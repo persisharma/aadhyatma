@@ -1,0 +1,688 @@
+{
+  "revision": 1,
+  "topics": [
+    {
+      "id": "basics",
+      "name": [
+        "मूल परिचय",
+        "Foundations"
+      ],
+      "title": [
+        "अवतार, स्वरूप और देवसमूह",
+        "Avatara, form and collection"
+      ],
+      "question": [
+        "हर देव-नाम एक अवतार है?",
+        "Is every divine name an avatara?"
+      ],
+      "group": [
+        "आरम्भ यहाँ से",
+        "Start here"
+      ],
+      "pages": [
+        [
+          "अवतार, स्वरूप और समूह अलग परिचय हैं। किसी समूह में देवताओं को उनकी भूमिका के आधार पर साथ रखा जा सकता है।",
+          "Avatara, form and collection are different introductions. A collection can bring deities together through a shared role."
+        ],
+        [
+          "दिक्पाल दिशा से जुड़ा समूह है। दशावतार एक चुना हुआ अवतार-समूह है। एक देवता के अलग स्वरूप भी हो सकते हैं।",
+          "Dikpal is a group defined by direction. Dashavatara is a selected avatara collection. A deity may also have different forms."
+        ],
+        [
+          "किसी नाम को समझते समय उसका ग्रंथ और परम्परा भी देखें।",
+          "Read a name with its text and tradition."
+        ]
+      ],
+      "refs": [
+        "BG47-MUKUND",
+        "SB1326-BBT"
+      ],
+      "kind": "categories",
+      "aliases": [
+        "sanatan parichay",
+        "avatara swaroop",
+        "dev samuh"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "deity",
+      "name": [
+        "देव परिचय",
+        "Deity introductions"
+      ],
+      "title": [
+        "गणेश को पहचानें",
+        "Recognising Ganesha"
+      ],
+      "question": [
+        "चित्र में देवता को कैसे पहचानें?",
+        "How do we recognise a deity?"
+      ],
+      "group": [
+        "देव और स्वरूप",
+        "Deities & forms"
+      ],
+      "pages": [
+        [
+          "गजमुख और विशिष्ट आयुध गणेश की पहचान में सहायता करते हैं। अलग प्रतिमाओं का विवरण उनके अपने संदर्भ में पढ़ें।",
+          "The elephant head and characteristic attributes help identify Ganesha. Read each image in its own context."
+        ],
+        [
+          "गणपति अथर्वशीर्ष में गणेश का ध्यान-वर्णन मिलता है। किसी एक चित्र से सभी प्रतिमाओं की मुद्रा और आयुध तय नहीं होते।",
+          "Ganapati Atharvashirsha includes a visual description of Ganesha. One image does not define every depiction."
+        ],
+        [
+          "यह चित्र गणेश के परिचय के लिए बनाई गई कलात्मक प्रस्तुति है। चित्र की कथा और उसका कलात्मक विवरण अलग स्तर हैं।",
+          "This illustration is an artistic presentation created for this introduction to Ganesha. Narrative and artistic description are separate layers."
+        ]
+      ],
+      "refs": [
+        "MET-GANESHA",
+        "GANAPATI-ATHARVA"
+      ],
+      "kind": "image",
+      "aliases": [
+        "ganesh ganesha ganpati"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "thirty",
+      "name": [
+        "33 कोटि देवता",
+        "Thirty-three devata"
+      ],
+      "title": [
+        "तैंतीस का परिचय",
+        "Understanding thirty-three"
+      ],
+      "question": [
+        "33 कोटि देवता कौन हैं?",
+        "Who are the thirty-three devata?"
+      ],
+      "group": [
+        "देव और स्वरूप",
+        "Deities & forms"
+      ],
+      "pages": [
+        [
+          "बृहदारण्यक उपनिषद् 3.9.2 में आठ वसु, ग्यारह रुद्र, बारह आदित्य, इन्द्र और प्रजापति गिने गए हैं।",
+          "Brihadaranyaka Upanishad 3.9.2 names eight Vasus, eleven Rudras, twelve Adityas, Indra and Prajapati."
+        ],
+        [
+          "आगे के संवाद में इन समूहों की दार्शनिक व्याख्या आती है। यह सभी हिन्दू देवताओं की सार्वभौम नामावली नहीं है।",
+          "The dialogue goes on to explain the groups philosophically. It is not a universal inventory of every Hindu deity."
+        ],
+        [
+          "दूसरे पाठों की सूची अलग हो सकती है। इस गणना में ‘कोटि’ शब्द नहीं आता; शब्दकोश अकेले लोकप्रिय अभिव्यक्ति का अर्थ तय नहीं करता।",
+          "Other texts can enumerate differently. This passage does not use koti; a dictionary alone cannot settle the popular expression."
+        ]
+      ],
+      "refs": [
+        "BU-MADH",
+        "BU-MULLER"
+      ],
+      "kind": "groups",
+      "aliases": [
+        "33 koti devta",
+        "33 crore",
+        "taintis koti"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "dikpal",
+      "name": [
+        "दिशाएँ और दिक्पाल",
+        "Directions & guardians"
+      ],
+      "title": [
+        "दस दिशाएँ कैसे?",
+        "How are there ten directions?"
+      ],
+      "question": [
+        "चार नहीं, दस दिशाएँ कैसे?",
+        "How do four directions become ten?"
+      ],
+      "group": [
+        "देव और स्वरूप",
+        "Deities & forms"
+      ],
+      "pages": [
+        [
+          "चार मुख्य और चार कोणीय दिशाओं के साथ ऊर्ध्व और अधो जोड़ने पर दस दिशाओं का परिचय मिलता है।",
+          "The ten-direction scheme adds above and below to four cardinal and four intermediate directions."
+        ],
+        [
+          "नीचे दिए चक्र में दिशा छुएँ। ऊपर और नीचे को चक्र से अलग रखा गया है।",
+          "Tap a direction in the wheel. Above and below are shown separately."
+        ],
+        [
+          "कामिक आगम के चुने गए संदर्भ में अधो के देवता विष्णु हैं। एक अन्य परम्परा में अनन्त आते हैं।",
+          "The selected Kamika passage places Vishnu below. Another documented convention uses Ananta."
+        ]
+      ],
+      "refs": [
+        "KAMIKA",
+        "UOU-KARMA"
+      ],
+      "kind": "directions",
+      "aliases": [
+        "das disha",
+        "dus disha",
+        "das dikpal",
+        "ten directions"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "graha",
+      "name": [
+        "नवग्रह परिचय",
+        "Navagraha"
+      ],
+      "title": [
+        "सूर्य का परिचय",
+        "Introducing Surya"
+      ],
+      "question": [
+        "नवग्रह में कौन-कौन आते हैं?",
+        "Who are the Navagraha?"
+      ],
+      "group": [
+        "देव और स्वरूप",
+        "Deities & forms"
+      ],
+      "pages": [
+        [
+          "सूर्य नवग्रह परम्परा के एक देवता हैं। देव-चित्र, खगोलीय पिंड और ज्योतिषीय व्याख्या के संदर्भ अलग समझें।",
+          "Surya is one of the Navagraha. Distinguish deity imagery, astronomical bodies and astrological interpretation."
+        ],
+        [
+          "नौ नामों को छूकर इस समूह का परिचय देखें। यह किसी व्यक्तिगत कुंडली की व्याख्या नहीं है।",
+          "Explore the nine names below. This is an introduction to the collection."
+        ],
+        [
+          "राहु और केतु का खगोलीय परिचय चन्द्र-कक्षा के दो पात-बिन्दुओं से जुड़ा है। वे दो अतिरिक्त भौतिक ग्रह नहीं हैं।",
+          "In astronomical usage Rahu and Ketu correspond to the Moon’s orbital nodes, rather than two additional physical planets."
+        ]
+      ],
+      "refs": [
+        "NAVAGRAHA",
+        "NASA-NODES"
+      ],
+      "kind": "grahas",
+      "aliases": [
+        "navgrah navagraha navgraha",
+        "surya rahu ketu"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "symbols",
+      "name": [
+        "शुभ चिह्न और प्रतीक",
+        "Sacred symbols"
+      ],
+      "title": [
+        "स्वस्तिक का अर्थ",
+        "Understanding the swastika"
+      ],
+      "question": [
+        "स्वस्तिक क्यों बनाते हैं?",
+        "Why is the swastika drawn?"
+      ],
+      "group": [
+        "प्रतीक और पूजा",
+        "Symbols & worship"
+      ],
+      "pages": [
+        [
+          "स्वस्तिक भारतीय धार्मिक परम्पराओं में मंगल का चिह्न है। पूजा और शुभ अवसरों पर इसके उपयोग मिलते हैं।",
+          "The swastika is an auspicious sign in Indian religious traditions, used in worship and on auspicious occasions."
+        ],
+        [
+          "इसकी चार भुजाओं की कई व्याख्याएँ मिलती हैं। किसी एक अर्थ को सभी परम्पराओं का एकमात्र अर्थ न मानें।",
+          "Its four arms have several attributed interpretations. One reading need not explain every use."
+        ],
+        [
+          "चित्र और बनाने की रीति को संबंधित परम्परा के साथ समझें। यहाँ दिया चित्र केवल परिचय के लिए है।",
+          "Understand the drawing convention in its traditional setting. This illustration is for identification."
+        ]
+      ],
+      "refs": [
+        "HAF-SWASTIKA",
+        "HOH-SYMBOLS"
+      ],
+      "kind": "swastika",
+      "aliases": [
+        "swastik swastika",
+        "swastik kyu banate hain"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "forms",
+      "name": [
+        "स्वरूप और अवतार",
+        "Forms & avataras"
+      ],
+      "title": [
+        "दशावतार की दो सूचियाँ",
+        "Two Dashavatara lists"
+      ],
+      "question": [
+        "दशावतार में बलराम या बुद्ध?",
+        "Balarama or Buddha in Dashavatara?"
+      ],
+      "group": [
+        "देव और स्वरूप",
+        "Deities & forms"
+      ],
+      "pages": [
+        [
+          "दशावतार विष्णु के दस अवतारों का एक प्रसिद्ध चयन है। अलग सूचियों में कुछ नाम बदलते हैं।",
+          "Dashavatara is a familiar selection of ten avataras of Vishnu. The names differ between some lists."
+        ],
+        [
+          "सूची बदलकर दोनों स्रोतों का परिचय देखें। दोनों को मिलाकर ग्यारह अवतारों की नई ‘दशावतार’ सूची न बनाएँ।",
+          "Switch between two sourced selections. Do not merge them into a new eleven-member Dashavatara list."
+        ],
+        [
+          "जयदेव के गीतगोविन्द के आरम्भिक स्तवन में बलराम और बुद्ध दोनों आते हैं; कृष्ण सम्बोधित उपास्य हैं।",
+          "Jayadeva’s opening hymn includes both Balarama and Buddha, with Krishna as the addressee."
+        ]
+      ],
+      "refs": [
+        "JAYADEVA",
+        "DRIK-DASHAVATARA"
+      ],
+      "kind": "avatars",
+      "aliases": [
+        "dashavatar dashavatara",
+        "balaram buddha"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "plants",
+      "name": [
+        "पूजा सामग्री और वनस्पतियाँ",
+        "Materials & sacred plants"
+      ],
+      "title": [
+        "तुलसी का परिचय",
+        "Introducing Tulasi"
+      ],
+      "question": [
+        "पूजा में तुलसी का स्थान क्या है?",
+        "What is Tulasi’s place in worship?"
+      ],
+      "group": [
+        "प्रतीक और पूजा",
+        "Symbols & worship"
+      ],
+      "pages": [
+        [
+          "तुलसी का वैष्णव पूजा-परम्पराओं में विशेष स्थान है। पौधे और अर्पित पत्तों का परिचय संबंधित परम्परा से समझें।",
+          "Tulasi has a special place in Vaishnava worship. Explain the plant and offered leaves within that tradition."
+        ],
+        [
+          "पत्ते, जप-माला और तुलसी-विवाह अलग उपयोग और प्रसंग हैं। एक परिचय से सभी विधियाँ तय नहीं होतीं।",
+          "Offered leaves, prayer beads and Tulasi Vivaha are distinct uses and settings. One introduction does not establish every procedure."
+        ],
+        [
+          "पौधे का धार्मिक महत्व और उसका वानस्पतिक या चिकित्सकीय परिचय अलग विषय हैं।",
+          "Sacred significance, botanical identification and medical use are different subjects."
+        ]
+      ],
+      "refs": [
+        "SDS-TULASI",
+        "CPREEC-PLANTS"
+      ],
+      "kind": "plant",
+      "aliases": [
+        "tulsi tulasi"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "elements",
+      "name": [
+        "प्रकृति और तत्त्व",
+        "Nature & elements"
+      ],
+      "title": [
+        "पंचमहाभूत",
+        "Panchamahabhuta"
+      ],
+      "question": [
+        "पाँच तत्त्व कौन-से हैं?",
+        "What are the five elements?"
+      ],
+      "group": [
+        "समय और ज्ञान",
+        "Time & knowledge"
+      ],
+      "pages": [
+        [
+          "आकाश, वायु, अग्नि, जल और पृथ्वी पारम्परिक तत्त्व-विचार के पाँच परिचित नाम हैं।",
+          "Akasha, Vayu, Agni, Ap and Prithivi are five familiar terms in traditional reflection on elements."
+        ],
+        [
+          "तैत्तिरीय उपनिषद् 2.1.1 में इनका क्रम आता है। इन्हें आधुनिक रसायन-विज्ञान के पाँच पदार्थों की सूची न समझें।",
+          "Taittiriya Upanishad 2.1.1 gives their sequence. They are not a modern periodic table."
+        ],
+        [
+          "किसी अन्य विषय—दिशा, ग्रह या शरीर—से संबंध जोड़ने के लिए उस विशेष संबंध का स्रोत चाहिए।",
+          "A mapping to directions, grahas or the body needs its own specific source."
+        ]
+      ],
+      "refs": [
+        "TAITTIRIYA"
+      ],
+      "kind": "elements",
+      "aliases": [
+        "panch tatva panch mahabhut",
+        "pancha mahabhuta"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "time",
+      "name": [
+        "काल और पंचांग",
+        "Panchang & time"
+      ],
+      "title": [
+        "तिथि क्या है?",
+        "What is a tithi?"
+      ],
+      "question": [
+        "क्या तिथि ठीक 24 घंटे होती है?",
+        "Is a tithi exactly 24 hours?"
+      ],
+      "group": [
+        "समय और ज्ञान",
+        "Time & knowledge"
+      ],
+      "pages": [
+        [
+          "तिथि सूर्य और चन्द्रमा के भूकेन्द्रीय देशान्तर के अन्तर में प्रत्येक 12° के विभाग से जुड़ी है।",
+          "A tithi is a 12° division of the geocentric Moon–Sun longitude difference."
+        ],
+        [
+          "तिथि का समय घड़ी के 24 घंटे का स्थिर दिन नहीं है। पंचांग में देखें कि दिया समय आरम्भ का है या समाप्ति का।",
+          "A tithi is not a fixed 24-hour civil day. Check whether the time label marks a beginning or an ending."
+        ],
+        [
+          "पंचांग में वार, तिथि, नक्षत्र, योग और करण पाँच अंग हैं। उत्सव के दिन का निर्णय संबंधित परम्परा के नियमों से भी जुड़ सकता है।",
+          "The five Panchang limbs are vara, tithi, nakshatra, yoga and karana. Observance dates also depend on traditional rules."
+        ]
+      ],
+      "refs": [
+        "IMD-PANCHANG",
+        "DRIK-TIMINGS"
+      ],
+      "kind": "tithi",
+      "aliases": [
+        "tithi panchang"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "texts",
+      "name": [
+        "ग्रंथ परिचय",
+        "Scriptures"
+      ],
+      "title": [
+        "वेद से उपनिषद् तक",
+        "From Veda to Upanishad"
+      ],
+      "question": [
+        "संहिता और उपनिषद् में क्या भेद है?",
+        "How do Samhita and Upanishad differ?"
+      ],
+      "group": [
+        "समय और ज्ञान",
+        "Time & knowledge"
+      ],
+      "pages": [
+        [
+          "संहिता, ब्राह्मण, आरण्यक और उपनिषद् वैदिक साहित्य को समझने के उपयोगी ग्रंथ-वर्ग हैं।",
+          "Samhita, Brahmana, Aranyaka and Upanishad are useful classes for understanding Vedic literature."
+        ],
+        [
+          "इनकी व्यवस्था अलग वैदिक शाखाओं में बदल सकती है। मूल पाठ और भाष्य को भी अलग पहचानें।",
+          "Their arrangement can vary by Vedic school. Distinguish the base text from its commentary."
+        ],
+        [
+          "‘108 उपनिषद्’ मुक्तिका की एक प्रसिद्ध सूची का संदर्भ है; यह सभी उपलब्ध उपनिषदों की निर्विवाद कुल संख्या नहीं है।",
+          "The familiar 108 refers to the Muktika list, rather than an uncontested count of every surviving Upanishad."
+        ]
+      ],
+      "refs": [
+        "VEDIC-INTRO",
+        "VEDIC-UPANISHADS"
+      ],
+      "kind": "texts",
+      "aliases": [
+        "ved veda upanishad"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "temples",
+      "name": [
+        "मंदिर और दर्शन",
+        "Temples & darshan"
+      ],
+      "title": [
+        "गर्भगृह और मण्डप",
+        "Sanctum and mandapa"
+      ],
+      "question": [
+        "मंदिर के हिस्सों को कैसे पहचानें?",
+        "How do we recognise temple spaces?"
+      ],
+      "group": [
+        "प्रतीक और पूजा",
+        "Symbols & worship"
+      ],
+      "pages": [
+        [
+          "गर्भगृह मुख्य प्रतिमा का भीतरी कक्ष है। मण्डप एक सभा या प्रवेश-स्थान हो सकता है।",
+          "The garbhagriha is the inner sanctum housing the main image. A mandapa can be a hall or porch."
+        ],
+        [
+          "इस सरल योजना के स्थान छूकर उनका परिचय देखें। वास्तविक मंदिरों की रचना और नाम क्षेत्र के अनुसार बदलते हैं।",
+          "Tap the spaces in this simplified plan. Actual temple layouts and terminology vary by region."
+        ],
+        [
+          "गोपुर प्रवेश-द्वार का ऊँचा भाग है; गर्भगृह के ऊपर की अधिरचना से उसका भेद रखें।",
+          "A gopura is a gateway tower; distinguish it from the sanctum’s superstructure."
+        ]
+      ],
+      "refs": [
+        "TEMPLE-GOV",
+        "MET-EDUCATORS"
+      ],
+      "kind": "temple",
+      "aliases": [
+        "mandir garbhagriha mandap"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "rishis",
+      "name": [
+        "ऋषि और ज्ञान परम्परा",
+        "Rishis & knowledge"
+      ],
+      "title": [
+        "गार्गी का प्रश्न",
+        "Gargi’s question"
+      ],
+      "question": [
+        "उपनिषद् में प्रश्न कौन पूछता है?",
+        "Who asks the questions in the Upanishads?"
+      ],
+      "group": [
+        "समय और ज्ञान",
+        "Time & knowledge"
+      ],
+      "pages": [
+        [
+          "गार्गी याज्ञवल्क्य से जगत के आधार और अक्षर के विषय में प्रश्न करती हैं। बृहदारण्यक उपनिषद् 3.8 में यह संवाद मिलता है।",
+          "Gargi questions Yajnavalkya about the world’s basis and the Immutable in Brihadaranyaka Upanishad 3.8."
+        ],
+        [
+          "ज्ञान-परम्परा में प्रश्न, संवाद और व्याख्या महत्वपूर्ण रूप हैं। गार्गी को दार्शनिक प्रश्नकर्ता के रूप में पढ़ें।",
+          "Question, dialogue and interpretation are important modes of learning. Read Gargi as a philosophical questioner."
+        ],
+        [
+          "मैत्रेयी का धन और अमृतत्व से जुड़ा प्रश्न एक अन्य संवाद में आता है। दोनों प्रसंगों को मिलाकर नई कथा न बनाएँ।",
+          "Maitreyi’s question about wealth and immortality occurs in another dialogue. Preserve the two contexts."
+        ]
+      ],
+      "refs": [
+        "BU-GARGI",
+        "BU-MAITREYI"
+      ],
+      "kind": "dialogue",
+      "aliases": [
+        "gargi rishi yagyavalkya yajnavalkya"
+      ],
+      "status": "published"
+    }
+  ],
+  "sources": {
+    "BU-MADH": {
+      "title": "Yajnavalkya and Vidagdha [Section IX]",
+      "edition": "Madhavananda with Shankara commentary",
+      "location": "Brihadaranyaka 3.9.1–9"
+    },
+    "BU-MULLER": {
+      "title": "III, 9 – The Upanishads, Part II",
+      "edition": "Max Muller SBE 15",
+      "location": "Brihadaranyaka 3.9.1–9"
+    },
+    "KAMIKA": {
+      "title": "Kamika Agama, Part 1 – Saivite Scriptures",
+      "edition": "Kamika Agama English translation hosted by Himalayan Academy",
+      "location": "Purvapada 4.481–491; 4.505–510; 4.441–448"
+    },
+    "UOU-KARMA": {
+      "title": "Microsoft Word - cvk - 01 final book",
+      "edition": "Uttarakhand Open University CVK 01",
+      "location": "Dikpal unit, printed pp 155–157 especially Brahma and Ananta"
+    },
+    "HAF-SWASTIKA": {
+      "title": "www.hinduamerican.org",
+      "edition": "Hindu American Foundation",
+      "location": "Word meaning, usage and symbolism sections"
+    },
+    "HOH-SYMBOLS": {
+      "title": "Hindu Symbols – Heart Of Hinduism",
+      "edition": "ISKCON Educational Services",
+      "location": "Hindu Symbols"
+    },
+    "NAVAGRAHA": {
+      "title": "Navagrahastotra (with meanings)",
+      "edition": "Sanskrit Documents",
+      "location": "Navagraha Stotra traditionally attributed to Vyasa, verses 1–9"
+    },
+    "SB1326-BBT": {
+      "title": "Śrīmad-Bhāgavatam 1.3.26",
+      "edition": "Bhaktivedanta Book Trust",
+      "location": "Bhagavata Purana 1.3.26"
+    },
+    "DRIK-DASHAVATARA": {
+      "title": "Dashavatara - List of all ten incarnation of Lord Vishnu",
+      "edition": "Drik Panchang",
+      "location": "Vishnu Dashavatara list"
+    },
+    "JAYADEVA": {
+      "title": "Read-Chapter | E-Bharatisampat",
+      "edition": "E Bharatisampat Sanskrit library",
+      "location": "Gita Govinda first sarga opening avatara hymn"
+    },
+    "VEDIC-INTRO": {
+      "title": "Introduction | Vedic Heritage Portal",
+      "edition": "IGNCA Vedic Heritage Portal",
+      "location": "Introduction and classification of Vedic literature"
+    },
+    "VEDIC-UPANISHADS": {
+      "title": "Upanishads | Vedic Heritage Portal",
+      "edition": "IGNCA Vedic Heritage Portal",
+      "location": "Upanishads number, main texts and themes"
+    },
+    "TAITTIRIYA": {
+      "title": "Taittiriya Upanisad",
+      "edition": "A K Aruna, with Gambhirananda commentary translation",
+      "location": "Taittiriya Upanishad 2.1.1"
+    },
+    "IMD-PANCHANG": {
+      "title": "Rashtriya Panchanga",
+      "edition": "IMD Positional Astronomy Centre",
+      "location": "Explanation, five limbs and ending times"
+    },
+    "DRIK-TIMINGS": {
+      "title": "Reading Panchang Timings in Drik Panchang",
+      "edition": "Drik Panchang",
+      "location": "FAQ reading Panchang end timings"
+    },
+    "NASA-NODES": {
+      "title": "NASA SVS | Moon Essentials: Orbit",
+      "edition": "NASA Scientific Visualization Studio",
+      "location": "Moon Essentials Orbit, nodes paragraph"
+    },
+    "MET-GANESHA": {
+      "title": "Ganesha - India, Tamil Nadu - Chola period - The Metropolitan Museum of Art",
+      "edition": "Metropolitan Museum of Art",
+      "location": "Object 37397"
+    },
+    "SDS-TULASI": {
+      "title": "A Sacred Plant: Tulasi | Sri Deva Sthanam",
+      "edition": "Sri Deva Sthanam",
+      "location": "A Sacred Plant Tulasi"
+    },
+    "GANAPATI-ATHARVA": {
+      "title": "shrI gaNapatyatharvashIrSha",
+      "edition": "Sanskrit Documents",
+      "location": "Ganapati Atharvashirsha 9 and 13"
+    },
+    "BG47-MUKUND": {
+      "title": "BG 4.7: Chapter 4, Verse 7 - Bhagavad Gita, The Song of God – Swami Mukundananda",
+      "edition": "Swami Mukundananda",
+      "location": "Bhagavad Gita 4.7"
+    },
+    "CPREEC-PLANTS": {
+      "title": "Sacred Plants – ecoheritage.cpreec.org",
+      "edition": "C P R Environmental Education Centre",
+      "location": "Sacred Plants"
+    },
+    "TEMPLE-GOV": {
+      "title": "Employment News",
+      "edition": "Employment News, Publications Division, issue 45, 5–11 February 2022",
+      "location": "Temple Architecture In India, Basic Form"
+    },
+    "MET-EDUCATORS": {
+      "title": "The Art of South and Southeast Asia: A Resource for Educators",
+      "edition": "Steven M. Kossak and Edith W. Watts, The Art of South and Southeast Asia (2001)",
+      "location": "Hindu Temples pp 33–34; glossary Brahma/Brahman"
+    },
+    "BU-GARGI": {
+      "title": "Yajnavalkya and Gargi (II) [Section VIII]",
+      "edition": "Madhavananda with Shankara commentary",
+      "location": "Brihadaranyaka 3.8.1–12"
+    },
+    "BU-MAITREYI": {
+      "title": "Yajnavalkya and Maitreyi (I) [Section IV]",
+      "edition": "Madhavananda with Shankara commentary",
+      "location": "Brihadaranyaka 2.4.1–5"
+    }
+  }
+}
