@@ -166,3 +166,5 @@ export function shapeSvg(shape, style) {
     ? `<path d="${shape.d}" fill="none" stroke="${pal.deco}" stroke-width="3.6" stroke-dasharray="0.01 12" stroke-linecap="round"/>`
     : `<path d="${shape.d}" fill="none" stroke="${pal.deco}" stroke-width="1.6" stroke-dasharray="5 6"/>`);
 }
+
+export {ell, rr, poly, s, flat, eye, limb, mirror};
