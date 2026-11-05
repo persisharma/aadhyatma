@@ -51,7 +51,7 @@ for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe']) {
     screen: 'StutiReader', params: { initialIndex: 0, stutiId: sourceId },
   });
   const target = { screen: 'StutiReader', params: { initialIndex: 3, stutiId: sourceId } };
-  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 3, updatedAt: 1 }), target);
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 3 }), target);
   assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::3`, sourceId, verseIndex: 3 })), target);
 }
 
