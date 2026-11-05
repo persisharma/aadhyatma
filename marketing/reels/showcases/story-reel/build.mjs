@@ -43,7 +43,7 @@ function captionChunks(text, t0, secs) {
     return out; });
   const weight = phrases.map(p => p.replace(/\s/g, '').length + 3), total = weight.reduce((a, b) => a + b, 0);
   let acc = 0;
-  return phrases.map((p, k) => { const s = k === 0 && t0 === 0 ? -0.3 : t0 + secs * acc / total; // opening phrase already on the first frame acc += weight[k]; return {text: p, s, e: k === phrases.length - 1 ? t0 + secs + 0.25 : t0 + secs * acc / total}; });
+  return phrases.map((p, k) => { const s = k === 0 && t0 === 0 ? -0.3 : t0 + secs * acc / total; /* opening phrase already on the first frame */ acc += weight[k]; return {text: p, s, e: k === phrases.length - 1 ? t0 + secs + 0.25 : t0 + secs * acc / total}; });
 }
 const HL = new Set(script.highlight || []);
 const hl = t => t.split(/\s+/).map(w => HL.has(w.replace(/[,।?!]/g, '')) ? `<b>${esc(w)}</b>` : esc(w)).join(' ');
