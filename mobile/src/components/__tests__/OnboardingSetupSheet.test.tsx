@@ -116,49 +116,52 @@ test('iOS completes setup only after the host Modal dismisses', async () => {
   expect(mockComplete).toHaveBeenCalledTimes(1);
 });
 
-test('language Next starts Android widget pinning with no Add tap, after saving the city resume point', async () => {
+
+async function languageThenCity() {
+  await mount();
+  await act(async () => sheet().props.onPrimary());
+  expect(sheet().props.step).toBe(2);
+  expect(mockPin).not.toHaveBeenCalled();
+}
+
+test('city Next commits location before automatic pinning and saves reminders as resume point', async () => {
   mockPin.mockImplementationOnce(async () => {
-    expect(await AsyncStorage.getItem('@vedansh/setup-step-v1')).toBe('2');
+    expect(mockCommit).toHaveBeenCalledTimes(1);
+    expect(await AsyncStorage.getItem('@vedansh/setup-step-v1')).toBe('3');
     return true;
   });
-  await mount();
-  expect(mockPin).not.toHaveBeenCalled();
+  await languageThenCity();
   await act(async () => sheet().props.onPrimary());
   expect(mockPin).toHaveBeenCalledWith('verse');
-  expect(nudgeSnapshot().widgetAddedAt).toEqual(expect.any(Number));
-  expect(sheet().props.step).toBe(2);
+  expect(sheet().props.step).toBe(3);
   expect(mockEnable).not.toHaveBeenCalled();
-  await act(async () => sheet().props.onBack());
-  await act(async () => sheet().props.onPrimary());
-  expect(mockPin.mock.calls.map(c => c[0])).toEqual(['verse', 'panchang']);
 });
 
-test.each(['hi', 'en', 'gu', 'kn'] as const)('iPhone opens inline widget instructions on Next in %s and continues to city', async lang => {
+test.each(['hi', 'en', 'gu', 'kn'] as const)('iPhone instructions follow city in %s and continue to reminders', async lang => {
   Platform.OS = 'ios'; mockLang = lang; mockSize = 'L';
-  await mount();
+  await languageThenCity();
   await act(async () => sheet().props.onPrimary());
+  expect(mockCommit).toHaveBeenCalledTimes(1);
   expect(sheet().props.primaryLabel).toBe('Setup widgets continue');
   expect(tree.root.findAllByType('QuietSheet' as any)).toHaveLength(1);
-  expect(tree.root.findByType('WidgetInstructions' as any).props.widgets).toEqual(['verse', 'panchang']);
   expect(await AsyncStorage.getItem('@vedansh/setup-step-v1')).toBe('widgets');
-  expect(mockPin).not.toHaveBeenCalled();
   await act(async () => sheet().props.onPrimary());
-  expect(sheet().props.step).toBe(2);
+  expect(sheet().props.step).toBe(3);
   expect(nudgeSnapshot().panchangAddedAt).toEqual(expect.any(Number));
   expect(mockComplete).not.toHaveBeenCalled();
 });
 
-test('Not now on widgets continues city without declining reminders', async () => {
+test('widget Not now continues reminders without declining them', async () => {
   Platform.OS = 'ios';
   await AsyncStorage.setItem('@vedansh/setup-step-v1', 'widgets');
   await mount();
   await act(async () => sheet().props.onSecondary());
-  expect(sheet().props.step).toBe(2);
+  expect(sheet().props.step).toBe(3);
   expect(nudgeSnapshot().widgetDismissedAt).toEqual(expect.any(Number));
   expect(mockDecline).not.toHaveBeenCalled();
 });
 
-test('iPhone cold resume hydrates the pending Panchang-only instructions', async () => {
+test('iPhone cold resume retains Panchang-only instructions and Back returns to city', async () => {
   Platform.OS = 'ios';
   await AsyncStorage.multiSet([
     ['@vedansh/setup-step-v1', 'widgets'],
@@ -166,46 +169,47 @@ test('iPhone cold resume hydrates the pending Panchang-only instructions', async
   ]);
   await mount();
   expect(tree.root.findByType('WidgetInstructions' as any).props.widgets).toEqual(['panchang']);
-  expect(mockPin).not.toHaveBeenCalled();
+  await act(async () => sheet().props.onBack());
+  expect(sheet().props.step).toBe(2);
 });
 
 test.each(['dismissed', 'completed', 'no host', 'unsupported', 'failed'])(
-  '%s widget setup never blocks onboarding', async state => {
+  '%s widgets never block reminders', async state => {
     mockHost = state !== 'no host';
     mockSupported.mockResolvedValue(state !== 'unsupported');
     if (state === 'failed') mockPin.mockRejectedValueOnce(new Error('launcher unavailable'));
-    await mount();
+    await languageThenCity();
     if (state === 'dismissed') await updateNudge({widgetDismissedAt: Date.now()});
     if (state === 'completed') await updateNudge({panchangAddedAt: Date.now()});
     await act(async () => sheet().props.onPrimary());
-    expect(sheet().props.step).toBe(2);
+    expect(sheet().props.step).toBe(3);
     if (['dismissed', 'completed', 'no host', 'unsupported'].includes(state)) expect(mockPin).not.toHaveBeenCalled();
   },
 );
 
-test('repeated Next while storage is loading starts one pin request', async () => {
-  await mount();
+test('repeated city Next starts one pin request', async () => {
+  await languageThenCity();
   await act(async () => { sheet().props.onPrimary(); sheet().props.onPrimary(); });
   expect(mockPin).toHaveBeenCalledTimes(1);
 });
 
-test('a cold restart at city never automatically repeats a widget request', async () => {
-  await AsyncStorage.setItem('@vedansh/setup-step-v1', '2');
+test('cold restart at reminders never repeats a widget request', async () => {
+  await AsyncStorage.setItem('@vedansh/setup-step-v1', '3');
   await mount();
-  expect(sheet().props.step).toBe(2);
+  expect(sheet().props.step).toBe(3);
   expect(mockPin).not.toHaveBeenCalled();
 });
 
-test('failed progress persistence continues city without opening an unresumable system dialog', async () => {
-  await mount();
+test('failed progress write continues reminders without opening an unresumable OS dialog', async () => {
+  await languageThenCity();
   (AsyncStorage.setItem as jest.Mock).mockRejectedValueOnce(new Error('disk unavailable'));
   await act(async () => sheet().props.onPrimary());
-  expect(sheet().props.step).toBe(2);
+  expect(sheet().props.step).toBe(3);
   expect(mockPin).not.toHaveBeenCalled();
 });
 
-test('unmount while widget bookkeeping loads never starts a late pin request', async () => {
-  await mount();
+test('unmount while widget bookkeeping loads prevents a late pin request', async () => {
+  await languageThenCity();
   let resolve!: (value: string | null) => void;
   (AsyncStorage.getItem as jest.Mock).mockImplementationOnce(() => new Promise(done => { resolve = done; }));
   await act(async () => { sheet().props.onPrimary(); });

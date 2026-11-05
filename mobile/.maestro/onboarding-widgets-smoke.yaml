@@ -12,6 +12,8 @@ appId: com.prashantsharma.vedansh
     timeout: 90000
 - tapOn: "English"
 - tapOn: "Setup language continue"
+- assertVisible: "Setup city continue"
+- tapOn: "Setup city continue"
 - runFlow:
     when:
       platform: iOS
@@ -33,8 +35,6 @@ appId: com.prashantsharma.vedansh
       - tapOn:
           text: "Add automatically|Add to Home screen|ADD|Add"
           optional: true
-- assertVisible: "Setup city continue"
-- tapOn: "Setup city continue"
 - assertVisible: "Enable reminders"
 - tapOn: "Not now"
 - tapOn:

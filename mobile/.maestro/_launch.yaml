@@ -68,7 +68,10 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Setup language continue"
     optional: true
-# First-run widgets now start on language Continue, with no separate Add CTA.
+- tapOn:
+    text: "Setup city continue"
+    optional: true
+# First-run widgets now start on city Continue, with no separate Add CTA.
 # iPhone instructions stay inside onboarding; Android launcher confirmations are
 # optional across hosts. Dismiss both requests so unrelated smoke flows stay clean.
 - tapOn:
@@ -80,9 +83,6 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn:
     text: "Cancel|CANCEL|रद्द करें"
-    optional: true
-- tapOn:
-    text: "Setup city continue"
     optional: true
 - tapOn:
     text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"

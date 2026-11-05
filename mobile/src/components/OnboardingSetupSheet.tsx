@@ -54,6 +54,7 @@ export default function OnboardingSetupSheet() {
     [error, setError] = useState('');
   const [choice, setChoice] = useState<PanchangLocation>(location);
   const completeRef = useRef(false);
+  const setupLoaded = useRef(false);
   const nextPending = useRef(false);
   const mounted = useRef(true);
   const [widgetHost] = useState(hasWidgetHost);
@@ -62,12 +63,13 @@ export default function OnboardingSetupSheet() {
     return () => { mounted.current = false; };
   }, []);
   useEffect(() => {
-    if (!shouldShowOnboardingSetup) return;
+    if (!shouldShowOnboardingSetup || setupLoaded.current) return;
     let active = true;
     void Promise.all([AsyncStorage.getItem(STEP_KEY), loadNudgeRecord()])
       .then(([raw]) => {
         if (active) {
-          setStep(raw === 'widgets' && widgetHost && Platform.OS === 'ios' ? 'widgets' : raw === 'widgets' || raw === '2' ? 2 : raw === '3' ? 3 : 1);
+          setupLoaded.current = true;
+          setStep(raw === 'widgets' && widgetHost && Platform.OS === 'ios' ? 'widgets' : raw === 'widgets' ? 3 : raw === '2' ? 2 : raw === '3' ? 3 : 1);
           setChoice(location);
           setVisible(true);
         }
@@ -105,6 +107,11 @@ export default function OnboardingSetupSheet() {
     setBusy(true);
     try {
       if (step === 1) {
+        await go(2);
+        return;
+      }
+      if (step === 2) {
+        await commitLocation(choice);
         await loadNudgeRecord();
         if (!mounted.current) return;
         const record = nudgeSnapshot();
@@ -113,12 +120,12 @@ export default function OnboardingSetupSheet() {
           if (Platform.OS === 'ios') {
             await go('widgets');
           } else {
-            // Save city as the resume point before handing control to the launcher.
-            const saved = await go(2);
+            // Save reminders as the resume point before handing control to the launcher.
+            const saved = await go(3);
             if (saved && mounted.current) await startWidgetPinFlow(widgets);
           }
         } else {
-          await go(2);
+          await go(3);
         }
         return;
       }
@@ -127,19 +134,14 @@ export default function OnboardingSetupSheet() {
         const widgets = nudgeWidgets(record.widgetAddedAt ? 'panchangWidget' : 'widget');
         // This records instruction completion, never confirmed widget placement.
         await updateNudge(Object.assign({}, ...widgets.map((w) => widgetAddedPatch(w, Date.now()))));
-        if (mounted.current) await go(2);
-        return;
-      }
-      if (step === 2) {
-        commitLocation(choice);
-        await go(3);
+        if (mounted.current) await go(3);
         return;
       }
       if (!(await enableReminders())) declineLaunchReminder();
       if (mounted.current) finish();
     } catch {
       // Optional widget support or storage failure must not strand first-run setup.
-      if (mounted.current && step === 1) await go(2);
+      if (mounted.current && step === 2) await go(3);
       else if (mounted.current) setError(q(lang, 'gpsFailed'));
     } finally {
       nextPending.current = false;
@@ -153,7 +155,7 @@ export default function OnboardingSetupSheet() {
     try {
       if (step === 'widgets') {
         await updateNudge({ widgetDismissedAt: Date.now() });
-        if (mounted.current) await go(2);
+        if (mounted.current) await go(3);
         return;
       }
       await declineReminders();
@@ -205,7 +207,7 @@ export default function OnboardingSetupSheet() {
             ? 'deity-ganga'
             : 'category-aarti-diya'
       }
-      onBack={step !== 1 ? () => { if (!busy) void go(step === 'widgets' || step === 2 ? 1 : 2); } : undefined}
+      onBack={step !== 1 ? () => { if (!busy) void go(step === 2 ? 1 : 2); } : undefined}
       onDismiss={() => {
         void afterDismiss();
       }}
@@ -241,7 +243,6 @@ export default function OnboardingSetupSheet() {
       ) : step === 1 ? (
         <>
           <Text style={para}>{q(lang, 'languageNote')}</Text>
-          {widgetHost && <Text style={para}>{q(lang, Platform.OS === 'android' ? 'widgetsNextAndroid' : 'widgetsNextIos')}</Text>}
           <View style={styles.languages}>
             {LANGUAGES.map((opt) => {
               const selected = lang === opt.value;
@@ -347,6 +348,7 @@ export default function OnboardingSetupSheet() {
         </>
       ) : step === 2 ? (
         <>
+          {widgetHost && <Text style={para}>{q(lang, Platform.OS === 'android' ? 'widgetsNextAndroid' : 'widgetsNextIos')}</Text>}
           <Text style={para}>{q(lang, 'cityNote')}</Text>
           <View
             style={[styles.sunrise, { backgroundColor: colors.saffronTint }]}
