@@ -227,3 +227,8 @@ Adopted from both reviews, no owner decision needed:
 ## 11. Quiet companion implementation — 31 October 2026
 
 The owner selected Quiet companion for all setup and nudge surfaces and requested implementation. The follow-up uses the shared native sheet and the revised order in §10. Decisions implemented from the preview: passive hard-denial recovery, bundled-city search + staged GPS, later-day widget offer, two/two/three-day reminder rests then weekly, and a stop control from the third decline. These are calendar-day rests, not a count of opens; sparse users are not asked repeatedly within a day. Source and validation details live in design.md's Quiet companion section. Device QA is explicitly pending.
+
+
+## 12. First-run widgets on language Continue — 5 November 2026
+
+Owner decision superseding later-day-only widget timing: language selection → Continue starts widget setup without a separate Add action. Android invokes the existing Verse/Panchang pin chain, retaining mandatory launcher confirmation. iPhone automatically shows the existing previews/manual steps inline, with Continue/Not now leading to city. City, reminder consent, ATT and the feature tour retain their order. The shared widget record owns dismissal and completed-flow stamps; none proves placement. Later-launch recovery and the gallery remain available under their existing rules. Save `2` before Android handoff and `widgets` for iPhone instruction resume; missing host, cancellation and unavailable pin support must not strand setup. Native all-language/size, lifecycle/launcher, signed-widget and Maestro checks remain required.
