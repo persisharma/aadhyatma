@@ -1336,3 +1336,6 @@ Added the 43.5 s Hindi/English all-features ad builder (9:16 + 4:5, deterministi
 
 ## [2026-11-05] ingest | Bhajan-cut Meta reel
 Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens, no TTS) after the voiced tour was judged slow and AI-like. Logged in [[runbooks/store-submission]]. Ad-use licence of the recording is unverified.
+
+## [2026-11-05] decision | Story-reel styles
+The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].

@@ -15,6 +15,9 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, '../../../..');
 const arg = (n, d) => { const i = process.argv.indexOf(`--${n}`); return i > -1 ? process.argv[i + 1] : d; };
 const preview = process.argv.includes('--preview');
+// --bed none (default): narration only, so music can be added in Instagram/Meta at upload. --bed tanpura: synthesised drone.
+// --remux: keep the already-rendered picture and only rebuild the audio (fast).
+const bed = arg('bed', 'none'), remux = process.argv.includes('--remux');
 const out = path.resolve(arg('out', path.join(root, 'marketing/reels/out/story-reel')));
 const styles = arg('style', 'all') === 'all' ? ['puppet', 'patta', 'painted'] : [arg('style')];
 const W = 1080, H = 1920, FPS = 30, T = 0.3;
@@ -167,10 +170,11 @@ function zig() {
 
 fs.mkdirSync(out, {recursive: true});
 const music = path.join(out, 'tanpura.wav');
-if (!preview && !fs.existsSync(music)) run('python3', [path.join(root, 'marketing/reels/showcases/feature-tour/music.py'), music, String(TOTAL), String(scenes.at(-1).start)]);
+if (!preview && bed === 'tanpura' && !fs.existsSync(music)) run('python3', [path.join(root, 'marketing/reels/showcases/feature-tour/music.py'), music, String(TOTAL), String(scenes.at(-1).start)]);
 const browser = await chromium.launch();
 try {
   for (const style of styles) {
+    if (remux) { mixAudio(path.join(out, `hanuman-surya-${style}.mp4`), path.join(out, `hanuman-surya-${style}-${bed === 'none' ? 'voice' : bed}.mp4`)); continue; }
     const html = path.join(out, `${style}.html`); fs.writeFileSync(html, page(style));
     const pg = await browser.newPage({viewport: {width: W, height: H}});
     await pg.goto(pathToFileURL(html).href, {waitUntil: 'networkidle'});
@@ -191,11 +195,21 @@ try {
     run('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(stills, '*.jpg'), '-vf', 'scale=240:426,tile=9x1:padding=4:color=white', '-frames:v', '1', path.join(out, `review-${style}.jpg`)]);
     if (preview) { console.log(style, 'stills'); continue; }
     ff.stdin.end(); await done;
-    const inputs = ['-i', video, '-i', music, ...scenes.flatMap(s => ['-i', s.voFile])];
-    const graph = scenes.map((s, k) => `[${k + 2}:a]aresample=48000,highpass=f=90,equalizer=f=220:t=q:w=1:g=2.5,equalizer=f=6500:t=q:w=2:g=-3,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,aecho=0.85:0.5:38|61:0.14|0.09,aformat=channel_layouts=stereo,adelay=${Math.round(s.voAt * 1000)}:all=1,apad[v${k}]`).join(';') +
-      `;${scenes.map((_, k) => `[v${k}]`).join('')}amix=inputs=${scenes.length}:normalize=0:duration=longest,volume=1.5,asplit[vo][key];[1:a]volume=0.8[bed];[bed][key]sidechaincompress=threshold=0.015:ratio=6:attack=15:release=400[duck];[duck][vo]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]`;
     const final = path.join(out, `hanuman-surya-${style}.mp4`);
-    run('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', graph, '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ac', '2', '-t', String(TOTAL), '-movflags', '+faststart', final]);
+    mixAudio(video, final);
     fs.rmSync(video); console.log(final);
   }
 } finally { await browser.close(); }
+
+function mixAudio(videoSrc, final) {
+  const vox = scenes.map((s, k) => `[${k + 1}:a]aresample=48000,highpass=f=90,equalizer=f=220:t=q:w=1:g=2.5,equalizer=f=6500:t=q:w=2:g=-3,acompressor=threshold=-20dB:ratio=3:attack=5:release=120,aecho=0.85:0.5:38|61:0.14|0.09,aformat=channel_layouts=stereo,adelay=${Math.round(s.voAt * 1000)}:all=1,apad=whole_dur=${TOTAL}[v${k}]`).join(';');
+  const mixVo = `${scenes.map((_, k) => `[v${k}]`).join('')}amix=inputs=${scenes.length}:normalize=0:duration=longest`;
+  const inputs = ['-i', videoSrc, ...scenes.flatMap(s => ['-i', s.voFile])];
+  let graph;
+  if (bed === 'tanpura') {
+    inputs.push('-i', music);
+    graph = `${vox};${mixVo},volume=1.5,asplit[vo][key];[${scenes.length + 1}:a]volume=0.8[bd];[bd][key]sidechaincompress=threshold=0.015:ratio=6:attack=15:release=400[duck];[duck][vo]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]`;
+  } else graph = `${vox};${mixVo},loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]`;
+  run('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', graph, '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-ac', '2', '-t', String(TOTAL), '-movflags', '+faststart', final]);
+  console.log(final);
+}

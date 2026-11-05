@@ -75,3 +75,10 @@ Source captures span 6–27 October and mix pre- and post-Vrat-tab UI. Keep text
 - It uses the app's own recorded "Govind Bolo" from 16.14 s and has no synthetic voice.
 - Real screens are shown full-bleed in screen-recording style, with short Hindi-first captions.
 - Gotchas: the stock-footage hosts (Pexels, Pixabay, Mixkit, Wikimedia) are blocked from the cloud container. The licence for using the bhajan recording in ads is unverified.
+
+**Story-reel style rule (5 November 2026, user decision).**
+- Stories already fully illustrated in the app use the app's painted art (style 3).
+- Stories without full illustration, such as vrat kathas, use the code-drawn Tholu Bommalata puppet style (style 1).
+- Pattachitra is not in use.
+- Narration-only audio is the default. The user disliked the synthesised tanpura bed; add music in Instagram/Meta at upload.
+- Kit: `marketing/reels/showcases/story-reel/`.
