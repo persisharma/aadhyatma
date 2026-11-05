@@ -20,6 +20,7 @@ Each story lives in `stories/<id>/`: `script.json` holds the narration, title, c
 | --- | --- | --- |
 | `hanuman-surya` | `kidsStories/hanuman-sun.json` (fully illustrated) | painted (style 3); puppet also available |
 | `dhanteras` | `panchang/kathaContent/entries/dhanteras-legends.ts` (samudra-manthan, dhanvantari-amrit, dhanteras-blessing) | puppet (style 1): the katha has no illustrations |
+| `diwali` | Five-day arc from `panchang/arcs.ts` (deepavali), with `dhanteras-legends`, `narak-chaturdashi-katha`, `diwali-legends`, `govardhan-puja-katha` and `bhai-dooj-katha` | puppet (style 1); dates are deliberately left out of the video and added in the post caption |
 
 `phonemeFixes` in a story's voice settings correct espeak pronunciations. For example, `-दशी` words lose their schwa, and धन्वंतरि gets first-syllable stress.
 

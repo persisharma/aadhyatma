@@ -52,6 +52,9 @@ function puppetBase(type, k) {
   if (type === 'forest') for (const [x, h] of [[110, 820], [980, 760], [640, 980]]) o += shape(`M${x - 22},1650 L${x - 22},${h + 160} L${x + 22},${h + 160} L${x + 22},1650Z`, '#5A2A12') + [[0, 0, 120], [-80, 90, 90], [80, 90, 90]].map(([dx, dy, r]) => shape(`M${x + dx - r},${h + dy}a${r},${r * 0.8} 0 1,0 ${2 * r},0a${r},${r * 0.8} 0 1,0 ${-2 * r},0Z`, '#2F6B2E')).join('');
   if (type === 'heaven') for (const x of [60, 930]) o += shape(`M${x},1640 L${x},700 L${x + 90},700 L${x + 90},1640Z`, '#4A1C0C') + `<path d="M${x - 20},700 L${x + 110},700 L${x + 95},660 L${x - 5},660Z" fill="${pal.gold}" stroke="#170904" stroke-width="6"/>`;
   if (type === 'cave') o += shape('M120,1650 L120,980 Q120,640 540,600 Q960,640 960,980 L960,1650Z', '#1E0A04');
+  if (type === 'palace') o += shape('M60,1640 L60,1150 L1020,1150 L1020,1640Z', '#5A2210')
+    + [[220, 980, 120], [540, 900, 170], [860, 980, 120]].map(([x, y, r]) => shape(`M${x - r},${y + r} L${x - r},${y + 60} A${r},${r} 0 0 1 ${x + r},${y + 60} L${x + r},${y + r}Z`, '#E2A62B') + shape(`M${x - 4},${y + 60 - r} L${x - 4},${y - 10 - r} L${x + 40},${y + 6 - r} L${x + 4},${y + 20 - r} L${x + 4},${y + 60 - r}Z`, '#B8261B')).join('')
+    + [180, 380, 700, 900].map(x => shape(`M${x - 50},1640 L${x - 50},1330 A50,50 0 0 1 ${x + 50},1330 L${x + 50},1640Z`, '#2B0E06')).join('');
   if (type === 'ocean') o += `<rect x="0" y="1330" width="${W}" height="320" fill="#1D4F66"/>${dot(`M30,1340 L${W - 30},1340`)}`;
   if (type === 'night') { let seed = 3; const r = () => ((seed = (seed * 16807) % 2147483647) / 2147483647); o += Array.from({length: 70}, () => `<circle cx="${(60 + r() * 960) | 0}" cy="${(600 + r() * 900) | 0}" r="${(2 + r() * 3).toFixed(1)}" fill="#FFE9B8" opacity=".85"/>`).join(''); }
   if (type === 'home') o += shape('M250,1640 L250,880 Q250,700 540,680 Q830,700 830,880 L830,1640Z', '#5A2210') + shape('M300,1640 L300,900 Q300,750 540,735 Q780,750 780,900 L780,1640Z', '#2B0E06')
@@ -79,10 +82,13 @@ function folkScene(style, sc, i) {
   let o = `<g class="scene" data-i="${i}">${style === 'puppet' ? puppetBase(f.bg) : pattaBase(f.bg)}`;
   if (f.fx?.includes('dim')) o += `<rect width="${W}" height="${H}" fill="#000" opacity=".22"/>`;
   if (f.fx?.includes('wind')) o += Array.from({length: 6}, (_, k) => `<path class="wind" d="M-200,${780 + k * 150} C200,${700 + k * 150} 600,${860 + k * 150} 1300,${760 + k * 150}" fill="none" stroke="#FFF3D6" stroke-width="${style === 'puppet' ? 6 : 5}" stroke-linecap="round" stroke-dasharray="160 1400" opacity=".7"/>`).join('');
+  o += '<!--cast-->';
   o += f.cast.map(([name], n) => {
     const parts = CHARACTERS[name];
     return [...parts.filter(p => p.first), ...parts.filter(p => !p.first)].map(p => `<g id="s${i}c${n}-${p.id}">${p.shapes.map(x => shapeSvg(x, style)).join('')}</g>`).join('');
   }).join('');
+  if (f.fx?.includes('rain')) o = o.replace('<!--cast-->', Array.from({length: 46}, (_, k) => `<path class="rain" d="M${(k * 97) % 1100 - 20},${560 + (k * 211) % 1050} l-26,90" stroke="#BFE3F2" stroke-width="5" stroke-linecap="round" opacity=".75"/>`).join('') + '<!--cast-->');
+  for (const [x, y, t, size, t0] of f.labels || []) o += `<text class="lbl" data-t0="${t0}" x="${x}" y="${y}" text-anchor="middle" font-family="Noto Serif Devanagari" font-weight="700" font-size="${size}" fill="#F3DFAE" stroke="#170904" stroke-width="${Math.max(4, size / 9)}" paint-order="stroke" opacity="0">${esc(t)}</text>`;
   if (f.fx?.includes('petals')) { let seed = 5; const r = () => ((seed = (seed * 16807) % 2147483647) / 2147483647); o += Array.from({length: 36}, (_, k) => `<ellipse class="petal" data-x="${(r() * W) | 0}" data-v="${(120 + r() * 160) | 0}" data-p="${r() * 6}" rx="11" ry="6" fill="${k % 3 ? '#F0A98A' : '#F0B53C'}" stroke="#170904" stroke-width="2"/>`).join(''); }
   return o + '</g>';
 }
@@ -137,7 +143,10 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  emerge:(c,u,d)=>({y:lerp(1850,c.y,eo(u/(d*.45)))}),emergeFast:(c,u,d)=>({y:lerp(1480,c.y,eo(u/.8))}),
  churn:(c,u)=>({rot:c.rot+Math.sin(u*2.4)*5}),tug:(c,u)=>({x:c.x-Math.sin(u*2.4)*14,rot:c.rot-Math.sin(u*2.4)*4*c.flip}),
  popAt:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/.55);return{s:c.s*(.3+.7*back(p)),op:clamp(p*3),y:c.y-(1-eo(p))*-120}},
- drift:(c,u)=>({x:c.x+Math.sin(u*.9+(c.o.phase||0))*34})};
+ drift:(c,u)=>({x:c.x+Math.sin(u*.9+(c.o.phase||0))*34}),
+ walkIn:(c,u,d)=>({x:lerp(-220,c.x,eo(u/(d*.42))),y:c.y-(u<d*.42?Math.abs(Math.sin(u*6))*8:0)}),
+ defeat:(c,u,d)=>{const f=clamp((u-.55*d)/(.3*d));return{rot:c.rot+f*70*c.flip,y:c.y+f*180,op:1-f*.75}},
+ fadeOut:(c,u,d)=>({op:1-clamp((u-.6*d)/(.25*d)),y:c.y+Math.sin(u*1.5)*8})};
 const vis=(i,t)=>{const s=SC[i],u=t-s.start,last=i===SC.length-1;if(u<0||(!last&&u>s.dur+T))return 0;return Math.min(i===0?1:clamp(u/T),last?1:1-clamp((u-s.dur)/T));};
 window.renderAt=t=>{
   document.querySelectorAll('.scene').forEach((g,i)=>{const o=vis(i,t);g.setAttribute('opacity',o);g.style.display=o>0?'':'none';if(!o)return;
@@ -147,6 +156,8 @@ window.renderAt=t=>{
       const world=id=>{if(cache[id])return cache[id];const p=by[id],pm=p.parent?world(p.parent):M;const a=(p.base||0)+(p.amp||0)*Math.sin(2*Math.PI*(p.freq||1)*t+(p.phase||0))+(p.spin||0)*t;return cache[id]=pm.translate(p.at[0],p.at[1]).rotate(a);};
       c.parts.forEach(p=>{const m=world(p.id),el=document.getElementById('s'+i+'c'+n+'-'+p.id);el.setAttribute('transform','matrix('+[m.a,m.b,m.c,m.d,m.e,m.f].join(',')+')');el.setAttribute('opacity',r.op);});});
     g.querySelectorAll('.glow').forEach(e=>e.setAttribute('opacity',(.82+.07*Math.sin(t*13)+.05*Math.sin(t*7.3)).toFixed(3)));
+    g.querySelectorAll('.lbl').forEach(e=>{const p=clamp((u-(+e.dataset.t0)*d)/.4);e.setAttribute('opacity',p);});
+    g.querySelectorAll('.rain').forEach((e,k)=>{const y=((u*900+k*137)%1100);e.setAttribute('transform','translate(0,'+(y-550).toFixed(0)+')');e.setAttribute('opacity',(.75*(1-clamp((u-.8*d)/(.15*d)))).toFixed(2));});
     g.querySelectorAll('.wind').forEach((e,k)=>e.setAttribute('stroke-dashoffset',(-(u*900+k*260)%1560).toFixed(0)));
     g.querySelectorAll('.petal').forEach(e=>{const x=+e.dataset.x+Math.sin(u*1.6+ +e.dataset.p)*40,y=520+((u*+e.dataset.v+ +e.dataset.p*200)%1300);e.setAttribute('cx',x.toFixed(1));e.setAttribute('cy',y.toFixed(1));e.setAttribute('opacity',clamp(u/1.2));});
   });
