@@ -1322,4 +1322,33 @@ Follow design.md §33a *Co-branding*. A pandit, temple or astrologer may print t
 **First-run widget trigger (5 Nov 2026).** Language Continue starts widget setup immediately; do not require another in-app Add tap. Use the shared `widgetNudgeStore` pair/Panchang-only policy and respect its prior dismissal/completion stamps. Android persists the city resume step before invoking the launcher and never treats a pin request as confirmed placement. iOS persists the `widgets` substep, reuses `WidgetHowToBody` inside the existing setup modal and continues to city on Continue/Not now. Hydrate widget bookkeeping on cold resume, prevent duplicate Next requests and do not re-arm pinning from city/reminder resume. Missing hosts/unsupported/failing pinning do not block onboarding. Manual gallery access and reminder consent remain independent; later-launch recovery retains the install-day/daily-slot gates. Shared Maestro boot must handle iPhone instructions and both Android confirmations; device/launcher evidence is required separately from source tests.
 
 
-Setup phase must persist independently of language/upgrader keys. Only explicit explained actions request notifications/location; Later leaves daily and festival toggles off, and an unrelated grant cannot subscribe a user. Stage a city/GPS result until Continue. One launch host arbitrates later prompts and skips notification/widget cold starts; to
+Setup phase must persist independently of language/upgrader keys. Only explicit explained actions request notifications/location; Later leaves daily and festival toggles off, and an unrelated grant cannot subscribe a user. Stage a city/GPS result until Continue. One launch host arbitrates later prompts and skips notification/widget cold starts; tour replay cannot erase setup. Widget flow stamps are not proof of placement. Reuse the existing cached-artwork descriptors and loaded script fonts, keep the body scrollable at Large, and record native ATT/launcher/font/device QA before merging. design.md's Quiet companion section owns the surface spec and cadence.
+
+Lower-priority automatic surfaces must wait for `launchAskStore.selectionComplete` and atomically claim the shared daily opportunity before opening. Storage hydration is not host selection completion. Automatic rating must wait too.
+
+Keep reminder-rest dates separate from the shared daily prompt date: an intervening widget/discovery prompt must not restart a reminder rest. Legacy records migrate their prior shared date once.
+
+### Explore launch integration contract
+
+The discovery ledger (`data/discovery/policy.ts`, key `@vedansh/explore-sheet-v1`)
+counts a visit from any owned route, not only a launch-sheet CTA. New section
+promotions must register their typed stack destination, route ownership, localized
+copy, preview kind and explicit hero artwork in `sections.ts`/`artwork.ts`. No
+reader corpus or solver is loaded on the launch graph for a preview. Hero scenes
+have a separate 1.5MB bundle budget and hash manifest under `assets/explore/`.
+The Home/More square-icon budgets and registries are unchanged.
+
+Launch surfaces must respect `isExploreSurfaceOpen()` while the sheet is visible;
+Explore itself stands down for onboarding, reminder asks, What's New, pending OTA,
+rating and external launch intents. Preserve the silent collection window,
+fail-closed persistence, count-on-show limit and single-action dismissal guard.
+Changes require policy, surface and asset tests plus the native Maestro fixture
+flow (`explore-sheet.yaml`); see design.md §86 for the current accepted behavior.
+
+Explore participates in the Quiet companion daily gate: wait for host selection, reserve with `claimLaunchAsk`, and preserve its own ownership during the store notification. Keep both rating ownership arbitration (`claimRatingAsk`) and Explore visibility checks in automatic rating; only rating-owned response repeats bypass the shared date/session ceiling. Combined launch tests must cover widget/reminder priority, stopped reminders, slow host initialization, concurrent claims and persisted same-day suppression.
+
+Explore has no on/off preference or permanent disable action. Retain the legacy ledger field only for storage compatibility; it does not gate selection. Settings exposes only an explicit replay, which bypasses automatic delays without writing decline/visit/cadence records or consuming the automatic daily slot. The replay uses the same localized sheets and real destinations, including the Suvichar draft handoff. Consume and clear native launch notification responses once through `notifications/launchResponse.ts`, and pass the resolved launch target to Explore; do not independently treat a cached last response as a current launch intent. Cover stale/real intents, legacy Off state and immediate replay in regressions.
+
+Explore history reset is an explicit, confirmed replay-only action. Serialize `resetExploreHistory` through the existing hydrated discovery store; persist a valid empty ledger aged by 24 hours rather than deleting the key. Clear visits, shown timestamps, last suggestion, declines, decline streak and sleep deadline together. Never clear unrelated storage, shared daily launch state or reminder preferences. Replay without confirmation remains write-free. A failed read/write must not report success or enable automatic discovery. Cover cancellation, duplicate/unmounted confirmation, cold reload/no reseeding, initial collection, queued route writes, storage failure, and normal automatic selection after reset. Native all-language/size acceptance and the replay Maestro flow remain required.
+
+
