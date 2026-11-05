@@ -1483,6 +1483,8 @@ function CityPicker({
                 color: colors.ink,
                 fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
                 fontSize: 18,
+                flex: 1,
+                minWidth: 0,
               }}
             >
               {contentByLang(lang, 'जन्म नगर चुनें', 'Choose birth city')}
@@ -1491,15 +1493,17 @@ function CityPicker({
               <Text style={{ color: colors.saffronDeep, fontSize: 24 }}>×</Text>
             </Pressable>
           </View>
-          <TextField
-            variant="form"
-            testID="kundali-city-search"
-            accessibilityLabel="Search birth cities"
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search Indian cities…"
-            style={[styles.modalSearch, { marginHorizontal: spacing.xxl }]}
-          />
+          <View style={{ paddingHorizontal: spacing.xxl }}>
+            <TextField
+              variant="form"
+              testID="kundali-city-search"
+              accessibilityLabel="Search birth cities"
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Search Indian cities…"
+              style={styles.modalSearch}
+            />
+          </View>
           {/* FlatList, not a mapped ScrollView: the list is ~390 rows once the
               Rajasthan tehsils are in, and mounting all of them stalled the sheet. */}
           <FlatList

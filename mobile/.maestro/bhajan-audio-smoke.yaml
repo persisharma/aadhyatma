@@ -56,6 +56,16 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Play"
 - waitForAnimationToEnd
 
+# The repeat control must remain reachable on compact screens after transport use.
+- scrollUntilVisible:
+    element: { text: "Toggle loop" }
+    direction: DOWN
+    timeout: 10000
+    centerElement: true
+- tapOn: "Toggle loop"
+- takeScreenshot: e2e-shots/now-playing-loop-reachable
+- tapOn: "Toggle loop"
+
 # Collapse the player, then stop + close to leave clean state.
 - tapOn: "Minimize player"
 - waitForAnimationToEnd

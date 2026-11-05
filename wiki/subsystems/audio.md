@@ -159,3 +159,8 @@ so a stale non-Indian preference can never resurrect a dropped accent.
   RULEBOOK forbids emoji. The visible label is localized; the `accessibilityLabel` stays English
   ("Read aloud" / "Pause reading aloud" / "Read aloud unavailable") for Maestro. The `♪`
   (`READ_ALOUD_GLYPH`) now only marks the More → Read Aloud settings row.
+
+
+### Screen-clipping corrections (5 November 2026)
+
+Now Playing keeps Minimize outside a vertically scrolling body. Full track titles wrap; compact/enlarged layouts can scroll through seek, transport and repeat without changing playback callbacks. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.

@@ -1,0 +1,1 @@
+import React from'react';import{View,Text}from'react-native';export default function DeityIcon({size=150}){return <View style={{width:size,height:size,borderWidth:1,borderColor:'#c8b894',alignItems:'center',justifyContent:'center'}}><Text style={{fontSize:12,textAlign:'center',color:'#6e5230'}}>Artwork adapter{`\n`}(same dimensions)</Text></View>;}

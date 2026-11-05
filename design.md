@@ -626,15 +626,16 @@ fixed the drift and, as a side effect, VratKathaReader's undersized back button.
 - Row: `spacing.readingGutter` (22) horizontal · `8` top · `12` bottom · `space-between`.
 - **Back control**: 44×44 circle, `radii.xl`, `parchmentSoft` fill, `divider` border, `‹` at
   22 in `ink-soft`, `hitSlop={16}`, `opacity 0.7` while pressed.
-- **Title**: `flex: 1`, centred, `numberOfLines={1}`, `titleFontByLang(lang)`, italic for
+- **Title**: `flex: 1`, centred, unrestricted wrapping, `titleFontByLang(lang)`, italic for
   English only. Two named scales via `variant` — **`reader`** (default) at
   `typography.readerTitle.fontSize` (16), and **`index`** at 22 (20 for Latin, whose smaller
   x-height needs less nominal size) for chapters/index landing screens. Two names rather than
   a loose number so the hierarchy stays a decision.
-- **Side columns**: two balancing spacers of equal `sideWidth` keep the title optically
-  centred; both must clear the wider side's content. Defaults to **120** when a `right` slot
-  is present (counter + optional audio button) and **44** when it is not. Screens with a
-  narrow trailing slot may pass a smaller value (GitaReader passes 60).
+- **Side columns**: the trailing column takes its intrinsic width, with a **48dp** minimum
+  (or the caller's explicit `sideWidth` minimum). Its measured width balances the back column,
+  so a bare counter no longer reserves 120dp on both sides. Side targets never shrink; complete
+  titles wrap and the row grows. The existing 1.25 chrome multiplier cap remains unchanged;
+  Android keeps its natural title font padding. Branded `titleContent` remains supported.
 - **`right`** slot carries the page counter, the `▶` audio affordance, and any actions.
 
 **Accessibility label.** The back control is labelled `"Back"` — deliberately English and
@@ -1544,9 +1545,10 @@ The list is **two browsable tiers**, rendered as one `FlatList` under group head
 
 **Now Playing** (`screens/audio/NowPlayingScreen.tsx`) — a full-screen `parchment` overlay (absolute-fill, mounted app-wide in `App.tsx`; no navigation plumbing), shown when `nowPlayingOpen`:
 
-- Header: ⌄ minimise circle · uppercase `Now Playing` label (swipe-hint face) · spacer.
+- Header: ⌄ minimise circle · uppercase `Now Playing` label (swipe-hint face) · spacer. It stays outside the scrolling body so minimise remains reachable.
 - Artwork: a 220 px `parchment-soft` framed square with the deity art at 150 (the painted `deity` seal when a track has no deity).
-- Title at 26 centred (reader-title face), subtitle `<artist/kind> · <deity>` in Cormorant italic `ink-muted`.
+- Artwork through repeat control forms a vertical `ScrollView` with 24dp bottom clearance. Compact screens and enlarged text can scroll to every control.
+- Title at 26 centred (reader-title face), complete and wrapping without a line cap; subtitle `<artist/kind> · <deity>` in Cormorant italic `ink-muted`.
 - Seek bar: 4 px `saffron` fill on `divider` track, tap-to-seek; lining time labels either side (Cormorant SemiBold 15).
 - Transport row: `−15 · ◀◀ · [▶/❚❚] · ▶▶ · +15`; the play button is a 72 px `saffron` disc with `saffron-deep` rim and `on-primary` glyph.
 - Secondary row: a 44 px ⟳ loop toggle (kept for mantra japa) — outline at rest, filled `saffron` when looping. It doubles as the **repeat-one** control: while it is on, a finished track restarts instead of auto-advancing to the next one.
@@ -4130,3 +4132,12 @@ A background update staged after Explore has claimed its slot does not dismiss t
 **Explore replay reset.** Settings → Explore sections retains immediate replay and adds a secondary “Reset visit history” action inside the scrolling body, with a 44pt target, script-aware theme text and all four UI languages. It is absent from automatic sheets. A native confirmation explains that visits, dismissal history and Explore cooldowns (including initial collection wait) are cleared; Cancel changes nothing. While saving, disable the reset action and guard duplicate confirmations. Report success only after persistence, using an inline live status with cold-launch/Home instructions and the shared daily-limit caveat. Failed persistence reports failure. Existing practices, saved progress, reminders and the shared launch gate remain untouched. The next ordinary eligible cold launch uses normal selection; reset neither forces a modal immediately nor guarantees today's slot. Keep the valid aged ledger so a cold restart cannot re-seed old routine/Sankalp/Pitru visits. Confirmations from an unmounted replay do nothing.
 
 
+
+
+### Kundali city-picker field containment (5 November 2026)
+
+`KundaliScreen` places the shared 100%-width `TextField` inside a wrapper with
+`spacing.xxl` horizontal padding, rather than adding outside margins to its full width.
+The field remains 24dp inside both sides of the clipping modal. The modal heading wraps
+beside Close. Filtering, selected city, dismissal and the existing birth-profile rules are
+unchanged. `docs/reviews/2026-11-05-screen-clipping.md` records regression and visual evidence.

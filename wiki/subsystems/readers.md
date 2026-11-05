@@ -294,3 +294,8 @@ User review corrected the initial portrait layout against current-main PR #449 (
 ### Garud Puran final Style 3 integration (2026-10-12)
 
 After user approval, nine exact Style 3 WebPs (1,433,814 bytes total) were bundled locally; the approval and hashes are pinned in `docs/content/garud-puran/artwork/manifest.json`. Current-main `ReadingArtwork` and `BackgroundLayer(readingParchment)` provide the common banner/divider/paper treatment. `HomeStackNavigator` registers both routes lazily, the generated route graph warms the reader from the index, and search yields per reading. Prose sharing carries source context without truncating the explanation; saved progress is labelled Reading / Page. See `docs/content/garud-puran/INTEGRATION.md` for final verification. **Since 16 Oct the nine paintings ship from R2**, not the bundle: they are `reading-backgrounds` entries `garud-puran--<artId>` (folder added to `prepare-reading-backgrounds.mjs`), `garudPuranImages` holds `RemoteBackground` descriptors, and `ListingThumbImage` crops R2 art from manifest dimensions. See [[integrations/reading-artwork]].
+
+
+### Screen-clipping corrections (5 November 2026)
+
+ReaderHeader now measures trailing actions, balances the back column from their actual width (minimum 48dp), and preserves complete wrapping titles. Explicit side minima, custom Back labels and mastheads remain supported. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.
