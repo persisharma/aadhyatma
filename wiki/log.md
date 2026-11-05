@@ -1346,3 +1346,5 @@ Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens,
 The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].
 
 ## [2026-11-05] ingest | Japa Infinity variation: optional persisted presentation beside Mala, one shared counter/audio/history, native marker driven only by counted chants, rollover/reset/reduced-motion/background handling, four-language provider tests and extended Japam Maestro flow. design.md §35 and RULEBOOK §3 updated. Native verification remains pending in the cloud environment.
+
+## [2026-11-06] ingest | Japa Infinity motion corrected to the approved intent: one complete figure-eight swing per tap/chant, independent of 108-bead progress. Rapid taps queue full swings; reset/background/unmount cancel them without modifying counts. Native verification remains pending.

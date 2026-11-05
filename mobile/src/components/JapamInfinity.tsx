@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, AppState, Easing, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
@@ -27,9 +27,41 @@ export default function JapamInfinity({ count, rounds, size, hint, notice, label
   const numbersBelow = factor * fontScale > 1.25;
   const [active, setActive] = useState(AppState.currentState !== 'background' && AppState.currentState !== 'inactive');
   const total = rounds * N + count;
-  const progress = useRef(new Animated.Value(total / N)).current;
+  const progress = useRef(new Animated.Value(0)).current;
+  const pending = useRef(0);
+  const running = useRef<ReturnType<typeof Animated.timing> | null>(null);
+  const generation = useRef(0);
   const previous = useRef(total);
   const wasHydrated = useRef(hydrated);
+  const cancelSwings = useCallback(() => {
+    generation.current++;
+    pending.current = 0;
+    const animation = running.current;
+    running.current = null;
+    animation?.stop();
+    progress.setValue(0);
+  }, [progress]);
+  const playNext = useCallback(function nextSwing() {
+    if (running.current || pending.current === 0) return;
+    pending.current--;
+    progress.setValue(0);
+    const epoch = generation.current;
+    const animation = Animated.timing(progress, {
+      toValue: 1,
+      duration: 800,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    });
+    running.current = animation;
+    animation.start(({ finished }) => {
+      if (epoch !== generation.current || running.current !== animation) return;
+      running.current = null;
+      progress.setValue(0); // 0 and 1 are the same centre crossing.
+      if (finished) nextSwing();
+      else pending.current = 0;
+    });
+  }, [progress]);
+  useEffect(() => cancelSwings, [cancelSwings]);
   useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => setActive(state === 'active'));
     return () => sub.remove();
@@ -40,27 +72,23 @@ export default function JapamInfinity({ count, rounds, size, hint, notice, label
     wasHydrated.current = hydrated;
     previous.current = total;
     if (restored || reduced || !active || delta <= 0 || delta > N) {
-      progress.setValue(total / N);
+      cancelSwings();
       return;
     }
-    const animation = Animated.timing(progress, {
-      toValue: total / N,
-      duration: 280,
-      easing: Easing.out(Easing.cubic),
-      useNativeDriver: true,
-    });
-    animation.start();
-    return () => animation.stop();
-  }, [total, hydrated, reduced, active, progress]);
-  // Cover the previous/current/next round so 107 → 0 continues across the crossing.
+    // Every accepted chant gets a complete swing. Rapid taps queue rather than
+    // restarting the current swing; only the counter provider records chants.
+    pending.current += delta;
+    playNext();
+  }, [total, hydrated, reduced, active, cancelSwings, playNext]);
+  // A complete figure-eight per chant, independent of the 108-bead progress bar.
   const coordinates = useMemo(() => {
-    const inputRange = Array.from({ length: INFINITY_SAMPLES * 3 + 1 }, (_, i) => rounds - 1 + i / INFINITY_SAMPLES);
+    const inputRange = Array.from({ length: INFINITY_SAMPLES + 1 }, (_, i) => i / INFINITY_SAMPLES);
     return {
       inputRange,
       x: inputRange.map((t) => infinityPoint(t).x * size - 5),
       y: inputRange.map((t) => infinityPoint(t).y * size - 5),
     };
-  }, [rounds, size]);
+  }, [size]);
   return (
     <View testID="japam-infinity" style={[styles.root, { width: size, minHeight: size }]} pointerEvents="none"
       importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>

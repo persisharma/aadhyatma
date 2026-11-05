@@ -13,8 +13,11 @@ let onState: (state: AppStateStatus) => void;
 const start = jest.fn();
 const stop = jest.fn();
 const remove = jest.fn();
+let completions: ((result: { finished: boolean }) => void)[];
 beforeEach(() => {
   mockReduced = false;
+  completions = [];
+  start.mockImplementation((callback) => { completions.push(callback); });
   jest.spyOn(Animated, 'timing').mockImplementation(() => ({ start, stop, reset: jest.fn() }));
   jest.spyOn(AppState, 'addEventListener').mockImplementation((_type, listener) => {
     onState = listener;
@@ -30,13 +33,39 @@ async function mount(count = 0, rounds = 0, hydrated = true) {
   await act(async () => { tree = TestRenderer.create(display(count, rounds, hydrated)); });
 }
 
-test('restored progress is still; real chants animate continuously through rollover', async () => {
+test('restored progress is still; one chant runs a full infinity swing even at rollover', async () => {
   await mount(0, 0, false);
   await act(async () => { tree.update(display(107, 2, true)); });
   expect(start).not.toHaveBeenCalled();
   await act(async () => { tree.update(display(0, 3)); });
-  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 3, useNativeDriver: true }));
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 800, useNativeDriver: true }));
   expect(start).toHaveBeenCalledTimes(1);
+});
+
+test('rapid taps queue a full swing each instead of cutting the current one short', async () => {
+  await mount();
+  await act(async () => { tree.update(display(1)); });
+  await act(async () => { tree.update(display(3)); });
+  expect(start).toHaveBeenCalledTimes(1);
+  expect(stop).not.toHaveBeenCalled();
+  act(() => completions[0]({ finished: true }));
+  expect(start).toHaveBeenCalledTimes(2);
+  act(() => completions[1]({ finished: true }));
+  expect(start).toHaveBeenCalledTimes(3);
+  act(() => completions[2]({ finished: true }));
+  expect(start).toHaveBeenCalledTimes(3);
+});
+
+test('reset cancels queued swings and ignores a late native completion', async () => {
+  await mount();
+  await act(async () => { tree.update(display(3)); });
+  expect(start).toHaveBeenCalledTimes(1);
+  await act(async () => { tree.update(display(0)); });
+  expect(stop).toHaveBeenCalled();
+  act(() => completions[0]({ finished: true }));
+  expect(start).toHaveBeenCalledTimes(1);
+  await act(async () => { tree.update(display(1)); });
+  expect(start).toHaveBeenCalledTimes(2);
 });
 
 test('reduced motion never starts a movement; resets do not animate backwards', async () => {
