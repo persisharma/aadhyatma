@@ -1349,3 +1349,12 @@ The user chose app painted art for illustrated stories and Tholu Bommalata puppe
 ## [2026-11-05] ingest | screen-clipping fixes
 
 Updated readers, audio and Panchang notes for complete header titles, contained city-search width and scrollable Now Playing controls. No native execution claim; see docs/reviews/2026-11-05-screen-clipping.md.
+
+## [2026-11-06] ingest | Covered animation-to-Home handoff
+
+PR #621 retains the completed approved canvas while Home mounts, waits for native content layout and two animation frames, then fades the cover for 180ms on the native driver. Shared brand visibility suppresses automatic asks through the fade. Targets, accessibility, interruptions and errors fail open; a separate 1,200ms deadline bounds the handoff. See design.md §§2.1/64 and docs/reviews/2026-11-06-launch-home-handoff.md. Native smoothness/full acceptance remain pending.
+
+
+## [2026-11-06] ingest | PR 621 main conflict resolution
+
+Merged main 77a0e0e692eaa31a1c96d29289771551b1680af8 into the launch handoff branch, preserving both appended clipping and launch records. RULEBOOK/design changes merged without conflict; launch implementation and tests remain unchanged. Focused launch tests and final CI are recorded in the PR. Native acceptance remains pending.
