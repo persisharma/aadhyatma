@@ -26,12 +26,17 @@ import { scriptBodyFont } from '@/utils/langType';
 import { contentByLang } from '@/utils/localize';
 import { startMetaAppEvents } from '@/utils/metaAppEvents';
 import { declineLaunchReminder } from './launchAskStore';
+import { hasWidgetHost } from '@/widgets/native';
+import { loadNudgeRecord, nudgeSnapshot, startWidgetPinFlow, updateNudge } from './widgetNudgeStore';
+import { nudgeWidgets, widgetAddedPatch } from './dailyBhaktiNudgeView';
+import { WidgetHowToBody } from './DailyBhaktiNudge';
 import QuietCompanionSheet from './QuietCompanionSheet';
 import QuietReminderBody from './QuietReminderBody';
 import TextField from './TextField';
 import AppIcon from './AppIcon';
 import { quietCopy as q } from './quietCompanionCopy';
 const STEP_KEY = '@vedansh/setup-step-v1';
+type SetupStep = 1 | 2 | 3 | 'widgets';
 export default function OnboardingSetupSheet() {
   const { colors, typography } = useTheme();
   const { lang, setLang } = useGitaLanguage();
@@ -42,20 +47,27 @@ export default function OnboardingSetupSheet() {
     usePanchangLocation();
   const { permissionStatus, canAskAgain, enableReminders, declineReminders } =
     useNotificationPreferences();
-  const [step, setStep] = useState(1),
+  const [step, setStep] = useState<SetupStep>(1),
     [visible, setVisible] = useState(false),
     [busy, setBusy] = useState(false),
     [query, setQuery] = useState(''),
     [error, setError] = useState('');
   const [choice, setChoice] = useState<PanchangLocation>(location);
   const completeRef = useRef(false);
+  const nextPending = useRef(false);
+  const mounted = useRef(true);
+  const [widgetHost] = useState(hasWidgetHost);
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; };
+  }, []);
   useEffect(() => {
     if (!shouldShowOnboardingSetup) return;
     let active = true;
-    void AsyncStorage.getItem(STEP_KEY)
-      .then((raw) => {
+    void Promise.all([AsyncStorage.getItem(STEP_KEY), loadNudgeRecord()])
+      .then(([raw]) => {
         if (active) {
-          setStep(raw === '2' ? 2 : raw === '3' ? 3 : 1);
+          setStep(raw === 'widgets' && widgetHost && Platform.OS === 'ios' ? 'widgets' : raw === 'widgets' || raw === '2' ? 2 : raw === '3' ? 3 : 1);
           setChoice(location);
           setVisible(true);
         }
@@ -66,11 +78,11 @@ export default function OnboardingSetupSheet() {
     return () => {
       active = false;
     };
-  }, [shouldShowOnboardingSetup, location]);
-  const go = (n: number) => {
+  }, [shouldShowOnboardingSetup, location, widgetHost]);
+  const go = (n: SetupStep) => {
     setStep(n);
     setError('');
-    void AsyncStorage.setItem(STEP_KEY, String(n)).catch(() => undefined);
+    return AsyncStorage.setItem(STEP_KEY, String(n)).catch(() => undefined);
   };
   const finish = () => {
     completeRef.current = true;
@@ -88,28 +100,60 @@ export default function OnboardingSetupSheet() {
     }
   }
   async function next() {
-    if (busy) return;
-    if (step === 1) {
-      go(2);
-      return;
-    }
-    if (step === 2) {
-      commitLocation(choice);
-      go(3);
-      return;
-    }
+    if (busy || nextPending.current) return;
+    nextPending.current = true;
     setBusy(true);
     try {
+      if (step === 1) {
+        await loadNudgeRecord();
+        if (!mounted.current) return;
+        const record = nudgeSnapshot();
+        const widgets = nudgeWidgets(record.widgetAddedAt ? 'panchangWidget' : 'widget');
+        if (widgetHost && !record.widgetDismissedAt && !record.panchangAddedAt) {
+          if (Platform.OS === 'ios') {
+            await go('widgets');
+          } else {
+            // Save city as the resume point before handing control to the launcher.
+            await go(2);
+            if (mounted.current) await startWidgetPinFlow(widgets);
+          }
+        } else {
+          await go(2);
+        }
+        return;
+      }
+      if (step === 'widgets') {
+        const record = nudgeSnapshot();
+        const widgets = nudgeWidgets(record.widgetAddedAt ? 'panchangWidget' : 'widget');
+        // This records instruction completion, never confirmed widget placement.
+        await updateNudge(Object.assign({}, ...widgets.map((w) => widgetAddedPatch(w, Date.now()))));
+        if (mounted.current) await go(2);
+        return;
+      }
+      if (step === 2) {
+        commitLocation(choice);
+        await go(3);
+        return;
+      }
       if (!(await enableReminders())) declineLaunchReminder();
-      finish();
+      if (mounted.current) finish();
     } catch {
-      setBusy(false);
-      setError(q(lang, 'gpsFailed'));
+      // Optional widget support or storage failure must not strand first-run setup.
+      if (mounted.current && step === 1) await go(2);
+      else if (mounted.current) setError(q(lang, 'gpsFailed'));
+    } finally {
+      nextPending.current = false;
+      if (mounted.current) setBusy(false);
     }
   }
   async function skip() {
     if (busy) return;
     setBusy(true);
+    if (step === 'widgets') {
+      await updateNudge({ widgetDismissedAt: Date.now() });
+      if (mounted.current) { await go(2); setBusy(false); }
+      return;
+    }
     await declineReminders();
     declineLaunchReminder();
     finish();
@@ -137,31 +181,31 @@ export default function OnboardingSetupSheet() {
       : '';
   const title = q(
     lang,
-    step === 1 ? 'welcome' : step === 2 ? 'cityTitle' : 'reminderTitle',
+    step === 'widgets' ? 'widgetsTitle' : step === 1 ? 'welcome' : step === 2 ? 'cityTitle' : 'reminderTitle',
   );
   return (
     <QuietCompanionSheet
       visible={visible}
-      step={step}
+      step={step === 'widgets' ? undefined : step}
       title={title}
       kicker={q(
         lang,
-        step === 1 ? 'language' : step === 2 ? 'city' : 'reminder',
+        step === 'widgets' ? 'widgets' : step === 1 ? 'language' : step === 2 ? 'city' : 'reminder',
       )}
       art={
-        step === 1
+        step === 1 || step === 'widgets'
           ? 'category-granth-open-scripture'
           : step === 2
             ? 'deity-ganga'
             : 'category-aarti-diya'
       }
-      onBack={step > 1 ? () => go(step - 1) : undefined}
+      onBack={step !== 1 ? () => { if (!busy) void go(step === 'widgets' || step === 2 ? 1 : 2); } : undefined}
       onDismiss={() => {
         void afterDismiss();
       }}
       primary={q(lang, step === 3 ? 'yes' : 'next')}
       primaryLabel={
-        step === 1
+        step === 'widgets' ? 'Setup widgets continue' : step === 1
           ? 'Setup language continue'
           : step === 2
             ? 'Setup city continue'
@@ -170,7 +214,7 @@ export default function OnboardingSetupSheet() {
       onPrimary={() => {
         void next();
       }}
-      secondary={step === 3 ? q(lang, 'later') : undefined}
+      secondary={step === 3 || step === 'widgets' ? q(lang, 'later') : undefined}
       onSecondary={() => {
         void skip();
       }}
@@ -183,9 +227,15 @@ export default function OnboardingSetupSheet() {
             : undefined
       }
     >
-      {step === 1 ? (
+      {step === 'widgets' ? (
+        <>
+          <Text style={para}>{q(lang, 'widgetsManual')}</Text>
+          <WidgetHowToBody widgets={nudgeWidgets(nudgeSnapshot().widgetAddedAt ? 'panchangWidget' : 'widget')} />
+        </>
+      ) : step === 1 ? (
         <>
           <Text style={para}>{q(lang, 'languageNote')}</Text>
+          {widgetHost && <Text style={para}>{q(lang, Platform.OS === 'android' ? 'widgetsNextAndroid' : 'widgetsNextIos')}</Text>}
           <View style={styles.languages}>
             {LANGUAGES.map((opt) => {
               const selected = lang === opt.value;

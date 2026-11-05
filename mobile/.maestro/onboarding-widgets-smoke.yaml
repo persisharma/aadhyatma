@@ -1,0 +1,48 @@
+# Run against a widget-capable development binary, not Expo Go.
+# Android prerequisite: a launcher supporting requestPinAppWidget. Native OS
+# button text can differ; record launcher/device evidence with this flow.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    clearState: true
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible: "Setup language continue"
+    timeout: 90000
+- tapOn: "English"
+- tapOn: "Setup language continue"
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - assertVisible: "Setup widgets continue"
+      - assertVisible: "Add widgets from your iPhone Home Screen, then return to Vedansh to continue."
+      - tapOn: "Setup widgets continue"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - extendedWaitUntil:
+          visible: "Add automatically|Add to Home screen|ADD|Add"
+          timeout: 10000
+      - tapOn: "Add automatically|Add to Home screen|ADD|Add"
+      - waitForAnimationToEnd
+      # Launchers with no background transition leave a manual Panchang recovery
+      # in Daily Bhakti; do not mistake an optional tap for confirmed placement.
+      - tapOn:
+          text: "Add automatically|Add to Home screen|ADD|Add"
+          optional: true
+- assertVisible: "Setup city continue"
+- tapOn: "Setup city continue"
+- assertVisible: "Enable reminders"
+- tapOn: "Not now"
+- tapOn:
+    text: "Ask App Not to Track"
+    optional: true
+- tapOn:
+    text: "Skip tour"
+    optional: true
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*"
+    timeout: 60000
