@@ -352,7 +352,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             const selected = japaStyle === value;
             return (
               <Pressable key={value} testID={`japam-style-${value}`} accessibilityRole="radio"
-                accessibilityLabel={label} accessibilityState={{ selected, disabled: !styleReady }}
+                accessibilityLabel={label} accessibilityState={{ selected, checked: selected, disabled: !styleReady }}
                 disabled={!styleReady} onPress={() => selectStyle(value)}
                 style={({ pressed }) => [styles.styleChoice, {
                   backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,

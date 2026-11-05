@@ -141,15 +141,16 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(AsyncStorage.setItem).toHaveBeenCalledWith('@vedansh/japam-style', '"mala"');
   });
 
-  test.each<Lang>(['hi', 'en', 'gu', 'kn'])('restores infinity in %s at Large without changing saved progress', async (lang) => {
+  test.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ lang, size }))))('restores infinity in $lang at $size without changing saved progress', async ({ lang, size }) => {
     mockGetItem.mockImplementation((key: string) => Promise.resolve(
       key === '@vedansh/japam-style' ? '"infinity"'
-        : key === '@vedansh/font-scale' ? 'L'
+        : key === '@vedansh/font-scale' ? size
         : key === '@vedansh/japam-counter' ? JSON.stringify({ 'om-namah-shivaya': { count: 107, rounds: 2, updatedAt: 1 } })
         : null
     ));
     const tree = await renderJapam('om-namah-shivaya', lang);
     expect(choice(tree, 'infinity').props.accessibilityState.selected).toBe(true);
+    expect(choice(tree, 'infinity').props.accessibilityState.checked).toBe(true);
     expect(beadLabel(tree)).toContain('107 of 108');
     expect(beadLabel(tree)).toContain('2 malas completed');
     expect(AsyncStorage.setItem).not.toHaveBeenCalledWith('@vedansh/japam-style', expect.anything());

@@ -1,6 +1,7 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Animated, AppState, Text } from 'react-native';
+import * as ReactNative from 'react-native';
 import type { AppStateStatus } from 'react-native';
 import JapamInfinity from '../JapamInfinity';
 import { ThemeProvider } from '@/theme/ThemeContext';
@@ -64,4 +65,13 @@ test('the complete hint can grow instead of truncating', async () => {
   await mount();
   const hint = tree.root.findAllByType(Text).find((n) => n.props.children === 'Tap to chant');
   expect(hint?.props.numberOfLines).toBeUndefined();
+});
+
+test('compact screens with enlarged system text move numbers below the loops', async () => {
+  jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width: 320, height: 568, scale: 2, fontScale: 2 });
+  await mount(107);
+  const row = tree.root.findAllByType(Text).find((n) => [n.props.children].flat().join('') === '107 / 108');
+  expect(row).toBeDefined();
+  expect(row?.props.adjustsFontSizeToFit).toBeUndefined();
+  expect(row?.props.numberOfLines).toBeUndefined();
 });
