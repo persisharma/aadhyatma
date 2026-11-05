@@ -31,7 +31,8 @@ Each story lives in `stories/<id>/`: `script.json` holds the narration, title, c
 | --- | --- | --- |
 | `hanuman-surya` | `kidsStories/hanuman-sun.json` (fully illustrated) | painted (style 3); puppet also available |
 | `dhanteras` | `panchang/kathaContent/entries/dhanteras-legends.ts` (samudra-manthan, dhanvantari-amrit, dhanteras-blessing) | puppet (style 1): the katha has no illustrations |
-| `diwali-ig` | Same sources as `diwali` | puppet, Instagram format (~40 s) |
+| `diwali-ig` | Same sources as `diwali` | puppet, Instagram format (~64 s) |
+| `laxmi-ganesh` | User-written narration, used verbatim. Rama's return and Lakshmi's Amavasya puja follow `diwali-legends.ts`; the Lakshmi–Parvati–Ganesha tale is a **folk tale (लोककथा), not in the app**, and is labelled as one in the narration | puppet, Instagram format; the end card appears after the narration (`ctaAfterVo`) |
 | `diwali` | Five-day arc from `panchang/arcs.ts` (deepavali), with `dhanteras-legends`, `narak-chaturdashi-katha`, `diwali-legends`, `govardhan-puja-katha` and `bhai-dooj-katha` | puppet (style 1); dates are deliberately left out of the video and added in the post caption |
 
 `phonemeFixes` in a story's voice settings correct espeak pronunciations. For example, `-दशी` words lose their schwa, and धन्वंतरि gets first-syllable stress.

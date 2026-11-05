@@ -47,7 +47,7 @@ function captionChunks(text, t0, secs) {
       const sc = -Math.abs(k - mid) + (GOOD_END.has(w[k - 1]) ? 2 : 0) + (w[k] === 'और' ? 1.5 : 0) - (['का', 'के', 'की', 'और'].includes(w[k - 1]) ? 4 : 0) - (POST.has(w[k]) ? 4 : 0) - (['है', 'हैं', 'था', 'थे', 'हुआ', 'हुए'].includes(w[k]) ? 4 : 0);
       if (sc > score) { score = sc; best = k; } }
     return [...split(w.slice(0, best).join(' ')), ...split(w.slice(best).join(' '))]; };
-  const phrases = text.replace(/([?!])/g, '$1|').split(/[|,।—]+/).map(x => x.trim()).filter(Boolean).flatMap(split);
+  const phrases = text.replace(/([?!])/g, '$1|').split(/[|,।—…]+/).map(x => x.trim()).filter(Boolean).flatMap(split);
   const weight = phrases.map(p => p.replace(/\s/g, '').length + 3), total = weight.reduce((a, b) => a + b, 0);
   let acc = 0;
   return phrases.map((p, k) => { const s = k === 0 && t0 === 0 ? -0.3 : t0 + secs * acc / total; /* opening phrase already on the first frame */ acc += weight[k]; return {text: p, s, e: k === phrases.length - 1 ? t0 + secs + 0.1 : t0 + secs * acc / total}; });
@@ -59,7 +59,7 @@ let at = 0;
 const scenes = script.scenes.map((sc, i) => {
   const v = vo[i];
   if (!v || v.text !== strip(sc.vo)) throw Error(`Stale narration for ${sc.id}: rerun voice.py`);
-  const lead = ig ? (i === 0 ? 0 : 0.08) : (i === 0 ? 0.2 : 0.35), tail = i === script.scenes.length - 1 ? (ig ? 1.0 : 1.4) : (ig ? 0.18 : 0.45);
+  const lead = ig ? (i === 0 ? 0 : 0.08) : (i === 0 ? 0.2 : 0.35), tail = i === script.scenes.length - 1 ? (script.ctaAfterVo ? 2.6 : ig ? 1.0 : 1.4) : (ig ? 0.18 : 0.45);
   const dur = Math.ceil((lead + v.seconds + tail) * FPS) / FPS;
   const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), text: v.text, caps: captionChunks(v.text, at + lead, v.seconds)};
   at += dur; return r;
@@ -78,6 +78,8 @@ function puppetBase(type, k) {
   if (type === 'forest') for (const [x, h] of [[110, 820], [980, 760], [640, 980]]) o += shape(`M${x - 22},1650 L${x - 22},${h + 160} L${x + 22},${h + 160} L${x + 22},1650Z`, '#5A2A12') + [[0, 0, 120], [-80, 90, 90], [80, 90, 90]].map(([dx, dy, r]) => shape(`M${x + dx - r},${h + dy}a${r},${r * 0.8} 0 1,0 ${2 * r},0a${r},${r * 0.8} 0 1,0 ${-2 * r},0Z`, '#2F6B2E')).join('');
   if (type === 'heaven') for (const x of [60, 930]) o += shape(`M${x},1640 L${x},700 L${x + 90},700 L${x + 90},1640Z`, '#4A1C0C') + `<path d="M${x - 20},700 L${x + 110},700 L${x + 95},660 L${x - 5},660Z" fill="${pal.gold}" stroke="#170904" stroke-width="6"/>`;
   if (type === 'cave') o += shape('M120,1650 L120,980 Q120,640 540,600 Q960,640 960,980 L960,1650Z', '#1E0A04');
+  if (type === 'kailash') o += [[-80, 1640, 360, 980], [200, 1640, 720, 860], [560, 1640, 1160, 1000]].map(([a, b, c, t]) => shape(`M${a},${b}L${(a + c) / 2},${t}L${c},${b}Z`, '#5B4A6E')
+    + `<path d="M${(a + c) / 2 - 70},${t + 110}L${(a + c) / 2},${t}L${(a + c) / 2 + 70},${t + 110}L${(a + c) / 2 + 30},${t + 90}L${(a + c) / 2},${t + 120}L${(a + c) / 2 - 30},${t + 90}Z" fill="#F3EEDD" stroke="#170904" stroke-width="6"/>`).join('');
   if (type === 'palace') o += shape('M60,1640 L60,1150 L1020,1150 L1020,1640Z', '#5A2210')
     + [[220, 980, 120], [540, 900, 170], [860, 980, 120]].map(([x, y, r]) => shape(`M${x - r},${y + r} L${x - r},${y + 60} A${r},${r} 0 0 1 ${x + r},${y + 60} L${x + r},${y + r}Z`, '#E2A62B') + shape(`M${x - 4},${y + 60 - r} L${x - 4},${y - 10 - r} L${x + 40},${y + 6 - r} L${x + 4},${y + 20 - r} L${x + 4},${y + 60 - r}Z`, '#B8261B')).join('')
     + [180, 380, 700, 900].map(x => shape(`M${x - 50},1640 L${x - 50},1330 A50,50 0 0 1 ${x + 50},1330 L${x + 50},1640Z`, '#2B0E06')).join('');
@@ -164,6 +166,7 @@ ${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.p
   : `<div class="head"><span class="pill">${esc(script.title)}</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>`}
 <div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div>${script.brand ? `<div class="h">फ़ॉलो करें ${esc(script.brand.handle)}</div>` : ''}</div>
 <script>
+const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).vo.seconds + 0.15).toFixed(3) : 'null'};
 const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
 const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
@@ -184,6 +187,8 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  churn:(c,u)=>({rot:c.rot+Math.sin(u*2.4)*5}),tug:(c,u)=>({x:c.x-Math.sin(u*2.4)*14,rot:c.rot-Math.sin(u*2.4)*4*c.flip}),
  popAt:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/.55);return{s:c.s*(.3+.7*back(p)),op:clamp(p*3),y:c.y-(1-eo(p))*-120}},
  drift:(c,u)=>({x:c.x+Math.sin(u*.9+(c.o.phase||0))*34}),
+ walkTo:(c,u,d)=>({x:lerp(-220,c.o.x,eo(u/(d*.45))),y:c.y-(u<d*.45?Math.abs(Math.sin(u*6))*8:0)}),
+ slideTo:(c,u,d)=>{const p=eio((u-(c.o.t0||0)*d)/(d*.35));return{x:lerp(c.x,c.o.x,p),y:c.y-Math.abs(Math.sin(p*Math.PI))*40}},
  walkIn:(c,u,d)=>({x:lerp(-220,c.x,eo(u/(d*.42))),y:c.y-(u<d*.42?Math.abs(Math.sin(u*6))*8:0)}),
  defeat:(c,u,d)=>{const f=clamp((u-.55*d)/(.3*d));return{rot:c.rot+f*70*c.flip,y:c.y+f*180,op:1-f*.75}},
  fadeOut:(c,u,d)=>({op:1-clamp((u-.6*d)/(.25*d)),y:c.y+Math.sin(u*1.5)*8})};
@@ -213,7 +218,7 @@ window.renderAt=t=>{
     const q=last===undefined?9:t-last;el.style.transform='scale('+(q<.35?1+.25*(1-q/.35):1)+')';}
   if(IG){document.querySelectorAll('.chip').forEach((e,i)=>{const s=SC[i],u=t-s.start;const on=u>=0&&u<s.dur+(i===SC.length-1?99:0);e.style.opacity=on?(i===0?1:clamp(u/.12)):0;e.style.transform='scale('+(on?(.7+.3*back(u/.3)):1)+')';});
     document.querySelectorAll('.cap').forEach(e=>{const s=+e.dataset.s,en=+e.dataset.e,u=t-s;const on=t>=s&&t<en;e.style.opacity=on?clamp(u/.06):0;e.style.transform='scale('+(on?(.82+.18*back(u/.18)):1)+')';});}
-  const L=SC[SC.length-1],cu=t-L.start-.4,cta=document.querySelector('.cta');cta.style.opacity=clamp(cu/.3);cta.style.transform='translateY('+(1-back(cu/.5))*80+'px)';
+  const L=SC[SC.length-1],cu=t-(CTA_AT!==null?CTA_AT:L.start+.4),cta=document.querySelector('.cta');cta.style.opacity=clamp(cu/.3);cta.style.transform='translateY('+(1-back(cu/.5))*80+'px)';
 };
 </script></body></html>`;
 }
