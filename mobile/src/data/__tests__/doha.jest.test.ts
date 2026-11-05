@@ -5,6 +5,8 @@ import { contentByLang, meaningByLang, verseLinesByLang } from '../../utils/loca
 import kabir from '../doha/kabir-bhakti-dohe.json';
 import rahim from '../doha/rahim-bhakti-dohe.json';
 import { flatPoolSegments } from '../versePoolFlat';
+import { devotionalSourceArt } from '../devotionalShareArt';
+import { dailyBhaktiShareable } from '../../utils/dailyBhaktiShare';
 
 test.each([kabir, rahim])('$id preserves complete sourced couplets with honest selection metadata', payload => {
   expect(payload.source.notes).toMatch(/selection.*not.*complete/i);
@@ -72,4 +74,28 @@ test.each(['hi', 'en', 'gu', 'kn'] as const)('%s exposes every complete verse, t
       if (lang === 'kn') expect(lines.join(' ')).toMatch(/[\u0c80-\u0cff]/);
     }
   }
+});
+
+test.each(dohaIds)('%s retains the full poet title, verse and meaning in every prepared share language', id => {
+  const payload = getDoha(id);
+  expect(devotionalSourceArt[id]).toBe('prayer');
+  const segment = flatPoolSegments({
+    isActive: sourceId => sourceId === id,
+    nameHi: () => payload.titleHi,
+    nameEn: () => payload.titleEn,
+  })[0];
+  payload.verses.forEach((verse, index) => {
+    const pooled = segment.getAt(index);
+    if (!pooled) throw new Error(`missing pooled doha ${verse.id}`);
+    const shared = dailyBhaktiShareable(pooled);
+    expect(shared.sectionNameHi).toBe(payload.titleHi);
+    expect(shared.sectionNameEn).toBe(payload.titleEn);
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      const pages = shared.scopes[0].prepared![lang].pages;
+      expect(pages).toHaveLength(1);
+      expect(pages[0].devotional!.art).toBe('prayer');
+      expect(pages[0].devotional!.verse).toBe(verseLinesByLang(lang, verse.lines, verse.linesEn).join('\n'));
+      expect(pages[0].devotional!.meaning).toBe(meaningByLang(lang, verse.meaningHi, verse.meaningEn));
+    }
+  });
 });

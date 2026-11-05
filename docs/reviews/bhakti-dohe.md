@@ -23,7 +23,7 @@ Each verse's source metadata names both consulted publications, date, complete c
 | U6 | PENDING | Existing persistence/lifecycle behavior reused; cold reload, offline/background, failed share and cancellation need native exercise. |
 | U7 | PASS/PENDING | Eight complete sourced couplets integrated through lazy registry/counts/pool; existing neutral art mapping used, no new publication. Native visibility remains pending. |
 | U8 | PASS | Inspected shared entry routing, search, VersePage/share, routine and coverage. A failing real route regression exposed missing bookmark dispatch for registry-backed flat readers; buildBookmarkTarget now reuses buildProgressTarget for Stuti/doha, Ashtakam, Suktam and Kavacham. Whole existing route regression passes after the fix. |
-| U9 | PENDING | Focused pure tests: 14/14 PASS (11 doha/script/pool plus 3 generated-count checks). Full repository npm test, shared native-renderer tests and Maestro not executed here; CI pending. |
+| U9 | PENDING | Focused pure tests: 16/16 PASS (13 doha/script/pool plus 3 generated-count checks). Full repository npm test, shared native-renderer tests and Maestro not executed here; CI pending. |
 | U10 | PASS/PENDING | Doha payloads remain behind require thunks; pool additions append after old segments; earlier IDs unchanged. Native performance/accessibility unmeasured. |
 | U11 | PASS/PENDING | Main checked, matching design §87/RULEBOOK §32/wiki updated; final CI/integration pending. |
 | U12 | PASS | Implementation/tests/source notes/docs are preserved on draft PR #618; the branch head was read back from GitHub. No cleanup performed. |
@@ -33,7 +33,7 @@ C1: per-verse two-publication comparison/variants recorded; no independent schol
 ## Executed checks
 
 - Existing generator source compiled without changing its logic and run with Node: 54 counts generated, including both real four-verse payloads. Existing generated values remain unchanged.
-- esbuild-bundled doha.jest.test.ts with standalone node-environment Jest: 11 passed. Covers full sourced couplets, unique IDs, two source hosts per verse, Unicode cluster validity, clean romanization, correct poet dispatch, last-verse pool/meaning lookup, no out-of-range result and all four language transformations.
+- esbuild-bundled doha.jest.test.ts with standalone node-environment Jest: 13 passed. Covers full sourced couplets, unique IDs, two source hosts per verse, Unicode cluster validity, clean romanization, correct poet dispatch, last-verse pool/meaning lookup, no out-of-range result and all four language transformations.
 - Official verse-count integrity test logic compiled and executed with Node: 3/3 PASS, including exact exported symbols and no eager corpus import in texts.ts.
 - No Maestro, adb or xcrun available in this environment. No device/emulator flow, native screenshot, installed share export, full mobile suite or release was performed.
 
@@ -44,3 +44,5 @@ Run full npm test and lint in the complete repository and confirm final-head CI;
 Remote handover: https://github.com/persisharma/aadhyatma/pull/618, branch codex/bhakti-dohe-kabir-rahim. All required task sources, source/variant records, tests and docs are committed. The existing library order and Daily Bhakti offsets are preserved. No new artwork files or other untracked task deliverables are required. Full CI is running; native platform/language/size/export gates remain unexecuted.
 
 Follow-up validation: the full compiled `entryRoutes.test.ts` assertion suite passes, including both doha start/resume/bookmark routes and four existing flat-reader sibling bookmark targets. The new doha bookmark assertion failed before the shared dispatch fix (returned null), then passed after. CI caught an excess updatedAt property in the new progress-target fixture; it was removed without loosening the helper type.
+
+Sharing follow-up: both collections explicitly register the existing neutral prayer master in devotionalSourceArt. Two additional focused tests exercise all eight real pooled dohas through dailyBhaktiShareable in all four languages (32 prepared cards): one complete page, exact full verse and meaning, correct poet titles, neutral art. All 13 focused doha tests and 3 count tests pass; real native image capture and handoff are still pending.
