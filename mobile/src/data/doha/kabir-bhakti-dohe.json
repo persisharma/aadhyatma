@@ -1,0 +1,117 @@
+{
+  "id": "kabir-bhakti-dohe",
+  "titleHi": "कबीर के भक्तिमय दोहे",
+  "titleEn": "Kabir Devotional Dohas",
+  "deity": "",
+  "language": "hi",
+  "source": {
+    "baseText": "Selected traditional Kabir dohas, individually collated against the sources recorded on each verse. Hindi and English meanings and pronunciation-based ASCII romanization are Vedansh editorial renderings.",
+    "retrievedOn": "2026-11-05",
+    "referenceUrls": [
+      "https://hi.wikisource.org/wiki/पृष्ठ:कबीर_वचनावली.djvu/१११",
+      "https://cdnbbsr.s3waas.gov.in/s323d2e1578544b172cca332ff74bddf5f/uploads/2022/09/2022091374.pdf",
+      "https://kavitakosh.org/kk/कबीर_दोहावली_/_पृष्ठ_१",
+      "https://bharatdiscovery.org/india/कबीर_की_साखियाँ_-कबीर",
+      "https://www.hindwi.org/dohe/kabir-ki-sakhiyan-en-si-ii-aar-tee-kabir-dohe"
+    ],
+    "notes": "A curated selection of four complete couplets, not the poet's complete dohavali. Original couplets retain one identified edition per verse; variants are documented, never blended. Gujarati/Kannada use the existing app re-scripting policy."
+  },
+  "verses": [
+    {
+      "id": "kabir-doha-sumiran",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "दुख में सुमिरन सब करै सुख में करै न कोय।",
+        "जो सुख में सुमिरन करै तो दुख काहे होय॥"
+      ],
+      "linesEn": [
+        "Dukh mein sumiran sab karai sukh mein karai na koy.",
+        "Jo sukh mein sumiran karai to dukh kahe hoy."
+      ],
+      "meaningHi": "दुख में तो सब ईश्वर को याद करते हैं, पर सुख में स्मरण भूल जाते हैं। कबीर पूछते हैं कि सुख में भी स्मरण बना रहे तो दुख का वैसा प्रभाव क्यों रहे।",
+      "meaningEn": "People remember God in sorrow but forget in happiness. Kabir asks: if remembrance continued in happiness too, why would sorrow hold the same sway?",
+      "source": {
+        "baseText": "Kabir Vachanavali, स्मरण 131. Schoolbook variant: दुःख / करें / करे and दुख काहे को होय. Keep the complete Vachanavali reading; meaning is editorial, not a promise that suffering cannot occur.",
+        "referenceUrls": [
+          "https://hi.wikisource.org/wiki/पृष्ठ:कबीर_वचनावली.djvu/१११",
+          "https://cdnbbsr.s3waas.gov.in/s323d2e1578544b172cca332ff74bddf5f/uploads/2022/09/2022091374.pdf"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    },
+    {
+      "id": "kabir-doha-santosh",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "साईं इतना दीजिये, जा में कुटुम समाय।",
+        "मैं भी भूखा न रहूँ, साधु ना भूखा जाय॥"
+      ],
+      "linesEn": [
+        "Sain itna deejiye, ja mein kutum samay.",
+        "Main bhi bhookha na rahoon, sadhu na bhookha jay."
+      ],
+      "meaningHi": "हे प्रभु, इतना दीजिए कि मेरे परिवार का भरण-पोषण हो जाए। मैं भी भूखा न रहूँ और मेरे द्वार से कोई साधु भी भूखा न लौटे।",
+      "meaningEn": "Lord, grant enough to sustain my family, so that I do not go hungry and no holy guest leaves my door hungry.",
+      "source": {
+        "baseText": "Kavita Kosh, doha 8. Schoolbook spells साई / दीजिए / समाए / जाए. Retain the selected Kavita Kosh wording without blending versions.",
+        "referenceUrls": [
+          "https://kavitakosh.org/kk/कबीर_दोहावली_/_पृष्ठ_१",
+          "https://cdnbbsr.s3waas.gov.in/s323d2e1578544b172cca332ff74bddf5f/uploads/2022/09/2022091374.pdf"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    },
+    {
+      "id": "kabir-doha-man",
+      "number": 3,
+      "labelHi": "दोहा · ३",
+      "labelEn": "Doha · 3",
+      "lines": [
+        "माला फेरत जुग भया फिरा न मन का फेर।",
+        "कर का मनका डारि दे मन का मनका फेर॥"
+      ],
+      "linesEn": [
+        "Mala pherat jug bhaya phira na man ka pher.",
+        "Kar ka manka dari de man ka manka pher."
+      ],
+      "meaningHi": "हाथ से माला फेरते बहुत समय बीत गया, पर मन का स्वभाव नहीं बदला। कबीर बाहरी क्रिया से आगे बढ़कर मन को बदलने की सीख देते हैं।",
+      "meaningEn": "Ages have passed turning rosary beads, yet the mind remains unchanged. Kabir urges a change of heart beyond the outward act.",
+      "source": {
+        "baseText": "Kabir Vachanavali, स्मरण 136. Bharatkosh has मिटा ना instead of फिरा न in the first line. Retain the complete Vachanavali reading; do not reconstruct from the flawed मन का / मनका split in some web lists.",
+        "referenceUrls": [
+          "https://hi.wikisource.org/wiki/पृष्ठ:कबीर_वचनावली.djvu/१११",
+          "https://bharatdiscovery.org/india/कबीर_की_साखियाँ_-कबीर"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    },
+    {
+      "id": "kabir-doha-daya",
+      "number": 4,
+      "labelHi": "दोहा · ४",
+      "labelEn": "Doha · 4",
+      "lines": [
+        "जग में बैरी कोइ नहीं, जो मन सीतल होय।",
+        "या आपा को डारि दे, दया करै सब कोय॥"
+      ],
+      "linesEn": [
+        "Jag mein bairi koi nahin, jo man seetal hoy.",
+        "Ya aapa ko dari de, daya karai sab koy."
+      ],
+      "meaningHi": "मन शांत हो तो संसार में कोई शत्रु नहीं लगता। अपने अहंकार को छोड़ देने पर सबके साथ दया और अपनापन संभव होता है।",
+      "meaningEn": "When the mind is calm, the world holds no enemy. Letting go of ego makes room for kindness and fellow feeling.",
+      "source": {
+        "baseText": "Hindwi transcription of NCERT Vasant 3, sakhi 5. Kavita Kosh no. 37 has कोई / शीतल / यह आपा तो ड़ाल दे / करे. Retain the NCERT reading; verse-number suffixes are moved to the reader label.",
+        "referenceUrls": [
+          "https://www.hindwi.org/dohe/kabir-ki-sakhiyan-en-si-ii-aar-tee-kabir-dohe",
+          "https://kavitakosh.org/kk/कबीर_दोहावली_/_पृष्ठ_१"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    }
+  ]
+}

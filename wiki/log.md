@@ -1344,3 +1344,8 @@ Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens,
 
 ## [2026-11-05] decision | Story-reel styles
 The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].
+
+
+## [2026-11-05] ingest | Selected devotional dohas
+
+Added the Kabir/Rahim doha integration to `wiki/subsystems/readers.md`: lazy payloads, shared flat-reader dispatch, Granth/no-deity metadata, per-verse edition provenance and append-only pool integration. Source/content/pool checks pass; native reader and exported-share acceptance remain pending and are tracked in `docs/reviews/bhakti-dohe.md`. No merge or release performed.

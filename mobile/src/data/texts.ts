@@ -10,6 +10,8 @@
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import {
+  kabirBhaktiDoheTotal,
+  rahimBhaktiDoheTotal,
   garudPuranTotal,
   garudPuranReadingCount,
   achyutashtakamTotal,
@@ -123,6 +125,30 @@ export type LibraryEntry = {
 };
 
 export const library: readonly LibraryEntry[] = [
+  {
+    id: 'kabir-bhakti-dohe',
+    nameHi: 'कबीर के भक्तिमय दोहे',
+    nameEn: 'Kabir Devotional Dohas',
+    sub: `${kabirBhaktiDoheTotal} चयनित दोहे · सरल अर्थ सहित`,
+    subEn: `${kabirBhaktiDoheTotal} selected dohas · simple meanings`,
+    thumb: 'क',
+    status: 'active',
+    category: 'granth',
+    deities: [],
+    verseCount: kabirBhaktiDoheTotal,
+  },
+  {
+    id: 'rahim-bhakti-dohe',
+    nameHi: 'रहीम के भक्तिमय दोहे',
+    nameEn: 'Rahim Devotional Dohas',
+    sub: `${rahimBhaktiDoheTotal} चयनित दोहे · सरल अर्थ सहित`,
+    subEn: `${rahimBhaktiDoheTotal} selected dohas · simple meanings`,
+    thumb: 'र',
+    status: 'active',
+    category: 'granth',
+    deities: [],
+    verseCount: rahimBhaktiDoheTotal,
+  },
   {
     id: 'hanuman-chalisa',
     nameHi: 'हनुमान चालीसा',
@@ -1260,3 +1286,4 @@ export const library: readonly LibraryEntry[] = [
     verseCount: navagrahaStotramTotal,
   },
 ];
+

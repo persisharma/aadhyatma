@@ -1,0 +1,117 @@
+{
+  "id": "rahim-bhakti-dohe",
+  "titleHi": "रहीम के भक्तिमय दोहे",
+  "titleEn": "Rahim Devotional Dohas",
+  "deity": "",
+  "language": "hi",
+  "source": {
+    "baseText": "Selected traditional Rahim dohas, individually collated against the sources recorded on each verse. Hindi and English meanings and pronunciation-based ASCII romanization are Vedansh editorial renderings.",
+    "retrievedOn": "2026-11-05",
+    "referenceUrls": [
+      "https://www.hindwi.org/dohe/rahiman-gali-hai-sankari-rahim-dohe",
+      "https://hi.wikisource.org/wiki/रहीम-कवितावली/दोहे",
+      "https://bharatdiscovery.org/india/रहीम_के_दोहे",
+      "https://www.hindwi.org/dohe/chah-gai-chinta-miti-rahim-dohe",
+      "https://www.hindisamay.com/content/2362/1/रहीम-कविताएँ-रहीम-ग्रंथावलीभग-1.cspx"
+    ],
+    "notes": "A curated selection of four complete couplets, not the poet's complete dohavali. Original couplets retain one identified edition per verse; variants are documented, never blended. Gujarati/Kannada use the existing app re-scripting policy."
+  },
+  "verses": [
+    {
+      "id": "rahim-doha-ahankar",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "रहिमन गली है साँकरी, दूजो ना ठहराहिं।",
+        "आपु अहै तो हरि नहीं, हरि तो आपुन नाहिं॥"
+      ],
+      "linesEn": [
+        "Rahiman gali hai sankari, doojo na thahrahin.",
+        "Aapu ahai to Hari nahin, Hari to aapun nahin."
+      ],
+      "meaningHi": "रहीम मन को संकरी गली कहते हैं, जिसमें अहंकार और ईश्वर के लिए एक साथ स्थान नहीं। जहाँ अपना अहंकार मिटता है, वहाँ हरि के लिए स्थान बनता है।",
+      "meaningEn": "Rahim pictures the heart as a narrow lane with no room for both ego and God. As self-importance recedes, space opens for Hari.",
+      "source": {
+        "baseText": "Hindwi reading; Rahim Kavitavali no. 211 reads रहिमन है सँकरी गली / आपु अहै तौ / हरि तौ अपनौ. Preserve each edition as a whole; do not attribute this Rahim couplet to Kabir.",
+        "referenceUrls": [
+          "https://www.hindwi.org/dohe/rahiman-gali-hai-sankari-rahim-dohe",
+          "https://hi.wikisource.org/wiki/रहीम-कवितावली/दोहे"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    },
+    {
+      "id": "rahim-doha-daan",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "देनहार कोउ और है, भेजत सो दिन-रैन।",
+        "लोग भरम हम पै धरैं, याते नीचे नैन॥"
+      ],
+      "linesEn": [
+        "Denhar kou aur hai, bhejat so din-rain.",
+        "Log bharam ham pai dharain, yate neeche nain."
+      ],
+      "meaningHi": "देने वाला वास्तव में कोई और, अर्थात ईश्वर है, जो दिन-रात देता है। लोग भूल से मुझे दाता मानते हैं, इसलिए मेरी आँखें विनम्रता से नीचे रहती हैं।",
+      "meaningEn": "The true giver is another—God—who provides day and night. People mistakenly give me the credit, so I keep my eyes lowered in humility.",
+      "source": {
+        "baseText": "Rahim Kavitavali no. 95. Bharatkosh prints दिन रैन without the hyphen; lexical reading agrees. No unverified donation anecdote added.",
+        "referenceUrls": [
+          "https://hi.wikisource.org/wiki/रहीम-कवितावली/दोहे",
+          "https://bharatdiscovery.org/india/रहीम_के_दोहे"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    },
+    {
+      "id": "rahim-doha-santosh",
+      "number": 3,
+      "labelHi": "दोहा · ३",
+      "labelEn": "Doha · 3",
+      "lines": [
+        "चाह गई चिंता मिटी, मनुआ बेपरवाह।",
+        "जिनको कछु न चाहिए, वे साहन के साह॥"
+      ],
+      "linesEn": [
+        "Chah gai chinta miti, manua beparvah.",
+        "Jinko kachhu na chahiye, ve sahan ke sah."
+      ],
+      "meaningHi": "जब पाने की लालसा मिटती है, तो उससे जुड़ी चिंता भी मिटती है। जिन्हें कुछ पाने की चाह नहीं सताती, वे राजाओं से भी अधिक स्वतंत्र हैं।",
+      "meaningEn": "When craving falls away, the worry tied to it falls away too. Those free from the need to acquire are freer than kings.",
+      "source": {
+        "baseText": "Hindwi reading. Bharatkosh has कछु नहि चाहिये; retain Hindwi's complete second line.",
+        "referenceUrls": [
+          "https://www.hindwi.org/dohe/chah-gai-chinta-miti-rahim-dohe",
+          "https://bharatdiscovery.org/india/रहीम_के_दोहे"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    },
+    {
+      "id": "rahim-doha-sharan",
+      "number": 4,
+      "labelHi": "दोहा · ४",
+      "labelEn": "Doha · 4",
+      "lines": [
+        "गहि सरनागति राम की, भवसागर की नाव।",
+        "रहिमन जगत उधार कर, और न कछू उपाव॥"
+      ],
+      "linesEn": [
+        "Gahi saranagati Ram ki, bhavsagar ki nav.",
+        "Rahiman jagat udhar kar, aur na kachhu upav."
+      ],
+      "meaningHi": "राम की शरण को संसार-सागर पार करने वाली नाव समझकर थामो। रहीम कहते हैं कि इस पार उतरने के लिए यही आश्रय है।",
+      "meaningEn": "Hold to refuge in Rama as the boat across the ocean of worldly existence. Rahim presents this surrender as the way across.",
+      "source": {
+        "baseText": "Hindi Samay Rahim Granthavali no. 51. Rahim Kavitavali no. 45 reads सरनागत and जगत-उधार. Retain Hindi Samay's complete text; punctuation and printed verse numbering normalized.",
+        "referenceUrls": [
+          "https://www.hindisamay.com/content/2362/1/रहीम-कविताएँ-रहीम-ग्रंथावलीभग-1.cspx",
+          "https://hi.wikisource.org/wiki/रहीम-कवितावली/दोहे"
+        ],
+        "retrievedOn": "2026-11-05"
+      }
+    }
+  ]
+}
