@@ -141,6 +141,11 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 .chip span{display:inline-block;padding:8px 28px 2px;border-radius:999px;background:#FFC94A;color:#2B0E06;font:800 38px/1.4 'Mukta';box-shadow:0 8px 20px rgba(0,0,0,.35);transform:rotate(-2deg)}
 .cap{position:absolute;left:50px;width:980px;top:470px;text-align:center;font:800 84px/1.18 'Mukta';color:#FFFFFF;-webkit-text-stroke:0;paint-order:stroke;text-shadow:0 0 2px #000,0 4px 0 #000,0 6px 18px rgba(0,0,0,.7);opacity:0;z-index:6}
 .cap b{color:#FFC94A}
+.brand{position:absolute;left:0;right:0;top:176px;text-align:center;z-index:7}
+.brand span{display:inline-flex;align-items:center;gap:12px;padding:6px 22px 6px 8px;border-radius:999px;background:rgba(20,8,3,.62);border:2px solid rgba(226,166,43,.75);color:#FFF1D5;font:700 30px/1 'Mukta'}
+.brand img{width:46px;height:46px;border-radius:12px}
+.brand i{font-style:normal;color:#FFC94A}
+.cta .h{margin-top:12px;font:700 34px/1.3 'Mukta';color:#6E1A10}
 .ctr{position:absolute;left:0;right:0;top:388px;text-align:center;z-index:6;opacity:0}
 .ctr span{display:inline-block;padding:4px 22px 0;border-radius:999px;background:#6E1A10;border:3px solid #E2A62B;color:#FFE7B0;font:700 32px/1.45 'Mukta'}
 .ctr b{color:#FFC94A}
@@ -155,9 +160,9 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 ${folk ? scenes.map((sc, i) => folkScene(style, sc, i)).join('') : ''}
 ${style === 'puppet' ? `<g>${zig()}</g>` : ''}</svg>
 <div class="flash"></div>
-${counter ? `<div class="ctr"><span>${esc(counter.label)}: <b class="n">0</b>/${counter.total}</span></div>` : ''}${ig ? scenes.map((sc, i) => `<div class="chip" data-i="${i}"><span>${esc(sc.chip || script.title)}</span></div>` + sc.caps.map(c => `<div class="cap" data-s="${c.s.toFixed(3)}" data-e="${c.e.toFixed(3)}">${hl(c.text)}</div>`).join('')).join('')
+${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.png')}">${esc(script.brand.name)} · <i>${esc(script.brand.handle)}</i></span></div>` : ''}${counter ? `<div class="ctr"><span>${esc(counter.label)}: <b class="n">0</b>/${counter.total}</span></div>` : ''}${ig ? scenes.map((sc, i) => `<div class="chip" data-i="${i}"><span>${esc(sc.chip || script.title)}</span></div>` + sc.caps.map(c => `<div class="cap" data-s="${c.s.toFixed(3)}" data-e="${c.e.toFixed(3)}">${hl(c.text)}</div>`).join('')).join('')
   : `<div class="head"><span class="pill">${esc(script.title)}</span>${scenes.map((sc, i) => `<div class="sub" data-i="${i}">${esc(sc.text)}</div>`).join('')}</div>`}
-<div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div></div>
+<div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div>${script.brand ? `<div class="h">फ़ॉलो करें ${esc(script.brand.handle)}</div>` : ''}</div>
 <script>
 const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
 const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
