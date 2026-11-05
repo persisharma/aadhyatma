@@ -56,6 +56,22 @@ for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe']) {
 }
 
 // Sundarkand chaptered bookmark routes to SundarkandReader with chapter+initialIndex.
+for (const [sourceId, screen, discriminator] of [
+  ['krishna-stuti', 'StutiReader', 'stutiId'],
+  ['lingashtakam', 'AshtakamReader', 'ashtakamId'],
+  ['devi-suktam', 'SuktamReader', 'suktamId'],
+  ['rama-raksha-stotra', 'KavachamReader', 'kavachamId'],
+] as const) {
+  const { nav, calls } = makeNav();
+  const saved = bm({ id: `${sourceId}::2`, sourceId, verseIndex: 2 });
+  assert.deepEqual(buildBookmarkTarget(saved), {
+    screen, params: { initialIndex: 2, [discriminator]: sourceId },
+  });
+  assert.equal(navigateToBookmark(nav as never, saved), true);
+  assert.deepEqual(calls, [{ name: screen, params: { initialIndex: 2, [discriminator]: sourceId } }]);
+}
+
+// Sundarkand chaptered bookmark routes to SundarkandReader with chapter+initialIndex.
 {
   const { nav, calls } = makeNav();
   const ok = navigateToBookmark(nav as never, bm({

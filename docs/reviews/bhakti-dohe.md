@@ -19,10 +19,10 @@ Each verse's source metadata names both consulted publications, date, complete c
 | U2 | PASS | Intended routes/states and success criteria above; C1/C4/C7/C8/C9 apply. |
 | U3 | PENDING | Existing reader and neutral artwork reused; installed native comparison not available. |
 | U4 | PENDING | Pure four-language content checks PASS; Standard/Large, compact/enlarged-system-text visual cells unexecuted on both platforms. Gujarati/Kannada are re-scripted Hindi, not native translations. |
-| U5 | PENDING | Registry dispatch/pool lookup PASS; category/search/bookmark/resume route regressions added. Full native journeys and Back remain unexecuted. |
+| U5 | PENDING | Registry dispatch/pool lookup and full entryRoutes regression PASS; native category/search/bookmark/resume journeys unexecuted. Full native journeys and Back remain unexecuted. |
 | U6 | PENDING | Existing persistence/lifecycle behavior reused; cold reload, offline/background, failed share and cancellation need native exercise. |
 | U7 | PASS/PENDING | Eight complete sourced couplets integrated through lazy registry/counts/pool; existing neutral art mapping used, no new publication. Native visibility remains pending. |
-| U8 | PASS | Inspected shared entry routing, search branch, generic VersePage/share payload, routine units/chapters, read coverage and pool integration. |
+| U8 | PASS | Inspected shared entry routing, search, VersePage/share, routine and coverage. A failing real route regression exposed missing bookmark dispatch for registry-backed flat readers; buildBookmarkTarget now reuses buildProgressTarget for Stuti/doha, Ashtakam, Suktam and Kavacham. Whole existing route regression passes after the fix. |
 | U9 | PENDING | Focused pure tests: 14/14 PASS (11 doha/script/pool plus 3 generated-count checks). Full repository npm test, shared native-renderer tests and Maestro not executed here; CI pending. |
 | U10 | PASS/PENDING | Doha payloads remain behind require thunks; pool additions append after old segments; earlier IDs unchanged. Native performance/accessibility unmeasured. |
 | U11 | PASS/PENDING | Main checked, matching design §87/RULEBOOK §32/wiki updated; final CI/integration pending. |
@@ -42,3 +42,5 @@ C1: per-verse two-publication comparison/variants recorded; no independent schol
 Run full npm test and lint in the complete repository and confirm final-head CI; execute mobile/.maestro/doha-smoke.yaml plus search/bookmark/resume on iOS and Android. Review first/middle/last pages in Hindi/English/Gujarati/Kannada × Standard/Large and compact/system text; verify re-entry, offline reading and actual shared images/handoff with poet title and complete meaning. Keep the PR draft until required evidence is recorded. No merge, native build, version bump or OTA is authorized by this task.
 
 Remote handover: https://github.com/persisharma/aadhyatma/pull/618, branch codex/bhakti-dohe-kabir-rahim. All required task sources, source/variant records, tests and docs are committed. The existing library order and Daily Bhakti offsets are preserved. No new artwork files or other untracked task deliverables are required. Full CI is running; native platform/language/size/export gates remain unexecuted.
+
+Follow-up validation: the full compiled `entryRoutes.test.ts` assertion suite passes, including both doha start/resume/bookmark routes and four existing flat-reader sibling bookmark targets. The new doha bookmark assertion failed before the shared dispatch fix (returned null), then passed after. CI caught an excess updatedAt property in the new progress-target fixture; it was removed without loosening the helper type.
