@@ -370,7 +370,7 @@ export default function DailyBhaktiNudge({
  * iOS cannot place a widget for the app, so "Add" opens this sheet instead: a
  * facsimile of each offered widget on its own sketch plate (design.md §59) — the
  * verse at Wide above the Panchang at Small — and the WidgetKit steps that add them.
- * Android never mounts it — its launcher shows the system pin dialog.
+ * The Android launch offer uses the same previews before its system pin dialog.
  */
 export function WidgetHowToSheet({
   visible,
@@ -388,6 +388,57 @@ export function WidgetHowToSheet({
   onDone: () => void;
   onGallery: () => void;
   onAdd?: () => void;
+}) {
+  const { lang } = useGitaLanguage();
+  return (
+    <QuietCompanionSheet
+      visible={visible}
+      title={pick(lang, {
+        hi: 'हर नज़र में थोड़ा अध्यात्म।',
+        en: 'A little devotion, at a glance.',
+        gu: 'દરેક નજરમાં થોડું અધ્યાત્મ.',
+        kn: 'ಪ್ರತಿ ನೋಟದಲ್ಲಿ ಸ್ವಲ್ಪ ಅಧ್ಯಾತ್ಮ.',
+      })}
+      kicker={pick(lang, {
+        hi: 'आपकी होम स्क्रीन पर',
+        en: 'On your Home Screen',
+        gu: 'તમારી હોમ સ્ક્રીન પર',
+        kn: 'ನಿಮ್ಮ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ',
+      })}
+      art="category-granth-open-scripture"
+      primary={
+        Platform.OS === 'android'
+          ? pick(lang, {
+              hi: widgets.length > 1 ? 'दोनों विजेट जोड़ें' : 'पंचांग जोड़ें',
+              en: widgets.length > 1 ? 'Add both widgets' : 'Add Panchang',
+              gu: 'વિજેટ ઉમેરો',
+              kn: 'ವಿಜೆಟ್ ಸೇರಿಸಿ',
+            })
+          : pick(lang, { hi: 'ठीक है', en: 'Got it', gu: 'ઠીક છે', kn: 'ಸರಿ' })
+      }
+      onPrimary={Platform.OS === 'android' ? (onAdd ?? onGallery) : onDone}
+      secondary={pick(lang, {
+        hi: 'अभी नहीं',
+        en: 'Not now',
+        gu: 'હમણાં નહીં',
+        kn: 'ಈಗ ಬೇಡ',
+      })}
+      onSecondary={onClose}
+    >
+      <WidgetHowToBody visible={visible} widgets={widgets} previewLines={previewLines} />
+    </QuietCompanionSheet>
+  );
+}
+
+/** Shared inline body keeps first-run widget instructions inside the existing Modal. */
+export function WidgetHowToBody({
+  visible = true,
+  widgets,
+  previewLines = [],
+}: {
+  visible?: boolean;
+  widgets: readonly NudgeWidget[];
+  previewLines?: readonly string[];
 }) {
   const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
@@ -460,6 +511,9 @@ export function WidgetHowToSheet({
           (item) => item.dateKey === widgetDateKey(now, WIDGET_TIME_ZONE),
         )
       : undefined;
+  const verseLines = previewLines.length ? previewLines : payload.kind === 'ready'
+    ? payload.payload.verses.days.find((item) => item.dateKey === widgetDateKey(now, WIDGET_TIME_ZONE))?.lines[lang] ?? []
+    : [];
   const tithi = day ? runningTithi(day, now) : undefined;
   const panchangEyebrow =
     day && payload.kind === 'ready'
@@ -508,8 +562,8 @@ export function WidgetHowToSheet({
               { color: WIDGET_TEXT_TOKENS.ink, fontFamily: bodyFont },
             ]}
           >
-            {previewLines.length
-              ? previewLines.join(' · ')
+            {verseLines.length
+              ? verseLines.join(' · ')
               : pick(lang, {
                   hi: 'विजेट तैयार करने के लिए वेदांश़ खोलें',
                   en: 'Open Vedansh to prepare your widget',
@@ -588,40 +642,7 @@ export function WidgetHowToSheet({
   };
 
   return (
-    <QuietCompanionSheet
-      visible={visible}
-      title={pick(lang, {
-        hi: 'हर नज़र में थोड़ा अध्यात्म।',
-        en: 'A little devotion, at a glance.',
-        gu: 'દરેક નજરમાં થોડું અધ્યાત્મ.',
-        kn: 'ಪ್ರತಿ ನೋಟದಲ್ಲಿ ಸ್ವಲ್ಪ ಅಧ್ಯಾತ್ಮ.',
-      })}
-      kicker={pick(lang, {
-        hi: 'आपकी होम स्क्रीन पर',
-        en: 'On your Home Screen',
-        gu: 'તમારી હોમ સ્ક્રીન પર',
-        kn: 'ನಿಮ್ಮ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ',
-      })}
-      art="category-granth-open-scripture"
-      primary={
-        Platform.OS === 'android'
-          ? pick(lang, {
-              hi: widgets.length > 1 ? 'दोनों विजेट जोड़ें' : 'पंचांग जोड़ें',
-              en: widgets.length > 1 ? 'Add both widgets' : 'Add Panchang',
-              gu: 'વિજેટ ઉમેરો',
-              kn: 'ವಿಜೆಟ್ ಸೇರಿಸಿ',
-            })
-          : pick(lang, { hi: 'ठीक है', en: 'Got it', gu: 'ઠીક છે', kn: 'ಸರಿ' })
-      }
-      onPrimary={Platform.OS === 'android' ? (onAdd ?? onGallery) : onDone}
-      secondary={pick(lang, {
-        hi: 'अभी नहीं',
-        en: 'Not now',
-        gu: 'હમણાં નહીં',
-        kn: 'ಈಗ ಬೇಡ',
-      })}
-      onSecondary={onClose}
-    >
+    <>
       <View
         testID="daily-bhakti-widget-sheet"
         style={{ gap: 16, marginTop: 20 }}
@@ -676,7 +697,7 @@ export function WidgetHowToSheet({
           })}
         </Text>
       )}
-    </QuietCompanionSheet>
+    </>
   );
 }
 
