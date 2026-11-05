@@ -1,0 +1,51 @@
+# Start with clean storage; both views must use the same counter and preference.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      text: "JapMala. Tap to open."
+    direction: DOWN
+- tapOn: "JapMala. Tap to open."
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- extendedWaitUntil:
+    visible:
+      id: "japam-style-infinity"
+    timeout: 15000
+- assertVisible: ".*0 of 108 on this mala.*"
+- tapOn:
+    id: "japam-style-infinity"
+- assertVisible:
+    id: "japam-counter-infinity"
+- assertVisible: ".*0 of 108 on this mala.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*1 of 108 on this mala.*"
+- takeScreenshot: e2e-shots/japam-infinity
+- tapOn:
+    id: "japam-style-mala"
+- assertNotVisible:
+    id: "japam-counter-infinity"
+- assertVisible: ".*1 of 108 on this mala.*"
+- tapOn:
+    id: "japam-style-infinity"
+- tapOn: "Back"
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- assertVisible:
+    id: "japam-counter-infinity"
+- assertVisible: ".*1 of 108 on this mala.*"
+# A cold process must restore both style and counter without adding a bead.
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible: "JapMala. Tap to open."
+    timeout: 90000
+- tapOn: "JapMala. Tap to open."
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- assertVisible:
+    id: "japam-counter-infinity"
+- assertVisible: ".*1 of 108 on this mala.*"
+- tapOn: "Back"
+- stopApp

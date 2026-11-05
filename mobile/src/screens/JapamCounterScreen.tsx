@@ -34,6 +34,8 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import AppIcon from '@/components/AppIcon';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
+import JapamInfinity from '@/components/JapamInfinity';
+import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -48,13 +50,14 @@ type Props = NativeStackScreenProps<RootStackParamList, 'JapamCounter'>;
 export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { getEntry, increment, resetBeads, clear } = useJapamCounter();
+  const { getEntry, increment, resetBeads, clear, isLoading: counterLoading } = useJapamCounter();
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
   const requestRatingAsk = useRatingAsk();
   const { factor } = useFontScale();
   const { activity } = useUserActivity();
   const { width: windowWidth } = useWindowDimensions();
+  const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
 
   // Mantra is reading text → it scales with the global M/L size on EVERY device
   // (no per-device hardcoding, so M/L always takes effect). The tap surface
@@ -218,6 +221,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     gu: 'સુમેરુ · માળા ફેરવો',
     kn: 'ಸುಮೇರು · ಮಾಲೆ ತಿರುಗಿಸಿ',
   });
+  const infinityCompleteLabel = pick(lang, {
+    hi: 'माला पूर्ण · 108 जप', en: 'Mala complete · 108 chants',
+    gu: 'માળા પૂર્ણ · 108 જપ', kn: 'ಮಾಲೆ ಪೂರ್ಣ · 108 ಜಪ',
+  });
   const tapHint = audioPlaying
     ? pick(lang, {
         hi: 'सुनें · मंत्र के साथ मनके आगे बढ़ते हैं',
@@ -337,6 +344,29 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </View>
         </View>
 
+        <View style={styles.styleChoices} accessibilityRole="radiogroup">
+          {(['mala', 'infinity'] as const).map((value: JapamStyle) => {
+            const label = value === 'mala'
+              ? pick(lang, { hi: 'माला', en: 'Mala', gu: 'માળા', kn: 'ಮಾಲೆ' })
+              : pick(lang, { hi: 'अनंत ∞', en: 'Infinity ∞', gu: 'અનંત ∞', kn: 'ಅನಂತ ∞' });
+            const selected = japaStyle === value;
+            return (
+              <Pressable key={value} testID={`japam-style-${value}`} accessibilityRole="radio"
+                accessibilityLabel={label} accessibilityState={{ selected, disabled: !styleReady }}
+                disabled={!styleReady} onPress={() => selectStyle(value)}
+                style={({ pressed }) => [styles.styleChoice, {
+                  backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
+                  borderColor: selected ? colors.saffronDeep : colors.divider,
+                  opacity: pressed ? 0.7 : 1,
+                }]}>
+                <Text style={{ textAlign: 'center', fontSize: Math.round(14 * factor),
+                  fontFamily: scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily),
+                  color: selected ? colors.saffronDeep : colors.inkMuted }}>{label}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
         <ScrollView
           style={styles.tapArea}
           contentContainerStyle={styles.tapScroll}
@@ -345,6 +375,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         >
           <Pressable
             onPress={handleTap}
+            testID={`japam-counter-${japaStyle}`}
             accessibilityRole="button"
             accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
             style={({ pressed }) => [
@@ -399,8 +430,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </View>
 
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
-            <View style={[styles.malaBlock, !measured && styles.unmeasured]}>
-              <JapamMala
+            <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
+              {japaStyle === 'infinity' ? (
+                <JapamInfinity count={entry.count} rounds={entry.rounds} size={malaSize} hydrated={!counterLoading}
+                  notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
+                  labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
+              ) : <JapamMala
                 count={entry.count}
                 rounds={entry.rounds}
                 size={malaSize}
@@ -408,7 +443,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 notice={sumeruNotice ? sumeruLabel : null}
                 hint={tapHint}
                 labelFontFamily={scriptSerif ?? undefined}
-              />
+              />}
             </View>
           </Pressable>
         </ScrollView>
@@ -708,6 +743,14 @@ const styles = StyleSheet.create({
   },
   tapArea: {
     flex: 1,
+  },
+  styleChoices: {
+    flexDirection: 'row', gap: 8, paddingHorizontal: 24, paddingBottom: 4,
+    width: '100%', maxWidth: 420, alignSelf: 'center',
+  },
+  styleChoice: {
+    flex: 1, minHeight: 44, paddingHorizontal: 12, paddingVertical: 6,
+    borderRadius: 22, borderWidth: 1, justifyContent: 'center',
   },
   tapScroll: {
     // flexGrow lets the tap surface fill the viewport (tappable everywhere) yet

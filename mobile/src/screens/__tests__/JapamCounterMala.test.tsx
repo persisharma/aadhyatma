@@ -1,6 +1,8 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { Lang } from '@/data/gita/language';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -59,19 +61,23 @@ const nav: any = { goBack() {}, navigate() {}, replace() {} };
 const route: any = { params: { mantraId: 'om-namah-shivaya' } };
 
 let mounted: TestRenderer.ReactTestRenderer | null = null;
+beforeEach(() => {
+  mockGetItem.mockReset().mockResolvedValue(null);
+  jest.mocked(AsyncStorage.setItem).mockClear();
+});
 afterEach(() => {
   // Unmount so the Sumeru-notice timer and ring animations stop before teardown.
   act(() => mounted?.unmount());
   mounted = null;
 });
 
-async function renderJapam(mantraId = 'om-namah-shivaya'): Promise<TestRenderer.ReactTestRenderer> {
+async function renderJapam(mantraId = 'om-namah-shivaya', lang: Lang = 'hi'): Promise<TestRenderer.ReactTestRenderer> {
   let tree: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
       <FontScaleProvider>
         <ThemeProvider>
-          <GitaLanguageProvider initialLang="hi">
+          <GitaLanguageProvider initialLang={lang}>
             <ShareProvider>
               <JapamCounterProvider>
                 <JapamCounterScreen navigation={nav} route={{ ...route, params: { mantraId } }} />
@@ -107,6 +113,48 @@ function tapSurface(tree: TestRenderer.ReactTestRenderer) {
 }
 
 describe('JapamCounter turning mala (design.md §35)', () => {
+  const choice = (tree: TestRenderer.ReactTestRenderer, style: string) => tree.root.findAll(
+    (n) => n.props.testID === `japam-style-${style}` && typeof n.props.onPress === 'function'
+  )[0];
+
+  test('switching styles retains taps, audio counts, rollover and reset in the real provider', async () => {
+    const tree = await renderJapam();
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    await act(async () => { choice(tree, 'infinity').props.onPress(); });
+    expect(tree.root.findAll((n) => n.props.testID === 'japam-infinity').length).toBeGreaterThan(0);
+    expect(choice(tree, 'infinity').props.accessibilityState.selected).toBe(true);
+    expect(beadLabel(tree)).toContain('1 of 108');
+    const audio = tree.root.findAll((n) => typeof n.props.onIteration === 'function')[0];
+    await act(async () => { audio.props.onIteration(107); });
+    expect(beadLabel(tree)).toContain('0 of 108');
+    expect(beadLabel(tree)).toContain('1 malas completed');
+    expect(texts(tree)).toContain('माला पूर्ण · 108 जप');
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    await act(async () => { choice(tree, 'mala').props.onPress(); });
+    expect(beadLabel(tree)).toContain('1 of 108');
+    expect(beadLabel(tree)).toContain('1 malas completed');
+    await act(async () => { byLabel(tree, 'Reset or clear the count').props.onPress(); });
+    await act(async () => { byLabel(tree, 'Reset bead count').props.onPress(); });
+    expect(beadLabel(tree)).toContain('0 of 108');
+    expect(beadLabel(tree)).toContain('1 malas completed');
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith('@vedansh/japam-style', '"infinity"');
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith('@vedansh/japam-style', '"mala"');
+  });
+
+  test.each<Lang>(['hi', 'en', 'gu', 'kn'])('restores infinity in %s at Large without changing saved progress', async (lang) => {
+    mockGetItem.mockImplementation((key: string) => Promise.resolve(
+      key === '@vedansh/japam-style' ? '"infinity"'
+        : key === '@vedansh/font-scale' ? 'L'
+        : key === '@vedansh/japam-counter' ? JSON.stringify({ 'om-namah-shivaya': { count: 107, rounds: 2, updatedAt: 1 } })
+        : null
+    ));
+    const tree = await renderJapam('om-namah-shivaya', lang);
+    expect(choice(tree, 'infinity').props.accessibilityState.selected).toBe(true);
+    expect(beadLabel(tree)).toContain('107 of 108');
+    expect(beadLabel(tree)).toContain('2 malas completed');
+    expect(AsyncStorage.setItem).not.toHaveBeenCalledWith('@vedansh/japam-style', expect.anything());
+  });
+
   test('top bar names the screen, so the mantra is not shown twice', async () => {
     const tree = await renderJapam();
     const t = texts(tree);

@@ -1,8 +1,8 @@
 ---
 title: Japam Counter & Sloka Japa
 type: subsystem
-sources: [mobile/src/data/japam/index.ts, mobile/src/data/japam/grahaBeej.ts, mobile/src/components/GrahaReadingList.tsx, mobile/src/screens/KundaliScreen.tsx, mobile/src/data/backgrounds.ts, mobile/src/data/devotionalShareArt.ts, mobile/src/data/discoveryMeta.ts, mobile/.maestro/japam-smoke.yaml, mobile/src/data/japam/sloka.ts, mobile/src/data/japam/japam.json, mobile/src/contexts/JapamCounterContext.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/components/StartJapaButton.tsx, mobile/src/components/JapamMala.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/data/__tests__/slokaJapa.test.ts, mobile/src/screens/__tests__/JapamCounterMala.test.tsx, design.md, RULEBOOK.md]
-last_verified_date: 2026-10-21
+sources: [mobile/src/components/JapamInfinity.tsx, mobile/src/components/japamInfinityGeometry.ts, mobile/src/utils/useJapamStyle.ts, mobile/src/data/japam/index.ts, mobile/src/data/japam/grahaBeej.ts, mobile/src/components/GrahaReadingList.tsx, mobile/src/screens/KundaliScreen.tsx, mobile/src/data/backgrounds.ts, mobile/src/data/devotionalShareArt.ts, mobile/src/data/discoveryMeta.ts, mobile/.maestro/japam-smoke.yaml, mobile/src/data/japam/sloka.ts, mobile/src/data/japam/japam.json, mobile/src/contexts/JapamCounterContext.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/components/StartJapaButton.tsx, mobile/src/components/JapamMala.tsx, mobile/src/components/JapamAudioPlayer.tsx, mobile/src/data/__tests__/slokaJapa.test.ts, mobile/src/screens/__tests__/JapamCounterMala.test.tsx, design.md, RULEBOOK.md]
+last_verified_date: 2026-11-05
 confidence: high
 status: current
 ---
@@ -18,6 +18,8 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
 
 ## Details
 
+- **Display styles**: Mala (default) and Infinity share this same counter/player/route. The radio row is outside the counting target, so switching never counts a bead or restarts playback. `useJapamStyle` hydrates `@vedansh/japam-style` (`"mala"` / `"infinity"` JSON strings), then enables selection; no default write on load, serialized writes and corrupt/offline fallback to Mala. This is a global visual preference, independent of mantra IDs.
+- **Infinity**: local SVG ∞ with a saffron marker driven by real total beads (`rounds * 108 + count`), 280ms native transform. Rollover continues across the crossing; resets/restored progress snap. No automatic count source. Reduced Motion/backgrounding snap and cancel movement; unmount removes the AppState listener. Left/right count/108 move beneath the figure for enlarged text, and hints can grow in the existing ScrollView. Completion uses localized mala-complete copy, not a Sumeru-turn prompt. Native visual/E2E verification remains a separate gate from the provider and geometry tests.
 - **Counts**: `JapamCounterContext` persists `{count, rounds, updatedAt}` per id at
   `@vedansh/japam-counter`; `increment` rolls over at `JAPAM_BEADS_PER_ROUND = 108` and logs
   `logJapaBead`/`logJapaRound` to `UserActivityContext` (today's tally, Profile, widget totals).
