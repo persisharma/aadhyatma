@@ -1180,6 +1180,15 @@ A lunar rule names a **tithi**, not a date. The civil day it lands on depends on
 
 ### Occasion timing windows
 
+Exact clocks need a published city/year fixture, exact endpoint civil dates and
+the declared clock tolerance. Every enabled profile must be represented; tests
+must distinguish clock matches from guidance-only withholding. See
+`docs/reviews/festival-muhurat-audit.md`. Ghatasthapana first-third/Abhijit alone
+is incomplete: withhold exact times until lagna/yoga priorities and exceptions
+are verified. Shared-ID month variants (Putrada) must all reach the solver.
+Moonrise uses topocentric geometric disc-centre chandrodaya; changing it requires
+day/observance cache invalidation and a regenerated precomputed-date comparison.
+
 Use `occasionTimings.ts` and the location-scoped shared day store; source URLs
 and reviewed recipe conventions travel with each profile. Never manufacture
 an occasion window from Choghadiya. Bhadra exceptions and tradition-specific

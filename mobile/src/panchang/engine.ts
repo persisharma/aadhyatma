@@ -5,6 +5,7 @@ import {
   SunPosition,
   MakeTime,
   SearchRiseSet,
+  SearchAltitude,
   Observer,
 } from 'astronomy-engine';
 
@@ -133,7 +134,12 @@ function computeSunset(localDate: Date, observer: Observer, civilTimeZone?: stri
 function computeMoonrise(localDate: Date, observer: Observer, civilTimeZone?: string): Date | null {
   const startOfDay = civilStart(localDate, civilTimeZone);
   const astroTime = MakeTime(startOfDay);
-  const result = SearchRiseSet(Body.Moon, observer, +1, astroTime, 1);
+  // Panchang chandrodaya: topocentric disc centre at the geometric horizon.
+  // SearchRiseSet includes upper limb + atmospheric refraction and ran 4–5
+  // minutes early against every 2026 Drik Delhi Sankashti reference. Do not
+  // patch that with a fixed minute offset: altitude=0 reproduces all 13 dates.
+  // Actual first sighting is atmospheric/terrain dependent, never guaranteed.
+  const result = SearchAltitude(Body.Moon, observer, +1, astroTime, 1, 0);
   if (!result) return null;
   return result.date;
 }

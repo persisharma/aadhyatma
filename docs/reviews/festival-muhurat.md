@@ -1,5 +1,16 @@
 # Festival-specific timings and festive share strip
 
+**Current source-audit status (6 November 2026):** see
+[the complete Drik comparison](festival-muhurat-audit.md). All 53 registered
+profiles are accounted for in 115 published reference cases. After fixing
+after-midday parana, shared-ID Putrada coverage and the Moon horizon convention,
+109 clock fixtures (116 windows) match within the existing three-minute bound
+under both calendars. Six cases for four Ghatasthapana profiles check withholding,
+not clock agreement: exact Ghatasthapana is disabled pending complete selection
+rules. This supersedes the older Ghatasthapana statements below. Native iOS run
+42199255156 failed at Maestro's Settings-driver preflight; native acceptance is
+still pending. These results do not certify every city/year or exception branch.
+
 Base: 98184456f55c1d6ebe3d5eb62277bb97f13267e8. Approved in-thread compact
 strip after the sky header and before the four angas; preserve all 16
 Choghadiya, four Kaal and four Vaas tiles and the original footer.
