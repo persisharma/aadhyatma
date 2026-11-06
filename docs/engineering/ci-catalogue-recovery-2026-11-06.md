@@ -34,7 +34,12 @@ product content, artwork, publication gates, progress or native dependencies.
    execution must still prove whether it resolves the observed startup timeout.
    The shared simulator selector retains the previous default for other callers,
    rejects wrong-runtime overrides and has six executable fixture regressions.
-   Native diagnostics have a 20-second limit and the flow result is written first.
+   Native log queries have a 20-second limit and the flow result is written first.
+   Both platforms pin the same CLI release and archive checksum.
+6. Read-only repository settings inspection found `main` unprotected, no required
+   status-check contexts, and its `main` ruleset disabled. The rulebook therefore
+   does not block a red/pending merge. This PR does not change administration
+   settings; enabling required-check protection is a separate repository action.
 
 ## Evidence and limits
 
