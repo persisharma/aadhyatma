@@ -1492,6 +1492,21 @@ The list is **two browsable tiers**, rendered as one `FlatList` under group head
 ---
 
 
+### Occasion timings — 6 November 2026
+
+Panchang inserts a natural-height festive ritual card after the observance
+ribbon and above general Choghadiya. Location and both endpoint dates remain
+visible. FestivalMotif provides bundled, painted miniature subjects from a reviewed
+transparent atlas. FestiveCorners adds the approved marigold/mango corner art
+and fine double gold border; festivalInk supplies maroon titles and clocks. The share
+card replaces the 36dp festival ribbon with a minimum-66dp primary ritual
+strip, after the sky and before angas, with a vertical divider and larger
+ritual title/clock; existing almanac font sizes, all sixteen Choghadiya,
+Kaal/Vaas and co-brand footer remain. Send as text carries complete windows. Next-day parana remains visible on
+the vrat day; long date-bearing clock ranges use two complete lines.
+Export readiness also waits for both painted corners and the miniature. The in-app ritual share action exposes `occasion-share` for native automation. `native-festival-ios.yml` builds an unsigned simulator app and retains compact/wide screenshots, Standard/Large and enlarged-system-text cases, plus actual full/focused PNGs; authored automation is not a native pass.
+See docs/reviews/festival-muhurat.md for rules and verification boundaries.
+
 ### §33a Share card: पूर्ण पंचांग (`PanchangShareCard`)
 
 **Purpose.** One image that carries the whole day the Panchang tab shows, sized for WhatsApp/feeds (4:5), branded, with the download link — so a forwarded panchang brings people back to the app.

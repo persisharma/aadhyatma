@@ -1109,6 +1109,19 @@ A lunar rule names a **tithi**, not a date. The civil day it lands on depends on
 17. **Janmashtami: Smarta by Nishita + Rohini, plus a Vaishnava row (`'janmashtami-smarta'` / `'janmashtami-vaishnava'`, `janmashtamiDays`).** Smarta, between d1 (the day the Ashtami begins — the day before, if it begins before sunrise) and d2: one Nishita (8th of 15 night muhurtas) with Ashtami AND Rohini → that day; else Ashtami in only one Nishita → that day, except an Ashtami that began after d1's sunset loses to d2 when it is d2's sunrise tithi and meets Rohini in daylight (2027 25 Aug, 2016); else d2. Vaishnava = ISKCON GCal: the sunrise-Ashtami day (kshaya → the day after); two such → Rohini at sunrise, then at midnight, then the second only if Monday/Wednesday. The row resolves only when it differs (2023 6/7 Sep, 2025 15/16 Aug, 2029 31 Aug/1 Sep). **The old udaya pin was the Vaishnava date**: Drik's Smarta 2025 is 15 Aug. 2030 Smarta (20 Aug here) is unconfirmed by any source read — two readings of the exception clause split on it.
 18. **An annual rule recurs, it does not stop.** `findObservanceDates` used to `break` at an annual rule's first match in a civil year; a lunar month that opens in early January comes round again in late December, so Saphala Ekadashi 26 Dec 2024 / 23 Dec 2027 and Pausha Putrada 30 Dec 2025 / 27 Dec 2028 never showed. It now skips 340 days and keeps scanning. Observance `CACHE_VERSION` → 10 for §23.14–23.18.
 
+### Occasion timing windows
+
+Use `occasionTimings.ts` and the location-scoped shared day store; source URLs
+and reviewed recipe conventions travel with each profile. Never manufacture
+an occasion window from Choghadiya. Bhadra exceptions and tradition-specific
+parana cannot silently inherit another convention. Screen/export/text share
+one result and date-aware formatter. Bundled painted FestivalMotif subjects avoid
+network-dependent art during capture. Preserve approved painted artwork: a
+flat SVG/glyph is not a faithful substitute. Compare the actual complete export
+with the approved reference, including corners, border, subject and type
+hierarchy. Capture waits for all painted slots to decode; provenance pins the
+transparent master, grid, output bytes and hashes. Native verification uses `.maestro/occasion-native-matrix.yaml` and `scripts/native-festival-ios.sh`: require a fresh PNG from the installed app’s ReactNative temporary capture directory, expected pixel dimensions, and an OS share sheet without choosing a recipient. Reject stale/downloaded/blank/transparent images; successful YAML parsing does not satisfy this gate. See docs/reviews/festival-muhurat.md.
+
 ## 23a. Adding an observance to the catalog — the regional-coverage contract
 
 §23 says which civil day a rule lands on. This section says what it takes to put a rule in `festivals.ts` at all. It was written after the Sept 2026 audit found Goga Navami, Teja Dashami, Chaiti Chhath and Kartik Purnima absent, and five Rajasthani observances shipping a full katha with **no tithi on the rule**.

@@ -1,3 +1,5 @@
+import OccasionTimingsCard from '@/components/OccasionTimingsCard';
+import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import React, { useCallback } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -36,10 +38,11 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
   // Daily Bhakti picker (§39.10).
   const observances = useObservancesForDate(date, calendarSystem);
   const { share, busy } = usePanchangShare();
+  const occasion = useOccasionTimings(date, calendarSystem);
   const onShare = useCallback(() => {
-    if (!ready) return;
-    void share({ p, md, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
-  }, [ready, share, p, md, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
+    if (!ready || occasion.loading || occasion.error) return;
+    void share({ p, md, observances, occasionTimings: occasion.items, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [ready, share, p, md, occasion.items, occasion.loading, occasion.error, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
 
   return (
     <View style={styles.root}>
@@ -62,13 +65,14 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           </Text>
           <ShareButton
             onPress={onShare}
-            busy={busy || !ready}
+            busy={busy || !ready || occasion.loading}
             accessibilityLabel={pick(lang, { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' })}
             accessibilityHint=""
           />
         </View>
 
         <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingTop: 8, paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
+          <OccasionTimingsCard items={occasion.items} date={date} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
           {ready ? (
             <MuhuratCardBody p={p} md={md} variant="full" nowStartMs={nowStartMs} cityLabel={cityLabel} isToday={muhurat.isToday} />
           ) : (

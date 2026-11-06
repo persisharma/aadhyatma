@@ -1400,3 +1400,9 @@ Recorded the local 17/24 override, shared full-line catalog/listing containment,
 ## [2026-11-06] ingest | Vrat font metrics verification
 
 Exact bundled-font checks found nine Kannada titles above the original 28pt line. Raised catalog/listing containment to 1.65em (Kannada hhea 1.62em), added actual TTF-metric regressions, and removed tight category/day-note/ledger overrides. All 1,576 catalog title/deity font-bounds checks pass; native pixel verification remains pending.
+
+## [2026-11-06] ingest | Festival timing solver, bundled subject miniatures and compact Panchang export strip; verification pending.
+
+## [2026-11-06] ingest | Full mobile suites and final focused checks pass; native share/visual matrix pending. GitHub publication blocked by automatic approval review; patch handover retained.
+
+## [2026-11-06] ingest | Correct approved festival design fidelity: painted subjects and marigold/mango corners, double gold frame, divider and maroon type; export decode barriers and pinned transparent-source provenance.
