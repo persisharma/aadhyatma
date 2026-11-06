@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { library } from '../texts';
-import { deities } from '../deities';
+import { deityCatalog as deities } from '../deities';
 import { categories } from '../categories';
 import { purposes } from '../purposes';
 import {
@@ -967,6 +967,8 @@ function collectJsonFiles(dirRel = ''): string[] {
       rel !== 'devotionalShareManifest.json' &&
       // Suvichar is a published artwork hash map, not a scripture corpus.
       rel !== 'suvicharManifest.json' &&
+      // Parshuram activation contains only verified artwork hashes, not scripture.
+      rel !== 'parshuramPublication.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);
@@ -1013,7 +1015,7 @@ for (const file of collectJsonFiles()) {
     assert.match(data.source.approvedOn, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(data.source.approval.trim());
     assert.deepEqual(data.source.referenceUrls, []);
-    assert.equal(data.entries.length, 84);
+    assert.equal(data.entries.length, 92);
     assert.ok(data.entries.every((entry: { sourceId: string }) => entry.sourceId === 'vedansh-original'));
     continue;
   }

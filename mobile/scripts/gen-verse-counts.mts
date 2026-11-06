@@ -27,7 +27,7 @@ import { saraswatiChalisaCounts } from '../src/data/saraswati-chalisa';
 import { saraswatiStotramTotal } from '../src/data/saraswati-stotram';
 import { shivChalisaCounts } from '../src/data/shiv-chalisa';
 import { shivaStrotamTotal } from '../src/data/shiva-strotam';
-import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal } from '../src/data/stuti';
+import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal, parshuramStotramTotal } from '../src/data/stuti';
 import { deviSuktamTotal, narayanaSuktamTotal, purushaSuktamTotal } from '../src/data/suktam';
 import { sundarkandTotal } from '../src/data/sundarkand';
 import { valmikiRamayanTotal } from '../src/data/valmiki-ramayan';
@@ -81,6 +81,7 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts],

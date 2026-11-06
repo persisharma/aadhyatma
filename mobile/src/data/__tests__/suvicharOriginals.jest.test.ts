@@ -1,13 +1,13 @@
 import originals from '../suvichar-content/originals.json';
-import { MESSAGE_LIMIT, parseSuvicharPreferences, suvicharDeityCatalog } from '../suvichar';
+import { suvicharDeities, MESSAGE_LIMIT, parseSuvicharPreferences, suvicharDeityCatalog } from '../suvichar';
 import { findSuvicharThought, isSourcedSuvicharMessage, nextSuvicharThought, sourceForSuvichar, suvicharSourceLabel, suvicharThoughtForDay, suvicharThoughtsFor } from '../suvicharContent';
 import { isSuvicharThought, suvicharTemplatesFor } from '../suvicharTemplates';
 import { contentByLang } from '@/utils/localize';
 
 it('preserves the original 76 thoughts and adds eight Hare Ka Sahara reflections with complete bilingual copy', () => {
-  expect(originals.entries).toHaveLength(84);
-  expect(new Set(originals.entries.map(t => t.id)).size).toBe(84);
-  expect(new Set(originals.entries.map(t => t.hi)).size).toBe(84);
+  expect(originals.entries).toHaveLength(92);
+  expect(new Set(originals.entries.map(t => t.id)).size).toBe(92);
+  expect(new Set(originals.entries.map(t => t.hi)).size).toBe(92);
   expect(originals.entries.slice(0, 76).map(t => t.id)).toEqual(Array.from({ length: 76 }, (_, i) => `VD-${String(i + 1).padStart(4, '0')}`));
   expect(originals.source.kind).toBe('app-written-original-reflections');
   expect(originals.source.referenceUrls).toEqual([]);
@@ -66,7 +66,8 @@ it.each(suvicharDeityCatalog.map(d => d.id))('uses only eligible originals and d
     ids.add(t.id);
     expect(eligible).toContain(t);
     const template = suvicharTemplatesFor(day).find(t => t.kind === 'daily' && t.deity === deity)!;
-    expect(template).toMatchObject({ thoughtId: t.id, messageHi: t.hi, messageEn: t.en });
+    if (suvicharDeities.some(d => d.id === deity)) expect(template).toMatchObject({ thoughtId: t.id, messageHi: t.hi, messageEn: t.en });
+    else expect(template).toBeUndefined();
   }
   expect(ids.size).toBe(eligible.length);
   expect(suvicharThoughtForDay(deity, -1)).toEqual(eligible[eligible.length - 1]);

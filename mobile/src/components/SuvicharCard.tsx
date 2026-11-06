@@ -39,8 +39,8 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
 }) {
   const { colors } = useTheme();
   const heroFraction = suvicharHeroFraction(deity, frame);
-  const band = suvicharFooterBand(frame);
-  const brand = suvicharBrandSlot(frame);
+  const band = suvicharFooterBand(frame, deity);
+  const brand = suvicharBrandSlot(frame, deity);
   const full = width * t.aspect;
   const hero = full * heroFraction;
   const footer = full * (1 - band.start);

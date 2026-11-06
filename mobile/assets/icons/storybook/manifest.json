@@ -1021,6 +1021,27 @@
       ],
       "provenanceFile": "../../../../docs/evaluations/panchang-day-icons-2026-10-27/masters/moonrise.png",
       "source": "Original individually generated transparent master; codex-brief.md, prompts.json and sources.json retain provenance"
+    },
+    {
+      "name": "parashu",
+      "file": "parashu.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 28097,
+      "sha256": "74206caad94e8cad50b4a7e5fae0da06747663d4845a2dd5e560935c7d565fec",
+      "masterSha256": "07418ee9064e2dd72fd1e534d9101dc62585f789ef0b951ce825717e1c122381",
+      "provenanceFile": "provenance/parashu.png",
+      "source": "Individual built-in imagegen Parshuram parashu, normalized to existing storybook symbolic attribute format.",
+      "visibleBounds": [
+        151,
+        40,
+        360,
+        472
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
     }
   ],
   "correctedDate": "2026-10-06",

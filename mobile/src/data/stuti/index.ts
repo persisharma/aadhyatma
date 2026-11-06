@@ -7,6 +7,7 @@ import krishnaStuti from './krishna-stuti.json';
 import durgaStutiArjuna from './durga-stuti-arjuna.json';
 import kuberaStotram from './kubera-stotram.json';
 import navagrahaStotram from './navagraha-stotram.json';
+import parshuramStotram from './parshuram-stotram.json';
 import { dohaIds, getDoha, isDohaId, type DohaId } from '../doha';
 
 export type StutiVerse = {
@@ -27,7 +28,8 @@ export type StutiId =
   | 'krishna-stuti'
   | 'durga-stuti-arjuna'
   | 'kubera-stotram'
-  | 'navagraha-stotram';
+  | 'navagraha-stotram'
+  | 'parshuram-stotram';
 
 export type StutiPayload = {
   id: StutiId;
@@ -38,6 +40,7 @@ export type StutiPayload = {
 };
 
 const registry: Record<Exclude<StutiId, DohaId>, StutiPayload> = {
+  'parshuram-stotram': { id: 'parshuram-stotram', titleHi: parshuramStotram.titleHi, titleEn: parshuramStotram.titleEn, deity: parshuramStotram.deity, verses: parshuramStotram.verses },
   'krishna-stuti': {
     id: 'krishna-stuti',
     titleHi: krishnaStuti.titleHi,
@@ -73,6 +76,7 @@ export const stutiIds: readonly StutiId[] = [
   'durga-stuti-arjuna',
   'kubera-stotram',
   'navagraha-stotram',
+  'parshuram-stotram',
   ...dohaIds,
 ];
 
@@ -89,3 +93,4 @@ export const durgaStutiArjunaTotal = durgaStutiArjuna.verses.length;
 export const kuberaStotramTotal = kuberaStotram.verses.length;
 export const navagrahaStotramTotal = navagrahaStotram.verses.length;
 
+export const parshuramStotramTotal = parshuramStotram.verses.length;

@@ -41,6 +41,7 @@ export const mahalakshmiAshtakamTotal = 8 as const;
 export const narasimhaAshtakamTotal = 8 as const;
 export const narayanaSuktamTotal = 14 as const;
 export const navagrahaStotramTotal = 9 as const;
+export const parshuramStotramTotal = 7 as const;
 export const purushaSuktamTotal = 18 as const;
 export const radhashtakamTotal = 8 as const;
 export const ramChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":2,"totalVerses":43} as const;
