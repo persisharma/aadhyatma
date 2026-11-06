@@ -1407,6 +1407,10 @@ Exact bundled-font checks found nine Kannada titles above the original 28pt line
 
 ## [2026-11-06] ingest | Correct approved festival design fidelity: painted subjects and marigold/mango corners, double gold frame, divider and maroon type; export decode barriers and pinned transparent-source provenance.
 
+## [2026-11-06] ingest | Occasion date corrections
+
+Updated [[subsystems/panchang]] for exclusive Adhik Jyeshtha, Rishi Panchami, Purnima fasting and Krishna midnight/Rohini rules; regenerated dates/cache and separate verification controls.
+
 ## [2026-11-06] ingest | Automatic R2 publication after relevant main merges
 
 Added the ten-collection manifest allowlist, source preflight, shared bounded S3 uploader,

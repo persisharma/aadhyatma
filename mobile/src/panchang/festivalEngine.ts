@@ -487,6 +487,12 @@ export function matchesLunarTithiRuleOnDate(
   location?: ObservanceLocation
 ): boolean {
   if (!rule.paksha || rule.tithi === undefined) return false;
+  if (rule.dayRule === 'rishi-panchami' || rule.dayRule === 'purnima-vrat') {
+    const selectDay = rule.dayRule === 'rishi-panchami' ? special().rishiPanchamiDay : special().purnimaVratDay;
+    return [addDays(date, 1), date, addDays(date, -1)].some((sunriseDay) =>
+      matchesUdayaTithiRuleOnDate(rule, sunriseDay, calendarSystem, location)
+      && sameDay(selectDay(sunriseDay, { calendarSystem: computationSystemForRule(rule, calendarSystem), location }), date));
+  }
   if (rule.dayRule === 'chandrodaya') {
     return matchesInstantVyapiniRuleOnDate(rule, date, calendarSystem, location, tithiAtMoonrise);
   }
@@ -747,8 +753,8 @@ function matchesLastVyapiniRuleOnDate(
 /**
  * The lunar-month guard the udaya matcher applies, reused by instant-vyapini
  * (chandrodaya/madhyahna) matching. Named-month rules (Karwa Chauth in Kartik) are observed in the nija
- * month, never the adhik one that repeats it; monthly rules have no month to
- * check. The matched instant and its sunrise share a lunar month for every tithi
+ * month unless its explicit Adhik exception says otherwise; monthly rules have
+ * no month to check. The matched instant and its sunrise share a lunar month for every tithi
  * these rules use — a chaturthi or navami is days from either month boundary — so
  * this day's sunrise month is the authoritative one here.
  */
@@ -762,7 +768,9 @@ function monthMatchesRule(
   if (matchingMonth === null) return true;
   const computationSystem = computationSystemForRule(rule, calendarSystem);
   const { lunarMonth, isAdhik } = computeTithiAndMonth(date, { calendarSystem: computationSystem, location });
-  return lunarMonth === matchingMonth && !isAdhik;
+  return lunarMonth === matchingMonth && (rule.adhikMonthPolicy === 'prefer-adhik'
+    ? isAdhik || !special().followsAdhikJyeshtha(date, { calendarSystem: computationSystem, location })
+    : !isAdhik);
 }
 
 function matchesUdayaTithiRuleOnDate(
@@ -783,10 +791,12 @@ function matchesUdayaTithiRuleOnDate(
   // This day's-month test must NOT pre-empt the kshaya branch below: on a kshaya
   // month-opening pratipada the sunrise tithi is the closing amavasya/purnima of
   // the PREVIOUS lunation (possibly adhik), and only tomorrow's month decides.
-  const monthMatch = matchingMonth === null || (lunarMonth === matchingMonth && !isAdhik);
+  const monthMatch = () => rule.adhikMonthPolicy === 'prefer-adhik'
+    ? monthMatchesRule(rule, date, calendarSystem, location)
+    : matchingMonth === null || (lunarMonth === matchingMonth && !isAdhik);
   const target = rule.paksha === 'shukla' ? rule.tithi - 1 : rule.tithi + 14;
   if (tithiIndex === target) {
-    if (!monthMatch) return false;
+    if (!monthMatch()) return false;
     // Vriddhi dedupe: the same tithi at yesterday's sunrise too means it spans
     // two civil days; the vrat is observed on the first (its evening/night —
     // pradosh, moonrise, nishita — always falls inside the tithi), so the
@@ -804,7 +814,7 @@ function matchesUdayaTithiRuleOnDate(
   if (tithiIndex === (target + 29) % 30) {
     const next = computeTithiAndMonth(addDays(date, 1), opts);
     if (next.tithiIndex !== (target + 1) % 30) return false;
-    if (monthMatch) return true;
+    if (monthMatch()) return true;
     // This day's sunrise month is authoritative for every kshaya tithi except the
     // month-OPENING pratipada (shukla 1 under amanta, krishna 1 under purnimant),
     // whose lunation boundary falls at its start — only there does tomorrow's
