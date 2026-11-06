@@ -12,6 +12,12 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: store-update-later
 - takeScreenshot: e2e-shots/${CAPTURE}
+- scrollUntilVisible:
+    element:
+      text: ".*Create beautiful deity cards.*|.*सुंदर देवता कार्ड.*|.*સુંદર દેવતા કાર્ડ.*|.*ಸುಂದರ ದೇವತಾ ಕಾರ್ಡ್.*"
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: e2e-shots/${CAPTURE}-body
 - tapOn:
     id: store-update-later
 - assertNotVisible:

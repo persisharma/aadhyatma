@@ -27,6 +27,10 @@ seed --state expired
 run_flow cooldown-73-hours visible
 seed --state used
 run_flow shared-daily-slot hidden
+seed --state due
+run_flow background-resume-dismiss lifecycle
+python3 scripts/native-store-update-seed.py "$PLATFORM" "$DEVICE" read > "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/lifecycle-persisted-shown.json"
+run_flow lifecycle-cold-restart hidden
 for system_size in standard enlarged; do
   if [[ "$PLATFORM" == ios ]]; then
     if [[ "$system_size" == enlarged ]]; then xcrun simctl ui "$DEVICE" content_size accessibility-extra-large
