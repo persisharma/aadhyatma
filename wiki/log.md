@@ -1375,3 +1375,8 @@ remain pending. Integrated main 3eb009b9c3748d21de9a0b1a737c50b10f23f75a.
 ## [2026-11-06] ingest | Japa Infinity now follows the clarified tap-toggle contract: first tap starts continuous full loops, next tap pauses, later tap resumes. Motion is independent of count changes and never logs chants. Added cancellable single-animation driver tests, updated native/provider coverage, Maestro flow and §35/contract documentation. Native and full React verification pending after workspace maintenance removed dependencies.
 
 ## [2026-11-06] ingest | Infinity counting connected: each completed silent loop records one japa; audio exclusively owns counts while playing, and pause suppresses both sources. Added duplicate-completion guards and provider/rollover coverage. Refined the Infinity parchment background, ambient halo and layered jyoti/trail; native verification remains pending.
+
+
+## [2026-11-06] ingest | Vrat title clipping recurrence
+
+Recorded the local 17/24 override, shared full-line catalog/listing containment, rendered-style regression matrix and separate native acceptance boundary in subsystems/panchang.md.

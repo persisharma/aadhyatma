@@ -61,3 +61,11 @@ test('always-Devanagari tokens carry no letterSpacing (tracking splits the shiro
     expect(`${token}: ${/letterSpacing:\s*-?[\d.]/.test(block)}`).toBe(`${token}: false`);
   }
 });
+
+test('Indic catalog/listing tokens reserve complete marks inside each line', () => {
+  const { typography } = require('@/theme/typography');
+  for (const key of ['catalogTitle', 'catalogMeta', 'catalogBody', 'listingTitle', 'listingEyebrow', 'listingBody', 'listingSection', 'listingScope']) {
+    const token = typography[key];
+    expect(token.lineHeight).toBeGreaterThanOrEqual(Math.ceil(token.fontSize * 1.55));
+  }
+});

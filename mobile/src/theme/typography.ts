@@ -136,13 +136,15 @@ export const typography = {
   // Shared content-listing card (`ListingCard`, design.md §82). Sizes only: the
   // face follows the script. Latin (Cormorant) title runs a step smaller and its
   // body a step larger than the Indic sizes, matching their apparent size.
+  // Indic lines reserve >=1.55em inside their own bounds, including the first
+  // line's marks. Keep local catalog overrides at this floor too; 17/24 clips.
   listingEyebrow: {
     fontSize: 13,
-    lineHeight: 20,
+    lineHeight: 21,
   },
   listingTitle: {
     fontSize: 17,
-    lineHeight: 25,
+    lineHeight: 27,
   },
   listingTitleLatin: {
     fontSize: 16,
@@ -150,7 +152,7 @@ export const typography = {
   },
   listingBody: {
     fontSize: 12,
-    lineHeight: 18,
+    lineHeight: 19,
   },
   listingBodyLatin: {
     fontSize: 13,
@@ -158,7 +160,7 @@ export const typography = {
   },
   listingSection: {
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 28,
   },
   listingScope: {
     fontSize: 14,

@@ -366,3 +366,8 @@ Upcoming now settles at card boundaries; measured rail width and trailing paddin
 ### Screen-clipping corrections (5 November 2026)
 
 Kundali city search keeps the shared 100%-width TextField inside horizontal padding, preventing its right edge from exceeding the clipped modal. City filtering, selection and form persistence rules are unchanged. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.
+
+
+### Vrat title mark containment (6 November 2026)
+
+`ObservanceTodaySummary` had overridden shared typography with 17/24, reproducing the documented first-line clipping of Hindi marks. It now consumes catalogTitle 18/28, catalogMeta 12/20 and catalogBody 13/21. ListingCard's Indic tokens, bilingual caption and ObservancePreviewCard date/countdown also reserve at least 1.55em within their line boxes. Cards grow; system scaling and independent reading/reminder controls remain. Rendered-style regressions cover hi/en/gu/kn, M/L, compact/regular and simulated system scale, but do not prove native glyph shaping. Required installed-device matrix is pending; see `docs/reviews/2026-11-06-vrat-title-clipping.md` and `.maestro/vrat-title-clipping.yaml`.
