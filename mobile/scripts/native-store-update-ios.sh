@@ -5,10 +5,14 @@ FIXTURES="$GITHUB_WORKSPACE/native-update-fixtures"
 NATIVE_IOS_PROFILE=${NATIVE_IOS_PROFILE:?profile}
 mkdir -p "$OUTPUT" e2e-shots
 printf '%s\t%s\n' "$NATIVE_IOS_PROFILE" "$NATIVE_SYSTEM_SIZE" > "$OUTPUT/ios-batch.tsv"
-trap 'rc=$?; if [[ -n "${DEVICE:-}" ]]; then xcrun simctl io "$DEVICE" screenshot "$OUTPUT/ios-final.png" || true; xcrun simctl spawn "$DEVICE" log show --last 3m --style compact --predicate '\''process == "Vedansh"'\'' > "$OUTPUT/ios-device.log" 2>&1 || true; fi; cp e2e-shots/update-*.png "$OUTPUT/" 2>/dev/null || true; exit "$rc"' EXIT
+trap 'rc=$?; if [[ -n "${DEVICE:-}" ]]; then xcrun simctl io "$DEVICE" screenshot "$OUTPUT/ios-final.png" || true; xcrun simctl spawn "$DEVICE" log show --last 3m --style compact --predicate '\''process == "Vedansh"'\'' > "$OUTPUT/ios-device.log" 2>&1 || true; xcrun simctl shutdown "$DEVICE" || true; fi; cp e2e-shots/update-*.png "$OUTPUT/" 2>/dev/null || true; exit "$rc"' EXIT
 git rev-parse HEAD > "$OUTPUT/tested-head.txt"
 xcodebuild -version > "$OUTPUT/ios-toolchain.txt"
-cmp "$OUTPUT/tested-head.txt" "$FIXTURES/tested-head.txt"
+cmp "$OUTPUT/tested-head.txt" "$FIXTURES/verified-consumer-head.txt"
+python3 scripts/native-store-update-fingerprint.py > "$OUTPUT/production-fingerprint.txt"
+cmp "$OUTPUT/production-fingerprint.txt" "$FIXTURES/production-fingerprint.txt"
+cp "$FIXTURES/tested-head.txt" "$OUTPUT/ios-binary-source-head.txt"
+cp "$FIXTURES/binary-origin.txt" "$OUTPUT/ios-binary-origin.txt"
 cmp "$OUTPUT/ios-toolchain.txt" "$FIXTURES/toolchain.txt"
 test "$(uname -m)" = "$(cat "$FIXTURES/architecture.txt")"
 (cd "$FIXTURES"; shasum -a 256 -c SHA256SUMS)
@@ -34,7 +38,7 @@ while IFS=$'\t' read -r PROFILE DEVICE NAME; do
   open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
   maestro --device "$DEVICE" test --config .maestro/config.yaml .maestro/brand-driver-check.yaml \
     2>&1 | tee "$OUTPUT/ios-$PROFILE-driver.log"
-  xcrun simctl shutdown "$DEVICE"
+  # Keep this one simulator booted: rebooting here stranded the XCTest driver.
 done < "$OUTPUT/ios-selected.tsv"
 for VERSION in 1.5.3 1.5.4; do
   DEST="$RUNNER_TEMP/update-fixture-$VERSION"
@@ -50,7 +54,7 @@ for VERSION in 1.5.3 1.5.4; do
     open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
     xcrun simctl install "$DEVICE" "$APP"
     bash scripts/native-store-update-matrix.sh ios "$DEVICE" "$PROFILE" "$VERSION"
-    xcrun simctl shutdown "$DEVICE"
+    # Install the next native runtime in place without restarting XCTest.
   done < "$OUTPUT/ios-selected.tsv"
 done
 printf 'PASS: iOS %s/%s native runtime fixtures, persisted cooldown, daily slot, language/size batch and browser/store handoff.\n' "$NATIVE_IOS_PROFILE" "$NATIVE_SYSTEM_SIZE" > "$OUTPUT/ios-result.txt"

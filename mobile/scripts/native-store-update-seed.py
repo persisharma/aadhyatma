@@ -18,9 +18,13 @@ if a.action=='read':
  else:
   with sqlite3.connect(db) as conn: values=dict(conn.execute('select key,value from catalystLocalStorage'))
  raw=values.get('@vedansh/store-update-1.5.4'); stamp=json.loads(raw) if raw is not None else None
- # Reading is used only after a real positive display: a seed cannot satisfy it.
- assert isinstance(stamp,(int,float)) and abs(time.time()*1000-stamp)<120000, ('No newly persisted native shown stamp',stamp)
- print(json.dumps({'nativeShownAt':stamp,'verifiedAt':time.time()*1000,'storage':'ios-manifest' if a.platform=='ios' else 'android-sqlite'})); raise SystemExit(0)
+ # Prove this flow created the stamp. Slow native UI commands must not turn a
+ # valid persisted display into a failure merely because two minutes elapsed.
+ fixture=json.loads((out/f'seed-{a.platform}-{a.lang}-{a.size}-due.json').read_text())
+ assert '@vedansh/store-update-1.5.4' not in fixture['values']
+ started=fixture['timestamp']; verified=time.time()*1000
+ assert type(stamp) in (int,float) and started-5000<=stamp<=verified+5000, ('No flow-created native shown stamp',stamp,started,verified)
+ print(json.dumps({'seededAt':started,'nativeShownAt':stamp,'verifiedAt':verified,'clockToleranceMs':5000,'storage':'ios-manifest' if a.platform=='ios' else 'android-sqlite'})); raise SystemExit(0)
 now=int(time.time()*1000); day=datetime.datetime.now().strftime('%Y-%m-%d')
 version=re.search(r"APP_TOUR_VERSION\s*=\s*'([^']+)'",pathlib.Path('src/data/tour/whatsNew.ts').read_text()).group(1)
 values={

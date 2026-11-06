@@ -13,8 +13,9 @@ on:
       - 'mobile/src/data/storeUpdate.ts'
 permissions:
   contents: read
+  actions: read
 concurrency:
-  group: native-store-update-${{ github.ref }}
+  group: native-store-update-${{ github.ref }}-${{ github.sha }}
   cancel-in-progress: true
 env:
   CI: '1'
@@ -37,6 +38,7 @@ jobs:
         with:
           persist-credentials: false
           sparse-checkout: mobile
+          fetch-depth: 10
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -57,8 +59,48 @@ jobs:
           )
           sudo systemsetup -settimezone "$UPDATE_TIMEZONE"
       - run: npm ci
+      - name: Check immutable fixture reuse eligibility
+        id: fixture-source
+        run: |
+          SOURCE=181de37554f7209f95857ae1b1239a7cc3d1b504
+          if git cat-file -e "$SOURCE:mobile" 2>/dev/null && \
+             [[ "$(python3 scripts/native-store-update-fingerprint.py "$SOURCE")" == "$(python3 scripts/native-store-update-fingerprint.py)" ]]; then
+            echo 'eligible=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'eligible=false' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/download-artifact@v4
+        id: previous-fixtures
+        if: steps.fixture-source.outputs.eligible == 'true'
+        continue-on-error: true
+        with:
+          name: native-update-ios-fixtures-42211025918
+          run-id: 42211025918
+          github-token: ${{ github.token }}
+          path: native-update-output/fixtures
+      - name: Verify reusable binaries and their original source
+        id: verified-fixtures
+        if: steps.previous-fixtures.outcome == 'success'
+        continue-on-error: true
+        run: |
+          FIXTURES="$GITHUB_WORKSPACE/native-update-output/fixtures"
+          test "$(cat "$FIXTURES/tested-head.txt")" = 181de37554f7209f95857ae1b1239a7cc3d1b504
+          cmp <(xcodebuild -version) "$FIXTURES/toolchain.txt"
+          test "$(uname -m)" = "$(cat "$FIXTURES/architecture.txt")"
+          (cd "$FIXTURES"; shasum -a 256 -c SHA256SUMS)
       - name: Compile both native runtime fixtures
-        run: bash scripts/native-store-update-ios-build.sh
+        if: steps.verified-fixtures.outcome != 'success'
+        run: |
+          rm -f "$GITHUB_WORKSPACE/native-update-output/fixtures/Vedansh-1.5.3.zip" "$GITHUB_WORKSPACE/native-update-output/fixtures/Vedansh-1.5.4.zip"
+          bash scripts/native-store-update-ios-build.sh
+      - name: Record verified production and consumer identity
+        run: |
+          FIXTURES="$GITHUB_WORKSPACE/native-update-output/fixtures"
+          python3 scripts/native-store-update-fingerprint.py > "$FIXTURES/production-fingerprint.txt"
+          git rev-parse HEAD > "$FIXTURES/verified-consumer-head.txt"
+          printf 'Compiled source: %s\nConsumer source: %s\nImmutable reuse: %s\n' \
+            "$(cat "$FIXTURES/tested-head.txt")" "$(git rev-parse HEAD)" \
+            '${{ steps.verified-fixtures.outcome == 'success' }}' > "$FIXTURES/binary-origin.txt"
       - uses: actions/upload-artifact@v4
         with:
           name: native-update-ios-fixtures-${{ github.run_id }}
