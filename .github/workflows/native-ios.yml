@@ -15,6 +15,7 @@ on:
       - 'mobile/scripts/select-native-ios-device.cjs'
       - 'mobile/scripts/run-native-diagnostic.cjs'
       - 'mobile/.maestro/*widgets*.yaml'
+      - 'mobile/.maestro/native-ios-input-check.yaml'
       - '.github/workflows/native-ios.yml'
 
 permissions:

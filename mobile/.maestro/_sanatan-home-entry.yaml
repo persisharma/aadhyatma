@@ -1,14 +1,14 @@
-# Swipe inside the outer Home margin, away from nested horizontal carousels.
+# Start on Home's visible section heading, away from the Today carousel and
+# system screen edges. A successful gesture must expose the actual entry card.
 appId: com.prashantsharma.vedansh
 ---
-- repeat:
-    times: 16
-    while:
-      notVisible: { id: home-sanatan-card }
+- runFlow:
+    when:
+      visible: CATEGORIES
     commands:
       - swipe:
-          start: "97%, 82%"
-          end: "97%, 30%"
+          from: { text: CATEGORIES }
+          direction: UP
           duration: 700
 - scrollUntilVisible:
     element: { id: home-sanatan-card }

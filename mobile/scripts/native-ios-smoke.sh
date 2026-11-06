@@ -44,8 +44,8 @@ xcrun simctl status_bar "$SIMULATOR_UDID" override --time '09:41' --batteryState
 if [[ "${NATIVE_SMOKE_DRIVER_CHECK:-0}" == 1 ]]; then
   PHASE=driver-preflight
   open -a Simulator --args -CurrentDeviceUDID "$SIMULATOR_UDID"
-  maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
-    --output "$OUTPUT/driver.xml" .maestro/brand-driver-check.yaml 2>&1 | tee "$OUTPUT/driver.log"
+  node scripts/run-native-diagnostic.cjs --timeout-ms 600000 maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
+    --output "$OUTPUT/driver.xml" .maestro/native-ios-input-check.yaml 2>&1 | tee "$OUTPUT/driver.log"
 fi
 
 WORKSPACE=$(python3 - <<'PY'
@@ -98,7 +98,7 @@ fi
 # The shared native flow handles the OS Open confirmation and asserts actual
 # gallery/deep-link destinations, including a cold restart and exact civil date.
 PHASE=widget-deep-link-journey
-maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
+node scripts/run-native-diagnostic.cjs --timeout-ms 1200000 maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
   --output "$OUTPUT/widgets.xml" .maestro/home-widgets-smoke.yaml 2>&1 | tee "$OUTPUT/widgets.log"
 
 printf '%s\n' 'PASS: native host + embedded widget extension compiled; widget gallery and warm/cold deep-link destinations passed the shared Maestro flow.' > "$OUTPUT/result.log"

@@ -56,9 +56,19 @@ appId: com.prashantsharma.vedansh
 # subsequent links where iOS no longer prompts.
 - openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
 - tapOn: { text: "Open", optional: true }
-- extendedWaitUntil:
-    visible: { id: "daily-bhakti-card" }
-    timeout: 15000
+# The illustrated card can start below the setup/Suvichar panels. Verify a
+# reader-only control, then scroll to the exact source/verse the widget named.
+- scrollUntilVisible:
+    element: { id: "daily-bhakti-next" }
+    direction: DOWN
+    visibilityPercentage: 100
+    centerElement: true
+    timeout: 60000
+- scrollUntilVisible:
+    element: { id: "devotional-share-source", text: ".*(भगवद् गीता|Bhagavad).*1[.]1$" }
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
 - openLink: "vedansh://widget/panchang?date=2030-01-15"
 - tapOn: { text: "Open", optional: true }
 - extendedWaitUntil:
@@ -84,8 +94,16 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=0"
 - tapOn: { text: "Open", optional: true }
-- extendedWaitUntil:
-    visible: { id: "daily-bhakti-card" }
-    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "daily-bhakti-next" }
+    direction: DOWN
+    visibilityPercentage: 100
+    centerElement: true
+    timeout: 60000
+- scrollUntilVisible:
+    element: { id: "devotional-share-source", text: ".*(भगवद् गीता|Bhagavad).*2[.]1$" }
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
 - stopApp:
     appId: com.prashantsharma.vedansh

@@ -1,6 +1,6 @@
 appId: com.prashantsharma.vedansh
 env:
-  CAPTURE_SUFFIX: local
+  CAPTURE_SUFFIX: "${typeof CAPTURE_SUFFIX === 'undefined' ? 'local' : CAPTURE_SUFFIX}"
 ---
 - runFlow: _launch.yaml
 - runFlow:

@@ -35,8 +35,9 @@ product content, artwork, publication gates, progress or native dependencies.
    The shared simulator selector retains the previous default for other callers,
    rejects wrong-runtime overrides and has six executable fixture regressions.
    Every OS diagnostic/reset command in the native failure cleanup has a
-   20-second limit and the flow result is written first. Three executable child-
-   process tests cover a real stuck process, an ordinary failure and success.
+   20-second limit and the flow result is written first. Five executable child-
+   process/CLI tests cover real stuck processes, ordinary failure, success and
+   invalid deadline rejection.
    Both platforms pin the same CLI release and archive checksum.
 6. Read-only repository settings inspection found `main` unprotected, no required
    status-check contexts, and its `main` ruleset disabled. The rulebook therefore
@@ -80,6 +81,54 @@ product content, artwork, publication gates, progress or native dependencies.
     navigated. The shared Home helper now requires 100% visibility, centers the
     banner and waits for scrolling to settle before every entry tap. No app UI
     or production navigation logic changes.
+11. Complete remote CI passed at `033102f`, including all 354 reader suites,
+    3,489 reader tests, every independent logic gate, both exports and all 144
+    public CDN objects. The separate widget run passed the Settings driver and
+    stopped at `daily-bhakti-card` visibility. That is an unscrolled, potentially
+    tall container below the setup/Suvichar panels, not proof that the represented
+    verse failed to resolve. The widget flow now scrolls to a reader-only control
+    and the exact Gita 1.1 / 2.1 source text. The reused SDK path also retains the
+    same bounded failure screenshot/device log as the fresh-build path, inside
+    its existing artifact contract. No Maestro debug-directory export or raw UI
+    hierarchy/screenshot logging is added. Native execution is still required
+    to distinguish selector/viewport failure from navigation failure.
+12. iOS `033102f` passed the title-only Settings preflight, then exhausted all
+    sixteen edge swipes and the full-visibility scroll without leaving the top
+    of Home. The captured hierarchy and screenshot confirm no Sanatan entry was
+    reached. XCTest accepted each swipe, so command completion was not evidence
+    that the page moved. The Home helper now starts a semantic swipe on the
+    visible CATEGORIES heading, clear of the nested Today carousel and system
+    screen edge, then requires the fully visible entry card. Settings preflight
+    now scrolls to General, opens About and verifies Model Name, proving actual
+    input delivery rather than only driver startup. A failure remains a failing
+    native gate; no product UI or navigation workaround is introduced.
+13. The retained Maestro 2.12.1 artifacts place requested screenshots inside
+    each flow's `takeScreenshot/e2e-shots` directory. The matrix script still
+    attempted an unguarded copy from the working directory after a passing
+    matrix. Collection now reads the actual artifact paths and requires exactly
+    one image for each of the forty language/reading-size/surface combinations
+    per system-text setting. Missing and duplicate captures fail before any
+    partial set is copied. Three executable filesystem regressions cover a
+    complete set, a missing image and conflicting runs. The artifact also proved
+    the flow header overwrote the CLI's platform/font suffix with `local`. A
+    regression reproduced that override, then passed after the default was
+    changed to preserve an already defined suffix. Existing debug-artifact
+    retention is unchanged; no broader export is introduced.
+    Both platforms run resume, collections, search, standard system text and
+    enlarged system text in five independent jobs, with sibling cancellation
+    disabled and separate artifacts. All thirteen collections, regional queries and sixteen reading
+    combinations per platform remain required. Android compiles one APK, then
+    every test job verifies its source commit and SHA-256 before installation.
+    The build artifact retains the APK once; scoped result artifacts retain
+    their own logs/captures without redundant APK copies.
+14. Android `033102f` passed cold resume (6m45s), all thirteen collections
+    (21m38s), regional search including the positive/empty controls (7m16s), and
+    all eight standard-system-text reading combinations (17m15s), then failed
+    exactly at the old working-directory screenshot copy. Enlarged system text
+    did not run. This confirms both the screenshot-path defect and the need to
+    separate the long acceptance phases. Native Maestro phases now have explicit
+    command deadlines shorter than the job budget, preserving a failing timeout
+    result and leaving time for existing diagnostic/artifact collection.
 
 ## Evidence and limits
 
@@ -88,6 +137,8 @@ product content, artwork, publication gates, progress or native dependencies.
 - After: all 20 targeted Jest tests and all five Doha integration tests pass.
 - Full local reader/component run: 354 suites / 3,489 tests pass. Widgets 46,
   engine 772, data 223 and Ask 49 pass. TypeScript and instruction policy pass.
+- Native verification tooling: fifteen executable regressions pass, covering
+  runtime selection, bounded child processes and exact matrix capture sets.
 - Both production asset maps and the public SHA-256 checks for all 144 Kids
   artwork objects pass; neither export bundles those story paintings.
 - Literal local `npm test` reaches TypeScript, then the tsx CLI fails opening an
