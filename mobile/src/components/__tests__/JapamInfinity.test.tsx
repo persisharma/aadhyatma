@@ -103,3 +103,38 @@ test('the loop sits on a dark night panel so the path, jyoti and numbers stand a
   const numbers = tree.root.findAllByType(Text).filter(n => n.props.children === 11 || n.props.children === 108);
   expect(numbers.map(n => ReactNative.StyleSheet.flatten(n.props.style).color)).toEqual([lightColors.nightInk, lightColors.nightGold]);
 });
+
+function ringDisplay(ringsActive = true, text = 'सीता राम') {
+  return <ThemeProvider><JapamInfinity count={11} size={300} running={false} onCycle={onCycle}
+    hint="Tap to start" labelFontFamily="test-font" ringText={text} ringsActive={ringsActive} /></ThemeProvider>;
+}
+function measureRingWords() {
+  // Fire each hidden measurer's layout, as the native text engine would.
+  for (const t of tree.root.findAllByType(Text).filter((n) => typeof n.props.onLayout === 'function')) {
+    act(() => t.props.onLayout({ nativeEvent: { layout: { width: 20 * String(t.props.children).length, height: 24, x: 0, y: 0 } } }));
+  }
+}
+
+test('mantra words circle both sides and keep turning while the screen is focused, even when paused', async () => {
+  jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+  await act(async () => { tree = TestRenderer.create(ringDisplay()); });
+  measureRingWords();
+  const words = tree.root.findAllByType(Text).filter((n) => ['सीता', 'राम', '॥'].includes(n.props.children) && !n.props.onLayout);
+  expect(words.length).toBeGreaterThan(12);
+  expect(words.every((n) => n.props.allowFontScaling === false && n.props.numberOfLines === 1)).toBe(true);
+  const ringTimings = (Animated.timing as jest.Mock).mock.calls.filter(([, c]) => c.duration === 48000 || c.duration === 36000);
+  expect(ringTimings.length).toBe(4); // outer + inner, left + right
+  expect(ringTimings.every(([, c]) => c.useNativeDriver === true)).toBe(true);
+  expect(onCycle).not.toHaveBeenCalled();
+  await act(async () => { tree.update(ringDisplay(false)); });
+  expect(stop).toHaveBeenCalled();
+});
+
+test('Reduced Motion keeps the mantra rings still', async () => {
+  mockReduced = true;
+  jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+  await act(async () => { tree = TestRenderer.create(ringDisplay()); });
+  measureRingWords();
+  expect(tree.root.findAll((n) => n.props.testID === 'japam-mantra-ring').length).toBeGreaterThan(0);
+  expect((Animated.timing as jest.Mock).mock.calls.some(([, c]) => c.duration === 48000)).toBe(false);
+});
