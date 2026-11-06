@@ -105,3 +105,7 @@ Ritual clocks and explanatory notes now honor the app’s Large reading preferen
 ## Publication approval and recovery — 6 November 2026
 
 The user explicitly approved publishing `codex/festival-muhurat-share`, running the prepared native checks and opening a PR. Recovered the exact saved implementation (`ee539c8f77f31521296deb49e83fe4a9bf01e271`, original base `98184456f55c1d6ebe3d5eb62277bb97f13267e8`) after workspace maintenance. Applied it to current main `e3628c2c85a62e396cba8d91ec9ddc4d2611e7b5`; retained both wiki additions and all current Indic clipping fixes. The earlier publication block is resolved by explicit approval. New-head local/CI and native results remain pending until executed; earlier results above retain their recorded scope. Keep the PR draft until the required native matrix and actual export review pass.
+
+### Native CI timezone preflight correction
+
+The first published simulator run (42197733528, head e462cf8d) failed before npm/prebuild/compilation: macOS rejected `Asia/Kolkata` as an unsupported systemsetup zone. The preflight now selects only a listed `Asia/Kolkata`/`Asia/Calcutta` alias, requires UTC+05:30, and retains the selected timezone plus available list. All clock assertions remain. This failure is infrastructure setup and is not native app evidence; the corrected run remains pending.

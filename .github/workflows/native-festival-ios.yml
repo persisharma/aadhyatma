@@ -40,7 +40,19 @@ jobs:
           distribution: temurin
           java-version: '17'
       - name: Set reference timezone
-        run: sudo systemsetup -settimezone Asia/Kolkata
+        run: |
+          mkdir -p ../native-festival-output
+          sudo systemsetup -listtimezones > ../native-festival-output/available-timezones.txt
+          FESTIVAL_TIMEZONE=$(python3 - <<'PYZONE'
+          from pathlib import Path
+          zones={line.strip() for line in Path('../native-festival-output/available-timezones.txt').read_text().splitlines()}
+          print(next((zone for zone in ['Asia/Kolkata', 'Asia/Calcutta'] if zone in zones), ''))
+          PYZONE
+          )
+          test -n "$FESTIVAL_TIMEZONE"
+          sudo systemsetup -settimezone "$FESTIVAL_TIMEZONE" | tee ../native-festival-output/reference-timezone.txt
+          test "$(date +%z)" = '+0530'
+          date '+%Z %z' >> ../native-festival-output/reference-timezone.txt
       - run: npm ci
       - name: Check native-export evidence collector
         run: node --test scripts/collect-native-festival-png.test.cjs
