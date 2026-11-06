@@ -1,0 +1,34 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- tapOn: { id: "suvichar-mode-custom" }
+- tapOn: { id: "suvichar-deity-krishna" }
+- scrollUntilVisible:
+    element: { id: "suvichar-browse-thoughts" }
+    timeout: 30000
+- tapOn: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-thought-search" }
+- inputText: "DH-kabir-doha-sumiran"
+- tapOn: { id: "suvichar-thought-DH-kabir-doha-sumiran" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-source" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-source" }
+- takeScreenshot: suvichar-kabir-doha
+- scrollUntilVisible:
+    element: { id: "suvichar-favorite" }
+- tapOn: { id: "suvichar-favorite" }
+- scrollUntilVisible:
+    element: { id: "suvichar-message" }
+    direction: UP
+- tapOn: { id: "suvichar-message" }
+- eraseText: 280
+- inputText: "Our family wishes"
+- hideKeyboard
+- scrollUntilVisible:
+    element: { id: "suvichar-card" }
+    direction: UP
+- assertNotVisible: { id: "suvichar-card-source" }
+# Authored native flow; device execution and share capture remain required.

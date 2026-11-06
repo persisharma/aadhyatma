@@ -1,11 +1,13 @@
 // Stuti (स्तुति) — multi-instance form registry, mirroring `suktam/index.ts`.
 // One StutiReaderScreen dispatches on the `stutiId` route param through this
-// registry (RULEBOOK §3). Each text is source-verified verses (Devanagari
-// `lines` + IAST `linesEn` + bilingual meanings).
+// registry (RULEBOOK §3). The same flat-reader contract also hosts the selected
+// dohas under Granth, without classifying their poets as deities. Sanskrit uses
+// IAST; Hindi dohas use pronunciation-based ASCII and bilingual meanings.
 import krishnaStuti from './krishna-stuti.json';
 import durgaStutiArjuna from './durga-stuti-arjuna.json';
 import kuberaStotram from './kubera-stotram.json';
 import navagrahaStotram from './navagraha-stotram.json';
+import { dohaIds, getDoha, isDohaId, type DohaId } from '../doha';
 
 export type StutiVerse = {
   id: string;
@@ -21,6 +23,7 @@ export type StutiVerse = {
 };
 
 export type StutiId =
+  | DohaId
   | 'krishna-stuti'
   | 'durga-stuti-arjuna'
   | 'kubera-stotram'
@@ -34,7 +37,7 @@ export type StutiPayload = {
   verses: readonly StutiVerse[];
 };
 
-const registry: Record<StutiId, StutiPayload> = {
+const registry: Record<Exclude<StutiId, DohaId>, StutiPayload> = {
   'krishna-stuti': {
     id: 'krishna-stuti',
     titleHi: krishnaStuti.titleHi,
@@ -70,10 +73,12 @@ export const stutiIds: readonly StutiId[] = [
   'durga-stuti-arjuna',
   'kubera-stotram',
   'navagraha-stotram',
+  ...dohaIds,
 ];
 
 export function getStuti(id: string | undefined): StutiPayload {
-  if (id && id in registry) return registry[id as StutiId];
+  if (isDohaId(id)) return getDoha(id);
+  if (id && id in registry) return registry[id as Exclude<StutiId, DohaId>];
   return registry['krishna-stuti'];
 }
 
@@ -83,3 +88,4 @@ export const krishnaStutiTotal = krishnaStuti.verses.length;
 export const durgaStutiArjunaTotal = durgaStutiArjuna.verses.length;
 export const kuberaStotramTotal = kuberaStotram.verses.length;
 export const navagrahaStotramTotal = navagrahaStotram.verses.length;
+

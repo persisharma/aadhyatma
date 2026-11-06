@@ -16,6 +16,7 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element: { id: home-sanatan-card }
     direction: DOWN
+- takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}"
 - tapOn: { id: home-sanatan-card }
 - scrollUntilVisible:
     element: { id: sanatan-collection-dikpal }

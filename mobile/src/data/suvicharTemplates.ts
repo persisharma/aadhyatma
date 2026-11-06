@@ -8,7 +8,7 @@ export type SuvicharTemplate = {
   hi: string; en: string; messageHi: string; messageEn: string; thoughtId?: string;
 };
 
-/** Complete approved collection; daily cards use the relevant original reflections. */
+/** Complete approved collection; daily cards use eligible originals and sourced dohas. */
 export const suvicharThoughts = suvicharAllThoughts;
 const legacyThoughts = [defaultSuvichar, ...suvicharReflections];
 const LANGS: Lang[] = ['hi', 'en', 'gu', 'kn'];
@@ -34,3 +34,4 @@ export function suvicharTemplatesFor(day: number): SuvicharTemplate[] {
     ...suvicharWishes.map((wish): SuvicharTemplate => ({ ...wish, id: `wish-${wish.id}`, kind: 'wish', frame: 'mandir-jharokha' })),
   ];
 }
+

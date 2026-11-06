@@ -3,13 +3,16 @@ import originals from './suvichar-content/originals.json';
 import type { SuvicharDeity } from './suvichar';
 import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
+import { suvicharDohaSources, suvicharDohaThoughts, suvicharDohasFor } from './doha/suvichar';
+export { suvicharDohaThoughts } from './doha/suvichar';
 
 export type SuvicharThought = typeof catalogue.entries[number];
 export type SuvicharSource = typeof catalogue.sources[number];
 export const suvicharSourcedThoughts: readonly SuvicharThought[] = catalogue.entries;
 export const suvicharOriginalThoughts: readonly (SuvicharThought & { deities: readonly string[] })[] = originals.entries;
-export const suvicharAllThoughts: readonly SuvicharThought[] = [...suvicharOriginalThoughts, ...suvicharSourcedThoughts];
+export const suvicharAllThoughts: readonly SuvicharThought[] = [...suvicharOriginalThoughts, ...suvicharSourcedThoughts, ...suvicharDohaThoughts];
 const sources = new Map(catalogue.sources.map(s => [s.id, s]));
+for (const source of suvicharDohaSources) sources.set(source.id, source);
 // Original daily reflections have authorship, never a fabricated scripture reference or URL.
 sources.set('vedansh-original', { id: 'vedansh-original', referenceHi: 'वेदांश', referenceEn: 'Vedansh',
   modeHi: 'मौलिक विचार', modeEn: 'Original reflection', url: '', contextHi: 'वेदांश के लिए लिखे गए मौलिक संदेश; शास्त्र या संत के उद्धरण नहीं।' });
@@ -33,7 +36,7 @@ export function suvicharThoughtsFor(deity: SuvicharDeity): readonly SuvicharThou
     // Shrine-specific copy cannot follow the broader Krishna/Vishnu family mapping.
     const specific = suvicharOriginalThoughts.filter(t => t.deities.includes(deity));
     const general = suvicharOriginalThoughts.filter(t => !t.deities.length);
-    const daily = [...specific, ...general];
+    const daily = [...specific, ...general, ...suvicharDohasFor(deity)];
     dailyByDeity.set(deity, daily);
     byDeity.set(deity, [...daily, ...byFamily.get(families[deity])!]);
   }
@@ -74,3 +77,4 @@ export function suvicharSourceLabel(thought: SuvicharThought, lang: Lang): strin
   const s = sourceForSuvichar(thought);
   return contentByLang(lang, `${s.referenceHi} · ${s.modeHi}`, `${s.referenceEn} · ${s.modeEn}`);
 }
+

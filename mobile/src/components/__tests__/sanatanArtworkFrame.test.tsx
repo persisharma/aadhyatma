@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
 import SanatanHomeCard from '../SanatanHomeCard';
 import { Painting } from '../sanatan/Primitives';
@@ -13,7 +13,7 @@ function assertFramed(tree: TestRenderer.ReactTestRenderer, small = false) {
   const image = tree.root.findByType(Image);
   const nativeImageStyle = StyleSheet.flatten([{ width: 960, height: 640 }, image.props.style]);
   expect(nativeImageStyle).toMatchObject({ position: 'absolute', width: '100%', height: '100%' });
-  const frame = tree.root.findAll(node => node.props.testID === image.props.testID.replace(/-image$/, ''))[0];
+  const frame = tree.root.findAll(node => node.type === View && node.props.testID === image.props.testID.replace(/-image$/, ''))[0];
   expect(frame).toBeDefined();
   const style = StyleSheet.flatten(frame.props.style);
   expect(style.overflow).toBe('hidden');
