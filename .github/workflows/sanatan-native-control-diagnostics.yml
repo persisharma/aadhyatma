@@ -61,7 +61,7 @@ jobs:
           for path in root.rglob('*.json'):
               if path.parent.name=='screen-hierarchy':groups.setdefault(path.parent,[]).append(path)
           for paths in groups.values():
-              final=max(paths,key=lambda p:int(re.search(r'step-(\\d+)',p.name).group(1)) if re.search(r'step-(\\d+)',p.name) else 0)
+              final=max(paths,key=lambda p:int(p.name.split('-')[1]) if p.name.startswith('step-') else 0)
               walk(json.loads(final.read_text()))
           for path in root.rglob('apk-source-head.txt'):
               value=path.read_text().strip()
