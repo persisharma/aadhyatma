@@ -90,6 +90,19 @@ function puppetBase(type, k) {
   if (type === 'home') o += shape('M250,1640 L250,880 Q250,700 540,680 Q830,700 830,880 L830,1640Z', '#5A2210') + shape('M300,1640 L300,900 Q300,750 540,735 Q780,750 780,900 L780,1640Z', '#2B0E06')
     + Array.from({length: 9}, (_, k) => shape(`M${290 + k * 56},860 L${318 + k * 56},930 L${346 + k * 56},860Z`, '#2F8A3B')).join('')
     + [[0, '#E2A62B'], [1, '#B8261B'], [2, '#2F8A3B']].map(([k, c]) => shape(`M${540 - 150 + k * 40},1700 a${150 - k * 40},${50 - k * 13} 0 1,0 ${2 * (150 - k * 40)},0 a${150 - k * 40},${50 - k * 13} 0 1,0 ${-2 * (150 - k * 40)},0Z`, c)).join('');
+  const khejri = (x, y) => shape(`M${x - 18},${y} C${x - 26},${y - 140} ${x + 6},${y - 230} ${x - 6},${y - 340} L${x + 22},${y - 340} C${x + 26},${y - 230} ${x + 36},${y - 130} ${x + 22},${y}Z`, '#5A2A12')
+    + [[-50, -360, 74, 46], [40, -380, 84, 50], [0, -430, 70, 44]].map(([dx, dy, rx, ry]) => shape(`M${x + dx - rx},${y + dy}a${rx},${ry} 0 1,0 ${2 * rx},0a${rx},${ry} 0 1,0 ${-2 * rx},0Z`, '#5E7A2E')).join('');
+  // Rajasthan: dunes, a khejri tree and a village hut (Salasar, Asota).
+  if (type === 'desert') o += shape('M0,1420 C180,1330 360,1330 540,1400 C720,1460 900,1340 1080,1380 L1080,1640 L0,1640Z', '#8A4E1E') + khejri(150, 1500)
+    + shape('M820,1520 L820,1390 L980,1390 L980,1520Z', '#B5732E') + shape('M796,1400 L900,1270 L1004,1400Z', '#7A4A1E') + shape('M880,1520 L880,1446 Q900,1424 920,1446 L920,1520Z', '#2B0E06')
+    + shape('M0,1530 C220,1480 420,1510 600,1550 C780,1590 920,1510 1080,1540 L1080,1640 L0,1640Z', '#A86A2C');
+  if (type === 'field') o += shape('M0,1300 C300,1250 700,1280 1080,1260 L1080,1640 L0,1640Z', '#8A4E1E') + khejri(950, 1400)
+    + shape('M0,1400 L1080,1385 L1080,1640 L0,1640Z', '#6B3B1C') + [1440, 1490, 1540, 1590].map(y => dot(`M20,${y} L1060,${y - 12}`)).join('');
+  // Sanctum: silver columns with mirror inlay and a golden toran (Salasar's silver-and-mirror work).
+  if (type === 'sanctum') { o += shape('M120,1640 L120,900 Q120,760 540,740 Q960,760 960,900 L960,1640Z', '#5A2210');
+    for (const x of [30, 950]) { o += shape(`M${x},1640 L${x},790 L${x + 100},790 L${x + 100},1640Z`, '#9CA3AE');
+      for (let k = 0; k < 12; k++) o += `<circle cx="${x + 50}" cy="${840 + k * 66}" r="11" fill="${['#2E6FB0', '#2F8A3B', '#B8261B'][k % 3]}" stroke="#170904" stroke-width="3"/>`; }
+    o += shape(`M0,740 L${W},740 L${W},792 L0,792Z`, '#E2A62B') + Array.from({length: 13}, (_, k) => shape(`M${30 + k * 80},792 L${58 + k * 80},856 L${86 + k * 80},792Z`, '#2F8A3B')).join(''); }
   o += shape(`M0,1640 L${W},1640 L${W},${H} L0,${H}Z`, '#3A1508');
   return o;
 }
@@ -197,7 +210,11 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  slideTo:(c,u,d)=>{const p=eio((u-(c.o.t0||0)*d)/(d*.35));return{x:lerp(c.x,c.o.x,p),y:c.y-Math.abs(Math.sin(p*Math.PI))*40}},
  walkIn:(c,u,d)=>({x:lerp(-220,c.x,eo(u/(d*.42))),y:c.y-(u<d*.42?Math.abs(Math.sin(u*6))*8:0)}),
  defeat:(c,u,d)=>{const f=clamp((u-.55*d)/(.3*d));return{rot:c.rot+f*70*c.flip,y:c.y+f*180,op:1-f*.75}},
- fadeOut:(c,u,d)=>({op:1-clamp((u-.6*d)/(.25*d)),y:c.y+Math.sin(u*1.5)*8})};
+ fadeOut:(c,u,d)=>({op:1-clamp((u-.6*d)/(.25*d)),y:c.y+Math.sin(u*1.5)*8}),
+ fadeIn:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/(c.o.dur||.6));return{op:p,s:c.s*(.9+.1*eo(p)),y:c.y+(c.o.hover?Math.sin(u*2)*10:0)}},
+ fadeAway:(c,u,d)=>({op:1-clamp((u-(c.o.t0||0)*d)/(c.o.dur||.6))}),
+ // travels in from the left and halts at c.x by fraction t1; st = distance rolled (drives wheel spin), am = gait (legs stop)
+ cartStop:(c,u,d)=>{const t1=(c.o.t1||.6)*d,x0=c.x-(c.o.dist||700),x=lerp(x0,c.x,eo(u/t1));return{x,st:(x-x0)/c.s,am:clamp((t1-u)/(.3*t1)),y:c.y-(u<t1?Math.abs(Math.sin(u*5))*3:0)}}};
 const vis=(i,t)=>{const s=SC[i],u=t-s.start,last=i===SC.length-1;if(u<0||(!last&&u>s.dur+T))return 0;return Math.min(i===0?1:clamp(u/T),last?1:1-clamp((u-s.dur)/T));};
 window.renderAt=t=>{
   document.querySelectorAll('.scene').forEach((g,i)=>{const o=vis(i,t);g.setAttribute('opacity',o);g.style.display=o>0?'':'none';if(!o)return;
@@ -206,7 +223,7 @@ window.renderAt=t=>{
     const u=t-SC[i].start,d=SC[i].dur;
     CASTS[i].forEach((c,n)=>{const r={x:c.x,y:c.y,rot:c.rot,s:c.s,op:1,...MO[c.m](c,u,d)};
       const M=new DOMMatrix().translate(r.x,r.y).rotate(r.rot).scale(r.s*(r.flip??c.flip),r.s),by={},cache={};c.parts.forEach(p=>by[p.id]=p);
-      const world=id=>{if(cache[id])return cache[id];const p=by[id],pm=p.parent?world(p.parent):M;const a=(p.base||0)+(p.amp||0)*Math.sin(2*Math.PI*(p.freq||1)*t+(p.phase||0))+(p.spin||0)*t;return cache[id]=pm.translate(p.at[0],p.at[1]).rotate(a);};
+      const world=id=>{if(cache[id])return cache[id];const p=by[id],pm=p.parent?world(p.parent):M;const a=(p.base||0)+(p.amp||0)*(r.am??1)*Math.sin(2*Math.PI*(p.freq||1)*t+(p.phase||0))+(p.spin||0)*(r.st??t);return cache[id]=pm.translate(p.at[0],p.at[1]).rotate(a);};
       c.parts.forEach(p=>{const m=world(p.id),el=document.getElementById('s'+i+'c'+n+'-'+p.id);el.setAttribute('transform','matrix('+[m.a,m.b,m.c,m.d,m.e,m.f].join(',')+')');el.setAttribute('opacity',r.op);});});
     g.querySelectorAll('.glow').forEach(e=>e.setAttribute('opacity',(.82+.07*Math.sin(t*13)+.05*Math.sin(t*7.3)).toFixed(3)));
     g.querySelectorAll('.lbl').forEach(e=>{const p=(i===0&&+e.dataset.t0<=0)?1:clamp((u-(+e.dataset.t0)*d)/.4); /* hook label on the first frame */e.setAttribute('opacity',p);});
