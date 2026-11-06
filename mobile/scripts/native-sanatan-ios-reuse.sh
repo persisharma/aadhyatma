@@ -8,7 +8,7 @@ printf '%s  %s\n' '3c74f9dd7f1a830ba092ae94b3e82772040d18ef9f22580eadb84b5be56bf
 ditto -x -k "$SANATAN_APP_ARCHIVE" "$RUNNER_TEMP/sanatan-app"
 SANATAN_APP="$RUNNER_TEMP/sanatan-app/Vedansh.app"
 test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$SANATAN_APP/Info.plist")" = 'com.prashantsharma.vedansh'
-lipo -verify_arch "$(uname -m)" "$SANATAN_APP/Vedansh"
+lipo "$SANATAN_APP/Vedansh" -verify_arch "$(uname -m)"
 xcodebuild -version > "$SANATAN_REUSE_OUTPUT/toolchain.txt"
 cat > "$SANATAN_REUSE_OUTPUT/binary-origin.json" <<'JSON'
 {"sourceHead":"a469ea3696f29baf588b3783fee83c9c1e000202","sourceRun":42168692889,"sourceArtifact":13481645746,"appArchiveSha256":"3c74f9dd7f1a830ba092ae94b3e82772040d18ef9f22580eadb84b5be56bf419","productionChanges":false,"note":"First native app built successfully. The unrelated widget-link smoke stopped at the iOS Open confirmation. This run tests Sanatan from Home using the preserved app."}
