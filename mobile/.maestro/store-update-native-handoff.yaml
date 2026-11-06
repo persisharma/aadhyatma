@@ -8,4 +8,22 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: store-update-now
 - waitForAnimationToEnd
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      # The isolated emulator's browser has never been opened. Complete its
+      # first-run screens without adding an account before checking the URL.
+      - tapOn:
+          text: Use without an account
+          optional: true
+      - tapOn:
+          text: "No thanks|Not now|Skip"
+          optional: true
+      - tapOn:
+          text: "Got it|Continue"
+          optional: true
+      - extendedWaitUntil:
+          visible: ".*play.google.com.*"
+          timeout: 30000
 - takeScreenshot: e2e-shots/${CAPTURE}

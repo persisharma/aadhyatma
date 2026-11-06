@@ -10,10 +10,21 @@ run_flow() {
     ".maestro/store-update-native-$flow.yaml" 2>&1 | tee "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/$case_name.log"
 }
 seed() { python3 scripts/native-store-update-seed.py "$PLATFORM" "$DEVICE" seed "$@"; }
+copy_screenshots() {
+  python3 - "$PLATFORM" "$VERSION" "$PROFILE" "$OUTPUT" <<'PY'
+import pathlib,shutil,sys
+platform,version,profile,output=sys.argv[1:]
+prefix=f'update-{platform}-{version}-{profile}-'
+shots=list((pathlib.Path.home()/'.maestro/tests').rglob(prefix+'*.png'))
+if not shots: raise SystemExit('No native screenshots captured for '+prefix)
+dest=pathlib.Path(output)/f'{platform}-{version}-{profile}'
+for shot in shots: shutil.copy2(shot,dest/shot.name)
+PY
+}
 if [[ "$VERSION" == 1.5.4 ]]; then
   seed --state due
   run_flow native-cutoff hidden
-  cp e2e-shots/update-*.png "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/"
+  copy_screenshots
   exit 0
 fi
 # Prove persistence from a genuinely displayed sheet, without writing the stamp fixture.
@@ -57,4 +68,5 @@ else
   maestro --device "$DEVICE" hierarchy > "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/handoff-hierarchy.txt"
   grep -Ei 'apps.apple.com|App Store' "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/handoff-hierarchy.txt"
 fi
-cp e2e-shots/update-*.png "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/"
+run_flow store-return return
+copy_screenshots

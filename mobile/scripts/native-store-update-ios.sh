@@ -17,6 +17,15 @@ small=min(phones,key=lambda d:compact.index(d['name']) if d['name'] in compact e
 large=min([d for d in phones if d['udid']!=small['udid']],key=lambda d:wide.index(d['name']) if d['name'] in wide else 99)
 (out/'ios-selected.tsv').write_text(''.join(f"{profile}\t{d['udid']}\t{d['name']}\n" for profile,d in [('compact',small),('wide',large)]))
 PY
+# Establish XCTest readiness before paying for a native compilation.
+while IFS=$'\t' read -r PROFILE DEVICE NAME; do
+  xcrun simctl boot "$DEVICE" 2>/dev/null || true
+  xcrun simctl bootstatus "$DEVICE" -b
+  open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
+  maestro --device "$DEVICE" test --config .maestro/config.yaml .maestro/brand-driver-check.yaml \
+    2>&1 | tee "$OUTPUT/ios-$PROFILE-driver.log"
+  xcrun simctl shutdown "$DEVICE"
+done < "$OUTPUT/ios-selected.tsv"
 for VERSION in 1.5.3 1.5.4; do
   node scripts/native-store-update-config.cjs "$VERSION" | tee "$OUTPUT/ios-$VERSION-config.json"
   npx expo prebuild --platform ios --no-install
@@ -36,8 +45,6 @@ for VERSION in 1.5.3 1.5.4; do
     xcrun simctl bootstatus "$DEVICE" -b
     open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
     xcrun simctl install "$DEVICE" "$APP"
-    maestro --device "$DEVICE" test --config .maestro/config.yaml .maestro/brand-driver-check.yaml \
-      2>&1 | tee "$OUTPUT/ios-$PROFILE-driver.log"
     bash scripts/native-store-update-matrix.sh ios "$DEVICE" "$PROFILE" "$VERSION"
     xcrun simctl shutdown "$DEVICE"
   done < "$OUTPUT/ios-selected.tsv"

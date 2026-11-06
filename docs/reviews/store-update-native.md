@@ -21,4 +21,10 @@ The runner writes only dedicated simulator/emulator app storage, while the proce
 
 ## Status
 
-Execution pending. Inspect the exact workflow head, native build/driver result, each scenario and all screenshot text/controls before marking native accepted. A failed handoff, runtime check, screenshot or assertion remains a failure; bundle compilation and YAML parsing alone are insufficient.
+Initial run: [42204881206](https://github.com/persisharma/aadhyatma/actions/runs/42204881206), source `21f4e20d304d17e684666b00acea0f36e42cbe70`. Full CI on that head passed.
+
+Android compiled its Release fixture. On the 320 dp profile, all 23 display, dismissal, native timestamp/cold-start, 71/73-hour cooldown, shared-slot, background/resume/Back and language/size flows passed. The store action opened Chrome, whose first-run welcome screen intercepted the URL; the external destination assertion correctly failed. The wider profile and native 1.5.4 cutoff were not reached. Initial compact screenshots were visually reviewed in all four languages and size combinations: actions remained reachable and visible Indic text was intact, but full-message verification still required actual scrolling.
+
+Harness corrections handle the isolated browser's welcome screens without an account, force real body scrolling (partially visible Text can satisfy accessibility visibility), assert removal of the fixed footer action, collect screenshots from Maestro 2.12's actual run directory, and check warm return from the store to Home. XCTest readiness now runs before iOS compilation. The first iOS run was superseded by these shared harness fixes; it is not counted as a native PASS.
+
+Rerun pending. Inspect the exact workflow head, native build/driver result, each scenario and all screenshot text/controls before marking native accepted. A failed handoff, runtime check, screenshot or assertion remains a failure; bundle compilation and YAML parsing alone are insufficient.

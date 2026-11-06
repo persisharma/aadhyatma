@@ -17,11 +17,20 @@ appId: com.prashantsharma.vedansh
       text: ".*Create beautiful deity cards.*|.*सुंदर देवता कार्ड.*|.*સુંદર દેવતા કાર્ડ.*|.*ಸುಂದರ ದೇವತಾ ಕಾರ್ಡ್.*"
     direction: DOWN
     timeout: 15000
+- repeat:
+    times: 4
+    commands:
+      # Android reports clipped Text bounds as visible. Physically scroll the
+      # body to its end so the second screenshot proves the final lines too.
+      - swipe:
+          start: 50%, 50%
+          end: 50%, 15%
+          duration: 400
 - takeScreenshot: e2e-shots/${CAPTURE}-body
 - tapOn:
     id: store-update-later
 - assertNotVisible:
-    id: store-update-heading
+    id: store-update-now
 - extendedWaitUntil:
     visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 30000
