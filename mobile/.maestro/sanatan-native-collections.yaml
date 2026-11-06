@@ -3,8 +3,10 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 - runFlow: _sanatan-home-entry.yaml
+- takeScreenshot: e2e-shots/sanatan-entry-home
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: lang-toggle-en }
+- takeScreenshot: e2e-shots/sanatan-entry-hub
 - scrollUntilVisible:
     element: { id: sanatan-collection-basics }
     direction: DOWN

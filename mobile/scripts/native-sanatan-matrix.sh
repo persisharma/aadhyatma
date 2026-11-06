@@ -34,16 +34,24 @@ else
   adb -s "$DEVICE" shell wm size > "$SANATAN_OUTPUT/device-size.txt"
   adb -s "$DEVICE" shell wm density >> "$SANATAN_OUTPUT/device-size.txt"
 fi
+SANATAN_PHASE_FILTER=${SANATAN_NATIVE_PHASES:-all}
+if [[ "$SANATAN_PHASE_FILTER" == all || "$SANATAN_PHASE_FILTER" == journey ]]; then
 SANATAN_PHASE=saved-resume-journey
 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/journey.xml" \
   .maestro/sanatan-parichay-smoke.yaml 2>&1 | tee "$SANATAN_OUTPUT/journey.log"
+fi
+if [[ "$SANATAN_PHASE_FILTER" == all || "$SANATAN_PHASE_FILTER" == collections ]]; then
 SANATAN_PHASE=all-collections
 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/collections.xml" \
   .maestro/sanatan-native-collections.yaml 2>&1 | tee "$SANATAN_OUTPUT/collections.log"
+fi
+if [[ "$SANATAN_PHASE_FILTER" == all || "$SANATAN_PHASE_FILTER" == regional-search ]]; then
 SANATAN_PHASE=regional-search
 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/regional-search.xml" \
   .maestro/sanatan-regional-search.yaml 2>&1 | tee "$SANATAN_OUTPUT/regional-search.log"
+fi
 for text_setting in standard enlarged; do
+  if [[ "$SANATAN_PHASE_FILTER" != all && "$SANATAN_PHASE_FILTER" != "$text_setting" ]]; then continue; fi
   if [[ "$PLATFORM" == ios ]]; then
     if [[ "$text_setting" == enlarged ]]; then xcrun simctl ui "$DEVICE" content_size accessibility-extra-large;
     else xcrun simctl ui "$DEVICE" content_size large; fi
