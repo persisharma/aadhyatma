@@ -18,6 +18,8 @@ export const useFontScale = () => ({ scale:params.get('size') || 'M', factor:par
 export const useSafeAreaInsets = () => ({top:0,bottom:0,left:0,right:0});
 export const SafeAreaView = ({children,edges,...props}:any) => <View {...props}>{children}</View>;
 export const storage = { getItem:async(key:string)=>localStorage.getItem(key),setItem:async(key:string,value:string)=>localStorage.setItem(key,value),removeItem:async(key:string)=>localStorage.removeItem(key) };
+// Browser layout only; the real native cache/placeholder is exercised by Jest/device QA.
+export const useCachedAsset = (request:any) => params.get('cdn') === '1' ? request?.remoteUrl ?? null : null;
 export default storage;
 export const ImpactFeedbackStyle={Light:'Light'};
 export const impactAsync=async()=>{};

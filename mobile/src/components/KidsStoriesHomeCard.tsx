@@ -1,11 +1,9 @@
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Image, StyleSheet, View } from 'react-native';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
-import { titleFontByLang } from '@/utils/langType';
 import { pick } from '@/utils/localize';
-import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import HomeBannerCard from '@/components/HomeBannerCard';
 import { assetBaseUrl, remoteAssetRequest } from '@/data/assetManifest';
 import kidsStoryManifest from '@/data/kidsStoryAssetManifest.json';
 import { useCachedAsset } from '@/utils/useCachedAsset';
@@ -20,64 +18,35 @@ type Props = {
 
 /** A deity-neutral picture-book door to the story library. */
 export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: Props) {
-  const { colors, radii, elevation } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const storyLibraryUri = useCachedAsset(storyLibraryRequest);
   const title = pick(lang, {
     hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids',
-    gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರકಥೆಗಳು',
+    gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು',
   });
   const action = pick(lang, {
     hi: 'पात्र चुनें', en: 'Choose a deity',
     gu: 'દેવતા પસંદ કરો', kn: 'ದೇವರನ್ನು ಆಯ್ಕೆಮಾಡಿ',
   });
-  const fontFamily = titleFontByLang(lang);
-  const ordered = orderTitlesByLanguage(lang, 'बच्चों की चित्र-कथाएँ', 'Stories for Kids', {
-    devPrimary: 18, devSecondary: 12, latPrimary: 21, latSecondary: 12,
-  });
-  const primary = { ...ordered.primary, text: lang === 'gu' || lang === 'kn' ? title : ordered.primary.text };
-
   return (
-    <Pressable
+    <HomeBannerCard
       testID="home-kids-stories-card"
-      accessibilityRole="button"
+      titleHi="बच्चों की चित्र-कथाएँ"
+      titleEn="Stories for Kids"
+      localizedTitle={title}
+      action={action}
       accessibilityLabel={`${title}. ${action}.`}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      style={({ pressed }) => [styles.card, { borderRadius: radii.lg, borderColor: colors.cardActiveBorder, backgroundColor: colors.cardActiveFrom }, elevation.card, pressed && styles.pressed]}
-    >
-      <LinearGradient
-        colors={[colors.cardActiveFrom, colors.cardActiveTo]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[StyleSheet.absoluteFill, { borderRadius: radii.lg }]}
-      />
-      {storyLibraryUri
+      artwork={storyLibraryUri
         ? <Image source={{ uri: storyLibraryUri }} resizeMode="cover" accessible={false} style={styles.cover} />
         : <View accessible={false} style={[styles.cover, { backgroundColor: colors.parchmentSoft }]} />}
-      <View style={styles.content}>
-        <Text style={{ color: colors.ink, fontFamily: primary.fontFamily, fontSize: primary.fontSize, fontStyle: primary.fontStyle, letterSpacing: primary.letterSpacing, lineHeight: 28 }} numberOfLines={2}>
-          {primary.text}
-        </Text>
-        <Text style={{ color: colors.inkMuted, fontFamily: ordered.secondary.fontFamily, fontSize: ordered.secondary.fontSize, fontStyle: ordered.secondary.fontStyle }} numberOfLines={1}>
-          {ordered.secondary.text}
-        </Text>
-        <View style={styles.actionRow}>
-          <Text style={{ color: colors.saffronDeep, fontFamily, fontSize: 14 }} numberOfLines={1}>
-            {action}
-          </Text>
-          <Text style={{ color: colors.saffronDeep, fontSize: 21, lineHeight: 22 }} accessible={false}>›</Text>
-        </View>
-      </View>
-    </Pressable>
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  card: { minHeight: 138, borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 15 },
-  pressed: { opacity: 0.88 },
   cover: { width: 100, height: 100, borderRadius: 12 },
-  content: { flex: 1, minWidth: 0, alignSelf: 'stretch', justifyContent: 'center', gap: 6 },
-  actionRow: { marginTop: 2, flexDirection: 'row', alignItems: 'center', gap: 5 },
 });

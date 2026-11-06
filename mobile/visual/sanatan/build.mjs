@@ -7,7 +7,7 @@ const {build}=require(path.join(mobile,'node_modules/esbuild'));
 const src=path.join(mobile,'src'),modules=path.join(root,'node_modules'),dist=path.join(root,'dist');
 fs.mkdirSync(path.join(dist,'assets'),{recursive:true});fs.mkdirSync(path.join(dist,'fonts'),{recursive:true});
 const platform=path.join(root,'src/platform.tsx');
-const services=['@/data/gita/language','@/contexts/FontScaleContext','@react-native-async-storage/async-storage','react-native-safe-area-context','expo-linear-gradient','expo-haptics','@/screens/_useAutoSlide','@/utils/shareVerse'];
+const services=['@/data/gita/language','@/contexts/FontScaleContext','@react-native-async-storage/async-storage','react-native-safe-area-context','expo-linear-gradient','expo-haptics','@/screens/_useAutoSlide','@/utils/shareVerse','@/utils/useCachedAsset'];
 await build({entryPoints:[path.join(root,'src/main.tsx')],outfile:path.join(dist,'app.js'),bundle:true,platform:'browser',format:'iife',jsx:'automatic',resolveExtensions:['.web.tsx','.web.ts','.web.js','.tsx','.ts','.jsx','.js','.json'],define:{__DEV__:'false','process.env':'{}',global:'globalThis'},loader:{'.js':'jsx'},plugins:[{name:'native-platform',setup(b){
  b.onResolve({filter:/.*/},args=>{
   if(services.includes(args.path))return{path:platform};
