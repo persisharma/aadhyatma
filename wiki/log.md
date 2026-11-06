@@ -1391,3 +1391,12 @@ Integrated main aba14c15a329bfb565ac62f6331a81a82987f5af into the Doha branch. P
 
 
 ## [2026-11-06] ingest | Prepared publication-gated Bhagwan Parshuram deity, seven-verse reader/Daily Bhakti, eight Suvichar reflections and standing artwork; publication and native evidence pending.
+
+## [2026-11-06] ingest | Vrat title clipping recurrence
+
+Recorded the local 17/24 override, shared full-line catalog/listing containment, rendered-style regression matrix and separate native acceptance boundary in subsystems/panchang.md.
+
+
+## [2026-11-06] ingest | Vrat font metrics verification
+
+Exact bundled-font checks found nine Kannada titles above the original 28pt line. Raised catalog/listing containment to 1.65em (Kannada hhea 1.62em), added actual TTF-metric regressions, and removed tight category/day-note/ledger overrides. All 1,576 catalog title/deity font-bounds checks pass; native pixel verification remains pending.

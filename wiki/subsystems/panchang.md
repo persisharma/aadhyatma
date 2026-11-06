@@ -366,3 +366,10 @@ Upcoming now settles at card boundaries; measured rail width and trailing paddin
 ### Screen-clipping corrections (5 November 2026)
 
 Kundali city search keeps the shared 100%-width TextField inside horizontal padding, preventing its right edge from exceeding the clipped modal. City filtering, selection and form persistence rules are unchanged. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.
+
+
+### Vrat title mark containment (6 November 2026)
+
+`ObservanceTodaySummary` had overridden shared typography with 17/24, reproducing the documented first-line clipping of Hindi marks. It now consumes catalogTitle 18/30, catalogMeta 12/20 and catalogBody 13/22. ListingCard's Indic tokens, bilingual caption and ObservancePreviewCard date/countdown also reserve at least 1.65em within their line boxes. Cards grow; system scaling and independent reading/reminder controls remain. Rendered-style regressions cover hi/en/gu/kn, M/L, compact/regular and simulated system scale, but do not prove native glyph shaping. Required installed-device matrix is pending; see `docs/reviews/2026-11-06-vrat-title-clipping.md` and `.maestro/vrat-title-clipping.yaml`.
+
+Verification follow-up measured all 197 unique catalog title/deity pairs in four languages using the exact shipped font bytes (1,576 shaped checks). Nine Kannada names exceeded the original 28pt title line. Catalog/listing tokens now cover the Kannada face's 1.62em vertical metrics with a 1.65em floor. The regression reads TTF hhea/head values rather than trusting that floor alone; category subtitles, day notes and ledger labels share safe tokens too. See the adjacent font-bounds JSON; native acceptance remains separate.
