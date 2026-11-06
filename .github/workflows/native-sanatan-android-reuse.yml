@@ -1,0 +1,100 @@
+name: Sanatan Android saved-APK acceptance
+on:
+  push:
+    branches: ['codex/sanatan-android-native-qa']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: sanatan-android-saved-apk
+  cancel-in-progress: true
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        phase: [journey, collections, standard, enlarged, regional-search]
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    env:
+      CI: '1'
+      SANATAN_NATIVE_PHASES: ${{ matrix.phase }}
+      MAESTRO_CLI_NO_ANALYTICS: 'true'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            mobile/.maestro
+            mobile/scripts
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify unchanged production app source
+        run: |
+          git fetch --no-tags --depth=1 origin 62af7ebf11ca8232c325e45b4a29ba7623ddff37
+          git diff --exit-code 62af7ebf11ca8232c325e45b4a29ba7623ddff37 HEAD -- src assets App.tsx index.ts app.json app.config.js app.config.ts package.json package-lock.json plugins modules babel.config.js metro.config.js eas.json ios android
+      - uses: actions/download-artifact@v4
+        with:
+          name: sanatan-android-42178480200
+          run-id: 42178480200
+          github-token: ${{ github.token }}
+          path: native-reuse-android
+      - name: Verify saved APK and provenance
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os,shutil
+          root=Path(os.environ['GITHUB_WORKSPACE'])/'native-reuse-android'
+          apps=list(root.rglob('Vedansh-test.apk'))
+          sources=list(root.rglob('apk-source-head.txt'))
+          if len(apps)!=1 or len(sources)!=1:raise SystemExit('Expected one native APK and source receipt')
+          source=sources[0].read_text().strip()
+          expected='9c855093ecdfe1bece7f73bd859c661beeab20ef3dd01c93f6092e40a0d39f2b'
+          if source!='62af7ebf11ca8232c325e45b4a29ba7623ddff37':raise SystemExit('Unexpected APK source')
+          if hashlib.sha256(apps[0].read_bytes()).hexdigest()!=expected:raise SystemExit('APK checksum mismatch')
+          shutil.copyfile(apps[0],Path(os.environ['RUNNER_TEMP'])/'sanatan-native.apk')
+          output=Path(os.environ['GITHUB_WORKSPACE'])/'native-sanatan-output'
+          output.mkdir(exist_ok=True)
+          (output/'binary-origin.json').write_text(json.dumps({'applicationSourceHead':source,'sourceRun':42178480200,'sourceArtifact':13485024126,'apkSha256':expected,'productionSourceUnchanged':True})+'\n')
+          print('Verified saved native APK checksum and exact production source.')
+          PY
+      - name: Install native test driver
+        run: |
+          curl -fsSL https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Exercise actual native app
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          working-directory: mobile
+          script: |
+            adb install "$RUNNER_TEMP/sanatan-native.apk"
+            adb shell wm size 960x1704
+            adb shell wm density 480
+            bash scripts/native-sanatan-matrix.sh android emulator-5554
+      - name: Retain native screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanatan-android-review-${{ github.run_id }}-${{ matrix.phase }}
+          path: native-sanatan-output/**
+          retention-days: 7
+          if-no-files-found: warn
