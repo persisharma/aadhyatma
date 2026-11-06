@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, AppState, Easing, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import Svg, { Circle, Defs, Ellipse, Path, RadialGradient, Stop } from 'react-native-svg';
+import Svg, { Circle, Defs, Ellipse, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
+import { radii } from '@/theme/spacing';
 import { JAPAM_BEADS_PER_ROUND as N } from '@/data/japam';
 import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useFontScale } from '@/contexts/FontScaleContext';
@@ -11,6 +12,9 @@ import { startInfinityMotion } from './japamInfinityPlayback';
 
 // Light-material highlights, like the mala's fixed wood/brass material colours.
 const JYOTI = { core: '#FFF9DF', gold: '#FFE4A0', amber: '#DFA13D' } as const;
+/** The jyoti's glow box; the bright core sits at its centre. */
+const MARKER = 40;
+const HALF = MARKER / 2;
 
 type Props = {
   count: number;
@@ -58,8 +62,8 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
     const inputRange = Array.from({ length: INFINITY_SAMPLES + 1 }, (_, i) => i / INFINITY_SAMPLES);
     return {
       inputRange,
-      x: inputRange.map((t) => infinityPoint(t).x * size - 16),
-      y: inputRange.map((t) => infinityPoint(t).y * size - 16),
+      x: inputRange.map((t) => infinityPoint(t).x * size - HALF),
+      y: inputRange.map((t) => infinityPoint(t).y * size - HALF),
       tails: [0.012, 0.024, 0.036].map((offset) => ({
         x: inputRange.map((t) => infinityPoint(t - offset).x * size - 4),
         y: inputRange.map((t) => infinityPoint(t - offset).y * size - 4),
@@ -69,49 +73,58 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
   return (
     <View testID="japam-infinity" style={[styles.root, { width: size, minHeight: size }]} pointerEvents="none"
       importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
-      <View style={{ width: size, height: size * 0.65 }}>
-        <Svg width={size} height={size * 0.65} viewBox="0 0 1000 650">
+      {/* A lamp-lit night panel (the Panchang sky's deep-sepia stops), so the
+          path, the moving jyoti and the parchment page never blend together. */}
+      <View testID="japam-infinity-panel" style={[styles.panel, { width: size, height: size * 0.65,
+        backgroundColor: colors.skyNightTop, borderColor: colors.nightGlassBorder }]}>
+        <Svg width={size} height={size * 0.65} viewBox="0 0 1000 650" style={StyleSheet.absoluteFill}>
           <Defs>
+            <RadialGradient id="infinity-night" cx="50%" cy="50%" r="60%">
+              <Stop offset="0" stopColor={colors.skyNightLower} stopOpacity={1} />
+              <Stop offset="0.55" stopColor={colors.skyNightUpper} stopOpacity={1} />
+              <Stop offset="1" stopColor={colors.skyNightTop} stopOpacity={1} />
+            </RadialGradient>
             <RadialGradient id="infinity-ambient" cx="50%" cy="50%" r="50%">
-              <Stop offset="0" stopColor={colors.parchmentSoft} stopOpacity={0.95} />
-              <Stop offset="0.6" stopColor={colors.gold} stopOpacity={0.08} />
-              <Stop offset="1" stopColor={colors.gold} stopOpacity={0} />
+              <Stop offset="0" stopColor={colors.sunCore} stopOpacity={0.16} />
+              <Stop offset="1" stopColor={colors.sunCore} stopOpacity={0} />
             </RadialGradient>
           </Defs>
+          <Rect x={0} y={0} width={1000} height={650} fill="url(#infinity-night)" />
           <Ellipse cx={500} cy={325} rx={500} ry={325} fill="url(#infinity-ambient)" />
-          <Path d={INFINITY_PATH} stroke={colors.gold} strokeWidth={22} opacity={0.06} fill="none" />
-          <Path d={INFINITY_PATH} stroke={colors.gold} strokeWidth={6} fill="none" />
+          <Path d={INFINITY_PATH} stroke={colors.sunCore} strokeWidth={34} opacity={0.08} fill="none" />
+          <Path d={INFINITY_PATH} stroke={colors.saffron} strokeWidth={9} fill="none" strokeLinecap="round" />
         </Svg>
         {running && !reduced ? coordinates.tails.map((tail, i) => (
-          <Animated.View key={i} style={[styles.tail, { backgroundColor: colors.saffron,
-            opacity: 0.2 - i * 0.05, transform: [
+          <Animated.View key={i} style={[styles.tail, { backgroundColor: colors.sunCore,
+            opacity: 0.5 - i * 0.15, transform: [
               { translateX: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: tail.x }) },
               { translateY: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: tail.y }) },
             ],
           }]} />
         )) : null}
         <Animated.View testID="japam-infinity-marker" style={[styles.light, {
-          transform: reduced ? [{ translateX: size / 2 - 16 }, { translateY: size * 0.325 - 16 }] : [
+          transform: reduced ? [{ translateX: size / 2 - HALF }, { translateY: size * 0.325 - HALF }] : [
             { translateX: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: coordinates.x }) },
             { translateY: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: coordinates.y }) },
           ],
         }]}>
-          <Svg width={32} height={32}>
+          <Svg width={MARKER} height={MARKER}>
             <Defs>
               <RadialGradient id="infinity-jyoti" cx="50%" cy="50%" r="50%">
                 <Stop offset="0" stopColor={JYOTI.core} stopOpacity={1} />
-                <Stop offset="0.23" stopColor={JYOTI.gold} stopOpacity={0.95} />
-                <Stop offset="0.48" stopColor={JYOTI.amber} stopOpacity={0.38} />
-                <Stop offset="1" stopColor={colors.saffron} stopOpacity={0} />
+                <Stop offset="0.2" stopColor={JYOTI.gold} stopOpacity={1} />
+                <Stop offset="0.42" stopColor={colors.sunCore} stopOpacity={0.75} />
+                <Stop offset="0.7" stopColor={JYOTI.amber} stopOpacity={0.22} />
+                <Stop offset="1" stopColor={colors.sunCore} stopOpacity={0} />
               </RadialGradient>
             </Defs>
-            <Circle cx={16} cy={16} r={16} fill="url(#infinity-jyoti)" />
-            <Circle cx={16} cy={16} r={3.3} fill={JYOTI.core} />
+            <Circle cx={HALF} cy={HALF} r={HALF} fill="url(#infinity-jyoti)" />
+            <Circle cx={HALF} cy={HALF} r={4.5} fill={JYOTI.core} />
           </Svg>
         </Animated.View>
         {!numbersBelow && <View style={[styles.numbers, { top: size * 0.325 - 26 * factor }]}>
-          <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.ink, fontFamily: fontFamilies.latinSemiBold }]}>{count}</Text>
-          <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.saffronDeep, fontFamily: fontFamilies.latinSemiBold }]}>{N}</Text>
+          <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.nightInk, fontFamily: fontFamilies.latinSemiBold }]}>{count}</Text>
+          <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.nightGold, fontFamily: fontFamilies.latinSemiBold }]}>{N}</Text>
         </View>}
       </View>
       {numbersBelow && <Text style={{ fontSize: 32 * factor, color: colors.ink, fontFamily: fontFamilies.latinSemiBold, textAlign: 'center' }}>
@@ -129,7 +142,8 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
 
 const styles = StyleSheet.create({
   root: { justifyContent: 'center', alignItems: 'center', paddingVertical: 8 },
-  light: { position: 'absolute', top: 0, left: 0, width: 32, height: 32 },
+  panel: { borderRadius: radii.xl, borderWidth: StyleSheet.hairlineWidth, overflow: 'hidden' },
+  light: { position: 'absolute', top: 0, left: 0, width: MARKER, height: MARKER },
   tail: { position: 'absolute', top: 0, left: 0, width: 8, height: 8, borderRadius: 4 },
   numbers: { position: 'absolute', left: '3%', right: '3%', flexDirection: 'row', alignItems: 'center' },
   number: { flex: 1, textAlign: 'center', fontSize: 38, lineHeight: 52 },

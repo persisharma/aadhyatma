@@ -6,6 +6,9 @@ export type InfinityMotionDriver = {
   onCycle?: () => void;
 };
 
+/** One full figure-eight. 880 ms is ~10% slower than the first cut's 800 ms. */
+export const INFINITY_CYCLE_MS = 880;
+
 /** Continuous motion; only successfully completed foreground cycles are emitted. */
 export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
   let live = true;
@@ -13,7 +16,7 @@ export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
   function cycle(from: number) {
     if (!live) return;
     let consumed = false;
-    animation = driver.animate(Math.max(1, Math.round(800 * (1 - from))), (finished) => {
+    animation = driver.animate(Math.max(1, Math.round(INFINITY_CYCLE_MS * (1 - from))), (finished) => {
       if (!live || consumed) return;
       consumed = true;
       if (!finished) return;

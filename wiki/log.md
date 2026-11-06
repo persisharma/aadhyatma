@@ -1417,3 +1417,7 @@ Added the ten-collection manifest allowlist, source preflight, shared bounded S3
 full public CDN byte verification, missing-secret skip and manual catch-up. Updated
 integrations/reading-artwork.md and the setup runbook; activation and OTA remain separate.
 Credentialed publication is pending the user's later Actions-secret setup.
+
+## [2026-11-06] ingest | JapMala Hindi label and Infinity contrast
+
+Hindi category `nameHi` is now जपमाला (tile, catalog, tour; matches the counter title). Infinity ∞ moved onto a night panel with a saffron path and bright jyoti (the old pale marker vanished on parchment); default loop 880ms (~10% slower). Updated [[subsystems/japam]]; native visual check pending.

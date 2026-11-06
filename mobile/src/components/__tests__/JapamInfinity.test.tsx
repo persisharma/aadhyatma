@@ -39,7 +39,7 @@ test('opening is still; start repeats full loops until pause', async () => {
   await mount(false, 107);
   expect(start).not.toHaveBeenCalled();
   await act(async () => { tree.update(display(true, 107)); });
-  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 800, useNativeDriver: true }));
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 880, useNativeDriver: true }));
   for (let i = 0; i < 5; i++) act(() => completions[i]({ finished: true }));
   expect(start).toHaveBeenCalledTimes(6);
   expect(onCycle).toHaveBeenCalledTimes(5);
@@ -62,7 +62,7 @@ test('Reduced Motion keeps count cycles active while the marker remains still', 
   await mount(true);
   expect(start).toHaveBeenCalledTimes(1);
   const marker = tree.root.findAll(n => n.props.testID === 'japam-infinity-marker')[0];
-  expect(ReactNative.StyleSheet.flatten(marker.props.style).transform).toEqual([{ translateX: 99 }, { translateY: 58.75 }]);
+  expect(ReactNative.StyleSheet.flatten(marker.props.style).transform).toEqual([{ translateX: 95 }, { translateY: 54.75 }]);
   act(() => completions[0]({ finished: true }));
   expect(onCycle).toHaveBeenCalledTimes(1);
   expect(tree.root.findAllByType(Text).some(n => n.props.children === 'Tap to pause')).toBe(true);
@@ -91,4 +91,15 @@ test('compact screens with enlarged text move untruncated numbers below the loop
   expect(row).toBeDefined();
   expect(row?.props.adjustsFontSizeToFit).toBeUndefined();
   expect(row?.props.numberOfLines).toBeUndefined();
+});
+
+test('the loop sits on a dark night panel so the path, jyoti and numbers stand apart from the parchment', async () => {
+  // Standard system text: the numbers sit inside the loops, on the panel.
+  jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+  await mount(false, 11);
+  const panel = tree.root.findAll(n => n.props.testID === 'japam-infinity-panel')[0];
+  const { lightColors } = jest.requireActual('@/theme/colors');
+  expect(ReactNative.StyleSheet.flatten(panel.props.style).backgroundColor).toBe(lightColors.skyNightTop);
+  const numbers = tree.root.findAllByType(Text).filter(n => n.props.children === 11 || n.props.children === 108);
+  expect(numbers.map(n => ReactNative.StyleSheet.flatten(n.props.style).color)).toEqual([lightColors.nightInk, lightColors.nightGold]);
 });
