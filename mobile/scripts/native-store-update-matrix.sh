@@ -42,7 +42,11 @@ seed --state due
 run_flow background-resume-dismiss lifecycle
 python3 scripts/native-store-update-seed.py "$PLATFORM" "$DEVICE" read > "$OUTPUT/$PLATFORM-$VERSION-$PROFILE/lifecycle-persisted-shown.json"
 run_flow lifecycle-cold-restart hidden
-for system_size in standard enlarged; do
+SYSTEM_SIZES=(standard enlarged)
+if [[ -n "${NATIVE_SYSTEM_SIZE:-}" ]]; then
+  case "$NATIVE_SYSTEM_SIZE" in standard|enlarged) SYSTEM_SIZES=("$NATIVE_SYSTEM_SIZE");; *) exit 2;; esac
+fi
+for system_size in "${SYSTEM_SIZES[@]}"; do
   if [[ "$PLATFORM" == ios ]]; then
     if [[ "$system_size" == enlarged ]]; then xcrun simctl ui "$DEVICE" content_size accessibility-extra-large
     else xcrun simctl ui "$DEVICE" content_size large; fi

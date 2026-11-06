@@ -25,9 +25,9 @@ env:
   MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
   MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
 jobs:
-  ios:
+  ios-build:
     runs-on: macos-15
-    timeout-minutes: 80
+    timeout-minutes: 50
     defaults:
       run:
         working-directory: mobile
@@ -57,18 +57,72 @@ jobs:
           )
           sudo systemsetup -settimezone "$UPDATE_TIMEZONE"
       - run: npm ci
+      - name: Compile both native runtime fixtures
+        run: bash scripts/native-store-update-ios-build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-update-ios-fixtures-${{ github.run_id }}
+          path: native-update-output/fixtures/*
+          retention-days: 7
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-update-ios-build-${{ github.run_id }}
+          path: native-update-output/*.log
+          retention-days: 7
+          if-no-files-found: warn
+  ios:
+    needs: ios-build
+    runs-on: macos-15
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [compact, wide]
+        system: [standard, enlarged]
+    env:
+      NATIVE_IOS_PROFILE: ${{ matrix.profile }}
+      NATIVE_SYSTEM_SIZE: ${{ matrix.system }}
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: mobile
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set native reference timezone
+        run: |
+          sudo systemsetup -listtimezones > /tmp/update-timezones.txt
+          UPDATE_TIMEZONE=$(python3 - <<'PY'
+          from pathlib import Path
+          zones={line.strip() for line in Path('/tmp/update-timezones.txt').read_text().splitlines()}
+          print(next(zone for zone in ['Asia/Kolkata','Asia/Calcutta'] if zone in zones))
+          PY
+          )
+          sudo systemsetup -settimezone "$UPDATE_TIMEZONE"
+      - uses: actions/download-artifact@v4
+        with:
+          name: native-update-ios-fixtures-${{ github.run_id }}
+          path: native-update-fixtures
       - name: Install Maestro
         run: |
           curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/update-maestro.zip"
           echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/update-maestro.zip" | shasum -a 256 -c -
           unzip -q "$RUNNER_TEMP/update-maestro.zip" -d "$RUNNER_TEMP/update-tools"
           echo "$RUNNER_TEMP/update-tools/maestro/bin" >> "$GITHUB_PATH"
-      - name: Compile and exercise native runtime fixtures
+      - name: Exercise verified native runtime fixtures
         run: bash scripts/native-store-update-ios.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: native-update-ios-${{ github.run_id }}
+          name: native-update-ios-${{ matrix.profile }}-${{ matrix.system }}-${{ github.run_id }}
           path: |
             native-update-output/**
             !native-update-output/ios-derived/**
