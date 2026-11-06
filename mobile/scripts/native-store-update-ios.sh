@@ -31,30 +31,23 @@ small=min(phones,key=lambda d:compact.index(d['name']) if d['name'] in compact e
 large=min([d for d in phones if d['udid']!=small['udid']],key=lambda d:wide.index(d['name']) if d['name'] in wide else 99)
 (out/'ios-selected.tsv').write_text(''.join(f"{profile}\t{d['udid']}\t{d['name']}\n" for profile,d in [('compact',small),('wide',large)] if profile==sys.argv[2]))
 PY
-# Establish XCTest readiness before testing the immutable compiled fixture.
-while IFS=$'\t' read -r PROFILE DEVICE NAME; do
-  xcrun simctl boot "$DEVICE" 2>/dev/null || true
-  xcrun simctl bootstatus "$DEVICE" -b
-  open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
-  maestro --device "$DEVICE" test --config .maestro/config.yaml .maestro/brand-driver-check.yaml \
-    2>&1 | tee "$OUTPUT/ios-$PROFILE-driver.log"
-  # Keep this one simulator booted: rebooting here stranded the XCTest driver.
-done < "$OUTPUT/ios-selected.tsv"
+FIXTURE_APPS="$RUNNER_TEMP/update-fixtures"
 for VERSION in 1.5.3 1.5.4; do
-  DEST="$RUNNER_TEMP/update-fixture-$VERSION"
+  DEST="$FIXTURE_APPS/$VERSION"
   mkdir -p "$DEST"
   ditto -x -k "$FIXTURES/Vedansh-$VERSION.zip" "$DEST"
   APP=$(find "$DEST" -maxdepth 1 -name '*.app' -print -quit)
   /usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' "$APP/Info.plist" | tee "$OUTPUT/ios-$VERSION-native-version.txt"
   /usr/libexec/PlistBuddy -c 'Print EXUpdatesRuntimeVersion' "$APP/Expo.plist" | tee "$OUTPUT/ios-$VERSION-native-runtime.txt"
+  test "$APP" = "$DEST/Vedansh.app"
+  test "$(cat "$OUTPUT/ios-$VERSION-native-version.txt")" = "$VERSION"
   test "$(cat "$OUTPUT/ios-$VERSION-native-runtime.txt")" = "$VERSION"
-  while IFS=$'\t' read -r PROFILE DEVICE NAME; do
-    xcrun simctl boot "$DEVICE" 2>/dev/null || true
-    xcrun simctl bootstatus "$DEVICE" -b
-    open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
-    xcrun simctl install "$DEVICE" "$APP"
-    bash scripts/native-store-update-matrix.sh ios "$DEVICE" "$PROFILE" "$VERSION"
-    # Install the next native runtime in place without restarting XCTest.
-  done < "$OUTPUT/ios-selected.tsv"
 done
-printf 'PASS: iOS %s/%s native runtime fixtures, persisted cooldown, daily slot, language/size batch and browser/store handoff.\n' "$NATIVE_IOS_PROFILE" "$NATIVE_SYSTEM_SIZE" > "$OUTPUT/ios-result.txt"
+IFS=$'\t' read -r PROFILE DEVICE NAME < "$OUTPUT/ios-selected.tsv"
+xcrun simctl boot "$DEVICE" 2>/dev/null || true
+xcrun simctl bootstatus "$DEVICE" -b
+open -a Simulator --args -CurrentDeviceUDID "$DEVICE"
+xcrun simctl install "$DEVICE" "$FIXTURE_APPS/1.5.3/Vedansh.app"
+# Warm SpringBoard/Preferences before the sole XCTest session starts.
+xcrun simctl launch "$DEVICE" com.apple.Preferences
+python3 scripts/native-store-update-ios-session.py "$DEVICE" "$PROFILE" "$NATIVE_SYSTEM_SIZE" "$FIXTURE_APPS"

@@ -8,6 +8,8 @@ drivers = {
  b'mobile/scripts/native-store-update-matrix.sh',
  b'mobile/scripts/native-store-update-seed.py',
  b'mobile/scripts/native-store-update-fingerprint.py',
+ b'mobile/scripts/native-store-update-ios-session.py',
+ b'mobile/scripts/native-store-update-request.js',
 }
 kept = []
 for row in rows:

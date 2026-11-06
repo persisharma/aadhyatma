@@ -20,6 +20,7 @@ The runner writes only dedicated simulator/emulator app storage, while the proce
 - Update-now handoff: actual Safari/App Store hierarchy or Android activity intent evidence for the expected store host. A simulator/browser handoff is not a physical store installation.
 - Real 1.5.4 native fixture must not show the sheet despite fresh eligibility storage.
 - JUnit, screenshots, device logs, binary/configuration/toolchain identity and fixture binaries are retained as workflow artifacts. Derived build caches are excluded.
+- Each iOS batch uses one XCTest session for 18 scenarios and both native runtimes. A loopback-only host helper performs the same process-stopped native-storage setup and verified fixture installation between UI subflows; it is outside the app. The aggregate JUnit must pass, the exact ordered scenario-completion list must match, both native timestamp reads must pass, and all 28 expected screenshots must exist. Startup recovery is limited to an XCTest timeout before the first fixture seed, with at most three attempts; product assertions and partially executed batches are never retried.
 
 ## Status
 
@@ -32,5 +33,9 @@ The superseded iOS run successfully compiled the unsigned Release fixture with X
 Harness corrections handle the isolated browser's welcome screens without an account, force real body scrolling (partially visible Text can satisfy accessibility visibility), assert removal of the fixed footer action, collect screenshots from Maestro 2.12's actual run directory, and check warm return from the store to Home. Each iOS consumer first checks XCTest readiness before exercising the immutable native fixtures.
 
 [Run 42211025918](https://github.com/persisharma/aadhyatma/actions/runs/42211025918) compiled both native runtime fixtures successfully at `181de37554f7209f95857ae1b1239a7cc3d1b504`. Three iOS consumers passed the Settings preflight but lost the XCTest connection after the harness rebooted their simulator; those failed before feature assertions. The driver now keeps its dedicated simulator booted through preflight, both runtime installations and the complete batch, shutting it down only at cleanup. Native shown-time verification is bounded by this flow's stamp-free seed and read times (with five seconds of clock tolerance), rather than an arbitrary two-minute UI-performance limit.
+
+Android in that run completed **52/52 native flows** and its **32/32 language/size/profile cells were visually reviewed**, including actual body-end scrolling, complete Indic marks, reachable footer controls, expected Google Play listing, warm return to Home and native 1.5.4 silence on both profiles. Evidence: artifact `13500975919` (`native-update-android-42211025918`), native package version records, four native SQLite timestamp reads, per-case JUnit and screenshots.
+
+The next iOS attempt also exposed a cold-start CoreSimulator/XCTest launch failure (`SimError 405` / Mach `-308`) before Settings. Maestro 2.12.1's CLI initializes a new XCTest session for every separate test invocation. The single-session batching above removes that repeated startup, warms Preferences before initial connection, and limits recovery strictly to initial driver startup. These infrastructure failures are not counted as feature passes.
 
 Rerun pending. Inspect the exact workflow head, native build/driver result, each scenario and all screenshot text/controls before marking native accepted. A failed handoff, runtime check, screenshot or assertion remains a failure; bundle compilation and YAML parsing alone are insufficient.
