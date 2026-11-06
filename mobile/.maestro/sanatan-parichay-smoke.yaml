@@ -67,5 +67,10 @@ appId: com.prashantsharma.vedansh
     optional: true
 - runFlow: _sanatan-home-entry.yaml
 - tapOn: { id: home-sanatan-card }
+- scrollUntilVisible:
+    element: { id: sanatan-resume }
+    direction: DOWN
+    timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-resume }
 - assertVisible: "2\\s*/\\s*3"

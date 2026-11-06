@@ -14,9 +14,9 @@ failure_evidence() {
   set +e
   printf 'FAIL phase=%s exit=%s line=%s\n' "$PHASE" "$rc" "${BASH_LINENO[0]:-unknown}" > "$OUTPUT/failure.log"
   if [[ -n "${SIMULATOR_UDID:-}" ]]; then
-    xcrun simctl spawn "$SIMULATOR_UDID" launchctl list > "$OUTPUT/processes-at-failure.log" 2>&1
-    xcrun simctl io "$SIMULATOR_UDID" screenshot "$OUTPUT/failure.png"
-    xcrun simctl spawn "$SIMULATOR_UDID" log show --last 5m --style compact --predicate 'process == "Vedansh" OR process == "SpringBoard"' > "$OUTPUT/device-failure.log" 2>&1
+    node scripts/run-native-diagnostic.cjs xcrun simctl spawn "$SIMULATOR_UDID" launchctl list > "$OUTPUT/processes-at-failure.log" 2>&1
+    node scripts/run-native-diagnostic.cjs xcrun simctl io "$SIMULATOR_UDID" screenshot "$OUTPUT/failure.png"
+    node scripts/run-native-diagnostic.cjs xcrun simctl spawn "$SIMULATOR_UDID" log show --last 5m --style compact --predicate 'process == "Vedansh" OR process == "SpringBoard"' > "$OUTPUT/device-failure.log" 2>&1
   fi
   shopt -s nullglob
   for report in "$HOME"/Library/Logs/DiagnosticReports/Vedansh*.ips; do
@@ -26,19 +26,7 @@ failure_evidence() {
 }
 trap failure_evidence ERR
 xcrun simctl list devices available --json > "$OUTPUT/simulators.json"
-SIMULATOR_UDID=$(python3 - "$OUTPUT/simulators.json" <<'PY'
-import json, sys
-data = json.load(open(sys.argv[1]))
-phones = [d for runtime, devices in data['devices'].items() if '.iOS-' in runtime
-          for d in devices if d.get('isAvailable') and d['name'].startswith('iPhone')]
-if not phones:
-    raise SystemExit('No available iPhone simulator runtime on this runner')
-# Prefer a compact installed profile; log the actual selected device below.
-priority = ['iPhone SE (3rd generation)', 'iPhone 16e', 'iPhone 17e', 'iPhone 16', 'iPhone 17']
-phones.sort(key=lambda d: priority.index(d['name']) if d['name'] in priority else len(priority))
-print(phones[0]['udid'])
-PY
-)
+SIMULATOR_UDID=$(node scripts/select-native-ios-device.cjs "$OUTPUT/simulators.json")
 if [[ -n "${GITHUB_ENV:-}" ]]; then
   echo "SIMULATOR_UDID=$SIMULATOR_UDID" >> "$GITHUB_ENV"
 fi
@@ -52,6 +40,13 @@ PY
 if [[ "$STATE" != 'Booted' ]]; then xcrun simctl boot "$SIMULATOR_UDID"; fi
 xcrun simctl bootstatus "$SIMULATOR_UDID" -b
 xcrun simctl status_bar "$SIMULATOR_UDID" override --time '09:41' --batteryState charged --batteryLevel 100
+
+if [[ "${NATIVE_SMOKE_DRIVER_CHECK:-0}" == 1 ]]; then
+  PHASE=driver-preflight
+  open -a Simulator --args -CurrentDeviceUDID "$SIMULATOR_UDID"
+  node scripts/run-native-diagnostic.cjs --timeout-ms 600000 maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
+    --output "$OUTPUT/driver.xml" .maestro/native-ios-input-check.yaml 2>&1 | tee "$OUTPUT/driver.log"
+fi
 
 WORKSPACE=$(python3 - <<'PY'
 from pathlib import Path
@@ -100,18 +95,11 @@ if [[ "${NATIVE_SMOKE_SCOPE:-widgets}" == host ]]; then
   exit 0
 fi
 
-# Exercise an existing widget destination on a cold launch. This checks the host
-# app route, not placement or rendering of the Home Screen widget itself.
-TODAY=$(TZ=Asia/Kolkata date +%F)
-PHASE=terminate-before-cold-widget
-xcrun simctl terminate "$SIMULATOR_UDID" "$APP_ID"
-PHASE=cold-panchang-widget-link
-xcrun simctl openurl "$SIMULATOR_UDID" "vedansh://widget/panchang?date=$TODAY"
-capture panchang-widget-link
-PHASE=warm-verse-widget-link
-xcrun simctl openurl "$SIMULATOR_UDID" 'vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=0'
-capture verse-widget-link
+# The shared native flow handles the OS Open confirmation and asserts actual
+# gallery/deep-link destinations, including a cold restart and exact civil date.
+PHASE=widget-deep-link-journey
+node scripts/run-native-diagnostic.cjs --timeout-ms 1200000 maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
+  --output "$OUTPUT/widgets.xml" .maestro/home-widgets-smoke.yaml 2>&1 | tee "$OUTPUT/widgets.log"
 
-
-printf '%s\n' 'PASS: native host + embedded widget extension compiled; host launched and remained running after widget URLs.' > "$OUTPUT/result.log"
+printf '%s\n' 'PASS: native host + embedded widget extension compiled; widget gallery and warm/cold deep-link destinations passed the shared Maestro flow.' > "$OUTPUT/result.log"
 printf '%s\n' 'PENDING: Home Screen widget placement/rendering, four-language/size matrix, signed-device entitlements and visual review.' >> "$OUTPUT/result.log"

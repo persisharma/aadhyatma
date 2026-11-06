@@ -1,0 +1,14 @@
+# Prove XCTest scrolling and taps, rather than only opening a built-in app.
+appId: com.apple.Preferences
+---
+- launchApp
+- assertVisible: Settings
+- scrollUntilVisible:
+    element: { text: General }
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
+- tapOn: General
+- assertVisible: About
+- tapOn: About
+- assertVisible: ".*Model Name.*"
