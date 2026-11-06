@@ -58,3 +58,16 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - stopApp:
     appId: com.prashantsharma.vedansh
+# A cold widget launch must deliver the represented day after the OS confirmation.
+- openLink: "vedansh://widget/panchang?date=2030-01-15"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: ".*15.*2030.*"
+    timeout: 15000
+- openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=0"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: { id: "daily-bhakti-card" }
+    timeout: 15000
+- stopApp:
+    appId: com.prashantsharma.vedansh

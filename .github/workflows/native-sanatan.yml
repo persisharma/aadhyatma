@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/native-sanatan.yml'
       - 'mobile/scripts/*sanatan*'
+      - 'mobile/scripts/native-ios-smoke.sh'
+      - 'mobile/scripts/select-native-ios-device.cjs'
+      - 'mobile/scripts/run-native-diagnostic.cjs'
       - 'mobile/.maestro/*sanatan*.yaml'
       - 'mobile/src/components/sanatan/**'
       - 'mobile/src/components/SanatanHomeCard.tsx'

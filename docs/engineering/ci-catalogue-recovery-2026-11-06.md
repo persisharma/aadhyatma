@@ -42,6 +42,14 @@ product content, artwork, publication gates, progress or native dependencies.
    status-check contexts, and its `main` ruleset disabled. The rulebook therefore
    does not block a red/pending merge. This PR does not change administration
    settings; enabling required-check protection is a separate repository action.
+7. The additional native host gate compiled and launched successfully on
+   `02d3771`, then failed at `cold-panchang-widget-link`. The failure capture and
+   SpringBoard log show the native "Open in Vedansh?" confirmation. The shell
+   had asserted process presence before the user/OS handoff. It now executes the
+   existing widget Maestro flow, which accepts Open and verifies gallery, verse,
+   dated Panchang and Japam destinations. The flow also checks the represented
+   civil date after a cold restart. The generic native job uses the same pinned
+   Xcode/runtime/driver as the Sanatan gate. WidgetKit placement remains separate.
 
 ## Evidence and limits
 

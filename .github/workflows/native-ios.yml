@@ -11,6 +11,9 @@ on:
       - 'mobile/app.json'
       - 'mobile/package-lock.json'
       - 'mobile/scripts/native-ios-smoke.sh'
+      - 'mobile/scripts/select-native-ios-device.cjs'
+      - 'mobile/scripts/run-native-diagnostic.cjs'
+      - 'mobile/.maestro/*widgets*.yaml'
       - '.github/workflows/native-ios.yml'
 
 permissions:
@@ -22,7 +25,7 @@ concurrency:
 
 jobs:
   simulator:
-    runs-on: macos-15
+    runs-on: macos-26
     timeout-minutes: 50
     defaults:
       run:
@@ -30,6 +33,8 @@ jobs:
         shell: bash
     env:
       CI: '1'
+      NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
+      NATIVE_SMOKE_DRIVER_CHECK: '1'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,6 +46,20 @@ jobs:
           cache-dependency-path: mobile/package-lock.json
       - name: Install dependencies
         run: npm ci
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Select matching XCTest toolchain
+        run: |
+          test -d /Applications/Xcode_26.2.app
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+      - name: Install pinned native test driver
+        run: |
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/widget-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/widget-maestro.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/widget-maestro.zip" -d "$RUNNER_TEMP/widget-tools"
+          echo "$RUNNER_TEMP/widget-tools/maestro/bin" >> "$GITHUB_PATH"
       - name: Record native toolchain
         run: |
           xcodebuild -version
@@ -61,6 +80,7 @@ jobs:
             native-output/*.log
             native-output/*.png
             native-output/*.json
+            native-output/*.xml
             native-output/*.zip
             native-output/*.ips
           retention-days: 7

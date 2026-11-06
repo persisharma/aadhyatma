@@ -95,18 +95,11 @@ if [[ "${NATIVE_SMOKE_SCOPE:-widgets}" == host ]]; then
   exit 0
 fi
 
-# Exercise an existing widget destination on a cold launch. This checks the host
-# app route, not placement or rendering of the Home Screen widget itself.
-TODAY=$(TZ=Asia/Kolkata date +%F)
-PHASE=terminate-before-cold-widget
-xcrun simctl terminate "$SIMULATOR_UDID" "$APP_ID"
-PHASE=cold-panchang-widget-link
-xcrun simctl openurl "$SIMULATOR_UDID" "vedansh://widget/panchang?date=$TODAY"
-capture panchang-widget-link
-PHASE=warm-verse-widget-link
-xcrun simctl openurl "$SIMULATOR_UDID" 'vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=0'
-capture verse-widget-link
+# The shared native flow handles the OS Open confirmation and asserts actual
+# gallery/deep-link destinations, including a cold restart and exact civil date.
+PHASE=widget-deep-link-journey
+maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
+  --output "$OUTPUT/widgets.xml" .maestro/home-widgets-smoke.yaml 2>&1 | tee "$OUTPUT/widgets.log"
 
-
-printf '%s\n' 'PASS: native host + embedded widget extension compiled; host launched and remained running after widget URLs.' > "$OUTPUT/result.log"
+printf '%s\n' 'PASS: native host + embedded widget extension compiled; widget gallery and warm/cold deep-link destinations passed the shared Maestro flow.' > "$OUTPUT/result.log"
 printf '%s\n' 'PENDING: Home Screen widget placement/rendering, four-language/size matrix, signed-device entitlements and visual review.' >> "$OUTPUT/result.log"
