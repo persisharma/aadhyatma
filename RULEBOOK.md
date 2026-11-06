@@ -644,6 +644,34 @@ See `docs/reviews/2026-11-06-sanatan-image-frame.md`.
 
 
 
+
+### 11.18 Prototype approval is not production content or design acceptance
+
+An approved prototype establishes a visual/interaction direction. Sample copy,
+placeholder lessons, research inventories and reference seeds are not thereby
+approved as a completed app feature.
+
+- Before integration, record a collection-by-collection coverage map: intended
+  content, finished source-backed reading units, unresolved drafts and reusable
+  app content. Never report a topic count as the number of finished articles.
+- Public reading pages must teach the subject with coherent explanations,
+  concrete examples and appropriate source/tradition context. Research directions
+  such as "explain this", "needs its own source", artwork-production commentary,
+  copyright/review notes and prototype instructions belong in repository notes,
+  not in the user-facing lesson body.
+- Reuse the actual native listing/card/input/reader/control components. Compare
+  the approved hierarchy, artwork framing, paired/grouped layouts, typography
+  and interactions with the installed screens at the real entry points.
+  A generic button-and-text reconstruction is not design fidelity.
+- Add regression checks for known editorial scaffolding and incomplete content
+  structures. Review factual/source quality separately; word counts and passing
+  structural tests cannot establish that content is complete or correct.
+- Report content completeness, native design fidelity, route/persistence tests,
+  geometry checks, CI and release status as separate results. Incomplete content
+  or required native QA remains PENDING and the PR stays draft. Do not call the
+  feature finished because its prototype routes work or its automated tests pass.
+
+
 ---
 
 ## 12. Theerth archetype (तीर्थ — map-driven pilgrimage tours)
