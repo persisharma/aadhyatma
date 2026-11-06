@@ -2,7 +2,7 @@ name: Native festival card iOS
 on:
   workflow_dispatch:
   push:
-    branches: [codex/festival-muhurat-share]
+    branches: [codex/festival-muhurat-share, codex/year-round-occasion-cards]
     paths:
       - 'mobile/**'
       - '.github/workflows/native-festival-ios.yml'
@@ -35,10 +35,29 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: mobile/package-lock.json
+      - name: Require published hero paintings
+        run: |
+          mkdir -p ../native-festival-output
+          git rev-parse HEAD > ../native-festival-output/tested-head.txt
+          node - <<'JS'
+          const fs = require('node:fs');
+          const manifest = require('./src/data/festivalHeroManifest.json');
+          if (manifest.publication !== 'verified') {
+            const message = 'BLOCKED: publish and publicly hash-verify festival hero paintings before native export verification. See the festival publication workflow.';
+            fs.writeFileSync('../native-festival-output/result.txt', message + '\n');
+            console.error(message);
+            process.exit(1);
+          }
+          JS
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+      - name: Select stable native toolchain
+        run: |
+          test -d /Applications/Xcode_16.4.app
+          sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+          xcodebuild -version
       - name: Set reference timezone
         run: |
           mkdir -p ../native-festival-output

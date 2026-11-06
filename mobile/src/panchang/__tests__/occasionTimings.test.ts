@@ -53,7 +53,7 @@ for (const fixture of PUBLISHED_OCCASIONS) test(`source audit: ${fixture.id} ${f
     if (fixture.guidanceOnly) {
       // This is a withholding regression, NOT a passed preferred-clock match.
       assert.deepEqual(item.windows, [], 'unverified Ghatasthapana must not advertise a clock');
-      assert.match(item.noteEn ?? '', /not yet verified/);
+      assert.match(item.noteEn ?? '', /Pratipada, lagna and yoga/);
       continue;
     }
     assert.equal(item.windows.length, fixture.clocks.length, `${fixture.source}: complete window count`);

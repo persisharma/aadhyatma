@@ -1,3 +1,4 @@
+import { occasionGuidance } from '@/panchang/occasionTimings';
 import OccasionTimingsCard from '@/components/OccasionTimingsCard';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import StoryIcon from '@/components/StoryIcon';
@@ -210,7 +211,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 : null}
             />
 
-            <OccasionTimingsCard items={occasion.items} date={next?.date ?? today} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
+            <OccasionTimingsCard items={occasion.items.length ? occasion.items : rule && !occasion.loading && !occasion.error ? [occasionGuidance(rule, next?.date ?? today)] : []} dated={!!next} date={next?.date ?? today} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
             {/* Actions (P2: Follow + Read Katha; Remind arrives in P3) */}
             <View style={styles.actionRow}>
