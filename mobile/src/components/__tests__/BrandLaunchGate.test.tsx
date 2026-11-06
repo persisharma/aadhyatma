@@ -244,7 +244,9 @@ test.each(['inactive', 'background'] as const)('%s during Home layout cancels th
 });
 test.each(['reduceMotionChanged', 'screenReaderChanged'] as const)('%s during the handoff skips the fade', async event => {
   await mount(); await send('brand-ready'); await send('brand-complete');
-  const listener = jest.mocked(AccessibilityInfo.addEventListener).mock.calls.filter(([name]) => name === event).at(-1)![1];
+  // Jest selects RN's final (announcement) overload; these two events carry booleans.
+  const calls = jest.mocked(AccessibilityInfo.addEventListener).mock.calls as unknown as [string, (enabled: boolean) => void][];
+  const listener = calls.filter(([name]) => name === event).at(-1)![1];
   act(() => listener(true)); expect(ready()).toBe(true); expect(isBrandLaunchVisible()).toBe(false);
   expect(tree!.root.findAllByType(WebView)).toHaveLength(0);
 });
@@ -291,4 +293,3 @@ test('a mounted automatic-ask subscriber stays suppressed through the cover fade
   layoutHome(); act(() => jest.advanceTimersByTime(50)); expect(selected).not.toHaveBeenCalled();
   act(() => finishFade({ finished: true })); expect(selected).toHaveBeenCalledTimes(1);
 });
-

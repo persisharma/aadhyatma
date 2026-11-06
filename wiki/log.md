@@ -1358,3 +1358,12 @@ PR #621 retains the completed approved canvas while Home mounts, waits for nativ
 ## [2026-11-06] ingest | PR 621 main conflict resolution
 
 Merged main 77a0e0e692eaa31a1c96d29289771551b1680af8 into the launch handoff branch, preserving both appended clipping and launch records. RULEBOOK/design changes merged without conflict; launch implementation and tests remain unchanged. Focused launch tests and final CI are recorded in the PR. Native acceptance remains pending.
+
+
+## [2026-11-05] ingest | Sanatan Parichay native integration
+
+Added [[subsystems/sanatan-parichay]] for the approved thirteen-collection learning
+journey, exact search targets, plain source credits and durable save/resume store.
+RULEBOOK §32/design §87 document the native subset of research PR #605. Draft
+PR #622 preserves implementation and artwork; device and native export gates
+remain pending. Integrated main 3eb009b9c3748d21de9a0b1a737c50b10f23f75a.
