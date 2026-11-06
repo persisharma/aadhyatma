@@ -382,6 +382,10 @@ publication by date/city/calendar/lenses. App and 4:5 share ribbon use typed
 painted FestivalMotif art and FestiveCorners; text sharing includes every window.
 Art is a bundled transparent 4x3 atlas, with reviewed source/hash metadata in
 `docs/reviews/festival-art/`. Full/focused export readiness waits for all painted
-slots, not only the brand mark. Ghatasthapana uses the first daylight third/Abhijit with explicit
-Chitra/Vaidhriti advisory; Ayudha and Shastra retain distinct dates. Coverage/exceptions and
+slots, not only the brand mark. Exact Ghatasthapana clocks are withheld: the
+first-third/Abhijit rule fails the published Chaitra 2026/2027 preferred windows.
+The Drik audit pins 115 cases across all 53 profiles; 109 are clock comparisons,
+six are withholding regressions. Shared-ID Putrada matches both months; Smarta
+after-midday parana ends with Aparahna; geometric-centre Moonrise is shared by
+Panchang and vrat matching, with persisted caches invalidated. Ayudha and Shastra retain distinct dates. Coverage/exceptions and
 verification: `docs/reviews/festival-muhurat.md`.

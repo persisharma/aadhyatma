@@ -1506,6 +1506,10 @@ Kaal/Vaas and co-brand footer remain. Send as text carries complete windows. Nex
 the vrat day; long date-bearing clock ranges use two complete lines.
 Export readiness also waits for both painted corners and the miniature. The in-app ritual share action exposes `occasion-share` for native automation. `native-festival-ios.yml` builds an unsigned simulator app and retains compact/wide screenshots, Standard/Large and enlarged-system-text cases, plus actual full/focused PNGs; authored automation is not a native pass.
 See docs/reviews/festival-muhurat.md for rules and verification boundaries.
+Source audit: all four Ghatasthapana profiles show guidance and a local-time
+confirmation in the compact export, without an unverified clock. The date,
+artwork and sharing remain. Single-occasion redesign concepts requested on
+6 November are exploration only; no new layout is approved or shipped yet.
 
 ### §33a Share card: पूर्ण पंचांग (`PanchangShareCard`)
 
