@@ -26,13 +26,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
       - name: Verify unchanged production source
         run: |
+          git fetch --no-tags --depth=1 origin a469ea3696f29baf588b3783fee83c9c1e000202
           git diff --exit-code a469ea3696f29baf588b3783fee83c9c1e000202 HEAD -- src assets App.tsx index.ts app.json app.config.js package.json package-lock.json plugins modules babel.config.js
       - uses: actions/download-artifact@v4
         with:
