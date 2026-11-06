@@ -43,10 +43,11 @@
   "voice": {
     "engine": "Kokoro-82M v1.0 (Apache-2.0)",
     "voice": "hf_alpha",
-    "speed": 1.05,
+    "speed": 1.0,
     "phonemeFixes": {
-      "lˈoːkəktʰaː": "lˈoːkʰ, kˈʌtʰaː"
-    }
+      "lˈoːkəktʰaː": "lˈoːkʰ kˈʌtʰaː"
+    },
+    "pacing": true
   },
   "scenes": [
     {

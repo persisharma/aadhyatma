@@ -21,14 +21,35 @@ if a.whisper:
     from whisper_check import WhisperCheck
     check = WhisperCheck(a.whisper)
 rows = []
-for i, sc in enumerate(cfg["scenes"]):
-    spoken = SPAN.sub(r"\2", sc["vo"])  # pronunciation spellings, e.g. वेदान्श
-    ph = k.tokenizer.phonemize(spoken, "hi")
-    for wrong, right in cfg["voice"].get("phonemeFixes", {}).items():  # espeak drops the schwa in -दशी words
+import numpy as np
+# Natural pacing ("voice.pacing": true): voice each phrase on its own and join with punctuation-sized pauses,
+# so pauses fall only at commas / full stops / "…", never inside a phrase. Phrase timings feed the captions.
+GAP = {",": 0.16, "—": 0.24, "।": 0.4, ".": 0.4, "?": 0.42, "!": 0.4, "…": 0.5}
+SPLIT = re.compile(r"(?<=[,।?!…—.])\s*")
+def synth(text):
+    ph = k.tokenizer.phonemize(text, "hi")
+    for wrong, right in cfg["voice"].get("phonemeFixes", {}).items():  # espeak quirks, e.g. -दशी schwa
         ph = ph.replace(wrong, right)
-    s, sr = k.create(ph, voice=cfg["voice"]["voice"], speed=cfg["voice"]["speed"], is_phonemes=True)
+    return k.create(ph, voice=cfg["voice"]["voice"], speed=cfg["voice"]["speed"], is_phonemes=True)
+for i, sc in enumerate(cfg["scenes"]):
+    display, spoken = SPAN.sub(r"\1", sc["vo"]), SPAN.sub(r"\2", sc["vo"])  # pronunciation spellings, e.g. वेदान्श
+    phrases = []
+    if cfg["voice"].get("pacing"):
+        dp = [x for x in SPLIT.split(display) if x.strip()]; spp = [x for x in SPLIT.split(spoken) if x.strip()]
+        if len(dp) != len(spp): dp = spp
+        chunks, t, sr = [], 0.0, 24000
+        for k_, (d_, sp_) in enumerate(zip(dp, spp)):
+            s_, sr = synth(sp_.strip())
+            phrases.append({"text": d_.strip().rstrip(",।?!…—.").strip(), "s": round(t, 3), "e": round(t + len(s_) / sr, 3)})
+            chunks.append(s_); t += len(s_) / sr
+            if k_ < len(spp) - 1:
+                g = GAP.get(sp_.strip()[-1], 0.08); chunks.append(np.zeros(int(sr * g), dtype=s_.dtype)); t += g
+        s = np.concatenate(chunks)
+    else:
+        s, sr = synth(spoken)
     f = out / f"vo-{i:02d}.wav"; sf.write(f, s, sr)
-    row = {"i": i, "id": sc["id"], "text": SPAN.sub(r"\1", sc["vo"]), "file": f.name, "seconds": round(len(s) / sr, 3)}
+    row = {"i": i, "id": sc["id"], "text": display, "file": f.name, "seconds": round(len(s) / sr, 3)}
+    if phrases: row["phrases"] = phrases
     if check: row["whisper"] = check.transcribe(s, sr, "hi")
     rows.append(row); print(f"{sc['id']:<9} {row['seconds']:.2f}s  {row.get('whisper', '')}", flush=True)
 (out / "vo.json").write_text(json.dumps(rows, ensure_ascii=False, indent=1))

@@ -61,7 +61,9 @@ const scenes = script.scenes.map((sc, i) => {
   if (!v || v.text !== strip(sc.vo)) throw Error(`Stale narration for ${sc.id}: rerun voice.py`);
   const lead = ig ? (i === 0 ? 0 : 0.08) : (i === 0 ? 0.2 : 0.35), tail = i === script.scenes.length - 1 ? (script.ctaAfterVo ? 2.6 : ig ? 1.0 : 1.4) : (ig ? 0.18 : 0.45);
   const dur = Math.ceil((lead + v.seconds + tail) * FPS) / FPS;
-  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), voSecs: v.seconds, text: v.text, caps: sc.caps ? captionChunks(v.text, at + lead, v.seconds, sc.caps) : captionChunks(v.text, at + lead, v.seconds)};
+  const r = {...sc, start: at, dur, voAt: at + lead, voFile: path.join(out, v.file), voSecs: v.seconds, text: v.text, caps: sc.caps ? captionChunks(v.text, at + lead, v.seconds, sc.caps)
+    : v.phrases ? v.phrases.flatMap(ph => captionChunks(ph.text, at + lead + ph.s, ph.e - ph.s).map((c, k, all) => k === all.length - 1 ? {...c, e: at + lead + ph.e + 0.12} : c))
+    : captionChunks(v.text, at + lead, v.seconds)};
   at += dur; return r;
 });
 const TOTAL = at;
