@@ -16,20 +16,25 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element: { id: home-sanatan-card }
     direction: DOWN
-- takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}"
+- takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
 - scrollUntilVisible:
     element: { id: sanatan-collection-dikpal }
     direction: DOWN
+- takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-collection-dikpal }
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+- takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-start }
-- takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}"
+- takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
 - tapOn: { id: sanatan-next }
-- assertVisible: "2/3"
-- takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}"
+- assertVisible: "2\\s*/\\s*3"
+- scrollUntilVisible:
+    element: { id: sanatan-explore-dikpal }
+    direction: DOWN
+- takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

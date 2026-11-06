@@ -16,11 +16,11 @@ export function useSanatanText() {
   return (pair: Pair) => contentByLang(lang, pair[0], pair[1]);
 }
 
-export function Copy({ children, heading = false }: { children: string; heading?: boolean }) {
+export function Copy({ children, heading = false, testID }: { children: string; heading?: boolean; testID?: string }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const token = meaningToken(lang, typography);
-  return <ProseParagraph accessibilityRole={heading ? 'header' : undefined} style={{
+  return <ProseParagraph testID={testID} accessibilityRole={heading ? 'header' : undefined} style={{
     ...token, color: colors.ink, marginVertical: 8,
     ...(heading ? { fontFamily: titleFontByLang(lang), fontSize: token.fontSize + 5, lineHeight: Math.max(token.lineHeight + 7, Math.ceil((token.fontSize + 5) * 1.7)) } : {}),
   }}>{children}</ProseParagraph>;

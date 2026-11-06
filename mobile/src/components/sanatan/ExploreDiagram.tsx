@@ -125,5 +125,5 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
     default:
       body = <><Painting id={topic.id} /><Copy>{t(topic.kind === 'plant' ? ['पत्ते · माला · तुलसी विवाह','Leaves · prayer beads · Tulasi Vivaha'] : ['स्वरूप के आयुध, मुद्रा और साथ के पात्र पहचान में सहायता करते हैं।','Attributes, posture and accompanying figures help identify a form.'])}</Copy></>;
   }
-  return <Panel>{body}</Panel>;
+  return <Panel><Copy heading testID={`sanatan-explore-${topic.id}`}>{t(['चित्र से समझें', 'Explore visually'])}</Copy>{body}</Panel>;
 }

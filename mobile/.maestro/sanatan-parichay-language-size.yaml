@@ -1,4 +1,6 @@
 appId: com.prashantsharma.vedansh
+env:
+  CAPTURE_SUFFIX: local
 ---
 - runFlow: _launch.yaml
 - runFlow:
