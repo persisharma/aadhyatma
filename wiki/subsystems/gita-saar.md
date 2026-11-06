@@ -115,3 +115,12 @@ Design: design.md §77; contract: RULEBOOK §30.
 - **`require()` in `index.ts` lints as a warning** (`no-require-imports`) — the same warning
   `pitru/index.ts` and `daan/index.ts` carry; it is the sanctioned lazy-load shape, not a
   defect.
+
+
+## Public research boundary — 6 November 2026
+
+RULEBOOK §11.16 supersedes prior public-source-display descriptions above.
+Research bibliographies, publisher/verification notes and source actions stay
+internal; meaningful scripture identities, poet attribution and real related
+in-app reading links remain. See `docs/reviews/2026-11-06-content-source-ui.md`
+for the audited callers, preserved provenance and separate native acceptance.

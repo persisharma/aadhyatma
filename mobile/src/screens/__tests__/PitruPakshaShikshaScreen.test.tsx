@@ -391,7 +391,8 @@ describe('PitruKathaScreen', () => {
     const text = allText(tree);
     expect(text).toContain('मन्दाकिनी');
     expect(byTestId(tree, 'pitru-katha-teaching')).toBeDefined();
-    expect(text).toContain('स्रोत: वाल्मीकि रामायण');
+    expect(text).toContain('वाल्मीकि रामायण');
+    expect(text).not.toContain('स्रोत:');
     pressByLabel(tree, 'Open valmiki reader for rama-jalanjali');
     expect(mockRootNavigate).toHaveBeenCalledWith('HomeTab', {
       screen: 'ValmikiRamayanReader',

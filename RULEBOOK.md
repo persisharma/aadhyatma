@@ -607,16 +607,45 @@ devotional reader that can read as disrespectful rather than merely imperfect. S
   that is squarely inside §11.3.
 - **Always opt-in per press.** Read-aloud never autoplays on opening a reader.
 
-### 11.16 No external links in the UI — sources are credited, never tappable out of the app
-A content screen may **credit** its source — name the text, edition, shrine or website as plain, non-interactive copy — but must **never render a tappable control that opens an external site** for that source. Source/citation URLs stay review-only data (§11.2) and do not reach the render tree, the same stance already pinned for vidhi (`sourceUrl` stripped before render), observances and katha. This now holds app-wide, and was retrofitted on three surfaces that still shipped a source link:
+### 11.16 Research provenance stays internal — no public source feature
 
-- **Sanatan Parichay** shows the cited work, edition and passage as plain credits. Full research URLs remain under `docs/content-parity/sanatan-parichay/`, outside the mobile content and render tree. No source opens a browser.
+**User clarification, 6 November 2026.** Source verification is an authoring and
+review obligation. It does not authorise a bibliography, source screen, source
+button, publisher footer, verification badge or reference dump in the product.
+This supersedes earlier permission to display research citations as plain text.
+Removing browser links alone does not satisfy this rule.
 
-- **Daily Bhakti / Suvichar** credits the source on the card (`suvichar-card-source`); the composer no longer carries a `suvichar-source-link` row that opened the source site.
-- **Gita Saar** opens Gita connections and Gita story-sources **in the app** (`GitaReader`); every other cited text (`Katha Upanishad`, a Purāṇa, etc.) is a plain citation row — `· Reference` / `· संदर्भ` — not a browser link.
-- **Garud Puran** shows its Sanskrit references and the context note as selectable text; the "Open Sanskrit/Hindi source" links are gone.
+- Keep URLs, publisher/edition details, object IDs, research notes, source comparisons,
+  retrieval dates, approval labels and PRD identifiers in editorial data/docs. Do not
+  render them in screens, accessibility labels, narration, share previews, exported
+  images or share captions. Do not add a source section because the data contains it.
+- Keep the actual teaching, original verse, author/poet attribution, scripture title
+  and chapter/verse identity where needed to understand the content. A bundled
+  scripture reading may have a useful in-app hand-off. This is not permission to
+  append an external bibliography. Preserve legally required attribution; resolve
+  actual licence obligations during content review rather than silently stripping them.
+- Keep meaningful distinctions such as an app-written retelling, original reflection
+  or regional tradition honest and concise. Copyright/verification/process boilerplate
+  is internal. Do not erase a teaching's variant or falsely imply verbatim scripture.
+- Audit siblings and both screen/share paths. Sanatan has no source action/modal or
+  bibliography appended to sharing; Garud Puran has no source disclosure; Theerth
+  details have no publisher footer; kids stories keep every narrative and takeaway
+  without editorial source notes in reading, auto-slide text budgets or sharing.
+  Gita Saar offers only real related in-app readings, without research-only rows.
+  Ask answers cannot expose source-verified badges, PRD numbers or copyright notes.
+- `contentSourceUiPolicy.test.ts` runs in the existing reader Jest gate. Its AST
+  scanner covers production screens/components, Ask intents and share modules;
+  fixtures prove detection of the known disclosure, publisher and review-field
+  patterns. Rendered-screen and payload tests protect the affected boundaries.
+  Update these checks for any new route or metadata shape; this finite guard is
+  not proof that all future editorial or visual mistakes are impossible.
 
-**The only external `Linking.openURL` destinations a user may see** are: (1) the **Daan directory** org hand-offs (§27.8 — the organization's own official channel, which *is* the feature); (2) the already-sanctioned **app-functional** links — the store-listing *Rate the app* hand-off (§54), the *Follow on Instagram* row and the feedback/discrepancy `mailto:` (design.md §37, the §4-style store-policy reasoning at "No native store-review module"). Anything else — a scripture/source citation, a "read the full text here", a reference PDF — is a hard reject. Pinned by `gitaSaarSourceScroll.test.tsx`, `GitaSaarReaderScreen.test.tsx`, `SuvicharScreen.test.tsx` and `GarudPuranReaderScreen.test.tsx` (no `accessibilityRole: 'link'` survives on those surfaces). §0.1 doc sync: a new content surface that cites a source updates this rule's surface list, not just the code.
+No content-source control may open an external site. Research URLs remain
+review-only. The existing authorised app-functional hand-offs (store rating,
+Instagram, feedback email) and Daan directory organisation channels remain under
+their existing contracts. Record native four-script/Standard/Large, compact and
+system-text checks separately from automated tests. See the app-wide audit at
+`docs/reviews/2026-11-06-content-source-ui.md`.
 
 ### 11.17 Native image geometry is an enforced acceptance gate
 
@@ -1391,7 +1420,7 @@ A saar theme is **a reading order over a bundled corpus plus a plain-language se
 7. **Adding a theme** touches five data files: `themes/<id>.ts`, the registry array in `themes/index.ts`, the manifest row in `index.ts`, its bilingual editorial frame in `experience.ts`, and its source-grounded three-beat lesson in `stories.ts`. A distinct approved 2:1 story painting must enter the reader-illustration manifest before the theme becomes visible. Screens and routes derive from these data. Editorial references must belong to the owning verified theme; examples and reflection prompts never alter scripture or Saar. Appending preserves existing identities.
 8. **Tests.** `gitaSaarContent.test.ts` (Jest, `src/data/gita-saar/__tests__/`) pins §30.1, §30.3's danda rule, §30.4, §30.5's mirror, bilingual parity, Devanagari well-formedness and the loader's reading order; `GitaSaarReaderScreen.test.tsx` pins first-page render, the English-mode no-leak rule, the hand-off target and the closing line; the reader is a row in `readerReadAloud.test.tsx`; `entryRoutes.test.ts` pins that the themes index leads (sixteen themes ship) and `readerAutoAdvance.test.tsx` pins the theme-to-theme swipe; `searchIndex.test.ts` pins a saar-phrase query; e2e `.maestro/granth-smoke.yaml`. §0.1 doc updates (design.md §77, this section) ride the same PR.
 
-9. **Continuous illustrated learning and private writing.** Each theme opens with its own source-grounded painting, then its complete Saar, three visible story beats, a separate Gita connection, a current-day example, and story source citations. Every Gita connection or Gita story-source reference must open the exact bundled verse in `GitaReader`. Valmiki Ramayan story citations open the first verse of their cited kāṇḍa and sarga in `ValmikiRamayanReader`. Source works without a bundled reader appear as plain citations; Gita Saar has no external story-source links or browser action, and research URLs remain in source metadata, never in the user-facing link list (§11.16). The story is an abridged editorial retelling and its everyday application is not scripture; the Gita verses and story passage must remain identifiable as different sources. `guna` and `dhyan` use scriptural examples rather than invented plot. The Saar appears before optional original scripture. No required learning-stage tabs or separate completion screens. Source disclosure and the full-Gita handoff remain available on every verse. Later verses show a one-tap door to the theme story, theme-specific takeaway and optional writing. One save keeps the existing bookmark and optional reflection. Reflections use the lazy, versioned, validated, serialized local `learningStore.ts`; failures preserve the draft and cannot overwrite storage after failed hydration. Private notes never enter share/narration payloads. The story/experience/store suites and `gita-saar-revamp-smoke.yaml`, `gita-saar-persistence.yaml`, `gita-saar-language-size.yaml`, and `gita-saar-ramayan-in-app.yaml` accompany existing gates. All sixteen story paintings use published `reader-illustrations` with complete 2:1 contain geometry and the existing lifetime cache; never a static require. The earlier karma garden is retained as a prototype asset but no longer leads the current reader.
+9. **Continuous illustrated learning and private writing.** Each theme opens with its own source-grounded painting, then its complete Saar, three visible story beats, a separate Gita connection, a current-day example, and related in-app scripture readings. Every Gita connection or Gita story-source reference must open the exact bundled verse in `GitaReader`. Valmiki Ramayan story citations open the first verse of their cited kāṇḍa and sarga in `ValmikiRamayanReader`. Source works without a bundled reader remain internal research records; only related in-app passages appear under a reading heading (§11.16). The story is an abridged editorial retelling and its everyday application is not scripture; the Gita verses and story passage must remain identifiable as different sources. `guna` and `dhyan` use scriptural examples rather than invented plot. The Saar appears before optional original scripture. No required learning-stage tabs or separate completion screens. Source disclosure and the full-Gita handoff remain available on every verse. Later verses show a one-tap door to the theme story, theme-specific takeaway and optional writing. One save keeps the existing bookmark and optional reflection. Reflections use the lazy, versioned, validated, serialized local `learningStore.ts`; failures preserve the draft and cannot overwrite storage after failed hydration. Private notes never enter share/narration payloads. The story/experience/store suites and `gita-saar-revamp-smoke.yaml`, `gita-saar-persistence.yaml`, `gita-saar-language-size.yaml`, and `gita-saar-ramayan-in-app.yaml` accompany existing gates. All sixteen story paintings use published `reader-illustrations` with complete 2:1 contain geometry and the existing lifetime cache; never a static require. The earlier karma garden is retained as a prototype asset but no longer leads the current reader.
 
 ---
 
@@ -1402,7 +1431,7 @@ This collection contains twelve selected teachings, stories and introductions to
 - Each reading has exact Sanskrit references, source-family identity, Hindi source pages, captured-source hashes and an editorial comparison note. SanskritDocuments/GRETIL count as one family; the independently published Gita Press Hindi abridgement supplies the second. Preserve edition differences and distinguish the Saroddhara abridgement from the wider Purana. Agent source comparison is not independent scholarly certification.
 - Source narrative and modern reflection must remain distinguishable. Do not add invented dialogue, destinations or plot details. Interpretive artwork is tied to specific readings; symbolic scenes must not imply literal geography or universal ritual instructions.
 - `data/garud-puran/chapters-manifest.json` is the eager index; twelve chapter payloads load lazily. Stable chapter/page IDs support search, bookmark, resume, sharing, routine and read-aloud. Internal `verses`/`verseIndex` names are compatibility fields; display units are readings and pages.
-- Follow the existing chapter index and horizontal reader shell. Use a prose page component with shared meaning typography, first-page art and expandable source links. Hindi/English content is authored; other locale behaviour follows the existing Hindi fallback helpers.
+- Follow the existing chapter index and horizontal reader shell. Use a prose page component with shared meaning typography, first-page art without source disclosures or research links (§11.16). Hindi/English content is authored; other locale behaviour follows the existing Hindi fallback helpers.
 - Verification: data/source/asset tests, Hindi/English rendering, source disclosure, resume clamping, the cross-reader narration/transition suites, search/routing checks, and `.maestro/garud-puran-smoke.yaml`. Design §81 and `docs/content/garud-puran/INTEGRATION.md` describe the preview and evidence.
 
 ### Daily Bhakti devotional export fit — 19 Oct 2026
@@ -1469,8 +1498,7 @@ Explore history reset is an explicit, confirmed replay-only action. Serialize `r
 ## 32. Sanatan Parichay — illustrated introductory learning
 
 The approved native scope is thirteen introductions, each with three authored
-Hindi/English prose pages, a topic-specific visual explanation and plain source
-credits. It is not the complete 201-topic research catalogue (#605), a scripture
+Hindi/English prose pages, a topic-specific visual explanation and internal review provenance. It is not the complete 201-topic research catalogue (#605), a scripture
 collection or a ritual manual. Keep unreviewed research seeds out of app discovery.
 See `docs/content-parity/sanatan-parichay/native-scope.md` and design.md §87.
 
@@ -1480,6 +1508,7 @@ IDs must show an unavailable state, never a substitute deity. The selected
 Kamika Agama direction list and the two Dashavatara lists retain their own source
 context; do not merge their variants into one canonical roster.
 
+Research references never become a public screen, footer, button or share appendix (§11.16).
 Use the approved uniform 3:2 painted scene family for all thirteen collection
 thumbnails and banners, shared script/font tokens and the existing prose, audio,
 auto-slide and branded share components. Keep research links out of UI (§11.16).
