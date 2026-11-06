@@ -1015,7 +1015,7 @@
       "tool": "built-in imagegen",
       "reviewedOn": "2026-11-06",
       "review": "2026-11-06: closer standing warrior-sage composition inspected against user reference. Large entire parashu blade over right shoulder, bow in left hand, quiver behind, exactly two arms. Head-to-thigh framing is deliberate; no seated pose. Frame/source/export native verification remains pending.",
-      "publication": "pending",
+      "publication": "verified",
       "prefix": "devotional-share",
       "stem": "parshuram",
       "manifest": "mobile/src/data/devotionalShareManifest.json",

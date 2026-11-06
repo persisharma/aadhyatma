@@ -1,7 +1,7 @@
 {
   "createdOn": "2026-11-06",
   "requirement": "User reference IMG_9272: closer standing warrior-sage, never sitting, large prominent parashu resting over right shoulder, bow in left hand, quiver behind. Head-to-thigh framing; no requirement to show feet.",
-  "publication": "pending",
+  "publication": "verified",
   "assets": [
     {
       "file": "mobile/assets/suvichar/parshuram--mandir-jharokha.webp",
@@ -136,5 +136,6 @@
       "manifest": "mobile/src/data/readerIllustrationManifest.json",
       "poseReferenceSha256": "2ef615231e594d4d99a95c5a1f0dda61eb8912a8ee458d1157c76a36fe6851f4"
     }
-  ]
+  ],
+  "verifiedOn": "2026-11-06T10:18:15.234Z"
 }

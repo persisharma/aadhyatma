@@ -20,7 +20,7 @@ function texts(tree: TestRenderer.ReactTestRenderer) {
 
 describe('DeityIcon', () => {
   test('every registered deity renders bundled symbolic art, without duplicate labels or text', () => {
-    expect(Object.keys(deityArtwork)).toHaveLength(21);
+    expect(Object.keys(deityArtwork)).toHaveLength(22);
     for (const deity of deities) {
       const tree = render(<DeityIcon iconKey={deity.iconKey} />);
       expect(texts(tree)).toHaveLength(0);
