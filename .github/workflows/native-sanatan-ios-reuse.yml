@@ -83,6 +83,11 @@ jobs:
                  'standard':['sanatan-collection-Gujarati-Large-local.png','sanatan-collection-Kannada-Large-local.png'],
                  'enlarged':['sanatan-home-frame-Hindi-Large-local.png','sanatan-diagram-Kannada-Large-local.png']}[phase]
           print('NATIVE_RESULT', (root/'result.json').read_text() if (root/'result.json').exists() else 'not reached')
+          if not any(list(root.rglob(name)) or list(root.rglob(name.replace('-local.png','-ios-'+('standard' if phase=='standard' else 'enlarged')+'.png'))) for name in names):names=['final.png']
+          receipt=root/'binary-origin.json'
+          if receipt.exists():
+              origin=json.loads(receipt.read_text())
+              print('NATIVE_ORIGIN',json.dumps({key:origin.get(key) for key in ['nativeSourceHead','javascriptSourceHead','bundleSha256','nativeFilesUnchanged']}))
           for name in names:
               matches=list(root.rglob(name))
               if not matches:
