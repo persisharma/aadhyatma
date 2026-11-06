@@ -2,6 +2,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const {execFileSync}=require('node:child_process');
+const sdk=require('./sanatan-native-sdk.json');
 const app=path.resolve(process.argv[2]);
 const output=path.resolve(process.argv[3]);
 const project=process.cwd();
@@ -16,7 +17,7 @@ const nativeBefore=nativeFiles.map(file=>[path.relative(app,file),digest(file)])
  await createManifestForBuildAsync('ios',project,path.join(app,'EXUpdates.bundle'),'index.ts');
  const nativeAfter=nativeFiles.map(file=>[path.relative(app,file),digest(file)]);
  if(JSON.stringify(nativeBefore)!==JSON.stringify(nativeAfter))throw Error('Native executable/framework/widget resources changed during JS bundling');
- const receipt={nativeSourceHead:'a469ea3696f29baf588b3783fee83c9c1e000202',javascriptSourceHead:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceArtifact:13481645746,appArchiveSha256:'3c74f9dd7f1a830ba092ae94b3e82772040d18ef9f22580eadb84b5be56bf419',rebundled:true,nativeFilesUnchanged:true,bundleSha256:digest(path.join(app,'main.jsbundle')),manifestSha256:digest(path.join(app,'EXUpdates.bundle/app.manifest')),nativeFiles:nativeBefore};
+ const receipt={nativeSourceHead:sdk.sourceHead,javascriptSourceHead:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sourceRun:sdk.sourceRun,sourceArtifact:sdk.sourceArtifact,appArchiveSha256:sdk.appArchiveSha256,rebundled:true,nativeFilesUnchanged:true,bundleSha256:digest(path.join(app,'main.jsbundle')),manifestSha256:digest(path.join(app,'EXUpdates.bundle/app.manifest')),nativeFiles:nativeBefore};
  fs.mkdirSync(output,{recursive:true});fs.writeFileSync(path.join(output,'binary-origin.json'),JSON.stringify(receipt,null,2)+'\n');
  console.log('Embedded current production JS and assets; verified unchanged native executables/frameworks.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

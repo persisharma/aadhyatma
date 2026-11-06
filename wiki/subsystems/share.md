@@ -52,7 +52,7 @@ page to one OS sheet (WhatsApp album; iOS "Save N Images"; Instagram → Select 
 
 - **Send as text + card language** (design.md §39.8, `utils/shareText.ts`): a `Send as text` row hands the verse (lines + meaning) or the *selected* prose pages to `Share.share({ message })` with the caption's link lines — no capture, so no native gate and no 10-page cap. Card-language chips let the card, caption, hashtags and text go out in hi/en/gu/kn while the sheet chrome and alerts stay in the reader's language (`chooser.cardLang`; prose keeps `lang` = card, `uiLang` = chrome). Switching on a series re-paginates and resets selection.
 
-- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): `layout: 'picture'` — every page on the 540×960 (9:16) picture card, captured at 1080×1920 for every target (`isPictureCapture` in the provider; no `ShareStoryFrame`). One card per scene: complete art at the body's full width when the caption allows (never under 400 dp), then the reader's caption box with title, narration and dialogue as a `quote` block in its tinted box. Closing card: cover art (≥260 dp), takeaway, source note and a `link` block printing `vedansh.app/get` (the share message carries the tappable URL). `paginateProse({ layout, firstPageReservedDp })` budgets the taller body, the caption-box padding and the 452 dp text column. Every published caption fits its scene card in all four languages. The sheet hides the 4:5 Instagram-post row for picture content. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards.
+- **Illustrated kids stories** (`kidsStoryShareable`, exported by `shareContent.ts`): `layout: 'picture'` — every page on the 540×960 (9:16) picture card, captured at 1080×1920 for every target (`isPictureCapture` in the provider; no `ShareStoryFrame`). One card per scene: complete art at the body's full width when the caption allows (never under 400 dp), then the reader's caption box with title, narration and dialogue as a `quote` block in its tinted box. Closing card: cover art (≥260 dp), takeaway and a `link` block printing `vedansh.app/get` (the share message carries the tappable URL). `paginateProse({ layout, firstPageReservedDp })` budgets the taller body, the caption-box padding and the 452 dp text column. Every published caption fits its scene card in all four languages. The sheet hides the 4:5 Instagram-post row for picture content. Numbered parts pack whole scene groups using the maximum count across all four locales, never silently truncating the story at ten cards.
 - **Illustrated capture readiness.** Only illustrated exports load the cache module, resolve the existing hashed R2 request, then wait for native `Image.onLoad` on a fresh capture mount. Fetch/decode timeout or errors return failure: a series aborts before hand-off and a single scene refuses the text-only fallback. Preview may show loading UI, but exported files never deliberately contain a placeholder. The same provider, paginator, branded card, preview and native multi-share adapter remain in use.
 
 ## Gotchas
@@ -126,3 +126,12 @@ Gotchas: `useShare()` throws outside `ShareProvider`, so `JyotishShareSheet` mou
 ### Personalized Suvichar
 
 [[suvichar]] is a separate composer that shares through the provider as a `ShareableCard` (540 dp, `awaitsArt`, `branded`): the provider mounts its own copy, waits for the art, and uses the Suvichar invite as the WhatsApp caption. Personal names stay on the card and in Send as text; they never enter hashtags or the caption. Its artwork subscription survives text edits; a measured child resets paint/layout readiness per content generation. New R2 master hashes remain inactive until public-byte verification.
+
+
+## Internal source records — 6 November 2026
+
+Under RULEBOOK §11.16, share builders never append research bibliographies or
+editorial source notes. Sanatan shares contain exactly the selected authored
+paragraphs; kids endings keep the cover, full takeaway and app link. Canonical
+scripture identity and poet attribution remain distinct from publisher metadata.
+See `docs/reviews/2026-11-06-content-source-ui.md` for regression and native gates.

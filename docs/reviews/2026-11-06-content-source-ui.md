@@ -58,29 +58,31 @@ native visual acceptance.
 
 ## Evidence and limitations
 
-- PASS: focused 4-suite rerun, 197 tests, including the new scan and all Sanatan
-  collection/language/size checks. Related rendered/share suites pass in the
-  first focused run; the full final suite is recorded below when complete.
-- PASS: final TypeScript check (`tsc --noEmit`).
-- PASS: agent instruction entry-point verification and `git diff --check`.
-- PASS: widget 46, engine 772, Ask 49 tests, using the exact package-script test
-  arguments through `node --import tsx --test` with `TZ=Asia/Kolkata`.
-- FAIL (inherited, reproduced): data suite 220/223 pass. Three dohaScopes cases
-  expect the earlier 18-deity/old catalogue state; current main has 19 choices and
-  the newer catalogue. The same three failures reproduce in the original checkout,
-  whose doha/Suvichar files are unchanged from main. No tests are skipped or
-  weakened to conceal this failure.
-- Environment: literal `npm test` stops at tsx's IPC listener with `EPERM` after
-  typecheck. The script-equivalent Node invocation avoids only that CLI listener.
-- FAIL (inherited, reproduced): full Jest 352/355 suites, 3507/3510 tests pass.
-  The three failures are RoutineTodayVisual (22 mappings versus 21 active deities),
-  dailyBhaktiShare (30 artwork identities versus 29 expected), and DeityIcon (22
-  registered attributes versus 21 expected). The same three failures reproduce
-  in the original checkout; those production modules/tests are unchanged here.
-- PENDING: CI, installed iOS/Android journeys, Hindi/English/
-  Gujarati/Kannada × Standard/Large, compact and enlarged system text, real share
-  captures, read-aloud/auto-slide and native screenshot comparison. This Linux
-  environment exposes no `maestro`, `adb` or `xcrun`; updated Maestro flows are
-  authored, not executed. Required pending checks keep the PR draft.
+Current integrated baseline: `d6fff46da437a97090729b55fcb1e92e756fd512` (#632),
+including its catalogue fixes and reproducible native acceptance tooling. The
+source smoke flow retains its offscreen-resume scroll fix while removing the
+source-modal steps. The earlier calendar changes from #635 remain intact.
 
-No merge, build, release, version change, store submission or OTA is performed.
+- PASS: final TypeScript check (`tsc --noEmit`), instruction entry-point check and
+  `git diff --check`.
+- PASS: widgets 46, engine 820, data 223 and Ask 49 tests, using each package
+  script's exact test arguments through `node --import tsx --test` with
+  `TZ=Asia/Kolkata`. No tests are skipped or weakened.
+- PASS: fifteen native-tooling unit tests from current main. These test device
+  selection, bounded diagnostics and capture collection, not a running app.
+- PASS: focused rendered/payload suites; the 379-module source guard; 104
+  collection/script/reading-factor combinations with exact page-door navigation;
+  all kids-story narrative/share-series checks and retained scripture hand-offs.
+- PASS: final full reader Jest suite, **356 suites / 3,511 tests**. Earlier runs
+  reproduced three inherited Jest and three data-scope failures; integrating main
+  #632 fixes them. The final run includes that exact catalogue fix.
+- Literal `npm test` stops at tsx's IPC listener (`EPERM`) after typecheck in this
+  environment. The script-equivalent Node invocations avoid only that CLI listener.
+- Five task-modified Maestro flows parse. Native flow execution, iOS/Android
+  screenshots, four scripts × Standard/Large, compact/system-text review, real
+  share captures and playback acceptance remain PENDING. This Linux environment
+  exposes no `maestro`, `adb` or `xcrun`; no installed-app visual acceptance is claimed.
+- Observance verifier: IN PROGRESS on the integrated baseline.
+
+The PR remains draft until required native checks pass. No merge, build, release,
+version change, store submission or OTA is performed.

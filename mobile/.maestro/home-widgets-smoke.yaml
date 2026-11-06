@@ -13,11 +13,23 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Daily verse widget preview"
     timeout: 15000
-- assertVisible: "Panchang widget preview"
-- assertVisible: "Japam widget preview"
 # Each content type advertises its own sizes, with the best one marked (PRD-15 §59).
-- assertVisible: ".*(Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು).*"
-- assertVisible: ".*(Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು).*"
+- scrollUntilVisible:
+    element: { text: ".*(Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು).*" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Panchang widget preview" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: ".*(Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು).*" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Japam widget preview" }
+    direction: DOWN
+    timeout: 15000
 - scrollUntilVisible:
     element:
       text: "How to add|कैसे जोड़ें|કેવી રીતે ઉમેરવું|ಹೇಗೆ ಸೇರಿಸುವುದು"
@@ -28,8 +40,14 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { platform: Android }
     commands:
-      - assertVisible: "Add Vedansh verse widget"
-      - assertVisible: "Add Vedansh panchang widget"
+      - scrollUntilVisible:
+          element: { text: "Add Vedansh verse widget" }
+          direction: UP
+          timeout: 15000
+      - scrollUntilVisible:
+          element: { text: "Add Vedansh panchang widget" }
+          direction: DOWN
+          timeout: 15000
 - tapOn: "Back"
 
 # iOS foregrounds a native "Open in Vedansh?" confirm sheet the first time a
@@ -38,9 +56,19 @@ appId: com.prashantsharma.vedansh
 # subsequent links where iOS no longer prompts.
 - openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=1&verseIndex=0"
 - tapOn: { text: "Open", optional: true }
-- extendedWaitUntil:
-    visible: { id: "daily-bhakti-card" }
-    timeout: 15000
+# The illustrated card can start below the setup/Suvichar panels. Verify a
+# reader-only control, then scroll to the exact source/verse the widget named.
+- scrollUntilVisible:
+    element: { id: "daily-bhakti-next" }
+    direction: DOWN
+    visibilityPercentage: 100
+    centerElement: true
+    timeout: 60000
+- scrollUntilVisible:
+    element: { id: "devotional-share-source", text: ".*(भगवद् गीता|Bhagavad).*1[.]1$" }
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
 - openLink: "vedansh://widget/panchang?date=2030-01-15"
 - tapOn: { text: "Open", optional: true }
 - extendedWaitUntil:
@@ -56,5 +84,26 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "JapMala|जप"
     timeout: 15000
+- stopApp:
+    appId: com.prashantsharma.vedansh
+# A cold widget launch must deliver the represented day after the OS confirmation.
+- openLink: "vedansh://widget/panchang?date=2030-01-15"
+- tapOn: { text: "Open", optional: true }
+- extendedWaitUntil:
+    visible: ".*15.*2030.*"
+    timeout: 15000
+- openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=0"
+- tapOn: { text: "Open", optional: true }
+- scrollUntilVisible:
+    element: { id: "daily-bhakti-next" }
+    direction: DOWN
+    visibilityPercentage: 100
+    centerElement: true
+    timeout: 60000
+- scrollUntilVisible:
+    element: { id: "devotional-share-source", text: ".*(भगवद् गीता|Bhagavad).*2[.]1$" }
+    direction: DOWN
+    centerElement: true
+    timeout: 60000
 - stopApp:
     appId: com.prashantsharma.vedansh
