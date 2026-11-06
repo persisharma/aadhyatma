@@ -1,0 +1,76 @@
+name: Native festival card iOS
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/festival-muhurat-share]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/native-festival-ios.yml'
+permissions:
+  contents: read
+concurrency:
+  group: native-festival-ios-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    env:
+      CI: '1'
+      EXPO_NO_DOTENV: '1'
+      MAESTRO_CLI_NO_ANALYTICS: 'true'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: mobile
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set reference timezone
+        run: sudo systemsetup -settimezone Asia/Kolkata
+      - run: npm ci
+      - name: Check native-export evidence collector
+        run: node --test scripts/collect-native-festival-png.test.cjs
+      - name: Ensure file inventory tool
+        run: command -v rg >/dev/null || brew install ripgrep
+      - name: Install Maestro
+        run: |
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/festival-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/festival-maestro.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/festival-maestro.zip" -d "$RUNNER_TEMP/festival-tools"
+          echo "$RUNNER_TEMP/festival-tools/maestro/bin" >> "$GITHUB_PATH"
+      - name: Generate unsigned simulator project
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: pod install --project-directory=ios
+      - name: Build and verify festival size matrix
+        run: bash scripts/native-festival-ios.sh
+      - name: Retain actual native screens and exported PNGs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-festival-ios-${{ github.run_id }}
+          path: |
+            native-festival-output/**
+            mobile/e2e-shots/festival-*.png
+          retention-days: 14
+          if-no-files-found: error
+      - name: Stop isolated simulators
+        if: always()
+        run: |
+          if [[ -f ../native-festival-output/selected-devices.tsv ]]; then
+            while IFS=$'\t' read -r size udid; do xcrun simctl shutdown "$udid" || true; done < ../native-festival-output/selected-devices.tsv
+          fi

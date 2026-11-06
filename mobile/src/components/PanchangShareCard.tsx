@@ -1,3 +1,7 @@
+import { formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
+import FestiveCorners from './FestiveCorners';
+import FestivalMotif from './FestivalMotif';
+import { occasionRange } from '@/panchang/occasionTimingFormat';
 import React from 'react';
 import { Image, StyleSheet, Text, View, type StyleProp, type TextStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -49,8 +53,17 @@ const chromeOpticalOffsets = {
  * tight leading, so each one takes the mark headroom (utils/markHeadroom.ts) or
  * iOS/Android would clip its matras.
  */
-export default function PanchangShareCard({ model, lang, onIconLoad, brand = null }: { model: PanchangShareModel; lang: Lang; onIconLoad?: () => void; brand?: ResolvedShareBrand | null }) {
+export default function PanchangShareCard({ model, lang, onIconLoad, brand = null, onFestivalArtLoad }: { onFestivalArtLoad?: (slot: string) => void; model: PanchangShareModel; lang: Lang; onIconLoad?: () => void; brand?: ResolvedShareBrand | null }) {
   const { colors } = useTheme();
+  const ritual = model.occasionTimings?.find(i => i.windows.length > 0 || i.noteHi);
+  const primary = ritual?.windows[0];
+  const referenceDay = model.referenceDay ?? ritual?.date;
+  const datedClock = !!primary && !!referenceDay && (!isSameLocalDay(primary.start, referenceDay) || !isSameLocalDay(primary.end, referenceDay));
+  const clockText = primary && referenceDay ? (datedClock && !primary.event
+    ? `${formatEndInstant(primary.start, referenceDay, lang)}\n– ${formatEndInstant(primary.end, referenceDay, lang)}`
+    : occasionRange(primary, referenceDay, lang)) : null;
+  const partsHi = ritual?.nameHi.split(' · ') ?? [];
+  const partsEn = ritual?.nameEn.split(' · ') ?? [];
   const en = lang === 'en';
   const t = (hi: string, enText: string) => contentByLang(lang, hi, enText);
 
@@ -202,9 +215,19 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
         </View>
       </View>
 
-      <View style={styles.body}>
+      <View testID="panchang-share-body" style={[styles.body, ritual && { rowGap: 3 }]}>
         {/* ---- today's पर्व */}
-        {model.festival && (
+        {ritual ? (
+          <View testID="panchang-share-occasion" style={[styles.ritual, { backgroundColor: colors.brandIvory, borderColor: colors.gold }]}>
+            <FestiveCorners size={64} onLoad={slot => onFestivalArtLoad?.(slot)} />
+            <FestivalMotif motif={ritual.motif} size={54} onLoad={() => onFestivalArtLoad?.('motif')} />
+            <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
+              <One style={[label, { fontSize: 11, color: colors.saffronDeep }]}>{t(partsHi.length > 1 ? partsHi[0] : datedClock && primary ? primary.labelHi : 'पर्व का मुहूर्त', partsEn.length > 1 ? partsEn[0] : datedClock && primary ? primary.labelEn : 'Festival timings')}</One>
+              <One style={[value(18), { color: colors.festivalInk }]}>{t(partsHi.at(-1) ?? ritual.nameHi, partsEn.at(-1) ?? ritual.nameEn)}</One>
+            </View>
+            <View style={{ width: 194, minHeight: 42, paddingLeft: 12, borderLeftWidth: 1, borderLeftColor: colors.goldChipBg, justifyContent: 'center' }}><Text allowFontScaling={false} numberOfLines={2} style={[clockLine(datedClock ? 17 : 20), { minWidth: 0, textAlign: 'center', color: colors.festivalInk }]}>{primary ? clockText : t('स्थानीय समय सुनिश्चित करें', 'Confirm local timing')}</Text>{!datedClock && primary && <One style={[line, { fontSize: 11, lineHeight: 15, textAlign: 'center' }]}>{t(primary.labelHi, primary.labelEn)}</One>}</View>
+          </View>
+        ) : model.festival && (
           <View style={[styles.ribbon, { backgroundColor: colors.cardActiveFrom, borderColor: colors.goldChipBg }]}>
             <View style={[styles.moonMark, { backgroundColor: colors.skyNightTop }]}>
               <View style={[styles.moonDisc, { backgroundColor: colors.moonLight }]} />
@@ -263,7 +286,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
       </View>
 
       {/* ---- footer: app icon, what the app does, the download link */}
-      <LinearGradient colors={[colors.skyNightUpper, colors.skyNightTop]} style={styles.footer}>
+      <LinearGradient testID="panchang-share-footer" colors={[colors.skyNightUpper, colors.skyNightTop]} style={styles.footer}>
         <Image source={brandMark} style={[styles.footerIcon, { borderColor: colors.nightGold }]} accessibilityIgnoresInvertColors />
         <View style={styles.footerText}>
           <One style={{ fontFamily: en ? fontFamilies.latinBold : titleFace, fontSize: en ? 16 : 14, lineHeight: en ? 19 : 17.5, color: colors.nightInk }}>
@@ -312,6 +335,7 @@ const styles = StyleSheet.create({
   center: { textAlign: 'center' },
   shrink: { flexShrink: 1, minWidth: 0 },
   body: { flex: 1, paddingTop: 7, paddingHorizontal: 12, rowGap: 5, justifyContent: 'space-between' },
+  ritual: { minHeight: 66, flexDirection: 'row', alignItems: 'center', gap: 12, paddingLeft: 38, paddingRight: 30, paddingVertical: 5, borderWidth: 1.2, borderRadius: 14 },
   ribbon: { height: 36, flexDirection: 'row', alignItems: 'center', gap: 9, paddingLeft: 6, paddingRight: 12, borderRadius: 14, borderWidth: 1 },
   moonMark: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   moonDisc: { width: 12, height: 12, borderRadius: 6 },

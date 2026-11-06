@@ -398,7 +398,7 @@ function resolveRuleDates(
 
 // Does `rule` fall on this exact day? Shared by the year resolver and the bounded
 // per-day / per-month / upcoming lookups so they always agree.
-function matchesRuleOnDate(
+export function matchesRuleOnDate(
   rule: ObservanceRule,
   date: Date,
   calendarSystem: CalendarSystem,

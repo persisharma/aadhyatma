@@ -1,3 +1,4 @@
+import { occasionShareText } from '@/panchang/occasionTimingFormat';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Lang } from '@/data/gita/language';
 import { buildPanchangShareMessage } from '@/data/shareLinks';
@@ -28,14 +29,20 @@ function ReadyCard({ input, lang, onReady }: { input: ShareInput; lang: Lang; on
   const { brand, hydrated } = useShareBrand();
   const resolved = useMemo(() => resolveShareBrand(brand), [brand]);
   const [markDone, setMarkDone] = useState(false);
+  const [painted, setPainted] = useState<ReadonlySet<string>>(new Set());
+  const onFestivalArtLoad = useCallback((slot: string) => {
+    setPainted(old => old.has(slot) ? old : new Set([...old, slot]));
+  }, []);
+  const needsArt = model.occasionTimings?.some(i => i.windows.length || i.noteHi);
+  const artReady = !needsArt || ['left', 'right', 'motif'].every(slot => painted.has(slot));
   useEffect(() => {
     const timer = setTimeout(() => setMarkDone(true), ICON_WAIT_MS);
     return () => clearTimeout(timer);
   }, []);
   useEffect(() => {
-    if (markDone && hydrated) onReady(true);
-  }, [markDone, hydrated, onReady]);
-  return <PanchangShareCard model={model} lang={lang} brand={resolved} onIconLoad={() => setMarkDone(true)} />;
+    if (markDone && hydrated && artReady) onReady(true);
+  }, [markDone, hydrated, artReady, onReady]);
+  return <PanchangShareCard model={model} lang={lang} brand={resolved} onFestivalArtLoad={onFestivalArtLoad} onIconLoad={() => setMarkDone(true)} />;
 }
 
 // The co-branding settings load only when a share sheet opens.
@@ -91,8 +98,10 @@ export function panchangShareable(input: ShareInput): ShareableCard {
         isToday: isSameLocalDay(input.p.date, new Date()),
       });
       // The sender's line closes the text like it signs the card; never the caption.
+      const rituals = occasionShareText(input.occasionTimings ?? [], input.p.date, lang);
+      const complete = rituals ? `${body}\n\n${rituals}` : body;
       const sender = shareBrandTextLine(resolveShareBrand(getShareBrand()));
-      return sender ? `${body}\n\n${sender}` : body;
+      return sender ? `${complete}\n\n${sender}` : complete;
     },
   };
 }

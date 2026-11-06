@@ -373,3 +373,15 @@ Kundali city search keeps the shared 100%-width TextField inside horizontal padd
 `ObservanceTodaySummary` had overridden shared typography with 17/24, reproducing the documented first-line clipping of Hindi marks. It now consumes catalogTitle 18/30, catalogMeta 12/20 and catalogBody 13/22. ListingCard's Indic tokens, bilingual caption and ObservancePreviewCard date/countdown also reserve at least 1.65em within their line boxes. Cards grow; system scaling and independent reading/reminder controls remain. Rendered-style regressions cover hi/en/gu/kn, M/L, compact/regular and simulated system scale, but do not prove native glyph shaping. Required installed-device matrix is pending; see `docs/reviews/2026-11-06-vrat-title-clipping.md` and `.maestro/vrat-title-clipping.yaml`.
 
 Verification follow-up measured all 197 unique catalog title/deity pairs in four languages using the exact shipped font bytes (1,576 shaped checks). Nine Kannada names exceeded the original 28pt title line. Catalog/listing tokens now cover the Kannada face's 1.62em vertical metrics with a 1.65em floor. The regression reads TTF hhea/head values rather than trusting that floor alone; category subtitles, day notes and ledger labels share safe tokens too. See the adjacent font-bounds JSON; native acceptance remains separate.
+
+## Festival-specific windows (6 November 2026)
+
+`occasionTimings.ts` derives reviewed ritual windows; `occasionTimingWork.ts`
+uses shared day inputs and cooperative cancellation. `useOccasionTimings` keys
+publication by date/city/calendar/lenses. App and 4:5 share ribbon use typed
+painted FestivalMotif art and FestiveCorners; text sharing includes every window.
+Art is a bundled transparent 4x3 atlas, with reviewed source/hash metadata in
+`docs/reviews/festival-art/`. Full/focused export readiness waits for all painted
+slots, not only the brand mark. Ghatasthapana uses the first daylight third/Abhijit with explicit
+Chitra/Vaidhriti advisory; Ayudha and Shastra retain distinct dates. Coverage/exceptions and
+verification: `docs/reviews/festival-muhurat.md`.
