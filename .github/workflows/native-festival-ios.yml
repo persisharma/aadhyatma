@@ -51,6 +51,9 @@ jobs:
           )
           test -n "$FESTIVAL_TIMEZONE"
           sudo systemsetup -settimezone "$FESTIVAL_TIMEZONE" | tee ../native-festival-output/reference-timezone.txt
+          export TZ="$FESTIVAL_TIMEZONE"
+          echo "TZ=$FESTIVAL_TIMEZONE" >> "$GITHUB_ENV"
+          sudo systemsetup -gettimezone >> ../native-festival-output/reference-timezone.txt
           test "$(date +%z)" = '+0530'
           date '+%Z %z' >> ../native-festival-output/reference-timezone.txt
       - run: npm ci
