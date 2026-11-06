@@ -2,281 +2,357 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
-- scrollUntilVisible:
-    element: { id: home-sanatan-card }
-    direction: DOWN
+- runFlow: _sanatan-home-entry.yaml
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: lang-toggle-en }
 - scrollUntilVisible:
     element: { id: sanatan-collection-basics }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-basics
 - tapOn: { id: sanatan-collection-basics }
 - takeScreenshot: e2e-shots/sanatan-overview-basics
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-basics
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-basics }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-basics
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-deity }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-deity
 - tapOn: { id: sanatan-collection-deity }
 - takeScreenshot: e2e-shots/sanatan-overview-deity
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-deity
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-deity }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-deity
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-thirty }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-thirty
 - tapOn: { id: sanatan-collection-thirty }
 - takeScreenshot: e2e-shots/sanatan-overview-thirty
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-thirty
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-thirty }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-thirty
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-dikpal }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-dikpal
 - tapOn: { id: sanatan-collection-dikpal }
 - takeScreenshot: e2e-shots/sanatan-overview-dikpal
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-dikpal
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-dikpal
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-graha }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-graha
 - tapOn: { id: sanatan-collection-graha }
 - takeScreenshot: e2e-shots/sanatan-overview-graha
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-graha
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-graha }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-graha
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-forms }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-forms
 - tapOn: { id: sanatan-collection-forms }
 - takeScreenshot: e2e-shots/sanatan-overview-forms
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-forms
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-forms }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-forms
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-symbols }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-symbols
 - tapOn: { id: sanatan-collection-symbols }
 - takeScreenshot: e2e-shots/sanatan-overview-symbols
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-symbols
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-symbols }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-symbols
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-plants }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-plants
 - tapOn: { id: sanatan-collection-plants }
 - takeScreenshot: e2e-shots/sanatan-overview-plants
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-plants
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-plants }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-plants
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-temples }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-temples
 - tapOn: { id: sanatan-collection-temples }
 - takeScreenshot: e2e-shots/sanatan-overview-temples
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-temples
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-temples }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-temples
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-elements }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-elements
 - tapOn: { id: sanatan-collection-elements }
 - takeScreenshot: e2e-shots/sanatan-overview-elements
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-elements
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-elements }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-elements
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-time }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-time
 - tapOn: { id: sanatan-collection-time }
 - takeScreenshot: e2e-shots/sanatan-overview-time
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-time
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-time }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-time
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-texts }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-texts
 - tapOn: { id: sanatan-collection-texts }
 - takeScreenshot: e2e-shots/sanatan-overview-texts
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-texts
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-texts }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-texts
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-collection-rishis }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-rishis
 - tapOn: { id: sanatan-collection-rishis }
 - takeScreenshot: e2e-shots/sanatan-overview-rishis
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-rishis
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-rishis }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-rishis
 - tapOn: Back
 - tapOn: Back

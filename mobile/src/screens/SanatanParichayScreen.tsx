@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Modal, ScrollView, Text, View } from 'react-native';
+import { Alert, Keyboard, Modal, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -63,6 +63,7 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
         <TextField variant="search" testID="sanatan-search" accessibilityLabel={t(['परिचय खोजें','Search introductions'])}
           placeholder={t(['स्वस्तिक, दिक्पाल, 33 देवता…','Swastika, Dikpal, 33 deities…'])}
           placeholderTextColor={colors.inkMuted} value={query} onChangeText={setQuery}
+          autoCorrect={false} autoCapitalize="none" returnKeyType="search" onSubmitEditing={() => Keyboard.dismiss()}
           style={{ flex: 1, minWidth: 0, height: undefined, minHeight: 48, paddingVertical: 10, color: colors.ink, fontFamily: titleFontByLang(lang), lineHeight: 24 }} /></View>
         {resume && learning.resume && <Panel><Copy>{t(['जहाँ छोड़ा था','Continue reading'])}</Copy>
           <Action testID="sanatan-resume" label={`${t(resume.title)} · ${learning.resume.page + 1}/3`}

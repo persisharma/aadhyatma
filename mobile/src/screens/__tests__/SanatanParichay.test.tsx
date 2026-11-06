@@ -28,6 +28,10 @@ async function render(node: React.ReactNode, lang: Lang = 'en') {
 afterEach(() => jest.clearAllMocks());
 test('question search opens the exact collection and keeps the query on Back', async () => {
   const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
+  const input = tree.root.findByType(TextInput);
+  expect(input.props.autoCorrect).toBe(false);
+  expect(input.props.autoCapitalize).toBe('none');
+  expect(input.props.returnKeyType).toBe('search');
   act(() => tree.root.findByType(TextInput).props.onChangeText('33 koti devta'));
   const target = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Thirty-three devata')[0];
   expect(target).toBeDefined();

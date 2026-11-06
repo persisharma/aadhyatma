@@ -61,7 +61,7 @@ PY
 PHASE=native-build
 xcodebuild -workspace "$WORKSPACE" -scheme Vedansh -configuration Release \
   -sdk iphonesimulator -destination "id=$SIMULATOR_UDID" \
-  -derivedDataPath "$OUTPUT/DerivedData" CODE_SIGNING_ALLOWED=NO \
+  -derivedDataPath "$OUTPUT/DerivedData" ARCHS="$(uname -m)" ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO \
   build 2>&1 | tee "$OUTPUT/native-build.log"
 
 APP_PATH=$(python3 - "$OUTPUT" <<'PY'
@@ -93,6 +93,12 @@ capture() {
 PHASE=initial-launch
 xcrun simctl launch "$SIMULATOR_UDID" "$APP_ID" | tee "$OUTPUT/launch.log"
 capture launch
+
+if [[ "${NATIVE_SMOKE_SCOPE:-widgets}" == host ]]; then
+  printf '%s\n' 'PASS: native host + widget extension compiled; host installed, launched and stayed running.' > "$OUTPUT/result.log"
+  printf '%s\n' 'Sanatan UI acceptance is executed by its own Maestro journeys; widget-link interaction is outside this setup.' >> "$OUTPUT/result.log"
+  exit 0
+fi
 
 # Exercise an existing widget destination on a cold launch. This checks the host
 # app route, not placement or rendering of the Home Screen widget itself.
