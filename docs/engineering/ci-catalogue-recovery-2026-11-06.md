@@ -59,6 +59,10 @@ product content, artwork, publication gates, progress or native dependencies.
    is embedded and the native journeys still execute. Expired/unavailable SDKs or
    incompatible changes fall back to fresh compilation; a successful SDK build
    never counts as a passing app journey.
+   The generic widget gate uses the same receipt/compatibility/rebundle path and
+   executes its own warm/cold widget flow. It does not repeat a native compile
+   for changes confined to test tooling. Native-source changes and unavailable
+   cache artifacts still take the fresh-build path.
 9. Android `02d3771` executed the repaired cold-resume journey successfully
    (3m52s) and all thirteen collection journeys successfully (9m54s), then failed
    in regional search at a stale Done tap. `LanguagePickerSheet` applies and

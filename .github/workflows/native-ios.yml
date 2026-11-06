@@ -11,6 +11,7 @@ on:
       - 'mobile/app.json'
       - 'mobile/package-lock.json'
       - 'mobile/scripts/native-ios-smoke.sh'
+      - 'mobile/scripts/*sanatan*'
       - 'mobile/scripts/select-native-ios-device.cjs'
       - 'mobile/scripts/run-native-diagnostic.cjs'
       - 'mobile/.maestro/*widgets*.yaml'
@@ -18,6 +19,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: native-ios-${{ github.event.pull_request.number || github.ref }}
@@ -65,11 +67,45 @@ jobs:
           xcodebuild -version
           pod --version
           mkdir -p "$GITHUB_WORKSPACE/native-output"
+      - name: Check preserved native SDK compatibility
+        id: compat
+        run: |
+          SDK_SOURCE_HEAD=$(node -p 'require("./scripts/sanatan-native-sdk.json").sourceHead')
+          git fetch --no-tags --depth=1 origin "$SDK_SOURCE_HEAD"
+          node <<'JS'
+          const sdk = require('./scripts/sanatan-native-sdk.json');
+          require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, `sdk_run=${sdk.sourceRun}\nsdk_artifact=${sdk.artifactName}\n`);
+          JS
+          if node scripts/sanatan-native-sdk-compatible.cjs; then
+            echo 'reuse=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'reuse=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Retrieve verified host and widget SDK
+        id: sdk
+        if: steps.compat.outputs.reuse == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.compat.outputs.sdk_artifact }}
+          run-id: ${{ steps.compat.outputs.sdk_run }}
+          github-token: ${{ github.token }}
+          path: native-reuse
+      - name: Verify current widget journeys on the compiled SDK
+        if: steps.compat.outputs.reuse == 'true' && steps.sdk.outcome == 'success'
+        env:
+          SANATAN_REBUNDLE_JS: '1'
+          NATIVE_ACCEPTANCE_SCOPE: widgets
+          NATIVE_SDK_OUTPUT: ${{ github.workspace }}/native-output
+        run: bash scripts/native-sanatan-ios-reuse.sh
       - name: Generate native app and widget target
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
         run: npx expo prebuild --platform ios --clean --no-install
       - name: Install CocoaPods
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
         run: pod install --project-directory=ios
       - name: Build, install and launch on iOS Simulator
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
         run: bash scripts/native-ios-smoke.sh
       - name: Retain native build and launch evidence
         if: always()

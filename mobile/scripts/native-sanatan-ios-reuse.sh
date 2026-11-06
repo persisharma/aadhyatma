@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 # Reuse the exact compiled SDK identified in the shared receipt. No release.
-SANATAN_REUSE_OUTPUT="$GITHUB_WORKSPACE/native-sanatan-output"
+SANATAN_REUSE_OUTPUT="${NATIVE_SDK_OUTPUT:-$GITHUB_WORKSPACE/native-sanatan-output}"
 SANATAN_APP_ARCHIVE="$GITHUB_WORKSPACE/native-reuse/$(node -p 'require("./scripts/sanatan-native-sdk.json").appArchivePath')"
 mkdir -p "$SANATAN_REUSE_OUTPUT"
 printf '%s  %s\n' "$(node -p 'require("./scripts/sanatan-native-sdk.json").appArchiveSha256')" "$SANATAN_APP_ARCHIVE" | shasum -a 256 -c -
@@ -35,4 +35,12 @@ xcrun simctl install "$SIMULATOR_UDID" "$SANATAN_APP"
 # Check XCTest first. The existing infrastructure flow opens only simulator Settings.
 mkdir -p e2e-shots
 maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit --output "$SANATAN_REUSE_OUTPUT/driver.xml" .maestro/brand-driver-check.yaml 2>&1 | tee "$SANATAN_REUSE_OUTPUT/driver.log"
-bash scripts/native-sanatan-matrix.sh ios "$SIMULATOR_UDID"
+case "${NATIVE_ACCEPTANCE_SCOPE:-sanatan}" in
+  sanatan) bash scripts/native-sanatan-matrix.sh ios "$SIMULATOR_UDID" ;;
+  widgets)
+    maestro --device "$SIMULATOR_UDID" test --config .maestro/config.yaml --format junit \
+      --output "$SANATAN_REUSE_OUTPUT/widgets.xml" .maestro/home-widgets-smoke.yaml 2>&1 | tee "$SANATAN_REUSE_OUTPUT/widgets.log"
+    printf '%s\n' 'PASS: verified compiled host/widget SDK with current JS; widget gallery and warm/cold deep-link destinations passed.' > "$SANATAN_REUSE_OUTPUT/result.log"
+    ;;
+  *) echo 'Unsupported native acceptance scope'; exit 2 ;;
+esac
