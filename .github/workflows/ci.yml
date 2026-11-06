@@ -58,7 +58,7 @@ jobs:
 
       - name: Native verification tooling tests
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: node --test scripts/select-native-ios-device.test.cjs
+        run: node --test scripts/select-native-ios-device.test.cjs scripts/run-native-diagnostic.test.cjs
 
       - name: Engine tests
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}

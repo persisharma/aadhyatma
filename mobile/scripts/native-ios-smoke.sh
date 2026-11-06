@@ -14,16 +14,9 @@ failure_evidence() {
   set +e
   printf 'FAIL phase=%s exit=%s line=%s\n' "$PHASE" "$rc" "${BASH_LINENO[0]:-unknown}" > "$OUTPUT/failure.log"
   if [[ -n "${SIMULATOR_UDID:-}" ]]; then
-    xcrun simctl spawn "$SIMULATOR_UDID" launchctl list > "$OUTPUT/processes-at-failure.log" 2>&1
-    xcrun simctl io "$SIMULATOR_UDID" screenshot "$OUTPUT/failure.png"
-    python3 - "$SIMULATOR_UDID" "$OUTPUT/device-failure.log" <<'PY'
-import subprocess, sys
-with open(sys.argv[2], 'w') as output:
-    try:
-        subprocess.run(['xcrun', 'simctl', 'spawn', sys.argv[1], 'log', 'show', '--last', '5m', '--style', 'compact', '--predicate', 'process == "Vedansh" OR process == "SpringBoard"'], stdout=output, stderr=subprocess.STDOUT, timeout=20)
-    except subprocess.TimeoutExpired:
-        output.write('Diagnostic collection timed out after 20 seconds.\n')
-PY
+    node scripts/run-native-diagnostic.cjs xcrun simctl spawn "$SIMULATOR_UDID" launchctl list > "$OUTPUT/processes-at-failure.log" 2>&1
+    node scripts/run-native-diagnostic.cjs xcrun simctl io "$SIMULATOR_UDID" screenshot "$OUTPUT/failure.png"
+    node scripts/run-native-diagnostic.cjs xcrun simctl spawn "$SIMULATOR_UDID" log show --last 5m --style compact --predicate 'process == "Vedansh" OR process == "SpringBoard"' > "$OUTPUT/device-failure.log" 2>&1
   fi
   shopt -s nullglob
   for report in "$HOME"/Library/Logs/DiagnosticReports/Vedansh*.ips; do

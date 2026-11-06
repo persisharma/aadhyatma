@@ -34,7 +34,9 @@ product content, artwork, publication gates, progress or native dependencies.
    execution must still prove whether it resolves the observed startup timeout.
    The shared simulator selector retains the previous default for other callers,
    rejects wrong-runtime overrides and has six executable fixture regressions.
-   Native log queries have a 20-second limit and the flow result is written first.
+   Every OS diagnostic/reset command in the native failure cleanup has a
+   20-second limit and the flow result is written first. Three executable child-
+   process tests cover a real stuck process, an ordinary failure and success.
    Both platforms pin the same CLI release and archive checksum.
 6. Read-only repository settings inspection found `main` unprotected, no required
    status-check contexts, and its `main` ruleset disabled. The rulebook therefore

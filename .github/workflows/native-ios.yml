@@ -67,4 +67,4 @@ jobs:
           if-no-files-found: warn
       - name: Stop simulator
         if: always() && env.SIMULATOR_UDID != ''
-        run: xcrun simctl shutdown "$SIMULATOR_UDID"
+        run: node scripts/run-native-diagnostic.cjs xcrun simctl shutdown "$SIMULATOR_UDID"
