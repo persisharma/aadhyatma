@@ -10,10 +10,14 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        artifact: [sanatan-ios-42178480200, sanatan-android-42178480200]
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: sanatan-ios-42178480200
+          name: ${{ matrix.artifact }}
           run-id: 42178480200
           github-token: ${{ github.token }}
           path: captured
@@ -21,7 +25,7 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import json
+          import json,re
           root=Path('captured')
           allowed={'home-sanatan-card','home-settings','home-wordmark','tab-home','home-discover-carousel','sanatan-search','sanatan-start','sanatan-next','sanatan-resume'}
           for path in root.rglob('commands.json'):
@@ -34,7 +38,7 @@ jobs:
                   data=command.get(kind,{})
                   selector=data.get('selector',{}) if isinstance(data,dict) else {}
                   test_id=selector.get('idRegex','')
-                  if test_id in allowed or meta.get('status')=='FAILED':
+                  if test_id in allowed or meta.get('status')=='FAILED' or kind=='swipeCommand':
                       print('TEST_STATUS',json.dumps({'kind':kind,'testId':test_id if test_id in allowed else 'redacted','status':meta.get('status'),'sequence':meta.get('sequenceNumber'),'durationMs':meta.get('duration')}))
           def walk(node):
               if not isinstance(node,dict):return
@@ -43,7 +47,13 @@ jobs:
               if test_id in allowed:
                   print('CONTROL_BOUNDS',json.dumps({'testId':test_id,'bounds':a.get('bounds'),'enabled':a.get('enabled')}))
               for child in node.get('children',[]):walk(child)
-          hierarchy=sorted(root.rglob('*home-sanatan-card*.json'))
+          hierarchy=sorted([*root.rglob('*home-sanatan-card*.json'),*root.rglob('*sanatan-resume*.json')])
           if hierarchy:walk(json.loads(hierarchy[-1].read_text()))
+          for path in root.rglob('apk-source-head.txt'):
+              value=path.read_text().strip()
+              if re.fullmatch('[a-f0-9]{40}',value):print('APK_SOURCE',value)
+          for path in root.rglob('apk-sha256.txt'):
+              value=path.read_text().split()[0]
+              if re.fullmatch('[a-f0-9]{64}',value):print('APK_SHA256',value)
           print('DIAGNOSTICS_COMPLETE')
           PY
