@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { dohaIds, getDoha } from '../doha';
 import { flatPoolSegments } from '../versePoolFlat';
 import { suvicharDohaThoughts, suvicharDohasFor } from '../doha/suvichar';
-import { suvicharDeityCatalog, parseSuvicharPreferences, MESSAGE_LIMIT } from '../suvichar';
+import { suvicharDeityCatalog, suvicharDeities, parseSuvicharPreferences, MESSAGE_LIMIT } from '../suvichar';
 import { suvicharSourcedThoughts, suvicharOriginalThoughts, suvicharThoughtsFor, suvicharThoughtForDay, findSuvicharThought, nextSuvicharThought, sourceForSuvichar, suvicharSourceLabel } from '../suvicharContent';
 import { suvicharTemplatesFor, isSuvicharThought } from '../suvicharTemplates';
 import { contentByLang } from '../../utils/localize';
@@ -29,7 +29,9 @@ test('Daily Bhakti serves all eight canonical dohas with complete meanings', () 
 
 test('Suvichar projects canonical full poems and poet credits without changing existing corpora', () => {
   assert.equal(suvicharSourcedThoughts.length, 621);
-  assert.equal(suvicharOriginalThoughts.length, 84);
+  // Doha integration must preserve the original stable IDs as newer originals are appended.
+  assert.deepEqual(suvicharOriginalThoughts.slice(0, 84).map(t => t.id),
+    Array.from({ length: 84 }, (_, i) => `VD-${String(i + 1).padStart(4, '0')}`));
   assert.equal(suvicharDohaThoughts.length, 8);
   assert.equal(new Set(suvicharDohaThoughts.map(t => t.id)).size, 8);
   for (const verse of canonical) {
@@ -44,8 +46,7 @@ test('Suvichar projects canonical full poems and poet credits without changing e
   }
 });
 
-test('named Ram and Hari dohas retain their deity scope across all eighteen choices', () => {
-  assert.equal(suvicharDeityCatalog.length, 18);
+test('named Ram and Hari dohas retain their deity scope across the full prepared catalogue', () => {
   const hari = ['rama','ram-darbar','krishna','radha-krishna','vishnu','tirupati-balaji','khatu-shyam','sanwariya-seth','jagannath'];
   for (const deity of suvicharDeityCatalog) {
     const ids = suvicharDohasFor(deity.id).map(t => t.id);
@@ -82,10 +83,15 @@ test('daily cards and Another thought reach every eligible doha without changing
     assert.deepEqual(daily.slice(0, expectedOriginals.length), expectedOriginals);
     daily.forEach((thought, day) => {
       assert.equal(suvicharThoughtForDay(deity.id, day).id, thought.id);
-      const card = suvicharTemplatesFor(day).find(t => t.id === `daily-${deity.id}`)!;
-      assert.equal(card.thoughtId, thought.id);
-      assert.equal(card.messageHi, thought.hi);
-      assert.equal(card.messageEn, thought.en);
+      const card = suvicharTemplatesFor(day).find(t => t.id === `daily-${deity.id}`);
+      if (suvicharDeities.some(d => d.id === deity.id)) {
+        assert.ok(card, `Missing daily card for enabled deity ${deity.id}`);
+        assert.equal(card.thoughtId, thought.id);
+        assert.equal(card.messageHi, thought.hi);
+        assert.equal(card.messageEn, thought.en);
+      } else {
+        assert.equal(card, undefined, `Unpublished deity ${deity.id} leaked into daily cards`);
+      }
     });
     assert.equal(suvicharThoughtForDay(deity.id, -1).id, daily.at(-1)!.id);
     for (const thought of suvicharDohasFor(deity.id)) {
