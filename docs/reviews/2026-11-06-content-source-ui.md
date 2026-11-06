@@ -82,7 +82,13 @@ source-modal steps. The earlier calendar changes from #635 remain intact.
   screenshots, four scripts × Standard/Large, compact/system-text review, real
   share captures and playback acceptance remain PENDING. This Linux environment
   exposes no `maestro`, `adb` or `xcrun`; no installed-app visual acceptance is claimed.
-- Observance verifier: IN PROGRESS on the integrated baseline.
+- PASS: observance verifier for 2024–2031: zero failures, known divergences or anchor/rule-table drift.
 
-The PR remains draft until required native checks pass. No merge, build, release,
-version change, store submission or OTA is performed.
+The PR remains draft until required native checks pass. No merge, release, version
+change, store submission or OTA is performed.
+
+Delivery: branch `codex/content-source-ui`, draft PR
+https://github.com/persisharma/aadhyatma/pull/636. Tested integrated source tree:
+`b0ae84df45cadc754ca4b162c3bd8982b432776e`; the final follow-up changes only this
+evidence record. Remote tree hashes are checked against the local Git index.
+
