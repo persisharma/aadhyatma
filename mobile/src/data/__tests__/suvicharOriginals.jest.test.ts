@@ -58,8 +58,8 @@ it('keeps original message lookup separate for deities that formerly shared a fa
   }
 });
 
-it.each(suvicharDeityCatalog.map(d => d.id))('uses only eligible originals for the daily and weekday rotation of %s', deity => {
-  const eligible = suvicharThoughtsFor(deity).filter(t => t.id.startsWith('VD-'));
+it.each(suvicharDeityCatalog.map(d => d.id))('uses only eligible originals and dohas for the daily and weekday rotation of %s', deity => {
+  const eligible = suvicharThoughtsFor(deity).filter(t => t.id.startsWith('VD-') || t.id.startsWith('DH-'));
   const ids = new Set<string>();
   for (let day = 0; day < eligible.length; day++) {
     const t = suvicharThoughtForDay(deity, day);
@@ -91,3 +91,4 @@ it('labels originals honestly, cycles all scripts, preserves favorites and drops
     expect(restored.favorites[0]).toEqual(f);
   }
 });
+
