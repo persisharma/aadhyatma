@@ -11,13 +11,13 @@ cleanup() {
   trap - EXIT
   set +e
   if [[ "$PLATFORM" == ios ]]; then
-    xcrun simctl ui "$DEVICE" content_size large
     xcrun simctl io "$DEVICE" screenshot "$SANATAN_OUTPUT/final.png"
+    xcrun simctl ui "$DEVICE" content_size large
     xcrun simctl spawn "$DEVICE" log show --last 3m --style compact --predicate 'process == "Vedansh"' > "$SANATAN_OUTPUT/device.log" 2>&1
   else
-    adb -s "$DEVICE" shell settings put system font_scale 1.0
     adb -s "$DEVICE" logcat -d > "$SANATAN_OUTPUT/device.log" 2>&1
     adb -s "$DEVICE" exec-out screencap -p > "$SANATAN_OUTPUT/final.png"
+    adb -s "$DEVICE" shell settings put system font_scale 1.0
   fi
   cp e2e-shots/sanatan*.png "$SANATAN_OUTPUT/" 2>/dev/null
   if [[ -d "$HOME/.maestro/tests" ]]; then cp -R "$HOME/.maestro/tests" "$SANATAN_OUTPUT/maestro-debug"; fi
@@ -51,7 +51,8 @@ for text_setting in standard enlarged; do
   maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/$text_setting.xml" \
     -e "CAPTURE_SUFFIX=$PLATFORM-$text_setting" .maestro/sanatan-parichay-language-size.yaml \
     2>&1 | tee "$SANATAN_OUTPUT/$text_setting.log"
-  cp e2e-shots/sanatan*.png "$SANATAN_OUTPUT/"
+  mkdir -p "$SANATAN_OUTPUT/$text_setting"
+  cp e2e-shots/sanatan*.png "$SANATAN_OUTPUT/$text_setting/"
 done
 SANATAN_PHASE=all-collections
 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/collections.xml" \

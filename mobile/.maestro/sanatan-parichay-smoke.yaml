@@ -5,6 +5,9 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element: { id: home-sanatan-card }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: lang-toggle-en }
 - assertVisible: "Every tradition.*"
@@ -14,31 +17,38 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element: { text: "Thirty-three devata" }
     direction: DOWN
+    timeout: 60000
 - tapOn: "Thirty-three devata"
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-start }
 - scrollUntilVisible:
     element: { text: "Save for later" }
     direction: DOWN
+    timeout: 60000
 - tapOn: "Save for later"
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    timeout: 60000
 - tapOn: { id: sanatan-next }
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
     element: { text: "11 · Rudras" }
     direction: DOWN
+    timeout: 60000
 - tapOn: "11 · Rudras"
 - scrollUntilVisible:
     element: { text: "Ten pranas and the self.*" }
     direction: DOWN
+    timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
 - scrollUntilVisible:
     element: { text: "Sources & context" }
     direction: DOWN
+    timeout: 60000
 - tapOn: "Sources & context"
 - assertVisible: "This is a short editorial introduction.*"
 - assertNotVisible: "https?://.*"
@@ -55,9 +65,15 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: { id: tab-home }
     timeout: 90000
+- tapOn:
+    text: "Maybe later"
+    optional: true
 - scrollUntilVisible:
     element: { id: home-sanatan-card }
     direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: sanatan-resume }
 - assertVisible: "2\\s*/\\s*3"

@@ -1,0 +1,59 @@
+name: Sanatan iOS saved-binary acceptance
+on:
+  push:
+    branches: ['codex/sanatan-ios-native-qa']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: sanatan-ios-saved-binary
+  cancel-in-progress: true
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+        working-directory: mobile
+    env:
+      CI: '1'
+      MAESTRO_CLI_NO_ANALYTICS: 'true'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify unchanged production source
+        run: |
+          git diff --exit-code a469ea3696f29baf588b3783fee83c9c1e000202 HEAD -- src assets App.tsx index.ts app.json app.config.js package.json package-lock.json plugins modules babel.config.js
+      - uses: actions/download-artifact@v4
+        with:
+          name: sanatan-ios-42168692889
+          run-id: 42168692889
+          github-token: ${{ github.token }}
+          path: native-reuse
+      - name: Install Maestro
+        run: |
+          curl -fsSL https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Install verified simulator app and exercise Sanatan
+        run: bash scripts/native-sanatan-ios-reuse.sh
+      - name: Retain native screens and driver results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanatan-ios-review-${{ github.run_id }}
+          path: native-sanatan-output/**
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: xcrun simctl shutdown "$SIMULATOR_UDID"
