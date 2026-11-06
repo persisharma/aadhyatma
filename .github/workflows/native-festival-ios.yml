@@ -35,6 +35,20 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: mobile/package-lock.json
+      - name: Require published hero paintings
+        run: |
+          mkdir -p ../native-festival-output
+          git rev-parse HEAD > ../native-festival-output/tested-head.txt
+          node - <<'JS'
+          const fs = require('node:fs');
+          const manifest = require('./src/data/festivalHeroManifest.json');
+          if (manifest.publication !== 'verified') {
+            const message = 'BLOCKED: publish and publicly hash-verify festival hero paintings before native export verification. See the festival publication workflow.';
+            fs.writeFileSync('../native-festival-output/result.txt', message + '\n');
+            console.error(message);
+            process.exit(1);
+          }
+          JS
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

@@ -19,7 +19,7 @@ New heavy paintings use the `festival-hero` R2 prefix; they are not required int
 
 ## Evidence
 
-Local implementation tree: `cbf584904cac9992435ea5db3d58b746a897ae8c` (remote checkpoint `13c6864954a7aaf4cc23240782f03e46d61ca27c`), with subsequent test/evidence-only changes included in the final PR head.
+Local implementation tree: `cbf584904cac9992435ea5db3d58b746a897ae8c` (remote checkpoint `13c6864954a7aaf4cc23240782f03e46d61ca27c`), with subsequent acceptance/test/evidence-only changes included in the final PR head. PR: https://github.com/persisharma/aadhyatma/pull/630 .
 
 | Gate | Result | Evidence |
 | --- | --- | --- |
@@ -27,13 +27,14 @@ Local implementation tree: `cbf584904cac9992435ea5db3d58b746a897ae8c` (remote ch
 | Whole-year date coverage | PASS | All 366 resolved 2026 occurrence records in each of Purnimant and Amanta; every month represented; five tests include ceremony-date regressions. This proves catalog wiring, not a new source audit of every tradition. |
 | Engine / verified clocks | PASS | 772 tests, including all 137 timing assertions and the 115 existing Drik fixtures. |
 | TypeScript / widgets / Ask | PASS | Typecheck; 46 widget and 49 Ask tests. |
-| New card/provider tests | PASS | Four scripts, individual row share payloads, undated catalog cards, source hashes, stale identity and decode readiness. Native rendering remains separate. |
+| New card/provider tests | PASS | 24 focused assertions across three suites. Four scripts, individual row share payloads, undated catalog cards, source hashes, stale identity and decode readiness. Native rendering remains separate. |
 | Full reader suite | FAIL: existing main expectations | All three unmodified package shards executed: 3487 assertions, 3484 pass, three failures in dailyBhaktiShare, DeityIcon and RoutineTodayVisual. The unchanged-main expectation drift is recorded in the earlier audit. |
 | Full data suite | FAIL: existing main expectations | 223 assertions, 220 pass; three dohaScopes failures (92 vs 84, 19 vs 18, missing thought). New text-free art manifest is routed alongside existing non-scripture asset manifests; its source hashes have their own gate. |
 | Artwork source / durability | PASS | Ten WebP masters with full hashes and prompt ledger committed remotely; final Govardhan revision inspected. |
 | Public CDN integration | BLOCKED | Run 42209628916, job 127864761920: missing R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY. Upload failed and activation was withheld. Add the repository R2 secrets, rerun publication, inspect all public hashes, and commit the emitted verified manifest/proof. |
-| Installed native size/language/export matrix | PENDING | Push-triggered macOS Release run. Stable Xcode 16.4 selection passed. No native success or visual parity is claimed; inspect actual screens/PNGs before readiness. |
+| Installed native size/language/export matrix | BLOCKED / PENDING | Publication flag now fails fast before costly native builds while hero assets are unpublished. The prepared 28-case matrix includes Govardhan, Dhanteras, Makar guidance and all Shivaratri windows. An earlier run passed stable Xcode 16.4 selection; it was superseded before native compilation. No native success or visual parity is claimed. |
 | Actual Android / physical devices | PENDING | No successful installed-app run available in this environment. |
+| Production export asset maps | PASS | iOS and Android production bundle/export passed and neither asset map contains festival-hero masters. The initial parallel iOS attempt was killed; retry alone passed. These are not native visual passes. |
 | Startup / source validity | PASS | Launch import graph and byte budget, instruction routing and whitespace gates. Share-only hero renderer loads on demand. |
 | Merge / OTA / store release | N/A | No merge, EAS, TestFlight, store or OTA publication requested/performed. |
 

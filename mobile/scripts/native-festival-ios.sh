@@ -125,7 +125,11 @@ while IFS=$'\t' read -r FESTIVAL_FORM udid; do
     run_case English Standard large true shastra 2026-10-20 ".*13:59.*14:44.*"
     run_case Hindi Large large true holika 2026-03-03 ".*18:22.*20:50.*"
     run_case Kannada Large accessibility-large true vrat-parana 2026-11-05 ".*06:36.*08:47.*"
+    run_case English Standard large true govardhan 2026-11-10 ".*06:39.*08:49.*"
+    run_case English Standard large true dhanteras 2026-11-06 ".*18:02.*19:58.*"
+    run_case English Large accessibility-large true guidance 2026-01-14 ".*sidereal ingress.*"
+    run_case English Large accessibility-large true maha-shivaratri 2026-02-15 ".*Nishita.*"
   fi
   xcrun simctl shutdown "$FESTIVAL_SIM"
 done < "$FESTIVAL_OUTPUT/selected-devices.tsv"
-printf 'PASS: 24 native cases; compact/wide, four languages, Standard/Large, compact enlarged-system-text full almanac export, Shastra/Holika and next-day parana.\nPENDING: human visual comparison of captured screens/PNGs, physical devices and Android.\n' > "$FESTIVAL_OUTPUT/result.txt"
+printf 'PASS: 28 native cases; compact/wide, four languages, Standard/Large, compact enlarged-system-text full almanac export, Shastra/Holika, Govardhan/Dhanteras heroes, guidance, all Shivaratri windows and next-day parana.\nPENDING: human visual comparison of captured screens/PNGs, physical devices and Android.\n' > "$FESTIVAL_OUTPUT/result.txt"
