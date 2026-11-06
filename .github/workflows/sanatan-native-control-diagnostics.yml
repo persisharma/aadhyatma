@@ -1,0 +1,49 @@
+name: Sanatan native control diagnostics
+on:
+  push:
+    branches: ['codex/sanatan-native-control-diagnostics']
+    paths: ['.github/workflows/sanatan-native-control-diagnostics.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: sanatan-ios-42178480200
+          run-id: 42178480200
+          github-token: ${{ github.token }}
+          path: captured
+      - name: Report allowlisted test control status and geometry only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          root=Path('captured')
+          allowed={'home-sanatan-card','home-settings','home-wordmark','tab-home','home-discover-carousel','sanatan-search','sanatan-start','sanatan-next','sanatan-resume'}
+          for path in root.rglob('commands.json'):
+              if path.parent.name!='sanatan-parichay-smoke':continue
+              commands=json.loads(path.read_text())
+              for item in commands:
+                  meta=item.get('metadata',{})
+                  command=item.get('command',{})
+                  kind=next(iter(command),'unknown')
+                  data=command.get(kind,{})
+                  selector=data.get('selector',{}) if isinstance(data,dict) else {}
+                  test_id=selector.get('idRegex','')
+                  if test_id in allowed or meta.get('status')=='FAILED':
+                      print('TEST_STATUS',json.dumps({'kind':kind,'testId':test_id if test_id in allowed else 'redacted','status':meta.get('status'),'sequence':meta.get('sequenceNumber'),'durationMs':meta.get('duration')}))
+          def walk(node):
+              if not isinstance(node,dict):return
+              a=node.get('attributes',{})
+              test_id=a.get('resource-id')
+              if test_id in allowed:
+                  print('CONTROL_BOUNDS',json.dumps({'testId':test_id,'bounds':a.get('bounds'),'enabled':a.get('enabled')}))
+              for child in node.get('children',[]):walk(child)
+          hierarchy=sorted(root.rglob('*home-sanatan-card*.json'))
+          if hierarchy:walk(json.loads(hierarchy[-1].read_text()))
+          print('DIAGNOSTICS_COMPLETE')
+          PY
