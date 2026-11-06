@@ -93,6 +93,7 @@ const DEITY_TAGS: Record<Deity, readonly string[]> = {
   shani: ['ShaniDev', 'Shani'],
   kali: ['MaaKali', 'Kali'],
   navagraha: ['Navagraha', 'Jyotish'],
+  parshuram: ['Parshuram', 'BhagwanParshuram', 'Parashurama'],
 };
 
 /** Category → the form of the text. Keys mirror `ContentCategory` in `texts.ts`. */
@@ -176,6 +177,7 @@ const DEITY_MATCH_TOKENS: Record<Deity, readonly string[]> = {
   shani: ['shani', 'sani'],
   kali: ['kali'],
   navagraha: ['navagraha', 'graha'],
+  parshuram: ['parshuram', 'parashuram', 'parashurama', 'bhargava'],
 };
 
 /** One observance falling on the share date, as much of it as the tags need. */

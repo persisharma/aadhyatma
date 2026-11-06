@@ -77,6 +77,8 @@ const FLAT_SOURCES: readonly FlatSource[] = [
   // Append only: the earlier Daily Bhakti pool offsets remain stable.
   stuti('kabir-bhakti-dohe', verseCounts.kabirBhaktiDoheTotal),
   stuti('rahim-bhakti-dohe', verseCounts.rahimBhaktiDoheTotal),
+
+  stuti('parshuram-stotram', verseCounts.parshuramStotramTotal),
 ];
 
 type LibraryLookup = {

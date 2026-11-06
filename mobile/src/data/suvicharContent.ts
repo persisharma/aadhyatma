@@ -17,7 +17,7 @@ for (const source of suvicharDohaSources) sources.set(source.id, source);
 sources.set('vedansh-original', { id: 'vedansh-original', referenceHi: 'वेदांश', referenceEn: 'Vedansh',
   modeHi: 'मौलिक विचार', modeEn: 'Original reflection', url: '', contextHi: 'वेदांश के लिए लिखे गए मौलिक संदेश; शास्त्र या संत के उद्धरण नहीं।' });
 const families: Record<SuvicharDeity, string> = {
-  krishna: 'krishna', rama: 'rama', hanuman: 'hanuman', shiva: 'shiva', ganesha: 'ganesha',
+  parshuram: 'parshuram', krishna: 'krishna', rama: 'rama', hanuman: 'hanuman', shiva: 'shiva', ganesha: 'ganesha',
   durga: 'durga', lakshmi: 'lakshmi', saraswati: 'saraswati', vishnu: 'vishnu', 'ram-darbar': 'ram-darbar',
   'radha-krishna': 'krishna', 'salasar-balaji': 'hanuman', 'tirupati-balaji': 'vishnu',
   'sanwariya-seth': 'krishna', jagannath: 'krishna', mahakaal: 'shiva', 'khatu-shyam': 'krishna', annapurna: 'annapurna',
@@ -38,7 +38,7 @@ export function suvicharThoughtsFor(deity: SuvicharDeity): readonly SuvicharThou
     const general = suvicharOriginalThoughts.filter(t => !t.deities.length);
     const daily = [...specific, ...general, ...suvicharDohasFor(deity)];
     dailyByDeity.set(deity, daily);
-    byDeity.set(deity, [...daily, ...byFamily.get(families[deity])!]);
+    byDeity.set(deity, [...daily, ...(byFamily.get(families[deity]) ?? [])]);
   }
   return byDeity.get(deity)!;
 }

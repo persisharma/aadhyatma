@@ -7,6 +7,7 @@ const devotionalShareManifest: RemoteAssetManifest = devotionalShareManifestJson
 
 /** Complete portrait paintings; every card slice uses its own master. */
 export const devotionalSubjectArt = {
+  parshuram: 'parshuram',
   'mahakaal': 'mahakaal',
   'lakshmi': 'lakshmi',
   'khatu-shyam': 'khatu-shyam',
@@ -36,6 +37,7 @@ export function devotionalPlateArt(art: DevotionalArt) {
 }
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
+  'parshuram-stotram': 'parshuram',
   // Poet collections use the existing neutral master, with no invented deity portrait.
   'kabir-bhakti-dohe': 'prayer', 'rahim-bhakti-dohe': 'prayer',
   'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',

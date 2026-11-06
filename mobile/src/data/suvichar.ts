@@ -1,7 +1,9 @@
 import { assetBaseUrl, remoteAssetRequest } from './assetManifest';
 import manifest from './suvicharManifest.json';
+import { parshuramPublished } from './parshuramAvailability';
 
 export const suvicharDeityCatalog = [
+  { id: 'parshuram', hi: 'भगवान परशुराम', en: 'Bhagwan Parshuram' },
   {
     "id": "krishna",
     "hi": "श्रीकृष्ण",
@@ -96,7 +98,7 @@ export const suvicharFrames = [
 ] as const;
 /** Offer a deity only after every frame has passed publication verification. */
 export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
-  suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
+  (deity.id !== 'parshuram' || parshuramPublished) && suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
 export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
 export const NAME_LIMIT = 48;
@@ -170,6 +172,7 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
 export function suvicharArtKey(deity: SuvicharDeity, frame: SuvicharFrame): string { return `${deity}--${frame}`; }
 /** Only published and byte-verified assets belong in the runtime manifest. No deity fallback. */
 export function suvicharArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
+  if (deity === 'parshuram' && !parshuramPublished) return null;
   return remoteAssetRequest(manifest, suvicharArtKey(deity, frame), assetBaseUrl());
 }
 /** Newly authored reflection, never presented as a scripture quotation. */
@@ -273,6 +276,7 @@ export const suvicharReflections = [
 
 /** Reviewed painting-to-paper bounds; floral scenes and the tall Tirupati shrine need more room. */
 export function suvicharHeroFraction(deity: SuvicharDeity, frame: SuvicharFrame): number {
+  if (deity === 'parshuram') return .60;
   return frame === 'pushp-aangan' ? .64 : deity === 'tirupati-balaji' && frame === 'mandir-jharokha' ? .62 : .60;
 }
 
@@ -281,7 +285,8 @@ export function suvicharHeroFraction(deity: SuvicharDeity, frame: SuvicharFrame)
  * `start` sits just above the divider rule, the text window between the rule and the bottom border.
  * The card renders this slice unstretched so the footer line never crosses painted rules.
  */
-export function suvicharFooterBand(frame: SuvicharFrame): { start: number; textTop: number; textBottom: number } {
+export function suvicharFooterBand(frame: SuvicharFrame, deity?: SuvicharDeity): { start: number; textTop: number; textBottom: number } {
+  if (deity === 'parshuram') return frame === 'bhakti-patra' ? { start: .897, textTop: .91, textBottom: .97 } : { start: .907, textTop: .92, textBottom: .953 };
   return frame === 'mandir-jharokha' ? { start: .908, textTop: .92, textBottom: .982 }
     : frame === 'pushp-aangan' ? { start: .898, textTop: .909, textBottom: .979 }
     : { start: .891, textTop: .904, textBottom: .972 };
@@ -292,7 +297,8 @@ export function suvicharFooterBand(frame: SuvicharFrame): { start: number; textT
  * the badge centres in it: the jharokha cartouche, the floral frame's paper band, and the letter frame's margin,
  * whose rule (≈ .031) the opaque badge covers. Slots leave room above the badge and end above the painting.
  */
-export function suvicharBrandSlot(frame: SuvicharFrame): { top: number; bottom: number } {
+export function suvicharBrandSlot(frame: SuvicharFrame, deity?: SuvicharDeity): { top: number; bottom: number } {
+  if (deity === 'parshuram') return { top: .01, bottom: .065 };
   return frame === 'mandir-jharokha' ? { top: .008, bottom: .076 }
     : frame === 'pushp-aangan' ? { top: .01, bottom: .058 }
     : { top: .01, bottom: .058 };

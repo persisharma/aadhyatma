@@ -1390,6 +1390,8 @@ Integrated main aba14c15a329bfb565ac62f6331a81a82987f5af into the Doha branch. P
 ## [2026-11-06] ingest | Infinity counting connected: each completed silent loop records one japa; audio exclusively owns counts while playing, and pause suppresses both sources. Added duplicate-completion guards and provider/rollover coverage. Refined the Infinity parchment background, ambient halo and layered jyoti/trail; native verification remains pending.
 
 
+## [2026-11-06] ingest | Prepared publication-gated Bhagwan Parshuram deity, seven-verse reader/Daily Bhakti, eight Suvichar reflections and standing artwork; publication and native evidence pending.
+
 ## [2026-11-06] ingest | Vrat title clipping recurrence
 
 Recorded the local 17/24 override, shared full-line catalog/listing containment, rendered-style regression matrix and separate native acceptance boundary in subsystems/panchang.md.

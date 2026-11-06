@@ -5,7 +5,7 @@
     "kind": "app-written-original-reflections",
     "approvedOn": "2026-11-02",
     "approval": "User approved the daily-life, deity-specific and humility lists and requested all thoughts above be added.",
-    "scope": "All 74 numbered thoughts plus the two distinct earlier examples; three exact repeated examples occur only once. Eight new Khatu Shyam Hare Ka Sahara reflections follow as VD-0077 through VD-0084 (84 originals total).",
+    "scope": "All 74 numbered thoughts plus the two distinct earlier examples; three exact repeated examples occur only once. Eight new Khatu Shyam Hare Ka Sahara reflections follow as VD-0077 through VD-0084 (84 originals total). Eight Parshuram reflections VD-0085–VD-0092 follow (92 originals total).",
     "languagePolicy": "Hindi copy preserved from the approved conversation. English is an editorial translation; Gujarati/Kannada use the existing runtime Hindi re-scripting policy.",
     "attribution": "Vedansh original reflections; not scripture quotations, translations or words attributed to a deity or saint.",
     "additions": [
@@ -24,6 +24,22 @@
           "VD-0084"
         ],
         "authorship": "App-written in response to the user request after PR #603 was merged; not an attributed scripture quotation."
+      },
+      {
+        "requestedOn": "2026-11-06",
+        "themeHi": "भगवान परशुराम",
+        "deity": "parshuram",
+        "ids": [
+          "VD-0085",
+          "VD-0086",
+          "VD-0087",
+          "VD-0088",
+          "VD-0089",
+          "VD-0090",
+          "VD-0091",
+          "VD-0092"
+        ],
+        "authorship": "Original Vedansh reflections written for the requested Parshuram addition; never quotations attributed to the deity or a scripture."
       }
     ]
   },
@@ -939,6 +955,94 @@
       "sourceId": "vedansh-original",
       "deities": [
         "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0085",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम का स्मरण करें। शक्ति के साथ संयम और ज्ञान के साथ विनम्रता रखें।",
+      "en": "Remember Bhagwan Parshuram. Let restraint accompany strength and humility accompany knowledge.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0086",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी की भक्ति में अहंकार छोड़िए। सच्चा बल किसी निर्बल का सहारा बनने में है।",
+      "en": "In devotion to Parshuram ji, let go of pride. True strength helps someone who needs support.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0087",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम से प्रेरणा लें। अन्याय के सामने साहस और अपने क्रोध पर संयम रखें।",
+      "en": "Draw inspiration from Bhagwan Parshuram: courage before injustice, restraint over your anger.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0088",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी का नाम लें और आज अपने कर्म में ईमानदारी, वाणी में मर्यादा रखें।",
+      "en": "Remember Parshuram ji. Bring honesty to your actions and dignity to your words today.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0089",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम की भक्ति मन को दृढ़ करे। कठिन समय में भी सही कर्म का साथ न छोड़ें।",
+      "en": "May devotion to Bhagwan Parshuram strengthen your resolve. Keep doing what is right in difficult times.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0090",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी का स्मरण करके दिन शुरू करें। सीखने का भाव रखें और अभिमान को दूर रखें।",
+      "en": "Begin the day remembering Parshuram ji. Remain willing to learn and leave pride behind.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0091",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम की कृपा से मन में धैर्य रहे और सामर्थ्य दूसरों के हित में लगे।",
+      "en": "May Bhagwan Parshuram bless you with patience and the will to use your abilities for others.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0092",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी की भक्ति केवल शब्दों में नहीं। अपने व्यवहार में सत्य, संयम और करुणा रखें।",
+      "en": "Let devotion to Parshuram ji guide your conduct through truth, restraint, and compassion.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
       ]
     }
   ]

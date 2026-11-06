@@ -25,7 +25,7 @@ import { saraswatiChalisaCounts } from '../saraswati-chalisa';
 import { saraswatiStotramTotal } from '../saraswati-stotram';
 import { shivChalisaCounts } from '../shiv-chalisa';
 import { shivaStrotamTotal } from '../shiva-strotam';
-import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal } from '../stuti';
+import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal, parshuramStotramTotal } from '../stuti';
 import { deviSuktamTotal, narayanaSuktamTotal, purushaSuktamTotal } from '../suktam';
 import { sundarkandTotal } from '../sundarkand';
 import { valmikiRamayanTotal } from '../valmiki-ramayan';
@@ -84,6 +84,7 @@ test('every generated verse count still matches its corpus', () => {
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal, generated.narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal, generated.narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal, generated.navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal, generated.parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal, generated.purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal, generated.radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts, generated.ramChalisaCounts],
@@ -153,6 +154,7 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal, generated.narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal, generated.narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal, generated.navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal, generated.parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal, generated.purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal, generated.radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts, generated.ramChalisaCounts],

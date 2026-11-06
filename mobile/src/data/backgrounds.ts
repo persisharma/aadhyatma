@@ -57,6 +57,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   parvati: backgroundImages.deity_parvati_bhavani,
   narasimha: backgroundImages.deity_narasimha_prahlad,
   dattatreya: backgroundImages.deity_dattatreya,
+  parshuram: backgroundImages.deity_parshuram,
   shani: backgroundImages.deity_shani,
   kali: backgroundImages.deity_kali,
   navagraha: backgroundImages.deity_navagraha_icons,
@@ -174,6 +175,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'kalika-ashtakam': backgroundImages.deity_kali,
   rudrashtakam: shivaStrotamImages.shiva,
   'navagraha-stotram': backgroundImages.deity_navagraha_icons,
+  'parshuram-stotram': backgroundImages.deity_parshuram,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
@@ -236,7 +238,7 @@ export function getTheerthIllustration(templeId: string): BackgroundImage | unde
   return theerthBackgroundOverrides[templeId];
 }
 
-const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
+const deityBackgroundList: BackgroundImage[] = deities.map(deity => deityBackgrounds[deity.id]);
 
 /**
  * A random deity backdrop, for the "By Deity" index which isn't tied to a single

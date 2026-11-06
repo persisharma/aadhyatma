@@ -23,7 +23,10 @@ it('integrates every approved catalogue ID and app proposal without changing the
 
 it.each(suvicharDeities.map(d => d.id))('cycles the complete matching collection for %s in every language, including repeated English senses', deity => {
   const pool = suvicharThoughtsFor(deity);
-  expect(pool.length).toBeGreaterThanOrEqual(50);
+  if (deity === 'parshuram') {
+    expect(pool.filter(t => t.id.startsWith('VD-')).length).toBe(pool.length);
+    expect(pool.filter(t => /^VD-00(?:8[5-9]|9[0-2])$/.test(t.id))).toHaveLength(8);
+  } else expect(pool.length).toBeGreaterThanOrEqual(50);
   for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
     const seen = new Set<string>();let current = pool[0];
     for (let n=0;n<pool.length;n++) {

@@ -19,6 +19,7 @@ export type BackgroundImageKey =
   | 'deity_ganga'
   | 'deity_parvati_bhavani'
   | 'deity_narasimha_prahlad'
+  | 'deity_parshuram'
   | 'deity_dattatreya'
   | 'deity_shani'
   | 'deity_kali'
@@ -59,6 +60,7 @@ export const backgroundImages: Record<BackgroundImageKey, RemoteBackground> = {
   deity_parvati_bhavani: backgroundAsset('backgrounds--deity-parvati-bhavani'),
   deity_narasimha_prahlad: backgroundAsset('backgrounds--deity-narasimha-prahlad'),
   deity_dattatreya: backgroundAsset('backgrounds--deity-dattatreya'),
+  deity_parshuram: { kind: 'remote-background', stem: 'backgrounds--deity-parshuram' },
   deity_shani: backgroundAsset('backgrounds--deity-shani'),
   deity_kali: backgroundAsset('backgrounds--deity-kali'),
   deity_navagraha_icons: backgroundAsset('backgrounds--deity-navagraha-icons'),

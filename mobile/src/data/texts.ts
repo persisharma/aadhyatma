@@ -44,6 +44,7 @@ import {
   narasimhaAshtakamTotal,
   narayanaSuktamTotal,
   navagrahaStotramTotal,
+  parshuramStotramTotal,
   purushaSuktamTotal,
   radhashtakamTotal,
   ramChalisaCounts,
@@ -65,6 +66,7 @@ import {
   vishnuSahasranamaTotal,
 } from './verseCounts';
 import { japamMantras } from './japam';
+import { parshuramPublished } from './parshuramAvailability';
 
 export type TextStatus = 'active' | 'coming';
 export type ContentCategory =
@@ -100,7 +102,8 @@ export type Deity =
   | 'dattatreya'
   | 'shani'
   | 'kali'
-  | 'navagraha';
+  | 'navagraha'
+  | 'parshuram';
 
 export type LibraryEntry = {
   id: string;
@@ -125,6 +128,7 @@ export type LibraryEntry = {
 };
 
 export const library: readonly LibraryEntry[] = [
+  { id: 'parshuram-stotram', nameHi: 'श्री परशुराम स्तोत्रम्', nameEn: 'Parshuram Stotram', sub: '७ श्लोक · अर्थ सहित', subEn: '7 verses · with meaning', thumb: 'प', status: parshuramPublished ? 'active' : 'coming', hidden: !parshuramPublished, category: 'stotram', deities: ['parshuram'], verseCount: parshuramStotramTotal },
   {
     id: 'hanuman-chalisa',
     nameHi: 'हनुमान चालीसा',
