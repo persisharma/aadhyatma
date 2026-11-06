@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { startInfinityMotion } from '../japamInfinityPlayback';
+import { japaAutoCountSource, startInfinityMotion } from '../japamInfinityPlayback';
 
 function driver(phase = 0) {
   const callbacks: ((finished: boolean) => void)[] = [];
@@ -70,4 +70,34 @@ test('the shared crossing resumes as a full loop', () => {
   assert.deepEqual(d.durations, [800]);
   assert.deepEqual(d.resets, [0]);
   stop();
+});
+
+test('only completed live cycles count, exactly once per cycle', () => {
+  const d = driver();
+  let count = 0;
+  const stop = startInfinityMotion({ ...d.motion, onCycle: () => { count++; } });
+  assert.equal(count, 0);
+  d.callbacks[0](true); d.callbacks[0](true);
+  assert.equal(count, 1);
+  assert.equal(d.durations.length, 2);
+  stop(); d.callbacks[1](true);
+  assert.equal(count, 1);
+});
+
+test('cancelled cycles and stale success callbacks never count', () => {
+  const d = driver();
+  let count = 0;
+  const stop = startInfinityMotion({ ...d.motion, onCycle: () => { count++; } });
+  d.callbacks[0](false); d.callbacks[0](true);
+  assert.equal(count, 0);
+  stop();
+});
+
+test('one count source is selected across audio, silent loops and pause', () => {
+  assert.equal(japaAutoCountSource('infinity', true, false), 'motion');
+  assert.equal(japaAutoCountSource('infinity', true, true), 'audio');
+  assert.equal(japaAutoCountSource('infinity', false, true), 'none');
+  assert.equal(japaAutoCountSource('infinity', false, false), 'none');
+  assert.equal(japaAutoCountSource('mala', false, true), 'audio');
+  assert.equal(japaAutoCountSource('mala', false, false), 'none');
 });

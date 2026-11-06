@@ -13,26 +13,28 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - tapOn:
     id: "japam-style-infinity"
-- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*0 of 108.*"
-# Start/pause controls never add beads. Do not wait for an intentionally looping
-# animation to end; only the second tap should stop it.
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
+# Each completed silent loop counts once. Do not wait for the looping motion
+# to end; the second tap pauses motion and counting.
 - tapOn:
     id: "japam-counter-infinity"
-- assertVisible: ".*रोकने के लिए स्पर्श करें.*0 of 108.*"
+- extendedWaitUntil:
+    visible: ".*रोकने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
+    timeout: 15000
 - tapOn:
     id: "japam-counter-infinity"
-- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*0 of 108.*"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
 - takeScreenshot: e2e-shots/japam-infinity-paused
 - tapOn:
     id: "japam-style-mala"
 - tapOn: ".*Tap to count one bead.*"
-- assertVisible: ".*1 of 108 on this mala.*"
+- assertVisible: ".*[1-9][0-9]* of 108 on this mala.*"
 - tapOn:
     id: "japam-style-infinity"
-- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*1 of 108.*"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - tapOn: "Back"
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
-- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*1 of 108.*"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - stopApp
 - launchApp:
     clearState: false
@@ -43,6 +45,6 @@ appId: com.prashantsharma.vedansh
     timeout: 90000
 - tapOn: "JapMala. Tap to open."
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
-- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*1 of 108.*"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - tapOn: "Back"
 - stopApp

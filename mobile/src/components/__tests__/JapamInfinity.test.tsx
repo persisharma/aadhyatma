@@ -13,6 +13,7 @@ let onState: (state: AppStateStatus) => void;
 const start = jest.fn();
 const stop = jest.fn();
 const remove = jest.fn();
+const onCycle = jest.fn();
 let completions: ((result: { finished: boolean }) => void)[];
 beforeEach(() => {
   mockReduced = false;
@@ -27,7 +28,7 @@ beforeEach(() => {
 });
 afterEach(() => { act(() => tree?.unmount()); jest.restoreAllMocks(); jest.clearAllMocks(); });
 function display(running = false, count = 0) {
-  return <ThemeProvider><JapamInfinity count={count} size={230} running={running}
+  return <ThemeProvider><JapamInfinity count={count} size={230} running={running} onCycle={onCycle}
     hint={running ? 'Tap to pause' : 'Tap to start'} labelFontFamily="test-font" /></ThemeProvider>;
 }
 async function mount(running = false, count = 0) {
@@ -41,10 +42,12 @@ test('opening is still; start repeats full loops until pause', async () => {
   expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 800, useNativeDriver: true }));
   for (let i = 0; i < 5; i++) act(() => completions[i]({ finished: true }));
   expect(start).toHaveBeenCalledTimes(6);
+  expect(onCycle).toHaveBeenCalledTimes(5);
   await act(async () => { tree.update(display(false, 107)); });
   expect(stop).toHaveBeenCalled();
   act(() => completions[5]({ finished: true }));
   expect(start).toHaveBeenCalledTimes(6);
+  expect(onCycle).toHaveBeenCalledTimes(5);
 });
 
 test('audio count updates and rollover do not restart or stop continuous motion', async () => {
@@ -54,10 +57,14 @@ test('audio count updates and rollover do not restart or stop continuous motion'
   expect(stop).not.toHaveBeenCalled();
 });
 
-test('Reduced Motion suppresses motion without changing the control state', async () => {
+test('Reduced Motion keeps count cycles active while the marker remains still', async () => {
   mockReduced = true;
   await mount(true);
-  expect(start).not.toHaveBeenCalled();
+  expect(start).toHaveBeenCalledTimes(1);
+  const marker = tree.root.findAll(n => n.props.testID === 'japam-infinity-marker')[0];
+  expect(ReactNative.StyleSheet.flatten(marker.props.style).transform).toEqual([{ translateX: 99 }, { translateY: 58.75 }]);
+  act(() => completions[0]({ finished: true }));
+  expect(onCycle).toHaveBeenCalledTimes(1);
   expect(tree.root.findAllByType(Text).some(n => n.props.children === 'Tap to pause')).toBe(true);
 });
 

@@ -35,6 +35,8 @@ import AppIcon from '@/components/AppIcon';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
+import { japaAutoCountSource } from '@/components/japamInfinityPlayback';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
@@ -103,6 +105,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const autoSourceRef = useRef(japaAutoCountSource(japaStyle, infinityRunning, audioPlaying));
+  autoSourceRef.current = japaAutoCountSource(japaStyle, infinityRunning, audioPlaying);
   // Naam japa (a single divine name, e.g. राधा): the name reads large and gives
   // a small pulse on every bead, so each name visibly lands on the mala.
   const naam = mantra?.naam === true;
@@ -183,6 +187,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     if (japaStyle === 'infinity') setInfinityRunning((value) => !value);
     else registerBead(1);
   }, [japaStyle, registerBead]);
+  const handleInfinityCycle = useCallback(() => {
+    if (autoSourceRef.current === 'motion') registerBead(1);
+  }, [registerBead]);
+  const handleAudioIteration = useCallback((beads: number) => {
+    if (autoSourceRef.current === 'audio') registerBead(beads);
+  }, [registerBead]);
 
   if (!mantra) {
     return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
@@ -266,6 +276,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
+      {japaStyle === 'infinity' ? <LinearGradient pointerEvents="none"
+        colors={[colors.parchmentSoft, colors.parchment, colors.parchmentDeep]}
+        locations={[0, 0.55, 1]} style={[StyleSheet.absoluteFill, { opacity: 0.65 }]} /> : null}
       {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
@@ -442,7 +455,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
             <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
               {japaStyle === 'infinity' ? (
-                <JapamInfinity count={entry.count} size={malaSize} running={infinityRunning}
+                <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} onCycle={handleInfinityCycle}
                   notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
                   labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
               ) : <JapamMala
@@ -510,7 +523,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <JapamAudioPlayer
             mantraId={mantra.id}
             lang={lang}
-            onIteration={registerBead}
+            onIteration={handleAudioIteration}
             onPlayingChange={setAudioPlaying}
             autoPlay={route.params.autoPlay === true}
           />

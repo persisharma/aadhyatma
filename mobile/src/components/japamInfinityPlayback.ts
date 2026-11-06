@@ -3,17 +3,22 @@ export type InfinityMotionDriver = {
   setPhase: (phase: number) => void;
   animate: (duration: number, complete: (finished: boolean) => void) => { stop: () => void };
   stopPhase: () => void;
+  onCycle?: () => void;
 };
 
-/** Continuous visual motion only. No chant-count callback or count timer. */
+/** Continuous motion; only successfully completed foreground cycles are emitted. */
 export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
   let live = true;
   let animation: { stop: () => void } | undefined;
   function cycle(from: number) {
     if (!live) return;
+    let consumed = false;
     animation = driver.animate(Math.max(1, Math.round(800 * (1 - from))), (finished) => {
-      if (!live || !finished) return;
+      if (!live || consumed) return;
+      consumed = true;
+      if (!finished) return;
       driver.setPhase(0); // Closed path: phase 0 and 1 share the same crossing.
+      driver.onCycle?.();
       cycle(0);
     });
   }
@@ -28,4 +33,11 @@ export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
     animation?.stop();
     driver.stopPhase(); // Keep the marker where the user paused it.
   };
+}
+
+/** Exactly one automatic count source: recorded chant or silent infinity cycle. */
+export function japaAutoCountSource(style: 'mala' | 'infinity', running: boolean, audioPlaying: boolean): 'none' | 'audio' | 'motion' {
+  if (style === 'infinity' && !running) return 'none';
+  if (audioPlaying) return 'audio';
+  return style === 'infinity' ? 'motion' : 'none';
 }
