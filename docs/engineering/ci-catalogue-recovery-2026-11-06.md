@@ -68,6 +68,14 @@ product content, artwork, publication gates, progress or native dependencies.
    state and restores the positive query before capturing the matched topic.
    This prevents an unfiltered catalogue from masquerading as a successful
    search. The size matrix keeps its required Done tap.
+10. iOS `0c56b51` verified the reused archive, unchanged native resources and
+    newly embedded JS, and passed the Settings driver preflight (34s). Its first
+    app journey then failed at `lang-toggle-en`: the captured tree exposed the
+    Home banner at y=827–965 on an 844pt screen, below the 757pt tab bar. The ID
+    was present but the tap was outside the visible app content, so Home never
+    navigated. The shared Home helper now requires 100% visibility, centers the
+    banner and waits for scrolling to settle before every entry tap. No app UI
+    or production navigation logic changes.
 
 ## Evidence and limits
 

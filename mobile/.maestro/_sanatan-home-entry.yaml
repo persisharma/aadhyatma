@@ -10,4 +10,11 @@ appId: com.prashantsharma.vedansh
           start: "97%, 82%"
           end: "97%, 30%"
           duration: 700
+- scrollUntilVisible:
+    element: { id: home-sanatan-card }
+    direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 100
+    centerElement: true
+- waitForAnimationToEnd
 - assertVisible: { id: home-sanatan-card }
