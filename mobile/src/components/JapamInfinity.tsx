@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, AppState, Easing, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
@@ -7,80 +7,46 @@ import { JAPAM_BEADS_PER_ROUND as N } from '@/data/japam';
 import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { INFINITY_PATH, INFINITY_SAMPLES, infinityPoint } from './japamInfinityGeometry';
+import { startInfinityMotion } from './japamInfinityPlayback';
 
 type Props = {
   count: number;
-  rounds: number;
   size: number;
   hint: string;
   notice?: string | null;
   labelFontFamily: string;
-  hydrated: boolean;
+  running: boolean;
 };
 
-/** Display-only: movement follows real beads, never generates chant counts. */
-export default function JapamInfinity({ count, rounds, size, hint, notice, labelFontFamily, hydrated }: Props) {
+/** Tap-controlled continuous motion; it never generates chant counts. */
+export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running }: Props) {
   const { colors } = useTheme();
   const reduced = useReducedMotion();
   const { factor } = useFontScale();
   const { fontScale } = useWindowDimensions();
   const numbersBelow = factor * fontScale > 1.25;
   const [active, setActive] = useState(AppState.currentState !== 'background' && AppState.currentState !== 'inactive');
-  const total = rounds * N + count;
   const progress = useRef(new Animated.Value(0)).current;
-  const pending = useRef(0);
-  const running = useRef<ReturnType<typeof Animated.timing> | null>(null);
-  const generation = useRef(0);
-  const previous = useRef(total);
-  const wasHydrated = useRef(hydrated);
-  const cancelSwings = useCallback(() => {
-    generation.current++;
-    pending.current = 0;
-    const animation = running.current;
-    running.current = null;
-    animation?.stop();
-    progress.setValue(0);
-  }, [progress]);
-  const playNext = useCallback(function nextSwing() {
-    if (running.current || pending.current === 0) return;
-    pending.current--;
-    progress.setValue(0);
-    const epoch = generation.current;
-    const animation = Animated.timing(progress, {
-      toValue: 1,
-      duration: 800,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    });
-    running.current = animation;
-    animation.start(({ finished }) => {
-      if (epoch !== generation.current || running.current !== animation) return;
-      running.current = null;
-      progress.setValue(0); // 0 and 1 are the same centre crossing.
-      if (finished) nextSwing();
-      else pending.current = 0;
-    });
-  }, [progress]);
-  useEffect(() => cancelSwings, [cancelSwings]);
   useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => setActive(state === 'active'));
     return () => sub.remove();
   }, []);
   useEffect(() => {
-    const delta = total - previous.current;
-    const restored = !wasHydrated.current || !hydrated;
-    wasHydrated.current = hydrated;
-    previous.current = total;
-    if (restored || reduced || !active || delta <= 0 || delta > N) {
-      cancelSwings();
-      return;
-    }
-    // Every accepted chant gets a complete swing. Rapid taps queue rather than
-    // restarting the current swing; only the counter provider records chants.
-    pending.current += delta;
-    playNext();
-  }, [total, hydrated, reduced, active, cancelSwings, playNext]);
-  // A complete figure-eight per chant, independent of the 108-bead progress bar.
+    if (!running || reduced || !active) return;
+    return startInfinityMotion({
+      readPhase: (callback) => progress.stopAnimation(callback),
+      setPhase: (value) => progress.setValue(value),
+      stopPhase: () => progress.stopAnimation(),
+      animate: (duration, complete) => {
+        const animation = Animated.timing(progress, {
+          toValue: 1, duration, easing: Easing.linear, useNativeDriver: true,
+        });
+        animation.start(({ finished }) => complete(finished));
+        return animation;
+      },
+    });
+  }, [running, reduced, active, progress]);
+  // One closed figure-eight, repeated until the next tap pauses it.
   const coordinates = useMemo(() => {
     const inputRange = Array.from({ length: INFINITY_SAMPLES + 1 }, (_, i) => i / INFINITY_SAMPLES);
     return {

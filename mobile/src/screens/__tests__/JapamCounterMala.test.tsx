@@ -3,6 +3,8 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Lang } from '@/data/gita/language';
+import JapamMala from '@/components/JapamMala';
+import JapamInfinity from '@/components/JapamInfinity';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -108,7 +110,7 @@ function tapSurface(tree: TestRenderer.ReactTestRenderer) {
   return tree.root.findAll(
     (n) =>
       typeof n.props.onPress === 'function' &&
-      String(n.props.accessibilityLabel ?? '').includes('Tap to count one bead')
+      /^japam-counter-(mala|infinity)$/.test(String(n.props.testID ?? ''))
   )[0];
 }
 
@@ -122,7 +124,13 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     await act(async () => { tapSurface(tree).props.onPress(); });
     await act(async () => { choice(tree, 'infinity').props.onPress(); });
     expect(tree.root.findAll((n) => n.props.testID === 'japam-infinity').length).toBeGreaterThan(0);
+    expect(tree.root.findAllByType(JapamMala)).toHaveLength(0);
+    expect(tree.root.findAllByType(JapamInfinity)).toHaveLength(1);
     expect(choice(tree, 'infinity').props.accessibilityState.selected).toBe(true);
+    expect(beadLabel(tree)).toContain('1 of 108');
+    expect(texts(tree)).toContain('शुरू करने के लिए स्पर्श करें');
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    expect(texts(tree)).toContain('रोकने के लिए स्पर्श करें');
     expect(beadLabel(tree)).toContain('1 of 108');
     const audio = tree.root.findAll((n) => typeof n.props.onIteration === 'function')[0];
     await act(async () => { audio.props.onIteration(107); });
@@ -130,7 +138,11 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(beadLabel(tree)).toContain('1 malas completed');
     expect(texts(tree)).toContain('माला पूर्ण · 108 जप');
     await act(async () => { tapSurface(tree).props.onPress(); });
+    expect(beadLabel(tree)).toContain('0 of 108');
     await act(async () => { choice(tree, 'mala').props.onPress(); });
+    expect(tree.root.findAllByType(JapamMala)).toHaveLength(1);
+    expect(tree.root.findAllByType(JapamInfinity)).toHaveLength(0);
+    await act(async () => { tapSurface(tree).props.onPress(); });
     expect(beadLabel(tree)).toContain('1 of 108');
     expect(beadLabel(tree)).toContain('1 malas completed');
     await act(async () => { byLabel(tree, 'Reset or clear the count').props.onPress(); });
@@ -153,6 +165,10 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(choice(tree, 'infinity').props.accessibilityState.checked).toBe(true);
     expect(beadLabel(tree)).toContain('107 of 108');
     expect(beadLabel(tree)).toContain('2 malas completed');
+    expect(texts(tree)).toContain({ hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' }[lang]);
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    expect(texts(tree)).toContain({ hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' }[lang]);
+    expect(beadLabel(tree)).toContain('107 of 108');
     expect(AsyncStorage.setItem).not.toHaveBeenCalledWith('@vedansh/japam-style', expect.anything());
   });
 
