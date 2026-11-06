@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppIcon from './AppIcon';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
@@ -45,9 +45,9 @@ export default function ReaderHeader({
   right?: React.ReactNode;
   /**
    * Width of the two balancing side columns. The title is centred in the space
-   * between them, so both sides must clear the widest side's content. Defaults to
-   * 120 when a `right` slot is present (counter + audio button) and to the bare
-   * 48pt target width when it is not.
+   * between them. This is a minimum: the trailing column is measured so a page
+   * counter does not reserve the old 120pt audio-control budget, while wider
+   * actions still get the space they need. Both columns clear the 48pt target.
    */
   sideWidth?: number;
   /**
@@ -62,7 +62,9 @@ export default function ReaderHeader({
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const latin = isLatinLang(lang);
-  const side = Math.max(48, sideWidth ?? (right ? 120 : 48));
+  const [rightWidth, setRightWidth] = useState(48);
+  const minimumSide = Math.max(48, sideWidth ?? 48);
+  const side = Math.max(minimumSide, right ? rightWidth : 48);
   const titleFontSize =
     variant === 'index' ? (latin ? 20 : 22) : typography.readerTitle.fontSize;
 
@@ -86,9 +88,8 @@ export default function ReaderHeader({
 
       {titleContent ? <View accessible accessibilityLabel={title} style={styles.masthead}>{titleContent}</View> : <Text
         allowFontScaling
-        // Reader titles are navigation chrome. Cap them below the point where a
-        // long localized title can push into the status area or side controls;
-        // the reading body itself remains fully scalable.
+        // Keep the existing chrome scale; long localized titles wrap at this
+        // readable size instead of being replaced by an ellipsis.
         maxFontSizeMultiplier={1.25}
         style={[
           styles.title,
@@ -99,12 +100,18 @@ export default function ReaderHeader({
             fontStyle: latin ? 'italic' : 'normal',
           },
         ]}
-        numberOfLines={1}
       >
         {title}
       </Text>}
 
-      <View style={[styles.side, styles.sideRight, { width: side }]}>{right}</View>
+      <View
+        testID="reader-header-actions"
+        onLayout={({ nativeEvent }) => {
+          const width = Math.ceil(nativeEvent.layout.width);
+          setRightWidth(previous => previous === width ? previous : width);
+        }}
+        style={[styles.side, styles.sideRight, { minWidth: minimumSide }]}
+      >{right}</View>
     </View>
   );
 }
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  side: { flexDirection: 'row', alignItems: 'center' },
+  side: { flexDirection: 'row', alignItems: 'center', flexShrink: 0 },
   sideRight: { justifyContent: 'flex-end' },
   backTarget: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   back: {
@@ -131,6 +138,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backGlyph: { fontSize: 22, lineHeight: 24, marginTop: -2, includeFontPadding: false },
-  title: { flex: 1, textAlign: 'center', includeFontPadding: false, marginHorizontal: 4 },
+  title: { flex: 1, minWidth: 0, textAlign: 'center', marginHorizontal: 4 },
   masthead: { flex: 1, minWidth: 0, alignItems: 'center' },
 });

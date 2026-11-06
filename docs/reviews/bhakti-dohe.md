@@ -63,4 +63,11 @@ Daily/weekday Suvichar cards rotate eligible originals followed by eligible doha
 
 Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
 
-Documentation limitation: automatic approval review rejected uploading the complete existing wiki/log.md as a broad document transfer. That file remains unchanged; this scoped review records the work instead.
+Historical limitation: the earlier scope update left wiki/log.md unchanged after automatic review rejected a broad document transfer. The explicit conflict-resolution follow-up now reconciles its entries with the same repository’s pinned main version.
+
+
+## Main conflict reconciliation — 6 November 2026
+
+Integrated main `aba14c15a329bfb565ac62f6331a81a82987f5af` into PR #618 using a two-parent merge commit. Four documentation overlaps were append conflicts: RULEBOOK.md, design.md, wiki/log.md and wiki/subsystems/readers.md. Both sides are retained. Sanatan Parichay keeps RULEBOOK §32/design §87; Doha guidance moves to RULEBOOK §33/design §88 and its references are updated. Main’s clipping and launch work is preserved. No production code, test expectations, poem text, IDs or assets were changed by conflict resolution.
+
+PASS: the five real production-data scope tests pass again using the existing Node 24 harness. Merged-tree comparison preserves every unchanged main blob and every non-overlapping PR change, and no conflict markers remain. Native verification and final CI remain separate pending gates; keep draft. No merge into main, build, OTA or release performed.

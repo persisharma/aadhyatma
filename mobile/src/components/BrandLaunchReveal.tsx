@@ -15,20 +15,21 @@ export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticle
   completeCallback.current = onComplete;
   readyCallback.current = onReady;
   const active = useRef(true);
-  const completed = useRef(false);
+  const completed = useRef<'formed' | 'cancelled' | null>(null);
   const [Renderer, setRenderer] = useState<ComponentType<BrandParticleProps> | null>(null);
-  const complete = useCallback(() => {
-    if (!active.current || completed.current) return;
-    completed.current = true;
-    completeCallback.current();
+  const complete = useCallback((formed = false) => {
+    if (!active.current || completed.current === 'cancelled' || (completed.current === 'formed' && formed)) return;
+    completed.current = formed ? 'formed' : 'cancelled';
+    completeCallback.current(formed);
   }, []);
+  const cancel = useCallback(() => complete(), [complete]);
   const ready = useCallback(() => {
     if (active.current && !completed.current) return readyCallback.current?.();
   }, []);
 
   useEffect(() => {
     active.current = true;
-    const watchdog = setTimeout(complete, BRAND_REVEAL_TIMEOUT_MS);
+    const watchdog = setTimeout(cancel, BRAND_REVEAL_TIMEOUT_MS);
     const reduced = AccessibilityInfo.addEventListener('reduceMotionChanged', enabled => { if (enabled) complete(); });
     const reader = AccessibilityInfo.addEventListener('screenReaderChanged', enabled => { if (enabled) complete(); });
     let hasBeenActive = AppState.currentState === 'active';
@@ -44,13 +45,13 @@ export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticle
         // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { default: Surface } = require('./BrandParticleWebView') as typeof import('./BrandParticleWebView');
         setRenderer(() => Surface);
-      }).catch(complete);
+      }).catch(cancel);
     };
     const app = AppState.addEventListener('change', state => {
       if (state === 'active') { hasBeenActive = true; start(); }
       else if (state === 'background' || hasBeenActive) complete();
     });
-    const link = Linking.addEventListener('url', complete);
+    const link = Linking.addEventListener('url', cancel);
     // Cached preferences can mount this gate before iOS becomes active. Do not
     // play behind the native splash or treat that startup 'inactive' as exit.
     if (hasBeenActive) start();
@@ -60,9 +61,10 @@ export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticle
       clearTimeout(watchdog);
       reduced.remove(); reader.remove(); app.remove(); link.remove();
     };
-  }, [complete]);
+  }, [complete, cancel]);
 
   return <View testID="brand-launch-reveal" pointerEvents="none" style={{ flex: 1, backgroundColor: colors.brandIvory }}>
     {Renderer ? <Renderer onReady={ready} onComplete={complete} /> : null}
   </View>;
 }
+

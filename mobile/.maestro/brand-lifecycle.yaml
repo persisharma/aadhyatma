@@ -14,7 +14,17 @@ appId: com.prashantsharma.vedansh
     timeout: 4000
 - assertVisible:
     id: home-wordmark-crest
+- assertNotVisible:
+    id: brand-launch-cover
+- assertVisible:
+    id: brand-launch-content
 - takeScreenshot: e2e-shots/brand-cold-home
+- tapOn: Search verses, sections, and mantras
+- assertVisible: Search input
+- tapOn: Back
+- assertVisible:
+    id: home-wordmark-crest
+- takeScreenshot: e2e-shots/brand-home-after-back
 - repeat:
     times: 3
     commands:
@@ -40,3 +50,4 @@ appId: com.prashantsharma.vedansh
     timeout: 4000
 - assertVisible:
     id: home-wordmark-crest
+

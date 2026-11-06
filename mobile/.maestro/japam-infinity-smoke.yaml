@@ -1,0 +1,50 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element:
+      text: "JapMala. Tap to open."
+    direction: DOWN
+- tapOn: "JapMala. Tap to open."
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- extendedWaitUntil:
+    visible:
+      id: "japam-style-infinity"
+    timeout: 15000
+- tapOn:
+    id: "japam-style-infinity"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
+# Each completed silent loop counts once. Do not wait for the looping motion
+# to end; the second tap pauses motion and counting.
+- tapOn:
+    id: "japam-counter-infinity"
+- extendedWaitUntil:
+    visible: ".*रोकने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
+    timeout: 15000
+- tapOn:
+    id: "japam-counter-infinity"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
+- takeScreenshot: e2e-shots/japam-infinity-paused
+- tapOn:
+    id: "japam-style-mala"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*[1-9][0-9]* of 108 on this mala.*"
+- tapOn:
+    id: "japam-style-infinity"
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
+- tapOn: "Back"
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible: "JapMala. Tap to open."
+    timeout: 90000
+- tapOn: "JapMala. Tap to open."
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
+- tapOn: "Back"
+- stopApp

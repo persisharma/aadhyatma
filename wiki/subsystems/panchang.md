@@ -361,3 +361,8 @@ Upcoming now settles at card boundaries; measured rail width and trailing paddin
 
 
 **Share label alignment follow-up (3 November 2026).** PanchangShareCard separates the wordmark and subtitle with 3dp and full script leading, removes negative reader-headroom compensation from its location/CTA labels, and centers separate Download/URL boxes with local shipped-font optical offsets. The location retains native one-line auto-fit without fixed leading. Reader helpers, date/engine data, assets and export dimensions are unchanged. See `docs/reviews/2026-11-03-panchang-share-alignment.md` for 12 passing focused cases, four-language browser crops and pending native checks.
+
+
+### Screen-clipping corrections (5 November 2026)
+
+Kundali city search keeps the shared 100%-width TextField inside horizontal padding, preventing its right edge from exceeding the clipped modal. City filtering, selection and form persistence rules are unchanged. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.

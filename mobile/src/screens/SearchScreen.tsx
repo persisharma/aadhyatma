@@ -51,6 +51,11 @@ import AskAnswerCard, { AskAbstainCard } from '@/components/AskAnswerCard';
 import { useShare } from '@/utils/shareVerse';
 import { askAnswerShareable } from '@/utils/shareContent';
 
+// Resolve on the Search surface only; compatible with the native Jest runtime.
+const SanatanSearchResults = React.lazy<typeof import('@/components/SanatanSearchResults').default>(
+  async () => ({ default: require('@/components/SanatanSearchResults').default })
+);
+
 type Props = NativeStackScreenProps<HomeStackParamList, 'Search'>;
 
 const RECENT_KEY = '@vedansh/search-recent';
@@ -375,7 +380,8 @@ export default function SearchScreen({ navigation, route }: Props) {
             spacing={spacing}
             radii={radii}
             lang={lang}
-            header={askHeader}
+            header={<>{askHeader}<React.Suspense fallback={null}><SanatanSearchResults query={query}
+              onOpen={topicId => navigation.navigate('SanatanReader', { topicId, initialPage: 0 })} /></React.Suspense></>}
             empty={
               askHeader ? null : index ? (
                 <ZeroState colors={colors} typography={typography} lang={lang} />
