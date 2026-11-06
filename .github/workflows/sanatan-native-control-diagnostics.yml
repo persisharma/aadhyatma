@@ -13,12 +13,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        artifact: [sanatan-ios-42178480200, sanatan-android-42178480200]
+        include:
+          - source-run: 42182363513
+            artifact: sanatan-android-review-42182363513-collections
+          - source-run: 42182363513
+            artifact: sanatan-android-review-42182363513-enlarged
+          - source-run: 42182363513
+            artifact: sanatan-android-review-42182363513-journey
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-          run-id: 42178480200
+          run-id: ${{ matrix.source-run }}
           github-token: ${{ github.token }}
           path: captured
       - name: Report allowlisted test control status and geometry only
@@ -28,15 +34,16 @@ jobs:
           import json,re
           root=Path('captured')
           allowed={'home-sanatan-card','home-settings','home-wordmark','tab-home','home-discover-carousel','sanatan-search','sanatan-start','sanatan-next','sanatan-resume'}
+          allowed.update('sanatan-collection-'+topic for topic in ['basics','deity','thirty','dikpal','graha','forms','symbols','plants','temples','elements','time','texts','rishis'])
+          allowed.update(['sanatan-featured','settings-back','settings-explore'])
           for path in root.rglob('commands.json'):
-              if path.parent.name!='sanatan-parichay-smoke':continue
               commands=json.loads(path.read_text())
               for item in commands:
                   meta=item.get('metadata',{})
-                  command=item.get('command',{})
+                  command=meta.get('evaluatedCommand',item.get('command',{}))
                   kind=next(iter(command),'unknown')
                   data=command.get(kind,{})
-                  selector=data.get('selector',{}) if isinstance(data,dict) else {}
+                  selector=data.get('selector',data.get('condition',{}).get('visible',{})) if isinstance(data,dict) else {}
                   test_id=selector.get('idRegex','')
                   if test_id in allowed or meta.get('status')=='FAILED' or kind=='swipeCommand':
                       print('TEST_STATUS',json.dumps({'kind':kind,'testId':test_id if test_id in allowed else 'redacted','status':meta.get('status'),'sequence':meta.get('sequenceNumber'),'durationMs':meta.get('duration')}))
@@ -44,11 +51,18 @@ jobs:
               if not isinstance(node,dict):return
               a=node.get('attributes',{})
               test_id=a.get('resource-id')
+              label=a.get('accessibilityText',a.get('text',''))
+              if label.startswith('Language, '):print('CONTROL_BOUNDS',json.dumps({'testId':'language-row','bounds':a.get('bounds')}))
+              if label.startswith('Reading size, '):print('CONTROL_BOUNDS',json.dumps({'testId':'reading-size-row','bounds':a.get('bounds')}))
               if test_id in allowed:
                   print('CONTROL_BOUNDS',json.dumps({'testId':test_id,'bounds':a.get('bounds'),'enabled':a.get('enabled')}))
               for child in node.get('children',[]):walk(child)
-          hierarchy=sorted([*root.rglob('*home-sanatan-card*.json'),*root.rglob('*sanatan-resume*.json')])
-          if hierarchy:walk(json.loads(hierarchy[-1].read_text()))
+          groups={}
+          for path in root.rglob('*.json'):
+              if path.parent.name=='screen-hierarchy':groups.setdefault(path.parent,[]).append(path)
+          for paths in groups.values():
+              final=max(paths,key=lambda p:int(re.search(r'step-(\\d+)',p.name).group(1)) if re.search(r'step-(\\d+)',p.name) else 0)
+              walk(json.loads(final.read_text()))
           for path in root.rglob('apk-source-head.txt'):
               value=path.read_text().strip()
               if re.fullmatch('[a-f0-9]{40}',value):print('APK_SOURCE',value)
