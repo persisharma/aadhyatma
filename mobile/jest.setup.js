@@ -1,5 +1,14 @@
 /* global jest */
 // Global mocks for the Jest suite.
+// OTA is a native ESM boundary reached by the shared launch host. Default to
+// no staged update in ordinary provider/onboarding tests; update-specific
+// suites override this mock with their controlled runtime and download state.
+jest.mock('expo-updates', () => ({
+  isEnabled: false,
+  runtimeVersion: null,
+  useUpdates: () => ({ isUpdatePending: false }),
+  reloadAsync: jest.fn(() => Promise.resolve()),
+}));
 //
 // AsyncStorage has no native module under Jest, so importing it throws
 // "NativeModule: AsyncStorage is null". ThemeContext now reaches AsyncStorage
