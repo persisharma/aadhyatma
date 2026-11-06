@@ -59,6 +59,12 @@ product content, artwork, publication gates, progress or native dependencies.
    is embedded and the native journeys still execute. Expired/unavailable SDKs or
    incompatible changes fall back to fresh compilation; a successful SDK build
    never counts as a passing app journey.
+9. Android `02d3771` executed the repaired cold-resume journey successfully
+   (3m52s) and all thirteen collection journeys successfully (9m54s), then failed
+   in regional search at a stale Done tap. `LanguagePickerSheet` applies and
+   closes on selection; only `ReadingSizePickerSheet` retains Done. Regional
+   search now waits for the settings row to confirm the selected language, then
+   continues to the actual query. The size matrix keeps its required Done tap.
 
 ## Evidence and limits
 
