@@ -126,3 +126,23 @@ User review established a separate fidelity/content failure beyond image geometr
 The 39 prototype pages are replaced with original source-linked introductory reading, subject-specific page titles and separate prose paragraphs. Known copy-writing and art-production notes are removed, including diagram captions. See `docs/content-parity/sanatan-parichay/reading-readiness.md` for precise coverage and editorial status. This does not turn 201 indexed research seeds into 201 finished articles.
 
 The reproducible browser harness in `mobile/visual/sanatan` mounts the real native components. Platform adapters make it useful for layout review only; no native screenshots, playback or share handoff are claimed. Revised content and native visual acceptance remain pending. Rulebook §11.18 now explicitly separates prototype approval, complete authored content and production design acceptance.
+
+## Final correction checkpoint and evidence
+
+Implemented/tested source and verified remote head: `7ff8ea3490e5b8555a1199d7e9dcb1885899a2dd`. Base includes main `e3628c2c85a62e396cba8d91ec9ddc4d2611e7b5`; native shared typography, Doha and infinity changes are preserved. Subsequent documentation-only commits do not change this tested application tree.
+
+| Check | Status | Evidence |
+| --- | --- | --- |
+| TypeScript | PASS | `./node_modules/.bin/tsc --noEmit`, exit 0 |
+| Reader/component gate | PASS | Jest shards 1/3:117 suites/1,207 tests; 2/3:117/1,299; 3/3:116/946. Total 350 suites/3,452 tests. Third shard repeated with JSON output after the first run produced an incomplete log; only the complete repeat is counted. |
+| Widgets/engine/data/Ask gates | PASS | 46/630/223/49 tests respectively, zero failures. Used `node --import tsx --test` with the package scripts' exact file lists because the tsx CLI's IPC pipe is denied in this runtime. Literal `npm test` is not claimed to pass. |
+| Known native image hazards | PASS | Production component/screen AST guard and the 30 image/component cases pass in the full gate. Native Yoga 24 cases pass again. |
+| Instruction bootstrap | PASS | `node scripts/verify-agent-instructions.mjs` |
+| Browser layout | PASS, supplemental only | Actual RN components: compact Hindi Home; English revised reader; hub hi/en/gu/kn × M/L at 320px and simulated fontScale 1.5. All eight hub DOM containers had 320px scroll width; sampled 274×182.656px artwork retained 3:2. Fonts loaded. Platform/device glyph and text-scaling acceptance remains separate. |
+| Remote preservation | PASS | PR #624 head and content, CollectionCard, reader and Rulebook blob SHAs read back and matched. All 20 UI/content/harness files retained; dependencies/build output omitted. |
+| CI | PENDING | Source-head CI run 42165064071 in progress at handover; agent policy run 42165064044 passed. |
+| Native acceptance | PENDING | No iOS/Android runtime available here. Four scripts × both sizes, compact/OS scaling, actual routes/store/audio/share and screenshot matrix remain required. |
+| Independent editorial acceptance | PENDING | 13 source-linked introductory lessons are candidates. The 201-topic research index is not a finished corpus. |
+| Release | N/A | No merge, store build, OTA or deployment requested/performed. |
+
+The durable PR is the handover: https://github.com/persisharma/aadhyatma/pull/624. It remains draft until required native and editorial checks are satisfied. No cleanup of the sole source/evidence copy was performed.
