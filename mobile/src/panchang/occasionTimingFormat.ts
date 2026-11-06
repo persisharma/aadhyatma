@@ -8,3 +8,11 @@ export function occasionRange(w: OccasionWindow, date: Date, lang: Lang): string
 export function occasionShareText(items: readonly OccasionTiming[], date: Date, lang: Lang): string {
   return items.map(i => [contentByLang(lang, i.nameHi, i.nameEn), ...i.windows.map(w => `${contentByLang(lang, w.labelHi, w.labelEn)} · ${occasionRange(w, date, lang)}`), i.noteHi ? contentByLang(lang, i.noteHi, i.noteEn ?? '') : ''].filter(Boolean).join('\n')).join('\n\n');
 }
+
+/** Adjacent rites in a festival detail keep their own poster date. A parana
+ * displayed on today's Panchang keeps today's date instead of yesterday's fast. */
+export function occasionCardReference(item: OccasionTiming, selected: Date): Date {
+  const lo = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate());
+  const hi = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate() + 1);
+  return item.windows.some(w => w.start < hi && w.end >= lo) ? selected : item.date;
+}
