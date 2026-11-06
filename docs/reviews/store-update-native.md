@@ -38,4 +38,6 @@ Android in that run completed **52/52 native flows** and its **32/32 language/si
 
 The next iOS attempt also exposed a cold-start CoreSimulator/XCTest launch failure (`SimError 405` / Mach `-308`) before Settings. Maestro 2.12.1's CLI initializes a new XCTest session for every separate test invocation. The single-session batching above removes that repeated startup, warms Preferences before initial connection, and limits recovery strictly to initial driver startup. These infrastructure failures are not counted as feature passes.
 
+The enlarged compact iOS attempt passed its seven behavior scenarios, then exposed a test assertion that required 100% of a paragraph taller than the viewport to be visible at once. Its failure screenshot showed the real message scrolled to its final lines with both footer actions reachable. The flow now scrolls through the upper body (clear of enlarged footer controls), verifies the paragraph is partially visible, and captures its end for visual review; it does not shrink or remove content.
+
 Rerun pending. Inspect the exact workflow head, native build/driver result, each scenario and all screenshot text/controls before marking native accepted. A failed handoff, runtime check, screenshot or assertion remains a failure; bundle compilation and YAML parsing alone are insufficient.

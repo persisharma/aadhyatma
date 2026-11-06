@@ -12,20 +12,38 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: store-update-later
 - takeScreenshot: e2e-shots/${CAPTURE}
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - repeat:
+          times: 8
+          commands:
+            # Keep the gesture inside the body even when enlarged controls
+            # occupy the lower half of a compact iPhone.
+            - swipe:
+                start: 50%, 35%
+                end: 50%, 10%
+                duration: 400
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 4
+          commands:
+            - swipe:
+                start: 50%, 50%
+                end: 50%, 15%
+                duration: 400
 - scrollUntilVisible:
     element:
       text: ".*Create beautiful deity cards.*|.*सुंदर देवता कार्ड.*|.*સુંદર દેવતા કાર્ડ.*|.*ಸುಂದರ ದೇವತಾ ಕಾರ್ಡ್.*"
     direction: DOWN
+    # The complete accessible paragraph can be taller than the viewport. Its
+    # body-end screenshot and physical scrolling prove access to the last lines.
+    visibilityPercentage: 1
     timeout: 15000
-- repeat:
-    times: 4
-    commands:
-      # Android reports clipped Text bounds as visible. Physically scroll the
-      # body to its end so the second screenshot proves the final lines too.
-      - swipe:
-          start: 50%, 50%
-          end: 50%, 15%
-          duration: 400
 - takeScreenshot: e2e-shots/${CAPTURE}-body
 - tapOn:
     id: store-update-later
