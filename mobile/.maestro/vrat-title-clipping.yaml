@@ -36,6 +36,15 @@ env:
       - assertVisible: "Collapse description.*"
       - takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-expanded
       - tapOn: { text: "Collapse description.*", index: 0 }
+- scrollUntilVisible:
+    element: { text: "Vrat,.*" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-categories
+- scrollUntilVisible:
+    element: { id: catalog-search }
+    direction: UP
+    centerElement: true
 - tapOn: { id: catalog-search }
 - inputText: "Pradosh"
 - hideKeyboard

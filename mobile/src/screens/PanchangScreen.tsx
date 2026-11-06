@@ -1645,13 +1645,13 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, titleHi, titleEn)}
           </Text>
-          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
+          <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkMuted, marginTop: 4 }}>
             {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
           </Text>
         </>
       )}
       {dayNote && (
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+        <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.saffronDeep, marginTop: 6 }}>
           {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
@@ -1753,7 +1753,7 @@ function CatalogLedgerCell({
     >
       <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 22, color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
+        style={{ ...typography.listingScope, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
       >
         {label}
       </Text>

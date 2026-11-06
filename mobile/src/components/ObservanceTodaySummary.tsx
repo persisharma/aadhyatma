@@ -33,7 +33,7 @@ export default function ObservanceTodaySummary({ rule, titleHi, titleEn, lang, b
             style={{ ...typography.catalogBody, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkSoft }}>
             {meaningByLang(lang, rule.shortDescriptionHi, rule.shortDescriptionEn)}
           </Text>
-          <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 11, lineHeight: 18, color: colors.saffronDeep, marginTop: 2 }}>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 11, lineHeight: 19, color: colors.saffronDeep, marginTop: 2 }}>
             {expanded ? contentByLang(lang, 'कम दिखाएँ', 'Show less') : contentByLang(lang, 'पूरा विवरण पढ़ें', 'Read full description')}
           </Text>
         </Pressable>

@@ -88,7 +88,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
         {eyebrow ? <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{eyebrow}</Text> : null}
         <Text
           numberOfLines={special ? undefined : 2}
-          style={{ color: special ? colors.catalogAccent : colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? (upcoming ? { fontSize: 15, lineHeight: 24 } : typography.listingTitle) : {}) }}
+          style={{ color: special ? colors.catalogAccent : colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? (upcoming ? { fontSize: 15, lineHeight: 25 } : typography.listingTitle) : {}) }}
         >
           {title}
         </Text>

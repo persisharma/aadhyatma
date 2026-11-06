@@ -24,9 +24,9 @@ export const fontFamilies = {
 } as const;
 
 export const typography = {
-  catalogTitle: { fontSize: 18, lineHeight: 28 },
+  catalogTitle: { fontSize: 18, lineHeight: 30 },
   catalogMeta: { fontSize: 12, lineHeight: 20 },
-  catalogBody: { fontSize: 13, lineHeight: 21 },
+  catalogBody: { fontSize: 13, lineHeight: 22 },
   practiceHeroTitle: { fontSize: 24, lineHeight: 36 },
   practiceItemTitle: { fontSize: 17, lineHeight: 26 },
   practiceItemMeta: { fontSize: 13, lineHeight: 20 },
@@ -136,15 +136,15 @@ export const typography = {
   // Shared content-listing card (`ListingCard`, design.md §82). Sizes only: the
   // face follows the script. Latin (Cormorant) title runs a step smaller and its
   // body a step larger than the Indic sizes, matching their apparent size.
-  // Indic lines reserve >=1.55em inside their own bounds, including the first
-  // line's marks. Keep local catalog overrides at this floor too; 17/24 clips.
+  // Indic lines reserve >=1.65em inside their own bounds. Bundled Kannada's
+  // hhea ascent + descent is 1.62em; the old 1.55em floor did not cover it.
   listingEyebrow: {
     fontSize: 13,
-    lineHeight: 21,
+    lineHeight: 22,
   },
   listingTitle: {
     fontSize: 17,
-    lineHeight: 27,
+    lineHeight: 29,
   },
   listingTitleLatin: {
     fontSize: 16,
@@ -152,7 +152,7 @@ export const typography = {
   },
   listingBody: {
     fontSize: 12,
-    lineHeight: 19,
+    lineHeight: 20,
   },
   listingBodyLatin: {
     fontSize: 13,
@@ -160,11 +160,11 @@ export const typography = {
   },
   listingSection: {
     fontSize: 18,
-    lineHeight: 28,
+    lineHeight: 30,
   },
   listingScope: {
     fontSize: 14,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   thumb: {
     fontFamily: fontFamilies.devanagariBold,

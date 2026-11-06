@@ -16,9 +16,9 @@ navigation and the two in-app reading-size presets.
 
 ## Implementation and sibling audit
 
-- Today uses catalogTitle 18/28, catalogMeta 12/20 and catalogBody 13/21 directly.
+- Today uses catalogTitle 18/30, catalogMeta 12/20 and catalogBody 13/22 directly.
   No local tight-leading override, negative margin, auto-fit or scale disabling.
-- ListingCard's Indic title/eyebrow/body/section tokens now reserve >=1.55em.
+- ListingCard's Indic title/eyebrow/body/section tokens now reserve >=1.65em, covering bundled Kannada hhea metrics (1.62em).
   Bilingual secondary captions use catalogBody; ObservancePreviewCard's row/tile
   dates and countdowns use catalogMeta. These slots can also render Indic text.
 - Audited ListingCard's story/comic/Garud, Katha, My Vrat, category/search and
@@ -42,7 +42,7 @@ head, readback and CI status; native visual acceptance remains pending.
 | --- | --- | --- |
 | U1 current source | PASS | Current main, AGENTS/checklist, CLAUDE/rules, RULEBOOK/design, language/Panchang wiki; no open overlapping Vrat typography PR found. |
 | U2 acceptance | PASS | Concrete screenshot titles, first-line containment, expansion and full wrapping criteria above. |
-| U3 native design fidelity | PENDING | Tokens match the existing 18/28 and 13/21 design; installed native screen not available. |
+| U3 native design fidelity | PENDING | Font verification required two extra points of title leading and one body point beyond the original design; design is updated. Installed native screen not available. |
 | U4 languages and sizes | PASS source / PENDING native | 48 rendered-style combinations: hi/en/gu/kn × M/L × 320/390 logical width × system scale 1/1.3/2; plus all three reported titles. Renderer asserts actual styles and retained scaling/wrapping, not glyph shaping or native layout. |
 | U5 journey | PASS focused / PENDING native | Existing sibling save/open/edit and expansion tests pass; parameterized Maestro adds landing → expand → search → detail → Back. Installed execution remains pending. |
 | U6 lifecycle/state | N/A runtime changes | No storage, async work, network or lifecycle mutation. Existing app suites exercise these boundaries separately. Native route/state acceptance is still pending under U5. |
@@ -99,3 +99,23 @@ The 4,323-test full result above belongs to the original base/tested head. Focus
 card/typography and Doha integration regressions plus typecheck are rerun after
 integration; the PR records their final outcome and exact remote head. Full CI and
 native visual acceptance remain pending. The branch stays draft.
+
+
+## Font verification follow-up
+
+The previous 1.55em style-only threshold was insufficient: exact bundled-font
+shaping found nine Kannada observance titles needing 28.35pt where 28pt was
+allocated. Font hhea/head tables reserve 1.555em (Devanagari), 1.447em (Gujarati)
+and 1.62em (Kannada). Shared catalog/listing lines now reserve 1.65em; the
+rendered-style regression reads the actual six TTF metric tables too. Including
+category subtitles exposed the same local short-leading pattern there. Those
+subtitles, day notes and ledger labels now use the safe shared tokens.
+
+Before the follow-up fix, the stronger suite failed 36/51 cases; after the fix
+it passes 51/51, and five focused suites pass 82 tests. All 1,576 shaped
+catalog title/deity checks (197 unique rules × four languages × two roles)
+pass; exact font hashes, metrics and worst cases are recorded in
+`2026-11-06-vrat-font-bounds.json`. This is font-bounds evidence, not native
+iOS/Android glyph/layout verification. System scaling remains enabled; there
+are no new runtime imports or dependencies. Final full-suite/CI results and
+remote tested head are recorded in PR #625. Native acceptance stays pending.

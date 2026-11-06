@@ -1,4 +1,5 @@
 import React from 'react';
+import fs from 'node:fs';
 import TestRenderer, { act } from 'react-test-renderer';
 import { StyleSheet, Text } from 'react-native';
 import { ThemeProvider } from '@/theme/ThemeContext';
@@ -8,6 +9,7 @@ import type { ObservanceRule } from '@/panchang/types';
 import ObservanceTodaySummary from '../ObservanceTodaySummary';
 import ObservancePreviewCard from '../ObservancePreviewCard';
 import ListingCard, { ListingScope, ListingSectionHeader } from '../ListingCard';
+import CatalogCategoryTile from '../CatalogCategoryTile';
 
 let mockReadingFactor = 1;
 let mockWindow = { width: 390, height: 844, scale: 3, fontScale: 1 };
@@ -29,8 +31,25 @@ function render(children: React.ReactNode) {
   return tree!.root;
 }
 
-// Exact faces used by these surfaces need up to 1.53em for marks + descent.
-// Reserve 1.55em inside the line, rather than painting above a previous badge.
+// Read the bundled TTF's own vertical metrics. The Kannada face reserves 1.62em,
+// so the previous uniform 1.55em guard could pass while real titles still clipped.
+const metricsCache = new Map<string, number>();
+function fontLineExtent(family: string): number {
+  if (metricsCache.has(family)) return metricsCache.get(family)!;
+  const match = family.match(/^NotoSerif(Devanagari|Gujarati|Kannada)_(500Medium|600SemiBold)$/)!;
+  expect(match).not.toBeNull();
+  const bytes = fs.readFileSync(require.resolve(`@expo-google-fonts/noto-serif-${match[1].toLowerCase()}/${match[2]}/${family}.ttf`));
+  const tables: Record<string, number> = {};
+  for (let i = 0; i < bytes.readUInt16BE(4); i++) {
+    const row = 12 + i * 16;
+    tables[bytes.toString('ascii', row, row + 4)] = bytes.readUInt32BE(row + 8);
+  }
+  const hhea = tables.hhea;
+  const extent = (bytes.readInt16BE(hhea + 4) - bytes.readInt16BE(hhea + 6) + bytes.readInt16BE(hhea + 8)) / bytes.readUInt16BE(tables.head + 18);
+  metricsCache.set(family, extent);
+  return extent;
+}
+
 // This validates rendered styles, including local overrides of safe tokens;
 // React Test Renderer does NOT shape glyphs or prove native pixel acceptance.
 function expectSafeLines(root: TestRenderer.ReactTestInstance) {
@@ -41,7 +60,8 @@ function expectSafeLines(root: TestRenderer.ReactTestInstance) {
   expect(fixedIndicLines.length).toBeGreaterThan(0);
   for (const node of fixedIndicLines) {
     const style = StyleSheet.flatten(node.props.style);
-    expect(style.lineHeight * mockWindow.fontScale).toBeGreaterThanOrEqual(style.fontSize * mockWindow.fontScale * 1.55);
+    expect(style.lineHeight * mockWindow.fontScale).toBeGreaterThanOrEqual(style.fontSize * mockWindow.fontScale * 1.65);
+    expect(style.lineHeight).toBeGreaterThanOrEqual(Math.ceil(style.fontSize * fontLineExtent(style.fontFamily)));
     expect(node.props.allowFontScaling).not.toBe(false);
     expect(node.props.adjustsFontSizeToFit).not.toBe(true);
     expect(style.height).toBeUndefined();
@@ -62,6 +82,7 @@ test.each(cases)('safe rendered catalog lines: $lang reading=$reading width=$wid
     <ListingCard title="शैलपुत्री: पर्वत की पुत्री" eyebrow="दिन 1" description="पार्वती का जन्म और बचपन" meta="4 पृष्ठ" language={lang} thumbnail={null} onPress={() => {}} />
     <ListingSectionHeader>जीवन की सीख</ListingSectionHeader>
     <ListingScope>19 कथाएँ</ListingScope>
+    <CatalogCategoryTile title="कथा" subtitle="90 कथाएँ" artwork="granth" lang={lang} accessibilityLabel="Katha library" onPress={() => {}} />
   </>);
   expectSafeLines(root);
   // These are chrome tokens: M/L must not accidentally alter the card title.

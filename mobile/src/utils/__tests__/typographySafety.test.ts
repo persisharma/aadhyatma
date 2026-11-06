@@ -66,6 +66,6 @@ test('Indic catalog/listing tokens reserve complete marks inside each line', () 
   const { typography } = require('@/theme/typography');
   for (const key of ['catalogTitle', 'catalogMeta', 'catalogBody', 'listingTitle', 'listingEyebrow', 'listingBody', 'listingSection', 'listingScope']) {
     const token = typography[key];
-    expect(token.lineHeight).toBeGreaterThanOrEqual(Math.ceil(token.fontSize * 1.55));
+    expect(token.lineHeight).toBeGreaterThanOrEqual(Math.ceil(token.fontSize * 1.65));
   }
 });
