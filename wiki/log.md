@@ -1368,6 +1368,19 @@ RULEBOOK §32/design §87 document the native subset of research PR #605. Draft
 PR #622 preserves implementation and artwork; device and native export gates
 remain pending. Integrated main 3eb009b9c3748d21de9a0b1a737c50b10f23f75a.
 
+## [2026-11-05] ingest | Selected devotional dohas
+
+Added the Kabir/Rahim doha integration to `wiki/subsystems/readers.md`: lazy payloads, shared flat-reader dispatch, Granth/no-deity metadata, per-verse edition provenance and append-only pool integration. Source/content/pool checks pass; native reader and exported-share acceptance remain pending and are tracked in `docs/reviews/bhakti-dohe.md`. No merge or release performed.
+
+
+## [2026-11-06] ingest | Bhakti or Suvichar only in the doha collection
+
+Recorded explicit per-verse theme/rationale metadata, the curation validator and registry-wide test gate, and updated the two listing subtitles to name both themes. No original verse or count changed. The broader 60 opening lines remain research candidates pending full-text/source verification. Native visual/size/export evidence remains pending.
+
+
+## [2026-11-06] ingest | PR 618 conflict resolution
+
+Integrated main aba14c15a329bfb565ac62f6331a81a82987f5af into the Doha branch. Preserved both documentation additions, the clipping/launch records and Sanatan Parichay scope. Main retains RULEBOOK §32/design §87; Doha guidance moves to RULEBOOK §33/design §88 with matching references. Daily Bhakti and Suvichar implementation remains unchanged. Focused scope checks pass; native acceptance remains pending.
 ## [2026-11-05] ingest | Japa Infinity variation: optional persisted presentation beside Mala, one shared counter/audio/history, native marker driven only by counted chants, rollover/reset/reduced-motion/background handling, four-language provider tests and extended Japam Maestro flow. design.md §35 and RULEBOOK §3 updated. Native verification remains pending in the cloud environment.
 
 ## [2026-11-06] ingest | Japa Infinity motion corrected to the approved intent: one complete figure-eight swing per tap/chant, independent of 108-bead progress. Rapid taps queue full swings; reset/background/unmount cancel them without modifying counts. Native verification remains pending.
@@ -1375,3 +1388,4 @@ remain pending. Integrated main 3eb009b9c3748d21de9a0b1a737c50b10f23f75a.
 ## [2026-11-06] ingest | Japa Infinity now follows the clarified tap-toggle contract: first tap starts continuous full loops, next tap pauses, later tap resumes. Motion is independent of count changes and never logs chants. Added cancellable single-animation driver tests, updated native/provider coverage, Maestro flow and §35/contract documentation. Native and full React verification pending after workspace maintenance removed dependencies.
 
 ## [2026-11-06] ingest | Infinity counting connected: each completed silent loop records one japa; audio exclusively owns counts while playing, and pause suppresses both sources. Added duplicate-completion guards and provider/rollover coverage. Refined the Infinity parchment background, ambient halo and layered jyoti/trail; native verification remains pending.
+

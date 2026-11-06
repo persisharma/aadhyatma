@@ -158,6 +158,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'shiva-kavacham': shivaStrotamImages.shiva,
   'durga-kavach': backgroundImages.deity_durga_lion,
   'krishna-stuti': backgroundImages.deity_krishna_bansuri,
+  'kabir-bhakti-dohe': backgroundImages.category_granth_open_scripture,
+  'rahim-bhakti-dohe': backgroundImages.category_granth_open_scripture,
   'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
   'mahalakshmi-ashtakam': backgroundImages.deity_lakshmi,
   'surya-ashtakam': backgroundImages.deity_surya,
@@ -327,3 +329,4 @@ export function getReaderBackground(
     }
   }
 })();
+
