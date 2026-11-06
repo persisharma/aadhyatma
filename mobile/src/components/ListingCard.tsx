@@ -88,11 +88,11 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
         {eyebrow ? <Text style={[eyebrowStyle, { color: colors.saffronDeep }]}>{eyebrow}</Text> : null}
         <Text
           numberOfLines={special ? undefined : 2}
-          style={{ color: special ? colors.catalogAccent : colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? { fontSize: upcoming ? 15 : 17, lineHeight: upcoming ? 24 : 27 } : {}) }}
+          style={{ color: special ? colors.catalogAccent : colors.ink, fontFamily: titleFontByLang(lang), fontStyle: latin ? 'italic' : 'normal', ...titleSize, ...(special ? (upcoming ? { fontSize: 15, lineHeight: 25 } : typography.listingTitle) : {}) }}
         >
           {title}
         </Text>
-        {secondary ? <Text style={{ ...captionFont(secondary), fontSize: 13, lineHeight: 18, color: colors.inkMuted }}>{secondary}</Text> : null}
+        {secondary ? <Text style={{ ...typography.catalogBody, ...captionFont(secondary), color: colors.inkMuted }}>{secondary}</Text> : null}
         {description ? (
           <Text numberOfLines={1} style={{ color: colors.inkSoft, fontFamily: bodyFont, ...body }}>
             {description}

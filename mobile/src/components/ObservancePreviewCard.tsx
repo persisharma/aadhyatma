@@ -71,10 +71,10 @@ export default function ObservancePreviewCard({
           {(dateLabel || countdown) && <View style={[styles.facts, tile && { marginTop: 2 }]}>
             {dateLabel && <View style={styles.dateRow}>
               <AppIcon name="date" size={tile ? 12 : 14} color={colors.saffronDeep} />
-              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.inkSoft }}>{dateLabel}</Text>
+              <Text style={{ ...typography.catalogMeta, fontFamily: bodyFont, flexShrink: 1, color: colors.inkSoft }}>{dateLabel}</Text>
             </View>}
             {countdown && <View style={[styles.countdown, { backgroundColor: colors.goldTint, borderRadius: radii.pill }]}>
-              <Text style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: tile ? 18 : 20, flexShrink: 1, color: colors.saffronDeep }}>{countdown}</Text>
+              <Text style={{ ...typography.catalogMeta, fontFamily: bodyFont, flexShrink: 1, color: colors.saffronDeep }}>{countdown}</Text>
             </View>}
           </View>}
           {areaLabel && <Text style={{ fontFamily: bodyFont, fontSize: 11, color: colors.saffronDeep, marginTop: 2 }}>{areaLabel}</Text>}
