@@ -1,6 +1,6 @@
 import AppIcon, { type AppIconName } from '@/components/AppIcon';
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
@@ -78,100 +78,107 @@ export default function NowPlayingScreen() {
           <View style={styles.headerBtn} />
         </View>
 
-        {/* Artwork */}
-        <View style={styles.artworkWrap}>
-          <View
-            style={[
-              styles.artwork,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
-            ]}
-          >
-            <DeityIcon iconKey={deity?.iconKey} size={150} />
-          </View>
-        </View>
-
-        {/* Title */}
-        <Text numberOfLines={2} style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
-          {title}
-        </Text>
-        <Text style={[styles.subtitle, { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily }]}>
-          {subtitle}
-        </Text>
-
-        {/* Seek bar */}
-        <View style={styles.seekBlock}>
-          <Pressable
-            onLayout={(e) => setBarWidth(e.nativeEvent.layout.width)}
-            onPress={(e) => {
-              if (barWidth > 0 && durationSec > 0) {
-                seekTo((e.nativeEvent.locationX / barWidth) * durationSec);
-              }
-            }}
-            accessibilityRole="adjustable"
-            accessibilityLabel="Seek"
-            style={styles.seekHit}
-          >
-            <View style={[styles.seekTrack, { backgroundColor: colors.divider }]}>
-              <View style={[styles.seekFill, { backgroundColor: colors.saffron, width: `${progress * 100}%` }]} />
+        <ScrollView
+          testID="now-playing-scroll"
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Artwork */}
+          <View style={styles.artworkWrap}>
+            <View
+              style={[
+                styles.artwork,
+                { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
+              ]}
+            >
+              <DeityIcon iconKey={deity?.iconKey} size={150} />
             </View>
-          </Pressable>
-          <View style={styles.timeRow}>
-            <Text style={[styles.time, { color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>
-              {fmt(positionSec)}
-            </Text>
-            <Text style={[styles.time, { color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>
-              {fmt(durationSec)}
-            </Text>
           </View>
-        </View>
 
-        {/* Transport controls */}
-        <View style={styles.controls}>
-          <ControlButton label={`−${SKIP_SECONDS}`} small onPress={() => skipBy(-SKIP_SECONDS)} color={colors.inkSoft} a11y="Rewind 15 seconds" />
-          <ControlButton icon="previous" onPress={skipToPrevious} color={colors.inkSoft} a11y="Previous track" />
-          <Pressable
-            onPress={togglePlay}
-            disabled={isBuffering}
-            accessibilityRole="button"
-            accessibilityState={{ busy: isBuffering }}
-            accessibilityLabel={isBuffering ? 'Loading' : isPlaying ? 'Pause' : 'Play'}
-            style={({ pressed }) => [
-              styles.playBtn,
-              { backgroundColor: colors.saffron, borderColor: colors.saffronDeep, borderRadius: radii.pill },
-              pressed && { opacity: 0.85 },
-            ]}
-          >
-            {isBuffering ? (
-              <ActivityIndicator size="small" color={colors.onPrimary} />
-            ) : (
-              <AppIcon name={isPlaying ? "pause" : "play"} size={32} color={colors.onPrimary} weight="fill" />
-            )}
-          </Pressable>
-          <ControlButton icon="skip" onPress={skipToNext} color={colors.inkSoft} a11y="Next track" />
-          <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y="Forward 15 seconds" />
-        </View>
+          {/* Title */}
+          <Text style={[styles.title, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}>
+            {title}
+          </Text>
+          <Text style={[styles.subtitle, { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily }]}>
+            {subtitle}
+          </Text>
 
-        {/* Secondary row: loop (kept for mantra japa) */}
-        <View style={styles.secondaryRow}>
-          <Pressable
-            onPress={toggleLoop}
-            accessibilityRole="button"
-            accessibilityState={{ selected: isLooping }}
-            accessibilityLabel="Toggle loop"
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.loopBtn,
-              {
-                borderColor: isLooping ? colors.saffronDeep : colors.divider,
-                backgroundColor: isLooping ? colors.saffron : 'transparent',
-                borderRadius: radii.md,
-              },
-              pressed && { opacity: 0.7 },
-            ]}
-          >
-            <AppIcon name="repeat" size={18} color={isLooping ? colors.onPrimary : colors.iconInk} />
-          </Pressable>
-        </View>
+          {/* Seek bar */}
+          <View style={styles.seekBlock}>
+            <Pressable
+              onLayout={(e) => setBarWidth(e.nativeEvent.layout.width)}
+              onPress={(e) => {
+                if (barWidth > 0 && durationSec > 0) {
+                  seekTo((e.nativeEvent.locationX / barWidth) * durationSec);
+                }
+              }}
+              accessibilityRole="adjustable"
+              accessibilityLabel="Seek"
+              style={styles.seekHit}
+            >
+              <View style={[styles.seekTrack, { backgroundColor: colors.divider }]}>
+                <View style={[styles.seekFill, { backgroundColor: colors.saffron, width: `${progress * 100}%` }]} />
+              </View>
+            </Pressable>
+            <View style={styles.timeRow}>
+              <Text style={[styles.time, { color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>
+                {fmt(positionSec)}
+              </Text>
+              <Text style={[styles.time, { color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>
+                {fmt(durationSec)}
+              </Text>
+            </View>
+          </View>
+
+          {/* Transport controls */}
+          <View style={styles.controls}>
+            <ControlButton label={`−${SKIP_SECONDS}`} small onPress={() => skipBy(-SKIP_SECONDS)} color={colors.inkSoft} a11y="Rewind 15 seconds" />
+            <ControlButton icon="previous" onPress={skipToPrevious} color={colors.inkSoft} a11y="Previous track" />
+            <Pressable
+              onPress={togglePlay}
+              disabled={isBuffering}
+              accessibilityRole="button"
+              accessibilityState={{ busy: isBuffering }}
+              accessibilityLabel={isBuffering ? 'Loading' : isPlaying ? 'Pause' : 'Play'}
+              style={({ pressed }) => [
+                styles.playBtn,
+                { backgroundColor: colors.saffron, borderColor: colors.saffronDeep, borderRadius: radii.pill },
+                pressed && { opacity: 0.85 },
+              ]}
+            >
+              {isBuffering ? (
+                <ActivityIndicator size="small" color={colors.onPrimary} />
+              ) : (
+                <AppIcon name={isPlaying ? "pause" : "play"} size={32} color={colors.onPrimary} weight="fill" />
+              )}
+            </Pressable>
+            <ControlButton icon="skip" onPress={skipToNext} color={colors.inkSoft} a11y="Next track" />
+            <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y="Forward 15 seconds" />
+          </View>
+
+          {/* Secondary row: loop (kept for mantra japa) */}
+          <View style={styles.secondaryRow}>
+            <Pressable
+              onPress={toggleLoop}
+              accessibilityRole="button"
+              accessibilityState={{ selected: isLooping }}
+              accessibilityLabel="Toggle loop"
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.loopBtn,
+                {
+                  borderColor: isLooping ? colors.saffronDeep : colors.divider,
+                  backgroundColor: isLooping ? colors.saffron : 'transparent',
+                  borderRadius: radii.md,
+                },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <AppIcon name="repeat" size={18} color={isLooping ? colors.onPrimary : colors.iconInk} />
+            </Pressable>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
@@ -208,6 +215,8 @@ function ControlButton({
 const styles = StyleSheet.create({
   root: { ...StyleSheet.absoluteFillObject, zIndex: 20, elevation: 20 },
   safe: { flex: 1, paddingHorizontal: 28 },
+  scroll: { flex: 1, minHeight: 0 },
+  scrollContent: { paddingBottom: 24 },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 },
   headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: 'transparent' },
   headerGlyph: { fontSize: 24, includeFontPadding: false },

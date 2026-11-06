@@ -45,6 +45,7 @@ const DEITY_LABELS: Record<Deity, { hi: string; en: string }> = {
   shani: { hi: 'शनि', en: 'SHANI' },
   kali: { hi: 'काली', en: 'KALI' },
   navagraha: { hi: 'नवग्रह', en: 'NAVAGRAHA' },
+  parshuram: { hi: 'परशुराम', en: 'PARSHURAM' },
 };
 
 function deityLabel(deity: Deity, lang: Lang): string {

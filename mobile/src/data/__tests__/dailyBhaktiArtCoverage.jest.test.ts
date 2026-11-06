@@ -1,4 +1,5 @@
 import { getVersePool } from '../versePool';
+import { parshuramPublished } from '../parshuramAvailability';
 import { devotionalArtForVerse, isDevotionalSubjectArt } from '../devotionalShareArt';
 
 // Named-subject portraits that still have a pooled verse after chalisas and
@@ -17,6 +18,7 @@ const sourceGroups = {
   kartikeya: ['subrahmanya-ashtakam'],
   narasimha: ['narasimha-ashtakam'],
   navagraha: ['navagraha-stotram'],
+  ...(parshuramPublished ? { parshuram: ['parshuram-stotram'] } : {}),
   tulsi: ['tulsi-puja'],
 };
 
@@ -34,13 +36,13 @@ it('gives every pooled named-subject its distinct portrait', () => {
 
 it('pools the flat ashtakam/suktam/kavach/stuti sources without the neutral fallback', () => {
   const pool = getVersePool();
-  expect(pool).toHaveLength(1676);
+  expect(pool).toHaveLength(parshuramPublished ? 1691 : 1684);
   // The flat sources that remain after chalisas and aartis left the rotation.
-  const flatSourceIds = new Set(["lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram"]);
+  const flatSourceIds = new Set(["lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram", "parshuram-stotram"]);
   const flat = pool.filter(v => flatSourceIds.has(v.sourceId));
-  expect(new Set(flat.map(v => v.sourceId)).size).toBe(25);
+  expect(new Set(flat.map(v => v.sourceId)).size).toBe(parshuramPublished ? 26 : 25);
   for (const verse of flat) expect(devotionalArtForVerse(verse)).not.toBe('prayer');
-  for (const sourceId of ['unknown-source', 'matribhumi-vandana', 'sandhya-deepam']) {
+  for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe', 'unknown-source', 'matribhumi-vandana', 'sandhya-deepam']) {
     expect(devotionalArtForVerse({ sourceId, verseIndex: 0 })).toBe('prayer');
   }
 });

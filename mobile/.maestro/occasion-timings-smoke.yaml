@@ -1,0 +1,23 @@
+appId: com.prashantsharma.vedansh
+---
+# Run on an installed native app after the shared launch/language setup.
+# Browser screenshots and this parsed flow are not native verification.
+- runFlow: _launch.yaml
+- openLink: "vedansh://widget/panchang?date=2026-11-08"
+- scrollUntilVisible:
+    element:
+      id: "occasion-timings-card"
+    direction: DOWN
+- assertVisible: "17:55.*19:50"
+- takeScreenshot: occasion-diwali
+- openLink: "vedansh://widget/panchang?date=2026-10-20"
+- scrollUntilVisible:
+    element:
+      id: "occasion-timings-card"
+    direction: DOWN
+- assertVisible: "13:59.*14:44"
+- takeScreenshot: occasion-shastra
+- openLink: "vedansh://widget/panchang?date=2026-11-12"
+- assertNotVisible:
+    id: "occasion-timings-card"
+- takeScreenshot: occasion-ordinary

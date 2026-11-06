@@ -1,3 +1,5 @@
+import OccasionTimingsCard from '@/components/OccasionTimingsCard';
+import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
@@ -206,11 +208,12 @@ export default function PanchangScreen({ route }: Props) {
   // 2,500-line screen does not re-render every minute for it.
   const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
   const { share: sharePanchang, busy: shareBusy } = usePanchangShare();
-  const shareUnavailable = shareBusy || !p || !shareMd;
+  const occasion = useOccasionTimings(selectedDate, calendarSystem);
+  const shareUnavailable = shareBusy || !p || !shareMd || occasion.loading || occasion.error;
   const shareDay = useCallback(() => {
-    if (!p || !shareMd) return;
-    void sharePanchang({ p, md: shareMd, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
-  }, [p, shareMd, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
+    if (!p || !shareMd || occasion.loading || occasion.error) return;
+    void sharePanchang({ p, md: shareMd, occasionTimings: occasion.items, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [p, shareMd, occasion.items, occasion.loading, occasion.error, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
   // The Panchang sky header (design.md §33) starts under the status bar, so it
   // needs the inset.
   const insets = useSafeAreaInsets();
@@ -374,7 +377,7 @@ export default function PanchangScreen({ route }: Props) {
   };
   const openVidhiCatalog = () => rootNav.navigate('VidhiCatalog');
 
-  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
+  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: selectedDate.getTime() });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
@@ -798,10 +801,12 @@ export default function PanchangScreen({ route }: Props) {
                 tonight={ribbonTonight}
                 sunrise={p.sunrise}
                 tithiIndex={p.tithi.index}
-                onOpen={openObservanceDetail}
+                onOpen={ruleId => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: (ribbonTonight ? carryOverDate : selectedDate).getTime() })}
               />
             </View>
           )}
+
+          <OccasionTimingsCard items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
           {/* Daily Muhurat — Choghadiya / Rahu Kaal card (PRD-14). Promoted
               to lead the day panel, above the anga grid: "is now auspicious?" is
@@ -907,7 +912,7 @@ export default function PanchangScreen({ route }: Props) {
             </Pressable>
           )}
 
-          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={openObservanceDetail} />
+          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={ruleId => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: nextDate.getTime() })} />
           {/* Preserve existing regional and private reminder entry points while
               the owner considers their placement. */}
           {observances.length === 0 && lensAvailableCount > 0 && (
@@ -1645,13 +1650,13 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, titleHi, titleEn)}
           </Text>
-          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
+          <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkMuted, marginTop: 4 }}>
             {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
           </Text>
         </>
       )}
       {dayNote && (
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+        <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.saffronDeep, marginTop: 6 }}>
           {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
@@ -1753,7 +1758,7 @@ function CatalogLedgerCell({
     >
       <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 22, color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
+        style={{ ...typography.listingScope, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
       >
         {label}
       </Text>

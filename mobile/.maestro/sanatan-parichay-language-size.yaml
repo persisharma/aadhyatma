@@ -1,0 +1,45 @@
+appId: com.prashantsharma.vedansh
+env:
+  CAPTURE_SUFFIX: local
+---
+- runFlow: _launch.yaml
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: Hindi
+      READING_SIZE: Standard
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: Hindi
+      READING_SIZE: Large
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: English
+      READING_SIZE: Standard
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: English
+      READING_SIZE: Large
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: Gujarati
+      READING_SIZE: Standard
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: Gujarati
+      READING_SIZE: Large
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: Kannada
+      READING_SIZE: Standard
+- runFlow:
+    file: _sanatan-language-size.yaml
+    env:
+      READING_LANGUAGE: Kannada
+      READING_SIZE: Large

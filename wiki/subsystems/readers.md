@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-10-22
+last_verified_date: 2026-11-05
 confidence: high
 status: current
 ---
@@ -294,3 +294,27 @@ User review corrected the initial portrait layout against current-main PR #449 (
 ### Garud Puran final Style 3 integration (2026-10-12)
 
 After user approval, nine exact Style 3 WebPs (1,433,814 bytes total) were bundled locally; the approval and hashes are pinned in `docs/content/garud-puran/artwork/manifest.json`. Current-main `ReadingArtwork` and `BackgroundLayer(readingParchment)` provide the common banner/divider/paper treatment. `HomeStackNavigator` registers both routes lazily, the generated route graph warms the reader from the index, and search yields per reading. Prose sharing carries source context without truncating the explanation; saved progress is labelled Reading / Page. See `docs/content/garud-puran/INTEGRATION.md` for final verification. **Since 16 Oct the nine paintings ship from R2**, not the bundle: they are `reading-backgrounds` entries `garud-puran--<artId>` (folder added to `prepare-reading-backgrounds.mjs`), `garudPuranImages` holds `RemoteBackground` descriptors, and `ListingThumbImage` crops R2 art from manifest dimensions. See [[integrations/reading-artwork]].
+
+
+### Screen-clipping corrections (5 November 2026)
+
+ReaderHeader now measures trailing actions, balances the back column from their actual width (minimum 48dp), and preserves complete wrapping titles. Explicit side minima, custom Back labels and mastheads remain supported. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.
+
+## Selected Kabir and Rahim dohas (5 November 2026)
+
+`data/doha/index.ts` adds two lazily loaded four-couplet selections to the existing flat reader registry. Their public category is Granth; the internal `StutiReader` route is reused for its typed verse shell, not to label the poets as deities or the poems as stotrams. Per-couplet provenance keeps chosen editions and variants distinct. New library rows use generated counts and neutral manuscript artwork; no new artwork object, route or provider is required.
+
+The registry-derived category, full-text search, bookmark and resume routes retain each collection's identity and exact verse index. `versePoolFlat` appends both collections, preserving older Daily Bhakti offsets and serving saved/daily/routine lookups. Hindi/English are editorial; Gujarati/Kannada follow existing re-scripting. No source URL reaches the UI. Focused script/content/pool checks are separate from pending native language/size/lifecycle/export checks. See design.md §88, RULEBOOK §33 and `docs/reviews/bhakti-dohe.md` for scope and acceptance.
+
+
+**Doha curation scope — 6 November 2026.** Only bhakti or constructive Suvichar qualifies, regardless of poet. Each authored verse now has a unique, nonempty `themes` array (`bhakti`/`suvichar`) and `themeReasonHi`; `doha/curation.ts` and registry-wide data tests check this contract. The list subtitles name both themes. Eligibility metadata never substitutes for source collation, and no runtime filtering may shift saved positions. The 60-item chat shortlist is research material, not an active corpus expansion. Existing eight payload verses/counts and all routes remain stable.
+
+
+### Daily Bhakti and Suvichar eligibility — 6 November 2026
+
+The eight verified canonical dohas participate in Daily Bhakti and Suvichar. Daily Bhakti retains the appended flat-source segments, complete verses/meanings and neutral prayer sharing artwork. Suvichar projects the same reader payloads through `data/doha/suvichar.ts`: six subject-neutral dohas suit all eighteen deity choices; the Hari doha is limited to the nine explicit Vishnu/Ram/Krishna choices, and the Ram-sharan doha to Rama/Ram Darbar. New poems require explicit artwork eligibility before exposure. No text, source or stable reader index is rewritten.
+
+Daily/weekday Suvichar cards rotate eligible originals followed by eligible dohas. Browse and Another thought order specific originals, general originals, eligible dohas, then existing referenced meanings. The unchanged 84 originals and 621 referenced messages remain available; the full catalogue now has 713 messages. Stable `DH-<canonical-verse-id>` IDs persist in preferences and favorites. Full Hindi and pronunciation-based English romanization are projected, with Gujarati/Kannada using the existing Hindi re-scripting policy. Poet and original-doha/romanization credit appears through the existing source label and share caption; edits remove attribution. Do not label these poems as Vedansh originals or as words spoken by the depicted deity. The 60-item research shortlist remains unintegrated.
+
+Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
+

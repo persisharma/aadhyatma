@@ -1,4 +1,5 @@
 import type { Deity } from './texts';
+import { parshuramPublished } from './parshuramAvailability';
 
 export type DeityIconKey =
   | 'bowArrow'
@@ -22,7 +23,8 @@ export type DeityIconKey =
   | 'dattatreya'
   | 'shani'
   | 'kali'
-  | 'navagraha';
+  | 'navagraha'
+  | 'parashu';
 
 export type DeityMeta = {
   id: Deity;
@@ -31,7 +33,7 @@ export type DeityMeta = {
   iconKey: DeityIconKey;
 };
 
-export const deities: readonly DeityMeta[] = [
+export const deityCatalog: readonly DeityMeta[] = [
   { id: 'rama', nameHi: 'श्री राम', nameEn: 'Shri Rama', iconKey: 'bowArrow' },
   {
     id: 'krishna',
@@ -59,10 +61,13 @@ export const deities: readonly DeityMeta[] = [
   { id: 'shani', nameHi: 'शनि देव', nameEn: 'Shani Dev', iconKey: 'shani' },
   { id: 'kali', nameHi: 'माँ काली', nameEn: 'Maa Kali', iconKey: 'kali' },
   { id: 'navagraha', nameHi: 'नवग्रह', nameEn: 'Navagraha', iconKey: 'navagraha' },
+  { id: 'parshuram', nameHi: 'भगवान परशुराम', nameEn: 'Bhagwan Parshuram', iconKey: 'parashu' },
 ];
 
+export const deities = deityCatalog.filter(d => d.id !== 'parshuram' || parshuramPublished);
+
 const deityById: Record<Deity, DeityMeta> = Object.fromEntries(
-  deities.map((d) => [d.id, d])
+  deityCatalog.map((d) => [d.id, d])
 ) as Record<Deity, DeityMeta>;
 
 /** Full metadata for a deity id. */

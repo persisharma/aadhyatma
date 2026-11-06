@@ -20,20 +20,20 @@ export default function ObservanceTodaySummary({ rule, titleHi, titleEn, lang, b
       <ObservanceArtwork rule={rule} width={width < 360 ? 100 : 126} height={154} variant="today" />
       <View style={styles.copy}>
         {badge}
-        <Text style={{ ...typography.listingTitle, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 17, lineHeight: 24, color: colors.ink }}>
+        <Text testID={`observance-title-${rule.id}`} style={{ ...typography.catalogTitle, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), color: colors.ink }}>
           {contentByLang(lang, titleHi, titleEn)}
         </Text>
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+        <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkMuted }}>
           {contentByLang(lang, rule.deityHi, rule.deityEn)}
         </Text>
         <Pressable accessibilityRole="button" accessibilityState={{ expanded }}
           accessibilityLabel={`${expanded ? 'Collapse' : 'Expand'} description ${rule.nameEn}. ${meaningByLang(lang, rule.shortDescriptionHi, rule.shortDescriptionEn)}`}
           onPress={() => setExpanded(value => !value)} style={({ pressed }) => [styles.description, pressed && { opacity: 0.7 }]}>
           <Text testID={`observance-summary-${rule.id}`} numberOfLines={expanded ? undefined : 2}
-            style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkSoft }}>
+            style={{ ...typography.catalogBody, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkSoft }}>
             {meaningByLang(lang, rule.shortDescriptionHi, rule.shortDescriptionEn)}
           </Text>
-          <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 11, lineHeight: 18, color: colors.saffronDeep, marginTop: 2 }}>
+          <Text style={{ fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), fontSize: 11, lineHeight: 19, color: colors.saffronDeep, marginTop: 2 }}>
             {expanded ? contentByLang(lang, 'कम दिखाएँ', 'Show less') : contentByLang(lang, 'पूरा विवरण पढ़ें', 'Read full description')}
           </Text>
         </Pressable>

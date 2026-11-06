@@ -40,6 +40,7 @@ import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets
 
 // The illustrated card sits below the category grid. Load its art and copy in
 // a separate chunk so the Home launch graph stays within its byte budget.
+const SanatanHomeCard = React.lazy(() => import('@/components/SanatanHomeCard'));
 const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -473,6 +474,13 @@ export default function HomeScreen({ navigation }: Props) {
             <KidsStoriesHomeCard
               onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
               onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+              onPressOut={finishTilePress}
+            />
+          </React.Suspense>
+          <React.Suspense fallback={<View style={{ height: 138 }} />}>
+            <SanatanHomeCard
+              onPress={() => activateTile(() => navigation.navigate('SanatanParichay'))}
+              onPressIn={() => beginTilePress(() => navigation.navigate('SanatanParichay'))}
               onPressOut={finishTilePress}
             />
           </React.Suspense>

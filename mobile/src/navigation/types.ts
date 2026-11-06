@@ -61,6 +61,8 @@ export type GharVastuStackParamList = {
 };
 
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
+  SanatanParichay: { topicId?: string } | undefined;
+  SanatanReader: { topicId: string; initialPage?: number };
   Home: undefined;
   Suvichar: { exploreDraft?: { name:string; deity:'ram-darbar' } } | undefined;
   KidsStoryLibrary: undefined;
@@ -205,7 +207,7 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
       }
     | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
-  ObservanceDetail: { ruleId: string };
+  ObservanceDetail: { ruleId: string; dateMs?: number };
   KathaLibrary: undefined;
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14

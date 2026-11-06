@@ -1,0 +1,35 @@
+{
+  "publication": "pending",
+  "assets": [
+    {
+      "prefix": "suvichar",
+      "stem": "parshuram--mandir-jharokha",
+      "hash": "c1e27ebd5dc41dea"
+    },
+    {
+      "prefix": "suvichar",
+      "stem": "parshuram--pushp-aangan",
+      "hash": "8babe6780d7654cb"
+    },
+    {
+      "prefix": "suvichar",
+      "stem": "parshuram--bhakti-patra",
+      "hash": "810ec124ea4704c1"
+    },
+    {
+      "prefix": "reading-backgrounds",
+      "stem": "backgrounds--deity-parshuram",
+      "hash": "c700a59650dc0b61"
+    },
+    {
+      "prefix": "devotional-share",
+      "stem": "parshuram",
+      "hash": "54c3c9bcc6e4bbaf"
+    },
+    {
+      "prefix": "reader-illustrations",
+      "stem": "deity-parshuram",
+      "hash": "c700a59650dc0b61"
+    }
+  ]
+}

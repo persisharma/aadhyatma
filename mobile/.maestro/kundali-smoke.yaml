@@ -160,6 +160,7 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "kundali-city-search"
 - inputText: "Ujjain"
+- takeScreenshot: e2e-shots/kundali-city-search-contained
 - tapOn: "Select Ujjain birth city"
 - waitForAnimationToEnd
 - scrollUntilVisible:

@@ -15,6 +15,9 @@ import { SMART_LINK } from '@/data/shareLinks';
 import PanchangShareCard from '@/components/PanchangShareCard';
 import { ShareProvider } from '@/utils/shareVerse';
 import { usePanchangShare } from '@/utils/panchangShare';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SHARE_BRAND_KEY } from '@/data/shareBrand';
+import { resetShareBrandForTests } from '@/utils/shareBrandStore';
 
 const mockCapture = jest.fn((..._args: unknown[]) => Promise.resolve('file:///tmp/panchang.png'));
 const mockFiles = jest.fn((..._args: unknown[]) => Promise.resolve(true));
@@ -69,7 +72,7 @@ async function shareToSystem(taps = 1) {
   await settle(); await settle();
 }
 
-beforeEach(() => { jest.clearAllMocks(); });
+beforeEach(async () => { jest.clearAllMocks(); await AsyncStorage.clear(); resetShareBrandForTests(); });
 afterEach(() => { act(() => tree.unmount()); Platform.OS = originalOS; });
 
 test('opens the Daily Bhakti picker on the self-branded card, with card-language chips and text', async () => {
@@ -106,4 +109,73 @@ test('Android: the native multi-share carries the caption; an older binary falls
   mockFiles.mockResolvedValueOnce(false);
   await shareToSystem();
   expect(Sharing.shareAsync).toHaveBeenCalledWith('file:///tmp/panchang.png', expect.objectContaining({ mimeType: 'image/png' }));
+});
+
+test('co-branding (§33a): a saved profile prints on the captured card and in Send as text, never in the caption', async () => {
+  Platform.OS = 'ios';
+  const profile = { on: true, name: 'पं. रमेश शर्मा', title: 'ज्योतिषाचार्य', contact: '98290 12345' };
+  await AsyncStorage.setItem(SHARE_BRAND_KEY, JSON.stringify(profile));
+  function Trigger() {
+    const { share } = usePanchangShare();
+    return <Pressable accessibilityLabel="trigger" onPress={() => void share(input)} />;
+  }
+  const open = async () => {
+    await act(async () => { tree.root.findAll((n) => n.props.accessibilityLabel === 'trigger' && typeof n.props.onPress === 'function')[0].props.onPress(); });
+  };
+  await act(async () => {
+    tree = TestRenderer.create(<ThemeProvider><ShareProvider><Trigger /></ShareProvider></ThemeProvider>, { createNodeMock: () => ({}) });
+  });
+  await open();
+  // The sheet carries the मेरी ब्रांडिंग settings under the preview.
+  expect(sheet().props.controls).toBeTruthy();
+
+  // Send as text signs off with the profile.
+  await settle();
+  await act(async () => { sheet().props.onShareText(); });
+  await settle(400);
+  const text = (system.mock.calls[0][0] as { message: string }).message;
+  expect(text).toContain('पं. रमेश शर्मा · ज्योतिषाचार्य · 98290 12345');
+  system.mockClear();
+
+  // The image: the capture mount prints the brand; the caption names neither the sender nor the contact.
+  await open();
+  act(() => { sheet().props.onShareSystem(); });
+  await settle();
+  const card = tree.root.findByType(PanchangShareCard);
+  expect(card.props.brand).toEqual({ name: 'पं. रमेश शर्मा', line: 'ज्योतिषाचार्य · 98290 12345' });
+  act(() => tree.root.findByProps({ testID: 'share-card-mount' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
+  act(() => card.props.onIconLoad());
+  act(() => tree.root.findByType(PanchangShareCard).findAllByType(Image)
+    .filter(n => n.props.testID === 'vedansh-wordmark-hi').forEach(image => image.props.onLoad()));
+  await settle(); await settle();
+  expect(mockCapture).toHaveBeenCalledTimes(1);
+  const caption = (system.mock.calls[0][0] as { message: string }).message;
+  expect(caption).toContain(SMART_LINK);
+  expect(caption).not.toContain('रमेश');
+  expect(caption).not.toContain('98290');
+});
+
+test('co-branding off: the captured card is the plain one', async () => {
+  Platform.OS = 'ios';
+  await AsyncStorage.setItem(SHARE_BRAND_KEY, JSON.stringify({ on: false, name: 'पं. रमेश शर्मा', title: '', contact: '' }));
+  function Trigger() {
+    const { share } = usePanchangShare();
+    return <Pressable accessibilityLabel="trigger" onPress={() => void share(input)} />;
+  }
+  await act(async () => {
+    tree = TestRenderer.create(<ThemeProvider><ShareProvider><Trigger /></ShareProvider></ThemeProvider>, { createNodeMock: () => ({}) });
+  });
+  await act(async () => { tree.root.findAll((n) => n.props.accessibilityLabel === 'trigger' && typeof n.props.onPress === 'function')[0].props.onPress(); });
+  act(() => { sheet().props.onShareSystem(); });
+  await settle();
+  const card = tree.root.findByType(PanchangShareCard);
+  expect(card.props.brand).toBeNull();
+  // Finish the capture, so no share is still waiting when the test environment closes.
+  act(() => tree.root.findByProps({ testID: 'share-card-mount' }).props.onLayout({ nativeEvent: { layout: { height: 675 } } }));
+  act(() => card.props.onIconLoad());
+  act(() => tree.root.findByType(PanchangShareCard).findAllByType(Image)
+    .filter(n => n.props.testID === 'vedansh-wordmark-hi').forEach(image => image.props.onLoad()));
+  await settle(); await settle();
+  expect(mockCapture).toHaveBeenCalledTimes(1);
+  expect(tree.root.findAllByType(PanchangShareCard)).toHaveLength(0);
 });

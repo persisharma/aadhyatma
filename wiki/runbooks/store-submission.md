@@ -2,7 +2,7 @@
 title: Store listing preparation
 type: runbook
 sources: [mobile/app.json, mobile/eas.json, mobile/app.config.js, mobile/src/notifications/pushTokenPure.ts, mobile/src/utils/assetCache.ts]
-last_verified_date: 2026-10-12
+last_verified_date: 2026-11-04
 confidence: high
 status: current
 ---
@@ -56,3 +56,29 @@ Generated universal APK directly from the submitted vc12 AAB using bundletool 1.
 The 1.5.0 release record and compact test evidence are committed under `docs/releases/1.5.0/`. `marketing/reels/showcases/latest-1.5.0/` holds locale-matched screen sources, benefit-focused narration, preset neural TTS generation and a reproducible 1080×1920 renderer. Hindi and English local MP4s run about 39 seconds, with SRT narration files and media/hash/volume validation; they have not been posted. The captures show current UI in a compatible capture shell, distinct from exact-release native test evidence.
 
 The user subsequently requested separate carousels reusing finished listing assets. `marketing/reels/showcases/listing-carousels/` contains the copy, renderer, source hashes and reviewed contact sheets for 10 features × Hindi/English × 3 slides (60 PNGs, 1080×1350). The user then requested Instagram marketing design rather than resized listing images. V3 uses a light cream three-step marketing journey: choose or enter details → begin → explore the result. The first card is an editorial diagram, the second uses a whole real phone screen, and the third highlights a feature-specific crop from a real capture with a light CTA. Kundali and Guna Milan explain the required birth details, chart generation and result. Locale-matched UI pixels, chart geometry and matching scores are unchanged; store metadata is unchanged. Latest local PNGs, captions, ZIPs and filtered review gallery are under `marketing/reels/out/instagram-journeys-v3/`; nothing was posted.
+
+## Meta feature-tour video (4 November 2026)
+
+`marketing/reels/showcases/feature-tour/` renders a roughly 50-second all-features ad in Hindi and English. Formats: 9:16 for Reels/Stories and a 4:5 centre crop for Feed. Frames are deterministic Chromium renders of committed native captures and are piped to ffmpeg. The tanpura bed is synthesised and side-chain ducked under the voice. All copy is limited to the 1.5.0 store claims.
+
+Voice-over uses Kokoro-82M (Apache-2.0), voice `hf_alpha`, through `narrate.py`. English lines use `{Term|देवनागरी}` spans so Indic words get Hindi phonemes. `whisper_check.py` round-trips every clip through Whisper turbo.
+
+Gotchas:
+- The cloud container blocks edge-tts and Hugging Face. Kokoro and Whisper models download from GitHub releases instead.
+- Piper hi_IN voices are trained on CC BY-NC-SA data, so they are not usable in ads.
+- sherpa-onnx's Kokoro build cannot phonemise Hindi without a lexicon (use kokoro-onnx), and its Whisper recogniser truncates Devanagari.
+- espeak drops the schwa in एकादशी; see `phonemeFixes`.
+
+Source captures span 6–27 October and mix pre- and post-Vrat-tab UI. Keep text within y 300–1250 so it survives both the Reels overlays and the 4:5 crop. No native-speaker listening review has been done yet. The outputs are local only; nothing has been uploaded to Meta.
+
+**Bhajan cut (5 November 2026).** The user found the voiced feature tour too slow and too AI-sounding. `marketing/reels/showcases/bhajan-cut/` is the replacement: 28 s and cut on tracked beats.
+- It uses the app's own recorded "Govind Bolo" from 16.14 s and has no synthetic voice.
+- Real screens are shown full-bleed in screen-recording style, with short Hindi-first captions.
+- Gotchas: the stock-footage hosts (Pexels, Pixabay, Mixkit, Wikimedia) are blocked from the cloud container. The licence for using the bhajan recording in ads is unverified.
+
+**Story-reel style rule (5 November 2026, user decision).**
+- Stories already fully illustrated in the app use the app's painted art (style 3).
+- Stories without full illustration, such as vrat kathas, use the code-drawn Tholu Bommalata puppet style (style 1).
+- Pattachitra is not in use.
+- Narration-only audio is the default. The user disliked the synthesised tanpura bed; add music in Instagram/Meta at upload.
+- Kit: `marketing/reels/showcases/story-reel/`.

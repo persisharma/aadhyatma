@@ -1,3 +1,7 @@
+import { formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
+import FestiveCorners from './FestiveCorners';
+import FestivalMotif from './FestivalMotif';
+import { occasionRange } from '@/panchang/occasionTimingFormat';
 import React from 'react';
 import { Image, StyleSheet, Text, View, type StyleProp, type TextStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,6 +15,7 @@ import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { withMarkHeadroom } from '@/utils/markHeadroom';
 import VedanshWordmark from './VedanshWordmark';
 import type { PanchangShareModel, ShareAnga, ShareChoghadiya, ShareVaas } from '@/panchang/panchangShareModel';
+import { brandTextLang, shareBrandTextLine, type ResolvedShareBrand } from '@/data/shareBrand';
 
 const brandMark = require('@assets/splash-icon.png');
 
@@ -37,14 +42,28 @@ const chromeOpticalOffsets = {
  * चौघड़िया with start times, the four kaal windows, the four वास tiles, and a
  * dark footer with the app icon and the download link.
  *
+ * `brand` (the sharer's co-branding, §33a *Co-branding*) replaces the footer's
+ * feature line with `<name>` or `<name> · <title> · <contact>`; the header is never
+ * touched. Without it the card is unchanged; the Vedansh icon, wordmark and
+ * download pill never move.
+ *
  * Every line is a fixed size that was fit-tested against the longest strings
  * (long city, अधिक मास, a क्षय tithi, the longest nakshatra/yoga/karana, a long
  * festival); single-line values only shrink as a last resort. Indic lines set
  * tight leading, so each one takes the mark headroom (utils/markHeadroom.ts) or
  * iOS/Android would clip its matras.
  */
-export default function PanchangShareCard({ model, lang, onIconLoad }: { model: PanchangShareModel; lang: Lang; onIconLoad?: () => void }) {
+export default function PanchangShareCard({ model, lang, onIconLoad, brand = null, onFestivalArtLoad }: { onFestivalArtLoad?: (slot: string) => void; model: PanchangShareModel; lang: Lang; onIconLoad?: () => void; brand?: ResolvedShareBrand | null }) {
   const { colors } = useTheme();
+  const ritual = model.occasionTimings?.find(i => i.windows.length > 0 || i.noteHi);
+  const primary = ritual?.windows[0];
+  const referenceDay = model.referenceDay ?? ritual?.date;
+  const datedClock = !!primary && !!referenceDay && (!isSameLocalDay(primary.start, referenceDay) || !isSameLocalDay(primary.end, referenceDay));
+  const clockText = primary && referenceDay ? (datedClock && !primary.event
+    ? `${formatEndInstant(primary.start, referenceDay, lang)}\n– ${formatEndInstant(primary.end, referenceDay, lang)}`
+    : occasionRange(primary, referenceDay, lang)) : null;
+  const partsHi = ritual?.nameHi.split(' · ') ?? [];
+  const partsEn = ritual?.nameEn.split(' · ') ?? [];
   const en = lang === 'en';
   const t = (hi: string, enText: string) => contentByLang(lang, hi, enText);
 
@@ -67,6 +86,18 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
   // A standalone clock line needs headroom in English too (fit() skips it there): the
   // face is Noto Devanagari, so 1.25 leading clips the digits' tops on device.
   const clockLine = (size: number) => withMarkHeadroom(clock(size));
+  // Header chip text (city, sharer's name): centred on each script's optical middle.
+  const chipText = (l: Lang): TextStyle => {
+    const size = l === 'en' ? 14 : 13;
+    return {
+      fontFamily: l === 'en' ? fontFamilies.latinBold : scriptTitleFont(l, fontFamilies.devanagariBold),
+      fontSize: size, includeFontPadding: false, textAlignVertical: 'center', color: colors.ink,
+      transform: [{ translateY: size * chromeOpticalOffsets[l].place }],
+    };
+  };
+  // The sharer typed the name/line in any script; draw it in a face that has its glyphs.
+  const brandLine = shareBrandTextLine(brand);
+  const brandLineLang = brandLine ? brandTextLang(brandLine) : lang;
 
   const One = ({ style, children }: { style: StyleProp<TextStyle>; children: React.ReactNode }) => (
     <Text allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={fit(style)}>
@@ -161,11 +192,13 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
               </Text>
             </View>
           </View>
-          <View testID="panchang-share-location-chip" style={[styles.cityChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
-            <View style={[styles.pin, { backgroundColor: colors.saffron }]} />
-            <Text testID="panchang-share-location" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[{ fontFamily: en ? fontFamilies.latinBold : scriptTitleFont(lang, fontFamilies.devanagariBold), fontSize: en ? 14 : 13, includeFontPadding: false, textAlignVertical: 'center', color: colors.ink, transform: [{ translateY: (en ? 14 : 13) * chromeOpticalOffsets[lang].place }] }, styles.shrink]}>
-              {model.place}
-            </Text>
+          <View style={styles.chips}>
+            <View testID="panchang-share-location-chip" style={[styles.cityChip, { backgroundColor: colors.dayGlass, borderColor: colors.dayGlassBorder }]}>
+              <View style={[styles.pin, { backgroundColor: colors.saffron }]} />
+              <Text testID="panchang-share-location" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[chipText(lang), styles.shrink]}>
+                {model.place}
+              </Text>
+            </View>
           </View>
         </View>
         <View style={styles.dateBlock}>
@@ -182,9 +215,19 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
         </View>
       </View>
 
-      <View style={styles.body}>
+      <View testID="panchang-share-body" style={[styles.body, ritual && { rowGap: 3 }]}>
         {/* ---- today's पर्व */}
-        {model.festival && (
+        {ritual ? (
+          <View testID="panchang-share-occasion" style={[styles.ritual, { backgroundColor: colors.brandIvory, borderColor: colors.gold }]}>
+            <FestiveCorners size={64} onLoad={slot => onFestivalArtLoad?.(slot)} />
+            <FestivalMotif motif={ritual.motif} size={54} onLoad={() => onFestivalArtLoad?.('motif')} />
+            <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
+              <One style={[label, { fontSize: 11, color: colors.saffronDeep }]}>{t(partsHi.length > 1 ? partsHi[0] : datedClock && primary ? primary.labelHi : 'पर्व का मुहूर्त', partsEn.length > 1 ? partsEn[0] : datedClock && primary ? primary.labelEn : 'Festival timings')}</One>
+              <One style={[value(18), { color: colors.festivalInk }]}>{t(partsHi.at(-1) ?? ritual.nameHi, partsEn.at(-1) ?? ritual.nameEn)}</One>
+            </View>
+            <View style={{ width: 194, minHeight: 42, paddingLeft: 12, borderLeftWidth: 1, borderLeftColor: colors.goldChipBg, justifyContent: 'center' }}><Text allowFontScaling={false} numberOfLines={2} style={[clockLine(datedClock ? 17 : 20), { minWidth: 0, textAlign: 'center', color: colors.festivalInk }]}>{primary ? clockText : t('स्थानीय समय सुनिश्चित करें', 'Confirm local timing')}</Text>{!datedClock && primary && <One style={[line, { fontSize: 11, lineHeight: 15, textAlign: 'center' }]}>{t(primary.labelHi, primary.labelEn)}</One>}</View>
+          </View>
+        ) : model.festival && (
           <View style={[styles.ribbon, { backgroundColor: colors.cardActiveFrom, borderColor: colors.goldChipBg }]}>
             <View style={[styles.moonMark, { backgroundColor: colors.skyNightTop }]}>
               <View style={[styles.moonDisc, { backgroundColor: colors.moonLight }]} />
@@ -243,15 +286,25 @@ export default function PanchangShareCard({ model, lang, onIconLoad }: { model: 
       </View>
 
       {/* ---- footer: app icon, what the app does, the download link */}
-      <LinearGradient colors={[colors.skyNightUpper, colors.skyNightTop]} style={styles.footer}>
+      <LinearGradient testID="panchang-share-footer" colors={[colors.skyNightUpper, colors.skyNightTop]} style={styles.footer}>
         <Image source={brandMark} style={[styles.footerIcon, { borderColor: colors.nightGold }]} accessibilityIgnoresInvertColors />
         <View style={styles.footerText}>
           <One style={{ fontFamily: en ? fontFamilies.latinBold : titleFace, fontSize: en ? 16 : 14, lineHeight: en ? 19 : 17.5, color: colors.nightInk }}>
             {t('रोज़ का पूरा पंचांग — वेदांश़ ऐप', 'Full panchang daily — Vedansh app')}
           </One>
-          <One style={{ fontFamily: en ? fontFamilies.latinSemiBold : bodyFace, fontSize: en ? 13 : 12, lineHeight: 15.5, color: colors.nightInkSoft }}>
-            {t('मुहूर्त · चौघड़िया · व्रत-त्योहार · कुंडली · पाठ', 'Muhurat · Choghadiya · Festivals · Kundali')}
-          </One>
+          {brandLine ? (
+            // The sharer's name (· title · contact) replaces the feature line; the pill keeps the link.
+            <Text testID="panchang-share-brand-line" allowFontScaling={false} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75}
+              style={brandLineLang === 'en'
+                ? { fontFamily: fontFamilies.latinBold, fontSize: 13, lineHeight: 15.5, color: colors.nightGold }
+                : withMarkHeadroom({ fontFamily: scriptTitleFont(brandLineLang, fontFamilies.devanagariBold), fontSize: 12, lineHeight: 15.5, color: colors.nightGold })}>
+              {brandLine}
+            </Text>
+          ) : (
+            <One style={{ fontFamily: en ? fontFamilies.latinSemiBold : bodyFace, fontSize: en ? 13 : 12, lineHeight: 15.5, color: colors.nightInkSoft }}>
+              {t('मुहूर्त · चौघड़िया · व्रत-त्योहार · कुंडली · पाठ', 'Muhurat · Choghadiya · Festivals · Kundali')}
+            </One>
+          )}
         </View>
         {/* Center each script's natural line box instead of sharing a baseline
             and pulling the whole label upward with reader mark headroom. */}
@@ -273,6 +326,7 @@ const styles = StyleSheet.create({
   brand: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   brandCopy: { gap: 3, alignItems: 'flex-start' },
   brandIcon: { width: 32, height: 32, borderRadius: 8 },
+  chips: { flexShrink: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: 6 },
   cityChip: { flexShrink: 1, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 11, paddingVertical: 4, borderRadius: 14, borderWidth: 1 },
   pin: { width: 9, height: 9, borderTopLeftRadius: 5, borderTopRightRadius: 5, borderBottomRightRadius: 5, transform: [{ rotate: '-45deg' }] },
   dateBlock: { position: 'absolute', left: 14, right: 14, top: 42 },
@@ -281,6 +335,7 @@ const styles = StyleSheet.create({
   center: { textAlign: 'center' },
   shrink: { flexShrink: 1, minWidth: 0 },
   body: { flex: 1, paddingTop: 7, paddingHorizontal: 12, rowGap: 5, justifyContent: 'space-between' },
+  ritual: { minHeight: 66, flexDirection: 'row', alignItems: 'center', gap: 12, paddingLeft: 38, paddingRight: 30, paddingVertical: 5, borderWidth: 1.2, borderRadius: 14 },
   ribbon: { height: 36, flexDirection: 'row', alignItems: 'center', gap: 9, paddingLeft: 6, paddingRight: 12, borderRadius: 14, borderWidth: 1 },
   moonMark: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   moonDisc: { width: 12, height: 12, borderRadius: 6 },

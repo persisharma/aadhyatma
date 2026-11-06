@@ -73,3 +73,8 @@ Verse and Panchang share the selected city's solved sunrise/sunset window. Day i
 `appearance.ts` owns preview selection/palettes; `heritage.ts` owns the source-to-reviewed-subject mapping. The deferred planner emits `artKey?`, and the cache key explicitly versions this solar payload addition. `scripts/build-widget-heritage.mjs` generates 66 budgeted plates from existing reader art and records hashes. Native paint sits in a separate right region; small verse keeps full-width text. Missing art has a palette-correct plain fallback. Recovery/iOS tinted modes keep day styling; Japam retains its existing artwork. Android's dynamic resource lookup requires `res/raw/vedansh_widget_keep.xml` to survive release shrinking.
 
 Native compilation, signed device timelines, four-language/size visual and accessibility review remain pending until executed; generated plates and source tests do not establish native fidelity. A new binary is required.
+
+
+## First-run widget setup (5 November 2026)
+
+`OnboardingSetupSheet` starts widgets from language Continue. Android saves city as its resume point before the existing process-owned pair pin flow; iPhone persists a `widgets` substep and embeds the shared `WidgetHowToBody` in the same Modal. Continue records instruction completion, Not now records widget dismissal, and both lead to city without changing reminder preferences. No iOS placement API exists; flow records remain bookkeeping only. Missing hosts and failed/unsupported Android pinning continue onboarding. The later launch offer retains its day/priority policy and the gallery remains available. Source tests and native evidence must be reported separately.

@@ -2,7 +2,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Pressable as mockPressable, Text as mockText, View as mockView } from 'react-native';
 import RoutineTodayScreen from '@/screens/RoutineTodayScreen';
-import { deities } from '@/data/deities';
+import { deities, deityCatalog } from '@/data/deities';
 import { practiceArtwork, practiceDeityStems } from '@/data/routine/artwork';
 import { readerIllustrationAsset, readerIllustrationRequest } from '@/data/readerIllustrationAsset';
 import { contentByLang } from '@/utils/localize';
@@ -83,7 +83,9 @@ it('retains empty-day creation without a 0 of 0 counter', () => {
   expect(mockNavigate).toHaveBeenCalledWith('RoutineList');
 });
 it('maps all declared deities to published R2 entries and unknown items to scripture', () => {
-  expect(Object.keys(practiceDeityStems)).toHaveLength(deities.length);
+  // The mapping includes pending catalog entries; only public deities must
+  // already resolve to a published CDN object.
+  expect(Object.keys(practiceDeityStems).sort()).toEqual(deityCatalog.map(d => d.id).sort());
   for (const deity of deities) {
     const request = readerIllustrationRequest(readerIllustrationAsset(practiceDeityStems[deity.id]));
     expect(request?.remoteUrl).toMatch(/^https:\/\/[^/]+\/reader-illustrations\/[a-f0-9]+\.webp$/);

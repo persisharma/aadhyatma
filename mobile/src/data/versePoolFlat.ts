@@ -74,6 +74,11 @@ const FLAT_SOURCES: readonly FlatSource[] = [
   stuti('durga-stuti-arjuna', verseCounts.durgaStutiArjunaTotal),
   stuti('kubera-stotram', verseCounts.kuberaStotramTotal),
   stuti('navagraha-stotram', verseCounts.navagrahaStotramTotal),
+  // Append only: the earlier Daily Bhakti pool offsets remain stable.
+  stuti('kabir-bhakti-dohe', verseCounts.kabirBhaktiDoheTotal),
+  stuti('rahim-bhakti-dohe', verseCounts.rahimBhaktiDoheTotal),
+
+  stuti('parshuram-stotram', verseCounts.parshuramStotramTotal),
 ];
 
 type LibraryLookup = {
@@ -112,3 +117,4 @@ export function flatPoolSegments({ isActive, nameHi, nameEn }: LibraryLookup): P
   }
   return segments;
 }
+

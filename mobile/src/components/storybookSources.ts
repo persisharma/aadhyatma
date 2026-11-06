@@ -62,4 +62,5 @@ export const storybookSources = {
   'agni-vaas': require('@assets/icons/storybook/agni-vaas.png'),
   'sunset': require('@assets/icons/storybook/sunset.png'),
   'moonrise': require('@assets/icons/storybook/moonrise.png'),
+  parashu: require('@assets/icons/storybook/parashu.png'),
 } as const;

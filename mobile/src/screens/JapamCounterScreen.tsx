@@ -34,6 +34,10 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import AppIcon from '@/components/AppIcon';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
+import JapamInfinity from '@/components/JapamInfinity';
+import { japaAutoCountSource } from '@/components/japamInfinityPlayback';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -48,13 +52,16 @@ type Props = NativeStackScreenProps<RootStackParamList, 'JapamCounter'>;
 export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { getEntry, increment, resetBeads, clear } = useJapamCounter();
+  const { getEntry, increment, resetBeads, clear, isLoading: counterLoading } = useJapamCounter();
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
   const requestRatingAsk = useRatingAsk();
   const { factor } = useFontScale();
   const { activity } = useUserActivity();
   const { width: windowWidth } = useWindowDimensions();
+  const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
+  const [infinityRunning, setInfinityRunning] = useState(false);
+  useEffect(() => { setInfinityRunning(false); }, [japaStyle, route.params.mantraId]);
 
   // Mantra is reading text → it scales with the global M/L size on EVERY device
   // (no per-device hardcoding, so M/L always takes effect). The tap surface
@@ -98,6 +105,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const autoSourceRef = useRef(japaAutoCountSource(japaStyle, infinityRunning, audioPlaying));
+  autoSourceRef.current = japaAutoCountSource(japaStyle, infinityRunning, audioPlaying);
   // Naam japa (a single divine name, e.g. राधा): the name reads large and gives
   // a small pulse on every bead, so each name visibly lands on the mala.
   const naam = mantra?.naam === true;
@@ -163,6 +172,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   useFocusEffect(
     useCallback(
       () => () => {
+        setInfinityRunning(false);
         if (completedRoundThisVisitRef.current) {
           completedRoundThisVisitRef.current = false;
           requestRatingAskRef.current('mala-complete');
@@ -172,9 +182,17 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     )
   );
 
-  // A screen tap is exactly one bead. Wrapped so the Pressable's gesture event
-  // is never passed through as a bead count.
-  const handleTap = useCallback(() => registerBead(1), [registerBead]);
+  // Mala taps count a bead; Infinity taps only toggle continuous visual motion.
+  const handleTap = useCallback(() => {
+    if (japaStyle === 'infinity') setInfinityRunning((value) => !value);
+    else registerBead(1);
+  }, [japaStyle, registerBead]);
+  const handleInfinityCycle = useCallback(() => {
+    if (autoSourceRef.current === 'motion') registerBead(1);
+  }, [registerBead]);
+  const handleAudioIteration = useCallback((beads: number) => {
+    if (autoSourceRef.current === 'audio') registerBead(beads);
+  }, [registerBead]);
 
   if (!mantra) {
     return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
@@ -218,7 +236,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     gu: 'સુમેરુ · માળા ફેરવો',
     kn: 'ಸುಮೇರು · ಮಾಲೆ ತಿರುಗಿಸಿ',
   });
-  const tapHint = audioPlaying
+  const infinityCompleteLabel = pick(lang, {
+    hi: 'माला पूर्ण · 108 जप', en: 'Mala complete · 108 chants',
+    gu: 'માળા પૂર્ણ · 108 જપ', kn: 'ಮಾಲೆ ಪೂರ್ಣ · 108 ಜಪ',
+  });
+  const infinityHint = infinityRunning
+    ? pick(lang, { hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' })
+    : pick(lang, { hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' });
+  const tapHint = japaStyle === 'infinity' ? infinityHint : audioPlaying
     ? pick(lang, {
         hi: 'सुनें · मंत्र के साथ मनके आगे बढ़ते हैं',
         en: 'Listening · beads advance with the chant',
@@ -251,6 +276,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
+      {japaStyle === 'infinity' ? <LinearGradient pointerEvents="none"
+        colors={[colors.parchmentSoft, colors.parchment, colors.parchmentDeep]}
+        locations={[0, 0.55, 1]} style={[StyleSheet.absoluteFill, { opacity: 0.65 }]} /> : null}
       {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
@@ -337,6 +365,29 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </View>
         </View>
 
+        <View style={styles.styleChoices} accessibilityRole="radiogroup">
+          {(['mala', 'infinity'] as const).map((value: JapamStyle) => {
+            const label = value === 'mala'
+              ? pick(lang, { hi: 'माला', en: 'Mala', gu: 'માળા', kn: 'ಮಾಲೆ' })
+              : pick(lang, { hi: 'अनंत ∞', en: 'Infinity ∞', gu: 'અનંત ∞', kn: 'ಅನಂತ ∞' });
+            const selected = japaStyle === value;
+            return (
+              <Pressable key={value} testID={`japam-style-${value}`} accessibilityRole="radio"
+                accessibilityLabel={label} accessibilityState={{ selected, checked: selected, disabled: !styleReady }}
+                disabled={!styleReady} onPress={() => selectStyle(value)}
+                style={({ pressed }) => [styles.styleChoice, {
+                  backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
+                  borderColor: selected ? colors.saffronDeep : colors.divider,
+                  opacity: pressed ? 0.7 : 1,
+                }]}>
+                <Text style={{ textAlign: 'center', fontSize: Math.round(14 * factor),
+                  fontFamily: scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily),
+                  color: selected ? colors.saffronDeep : colors.inkMuted }}>{label}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
         <ScrollView
           style={styles.tapArea}
           contentContainerStyle={styles.tapScroll}
@@ -345,8 +396,11 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         >
           <Pressable
             onPress={handleTap}
+            disabled={counterLoading || !styleReady}
+            testID={`japam-counter-${japaStyle}`}
             accessibilityRole="button"
-            accessibilityLabel={`${titleEn}. Tap to count one bead. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
+            accessibilityLabel={`${titleEn}. ${japaStyle === 'infinity' ? infinityHint : 'Tap to count one bead'}. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
+            accessibilityState={{ disabled: counterLoading || !styleReady }}
             style={({ pressed }) => [
               styles.tapContent,
               { paddingHorizontal: spacing.xxl },
@@ -399,8 +453,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </View>
 
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
-            <View style={[styles.malaBlock, !measured && styles.unmeasured]}>
-              <JapamMala
+            <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
+              {japaStyle === 'infinity' ? (
+                <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} onCycle={handleInfinityCycle}
+                  notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
+                  labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
+              ) : <JapamMala
                 count={entry.count}
                 rounds={entry.rounds}
                 size={malaSize}
@@ -408,7 +466,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 notice={sumeruNotice ? sumeruLabel : null}
                 hint={tapHint}
                 labelFontFamily={scriptSerif ?? undefined}
-              />
+              />}
             </View>
           </Pressable>
         </ScrollView>
@@ -465,7 +523,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <JapamAudioPlayer
             mantraId={mantra.id}
             lang={lang}
-            onIteration={registerBead}
+            onIteration={handleAudioIteration}
             onPlayingChange={setAudioPlaying}
             autoPlay={route.params.autoPlay === true}
           />
@@ -708,6 +766,14 @@ const styles = StyleSheet.create({
   },
   tapArea: {
     flex: 1,
+  },
+  styleChoices: {
+    flexDirection: 'row', gap: 8, paddingHorizontal: 24, paddingBottom: 4,
+    width: '100%', maxWidth: 420, alignSelf: 'center',
+  },
+  styleChoice: {
+    flex: 1, minHeight: 44, paddingHorizontal: 12, paddingVertical: 6,
+    borderRadius: 22, borderWidth: 1, justifyContent: 'center',
   },
   tapScroll: {
     // flexGrow lets the tap surface fill the viewport (tappable everywhere) yet

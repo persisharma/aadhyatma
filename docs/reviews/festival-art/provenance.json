@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-06",
+  "designReference": "libfile_afba22ea46c48191a52696db84b945ed",
+  "approvedDirection": "painted diya and marigold/mango corners with fine double gold border",
+  "generation": "imagegen; original app UI decorative artwork, no scripture",
+  "encoding": "WebP quality92 alphaQuality100, no crop or rescale",
+  "columns": 4,
+  "rows": 3,
+  "cells": [
+    "diya",
+    "fire",
+    "shastra",
+    "kalash",
+    "moon",
+    "sun",
+    "shiva",
+    "ganesh",
+    "rakhi",
+    "lotus",
+    "top-left-flowers",
+    "top-right-flowers"
+  ],
+  "frameReview": "Every subject stays within its cell; diya uses 1.16x center zoom with remaining transparent padding. Corner cells are decorative and clipped to the frame, never over live text.",
+  "files": [
+    {
+      "path": "mobile/assets/festival-art/painted-atlas.webp",
+      "sha256": "e33f75d1c1881a1b260fed43f527429322fe3a4564156060f41c958b29c128a9",
+      "bytes": 479742,
+      "width": 1448,
+      "height": 1086,
+      "hasAlpha": true
+    },
+    {
+      "path": "docs/reviews/festival-art/painted-atlas-master.png",
+      "sha256": "09371f7610ce67ac43b14f8d6e29e9900b92b3c73452b7163498882195549bd8",
+      "bytes": 1452779,
+      "width": 1448,
+      "height": 1086,
+      "hasAlpha": true
+    }
+  ]
+}

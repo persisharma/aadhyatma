@@ -1,0 +1,13 @@
+# Swipe inside the outer Home margin, away from nested horizontal carousels.
+appId: com.prashantsharma.vedansh
+---
+- repeat:
+    times: 16
+    while:
+      notVisible: { id: home-sanatan-card }
+    commands:
+      - swipe:
+          start: "97%, 82%"
+          end: "97%, 30%"
+          duration: 700
+- assertVisible: { id: home-sanatan-card }
