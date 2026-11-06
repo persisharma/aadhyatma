@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        phase: [collections, standard, enlarged]
+        phase: [journey, collections, standard, enlarged, regional-search]
     runs-on: macos-15
     timeout-minutes: 60
     defaults:
@@ -69,36 +69,6 @@ jobs:
           path: native-sanatan-output/**
           retention-days: 7
           if-no-files-found: warn
-      - name: Expose selected native evidence for visual review
-        if: always()
-        env:
-          QA_PHASE: ${{ matrix.phase }}
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import base64,json,os
-          root=Path('../native-sanatan-output')
-          phase=os.environ['QA_PHASE']
-          names={'collections':['sanatan-entry-home.png','sanatan-entry-hub.png'],
-                 'standard':['sanatan-collection-Gujarati-Large-local.png','sanatan-collection-Kannada-Large-local.png'],
-                 'enlarged':['sanatan-home-frame-Hindi-Large-local.png','sanatan-diagram-Kannada-Large-local.png']}[phase]
-          print('NATIVE_RESULT', (root/'result.json').read_text() if (root/'result.json').exists() else 'not reached')
-          if not any(list(root.rglob(name)) or list(root.rglob(name.replace('-local.png','-ios-'+('standard' if phase=='standard' else 'enlarged')+'.png'))) for name in names):names=['final.png']
-          receipt=root/'binary-origin.json'
-          if receipt.exists():
-              origin=json.loads(receipt.read_text())
-              print('NATIVE_ORIGIN',json.dumps({key:origin.get(key) for key in ['nativeSourceHead','javascriptSourceHead','bundleSha256','nativeFilesUnchanged']}))
-          for name in names:
-              matches=list(root.rglob(name))
-              if not matches:
-                  matches=list(root.rglob(name.replace('-local.png','-ios-'+('standard' if phase=='standard' else 'enlarged')+'.png')))
-              if matches:
-                  data=matches[0].read_bytes()
-                  print('NATIVE_PNG_BEGIN '+name)
-                  encoded=base64.b64encode(data).decode()
-                  for offset in range(0,len(encoded),8000):print(encoded[offset:offset+8000])
-                  print('NATIVE_PNG_END '+name)
-          PY
       - name: Stop simulator
         if: always() && env.SIMULATOR_UDID != ''
         run: xcrun simctl shutdown "$SIMULATOR_UDID"

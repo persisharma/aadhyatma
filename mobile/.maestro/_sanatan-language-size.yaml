@@ -1,16 +1,14 @@
 appId: com.prashantsharma.vedansh
 ---
-- runFlow: _open-settings.yaml
-- scrollUntilVisible:
-    element: { text: "Language,.*" }
-    direction: DOWN
-    timeout: 60000
+- runFlow: _sanatan-open-settings.yaml
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Language,.*" }
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
-- scrollUntilVisible:
-    element: { text: "Reading size,.*" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Reading size,.*" }
 - tapOn: "Reading size,.*"
 - tapOn: "${READING_SIZE}"
 - tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
@@ -18,29 +16,23 @@ appId: com.prashantsharma.vedansh
 - runFlow: _sanatan-home-entry.yaml
 - takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
-- scrollUntilVisible:
-    element: { id: sanatan-collection-dikpal }
-    direction: DOWN
-    timeout: 60000
-    visibilityPercentage: 50
-    centerElement: true
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-collection-dikpal }
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-collection-dikpal }
-- scrollUntilVisible:
-    element: { id: sanatan-start }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-start }
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-start }
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- scrollUntilVisible:
-    element: { id: sanatan-next }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-next }
 - tapOn: { id: sanatan-next }
 - assertVisible: "2\\s*/\\s*3"
-- scrollUntilVisible:
-    element: { id: sanatan-explore-dikpal }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-explore-dikpal }
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

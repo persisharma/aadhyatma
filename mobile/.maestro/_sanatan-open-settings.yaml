@@ -1,0 +1,15 @@
+appId: com.prashantsharma.vedansh
+---
+- tapOn: { id: tab-home }
+- tapOn: { id: tab-home }
+- repeat:
+    times: 24
+    while:
+      notVisible: { id: home-settings }
+    commands:
+      - swipe:
+          start: "85%, 35%"
+          end: "85%, 82%"
+          duration: 700
+- assertVisible: { id: home-settings }
+- tapOn: { id: home-settings }

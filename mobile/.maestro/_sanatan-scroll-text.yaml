@@ -1,0 +1,13 @@
+# Start inside the lower content viewport, away from fixed headers and nested carousels.
+appId: com.prashantsharma.vedansh
+---
+- repeat:
+    times: 24
+    while:
+      notVisible: { text: "${TARGET}" }
+    commands:
+      - swipe:
+          start: "85%, 82%"
+          end: "85%, 35%"
+          duration: 700
+- assertVisible: { text: "${TARGET}" }

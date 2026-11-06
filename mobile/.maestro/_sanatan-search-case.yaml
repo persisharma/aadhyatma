@@ -1,10 +1,9 @@
 appId: com.prashantsharma.vedansh
 ---
-- runFlow: _open-settings.yaml
-- scrollUntilVisible:
-    element: { text: "Language,.*" }
-    direction: DOWN
-    timeout: 60000
+- runFlow: _sanatan-open-settings.yaml
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Language,.*" }
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
 - tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
@@ -14,9 +13,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: sanatan-search }
 - inputText: "${QUERY}"
 - pressKey: Enter
-- scrollUntilVisible:
-    element: { id: sanatan-collection-symbols }
-    direction: DOWN
-    visibilityPercentage: 50
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-collection-symbols }
 - takeScreenshot: "e2e-shots/sanatan-search-${READING_LANGUAGE}"

@@ -11,41 +11,34 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: sanatan-search }
 - inputText: "33 koti devta"
 - pressKey: Enter
-- scrollUntilVisible:
-    element: { text: "Thirty-three devata" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Thirty-three devata" }
 - tapOn: "Thirty-three devata"
-- scrollUntilVisible:
-    element: { id: sanatan-start }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-start }
 - tapOn: { id: sanatan-start }
-- scrollUntilVisible:
-    element: { text: "Save for later" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Save for later" }
 - tapOn: "Save for later"
-- scrollUntilVisible:
-    element: { id: sanatan-next }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-next }
 - tapOn: { id: sanatan-next }
 - assertVisible: "2\\s*/\\s*3"
-- scrollUntilVisible:
-    element: { text: "11 · Rudras" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "11 · Rudras" }
 - tapOn: "11 · Rudras"
-- scrollUntilVisible:
-    element: { text: "Ten pranas and the self.*" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Ten pranas and the self.*" }
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
-- scrollUntilVisible:
-    element: { text: "Sources & context" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-scroll-text.yaml
+    env: { TARGET: "Sources & context" }
 - tapOn: "Sources & context"
 - assertVisible: "This is a short editorial introduction.*"
 - assertNotVisible: "https?://.*"
@@ -67,5 +60,8 @@ appId: com.prashantsharma.vedansh
     optional: true
 - runFlow: _sanatan-home-entry.yaml
 - tapOn: { id: home-sanatan-card }
+- runFlow:
+    file: _sanatan-scroll-id.yaml
+    env: { TARGET: sanatan-resume }
 - tapOn: { id: sanatan-resume }
 - assertVisible: "2\\s*/\\s*3"
