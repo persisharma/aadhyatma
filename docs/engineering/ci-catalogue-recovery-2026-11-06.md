@@ -48,7 +48,9 @@ product content, artwork, publication gates, progress or native dependencies.
    had asserted process presence before the user/OS handoff. It now executes the
    existing widget Maestro flow, which accepts Open and verifies gallery, verse,
    dated Panchang and Japam destinations. The flow also checks the represented
-   civil date after a cold restart. The generic native job uses the same pinned
+   civil date after a cold restart. Gallery assertions scroll through each
+   vertically stacked preview/size row rather than assuming all three cards and
+   their add controls fit in one compact viewport. The generic native job uses the same pinned
    Xcode/runtime/driver as the Sanatan gate. WidgetKit placement remains separate.
 
 ## Evidence and limits

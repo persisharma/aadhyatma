@@ -13,11 +13,23 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Daily verse widget preview"
     timeout: 15000
-- assertVisible: "Panchang widget preview"
-- assertVisible: "Japam widget preview"
 # Each content type advertises its own sizes, with the best one marked (PRD-15 §59).
-- assertVisible: ".*(Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು).*"
-- assertVisible: ".*(Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು).*"
+- scrollUntilVisible:
+    element: { text: ".*(Wide · best|चौड़ा · सुझाव|પહોળું · સૂચિત|ಅಗಲ · ಶಿಫಾರಸು).*" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Panchang widget preview" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: ".*(Small · best|छोटा · सुझाव|નાનું · સૂચિત|ಚಿಕ್ಕದು · ಶಿಫಾರಸು).*" }
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Japam widget preview" }
+    direction: DOWN
+    timeout: 15000
 - scrollUntilVisible:
     element:
       text: "How to add|कैसे जोड़ें|કેવી રીતે ઉમેરવું|ಹೇಗೆ ಸೇರಿಸುವುದು"
@@ -28,8 +40,14 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { platform: Android }
     commands:
-      - assertVisible: "Add Vedansh verse widget"
-      - assertVisible: "Add Vedansh panchang widget"
+      - scrollUntilVisible:
+          element: { text: "Add Vedansh verse widget" }
+          direction: UP
+          timeout: 15000
+      - scrollUntilVisible:
+          element: { text: "Add Vedansh panchang widget" }
+          direction: DOWN
+          timeout: 15000
 - tapOn: "Back"
 
 # iOS foregrounds a native "Open in Vedansh?" confirm sheet the first time a
