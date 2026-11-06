@@ -1,0 +1,54 @@
+# The runner seeds native storage externally, with the app stopped. Never clear it here.
+appId: com.prashantsharma.vedansh
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: store-update-heading
+    timeout: 45000
+- assertVisible: v1.5.4
+- assertVisible:
+    id: store-update-now
+- assertVisible:
+    id: store-update-later
+- takeScreenshot: e2e-shots/${CAPTURE}
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - repeat:
+          times: 8
+          commands:
+            # Keep the gesture inside the body even when enlarged controls
+            # occupy the lower half of a compact iPhone.
+            - swipe:
+                start: 50%, 35%
+                end: 50%, 10%
+                duration: 400
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - repeat:
+          times: 4
+          commands:
+            - swipe:
+                start: 50%, 50%
+                end: 50%, 15%
+                duration: 400
+- scrollUntilVisible:
+    element:
+      text: ".*Create beautiful deity cards.*|.*सुंदर देवता कार्ड.*|.*સુંદર દેવતા કાર્ડ.*|.*ಸುಂದರ ದೇವತಾ ಕಾರ್ಡ್.*"
+    direction: DOWN
+    # The complete accessible paragraph can be taller than the viewport. Its
+    # body-end screenshot and physical scrolling prove access to the last lines.
+    visibilityPercentage: 1
+    timeout: 15000
+- takeScreenshot: e2e-shots/${CAPTURE}-body
+- tapOn:
+    id: store-update-later
+- assertNotVisible:
+    id: store-update-now
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 30000

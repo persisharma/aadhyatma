@@ -1,0 +1,10 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    stopApp: false
+- extendedWaitUntil:
+    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    timeout: 30000
+- assertNotVisible:
+    id: store-update-now
+- takeScreenshot: e2e-shots/${CAPTURE}

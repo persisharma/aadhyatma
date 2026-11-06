@@ -1,0 +1,21 @@
+# Requires a release binary below 1.5.4 receiving this compatible bundle, completed
+# onboarding/What's New, and an unused daily slot. Do not clear data. Run on both platforms.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+- extendedWaitUntil:
+    visible:
+      id: store-update-heading
+    timeout: 30000
+- assertVisible:
+    id: store-update-now
+- tapOn:
+    id: store-update-later
+- assertNotVisible:
+    id: store-update-heading
+- assertVisible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+- stopApp
+- launchApp
+- assertNotVisible:
+    id: store-update-heading

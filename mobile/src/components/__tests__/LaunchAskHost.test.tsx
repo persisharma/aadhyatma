@@ -2,6 +2,8 @@ import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Platform } from 'react-native';
 import LaunchAskHost from '../LaunchAskHost';
+jest.mock('expo-updates', () => ({ isEnabled: false, useUpdates: () => ({ isUpdatePending: false }) }));
+jest.mock('../StoreUpdateSheet', () => 'StoreUpdateSheet');
 let mockTour: any = {
   isLoading: false,
   shouldShowOnboardingSetup: false,
@@ -155,3 +157,4 @@ test('an old default-on preference without an OS grant still gets an explanation
   await mount();
   expect(tree.root.findAllByType('Reminder' as any)).toHaveLength(1);
 });
+

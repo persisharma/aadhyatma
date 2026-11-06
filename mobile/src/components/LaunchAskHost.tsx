@@ -1,6 +1,9 @@
 import { useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import React, { useEffect, useRef, useState } from 'react';
-import { Platform } from 'react-native';
+import { AppState, Platform } from 'react-native';
+import * as Updates from 'expo-updates';
+import StoreUpdateSheet from './StoreUpdateSheet';
+import { loadStoreUpdateDue, recordStoreUpdateShown } from './storeUpdateNudge';
 import { useNavigation } from '@react-navigation/native';
 import { useTour } from '@/contexts/TourContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
@@ -46,20 +49,25 @@ export default function LaunchAskHost({
   const brandVisible = useBrandLaunchVisible();
   const { lang } = useGitaLanguage();
   const navigation = useNavigation<any>();
-  const [kind, setKind] = useState<'reminder' | 'widgets' | null>(null),
+  const [kind, setKind] = useState<'reminder' | 'widgets' | 'store-update' | null>(null),
     [loaded, setLoaded] = useState(false),
     [lines, setLines] = useState<readonly string[]>([]),
     [widgets, setWidgets] = useState<NudgeWidget[]>([]);
   const decided = useRef(false);
+  const mounted = useRef(true);
+  const [storeUpdateDue, setStoreUpdateDue] = useState(false);
+  const { isUpdatePending } = Updates.useUpdates();
   const trackingStarted = useRef(false);
   const [trackingReady, setTrackingReady] = useState(Platform.OS !== 'ios');
   useEffect(() => {
     let alive = true;
-    void Promise.all([hydrateLaunchAsks(), loadNudgeRecord()]).then(() => {
-      if (alive) setLoaded(true);
+    mounted.current = true;
+    void Promise.all([hydrateLaunchAsks(), loadNudgeRecord(), loadStoreUpdateDue()]).then(([, , due]) => {
+      if (alive) { setStoreUpdateDue(due); setLoaded(true); }
     });
     return () => {
       alive = false;
+      mounted.current = false;
     };
   }, []);
   useEffect(() => {
@@ -102,6 +110,21 @@ export default function LaunchAskHost({
     if (launch.taken || launch.record.lastDay === localDay()) {
       decided.current = true;
       completeLaunchSelection();
+      return;
+    }
+    // A downloaded OTA keeps priority; its existing modal claims the opportunity.
+    if (Updates.isEnabled && isUpdatePending) {
+      decided.current = true;
+      completeLaunchSelection();
+      return;
+    }
+    if (storeUpdateDue && AppState.currentState === 'active') {
+      if (claimLaunchAsk()) {
+        decided.current = true;
+        void recordStoreUpdateShown().then((saved) => {
+          if (saved && mounted.current && AppState.currentState === 'active') setKind('store-update');
+        });
+      }
       return;
     }
     // Existing snoozes and manual Settings opt-outs survive this migration.
@@ -154,13 +177,14 @@ export default function LaunchAskHost({
     }
     decided.current = true;
     completeLaunchSelection();
-  }, [loaded, tour, prefs, launch, targeted, lang, trackingReady, brandVisible]);
+  }, [loaded, tour, prefs, launch, targeted, lang, trackingReady, brandVisible, storeUpdateDue, isUpdatePending]);
   if (tour.shouldShowOnboardingSetup && !targeted)
     return <OnboardingSetupSheet />;
   const gallery = () => {
     setKind(null);
     navigation.navigate('MoreTab', moreTabTarget('WidgetGallery'));
   };
+  if (kind === 'store-update') return <StoreUpdateSheet onClose={() => setKind(null)} />;
   if (kind === 'reminder')
     return <ReminderOptInModal onClose={() => setKind(null)} />;
   if (kind === 'widgets')
@@ -190,3 +214,4 @@ export default function LaunchAskHost({
     );
   return null;
 }
+
