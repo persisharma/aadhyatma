@@ -1,0 +1,132 @@
+name: Native store update nudge
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/optional-store-update-154]
+    paths:
+      - '.github/workflows/native-store-update.yml'
+      - 'mobile/scripts/native-store-update-*'
+      - 'mobile/.maestro/store-update-native-*'
+      - 'mobile/src/components/LaunchAskHost.tsx'
+      - 'mobile/src/components/StoreUpdateSheet.tsx'
+      - 'mobile/src/components/storeUpdateNudge.ts'
+      - 'mobile/src/data/storeUpdate.ts'
+permissions:
+  contents: read
+concurrency:
+  group: native-store-update-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CI: '1'
+  TZ: Asia/Kolkata
+  EXPO_NO_DOTENV: '1'
+  META_TRACKING_ENABLED: 'false'
+  MAESTRO_CLI_NO_ANALYTICS: 'true'
+  MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+  MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 80
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: mobile
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set native reference timezone
+        run: |
+          sudo systemsetup -listtimezones > /tmp/update-timezones.txt
+          UPDATE_TIMEZONE=$(python3 - <<'PY'
+          from pathlib import Path
+          zones={line.strip() for line in Path('/tmp/update-timezones.txt').read_text().splitlines()}
+          print(next(zone for zone in ['Asia/Kolkata','Asia/Calcutta'] if zone in zones))
+          PY
+          )
+          sudo systemsetup -settimezone "$UPDATE_TIMEZONE"
+      - run: npm ci
+      - name: Install Maestro
+        run: |
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/update-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/update-maestro.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/update-maestro.zip" -d "$RUNNER_TEMP/update-tools"
+          echo "$RUNNER_TEMP/update-tools/maestro/bin" >> "$GITHUB_PATH"
+      - name: Compile and exercise native runtime fixtures
+        run: bash scripts/native-store-update-ios.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-update-ios-${{ github.run_id }}
+          path: |
+            native-update-output/**
+            !native-update-output/ios-derived/**
+            mobile/e2e-shots/update-*.png
+            ~/.maestro/tests/**
+          retention-days: 7
+          if-no-files-found: warn
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: mobile
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: npm ci
+      - name: Install Maestro
+        run: |
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/update-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/update-maestro.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/update-maestro.zip" -d "$RUNNER_TEMP/update-tools"
+          echo "$RUNNER_TEMP/update-tools/maestro/bin" >> "$GITHUB_PATH"
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Compile and exercise native runtime fixtures
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          working-directory: mobile
+          script: bash scripts/native-store-update-android.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-update-android-${{ github.run_id }}
+          path: |
+            native-update-output/**
+            !native-update-output/ios-derived/**
+            mobile/e2e-shots/update-*.png
+            ~/.maestro/tests/**
+          retention-days: 7
+          if-no-files-found: warn

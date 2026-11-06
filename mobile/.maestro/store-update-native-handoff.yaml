@@ -1,0 +1,11 @@
+appId: com.prashantsharma.vedansh
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: store-update-now
+    timeout: 45000
+- tapOn:
+    id: store-update-now
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/${CAPTURE}
