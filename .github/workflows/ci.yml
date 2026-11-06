@@ -9,6 +9,12 @@ on:
       - 'mobile/**'
       - 'docs/content-parity/reader-illustration*.md'
       - 'scripts/verify-kids-story-assets.mjs'
+      - 'scripts/r2-*.mjs'
+      - 'scripts/r2-collections.json'
+      - 'scripts/publish-r2-assets.mjs'
+      - 'scripts/upload-r2-assets.mjs'
+      - 'scripts/tests/r2-*.test.mjs'
+      - '.github/workflows/r2-upload.yml'
       - '.github/workflows/ci.yml'
   push:
     branches: [main]
@@ -16,6 +22,12 @@ on:
       - 'mobile/**'
       - 'docs/content-parity/reader-illustration*.md'
       - 'scripts/verify-kids-story-assets.mjs'
+      - 'scripts/r2-*.mjs'
+      - 'scripts/r2-collections.json'
+      - 'scripts/publish-r2-assets.mjs'
+      - 'scripts/upload-r2-assets.mjs'
+      - 'scripts/tests/r2-*.test.mjs'
+      - '.github/workflows/r2-upload.yml'
       - '.github/workflows/ci.yml'
 
 jobs:

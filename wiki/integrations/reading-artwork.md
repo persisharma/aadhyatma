@@ -2,7 +2,7 @@
 title: Reading artwork on R2
 type: integration
 sources: [mobile/assets/garud-puran/index.ts, scripts/verify-artwork-corrections.mjs, mobile/src/data/__tests__/artworkDelivery.jest.test.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-10-22
+last_verified_date: 2026-11-06
 confidence: high
 status: current
 ---
@@ -175,6 +175,26 @@ using Expo's installed build-time image reader. `--verify` compares all source h
 with the committed manifest. Staging is rebuilt under ignored `scripts/.cache/reading-backgrounds`.
 The existing uploader accepts R2 account/access-key/secret variables or the explicit Wrangler flag;
 no credentials are committed. Publish objects before distributing a manifest that references them.
+
+## Automatic post-merge publication
+
+`.github/workflows/r2-upload.yml` runs a credential-free source/manifest dry run
+on PRs and publishes on relevant `main` pushes (including merges), with a manual
+collection/mode selector for catch-up and retries. It replaces the festival-only
+branch-push publisher. `scripts/r2-collections.json` bounds ten current runtime
+manifests and their source folders; `publish-r2-assets.mjs` validates all selected
+sources before uploading only matching immutable keys. Existing objects skip PUT,
+then every public CDN object is GET-checked for full SHA-256 and content type.
+The legacy uploader and automatic path share `scripts/r2-client.mjs`.
+
+Missing `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID` or `R2_SECRET_ACCESS_KEY` produces a clear
+successful skip. Once supplied, a manual `main` run or the next relevant merge
+starts publication; saving a secret alone is not a trigger. `R2_BUCKET` defaults
+to `vedansh`; `cdn.vedansh.app` must serve that bucket. Configured auth/CDN failures
+fail the run and retain evidence. No manifests, activation flags or releases are
+written by the workflow. Unreferenced drafts and pending activation stay gated.
+Live publication remains unverified until secrets are configured.
+See [the setup and publication contract](../../docs/engineering/r2-auto-upload.md).
 
 ## Dependencies
 
