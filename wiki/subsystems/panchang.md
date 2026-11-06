@@ -389,3 +389,7 @@ six are withholding regressions. Shared-ID Putrada matches both months; Smarta
 after-midday parana ends with Aparahna; geometric-centre Moonrise is shared by
 Panchang and vrat matching, with persisted caches invalidated. Ayudha and Shastra retain distinct dates. Coverage/exceptions and
 verification: `docs/reviews/festival-muhurat.md`.
+
+
+### Individual year-round occasion cards
+Every catalog identity has an individual festive hero export. The verified timing registry remains separate from full-catalog guidance coverage. New heavy scene artwork is R2-only and publication/hash verification precedes manifest activation. Catalog-only cards omit dates; separate Holi/Holika and Maha Navami/Ayudha identities are preserved. See `docs/reviews/year-round-occasion-cards.md` for acceptance, routes and evidence.

@@ -222,10 +222,10 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
             <FestiveCorners size={64} onLoad={slot => onFestivalArtLoad?.(slot)} />
             <FestivalMotif motif={ritual.motif} size={54} onLoad={() => onFestivalArtLoad?.('motif')} />
             <View style={{ flex: 1, minWidth: 0, gap: 2 }}>
-              <One style={[label, { fontSize: 11, color: colors.saffronDeep }]}>{t(partsHi.length > 1 ? partsHi[0] : datedClock && primary ? primary.labelHi : 'पर्व का मुहूर्त', partsEn.length > 1 ? partsEn[0] : datedClock && primary ? primary.labelEn : 'Festival timings')}</One>
+              <One style={[label, { fontSize: 11, color: colors.saffronDeep }]}>{t(partsHi.length > 1 ? partsHi[0] : datedClock && primary ? primary.labelHi : 'पर्व व व्रत', partsEn.length > 1 ? partsEn[0] : datedClock && primary ? primary.labelEn : 'Festival & vrat')}</One>
               <One style={[value(18), { color: colors.festivalInk }]}>{t(partsHi.at(-1) ?? ritual.nameHi, partsEn.at(-1) ?? ritual.nameEn)}</One>
             </View>
-            <View style={{ width: 194, minHeight: 42, paddingLeft: 12, borderLeftWidth: 1, borderLeftColor: colors.goldChipBg, justifyContent: 'center' }}><Text allowFontScaling={false} numberOfLines={2} style={[clockLine(datedClock ? 17 : 20), { minWidth: 0, textAlign: 'center', color: colors.festivalInk }]}>{primary ? clockText : t('स्थानीय समय सुनिश्चित करें', 'Confirm local timing')}</Text>{!datedClock && primary && <One style={[line, { fontSize: 11, lineHeight: 15, textAlign: 'center' }]}>{t(primary.labelHi, primary.labelEn)}</One>}</View>
+            <View style={{ width: 194, minHeight: 42, paddingLeft: 12, borderLeftWidth: 1, borderLeftColor: colors.goldChipBg, justifyContent: 'center' }}><Text allowFontScaling={false} numberOfLines={2} style={[clockLine(datedClock ? 17 : 20), { minWidth: 0, textAlign: 'center', color: colors.festivalInk }]}>{primary ? clockText : t('विधि व परंपरा', 'Ritual & tradition')}</Text>{!datedClock && primary && <One style={[line, { fontSize: 11, lineHeight: 15, textAlign: 'center' }]}>{t(primary.labelHi, primary.labelEn)}</One>}</View>
           </View>
         ) : model.festival && (
           <View style={[styles.ribbon, { backgroundColor: colors.cardActiveFrom, borderColor: colors.goldChipBg }]}>

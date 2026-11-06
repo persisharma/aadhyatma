@@ -1,0 +1,66 @@
+{
+  "prefix": "festival-hero",
+  "publication": "pending",
+  "assets": {
+    "govardhan": {
+      "hash": "43aea39a45e220b0",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "dhanteras": {
+      "hash": "c4e4d3628359d208",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "holika": {
+      "hash": "37039f16aa186d11",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "shastra": {
+      "hash": "229136b973248b9d",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "raksha-bandhan": {
+      "hash": "c4b9a5bb4509db84",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "bhai-dooj": {
+      "hash": "95a96f83eba7627a",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "chhath": {
+      "hash": "5d0b5319696240bc",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "navratri": {
+      "hash": "ebed48223d3dd088",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "tulsi-vivah": {
+      "hash": "a7172ad4c39fd9c5",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    },
+    "sankranti": {
+      "hash": "612e3a41167d2170",
+      "ext": "webp",
+      "width": 1536,
+      "height": 1024
+    }
+  }
+}

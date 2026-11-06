@@ -2,7 +2,7 @@ name: Native festival card iOS
 on:
   workflow_dispatch:
   push:
-    branches: [codex/festival-muhurat-share]
+    branches: [codex/festival-muhurat-share, codex/year-round-occasion-cards]
     paths:
       - 'mobile/**'
       - '.github/workflows/native-festival-ios.yml'
@@ -39,6 +39,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Select stable native toolchain
+        run: |
+          test -d /Applications/Xcode_16.4.app
+          sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+          xcodebuild -version
       - name: Set reference timezone
         run: |
           mkdir -p ../native-festival-output

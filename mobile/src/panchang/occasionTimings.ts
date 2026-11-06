@@ -8,7 +8,7 @@ import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
 import type { ObservanceRule } from './types';
 
 export type FestivalMotif = 'diya' | 'fire' | 'shastra' | 'kalash' | 'moon' | 'sun' | 'shiva' | 'ganesh' | 'rakhi' | 'lotus';
-type Recipe = 'lakshmi' | 'midday' | 'rama' | 'vijaya' | 'nishita' | 'shiva' | 'holika' | 'moon' | 'karwa' | 'chhath' | 'afternoon' | 'morning' | 'pratah' | 'pradosh' | 'rakhi' | 'ekadashi' | 'ghata';
+type Recipe = 'lakshmi' | 'midday' | 'rama' | 'vijaya' | 'nishita' | 'shiva' | 'holika' | 'moon' | 'karwa' | 'chhath' | 'afternoon' | 'morning' | 'pratah' | 'pradosh' | 'rakhi' | 'ekadashi' | 'ghata' | 'guidance';
 export type OccasionProfile = { id: string; ruleId: string; recipe: Recipe; motif: FestivalMotif; nameHi?: string; nameEn?: string; before?: number; source: string; sunriseAnchor?: boolean };
 export type OccasionWindow = Span & { labelHi: string; labelEn: string; event?: boolean };
 export type OccasionTiming = { id: string; ruleId: string; date: Date; nameHi: string; nameEn: string; motif: FestivalMotif; windows: OccasionWindow[]; noteHi?: string; noteEn?: string };
@@ -44,6 +44,20 @@ export const OCCASION_PROFILES: readonly OccasionProfile[] = [
   // Vaishnava/Mahadvadashi deadlines cannot inherit Smarta's formula.
   ...uniqueRules.filter(r => r.dayRule === 'ekadashi' && r.category === 'vrat' && r.tithi === 11).map(r => profile(r.id, 'ekadashi', 'lotus', '/vrats/ekadashidates.html')),
 ];
+/** Every catalog identity has a share card. Only reviewed recipes emit clocks;
+ * the rest retain their own catalog guidance, never a manufactured muhurat. */
+export const OCCASION_CARD_PROFILES: readonly OccasionProfile[] = [
+  ...OCCASION_PROFILES,
+  ...uniqueRules.filter(r => ['holi', 'maha-navami'].includes(r.id) || !OCCASION_PROFILES.some(p => p.ruleId === r.id)).map(r => ({
+    id: `${r.id}-guidance`, ruleId: r.id, recipe: 'guidance' as const,
+    motif: 'kalash' as const, source: r.sourceUrl ?? `${drik}/calendars/hindu/hinducalendar.html`,
+  })),
+];
+export function occasionGuidance(rule: ObservanceRule, date: Date): OccasionTiming {
+  return { id: `${rule.id}-guidance`, ruleId: rule.id, date, nameHi: rule.nameHi,
+    nameEn: rule.nameEn, motif: 'kalash', windows: [],
+    noteHi: rule.shortDescriptionHi, noteEn: rule.shortDescriptionEn };
+}
 export function intersect(...spans: (Span | null | undefined)[]): Span | null {
   if (!spans.length || spans.some(s => !s)) return null;
   const start = Math.max(...spans.map(s => +s!.start)), end = Math.min(...spans.map(s => +s!.end));
@@ -60,7 +74,7 @@ export function paranaWindows(dwadashi: Span | null, sunrise: Date, sunset: Date
 export type TimingOccurrence = { profile: OccasionProfile; date: Date; rule: ObservanceRule };
 export function* findTimingOccurrences(day: Date, options: ScanOptions, lenses: ReadonlySet<ObservanceLens>, ruleId?: string): Generator<void, TimingOccurrence[], void> {
   const found: TimingOccurrence[] = [];
-  for (const p of OCCASION_PROFILES) {
+  for (const p of OCCASION_CARD_PROFILES) {
     if (ruleId && p.ruleId !== ruleId) continue;
     // Putrada deliberately shares an ID across Shravana and Pausha. Match all
     // catalog variants before deduplication, then carry the actual rule forward.
@@ -71,6 +85,7 @@ export function* findTimingOccurrences(day: Date, options: ScanOptions, lenses: 
   return found;
 }
 export function solveOccasion({ profile: r, date, rule }: TimingOccurrence, days: readonly DayInputs[]): OccasionTiming {
+  if (r.recipe === 'guidance') return occasionGuidance(rule, date);
   const at = (offset: number) => days.find(d => +dayAt(d.p.date, 0) === +dayAt(date, offset));
   const current = at(0), tomorrow = at(1);
   const out: OccasionTiming = { id: r.id, ruleId: r.ruleId, date, nameHi: r.nameHi ?? rule.nameHi, nameEn: r.nameEn ?? rule.nameEn, motif: r.motif, windows: [] };
@@ -87,8 +102,8 @@ export function solveOccasion({ profile: r, date, rule }: TimingOccurrence, days
       // First-third/Abhijit alone do not reproduce Drik's preferred windows:
       // Delhi Chaitra 2026 ends at Meena lagna (07:43), 2027 at 07:26.
       // Do not turn that incomplete rule into an exact, shareable muhurat.
-      out.noteHi = 'घटस्थापना में प्रतिपदा, लग्न और योग के विशेष नियम लागू होते हैं। इस अवसर का सटीक मुहूर्त अभी सत्यापित नहीं है; अपने शहर के मान्य पंचांग से समय सुनिश्चित करें।';
-      out.noteEn = 'Ghatasthapana has special Pratipada, lagna and yoga rules. An exact muhurat is not yet verified here; confirm the time in a trusted Panchang for your city.';
+      out.noteHi = 'घटस्थापना में प्रतिपदा, लग्न और योग के विशेष नियम लागू होते हैं। अपने शहर के मान्य पंचांग और अपनी परंपरा के अनुसार समय सुनिश्चित करें।';
+      out.noteEn = 'Ghatasthapana follows special Pratipada, lagna and yoga rules. Confirm the time in a trusted Panchang for your city and tradition.';
       break;
     case 'lakshmi': for (const lagna of current.lagnas.filter(l => l.rashiIndex === 1)) add(intersect(night(0, .2), tithi, lagna), 'पूजा · प्रदोष व वृषभ लग्न', 'Puja · Pradosh and Vrishabha lagna'); break;
     case 'midday': add(intersect(day(.4, .6), tithi), 'मध्याह्न पूजा', 'Madhyahna puja'); break;
