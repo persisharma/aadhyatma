@@ -10,6 +10,8 @@
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import {
+  kabirBhaktiDoheTotal,
+  rahimBhaktiDoheTotal,
   garudPuranTotal,
   garudPuranReadingCount,
   achyutashtakamTotal,
@@ -1259,4 +1261,30 @@ export const library: readonly LibraryEntry[] = [
     deities: ['navagraha'],
     verseCount: navagrahaStotramTotal,
   },
+  // Selected devotional dohas — append to preserve all earlier library positions.
+  {
+    id: 'kabir-bhakti-dohe',
+    nameHi: 'कबीर के भक्तिमय दोहे',
+    nameEn: 'Kabir Devotional Dohas',
+    sub: `${kabirBhaktiDoheTotal} चयनित दोहे · भक्ति और सुविचार`,
+    subEn: `${kabirBhaktiDoheTotal} selected dohas · devotion and reflection`,
+    thumb: 'क',
+    status: 'active',
+    category: 'granth',
+    deities: [],
+    verseCount: kabirBhaktiDoheTotal,
+  },
+  {
+    id: 'rahim-bhakti-dohe',
+    nameHi: 'रहीम के भक्तिमय दोहे',
+    nameEn: 'Rahim Devotional Dohas',
+    sub: `${rahimBhaktiDoheTotal} चयनित दोहे · भक्ति और सुविचार`,
+    subEn: `${rahimBhaktiDoheTotal} selected dohas · devotion and reflection`,
+    thumb: 'र',
+    status: 'active',
+    category: 'granth',
+    deities: [],
+    verseCount: rahimBhaktiDoheTotal,
+  },
 ];
+

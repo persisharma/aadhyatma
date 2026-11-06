@@ -88,3 +88,14 @@ use the reported 6 November 2026 date/location in the test device. Do not treat
 accessibility-tree visibility, YAML parsing or rendered-style tests as pixel QA.
 Keep the PR draft until required CI/native evidence is complete. No merge or
 release is authorized.
+
+
+## Integration with current main
+
+Main advanced to `1b77c101594991b41b683fcf0cbba69d93acd61f` while PR #625 was
+being published. Integrated that Doha change, preserving both sets of documentation
+and resolving the append-only wiki log. No Vrat runtime/test file overlaps main.
+The 4,323-test full result above belongs to the original base/tested head. Focused
+card/typography and Doha integration regressions plus typecheck are rerun after
+integration; the PR records their final outcome and exact remote head. Full CI and
+native visual acceptance remain pending. The branch stays draft.

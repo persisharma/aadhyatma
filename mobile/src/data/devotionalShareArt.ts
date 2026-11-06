@@ -36,6 +36,8 @@ export function devotionalPlateArt(art: DevotionalArt) {
 }
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
+  // Poet collections use the existing neutral master, with no invented deity portrait.
+  'kabir-bhakti-dohe': 'prayer', 'rahim-bhakti-dohe': 'prayer',
   'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
   'shiva-strotam': 'shiva', 'om-namah-shivaya': 'mahakaal', 'mahamrityunjaya-mantra': 'shiva',
   'durga-stotram': 'durga', 'saraswati-stotram': 'saraswati',

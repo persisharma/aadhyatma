@@ -478,6 +478,11 @@ export function buildProgressTarget(p: {
  */
 export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
   const sourceId = canonicalSourceId(bm.sourceId);
+  // These registry-backed readers are flat: reuse the progress target so saved
+  // dohas (and sibling flat texts) retain their discriminator and exact page.
+  if (stutiIds.has(sourceId) || ashtakamIds.has(sourceId) || suktamIds.has(sourceId) || kavachamIds.has(sourceId)) {
+    return buildProgressTarget(bm);
+  }
   if (chalisaIds.has(sourceId)) {
     return {
       screen: 'ChalisaReader',
@@ -527,3 +532,4 @@ export function navigateToBookmark(nav: Nav, bm: BookmarkRef): boolean {
 export function suvicharTabTarget(): { screen: 'Suvichar'; initial: false } {
   return { screen: 'Suvichar', initial: false };
 }
+
