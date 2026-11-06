@@ -13,7 +13,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Every tradition.*"
 - tapOn: { id: sanatan-search }
 - inputText: "33 koti devta"
-- hideKeyboard
+- pressKey: Enter
 - scrollUntilVisible:
     element: { text: "Thirty-three devata" }
     direction: DOWN
