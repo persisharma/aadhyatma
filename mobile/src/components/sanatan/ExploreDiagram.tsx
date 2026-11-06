@@ -14,12 +14,24 @@ const directions = [
 ];
 const groups = [
   ['8 · वसु', '8 · Vasus', 'अग्नि, पृथ्वी, वायु, अन्तरिक्ष, आदित्य, द्यौ, चन्द्रमा और नक्षत्र।', 'Agni, Prithivi, Vayu, Antariksha, Aditya, Dyau, Chandramas and Nakshatras.'],
-  ['11 · रुद्र', '11 · Rudras', 'दस प्राण और ग्यारहवाँ आत्मा; अनुवाद और भाष्य के स्तर अलग समझें।', 'Ten pranas and atman as the eleventh; distinguish text, translation and commentary.'],
+  ['11 · रुद्र', '11 · Rudras', 'दस प्राण और ग्यारहवाँ आत्मा। शरीर से इनके निकलने पर सम्बन्धी रोते हैं; संवाद इसी से रुद्र नाम समझाता है।', 'Ten pranas and the self as eleventh. The dialogue connects their departure from the body with the weeping of relatives, explaining the name Rudra.'],
   ['12 · आदित्य', '12 · Adityas', 'इस संवाद में बारह महीनों से व्याख्या की गई है।', 'Explained here through the twelve months.'],
   ['1 · इन्द्र', '1 · Indra', 'इस संदर्भ में वज्र का परिचय।', 'The thunderbolt in this context.'],
   ['1 · प्रजापति', '1 · Prajapati', 'इस संवाद में यज्ञ का संदर्भ।', 'Yajna in this dialogue.'],
 ];
 const grahas: Pair[] = [['सूर्य','Surya'],['चन्द्र','Chandra'],['मंगल','Mangala'],['बुध','Budha'],['बृहस्पति','Brihaspati'],['शुक्र','Shukra'],['शनि','Shani'],['राहु','Rahu'],['केतु','Ketu']];
+// Short original explanations of the stotra's epithets; not copied translations.
+const grahaDescriptions: Pair[] = [
+  ['स्तोत्र सूर्य को दिवाकर—दिन बनाने वाला—कहता है।', 'Surya is praised as Divakara, maker of the day.'],
+  ['चन्द्र का स्मरण शिव के मुकुट के भूषण के रूप में है।', 'Chandra is remembered as an adornment of Shiva’s crown.'],
+  ['मंगल धरती से उत्पन्न और हाथ में शक्ति लिए हुए वर्णित हैं।', 'Mangala is described as earth-born and carrying a spear.'],
+  ['बुध के सौम्य गुणों और अनुपम रूप का वर्णन है।', 'Budha is praised for a gentle nature and exceptional beauty.'],
+  ['बृहस्पति देवों और ऋषियों के गुरु कहे गए हैं।', 'Brihaspati is the teacher of deities and rishis.'],
+  ['भार्गव नाम से स्मरण किए गए शुक्र दैत्यों के गुरु हैं।', 'Shukra, addressed as Bhargava, is the preceptor of the daityas.'],
+  ['शनैश्चर सूर्य और छाया की सन्तान के रूप में स्मरण किए गए हैं।', 'Shanaishchara is remembered as the child of Surya and Chhaya.'],
+  ['राहु का अर्धकाय रूप स्तोत्र में आता है। खगोल में यह चन्द्र-कक्षा के दो पात-बिन्दुओं में से एक है।', 'The hymn describes Rahu with half a body. Astronomically, Rahu denotes one of the lunar orbital nodes.'],
+  ['केतु के तेज की तुलना पलाश के फूल से है। खगोल में यह दूसरा चन्द्र-पात है।', 'Ketu’s appearance is likened to a palasha flower. Astronomically, Ketu denotes the other lunar node.'],
+];
 
 /** Exact educational schematics stay vector-based; collection paintings remain unchanged. */
 export default function ExploreDiagram({ topic, onCollection }: { topic: SanatanTopic; onCollection: (id: string) => void }) {
@@ -27,9 +39,9 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
   const { colors } = useTheme();
   const [selected, setSelected] = useState(0);
   const [lens, setLens] = useState(0);
-  const choices = (items: readonly Pair[]) => <View style={{ gap: 8 }}>
+  const choices = (items: readonly Pair[]) => <View style={{ gap: 8, flexDirection: 'row', flexWrap: 'wrap' }}>
     {items.map((item, index) => <Action key={item[1]} label={t(item)} selected={selected === index}
-      onPress={() => setSelected(index)} />)}
+      style={{ flexBasis: '45%', flexGrow: 1 }} onPress={() => setSelected(index)} />)}
   </View>;
   let body: React.ReactNode;
   switch (topic.kind) {
@@ -73,7 +85,8 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
     }
     case 'grahas':
       body = <>{choices(grahas)}<Copy heading>{t(grahas[selected])}</Copy>
-        <Copy>{t(selected >= 7 ? ['चन्द्र-कक्षा का पात-बिन्दु; देव-परिचय का संदर्भ अलग है।','A lunar orbital node; devotional identity is a separate layer.'] : ['नवग्रह स्तोत्र के नौ देवताओं में एक।','One of the nine deities in the Navagraha Stotra.'])}</Copy></>;
+        <Copy>{t(grahaDescriptions[selected])}</Copy>
+        <Copy>{t(['नवग्रह स्तोत्र · पद्य 1–9','Navagraha Stotra · verses 1–9'])}</Copy></>;
       break;
     case 'swastika':
       body = <><Svg width="100%" height={200} viewBox="0 0 120 120" accessibilityLabel={t(['स्वस्तिक चिह्न','Swastika symbol'])} accessible>
@@ -101,7 +114,7 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
     case 'dialogue':
       body = <><Copy heading>{t(['गार्गी','Gargi'])}</Copy><Copy>{t(['जगत का आधार क्या है?','What is the basis of the world?'])}</Copy>
         <Copy>{t(['याज्ञवल्क्य के साथ अक्षर पर चर्चा।','A discussion of the Immutable with Yajnavalkya.'])}</Copy>
-        <Copy>{t(['संवाद का संक्षिप्त परिचय; मूल श्लोक नहीं।','An editorial introduction, rather than a quotation.'])}</Copy></>;
+        <Copy>{t(['पहला प्रश्न जगत से आकाश की ओर ले जाता है; दूसरा आकाश के आधार, अक्षर, की ओर।','The first question leads from the world to akasha; the second asks about its ground, the Akshara.'])}</Copy></>;
       break;
     case 'texts':
       body = <>{[['संहिता','Samhita'],['ब्राह्मण','Brahmana'],['आरण्यक','Aranyaka'],['उपनिषद्','Upanishad']].map((p, i) => <Copy key={i}>{`${i + 1}. ${t([p[0], p[1]])}`}</Copy>)}</>;

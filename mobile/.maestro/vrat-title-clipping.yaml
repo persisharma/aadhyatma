@@ -1,0 +1,61 @@
+# Run for LANGUAGE=Hindi/English/Gujarati/Kannada and READING_SIZE=Standard/Large.
+# Repeat on compact iOS/Android devices with enlarged OS text. Inspect captured
+# native glyphs: accessibility visibility alone cannot detect sliced matras.
+# Today is date-dependent; capture explicitly records when it is absent. To
+# reproduce all three reported titles, also run on 6 November 2026 in the chosen
+# city's calendar. Do not change production dates or fabricate an observance.
+appId: com.prashantsharma.vedansh
+env:
+  LANGUAGE: Hindi
+  READING_SIZE: Standard
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "${LANGUAGE}"
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+    centerElement: true
+- tapOn: "Reading size,.*"
+- tapOn: "${READING_SIZE}"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-vrat }
+- waitForAnimationToEnd
+- assertVisible: { id: catalog-search }
+- takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-landing
+- runFlow:
+    when: { visible: "Expand description.*" }
+    commands:
+      - assertVisible: { id: "observance-title-.*" }
+      - tapOn: { text: "Expand description.*", index: 0 }
+      - assertVisible: "Collapse description.*"
+      - takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-expanded
+      - tapOn: { text: "Collapse description.*", index: 0 }
+- scrollUntilVisible:
+    element: { text: "Vrat,.*" }
+    direction: DOWN
+    centerElement: true
+- takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-categories
+- scrollUntilVisible:
+    element: { id: catalog-search }
+    direction: UP
+    centerElement: true
+- tapOn: { id: catalog-search }
+- inputText: "Pradosh"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: { id: "observance-card-.*" }
+    timeout: 30000
+- takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-search
+- tapOn: { id: "observance-card-.*", index: 0 }
+- waitForAnimationToEnd
+- assertVisible: { text: "Back" }
+- tapOn: "Back"
+- assertVisible: { id: catalog-search }
+- assertVisible: { id: "observance-card-.*" }
+- takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-returned

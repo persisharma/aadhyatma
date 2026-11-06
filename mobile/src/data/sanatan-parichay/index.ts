@@ -1,7 +1,7 @@
 import content from './content.json';
 import { normalize } from '@/data/searchNormalize';
 export type Pair = readonly [string,string];
-export type SanatanTopic = { id:string; name:Pair; title:Pair; question:Pair; group:Pair; pages:readonly Pair[]; refs:readonly string[]; kind:string; aliases:readonly string[]; status:'published'|'draft' };
+export type SanatanTopic = { id:string; name:Pair; title:Pair; question:Pair; group:Pair; pages:readonly Pair[]; pageTitles?:readonly Pair[]; refs:readonly string[]; kind:string; aliases:readonly string[]; status:'published'|'draft' };
 export type SanatanSource = {title:string;edition:string;location:string};
 function pair(value: string[]): Pair {
  if (value.length !== 2) throw Error('Expected Hindi and English content');
@@ -10,10 +10,12 @@ function pair(value: string[]): Pair {
 const topics: readonly SanatanTopic[] = content.topics.map(topic => ({
  ...topic, name: pair(topic.name), title: pair(topic.title), question: pair(topic.question),
  group: pair(topic.group), pages: topic.pages.map(pair),
+ pageTitles: 'pageTitles' in topic && Array.isArray(topic.pageTitles) ? topic.pageTitles.map(pair) : undefined,
  status: topic.status === 'published' ? 'published' : 'draft',
 }));
 export const sanatanSources:Readonly<Record<string,SanatanSource>>=content.sources;
 export const SANATAN_PAGE_TITLES:readonly Pair[]=[['पहचान','Introduction'],['चित्र से समझें','Explore visually'],['संदर्भ और भिन्नता','Context & variations']];
+export const getSanatanPageTitles=(topic:SanatanTopic)=>topic.pageTitles??SANATAN_PAGE_TITLES;
 export const getSanatanTopics=()=>topics.filter(t=>t.status==='published');
 export const getSanatanTopic=(id:string)=>getSanatanTopics().find(t=>t.id===id);
 /** Exact registry targets; no remote answer generation or draft visibility. */

@@ -118,3 +118,11 @@ Automatic approval review blocked replacement of large design/history payloads.
 They remain unchanged; the focused companion is docs/design/sanatan-native-geometry.md.
 RULEBOOK update succeeded using the verified existing branch file SHA after
 confirming its upstream text is preserved except the explicitly requested rule.
+
+## Subsequent design and copy correction
+
+User review established a separate fidelity/content failure beyond image geometry. The correction now reuses ListingCardFrame, ListingSectionHeader, TextField, ReaderHeader and the actual prose-reader shell. Collection thumbnails sit inside their complete tappable card; discovery cards use the approved paired layout with a stacked compact/system-text fallback. Home is a compact horizontal text/art row. All thirteen retain the approved 3:2 scene family.
+
+The 39 prototype pages are replaced with original source-linked introductory reading, subject-specific page titles and separate prose paragraphs. Known copy-writing and art-production notes are removed, including diagram captions. See `docs/content-parity/sanatan-parichay/reading-readiness.md` for precise coverage and editorial status. This does not turn 201 indexed research seeds into 201 finished articles.
+
+The reproducible browser harness in `mobile/visual/sanatan` mounts the real native components. Platform adapters make it useful for layout review only; no native screenshots, playback or share handoff are claimed. Revised content and native visual acceptance remain pending. Rulebook §11.18 now explicitly separates prototype approval, complete authored content and production design acceptance.

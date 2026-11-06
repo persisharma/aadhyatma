@@ -40,7 +40,7 @@ test.each<Lang>(['hi','en','gu','kn'])('reader renders complete authored prose i
   const topic = getSanatanTopic('symbols')!;
   const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
     route={{ key: 'lesson', name: 'SanatanReader', params: { topicId: topic.id, initialPage: 0 } }} />, lang);
-  expect(text(tree)).toContain(contentByLang(lang, ...topic.pages[0]));
+  for (const paragraph of contentByLang(lang, ...topic.pages[0]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph);
   const list = tree.root.findByType(FlatList);
   await act(async () => { list.props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: list.props.getItemLayout(null, 1).length } } }); });
   expect(text(tree)).toMatch(/2\s*\/3/);
