@@ -1494,6 +1494,8 @@ The list is **two browsable tiers**, rendered as one `FlatList` under group head
 
 ### Occasion timings — 6 November 2026
 
+Date selection precedes clock solving. Ganga Dussehra uses its exclusive Adhik-Jyeshtha exception; Rishi Panchami uses Madhyahna coverage; Purnima fasting requires Madhyahna for its previous-day qualification; monthly Krishna Ashtami uses midnight/Rohini priorities. Midnight means the exact night midpoint, correcting annual Janmashtami 2029 as well. Coincident traditions render one date. All consumers share regenerated 2024–2031 tables and observance cache v12. Other vrats retain their conventions. Sources and limits: docs/reviews/occasion-date-corrections.md.
+
 Panchang inserts a natural-height festive ritual card after the observance
 ribbon and above general Choghadiya. Location and both endpoint dates remain
 visible. FestivalMotif provides bundled, painted miniature subjects from a reviewed
