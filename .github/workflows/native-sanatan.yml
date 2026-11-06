@@ -65,7 +65,12 @@ jobs:
       - name: Check preserved native SDK compatibility
         id: compat
         run: |
-          git fetch --no-tags --depth=1 origin a469ea3696f29baf588b3783fee83c9c1e000202
+          SDK_SOURCE_HEAD=$(node -p 'require("./scripts/sanatan-native-sdk.json").sourceHead')
+          git fetch --no-tags --depth=1 origin "$SDK_SOURCE_HEAD"
+          node <<'JS'
+          const sdk = require('./scripts/sanatan-native-sdk.json');
+          require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, `sdk_run=${sdk.sourceRun}\nsdk_artifact=${sdk.artifactName}\n`);
+          JS
           if node scripts/sanatan-native-sdk-compatible.cjs; then
             echo 'reuse=true' >> "$GITHUB_OUTPUT"
           else
@@ -77,8 +82,8 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
-          name: sanatan-ios-42168692889
-          run-id: 42168692889
+          name: ${{ steps.compat.outputs.sdk_artifact }}
+          run-id: ${{ steps.compat.outputs.sdk_run }}
           github-token: ${{ github.token }}
           path: native-reuse
       - name: Embed current JS and test the verified native SDK

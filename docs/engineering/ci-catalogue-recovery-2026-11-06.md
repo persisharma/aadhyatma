@@ -52,6 +52,13 @@ product content, artwork, publication gates, progress or native dependencies.
    vertically stacked preview/size row rather than assuming all three cards and
    their add controls fit in one compact viewport. The generic native job uses the same pinned
    Xcode/runtime/driver as the Sanatan gate. WidgetKit placement remains separate.
+8. Sanatan's existing SDK-reuse checkpoint now references the successfully
+   compiled `02d3771` host, with a shared metadata receipt and the verified nested
+   archive SHA-256. The same conservative native-source guard, architecture check
+   and unchanged-native-files rebundle verification remain. Current production JS
+   is embedded and the native journeys still execute. Expired/unavailable SDKs or
+   incompatible changes fall back to fresh compilation; a successful SDK build
+   never counts as a passing app journey.
 
 ## Evidence and limits
 

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-# Reuse the exact app already compiled for a469ea3. No native compilation/release.
+# Reuse the exact compiled SDK identified in the shared receipt. No release.
 SANATAN_REUSE_OUTPUT="$GITHUB_WORKSPACE/native-sanatan-output"
-SANATAN_APP_ARCHIVE="$GITHUB_WORKSPACE/native-reuse/native-output/Vedansh-simulator.zip"
+SANATAN_APP_ARCHIVE="$GITHUB_WORKSPACE/native-reuse/$(node -p 'require("./scripts/sanatan-native-sdk.json").appArchivePath')"
 mkdir -p "$SANATAN_REUSE_OUTPUT"
-printf '%s  %s\n' '3c74f9dd7f1a830ba092ae94b3e82772040d18ef9f22580eadb84b5be56bf419' "$SANATAN_APP_ARCHIVE" | shasum -a 256 -c -
+printf '%s  %s\n' "$(node -p 'require("./scripts/sanatan-native-sdk.json").appArchiveSha256')" "$SANATAN_APP_ARCHIVE" | shasum -a 256 -c -
 ditto -x -k "$SANATAN_APP_ARCHIVE" "$RUNNER_TEMP/sanatan-app"
 SANATAN_APP="$RUNNER_TEMP/sanatan-app/Vedansh.app"
 test "$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$SANATAN_APP/Info.plist")" = 'com.prashantsharma.vedansh'
 lipo "$SANATAN_APP/Vedansh" -verify_arch "$(uname -m)"
 xcodebuild -version > "$SANATAN_REUSE_OUTPUT/toolchain.txt"
-cat > "$SANATAN_REUSE_OUTPUT/binary-origin.json" <<'JSON'
-{"sourceHead":"a469ea3696f29baf588b3783fee83c9c1e000202","sourceRun":42168692889,"sourceArtifact":13481645746,"appArchiveSha256":"3c74f9dd7f1a830ba092ae94b3e82772040d18ef9f22580eadb84b5be56bf419","productionChanges":false,"note":"First native app built successfully. The unrelated widget-link smoke stopped at the iOS Open confirmation. This run tests Sanatan from Home using the preserved app."}
-JSON
+node - "$SANATAN_REUSE_OUTPUT/binary-origin.json" <<'JS'
+require('node:fs').writeFileSync(process.argv[2], JSON.stringify(require('./scripts/sanatan-native-sdk.json'), null, 2) + '\n');
+JS
 if [[ "${SANATAN_REBUNDLE_JS:-0}" == 1 ]]; then
   node scripts/sanatan-native-sdk-compatible.cjs
   node scripts/rebundle-sanatan-simulator.cjs "$SANATAN_APP" "$SANATAN_REUSE_OUTPUT"
