@@ -9,7 +9,7 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { INFINITY_PATH, INFINITY_SAMPLES, infinityPoint } from './japamInfinityGeometry';
 import { startInfinityMotion } from './japamInfinityPlayback';
-import JapamMantraRing from './JapamMantraRing';
+import JapamMantraRing, { RING_INNER_PERIOD_MS, RING_OUTER_PERIOD_MS } from './JapamMantraRing';
 
 // Light-material highlights, like the mala's fixed wood/brass material colours.
 const JYOTI = { core: '#FFF9DF', gold: '#FFE4A0', amber: '#DFA13D' } as const;
@@ -38,9 +38,6 @@ const RING_CLEARANCE = 8;
 /** Ring centre-line to the ∞'s outer curve: half the outer text's height plus air. */
 const RING_INSET = 15;
 const RING_SPACING = 20;
-/** Side-ring rotation: one slow turn each, inner and outer counter-rotating. */
-export const RING_OUTER_PERIOD_MS = 48000;
-export const RING_INNER_PERIOD_MS = 36000;
 
 /** Tap-controlled loops. The parent arbitrates silent-cycle versus audio counts. */
 export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running, onCycle, ringText, ringsActive = true }: Props) {

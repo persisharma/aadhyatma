@@ -104,4 +104,16 @@ test('one count source is selected across audio, silent loops and pause', () => 
   assert.equal(japaAutoCountSource('infinity', false, false), 'none');
   assert.equal(japaAutoCountSource('mala', false, true), 'audio');
   assert.equal(japaAutoCountSource('mala', false, false), 'none');
+  assert.equal(japaAutoCountSource('kirtan', true, false), 'motion');
+  assert.equal(japaAutoCountSource('kirtan', true, true), 'audio');
+  assert.equal(japaAutoCountSource('kirtan', false, true), 'none');
+});
+
+test('a driver can set its own cycle length (Kirtan beat, two-beat sway)', () => {
+  const d = driver(0.5);
+  const stop = startInfinityMotion({ ...d.motion, cycleMs: 1760 });
+  assert.equal(d.durations[0], 880);
+  d.callbacks[0](true);
+  assert.deepEqual(d.durations, [880, 1760]);
+  stop();
 });

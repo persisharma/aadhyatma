@@ -4,6 +4,8 @@ export type InfinityMotionDriver = {
   animate: (duration: number, complete: (finished: boolean) => void) => { stop: () => void };
   stopPhase: () => void;
   onCycle?: () => void;
+  /** Full-cycle duration; defaults to the Infinity loop. */
+  cycleMs?: number;
 };
 
 /** One full figure-eight. 880 ms is ~10% slower than the first cut's 800 ms. */
@@ -13,10 +15,11 @@ export const INFINITY_CYCLE_MS = 880;
 export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
   let live = true;
   let animation: { stop: () => void } | undefined;
+  const cycleMs = driver.cycleMs ?? INFINITY_CYCLE_MS;
   function cycle(from: number) {
     if (!live) return;
     let consumed = false;
-    animation = driver.animate(Math.max(1, Math.round(INFINITY_CYCLE_MS * (1 - from))), (finished) => {
+    animation = driver.animate(Math.max(1, Math.round(cycleMs * (1 - from))), (finished) => {
       if (!live || consumed) return;
       consumed = true;
       if (!finished) return;
@@ -39,8 +42,9 @@ export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
 }
 
 /** Exactly one automatic count source: recorded chant or silent infinity cycle. */
-export function japaAutoCountSource(style: 'mala' | 'infinity', running: boolean, audioPlaying: boolean): 'none' | 'audio' | 'motion' {
-  if (style === 'infinity' && !running) return 'none';
+export function japaAutoCountSource(style: 'mala' | 'infinity' | 'kirtan', running: boolean, audioPlaying: boolean): 'none' | 'audio' | 'motion' {
+  const motionStyle = style === 'infinity' || style === 'kirtan';
+  if (motionStyle && !running) return 'none';
   if (audioPlaying) return 'audio';
-  return style === 'infinity' ? 'motion' : 'none';
+  return motionStyle ? 'motion' : 'none';
 }

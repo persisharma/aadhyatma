@@ -55,3 +55,9 @@ test('storage failure leaves the session usable and allows a later write', async
   await act(async () => { state.selectStyle('mala'); });
   expect(await AsyncStorage.getItem(JAPAM_STYLE_KEY)).toBe('"mala"');
 });
+
+test('a saved Kirtan choice restores as Kirtan (the screen decides whether it is offered)', async () => {
+  await AsyncStorage.setItem(JAPAM_STYLE_KEY, '"kirtan"');
+  await mount();
+  expect(state.style).toBe('kirtan');
+});
