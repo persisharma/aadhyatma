@@ -1406,3 +1406,10 @@ Exact bundled-font checks found nine Kannada titles above the original 28pt line
 ## [2026-11-06] ingest | Full mobile suites and final focused checks pass; native share/visual matrix pending. GitHub publication blocked by automatic approval review; patch handover retained.
 
 ## [2026-11-06] ingest | Correct approved festival design fidelity: painted subjects and marigold/mango corners, double gold frame, divider and maroon type; export decode barriers and pinned transparent-source provenance.
+
+## [2026-11-06] ingest | Automatic R2 publication after relevant main merges
+
+Added the ten-collection manifest allowlist, source preflight, shared bounded S3 uploader,
+full public CDN byte verification, missing-secret skip and manual catch-up. Updated
+integrations/reading-artwork.md and the setup runbook; activation and OTA remain separate.
+Credentialed publication is pending the user's later Actions-secret setup.
