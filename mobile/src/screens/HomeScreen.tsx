@@ -470,20 +470,22 @@ export default function HomeScreen({ navigation }: Props) {
           >
             STORIES FOR KIDS
           </Text>
-          <React.Suspense fallback={<View style={{ height: 138 }} />}>
-            <KidsStoriesHomeCard
-              onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
-              onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
-              onPressOut={finishTilePress}
-            />
-          </React.Suspense>
-          <React.Suspense fallback={<View style={{ height: 138 }} />}>
-            <SanatanHomeCard
-              onPress={() => activateTile(() => navigation.navigate('SanatanParichay'))}
-              onPressIn={() => beginTilePress(() => navigation.navigate('SanatanParichay'))}
-              onPressOut={finishTilePress}
-            />
-          </React.Suspense>
+          <View style={{ gap: 12, marginBottom: 12 }}>
+            <React.Suspense fallback={<View style={{ height: 138 }} />}>
+              <KidsStoriesHomeCard
+                onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
+                onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+                onPressOut={finishTilePress}
+              />
+            </React.Suspense>
+            <React.Suspense fallback={<View style={{ height: 138 }} />}>
+              <SanatanHomeCard
+                onPress={() => activateTile(() => navigation.navigate('SanatanParichay'))}
+                onPressIn={() => beginTilePress(() => navigation.navigate('SanatanParichay'))}
+                onPressOut={finishTilePress}
+              />
+            </React.Suspense>
+          </View>
 
           <Text
             style={[
