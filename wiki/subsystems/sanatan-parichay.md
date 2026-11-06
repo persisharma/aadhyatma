@@ -2,7 +2,7 @@
 title: Sanatan Parichay
 type: subsystem
 sources: [mobile/src/data/sanatan-parichay/index.ts, mobile/src/data/sanatan-parichay/store.ts, mobile/src/screens/SanatanParichayScreen.tsx, mobile/src/screens/SanatanReaderScreen.tsx]
-last_verified_date: 2026-11-05
+last_verified_date: 2026-11-06
 confidence: high
 status: current
 ---
@@ -49,3 +49,17 @@ missing topic with another deity. Bundled painted gallery assets do not establis
 device rendering or native share success. The PR remains draft until those gates
 are executed. Detailed image-generation prompt files are excluded from GitHub;
 the approved Site retains the masters.
+
+
+## Native image sizing regression — 6 November 2026
+
+Bare Image aspectRatio retained the bundled 640pt intrinsic height. Home and all
+Sanatan painting callers now use `FramedPainting`, following the existing Jyotish
+frame pattern. Its View owns 3:2/81×54 layout; the absolute Image overrides both
+dimensions to 100%. The production AST guard also found CatalogBackground's
+absoluteFill-only Image; both percentages are now explicit there too.
+
+RULEBOOK §11.17 requires geometry regression tests and actual device screenshots.
+The native Yoga harness reproduces the old sizing error and verifies corrected
+constraints across fractional widths/densities. This is layout-engine evidence,
+not installed-screen visual QA. Do not mark device acceptance passed from it.

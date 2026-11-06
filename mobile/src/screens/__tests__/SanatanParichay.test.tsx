@@ -28,6 +28,10 @@ async function render(node: React.ReactNode, lang: Lang = 'en') {
 afterEach(() => jest.clearAllMocks());
 test('question search opens the exact collection and keeps the query on Back', async () => {
   const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
+  const input = tree.root.findByType(TextInput);
+  expect(input.props.autoCorrect).toBe(false);
+  expect(input.props.autoCapitalize).toBe('none');
+  expect(input.props.returnKeyType).toBe('search');
   act(() => tree.root.findByType(TextInput).props.onChangeText('33 koti devta'));
   const target = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Thirty-three devata')[0];
   expect(target).toBeDefined();
@@ -40,7 +44,7 @@ test.each<Lang>(['hi','en','gu','kn'])('reader renders complete authored prose i
   const topic = getSanatanTopic('symbols')!;
   const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
     route={{ key: 'lesson', name: 'SanatanReader', params: { topicId: topic.id, initialPage: 0 } }} />, lang);
-  expect(text(tree)).toContain(contentByLang(lang, ...topic.pages[0]));
+  for (const paragraph of contentByLang(lang, ...topic.pages[0]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph);
   const list = tree.root.findByType(FlatList);
   await act(async () => { list.props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: list.props.getItemLayout(null, 1).length } } }); });
   expect(text(tree)).toMatch(/2\s*\/3/);

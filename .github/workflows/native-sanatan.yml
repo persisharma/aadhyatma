@@ -1,0 +1,176 @@
+name: Native Sanatan acceptance
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/native-sanatan.yml'
+      - 'mobile/scripts/*sanatan*'
+      - 'mobile/.maestro/*sanatan*.yaml'
+      - 'mobile/src/components/sanatan/**'
+      - 'mobile/src/components/SanatanHomeCard.tsx'
+      - 'mobile/src/components/FramedPainting.tsx'
+      - 'mobile/src/screens/Sanatan*.tsx'
+      - 'mobile/src/data/sanatan-parichay/**'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: native-sanatan-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  CI: '1'
+  MAESTRO_CLI_NO_ANALYTICS: 'true'
+  MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+  MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+jobs:
+  ios:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: macos-15
+    timeout-minutes: 75
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: npm ci
+      - name: Install native test driver
+        run: |
+          curl -fsSL https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Check preserved native SDK compatibility
+        id: compat
+        run: |
+          git fetch --no-tags --depth=1 origin a469ea3696f29baf588b3783fee83c9c1e000202
+          if node scripts/sanatan-native-sdk-compatible.cjs; then
+            echo 'reuse=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'reuse=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Retrieve preserved simulator SDK
+        id: sdk
+        if: steps.compat.outputs.reuse == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: sanatan-ios-42168692889
+          run-id: 42168692889
+          github-token: ${{ github.token }}
+          path: native-reuse
+      - name: Embed current JS and test the verified native SDK
+        if: steps.compat.outputs.reuse == 'true' && steps.sdk.outcome == 'success'
+        env:
+          SANATAN_REBUNDLE_JS: '1'
+        run: bash scripts/native-sanatan-ios-reuse.sh
+      - name: Generate fresh unsigned project when SDK reuse is unavailable
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods for fresh compilation
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        run: pod install --project-directory=ios
+      - name: Compile and install fresh native host
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        env:
+          NATIVE_SMOKE_SCOPE: host
+        run: bash scripts/native-ios-smoke.sh
+      - name: Exercise fresh simulator app
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        run: |
+          open -a Simulator --args -CurrentDeviceUDID "$SIMULATOR_UDID"
+          bash scripts/native-sanatan-matrix.sh ios "$SIMULATOR_UDID"
+      - name: Retain native screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanatan-ios-${{ github.run_id }}
+          path: |
+            native-sanatan-output/**
+            native-output/*.log
+            native-output/*.json
+            native-output/*.png
+            native-output/Vedansh-simulator.zip
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: xcrun simctl shutdown "$SIMULATOR_UDID"
+  android:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: npm ci
+      - name: Install native test driver
+        run: |
+          curl -fsSL https://get.maestro.mobile.dev | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Enable runner emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Generate native Android project
+        run: npx expo prebuild --platform android --clean --no-install
+      - name: Compile and preserve local test APK
+        timeout-minutes: 30
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/native-sanatan-output"
+          cd android
+          ./gradlew assembleRelease -PreactNativeArchitectures=x86_64 --no-daemon --max-workers=2 \
+            '-Dorg.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=2g -XX:+ExitOnOutOfMemoryError' \
+            -Pkotlin.compiler.execution.strategy=in-process --console=plain \
+            2>&1 | tee "$GITHUB_WORKSPACE/native-sanatan-output/android-build.log"
+          cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/native-sanatan-output/Vedansh-test.apk"
+          sha256sum "$GITHUB_WORKSPACE/native-sanatan-output/Vedansh-test.apk" > "$GITHUB_WORKSPACE/native-sanatan-output/apk-sha256.txt"
+          git rev-parse HEAD > "$GITHUB_WORKSPACE/native-sanatan-output/apk-source-head.txt"
+      - name: Exercise Sanatan on Android Emulator
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          working-directory: mobile
+          script: |
+            adb install android/app/build/outputs/apk/release/app-release.apk
+            adb shell wm size 960x1704
+            adb shell wm density 480
+            bash scripts/native-sanatan-matrix.sh android emulator-5554
+      - name: Retain native screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanatan-android-${{ github.run_id }}
+          path: native-sanatan-output/**
+          retention-days: 7
+          if-no-files-found: warn

@@ -603,6 +603,75 @@ A content screen may **credit** its source — name the text, edition, shrine or
 
 **The only external `Linking.openURL` destinations a user may see** are: (1) the **Daan directory** org hand-offs (§27.8 — the organization's own official channel, which *is* the feature); (2) the already-sanctioned **app-functional** links — the store-listing *Rate the app* hand-off (§54), the *Follow on Instagram* row and the feedback/discrepancy `mailto:` (design.md §37, the §4-style store-policy reasoning at "No native store-review module"). Anything else — a scripture/source citation, a "read the full text here", a reference PDF — is a hard reject. Pinned by `gitaSaarSourceScroll.test.tsx`, `GitaSaarReaderScreen.test.tsx`, `SuvicharScreen.test.tsx` and `GarudPuranReaderScreen.test.tsx` (no `accessibilityRole: 'link'` survives on those surfaces). §0.1 doc sync: a new content surface that cites a source updates this rule's surface list, not just the code.
 
+### 11.17 Native image geometry is an enforced acceptance gate
+
+React Native supplies a bundled image's intrinsic `width` and `height` before
+merging its supplied style. `width: '100%'` plus `aspectRatio` does not clear the
+intrinsic height. `StyleSheet.absoluteFill[Object]` alone does not override those
+dimensions either. This can create a screen-sized portrait crop from a landscape
+painting, even when the source file and aspect-ratio metadata are correct.
+
+- **Frame the slot explicitly.** Prefer a View owning the intended aspect ratio
+  or measured width/height, with its Image absolutely positioned and explicitly
+  `width: '100%', height: '100%'`. Fixed/derived numeric image width **and**
+  height are also valid. Do not size a card from source pixels or use bare
+  aspectRatio/absoluteFill on a native Image.
+- **Reuse the frame.** Sanatan Home, hub, collection, reader, diagrams and Search
+  use `FramedPainting`; the full scene stays 3:2 and thumbnails stay 81×54.
+  Audit sibling callers when fixing an image sizing issue. Cropping/resizing the
+  master, hiding text or reducing font size does not fix an unconstrained image.
+- **Keep the regression in CI.** `nativeImageGeometryPolicy.test.ts` scans
+  production components/screens for the known unsafe inline, conditional and
+  StyleSheet forms. Its AST guard lives in `scripts/native-image-geometry.cjs`.
+  `sanatanArtworkFrame.test.tsx` includes native source dimensions and exercises
+  all 13 paintings and four Home scripts. These suites run through the existing
+  reader/component Jest gate; do not skip them or add a broad exemption.
+  Dynamic style composition still requires component-specific geometry tests.
+- **Verify the actual app before visual acceptance.** Record rendered frame/image
+  bounds, expected ratio/crop and an installed-screen screenshot. Inspect the
+  entry card and destination at Hindi/English/Gujarati/Kannada, Standard/Large,
+  compact widths and enlarged system text, with actions/text reachable by normal
+  scrolling. Native pixel rounding is acceptable; intrinsic source height is not.
+- **Do not substitute evidence.** Source dimensions, TypeScript, unit tests,
+  native Yoga calculations, a browser preview and an exported bundle are distinct
+  from installed iOS/Android appearance. A missing native check stays PENDING,
+  the PR stays draft, and visual acceptance/release readiness must not be claimed.
+
+The 6 November 2026 Sanatan regression was an implementation and verification
+failure despite the pre-existing checklist C3 requirement. This rule adds a
+specific executable guard; it does not reclassify pending device QA as passed.
+See `docs/reviews/2026-11-06-sanatan-image-frame.md`.
+
+
+
+
+### 11.18 Prototype approval is not production content or design acceptance
+
+An approved prototype establishes a visual/interaction direction. Sample copy,
+placeholder lessons, research inventories and reference seeds are not thereby
+approved as a completed app feature.
+
+- Before integration, record a collection-by-collection coverage map: intended
+  content, finished source-backed reading units, unresolved drafts and reusable
+  app content. Never report a topic count as the number of finished articles.
+- Public reading pages must teach the subject with coherent explanations,
+  concrete examples and appropriate source/tradition context. Research directions
+  such as "explain this", "needs its own source", artwork-production commentary,
+  copyright/review notes and prototype instructions belong in repository notes,
+  not in the user-facing lesson body.
+- Reuse the actual native listing/card/input/reader/control components. Compare
+  the approved hierarchy, artwork framing, paired/grouped layouts, typography
+  and interactions with the installed screens at the real entry points.
+  A generic button-and-text reconstruction is not design fidelity.
+- Add regression checks for known editorial scaffolding and incomplete content
+  structures. Review factual/source quality separately; word counts and passing
+  structural tests cannot establish that content is complete or correct.
+- Report content completeness, native design fidelity, route/persistence tests,
+  geometry checks, CI and release status as separate results. Incomplete content
+  or required native QA remains PENDING and the PR stays draft. Do not call the
+  feature finished because its prototype routes work or its automated tests pass.
+
+
 ---
 
 ## 12. Theerth archetype (तीर्थ — map-driven pilgrimage tours)

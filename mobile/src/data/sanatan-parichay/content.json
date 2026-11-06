@@ -1,5 +1,5 @@
 {
-  "revision": 1,
+  "revision": 2,
   "topics": [
     {
       "id": "basics",
@@ -21,16 +21,16 @@
       ],
       "pages": [
         [
-          "अवतार, स्वरूप और समूह अलग परिचय हैं। किसी समूह में देवताओं को उनकी भूमिका के आधार पर साथ रखा जा सकता है।",
-          "Avatara, form and collection are different introductions. A collection can bring deities together through a shared role."
+          "अवतार का परिचय ईश्वर के प्रकट होने से जुड़ा है। भगवद्गीता 4.7 में कृष्ण धर्म की हानि और अधर्म के बढ़ने पर अपने प्राकट्य की बात कहते हैं। इस धार्मिक अर्थ में अवतार केवल किसी देवता का दूसरा नाम या किसी चित्र की अलग शैली नहीं है।\n\nउदाहरण के लिए विष्णु के दशावतार का परिचय दस चुने हुए अवतारों को साथ रखता है। इसलिए पहले यह समझना उपयोगी है कि सामने दिया नाम किसी अवतार का है, किसी देव-स्वरूप का, या कई देवताओं को मिलाकर बने समूह का।",
+          "An avatara is understood through divine manifestation. In Bhagavad Gita 4.7 Krishna speaks of manifesting when dharma declines and adharma rises. In this religious setting, avatara does not simply mean another name for a deity or a different artistic style.\n\nDashavatara, for example, gathers ten selected avataras of Vishnu. A useful first question is whether a name identifies an avatara, a divine form, or a group of several deities."
         ],
         [
-          "दिक्पाल दिशा से जुड़ा समूह है। दशावतार एक चुना हुआ अवतार-समूह है। एक देवता के अलग स्वरूप भी हो सकते हैं।",
-          "Dikpal is a group defined by direction. Dashavatara is a selected avatara collection. A deity may also have different forms."
+          "स्वरूप किसी देवता की विशेष पहचान, मुद्रा या अभिव्यक्ति को सामने लाता है। प्रतिमा और चित्र में हाथ, आयुध, वाहन तथा साथ के पात्र उस पहचान को समझने में सहायता करते हैं। केवल किसी नाम के आगे ‘देव’ जुड़ा होना उसे दशावतार की सूची का सदस्य नहीं बनाता।\n\nदेवसमूह में कई नाम किसी साझा आधार पर साथ रखे जाते हैं। दिक्पालों का आधार दिशा है और नवग्रहों का अपना नौ-सदस्यीय पारम्परिक समूह। ऐसे समूह का परिचय पढ़ना और उसके हर सदस्य को एक ही देवता का अवतार मानना अलग बातें हैं।",
+          "A divine form brings a particular identity or expression into focus. Posture, attributes, a mount and accompanying figures help a viewer recognise it. A divine name does not automatically become a member of the Dashavatara list.\n\nA group brings several names together through a shared setting: direction for Dikpals, or the traditional nine-member collection for Navagraha. Understanding a group is different from treating every member as an avatara of one deity."
         ],
         [
-          "किसी नाम को समझते समय उसका ग्रंथ और परम्परा भी देखें।",
-          "Read a name with its text and tradition."
+          "दशावतार एक प्रसिद्ध चयन है; उसे विष्णु के सभी अवतारों की समाप्त सूची नहीं समझना चाहिए। श्रीमद्भागवत 1.3.26 हरि के अवतारों को असंख्य बताता है। इसी कारण किसी अन्य ग्रन्थ में अतिरिक्त अवतारों का उल्लेख मिलना दशावतार शब्द को गलत नहीं बनाता।\n\nइस अनुभाग में किसी नाम को उसके अपने संदर्भ में पहचानें। आगे दशावतार की दो स्रोत-आधारित सूचियाँ, दिशा के आधार पर दिक्पाल और नवग्रहों के अलग परिचय मिलेंगे। इससे अलग प्रकार के नामों को केवल संख्या या चित्र के कारण एक ही सूची में मिला देने का भ्रम दूर होता है।",
+          "Dashavatara is a familiar selection, rather than a claim that Vishnu has no other avataras. Srimad Bhagavatam 1.3.26 describes Hari’s avataras as innumerable. A text naming additional manifestations therefore need not contradict a ten-member selection.\n\nRead each name in its own setting. The following collections distinguish two Dashavatara rosters, guardians organised by direction, and the Navagraha. Number or visual resemblance alone does not make these different kinds of introduction interchangeable."
         ]
       ],
       "refs": [
@@ -43,7 +43,22 @@
         "avatara swaroop",
         "dev samuh"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "अवतार क्या है?",
+          "What is an avatara?"
+        ],
+        [
+          "स्वरूप और देवसमूह",
+          "Forms and divine groups"
+        ],
+        [
+          "दशावतार ही सब अवतार हैं?",
+          "Are there only ten avataras?"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "deity",
@@ -65,16 +80,16 @@
       ],
       "pages": [
         [
-          "गजमुख और विशिष्ट आयुध गणेश की पहचान में सहायता करते हैं। अलग प्रतिमाओं का विवरण उनके अपने संदर्भ में पढ़ें।",
-          "The elephant head and characteristic attributes help identify Ganesha. Read each image in its own context."
+          "हाथी का मुख, बड़े कान और लम्बोदर रूप गणेश की पहचान में प्रमुख हैं। शिव और पार्वती के पुत्र गणेश को शुभ आरम्भ और विघ्नों को दूर करने की प्रार्थना से विशेष रूप से जोड़ा जाता है। किसी नए कार्य से पहले उनका स्मरण इसी भक्ति-परम्परा का परिचित रूप है।\n\nप्रतिमा देखते समय केवल मुख नहीं, हाथों में धरे आयुध और साथ के छोटे पात्र भी देखें। ये संकेत बताते हैं कि कलाकार ने कौन-सा स्वरूप और कौन-सा धार्मिक प्रसंग सामने रखा है।",
+          "The elephant head, broad ears and rounded belly are familiar signs of Ganesha. The son of Shiva and Parvati is especially associated with auspicious beginnings and prayers for obstacles to be removed. Remembering him before a new undertaking belongs to that devotional setting.\n\nWhen looking at a sculpture, notice not only the head but also the attributes and accompanying figures. These help reveal which form and setting the artist has presented."
         ],
         [
-          "गणपति अथर्वशीर्ष में गणेश का ध्यान-वर्णन मिलता है। किसी एक चित्र से सभी प्रतिमाओं की मुद्रा और आयुध तय नहीं होते।",
-          "Ganapati Atharvashirsha includes a visual description of Ganesha. One image does not define every depiction."
+          "गणपति अथर्वशीर्ष के ध्यान-वर्णन में एकदन्त, चार हाथ, पाश, अंकुश और मूषकध्वज का उल्लेख आता है। पाश रस्सी या फन्दे जैसा आयुध है; अंकुश हाथी को दिशा देने वाला उपकरण। मूषक से जुड़ा चिह्न गणेश की पहचान में सहायता करता है।\n\nदूसरी प्रतिमाओं में मिठाई, टूटा दन्त या अलग आयुध भी मिलते हैं। किसी कलाकृति के हाथ में दिखाई दे रही वस्तु को उसी चित्र या प्रतिमा के अनुसार पहचानना चाहिए। चित्र के हर छोटे आकार को बिना देखे किसी एक आयुध का नाम दे देना सही पहचान नहीं है।",
+          "The visual description in Ganapati Atharvashirsha includes one tusk, four hands, a pasha, an ankusha and the mouse emblem. Pasha is a noose-like attribute, while ankusha is an elephant goad. The mouse association is another identifying sign.\n\nOther sculptures may show a sweet, the broken tusk or different attributes. Identify what is actually present in a particular work rather than assigning the same object to every depiction."
         ],
         [
-          "यह चित्र गणेश के परिचय के लिए बनाई गई कलात्मक प्रस्तुति है। चित्र की कथा और उसका कलात्मक विवरण अलग स्तर हैं।",
-          "This illustration is an artistic presentation created for this introduction to Ganesha. Narrative and artistic description are separate layers."
+          "एकदन्त का अर्थ एक दन्त वाला है। टूटा हुआ दन्त गणेश की अनेक परिचित छवियों में दिखाई देता है। उसके बारे में कही जाने वाली अलग कथाओं को उनकी अपनी कथा-परम्परा के साथ समझा जाता है; केवल चित्र देखकर कोई एक पूरी कथा अपने-आप तय नहीं हो जाती।\n\nगणेश के रूप अलग काल, क्षेत्र और कलाशैली में बदल सकते हैं। कहीं बैठा हुआ, कहीं नृत्य करता स्वरूप मिलता है। इन भिन्नताओं के बीच मुख, उदर, आयुध और मूषक जैसे संकेत पहचान को बनाए रखते हैं। इसलिए भिन्न कलाकृतियाँ एक ही देवता को अलग भाव में दिखा सकती हैं।",
+          "Ekadanta means one-tusked. The broken tusk appears in many familiar representations, while its narratives belong to their particular storytelling traditions. A picture alone does not supply every detail of one complete story.\n\nForms vary across period, region and artistic setting: Ganesha may be seated or dancing. The head, belly, attributes and mouse association preserve recognisable connections while allowing different expressions of the same deity."
         ]
       ],
       "refs": [
@@ -85,7 +100,22 @@
       "aliases": [
         "ganesh ganesha ganpati"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "गणेश को पहचानें",
+          "Recognising Ganesha"
+        ],
+        [
+          "आयुध और वाहन",
+          "Attributes and mount"
+        ],
+        [
+          "एकदन्त और अलग स्वरूप",
+          "Ekadanta and varied forms"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "thirty",
@@ -94,8 +124,8 @@
         "Thirty-three devata"
       ],
       "title": [
-        "तैंतीस का परिचय",
-        "Understanding thirty-three"
+        "तैंतीस देवताओं की गणना",
+        "The reckoning of thirty-three"
       ],
       "question": [
         "33 कोटि देवता कौन हैं?",
@@ -107,16 +137,16 @@
       ],
       "pages": [
         [
-          "बृहदारण्यक उपनिषद् 3.9.2 में आठ वसु, ग्यारह रुद्र, बारह आदित्य, इन्द्र और प्रजापति गिने गए हैं।",
-          "Brihadaranyaka Upanishad 3.9.2 names eight Vasus, eleven Rudras, twelve Adityas, Indra and Prajapati."
+          "बृहदारण्यक उपनिषद् के तीसरे अध्याय में विदग्ध शाकल्य याज्ञवल्क्य से देवताओं की संख्या पूछते हैं। संवाद में संख्या घटती जाती है—तैंतीस, छह, तीन, दो और आगे एक तक। इसलिए यहाँ केवल नाम गिनना उद्देश्य नहीं है; अनेक रूपों के पीछे के आधार की खोज भी है।\n\nतैंतीस की व्याख्या में आठ वसु, ग्यारह रुद्र, बारह आदित्य, इन्द्र और प्रजापति आते हैं। अगले पृष्ठ पर प्रत्येक समूह खोलकर उसका अर्थ देखें। यह उसी संवाद की गणना है, जिससे आगे की चर्चा को समझना आसान होता है।",
+          "In Brihadaranyaka Upanishad 3.9, Vidagdha Shakalya asks Yajnavalkya how many gods there are. The answers progressively narrow: thirty-three, six, three, two, and eventually one. The conversation explores the ground of many manifestations, rather than merely ending with a list.\n\nIts thirty-three are eight Vasus, eleven Rudras, twelve Adityas, Indra and Prajapati. Open each group on the next page to connect the arithmetic with the explanation given in this dialogue."
         ],
         [
-          "आगे के संवाद में इन समूहों की दार्शनिक व्याख्या आती है। यह सभी हिन्दू देवताओं की सार्वभौम नामावली नहीं है।",
-          "The dialogue goes on to explain the groups philosophically. It is not a universal inventory of every Hindu deity."
+          "आठ वसु हैं—अग्नि, पृथ्वी, वायु, अन्तरिक्ष, आदित्य, द्यौ, चन्द्रमा और नक्षत्र। ग्यारह रुद्रों का सम्बन्ध मनुष्य के दस प्राणों और ग्यारहवें आत्मा से बताया गया है; भाष्य सहित अनुवाद इन्हें इन्द्रियों और मन के रूप में भी समझाता है।\n\nबारह आदित्य वर्ष के बारह महीनों से समझाए गए हैं। इन्द्र को मेघ और वज्र के प्रसंग से, तथा प्रजापति को यज्ञ से जोड़ा गया है। इनका योग तैंतीस है। ध्यान दें कि यह सूची प्रकृति, जीवन, समय और यज्ञ के माध्यम से भी देवताओं को समझाती है।",
+          "The eight Vasus are fire, earth, air, the intermediate region, the sun, heaven, the moon and the stars. The eleven Rudras are explained through ten pranas and the self as eleventh; the commentary-based translation interprets these through the organs and mind.\n\nThe twelve Adityas are associated with the twelve months. Indra is discussed through cloud and thunder, and Prajapati through sacrifice. Together they make thirty-three, connecting the discussion with nature, embodied life, time and yajna."
         ],
         [
-          "दूसरे पाठों की सूची अलग हो सकती है। इस गणना में ‘कोटि’ शब्द नहीं आता; शब्दकोश अकेले लोकप्रिय अभिव्यक्ति का अर्थ तय नहीं करता।",
-          "Other texts can enumerate differently. This passage does not use koti; a dictionary alone cannot settle the popular expression."
+          "तैंतीस के बाद संवाद रुकता नहीं है। आगे के उत्तर उन्हीं अनेक रूपों को बड़े समूहों और अन्ततः एक आधार में समेटते हैं। इसीलिए केवल संख्या याद कर लेने से इस प्रसंग का दार्शनिक अर्थ पूरा नहीं खुलता।\n\nलोकप्रिय अभिव्यक्ति ‘33 कोटि देवता’ को पढ़ते समय एक भेद उपयोगी है: इस विशेष अंश में ‘कोटि’ शब्द नहीं आता। इसलिए केवल इस संवाद या किसी एक शब्दकोश के आधार पर सभी परम्पराओं की उस अभिव्यक्ति का एक ही अर्थ तय करना उचित नहीं है। दूसरी नामावलियों को उनके अपने ग्रन्थ के साथ समझना चाहिए।",
+          "The dialogue continues beyond thirty-three, gathering the many into larger principles and finally a single ground. Its philosophical movement matters as much as the arithmetic.\n\nThe popular expression “33 koti devata” needs a separate distinction: this particular passage does not use koti. It therefore cannot, by itself, settle every traditional use of that expression. A differently named roster belongs with the text and setting in which it occurs."
         ]
       ],
       "refs": [
@@ -129,7 +159,22 @@
         "33 crore",
         "taintis koti"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "एक प्रश्न, कई उत्तर",
+          "One question, several answers"
+        ],
+        [
+          "8 + 11 + 12 + 1 + 1",
+          "8 + 11 + 12 + 1 + 1"
+        ],
+        [
+          "गणना से आगे का अर्थ",
+          "Beyond the count"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "dikpal",
@@ -138,8 +183,8 @@
         "Directions & guardians"
       ],
       "title": [
-        "दस दिशाएँ कैसे?",
-        "How are there ten directions?"
+        "दस दिशाएँ और उनके पालक",
+        "Ten directions and their guardians"
       ],
       "question": [
         "चार नहीं, दस दिशाएँ कैसे?",
@@ -151,16 +196,16 @@
       ],
       "pages": [
         [
-          "चार मुख्य और चार कोणीय दिशाओं के साथ ऊर्ध्व और अधो जोड़ने पर दस दिशाओं का परिचय मिलता है।",
-          "The ten-direction scheme adds above and below to four cardinal and four intermediate directions."
+          "पूर्व, दक्षिण, पश्चिम और उत्तर चार मुख्य दिशाएँ हैं। इनके बीच आग्नेय, नैऋत्य, वायव्य और ईशान चार कोणीय दिशाएँ आती हैं। इस प्रकार हमारे चारों ओर के धरातल को आठ दिशाओं में समझा जाता है। ऊपर अर्थात् ऊर्ध्व और नीचे अर्थात् अधो जोड़ने पर दस दिशाएँ बनती हैं।\n\nदिक्पाल उन देवताओं का समूह है जिन्हें किसी परम्परा में इन दिशाओं के पालक के रूप में रखा जाता है। मंदिर, पूजा और देवसमूह के चित्रों में यह व्यवस्था दिखाई दे सकती है। यहाँ का चक्र पहले धरातल की आठ दिशाएँ दिखाता है; ऊपर और नीचे के लिए अलग विकल्प हैं।",
+          "East, south, west and north are the four cardinal directions. Southeast, southwest, northwest and northeast lie between them. These make eight directions around a horizontal plane; adding above and below gives ten.\n\nDikpals are the deities placed as guardians of directions in a particular tradition. Such arrangements appear in temple and ritual settings. The wheel shows the eight horizontal directions, with separate controls for above and below."
         ],
         [
-          "नीचे दिए चक्र में दिशा छुएँ। ऊपर और नीचे को चक्र से अलग रखा गया है।",
-          "Tap a direction in the wheel. Above and below are shown separately."
+          "इस कामिक आगम-आधारित चयन में पूर्व के इन्द्र, आग्नेय के अग्नि, दक्षिण के यम और नैऋत्य के निरृति हैं। पश्चिम के वरुण, वायव्य के वायु, उत्तर के कुबेर और ईशान के ईशान हैं। दिशा चुनने पर उसका नाम और सम्बन्धित दिक्पाल साथ दिखाई देते हैं।\n\nचक्र को नक्शे की तरह पढ़ें: उत्तर ऊपर है, पूर्व दाईं ओर, दक्षिण नीचे और पश्चिम बाईं ओर। दो मुख्य दिशाओं के बीच की दिशा को कोणीय दिशा कहते हैं। इस चक्र का ‘दक्षिण’ और अलग दिया गया ‘अधो’ एक ही दिशा नहीं हैं।",
+          "In this Kamika Agama selection, Indra guards east, Agni southeast, Yama south and Nirriti southwest. Varuna is west, Vayu northwest, Kubera north and Ishana northeast. Selecting a direction shows the matching guardian.\n\nRead the wheel like a north-up map: east is right, south below and west left. The intermediate directions sit between the cardinal ones. South on this horizontal wheel is distinct from the separate downward direction."
         ],
         [
-          "कामिक आगम के चुने गए संदर्भ में अधो के देवता विष्णु हैं। एक अन्य परम्परा में अनन्त आते हैं।",
-          "The selected Kamika passage places Vishnu below. Another documented convention uses Ananta."
+          "यहाँ ऊर्ध्व के लिए ब्रह्मा और अधो के लिए विष्णु चुने गए हैं। इसी कारण दिक्पालों की इस सूची में आठ दिशाओं के अतिरिक्त दो और नाम आते हैं। केवल आठ दिशाओं वाला अष्टदिक्पाल परिचय इससे अलग, छोटा समूह है।\n\nकुछ अन्य पूजा-परम्पराओं की दस-दिक्पाल सूची में अधो के लिए अनन्त का नाम मिलता है। नाम बदलने पर भी ऊपर-नीचे और चारों ओर की दिशा-व्यवस्था का भेद बना रहता है। किसी मंदिर या पूजा-पुस्तक की सूची देखते समय उसी परम्परा की नामावली पढ़ें; एक सूची के चित्र और दूसरी के नाम आपस में न मिलाएँ।",
+          "Here Brahma is above and Vishnu below, completing the ten. Ashtadikpal refers to the smaller eight-direction grouping.\n\nAnother documented worship convention places Ananta below. This is a difference between rosters, not a missing direction. When reading a temple arrangement or worship manual, keep its names together with that tradition rather than combining parts of different lists."
         ]
       ],
       "refs": [
@@ -174,7 +219,22 @@
         "das dikpal",
         "ten directions"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "आठ से दस दिशाएँ",
+          "From eight to ten"
+        ],
+        [
+          "दिशा और दिक्पाल",
+          "Directions and guardians"
+        ],
+        [
+          "ऊर्ध्व और अधो",
+          "Above and below"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "graha",
@@ -183,8 +243,8 @@
         "Navagraha"
       ],
       "title": [
-        "सूर्य का परिचय",
-        "Introducing Surya"
+        "नौ ग्रहों का परिचय",
+        "Meet the nine grahas"
       ],
       "question": [
         "नवग्रह में कौन-कौन आते हैं?",
@@ -196,16 +256,16 @@
       ],
       "pages": [
         [
-          "सूर्य नवग्रह परम्परा के एक देवता हैं। देव-चित्र, खगोलीय पिंड और ज्योतिषीय व्याख्या के संदर्भ अलग समझें।",
-          "Surya is one of the Navagraha. Distinguish deity imagery, astronomical bodies and astrological interpretation."
+          "नवग्रह हैं—सूर्य, चन्द्र, मंगल, बुध, बृहस्पति, शुक्र, शनि, राहु और केतु। मंदिरों, स्तोत्रों और ज्योतिष के परिचय में ये नौ नाम साथ मिलते हैं। ‘नव’ का अर्थ नौ है, लेकिन यहाँ ‘ग्रह’ का अर्थ केवल आधुनिक खगोल-विज्ञान का ग्रह नहीं है।\n\nदेव-परिचय में सूर्य और चन्द्र की स्तुति तथा स्वरूप का अर्थ समझा जाता है। ज्योतिष में इन्हीं नामों से अलग प्रकार की पारम्परिक व्याख्याएँ जुड़ती हैं। खगोल-विज्ञान आकाश में उनकी भौतिक स्थिति और गति का अध्ययन करता है। इन तीन संदर्भों को पहचानने से एक ही नाम के अलग प्रयोग स्पष्ट होते हैं।",
+          "The Navagraha are Surya, Chandra, Mangala, Budha, Brihaspati, Shukra, Shani, Rahu and Ketu. These nine names appear together in temples, hymns and Jyotish. Nava means nine, but graha here is broader than the modern astronomical category “planet.”\n\nDevotional introductions discuss a deity’s form and praise; Jyotish adds traditional interpretive associations; astronomy describes physical positions and motion. Recognising the setting explains why one name can be used in different ways."
         ],
         [
-          "नौ नामों को छूकर इस समूह का परिचय देखें। यह किसी व्यक्तिगत कुंडली की व्याख्या नहीं है।",
-          "Explore the nine names below. This is an introduction to the collection."
+          "सूर्य और चन्द्र से शुरू होकर नवग्रह स्तोत्र मंगल, बुध, बृहस्पति, शुक्र, शनि, राहु और केतु का स्मरण करता है। प्रत्येक की पहचान के लिए अलग विशेषण आते हैं—जैसे बृहस्पति देवताओं और ऋषियों के गुरु तथा शुक्र दैत्यों के गुरु के रूप में वर्णित हैं।\n\nनीचे किसी नाम को चुनकर उस परिचय पर जाएँ। बुध और बृहस्पति अलग हैं; बृहस्पति को गुरु भी कहा जाता है। देवताओं के वाहनों, रंगों या आयुधों की कोई छवि देखते समय उसका स्तोत्र या मंदिर-संदर्भ साथ पढ़ना उपयोगी है, क्योंकि सभी कलाकृतियाँ एक ही रूप नहीं दिखातीं।",
+          "The Navagraha Stotra remembers the nine in sequence and gives each distinct epithets. Brihaspati is described as teacher of gods and rishis, while Shukra is the preceptor of the daityas.\n\nSelect a name below to focus on that member. Budha and Brihaspati are different: the latter is also called Guru. A hymn or temple context helps explain a depicted colour, mount or attribute, since artwork does not always use a single uniform form."
         ],
         [
-          "राहु और केतु का खगोलीय परिचय चन्द्र-कक्षा के दो पात-बिन्दुओं से जुड़ा है। वे दो अतिरिक्त भौतिक ग्रह नहीं हैं।",
-          "In astronomical usage Rahu and Ketu correspond to the Moon’s orbital nodes, rather than two additional physical planets."
+          "खगोल-विज्ञान में सूर्य एक तारा है और चन्द्र पृथ्वी का प्राकृतिक उपग्रह। मंगल, बुध, बृहस्पति, शुक्र और शनि भौतिक ग्रह हैं। राहु और केतु दो अतिरिक्त भौतिक ग्रह नहीं, बल्कि चन्द्र-कक्षा और क्रान्तिवृत्त के प्रतिच्छेदन से सम्बन्धित पात-बिन्दु हैं।\n\nइसलिए नवग्रहों को सौरमण्डल के आधुनिक ग्रहों की सूची समझ लेने से भ्रम होता है। धार्मिक स्वरूप, पारम्परिक ज्योतिष और खगोलीय पहचान—तीनों का अपना प्रश्न है। यहाँ का परिचय नाम और संदर्भ समझाता है; किसी व्यक्ति के भविष्य का निष्कर्ष नहीं निकालता।",
+          "Astronomically, the Sun is a star and the Moon Earth’s natural satellite. Mars, Mercury, Jupiter, Venus and Saturn are physical planets. Rahu and Ketu correspond to the lunar orbital nodes, rather than two further physical planets.\n\nThe Navagraha therefore are not a modern inventory of Solar System planets. Devotional identity, traditional interpretation and astronomical description address different questions; this introduction explains those distinctions rather than predicting an individual future."
         ]
       ],
       "refs": [
@@ -217,7 +277,22 @@
         "navgrah navagraha navgraha",
         "surya rahu ketu"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "नवग्रह कौन हैं?",
+          "Who are the Navagraha?"
+        ],
+        [
+          "नाम और पहचान",
+          "Names and identities"
+        ],
+        [
+          "ग्रह और खगोलीय पिण्ड",
+          "Grahas and celestial bodies"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "symbols",
@@ -226,8 +301,8 @@
         "Sacred symbols"
       ],
       "title": [
-        "स्वस्तिक का अर्थ",
-        "Understanding the swastika"
+        "स्वस्तिक का मंगलार्थ",
+        "The auspicious meaning of the swastika"
       ],
       "question": [
         "स्वस्तिक क्यों बनाते हैं?",
@@ -239,16 +314,16 @@
       ],
       "pages": [
         [
-          "स्वस्तिक भारतीय धार्मिक परम्पराओं में मंगल का चिह्न है। पूजा और शुभ अवसरों पर इसके उपयोग मिलते हैं।",
-          "The swastika is an auspicious sign in Indian religious traditions, used in worship and on auspicious occasions."
+          "स्वस्तिक हिन्दू परम्पराओं में मंगल, कल्याण और शुभ आरम्भ का चिह्न है। घर के प्रवेश, पूजा-स्थल, मंदिर, बहीखाते और उत्सवों की सजावट में इसका उपयोग मिलता है। इसे बनाने का भाव किसी काम को शुभकामना और श्रद्धा के साथ आरम्भ करना है।\n\nसंस्कृत के ‘सु’ और ‘अस्ति’ से जुड़ा इसका नाम भलाई और मंगल का बोध कराता है। दिवाली पर रंगोली या प्रवेश-द्वार के साथ बना स्वस्तिक इसी धार्मिक-सांस्कृतिक संसार का हिस्सा है; यह केवल सजावट का कोई नया आकार नहीं है।",
+          "In Hindu traditions the swastika expresses auspiciousness, well-being and a good beginning. It appears at entrances, worship spaces, temples, account books and festivals. Its use places an activity within a setting of goodwill and devotion.\n\nThe name is connected with the Sanskrit su and asti, conveying a sense of things being well. A swastika in a Diwali rangoli or at a household entrance belongs to this religious and cultural setting, rather than being a recently invented decoration."
         ],
         [
-          "इसकी चार भुजाओं की कई व्याख्याएँ मिलती हैं। किसी एक अर्थ को सभी परम्पराओं का एकमात्र अर्थ न मानें।",
-          "Its four arms have several attributed interpretations. One reading need not explain every use."
+          "इस चिह्न में केन्द्र से निकली चार भुजाएँ समकोण पर मुड़ती हैं। पूजा में प्रचलित कुछ रूपों में चार बिन्दु भी बनाए जाते हैं। रंग, बिन्दुओं और बनाने की शैली में परम्परागत भिन्नताएँ हो सकती हैं; चार बिन्दु हर उदाहरण की अनिवार्य पहचान नहीं हैं।\n\nचित्र में भुजाओं और बिन्दुओं को अलग-अलग देखें। किसी रूप को पहचानना और उसके लिए एक विशेष आध्यात्मिक अर्थ बताना अलग बातें हैं। चार दिशाओं या जीवन के चक्र जैसी व्याख्याएँ मिलती हैं, पर उन्हें हर परिवार और सम्प्रदाय की एक ही अनिवार्य व्याख्या नहीं मानना चाहिए।",
+          "Four arms extend from a centre and turn at right angles. Some worship conventions add four dots; colours and drawing styles also vary. Those dots are not required for every historical example.\n\nLook separately at the arms and dots. Recognising a form is different from assigning it one exclusive spiritual explanation. Interpretations include the cardinal directions or cycles of life, without making either an obligatory meaning for every community."
         ],
         [
-          "चित्र और बनाने की रीति को संबंधित परम्परा के साथ समझें। यहाँ दिया चित्र केवल परिचय के लिए है।",
-          "Understand the drawing convention in its traditional setting. This illustration is for identification."
+          "हिन्दू धर्म के अतिरिक्त जैन और बौद्ध परम्पराओं में भी इस चिह्न के अपने पवित्र संदर्भ हैं। इसलिए उसका अर्थ स्थान, समुदाय और धार्मिक प्रयोग के साथ समझा जाता है।\n\nबीसवीं शताब्दी में नाज़ियों द्वारा अपनाए गए चिह्न से हुई ऐतिहासिक क्षति भी वास्तविक है। भारतीय धार्मिक प्रयोग उससे बहुत पुराना है। किसी सार्वजनिक या अन्तरसांस्कृतिक संदर्भ में स्वस्तिक का अर्थ समझाते समय दोनों बातों की संवेदनशील पहचान रखना उपयोगी है—उसकी जीवित पवित्र परम्परा और आधुनिक इतिहास से जुड़ा दुःख।",
+          "The sign also has sacred settings in Jain and Buddhist traditions. Meaning depends on the community and religious use.\n\nThe harm associated with its twentieth-century Nazi appropriation is also real. Indian religious use long predates that history. In a public or cross-cultural setting, explaining the symbol calls for sensitivity both to its living sacred traditions and to the suffering associated with the modern appropriation."
         ]
       ],
       "refs": [
@@ -260,7 +335,22 @@
         "swastik swastika",
         "swastik kyu banate hain"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "स्वस्तिक क्यों बनाते हैं?",
+          "Why draw a swastika?"
+        ],
+        [
+          "चिह्न को पहचानें",
+          "Recognise the sign"
+        ],
+        [
+          "एक चिह्न, कई व्याख्याएँ",
+          "A sign with several interpretations"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "forms",
@@ -282,16 +372,16 @@
       ],
       "pages": [
         [
-          "दशावतार विष्णु के दस अवतारों का एक प्रसिद्ध चयन है। अलग सूचियों में कुछ नाम बदलते हैं।",
-          "Dashavatara is a familiar selection of ten avataras of Vishnu. The names differ between some lists."
+          "दशावतार विष्णु के दस अवतारों का प्रसिद्ध समूह है। इसमें मत्स्य, कूर्म, वराह और नरसिंह जैसे अलग रूप साथ आते हैं। यह परिचय अवतारों की विविधता दिखाता है—हर अवतार को एक जैसे मानव-रूप में समझना आवश्यक नहीं है।\n\nसूची का नाम ‘दशावतार’ होने पर भी सभी परम्पराएँ ठीक वही दस नाम नहीं चुनतीं। इसी वजह से एक मंदिर, स्तवन या पुस्तक की सूची में मिला अंतर पहले उस स्रोत के अपने चयन के रूप में पढ़ा जाता है।",
+          "Dashavatara is a familiar group of ten avataras of Vishnu. Forms such as Matsya, Kurma, Varaha and Narasimha show why an avatara need not always be imagined in the same human shape.\n\nDifferent traditions do not invariably select the identical ten names. A difference encountered in a temple, hymn or book should first be read as the selection used by that source."
         ],
         [
-          "सूची बदलकर दोनों स्रोतों का परिचय देखें। दोनों को मिलाकर ग्यारह अवतारों की नई ‘दशावतार’ सूची न बनाएँ।",
-          "Switch between two sourced selections. Do not merge them into a new eleven-member Dashavatara list."
+          "यहाँ द्रिक पंचांग का चयन है—मत्स्य, कूर्म, वराह, नरसिंह, वामन, परशुराम, राम, बलराम, कृष्ण और कल्कि। दूसरी ओर जयदेव के गीतगोविन्द के आरम्भिक स्तवन में मत्स्य से राम और बलराम तक के साथ बुद्ध तथा कल्कि आते हैं।\n\nनीचे स्रोत बदलने पर पूरी सूची साथ बदलती है। दोनों में बलराम आते हैं, लेकिन इस चयन में एक में कृष्ण का नाम गिना गया है और दूसरे में बुद्ध का। दोनों सूचियों के सभी अलग नाम जोड़ देने से दस के बजाय ग्यारह सदस्यों की नई सूची बन जाएगी।",
+          "The Drik Panchang selection here is Matsya, Kurma, Varaha, Narasimha, Vamana, Parashurama, Rama, Balarama, Krishna and Kalki. Jayadeva’s opening Gitagovinda hymn includes Buddha in the corresponding selection alongside Balarama and Kalki.\n\nSwitching the source changes the whole roster. Both include Balarama; this Drik selection counts Krishna, while the Jayadeva selection counts Buddha. Combining every distinct name from both would create an eleven-member list."
         ],
         [
-          "जयदेव के गीतगोविन्द के आरम्भिक स्तवन में बलराम और बुद्ध दोनों आते हैं; कृष्ण सम्बोधित उपास्य हैं।",
-          "Jayadeva’s opening hymn includes both Balarama and Buddha, with Krishna as the addressee."
+          "जयदेव के स्तवन में कृष्ण सम्बोधित उपास्य हैं। इसलिए वहाँ कृष्ण का दस नामों में उसी तरह न गिना जाना उनकी अनुपस्थिति या उपासना से बाहर होने का अर्थ नहीं है। स्तवन का सम्बोधन और उसमें गिनाए गए रूप अलग स्तरों पर काम करते हैं।\n\nदशावतार को देखते समय इसलिए दो प्रश्न उपयोगी हैं: यह किस स्रोत का चयन है, और उस रचना में किसे सम्बोधित किया जा रहा है? इससे नामों का अंतर समझ आता है और अलग परम्पराओं को अनावश्यक रूप से गलत बताने की जरूरत नहीं पड़ती।",
+          "Krishna is the addressee in Jayadeva’s hymn. Not counting him in that roster in the same way therefore does not mean that he is absent from its devotion. The addressee and the enumerated manifestations have different roles in the composition.\n\nTwo questions help when reading a Dashavatara display: which source supplies the selection, and whom does the composition address? They explain the difference without dismissing another tradition’s roster."
         ]
       ],
       "refs": [
@@ -303,7 +393,22 @@
         "dashavatar dashavatara",
         "balaram buddha"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "दस अवतारों का चयन",
+          "A selection of ten"
+        ],
+        [
+          "दो सूचियाँ पढ़ें",
+          "Read two rosters"
+        ],
+        [
+          "कृष्ण, बलराम और बुद्ध",
+          "Krishna, Balarama and Buddha"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "plants",
@@ -325,16 +430,16 @@
       ],
       "pages": [
         [
-          "तुलसी का वैष्णव पूजा-परम्पराओं में विशेष स्थान है। पौधे और अर्पित पत्तों का परिचय संबंधित परम्परा से समझें।",
-          "Tulasi has a special place in Vaishnava worship. Explain the plant and offered leaves within that tradition."
+          "तुलसी हिन्दू घरों और विशेष रूप से वैष्णव उपासना में पूजित पौधा है। घर के आँगन में बनी चौकी या विशेष पात्र में तुलसी लगाने और उसके पास दीप रखने की परम्परा कई क्षेत्रों में दिखाई देती है। यह घरेलू स्थान भी पूजा और स्मरण का केन्द्र बन जाता है।\n\nतुलसी का सम्बन्ध विष्णु और कृष्ण की भक्ति से विशेष रूप से जुड़ा है। वैष्णव परम्पराओं में उन्हें लक्ष्मी का स्वरूप भी माना जाता है। इसलिए तुलसी के पत्ते केवल सुगन्ध या सजावट के लिए नहीं, श्रद्धापूर्वक अर्पण की वस्तु के रूप में भी आते हैं।",
+          "Tulasi is a sacred plant in Hindu homes and especially in Vaishnava worship. A courtyard platform or dedicated container, sometimes with a place for lamps, can become a small centre of daily remembrance.\n\nThe plant is particularly connected with devotion to Vishnu and Krishna. Vaishnava traditions may revere Tulasi as Lakshmi, giving the offering of leaves a devotional meaning beyond fragrance or decoration."
         ],
         [
-          "पत्ते, जप-माला और तुलसी-विवाह अलग उपयोग और प्रसंग हैं। एक परिचय से सभी विधियाँ तय नहीं होतीं।",
-          "Offered leaves, prayer beads and Tulasi Vivaha are distinct uses and settings. One introduction does not establish every procedure."
+          "विष्णु-पूजा में तुलसी-पत्र का अर्पण परिचित है। तुलसी की लकड़ी से जप-माला के मनके भी बनाए जाते हैं, और कुछ वैष्णव परम्पराओं में छोटे मनकों की कण्ठी पहनी जाती है। पत्र, लकड़ी के मनके और गले की कण्ठी अलग वस्तुएँ हैं, भले उनका सम्बन्ध एक ही पवित्र पौधे से हो।\n\nजप-माला स्मरण और नाम-जप में सहायक होती है; पत्ते पूजा में अर्पित होते हैं। किसी घर या मंदिर की पूजा-विधि देखते समय इन अलग उपयोगों को पहचानें। अर्पण, पौधे की देखभाल और मनके बनाने की प्रक्रिया को एक ही बात नहीं समझना चाहिए।",
+          "Leaves are offered in Vishnu worship. Wood from the plant is also used for japa beads, and some Vaishnava traditions wear small Tulasi beads around the neck. Offered leaves, wooden prayer beads and a neck strand are distinct objects connected with the same sacred plant.\n\nThe mala supports remembrance and chanting; the leaves serve as an offering. Recognising these uses helps make sense of household and temple practice without treating plant care, offering and bead-making as one procedure."
         ],
         [
-          "पौधे का धार्मिक महत्व और उसका वानस्पतिक या चिकित्सकीय परिचय अलग विषय हैं।",
-          "Sacred significance, botanical identification and medical use are different subjects."
+          "कार्तिक में अनेक स्थानों पर तुलसी विवाह मनाया जाता है। इस उत्सव में तुलसी का विवाह विष्णु या कृष्ण के साथ माना जाता है; कुछ परम्पराओं में शालिग्राम की उपस्थिति होती है। पौधे को सजाने और विवाह के मंगल भाव से उत्सव मनाने के अपने क्षेत्रीय रूप हैं।\n\nतुलसी विवाह की तिथि और स्थानीय विधि के लिए उस वर्ष का पंचांग तथा अपनी मंदिर-परम्परा देखी जाती है। पौधे का पवित्र महत्व समझना, उसकी वनस्पति पहचान जानना और औषधीय उपयोग तय करना अलग विषय हैं। धार्मिक परिचय अपने-आप किसी बीमारी के उपचार का निर्देश नहीं बनता।",
+          "Tulasi Vivaha is celebrated during Kartika in many places. Tulasi is ceremonially married to Vishnu or Krishna, sometimes represented by a Shaligrama. Decoration and wedding observances take regional forms.\n\nThe year’s calendar and local temple tradition determine the observed date and practice. Sacred significance, botanical identification and medical use are separate matters: this devotional introduction is not a treatment instruction."
         ]
       ],
       "refs": [
@@ -345,7 +450,22 @@
       "aliases": [
         "tulsi tulasi"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "आँगन की तुलसी",
+          "Tulasi in the courtyard"
+        ],
+        [
+          "पत्र और माला",
+          "Leaves and prayer beads"
+        ],
+        [
+          "तुलसी विवाह",
+          "Tulasi Vivaha"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "elements",
@@ -367,16 +487,16 @@
       ],
       "pages": [
         [
-          "आकाश, वायु, अग्नि, जल और पृथ्वी पारम्परिक तत्त्व-विचार के पाँच परिचित नाम हैं।",
-          "Akasha, Vayu, Agni, Ap and Prithivi are five familiar terms in traditional reflection on elements."
+          "आकाश, वायु, अग्नि, आप अर्थात् जल और पृथ्वी—ये पाँच नाम पंचमहाभूत के परिचय में आते हैं। यहाँ ‘भूत’ का अर्थ प्रेत नहीं, तत्त्व या अस्तित्व में आया पदार्थ है। ये नाम भारतीय चिन्तन में प्रकृति और अनुभव को समझने की एक परिचित भाषा बनाते हैं।\n\nपृथ्वी का विचार स्थूलता, जल का तरलता और अग्नि का ऊष्मा जैसे अनुभव याद दिला सकता है। लेकिन अलग दर्शनों में इन तत्त्वों की व्याख्या अपने ढंग से होती है। इसलिए पंचमहाभूत को आधुनिक रसायन-विज्ञान की आवर्त सारणी का दूसरा नाम नहीं समझना चाहिए।",
+          "Akasha, Vayu, Agni, Ap or water, and Prithivi are the five names in Panchamahabhuta. Here bhuta refers to an element or something that has come into being, rather than a ghost. These terms offer a traditional vocabulary for reflecting on nature and experience.\n\nEarth, water and fire can bring solidity, fluidity and heat to mind, while philosophical schools develop their own accounts. The five are not another name for the modern chemical periodic table."
         ],
         [
-          "तैत्तिरीय उपनिषद् 2.1.1 में इनका क्रम आता है। इन्हें आधुनिक रसायन-विज्ञान के पाँच पदार्थों की सूची न समझें।",
-          "Taittiriya Upanishad 2.1.1 gives their sequence. They are not a modern periodic table."
+          "तैत्तिरीय उपनिषद् 2.1.1 में आत्मा से आकाश, आकाश से वायु, वायु से अग्नि, अग्नि से जल और जल से पृथ्वी का क्रम आता है। चर्चा आगे पृथ्वी से वनस्पति, वनस्पति से अन्न और अन्न से मनुष्य तक बढ़ती है।\n\nयह क्रम केवल पाँच शब्द याद कराने के लिए नहीं है। इसके साथ व्यक्ति, अन्न और व्यापक अस्तित्व के सम्बन्ध पर विचार खुलता है। नीचे पाँच तत्त्वों को क्रम में देखकर इस अंश की गति समझें—आकाश से आरम्भ होकर स्थूल जगत और जीवन की ओर।",
+          "Taittiriya Upanishad 2.1.1 gives a sequence from the self to space, air, fire, water and earth. It then proceeds through plants, food and the person.\n\nThe passage opens a reflection on the relationship between a person, nourishment and wider existence, rather than merely offering five words to memorise. Read the sequence as the movement of this particular passage, from space toward the material world and life."
         ],
         [
-          "किसी अन्य विषय—दिशा, ग्रह या शरीर—से संबंध जोड़ने के लिए उस विशेष संबंध का स्रोत चाहिए।",
-          "A mapping to directions, grahas or the body needs its own specific source."
+          "समझने के लिए मिट्टी के दीपक का एक सरल उदाहरण लें: उसमें मिट्टी का पात्र है, उसे बनाने में जल काम आता है, जलती लौ में ऊष्मा है, हवा उससे सम्बन्ध रखती है और दीपक किसी स्थान में रखा है। यह रोजमर्रा का समझाने वाला उदाहरण है, उपनिषद् में दी हुई पूजा-विधि नहीं।\n\nइस उदाहरण से पाँच नामों को अनुभव से जोड़ना आसान होता है। ग्रह, दिशा या शरीर के किसी भाग को किसी तत्त्व के साथ जोड़ने वाली दूसरी प्रणालियाँ अलग ग्रन्थों और परम्पराओं में मिल सकती हैं; इस एक अंश का क्रम अपने-आप उन सभी का विवरण नहीं देता।",
+          "For a simple learning example, consider a clay lamp: a clay body, water involved in shaping it, heat in the flame, surrounding air and a place it occupies. This is an everyday explanatory analogy, not a worship procedure stated in the Upanishad.\n\nIt connects the names with experience. Other systems may associate elements with directions, grahas or the body, but the sequence in this passage does not by itself describe every such system."
         ]
       ],
       "refs": [
@@ -387,7 +507,22 @@
         "panch tatva panch mahabhut",
         "pancha mahabhuta"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "पंचमहाभूत क्या हैं?",
+          "What are the five elements?"
+        ],
+        [
+          "उपनिषद् में क्रम",
+          "The Upanishadic sequence"
+        ],
+        [
+          "एक परिचित उदाहरण",
+          "A familiar example"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "time",
@@ -409,16 +544,16 @@
       ],
       "pages": [
         [
-          "तिथि सूर्य और चन्द्रमा के भूकेन्द्रीय देशान्तर के अन्तर में प्रत्येक 12° के विभाग से जुड़ी है।",
-          "A tithi is a 12° division of the geocentric Moon–Sun longitude difference."
+          "घड़ी का दिन चौबीस घंटे में बदलता है, लेकिन तिथि सूर्य और चन्द्रमा की आपसी खगोलीय स्थिति से जुड़ी है। चन्द्रमा जब सूर्य से देशान्तर में अगला 12 अंश आगे बढ़ता है, अगली तिथि शुरू होती है। इसलिए तिथि की अवधि हर बार ठीक चौबीस घंटे नहीं होती।\n\nइसी कारण एक ही नागरिक तारीख में तिथि बदल सकती है। प्रतिपदा से आगे बढ़ती हुई तिथियों से शुक्ल और कृष्ण पक्ष का परिचय मिलता है। पंचांग में तारीख, वार और तिथि साथ दिखने पर वे एक ही वस्तु के तीन नाम नहीं, समय को पढ़ने के अलग संकेत हैं।",
+          "A civil day follows a twenty-four-hour clock, while a tithi follows the relative astronomical position of Moon and Sun. The next tithi begins when the Moon gains another 12 degrees of longitude on the Sun. Its duration is therefore not fixed at twenty-four hours.\n\nA tithi can change during one civil date. The numbered tithis belong to the waxing and waning lunar fortnights. A date, weekday and tithi shown together are different ways of describing time, rather than three names for one thing."
         ],
         [
-          "तिथि का समय घड़ी के 24 घंटे का स्थिर दिन नहीं है। पंचांग में देखें कि दिया समय आरम्भ का है या समाप्ति का।",
-          "A tithi is not a fixed 24-hour civil day. Check whether the time label marks a beginning or an ending."
+          "पंचांग के पाँच अंग हैं—वार, तिथि, नक्षत्र, योग और करण। वार सप्ताह का दिन है। तिथि सूर्य-चन्द्र के देशान्तर-अन्तर से, नक्षत्र चन्द्रमा के राशिचक्र में स्थान से और योग सूर्य-चन्द्र के निरयण देशान्तरों के योग से निकाला जाता है।\n\nकरण तिथि का आधा भाग है: सूर्य से चन्द्रमा के छह अंश आगे बढ़ने की अवधि। इसी कारण किसी तिथि के दौरान दो करण हो सकते हैं। नीचे पाँच नामों को पहचानें; एक ही समय पर ये सभी अलग गणनाओं के नाम बता रहे होते हैं।",
+          "Panchang has five limbs: vara, tithi, nakshatra, yoga and karana. Vara is the weekday. Tithi uses the Moon–Sun longitude difference; nakshatra uses the Moon’s zodiacal position; yoga uses the sum of the Sun’s and Moon’s sidereal longitudes.\n\nKarana is half a tithi, corresponding to six degrees gained by the Moon on the Sun. Thus a tithi contains two karana periods. The five labels describe different calculations at the same moment."
         ],
         [
-          "पंचांग में वार, तिथि, नक्षत्र, योग और करण पाँच अंग हैं। उत्सव के दिन का निर्णय संबंधित परम्परा के नियमों से भी जुड़ सकता है।",
-          "The five Panchang limbs are vara, tithi, nakshatra, yoga and karana. Observance dates also depend on traditional rules."
+          "किसी पंचांग में तिथि के साथ लिखा समय समाप्ति का हो सकता है। उदाहरण के लिए ‘चतुर्दशी 14:15 तक’ का अर्थ है कि उस समय चतुर्दशी समाप्त होगी और अगली तिथि शुरू होगी। इसे चतुर्दशी शुरू होने का समय समझ लेने से पूरा दिन गलत पढ़ा जाएगा।\n\nसमय पढ़ते समय ‘तक’, आरम्भ, समाप्ति, अगली तारीख और चुने हुए स्थान पर ध्यान दें। व्रत या उत्सव का दिन केवल नागरिक तारीख देखकर तय नहीं होता; संबंधित परम्परा में सूर्योदय या अन्य काल का नियम भी हो सकता है। इसलिए तिथि का परिचय और किसी विशेष पर्व का निर्णय अलग स्तरों पर समझे जाते हैं।",
+          "A time beside a tithi may mark its ending. For example, “Chaturdashi until 14:15” means the next tithi begins then; treating it as a starting time reverses the meaning.\n\nNotice “until,” start/end labels, next-day notation and the selected location. An observance may depend on sunrise or another traditional time criterion as well as the civil date. Understanding a tithi is therefore distinct from deciding a particular festival’s observance."
         ]
       ],
       "refs": [
@@ -429,7 +564,22 @@
       "aliases": [
         "tithi panchang"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "तिथि दिन से कैसे अलग है?",
+          "How is a tithi different from a day?"
+        ],
+        [
+          "पंचांग के पाँच अंग",
+          "The five limbs of Panchang"
+        ],
+        [
+          "समय कैसे पढ़ें?",
+          "Reading the time correctly"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "texts",
@@ -451,16 +601,16 @@
       ],
       "pages": [
         [
-          "संहिता, ब्राह्मण, आरण्यक और उपनिषद् वैदिक साहित्य को समझने के उपयोगी ग्रंथ-वर्ग हैं।",
-          "Samhita, Brahmana, Aranyaka and Upanishad are useful classes for understanding Vedic literature."
+          "ऋग्वेद, यजुर्वेद, सामवेद और अथर्ववेद चार वेद हैं। इनके अध्ययन में संहिता, ब्राह्मण, आरण्यक और उपनिषद् जैसे शब्द मिलते हैं। ये केवल चार अलग किताबों के नाम नहीं, वैदिक साहित्य के अलग प्रकार और परतों को समझने के संकेत हैं।\n\nकिसी पाठ का नाम देखते समय यह जानना मदद करता है कि वह किस वेद और किस शाखा से जुड़ा है। उदाहरण के लिए बृहदारण्यक उपनिषद् शुक्ल यजुर्वेद की परम्परा से जुड़ा है। शाखा और पाठ-व्यवस्था के कारण अलग परम्पराओं में साहित्य का संयोजन बदल सकता है।",
+          "Rigveda, Yajurveda, Samaveda and Atharvaveda are the four Vedas. Their study introduces terms such as Samhita, Brahmana, Aranyaka and Upanishad. These identify types and layers of Vedic literature, rather than merely four independent book titles.\n\nA text’s Vedic association and recension help place it. Brihadaranyaka Upanishad, for example, belongs to the Shukla Yajurveda tradition. Arrangement can differ across schools of transmission."
         ],
         [
-          "इनकी व्यवस्था अलग वैदिक शाखाओं में बदल सकती है। मूल पाठ और भाष्य को भी अलग पहचानें।",
-          "Their arrangement can vary by Vedic school. Distinguish the base text from its commentary."
+          "संहिता में मन्त्रों के संग्रह आते हैं। ब्राह्मण ग्रन्थ यज्ञ और उससे जुड़े अर्थ-विवेचन की ओर ले जाते हैं। आरण्यक में उपासना और अन्तर्निहित अर्थों पर विचार अधिक उभरता है। उपनिषद् आत्मा, ब्रह्म और ज्ञान के प्रश्नों को प्रमुखता देते हैं।\n\nइन श्रेणियों की सीमाएँ हर जगह एक जैसी नहीं हैं। ईशावास्य उपनिषद् वाजसनेयी संहिता के चालीसवें अध्याय के रूप में आता है। इसलिए किसी ग्रन्थ का उपनिषद् होना और उसका किसी संहिता में स्थान होना साथ-साथ सम्भव है।",
+          "Samhitas collect mantras. Brahmana texts develop ritual practice and its meanings. Aranyakas bring reflective and contemplative dimensions into focus, while Upanishads prominently explore self, Brahman and knowledge.\n\nThe boundaries are not identical everywhere. Ishavasya Upanishad forms the fortieth chapter of the Vajasaneyi Samhita: being an Upanishad and having a place within a Samhita are compatible descriptions."
         ],
         [
-          "‘108 उपनिषद्’ मुक्तिका की एक प्रसिद्ध सूची का संदर्भ है; यह सभी उपलब्ध उपनिषदों की निर्विवाद कुल संख्या नहीं है।",
-          "The familiar 108 refers to the Muktika list, rather than an uncontested count of every surviving Upanishad."
+          "मूल पाठ, अनुवाद और भाष्य की भूमिका अलग होती है। अनुवाद भाषा बदलकर अर्थ तक पहुँचाता है; भाष्य किसी आचार्य की व्याख्या देता है। दोनों साथ छपे होने पर भी हर व्याख्यात्मक वाक्य मूल मन्त्र का हिस्सा नहीं हो जाता।\n\nउपनिषदों के लिए परिचित संख्या 108 मुक्तिका की सूची से जुड़ी है। यह सभी उपलब्ध या अलग-अलग परम्पराओं में गिने गए उपनिषदों की निर्विवाद कुल संख्या नहीं है। किसी पाठ के साथ वेद, शाखा, अध्याय और भाष्यकार की पहचान पढ़ना उसके विचार को सही स्थान पर समझने में मदद करता है।",
+          "The base text, translation and commentary have distinct roles. Translation changes the language; commentary develops an interpreter’s explanation. Printing them together does not make every explanatory sentence part of the original mantra.\n\nThe familiar 108 Upanishads refers to the Muktika list, rather than an uncontested total of every surviving work. Identifying the Veda, recension, passage and commentator places a reading in its proper context."
         ]
       ],
       "refs": [
@@ -471,7 +621,22 @@
       "aliases": [
         "ved veda upanishad"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "चार वेद और उनके भाग",
+          "Four Vedas and their divisions"
+        ],
+        [
+          "संहिता से उपनिषद्",
+          "From Samhita to Upanishad"
+        ],
+        [
+          "ग्रन्थ और भाष्य",
+          "A text and its commentary"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "temples",
@@ -493,27 +658,43 @@
       ],
       "pages": [
         [
-          "गर्भगृह मुख्य प्रतिमा का भीतरी कक्ष है। मण्डप एक सभा या प्रवेश-स्थान हो सकता है।",
-          "The garbhagriha is the inner sanctum housing the main image. A mandapa can be a hall or porch."
+          "मंदिर के भीतर मुख्य देव-प्रतिमा का स्थान गर्भगृह कहलाता है। यह मंदिर का भीतरी केन्द्र है। बाहर से दिखने वाला सबसे ऊँचा या सबसे सजावटी भाग ही गर्भगृह हो, ऐसा आवश्यक नहीं; गर्भगृह एक आन्तरिक स्थान का नाम है।\n\nमण्डप गर्भगृह के सामने या उससे जुड़ा सभा और पूजा का स्थान हो सकता है। अनेक मंदिरों में दोनों के बीच अन्तराल नाम का जोड़ने वाला भाग होता है। इस तरह मंदिर को केवल एक भवन नहीं, अलग भूमिकाओं वाले स्थानों की व्यवस्था के रूप में पढ़ा जा सकता है।",
+          "The garbhagriha is the inner sanctum housing the principal sacred image. It names an interior space, not necessarily the tallest or most decorative feature visible outside.\n\nA mandapa can form a hall or porch before the sanctum. An antarala may connect them. These terms help describe the temple as an arrangement of spaces with different functions."
         ],
         [
-          "इस सरल योजना के स्थान छूकर उनका परिचय देखें। वास्तविक मंदिरों की रचना और नाम क्षेत्र के अनुसार बदलते हैं।",
-          "Tap the spaces in this simplified plan. Actual temple layouts and terminology vary by region."
+          "सरल योजना में पहले प्रवेश, फिर मण्डप और भीतर गर्भगृह को देखें। इससे बाहर से भीतरी केन्द्र की ओर बढ़ने का क्रम समझ आता है। किसी वास्तविक मंदिर में कई मण्डप, प्राकार, उप-मंदिर या परिक्रमा-पथ भी हो सकते हैं।\n\nयह परिचय स्थान पहचानने के लिए है। कहाँ तक प्रवेश करना है, किस ओर से जाना है और दर्शन की स्थानीय व्यवस्था क्या है—इनके लिए उसी मंदिर के निर्देश मानें। अलग क्षेत्रों की भवन-योजना और शब्दावली में फर्क मिलना स्वाभाविक है।",
+          "In the simplified plan, follow entrance, mandapa and inner sanctum. It explains movement toward the inner centre; a real temple may also have several halls, enclosures, subsidiary shrines or a circumambulatory path.\n\nThe diagram identifies spaces. Local temple guidance determines permitted access and the visitor route. Plans and terminology vary across regions."
         ],
         [
-          "गोपुर प्रवेश-द्वार का ऊँचा भाग है; गर्भगृह के ऊपर की अधिरचना से उसका भेद रखें।",
-          "A gopura is a gateway tower; distinguish it from the sanctum’s superstructure."
+          "शिखर गर्भगृह के ऊपर उठने वाली अधिरचना का नाम है, विशेषकर उत्तर भारतीय मंदिर-वर्णन में यह शब्द मिलता है। दक्षिण भारतीय मंदिर-वास्तु में गर्भगृह के ऊपर की संरचना के लिए विमान शब्द भी प्रचलित है।\n\nगोपुर या गोपुरम् प्रवेश-द्वार से जुड़ा ऊँचा द्वार-स्तम्भ या टॉवर है। उसे गर्भगृह के ऊपर की संरचना से अलग पहचानें। मंदिर को देखते समय तीन प्रश्न मदद करते हैं: देव-प्रतिमा का भीतरी स्थान कौन-सा है, सभा का स्थान कहाँ है, और दिखाई दे रहा ऊँचा भाग प्रवेश का है या गर्भगृह का?",
+          "Shikhara names the superstructure rising above the sanctum, particularly in descriptions of northern temples. Vimana is used for the sanctum’s superstructure in southern architectural settings.\n\nA gopura or gopuram is a gateway tower and should be distinguished from the structure above the sanctum. Identify the inner image chamber, the gathering space and whether a tall feature belongs to an entrance or to the sanctum."
         ]
       ],
       "refs": [
-        "TEMPLE-GOV",
-        "MET-EDUCATORS"
+        "ASI-TEMPLE",
+        "MET-EDUCATORS",
+        "TEMPLE-GOV"
       ],
       "kind": "temple",
       "aliases": [
         "mandir garbhagriha mandap"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "गर्भगृह कहाँ है?",
+          "Where is the sanctum?"
+        ],
+        [
+          "मण्डप और प्रवेश",
+          "Hall and entrance"
+        ],
+        [
+          "शिखर और गोपुर",
+          "Shikhara and gopura"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     },
     {
       "id": "rishis",
@@ -535,16 +716,16 @@
       ],
       "pages": [
         [
-          "गार्गी याज्ञवल्क्य से जगत के आधार और अक्षर के विषय में प्रश्न करती हैं। बृहदारण्यक उपनिषद् 3.8 में यह संवाद मिलता है।",
-          "Gargi questions Yajnavalkya about the world’s basis and the Immutable in Brihadaranyaka Upanishad 3.8."
+          "बृहदारण्यक उपनिषद् 3.8 में गार्गी वाचक्नवी याज्ञवल्क्य से दो प्रश्न पूछती हैं। वह अपने प्रश्नों की तुलना दो तीक्ष्ण बाणों से करती हैं। यह तुलना उनके प्रश्नों की गम्भीरता बताती है—वह केवल कोई नाम या संख्या नहीं, पूरे जगत के आधार को जानना चाहती हैं।\n\nउनका पहला प्रश्न आकाश और पृथ्वी के ऊपर, नीचे और बीच के जगत तक फैलता है। भूत, वर्तमान और भविष्य में कही जाने वाली सारी वस्तुएँ किसमें स्थित हैं? गार्गी का परिचय इस जिज्ञासा और दार्शनिक संवाद में उनकी सक्रिय भूमिका से बनता है।",
+          "In Brihadaranyaka Upanishad 3.8, Gargi Vachaknavi approaches Yajnavalkya with two questions, comparing them to sharp arrows. She seeks more than a name or number: she asks about the ground of the world.\n\nHer first question encompasses what lies above heaven, below earth and between them, along with past, present and future. Her role in the passage is that of an active philosophical questioner."
         ],
         [
-          "ज्ञान-परम्परा में प्रश्न, संवाद और व्याख्या महत्वपूर्ण रूप हैं। गार्गी को दार्शनिक प्रश्नकर्ता के रूप में पढ़ें।",
-          "Question, dialogue and interpretation are important modes of learning. Read Gargi as a philosophical questioner."
+          "याज्ञवल्क्य पहले उत्तर में आकाश का उल्लेख करते हैं। गार्गी फिर पूछती हैं कि वह आकाश किसमें स्थित है। इस दूसरे प्रश्न से चर्चा ‘अक्षर’—अविनाशी आधार—की ओर बढ़ती है।\n\nयहाँ प्रश्न केवल दिखाई दे रहे आकाश की दूरी नापने का नहीं है। संवाद में जगत और उसके आधार पर विचार किया जा रहा है। अध्याय के अन्त में गार्गी याज्ञवल्क्य के उत्तर की प्रतिष्ठा स्वीकार करती हैं। दो प्रश्न, उनके उत्तर और यह समापन मिलकर प्रसंग की पूरी गति बनाते हैं।",
+          "Yajnavalkya first answers through akasha. Gargi then asks what supports that akasha, moving the discussion toward the Akshara, the Imperishable.\n\nThe enquiry concerns the world and its ground, rather than measuring the distance to the visible sky. Gargi ultimately acknowledges the standing of Yajnavalkya’s answer. The questions, responses and conclusion form the movement of this episode."
         ],
         [
-          "मैत्रेयी का धन और अमृतत्व से जुड़ा प्रश्न एक अन्य संवाद में आता है। दोनों प्रसंगों को मिलाकर नई कथा न बनाएँ।",
-          "Maitreyi’s question about wealth and immortality occurs in another dialogue. Preserve the two contexts."
+          "मैत्रेयी का प्रश्न बृहदारण्यक के दूसरे प्रसंग, 2.4, में आता है। धन का बँटवारा प्रस्तावित होने पर वह पूछती हैं कि क्या बहुत-सा धन उन्हें अमृतत्व दे सकता है। उत्तर मिलने पर उनकी जिज्ञासा धन से आगे आत्मज्ञान की ओर जाती है।\n\nगार्गी जगत के आधार को और मैत्रेयी धन से न मिल सकने वाले ज्ञान को प्रश्न बनाती हैं। दोनों प्रसंग दिखाते हैं कि उपनिषद् में प्रश्न करना सीखने का सक्रिय मार्ग है। ये दो अलग संवाद हैं; इनके पात्र, प्रश्न और अवसर अलग रखते हुए पढ़ने पर प्रत्येक का अर्थ अधिक स्पष्ट होता है।",
+          "Maitreyi’s question appears in a different episode, Brihadaranyaka 2.4. When wealth is to be divided, she asks whether great wealth could bring immortality. The response turns her enquiry toward knowledge of the self.\n\nGargi asks about the world’s ground; Maitreyi asks about what wealth cannot supply. Both passages make questioning an active path of learning, while retaining distinct participants, occasions and questions."
         ]
       ],
       "refs": [
@@ -555,7 +736,22 @@
       "aliases": [
         "gargi rishi yagyavalkya yajnavalkya"
       ],
-      "status": "published"
+      "status": "published",
+      "pageTitles": [
+        [
+          "गार्गी के दो प्रश्न",
+          "Gargi’s two questions"
+        ],
+        [
+          "जगत किसमें स्थित है?",
+          "What supports the world?"
+        ],
+        [
+          "मैत्रेयी का अलग प्रश्न",
+          "Maitreyi’s distinct question"
+        ]
+      ],
+      "reviewStatus": "source-checked-candidate"
     }
   ],
   "sources": {
@@ -575,12 +771,12 @@
       "location": "Purvapada 4.481–491; 4.505–510; 4.441–448"
     },
     "UOU-KARMA": {
-      "title": "Microsoft Word - cvk - 01 final book",
+      "title": "Karmakanda study material · CVK 01",
       "edition": "Uttarakhand Open University CVK 01",
       "location": "Dikpal unit, printed pp 155–157 especially Brahma and Ananta"
     },
     "HAF-SWASTIKA": {
-      "title": "www.hinduamerican.org",
+      "title": "Swastika: a guide to its sacred meaning and history",
       "edition": "Hindu American Foundation",
       "location": "Word meaning, usage and symbolism sections"
     },
@@ -605,7 +801,7 @@
       "location": "Vishnu Dashavatara list"
     },
     "JAYADEVA": {
-      "title": "Read-Chapter | E-Bharatisampat",
+      "title": "Gitagovinda · opening Dashavatara hymn",
       "edition": "E Bharatisampat Sanskrit library",
       "location": "Gita Govinda first sarga opening avatara hymn"
     },
@@ -683,13 +879,20 @@
       "title": "Yajnavalkya and Maitreyi (I) [Section IV]",
       "edition": "Madhavananda with Shankara commentary",
       "location": "Brihadaranyaka 2.4.1–5"
+    },
+    "ASI-TEMPLE": {
+      "title": "About The Temple | Temple Survey Project(Northern Region), Bhopal",
+      "edition": "Archaeological Survey of India Temple Survey Project",
+      "location": "About the Temple"
     }
   },
   "source": {
     "kind": "app-written-editorial-introductions",
     "baseText": "Original introductory prose based on the credited works; not a scripture collection or ritual manual.",
     "approvedOn": "2026-11-05",
-    "approval": "Approved Sanatan Parichay design review: e4a01fe0fac7b9637fa71e536d76612fa0c39c1c; request: Looks good build it.",
-    "referenceUrls": []
+    "approval": "Design direction approved 2026-11-05 at e4a01fe0fac7b9637fa71e536d76612fa0c39c1c. Revised prose is a source-checked PR candidate; maintainer/editorial and native acceptance remain pending.",
+    "referenceUrls": [],
+    "revisionNote": "Rewritten reading copy is a source-checked PR candidate. Prior approval was for the prototype design; complete content and native acceptance remain separate.",
+    "approvalScope": "prototype design only; revised reading content requires separate acceptance"
   }
 }
