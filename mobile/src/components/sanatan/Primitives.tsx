@@ -1,10 +1,11 @@
 import React from 'react';
-import { Image, Pressable, Text, View, type ViewStyle } from 'react-native';
+import { Pressable, Text, View, type ViewStyle } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import ProseParagraph from '@/components/ProseParagraph';
+import FramedPainting from '@/components/FramedPainting';
 import { sanatanArtwork } from '@/data/sanatan-parichay/artwork';
 import type { Pair } from '@/data/sanatan-parichay';
 
@@ -25,8 +26,7 @@ export function Copy({ children, heading = false }: { children: string; heading?
 
 /** All collection artwork has the same approved crop. No icon fallback family. */
 export function Painting({ id, small = false }: { id: string; small?: boolean }) {
-  return <Image source={sanatanArtwork[id]} accessible={false} resizeMode="cover"
-    style={small ? { width: 81, height: 54, borderRadius: 10 } : { width: '100%', aspectRatio: 1.5, borderRadius: 16 }} />;
+  return <FramedPainting source={sanatanArtwork[id]} small={small} testID={`sanatan-artwork-${id}${small ? '-thumbnail' : ''}`} />;
 }
 
 export function Action({ label, onPress, selected = false, disabled = false, testID, style }: {
