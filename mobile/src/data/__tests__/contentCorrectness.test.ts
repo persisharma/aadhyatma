@@ -990,6 +990,23 @@ for (const file of collectJsonFiles()) {
   assert.ok(data.source, `${file} should declare source provenance`);
   // This exact collection is original prose, not scripture requiring collation.
   // Require honest authorship rather than inventing two external source URLs.
+  // Sanatan lessons are authored introductions, not a new liturgical corpus.
+  // Validate their cited-source graph instead of treating prose as collated scripture.
+  if (file === 'sanatan-parichay/content.json') {
+    assert.equal(data.source.kind, 'app-written-editorial-introductions');
+    assert.match(data.source.baseText, /not a scripture collection/i);
+    assert.match(data.source.approvedOn, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(data.source.approval.trim());
+    assert.deepEqual(data.source.referenceUrls, []);
+    assert.equal(data.topics.length, 13);
+    for (const topic of data.topics) {
+      assert.equal(topic.pages.length, 3);
+      assert.ok(topic.refs.length > 0);
+      for (const ref of topic.refs) assert.ok(data.sources[ref]?.edition && data.sources[ref]?.location);
+    }
+    assert.ok(!/https?:\/\//.test(JSON.stringify(data)), 'research URLs do not ship in lesson content');
+    continue;
+  }
   if (file === 'suvichar-content/originals.json') {
     assert.equal(data.source.kind, 'app-written-original-reflections');
     assert.match(data.source.baseText, /not a scripture collection/i);

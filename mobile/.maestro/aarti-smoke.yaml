@@ -86,6 +86,7 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "ॐ जय श्री श्याम हरे.*"
+- takeScreenshot: e2e-shots/aarti-complete-reader-header
 - tapOn: "Back"
 - waitForAnimationToEnd
 # Jay Adhya Shakti (addedInVersion 1.5.2, NEW badge absorbed by `.*`). Open it

@@ -1,0 +1,34 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+- tapOn: "Language,.*"
+- tapOn: "${READING_LANGUAGE}"
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+- tapOn: "Reading size,.*"
+- tapOn: "${READING_SIZE}"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-home }
+- scrollUntilVisible:
+    element: { id: home-sanatan-card }
+    direction: DOWN
+- tapOn: { id: home-sanatan-card }
+- scrollUntilVisible:
+    element: { id: sanatan-collection-dikpal }
+    direction: DOWN
+- tapOn: { id: sanatan-collection-dikpal }
+- scrollUntilVisible:
+    element: { id: sanatan-start }
+    direction: DOWN
+- tapOn: { id: sanatan-start }
+- takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}"
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+- tapOn: { id: sanatan-next }
+- assertVisible: "2/3"
+- takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}"

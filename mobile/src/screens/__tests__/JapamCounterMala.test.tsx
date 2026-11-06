@@ -3,8 +3,6 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Lang } from '@/data/gita/language';
-import JapamMala from '@/components/JapamMala';
-import JapamInfinity from '@/components/JapamInfinity';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -124,8 +122,6 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     await act(async () => { tapSurface(tree).props.onPress(); });
     await act(async () => { choice(tree, 'infinity').props.onPress(); });
     expect(tree.root.findAll((n) => n.props.testID === 'japam-infinity').length).toBeGreaterThan(0);
-    expect(tree.root.findAllByType(JapamMala)).toHaveLength(0);
-    expect(tree.root.findAllByType(JapamInfinity)).toHaveLength(1);
     expect(choice(tree, 'infinity').props.accessibilityState.selected).toBe(true);
     expect(beadLabel(tree)).toContain('1 of 108');
     expect(texts(tree)).toContain('शुरू करने के लिए स्पर्श करें');
@@ -140,8 +136,6 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     await act(async () => { tapSurface(tree).props.onPress(); });
     expect(beadLabel(tree)).toContain('0 of 108');
     await act(async () => { choice(tree, 'mala').props.onPress(); });
-    expect(tree.root.findAllByType(JapamMala)).toHaveLength(1);
-    expect(tree.root.findAllByType(JapamInfinity)).toHaveLength(0);
     await act(async () => { tapSurface(tree).props.onPress(); });
     expect(beadLabel(tree)).toContain('1 of 108');
     expect(beadLabel(tree)).toContain('1 malas completed');

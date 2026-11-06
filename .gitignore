@@ -52,3 +52,6 @@ tmp/
 # Python bytecode caches (marketing builder scripts)
 __pycache__/
 *.pyc
+
+# Reproducible clipping regression screenshots/results
+/mobile/visual-output/layout/
