@@ -26,6 +26,15 @@ product content, artwork, publication gates, progress or native dependencies.
    failing result for any failure. Widget and Ask suites join the CI gate as
    already required by `npm test`. Both asset exports run independently; CDN
    verification still requires both successful asset maps.
+5. The prior iOS job built the app with Xcode 16.4 for iOS 18.5, while the
+   pinned Maestro 2.12.1 runner's bundled Info.plists identify SDK/Xcode 26.2.
+   Its upstream iOS test matrix uses iOS 26.2. Sanatan now selects macOS 26,
+   Xcode 26.2 and the exact iOS 26.2 runtime, and verifies the driver against
+   Settings before a fresh app compilation. This aligns the toolchain; native
+   execution must still prove whether it resolves the observed startup timeout.
+   The shared simulator selector retains the previous default for other callers,
+   rejects wrong-runtime overrides and has six executable fixture regressions.
+   Native diagnostics have a 20-second limit and the flow result is written first.
 
 ## Evidence and limits
 
@@ -34,6 +43,8 @@ product content, artwork, publication gates, progress or native dependencies.
 - After: all 20 targeted Jest tests and all five Doha integration tests pass.
 - Full local reader/component run: 354 suites / 3,489 tests pass. Widgets 46,
   engine 772, data 223 and Ask 49 pass. TypeScript and instruction policy pass.
+- Both production asset maps and the public SHA-256 checks for all 144 Kids
+  artwork objects pass; neither export bundles those story paintings.
 - Literal local `npm test` reaches TypeScript, then the tsx CLI fails opening an
   IPC socket (`EPERM`). The same Node-suite file lists pass through
   `node --import tsx --test`; this is not a claim that the literal command passed.

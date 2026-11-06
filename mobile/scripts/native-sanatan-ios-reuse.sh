@@ -18,17 +18,7 @@ if [[ "${SANATAN_REBUNDLE_JS:-0}" == 1 ]]; then
   node scripts/rebundle-sanatan-simulator.cjs "$SANATAN_APP" "$SANATAN_REUSE_OUTPUT"
 fi
 xcrun simctl list devices available --json > "$SANATAN_REUSE_OUTPUT/simulators.json"
-SIMULATOR_UDID=$(python3 - "$SANATAN_REUSE_OUTPUT/simulators.json" <<'PY'
-import json,sys
-phones=[d for runtime,devices in json.load(open(sys.argv[1]))['devices'].items()
-        if '.iOS-' in runtime for d in devices
-        if d.get('isAvailable') and d['name'].startswith('iPhone')]
-priority=['iPhone SE (3rd generation)','iPhone 16e','iPhone 17e','iPhone 16','iPhone 17']
-phones.sort(key=lambda d:priority.index(d['name']) if d['name'] in priority else len(priority))
-if not phones:raise SystemExit('No available iPhone simulator')
-print(phones[0]['udid'])
-PY
-)
+SIMULATOR_UDID=$(node scripts/select-native-ios-device.cjs "$SANATAN_REUSE_OUTPUT/simulators.json")
 export SIMULATOR_UDID
 echo "SIMULATOR_UDID=$SIMULATOR_UDID" >> "$GITHUB_ENV"
 SIMULATOR_STATE=$(python3 - "$SANATAN_REUSE_OUTPUT/simulators.json" "$SIMULATOR_UDID" <<'PY'

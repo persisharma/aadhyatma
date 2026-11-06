@@ -10,10 +10,19 @@ cleanup() {
   local result=$?
   trap - EXIT
   set +e
+  # Preserve the real flow failure before optional OS diagnostics can stall.
+  printf '{"platform":"%s","phase":"%s","exitCode":%s}\n' "$PLATFORM" "$SANATAN_PHASE" "$result" > "$SANATAN_OUTPUT/result.json"
   if [[ "$PLATFORM" == ios ]]; then
     xcrun simctl io "$DEVICE" screenshot "$SANATAN_OUTPUT/final.png"
     xcrun simctl ui "$DEVICE" content_size large
-    xcrun simctl spawn "$DEVICE" log show --last 3m --style compact --predicate 'process == "Vedansh"' > "$SANATAN_OUTPUT/device.log" 2>&1
+    python3 - "$DEVICE" "$SANATAN_OUTPUT/device.log" <<'PY'
+import subprocess, sys
+with open(sys.argv[2], 'w') as output:
+    try:
+        subprocess.run(['xcrun', 'simctl', 'spawn', sys.argv[1], 'log', 'show', '--last', '3m', '--style', 'compact', '--predicate', 'process == "Vedansh"'], stdout=output, stderr=subprocess.STDOUT, timeout=20)
+    except subprocess.TimeoutExpired:
+        output.write('Diagnostic collection timed out after 20 seconds.\n')
+PY
   else
     adb -s "$DEVICE" logcat -d > "$SANATAN_OUTPUT/device.log" 2>&1
     adb -s "$DEVICE" exec-out screencap -p > "$SANATAN_OUTPUT/final.png"
@@ -21,7 +30,6 @@ cleanup() {
   fi
   cp e2e-shots/sanatan*.png "$SANATAN_OUTPUT/" 2>/dev/null
   if [[ -d "$HOME/.maestro/tests" ]]; then cp -R "$HOME/.maestro/tests" "$SANATAN_OUTPUT/maestro-debug"; fi
-  printf '{"platform":"%s","phase":"%s","exitCode":%s}\n' "$PLATFORM" "$SANATAN_PHASE" "$result" > "$SANATAN_OUTPUT/result.json"
   exit "$result"
 }
 trap cleanup EXIT

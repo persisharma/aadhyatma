@@ -25,7 +25,9 @@ env:
 jobs:
   ios:
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: macos-15
+    runs-on: macos-26
+    env:
+      NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
     timeout-minutes: 75
     defaults:
       run:
@@ -45,11 +47,18 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Select matching XCTest toolchain
+        run: |
+          test -d /Applications/Xcode_26.2.app
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+          xcodebuild -version
       - run: npm ci
       - name: Install native test driver
         run: |
-          curl -fsSL https://get.maestro.mobile.dev | bash
-          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/sanatan-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/sanatan-maestro.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/sanatan-maestro.zip" -d "$RUNNER_TEMP/sanatan-tools"
+          echo "$RUNNER_TEMP/sanatan-tools/maestro/bin" >> "$GITHUB_PATH"
       - name: Check preserved native SDK compatibility
         id: compat
         run: |
@@ -84,6 +93,7 @@ jobs:
         if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
         env:
           NATIVE_SMOKE_SCOPE: host
+          NATIVE_SMOKE_DRIVER_CHECK: '1'
         run: bash scripts/native-ios-smoke.sh
       - name: Exercise fresh simulator app
         if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
