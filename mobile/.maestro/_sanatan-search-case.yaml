@@ -7,7 +7,6 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
-- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
 - tapOn: { id: tab-home }
 - runFlow: _sanatan-home-entry.yaml
 - tapOn: { id: home-sanatan-card }
