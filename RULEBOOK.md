@@ -454,6 +454,21 @@ Reading artwork is never bundled: a corrected painting replaces the source file 
 Share-card art follows the same rule: the Daily Bhakti devotional masters are R2 objects under
 `devotional-share`, resolved through the download-once cache, and capture refuses until every slice
 has painted.
+
+**Post-merge R2 publication.** `.github/workflows/r2-upload.yml` publishes the exact
+committed manifest hashes after relevant changes reach `main`; PRs only test and
+dry-run. `scripts/r2-collections.json` is the bounded manifest/source catalog.
+Unreferenced draft files are excluded, every selected source mapping is validated
+before the first write, existing keys skip PUT, and every public object is GET-checked
+against its full source SHA-256 and content type. Missing Actions secrets produce
+a clear successful skip; configured auth/upload/CDN failures fail the job. Adding
+secrets does not itself trigger Actions: run the workflow once on `main` to catch up,
+or let the next relevant merge do so. Publication never writes runtime manifests,
+changes feature activation flags or pushes an OTA; existing verified-publication
+and native review gates still apply before distributing active hashes. Add a new
+collection's source paths to both workflow filters and its catalog entry. Setup,
+manual retries and report interpretation: `docs/engineering/r2-auto-upload.md`.
+
 Paged verse readers show the banner only on the first actual verse of each reading/chapter/theme,
 excluding navigation transition cards; section-based Katha/Pitru readers show it only on section
 zero. Later cards keep their themed background and divider with no banner frame, placeholder
