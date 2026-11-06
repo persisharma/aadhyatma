@@ -16,6 +16,27 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: sanatan-search }
 - inputText: "${QUERY}"
 - pressKey: Enter
+- assertVisible: { id: sanatan-search, text: "${QUERY}" }
+# A matching card alone could be the unfiltered catalogue. Prove the empty
+# result state, then restore the real query before capturing its matched topic.
+- tapOn: { id: sanatan-search }
+- eraseText
+- inputText: "zzzz-no-match"
+- pressKey: Enter
+- scrollUntilVisible:
+    element:
+      text: "कोई परिचय नहीं मिला। दूसरा शब्द आज़माएँ।|No introductions found. Try another word.|કોઈ પરિચય નહીં મિલા। દૂસરા શબ્દ આજ઼માએઁ।|ಕೋಈ ಪರಿಚಯ ನಹೀಂ ಮಿಲಾ। ದೂಸರಾ ಶಬ್ದ ಆಜ಼ಮಾಏಁ।"
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: sanatan-search }
+    direction: UP
+    timeout: 15000
+- tapOn: { id: sanatan-search }
+- eraseText
+- inputText: "${QUERY}"
+- pressKey: Enter
+- assertVisible: { id: sanatan-search, text: "${QUERY}" }
 - scrollUntilVisible:
     element: { id: sanatan-collection-symbols }
     direction: DOWN

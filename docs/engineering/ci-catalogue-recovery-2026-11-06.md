@@ -64,7 +64,10 @@ product content, artwork, publication gates, progress or native dependencies.
    in regional search at a stale Done tap. `LanguagePickerSheet` applies and
    closes on selection; only `ReadingSizePickerSheet` retains Done. Regional
    search now waits for the settings row to confirm the selected language, then
-   continues to the actual query. The size matrix keeps its required Done tap.
+   asserts the actual native query value, checks a nonmatching query's empty
+   state and restores the positive query before capturing the matched topic.
+   This prevents an unfiltered catalogue from masquerading as a successful
+   search. The size matrix keeps its required Done tap.
 
 ## Evidence and limits
 
