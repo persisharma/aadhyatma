@@ -11,6 +11,10 @@ let mockReadError = false, mockWriteError = false, mockBrand = false;
 let mockTour = { isLoading: false, shouldShowFirstLaunchTour: false, shouldShowOnboardingSetup: false, shouldShowWhatsNew: false };
 const mockNavigate = jest.fn(), mockOpen = jest.fn(async (_url: string) => undefined);
 const mockReact = React;
+const originalDevDescriptor = Object.getOwnPropertyDescriptor(globalThis, '__DEV__');
+function setDev(value: boolean) {
+  Object.defineProperty(globalThis, '__DEV__', { configurable: true, writable: true, value });
+}
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(async (key: string) => { if (mockReadError && key.includes('store-update')) throw Error('offline'); return mockStorage.get(key) ?? null; }),
   setItem: jest.fn(async (key: string, value: string) => { if (mockWriteError && key.includes('store-update')) throw Error('full'); mockStorage.set(key, value); }),
@@ -44,7 +48,7 @@ async function boot(targeted = false) {
 function shown() { return tree!.root.findAllByProps({ testID: 'store-update-heading' }).length > 0; }
 function button(id: string) { return tree!.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function')!; }
 beforeEach(() => {
-  global.__DEV__ = false;
+  setDev(false);
   jest.useFakeTimers({ now: Date.UTC(2026, 10, 3, 6) });
   mockStorage.clear(); mockRuntime = '1.5.3'; mockPending = false; mockReadError = false; mockWriteError = false; mockBrand = false; mockLang = 'en';
   mockTour = { isLoading: false, shouldShowFirstLaunchTour: false, shouldShowOnboardingSetup: false, shouldShowWhatsNew: false };
@@ -54,7 +58,13 @@ beforeEach(() => {
   jest.spyOn(nativeBoundary.Linking, 'openURL').mockImplementation(mockOpen);
   mockOpen.mockReset().mockResolvedValue(undefined); mockNavigate.mockClear();
 });
-afterEach(async () => { if (tree) await act(async () => tree!.unmount()); tree = undefined; global.__DEV__ = true; jest.restoreAllMocks(); jest.useRealTimers(); });
+afterEach(async () => {
+  if (tree) await act(async () => tree!.unmount());
+  tree = undefined;
+  if (originalDevDescriptor) Object.defineProperty(globalThis, '__DEV__', originalDevDescriptor);
+  else Reflect.deleteProperty(globalThis, '__DEV__');
+  jest.restoreAllMocks(); jest.useRealTimers();
+});
 
 test('older native runtime claims the real shared slot, Later continues and cooldown survives cold boots', async () => {
   await boot(); expect(shown()).toBe(true);
@@ -74,7 +84,7 @@ test.each(['target', 'brand', 'whatsNew', 'tour', 'setup', 'pending', 'readError
   if (reason === 'pending') mockPending = true;
   if (reason === 'readError') mockReadError = true;
   if (reason === 'writeError') mockWriteError = true;
-  if (reason === 'dev') global.__DEV__ = true;
+  if (reason === 'dev') setDev(true);
   await boot(reason === 'target'); expect(shown()).toBe(false);
 });
 test.each(['ios', 'android'] as const)('%s opens the store listing once and dismisses', async platform => {
