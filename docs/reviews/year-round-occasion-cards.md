@@ -17,13 +17,27 @@ Ten new text-free scenes are preserved in `mobile/assets/festival-hero/`, with f
 
 New heavy paintings use the `festival-hero` R2 prefix; they are not required into the native bundle. `festivalHeroManifest.json` remains `pending` until the publisher downloads every production CDN object and verifies its full source hash. The publication workflow emits a verified manifest and proof as artifacts; it cannot change the app manifest automatically. Never treat an upload dry-run as publication. Capture waits for actual image decode; errors cannot unlock a blank export.
 
-## Evidence (in progress)
+## Evidence
 
-- PASS: TypeScript typecheck; existing 137 occasion timing assertions against 115 Drik fixtures; 19 focused component/closed-inventory assertions.
-- PASS: all 197 catalog identities and known subject assignments; ten source WebP hashes; instruction routing; whitespace check.
-- PENDING: final full mobile suites, full-year route/date coverage, published CDN objects, native matrix/visual comparison, physical devices and Android native export.
-- The existing main baseline has unrelated reader/data expectation failures recorded in `festival-muhurat-audit.md`; do not weaken those tests to mark this feature green.
-- Native verification is an unsigned simulator Release only; no EAS, OTA, TestFlight or store release. The previous Maestro Settings preflight failed before the app ran. This branch pins Xcode 16.4/iOS 18.5 and emphasizes focused hero exports; a new run must establish its result.
+Local implementation tree: `cbf584904cac9992435ea5db3d58b746a897ae8c` (remote checkpoint `13c6864954a7aaf4cc23240782f03e46d61ca27c`), with subsequent test/evidence-only changes included in the final PR head.
+
+| Gate | Result | Evidence |
+| --- | --- | --- |
+| Scope / closed inventory | PASS | All 197 catalog IDs have profiles and known artwork subjects; additions require an explicit fixture update. |
+| Whole-year date coverage | PASS | All 366 resolved 2026 occurrence records in each of Purnimant and Amanta; every month represented; five tests include ceremony-date regressions. This proves catalog wiring, not a new source audit of every tradition. |
+| Engine / verified clocks | PASS | 772 tests, including all 137 timing assertions and the 115 existing Drik fixtures. |
+| TypeScript / widgets / Ask | PASS | Typecheck; 46 widget and 49 Ask tests. |
+| New card/provider tests | PASS | Four scripts, individual row share payloads, undated catalog cards, source hashes, stale identity and decode readiness. Native rendering remains separate. |
+| Full reader suite | FAIL: existing main expectations | All three unmodified package shards executed: 3487 assertions, 3484 pass, three failures in dailyBhaktiShare, DeityIcon and RoutineTodayVisual. The unchanged-main expectation drift is recorded in the earlier audit. |
+| Full data suite | FAIL: existing main expectations | 223 assertions, 220 pass; three dohaScopes failures (92 vs 84, 19 vs 18, missing thought). New text-free art manifest is routed alongside existing non-scripture asset manifests; its source hashes have their own gate. |
+| Artwork source / durability | PASS | Ten WebP masters with full hashes and prompt ledger committed remotely; final Govardhan revision inspected. |
+| Public CDN integration | BLOCKED | Run 42209628916, job 127864761920: missing R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY. Upload failed and activation was withheld. Add the repository R2 secrets, rerun publication, inspect all public hashes, and commit the emitted verified manifest/proof. |
+| Installed native size/language/export matrix | PENDING | Push-triggered macOS Release run. Stable Xcode 16.4 selection passed. No native success or visual parity is claimed; inspect actual screens/PNGs before readiness. |
+| Actual Android / physical devices | PENDING | No successful installed-app run available in this environment. |
+| Startup / source validity | PASS | Launch import graph and byte budget, instruction routing and whitespace gates. Share-only hero renderer loads on demand. |
+| Merge / OTA / store release | N/A | No merge, EAS, TestFlight, store or OTA publication requested/performed. |
+
+The existing main failures are not bypassed or weakened. Required pending/failed checks keep this PR draft. The new scene-dependent exports wait for verified publication and decoded artwork rather than sharing a blank painting.
 
 ## Date distinctions checked
 

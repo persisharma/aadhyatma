@@ -94,3 +94,12 @@ test('changing occasion identity clears decoded-image readiness', async () => {
   await act(async () => tree.update(<ThemeProvider><GitaLanguageProvider initialLang="en"><OccasionShareCard items={[other]} {...props} /></GitaLanguageProvider></ThemeProvider>));
   expect(onReady).toHaveBeenLastCalledWith(false);
 });
+test('a decoded hero that later fails cannot remain capture-ready', async () => {
+  const onReady = jest.fn();
+  const item = occasionGuidance(rules.find(r => r.id === 'rama-ekadashi')!, date);
+  const tree = await mount(<OccasionShareCard items={[item]} date={date} placeHi="दिल्ली" placeEn="Delhi" lang="en" onReady={onReady} />);
+  act(() => tree.root.findAllByType(Image).forEach(n => n.props.onLoad?.()));
+  expect(onReady).toHaveBeenLastCalledWith(true);
+  act(() => tree.root.findAllByType(Image).find(n => n.props.testID === 'occasion-hero-image')!.props.onError());
+  expect(onReady).toHaveBeenLastCalledWith(false);
+});
