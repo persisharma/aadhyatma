@@ -85,6 +85,7 @@ jobs:
         run: |
           node scripts/run-native-diagnostic.cjs --timeout-ms 1500000 maestro --device "$SIMULATOR_UDID" test \
             --config .maestro/config.yaml --format junit --output "$GITHUB_WORKSPACE/native-output/pitru-smaran.xml" \
+            --debug-output "$GITHUB_WORKSPACE/native-output/maestro-debug" \
             .maestro/pitru-smaran.yaml 2>&1 | tee "$GITHUB_WORKSPACE/native-output/pitru-smaran.log"
       - name: Capture failure screen and device log
         if: failure() && env.SIMULATOR_UDID != ''
@@ -92,6 +93,36 @@ jobs:
           node scripts/run-native-diagnostic.cjs xcrun simctl io "$SIMULATOR_UDID" screenshot "$GITHUB_WORKSPACE/native-output/pitru-failure.png" || true
           node scripts/run-native-diagnostic.cjs xcrun simctl spawn "$SIMULATOR_UDID" log show --last 5m --style compact \
             --predicate 'process == "Vedansh"' > "$GITHUB_WORKSPACE/native-output/pitru-device.log" 2>&1 || true
+      # Artifacts are not always reachable by whoever triages the run, so the
+      # failing step, each command's duration and the visible screen text are
+      # also printed into the job log itself.
+      - name: Print failing step, step timings and on-screen text
+        if: failure() && env.SIMULATOR_UDID != ''
+        run: |
+          node - "$GITHUB_WORKSPACE/native-output/maestro-debug" <<'JS' || true
+          const fs = require('node:fs'); const path = require('node:path');
+          const walk = (d) => fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]) : [];
+          for (const file of walk(process.argv[2]).filter((f) => /commands-.*\.json$/.test(f))) {
+            console.log(`== ${path.basename(file)}`);
+            for (const entry of JSON.parse(fs.readFileSync(file, 'utf8'))) {
+              const command = Object.entries(entry.command ?? {}).find(([, v]) => v)?.[0] ?? '?';
+              const detail = JSON.stringify(Object.values(entry.command ?? {}).find(Boolean) ?? {}).slice(0, 140);
+              const meta = entry.metadata ?? {};
+              console.log(`${String(meta.status ?? '?').padEnd(10)} ${String(meta.duration ?? '').padStart(7)}ms  ${command} ${detail}${meta.error ? `  ERROR: ${JSON.stringify(meta.error).slice(0, 300)}` : ''}`);
+            }
+          }
+          JS
+          maestro --device "$SIMULATOR_UDID" hierarchy > "$GITHUB_WORKSPACE/native-output/pitru-hierarchy.json" 2>/dev/null || true
+          node - "$GITHUB_WORKSPACE/native-output/pitru-hierarchy.json" <<'JS' || true
+          const fs = require('node:fs');
+          const raw = fs.readFileSync(process.argv[2], 'utf8'); const tree = JSON.parse(raw.slice(raw.indexOf('{')));
+          const seen = new Set();
+          (function visit(node) {
+            const a = node.attributes ?? {};
+            for (const k of ['text', 'accessibilityText', 'resource-id']) if (a[k] && !seen.has(`${k}:${a[k]}`)) { seen.add(`${k}:${a[k]}`); console.log(`${k}: ${a[k]}`); }
+            (node.children ?? []).forEach(visit);
+          })(tree);
+          JS
       - name: Retain native evidence
         if: always()
         uses: actions/upload-artifact@v4
