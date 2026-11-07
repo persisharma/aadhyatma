@@ -155,8 +155,8 @@ export default function JapamMala({ count, rounds, size, playing, notice, hint, 
     }
     const loop = Animated.loop(
       Animated.sequence([
-        Animated.timing(pulse, { toValue: 0.35, duration: 700, useNativeDriver: true }),
-        Animated.timing(pulse, { toValue: 1, duration: 700, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0.35, duration: 700, useNativeDriver: true, isInteraction: false }),
+        Animated.timing(pulse, { toValue: 1, duration: 700, useNativeDriver: true, isInteraction: false }),
       ])
     );
     loop.start();

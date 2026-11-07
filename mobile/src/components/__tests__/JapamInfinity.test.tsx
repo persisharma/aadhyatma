@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Animated, AppState, Text } from 'react-native';
 import * as ReactNative from 'react-native';
 import type { AppStateStatus } from 'react-native';
+import { Circle, Path, Rect } from 'react-native-svg';
 import JapamInfinity from '../JapamInfinity';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -27,8 +28,8 @@ beforeEach(() => {
   });
 });
 afterEach(() => { act(() => tree?.unmount()); jest.restoreAllMocks(); jest.clearAllMocks(); });
-function display(running = false, count = 0) {
-  return <ThemeProvider><JapamInfinity count={count} size={230} running={running} onCycle={onCycle}
+function display(running = false, count = 0, cycleMs?: number) {
+  return <ThemeProvider><JapamInfinity count={count} size={230} running={running} cycleMs={cycleMs} onCycle={onCycle}
     hint={running ? 'Tap to pause' : 'Tap to start'} labelFontFamily="test-font" /></ThemeProvider>;
 }
 async function mount(running = false, count = 0) {
@@ -39,7 +40,7 @@ test('opening is still; start repeats full loops until pause', async () => {
   await mount(false, 107);
   expect(start).not.toHaveBeenCalled();
   await act(async () => { tree.update(display(true, 107)); });
-  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 880, useNativeDriver: true }));
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 880, useNativeDriver: true, isInteraction: false }));
   for (let i = 0; i < 5; i++) act(() => completions[i]({ finished: true }));
   expect(start).toHaveBeenCalledTimes(6);
   expect(onCycle).toHaveBeenCalledTimes(5);
@@ -93,19 +94,27 @@ test('compact screens with enlarged text move untruncated numbers below the loop
   expect(row?.props.numberOfLines).toBeUndefined();
 });
 
-test('the loop sits on a dark night panel so the path, jyoti and numbers stand apart from the parchment', async () => {
+test('the loop is borderless on the page parchment with legible sepia numbers', async () => {
   // Standard system text: the numbers sit inside the loops, on the panel.
   jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
   await mount(false, 11);
   const panel = tree.root.findAll(n => n.props.testID === 'japam-infinity-panel')[0];
   const { lightColors } = jest.requireActual('@/theme/colors');
-  expect(ReactNative.StyleSheet.flatten(panel.props.style).backgroundColor).toBe(lightColors.skyNightTop);
+  const style = ReactNative.StyleSheet.flatten(panel.props.style);
+  expect(style.backgroundColor).toBeUndefined();
+  expect(style.borderWidth ?? 0).toBe(0);
+  expect(style.borderRadius ?? 0).toBe(0);
+  expect(style.shadowOpacity ?? 0).toBe(0);
+  expect(style.elevation ?? 0).toBe(0);
+  expect(tree.root.findAllByType(Rect)).toHaveLength(0);
+  expect(tree.root.findAllByType(Path).find(n => n.props.strokeWidth === 12)?.props.stroke).toBe(lightColors.saffronDeep);
+  expect(tree.root.findAllByType(Circle).find(n => n.props.r === 6)?.props.stroke).toBe(lightColors.saffronDeep);
   const numbers = tree.root.findAllByType(Text).filter(n => n.props.children === 11 || n.props.children === 108);
-  expect(numbers.map(n => ReactNative.StyleSheet.flatten(n.props.style).color)).toEqual([lightColors.nightInk, lightColors.nightGold]);
+  expect(numbers.map(n => ReactNative.StyleSheet.flatten(n.props.style).color)).toEqual([lightColors.inkSoft, lightColors.inkSoft]);
 });
 
-function ringDisplay(ringsActive = true, text = 'सीता राम') {
-  return <ThemeProvider><JapamInfinity count={11} size={300} running={false} onCycle={onCycle}
+function ringDisplay(ringsActive = true, text = 'सीता राम', count = 11) {
+  return <ThemeProvider><JapamInfinity count={count} size={300} running={false} onCycle={onCycle}
     hint="Tap to start" labelFontFamily="test-font" ringText={text} ringsActive={ringsActive} /></ThemeProvider>;
 }
 function measureRingWords() {
@@ -137,4 +146,46 @@ test('Reduced Motion keeps the mantra rings still', async () => {
   measureRingWords();
   expect(tree.root.findAll((n) => n.props.testID === 'japam-mantra-ring').length).toBeGreaterThan(0);
   expect((Animated.timing as jest.Mock).mock.calls.some(([, c]) => c.duration === 48000)).toBe(false);
+});
+
+
+test('count updates reuse the native interpolation graph instead of allocating it again', async () => {
+  const interpolate = jest.spyOn(Animated.Value.prototype, 'interpolate');
+  await mount(true);
+  const initial = interpolate.mock.calls.length;
+  expect(initial).toBeGreaterThan(0);
+  for (let count = 1; count <= 108; count++) {
+    await act(async () => { tree.update(display(true, count % 108)); });
+  }
+  expect(interpolate).toHaveBeenCalledTimes(initial);
+  expect(start).toHaveBeenCalledTimes(1);
+});
+
+test('count changes do not re-render decorative mantra words or recreate their animations', async () => {
+  jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+  await act(async () => { tree = TestRenderer.create(ringDisplay()); });
+  measureRingWords();
+  const before = tree.root.findAll(n => n.props.testID === 'japam-mantra-ring').map(n => n.props.style);
+  expect(before.length).toBeGreaterThan(0);
+  const starts = start.mock.calls.length;
+  await act(async () => { tree.update(ringDisplay(true, 'सीता राम', 12)); });
+  const after = tree.root.findAll(n => n.props.testID === 'japam-mantra-ring').map(n => n.props.style);
+  after.forEach((style, i) => expect(style).toBe(before[i]));
+  expect(start).toHaveBeenCalledTimes(starts);
+  expect((Animated.timing as jest.Mock).mock.calls.every(([, config]) => config.isInteraction === false)).toBe(true);
+});
+
+
+test('a longer mantra uses its own duration and a tempo change resumes the remaining fraction', async () => {
+  await act(async () => { tree = TestRenderer.create(display(true, 0, 10200)); });
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ duration: 10200 }));
+  jest.spyOn(Animated.Value.prototype, 'stopAnimation').mockImplementation(callback => callback?.(0.25));
+  await act(async () => { tree.update(display(true, 0, 6800)); });
+  expect(stop).toHaveBeenCalled();
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ duration: 5100 }));
+  act(() => completions[0]({ finished: true }));
+  expect(onCycle).not.toHaveBeenCalled();
+  act(() => completions[1]({ finished: true }));
+  expect(onCycle).toHaveBeenCalledTimes(1);
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ duration: 6800 }));
 });
