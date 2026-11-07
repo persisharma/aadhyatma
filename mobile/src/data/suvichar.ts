@@ -107,6 +107,18 @@ export const MESSAGE_LIMIT = 280;
 export function cleanSender(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
 }
+/**
+ * A favorite or Explore hand-off carries the sender shown on its card. A name turns the line on;
+ * none hides the line but keeps the saved name, so the reader never has to retype it.
+ */
+export function senderFrom(name: string, saved: string): { name: string; nameOn: boolean } {
+  return name.trim() ? { name, nameOn: true } : { name: saved, nameOn: !saved.trim() };
+}
+/** The card's muted heading: authored thoughts are today's thought; wishes and reader-written text are wishes. */
+export const suvicharHeading = {
+  thought: { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' },
+  wish: { hi: 'शुभकामनाएँ', en: 'Warm wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' },
+} as const;
 /** Sender photos are written by utils/suvicharPhoto.ts only; a corrupt preference can never point at another file. */
 export function isSenderPhotoName(value: unknown): value is string { return typeof value === 'string' && /^sender-\d+\.(jpe?g|png|heic|webp)$/i.test(value); }
 /** The square of the sender photo shown in the round frame, as fractions of the displayed image's width and height. */
@@ -145,9 +157,10 @@ const savedThoughtId = (value: unknown): string => typeof value === 'string' && 
 /**
  * `photo` belongs to the sender, like the name, but favorites never store it: removing the photo removes it everywhere.
  * The photo section is opt-in: `photoOn` (off by default) shows it; turning it off hides the photo but keeps the file.
+ * `nameOn` (on by default, so earlier saves keep their line) hides “सप्रेम — name” without clearing the saved name.
  */
 export const initialSuvichar = { deity: 'krishna' as SuvicharDeity, frame: 'mandir-jharokha' as SuvicharFrame,
-  name: '', photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', thoughtId: '', vaar: false, favorites: [] as SuvicharFavorite[] };
+  name: '', nameOn: true, photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', thoughtId: '', vaar: false, favorites: [] as SuvicharFavorite[] };
 export type SuvicharPreferences = typeof initialSuvichar;
 export function parseSuvicharPreferences(raw: string | null): SuvicharPreferences {
   try {
@@ -156,6 +169,7 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
       deity: suvicharDeities.some(d => d.id === p.deity) ? p.deity : initialSuvichar.deity,
       frame: suvicharFrames.some(f => f.id === p.frame) ? p.frame : initialSuvichar.frame,
       name: typeof p.name === 'string' ? p.name.slice(0, NAME_LIMIT) : '',
+      nameOn: p.nameOn !== false,
       photo: isSenderPhotoName(p.photo) ? p.photo : '',
       photoOn: p.photoOn === true,
       photoFit: isPhotoFit(p.photoFit) ? { x: p.photoFit.x, y: p.photoFit.y, w: p.photoFit.w, h: p.photoFit.h } : fullPhotoFit,

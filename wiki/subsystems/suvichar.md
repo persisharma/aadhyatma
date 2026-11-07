@@ -2,7 +2,7 @@
 title: Suvichar personalized cards
 type: subsystem
 sources: [mobile/src/data/suvicharContent.ts, mobile/src/components/SuvicharThoughtPicker.tsx, scripts/build-suvichar-content.mjs, mobile/src/data/shareLinks.ts, mobile/src/utils/suvicharPhoto.ts, mobile/src/components/SuvicharSenderPhoto.tsx, mobile/modules/suvichar-face, mobile/src/screens/SuvicharScreen.tsx, mobile/src/components/SuvicharCard.tsx, mobile/src/components/SuvicharEntryCard.tsx, mobile/src/components/SuvicharFramePicker.tsx, mobile/src/data/suvichar.ts, mobile/src/data/suvicharVaar.ts, mobile/src/data/suvicharTemplates.ts, scripts/prepare-suvichar.mjs]
-last_verified_date: 2026-11-02
+last_verified_date: 2026-11-07
 confidence: high
 status: current
 ---
@@ -14,6 +14,10 @@ status: current
 The paragraphs below describe the preserved 621 referenced entries. Eight Khatu Shyam-only “हारे का सहारा” additions (`VD-0077`–`VD-0084`) bring the original collection to 84. The active total is now 713 with eight verified dohas. Daily/weekday cards rotate eligible originals and deity-eligible dohas. Browse and Another thought put specific originals first, general originals next, eligible dohas next, then the original scripture-family pool. An empty `deities` array means universal; explicit deity arrays restrict named shrine messages. All 621 legacy IDs and references remain browsable and favorites remain readable. Original `VD-` IDs persist alongside `SV-`/`APP-` IDs. Localized lookup caches are keyed by deity, since shrine originals cannot share the old broad Krishna/Vishnu cache. No new images, CDN objects, permissions or release are needed.
 
 Regression coverage includes all 84 records, every deity, daily/weekday composition, four-script lookup, cross-shrine isolation, original authorship, edited-text attribution removal, real picker search/selection, shared-provider handoff and persisted favorite restoration. `.maestro/suvichar-original-reflections.yaml` covers native browsing, favorite restore and shrine isolation; device execution, compact/Standard/Large and actual WhatsApp exports remain pending in this Linux environment.
+
+## Sender switch and wishes heading (7 November 2026)
+
+`nameOn` (persisted, default true so older saves keep their line) is the `suvichar-name-toggle` switch above the sender field/row. Off hides “सप्रेम — name” on the card, in Send as text and in new favorites, but never clears `name`. Favorites and the Explore hand-off apply their sender through `senderFrom`: a name switches the line on; no name switches it off and keeps the saved name. Before this, restoring a nameless favorite or opening from Explore without a name erased the saved sender. The card no longer prints “आपकी शुभकामना” between the breaker and the sender: the recipient read it as addressed to them. Instead the muted heading (`suvicharHeading`) reads “शुभकामनाएँ / Warm wishes” whenever `original` is false (ready-made wishes and reader-written text). Authored thoughts still read “आज का सुविचार”, and the share-text title follows the same heading. `original` is part of the capture identity. Jest covers the switch, persistence, restore and hand-off; `.maestro/suvichar-personalization.yaml` adds toggle steps. Native device/WhatsApp export review remains pending.
 
 ## Summary
 Daily Bhakti opens a separate Home-stack composer for reusable devotional wishes with editable messages and optional names. Eighteen image-based deities (including Mahakaal and Annapurna) and three frames map to 54 published R2 masters; there is no text-only card. The runtime contains 621 deity-family-specific reviewed meanings/story lessons with 364 source locations, replacing the shared 21-thought rotation. Every day the composer opens on a weekday card titled “शुभ रविवार”, “शुभ मंगलवार” and so on.

@@ -74,6 +74,23 @@ it('reuses the artwork request while a sender is edited and remeasures the card'
   expect(subscribeBackgroundAsset).toHaveBeenCalledTimes(1);
 });
 
+it('heads wishes and reader-written text “शुभकामनाएँ”, with no second wishes label above the sender', () => {
+  const ready = jest.fn();
+  act(() => { tree = create(<SuvicharCard deity="lakshmi" frame="mandir-jharokha" name="शर्मा परिवार" message="दीपावली की हार्दिक शुभकामनाएँ।" original={false} lang="hi" width={360} onReady={ready} />); });
+  const texts = () => tree.root.findAllByType(Text).map(t => [t.props.children].flat().join(''));
+  expect(tree.root.findByProps({ testID: 'suvichar-card-label' }).props.children).toBe('शुभकामनाएँ');
+  expect(texts()).not.toContain('आपकी शुभकामना'); expect(texts()).not.toContain('आज का सुविचार');
+  expect(tree.root.findByProps({ testID: 'suvichar-card-sender' }).props.children.join('')).toBe('सप्रेम — शर्मा परिवार');
+  layout(); act(() => tree.root.findAllByType(Image).forEach(image => image.props.onLoad()));
+  expect(ready).toHaveBeenLastCalledWith(true);
+  // The heading is part of the measured body, so a change re-measures before capture.
+  act(() => tree.update(<SuvicharCard deity="lakshmi" frame="mandir-jharokha" name="शर्मा परिवार" message="दीपावली की हार्दिक शुभकामनाएँ।" lang="hi" width={360} onReady={ready} />));
+  expect(ready).toHaveBeenLastCalledWith(false);
+  expect(tree.root.findByProps({ testID: 'suvichar-card-label' }).props.children).toBe('आज का सुविचार');
+  act(() => tree.update(<SuvicharCard deity="lakshmi" frame="mandir-jharokha" name="" message="Happy Diwali!" original={false} lang="en" width={360} onReady={ready} />));
+  expect(tree.root.findByProps({ testID: 'suvichar-card-label' }).props.children).toBe('Warm wishes');
+});
+
 it('shows a weekday title in place of the label, and re-measures when the title changes', () => {
   const ready = jest.fn();
   act(() => { tree = create(<SuvicharCard deity="hanuman" frame="mandir-jharokha" name="" message="श्रद्धा रखिए।" title="शुभ मंगलवार" lang="hi" width={360} onReady={ready} />); });
