@@ -12,7 +12,7 @@ import {
 // the chips paint on the first frame without ever freezing the launch.
 
 test('precomputed Ujjain year seeds identically to the deferred resolve', () => {
-  // 2026 is inside the precomputed table (purnimant:2024–2031) — a real vrat day.
+  // 2026 is inside the precomputed table (purnimant:2024–2035) — a real vrat day.
   const day = new Date(2026, 8, 18); // Fri 18 Sep 2026 — inside Pitru Paksha
   const seed = getCachedObservancesForDate(day, 'purnimant');
   const deferred = getObservancesForDate(day, 'purnimant');
@@ -39,7 +39,7 @@ test('a non-precomputed Ujjain year returns null so the caller defers the live s
 });
 
 test('amanta is precomputed too, so it seeds identically to the deferred resolve', () => {
-  // Both calendar systems are baked in the supported range (amanta:2024–2031), so the
+  // Both calendar systems are baked in the supported range (amanta:2024–2035), so the
   // amanta seed must match its deferred resolve, never fall back to a live scan.
   const day = new Date(2028, 3, 10);
   const seed = getCachedObservancesForDate(day, 'amanta');
