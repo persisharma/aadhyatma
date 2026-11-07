@@ -1,4 +1,5 @@
-import OccasionTimingsCard from '@/components/OccasionTimingsCard';
+import OccasionSection from '@/components/OccasionSection';
+import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
@@ -178,6 +179,7 @@ export default function PanchangScreen({ route }: Props) {
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
     route.params?.initialTab ?? 'calendar'
   );
+  const scrollRef = useRef<ScrollView>(null);
   const [catalogQuery, setCatalogQuery] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
@@ -208,7 +210,7 @@ export default function PanchangScreen({ route }: Props) {
   // 2,500-line screen does not re-render every minute for it.
   const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
   const { share: sharePanchang, busy: shareBusy } = usePanchangShare();
-  const occasion = useOccasionTimings(selectedDate, calendarSystem);
+  const occasion = useOccasionTimings(isFocused && panchangTab !== 'jyotish' ? selectedDate : null, calendarSystem);
   const shareUnavailable = shareBusy || !p || !shareMd || occasion.loading || occasion.error;
   const shareDay = useCallback(() => {
     if (!p || !shareMd || occasion.loading || occasion.error) return;
@@ -307,12 +309,19 @@ export default function PanchangScreen({ route }: Props) {
   }, [route.params?.initialTab]);
 
   useEffect(() => {
-    if (route.params?.dateMs == null || !Number.isFinite(route.params.dateMs)) return;
-    const represented = startOfLocalDay(new Date(route.params.dateMs));
+    const entry = panchangDatedEntry(route.params);
+    if (!entry) return;
+    const represented = entry.date;
     setSelectedDate(represented);
     setVisibleMonth(startOfMonth(represented));
-    setPanchangTab('calendar');
-  }, [route.params?.dateMs]);
+    setPanchangTab(entry.mode);
+    if (entry.mode === 'catalog') {
+      setCatalogQuery('');
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }
+    // A new navigation request for the same day must also reveal the cards,
+    // even when Vrat was left with a search query or another local mode.
+  }, [route.params]);
 
   useFocusEffect(
     useCallback(() => {
@@ -378,6 +387,8 @@ export default function PanchangScreen({ route }: Props) {
   const openVidhiCatalog = () => rootNav.navigate('VidhiCatalog');
 
   const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: selectedDate.getTime() });
+  const openVratOccasions = () => rootNav.navigate('VratTab', vratOccasionTarget(selectedDate));
+  const openOccasionDetail = (ruleId: string, date: Date) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: date.getTime() });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
@@ -558,6 +569,7 @@ export default function PanchangScreen({ route }: Props) {
         : <CatalogBackground />}
       <SafeAreaView style={styles.safe} edges={panchangTab === 'calendar' ? ['left', 'right'] : ['top', 'left', 'right']}>
         <ScrollView
+          ref={scrollRef}
           contentContainerStyle={[styles.scroll, { paddingHorizontal: 14 }, panchangTab === 'calendar' && { paddingTop: 0 }]}
           showsVerticalScrollIndicator={false}
         >
@@ -806,7 +818,7 @@ export default function PanchangScreen({ route }: Props) {
             </View>
           )}
 
-          <OccasionTimingsCard items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
+          <OccasionSection presentation="summary" onOpenVrat={openVratOccasions} items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
           {/* Daily Muhurat — Choghadiya / Rahu Kaal card (PRD-14). Promoted
               to lead the day panel, above the anga grid: "is now auspicious?" is
@@ -929,6 +941,8 @@ export default function PanchangScreen({ route }: Props) {
               calendarSystem={calendarSystem}
               query={catalogQuery}
               onChangeQuery={setCatalogQuery}
+              occasionCards={<OccasionSection presentation="illustrated" items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} onOpenVrat={openVratOccasions} onOpenDetail={openOccasionDetail} />}
+              replacesTodayCards={isSelectedToday && occasion.items.length > 0}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -2020,7 +2034,7 @@ function CatalogLanding({
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
   onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
-  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi,
+  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi, occasionCards, replacesTodayCards,
 }: {
   lang: Lang;
   today: Date;
@@ -2041,6 +2055,8 @@ function CatalogLanding({
   lenses: ReadonlySet<ObservanceLens>;
   lensAvailableCount: number;
   followCount: number;
+  occasionCards: React.ReactNode;
+  replacesTodayCards: boolean;
   // Today's solve for the day note, or null when the calendar is on another day.
   todaySolve: ObservanceDaySolve | null;
   onOpenLink: (sectionId: string) => void;
@@ -2103,7 +2119,8 @@ function CatalogLanding({
         <>
           {/* Same occurrence names, day notes and reading actions as the calendar;
               the catalog opts into an illustrated, expandable introduction. */}
-          {todayItems.length > 0 && (
+          {occasionCards}
+          {!replacesTodayCards && todayItems.length > 0 && (
             <View testID="catalog-today" style={{ marginBottom: 0 }}>
               <View style={styles.todayHead}>
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
