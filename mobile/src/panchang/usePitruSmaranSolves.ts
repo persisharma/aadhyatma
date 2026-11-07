@@ -19,8 +19,8 @@ import { useEffect, useState } from 'react';
 import { InteractionManager } from 'react-native';
 
 import {
-  ensureOccurrences,
-  ensurePakshaWindow,
+  ensureOccurrencesAsync,
+  ensurePakshaWindowAsync,
   hydrateSmaranSolves,
   knownOccurrences,
   knownPakshaWindow,
@@ -29,7 +29,13 @@ import {
   KEPT_OCCURRENCES,
   type SmaranRule,
 } from './pitruSmaranSolves';
-import { pakshaShraddhaDay, type PitruPakshaWindow, type SmaranEntry } from './pitruSmaran';
+import {
+  isPitruPakshaDayTableWarm,
+  pakshaShraddhaDay,
+  pakshaShraddhaDayAsync,
+  type PitruPakshaWindow,
+  type SmaranEntry,
+} from './pitruSmaran';
 import { startOfLocalDay } from './pitruSmaranDisplay';
 
 /**
@@ -37,11 +43,14 @@ import { startOfLocalDay } from './pitruSmaranDisplay';
  * सर्वपितृ अमावस्या has passed, then next year's. Shared so the list banner, the
  * detail card and the prewarm cannot disagree about which fortnight is "the" one.
  */
-function pakshaYearFor(today: Date): { year: number; window: PitruPakshaWindow | null } {
+async function pakshaYearFor(
+  today: Date,
+  isCancelled: () => boolean
+): Promise<{ year: number; window: PitruPakshaWindow | null }> {
   const year = today.getFullYear();
-  const thisYear = ensurePakshaWindow(year);
+  const thisYear = await ensurePakshaWindowAsync(year, isCancelled);
   if (thisYear && thisYear.end.getTime() < today.getTime()) {
-    return { year: year + 1, window: ensurePakshaWindow(year + 1) };
+    return { year: year + 1, window: await ensurePakshaWindowAsync(year + 1, isCancelled) };
   }
   return { year, window: thisYear };
 }
@@ -81,7 +90,7 @@ export function useSmaranListSolve(entries: SmaranEntry[], todayMs: number): Sma
 
   useEffect(() => {
     let cancelled = false;
-    let handle: ReturnType<typeof setTimeout> | undefined;
+    const isCancelled = () => cancelled;
     let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
 
     // Rule 2: the read starts now, not after the interactions.
@@ -90,29 +99,38 @@ export function useSmaranListSolve(entries: SmaranEntry[], todayMs: number): Sma
       const warm = readListFromMemory(entries, todayMs);
       if (warm) setSolve(warm);
 
+      // Every solve below is cooperative (`runInBackground`, 4 ms slices): a
+      // cold list used to run all of it — each person's annual scan, the
+      // fortnight and the detail prewarm — as ONE task, seconds long on a
+      // phone, during which no tap could land. A warm list skips straight to
+      // the prewarm, which is itself a memory read once the detail is warm.
       interaction = InteractionManager.runAfterInteractions(() => {
-        handle = setTimeout(() => {
-          if (cancelled) return;
+        void (async () => {
           const today = new Date(todayMs);
-          const nextByEntryId = new Map<string, Date | null>();
-          entries.forEach((entry) => {
-            nextByEntryId.set(entry.id, ensureOccurrences(entry.tithiRule, today, 1)[0] ?? null);
-          });
-          const { window } = pakshaYearFor(today);
-          if (!cancelled) setSolve({ nextByEntryId, window });
+          if (!warm) {
+            const nextByEntryId = new Map<string, Date | null>();
+            for (const entry of entries) {
+              const [next] = await ensureOccurrencesAsync(entry.tithiRule, today, 1, isCancelled);
+              if (cancelled) return;
+              nextByEntryId.set(entry.id, next ?? null);
+            }
+            const { window } = await pakshaYearFor(today, isCancelled);
+            if (cancelled) return;
+            setSolve({ nextByEntryId, window });
+            void persistSmaranSolves();
+          }
 
           // Prewarm, deliberately after the rows are published and deliberately
           // not fed to React state: this is work for the NEXT screen.
-          prewarmDetail(entries, today);
-          void persistSmaranSolves();
-        }, 0);
+          await prewarmDetail(entries, today, isCancelled);
+          if (!cancelled) void persistSmaranSolves();
+        })();
       });
     });
 
     return () => {
       cancelled = true;
       interaction?.cancel();
-      if (handle !== undefined) clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signature, todayMs]);
@@ -141,22 +159,27 @@ function readListFromMemory(entries: SmaranEntry[], todayMs: number): SmaranList
  * background work: it touches no state and its result is read back out of the
  * shared cache.
  */
-function prewarmDetail(entries: SmaranEntry[], today: Date): void {
-  const { year } = pakshaYearFor(today);
+async function prewarmDetail(
+  entries: SmaranEntry[],
+  today: Date,
+  isCancelled: () => boolean
+): Promise<void> {
+  const { year } = await pakshaYearFor(today, isCancelled);
   const seen = new Set<string>();
-  entries.forEach((entry) => {
+  for (const entry of entries) {
+    if (isCancelled()) return;
     const key = smaranRuleKey(entry.tithiRule);
-    if (seen.has(key)) return; // two people on one tithi share one answer
+    if (seen.has(key)) continue; // two people on one tithi share one answer
     seen.add(key);
     try {
       // One past what the detail screen shows — the rollover margin, bought here
       // on idle time rather than on that screen's critical path.
-      ensureOccurrences(entry.tithiRule, today, KEPT_OCCURRENCES);
-      pakshaShraddhaDay(entry.tithiRule, year);
+      await ensureOccurrencesAsync(entry.tithiRule, today, KEPT_OCCURRENCES, isCancelled);
+      await pakshaShraddhaDayAsync(entry.tithiRule, year, isCancelled);
     } catch {
       // a rule the engine cannot place is a cache miss, never a crash
     }
-  });
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -201,8 +224,7 @@ export function useSmaranDetailSolve(rule: SmaranRule | undefined, todayMs: numb
   useEffect(() => {
     if (!rule) return undefined;
     let cancelled = false;
-    let handle: ReturnType<typeof setTimeout> | undefined;
-    let restHandle: ReturnType<typeof setTimeout> | undefined;
+    const isCancelled = () => cancelled;
     let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
 
     void hydrateSmaranSolves([rule], new Date(todayMs)).then(() => {
@@ -211,37 +233,37 @@ export function useSmaranDetailSolve(rule: SmaranRule | undefined, todayMs: numb
       setSolve(warm);
       if (warm.restReady) return; // disk had everything — nothing left to solve
 
+      // Cooperative solves (see the list above): a notification or deep link
+      // can open this screen cold, and each stage used to be one long task.
       interaction = InteractionManager.runAfterInteractions(() => {
-        handle = setTimeout(() => {
-          if (cancelled) return;
+        void (async () => {
           const today = new Date(todayMs);
-          const next = ensureOccurrences(rule, today, 1)[0] ?? null;
+          const [next] = await ensureOccurrencesAsync(rule, today, 1, isCancelled);
+          if (cancelled) return;
           // Stage one: the pill. Everything below it is still unsolved, and that
           // is the point — it used to wait on them.
-          setSolve((prev) => ({ ...prev, next, nextReady: true }));
+          setSolve((prev) => ({ ...prev, next: next ?? null, nextReady: true }));
 
-          restHandle = setTimeout(() => {
-            if (cancelled) return;
-            const following = ensureOccurrences(rule, today, 2)[1] ?? null;
-            const { year } = pakshaYearFor(today);
-            let pakshaDay: Date | null = null;
-            try {
-              pakshaDay = pakshaShraddhaDay(rule, year);
-            } catch {
-              pakshaDay = null; // the rows render only when solved
-            }
-            setSolve((prev) => ({ ...prev, following, pakshaYear: year, pakshaDay, restReady: true }));
-            void persistSmaranSolves();
-          }, 0);
-        }, 0);
+          const [, following] = await ensureOccurrencesAsync(rule, today, 2, isCancelled);
+          if (cancelled) return;
+          const { year } = await pakshaYearFor(today, isCancelled);
+          if (cancelled) return;
+          let pakshaDay: Date | null = null;
+          try {
+            pakshaDay = (await pakshaShraddhaDayAsync(rule, year, isCancelled)) ?? null;
+          } catch {
+            pakshaDay = null; // the rows render only when solved
+          }
+          if (cancelled) return;
+          setSolve((prev) => ({ ...prev, following: following ?? null, pakshaYear: year, pakshaDay, restReady: true }));
+          void persistSmaranSolves();
+        })();
       });
     });
 
     return () => {
       cancelled = true;
       interaction?.cancel();
-      if (handle !== undefined) clearTimeout(handle);
-      if (restHandle !== undefined) clearTimeout(restHandle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ruleKey, todayMs]);
@@ -254,10 +276,12 @@ function readDetailFromMemory(rule: SmaranRule, todayMs: number): SmaranDetailSo
   const both = knownOccurrences(rule, today, 2);
   const one = both ?? knownOccurrences(rule, today, 1);
   const { year, window } = knownPakshaYearFor(today);
-  // With the window warm, `pakshaShraddhaDay` is a ~3 ms scan inside the
-  // fortnight — cheap enough to run on the seed path, unlike the year-long scans.
+  // With the window AND its day table warm, `pakshaShraddhaDay` is a lookup —
+  // cheap enough for the seed path. A window primed from disk leaves the table
+  // to solve (~80 ms cold on V8), which belongs to the cooperative path, not to
+  // a render: `isPitruPakshaDayTableWarm` is the render-time gate.
   let pakshaDay: Date | null = null;
-  if (window) {
+  if (window && isPitruPakshaDayTableWarm(year)) {
     try {
       pakshaDay = pakshaShraddhaDay(rule, year);
     } catch {
