@@ -38,6 +38,12 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
 - assertVisible: { id: compact-occasion-card }
 - takeScreenshot: 'e2e-shots/festival-${CASE_ID}-screen'
+- scrollUntilVisible:
+    element: { id: compact-occasion-open-vrat }
+    direction: DOWN
+    centerElement: true
+- assertVisible: { text: '${EXPECTED_CLOCK}' }
+- takeScreenshot: 'e2e-shots/festival-${CASE_ID}-compact-fit'
 - runFlow:
     when: { true: '${String(FOCUSED) === "true"}' }
     commands:

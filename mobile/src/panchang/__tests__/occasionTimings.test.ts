@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { OCCASION_PROFILES, findTimingOccurrences, intersect, paranaWindows, solveOccasion, timingsOnDay } from '../occasionTimings';
 import { computeDayInputs, dayAt, type ScanOptions } from '../panchangDayStore';
 import { runSynchronously } from '../backgroundWork';
-import { occasionRange } from '../occasionTimingFormat';
+import { compactOccasionRange, occasionRange } from '../occasionTimingFormat';
 import { buildPanchangShareModel } from '../panchangShareModel';
 import { computeMuhuratDay } from '../muhurat';
 import { PUBLISHED_OCCASIONS } from './fixtures/occasionPublished';
@@ -124,4 +124,25 @@ test('share model retains all existing sections and receives exact same solved w
   const model = buildPanchangShareModel({ p, md, observances: [], placeHi: 'नई दिल्ली', placeEn: 'New Delhi', calendarSystem: 'purnimant', lang: 'hi', occasionTimings: items });
   assert.equal(model.occasionTimings, items); assert.equal(model.day.length, 8); assert.equal(model.night.length, 8);
   for (const key of ['tithi', 'nakshatra', 'yoga', 'karana', 'rahu', 'gulika', 'yamaganda', 'surya', 'chandra', 'dishaShool', 'agni'] as const) assert.ok(model[key]);
+});
+
+
+test('compact clocks keep previous-night dates on their own endpoints', () => {
+  const date = new Date(2026, 10, 8);
+  const w = { start: new Date(2026, 10, 7, 23, 44), end: new Date(2026, 10, 8, 0, 36), labelHi: '', labelEn: '' };
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '23:44', end: '00:36', startDate: '7 Nov', endDate: '8 Nov' });
+  assert.equal(occasionRange(w, date, 'en'), '23:44, 7 Nov – 00:36');
+});
+test('compact next-day parana and year boundaries retain both endpoint dates', () => {
+  const date = new Date(2026, 10, 5);
+  const w = { start: new Date(2026, 10, 6, 6, 36), end: new Date(2026, 10, 6, 8, 47), labelHi: '', labelEn: '' };
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '06:36', end: '08:47', startDate: '6 Nov', endDate: '6 Nov' });
+  const year = compactOccasionRange({ ...w, start: new Date(2026, 11, 31, 23), end: new Date(2027, 0, 1, 1) }, new Date(2026, 11, 31), 'en');
+  assert.equal(year.startDate, '31 Dec 2026'); assert.equal(year.endDate, '1 Jan 2027');
+});
+test('same-day windows need no date row and events keep just one timestamp', () => {
+  const date = new Date(2026, 10, 8);
+  const w = { start: new Date(2026, 10, 8, 18, 3), end: new Date(2026, 10, 8, 20), labelHi: '', labelEn: '' };
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '18:03', end: '20:00', startDate: undefined, endDate: undefined });
+  assert.deepEqual(compactOccasionRange({ ...w, event: true }, new Date(2026, 10, 7), 'hi'), { start: '18:03', end: undefined, startDate: '8 नवं', endDate: undefined });
 });

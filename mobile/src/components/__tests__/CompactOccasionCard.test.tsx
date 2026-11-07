@@ -9,9 +9,17 @@ import type { OccasionTiming } from '@/panchang/occasionTimings';
 import { occasionRange } from '@/panchang/occasionTimingFormat';
 import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
 import { contentByLang } from '@/utils/localize';
+import { formatShortDate } from '@/panchang/muhuratFormat';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import measuredClocks from './fixtures/compactOccasionClockWidths.json';
 
 const mockShare = jest.fn();
 let mockFactor = 1;
+let mockDimensions = { width: 390, height: 844, scale: 3, fontScale: 1 };
+// Mock the underlying export, not Babel's namespace copy. The old namespace
+// spy left the component on RN's default 750dp / fontScale=2 in every case.
+jest.mock('react-native/Libraries/Utilities/useWindowDimensions', () => ({ __esModule: true, default: () => mockDimensions }));
 jest.mock('@/contexts/FontScaleContext', () => ({ useFontScale: () => ({ factor: mockFactor }) }));
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('expo-linear-gradient', () => ({ LinearGradient: require('react-native').View }));
@@ -29,43 +37,75 @@ const press = (id: string) => tree.root.findAllByProps({ testID: id }).find(n =>
 const onOpenVrat = jest.fn();
 async function mount(node: React.ReactNode, lang: Lang = 'hi') {
   await act(async () => { tree = TestRenderer.create(<ThemeProvider><GitaLanguageProvider initialLang={lang}>{node}</GitaLanguageProvider></ThemeProvider>); });
+  const width = RN.useWindowDimensions().width;
+  act(() => views('compact-occasion-card')[0]?.props.onLayout?.({ nativeEvent: { layout: { width: width - 28 } } }));
   return tree;
 }
-beforeEach(() => { mockFactor = 1; jest.spyOn(RN, 'useWindowDimensions').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 }); });
+beforeEach(() => { mockFactor = 1; mockDimensions = { width: 390, height: 844, scale: 3, fontScale: 1 }; });
 afterEach(() => { act(() => tree?.unmount()); jest.restoreAllMocks(); jest.clearAllMocks(); });
 
 for (const lang of ['hi', 'en', 'gu', 'kn'] as Lang[]) for (const factor of [1, 1.15]) for (const width of [320, 390]) {
   test(`${lang}, factor ${factor}, width ${width}: complete windows, safe type and no hero artwork`, async () => {
     mockFactor = factor;
-    (RN.useWindowDimensions as jest.Mock).mockReturnValue({ width, height: 844, scale: 3, fontScale: width === 320 ? 1.3 : 1 });
+    mockDimensions = { width, height: 844, scale: 3, fontScale: width === 320 ? 1.3 : 1 };
     await mount(<CompactOccasionCard items={[diwali, midnight, guidance]} date={date} onOpenVrat={onOpenVrat} />, lang);
     expect(views('compact-occasion-card')).toHaveLength(1);
-    const times = texts('compact-occasion-time');
-    expect(times.map(t => t.props.children)).toEqual([occasionRange(window, date, lang), occasionRange(midnight.windows[0], date, lang)]);
+    const times = views('compact-occasion-time');
+    expect(times.map(t => t.props.accessibilityLabel)).toEqual([occasionRange(window, date, lang), occasionRange(midnight.windows[0], date, lang)]);
+    expect(texts('compact-occasion-clock').map(t => t.props.children)).toEqual(['18:03', '20:00', '23:44', '00:36']);
+    expect(texts('compact-occasion-date').map(t => t.props.children)).toEqual([formatShortDate(midnight.windows[0].start, lang), formatShortDate(midnight.windows[0].end, lang)]);
     expect(views('occasion-inline-art')).toHaveLength(0);
     for (const text of tree.root.findAllByType(RN.Text)) {
       expect(text.props.allowFontScaling).not.toBe(false);
       expect(text.props.numberOfLines).toBeUndefined();
       expect(text.props.adjustsFontSizeToFit).not.toBe(true);
     }
-    expect(times[1].props.children).toContain('7 ');
+    expect(times[1].props.accessibilityLabel).toContain('7 ');
     expect(tree.root.findAllByType(RN.Text).map(n => n.props.children)).toContain(contentByLang(lang, diwali.nameHi, diwali.nameEn));
-    if (lang !== 'en') expect(times[1].props.style.lineHeight).toBeGreaterThanOrEqual(times[1].props.style.fontSize * 1.65);
-    expect(views('compact-occasion-row-layout')[1].props.style.flexDirection).toBe('column');
+    for (const text of texts('compact-occasion-date')) {
+      expect(text.props.style.fontSize).toBeLessThan(texts('compact-occasion-clock')[0].props.style.fontSize);
+      expect(text.props.style.lineHeight).toBeGreaterThanOrEqual(text.props.style.fontSize * 1.65);
+    }
+    expect(views('compact-occasion-row-layout')[1].props.style.flexDirection).toBe(width === 320 || factor > 1 ? 'column' : 'row');
+    // Bound the real shipped font's widest HH:MM (all 1,440 clocks), including
+    // the system scale actually seen by the component, against its time column.
+    const scale = factor * mockDimensions.fontScale;
+    const group = times[0].props.style;
+    const endpoint = times[0].findAllByType(RN.View).find(n => n.props.style?.minWidth != null)!;
+    expect(measuredClocks.maxClockAdvance * scale).toBeLessThanOrEqual(endpoint.props.style.minWidth);
+    const available = typeof group.width === 'number' ? group.width : width - 58.4;
+    expect(2 * endpoint.props.style.minWidth + measuredClocks.dashAdvance * scale + 2 * group.columnGap).toBeLessThanOrEqual(available);
   });
 }
+
+test('measured clock advances refer to the exact shipped Inter font', () => {
+  const bytes = readFileSync(require.resolve(measuredClocks.font));
+  expect(createHash('sha256').update(bytes).digest('hex')).toBe(measuredClocks.sha256);
+  expect(measuredClocks.clocksMeasured).toBe(24 * 60);
+});
 
 test('every prahar is retained in one card and guidance does not invent a time', async () => {
   const shiva = { ...diwali, id: 'five-windows', windows: Array.from({ length: 5 }, (_, index) => ({ ...window, labelEn: `Prahar ${index}` })) };
   await mount(<CompactOccasionCard items={[shiva, guidance]} date={date} onOpenVrat={onOpenVrat} />);
-  expect(texts('compact-occasion-time')).toHaveLength(5);
+  expect(views('compact-occasion-time')).toHaveLength(5);
+  expect(tree.root.findAllByType(RN.Text).filter(n => n.props.children === shiva.nameHi)).toHaveLength(1);
+});
+
+test('a narrow host stacks even inside a wide viewport; repeating layout does not publish another render', async () => {
+  const rendered = jest.fn();
+  await mount(<React.Profiler id="card" onRender={rendered}><CompactOccasionCard items={[diwali]} date={date} onOpenVrat={onOpenVrat} /></React.Profiler>);
+  act(() => views('compact-occasion-card')[0].props.onLayout({ nativeEvent: { layout: { width: 230 } } }));
+  expect(views('compact-occasion-row-layout')[0].props.style.flexDirection).toBe('column');
+  const count = rendered.mock.calls.length;
+  act(() => views('compact-occasion-card')[0].props.onLayout({ nativeEvent: { layout: { width: 230 } } }));
+  expect(rendered).toHaveBeenCalledTimes(count);
 });
 
 test('empty ordinary days omit the summary; guidance-only days have a door and no fabricated clocks', async () => {
   await mount(<CompactOccasionCard items={[]} date={date} onOpenVrat={onOpenVrat} />);
   expect(views('compact-occasion-card')).toHaveLength(0);
   await act(async () => tree.update(<ThemeProvider><GitaLanguageProvider initialLang="hi"><CompactOccasionCard items={[guidance]} date={date} onOpenVrat={onOpenVrat} /></GitaLanguageProvider></ThemeProvider>));
-  expect(texts('compact-occasion-time')).toHaveLength(0);
+  expect(views('compact-occasion-time')).toHaveLength(0);
   act(() => press('compact-occasion-open-vrat').props.onPress());
   expect(onOpenVrat).toHaveBeenCalledTimes(1);
 });
