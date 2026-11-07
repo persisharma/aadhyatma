@@ -707,6 +707,9 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
   let shipped = 0;
   let shippedSargas = 0;
   const references = new Set<string>();
+  const VALMIKI_SITE_CHROME = new Set(['Hindu Dharma', 'हिन्दू धर्म', 'मिथक व लोकथाएं', 'पुस्तकें व साहित्य']);
+  const blankHi: Record<number, number> = {};
+  const blankEn: Record<number, number> = {};
   for (const summary of manifest) {
     const file = `valmiki-ramayan/chapter-0${summary.chapter}.json`;
     const chapter = readJson(file) as {
@@ -777,8 +780,28 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
         verse.linesEn.length,
         `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §11.12)`
       );
-      assert.ok(verse.meaningHi.trim(), `${verse.id}: missing Hindi meaning`);
-      assert.ok(verse.meaningEn.trim(), `${verse.id}: missing English meaning`);
+      // RULEBOOK §11.6: unusable upstream rows ship blank (the loader falls back to the
+      // other sourced meaning) — never site-navigation residue, placeholders or the Sanskrit.
+      assert.ok(
+        verse.meaningHi.trim() || verse.meaningEn.trim(),
+        `${verse.id}: needs a meaning in at least one language`
+      );
+      if (!verse.meaningHi.trim()) blankHi[summary.chapter] = (blankHi[summary.chapter] ?? 0) + 1;
+      if (!verse.meaningEn.trim()) blankEn[summary.chapter] = (blankEn[summary.chapter] ?? 0) + 1;
+      assert.ok(
+        !VALMIKI_SITE_CHROME.has(verse.meaningHi.replace(/[‌‍﻿]/g, '').trim()),
+        `${verse.id}: meaningHi is website navigation text, not a meaning`
+      );
+      assert.ok(
+        !/^(missing|in progress)$/i.test(verse.meaningEn.trim()),
+        `${verse.id}: meaningEn is an upstream placeholder, not a meaning`
+      );
+      const bareHi = verse.meaningHi.replace(/[\s।॥|.0-9०-९]/gu, '');
+      const bareSanskrit = verse.lines.join('').replace(/[\s।॥|.0-9०-९]/gu, '');
+      assert.ok(
+        !bareHi || (bareHi !== bareSanskrit && !(bareHi.length > 20 && bareSanskrit.includes(bareHi))),
+        `${verse.id}: meaningHi repeats the Sanskrit instead of translating it`
+      );
       assert.ok(
         !verse.lines.some((line) => /[^\u0900-\u097f\s।॥]/u.test(line)),
         `${verse.id}: Sanskrit lines must not contain headings, OCR characters, or citation artifacts`
@@ -791,6 +814,10 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
     shipped += chapter.verses.length;
     shippedSargas += summary.sargaCount;
   }
+  // Pinned with EXPECTED_BLANK_MEANINGS in scripts/build-valmiki-ramayan.py: the gap may
+  // only shrink deliberately (when Gita Press text is captured), never grow silently.
+  assert.deepEqual(blankHi, { 2: 6, 3: 24, 4: 19, 5: 10, 6: 9, 7: 12 }, 'blank Hindi meanings drifted');
+  assert.deepEqual(blankEn, { 3: 3, 4: 2 }, 'blank English meanings drifted');
   assert.equal(shipped, 23289, 'complete verified corpus total must remain 23,289 verses');
   assert.equal(shippedSargas, 648, 'complete corpus must contain 648 sargas');
   assert.equal(entry.verseCount, shipped, 'library verseCount must equal shipped verses');

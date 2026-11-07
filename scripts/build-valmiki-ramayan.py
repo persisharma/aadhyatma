@@ -100,6 +100,30 @@ HINDI_REFERENCE_OVERRIDES: dict[tuple[int, str, int], str] = {
     (6, "127", 21): "20",
 }
 
+# Some pinned upstream meaning rows are not meanings at all: the RamCharit.in
+# Reader Mode copy captured site-navigation labels or the Sanskrit line itself in
+# place of the Gita Press Hindi, and the structured export marks some English
+# prose "Missing"/"In Progress".  Those fields are written blank (never shown);
+# the app falls back to the verse's other sourced meaning.  Pinned per kanda so
+# a changed upstream cannot silently grow or shrink the gap (RULEBOOK §11.6).
+SITE_CHROME_HINDI = {"Hindu Dharma", "हिन्दू धर्म", "मिथक व लोकथाएं", "पुस्तकें व साहित्य"}
+UNTRANSLATED_ENGLISH = {"Missing", "In Progress"}
+EXPECTED_BLANK_MEANINGS: dict[int, tuple[int, int]] = {
+    1: (0, 0), 2: (6, 0), 3: (24, 3), 4: (19, 2), 5: (10, 0), 6: (9, 0), 7: (12, 0),
+}
+_ZERO_WIDTH = dict.fromkeys(map(ord, "‌‍﻿"), None)
+_NON_TEXT = re.compile(r"[\s।॥|.0-9०-९]")
+
+
+def hindi_meaning_unusable(meaning: str, lines: list[str]) -> bool:
+    text = meaning.translate(_ZERO_WIDTH).strip()
+    if text in SITE_CHROME_HINDI:
+        return True
+    bare = _NON_TEXT.sub("", text)
+    sanskrit = _NON_TEXT.sub("", "".join(lines))
+    return bool(bare) and (bare == sanskrit or (len(bare) > 20 and bare in sanskrit))
+
+
 # These two upstream rows repeat the preceding verse and its printed reference;
 # neither the Gita Press-aligned Hindi source nor independent verse editions has
 # the claimed extra verse.  They are source-export artefacts, not scripture.
@@ -537,6 +561,10 @@ def source_metadata(kanda: int, _kanda_slug: str) -> dict[str, Any]:
             "verses 10-49 use independently published Hindi verse meanings from Dharmasutra. "
             "English meanings in Uttarakanda are editorial/machine-"
             "assisted in the pinned structured source; the Sanskrit and generated IAST are not."
+            " Upstream Hindi rows that carried RamCharit.in site-navigation labels or repeated the "
+            "Sanskrit, and English rows marked 'Missing' or 'In Progress', are left blank rather "
+            "than shown; the reader falls back to the verse's other sourced meaning until the "
+            "Gita Press text is captured."
         ),
         "retrievedOn": "2026-08-01",
     }
@@ -561,6 +589,7 @@ def build(corpus_path: Path, hindi_dir: Path) -> None:
     missing_hindi: list[tuple[int, str, int]] = []
     chapters: dict[int, list[dict[str, Any]]] = defaultdict(list)
     seen_references: set[tuple[int, str, int]] = set()
+    blank_meanings: dict[int, list[int]] = defaultdict(lambda: [0, 0])
 
     for row in corpus:
         kanda = KANDA_NUMBER[row["kanda"]]
@@ -614,6 +643,14 @@ def build(corpus_path: Path, hindi_dir: Path) -> None:
                 meaning_hi = collapse_space(str(row.get("translation") or ""))
         if not meaning_hi:
             raise ValueError(f"missing Hindi meaning for {reference_key}")
+        if hindi_meaning_unusable(meaning_hi, lines):
+            meaning_hi = ""
+            blank_meanings[kanda][0] += 1
+        if meaning_en.strip() in UNTRANSLATED_ENGLISH:
+            meaning_en = ""
+            blank_meanings[kanda][1] += 1
+        if not meaning_hi and not meaning_en:
+            raise ValueError(f"no usable meaning in either language for {reference_key}")
 
         reference = f"{kanda}.{sarga}.{shloka}"
         chapters[kanda].append(
@@ -635,6 +672,9 @@ def build(corpus_path: Path, hindi_dir: Path) -> None:
 
     if missing_hindi:
         raise ValueError(f"Hindi alignment incomplete for {len(missing_hindi)} rows: {missing_hindi[:20]}")
+    actual_blanks = {kanda: tuple(blank_meanings[kanda]) for kanda in EXPECTED_BLANK_MEANINGS}
+    if actual_blanks != EXPECTED_BLANK_MEANINGS:
+        raise ValueError(f"blank meaning counts drifted: {actual_blanks}")
     expected_repairs = 18 + len(VERIFIED_TEXT_OVERRIDES)
     if repaired_rows != expected_repairs:
         raise ValueError(

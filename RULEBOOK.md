@@ -440,6 +440,8 @@ Ship the full canonical version (all verses) only after internet verification. M
 ### 11.6 No fabricated content
 Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.
 
+**Scraper residue is not a meaning.** A meaning field that holds website navigation text, an upstream placeholder (`Missing`, `In Progress`) or the verse's own Sanskrit is as wrong as a fabricated line. Write that field blank in the builder and fall back to the verse's other *sourced* meaning at load time — never fill it from memory or machine translation. `valmiki-ramayan` is the worked case (Nov 2026: 80 Hindi + 5 English rows): `scripts/build-valmiki-ramayan.py` pins the per-kāṇḍa blank counts (`EXPECTED_BLANK_MEANINGS`), `getValmikiRamayanChapter` applies `withMeaningFallback`, and `contentCorrectness.test.ts` + `valmikiMeaningFallback.jest.test.ts` fail on residue, on both sides blank, and on a count that grows. The count may only shrink, when the published text is captured.
+
 ### 11.7 Both platforms per change
 Every content/data change must be verified on both iOS and Android before OTA push. Bundle and test on both platforms — a rendering issue on one platform (especially with Devanagari fonts) may not appear on the other.
 

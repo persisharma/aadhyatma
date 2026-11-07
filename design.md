@@ -2781,6 +2781,15 @@ constituent verse pages. The one truncated Hindi page (2.102 after verse 9) is f
 independent Dharmasutra verse meanings. Source commits, hash, dates, and caveats live in every
 chapter's `source` object.
 
+**Unusable upstream meanings ship blank, never as residue (Nov 2026).** 80 pinned Hindi rows were
+not meanings — RamCharit.in navigation labels (`Hindu Dharma`, `मिथक व लोकथाएं`, …) or the Sanskrit
+line repeated — and 5 English rows read `Missing`/`In Progress`. The builder writes those fields
+blank (`EXPECTED_BLANK_MEANINGS` pins the per-kāṇḍa counts), and `getValmikiRamayanChapter` fills a
+blank side from the verse's other sourced meaning (`withMeaningFallback`), so the reader, share,
+read-aloud and bookmarks always receive a real meaning. A Hindi/gu/kn reader therefore sees the
+English meaning on those 80 verses until the Gita Press Hindi is captured; never fill them from
+memory or machine translation (§11.3/§11.13).
+
 **Structure.** Standard chaptered-Granth pipeline (§15 chapters index → §9 reader), one chapter
 per kāṇḍa. The chapters index passes `chapterLabelHi/En="काण्ड"/"Kanda"` and
 `unitLabelHi/En="श्लोक"/"shlokas"` (plus `unitLabelEnSingular="shloka"`) to `GitaChapterCard` — the
