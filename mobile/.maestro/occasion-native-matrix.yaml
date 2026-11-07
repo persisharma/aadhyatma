@@ -36,17 +36,21 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
     timeout: 30000
-- assertVisible: { id: occasion-timings-card }
+- assertVisible: { id: compact-occasion-card }
 - takeScreenshot: 'e2e-shots/festival-${CASE_ID}-screen'
-- scrollUntilVisible:
-    element: { id: occasion-share }
-    direction: DOWN
-    centerElement: true
-- assertVisible: { id: occasion-share }
-- takeScreenshot: 'e2e-shots/festival-${CASE_ID}-action'
 - runFlow:
     when: { true: '${String(FOCUSED) === "true"}' }
     commands:
+      - tapOn: { id: compact-occasion-open-vrat }
+      - extendedWaitUntil:
+          visible: { id: occasion-timings-card }
+          timeout: 30000
+      - scrollUntilVisible:
+          element: { id: occasion-share }
+          direction: DOWN
+          centerElement: true
+      - assertVisible: { id: occasion-share }
+      - takeScreenshot: 'e2e-shots/festival-${CASE_ID}-action'
       - tapOn: { id: occasion-share }
       - extendedWaitUntil:
           visible: { id: occasion-share-export }
