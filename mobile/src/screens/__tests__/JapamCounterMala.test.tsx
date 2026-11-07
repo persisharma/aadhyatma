@@ -30,7 +30,7 @@ jest.mock('expo-haptics', () => ({
   notificationAsync: jest.fn(() => Promise.resolve()),
   impactAsync: jest.fn(() => Promise.resolve()),
   NotificationFeedbackType: { Success: 'success' },
-  ImpactFeedbackStyle: { Light: 'light' },
+  ImpactFeedbackStyle: { Light: 'light', Medium: 'medium' },
 }));
 jest.mock('expo-linear-gradient', () => {
   const r = require('react');
@@ -179,6 +179,22 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     await act(async () => { cycle(); });
     expect(beadLabel(tree)).toContain('0 of 108');
     expect(beadLabel(tree)).toContain('1 malas completed');
+  });
+
+  test('every automatic Infinity count gets the same firm tick for any mantra; taps stay light', async () => {
+    // Regression: Light ticks seconds apart (shlokas, long mantras) went unfelt on
+    // iPhone while 0.88 s naam loops kept the Taptic Engine warm.
+    const haptics = jest.requireMock('expo-haptics') as { impactAsync: jest.Mock };
+    const tree = await renderJapam();
+    haptics.impactAsync.mockClear();
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    expect(haptics.impactAsync).toHaveBeenLastCalledWith('light');
+    await act(async () => { choice(tree, 'infinity').props.onPress(); });
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    haptics.impactAsync.mockClear();
+    await act(async () => { tree.root.findAll((n) => typeof n.props.onCycle === 'function')[0].props.onCycle(); });
+    expect(haptics.impactAsync).toHaveBeenCalledTimes(1);
+    expect(haptics.impactAsync).toHaveBeenLastCalledWith('medium');
   });
 
   test.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ lang, size }))))('restores infinity in $lang at $size without changing saved progress', async ({ lang, size }) => {

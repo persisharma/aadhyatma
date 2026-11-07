@@ -178,8 +178,13 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   /** Did the user complete at least one full mala while this screen was open? */
   const completedRoundThisVisitRef = useRef(false);
 
+  // Automatic counts (an Infinity loop or a recording's repetition) arrive with
+  // no finger on the glass, often seconds apart. iOS (expo-haptics) builds a new
+  // generator and fires it at once, so after a long gap the Taptic Engine is
+  // cold and a Light tick is easy to miss: shlokas and long mantras felt silent
+  // while 0.88 s naam loops kept the engine warm. They get a Medium tick instead.
   const registerBead = useCallback(
-    (beads: number = 1) => {
+    (beads: number = 1, source: 'tap' | 'auto' = 'tap') => {
       if (!mantra) return;
       const next = increment(mantra.id, beads);
       if (next.rounds > lastRoundRef.current) {
@@ -192,7 +197,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           () => undefined
         );
       } else {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => undefined);
+        Haptics.impactAsync(source === 'auto' ? Haptics.ImpactFeedbackStyle.Medium : Haptics.ImpactFeedbackStyle.Light)
+          .catch(() => undefined);
       }
     },
     [increment, mantra]
@@ -224,10 +230,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     else registerBead(1);
   }, [japaStyle, registerBead]);
   const handleInfinityCycle = useCallback(() => {
-    if (autoSourceRef.current === 'motion') registerBead(1);
+    if (autoSourceRef.current === 'motion') registerBead(1, 'auto');
   }, [registerBead]);
   const handleAudioIteration = useCallback((beads: number) => {
-    if (autoSourceRef.current === 'audio') registerBead(beads);
+    if (autoSourceRef.current === 'audio') registerBead(beads, 'auto');
   }, [registerBead]);
 
   if (!mantra) {
