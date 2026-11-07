@@ -117,7 +117,10 @@ so a stale non-Indian preference can never resurrect a dropped accent.
   `Locale.getDefault()`. Availability therefore comes from a `getAvailableVoicesAsync()` probe
   (**on first need only** — `ensureVoices()` from `useReaderReadAloud` after interactions, or the voice
   sheet opening; never at provider mount, because Android answers it with a main-thread `getVoices()`
-  binder call in expo-speech's init callback — Nov 2026 ANR audit)
+  binder call in expo-speech's init callback — Nov 2026 ANR audit). `patches/expo-speech+14.0.8.patch`
+  also moves that init-callback drain onto expo's serial AsyncFunction queue (ready flag flipped there,
+  so queued work keeps order) and stops activity-destroy from constructing an engine just to shut it
+  down; `expoSpeechPatch.test.ts` pins the installed source — re-port it on any expo-speech upgrade
   (raced against a 4 s timeout — Android's engine binds slowly) plus a **3 s `onStart` watchdog**
   for the OEM engine that reports a language then emits nothing. Never gate on `onError`.
 - **Never pass `'hi-IN'` as Android's `language`.** `SpeechModule.kt` does `Locale(options.language)`
