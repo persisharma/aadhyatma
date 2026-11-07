@@ -4,7 +4,7 @@ import { BRAND_LAUNCH_REVEAL_ENABLED } from '../BrandLaunchGate';
 
 // The particle reveal mounted a WebView (Chromium init on the Android main thread)
 // on every cold start; it stays off until ANR evidence says otherwise
-// (docs/engineering/android-anr-review-2026-11.md).
+// (docs/engineering/android-anr-audit-2026-11.md).
 test('the cold-start particle reveal is disabled', () => {
   expect(BRAND_LAUNCH_REVEAL_ENABLED).toBe(false);
 });

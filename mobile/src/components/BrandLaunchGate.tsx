@@ -5,7 +5,7 @@ import BrandLaunchReveal from './BrandLaunchReveal';
 
 /**
  * Kill switch for the cold-start particle reveal, OFF on every platform since the
- * November 2026 Android ANR review (docs/engineering/android-anr-review-2026-11.md):
+ * November 2026 Android ANR review (docs/engineering/android-anr-audit-2026-11.md):
  * the reveal mounted a WebView on every cold start, and a process's first WebView
  * initialises Chromium on the main thread. Off, every launch takes the gate's
  * existing bypass path (the one targeted launches use): no reveal, no WebView, Home
