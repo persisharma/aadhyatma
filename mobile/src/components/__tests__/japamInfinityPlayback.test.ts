@@ -18,7 +18,7 @@ function driver(phase = 0) {
   return { motion, callbacks, durations, resets, get stops() { return stops; }, get nativeStops() { return nativeStops; } };
 }
 
-test('default loop is ~10% slower than the original 800ms cycle', () => {
+test('short-name fallback is 880ms', () => {
   assert.equal(INFINITY_CYCLE_MS, 880);
 });
 
@@ -104,4 +104,48 @@ test('one count source is selected across audio, silent loops and pause', () => 
   assert.equal(japaAutoCountSource('infinity', false, false), 'none');
   assert.equal(japaAutoCountSource('mala', false, true), 'audio');
   assert.equal(japaAutoCountSource('mala', false, false), 'none');
+});
+
+
+test('ten thousand completed cycles keep one active animation and reject duplicate or stopped callbacks', () => {
+  let current: (finished: boolean) => void = () => { throw new Error('not started'); };
+  let active = 0;
+  let maximum = 0;
+  let count = 0;
+  const stop = startInfinityMotion({
+    readPhase: callback => callback(0),
+    setPhase: () => {},
+    stopPhase: () => {},
+    onCycle: () => { count++; },
+    animate: (_duration, callback) => {
+      active++;
+      maximum = Math.max(maximum, active);
+      current = callback;
+      return { stop: () => { active--; } };
+    },
+  });
+  for (let i = 0; i < 10000; i++) {
+    const completed = current;
+    active--; // The native animation has completed before invoking JS.
+    completed(true);
+    completed(true); // Duplicate completion must not spawn another animation.
+    assert.equal(active, 1);
+  }
+  assert.equal(count, 10000);
+  assert.equal(maximum, 1);
+  const late = current;
+  stop();
+  late(true);
+  assert.equal(active, 0);
+  assert.equal(count, 10000);
+});
+
+
+test('mantra-specific cadence applies to partial resume and every subsequent full utterance', () => {
+  const d = driver(0.25);
+  const stop = startInfinityMotion(d.motion, 10200);
+  assert.deepEqual(d.durations, [7650]);
+  d.callbacks[0](true);
+  assert.deepEqual(d.durations, [7650, 10200]);
+  stop();
 });

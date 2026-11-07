@@ -15,6 +15,7 @@ import {
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import RateStepper from './RateStepper';
+import { MIN_JAPA_RATE as MIN_RATE, MAX_JAPA_RATE as MAX_RATE } from './japamRecitationTiming';
 
 type Props = {
   mantraId: string;
@@ -29,10 +30,14 @@ type Props = {
   /** Told whenever the auto-chant starts or stops, so the counter can show a
    *  listening state (marker pulse, hint copy). Called with `false` on unmount. */
   onPlayingChange?: (playing: boolean) => void;
+  rate?: number;
+  onRateChange?: (rate: number) => void;
+  /** Natural-tempo average, before applying the selected playback rate. */
+  onRecitationDurationChange?: (mantraId: string, durationMs: number) => void;
+  /** Infinity supports tempo adjustment even without a bundled recording. */
+  showSilentTempo?: boolean;
 };
 
-const MIN_RATE = 0.5;
-const MAX_RATE = 1.5;
 const RATE_STEP = 0.1;
 
 // How often the wall-clock bead counter samples. Matches the audio status
@@ -52,22 +57,30 @@ export default function JapamAudioPlayer({
   onIteration,
   autoPlay,
   onPlayingChange,
+  rate,
+  onRateChange,
+  onRecitationDurationChange,
+  showSilentTempo,
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
   if (source == null) {
-    return <UnavailableNotice lang={lang} />;
+    return <UnavailableNotice lang={lang} rate={rate} onRateChange={showSilentTempo ? onRateChange : undefined} />;
   }
 
   return (
     <ActiveAudioPlayer
+      key={mantraId}
       source={source}
       mantraId={mantraId}
       lang={lang}
       onIteration={onIteration}
       autoPlay={autoPlay}
       onPlayingChange={onPlayingChange}
+      rate={rate}
+      onRateChange={onRateChange}
+      onRecitationDurationChange={onRecitationDurationChange}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -89,13 +102,18 @@ function ActiveAudioPlayer({
   onIteration,
   autoPlay,
   onPlayingChange,
+  rate: controlledRate,
+  onRateChange,
+  onRecitationDurationChange,
   colors,
   typography,
   radii,
 }: ActivePlayerProps) {
   const player = useAudioPlayer(source, { updateInterval: 250 });
   const status = useAudioPlayerStatus(player);
-  const [rate, setRate] = useState(1.0);
+  const [localRate, setLocalRate] = useState(1.0);
+  const rate = controlledRate ?? localRate;
+  const setRate = onRateChange ?? setLocalRate;
   // Whether a chant session is active — our own play/pause intent, NOT the
   // native `status.playing`. On a looping clip the native flag flickers false
   // at every loop seam (and its update stream can stall), which both flickered
@@ -132,7 +150,7 @@ function ActiveAudioPlayer({
 
   // Reset playback when the mantra changes.
   useEffect(() => {
-    setRate(1.0);
+    setLocalRate(1.0);
     setChanting(false);
     autoPlayedRef.current = false;
     progressRef.current = INITIAL_BEAD_PROGRESS;
@@ -195,7 +213,11 @@ function ActiveAudioPlayer({
   // the native status doesn't stall the clock. A multi-bead tick is applied as
   // ONE `onIteration(delta)` call — a single atomic counter update.
   const durationRef = useRef(0);
-  if ((status.duration ?? 0) > 0) durationRef.current = status.duration;
+  if (Number.isFinite(status.duration) && (status.duration ?? 0) > 0) durationRef.current = status.duration;
+  const recitationMs = durationRef.current > 0 ? durationRef.current * 1000 / repetitions : 0;
+  useEffect(() => {
+    if (recitationMs > 0) onRecitationDurationChange?.(mantraId, recitationMs);
+  }, [mantraId, recitationMs, onRecitationDurationChange]);
   const beadInputsRef = useRef({ duration: 0, repetitions, rate, playing: false });
   beadInputsRef.current = {
     duration: durationRef.current,
@@ -344,7 +366,7 @@ function ActiveAudioPlayer({
   );
 }
 
-function UnavailableNotice({ lang }: { lang: Lang }) {
+function UnavailableNotice({ lang, rate = 1, onRateChange }: Pick<Props, 'lang' | 'rate' | 'onRateChange'>) {
   const { colors, typography } = useTheme();
   const text = pick(lang, {
     hi: 'इस मंत्र की ध्वनि उपलब्ध नहीं है',
@@ -359,7 +381,7 @@ function UnavailableNotice({ lang }: { lang: Lang }) {
         ? fontFamilies.kannada
         : typography.swipeHint.fontFamily;
   return (
-    <View style={[styles.wrap, styles.wrapCentered]}>
+    <View style={[styles.wrap, !onRateChange && styles.wrapCentered]}>
       <Text
         style={[
           styles.unavailable,
@@ -372,6 +394,10 @@ function UnavailableNotice({ lang }: { lang: Lang }) {
       >
         {text}
       </Text>
+      {onRateChange ? <RateStepper value={rate} onChange={onRateChange}
+        min={MIN_RATE} max={MAX_RATE} step={RATE_STEP} inlineLabel
+        label={pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' })}
+        labelFontFamily={noticeFont} /> : null}
     </View>
   );
 }
@@ -380,6 +406,7 @@ const styles = StyleSheet.create({
   // One line: Play at the start, the inline-labelled tempo stepper at the end.
   wrap: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 12,

@@ -74,7 +74,7 @@ function Ring({ ring, words, separator, widths, cx, cy, fontFamily, animate }: {
     const run = (from: number) => {
       if (!live) return;
       animation = Animated.timing(turn, {
-        toValue: 1, duration: Math.max(1, Math.round(periodMs * (1 - from))), easing: Easing.linear, useNativeDriver: true,
+        toValue: 1, duration: Math.max(1, Math.round(periodMs * (1 - from))), easing: Easing.linear, useNativeDriver: true, isInteraction: false,
       });
       animation.start(({ finished }) => {
         if (!live || !finished) return;
