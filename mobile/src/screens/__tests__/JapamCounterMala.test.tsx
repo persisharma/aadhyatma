@@ -8,6 +8,7 @@ import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import mandalaMeasurements from '@/components/__tests__/fixtures/japamMandalaWidths.json';
+import { compactJapamReadingLines } from '@/components/japamReadingLayout';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -340,13 +341,18 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(tree.root.findByType(JapamInfinity).props.size).toBe(296);
     expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4000);
     const reading = tree.root.findAll(node => node.props.progress && node.props.referenceLines)[0];
-    expect(reading.props.lines).toEqual(fixture.lines);
-    expect(reading.props.fontSize).toBe(size === 'L' ? lang === 'en' ? 23 : 26 : lang === 'en' ? 20 : 23);
+    expect(reading.props.lines).toEqual(compactJapamReadingLines(fixture.lines));
+    expect(reading.props.lines.join(' ')).toBe(fixture.lines.join(' '));
+    expect(reading.props.fontSize).toBe(size === 'L' ? 21 : 18);
+    expect(reading.props.numberOfLines).toBeUndefined();
     const order = tree.root.findAll(node => ['japam-mandala', 'karaoke-text'].includes(node.props.testID));
     expect(order[0].props.testID).toBe('japam-mandala');
     expect(order[order.length - 1].props.testID).toBe('karaoke-text');
     expect(tree.root.findAll(node => node.props.testID === 'japam-mandala-word').length).toBeGreaterThan(0);
-    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-count')[0].props.numberOfLines).toBeUndefined();
+    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-count')).toHaveLength(0);
+    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-current').length).toBeGreaterThan(0);
+    const readerHost = tree.root.findAll(node => node.props.testID === 'japam-infinity-reading')[0];
+    expect(readerHost.parent?.props.accessibilityElementsHidden).toBe(false);
     expect(beadLabel(tree)).toContain('0 of 108');
   });
 

@@ -37,6 +37,7 @@ import JapamInfinity from '@/components/JapamInfinity';
 import { japaAutoCountSource } from '@/components/japamInfinityPlayback';
 import { infinityRecitationMs, normalizeJapaRate, recitationUnits } from '@/components/japamRecitationTiming';
 import KaraokeText from '@/components/KaraokeText';
+import { compactJapamReadingLines } from '@/components/japamReadingLayout';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -113,6 +114,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     [route.params.mantraId]
   );
   const displayedLines = useMemo(() => verseLinesByLang(lang, mantra?.lines ?? [], mantra?.linesEn ?? []), [lang, mantra]);
+  const compactReadingLines = useMemo(() => compactJapamReadingLines(displayedLines), [displayedLines]);
 
   React.useEffect(() => {
     if (!mantra) {
@@ -293,14 +295,20 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
   const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
-  // The full ornamental frame keeps a stable width. Its complete mantra sits
-  // below it and the existing ScrollView grows for long/enlarged passages.
+  // Keep the approved frame; the complete reader replaces its former count row.
   const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
     <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340)}
       running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
       notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
       ringText={displayedLines.join(' ')} ringsActive={screenFocused}
-      labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
+      labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)}
+      reading={<Animated.View style={{ width: '100%', transform: [{ scale: nameBeat }] }}>
+        <KaraokeText lines={compactReadingLines} referenceLines={mantra.lines} wordWeight={japaWordWeight}
+          progress={infinityPhase} color={colors.ink} highlightColor={colors.saffronDeep}
+          fontFamily={isLatinLang(lang) ? typography.cardLatin.fontFamily : scriptSerif ?? typography.verse.fontFamily}
+          fontSize={Math.round(18 * factor)} lineHeight={Math.round(30 * factor)}
+          fontStyle={isLatinLang(lang) ? 'italic' : 'normal'} includeFontPadding={!isLatinLang(lang)} />
+      </Animated.View>} />
   </View> : null;
 
 
@@ -439,19 +447,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             ]}
           >
             {infinityVisual}
-            <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
-              <Animated.View style={[styles.mantraBlock, japaStyle === 'infinity' && styles.mantraFullWidth, { transform: [{ scale: nameBeat }] }]}>
-                {japaStyle === 'infinity' ? <KaraokeText
-                  lines={displayedLines} referenceLines={mantra.lines} wordWeight={japaWordWeight}
-                  progress={infinityPhase} color={colors.ink} highlightColor={colors.saffronDeep}
-                  fontFamily={isLatinLang(lang) ? typography.cardLatin.fontFamily : scriptSerif ?? typography.verse.fontFamily}
-                  fontSize={isLatinLang(lang) ? naam ? Math.round(verseFontSizeEn * 1.6) : verseFontSizeEn
-                    : naam ? Math.round(verseFontSize * 1.5) : verseFontSize}
-                  lineHeight={isLatinLang(lang) ? naam ? Math.round(verseLineHeightEn * 1.25) : verseLineHeightEn
-                    : naam ? Math.round(verseLineHeight * 1.25) : verseLineHeight}
-                  fontStyle={isLatinLang(lang) ? 'italic' : 'normal'} includeFontPadding={!isLatinLang(lang)}
-                  lineGap={isLatinLang(lang) ? 6 : 0}
-                /> : displayedLines.map((line, i) => (
+            {japaStyle === 'mala' ? <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
+              <Animated.View style={[styles.mantraBlock, { transform: [{ scale: nameBeat }] }]}>
+                {displayedLines.map((line, i) => (
                   <Text
                     key={`${lang}-${i}`}
                     style={[
@@ -492,7 +490,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               ) : null}
 
               <Ornament compact />
-            </View>
+            </View> : null}
 
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
             {japaStyle === 'mala' ? <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
