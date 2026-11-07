@@ -1,11 +1,13 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Animated, Text } from 'react-native';
+import * as ReactNative from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Lang } from '@/data/gita/language';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
+import mandalaMeasurements from '@/components/__tests__/fixtures/japamMandalaWidths.json';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -320,6 +322,32 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     mockGetItem.mockImplementation(key => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
     const tree = await renderJapam('gayatri-mantra', lang);
     expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4000);
+  });
+
+  test.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ lang, size }))))
+  ('compact Gayatri keeps its complete $lang passage at $size below the measured frame', async ({ lang, size }) => {
+    jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 320, height: 568, scale: 2, fontScale: 1.5 });
+    jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width: 320, height: 568, scale: 2, fontScale: 1.5 });
+    mockGetItem.mockImplementation(key => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"'
+      : key === '@vedansh/font-scale' ? size : null));
+    const tree = await renderJapam('gayatri-mantra', lang);
+    const fixture = mandalaMeasurements.cases.find(row => row.id === 'gayatri-mantra' && row.lang === lang)!;
+    const widths: Readonly<Record<string, number | undefined>> = fixture.widths;
+    const measurers = tree.root.findAllByType(Text).filter(node => typeof node.props.onLayout === 'function');
+    await act(async () => {
+      measurers.forEach(node => node.props.onLayout({ nativeEvent: { layout: { width: widths[String(node.props.children)], height: 40, x: 0, y: 0 } } }));
+    });
+    expect(tree.root.findByType(JapamInfinity).props.size).toBe(296);
+    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4000);
+    const reading = tree.root.findAll(node => node.props.progress && node.props.referenceLines)[0];
+    expect(reading.props.lines).toEqual(fixture.lines);
+    expect(reading.props.fontSize).toBe(size === 'L' ? lang === 'en' ? 23 : 26 : lang === 'en' ? 20 : 23);
+    const order = tree.root.findAll(node => ['japam-mandala', 'karaoke-text'].includes(node.props.testID));
+    expect(order[0].props.testID).toBe('japam-mandala');
+    expect(order[order.length - 1].props.testID).toBe('karaoke-text');
+    expect(tree.root.findAll(node => node.props.testID === 'japam-mandala-word').length).toBeGreaterThan(0);
+    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-count')[0].props.numberOfLines).toBeUndefined();
+    expect(beadLabel(tree)).toContain('0 of 108');
   });
 
   test('silent tempo and playing-recording cadence reach Infinity without extra or double counts', async () => {

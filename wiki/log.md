@@ -1441,5 +1441,12 @@ Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infin
 ## [2026-11-07] ingest | Suvichar sender switch and wishes heading
 Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.
 
+## [2026-11-07] ingest | Japa ornamental mandala and long-text fitting
+Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
+
+## [2026-11-07] ingest | Compact Panchang occasion summary; full dated illustrated cards in Vrat. Shared yielded/cancelled timing work and independent share/detail dates preserved; native visual/export/low-end performance acceptance pending. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
+
+## [2026-11-07] ingest | Correct compact muhurat card fit: grouped headings, numeric-only clock endpoints with separate dates, measured container width and stable layout callbacks. Correct the ineffective RN namespace dimensions spy; add exact-font clock bounds and a PR-triggered native compact-fit matrix. Native/device acceptance tracked in docs/reviews/2026-11-07-compact-muhurat-fit.md.
+
 ## [2026-11-07] ingest | Cooperative Pitru/Janma solves and the precomputed-table end
 Updated [[subsystems/panchang]]: Pitru Smaran and Janma Tithi list/detail hooks now solve through `runInBackground` (longest cold block 5,975 → 22 ms in Jest); the precomputed observance table is extended to 2035 with a coverage test that fails two years ahead (out-of-table years cost ~1.5 s synchronously). Hermes device timing remains pending.

@@ -113,8 +113,8 @@ test('the loop is borderless on the page parchment with legible sepia numbers', 
   expect(numbers.map(n => ReactNative.StyleSheet.flatten(n.props.style).color)).toEqual([lightColors.inkSoft, lightColors.inkSoft]);
 });
 
-function ringDisplay(ringsActive = true, text = 'सीता राम', count = 11) {
-  return <ThemeProvider><JapamInfinity count={count} size={300} running={false} onCycle={onCycle}
+function ringDisplay(ringsActive = true, text = 'सीता राम', count = 11, running = true) {
+  return <ThemeProvider><JapamInfinity count={count} size={300} running={running} onCycle={onCycle}
     hint="Tap to start" labelFontFamily="test-font" ringText={text} ringsActive={ringsActive} /></ThemeProvider>;
 }
 function measureRingWords() {
@@ -124,15 +124,16 @@ function measureRingWords() {
   }
 }
 
-test('mantra words circle both sides and keep turning while the screen is focused, even when paused', async () => {
+test('the ornamental mandala turns on the native driver and rests on pause or blur', async () => {
   jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
   await act(async () => { tree = TestRenderer.create(ringDisplay()); });
   measureRingWords();
-  const words = tree.root.findAllByType(Text).filter((n) => ['सीता', 'राम', '॥'].includes(n.props.children) && !n.props.onLayout);
+  const words = tree.root.findAllByType(Text).filter((n) => ['सी', 'ता', 'रा', 'म', '॥'].includes(n.props.children) && !n.props.onLayout);
   expect(words.length).toBeGreaterThan(12);
+  expect(tree.root.findAll(n => n.props.testID === 'japam-mandala-frame').length).toBeGreaterThan(0);
   expect(words.every((n) => n.props.allowFontScaling === false && n.props.numberOfLines === 1)).toBe(true);
-  const ringTimings = (Animated.timing as jest.Mock).mock.calls.filter(([, c]) => c.duration === 48000 || c.duration === 36000);
-  expect(ringTimings.length).toBe(4); // outer + inner, left + right
+  const ringTimings = (Animated.timing as jest.Mock).mock.calls.filter(([, c]) => c.duration === 56000 || c.duration === 72000);
+  expect(ringTimings.length).toBe(2); // two concentric native rotations
   expect(ringTimings.every(([, c]) => c.useNativeDriver === true)).toBe(true);
   expect(onCycle).not.toHaveBeenCalled();
   await act(async () => { tree.update(ringDisplay(false)); });
@@ -144,27 +145,27 @@ test('Reduced Motion keeps the mantra rings still', async () => {
   jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
   await act(async () => { tree = TestRenderer.create(ringDisplay()); });
   measureRingWords();
-  expect(tree.root.findAll((n) => n.props.testID === 'japam-mantra-ring').length).toBeGreaterThan(0);
-  expect((Animated.timing as jest.Mock).mock.calls.some(([, c]) => c.duration === 48000)).toBe(false);
+  expect(tree.root.findAll((n) => n.props.testID === 'japam-mandala-band').length).toBeGreaterThan(0);
+  expect((Animated.timing as jest.Mock).mock.calls.some(([, c]) => c.duration === 56000)).toBe(false);
 });
 
 test('repeated background and foreground transitions leave no stale ring work after cleanup', async () => {
   jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
   await act(async () => { tree = TestRenderer.create(ringDisplay()); });
   measureRingWords();
-  expect(start).toHaveBeenCalledTimes(4);
+  expect(start).toHaveBeenCalledTimes(3);
   for (let i = 0; i < 25; i++) {
-    const stale = completions.slice(-4);
+    const stale = completions.slice(-3);
     const started = start.mock.calls.length;
     const stopped = stop.mock.calls.length;
     await act(async () => { onState('background'); });
-    expect(stop.mock.calls.length - stopped).toBe(4);
+    expect(stop.mock.calls.length - stopped).toBe(3);
     act(() => stale.forEach(complete => complete({ finished: true })));
     expect(start).toHaveBeenCalledTimes(started);
     await act(async () => { onState('active'); });
-    expect(start).toHaveBeenCalledTimes(started + 4);
+    expect(start).toHaveBeenCalledTimes(started + 3);
   }
-  const late = completions.slice(-4);
+  const late = completions.slice(-3);
   const started = start.mock.calls.length;
   act(() => tree.unmount());
   act(() => late.forEach(complete => complete({ finished: true })));
@@ -190,11 +191,11 @@ test('count changes do not re-render decorative mantra words or recreate their a
   jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
   await act(async () => { tree = TestRenderer.create(ringDisplay()); });
   measureRingWords();
-  const before = tree.root.findAll(n => n.props.testID === 'japam-mantra-ring').map(n => n.props.style);
+  const before = tree.root.findAll(n => n.props.testID === 'japam-mandala-band').map(n => n.props.style);
   expect(before.length).toBeGreaterThan(0);
   const starts = start.mock.calls.length;
   await act(async () => { tree.update(ringDisplay(true, 'सीता राम', 12)); });
-  const after = tree.root.findAll(n => n.props.testID === 'japam-mantra-ring').map(n => n.props.style);
+  const after = tree.root.findAll(n => n.props.testID === 'japam-mandala-band').map(n => n.props.style);
   after.forEach((style, i) => expect(style).toBe(before[i]));
   expect(start).toHaveBeenCalledTimes(starts);
   expect((Animated.timing as jest.Mock).mock.calls.every(([, config]) => config.isInteraction === false)).toBe(true);
