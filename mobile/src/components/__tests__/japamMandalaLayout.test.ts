@@ -76,6 +76,14 @@ test('Gayatri in Hindi fits both ornamental bands in a single page even on the c
   }
 });
 
+test.each(['gayatri-mantra', 'hare-krishna-mahamantra'])('%s never leaves a text band empty', id => {
+  for (const row of measurements.cases.filter(item => item.id === id)) for (const size of [280, 296, 340]) {
+    const layout = layoutMandala(row.lines.join(' '), size, row.widths)!;
+    expect(layout.bands).toHaveLength(2);
+    for (const band of layout.bands) for (const page of band.pages) expect(page.length).toBeGreaterThan(0);
+  }
+});
+
 test('word windows use valid native opacity ranges and missing measurements never start layout work', () => {
   for (let total = 1; total <= 20; total++) for (let page = 0; page < total; page++) {
     const frames = mandalaPageOpacity(page, total);
