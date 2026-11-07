@@ -1,6 +1,12 @@
 name: Native festival card iOS
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'mobile/src/components/CompactOccasionCard.tsx'
+      - 'mobile/src/panchang/occasionTimingFormat.ts'
+      - 'mobile/.maestro/occasion-native-matrix.yaml'
+      - '.github/workflows/native-festival-ios.yml'
   push:
     branches: [codex/festival-muhurat-share, codex/year-round-occasion-cards]
     paths:
@@ -25,6 +31,9 @@ jobs:
       MAESTRO_CLI_NO_ANALYTICS: 'true'
       MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
       MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+      # This card-layout gate covers Diwali + previous-night Shivaratri in all
+      # scripts/sizes. Manual and existing push runs retain the full festival set.
+      FESTIVAL_VERIFY_SCOPE: ${{ github.event_name == 'pull_request' && 'compact-fit' || 'all' }}
     steps:
       - uses: actions/checkout@v4
         with:

@@ -1445,3 +1445,5 @@ Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line
 Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
 
 ## [2026-11-07] ingest | Compact Panchang occasion summary; full dated illustrated cards in Vrat. Shared yielded/cancelled timing work and independent share/detail dates preserved; native visual/export/low-end performance acceptance pending. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
+
+## [2026-11-07] ingest | Correct compact muhurat card fit: grouped headings, numeric-only clock endpoints with separate dates, measured container width and stable layout callbacks. Correct the ineffective RN namespace dimensions spy; add exact-font clock bounds and a PR-triggered native compact-fit matrix. Native/device acceptance tracked in docs/reviews/2026-11-07-compact-muhurat-fit.md.
