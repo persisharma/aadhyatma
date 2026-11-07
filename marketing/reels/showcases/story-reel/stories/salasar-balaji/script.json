@@ -45,14 +45,15 @@
   "voice": {
     "engine": "Kokoro-82M v1.0 (Apache-2.0)",
     "voice": "hf_alpha",
-    "speed": 1.0,
+    "speed": 1.1,
     "phonemeFixes": {
       "dˈaːr.hi": "dˈaːɖʰi ",
       "mˈũncʰ": "mˈuːnʧʰ",
       "ɡˈaːr.i": "ɡˈaːɖi",
       "pˈõcʰi": "pˈõːtʃʰiː"
     },
-    "pacing": true
+    "pacing": true,
+    "pauseScale": 0.9
   },
   "scenes": [
     {

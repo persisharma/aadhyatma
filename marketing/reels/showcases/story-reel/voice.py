@@ -43,7 +43,7 @@ for i, sc in enumerate(cfg["scenes"]):
             phrases.append({"text": d_.strip().rstrip(",।?!…—.").strip(), "s": round(t, 3), "e": round(t + len(s_) / sr, 3)})
             chunks.append(s_); t += len(s_) / sr
             if k_ < len(spp) - 1:
-                g = GAP.get(sp_.strip()[-1], 0.08); chunks.append(np.zeros(int(sr * g), dtype=s_.dtype)); t += g
+                g = GAP.get(sp_.strip()[-1], 0.08) * cfg["voice"].get("pauseScale", 1); chunks.append(np.zeros(int(sr * g), dtype=s_.dtype)); t += g
         s = np.concatenate(chunks)
     else:
         s, sr = synth(spoken)
