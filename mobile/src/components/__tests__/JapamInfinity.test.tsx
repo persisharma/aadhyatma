@@ -148,6 +148,31 @@ test('Reduced Motion keeps the mantra rings still', async () => {
   expect((Animated.timing as jest.Mock).mock.calls.some(([, c]) => c.duration === 48000)).toBe(false);
 });
 
+test('repeated background and foreground transitions leave no stale ring work after cleanup', async () => {
+  jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+  await act(async () => { tree = TestRenderer.create(ringDisplay()); });
+  measureRingWords();
+  expect(start).toHaveBeenCalledTimes(4);
+  for (let i = 0; i < 25; i++) {
+    const stale = completions.slice(-4);
+    const started = start.mock.calls.length;
+    const stopped = stop.mock.calls.length;
+    await act(async () => { onState('background'); });
+    expect(stop.mock.calls.length - stopped).toBe(4);
+    act(() => stale.forEach(complete => complete({ finished: true })));
+    expect(start).toHaveBeenCalledTimes(started);
+    await act(async () => { onState('active'); });
+    expect(start).toHaveBeenCalledTimes(started + 4);
+  }
+  const late = completions.slice(-4);
+  const started = start.mock.calls.length;
+  act(() => tree.unmount());
+  act(() => late.forEach(complete => complete({ finished: true })));
+  expect(start).toHaveBeenCalledTimes(started);
+  expect(onCycle).not.toHaveBeenCalled();
+  expect(remove).toHaveBeenCalled();
+});
+
 
 test('count updates reuse the native interpolation graph instead of allocating it again', async () => {
   const interpolate = jest.spyOn(Animated.Value.prototype, 'interpolate');
