@@ -3,6 +3,17 @@ import { AccessibilityInfo, Animated, AppState, Linking, StyleSheet, View } from
 import { setBrandLaunchVisible, subscribeBrandLaunchTarget } from '@/navigation/brandLaunchIntent';
 import BrandLaunchReveal from './BrandLaunchReveal';
 
+/**
+ * Kill switch for the cold-start particle reveal, OFF on every platform since the
+ * November 2026 Android ANR review (docs/engineering/android-anr-audit-2026-11.md):
+ * the reveal mounted a WebView on every cold start, and a process's first WebView
+ * initialises Chromium on the main thread. Off, every launch takes the gate's
+ * existing bypass path (the one targeted launches use): no reveal, no WebView, Home
+ * after hydration. The approved renderer and its contract stay intact for a
+ * deliberate re-enable — flip this only with ANR evidence that it is safe.
+ */
+export const BRAND_LAUNCH_REVEAL_ENABLED = false;
+
 export const BRAND_HOME_FADE_MS = 180;
 export const BRAND_HOME_HANDOFF_TIMEOUT_MS = 1200;
 
