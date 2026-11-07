@@ -397,3 +397,18 @@ Every catalog identity has an individual festive hero export. The verified timin
 ### Occasion date corrections — 6 November 2026
 
 `festivals.ts` declares Ganga Dussehra’s exclusive Adhik exception, Rishi Panchami’s Madhyahna span, Purnima fasting’s Madhyahna qualification and monthly Krishna’s Smarta midnight/Rohini convention. `specialDayRules.ts` uses the exact night midpoint, correcting annual Janmashtami 2029 and suppressing its coincident Vaishnava duplicate. Bundled years 2024–2031 and observance cache v12 are regenerated together. Published facts, independent Swiss/Moshier fixtures and before-change control hashes are separate evidence. See `docs/reviews/occasion-date-corrections.md` for sources, multi-city checks, regional uncertainty and acceptance status.
+
+
+### Occasion cards on screen — 7 November 2026
+The individual festive composition is visible in OccasionTimingsCard on Panchang,
+Muhurat detail and Observance detail, not confined to the exported PNG. Each
+occasion owns its gold parchment frame, floral corners, centered title, complete
+3:2 painting, ritual windows/guidance and existing independent share action.
+Titles retain script-safe leading and native accessibility scaling; content grows.
+OccasionInlineArtwork reserves the image frame before downloading and keeps an
+offline thumbnail until native decode completes. Full artwork mounts only after
+measured layout and InteractionManager settlement on the focused screen; blur or
+unmount cancels queued work and removes cache subscriptions. Heavy masters stay
+remote. Text, timings, scrolling and sharing controls never await the painting.
+Native visual and low-end-device responsiveness checks remain separate release
+gates; source or mocked tests do not prove them.

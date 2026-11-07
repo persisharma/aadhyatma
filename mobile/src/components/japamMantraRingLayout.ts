@@ -26,6 +26,66 @@ export type PlacedRingToken = {
   angleDeg: number;
 };
 
+/** The arc of a ring the stage shows, clockwise from 12 o'clock in degrees. */
+export type VisibleArc = { fromDeg: number; toDeg: number };
+
+const mod360 = (deg: number) => ((deg % 360) + 360) % 360;
+
+/**
+ * Angle (degrees) from a word's centre to where its box first meets the radial
+ * line through the ring centre — the stage's clip edge. `halfHeight` is the
+ * word box's radial half-extent.
+ */
+export function wordClearanceDeg(width: number, halfHeight: number, radius: number): number {
+  const lever = radius - halfHeight;
+  if (lever <= 0) return 90;
+  return (Math.atan2(width / 2, lever) * 180) / Math.PI;
+}
+
+/**
+ * Opacity keyframes over one ring turn (0 → 1) for a word at `angleDeg`, so the
+ * word fades out whole before the stage edge would cut it and fades back in
+ * once it is wholly inside `arc`. `clearDeg` is the word's half-width as an
+ * angle (plus any margin); `fadeDeg` is the ramp length. The ring turns by
+ * `direction × 360°` per cycle, as `JapamMantraRing` rotates it.
+ */
+export function ringWordFade(
+  angleDeg: number,
+  clearDeg: number,
+  direction: 1 | -1,
+  arc: VisibleArc,
+  fadeDeg: number,
+): { inputRange: number[]; outputRange: number[] } {
+  const span = mod360(arc.toDeg - arc.fromDeg) || 360;
+  const lo = clearDeg;
+  const hi = span - clearDeg;
+  if (hi <= lo) return { inputRange: [0, 1], outputRange: [0, 0] };
+  // A ramp of at least half a degree keeps the curve continuous (no division by zero).
+  const fade = Math.min(Math.max(fadeDeg, 0.5), (hi - lo) / 2);
+  // Opacity by position within the arc; zero everywhere outside it.
+  const at = (rho: number) => {
+    if (rho <= lo || rho >= hi) return 0;
+    if (rho < lo + fade) return (rho - lo) / fade;
+    if (rho > hi - fade) return (hi - rho) / fade;
+    return 1;
+  };
+  const start = mod360(angleDeg - arc.fromDeg);
+  const points = ([[lo, 0], [lo + fade, 1], [hi - fade, 1], [hi, 0]] as const).map(([rho, v]) => ({
+    t: mod360(direction * (rho - start)) / 360,
+    v,
+  }));
+  points.push({ t: 0, v: at(start) }, { t: 1, v: at(start) });
+  points.sort((a, b) => a.t - b.t);
+  const inputRange: number[] = [];
+  const outputRange: number[] = [];
+  for (const { t, v } of points) {
+    if (inputRange.length > 0 && t - inputRange[inputRange.length - 1] < 1e-9) continue;
+    inputRange.push(t);
+    outputRange.push(v);
+  }
+  return { inputRange, outputRange };
+}
+
 /** The words to repeat round the ring (dandas and verse numbers are dropped). */
 export function ringWords(text: string): string[] {
   return text

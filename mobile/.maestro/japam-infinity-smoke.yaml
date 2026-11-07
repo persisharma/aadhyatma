@@ -14,6 +14,10 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "japam-style-infinity"
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
+# Om Namah Shivaya uses its complete-text cadence (1s at 1×); long mantras use their own pacing.
+# Verify tempo changes only pace the loop and never add a bead themselves.
+- tapOn: "Faster"
+- tapOn: "Slower"
 # Each completed silent loop counts once. Do not wait for the looping motion
 # to end; the second tap pauses motion and counting.
 - tapOn:
@@ -24,7 +28,10 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "japam-counter-infinity"
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
-- takeScreenshot: e2e-shots/japam-infinity-paused
+# Review continuous parchment with no card boundary, current count, completed
+# malas and reset; no duplicate daily-japa tally. Paused word colour and jyoti
+# must hold together; the complete mantra remains visible and correctly shaped.
+- takeScreenshot: e2e-shots/japam-infinity-seamless-parchment-paused
 - tapOn:
     id: "japam-style-mala"
 - tapOn: ".*Tap to count one bead.*"

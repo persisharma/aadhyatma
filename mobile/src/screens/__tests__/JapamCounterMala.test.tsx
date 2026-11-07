@@ -3,8 +3,9 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { Animated, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Lang } from '@/data/gita/language';
-import JapamMala from '@/components/JapamMala';
+import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
+import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -29,7 +30,7 @@ jest.mock('expo-haptics', () => ({
   notificationAsync: jest.fn(() => Promise.resolve()),
   impactAsync: jest.fn(() => Promise.resolve()),
   NotificationFeedbackType: { Success: 'success' },
-  ImpactFeedbackStyle: { Light: 'light' },
+  ImpactFeedbackStyle: { Light: 'light', Medium: 'medium' },
 }));
 jest.mock('expo-linear-gradient', () => {
   const r = require('react');
@@ -180,6 +181,22 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(beadLabel(tree)).toContain('1 malas completed');
   });
 
+  test('every automatic Infinity count gets the same firm tick for any mantra; taps stay light', async () => {
+    // Regression: Light ticks seconds apart (shlokas, long mantras) went unfelt on
+    // iPhone while 0.88 s naam loops kept the Taptic Engine warm.
+    const haptics = jest.requireMock('expo-haptics') as { impactAsync: jest.Mock };
+    const tree = await renderJapam();
+    haptics.impactAsync.mockClear();
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    expect(haptics.impactAsync).toHaveBeenLastCalledWith('light');
+    await act(async () => { choice(tree, 'infinity').props.onPress(); });
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    haptics.impactAsync.mockClear();
+    await act(async () => { tree.root.findAll((n) => typeof n.props.onCycle === 'function')[0].props.onCycle(); });
+    expect(haptics.impactAsync).toHaveBeenCalledTimes(1);
+    expect(haptics.impactAsync).toHaveBeenLastCalledWith('medium');
+  });
+
   test.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ lang, size }))))('restores infinity in $lang at $size without changing saved progress', async ({ lang, size }) => {
     mockGetItem.mockImplementation((key: string) => Promise.resolve(
       key === '@vedansh/japam-style' ? '"infinity"'
@@ -192,6 +209,7 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(choice(tree, 'infinity').props.accessibilityState.checked).toBe(true);
     expect(beadLabel(tree)).toContain('107 of 108');
     expect(beadLabel(tree)).toContain('2 malas completed');
+    expect(texts(tree).some(text => /^(आज|આજે|ಇಂದು) \d+|^\d+ (japa|names|shloka) today$/.test(text))).toBe(false);
     expect(texts(tree)).toContain({ hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' }[lang]);
     await act(async () => { tapSurface(tree).props.onPress(); });
     expect(texts(tree)).toContain({ hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' }[lang]);
@@ -252,7 +270,7 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(t).toContain('राधा');
     expect(t).toContain('राधा नाम जप');
     expect(t).toContain('स्पर्श करें · हर नाम एक मनका');
-    expect(t.some((x) => /^आज \d+ नाम$/.test(x))).toBe(true);
+    expect(t.some((x) => /^आज \d+ नाम$/.test(x))).toBe(false);
     await act(async () => {
       tapSurface(tree).props.onPress();
     });
@@ -266,10 +284,69 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(t.some((x) => x.startsWith('सहस्रलोचनप्रभृत्यशेषलेखशेखर'))).toBe(true);
     expect(t).toContain('शिव ताण्डव स्तोत्रम् · श्लोक 5');
     expect(t).toContain('स्पर्श करें · हर श्लोक एक मनका');
-    expect(t.some((x) => /^आज \d+ श्लोक$/.test(x))).toBe(true);
+    expect(t.some((x) => /^आज \d+ श्लोक$/.test(x))).toBe(false);
     await act(async () => {
       tapSurface(tree).props.onPress();
     });
     expect(beadLabel(tree)).toContain('1 of 108');
   });
+  test.each((['mala', 'infinity'] as const).flatMap(style =>
+    (['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang =>
+      (['M', 'L'] as const).map(size => ({ style, lang, size }))))
+  )('shows only current beads and completed malas in $style / $lang / $size', async ({ style, lang, size }) => {
+    mockGetItem.mockImplementation((key: string) => Promise.resolve(
+      key === '@vedansh/japam-style' ? JSON.stringify(style)
+        : key === '@vedansh/font-scale' ? size
+        : key === '@vedansh/japam-counter' ? JSON.stringify({ 'om-namah-shivaya': { count: 107, rounds: 2, updatedAt: 1 } })
+        : null
+    ));
+    const tree = await renderJapam('om-namah-shivaya', lang);
+    expect(beadLabel(tree)).toContain('107 of 108');
+    expect(tree.root.findByType(JapamMalaTray).props.rounds).toBe(2);
+    if (style === 'infinity') {
+      const phase = tree.root.findByType(JapamInfinity).props.phase;
+      expect(phase).toBeDefined();
+      expect(tree.root.findAll(node => node.props.progress === phase && node.props.referenceLines).length).toBeGreaterThan(0);
+      expect(tree.root.findAll(node => node.props.testID === 'karaoke-text').length).toBeGreaterThan(0);
+    } else {
+      expect(tree.root.findAll(node => node.props.testID === 'karaoke-text')).toHaveLength(0);
+    }
+
+    expect(texts(tree).some(text => /^(आज|આજે|ಇಂದು) \d+|^\d+ (japa|names|shloka) today$/.test(text))).toBe(false);
+    expect(tree.root.findAll(node => node.props.accessibilityLabel === 'Reset or clear the count').length).toBeGreaterThan(0);
+  });
+
+  test.each(['hi', 'en', 'gu', 'kn'] as Lang[])('Gayatri cadence is based on canonical speech, independent of $lang UI text', async lang => {
+    mockGetItem.mockImplementation(key => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
+    const tree = await renderJapam('gayatri-mantra', lang);
+    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4000);
+  });
+
+  test('silent tempo and playing-recording cadence reach Infinity without extra or double counts', async () => {
+    mockGetItem.mockImplementation(key => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
+    const tree = await renderJapam('gayatri-mantra');
+    const player = () => tree.root.findByType(JapamAudioPlayer);
+    const infinity = () => tree.root.findByType(JapamInfinity);
+    await act(async () => { tapSurface(tree).props.onPress(); });
+    await act(async () => { player().props.onRateChange(1.5); });
+    expect(infinity().props.cycleMs).toBe(2667);
+    expect(beadLabel(tree)).toContain('0 of 108');
+    await act(async () => {
+      player().props.onRecitationDurationChange('om-namah-shivaya', 2000);
+      player().props.onPlayingChange(true);
+    });
+    expect(infinity().props.cycleMs).toBe(2667); // Another mantra's measurement is ignored.
+    await act(async () => { player().props.onRecitationDurationChange('gayatri-mantra', 30000); });
+    expect(infinity().props.cycleMs).toBe(20000);
+    await act(async () => { player().props.onRecitationDurationChange('om-namah-shivaya', 2000); });
+    expect(infinity().props.cycleMs).toBe(20000); // A late old-file result cannot erase the current cadence.
+    await act(async () => { infinity().props.onCycle(); });
+    expect(beadLabel(tree)).toContain('0 of 108');
+    await act(async () => { player().props.onIteration(1); });
+    expect(beadLabel(tree)).toContain('1 of 108');
+    await act(async () => { player().props.onPlayingChange(false); });
+    expect(infinity().props.cycleMs).toBe(2667);
+    expect(beadLabel(tree)).toContain('1 of 108');
+  });
+
 });

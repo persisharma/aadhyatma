@@ -1426,6 +1426,20 @@ Hindi category `nameHi` is now जपमाला (tile, catalog, tour; matches 
 
 Added rotating side rings of the mantra's words to the Infinity night panel (whole-word Text runs, not textPath, so Indic shaping holds; ॥/• separators present in bundled fonts). Panel widens, ∞ narrows to clear them. Updated [[subsystems/japam]]; native visual/perf check pending.
 
+## [2026-11-07] ingest | Seamless Japam, animation reuse and count footer
+Updated [[subsystems/japam]] and design.md §35: approved borderless parchment, reused native graph/ring elements, non-interaction continuous animations, and removed the duplicate daily tally from both styles. Focused tests include long-running cycle structure; physical low-end profiling remains pending.
+
+## [2026-11-07] ingest | Full-mantra Infinity cadence
+Replaced the universal 880ms screen cadence with canonical phonetic-length estimates, shared silent/audio tempo, recording averages and stale-identity guards. Updated design.md §35 and the Japam integration rule; exact voice-cue alignment and device checks remain pending.
+
+## [2026-11-07] ingest | User-approved faster Infinity cadence
+Calibrated the default to Gayatri 4s, short chants of up to three words 880–1000ms, and proportional longer-mantra pacing. Recording-owned cadence and configurable tempo remain. This supersedes the earlier slower examples.
+
+## [2026-11-07] ingest | Shared karaoke reading foundation
+Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infinity. Documented configurable speed, source-script shaping, memoized native colours and the deferred whole-page स्वतः adapter. Other readers are not integrated yet.
+
+## [2026-11-07] ingest | Suvichar sender switch and wishes heading
+Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.
 ## [2026-11-07] ingest | Android ANR review (Play 28-day 0.67%, 1.60% on 5 Nov): expo-splash-screen's hold vetoes the activity's first draw, so a held window has no input focus and Back past 5 s ANRs; the hold had grown to fonts + hydration + particle WebView/Chromium (7 s watchdog). Android now releases the native splash at the first JS frame onto the colour-identical `LaunchCover`; font-load errors fail open. overview.md launch paragraphs, design.md §2.1/§64 and RULEBOOK brand rule synced. Open items (WebView Chromium init per cold start, pre-JS native cap, eager expo-audio player with runBlocking, Meta activate on main, widget/notification broadcast work) recorded in docs/engineering/android-anr-review-2026-11.md.
 ## [2026-11-07] gap | No Play ANR stack clusters were available; F3–F7 in the ANR review are code-derived and need cluster confirmation before native changes.
 ## [2026-11-07] ingest | Particle launch reveal disabled on all platforms (`BRAND_LAUNCH_REVEAL_ENABLED = false`, gate bypass path, no launch WebView) as the ANR mitigation the owner chose. Meta SDK deliberately untouched: no Play data before 19 Oct, so its 1.5.0 release (11 Oct) cannot be aligned with the onset. design.md §2.1/§64, RULEBOOK brand rule, overview.md, review doc and brand Maestro flows updated.

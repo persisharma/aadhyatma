@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, AppState, Easing, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import Svg, { Circle, Defs, Ellipse, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
+import Svg, { Circle, Defs, Ellipse, Path, RadialGradient, Stop } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { radii } from '@/theme/spacing';
 import { JAPAM_BEADS_PER_ROUND as N } from '@/data/japam';
 import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useFontScale } from '@/contexts/FontScaleContext';
@@ -24,6 +23,10 @@ type Props = {
   notice?: string | null;
   labelFontFamily: string;
   running: boolean;
+  /** One complete utterance at the selected tempo; independent of UI script. */
+  cycleMs?: number;
+  /** Shared with the word highlighter; the host keeps one reading clock. */
+  phase?: Animated.Value;
   onCycle: () => void;
   /** The mantra as displayed (current script); its words circle the panel's sides. */
   ringText?: string;
@@ -41,15 +44,22 @@ const RING_SPACING = 20;
 /** Side-ring rotation: one slow turn each, inner and outer counter-rotating. */
 export const RING_OUTER_PERIOD_MS = 48000;
 export const RING_INNER_PERIOD_MS = 36000;
+/**
+ * Each side ring is centred on the stage's clipped edge, so only its inner half
+ * shows (left ring: 12 → 6 o'clock through 3; right ring: 6 → 12 through 9).
+ * Words fade out whole before reaching the edge instead of being cut by it.
+ */
+const LEFT_RING_ARC = { fromDeg: 0, toDeg: 180 } as const;
+const RIGHT_RING_ARC = { fromDeg: 180, toDeg: 360 } as const;
 
 /** Tap-controlled loops. The parent arbitrates silent-cycle versus audio counts. */
-export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running, onCycle, ringText, ringsActive = true }: Props) {
+export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running, cycleMs, phase, onCycle, ringText, ringsActive = true }: Props) {
   const { colors } = useTheme();
   const reduced = useReducedMotion();
   const { factor } = useFontScale();
   const { fontScale, width: windowWidth } = useWindowDimensions();
   const numbersBelow = factor * fontScale > 1.25;
-  // The night panel is wider than the ∞ (8 pt page margins, capped on tablets).
+  // The transparent stage is wider than the ∞ (8 pt page margins, capped on tablets).
   // With mantra rings, the ∞ narrows so its outer curves clear the rings
   // centred on the panel's side edges; the panel keeps the `size` height.
   const height = size * 0.65;
@@ -62,7 +72,8 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
   const innerRadius = outerRadius - RING_SPACING;
   const showRings = Boolean(ringText) && outerRadius >= 28;
   const [active, setActive] = useState(AppState.currentState !== 'background' && AppState.currentState !== 'inactive');
-  const progress = useRef(new Animated.Value(0)).current;
+  const [fallbackProgress] = useState(() => phase ?? new Animated.Value(0));
+  const progress = phase ?? fallbackProgress;
   const cycleCallback = useRef(onCycle);
   cycleCallback.current = onCycle;
   useEffect(() => {
@@ -78,13 +89,13 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
       onCycle: () => cycleCallback.current(),
       animate: (duration, complete) => {
         const animation = Animated.timing(progress, {
-          toValue: 1, duration, easing: Easing.linear, useNativeDriver: true,
+          toValue: 1, duration, easing: Easing.linear, useNativeDriver: true, isInteraction: false,
         });
         animation.start(({ finished }) => complete(finished));
         return animation;
       },
-    });
-  }, [running, active, progress]);
+    }, cycleMs);
+  }, [running, active, progress, cycleMs]);
   // One closed figure-eight, repeated until the next tap pauses it.
   const coordinates = useMemo(() => {
     const inputRange = Array.from({ length: INFINITY_SAMPLES + 1 }, (_, i) => i / INFINITY_SAMPLES);
@@ -98,66 +109,57 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
       })),
     };
   }, [loop]);
+  // Reuse native interpolation nodes across count/today/provider updates.
+  // Only a geometry change should rebuild the 217-point motion graph.
+  const transforms = useMemo(() => ({
+    marker: [
+      { translateX: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: coordinates.x }) },
+      { translateY: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: coordinates.y }) },
+    ],
+    tails: coordinates.tails.map(tail => [
+      { translateX: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: tail.x }) },
+      { translateY: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: tail.y }) },
+    ]),
+  }), [coordinates, progress]);
+  // Decorative shaped text is independent of the live bead count.
+  const sideRings = useMemo(() => (
+    showRings && ringText ? ([[0, 1, LEFT_RING_ARC], [panelWidth, -1, RIGHT_RING_ARC]] as const).map(([cx, turn, arc]) => (
+          <JapamMantraRing key={`${cx}|${ringText}|${labelFontFamily}`} testID="japam-mantra-rings"
+            text={ringText} fontFamily={labelFontFamily} cx={cx} cy={height / 2}
+            animate={ringsActive && active && !reduced} visibleArc={arc}
+            rings={[
+              { radius: outerRadius, fontSize: 13, color: colors.inkMuted, opacity: 1, direction: turn, periodMs: RING_OUTER_PERIOD_MS },
+              ...(innerRadius >= 24 ? [{ radius: innerRadius, fontSize: 11, color: colors.inkSoft, opacity: 0.9,
+                direction: (turn === 1 ? -1 : 1) as 1 | -1, periodMs: RING_INNER_PERIOD_MS }] : []),
+            ]} />
+        )) : null
+  ), [showRings, ringText, labelFontFamily, panelWidth, height, outerRadius, innerRadius,
+    ringsActive, active, reduced, colors.inkMuted, colors.inkSoft]);
   return (
     <View testID="japam-infinity" style={[styles.root, { width: size, minHeight: size }]} pointerEvents="none"
       importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
-      {/* A lamp-lit night panel (the Panchang sky's deep-sepia stops), so the
-          path, the moving jyoti and the parchment page never blend together. */}
-      <View testID="japam-infinity-panel" style={[styles.panel, { width: panelWidth, height,
-        backgroundColor: colors.skyNightTop, borderColor: colors.nightGlassBorder }]}>
-        <Svg width={panelWidth} height={height} style={StyleSheet.absoluteFill}>
-          <Defs>
-            <RadialGradient id="infinity-night" cx="50%" cy="50%" r="60%">
-              <Stop offset="0" stopColor={colors.skyNightLower} stopOpacity={1} />
-              <Stop offset="0.55" stopColor={colors.skyNightUpper} stopOpacity={1} />
-              <Stop offset="1" stopColor={colors.skyNightTop} stopOpacity={1} />
-            </RadialGradient>
-            <RadialGradient id="infinity-side-glow" cx="50%" cy="50%" r="50%">
-              <Stop offset="0" stopColor={colors.sunCore} stopOpacity={0.42} />
-              <Stop offset="0.55" stopColor={colors.sunCore} stopOpacity={0.12} />
-              <Stop offset="1" stopColor={colors.sunCore} stopOpacity={0} />
-            </RadialGradient>
-          </Defs>
-          <Rect x={0} y={0} width={panelWidth} height={height} fill="url(#infinity-night)" />
-          {showRings ? [0, panelWidth].map((x) => (
-            <Circle key={x} cx={x} cy={height / 2} r={Math.max(24, innerRadius)} fill="url(#infinity-side-glow)" />
-          )) : null}
-        </Svg>
-        {showRings && ringText ? ([[0, 1], [panelWidth, -1]] as const).map(([cx, turn]) => (
-          <JapamMantraRing key={`${cx}|${ringText}|${labelFontFamily}`} testID="japam-mantra-rings"
-            text={ringText} fontFamily={labelFontFamily} cx={cx} cy={height / 2}
-            animate={ringsActive && active && !reduced}
-            rings={[
-              { radius: outerRadius, fontSize: 13, color: colors.nightGold, opacity: 0.92, direction: turn, periodMs: RING_OUTER_PERIOD_MS },
-              ...(innerRadius >= 24 ? [{ radius: innerRadius, fontSize: 11, color: colors.sunCore, opacity: 0.88,
-                direction: (turn === 1 ? -1 : 1) as 1 | -1, periodMs: RING_INNER_PERIOD_MS }] : []),
-            ]} />
-        )) : null}
+      {/* Transparent page stage; clipping is only for the half-visible rings, whose words fade before the edge. */}
+      <View testID="japam-infinity-panel" style={[styles.panel, { width: panelWidth, height }]}>
+        {sideRings}
         <View style={[styles.stage, { left: stageLeft, top: stageTop, width: loop, height: loop * 0.65 }]}>
           <Svg width={loop} height={loop * 0.65} viewBox="0 0 1000 650" style={StyleSheet.absoluteFill}>
             <Defs>
               <RadialGradient id="infinity-ambient" cx="50%" cy="50%" r="50%">
-                <Stop offset="0" stopColor={colors.sunCore} stopOpacity={0.16} />
-                <Stop offset="1" stopColor={colors.sunCore} stopOpacity={0} />
+                <Stop offset="0" stopColor={colors.gold} stopOpacity={0.14} />
+                <Stop offset="1" stopColor={colors.gold} stopOpacity={0} />
               </RadialGradient>
             </Defs>
             <Ellipse cx={500} cy={325} rx={500} ry={325} fill="url(#infinity-ambient)" />
-            <Path d={INFINITY_PATH} stroke={colors.sunCore} strokeWidth={34} opacity={0.08} fill="none" />
-            <Path d={INFINITY_PATH} stroke={colors.saffron} strokeWidth={9} fill="none" strokeLinecap="round" />
+            <Path d={INFINITY_PATH} stroke={colors.gold} strokeWidth={34} opacity={0.25} fill="none" />
+            <Path d={INFINITY_PATH} stroke={colors.saffronDeep} strokeWidth={12} fill="none" strokeLinecap="round" />
           </Svg>
-          {running && !reduced ? coordinates.tails.map((tail, i) => (
-            <Animated.View key={i} style={[styles.tail, { backgroundColor: colors.sunCore,
-              opacity: 0.5 - i * 0.15, transform: [
-                { translateX: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: tail.x }) },
-                { translateY: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: tail.y }) },
-              ],
+          {running && !reduced ? transforms.tails.map((transform, i) => (
+            <Animated.View key={i} style={[styles.tail, { backgroundColor: colors.saffronDeep,
+              opacity: 0.5 - i * 0.15, transform,
             }]} />
           )) : null}
           <Animated.View testID="japam-infinity-marker" style={[styles.light, {
-            transform: reduced ? [{ translateX: loop / 2 - HALF }, { translateY: loop * 0.325 - HALF }] : [
-              { translateX: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: coordinates.x }) },
-              { translateY: progress.interpolate({ inputRange: coordinates.inputRange, outputRange: coordinates.y }) },
-            ],
+            transform: reduced ? [{ translateX: loop / 2 - HALF }, { translateY: loop * 0.325 - HALF }] : transforms.marker,
           }]}>
             <Svg width={MARKER} height={MARKER}>
               <Defs>
@@ -170,12 +172,12 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
                 </RadialGradient>
               </Defs>
               <Circle cx={HALF} cy={HALF} r={HALF} fill="url(#infinity-jyoti)" />
-              <Circle cx={HALF} cy={HALF} r={4.5} fill={JYOTI.core} />
+              <Circle cx={HALF} cy={HALF} r={6} fill={JYOTI.core} stroke={colors.saffronDeep} strokeWidth={1.5} />
             </Svg>
           </Animated.View>
           {!numbersBelow && <View style={[styles.numbers, { top: loop * 0.325 - 26 * factor }]}>
-            <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.nightInk, fontFamily: fontFamilies.latinSemiBold }]}>{count}</Text>
-            <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.nightGold, fontFamily: fontFamilies.latinSemiBold }]}>{N}</Text>
+            <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>{count}</Text>
+            <Text style={[styles.number, { fontSize: 38 * factor, lineHeight: 52 * factor, color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }]}>{N}</Text>
           </View>}
         </View>
       </View>
@@ -194,7 +196,7 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
 
 const styles = StyleSheet.create({
   root: { justifyContent: 'center', alignItems: 'center', paddingVertical: 8 },
-  panel: { borderRadius: radii.xl, borderWidth: StyleSheet.hairlineWidth, overflow: 'hidden' },
+  panel: { overflow: 'hidden' },
   stage: { position: 'absolute', top: 0 },
   light: { position: 'absolute', top: 0, left: 0, width: MARKER, height: MARKER },
   tail: { position: 'absolute', top: 0, left: 0, width: 8, height: 8, borderRadius: 4 },

@@ -33,6 +33,7 @@
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts
+- [[concepts/karaoke]] — shared whole-word native-opacity highlight progression, host-owned configurable reading clock, Infinity first and future स्वतः integration contract.
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
 - [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 

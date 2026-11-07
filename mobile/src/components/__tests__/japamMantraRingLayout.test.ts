@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { layoutRing, ringSeparator, ringWords } from '../japamMantraRingLayout';
+import { layoutRing, ringSeparator, ringWordFade, ringWords, wordClearanceDeg } from '../japamMantraRingLayout';
 
 const SEP = '॥';
 
@@ -49,4 +49,49 @@ test('the separator is a glyph the ring\'s own font carries: double danda for In
   assert.equal(ringSeparator('જય શ્રી રામ'), '॥');
   assert.equal(ringSeparator('ಜಯ ಶ್ರೀ ರಾಮ'), '॥');
   assert.equal(ringSeparator('Jaya Shri Rama'), '•');
+});
+
+/** Linear interpolation of keyframes, as Animated.interpolate evaluates them. */
+function opacityAt(frames: { inputRange: number[]; outputRange: number[] }, t: number): number {
+  const { inputRange: x, outputRange: y } = frames;
+  for (let i = 1; i < x.length; i++) {
+    if (t <= x[i]) return y[i - 1] + ((y[i] - y[i - 1]) * (t - x[i - 1])) / (x[i] - x[i - 1]);
+  }
+  return y[y.length - 1];
+}
+
+test('a word is invisible whenever the clip edge would cut it, and fully shown mid-arc', () => {
+  // Left ring: centred on the stage's left edge, so only 0°→180° is on screen.
+  const arc = { fromDeg: 0, toDeg: 180 };
+  const radius = 60;
+  const width = 26;
+  const halfHeight = 12.5;
+  const clear = wordClearanceDeg(width, halfHeight, radius);
+  for (const direction of [1, -1] as const) {
+    for (const angleDeg of [0, 37, 90, 179, 200, 300]) {
+      const frames = ringWordFade(angleDeg, clear, direction, arc, 12);
+      for (let i = 1; i < frames.inputRange.length; i++) assert.ok(frames.inputRange[i] > frames.inputRange[i - 1]);
+      assert.equal(frames.inputRange[0], 0);
+      assert.equal(frames.inputRange[frames.inputRange.length - 1], 1);
+      for (let step = 0; step <= 720; step++) {
+        const t = step / 720;
+        const phi = (((angleDeg + direction * 360 * t) % 360) + 360) % 360;
+        const rad = (phi * Math.PI) / 180;
+        // Nearest point of the word's box to the clip line (x = 0).
+        const minX = (radius - halfHeight) * Math.abs(Math.sin(rad)) - (width / 2) * Math.abs(Math.cos(rad));
+        const shown = Math.sin(rad) > 0;
+        const opacity = opacityAt(frames, t);
+        if (!shown || minX < 0) assert.ok(opacity < 1e-9, `cut word must be hidden (φ=${phi.toFixed(1)}, o=${opacity})`);
+        if (Math.abs(phi - 90) < 30) assert.ok(Math.abs(opacity - 1) < 1e-9, `mid-arc word must be fully shown (φ=${phi})`);
+      }
+    }
+  }
+});
+
+test('the right ring shows its 180°→360° half, and a word too wide for the arc never shows', () => {
+  const right = ringWordFade(270, 20, -1, { fromDeg: 180, toDeg: 360 }, 12);
+  assert.equal(opacityAt(right, 0), 1);
+  assert.equal(opacityAt(right, 0.5), 0); // half a turn later it sits at 90°, off stage
+  assert.deepEqual(ringWordFade(90, 95, 1, { fromDeg: 0, toDeg: 180 }, 12), { inputRange: [0, 1], outputRange: [0, 0] });
+  assert.equal(wordClearanceDeg(20, 30, 24), 90);
 });
