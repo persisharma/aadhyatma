@@ -45,6 +45,8 @@ export default function CompactOccasionCard({ items, date, error = false, onRetr
     {windows.map(({ item, window, index }) => {
       const crossingDate = !isSameLocalDay(window.start, date) || !isSameLocalDay(window.end, date);
       const rowStack = stack || crossingDate;
+      // Date suffixes contain script month names, not just Latin numerals.
+      const scriptTime = crossingDate && lang !== 'en';
       return <View key={`${item.id}:${+item.date}:${index}`} testID={`compact-occasion-window-${item.id}-${index}`}
         style={{ borderTopWidth: 1, borderTopColor: colors.goldChipBg, paddingVertical: 12, flexDirection: 'row', gap: 10 }}>
         <FestivalMotif motif={item.motif} size={36} />
@@ -53,7 +55,7 @@ export default function CompactOccasionCard({ items, date, error = false, onRetr
             <Text style={{ flex: rowStack ? undefined : 1, flexShrink: 1, fontFamily: title, fontSize: 15 * factor, lineHeight: 25 * factor, color: colors.festivalInk }}>
               {contentByLang(lang, item.nameHi, item.nameEn)}
             </Text>
-            <Text testID="compact-occasion-time" style={{ flexShrink: 1, fontFamily: fontFamilies.latin, fontSize: 25 * factor, lineHeight: 34 * factor, color: colors.festivalInk }}>
+            <Text testID="compact-occasion-time" style={{ flexShrink: 1, fontFamily: scriptTime ? body : fontFamilies.latin, fontSize: 25 * factor, lineHeight: (scriptTime ? 42 : 34) * factor, color: colors.festivalInk }}>
               {occasionRange(window, date, lang)}
             </Text>
           </View>
