@@ -28,7 +28,7 @@ The owner approved the first animated preview with an ornamental frame, then req
 | U9 tests / bundle | PASS (automated) / PENDING (native) | 366 Jest suites / 3,619 tests, 1,140 pure tests, 101 post-build checks and both Hermes bundles pass; native Maestro not executed |
 | U10 / U10.1 performance / ANR | PENDING | Native-driver/memoization/lifecycle tests are structural evidence. No representative low-end Android release device, 20-minute soak, ANR traces/vitals or iOS hang evidence on this host |
 | U11 integration / docs | PASS (local) / PENDING (CI) | design.md §35, RULEBOOK §3 and Japa wiki updated; final remote head/CI recorded in PR |
-| U12 remote preservation | PENDING | Implementation, tests, reference and evidence are committed locally; verify the published branch/tree and record its checkpoint before completion |
+| U12 remote preservation | PASS | Branch `codex/japa-ornamental-mandala` and checkpoint `82fda1c8dd911807842c63c33e78bea26f46bd6e` verified through GitHub; remote tree exactly matches local `f841ef895007d1ba36713b3bcb59e651b6f0cf15` |
 
 Conditional groups: C1 (full reading text), C7 (saved counters/navigation), C8 (Japa/audio ownership), C9 (script sizing/accessibility), C10 (tests/docs/runtime cost). Other content/calendar/reminder/export-specific changes are N/A.
 
@@ -51,3 +51,10 @@ The normal Jest suite needs no rasterizer: it validates fixture font hashes, cur
 - Remote branch, commit and exact tree verification are recorded in the publication checkpoint below.
 - This Linux host has no `adb`, Android emulator, `xcrun` or Maestro executable. Native journeys and physical-device ANR profiling remain pending; they must not be inferred from a bundle export.
 - Keep the PR draft pending native visual/E2E and U10.1 evidence. No release/OTA is authorized or performed as part of this change.
+
+## Publication checkpoint
+
+- Remote branch: `codex/japa-ornamental-mandala` in `persisharma/aadhyatma`.
+- Verified implementation/evidence checkpoint: `82fda1c8dd911807842c63c33e78bea26f46bd6e`, parent `ff40c7592e46c4b09432d90944d2f2d9efa15f54`.
+- Remote tree `8ed7a33c8a50458613abcf8796f06ca166c85c96` exactly matches local checkpoint `f841ef895007d1ba36713b3bcb59e651b6f0cf15`; all 21 changed source, test, fixture, design-reference and documentation files are preserved.
+- This publication-checkpoint follow-up changes documentation only. The PR records the final remote head and CI status; pending native visual/E2E and U10.1 checks still require the PR to remain draft.
