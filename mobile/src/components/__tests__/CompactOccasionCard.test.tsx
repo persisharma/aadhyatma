@@ -37,7 +37,7 @@ const press = (id: string) => tree.root.findAllByProps({ testID: id }).find(n =>
 const onOpenVrat = jest.fn();
 async function mount(node: React.ReactNode, lang: Lang = 'hi') {
   await act(async () => { tree = TestRenderer.create(<ThemeProvider><GitaLanguageProvider initialLang={lang}>{node}</GitaLanguageProvider></ThemeProvider>); });
-  const width = RN.useWindowDimensions().width;
+  const width = mockDimensions.width;
   act(() => views('compact-occasion-card')[0]?.props.onLayout?.({ nativeEvent: { layout: { width: width - 28 } } }));
   return tree;
 }
