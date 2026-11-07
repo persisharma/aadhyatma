@@ -28,10 +28,9 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "japam-counter-infinity"
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
-# Review continuous parchment with no card boundary, current count, completed
-# malas and reset; no duplicate daily-japa tally. Paused word colour and jyoti
-# must hold together; the complete mantra remains visible and correctly shaped.
-- takeScreenshot: e2e-shots/japam-infinity-seamless-parchment-paused
+# Review the full lotus/beaded frame, curved bands and compact infinity.
+# Paused rings, word colour and jyoti must hold; reading text scrolls below.
+- takeScreenshot: e2e-shots/japam-infinity-ornamental-paused
 - tapOn:
     id: "japam-style-mala"
 - tapOn: ".*Tap to count one bead.*"
@@ -54,4 +53,16 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - tapOn: "Back"
+# The full Gayatri keeps its four-second canonical cadence. Review its native
+# script, complete reading text and ornate frame; a saved count must survive.
+- tapOn: "Gayatri Mantra\\..*Tap to open\\."
+- assertVisible: ".*Gayatri Mantra.*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
+- tapOn:
+    id: "japam-counter-infinity"
+- extendedWaitUntil:
+    visible: ".*Gayatri Mantra.*रोकने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
+    timeout: 20000
+- tapOn:
+    id: "japam-counter-infinity"
+- takeScreenshot: e2e-shots/japam-gayatri-ornamental-paused
 - stopApp
