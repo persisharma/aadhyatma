@@ -54,3 +54,5 @@ _(none yet — add per-model pages as they warrant)_
 - [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards, 84 original daily/deity/humility reflections (including Khatu Shyam Hare Ka Sahara) plus 621 preserved referenced meanings, deity-scoped search and 54 published masters across 18 painted deities.
 
 - [[subsystems/explore-sheet]] — Immersive Story launch sheet, sixteen destinations, cadence, persisted visit ledger and artwork provenance.
+
+- [[subsystems/engagement-prompts]] — rating → social-follow action prompts, confirmations, launch guards and independent campaign resets.
