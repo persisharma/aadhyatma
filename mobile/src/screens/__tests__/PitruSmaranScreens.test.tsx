@@ -42,7 +42,6 @@ jest.mock('@/panchang/pitruSmaran', () => {
     // The screens solve cooperatively (`runInBackground`). These answer from the
     // SAME mocks, so each case's `mockReturnValue` drives both paths and the
     // assertions below read identical dates whichever path a screen takes.
-    // eslint-disable-next-line require-yield
     nextObservanceForEntrySteps: jest.fn(function* (...args: unknown[]) {
       return nextObservanceForEntry(...args);
     }),
