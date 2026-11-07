@@ -320,6 +320,62 @@
       }
     },
     {
+      "id": "mahalakshmi-mantra",
+      "nameHi": "महालक्ष्मी मंत्र",
+      "nameEn": "Mahalakshmi Mantra",
+      "sub": "लक्ष्मी जप · श्रीं बीजाक्षर",
+      "subEn": "Lakshmi japa · Shreem seed syllable",
+      "thumb": "ल",
+      "deities": [
+        "lakshmi"
+      ],
+      "lines": [
+        "ॐ श्रीं महालक्ष्म्यै नमः"
+      ],
+      "linesEn": [
+        "oṁ śhrīṁ mahālakṣhmyai namaḥ"
+      ],
+      "meaningHi": "ॐ — देवी महालक्ष्मी को नमस्कार। ‘श्रीं’ लक्ष्मी से जुड़ा बीजाक्षर है; यह श्री — शुभता, सौन्दर्य और समृद्धि — का स्मरण कराता है।",
+      "meaningEn": "Om — salutations to Goddess Mahalakshmi. Shreem is the seed syllable associated with her, evoking Shri — auspiciousness, grace and abundance.",
+      "source": {
+        "baseText": "Mahalakshmi Shreem mantra. Exact Devanagari search-verified on 2026-11-07 against Shubh Panchang (Mahalakshmi beej mantra) and Satyori; this build environment's network policy blocked opening the pages, so re-read both — and confirm against Drik Panchang — before release. The Hindi and English meanings are original editorial glosses of the salutation and seed syllable.",
+        "referenceUrls": [
+          "https://shubhpanchang.com/hi/mantra/lakshmi/mahalakshmi-beej-mantra",
+          "https://satyori.com/mantras/om-shreem-mahalakshmiyei-namaha/"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
+      "id": "kubera-mantra",
+      "nameHi": "कुबेर मंत्र",
+      "nameEn": "Kubera Mantra",
+      "sub": "पञ्चत्रिंशाक्षर मंत्र · 35-syllable",
+      "subEn": "Panchatrimshakshara mantra · 35-syllable",
+      "thumb": "कु",
+      "deities": [
+        "kubera"
+      ],
+      "lines": [
+        "ॐ यक्षाय कुबेराय वैश्रवणाय धनधान्याधिपतये",
+        "धनधान्यसमृद्धिं मे देहि दापय स्वाहा"
+      ],
+      "linesEn": [
+        "oṁ yakṣhāya kuberāya vaiśhravaṇāya dhanadhānyādhipataye",
+        "dhanadhānyasamṛddhiṁ me dehi dāpaya svāhā"
+      ],
+      "meaningHi": "ॐ — यक्षों के राजा, विश्रवा-पुत्र (वैश्रवण) कुबेर को, जो धन और धान्य के अधिपति हैं, अर्पण। मुझे धन-धान्य की समृद्धि दीजिए, दिलवाइए। ‘स्वाहा’ से यह अर्पण पूर्ण होता है।",
+      "meaningEn": "Om — offered to Kubera, king of the Yakshas, Vaishravana (son of Vishrava), lord of wealth and grain: grant me abundance of wealth and grain, and let it be granted. Svaha completes the offering.",
+      "source": {
+        "baseText": "Kubera Panchatrimshakshara (35 syllables after Om) mantra. The complete Devanagari string was search-verified verbatim on 2026-11-07 against Drik Panchang's Kubera Mantra page and shlokam.org; this build environment's network policy blocked opening the pages, so re-read both before release. The two-line break is presentational only. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/shri-kubera/mantra/kubera-mantra.html?lang=hi",
+          "https://shlokam.org/shloka/kubera-mantra.htm"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
       "id": "surya-beej-mantra",
       "nameHi": "सूर्य बीज मंत्र",
       "nameEn": "Surya Beej Mantra",
@@ -566,7 +622,7 @@
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation. Ganesha Ashtakshara, Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram and Durga beej mantras, and the nine Navagraha beej mantras (same text as the jyotishi-approved GRAHA_UPAY table), each with its own two reference pages. The 2026-10-21 additions were checked through web-search results only (the build environment's network policy blocked opening the pages); their meanings are original editorial glosses.",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation. Ganesha Ashtakshara, Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram and Durga beej mantras, and the nine Navagraha beej mantras (same text as the jyotishi-approved GRAHA_UPAY table), each with its own two reference pages. The 2026-10-21 additions were checked through web-search results only (the build environment's network policy blocked opening the pages); their meanings are original editorial glosses. The 2026-11-07 addition — Mahalakshmi Shreem mantra and Kubera 35-syllable mantra — is search-verified only (reference hosts blocked in the build environment); re-read their pages before release.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
       "https://vedabase.io/en/library/kb/90/",
@@ -601,7 +657,11 @@
       "https://dekhopanchang.com/mr/calendar/graha-shanti-rahu",
       "https://www.bhaktibharat.com/mantra/rahu-mantra",
       "https://www.bhaktibharat.com/mantra/ketu-mantra",
-      "https://dekhopanchang.com/en/puja/graha-shanti-ketu"
+      "https://dekhopanchang.com/en/puja/graha-shanti-ketu",
+      "https://shubhpanchang.com/hi/mantra/lakshmi/mahalakshmi-beej-mantra",
+      "https://satyori.com/mantras/om-shreem-mahalakshmiyei-namaha/",
+      "https://www.drikpanchang.com/vedic-mantra/gods/shri-kubera/mantra/kubera-mantra.html?lang=hi",
+      "https://shlokam.org/shloka/kubera-mantra.htm"
     ],
     "retrievedOn": "2026-10-13"
   }

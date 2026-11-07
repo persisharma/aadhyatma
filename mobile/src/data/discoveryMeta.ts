@@ -175,6 +175,19 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'sunset',
     source: `${SOURCE_BUNDLED} Mahalakshmi Ashtakam source references in ashtakam/mahalakshmi-ashtakam.json.`,
   },
+  'mahalakshmi-mantra': {
+    purposes: ['wealth', 'prosperity', 'devotion'],
+    bestDays: [5],
+    bestFestivals: ['diwali'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} japam/japam.json.`,
+  },
+  'kubera-mantra': {
+    purposes: ['wealth', 'prosperity'],
+    bestDays: [4, 5],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} japam/japam.json.`,
+  },
   'kubera-stotram': {
     purposes: ['wealth', 'prosperity'],
     bestDays: [4, 5],
