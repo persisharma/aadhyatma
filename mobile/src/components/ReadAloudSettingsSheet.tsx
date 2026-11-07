@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Linking, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { radii } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
@@ -58,7 +58,12 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
   const { colors, spacing } = useTheme();
   const { lang } = useGitaLanguage();
   const { prefs, setRate, setVoice, setReadMeaning, setReadCommentary } = useReadAloudPrefs();
-  const { availability, candidateVoices, target, speakPreview, refreshVoices } = useReadAloud();
+  const { availability, candidateVoices, target, speakPreview, refreshVoices, ensureVoices } =
+    useReadAloud();
+  // The voice list is probed on first need, not at app start (ReadAloudContext).
+  useEffect(() => {
+    if (visible) ensureVoices();
+  }, [visible, ensureVoices]);
 
   const chromeFont = cardFontByLang(lang);
   const selectedVoice = prefs.voiceByTarget[target];
