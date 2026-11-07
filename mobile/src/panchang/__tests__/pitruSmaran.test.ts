@@ -19,6 +19,7 @@ import {
   tithiRuleMatchesDate,
   __resetPitruPakshaWindowCacheForTests,
 } from '../pitruSmaran';
+import type { TithiRule } from '../pitruSmaran';
 
 // PRD-17 Phase 1 — the pitru-smaran solvers must agree with the festival engine's
 // conventions (sunrise anga, purnimant rules, kshaya fallback, vriddhi dedupe,
@@ -412,4 +413,31 @@ test('asynchronous Pitru Paksha agrees with the synchronous engine across years 
   __resetPitruPakshaWindowCacheForTests();
   assert.equal(await pitruPakshaWindowAsync(2026, () => true), undefined);
   assert.ok(await pitruPakshaWindowAsync(2026));
+});
+
+// The पितृ स्मरण screens now read a person's fortnight day through the yielding
+// path. Every tithi, both pakshas and सर्वपितृ, across years and two locations,
+// must land on the SAME day the synchronous mapping gives — each side solved
+// from a cold engine so neither can borrow the other's memo.
+test('asynchronous pakshaShraddhaDay agrees with the synchronous mapping for every tithi', async () => {
+  const { pakshaShraddhaDayAsync } = await import('../pitruSmaran');
+  const rules: (TithiRule | 'sarvapitri')[] = ['sarvapitri'];
+  for (const paksha of ['shukla', 'krishna'] as const) {
+    for (let tithi = 1; tithi <= 15; tithi += 1) rules.push({ lunarMonth: 7, paksha, tithi });
+  }
+  let compared = 0;
+  for (const year of [2025, 2026, 2027]) {
+    for (const options of [{}, { location: { latitude: 28.6139, longitude: 77.209, elevation: 216, cityId: 'delhi' } }]) {
+      __resetPitruPakshaWindowCacheForTests();
+      const asyncDays = [];
+      for (const rule of rules) asyncDays.push(await pakshaShraddhaDayAsync(rule, year, () => false, options));
+      __resetPitruPakshaWindowCacheForTests();
+      const syncDays = rules.map((rule) => pakshaShraddhaDay(rule, year, options));
+      assert.deepEqual(asyncDays, syncDays, `${year} ${JSON.stringify(options)}`);
+      compared += rules.length;
+    }
+  }
+  assert.equal(compared, 3 * 2 * 31);
+  __resetPitruPakshaWindowCacheForTests();
+  assert.equal(await pakshaShraddhaDayAsync('sarvapitri', 2026, () => true), undefined);
 });

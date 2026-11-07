@@ -70,7 +70,7 @@ export function ringWordFade(
     return 1;
   };
   const start = mod360(angleDeg - arc.fromDeg);
-  const points = ([[lo, 0], [lo + fade, 1], [hi - fade, 1], [hi, 0]] as const).map(([rho, v]) => ({
+  const points = ([[lo, 0], [lo + fade, 1], [hi - fade, 1], [hi, 0]] as const).map(([rho, v]): { t: number; v: number } => ({
     t: mod360(direction * (rho - start)) / 360,
     v,
   }));
