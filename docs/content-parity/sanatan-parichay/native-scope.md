@@ -22,7 +22,7 @@ liturgical text are outside this implementation.
 
 Diagrams keep distinctions visible: eight compass directions plus above/below in
 the selected Kamika Agama source, the 8+11+12+1+1 grouping of Brihadaranyaka 3.9,
-separate Drik Panchang/Jayadeva Dashavatara selections, and Rahu/Ketu as orbital
+separate Balarama–Krishna/Jayadeva Dashavatara selections, and Rahu/Ketu as orbital
 nodes with a distinct devotional identity. Diagrams are educational schematics.
 
 ## Shared app behaviour
@@ -39,7 +39,7 @@ writes serialize, invalid IDs/pages are dropped, and failed writes preserve prio
 state. Opening only records a resume position. Forward turns record the page left;
 explicit Finish records the final page and clears resume. Saving uses stable IDs.
 
-Sources are text/edition/location credits with no links or browser actions. Research
+There is no source screen/action or bibliography in reading/sharing. Research
 URLs remain in `source-provenance.json`, outside the mobile module graph. The
 shared content gate validates this original prose's authorship and source graph;
 it does not falsely classify it as collated scripture.

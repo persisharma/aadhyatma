@@ -272,18 +272,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             </View>
           ) : null}
 
-          <Text
-            style={{
-              textAlign: 'center',
-              fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 12,
-              color: colors.inkMuted,
-              marginTop: spacing.xl,
-              fontStyle: lang === 'en' ? 'italic' : 'normal',
-            }}
-          >
-            {`${pick(lang, { hi: 'स्रोत', en: 'Sources', gu: 'સ્રોત', kn: 'ಮೂಲಗಳು' })} — ${temple.sources.map((s) => s.label).join(', ')}`}
-          </Text>
+
         </ScrollView>
       </SafeAreaView>
     </View>

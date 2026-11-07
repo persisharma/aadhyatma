@@ -146,7 +146,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-mercy-and-home" }
 - takeScreenshot: kids-putana-gu-large-pt06
 - scrollUntilVisible:
-    element: { text: "શ્રીમદ્ ભાગવત 10.5–6નું બાળકો માટે સરળ રૂપાંતર. ભયાનક વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે." }
+    element: { text: "સાચો પ્રેમ કાળજીમાં દેખાય છે. આ વાર્તા કૃષ્ણની રક્ષા અને અપાર કરુણા યાદ અપાવે છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-gu-source
@@ -252,7 +252,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-river-restored" }
 - takeScreenshot: kids-kaliya-nag-gu-large-ka07
 - scrollUntilVisible:
-    element: { text: "શ્રીમદ્ ભાગવત 10.15–16નું સરળ રૂપાંતર. અનેક ફણને ચિત્રોમાં નાના સમૂહથી દર્શાવ્યા છે. શીખ સંપાદકીય છે." }
+    element: { text: "સાહસ સાથે કરુણા પણ રાખો. ભૂલ સ્વીકારીને તેને સુધારવી એ નમ્રતા છે. પ્રકૃતિની સંભાળ સૌ માટે મહત્વની છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-gu-source
@@ -399,7 +399,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-ganapati-blessing" }
 - takeScreenshot: kids-ganesha-birth-gu-large-gb07
 - scrollUntilVisible:
-    element: { text: "શિવપુરાણ, રુદ્રસંહિતા, કુમારખંડ 13–18ની શ્વેતકલ્પ કથાનું સરળ રૂપાંતર. અન્ય જન્મકથાઓ પણ પ્રચલિત છે. હિંસાની વિગતો ટૂંકાવી છે; શીખ સંપાદકીય છે." }
+    element: { text: "એકબીજાને સમજવા માટે સાંભળવું જરૂરી છે. પ્રેમ અને કરુણાથી દુઃખ પછી પણ નવો આરંભ થઈ શકે છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-gu-source
@@ -533,7 +533,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-gods-blessings" }
 - takeScreenshot: kids-hanuman-sun-gu-large-hs06
 - scrollUntilVisible:
-    element: { text: "વાલ્મીકિ રામાયણ, ઉત્તરકાંડ 35–36નું સરળ રૂપાંતર. અહીં સૂર્ય તરફ ઉડવાની કથા છે; સૂર્ય ગળી જવાની લોકકથા અલગ છે. શીખ સંપાદકીય છે." }
+    element: { text: "જિજ્ઞાસા શીખવાની શરૂઆત છે. મોટી શક્તિ સાથે સમજ અને કાળજી પણ જરૂરી છે." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-gu-source
@@ -685,7 +685,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-mercy-and-home" }
 - takeScreenshot: kids-putana-kn-large-pt06
 - scrollUntilVisible:
-    element: { text: "ಶ್ರೀಮದ್ಭಾಗವತ 10.5–6ರ ಮಕ್ಕಳಿಗಾಗಿ ಸರಳ ರೂಪಾಂತರ. ಭಯಾನಕ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    element: { text: "ನಿಜವಾದ ಪ್ರೀತಿ ಕಾಳಜಿಯಲ್ಲಿ ಕಾಣುತ್ತದೆ. ಈ ಕಥೆ ಕೃಷ್ಣನ ರಕ್ಷಣೆ ಮತ್ತು ಅಪಾರ ಕರುಣೆಯನ್ನು ನೆನಪಿಸುತ್ತದೆ." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-kn-source
@@ -791,7 +791,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-river-restored" }
 - takeScreenshot: kids-kaliya-nag-kn-large-ka07
 - scrollUntilVisible:
-    element: { text: "ಶ್ರೀಮದ್ಭಾಗವತ 10.15–16ರ ಸರಳ ರೂಪಾಂತರ. ಚಿತ್ರಗಳಲ್ಲಿ ಅನೇಕ ಹೆಡೆಗಳನ್ನು ಚಿಕ್ಕ ಗುಂಪಿನಿಂದ ಸೂಚಿಸಲಾಗಿದೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    element: { text: "ಧೈರ್ಯದ ಜೊತೆ ಕರುಣೆಯೂ ಇರಲಿ. ತಪ್ಪನ್ನು ಒಪ್ಪಿಕೊಂಡು ಸರಿಪಡಿಸುವುದು ವಿನಯ. ಪ್ರಕೃತಿಯ ಕಾಳಜಿ ಎಲ್ಲರಿಗೂ ಮುಖ್ಯ." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-kn-source
@@ -938,7 +938,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-ganapati-blessing" }
 - takeScreenshot: kids-ganesha-birth-kn-large-gb07
 - scrollUntilVisible:
-    element: { text: "ಶಿವಪುರಾಣದ ರುದ್ರಸಂಹಿತೆ, ಕುಮಾರಖಂಡ 13–18ರ ಶ್ವೇತಕಲ್ಪ ಕಥೆಯ ಸರಳ ರೂಪಾಂತರ. ಬೇರೆ ಜನ್ಮಕಥೆಗಳೂ ಇವೆ. ಹಿಂಸೆಯ ವಿವರಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತಗೊಳಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    element: { text: "ಒಬ್ಬರನ್ನೊಬ್ಬರು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ಆಲಿಸುವುದು ಮುಖ್ಯ. ಪ್ರೀತಿ ಮತ್ತು ಕರುಣೆ ದುಃಖದ ನಂತರವೂ ಹೊಸ ಆರಂಭ ತರಬಲ್ಲವು." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-kn-source
@@ -1072,7 +1072,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-gods-blessings" }
 - takeScreenshot: kids-hanuman-sun-kn-large-hs06
 - scrollUntilVisible:
-    element: { text: "ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ಉತ್ತರಕಾಂಡ 35–36ರ ಸರಳ ರೂಪಾಂತರ. ಇದು ಸೂರ್ಯನ ಕಡೆಗೆ ಹಾರಿದ ಕಥೆ; ಸೂರ್ಯನನ್ನು ನುಂಗಿದ ಜನಪದ ಕಥೆ ಬೇರೆ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ." }
+    element: { text: "ಕುತೂಹಲ ಕಲಿಕೆಯ ಆರಂಭ. ದೊಡ್ಡ ಶಕ್ತಿಯ ಜೊತೆಗೆ ತಿಳುವಳಿಕೆ ಮತ್ತು ಕಾಳಜಿಯೂ ಬೇಕು." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-kn-source

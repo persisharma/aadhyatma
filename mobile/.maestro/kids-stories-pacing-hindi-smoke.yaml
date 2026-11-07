@@ -146,7 +146,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-mercy-and-home" }
 - takeScreenshot: kids-putana-hi-large-pt06
 - scrollUntilVisible:
-    element: { text: "श्रीमद्भागवत 10.5–6 का बच्चों के लिए सरल रूपांतरण। भयावह विवरण संक्षिप्त हैं; सीख संपादकीय है।" }
+    element: { text: "सच्चा स्नेह देखभाल में दिखता है। कृष्ण की यह कथा उनकी रक्षा और अपार करुणा याद दिलाती है।" }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-hi-source
@@ -293,7 +293,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-ganapati-blessing" }
 - takeScreenshot: kids-ganesha-birth-hi-large-gb07
 - scrollUntilVisible:
-    element: { text: "शिवपुराण, रुद्रसंहिता, कुमारखण्ड 13–18 की श्वेतकल्प कथा का सरल रूपांतरण। अन्य जन्म-कथाएँ भी प्रचलित हैं। हिंसा के विवरण संक्षिप्त हैं; सीख संपादकीय है।" }
+    element: { text: "बात समझने के लिए एक-दूसरे को सुनना जरूरी है। प्रेम और करुणा से दुख के बाद भी नया आरंभ हो सकता है।" }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-hi-source
@@ -427,7 +427,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-gods-blessings" }
 - takeScreenshot: kids-hanuman-sun-hi-large-hs06
 - scrollUntilVisible:
-    element: { text: "वाल्मीकि रामायण, उत्तरकाण्ड 35–36 का सरल रूपांतरण। इसमें सूर्य की ओर उड़ने की कथा है; सूर्य निगलने की लोक-कथा अलग है। सीख संपादकीय है।" }
+    element: { text: "जिज्ञासा सीखने की शुरुआत है। बड़ी शक्ति के साथ समझ और देखभाल भी जरूरी हैं।" }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-hi-source

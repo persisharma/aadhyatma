@@ -65,7 +65,7 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
           {directions.slice(8).map((d, i) => <Action key={d[1]} label={t([d[0],d[1]])}
             selected={selected === i + 8} onPress={() => setSelected(i + 8)} />)}
         </View>
-        <Copy>{t(['कामिक आगम · चुना हुआ संदर्भ', 'Kamika Agama · selected source'])}</Copy>
+        <Copy>{t(['कामिक आगम का दिशाक्रम', 'Direction sequence in Kamika Agama'])}</Copy>
       </>;
       break;
     }
@@ -77,7 +77,7 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
       break;
     case 'avatars': {
       const names: Pair[] = [['मत्स्य','Matsya'],['कूर्म','Kurma'],['वराह','Varaha'],['नरसिंह','Narasimha'],['वामन','Vamana'],['परशुराम','Parashurama'],['राम','Rama'],['बलराम','Balarama'],lens ? ['बुद्ध','Buddha'] : ['कृष्ण','Krishna'],['कल्कि','Kalki']];
-      body = <><Action label="Drik Panchang" selected={lens === 0} onPress={() => setLens(0)} />
+      body = <><Action label={t(['बलराम–कृष्ण क्रम', 'Balarama–Krishna sequence'])} selected={lens === 0} onPress={() => setLens(0)} />
         <Action label={t(['जयदेव', 'Jayadeva'])} selected={lens === 1} onPress={() => setLens(1)} />
         {names.map((name, i) => <Copy key={i}>{`${i + 1}. ${t(name)}`}</Copy>)}
         <Copy>{t(lens ? ['कृष्ण इस स्तवन में सम्बोधित हैं।', 'Krishna is the addressee in this hymn.'] : ['बलराम और कृष्ण वाला चयन।', 'The selection with Balarama and Krishna.'])}</Copy></>;

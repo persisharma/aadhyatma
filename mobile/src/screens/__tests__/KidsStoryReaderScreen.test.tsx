@@ -58,7 +58,7 @@ function mount(pageId?: string, storyId = story.id) {
 }
 afterEach(() => { mockLang = 'hi'; mockScroll.mockClear(); });
 
-test.each(kidsStories.filter(item => item.id !== story.id))('$id uses the same reader from first scene to sourced ending in every language', (item: KidsStory) => {
+test.each(kidsStories.filter(item => item.id !== story.id))('$id uses the same reader from first scene to takeaway without research notes in every language', (item: KidsStory) => {
   const { tree, props, find } = mount(undefined, item.id);
   expect(find('story-pager').props.data).toEqual(item.pages);
   expect(find('story-progress').props.children).toEqual([1, ' / ', item.pages.length]);
@@ -72,7 +72,7 @@ test.each(kidsStories.filter(item => item.id !== story.id))('$id uses the same r
     expect(texts).toContain(item.pages[0].text[language]);
     expect(texts).toContain(item.pages[item.pages.length - 1].text[language]);
     expect(texts).toContain(item.takeaway[language]);
-    expect(texts).toContain(item.sourceNote[language]);
+    expect(texts).not.toContain(item.sourceNote[language]);
   }
   expect(find(`story-page-${item.pages[item.pages.length - 1].id}`).type).toBe('ScrollView');
   act(() => tree.unmount());

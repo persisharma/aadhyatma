@@ -1,4 +1,4 @@
-# Requires a native build of this branch. Source credits must stay inside the app.
+# Requires a native build of this branch. Research bibliography must not appear in the app.
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
@@ -42,14 +42,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
-- scrollUntilVisible:
-    element: { text: "Sources & context" }
-    direction: DOWN
-    timeout: 60000
-- tapOn: "Sources & context"
-- assertVisible: "This is a short editorial introduction.*"
+- assertNotVisible: "Sources & context"
 - assertNotVisible: "https?://.*"
-- tapOn: Back
 - tapOn: Back
 - tapOn: Back
 - assertVisible: "33 koti devta"

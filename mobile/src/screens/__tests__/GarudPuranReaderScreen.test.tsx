@@ -96,15 +96,13 @@ test('Hindi and English show the complete authored paragraphs and editorial labe
   expect(en.renderedText).not.toContain(firstVerse.bodyHi[0]);
 });
 
-test('source disclosure opens on the rendered page', () => {
-  const { tree } = render();
-  const button = tree.root.findAll(n => n.props.testID === `garud-sources-${firstVerse.id}` && typeof n.props.onPress === 'function')[0];
-  act(() => button.props.onPress());
-  expect(tree.root.findAll(n => n.props.testID === 'garud-source-details').length).toBeGreaterThan(0);
-  const text = tree.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
-  expect(text).toContain(chapter.source.citeHi);
-  // Sources are shown as citations only — never a tappable external link (RULEBOOK §11.16).
-  expect(tree.root.findAll(n => n.props.accessibilityRole === 'link').length).toBe(0);
+test('complete readings have no research disclosure or publisher metadata', () => {
+  const { tree, renderedText } = render();
+  expect(renderedText).toContain(firstVerse.bodyHi[0]);
+  expect(tree.root.findAll(n => typeof n.props.testID === 'string' && /^garud-source/.test(n.props.testID))).toHaveLength(0);
+  expect(renderedText).not.toContain('गीताप्रेस');
+  expect(renderedText).not.toContain(chapter.source.sanskritReferences.join(', '));
+  expect(tree.root.findAll(n => n.props.accessibilityRole === 'link')).toHaveLength(0);
 });
 
 test('out-of-range saved progress is clamped to the final page', () => {
