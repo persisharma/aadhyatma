@@ -1440,3 +1440,6 @@ Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infin
 
 ## [2026-11-07] ingest | Suvichar sender switch and wishes heading
 Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.
+
+## [2026-11-07] ingest | Japa ornamental mandala and long-text fitting
+Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
