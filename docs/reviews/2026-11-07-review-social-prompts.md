@@ -1,6 +1,6 @@
 # Review → social follow prompts and owner resets
 
-Base: `dd8b1f9` (main). Branch: `codex/review-social-prompts`.
+Original base: `dd8b1f9`; integrated current main `fdb304a` (#649). Branch: `codex/review-social-prompts`.
 
 ## Acceptance and scope
 
@@ -39,8 +39,8 @@ Do not use app versions/current time as IDs. Keep the same ID after answering, o
 | U8 Siblings | PASS | Same rating bridge covers every share/bookmark/routine/mala action; direct Instagram More row remains available |
 | U9 Tests | PASS full automated / PENDING native | Commands/results below; authored social Maestro journey, no native execution |
 | U10 / U10.1 Performance/ANR | PASS static / PENDING device | Only constant-size state (two pages/seven trigger counters), serial async writes, two bounded URL parses and existing settle/deadline timers. No fetch, image decode, per-frame state or new native module. Lower-end Android release frame/memory/ANR and iOS hang evidence unavailable |
-| U11 Integration | PASS docs / PENDING final CI | design/RULEBOOK/wiki updated; final branch checks recorded below |
-| U12 Preservation | PENDING checkpoint | Remote tree and PR verification recorded below before completion |
+| U11 Integration | PASS merged tree / PENDING final CI | Current main #649 merged cleanly; design/RULEBOOK/wiki updated; final checks below |
+| U12 Preservation | PASS checkpoint | PR #650 is draft; remote `2ff0810642f5bad2ead87d08cce06a46c6164969` exactly matches tested local tree `a2b5144427b23bda36d159a3dfd3ccf762fb6010`. Subsequent main-sync/evidence commit verified in PR metadata |
 
 Applicable conditional checks: C6 (shared prompt priority), C9 (modal accessibility). C1–C5, C7–C8 and C10 are N/A: no devotional content/calendar/navigation/audio/release change.
 
@@ -54,5 +54,9 @@ Implementation is integrated into the app provider/sheet; native verification, f
 Final automated evidence for local implementation checkpoint `0526112` (later edits are documentation only):
 
 - Affected tests: **8 suites / 149 tests PASS** (gates, campaign migration, action provider, both prompt modes, More/routine/mala callers). The hydration failure regression is included.
-- Full unchanged `npm test` gates via the no-IPC shell: typecheck PASS; widgets **46**; reader shards **1,277 + 1,359 + 1,048 = 3,684** tests / **370** suites; engine **822**; data **223** (including launch import budget); Ask **49**. Exit status recorded after process completion.
+- Full unchanged `npm test` gates via the no-IPC shell: typecheck PASS; widgets **46**; reader shards **1,277 + 1,359 + 1,048 = 3,684** tests / **370** suites; engine **822**; data **223** (including launch import budget); Ask **49**. Exit 0.
 - Changed-file ESLint PASS (0 output). Agent instruction entry-point verification PASS. Affected Maestro YAML files parse. Installed native execution remains PENDING (`maestro: not found`); no SDK/emulator is present.
+
+- Full lint PASS: **0 errors**, 447 existing warnings. No code/test assertion was weakened.
+- PR: https://github.com/persisharma/aadhyatma/pull/650 (draft). Current main advanced only with the compact-muhurat #649 work; merged without conflicts. Required final CI/native evidence remains distinct from local results.
+- Remote preservation uses the connected GitHub app because this checkout has no CLI push credential. The first document write was auto-review rejected as an unverified disclosure; source/destination verification proved the existing RULEBOOK/design blob hashes belonged to the same repository, and the write then succeeded. Required implementation, tests, docs and flow are preserved; the local dependency symlink is excluded from commits. No worktree cleanup performed.

@@ -39,6 +39,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Chapter 1\\..*Tap to open\\."
 - waitForAnimationToEnd
 - tapOn: { text: "Jump to beginning", optional: true }
+- tapOn: { text: "Remove bookmark", optional: true }
 - tapOn: "Add bookmark"
 - extendedWaitUntil:
     visible: "Stay connected with Vedansh"

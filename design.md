@@ -4292,17 +4292,25 @@ establish rendering or low-end performance. See
 
 
 ### Compact Panchang muhurats and illustrated Vrat cards — 7 November 2026
-Panchang shows one CompactOccasionCard using the approved Festive compact design:
-ivory-to-parchment gradient, 18dp round double gold frame, 54dp painted floral
-corners, centered 19/32 script-safe heading and 36dp ritual motifs. Every actual
-window remains visible in a divided row; no guidance-only entry receives a clock.
-The full occasion name and 25/34 Latin time retain accessibility scaling.
-Overnight script-month suffixes use the script face at 25/42 to preserve marks. Rows
-stack below 380dp, at Large reading/system text, or across civil-date boundaries;
-no content truncation or font shrinking. Ordinary days omit the card; guidance-only
-days retain a Vrat door, and failures retain Retry. The 44dp minimum action opens
-Vrat with the selected date and catalog mode, clears an old search and reveals the
-cards. Detail Back retains the dated catalog state.
+Panchang shows one CompactOccasionCard with the approved parchment/double-gold
+frame and painted motifs. The fitted revision uses 14dp padding, 42dp corners and
+a 17/29 heading, without a redundant subtitle. Each occasion has one 28dp motif
+and complete 14/24 heading, followed by every ritual window. A normal-width window
+pairs its 11/19 ritual label with a 132dp time column. Numeric endpoints use Inter
+SemiBold 18/26; civil dates sit under their own endpoint at script-safe 11/19.
+Dates never enter the large numeric text. An overnight range therefore reads
+23:44 – 00:36 with 7 Nov / 8 Nov beneath the respective endpoints. Both years
+are explicit across a year boundary. Events show one timestamp. Full date-aware
+accessibility descriptions and existing share formatting are preserved.
+
+The card measures its actual inner width once per width change; below 280dp, at
+Large reading size or enlarged system text, each window stacks and endpoints
+wrap as whole groups. No repeated publication for identical layout callbacks,
+content truncation, accessibility-scaling suppression or font shrinking. Every
+window is retained without repeating its occasion heading. Ordinary days omit
+the card; guidance-only days retain a Vrat door, and failures retain Retry. The
+44dp minimum action opens Vrat with the selected date and catalog mode, clears an
+old search and reveals the cards. Detail Back retains the dated catalog state.
 
 OccasionSection evaluates the full OccasionTimingsCard module only for the
 illustrated view. The Vrat landing owns the complete 3:2 painted cards, local
@@ -4311,14 +4319,16 @@ Details & katha action. Details use each occurrence's own date, including a
 prior-day midnight ceremony. Today introductions are not duplicated. Muhurat and
 Observance detail keep their illustrated cards and export contracts.
 
-OccasionInlineArtwork reserves the frame and offline thumbnail before download;
-full art waits for layout/InteractionManager settlement and cancels on blur or
-unmount. The main summary uses the existing bundled painted atlas only. Occasion
-work is cancelled on tab blur/Jyotish. Calendar clocks, date-aware formatting,
-location/calendar/lens keys, yielding scheduler and complete Panchang export gate
-are retained. No additional assets or native dependencies. Native glyph/layout,
-actual share-file and lower-end Android ANR/frame-time evidence remain separate
-acceptance gates. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
+OccasionInlineArtwork retains reserved frames, offline thumbnails, deferred
+loading and blur/unmount cancellation. The summary uses the existing bundled
+atlas only. Yielded/cancelled calculation, location/calendar/lens keys and the
+complete Panchang export gate remain. No new asset, runtime dependency, timer or
+calculation was introduced. Regression dimensions must reach the actual RN hook;
+namespace-only spies do not establish a responsive matrix. Font bounds are pinned
+to the shipped Inter bytes and all 1,440 clocks. The native iOS PR gate executes
+the compact-fit matrix; manual/push festival runs retain the full occasion set.
+Human native visual review, Android and lower-end ANR/frame-time acceptance remain
+separate gates. See docs/reviews/2026-11-07-compact-muhurat-fit.md.
 
 
 ### Panchang entry responsiveness — 7 November 2026
