@@ -28,7 +28,7 @@ or verified word-by-word audio cues.
 - `KaraokeText` accepts those complete lines, optional reference/weight function,
   one host-owned 0–1 progress value (or a read-only derived phase), theme colours
   and existing font/size/leading tokens. Derived phases let differently styled
-  verse/meaning blocks share sequential ranges of a single page clock. It creates native colour interpolations once per changed passage/theme;
+  verse/meaning blocks share sequential ranges of a single page clock. It creates native opacity interpolations (one highlight copy per word over the base run) once per changed passage/theme — never a native-driven Text `color`, which the native driver cannot repaint;
   no per-frame JS listener or independent timer is added. It does not count or
   turn pages. Whole words are native Text runs so Indic shaping stays intact.
 - `karaokeDurationMs(baseMs, rate)` supplies reusable configurable-speed math.

@@ -18,7 +18,7 @@ Infinity is wired now. Other sections' स्वतः integration is deferred b
   intervals. Reference weighting survives script and line-break changes when
   word counts match; mismatches use proportional reference-line allocation where possible, or display-passage allocation when line counts also differ.
 - `KaraokeText` accepts progress, complete lines, optional reference/weights,
-  theme colours and existing typography. Native colour nodes and memoized text
+  theme colours and existing typography. Each word is a base `Text` plus an identical absolutely-filled highlight copy whose native opacity fades in; memoized text
   avoid per-frame JS updates. Reduced Motion is static; the full passage remains
   one accessible group. Font sizing/wrapping grows rather than clipping text.
 - `karaokeDurationMs` applies a caller-selected speed without importing Japam,
@@ -27,6 +27,8 @@ Infinity is wired now. Other sections' स्वतः integration is deferred b
   counts, pauses and handles background/blur; the renderer never increments.
 
 ## Gotchas
+
+- **Never native-drive Text `color`.** RN allows it on the native driver, but text colour is part of the shadow-tree text layout, so it never repaints mid-animation. On loop end JS syncs phase 1 (whole passage turns highlighted at once) and the following native `setValue(0)` does not flush, so it never resets. Shipped that way in #638; fixed with the opacity overlay (Nov 2026).
 
 - `_useAutoSlide` currently exposes scroll-step countdowns, not a whole-page
   phase. Reusing that countdown directly would restart words after each scroll.

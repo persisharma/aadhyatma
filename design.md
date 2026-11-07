@@ -4272,7 +4272,7 @@ Guard: `scripts/content-source-ui-policy.cjs` through
 
 `components/karaokeTiming.ts` is a domain-neutral whole-word timeline and
 configurable-speed model. `KaraokeText.tsx` renders complete shaped words with
-native colour interpolation driven by a supplied 0–1 phase or read-only derived block phase. The host owns
+a native-driven highlight copy per word (base `ink` run + identical absolutely-filled highlight run whose view opacity fades 0→1 over the word's interval) driven by a supplied 0–1 phase or read-only derived block phase. The host owns
 start/pause, selected speed, completion, lifecycle, navigation and saved state;
 rendering never creates its own counter or page timer. Canonical/reference
 weights align matching words across scripts and changed line breaks; differing
@@ -4286,7 +4286,7 @@ per-scroll countdown, retain configurable speed and pause/hold semantics, and
 verify long prose, mixed typography, accessibility and actual native layout.
 
 The renderer uses theme colours and host typography, complete accessible text,
-intrinsically wrapping words and memoized native colour nodes. Do not animate
+intrinsically wrapping words and memoized native opacity nodes. Never animate a Text `color` on the native driver: text colour lives in native text layout, so it does not repaint mid-loop, then jumps to fully highlighted when JS syncs a finished loop and never resets (the Nov 2026 Infinity shloka defect). Do not animate
 individual Indic glyphs, truncate long words, introduce per-frame JS listeners,
 or give highlights independent completion ownership. Native device proof and
 per-section verification remain required; API support and unit tests do not

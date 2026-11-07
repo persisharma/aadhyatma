@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import KaraokeText from '../KaraokeText';
 
 let mockReduced = false;
@@ -11,9 +11,10 @@ const highlightColor = '#8A3E0B';
 beforeEach(() => { mockReduced = false; });
 afterEach(() => { act(() => tree?.unmount()); jest.restoreAllMocks(); tree = undefined; });
 const common = { color, highlightColor, fontFamily: 'test-font', fontSize: 24, lineHeight: 40 };
+/** How far a word's highlight copy has faded in (0 = base colour, 1 = highlight). */
 function value(word: TestRenderer.ReactTestInstance) {
-  const fill = StyleSheet.flatten(word.props.style).color;
-  return typeof fill === 'string' ? fill : fill.__getValue();
+  const reveal = StyleSheet.flatten(word.props.style).opacity;
+  return typeof reveal === 'number' ? reveal : reveal.__getValue();
 }
 
 test('one host phase colours whole words in order and resets/pauses without its own clock', async () => {
@@ -61,7 +62,29 @@ test('Reduced Motion leaves static readable text while the host keeps control of
   const interpolate = jest.spyOn(progress, 'interpolate');
   await act(async () => { tree = TestRenderer.create(<KaraokeText lines={['राधा']} progress={progress} {...common} />); });
   expect(interpolate).not.toHaveBeenCalled();
-  expect(value(tree!.root.findByType(Animated.Text))).toBe(color);
+  expect(tree!.root.findAllByType(Animated.Text)).toHaveLength(0);
+  expect(StyleSheet.flatten(tree!.root.findByType(Text).props.style).color).toBe(color);
+});
+
+test('word colour is never a native-animated Text colour: the native driver cannot repaint text layout', async () => {
+  // Regression: an interpolated `color` only changed when JS synced a finished
+  // loop (whole passage at once) and never reset on the next native loop.
+  const progress = new Animated.Value(0);
+  await act(async () => { tree = TestRenderer.create(<KaraokeText lines={['ॐ नमः शिवाय']} progress={progress} {...common} />); });
+  for (const text of tree!.root.findAllByType(Text)) {
+    expect(typeof StyleSheet.flatten(text.props.style).color).toBe('string');
+  }
+  const highlights = tree!.root.findAllByType(Animated.Text);
+  expect(highlights).toHaveLength(3);
+  expect(highlights.every(h => StyleSheet.flatten(h.props.style).color === highlightColor)).toBe(true);
+  expect(highlights.every(h => StyleSheet.flatten(h.props.style).position === 'absolute')).toBe(true);
+  // Each highlight copy sits over a base run with the same complete word.
+  const words = tree!.root.findAll(n => typeof n.props.testID === 'string' && /^karaoke-word-/.test(n.props.testID) && n.type === View);
+  for (const word of words) {
+    const [base, highlight] = word.findAllByType(Text);
+    expect(highlight.props.children).toBe(base.props.children);
+    expect(StyleSheet.flatten(base.props.style).color).toBe(color);
+  }
 });
 
 test('styled passage blocks can use derived phases from one page clock', async () => {
