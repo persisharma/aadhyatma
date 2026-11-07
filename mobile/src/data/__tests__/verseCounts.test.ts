@@ -214,3 +214,19 @@ test('texts.ts takes its verse counts from verseCounts.ts, never from a corpus',
   );
 });
 
+
+/**
+ * The aarti rows in `texts.ts` still spell their counts as literals (`verseCount`
+ * and the `N पद` / `N verses` subtitle). Om Jai Shiv Omkara shipped "9 पद" over a
+ * 12-entry payload (टेक + 11 पद) because nothing compared them (RULEBOOK §11.10).
+ */
+test('every aarti row states the count its payload actually has', async () => {
+  const { library } = await import('../texts');
+  for (const [id, count] of Object.entries(generated.aartiVerseCounts)) {
+    const row = library.find((entry) => entry.id === id);
+    assert.ok(row, `${id}: aarti payload has no library row`);
+    assert.equal(row.verseCount, count, `${id}: verseCount must equal the payload's ${count} entries`);
+    assert.match(row.sub, new RegExp(`^${count} पद(?:\\s|$)`), `${id}: Hindi subtitle must say ${count} पद`);
+    assert.match(row.subEn ?? '', new RegExp(`^${count} verses\\b`), `${id}: English subtitle must say ${count} verses`);
+  }
+});
