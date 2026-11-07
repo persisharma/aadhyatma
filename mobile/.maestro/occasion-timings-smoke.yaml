@@ -10,12 +10,25 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - assertVisible: "17:55.*19:50"
 - takeScreenshot: occasion-diwali
+- scrollUntilVisible:
+    element: { id: compact-occasion-open-vrat }
+    direction: DOWN
 - tapOn: { id: compact-occasion-open-vrat }
 - extendedWaitUntil:
     visible: { id: occasion-timings-card }
     timeout: 30000
 - assertNotVisible: { id: compact-occasion-card }
 - takeScreenshot: occasion-diwali-vrat
+- scrollUntilVisible:
+    element: { id: occasion-detail-diwali-lakshmi }
+    direction: DOWN
+- tapOn: { id: occasion-detail-diwali-lakshmi }
+- waitForAnimationToEnd
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: occasion-timings-card }
+    direction: UP
+- takeScreenshot: occasion-diwali-vrat-back
 - openLink: "vedansh://widget/panchang?date=2026-10-20"
 - scrollUntilVisible:
     element:
