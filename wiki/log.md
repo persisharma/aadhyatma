@@ -1425,3 +1425,6 @@ Hindi category `nameHi` is now जपमाला (tile, catalog, tour; matches 
 ## [2026-11-06] ingest | Infinity mantra rings
 
 Added rotating side rings of the mantra's words to the Infinity night panel (whole-word Text runs, not textPath, so Indic shaping holds; ॥/• separators present in bundled fonts). Panel widens, ∞ narrows to clear them. Updated [[subsystems/japam]]; native visual/perf check pending.
+
+## [2026-11-07] ingest | Android ANR review (Play 28-day 0.67%, 1.60% on 5 Nov): expo-splash-screen's hold vetoes the activity's first draw, so a held window has no input focus and Back past 5 s ANRs; the hold had grown to fonts + hydration + particle WebView/Chromium (7 s watchdog). Android now releases the native splash at the first JS frame onto the colour-identical `LaunchCover`; font-load errors fail open. overview.md launch paragraphs, design.md §2.1/§64 and RULEBOOK brand rule synced. Open items (WebView Chromium init per cold start, pre-JS native cap, eager expo-audio player with runBlocking, Meta activate on main, widget/notification broadcast work) recorded in docs/engineering/android-anr-review-2026-11.md.
+## [2026-11-07] gap | No Play ANR stack clusters were available; F3–F7 in the ANR review are code-derived and need cluster confirmation before native changes.
