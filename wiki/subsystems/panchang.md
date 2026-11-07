@@ -277,7 +277,14 @@ The public Pitru Paksha chip uses `ensurePakshaWindowAsync`, yielding inside the
 civil-date scan. Synchronous and asynchronous callers drive the same generator,
 so kshaya/vriddhi/month rules and persisted schemas are unchanged. Both paths
 use `backgroundWork.ts`, a shared round-robin queue with a 4 ms slice budget
-checked after each engine unit. This is cooperative JavaScript scheduling, not a
+checked after each engine unit. Since Nov 2026 it has two lanes: `runInBackground(work,
+isCancelled, 'foreground')` is for an answer a person is looking at a spinner for (the
+पितृ स्मरण / जन्म तिथि list rows and detail stages); while any foreground job is queued a
+tick runs only foreground work, in a 12 ms slice. The default `background` lane is
+unchanged. Without it, a cold Pitru detail opened during the launch burst shared the
+4 ms slices round-robin with the widget plan, muhurat prewarm and reminder passes, and
+on the iOS Simulator its second stage missed the e2e flow's 15 s budget
+(`smaranSolvesYield.jest.test.tsx` reproduces it: 141 background units ran first). This is cooperative JavaScript scheduling, not a
 separate thread or a hard 4 ms bound on an individual astronomy primitive.
 Cache hydration still starts immediately, and warm results retain first-render
 seeding. Release-device tap latency requires Hermes verification; timer

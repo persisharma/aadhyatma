@@ -119,7 +119,7 @@ export function useJanmaTithiList(todayMs: number): JanmaTithiListEntry[] | null
         void (async () => {
           const solved = new Map<string, Date | null>();
           for (const { person, rule } of people) {
-            const [next] = rule ? await ensureOccurrencesAsync(rule, today, 1, isCancelled, 'janma') : [];
+            const [next] = rule ? await ensureOccurrencesAsync(rule, today, 1, isCancelled, 'janma', 'foreground') : [];
             if (cancelled) return;
             solved.set(person.id, next ?? null);
           }
@@ -198,10 +198,10 @@ export function useJanmaTithiDetailSolve(rule: TithiRule | null, todayMs: number
       interaction = InteractionManager.runAfterInteractions(() => {
         void (async () => {
           const today = new Date(todayMs);
-          const [next] = await ensureOccurrencesAsync(rule, today, 1, isCancelled, 'janma');
+          const [next] = await ensureOccurrencesAsync(rule, today, 1, isCancelled, 'janma', 'foreground');
           if (cancelled) return;
           setSolve((prev) => ({ ...prev, next: next ?? null, nextReady: true }));
-          const [, following] = await ensureOccurrencesAsync(rule, today, 2, isCancelled, 'janma');
+          const [, following] = await ensureOccurrencesAsync(rule, today, 2, isCancelled, 'janma', 'foreground');
           if (cancelled) return;
           setSolve((prev) => ({ ...prev, following: following ?? null, restReady: true }));
           void persistSmaranSolves();

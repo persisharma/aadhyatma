@@ -27,7 +27,7 @@
 // src/panchang). AsyncStorage/React live in PitruSmaranContext and the hooks.
 
 import { addDays } from './calendarGrid';
-import { runInBackground, runSynchronously } from './backgroundWork';
+import { runInBackground, runSynchronously, type WorkPriority } from './backgroundWork';
 import { aparahnaCover, computeTithiAndMonthSteps } from './engine';
 import { matchesLunarTithiRuleOnDate, type ObservanceLocation } from './festivalEngine';
 import {
@@ -385,9 +385,10 @@ export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions =
 export function pitruPakshaWindowAsync(
   year: number,
   isCancelled: () => boolean = () => false,
-  options: SolveOptions = {}
+  options: SolveOptions = {},
+  priority: WorkPriority = 'background'
 ): Promise<PitruPakshaWindow | null | undefined> {
-  return runInBackground(pitruPakshaWindowSteps(year, options), isCancelled);
+  return runInBackground(pitruPakshaWindowSteps(year, options), isCancelled, priority);
 }
 
 /**
@@ -417,9 +418,10 @@ export function pakshaShraddhaDayAsync(
   rule: TithiRule | 'sarvapitri',
   gregorianYear: number,
   isCancelled: () => boolean = () => false,
-  options: SolveOptions = {}
+  options: SolveOptions = {},
+  priority: WorkPriority = 'background'
 ): Promise<Date | null | undefined> {
-  return runInBackground(pakshaShraddhaDaySteps(rule, gregorianYear, options), isCancelled);
+  return runInBackground(pakshaShraddhaDaySteps(rule, gregorianYear, options), isCancelled, priority);
 }
 
 function* pakshaShraddhaDaySteps(
