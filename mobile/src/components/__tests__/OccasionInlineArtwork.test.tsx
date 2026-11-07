@@ -1,0 +1,45 @@
+import React from 'react';
+import { InteractionManager } from 'react-native';
+import { NavigationContext } from '@react-navigation/native';
+import TestRenderer, { act } from 'react-test-renderer';
+import OccasionInlineArtwork from '../OccasionInlineArtwork';
+import type { OccasionTiming } from '@/panchang/occasionTimings';
+jest.mock('../ObservanceArtwork', () => 'Fallback');
+jest.mock('../OccasionHeroArtwork', () => ({ __esModule: true, default: 'Hero' }));
+const item = { id: 'diwali-lakshmi', ruleId: 'diwali' } as OccasionTiming;
+let tree: TestRenderer.ReactTestRenderer;
+let settle: (() => void) | undefined;
+let cancel: jest.Mock;
+beforeEach(() => { settle = undefined; cancel = jest.fn(); jest.spyOn(InteractionManager, 'runAfterInteractions').mockImplementation((callback: any) => { settle = callback; return { cancel } as any; }); });
+afterEach(() => { act(() => tree?.unmount()); jest.restoreAllMocks(); });
+function layout() { act(() => tree.root.findByProps({ testID: 'occasion-inline-art' }).props.onLayout({ nativeEvent: { layout: { width: 280 } } })); }
+test('screen has a stable frame and fallback before interactions; full art starts later', () => {
+  act(() => { tree = TestRenderer.create(<OccasionInlineArtwork item={item} />); });
+  expect(tree.root.findAllByType('Hero' as any)).toHaveLength(0);
+  layout();
+  expect(tree.root.findAllByType('Fallback' as any)).toHaveLength(1);
+  expect(tree.root.findAllByType('Hero' as any)).toHaveLength(0);
+  act(() => settle?.());
+  const hero = tree.root.findByType('Hero' as any);
+  expect(hero.props.width).toBe(280);
+  expect(hero.props.height).toBeCloseTo(280 / 1.5);
+  act(() => hero.props.onPaint(true));
+  expect(tree.root.findAllByType('Fallback' as any)).toHaveLength(0);
+  act(() => hero.props.onPaint(false));
+  expect(tree.root.findAllByType('Fallback' as any)).toHaveLength(1);
+});
+test('blur removes the remote viewer; focus defers remount; unmount cancels scheduled work', () => {
+  const listeners: Record<string, () => void> = {};
+  const navigation = { isFocused: () => true, addListener: (name: string, cb: () => void) => { listeners[name] = cb; return jest.fn(); } } as any;
+  act(() => { tree = TestRenderer.create(<NavigationContext.Provider value={navigation}><OccasionInlineArtwork item={item} /></NavigationContext.Provider>); });
+  layout(); act(() => settle?.());
+  expect(tree.root.findAllByType('Hero' as any)).toHaveLength(1);
+  act(() => listeners.blur());
+  expect(tree.root.findAllByType('Hero' as any)).toHaveLength(0);
+  act(() => listeners.focus());
+  expect(tree.root.findAllByType('Hero' as any)).toHaveLength(0);
+  const pending = settle;
+  act(() => tree.unmount());
+  expect(cancel).toHaveBeenCalled();
+  act(() => pending?.());
+});
