@@ -114,10 +114,12 @@ import VishnuSahasranamaReaderScreen from '../VishnuSahasranamaReaderScreen';
 import ValmikiRamayanReaderScreen from '../ValmikiRamayanReaderScreen';
 import DaanKathaScreen from '../DaanKathaScreen';
 import PitruKathaScreen from '../PitruKathaScreen';
+import { VOICE_PROBE_DELAY_MS } from '../_useReaderReadAloud';
 
 const speechMock = Speech as unknown as {
   __calls: { text: string; options: Record<string, unknown> }[];
   speak: jest.Mock;
+  getAvailableVoicesAsync: jest.Mock;
 };
 
 /** Only the three methods the readers call; typed loosely on purpose. */
@@ -495,6 +497,45 @@ describe.each(SCROLL_KATHAS)('$name', ({ element, firstSpokenLine }) => {
     const expected = prepareForSpeech(firstSpokenLine, 'hi').slice(0, 40);
     expect(expected.length).toBeGreaterThan(0);
     expect(speechMock.__calls[0].text).toContain(expected);
+  });
+});
+
+describe('voice probe timing', () => {
+  // The provider never probes at app start (ANR audit); opening a read-aloud
+  // reader is what asks for it, once the screen's interactions settle.
+  it('probes installed voices once a reader opens, after the transition delay', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    jest.useFakeTimers();
+    try {
+      await mount(READERS[0]);
+      act(() => jest.advanceTimersByTime(VOICE_PROBE_DELAY_MS - 1));
+      expect(speechMock.getAvailableVoicesAsync).not.toHaveBeenCalled();
+      await act(async () => {
+        jest.advanceTimersByTime(1);
+        await Promise.resolve();
+      });
+      expect(speechMock.getAvailableVoicesAsync).toHaveBeenCalledTimes(1);
+    } finally {
+      if (tree) {
+        act(() => tree!.unmount());
+        tree = null;
+      }
+      jest.useRealTimers();
+    }
+  });
+
+  it('cancels the pending probe when the reader closes first', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    jest.useFakeTimers();
+    try {
+      await mount(READERS[0]);
+      act(() => tree!.unmount());
+      tree = null;
+      act(() => jest.advanceTimersByTime(VOICE_PROBE_DELAY_MS * 2));
+      expect(speechMock.getAvailableVoicesAsync).not.toHaveBeenCalled();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 });
 
