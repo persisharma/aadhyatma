@@ -4243,3 +4243,20 @@ Publication is an explicit state: while `parshuramPublication.json` is pending, 
 
 ### Individual year-round occasion cards
 Every catalog identity has an individual festive hero export. The verified timing registry remains separate from full-catalog guidance coverage. New heavy scene artwork is R2-only and publication/hash verification precedes manifest activation. Catalog-only cards omit dates; separate Holi/Holika and Maha Navami/Ayudha identities are preserved. See `docs/reviews/year-round-occasion-cards.md` for acceptance, routes and evidence.
+
+---
+
+## 89. Docked YouTube video (verified chalisa recitation, Oct–Nov 2026)
+
+**Purpose.** Let a reader watch a reviewed recitation video while the verses keep scrolling below it. Today only the Hanuman Chalisa mapping is `status: 'verified'` (`data/video/videoMappings.ts`); unverified mappings never render.
+
+**Structure.** Docked at the top of `ChalisaReaderScreen`, mounted only after the explicit *Play video* tap:
+
+1. Stage — YouTube's official embed (`react-native-youtube-iframe`), 16:9, never below 200 px tall; YouTube's own in-video controls stay on (`controls: true`).
+2. Strip — saffron play/pause disc, elapsed / duration, **↗ open in YouTube**, close.
+3. Meta — video title and channel.
+4. Error card (load error or 15 s timeout) — title, body, **Retry**, and *↗ open in YouTube*.
+
+**Interaction.** Exactly one sound source at a time through `audio/playbackArbiter.ts` (`'youtube'` kind): the player claims the session on mount, on the strip's play, on Retry, **and when the embed reports PLAYING after a pause** — a resume from YouTube's own ▶ must silence the bhajan / read-aloud that paused it (Nov 2026 fix; iOS mixes sessions, so a missed claim plays both). Another source claiming pauses the video (never unmounts it). Backgrounding, screen lock and leaving the reader (blur) pause it; it never auto-resumes. The ↗ hand-off opens the same video on YouTube — the one sanctioned non-store external link besides Daan/Rate/Instagram/mailto (RULEBOOK §11.16). The player may say it needs an internet connection (RULEBOOK §3 streaming exception).
+
+**Files.** `mobile/src/components/video/DockedYouTubePlayer.tsx`, `mobile/src/components/video/__tests__/DockedYouTubePlayer.test.tsx`, `mobile/src/audio/playbackArbiter.ts`, `mobile/src/data/video/videoMappings.ts`.

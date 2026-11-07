@@ -92,10 +92,17 @@ export default function DockedYouTubePlayer({
     }
   }, []);
 
-  const pause = useCallback(() => setPlaying(false), []);
+  // Mirrors `playing` synchronously so the embed's state callback can tell a user resume
+  // (claim the session) from a report of playback we already claimed.
+  const playingRef = useRef(true);
+  const pause = useCallback(() => {
+    playingRef.current = false;
+    setPlaying(false);
+  }, []);
   const play = useCallback(() => {
     // Starting playback re-claims exclusivity, mirroring recorded/tts/japam.
     claimPlayback('youtube');
+    playingRef.current = true;
     setPlaying(true);
   }, []);
 
@@ -151,8 +158,14 @@ export default function DockedYouTubePlayer({
   const onChangeState = useCallback((state: PLAYER_STATES) => {
     if (state === PLAYER_STATES.PLAYING) {
       setPhase('ready');
+      // A resume from the embed's own controls (`controls: true`) never passes through
+      // `play()`; claim here too, or a bhajan / read-aloud that paused the video keeps
+      // playing over it (iOS mixes sessions, audioSession.ts).
+      if (!playingRef.current) claimPlayback('youtube');
+      playingRef.current = true;
       setPlaying(true);
     } else if (state === PLAYER_STATES.PAUSED || state === PLAYER_STATES.ENDED) {
+      playingRef.current = false;
       setPlaying(false);
     }
   }, []);
@@ -178,6 +191,9 @@ export default function DockedYouTubePlayer({
 
   const retry = useCallback(() => {
     setPhase('loading');
+    // Retry autoplays the remounted embed, so it claims the session like `play()`.
+    claimPlayback('youtube');
+    playingRef.current = true;
     setPlaying(true);
     setReloadKey((k) => k + 1);
     armLoadTimeout();
