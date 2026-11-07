@@ -62,7 +62,7 @@ import { childRoutes } from '@/navigation/routeGraph';
 // walk. Must be imported before `startScreenPrefetch` runs.
 import '@/navigation/dataWarmups';
 import LaunchAskHost from '@/components/LaunchAskHost';
-import BrandLaunchGate from '@/components/BrandLaunchGate';
+import BrandLaunchGate, { BRAND_LAUNCH_REVEAL_ENABLED } from '@/components/BrandLaunchGate';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
@@ -523,7 +523,8 @@ function AppReadyGate({ children, targeted }: { children: React.ReactNode; targe
 
   return (
     <View style={{ flex: 1 }}>
-      <BrandLaunchGate targeted={targeted} onReady={hideSplash}>{children}</BrandLaunchGate>
+      {/* Reveal disabled (ANR mitigation): every launch takes the bypass path. */}
+      <BrandLaunchGate targeted={targeted || !BRAND_LAUNCH_REVEAL_ENABLED} onReady={hideSplash}>{children}</BrandLaunchGate>
     </View>
   );
 }
