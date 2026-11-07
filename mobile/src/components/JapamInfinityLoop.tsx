@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
-import Svg, { Circle, Defs, Ellipse, Path, RadialGradient, Stop } from 'react-native-svg';
+import Svg, { Circle, Defs, Ellipse, Path, RadialGradient, Stop, Text as SvgText } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { INFINITY_PATH, INFINITY_SAMPLES, infinityPoint } from './japamInfinityGeometry';
@@ -8,11 +8,11 @@ import { INFINITY_PATH, INFINITY_SAMPLES, infinityPoint } from './japamInfinityG
 const JYOTI = { core: '#FFF9DF', gold: '#FFE4A0', amber: '#DFA13D' } as const;
 type Props = {
   loop: number; progress: Animated.Value; running: boolean; reduced: boolean;
-  count: number; total: number; factor: number; showNumbers: boolean; markerSize?: number;
+  count: number; total: number; factor: number; showNumbers: boolean; markerSize?: number; compactNumbers?: boolean;
 };
 
 /** Native interpolation graph is rebuilt only for geometry changes. */
-export default function JapamInfinityLoop({ loop, progress, running, reduced, count, total, factor, showNumbers, markerSize = 40 }: Props) {
+export default function JapamInfinityLoop({ loop, progress, running, reduced, count, total, factor, showNumbers, markerSize = 40, compactNumbers = false }: Props) {
   const { colors } = useTheme();
   const half = markerSize / 2;
   const coordinates = useMemo(() => {
@@ -45,6 +45,11 @@ export default function JapamInfinityLoop({ loop, progress, running, reduced, co
       <Ellipse cx={500} cy={325} rx={500} ry={325} fill="url(#infinity-ambient)" />
       <Path d={INFINITY_PATH} stroke={colors.gold} strokeWidth={34} opacity={.25} fill="none" />
       <Path d={INFINITY_PATH} stroke={colors.saffronDeep} strokeWidth={12} fill="none" strokeLinecap="round" />
+      {showNumbers && compactNumbers ? [count, total].map((value, i) => <SvgText key={i}
+        testID={i === 0 ? 'japam-infinity-current' : 'japam-infinity-total'}
+        x={i === 0 ? 240 : 760} y={325} textAnchor="middle" alignmentBaseline="central"
+        fontFamily={fontFamilies.latinSemiBold} fill={colors.inkSoft}
+        fontSize={Math.min((i === 0 ? 18 : 15) * factor / loop * 1000, i === 0 ? 150 : 125)}>{value}</SvgText>) : null}
     </Svg>
     {running && !reduced ? transforms.tails.map((transform, i) => <Animated.View key={i}
       style={[styles.tail, { backgroundColor: colors.saffronDeep, opacity: .5 - i * .15, transform }]} />) : null}
@@ -64,7 +69,7 @@ export default function JapamInfinityLoop({ loop, progress, running, reduced, co
         <Circle cx={half} cy={half} r={markerSize * .15} fill={JYOTI.core} stroke={colors.saffronDeep} strokeWidth={1.5} />
       </Svg>
     </Animated.View>
-    {showNumbers ? <View style={[styles.numbers, { top: loop * .325 - 26 * factor }]}>
+    {showNumbers && !compactNumbers ? <View style={[styles.numbers, { top: loop * .325 - 26 * factor }]}>
       {[count, total].map((value, i) => <Text key={i} style={{ flex: 1, textAlign: 'center', fontSize: 38 * factor,
         lineHeight: 52 * factor, color: colors.inkSoft, fontFamily: fontFamilies.latinSemiBold }}>{value}</Text>)}
     </View> : null}

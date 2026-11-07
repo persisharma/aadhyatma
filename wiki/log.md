@@ -1458,3 +1458,7 @@ Approved full circular animation replaces clipped side rings. Documented complet
 
 ## [2026-11-07] ingest | Cooperative Pitru/Janma solves and the precomputed-table end
 Updated [[subsystems/panchang]]: Pitru Smaran and Janma Tithi list/detail hooks now solve through `runInBackground` (longest cold block 5,975 → 22 ms in Jest); the precomputed observance table is extended to 2035 with a coverage test that fails two years ahead (out-of-table years cost ~1.5 s synchronously). Hermes device timing remains pending.
+
+## [2026-11-07] ingest | Japa shloka in the former count space
+
+Preserved the approved circular frame and Mala/footer designs; moved decorative counts inside infinity, paired Gayatri padas into two complete compact reading rows and introduced an Infinity-only gauge chip over the existing tempo stepper. Canonical cadence, count ownership and accessible/scalable complete text remain unchanged. Native visual/ANR evidence remains pending.
