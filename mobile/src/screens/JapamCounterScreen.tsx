@@ -140,22 +140,32 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const sloka = mantra?.sloka ?? null;
   const reduceMotion = useReducedMotion();
   const nameBeat = useRef(new Animated.Value(1)).current;
-  const beatPrimedRef = useRef(false);
+  // Every completed Infinity loop also lands visibly for mantras and shlokas
+  // (gently: multi-line text must stay inside the page gutters), so completion
+  // feedback matches naam japa. Mala keeps its bead motion as the per-tap cue.
+  const beatScale = naam ? 1.14 : japaStyle === 'infinity' ? 1.04 : null;
+  const lastBeatRef = useRef<{ id: string; beat: string } | null>(null);
+  const beatId = mantra?.id ?? '';
   useEffect(() => {
-    if (!naam || reduceMotion) return;
-    // No pulse for the count restored on open, only for beads chanted here.
-    if (!beatPrimedRef.current) {
-      beatPrimedRef.current = true;
+    // No pulse for the count restored on open, a mantra or style switch, only for beads chanted here.
+    if (counterLoading) {
+      lastBeatRef.current = null;
       return;
     }
-    nameBeat.setValue(1.14);
+    const beat = `${entry.count}|${entry.rounds}`;
+    const previous = lastBeatRef.current;
+    lastBeatRef.current = { id: beatId, beat };
+    if (!previous || previous.id !== beatId || previous.beat === beat || beatScale === null || reduceMotion) return;
+    nameBeat.setValue(beatScale);
     Animated.timing(nameBeat, {
       toValue: 1,
       duration: 460,
       easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
+      // Repeats every Infinity loop: never hold InteractionManager work back.
+      isInteraction: false,
     }).start();
-  }, [entry.count, entry.rounds, naam, reduceMotion, nameBeat]);
+  }, [counterLoading, beatId, entry.count, entry.rounds, beatScale, reduceMotion, nameBeat]);
   // Brief "turn the mala" notice when a round completes at the Sumeru.
   const [sumeruNotice, setSumeruNotice] = useState(false);
   const noticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
