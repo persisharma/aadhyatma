@@ -1555,19 +1555,34 @@ Validation: five focused Node integration tests execute the production pool, con
 The stable `parshuram` deity uses the `parashu` painted attribute and its own standing background. `stuti/parshuram-stotram.json` is the complete seven-verse Vasudevananda Saraswati recension, routed through the existing Stuti reader and flat Daily Bhakti pool. Original reflections VD-0085–VD-0092 belong only to Parshuram plus the universal original pool. `parshuramPublication.json` activates all new surfaces only after `scripts/prepare-parshuram.mjs --publish` verifies every public artwork hash. Keep pending masters out of runtime manifests. The new remote Daily Bhakti master is capped at 250 KiB independently; all pre-existing masters retain their 9 MiB aggregate cap. Suvichar retains 30 MiB. Exact prompts/provenance, publication procedure and native checks: `docs/content-parity/parshuram/README.md`.
 
 
-### Occasion cards on screen — 7 November 2026
-The individual festive composition is visible in OccasionTimingsCard on Panchang,
-Muhurat detail and Observance detail, not confined to the exported PNG. Each
-occasion owns its gold parchment frame, floral corners, centered title, complete
-3:2 painting, ritual windows/guidance and existing independent share action.
-Titles retain script-safe leading and native accessibility scaling; content grows.
-OccasionInlineArtwork reserves the image frame before downloading and keeps an
-offline thumbnail until native decode completes. Full artwork mounts only after
-measured layout and InteractionManager settlement on the focused screen; blur or
-unmount cancels queued work and removes cache subscriptions. Heavy masters stay
-remote. Text, timings, scrolling and sharing controls never await the painting.
-Native visual and low-end-device responsiveness checks remain separate release
-gates; source or mocked tests do not prove them.
+### Compact Panchang muhurats and illustrated Vrat cards — 7 November 2026
+Panchang shows one CompactOccasionCard using the approved Festive compact design:
+ivory-to-parchment gradient, 18dp round double gold frame, 54dp painted floral
+corners, centered 19/32 script-safe heading and 36dp ritual motifs. Every actual
+window remains visible in a divided row; no guidance-only entry receives a clock.
+The full occasion name and 25/34 Latin time retain accessibility scaling.
+Overnight script-month suffixes use the script face at 25/42 to preserve marks. Rows
+stack below 380dp, at Large reading/system text, or across civil-date boundaries;
+no content truncation or font shrinking. Ordinary days omit the card; guidance-only
+days retain a Vrat door, and failures retain Retry. The 44dp minimum action opens
+Vrat with the selected date and catalog mode, clears an old search and reveals the
+cards. Detail Back retains the dated catalog state.
+
+OccasionSection evaluates the full OccasionTimingsCard module only for the
+illustrated view. The Vrat landing owns the complete 3:2 painted cards, local
+date/city label, ritual windows/guidance, independent per-occasion share and
+Details & katha action. Details use each occurrence's own date, including a
+prior-day midnight ceremony. Today introductions are not duplicated. Muhurat and
+Observance detail keep their illustrated cards and export contracts.
+
+OccasionInlineArtwork reserves the frame and offline thumbnail before download;
+full art waits for layout/InteractionManager settlement and cancels on blur or
+unmount. The main summary uses the existing bundled painted atlas only. Occasion
+work is cancelled on tab blur/Jyotish. Calendar clocks, date-aware formatting,
+location/calendar/lens keys, yielding scheduler and complete Panchang export gate
+are retained. No additional assets or native dependencies. Native glyph/layout,
+actual share-file and lower-end Android ANR/frame-time evidence remain separate
+acceptance gates. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
 
 
 ### Panchang entry responsiveness — 7 November 2026

@@ -41,6 +41,10 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { true: '${String(FOCUSED) === "true"}' }
     commands:
+      - scrollUntilVisible:
+          element: { id: compact-occasion-open-vrat }
+          direction: DOWN
+          centerElement: true
       - tapOn: { id: compact-occasion-open-vrat }
       - extendedWaitUntil:
           visible: { id: occasion-timings-card }

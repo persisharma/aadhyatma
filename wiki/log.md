@@ -1443,3 +1443,5 @@ Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line
 
 ## [2026-11-07] ingest | Japa ornamental mandala and long-text fitting
 Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
+
+## [2026-11-07] ingest | Compact Panchang occasion summary; full dated illustrated cards in Vrat. Shared yielded/cancelled timing work and independent share/detail dates preserved; native visual/export/low-end performance acceptance pending. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.

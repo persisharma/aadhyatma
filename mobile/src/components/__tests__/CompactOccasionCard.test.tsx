@@ -8,6 +8,7 @@ import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
 import type { OccasionTiming } from '@/panchang/occasionTimings';
 import { occasionRange } from '@/panchang/occasionTimingFormat';
 import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
+import { contentByLang } from '@/utils/localize';
 
 const mockShare = jest.fn();
 let mockFactor = 1;
@@ -48,6 +49,8 @@ for (const lang of ['hi', 'en', 'gu', 'kn'] as Lang[]) for (const factor of [1, 
       expect(text.props.adjustsFontSizeToFit).not.toBe(true);
     }
     expect(times[1].props.children).toContain('7 ');
+    expect(tree.root.findAllByType(RN.Text).map(n => n.props.children)).toContain(contentByLang(lang, diwali.nameHi, diwali.nameEn));
+    if (lang !== 'en') expect(times[1].props.style.lineHeight).toBeGreaterThanOrEqual(times[1].props.style.fontSize * 1.65);
     expect(views('compact-occasion-row-layout')[1].props.style.flexDirection).toBe('column');
   });
 }
