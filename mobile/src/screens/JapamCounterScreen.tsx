@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
   Easing,
@@ -29,13 +29,14 @@ import {
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { useJapamAlarms } from '@/contexts/JapamAlarmsContext';
 import { useFontScale } from '@/contexts/FontScaleContext';
-import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import AppIcon from '@/components/AppIcon';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
 import { japaAutoCountSource } from '@/components/japamInfinityPlayback';
+import { infinityRecitationMs, normalizeJapaRate, recitationUnits } from '@/components/japamRecitationTiming';
+import KaraokeText from '@/components/KaraokeText';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -48,6 +49,7 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
 import type { RootStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'JapamCounter'>;
+const japaWordWeight = (word: string) => recitationUnits([word]);
 
 export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
@@ -57,13 +59,30 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { share, busy: shareBusy } = useShare();
   const requestRatingAsk = useRatingAsk();
   const { factor } = useFontScale();
-  const { activity } = useUserActivity();
   const { width: windowWidth } = useWindowDimensions();
   const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
   const [infinityRunning, setInfinityRunning] = useState(false);
+  const [infinityPhase] = useState(() => new Animated.Value(0));
+  const [tempo, setTempo] = useState({ mantraId: route.params.mantraId, rate: 1 });
+  const chantRate = tempo.mantraId === route.params.mantraId ? tempo.rate : 1;
+  const setChantRate = useCallback((rate: number) => {
+    setTempo({ mantraId: route.params.mantraId, rate: normalizeJapaRate(rate) });
+  }, [route.params.mantraId]);
+  const [audioCadence, setAudioCadence] = useState<{ mantraId: string; durationMs: number } | null>(null);
+  const cadenceMantraRef = useRef(route.params.mantraId);
+  cadenceMantraRef.current = route.params.mantraId;
+  const receiveAudioCadence = useCallback((mantraId: string, durationMs: number) => {
+    if (mantraId !== cadenceMantraRef.current || !Number.isFinite(durationMs) || durationMs <= 0) return;
+    setAudioCadence(previous => previous?.mantraId === mantraId && previous.durationMs === durationMs
+      ? previous : { mantraId, durationMs });
+  }, []);
   // The Infinity side rings turn only while this screen is focused.
   const [screenFocused, setScreenFocused] = useState(true);
-  useEffect(() => { setInfinityRunning(false); }, [japaStyle, route.params.mantraId]);
+  useLayoutEffect(() => {
+    setInfinityRunning(false);
+    infinityPhase.stopAnimation();
+    infinityPhase.setValue(0);
+  }, [japaStyle, route.params.mantraId, infinityPhase]);
 
   // Mantra is reading text → it scales with the global M/L size on EVERY device
   // (no per-device hardcoding, so M/L always takes effect). The tap surface
@@ -75,8 +94,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const verseFontSizeEn = Math.round(20 * factor);
   const verseLineHeightEn = Math.round(34 * factor);
   // The turning mala (§35) takes whatever height the tap surface has left after
-  // the mantra above it, so the ring never runs past the stats row. The tray,
-  // today count and reset live in that fixed row and the hint sits inside the
+  // the mantra above it, so the ring never runs past the stats row. Completed rounds
+  // and reset live in that fixed row and the hint sits inside the
   // ring, so nothing below the ring can grow mid-japa and make it jump.
   // Window-height breakpoints can't do this: the tab bar, mantra length and M/L
   // size all eat into the same viewport. Below MALA_MIN the surface scrolls
@@ -93,6 +112,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     () => findJapamMantra(route.params.mantraId),
     [route.params.mantraId]
   );
+  const displayedLines = useMemo(() => verseLinesByLang(lang, mantra?.lines ?? [], mantra?.linesEn ?? []), [lang, mantra]);
 
   React.useEffect(() => {
     if (!mantra) {
@@ -107,6 +127,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const infinityCycleMs = useMemo(() => infinityRecitationMs(mantra?.lines ?? [], chantRate,
+    audioPlaying && audioCadence?.mantraId === mantra?.id ? audioCadence?.durationMs : null),
+  [mantra, chantRate, audioPlaying, audioCadence]);
   const autoSourceRef = useRef(japaAutoCountSource(japaStyle, infinityRunning, audioPlaying));
   autoSourceRef.current = japaAutoCountSource(japaStyle, infinityRunning, audioPlaying);
   // Naam japa (a single divine name, e.g. राधा): the name reads large and gives
@@ -205,27 +228,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // The mantra itself is shown once, in the tap surface; the top bar names the screen.
   const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
 
-  const todayBeads = activity[toDateKey(new Date())]?.japa[mantra.id]?.beads ?? 0;
-  const todayLabel = sloka
-    ? pick(lang, {
-        hi: `आज ${todayBeads} श्लोक`,
-        en: `${todayBeads} shloka today`,
-        gu: `આજે ${todayBeads} શ્લોક`,
-        kn: `ಇಂದು ${todayBeads} ಶ್ಲೋಕ`,
-      })
-    : naam
-    ? pick(lang, {
-        hi: `आज ${todayBeads} नाम`,
-        en: `${todayBeads} names today`,
-        gu: `આજે ${todayBeads} નામ`,
-        kn: `ಇಂದು ${todayBeads} ನಾಮ`,
-      })
-    : pick(lang, {
-        hi: `आज ${todayBeads} जप`,
-        en: `${todayBeads} japa today`,
-        gu: `આજે ${todayBeads} જપ`,
-        kn: `ಇಂದು ${todayBeads} ಜಪ`,
-      });
   const malasDoneLabel = pick(lang, { hi: 'माला पूर्ण', en: 'Malas done', gu: 'માળા પૂર્ણ', kn: 'ಮಾಲೆ ಪೂರ್ಣ' });
   const firstMalaLabel = pick(lang, {
     hi: 'पहली माला आरम्भ',
@@ -411,8 +413,18 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             ]}
           >
             <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
-              <Animated.View style={[styles.mantraBlock, { transform: [{ scale: nameBeat }] }]}>
-                {verseLinesByLang(lang, mantra.lines, mantra.linesEn).map((line, i) => (
+              <Animated.View style={[styles.mantraBlock, japaStyle === 'infinity' && styles.mantraFullWidth, { transform: [{ scale: nameBeat }] }]}>
+                {japaStyle === 'infinity' ? <KaraokeText
+                  lines={displayedLines} referenceLines={mantra.lines} wordWeight={japaWordWeight}
+                  progress={infinityPhase} color={colors.ink} highlightColor={colors.saffronDeep}
+                  fontFamily={isLatinLang(lang) ? typography.cardLatin.fontFamily : scriptSerif ?? typography.verse.fontFamily}
+                  fontSize={isLatinLang(lang) ? naam ? Math.round(verseFontSizeEn * 1.6) : verseFontSizeEn
+                    : naam ? Math.round(verseFontSize * 1.5) : verseFontSize}
+                  lineHeight={isLatinLang(lang) ? naam ? Math.round(verseLineHeightEn * 1.25) : verseLineHeightEn
+                    : naam ? Math.round(verseLineHeight * 1.25) : verseLineHeight}
+                  fontStyle={isLatinLang(lang) ? 'italic' : 'normal'} includeFontPadding={!isLatinLang(lang)}
+                  lineGap={isLatinLang(lang) ? 6 : 0}
+                /> : displayedLines.map((line, i) => (
                   <Text
                     key={`${lang}-${i}`}
                     style={[
@@ -458,9 +470,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
             <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
               {japaStyle === 'infinity' ? (
-                <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} onCycle={handleInfinityCycle}
+                <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
                   notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
-                  ringText={verseLinesByLang(lang, mantra.lines, mantra.linesEn).join(' ')} ringsActive={screenFocused}
+                  ringText={displayedLines.join(' ')} ringsActive={screenFocused}
                   labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
               ) : <JapamMala
                 count={entry.count}
@@ -475,28 +487,13 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </ScrollView>
 
-        {/* One fixed line replaces the tray, the today label and the two reset buttons. */}
+        {/* Completed malas and reset; the current bead count is in the visualization. */}
         <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
           <JapamMalaTray
             rounds={entry.rounds}
             label={malasDoneLabel}
             emptyLabel={firstMalaLabel}
           />
-          <View style={[styles.statsDivider, { backgroundColor: colors.divider }]} />
-          <Text
-            style={[
-              styles.todayLabel,
-              {
-                color: colors.saffronDeep,
-                fontFamily: isLatinLang(lang)
-                  ? typography.cardLatin.fontFamily
-                  : scriptSerifBold ?? typography.readerTitle.fontFamily,
-              },
-            ]}
-            numberOfLines={1}
-          >
-            {todayLabel}
-          </Text>
           <Pressable
             onPress={() => setResetSheetOpen(true)}
             accessibilityRole="button"
@@ -529,6 +526,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             lang={lang}
             onIteration={handleAudioIteration}
             onPlayingChange={setAudioPlaying}
+            rate={chantRate}
+            onRateChange={setChantRate}
+            onRecitationDurationChange={receiveAudioCadence}
+            showSilentTempo={japaStyle === 'infinity'}
             autoPlay={route.params.autoPlay === true}
           />
         </View>
@@ -800,6 +801,7 @@ const styles = StyleSheet.create({
   mantraBlock: {
     alignItems: 'center',
   },
+  mantraFullWidth: { width: '100%' },
   mantraLine: {
     textAlign: 'center',
     // No includeFontPadding:false here — this line is Devanagari, and on Android
@@ -826,6 +828,7 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   statsRow: {
+    justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
@@ -834,15 +837,6 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingVertical: 6,
     borderTopWidth: 1,
-  },
-  statsDivider: {
-    width: 1,
-    height: 28,
-  },
-  todayLabel: {
-    flex: 1,
-    fontSize: 14,
-    includeFontPadding: false,
   },
   resetBtn: {
     width: 44,

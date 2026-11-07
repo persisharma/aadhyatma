@@ -17,16 +17,21 @@ export default function OccasionInlineArtwork({ item }: { item: OccasionTiming }
   useEffect(() => {
     let task: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
     let alive = true;
-    const stop = () => { task?.cancel(); task = undefined; if (alive) { setActive(false); setPainted(false); } };
+    let generation = 0;
+    const stop = () => { generation++; task?.cancel(); task = undefined; if (alive) { setActive(false); setPainted(false); } };
     const start = () => {
+      const current = ++generation;
       task?.cancel();
-      task = InteractionManager.runAfterInteractions(() => { if (alive) setActive(true); });
+      if (width <= 0 || (navigation && !navigation.isFocused())) return;
+      task = InteractionManager.runAfterInteractions(() => {
+        if (alive && current === generation && (!navigation || navigation.isFocused())) setActive(true);
+      });
     };
     setPainted(false);
     if (width > 0 && (!navigation || navigation.isFocused())) start();
     const focus = navigation?.addListener('focus', start);
     const blur = navigation?.addListener('blur', stop);
-    return () => { alive = false; task?.cancel(); focus?.(); blur?.(); };
+    return () => { alive = false; generation++; task?.cancel(); focus?.(); blur?.(); };
   }, [identity, width, navigation]);
   const rule = OBSERVANCE_RULES.find(r => r.id === item.ruleId);
   let Hero: typeof import('./OccasionHeroArtwork').default | undefined;

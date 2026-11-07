@@ -55,3 +55,14 @@ test.each([248, 280, 328, 398, 640, 327.6])('painting fits a measured %s dp card
   expect(hero.props.width).toBe(Math.floor(width));
   expect(hero.props.height).toBeCloseTo(Math.floor(width) / 1.5);
 });
+
+test('a cancelled interaction callback cannot restart artwork after blur', () => {
+  const listeners: Record<string, () => void> = {};
+  const navigation = { isFocused: () => true, addListener: (name: string, cb: () => void) => { listeners[name] = cb; return jest.fn(); } } as any;
+  act(() => { tree = TestRenderer.create(<NavigationContext.Provider value={navigation}><OccasionInlineArtwork item={item} /></NavigationContext.Provider>); });
+  layout();
+  const stale = settle;
+  act(() => listeners.blur());
+  act(() => stale?.());
+  expect(tree.root.findAllByType('Hero' as any)).toHaveLength(0);
+});
