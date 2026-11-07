@@ -2,6 +2,7 @@ import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import JapamAudioPlayer from '../JapamAudioPlayer';
 import RateStepper from '../RateStepper';
+import type { Lang } from '@/data/gita/language';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
 const mockPlayer = {
@@ -46,9 +47,28 @@ test('silent Infinity retains tempo controls for mantras with no recording', asy
     <JapamAudioPlayer mantraId="radha-naam" lang="hi" rate={1} onRateChange={rate}
       showSilentTempo onIteration={jest.fn()} />
   </ThemeProvider>); });
+  act(() => tree!.root.findAll(node => node.props.testID === 'japam-tempo-open')[0].props.onPress());
   const stepper = tree!.root.findByType(RateStepper);
   act(() => stepper.props.onChange(0.8));
   expect(rate).toHaveBeenCalledWith(0.8);
+  expect(mockPlayer.play).not.toHaveBeenCalled();
+});
+
+test.each(['hi', 'en', 'gu', 'kn'] as Lang[])('Infinity speed opens and closes in %s without playing or counting', async lang => {
+  const rate = jest.fn();
+  const iteration = jest.fn();
+  await act(async () => { tree = TestRenderer.create(<ThemeProvider>
+    <JapamAudioPlayer mantraId="hare-krishna-mahamantra" lang={lang} rate={1} onRateChange={rate}
+      showSilentTempo onIteration={iteration} />
+  </ThemeProvider>); });
+  act(() => tree!.root.findAll(node => node.props.testID === 'japam-tempo-open')[0].props.onPress());
+  const stepper = tree!.root.findByType(RateStepper);
+  expect(stepper.props).toMatchObject({ min: .5, max: 1.5, step: .1 });
+  act(() => stepper.props.onChange(1.4));
+  expect(rate).toHaveBeenCalledWith(1.4);
+  act(() => tree!.root.findAll(node => node.props.testID === 'japam-tempo-close')[0].props.onPress());
+  expect(tree!.root.findAll(node => node.props.testID === 'japam-tempo-open')[0].props.accessibilityState.expanded).toBe(false);
+  expect(iteration).not.toHaveBeenCalled();
   expect(mockPlayer.play).not.toHaveBeenCalled();
 });
 

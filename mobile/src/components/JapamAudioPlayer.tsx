@@ -15,6 +15,7 @@ import {
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import RateStepper from './RateStepper';
+import JapamTempoControl from './JapamTempoControl';
 import { MIN_JAPA_RATE as MIN_RATE, MAX_JAPA_RATE as MAX_RATE } from './japamRecitationTiming';
 
 type Props = {
@@ -66,7 +67,7 @@ export default function JapamAudioPlayer({
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
   if (source == null) {
-    return <UnavailableNotice lang={lang} rate={rate} onRateChange={showSilentTempo ? onRateChange : undefined} />;
+    return <UnavailableNotice key={mantraId} lang={lang} rate={rate} onRateChange={showSilentTempo ? onRateChange : undefined} />;
   }
 
   return (
@@ -81,6 +82,7 @@ export default function JapamAudioPlayer({
       rate={rate}
       onRateChange={onRateChange}
       onRecitationDurationChange={onRecitationDurationChange}
+      showSilentTempo={showSilentTempo}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -105,6 +107,7 @@ function ActiveAudioPlayer({
   rate: controlledRate,
   onRateChange,
   onRecitationDurationChange,
+  showSilentTempo,
   colors,
   typography,
   radii,
@@ -352,7 +355,7 @@ function ActiveAudioPlayer({
         </Text>
       </Pressable>
 
-      <RateStepper
+      {showSilentTempo ? <JapamTempoControl value={rate} onChange={setRate} lang={lang} fontFamily={labelSubFont} /> : <RateStepper
         value={rate}
         onChange={setRate}
         min={MIN_RATE}
@@ -361,7 +364,7 @@ function ActiveAudioPlayer({
         label={tempoLabel}
         labelFontFamily={labelSubFont}
         inlineLabel
-      />
+      />}
     </View>
   );
 }
@@ -394,10 +397,7 @@ function UnavailableNotice({ lang, rate = 1, onRateChange }: Pick<Props, 'lang' 
       >
         {text}
       </Text>
-      {onRateChange ? <RateStepper value={rate} onChange={onRateChange}
-        min={MIN_RATE} max={MAX_RATE} step={RATE_STEP} inlineLabel
-        label={pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' })}
-        labelFontFamily={noticeFont} /> : null}
+      {onRateChange ? <JapamTempoControl value={rate} onChange={onRateChange} lang={lang} fontFamily={noticeFont} /> : null}
     </View>
   );
 }
