@@ -52,7 +52,10 @@ Android vitals → ANRs → group by cluster and match the signature:
   unfocused window and an ANR on every key press.
 - **Fix.** `fontsReady = fontsLoaded || fontError != null`. A failed family falls back to platform glyphs.
 
-### F3 — Chromium starts on the main thread on every cold start · OPEN (product decision)
+### F3 — Chromium starts on the main thread on every cold start · MITIGATED (reveal disabled on all platforms, 7 Nov)
+
+- **Decision (7 Nov).** `BRAND_LAUNCH_REVEAL_ENABLED = false`. Every launch takes the gate's bypass path,
+  so no WebView is created at launch. Re-enable only with ANR evidence; option (a) below is the safe route back.
 
 - **[Certain]** `BrandParticleWebView` mounts a `react-native-webview` on every non-targeted cold
   start. Before 2 Nov, only YouTube surfaces created a WebView.
@@ -86,7 +89,11 @@ Android vitals → ANRs → group by cluster and match the signature:
 - **Recommendation.** Create the global player lazily on the first `playTrack`. Watch upstream
   expo-audio for removal of `runBlocking`.
 
-### F6 — Meta SDK work on the main thread · OPEN (low)
+### F6 — Meta SDK work on the main thread · OPEN (low) — deliberately untouched
+
+- **Decision (7 Nov).** Leave it unchanged unless the dates align. It shipped in 1.5.0 (Play release marker
+  11 Oct), but Play has no ANR data before 19 Oct, so its release cannot be shown to align with the ANR onset.
+  Revisit if a longer Play range or per-version ANR rate shows the rate starting with 1.5.0.
 
 - **[Certain]** `MetaAppEventsModule.activate` is `.runOnQueue(Queues.MAIN)`. It creates
   `AppEventsLogger` (SharedPreferences reads) after interactions settle. The SDK's init provider
