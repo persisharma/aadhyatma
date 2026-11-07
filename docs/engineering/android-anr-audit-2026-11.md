@@ -34,6 +34,7 @@ Not user-perceived (these count only in the overall ANR rate): widget providers 
 
 ## 4. Status of changes
 
+- **Fixed (candidate #1):** the voice check now runs on first need instead of at app start. `ReadAloudProvider` no longer probes on mount. `ensureVoices()` probes once, and is called by `useReaderReadAloud` after the reader's interactions settle and by the voice sheet when it opens. `refreshVoices()` still forces a re-probe. Remaining exposure: one `getVoices()` main-thread call per session, for users who open a read-aloud reader, after its transition.
 - **Kept:** `BRAND_LAUNCH_REVEAL_ENABLED = false`. The particle reveal is disabled on all platforms (candidate #3; its timing matches the spikes).
 - **Reverted by owner direction:** the Android first-frame splash release and the font-error fail-open (they addressed #2).
 - **Not touched:** Meta SDK. It shipped in the first production build, so it cannot be dated against the onset.

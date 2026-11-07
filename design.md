@@ -3129,8 +3129,12 @@ auto-advancing a screen the user cannot see is worse than silence.
 ### 56.4 Availability is a first-class state
 
 Both platforms fall back to the device default voice for an unavailable language **silently** —
-neither fires an error callback. So voices are probed at startup (`getAvailableVoicesAsync`, raced
-against a 4 s timeout because Android's engine binds slowly), the control is gated on the result,
+neither fires an error callback. So voices are probed (`getAvailableVoicesAsync`, raced
+against a 4 s timeout because Android's engine binds slowly) **on first need — when a read-aloud
+reader opens (after its transition settles) or the voice sheet opens, never at app start**: on
+Android the probe's native callback calls the TTS engine on the main thread, so a launch-time probe
+cost every cold start an ANR risk. Until then availability is `unknown` and the control stays
+pressable. The control is gated on the result,
 and a **3 s `onStart` watchdog** catches the OEM engine that reports a language then emits nothing.
 Availability is resolved **for the active reading language**, so it changes when the language does.
 The probe re-runs when the app foregrounds while unavailable, so installing voice data and coming

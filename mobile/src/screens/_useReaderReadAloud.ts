@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AccessibilityInfo, type FlatList } from 'react-native';
+import { AccessibilityInfo, InteractionManager, type FlatList } from 'react-native';
 import * as Speech from 'expo-speech';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useReadAloud, type ReadAloudSession } from '@/contexts/ReadAloudContext';
@@ -105,6 +105,16 @@ export function useReaderReadAloud<T>(args: ReaderPagerArgs<T>): ReadAloudContro
       sub.remove();
     };
   }, []);
+
+  // Probe installed voices when a read-aloud reader opens, never at app start (the
+  // provider explains why). Deferred past the screen transition: on Android the
+  // probe's native callback runs on the main thread, so it must not overlap the
+  // reader's own mount. A no-op once any reader or the voice sheet has probed.
+  const { ensureVoices } = readAloud;
+  useEffect(() => {
+    const task = InteractionManager.runAfterInteractions(() => ensureVoices());
+    return () => task.cancel();
+  }, [ensureVoices]);
 
   const isActive = readAloud.activeSourceId === sourceId;
   const isSpeaking = isActive && readAloud.status === 'speaking';

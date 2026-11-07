@@ -118,6 +118,7 @@ import PitruKathaScreen from '../PitruKathaScreen';
 const speechMock = Speech as unknown as {
   __calls: { text: string; options: Record<string, unknown> }[];
   speak: jest.Mock;
+  getAvailableVoicesAsync: jest.Mock;
 };
 
 /** Only the three methods the readers call; typed loosely on purpose. */
@@ -495,6 +496,19 @@ describe.each(SCROLL_KATHAS)('$name', ({ element, firstSpokenLine }) => {
     const expected = prepareForSpeech(firstSpokenLine, 'hi').slice(0, 40);
     expect(expected.length).toBeGreaterThan(0);
     expect(speechMock.__calls[0].text).toContain(expected);
+  });
+});
+
+describe('voice probe timing', () => {
+  // The provider never probes at app start (ANR audit); opening a read-aloud
+  // reader is what asks for it, once the screen's interactions settle.
+  it('probes installed voices once a reader opens', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    await mount(READERS[0]);
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    expect(speechMock.getAvailableVoicesAsync).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -115,6 +115,9 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 - **Both platforms fail SILENTLY for a missing voice — `onError` never fires.** iOS leaves
   `utterance.voice = nil` and uses the system default; Android's `speakOut` falls back to
   `Locale.getDefault()`. Availability therefore comes from a `getAvailableVoicesAsync()` probe
+  (**on first need only** — `ensureVoices()` from `useReaderReadAloud` after interactions, or the voice
+  sheet opening; never at provider mount, because Android answers it with a main-thread `getVoices()`
+  binder call in expo-speech's init callback — Nov 2026 ANR audit)
   (raced against a 4 s timeout — Android's engine binds slowly) plus a **3 s `onStart` watchdog**
   for the OEM engine that reports a language then emits nothing. Never gate on `onError`.
 - **Never pass `'hi-IN'` as Android's `language`.** `SpeechModule.kt` does `Locale(options.language)`
