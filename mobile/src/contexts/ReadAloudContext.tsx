@@ -78,6 +78,11 @@ type ReadAloudContextValue = {
   speakPreview: (text: string) => void;
   /** Re-probe after the user installs voice data. */
   refreshVoices: () => void;
+  /**
+   * Probe installed voices once, on first need (a reader or the voice sheet opening).
+   * Never called at app start: see the voice-probe note in the provider.
+   */
+  ensureVoices: () => void;
 };
 
 const DISABLED_DEFAULT: ReadAloudContextValue = {
@@ -94,6 +99,7 @@ const DISABLED_DEFAULT: ReadAloudContextValue = {
   stop: () => {},
   speakPreview: () => {},
   refreshVoices: () => {},
+  ensureVoices: () => {},
 };
 
 const ReadAloudContext = createContext<ReadAloudContextValue>(DISABLED_DEFAULT);
@@ -168,8 +174,10 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const probeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const probeStartedRef = useRef(false);
 
   const probe = useCallback(() => {
+    probeStartedRef.current = true;
     if (probeTimerRef.current) clearTimeout(probeTimerRef.current);
 
     // Android's TTS engine can take seconds to bind, and `getVoices` waits on that
@@ -214,15 +222,26 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
       });
   }, []);
 
-  useEffect(() => {
-    probe();
-    return () => {
+  // The probe is ON DEMAND, never on mount. This provider wraps the whole app, and on
+  // Android the first `getAvailableVoicesAsync` constructs TextToSpeech, whose init
+  // callback answers it with `getVoices()`: a synchronous binder call into the TTS
+  // engine on the MAIN thread (expo-speech SpeechModule). Probing at launch put that
+  // call on every cold start, for users who never open read-aloud (Android ANR audit,
+  // docs/engineering/android-anr-audit-2026-11.md). Until a reader or the voice sheet
+  // asks, availability stays 'unknown', which keeps the control pressable.
+  const ensureVoices = useCallback(() => {
+    if (!probeStartedRef.current) probe();
+  }, [probe]);
+
+  useEffect(
+    () => () => {
       if (probeTimerRef.current) {
         clearTimeout(probeTimerRef.current);
         probeTimerRef.current = null;
       }
-    };
-  }, [probe]);
+    },
+    []
+  );
 
   const availability = useMemo<VoiceAvailability>(() => {
     if (probeFailed) return 'unavailable';
@@ -451,6 +470,7 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
       stop,
       speakPreview,
       refreshVoices,
+      ensureVoices,
     }),
     [
       availability,
@@ -465,6 +485,7 @@ export function ReadAloudProvider({ children }: { children: React.ReactNode }) {
       stop,
       speakPreview,
       refreshVoices,
+      ensureVoices,
     ]
   );
 
