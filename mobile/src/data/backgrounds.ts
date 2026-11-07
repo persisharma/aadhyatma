@@ -81,6 +81,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'ganapati-gam-mantra': backgroundImages.deity_ganesha_modak,
   'om-namo-narayanaya': backgroundImages.source_vishnu_narayana,
   'hanuman-moola-mantra': chalisaImages.ram_hanuman,
+  'mahalakshmi-mantra': backgroundImages.deity_lakshmi,
+  'kubera-mantra': backgroundImages.deity_kubera,
   'shri-ram-jai-ram': backgroundImages.deity_rama_darbar,
   'durga-beej-mantra': backgroundImages.deity_durga_lion,
   'surya-beej-mantra': backgroundImages.deity_surya,
