@@ -3137,7 +3137,7 @@ auto-advancing a screen the user cannot see is worse than silence.
 Both platforms fall back to the device default voice for an unavailable language **silently** —
 neither fires an error callback. So voices are probed (`getAvailableVoicesAsync`, raced
 against a 4 s timeout because Android's engine binds slowly) **on first need — when a read-aloud
-reader opens (after its transition settles) or the voice sheet opens, never at app start**: on
+reader opens (after a 500ms `VOICE_PROBE_DELAY_MS`, cleared if the reader closes first) or the voice sheet opens, never at app start**: on
 Android the probe's native callback calls the TTS engine on the main thread, so a launch-time probe
 cost every cold start an ANR risk. Until then availability is `unknown` and the control stays
 pressable. The control is gated on the result,

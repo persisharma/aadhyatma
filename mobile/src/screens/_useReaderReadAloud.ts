@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AccessibilityInfo, InteractionManager, type FlatList } from 'react-native';
+import { AccessibilityInfo, type FlatList } from 'react-native';
 import * as Speech from 'expo-speech';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useReadAloud, type ReadAloudSession } from '@/contexts/ReadAloudContext';
@@ -26,6 +26,14 @@ const SWIPE_DEBOUNCE_MS = 250;
  * caught up by now, end the session instead.
  */
 const SCROLL_SETTLE_MS = 600;
+/**
+ * How long after a reader mounts before it asks for the voice probe, so the probe's
+ * native work never overlaps the screen's own mount and push transition. A plain,
+ * cleared timer, not `InteractionManager`: native-stack transitions are not JS
+ * interactions, and an InteractionManager immediate scheduled under Jest fake timers
+ * outlived `useRealTimers()` and hung the CI reader shard.
+ */
+export const VOICE_PROBE_DELAY_MS = 500;
 
 export type ReadAloudControl = {
   /**
@@ -107,13 +115,13 @@ export function useReaderReadAloud<T>(args: ReaderPagerArgs<T>): ReadAloudContro
   }, []);
 
   // Probe installed voices when a read-aloud reader opens, never at app start (the
-  // provider explains why). Deferred past the screen transition: on Android the
-  // probe's native callback runs on the main thread, so it must not overlap the
-  // reader's own mount. A no-op once any reader or the voice sheet has probed.
+  // provider explains why). Deferred past the screen transition so the probe's
+  // native work does not overlap the reader's own mount. A no-op once any reader
+  // or the voice sheet has probed.
   const { ensureVoices } = readAloud;
   useEffect(() => {
-    const task = InteractionManager.runAfterInteractions(() => ensureVoices());
-    return () => task.cancel();
+    const timer = setTimeout(ensureVoices, VOICE_PROBE_DELAY_MS);
+    return () => clearTimeout(timer);
   }, [ensureVoices]);
 
   const isActive = readAloud.activeSourceId === sourceId;
