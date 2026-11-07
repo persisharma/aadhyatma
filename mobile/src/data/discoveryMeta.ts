@@ -182,6 +182,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} japam/japam.json.`,
   },
+  'krishna-beej-mantra': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} japam/japam.json.` },
+  'rudra-mantra': { purposes: ['devotion', 'protection'], bestDays: [1], bestTime: 'any', source: `${SOURCE_BUNDLED} japam/japam.json.` },
+  'om-ham-hanumate-namah': { purposes: ['courage', 'protection'], bestDays: [2, 6], bestTime: 'any', source: `${SOURCE_BUNDLED} japam/japam.json.` },
+  'rama-moola-mantra': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} japam/japam.json.` },
+  'navarna-mantra': { purposes: ['protection', 'devotion'], bestFestivals: ['navratri'], bestTime: 'any', source: `${SOURCE_BUNDLED} japam/japam.json.` },
+  'shani-moola-mantra': { purposes: ['protection', 'peace'], bestDays: [6], bestTime: 'any', source: `${SOURCE_BUNDLED} japam/japam.json.` },
   'kubera-mantra': {
     purposes: ['wealth', 'prosperity'],
     bestDays: [4, 5],
