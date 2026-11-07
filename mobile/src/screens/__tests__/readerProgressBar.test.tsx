@@ -13,10 +13,6 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   setItem: jest.fn(() => Promise.resolve()),
 }));
 
-// Native video is covered by DockedYouTubePlayer.test; keep this reader contract
-// independent of the WebView module, which cannot execute in Jest.
-jest.mock('@/components/video/DockedYouTubePlayer', () => ({ __esModule: true, default: () => null }));
-
 jest.mock('react-native-view-shot', () => ({
   captureRef: jest.fn(() => Promise.resolve(null)),
 }));

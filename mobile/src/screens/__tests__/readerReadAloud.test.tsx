@@ -23,10 +23,6 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: () => undefined, goBack: () => undefined }),
 }));
 
-// Native video is covered by DockedYouTubePlayer.test; keep this reader contract
-// independent of the WebView module, which cannot execute in Jest.
-jest.mock('@/components/video/DockedYouTubePlayer', () => ({ __esModule: true, default: () => null }));
-
 jest.mock('react-native-view-shot', () => ({ captureRef: jest.fn(() => Promise.resolve(null)) }));
 jest.mock('expo-sharing', () => ({
   isAvailableAsync: jest.fn(() => Promise.resolve(false)),
