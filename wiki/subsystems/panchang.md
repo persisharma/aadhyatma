@@ -412,3 +412,16 @@ unmount cancels queued work and removes cache subscriptions. Heavy masters stay
 remote. Text, timings, scrolling and sharing controls never await the painting.
 Native visual and low-end-device responsiveness checks remain separate release
 gates; source or mocked tests do not prove them.
+
+
+### Panchang entry responsiveness — 7 November 2026
+Occasion lookup uses the shared yielding day matcher. Solar matches inspect the
+queried civil day's two midnight longitudes; Varalakshmi checks only the selected
+weekday's 0–6 forward Purnima anchors and yields between candidates. A profile
+must never resolve a year inside a single scheduler step. The synchronous year
+resolver remains available for offline generators; its source conventions and
+published calendar dates are unchanged. Panchang selection now fills missing day
+inputs through cachedDayInputsAsync, not a synchronous solve inside setTimeout.
+Text/tab/Back input must remain responsive while these tasks resolve; delayed
+publication is distinct from blocked input. Device ANR/frame-time acceptance is
+required separately from unit timing and absence of crash reports.

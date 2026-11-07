@@ -1,7 +1,7 @@
 /** Pure ritual windows, distinct from Choghadiya. Source ledger and exclusions:
  * docs/reviews/festival-muhurat.md. No year-table/fallback-city dates. */
 import { OBSERVANCE_RULES } from './festivals';
-import { matchesRuleOnDate } from './festivalEngine';
+import { matchesRuleOnDateSteps } from './festivalEngine';
 import { crossingAfter, elongationAt, tithiSpan, type Span } from './dayRuleInstants';
 import { dayAt, type DayInputs, type ScanOptions } from './panchangDayStore';
 import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
@@ -78,7 +78,15 @@ export function* findTimingOccurrences(day: Date, options: ScanOptions, lenses: 
     if (ruleId && p.ruleId !== ruleId) continue;
     // Putrada deliberately shares an ID across Shravana and Pausha. Match all
     // catalog variants before deduplication, then carry the actual rule forward.
-    const r = OBSERVANCE_RULES.find(r => r.id === p.ruleId && ruleVisibleForLenses(r.lens, lenses) && matchesRuleOnDate(p.sunriseAnchor ? { ...r, dayRule: undefined } : r, dayAt(day, p.before ?? 0), options.calendarSystem, options.location));
+    let r: ObservanceRule | undefined;
+    for (const candidate of OBSERVANCE_RULES) {
+      if (candidate.id !== p.ruleId || !ruleVisibleForLenses(candidate.lens, lenses)) continue;
+      if (yield* matchesRuleOnDateSteps(p.sunriseAnchor ? { ...candidate, dayRule: undefined } : candidate,
+        dayAt(day, p.before ?? 0), options.calendarSystem, options.location)) {
+        r = candidate;
+        break;
+      }
+    }
     if (r) found.push({ profile: p, rule: r, date: dayAt(day, 0) });
     yield;
   }
