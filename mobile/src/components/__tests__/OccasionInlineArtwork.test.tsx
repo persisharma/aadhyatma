@@ -43,3 +43,15 @@ test('blur removes the remote viewer; focus defers remount; unmount cancels sche
   expect(cancel).toHaveBeenCalled();
   act(() => pending?.());
 });
+
+test.each([248, 280, 328, 398, 640, 327.6])('painting fits a measured %s dp card without intrinsic-size overflow', width => {
+  act(() => { tree = TestRenderer.create(<OccasionInlineArtwork item={item} />); });
+  const frame = tree.root.findByProps({ testID: 'occasion-inline-art' });
+  expect(frame.props.style).toMatchObject({ width: '100%', aspectRatio: 1.5, overflow: 'hidden' });
+  act(() => frame.props.onLayout({ nativeEvent: { layout: { width } } }));
+  act(() => settle?.());
+  const hero = tree.root.findByType('Hero' as any);
+  expect(hero.props.width).toBeLessThanOrEqual(width);
+  expect(hero.props.width).toBe(Math.floor(width));
+  expect(hero.props.height).toBeCloseTo(Math.floor(width) / 1.5);
+});
