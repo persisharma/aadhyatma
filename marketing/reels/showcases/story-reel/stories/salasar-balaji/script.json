@@ -2,7 +2,7 @@
   "story": "salasar-balaji",
   "format": "ig",
   "title": "सालासर बालाजी",
-  "source": "App theerth text for 'salasar-balaji' (mobile/src/data/theerth/details/legacy.ts: significance, originStory, sthapana, svarup, parampara; sources: shreesalasarbalajimandir.com, Rajasthan Tourism, Wikipedia). 'Only bearded Hanuman murti' is framed as belief (माना जाता है), as the app says 'held to be'. The farmer's caste and the masons' religion are left out of the narration by choice; their names follow the app text.",
+  "source": "App theerth text for 'salasar-balaji' (mobile/src/data/theerth/details/legacy.ts: significance, originStory, sthapana, svarup, parampara; sources: shreesalasarbalajimandir.com, Rajasthan Tourism, Wikipedia). 'Only bearded Hanuman murti' is framed as belief (माना जाता है), as the app says 'held to be'. The farmer's caste and the masons' religion are left out of the narration by choice; their names follow the app text. The masons scene (Noora and Dau) was cut for length (user decision, 2026-11-07); the shared-devotion detail can go in the post caption.",
   "brand": {
     "name": "वेदांश",
     "handle": "@vedansh.app"
@@ -29,8 +29,6 @@
     "आप",
     "श्रावण",
     "नवमी",
-    "नूरा",
-    "दाऊ",
     "धूनी",
     "नारियल",
     "मौली",
@@ -95,11 +93,6 @@
       "id": "sthapana",
       "chip": "स्थापना · 1754 ई.",
       "vo": "वहीं विराजे बालाजी — श्रावण शुक्ल नवमी, शनिवार के दिन।"
-    },
-    {
-      "id": "masons",
-      "chip": "पहला मंदिर",
-      "vo": "पहला मंदिर बनाया फ़तेहपुर के दो कारीगरों, नूरा और दाऊ ने।"
     },
     {
       "id": "traditions",
