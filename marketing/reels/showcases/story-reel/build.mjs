@@ -212,6 +212,9 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  defeat:(c,u,d)=>{const f=clamp((u-.55*d)/(.3*d));return{rot:c.rot+f*70*c.flip,y:c.y+f*180,op:1-f*.75}},
  fadeOut:(c,u,d)=>({op:1-clamp((u-.6*d)/(.25*d)),y:c.y+Math.sin(u*1.5)*8}),
  fadeIn:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/(c.o.dur||.6));return{op:p,s:c.s*(.9+.1*eo(p)),y:c.y+(c.o.hover?Math.sin(u*2)*10:0)}},
+ dropIn:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/(c.o.dur||.7));return{op:p>0?1:0,y:lerp(c.o.y0??c.y-500,c.y,eo(p)),rot:c.rot+(1-p)*(c.o.spinIn||0)}},
+ // grows from c.s to o.s2 with its feet kept on o.ground (o.foot = feet offset at scale 1)
+ grow:(c,u,d)=>{const p=eio((u-(c.o.t0||0)*d)/(c.o.dur||.8)),sc=lerp(c.s,c.o.s2,p);return{s:sc,y:c.o.ground-(c.o.foot||170)*sc}},
  fadeAway:(c,u,d)=>({op:1-clamp((u-(c.o.t0||0)*d)/(c.o.dur||.6))}),
  // travels in from the left and halts at c.x by fraction t1; st = distance rolled (drives wheel spin), am = gait (legs stop)
  cartStop:(c,u,d)=>{const t1=(c.o.t1||.6)*d,x0=c.x-(c.o.dist||700),x=lerp(x0,c.x,eo(u/t1));return{x,st:(x-x0)/c.s,am:clamp((t1-u)/(.3*t1)),y:c.y-(u<t1?Math.abs(Math.sin(u*5))*3:0)}}};
