@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { japaAutoCountSource, startInfinityMotion } from '../japamInfinityPlayback';
+import { INFINITY_CYCLE_MS, japaAutoCountSource, startInfinityMotion } from '../japamInfinityPlayback';
 
 function driver(phase = 0) {
   const callbacks: ((finished: boolean) => void)[] = [];
@@ -18,12 +18,16 @@ function driver(phase = 0) {
   return { motion, callbacks, durations, resets, get stops() { return stops; }, get nativeStops() { return nativeStops; } };
 }
 
+test('default loop is ~10% slower than the original 800ms cycle', () => {
+  assert.equal(INFINITY_CYCLE_MS, 880);
+});
+
 test('one start continues across many full cycles without extra taps', () => {
   const d = driver();
   const stop = startInfinityMotion(d.motion);
   for (let i = 0; i < 20; i++) d.callbacks[i](true);
   assert.equal(d.durations.length, 21);
-  assert.ok(d.durations.every(ms => ms === 800));
+  assert.ok(d.durations.every(ms => ms === INFINITY_CYCLE_MS));
   stop();
   assert.equal(d.stops, 1);
   assert.equal(d.nativeStops, 1);
@@ -32,18 +36,18 @@ test('one start continues across many full cycles without extra taps', () => {
 test('stop freezes the marker and late completion cannot restart it', () => {
   const d = driver(.25);
   const stop = startInfinityMotion(d.motion);
-  assert.equal(d.durations[0], 600);
+  assert.equal(d.durations[0], 660);
   stop(); d.callbacks[0](true);
   assert.equal(d.durations.length, 1);
   assert.deepEqual(d.resets, []);
 });
 
-test('a later start resumes the paused fraction and then full 800ms cycles', () => {
+test('a later start resumes the paused fraction and then full 880ms cycles', () => {
   const d = driver(.625);
   const stop = startInfinityMotion(d.motion);
-  assert.equal(d.durations[0], 300);
+  assert.equal(d.durations[0], 330);
   d.callbacks[0](true);
-  assert.deepEqual(d.durations, [300, 800]);
+  assert.deepEqual(d.durations, [330, 880]);
   stop();
 });
 
@@ -67,7 +71,7 @@ test('a cancelled native cycle does not repeat', () => {
 test('the shared crossing resumes as a full loop', () => {
   const d = driver(1);
   const stop = startInfinityMotion(d.motion);
-  assert.deepEqual(d.durations, [800]);
+  assert.deepEqual(d.durations, [880]);
   assert.deepEqual(d.resets, [0]);
   stop();
 });

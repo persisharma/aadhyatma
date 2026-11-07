@@ -61,6 +61,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { width: windowWidth } = useWindowDimensions();
   const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
   const [infinityRunning, setInfinityRunning] = useState(false);
+  // The Infinity side rings turn only while this screen is focused.
+  const [screenFocused, setScreenFocused] = useState(true);
   useEffect(() => { setInfinityRunning(false); }, [japaStyle, route.params.mantraId]);
 
   // Mantra is reading text → it scales with the global M/L size on EVERY device
@@ -170,16 +172,17 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const requestRatingAskRef = useRef(requestRatingAsk);
   requestRatingAskRef.current = requestRatingAsk;
   useFocusEffect(
-    useCallback(
-      () => () => {
+    useCallback(() => {
+      setScreenFocused(true);
+      return () => {
+        setScreenFocused(false);
         setInfinityRunning(false);
         if (completedRoundThisVisitRef.current) {
           completedRoundThisVisitRef.current = false;
           requestRatingAskRef.current('mala-complete');
         }
-      },
-      []
-    )
+      };
+    }, [])
   );
 
   // Mala taps count a bead; Infinity taps only toggle continuous visual motion.
@@ -457,6 +460,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               {japaStyle === 'infinity' ? (
                 <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} onCycle={handleInfinityCycle}
                   notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
+                  ringText={verseLinesByLang(lang, mantra.lines, mantra.linesEn).join(' ')} ringsActive={screenFocused}
                   labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
               ) : <JapamMala
                 count={entry.count}
