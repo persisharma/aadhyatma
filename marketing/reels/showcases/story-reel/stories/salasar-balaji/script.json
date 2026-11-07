@@ -2,7 +2,7 @@
   "story": "salasar-balaji",
   "format": "ig",
   "title": "सालासर बालाजी",
-  "source": "App theerth text for 'salasar-balaji' (mobile/src/data/theerth/details/legacy.ts: significance, originStory, sthapana, svarup, parampara; sources: shreesalasarbalajimandir.com, Rajasthan Tourism, Wikipedia). 'Only bearded Hanuman murti' is framed as belief (माना जाता है), as the app says 'held to be'. The farmer's caste and the masons' religion are left out of the narration by choice; their names follow the app text. The masons scene (Noora and Dau) was cut for length (user decision, 2026-11-07); the shared-devotion detail can go in the post caption.",
+  "source": "App theerth text for 'salasar-balaji' (mobile/src/data/theerth/details/legacy.ts: significance, originStory, sthapana, svarup, parampara; sources: shreesalasarbalajimandir.com, Rajasthan Tourism, Wikipedia). 'Only bearded Hanuman murti' is framed as belief (माना जाता है), as the app says 'held to be'. The farmer's caste and the masons' religion are left out of the narration by choice; their names follow the app text. The masons scene (Noora and Dau) was cut for length (user decision, 2026-11-07); the shared-devotion detail can go in the post caption. Coconut-vow and Savamani lines also cut for length (user decision); the akhand dhuni line stays.",
   "brand": {
     "name": "वेदांश",
     "handle": "@vedansh.app"
@@ -30,15 +30,13 @@
     "श्रावण",
     "नवमी",
     "धूनी",
-    "नारियल",
-    "मौली",
-    "सवामणी",
     "वेदांश",
     "क्यों",
     "एक",
     "दो",
     "सपने",
-    "ऐसा"
+    "ऐसा",
+    "अखंड"
   ],
   "voice": {
     "engine": "Kokoro-82M v1.0 (Apache-2.0)",
@@ -97,7 +95,7 @@
     {
       "id": "traditions",
       "chip": "आज भी",
-      "vo": "आज भी जलती है मोहनदास जी की अखंड धूनी। मन्नत हो तो मौली से नारियल बाँधते हैं, और पूरी हो जाए तो सवामणी का भोग।"
+      "vo": "आज भी जलती है मोहनदास जी की अखंड धूनी।"
     },
     {
       "id": "payoff",
