@@ -76,7 +76,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     setAudioCadence(previous => previous?.mantraId === mantraId && previous.durationMs === durationMs
       ? previous : { mantraId, durationMs });
   }, []);
-  // The Infinity side rings turn only while this screen is focused.
+  // The Infinity mandala rests when paused, blurred or in the background.
   const [screenFocused, setScreenFocused] = useState(true);
   useLayoutEffect(() => {
     setInfinityRunning(false);
@@ -293,6 +293,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
   const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
+  // The full ornamental frame keeps a stable width. Its complete mantra sits
+  // below it and the existing ScrollView grows for long/enlarged passages.
+  const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
+    <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340)}
+      running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
+      notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
+      ringText={displayedLines.join(' ')} ringsActive={screenFocused}
+      labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
+  </View> : null;
+
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -428,6 +438,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               pressed && styles.tapAreaPressed,
             ]}
           >
+            {infinityVisual}
             <View style={styles.headBlock} onLayout={(e) => setHeadH(e.nativeEvent.layout.height)}>
               <Animated.View style={[styles.mantraBlock, japaStyle === 'infinity' && styles.mantraFullWidth, { transform: [{ scale: nameBeat }] }]}>
                 {japaStyle === 'infinity' ? <KaraokeText
@@ -484,13 +495,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </View>
 
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
-            <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
-              {japaStyle === 'infinity' ? (
-                <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
-                  notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
-                  ringText={displayedLines.join(' ')} ringsActive={screenFocused}
-                  labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
-              ) : <JapamMala
+            {japaStyle === 'mala' ? <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
+              <JapamMala
                 count={entry.count}
                 rounds={entry.rounds}
                 size={malaSize}
@@ -498,8 +504,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 notice={sumeruNotice ? sumeruLabel : null}
                 hint={tapHint}
                 labelFontFamily={scriptSerif ?? undefined}
-              />}
-            </View>
+              />
+            </View> : null}
           </Pressable>
         </ScrollView>
 

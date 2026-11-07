@@ -1440,6 +1440,13 @@ Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infin
 
 ## [2026-11-07] ingest | Suvichar sender switch and wishes heading
 Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.
+
+## [2026-11-07] ingest | Japa ornamental mandala and long-text fitting
+Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
+
+## [2026-11-07] ingest | Compact Panchang occasion summary; full dated illustrated cards in Vrat. Shared yielded/cancelled timing work and independent share/detail dates preserved; native visual/export/low-end performance acceptance pending. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
+
+## [2026-11-07] ingest | Correct compact muhurat card fit: grouped headings, numeric-only clock endpoints with separate dates, measured container width and stable layout callbacks. Correct the ineffective RN namespace dimensions spy; add exact-font clock bounds and a PR-triggered native compact-fit matrix. Native/device acceptance tracked in docs/reviews/2026-11-07-compact-muhurat-fit.md.
 ## [2026-11-07] ingest | Android ANR review (Play 28-day 0.67%, 1.60% on 5 Nov): expo-splash-screen's hold vetoes the activity's first draw, so a held window has no input focus and Back past 5 s ANRs; the hold had grown to fonts + hydration + particle WebView/Chromium (7 s watchdog). Android now releases the native splash at the first JS frame onto the colour-identical `LaunchCover`; font-load errors fail open. overview.md launch paragraphs, design.md §2.1/§64 and RULEBOOK brand rule synced. Open items (WebView Chromium init per cold start, pre-JS native cap, eager expo-audio player with runBlocking, Meta activate on main, widget/notification broadcast work) recorded in docs/engineering/android-anr-review-2026-11.md.
 ## [2026-11-07] gap | No Play ANR stack clusters were available; F3–F7 in the ANR review are code-derived and need cluster confirmation before native changes.
 ## [2026-11-07] ingest | Particle launch reveal disabled on all platforms (`BRAND_LAUNCH_REVEAL_ENABLED = false`, gate bypass path, no launch WebView) as the ANR mitigation the owner chose. Meta SDK deliberately untouched: no Play data before 19 Oct, so its 1.5.0 release (11 Oct) cannot be aligned with the onset. design.md §2.1/§64, RULEBOOK brand rule, overview.md, review doc and brand Maestro flows updated.

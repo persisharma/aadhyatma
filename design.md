@@ -1590,9 +1590,11 @@ artwork and sharing remain. Single-occasion redesign concepts requested on
 
 **Infinity display** (`components/JapamInfinity.tsx`, `japamInfinityPlayback.ts`, `japamInfinityGeometry.ts`). First tap starts continuous full ∞ loops; next tap pauses immediately; another tap resumes the remaining fraction. Each completed silent loop adds exactly one japa through the existing provider, with 108 rolling into a completed mala. Start/pause taps themselves do not add counts. Audio is the sole counter source while it plays, so visual loop callbacks do not double-count; a paused Infinity session ignores both loop and audio count callbacks. Mala keeps manual taps and normal audio counting. Counts, rounds and today's tally persist through the existing provider. The native driver emits only successful live completions and rejects duplicates, cancellation and late callbacks. A callback ref updates the count handler without restarting motion; switching mantra remounts the visualization to isolate it. There is one active native cycle and no JS count interval or pending-swing queue. Reduced Motion fixes the marker at the centre while completed count cycles continue. Background/inactive and blur/unmount suspend/cancel counting and motion without background catch-up; foreground resumes only a still-started session. Entry, style/mantra change and cold start are paused; display choice persists, running state does not. One loop covers one full utterance using the cadence below; 880ms remains only the 1× short-name fallback.
 
-**Infinity visual — seamless parchment (7 November 2026).** Approved Option 1: the ∞ sits directly on the existing mantra sketch and parchment page, with no enclosing fill, border, corner radius or shadow. The transparent stage retains its `size × 0.65` height, `min(window − 16, size + 160)` width and clipping for the intentionally half-visible side rings. A radial `gold` wash (0.14 → 0), a 34/1000 `gold` track at 0.25 and a 12/1000 round-capped `saffronDeep` line keep the path visible. Both numbers use `inkSoft` and non-italic `latinSemiBold`; enlarged numbers still move below in `ink`. The 40dp ivory/gold/amber jyoti has a 6dp ivory core with a 1.5dp `saffronDeep` outline; three short `saffronDeep` tails appear only while running without Reduced Motion. The progress track and hints stay on parchment. No new artwork or blanket overlay is added.
+**Infinity visual — ornamental mandala (7 November 2026, approved animation).** The selected animation uses one complete circular manuscript frame on transparent parchment: sixteen lotus motifs, a beaded double outer rim, patterned middle band and fine inner edging (`JapamMandala.tsx`). The frame is 280–340dp, capped at `windowWidth − 24`; its size is independent of the measured reading height, so a long mantra does not shrink or resize it after entry. No Hanuman/Shiva mockup portrait is introduced. Existing per-mantra background artwork remains. A compact ∞ and 22dp jyoti occupy the safe centre; exceptionally tight inner space places the small loop just below the frame. The current count always sits below at `32 × reading factor`, keeping numerals readable. The full, scaled karaoke passage follows the frame inside the existing ScrollView. Completed malas/reset and audio retain their fixed rows. Compact and Large passages may scroll vertically; no line clamp or automatic text shrinking is applied.
 
-**Mantra rings** (`JapamMantraRing.tsx`, `japamMantraRingLayout.ts`). Preserve the existing ring/loop clearance and responsive geometry: outer radius `min(height/2 − 12, sideGap − 15)`, rings hidden below 28pt, inner 20pt inward and hidden below 24pt. Outer/inner words use 13pt `inkMuted` at 1 and 11pt `inkSoft` at 0.9. Each word is measured and shaped as a complete native `Text` run; never use SVG `textPath`. The stage clips each ring at its centre line, so a word must never be cut by that edge: each word carries a native-driver opacity node on the ring's own turn value (`ringWordFade`, `wordClearanceDeg`) that holds it at 0 while any part of its box would cross the edge (its half-width as an angle from the radius less the half line-height, plus 3°) and ramps over 12° (≈1.6s at 48s/turn) to full opacity once it is wholly inside the visible half (left ring 0°→180°, right ring 180°→360°). The arc ends therefore read as a soft fade, never as sliced glyphs; the same holds while rings rest or stay still under Reduced Motion. Keep the existing `॥` / `•` separators. Four decorative ring layers rotate on the native driver over 48s/36s, rest on background/blur, and remain still under Reduced Motion. They never count; paused sessions retain the existing decorative ring motion.
+**Curved mantra bands** (`JapamMandala.tsx`, `japamMandalaLayout.ts`). Native text measurement at 20dp is batched into one state update per text/font. Every decorative run is a complete native-shaped script syllable: combining signs, reph, virama-linked consonants and explicit joiners remain together. Never split code points or use SVG `textPath`. This supersedes the old whole-word tangent-only side rings, whose long compounds could not fit the circular bands. Ordinary words remain together within a band when possible; exceptionally long compounds can continue at complete syllable boundaries. Allocated text rectangles (including width slack and 1.9× leading) must clear both annular edges and their neighbouring runs at every rotation. The outer/inner decorative faces are 18/15dp and are not accessibility reading text; the complete primary passage retains the normal script/size policy and a single accessible reading group. Missing widths show the static frame until measurement, without blocking input. Complete passages that exceed a turn continue across the two bands and, when needed, native-opacity windows on the existing host-owned recitation phase. The 384-run decorative budget never truncates the primary passage. Reduced Motion fixes the first decorative window while leaving the entire primary passage readable.
+
+The two band transforms use 56s clockwise / 72s anticlockwise native-driver turns with `isInteraction: false`. Pause, background, blur and unmount stop them; stale completion callbacks cannot restart them. The frame paths and native word/ring nodes are memoized across count updates. There is no WebView, rasterizer, new native dependency, per-frame JS callback, word timer, network fetch or bitmap animation. The numeric counter, audio authority and phase/cadence contracts below remain unchanged. Font-metric fixtures cover all 22 mantras plus all 16 Shiv Tandav verses in Hindi/English/Gujarati/Kannada at 280/296/340dp, including rectangle containment, adjacent-run clearance and complete decorative text ordering. These checks do not establish native visual fidelity or low-end device performance; U3/U4/U10.1 device evidence remains a merge gate.
 
 **Recitation cadence (7 November 2026, revised by user).** `japamRecitationTiming.ts` applies the user-approved fast preset to the full canonical Devanagari `mantra.lines`, independent of UI script. Default 1× timings: up to three spoken words use 880–1000ms; Radha 880ms, Jai Shri Ram 880ms, Om Namah Shivaya 1000ms and full Gayatri 4000ms. Other longer chants scale by phonetic length with 125ms per weighted unit (Hare Krishna 4400ms, Mahamrityunjaya 4600ms). Half-consonants, vowel marks, verse numbers and dandas are not independent spoken words. All 22 mantras and resolved shlokas use the helper. These are configurable pacing presets requested by the user, not measured speech or confirmation of actual recitation.
 
@@ -1600,7 +1602,7 @@ The existing `गति / Tempo` stepper controls 0.5–1.5× for silent Infinit
 
 **Reading colour progression.** Infinity renders the selected mantra through shared `KaraokeText` over the same host-owned phase value as the moving jyoti. Whole words gradually turn `saffronDeep` from `ink` in reading order; completed words stay coloured until the host resets at loop completion. Pause holds word colour and marker position together; tempo changes preserve phase. Mantra/style changes reset before paint. Use the existing script font, scaled size and leading, with complete word runs that wrap rather than truncate; English retains its italic face/6pt line gap. The whole passage is one accessible text group, without per-word focus stops. Reduced Motion keeps static ink. The renderer adds no clock, counting callback or per-frame JS listener. See §90 for the reusable contract.
 
-**Infinity performance contract.** One phase value drives the marker and three trails; 216 samples/217 points are prepared only when loop geometry changes. Memoize the eight interpolation nodes and the side-ring elements so live bead/provider updates neither rebuild the native motion graph nor re-render shaped decorative words. All continuous `Animated.timing` configurations set `useNativeDriver: true` and `isInteraction: false`. No per-frame JS listener, timer, SVG path rebuilding or bitmap animation is introduced. One successful completed mantra-specific cycle can enter JS to count; one native cycle remains active, with duplicate/late callbacks rejected. Pause, unmount, blur and background guards remain. These structural checks do not establish device FPS, thermal behaviour, battery drain or GPU cost; a release-mode low-end Android soak is required.
+**Infinity performance contract.** One phase value drives the marker, three trails, karaoke and any decorative page opacities. The 216 samples/217 points and interpolation graph are prepared only when loop geometry changes (`JapamInfinityLoop.tsx`). The ornamental frame and two band transforms are independent of the current count. All continuous timings use the native driver and `isInteraction: false`; only successful live cycle completions enter JS for counting. Cancellation, duplicate and stale-callback guards remain. Static font measurements, annular layout and frame paths are bounded and reused; no JS frame listener or repeated SVG path build runs during recitation. A release-mode low-end Android soak and native iOS/Android visual review remain required before readiness.
 
 **Responsive practice surface** (Oct 2026 redesign, extended November 2026): everything — mantra, ring, current count, completed malas, audio — fits one viewport above the visible tab bar on a 6.1" phone, and a 4-line mantra still fits an iPhone SE. The language pill moved into the top bar, the hint moved inside the ring, completed malas and reset share one fixed stats row, and the two reset buttons became one icon.
 
@@ -4300,16 +4302,54 @@ establish rendering or low-end performance. See
 `docs/engineering/karaoke-integration.md`.
 
 
-### Occasion cards on screen — 7 November 2026
-The individual festive composition is visible in OccasionTimingsCard on Panchang,
-Muhurat detail and Observance detail, not confined to the exported PNG. Each
-occasion owns its gold parchment frame, floral corners, centered title, complete
-3:2 painting, ritual windows/guidance and existing independent share action.
-Titles retain script-safe leading and native accessibility scaling; content grows.
-OccasionInlineArtwork reserves the image frame before downloading and keeps an
-offline thumbnail until native decode completes. Full artwork mounts only after
-measured layout and InteractionManager settlement on the focused screen; blur or
-unmount cancels queued work and removes cache subscriptions. Heavy masters stay
-remote. Text, timings, scrolling and sharing controls never await the painting.
-Native visual and low-end-device responsiveness checks remain separate release
-gates; source or mocked tests do not prove them.
+### Compact Panchang muhurats and illustrated Vrat cards — 7 November 2026
+Panchang shows one CompactOccasionCard with the approved parchment/double-gold
+frame and painted motifs. The fitted revision uses 14dp padding, 42dp corners and
+a 17/29 heading, without a redundant subtitle. Each occasion has one 28dp motif
+and complete 14/24 heading, followed by every ritual window. A normal-width window
+pairs its 11/19 ritual label with a 132dp time column. Numeric endpoints use Inter
+SemiBold 18/26; civil dates sit under their own endpoint at script-safe 11/19.
+Dates never enter the large numeric text. An overnight range therefore reads
+23:44 – 00:36 with 7 Nov / 8 Nov beneath the respective endpoints. Both years
+are explicit across a year boundary. Events show one timestamp. Full date-aware
+accessibility descriptions and existing share formatting are preserved.
+
+The card measures its actual inner width once per width change; below 280dp, at
+Large reading size or enlarged system text, each window stacks and endpoints
+wrap as whole groups. No repeated publication for identical layout callbacks,
+content truncation, accessibility-scaling suppression or font shrinking. Every
+window is retained without repeating its occasion heading. Ordinary days omit
+the card; guidance-only days retain a Vrat door, and failures retain Retry. The
+44dp minimum action opens Vrat with the selected date and catalog mode, clears an
+old search and reveals the cards. Detail Back retains the dated catalog state.
+
+OccasionSection evaluates the full OccasionTimingsCard module only for the
+illustrated view. The Vrat landing owns the complete 3:2 painted cards, local
+date/city label, ritual windows/guidance, independent per-occasion share and
+Details & katha action. Details use each occurrence's own date, including a
+prior-day midnight ceremony. Today introductions are not duplicated. Muhurat and
+Observance detail keep their illustrated cards and export contracts.
+
+OccasionInlineArtwork retains reserved frames, offline thumbnails, deferred
+loading and blur/unmount cancellation. The summary uses the existing bundled
+atlas only. Yielded/cancelled calculation, location/calendar/lens keys and the
+complete Panchang export gate remain. No new asset, runtime dependency, timer or
+calculation was introduced. Regression dimensions must reach the actual RN hook;
+namespace-only spies do not establish a responsive matrix. Font bounds are pinned
+to the shipped Inter bytes and all 1,440 clocks. The native iOS PR gate executes
+the compact-fit matrix; manual/push festival runs retain the full occasion set.
+Human native visual review, Android and lower-end ANR/frame-time acceptance remain
+separate gates. See docs/reviews/2026-11-07-compact-muhurat-fit.md.
+
+
+### Panchang entry responsiveness — 7 November 2026
+Occasion lookup uses the shared yielding day matcher. Solar matches inspect the
+queried civil day's two midnight longitudes; Varalakshmi checks only the selected
+weekday's 0–6 forward Purnima anchors and yields between candidates. A profile
+must never resolve a year inside a single scheduler step. The synchronous year
+resolver remains available for offline generators; its source conventions and
+published calendar dates are unchanged. Panchang selection now fills missing day
+inputs through cachedDayInputsAsync, not a synchronous solve inside setTimeout.
+Text/tab/Back input must remain responsive while these tasks resolve; delayed
+publication is distinct from blocked input. Device ANR/frame-time acceptance is
+required separately from unit timing and absence of crash reports.
