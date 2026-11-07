@@ -44,6 +44,13 @@ const RING_SPACING = 20;
 /** Side-ring rotation: one slow turn each, inner and outer counter-rotating. */
 export const RING_OUTER_PERIOD_MS = 48000;
 export const RING_INNER_PERIOD_MS = 36000;
+/**
+ * Each side ring is centred on the stage's clipped edge, so only its inner half
+ * shows (left ring: 12 → 6 o'clock through 3; right ring: 6 → 12 through 9).
+ * Words fade out whole before reaching the edge instead of being cut by it.
+ */
+const LEFT_RING_ARC = { fromDeg: 0, toDeg: 180 } as const;
+const RIGHT_RING_ARC = { fromDeg: 180, toDeg: 360 } as const;
 
 /** Tap-controlled loops. The parent arbitrates silent-cycle versus audio counts. */
 export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running, cycleMs, phase, onCycle, ringText, ringsActive = true }: Props) {
@@ -116,10 +123,10 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
   }), [coordinates, progress]);
   // Decorative shaped text is independent of the live bead count.
   const sideRings = useMemo(() => (
-    showRings && ringText ? ([[0, 1], [panelWidth, -1]] as const).map(([cx, turn]) => (
+    showRings && ringText ? ([[0, 1, LEFT_RING_ARC], [panelWidth, -1, RIGHT_RING_ARC]] as const).map(([cx, turn, arc]) => (
           <JapamMantraRing key={`${cx}|${ringText}|${labelFontFamily}`} testID="japam-mantra-rings"
             text={ringText} fontFamily={labelFontFamily} cx={cx} cy={height / 2}
-            animate={ringsActive && active && !reduced}
+            animate={ringsActive && active && !reduced} visibleArc={arc}
             rings={[
               { radius: outerRadius, fontSize: 13, color: colors.inkMuted, opacity: 1, direction: turn, periodMs: RING_OUTER_PERIOD_MS },
               ...(innerRadius >= 24 ? [{ radius: innerRadius, fontSize: 11, color: colors.inkSoft, opacity: 0.9,
@@ -131,7 +138,7 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
   return (
     <View testID="japam-infinity" style={[styles.root, { width: size, minHeight: size }]} pointerEvents="none"
       importantForAccessibility="no-hide-descendants" accessibilityElementsHidden>
-      {/* Transparent page stage; clipping is only for the half-visible rings. */}
+      {/* Transparent page stage; clipping is only for the half-visible rings, whose words fade before the edge. */}
       <View testID="japam-infinity-panel" style={[styles.panel, { width: panelWidth, height }]}>
         {sideRings}
         <View style={[styles.stage, { left: stageLeft, top: stageTop, width: loop, height: loop * 0.65 }]}>
