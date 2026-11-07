@@ -1437,3 +1437,6 @@ Calibrated the default to Gayatri 4s, short chants of up to three words 880–10
 
 ## [2026-11-07] ingest | Shared karaoke reading foundation
 Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infinity. Documented configurable speed, source-script shaping, memoized native colours and the deferred whole-page स्वतः adapter. Other readers are not integrated yet.
+
+## [2026-11-07] ingest | Suvichar sender switch and wishes heading
+Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.

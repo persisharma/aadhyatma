@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { cleanSender, parseSuvicharPreferences, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharDeityCatalog, suvicharFrames, NAME_LIMIT } from '../suvichar';
+import { cleanSender, parseSuvicharPreferences, senderFrom, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharDeityCatalog, suvicharFrames, NAME_LIMIT } from '../suvichar';
 import { suvicharTemplatesFor } from '../suvicharTemplates';
 const suvicharTemplates = suvicharTemplatesFor(0);
 it('maps all eighteen catalog subjects to three distinct masters without fallback', () => {
@@ -29,7 +29,19 @@ it.each([null, '{', 'null', '[]', '{}'])('recovers corrupt or missing preference
 });
 it('restores names, frame, message and only valid saved cards', () => {
   const f = { deity: 'ram-darbar', frame: 'pushp-aangan', name: 'शर्मा परिवार', message: 'जय श्रीराम' };
-  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, photo: '', photoFit: { x: 0, y: 0, w: 1, h: 1 }, photoOn: false, thoughtId: '', vaar: false, favorites: [f] });
+  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, nameOn: true, photo: '', photoFit: { x: 0, y: 0, w: 1, h: 1 }, photoOn: false, thoughtId: '', vaar: false, favorites: [f] });
+});
+it('keeps the sender line on unless it was switched off, so earlier saves keep their name', () => {
+  expect(parseSuvicharPreferences(JSON.stringify({ name: 'शर्मा परिवार' })).nameOn).toBe(true);
+  expect(parseSuvicharPreferences(JSON.stringify({ name: 'शर्मा परिवार', nameOn: false }))).toMatchObject({ name: 'शर्मा परिवार', nameOn: false });
+  expect(parseSuvicharPreferences(JSON.stringify({ nameOn: 0 })).nameOn).toBe(true);
+});
+it('applies a carried sender without ever clearing the saved name', () => {
+  expect(senderFrom('Patel family', 'Sharma family')).toEqual({ name: 'Patel family', nameOn: true });
+  expect(senderFrom('', 'Sharma family')).toEqual({ name: 'Sharma family', nameOn: false });
+  expect(senderFrom('  ', 'Sharma family')).toEqual({ name: 'Sharma family', nameOn: false });
+  // No saved name: keep the switch on so the first-time field stays visible.
+  expect(senderFrom('', '')).toEqual({ name: '', nameOn: true });
 });
 it('restores the weekday flag on preferences and favorites, and drops anything but true', () => {
   const f = { deity: 'hanuman', frame: 'bhakti-patra', name: '', message: '', vaar: true };
