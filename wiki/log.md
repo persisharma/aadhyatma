@@ -1425,7 +1425,3 @@ Hindi category `nameHi` is now जपमाला (tile, catalog, tour; matches 
 ## [2026-11-06] ingest | Infinity mantra rings
 
 Added rotating side rings of the mantra's words to the Infinity night panel (whole-word Text runs, not textPath, so Indic shaping holds; ॥/• separators present in bundled fonts). Panel widens, ∞ narrows to clear them. Updated [[subsystems/japam]]; native visual/perf check pending.
-
-## [2026-11-06] ingest | Kirtan japa style (preview)
-
-Added the Kirtan style: per-mantra dancer with manjira, one beat = one japa, mantra-ring halo; placeholder rig gated to dev/preview builds until painted layered art exists. Updated [[subsystems/japam]].

@@ -24,10 +24,6 @@ type Props = {
   testID?: string;
 };
 
-/** One slow turn each; inner and outer rings counter-rotate. */
-export const RING_OUTER_PERIOD_MS = 48000;
-export const RING_INNER_PERIOD_MS = 36000;
-
 // Widths are measured once at this size and scaled to each ring's size.
 const MEASURE_SIZE = 20;
 

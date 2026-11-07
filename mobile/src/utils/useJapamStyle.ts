@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export type JapamStyle = 'mala' | 'infinity' | 'kirtan';
+export type JapamStyle = 'mala' | 'infinity';
 export const JAPAM_STYLE_KEY = '@vedansh/japam-style';
 
 /** A presentation preference only: counts always belong to JapamCounterContext. */
@@ -16,7 +16,7 @@ export function useJapamStyle() {
         if (!live || !raw) return;
         try {
           const value: unknown = JSON.parse(raw);
-          if (value === 'mala' || value === 'infinity' || value === 'kirtan') setStyle(value);
+          if (value === 'mala' || value === 'infinity') setStyle(value);
         } catch { /* Invalid preferences fall back to the existing mala. */ }
       })
       .catch(() => undefined)

@@ -113,7 +113,7 @@ function tapSurface(tree: TestRenderer.ReactTestRenderer) {
   return tree.root.findAll(
     (n) =>
       typeof n.props.onPress === 'function' &&
-      /^japam-counter-(mala|infinity|kirtan)$/.test(String(n.props.testID ?? ''))
+      /^japam-counter-(mala|infinity)$/.test(String(n.props.testID ?? ''))
   )[0];
 }
 
@@ -160,25 +160,6 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(beadLabel(tree)).toContain('1 malas completed');
     expect(AsyncStorage.setItem).toHaveBeenCalledWith('@vedansh/japam-style', '"infinity"');
     expect(AsyncStorage.setItem).toHaveBeenCalledWith('@vedansh/japam-style', '"mala"');
-  });
-
-  test('Kirtan (dev/preview builds) counts one japa per completed manjira beat and stops on pause', async () => {
-    const tree = await renderJapam();
-    await act(async () => { choice(tree, 'kirtan').props.onPress(); });
-    expect(tree.root.findAll((n) => n.props.testID === 'japam-kirtan').length).toBeGreaterThan(0);
-    expect(tree.root.findAllByType(JapamInfinity)).toHaveLength(0);
-    expect(choice(tree, 'kirtan').props.accessibilityState.selected).toBe(true);
-    const beat = () => tree.root.findAll((n) => typeof n.props.onCycle === 'function')[0].props.onCycle();
-    await act(async () => { beat(); });
-    expect(beadLabel(tree)).toContain('0 of 108'); // not started: nothing counts
-    await act(async () => { tapSurface(tree).props.onPress(); });
-    expect(texts(tree)).toContain('रोकने के लिए स्पर्श करें');
-    await act(async () => { beat(); beat(); });
-    expect(beadLabel(tree)).toContain('2 of 108');
-    await act(async () => { tapSurface(tree).props.onPress(); });
-    await act(async () => { beat(); });
-    expect(beadLabel(tree)).toContain('2 of 108');
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith('@vedansh/japam-style', '"kirtan"');
   });
 
   test('silent Infinity increments per completed loop, rolls over at 108 and stops counting on pause', async () => {

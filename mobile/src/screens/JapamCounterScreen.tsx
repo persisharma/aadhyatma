@@ -35,8 +35,6 @@ import AppIcon from '@/components/AppIcon';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
-import JapamKirtan from '@/components/JapamKirtan';
-import { kirtanFigureFor, kirtanStyleAvailable } from '@/components/japamKirtanFigure';
 import { japaAutoCountSource } from '@/components/japamInfinityPlayback';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
@@ -61,10 +59,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const { factor } = useFontScale();
   const { activity } = useUserActivity();
   const { width: windowWidth } = useWindowDimensions();
-  const { style: savedStyle, ready: styleReady, selectStyle } = useJapamStyle();
-  // A saved Kirtan choice reads as Mala wherever Kirtan isn't offered (no art yet).
-  const japaStyle: JapamStyle = savedStyle === 'kirtan' && !KIRTAN_AVAILABLE ? 'mala' : savedStyle;
-  const motionStyle = japaStyle === 'infinity' || japaStyle === 'kirtan';
+  const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
   const [infinityRunning, setInfinityRunning] = useState(false);
   // The Infinity side rings turn only while this screen is focused.
   const [screenFocused, setScreenFocused] = useState(true);
@@ -192,9 +187,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   // Mala taps count a bead; Infinity taps only toggle continuous visual motion.
   const handleTap = useCallback(() => {
-    if (motionStyle) setInfinityRunning((value) => !value);
+    if (japaStyle === 'infinity') setInfinityRunning((value) => !value);
     else registerBead(1);
-  }, [motionStyle, registerBead]);
+  }, [japaStyle, registerBead]);
   const handleInfinityCycle = useCallback(() => {
     if (autoSourceRef.current === 'motion') registerBead(1);
   }, [registerBead]);
@@ -251,7 +246,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const infinityHint = infinityRunning
     ? pick(lang, { hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' })
     : pick(lang, { hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' });
-  const tapHint = motionStyle ? infinityHint : audioPlaying
+  const tapHint = japaStyle === 'infinity' ? infinityHint : audioPlaying
     ? pick(lang, {
         hi: 'सुनें · मंत्र के साथ मनके आगे बढ़ते हैं',
         en: 'Listening · beads advance with the chant',
@@ -284,7 +279,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
       <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
-      {motionStyle ? <LinearGradient pointerEvents="none"
+      {japaStyle === 'infinity' ? <LinearGradient pointerEvents="none"
         colors={[colors.parchmentSoft, colors.parchment, colors.parchmentDeep]}
         locations={[0, 0.55, 1]} style={[StyleSheet.absoluteFill, { opacity: 0.65 }]} /> : null}
       {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
@@ -374,12 +369,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         </View>
 
         <View style={styles.styleChoices} accessibilityRole="radiogroup">
-          {STYLE_OPTIONS.map((value: JapamStyle) => {
+          {(['mala', 'infinity'] as const).map((value: JapamStyle) => {
             const label = value === 'mala'
               ? pick(lang, { hi: 'माला', en: 'Mala', gu: 'માળા', kn: 'ಮಾಲೆ' })
-              : value === 'infinity'
-                ? pick(lang, { hi: 'अनंत ∞', en: 'Infinity ∞', gu: 'અનંત ∞', kn: 'ಅನಂತ ∞' })
-                : pick(lang, { hi: 'कीर्तन', en: 'Kirtan', gu: 'કીર્તન', kn: 'ಕೀರ್ತನೆ' });
+              : pick(lang, { hi: 'अनंत ∞', en: 'Infinity ∞', gu: 'અનંત ∞', kn: 'ಅನಂತ ∞' });
             const selected = japaStyle === value;
             return (
               <Pressable key={value} testID={`japam-style-${value}`} accessibilityRole="radio"
@@ -409,7 +402,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             disabled={counterLoading || !styleReady}
             testID={`japam-counter-${japaStyle}`}
             accessibilityRole="button"
-            accessibilityLabel={`${titleEn}. ${motionStyle ? infinityHint : 'Tap to count one bead'}. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
+            accessibilityLabel={`${titleEn}. ${japaStyle === 'infinity' ? infinityHint : 'Tap to count one bead'}. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
             accessibilityState={{ disabled: counterLoading || !styleReady }}
             style={({ pressed }) => [
               styles.tapContent,
@@ -464,13 +457,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
             {/* Held invisible for the first layout pass so the ring doesn't visibly snap to its fitted size. */}
             <View style={[styles.malaBlock, (!measured || !styleReady) && styles.unmeasured]}>
-              {japaStyle === 'kirtan' ? (
-                <JapamKirtan key={mantra.id} figure={kirtanFigureFor(mantra.deities)} count={entry.count} size={malaSize}
-                  running={infinityRunning} onCycle={handleInfinityCycle}
-                  notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
-                  ringText={verseLinesByLang(lang, mantra.lines, mantra.linesEn).join(' ')} ringsActive={screenFocused}
-                  labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)} />
-              ) : japaStyle === 'infinity' ? (
+              {japaStyle === 'infinity' ? (
                 <JapamInfinity key={mantra.id} count={entry.count} size={malaSize} running={infinityRunning} onCycle={handleInfinityCycle}
                   notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
                   ringText={verseLinesByLang(lang, mantra.lines, mantra.linesEn).join(' ')} ringsActive={screenFocused}
@@ -714,10 +701,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
 // Mala box bounds; the fitted size lands between them (and under the width cap).
 // Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.
-// Kirtan needs painted figure art; until then only dev / preview builds offer it.
-const KIRTAN_AVAILABLE = kirtanStyleAvailable(__DEV__, process.env.EXPO_PUBLIC_KIRTAN_PREVIEW);
-const STYLE_OPTIONS: readonly JapamStyle[] = KIRTAN_AVAILABLE ? ['mala', 'infinity', 'kirtan'] : ['mala', 'infinity'];
-
 const MALA_MAX = 330;
 const MALA_MIN = 230;
 // tapContent paddingVertical (2 × 8) + malaBlock marginTop (4).
