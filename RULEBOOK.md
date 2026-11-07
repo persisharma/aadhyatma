@@ -1553,3 +1553,18 @@ Validation: five focused Node integration tests execute the production pool, con
 ### Parshuram integration (6 November 2026)
 
 The stable `parshuram` deity uses the `parashu` painted attribute and its own standing background. `stuti/parshuram-stotram.json` is the complete seven-verse Vasudevananda Saraswati recension, routed through the existing Stuti reader and flat Daily Bhakti pool. Original reflections VD-0085–VD-0092 belong only to Parshuram plus the universal original pool. `parshuramPublication.json` activates all new surfaces only after `scripts/prepare-parshuram.mjs --publish` verifies every public artwork hash. Keep pending masters out of runtime manifests. The new remote Daily Bhakti master is capped at 250 KiB independently; all pre-existing masters retain their 9 MiB aggregate cap. Suvichar retains 30 MiB. Exact prompts/provenance, publication procedure and native checks: `docs/content-parity/parshuram/README.md`.
+
+
+### Occasion cards on screen — 7 November 2026
+The individual festive composition is visible in OccasionTimingsCard on Panchang,
+Muhurat detail and Observance detail, not confined to the exported PNG. Each
+occasion owns its gold parchment frame, floral corners, centered title, complete
+3:2 painting, ritual windows/guidance and existing independent share action.
+Titles retain script-safe leading and native accessibility scaling; content grows.
+OccasionInlineArtwork reserves the image frame before downloading and keeps an
+offline thumbnail until native decode completes. Full artwork mounts only after
+measured layout and InteractionManager settlement on the focused screen; blur or
+unmount cancels queued work and removes cache subscriptions. Heavy masters stay
+remote. Text, timings, scrolling and sharing controls never await the painting.
+Native visual and low-end-device responsiveness checks remain separate release
+gates; source or mocked tests do not prove them.

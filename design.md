@@ -4292,3 +4292,18 @@ or give highlights independent completion ownership. Native device proof and
 per-section verification remain required; API support and unit tests do not
 establish rendering or low-end performance. See
 `docs/engineering/karaoke-integration.md`.
+
+
+### Occasion cards on screen — 7 November 2026
+The individual festive composition is visible in OccasionTimingsCard on Panchang,
+Muhurat detail and Observance detail, not confined to the exported PNG. Each
+occasion owns its gold parchment frame, floral corners, centered title, complete
+3:2 painting, ritual windows/guidance and existing independent share action.
+Titles retain script-safe leading and native accessibility scaling; content grows.
+OccasionInlineArtwork reserves the image frame before downloading and keeps an
+offline thumbnail until native decode completes. Full artwork mounts only after
+measured layout and InteractionManager settlement on the focused screen; blur or
+unmount cancels queued work and removes cache subscriptions. Heavy masters stay
+remote. Text, timings, scrolling and sharing controls never await the painting.
+Native visual and low-end-device responsiveness checks remain separate release
+gates; source or mocked tests do not prove them.
