@@ -61,14 +61,15 @@ afterEach(async () => {
 });
 
 async function renderSheet(
-  props: Partial<SheetProps> & Pick<SheetProps, 'state'>
+  props: Partial<SheetProps> & Pick<SheetProps, 'state'>,
+  lang: 'hi' | 'en' | 'gu' | 'kn' = 'en'
 ): Promise<TestRenderer.ReactTestRenderer> {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(
       <FontScaleProvider>
         <ThemeProvider>
-          <GitaLanguageProvider initialLang="en">
+          <GitaLanguageProvider initialLang={lang}>
             <AlarmEditorSheet
               onClose={jest.fn()}
               onCreate={jest.fn()}
@@ -220,5 +221,29 @@ describe('AlarmEditorSheet — edit mode & skip-next', () => {
       checked: false,
     });
     expect(textContents(tree).some((t) => t.startsWith('Tue, Thu'))).toBe(true);
+  });
+});
+
+// Regression: the editor branched on `lang === 'hi'`, so Gujarati and Kannada readers got
+// every label in English (U4 / RULEBOOK §3 — every string respects the reading language).
+describe('AlarmEditorSheet — every reading language', () => {
+  const ENGLISH_CHROME = ['New alarm', 'Time', 'Repeat', 'Mantra', 'Label (optional)', 'Add', 'Cancel'];
+
+  test.each([
+    ['gu', 'નવું સ્મરણ', 'સમય', 'દરરોજ', 'રદ કરો'],
+    ['kn', 'ಹೊಸ ಸ್ಮರಣ', 'ಸಮಯ', 'ಪ್ರತಿದಿನ', 'ರದ್ದುಮಾಡಿ'],
+  ] as const)('%s shows its own script, never the English chrome', async (lang, title, timeLabel, daily, cancel) => {
+    const tree = await renderSheet({ state: { kind: 'new' } }, lang);
+    const texts = textContents(tree);
+    expect(texts).toEqual(expect.arrayContaining([title, timeLabel, cancel]));
+    expect(texts.some((t) => t.startsWith(daily))).toBe(true);
+    for (const english of ENGLISH_CHROME) expect(texts).not.toContain(english);
+    // The placeholder and the field's spoken name follow the reading language too.
+    expect(byLabel(tree, lang === 'gu' ? 'સ્મરણનું નામ' : 'ಸ್ಮರಣದ ಹೆಸರು').props.placeholder).not.toMatch(/e\.g\./);
+  });
+
+  test('Hindi keeps its existing copy', async () => {
+    const tree = await renderSheet({ state: { kind: 'new' } }, 'hi');
+    expect(textContents(tree)).toEqual(expect.arrayContaining(['नया स्मरण', 'समय', 'दोहराव', 'रद्द करें']));
   });
 });
