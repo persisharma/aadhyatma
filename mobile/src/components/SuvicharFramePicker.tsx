@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { suvicharArtRequest, suvicharFrames, type SuvicharDeity, type SuvicharFrame } from '@/data/suvichar';
+import { suvicharPhotoArt } from '@/data/suvicharPhotoArt';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
@@ -12,6 +13,7 @@ type Props = { deity: SuvicharDeity; frame: SuvicharFrame; lang: Lang; disabled:
 function FrameTile({ deity, id, label, lang, selected, disabled, onSelect }: { deity: SuvicharDeity; id: SuvicharFrame; label: string; lang: Lang; selected: boolean; disabled: boolean; onSelect: Props['onSelect'] }) {
   const { colors, spacing, radii } = useTheme();
   const request = suvicharArtRequest(deity, id);
+  const portrait = suvicharPhotoArt(deity);
   const [art, setArt] = useState<{ url: string; uri: string } | null>(null);
   useEffect(() => {
     if (!request) return;
@@ -23,7 +25,7 @@ function FrameTile({ deity, id, label, lang, selected, disabled, onSelect }: { d
     style={({ pressed }) => ({ flex: 1, alignItems: 'center', gap: spacing.xs + 2, paddingVertical: spacing.sm, paddingHorizontal: spacing.xs, borderRadius: radii.md,
       borderWidth: 2, borderColor: selected ? colors.saffron : colors.divider, backgroundColor: colors.parchmentSoft, opacity: pressed ? 0.85 : 1 })}>
     <View style={{ width: 52, height: 65, borderRadius: 4, overflow: 'hidden', backgroundColor: colors.parchmentDeep }}>
-      {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width: 52, height: 65 }} onError={() => setArt(null)} /> : null}
+      {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width: 52, height: portrait ? 52 * portrait.height / portrait.width : 65 }} onError={() => setArt(null)} /> : null}
     </View>
     <Text numberOfLines={1} style={{ fontFamily: titleFontByLang(lang), fontSize: 12, lineHeight: 20, color: selected ? colors.saffronDeep : colors.inkSoft }}>{label}</Text>
   </Pressable>;

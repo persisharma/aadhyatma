@@ -2,6 +2,7 @@ import { defaultSuvichar, suvicharDeities, suvicharReflections, suvicharWishes, 
 import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
 import { isSourcedSuvicharMessage, suvicharAllThoughts, suvicharThoughtForDay } from './suvicharContent';
+import { suvicharPhotoArt } from './suvicharPhotoArt';
 
 export type SuvicharTemplate = {
   id: string; kind: 'daily' | 'wish' | 'vaar'; deity: SuvicharDeity; frame: SuvicharFrame;
@@ -12,6 +13,8 @@ export type SuvicharTemplate = {
 export const suvicharThoughts = suvicharAllThoughts;
 const legacyThoughts = [defaultSuvichar, ...suvicharReflections];
 const LANGS: Lang[] = ['hi', 'en', 'gu', 'kn'];
+// Inserting a photo option must not rotate the existing deities into different default frames.
+const paintedOrder = new Map(suvicharDeities.filter(d => !suvicharPhotoArt(d.id)).map((d, index) => [d.id, index]));
 /** An unedited authored thought in any reading language (not a wish or a user's own words). */
 export function isSuvicharThought(message: string): boolean {
   return isSourcedSuvicharMessage(message) || legacyThoughts.some(t => LANGS.some(lang => contentByLang(lang, t.hi, t.en) === message));
@@ -25,10 +28,10 @@ export function suvicharDay(date: Date): number {
 /** Curated complete compositions over the existing artwork for one day; no extra image payload. */
 export function suvicharTemplatesFor(day: number): SuvicharTemplate[] {
   return [
-    ...suvicharDeities.map((deity, index): SuvicharTemplate => {
+    ...suvicharDeities.map((deity): SuvicharTemplate => {
       const thought = suvicharThoughtForDay(deity.id, day);
       return { id: `daily-${deity.id}`, kind: 'daily', deity: deity.id,
-        frame: (['mandir-jharokha', 'pushp-aangan', 'bhakti-patra'] as const)[index % 3],
+        frame: (['mandir-jharokha', 'pushp-aangan', 'bhakti-patra'] as const)[(paintedOrder.get(deity.id) ?? 0) % 3],
         hi: deity.hi, en: deity.en, messageHi: thought.hi, messageEn: thought.en, thoughtId: thought.id };
     }),
     ...suvicharWishes.map((wish): SuvicharTemplate => ({ ...wish, id: `wish-${wish.id}`, kind: 'wish', frame: 'mandir-jharokha' })),
