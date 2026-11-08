@@ -386,8 +386,8 @@ Verification follow-up measured all 197 unique catalog title/deity pairs in four
 
 `occasionTimings.ts` derives reviewed ritual windows; `occasionTimingWork.ts`
 uses shared day inputs and cooperative cancellation.
-For the whole-minute festival window display, `occasionTimingFormat.ts` rounds
-starts upward and ends downward while preserving exact solver inputs. It also
+For whole-minute festival windows, `occasionTimingFormat.ts` preserves the
+existing start clock and floors only the end while keeping exact solver inputs. It also
 owns the full share's overnight start/end date labels, compact card, illustrated
 Vrat card, focused export, accessibility text and text sharing. Point events
 are unchanged; sub-minute windows retain the raw bounds if conservative rounding
