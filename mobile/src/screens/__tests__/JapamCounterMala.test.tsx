@@ -339,7 +339,7 @@ describe('JapamCounter turning mala (design.md §35)', () => {
       measurers.forEach(node => node.props.onLayout({ nativeEvent: { layout: { width: widths[String(node.props.children)], height: 40, x: 0, y: 0 } } }));
     });
     expect(tree.root.findByType(JapamInfinity).props.size).toBe(296);
-    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(id === 'gayatri-mantra' ? 4500 : 4900);
+    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(id === 'gayatri-mantra' ? 4500 : 4950);
     const bands = tree.root.findAll(node => node.props.testID === 'japam-mandala-band');
     expect(bands.length).toBeGreaterThanOrEqual(2);
     for (const band of bands) {
@@ -368,23 +368,23 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     const infinity = () => tree.root.findByType(JapamInfinity);
     await act(async () => { tapSurface(tree).props.onPress(); });
     await act(async () => { player().props.onRateChange(1.5); });
-    expect(infinity().props.cycleMs).toBe(3167);
+    expect(infinity().props.cycleMs).toBe(3000);
     expect(beadLabel(tree)).toContain('0 of 108');
     await act(async () => {
       player().props.onRecitationDurationChange('om-namah-shivaya', 2000);
       player().props.onPlayingChange(true);
     });
-    expect(infinity().props.cycleMs).toBe(3167); // Another mantra's measurement is ignored.
+    expect(infinity().props.cycleMs).toBe(3000); // Another mantra's measurement is ignored.
     await act(async () => { player().props.onRecitationDurationChange('gayatri-mantra', 30000); });
-    expect(infinity().props.cycleMs).toBe(20500);
+    expect(infinity().props.cycleMs).toBe(22500);
     await act(async () => { player().props.onRecitationDurationChange('om-namah-shivaya', 2000); });
-    expect(infinity().props.cycleMs).toBe(20500); // A late old-file result cannot erase the current cadence.
+    expect(infinity().props.cycleMs).toBe(22500); // A late old-file result cannot erase the current cadence.
     await act(async () => { infinity().props.onCycle(); });
     expect(beadLabel(tree)).toContain('0 of 108');
     await act(async () => { player().props.onIteration(1); });
     expect(beadLabel(tree)).toContain('1 of 108');
     await act(async () => { player().props.onPlayingChange(false); });
-    expect(infinity().props.cycleMs).toBe(3167);
+    expect(infinity().props.cycleMs).toBe(3000);
     expect(beadLabel(tree)).toContain('1 of 108');
   });
 

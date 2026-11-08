@@ -14,7 +14,7 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "japam-style-infinity"
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
-# Om Namah Shivaya uses its complete-text cadence (1.5s at 1×, including the extra 500ms); long mantras use their own pacing.
+# Om Namah Shivaya uses its complete-text cadence (1.125s at 1×, with the proportional 12.5% increase); long mantras use their own pacing.
 # Verify tempo changes only pace the loop and never add a bead themselves.
 - tapOn:
     id: "japam-tempo-open"
@@ -57,7 +57,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - tapOn: "Back"
-# The full Gayatri keeps its 4.5-second cadence (4s canonical + 500ms). Review its native
+# The full Gayatri keeps its 4.5-second cadence (4s canonical × 1.125). Review its native
 # script, complete reading text and ornate frame; a saved count must survive.
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."
 - assertVisible: ".*Gayatri Mantra.*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"

@@ -7,8 +7,8 @@ import { karaokeDurationMs } from './karaokeTiming';
 export const MIN_SILENT_JAPA_MS = 880;
 export const MIN_JAPA_RATE = 0.5;
 export const MAX_JAPA_RATE = 1.5;
-/** Extra wall-clock time per automatic jap, after the selected tempo. */
-export const EXTRA_JAPA_MS = 500;
+/** Gayatri's 4000 → 4500ms calibration applies proportionally to every jap. */
+export const JAPA_DURATION_SCALE = (4000 + 500) / 4000;
 const MIN_NATIVE_PLAYBACK_RATE = 0.1;
 // Calibrated to the requested full Gayatri loop of 4 seconds at 1×.
 const MS_PER_UNIT = 125;
@@ -46,6 +46,11 @@ export function estimateRecitationMs(lines: readonly string[]): number {
   return words.length <= 3 ? Math.min(1000, duration) : duration;
 }
 
+/** Scale the full utterance, then apply the selected tempo once. */
+export function japaCycleDurationMs(baseMs: number, rate = 1): number {
+  return karaokeDurationMs(baseMs * JAPA_DURATION_SCALE, normalizeJapaRate(rate));
+}
+
 /** Native audio and its bead counter use this same effective rate. Stretch the
  * recorded utterance instead of adding a second pause/count timer. Pitch
  * correction stays enabled by the player. Invalid/loading metadata keeps the
@@ -54,15 +59,16 @@ export function estimateRecitationMs(lines: readonly string[]): number {
 export function japaAudioPlaybackRate(recitationMs: number, rate = 1): number {
   const requested = normalizeJapaRate(rate);
   if (!Number.isFinite(recitationMs) || recitationMs <= 0) return requested;
-  return Math.max(MIN_NATIVE_PLAYBACK_RATE, recitationMs / (karaokeDurationMs(recitationMs, requested) + EXTRA_JAPA_MS));
+  return Math.max(MIN_NATIVE_PLAYBACK_RATE, recitationMs / japaCycleDurationMs(recitationMs, requested));
 }
 
-/** Every automatic jap takes 500ms longer at the currently selected tempo.
+/** Every automatic jap takes 12.5% longer: Gayatri gains 500ms at 1×, shorter
+ * chants gain proportionally less. Tempo scales the complete longer duration.
  * Recorded playback, wall-clock beads and the visual loop share that cadence.
  */
 export function infinityRecitationMs(lines: readonly string[], rate = 1, audioRecitationMs?: number | null): number {
   const audio = typeof audioRecitationMs === 'number' && Number.isFinite(audioRecitationMs) && audioRecitationMs > 0;
   const base = audio ? audioRecitationMs : estimateRecitationMs(lines);
   return audio ? Math.max(1, Math.round(base / japaAudioPlaybackRate(base, rate)))
-    : karaokeDurationMs(base, normalizeJapaRate(rate)) + EXTRA_JAPA_MS;
+    : japaCycleDurationMs(base, rate);
 }
