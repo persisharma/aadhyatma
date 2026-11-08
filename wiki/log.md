@@ -1469,3 +1469,6 @@ Native iOS Simulator run of `pitru-smaran.yaml` after #645: the detail's second 
 ## [2026-11-08] ingest | Ram Lalla Ayodhya photo sharing cards
 
 Added the photographic-subject contract, actual-photo provenance/cache/paint gate and Ram content eligibility to [[subsystems/suvichar]]. Native export/device acceptance remains explicit.
+
+## [2026-11-08] ingest | Single flute wordmark on Daily Bhakti cards
+Updated share/design/integration contracts for shared top/cartouche and English domain-footer overlays, logo paint failure refusal and per-language readiness invalidation. Native capture/performance remains pending.
