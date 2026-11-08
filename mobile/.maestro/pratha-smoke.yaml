@@ -55,6 +55,12 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { visible: { id: pratha-month-card } }
     commands:
+      # The card can sit at the bottom edge of a small screen (the 320×568dp search
+      # matrix): bring its footer link into view before tapping it.
+      - scrollUntilVisible:
+          element: { id: pratha-month-hub }
+          direction: DOWN
+          timeout: 60000
       - tapOn: { id: pratha-month-hub }
       - assertVisible: { id: pratha-hub }
       - tapOn: Back
