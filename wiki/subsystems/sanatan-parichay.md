@@ -2,7 +2,7 @@
 title: Sanatan Parichay
 type: subsystem
 sources: [mobile/src/data/sanatan-parichay/index.ts, mobile/src/data/sanatan-parichay/store.ts, mobile/src/screens/SanatanParichayScreen.tsx, mobile/src/screens/SanatanReaderScreen.tsx]
-last_verified_date: 2026-11-06
+last_verified_date: 2026-11-08
 confidence: high
 status: current
 ---
@@ -71,3 +71,15 @@ Research bibliographies, publisher/verification notes and source actions stay
 internal; meaningful scripture identities, poet attribution and real related
 in-app reading links remain. See `docs/reviews/2026-11-06-content-source-ui.md`
 for the audited callers, preserved provenance and separate native acceptance.
+
+
+## Swastika lesson expansion — 8 November 2026
+
+`symbols` retains three pages and existing save/resume IDs. The authored lesson
+now explains auspicious use, each purushartha, other interpretations and a
+clockwise drawing exercise. `SwastikaGuide` supplies the second-page meaning
+schematic and third-page cross → four bends → optional dots sequence. Captions
+use shared script/reading tokens; narration and prose shares retain equivalent
+full drawing instructions. No universal stroke/finger/dot requirement is claimed.
+See `docs/content-parity/sanatan-parichay/swastika-guide.md` for source scope and
+pending native/editorial acceptance. This expansion is not a catalogue expansion.

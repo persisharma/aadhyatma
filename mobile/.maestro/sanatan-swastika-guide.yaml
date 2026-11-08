@@ -1,0 +1,60 @@
+# Run against this branch's installed native app/Metro. Does not prove visual QA by parsing.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- tapOn: { id: sanatan-search }
+- inputText: "how to draw swastika"
+- pressKey: Enter
+- scrollUntilVisible:
+    element: { text: "Sacred symbols" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Sacred symbols"
+- scrollUntilVisible:
+    element: { text: "Four arms, four aims of life" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Four arms, four aims of life"
+- assertVisible: "2\\s*/\\s*3"
+- scrollUntilVisible:
+    element: { text: "Moksha · Spiritual liberation" }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-four-aims
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-next }
+- assertVisible: "3\\s*/\\s*3"
+- scrollUntilVisible:
+    element: { id: swastika-stage-0 }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-cross
+- scrollUntilVisible:
+    element: { id: swastika-stage-1 }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-four-bends
+- scrollUntilVisible:
+    element: { id: swastika-stage-2 }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-optional-dots
+- scrollUntilVisible:
+    element: { text: "This guide does not prescribe.*" }
+    direction: DOWN
+    timeout: 60000
+- scrollUntilVisible:
+    element: { text: "Share" }
+    direction: DOWN
+    timeout: 60000
+- assertVisible: "Share"
+- tapOn: Back
+- assertVisible: "Sacred symbols"
+- tapOn: Back
+- assertVisible: "how to draw swastika"

@@ -4227,6 +4227,22 @@ publication is claimed. Source masters remain in the approved Site. Native
 appearance has not yet been established by device screenshots; see the acceptance
 matrix in `docs/content-parity/sanatan-parichay/native-verification.md`.
 
+### Swastika meaning and drawing — 8 November 2026
+
+The existing `symbols` lesson keeps its three stable pages: auspicious meaning,
+four purusharthas and other interpretations, then household clockwise drawing.
+Page two's SVG has four readable aim captions; positions do not assert a universal
+arm-to-aim mapping. Page three places `SwastikaGuide` before the full instructions:
+three vertically stacked, intrinsically growing panels show the central cross,
+four clockwise right-angle extensions, then optional dots. Each 160pt-high SVG
+uses a 120-unit square viewBox and the same exact geometry; explanatory native
+text uses shared script-aware `Copy` tokens and scrolls with the reader.
+No animation, timers, network assets or new navigation. Geometry is also described
+in the authored text used by read-aloud and prose sharing. A particular stroke
+order, finger or dots are not presented as universal ritual requirements.
+Gujarati/Kannada retain Hindi re-scripting. Internal source review and native
+acceptance are tracked in `docs/content-parity/sanatan-parichay/swastika-guide.md`.
+
 ## 88. भक्तिमय दोहे — selected Kabir and Rahim readings
 
 Two Granth cards, `kabir-bhakti-dohe` and `rahim-bhakti-dohe`, each open four complete selected couplets in the existing flat `StutiReaderScreen`/`VersePage` shell. This is reader reuse, not a Stotram classification: the library category is Granth, the titles name the poet, and subtitles explicitly say चयनित / selected. Preserve original Hindi couplets, pronunciation-based ASCII romanization and editorial Hindi/English meanings. Gujarati/Kannada follow the shared re-scripting policy, not an authored-translation claim.
