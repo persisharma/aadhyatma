@@ -4,6 +4,8 @@ import { afterRated, parseRatingPromptState, RATING_PROMPT_DEFAULTS } from '@/da
 
 const original = { ...ENGAGEMENT_PROMPTS };
 const now = 1794096000000;
+// Single-page fixture; production two-page activation is tested explicitly below.
+beforeEach(() => { ENGAGEMENT_PROMPTS.facebookUrl = null; });
 afterEach(() => Object.assign(ENGAGEMENT_PROMPTS, original));
 
 it('waits for a hand-off and a new action, never just a store return or cold start', () => {
@@ -62,4 +64,17 @@ it('a separate review campaign can intentionally restart rating without clearing
 it('initial rollout preserves pre-campaign declines and low-rating pauses', () => {
   expect(parseRatingPromptState(JSON.stringify({ outcome: 'declined' })).outcome).toBe('declined');
   expect(parseRatingPromptState(JSON.stringify({ lowRatedAt: now })).lowRatedAt).toBe(now);
+});
+
+it('enables the owner-supplied Facebook share URL in the production configuration', () => {
+  ENGAGEMENT_PROMPTS.facebookUrl = original.facebookUrl;
+  expect(socialPageUrl('facebook')).toBe('https://www.facebook.com/share/18wwA4vHG4/?mibextid=wwXIfr');
+  expect(pendingSocialPlatforms(newSocialPromptState())).toEqual(['instagram', 'facebook']);
+});
+it('enabling Facebook preserves an existing Instagram confirmation and review hand-off', () => {
+  ENGAGEMENT_PROMPTS.facebookUrl = original.facebookUrl;
+  const previous = { ...newSocialPromptState(), confirmed: { instagram: true } };
+  expect(pendingSocialPlatforms(previous)).toEqual(['facebook']);
+  expect(isEligibleForSocialPrompt(previous, true, true, now)).toBe(true);
+  expect(previous.confirmed.instagram).toBe(true);
 });

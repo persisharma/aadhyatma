@@ -40,7 +40,7 @@ test('opening is still; start repeats full loops until pause', async () => {
   await mount(false, 107);
   expect(start).not.toHaveBeenCalled();
   await act(async () => { tree.update(display(true, 107)); });
-  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 880, useNativeDriver: true, isInteraction: false }));
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 1380, useNativeDriver: true, isInteraction: false }));
   for (let i = 0; i < 5; i++) act(() => completions[i]({ finished: true }));
   expect(start).toHaveBeenCalledTimes(6);
   expect(onCycle).toHaveBeenCalledTimes(5);
@@ -147,6 +147,24 @@ test('Reduced Motion keeps the mantra rings still', async () => {
   measureRingWords();
   expect(tree.root.findAll((n) => n.props.testID === 'japam-mandala-band').length).toBeGreaterThan(0);
   expect((Animated.timing as jest.Mock).mock.calls.some(([, c]) => c.duration === 56000)).toBe(false);
+});
+
+test('the compact count is inside the infinity and the full reading occupies its former row', async () => {
+  await act(async () => { tree = TestRenderer.create(<ThemeProvider>
+    <JapamInfinity count={107} size={340} hint="Tap to start" labelFontFamily="test-font"
+      running={false} onCycle={onCycle} ringText="सीता राम" reading={<Text>Complete reading</Text>} />
+  </ThemeProvider>); });
+  measureRingWords();
+  expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-count')).toHaveLength(0);
+  const current = tree.root.findAll(node => node.props.testID === 'japam-infinity-current')[0];
+  const total = tree.root.findAll(node => node.props.testID === 'japam-infinity-total')[0];
+  expect(current.props.children).toBe(107);
+  expect(total.props.children).toBe(108);
+  expect(current.props.fontSize).toBeLessThanOrEqual(150);
+  expect(total.props.fontSize).toBeLessThanOrEqual(125);
+  const order = tree.root.findAll(node => ['japam-infinity-panel', 'japam-infinity-reading'].includes(node.props.testID));
+  expect(order[0].props.testID).toBe('japam-infinity-panel');
+  expect(order[order.length - 1].props.testID).toBe('japam-infinity-reading');
 });
 
 test('repeated background and foreground transitions leave no stale ring work after cleanup', async () => {

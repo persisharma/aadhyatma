@@ -18,8 +18,8 @@ function driver(phase = 0) {
   return { motion, callbacks, durations, resets, get stops() { return stops; }, get nativeStops() { return nativeStops; } };
 }
 
-test('short-name fallback is 880ms', () => {
-  assert.equal(INFINITY_CYCLE_MS, 880);
+test('short-name fallback is 1380ms', () => {
+  assert.equal(INFINITY_CYCLE_MS, 1380);
 });
 
 test('one start continues across many full cycles without extra taps', () => {
@@ -36,18 +36,18 @@ test('one start continues across many full cycles without extra taps', () => {
 test('stop freezes the marker and late completion cannot restart it', () => {
   const d = driver(.25);
   const stop = startInfinityMotion(d.motion);
-  assert.equal(d.durations[0], 660);
+  assert.equal(d.durations[0], 1035);
   stop(); d.callbacks[0](true);
   assert.equal(d.durations.length, 1);
   assert.deepEqual(d.resets, []);
 });
 
-test('a later start resumes the paused fraction and then full 880ms cycles', () => {
+test('a later start resumes the paused fraction and then full 1380ms cycles', () => {
   const d = driver(.625);
   const stop = startInfinityMotion(d.motion);
-  assert.equal(d.durations[0], 330);
+  assert.equal(d.durations[0], 518);
   d.callbacks[0](true);
-  assert.deepEqual(d.durations, [330, 880]);
+  assert.deepEqual(d.durations, [518, 1380]);
   stop();
 });
 
@@ -71,7 +71,7 @@ test('a cancelled native cycle does not repeat', () => {
 test('the shared crossing resumes as a full loop', () => {
   const d = driver(1);
   const stop = startInfinityMotion(d.motion);
-  assert.deepEqual(d.durations, [880]);
+  assert.deepEqual(d.durations, [1380]);
   assert.deepEqual(d.resets, [0]);
   stop();
 });

@@ -15,7 +15,8 @@ import {
 import type { Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
 import RateStepper from './RateStepper';
-import { MIN_JAPA_RATE as MIN_RATE, MAX_JAPA_RATE as MAX_RATE } from './japamRecitationTiming';
+import JapamTempoControl from './JapamTempoControl';
+import { MIN_JAPA_RATE as MIN_RATE, MAX_JAPA_RATE as MAX_RATE, japaAudioPlaybackRate } from './japamRecitationTiming';
 
 type Props = {
   mantraId: string;
@@ -66,7 +67,7 @@ export default function JapamAudioPlayer({
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
   if (source == null) {
-    return <UnavailableNotice lang={lang} rate={rate} onRateChange={showSilentTempo ? onRateChange : undefined} />;
+    return <UnavailableNotice key={mantraId} lang={lang} rate={rate} onRateChange={showSilentTempo ? onRateChange : undefined} />;
   }
 
   return (
@@ -81,6 +82,7 @@ export default function JapamAudioPlayer({
       rate={rate}
       onRateChange={onRateChange}
       onRecitationDurationChange={onRecitationDurationChange}
+      showSilentTempo={showSilentTempo}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -105,6 +107,7 @@ function ActiveAudioPlayer({
   rate: controlledRate,
   onRateChange,
   onRecitationDurationChange,
+  showSilentTempo,
   colors,
   typography,
   radii,
@@ -126,6 +129,10 @@ function ActiveAudioPlayer({
   // single-recitation clip is 1 (one bead per loop); musical renditions repeat
   // the mantra many times, so the count is spread across the clip.
   const repetitions = useMemo(() => getJapamAudioRepetitions(mantraId), [mantraId]);
+  const durationRef = useRef(0);
+  if (Number.isFinite(status.duration) && (status.duration ?? 0) > 0) durationRef.current = status.duration;
+  const recitationMs = durationRef.current > 0 ? durationRef.current * 1000 / repetitions : 0;
+  const playbackRate = japaAudioPlaybackRate(recitationMs, rate);
   // Cumulative bead-counting state (audio time played, beads emitted, last
   // clock). Advanced by the pure `advanceBeadProgress` reducer each tick.
   const progressRef = useRef<BeadProgress>(INITIAL_BEAD_PROGRESS);
@@ -161,6 +168,12 @@ function ActiveAudioPlayer({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mantraId]);
+
+  // Configure the padded cadence before an alarm can start native playback.
+  useEffect(() => {
+    player.shouldCorrectPitch = true;
+    player.setPlaybackRate(playbackRate, 'high');
+  }, [player, playbackRate]);
 
   // Honour an `autoPlay` request once the file is ready. Gated on
   // `status.isLoaded` because `play()` is a no-op before the player has
@@ -212,17 +225,14 @@ function ActiveAudioPlayer({
   // loop. Duration is latched to the last non-zero value so a transient 0 from
   // the native status doesn't stall the clock. A multi-bead tick is applied as
   // ONE `onIteration(delta)` call — a single atomic counter update.
-  const durationRef = useRef(0);
-  if (Number.isFinite(status.duration) && (status.duration ?? 0) > 0) durationRef.current = status.duration;
-  const recitationMs = durationRef.current > 0 ? durationRef.current * 1000 / repetitions : 0;
   useEffect(() => {
     if (recitationMs > 0) onRecitationDurationChange?.(mantraId, recitationMs);
   }, [mantraId, recitationMs, onRecitationDurationChange]);
-  const beadInputsRef = useRef({ duration: 0, repetitions, rate, playing: false });
+  const beadInputsRef = useRef({ duration: 0, repetitions, rate: playbackRate, playing: false });
   beadInputsRef.current = {
     duration: durationRef.current,
     repetitions,
-    rate,
+    rate: playbackRate,
     playing: chanting,
   };
   useEffect(() => {
@@ -240,11 +250,6 @@ function ActiveAudioPlayer({
     }, BEAD_TICK_MS);
     return () => clearInterval(id);
   }, []);
-
-  useEffect(() => {
-    player.shouldCorrectPitch = true;
-    player.setPlaybackRate(rate, 'high');
-  }, [player, rate]);
 
   // Pause and release the global audio session when unmounting.
   useEffect(() => {
@@ -352,7 +357,7 @@ function ActiveAudioPlayer({
         </Text>
       </Pressable>
 
-      <RateStepper
+      {showSilentTempo ? <JapamTempoControl value={rate} onChange={setRate} lang={lang} fontFamily={labelSubFont} /> : <RateStepper
         value={rate}
         onChange={setRate}
         min={MIN_RATE}
@@ -361,7 +366,7 @@ function ActiveAudioPlayer({
         label={tempoLabel}
         labelFontFamily={labelSubFont}
         inlineLabel
-      />
+      />}
     </View>
   );
 }
@@ -394,10 +399,7 @@ function UnavailableNotice({ lang, rate = 1, onRateChange }: Pick<Props, 'lang' 
       >
         {text}
       </Text>
-      {onRateChange ? <RateStepper value={rate} onChange={onRateChange}
-        min={MIN_RATE} max={MAX_RATE} step={RATE_STEP} inlineLabel
-        label={pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' })}
-        labelFontFamily={noticeFont} /> : null}
+      {onRateChange ? <JapamTempoControl value={rate} onChange={onRateChange} lang={lang} fontFamily={noticeFont} /> : null}
     </View>
   );
 }

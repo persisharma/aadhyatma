@@ -9,7 +9,7 @@ Original base: `dd8b1f9`; integrated current main `fdb304a` (#649). Branch: `cod
 - Same provider/action bridge and 1200ms settle delay. Preserve hydration, shared launch selection/ownership, brand, Explore, share-interaction, foreground and cancellation guards.
 - Independent Instagram and Facebook links/explicit confirmations, retry and scrollable four-language modal. A page opening does not prove a follow. No automatic posting/following.
 - Stable independent campaign IDs re-arm social/review eligibility after bundle delivery; never clear unrelated app data or force immediate display. Initial rollout preserves old decline and low-star state. Existing store handoffs migrate to social.
-- Facebook's exact page is absent from repository and was not supplied. Its implementation is covered with a synthetic test URL; production `facebookUrl` stays null/hidden until verified.
+- The owner supplied the Facebook share URL on 8 Nov 2026. It is now configured verbatim and tested through the real follow action; OS/app/browser return remains native acceptance.
 
 ## Owner operation
 
@@ -35,7 +35,7 @@ Do not use app versions/current time as IDs. Keep the same ID after answering, o
 | U4 Language/size | PASS component / PENDING native | hi/en/gu/kn at M/L component coverage; compact/enlarged-system native review not established |
 | U5 Entry/journey | PASS provider / PENDING native | Actual bookmark provider order, completed/cancelled share paths, manual rating, store → social, independent confirmations and cold reload tested |
 | U6 Failure/lifecycle | PASS automated / PENDING native | Both failed store routes, failed social link/retry, read failure suppression, background, delayed overlap and unmount cleanup; native app/browser return still needed |
-| U7 Content/assets | N/A publication | No artwork/content/CDN addition. Existing Instagram URL reused; Facebook URL pending owner input |
+| U7 Content/assets | N/A publication | No artwork/content/CDN addition. Existing Instagram URL reused; owner-supplied Facebook URL configured; native hand-off pending |
 | U8 Siblings | PASS | Same rating bridge covers every share/bookmark/routine/mala action; direct Instagram More row remains available |
 | U9 Tests | PASS full automated / PENDING native | Commands/results below; authored social Maestro journey, no native execution |
 | U10 / U10.1 Performance/ANR | PASS static / PENDING device | Only constant-size state (two pages/seven trigger counters), serial async writes, two bounded URL parses and existing settle/deadline timers. No fetch, image decode, per-frame state or new native module. Lower-end Android release frame/memory/ANR and iOS hang evidence unavailable |
@@ -60,3 +60,13 @@ Final automated evidence for local implementation checkpoint `0526112` (later ed
 - Full lint PASS: **0 errors**, 447 existing warnings. No code/test assertion was weakened.
 - PR: https://github.com/persisharma/aadhyatma/pull/650 (draft). Current main advanced only with the compact-muhurat #649 work; merged without conflicts. Required final CI/native evidence remains distinct from local results.
 - Remote preservation uses the connected GitHub app because this checkout has no CLI push credential. The first document write was auto-review rejected as an unverified disclosure; source/destination verification proved the existing RULEBOOK/design blob hashes belonged to the same repository, and the write then succeeded. Required implementation, tests, docs and flow are preserved; the local dependency symlink is excluded from commits. No worktree cleanup performed.
+
+## 8 November follow-up — Facebook enabled
+
+Owner target: https://www.facebook.com/share/18wwA4vHG4/?mibextid=wwXIfr
+
+Both social rows are configured. Regression coverage checks the real Facebook link dispatch, independent confirmations, and preservation of an existing Instagram confirmation. Explicit single-page test fixtures retain missing-target coverage. The native smoke requires both rows instead of making Facebook optional. Actual store/Facebook app or browser return and the native language/size/performance matrix remain pending.
+
+The previous complete CI for `49d70d7` passed, including all reader shards, widgets/engine/data/Ask, observance verification and both production exports. Current main `8bbcb48` (Japa controls and long-text/+500ms fixes) merged cleanly; existing mala action reporting is preserved. This update does not merge the PR or publish an OTA/store release.
+
+Follow-up validation: all 8 focused suites / 152 tests, TypeScript, changed-file ESLint, Maestro YAML parsing and diff whitespace checks pass. Native/device acceptance remains pending.

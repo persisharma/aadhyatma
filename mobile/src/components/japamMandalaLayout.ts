@@ -130,21 +130,75 @@ export function layoutMandala(text: string, size: number, measured: Readonly<Rec
     return parts;
   });
   const complete = [...flow, separator];
+  // A complete passage can fit the outer band but exceed the inner one.
+  // Greedy outer-first filling then starves the inner band (Gayatri/Hare Krishna).
+  // Balance a one-page split by angular occupancy, preserving every word/run.
+  const prefixes = configs.map(c => {
+    const totals = [0];
+    for (const word of flow) totals.push(totals[totals.length - 1] + wordSector(word, c.width, c.lineHeight, c.radius));
+    return totals;
+  });
+  const separators = configs.map(c => wordSector(separator, c.width, c.lineHeight, c.radius));
+  const used = (from: number, end: number, index: number) => prefixes[index][end] - prefixes[index][from];
+  const balancedSplit = (from: number): number | null => {
+    if (configs.length !== 2 || flow.length - from < 2) return null;
+    let best: number | null = null, score = Infinity;
+    for (let n = from + 1; n < flow.length; n++) {
+      const outerUsed = used(from, n, 0) + separators[0];
+      const innerUsed = used(n, flow.length, 1) + separators[1];
+      if (outerUsed <= TAU && innerUsed <= TAU && Math.abs(outerUsed - innerUsed) < score) {
+        best = n; score = Math.abs(outerUsed - innerUsed);
+      }
+    }
+    return best;
+  };
+  // Look ahead before closing a page: a greedy fill can also strand ONE final
+  // word on the next outer band. Memoization bounds the search to flow × bands;
+  // words stay whole and every allocated band receives visible text.
+  const memo = new Map<string, string[][] | null>();
+  const pack = (from: number, index: number): string[][] | null => {
+    if (from === flow.length) return index === 0 ? [] : null;
+    const key = `${from}:${index}`;
+    if (memo.has(key)) return memo.get(key)!;
+    if (index === 0) {
+      const split = balancedSplit(from);
+      if (split !== null) return [flow.slice(from, split), flow.slice(split)];
+    }
+    let end = from;
+    while (end < flow.length && (used(from, end + 1, index) + separators[index] <= TAU || end === from && used(from, end + 1, index) <= TAU)) end++;
+    for (; end > from; end--) {
+      const rest = pack(end, (index + 1) % configs.length);
+      if (rest) {
+        const result = [flow.slice(from, end), ...rest];
+        memo.set(key, result);
+        return result;
+      }
+    }
+    memo.set(key, null);
+    return null;
+  };
   if (configs.every(c => fits(complete, c))) {
     configs.forEach((c, i) => pages[i].push(place(complete, c.width, c.radius, c.lineHeight)));
   } else {
-    let at = 0;
-    while (at < flow.length) {
-      const before = at;
-      configs.forEach((c, i) => {
-        const part: string[] = [];
-        while (at < flow.length && (fits([...part, flow[at], separator], c) || part.length === 0 && fits([flow[at]], c))) part.push(flow[at++]);
-        const display = fits([...part, separator], c) ? [...part, separator] : part;
-        pages[i].push(part.length ? place(display, c.width, c.radius, c.lineHeight, false) : []);
-      });
-      if (at === before) break; // bounded fallback; primary reading text is intact
+    const packed = configs.length === 2 ? pack(0, 0) : null;
+    if (packed) packed.forEach((part, slot) => {
+      const index = slot % configs.length, c = configs[index];
+      pages[index].push(place(fits([...part, separator], c) ? [...part, separator] : part, c.width, c.radius, c.lineHeight, false));
+    });
+    else {
+      let at = 0;
+      while (at < flow.length) {
+        const before = at;
+        configs.forEach((c, i) => {
+          const part: string[] = [];
+          while (at < flow.length && (fits([...part, flow[at], separator], c) || part.length === 0 && fits([flow[at]], c))) part.push(flow[at++]);
+          const display = fits([...part, separator], c) ? [...part, separator] : part;
+          pages[i].push(part.length ? place(display, c.width, c.radius, c.lineHeight, false) : []);
+        });
+        if (at === before) break; // bounded fallback; primary reading text is intact
+      }
+      if (at < flow.length) return { outer, middle: size * .37, inner: size * .28, loop: size * .35, bands: [], overflow: true };
     }
-    if (at < flow.length) return { outer, middle: size * .37, inner: size * .28, loop: size * .35, bands: [], overflow: true };
   }
   const bands = configs.map((c, i) => ({ radius: c.radius, fontSize: c.fontSize, lineHeight: c.lineHeight, pages: pages[i] }));
   const middle = configs[0].radius - configs[0].lineHeight / 2 - AIR;

@@ -9,8 +9,8 @@ export const ENGAGEMENT_PROMPTS = {
   socialCampaignId: 'initial',
   socialEnabled: true,
   instagramUrl: INSTAGRAM_URL,
-  // Supply the verified Vedansh page URL; never guess a Facebook username.
-  facebookUrl: null as string | null,
+  // Owner-supplied Facebook share link; retain its app/browser hand-off target.
+  facebookUrl: 'https://www.facebook.com/share/18wwA4vHG4/?mibextid=wwXIfr' as string | null,
 };
 
 export type SocialPlatform = 'instagram' | 'facebook';

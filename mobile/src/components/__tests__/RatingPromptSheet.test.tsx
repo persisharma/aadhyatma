@@ -188,6 +188,8 @@ beforeEach(() => {
   jest.useFakeTimers();
   requestAsk = null;
   mockStore.clear();
+  // Single-page fixture; real configured Facebook hand-off is covered below.
+  ENGAGEMENT_PROMPTS.facebookUrl = null;
   mockAppOpens = 1;
   mockOptInShowing = false;
   mockActiveDays = 0;
@@ -622,6 +624,23 @@ describe('post-review social prompt', () => {
     expect(modalVisible(tree)).toBe(false);
     await fireMoment();
     expect(modalVisible(tree)).toBe(true);
+  });
+  test('the configured Facebook button opens the exact owner link and keeps follow confirmation independent', async () => {
+    ENGAGEMENT_PROMPTS.facebookUrl = originalCampaigns.facebookUrl;
+    reviewed();
+    const tree = await renderAndSettle();
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Instagram')).toHaveLength(1);
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Facebook')).toHaveLength(1);
+    await act(async () => { pressableByLabel(tree, 'Follow Vedansh on Facebook').props.onPress(); });
+    expect(openURL).toHaveBeenLastCalledWith('https://www.facebook.com/share/18wwA4vHG4/?mibextid=wwXIfr');
+    expect(savedState().social.confirmed.facebook).not.toBe(true);
+    expect(modalVisible(tree)).toBe(true);
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Instagram').props.onPress(); });
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Instagram')).toHaveLength(0);
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Facebook')).toHaveLength(1);
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Facebook').props.onPress(); });
+    expect(savedState().social.confirmed).toEqual({ instagram: true, facebook: true });
+    expect(modalVisible(tree)).toBe(false);
   });
   test('opening each page never silently confirms a follow; both confirmations persist', async () => {
     ENGAGEMENT_PROMPTS.facebookUrl = 'https://www.facebook.com/test-vedansh-page';

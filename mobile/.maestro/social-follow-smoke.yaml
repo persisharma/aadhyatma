@@ -3,7 +3,7 @@
 # Uses real store handoff state and a real bookmark action, without test-only seed code.
 # Run on a returning test install with a free shared launch opportunity and no
 # confirmed social pages. Do not clear its data: first-run setup owns that day.
-# Facebook assertions are conditional until the verified page URL is configured.
+# Both social pages are configured; Facebook must remain available after confirming Instagram.
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
@@ -45,6 +45,7 @@ appId: com.prashantsharma.vedansh
     visible: "Stay connected with Vedansh"
     timeout: 10000
 - assertVisible: "Follow Vedansh on Instagram"
+- assertVisible: "Follow Vedansh on Facebook"
 - assertNotVisible: "Rate 5 stars"
 - takeScreenshot: e2e-shots/social-follow
 - tapOn: "Maybe later"
@@ -56,10 +57,9 @@ appId: com.prashantsharma.vedansh
     visible: "Stay connected with Vedansh"
     timeout: 10000
 - tapOn: "I already follow Vedansh on Instagram"
-- runFlow:
-    when: { visible: "Follow Vedansh on Facebook" }
-    commands:
-      - tapOn: "I already follow Vedansh on Facebook"
+- assertNotVisible: "Follow Vedansh on Instagram"
+- assertVisible: "Follow Vedansh on Facebook"
+- tapOn: "I already follow Vedansh on Facebook"
 - assertNotVisible: "Stay connected with Vedansh"
 # Cold process remains quiet; action-after-reload persistence also has provider coverage.
 - stopApp

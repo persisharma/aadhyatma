@@ -8,6 +8,7 @@ import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import JapamInfinity from '@/components/JapamInfinity';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import mandalaMeasurements from '@/components/__tests__/fixtures/japamMandalaWidths.json';
+import { compactJapamReadingLines } from '@/components/japamReadingLayout';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -321,32 +322,42 @@ describe('JapamCounter turning mala (design.md §35)', () => {
   test.each(['hi', 'en', 'gu', 'kn'] as Lang[])('Gayatri cadence is based on canonical speech, independent of $lang UI text', async lang => {
     mockGetItem.mockImplementation(key => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
     const tree = await renderJapam('gayatri-mantra', lang);
-    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4000);
+    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4500);
   });
 
-  test.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ lang, size }))))
-  ('compact Gayatri keeps its complete $lang passage at $size below the measured frame', async ({ lang, size }) => {
+  test.each(['gayatri-mantra', 'hare-krishna-mahamantra'].flatMap(id => (['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ id, lang, size })))))
+  ('compact $id keeps its complete $lang passage at $size below the measured frame', async ({ id, lang, size }) => {
     jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 320, height: 568, scale: 2, fontScale: 1.5 });
     jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width: 320, height: 568, scale: 2, fontScale: 1.5 });
     mockGetItem.mockImplementation(key => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"'
       : key === '@vedansh/font-scale' ? size : null));
-    const tree = await renderJapam('gayatri-mantra', lang);
-    const fixture = mandalaMeasurements.cases.find(row => row.id === 'gayatri-mantra' && row.lang === lang)!;
+    const tree = await renderJapam(id, lang);
+    const fixture = mandalaMeasurements.cases.find(row => row.id === id && row.lang === lang)!;
     const widths: Readonly<Record<string, number | undefined>> = fixture.widths;
     const measurers = tree.root.findAllByType(Text).filter(node => typeof node.props.onLayout === 'function');
     await act(async () => {
       measurers.forEach(node => node.props.onLayout({ nativeEvent: { layout: { width: widths[String(node.props.children)], height: 40, x: 0, y: 0 } } }));
     });
     expect(tree.root.findByType(JapamInfinity).props.size).toBe(296);
-    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(4000);
+    expect(tree.root.findByType(JapamInfinity).props.cycleMs).toBe(id === 'gayatri-mantra' ? 4500 : 4900);
+    const bands = tree.root.findAll(node => node.props.testID === 'japam-mandala-band');
+    expect(bands.length).toBeGreaterThanOrEqual(2);
+    for (const band of bands) {
+      expect(band.findAll(node => node.props.testID === 'japam-mandala-word').length).toBeGreaterThan(0);
+    }
     const reading = tree.root.findAll(node => node.props.progress && node.props.referenceLines)[0];
-    expect(reading.props.lines).toEqual(fixture.lines);
-    expect(reading.props.fontSize).toBe(size === 'L' ? lang === 'en' ? 23 : 26 : lang === 'en' ? 20 : 23);
+    expect(reading.props.lines).toEqual(compactJapamReadingLines(fixture.lines));
+    expect(reading.props.lines.join(' ')).toBe(fixture.lines.join(' '));
+    expect(reading.props.fontSize).toBe(size === 'L' ? 21 : 18);
+    expect(reading.props.numberOfLines).toBeUndefined();
     const order = tree.root.findAll(node => ['japam-mandala', 'karaoke-text'].includes(node.props.testID));
     expect(order[0].props.testID).toBe('japam-mandala');
     expect(order[order.length - 1].props.testID).toBe('karaoke-text');
     expect(tree.root.findAll(node => node.props.testID === 'japam-mandala-word').length).toBeGreaterThan(0);
-    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-count')[0].props.numberOfLines).toBeUndefined();
+    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-count')).toHaveLength(0);
+    expect(tree.root.findAll(node => node.props.testID === 'japam-infinity-current').length).toBeGreaterThan(0);
+    const readerHost = tree.root.findAll(node => node.props.testID === 'japam-infinity-reading')[0];
+    expect(readerHost.parent?.props.accessibilityElementsHidden).toBe(false);
     expect(beadLabel(tree)).toContain('0 of 108');
   });
 
@@ -357,23 +368,23 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     const infinity = () => tree.root.findByType(JapamInfinity);
     await act(async () => { tapSurface(tree).props.onPress(); });
     await act(async () => { player().props.onRateChange(1.5); });
-    expect(infinity().props.cycleMs).toBe(2667);
+    expect(infinity().props.cycleMs).toBe(3167);
     expect(beadLabel(tree)).toContain('0 of 108');
     await act(async () => {
       player().props.onRecitationDurationChange('om-namah-shivaya', 2000);
       player().props.onPlayingChange(true);
     });
-    expect(infinity().props.cycleMs).toBe(2667); // Another mantra's measurement is ignored.
+    expect(infinity().props.cycleMs).toBe(3167); // Another mantra's measurement is ignored.
     await act(async () => { player().props.onRecitationDurationChange('gayatri-mantra', 30000); });
-    expect(infinity().props.cycleMs).toBe(20000);
+    expect(infinity().props.cycleMs).toBe(20500);
     await act(async () => { player().props.onRecitationDurationChange('om-namah-shivaya', 2000); });
-    expect(infinity().props.cycleMs).toBe(20000); // A late old-file result cannot erase the current cadence.
+    expect(infinity().props.cycleMs).toBe(20500); // A late old-file result cannot erase the current cadence.
     await act(async () => { infinity().props.onCycle(); });
     expect(beadLabel(tree)).toContain('0 of 108');
     await act(async () => { player().props.onIteration(1); });
     expect(beadLabel(tree)).toContain('1 of 108');
     await act(async () => { player().props.onPlayingChange(false); });
-    expect(infinity().props.cycleMs).toBe(2667);
+    expect(infinity().props.cycleMs).toBe(3167);
     expect(beadLabel(tree)).toContain('1 of 108');
   });
 
