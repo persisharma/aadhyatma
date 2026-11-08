@@ -79,6 +79,16 @@ Follow the repository's unit, integration and E2E gates. Bug regressions should 
 - [ ] Verified with evidence.
 Protect startup import and asset budgets; defer expensive calculations and share-only modules. Verify responsive taps, bounded work, cancellation and cache invalidation. Preserve stable content IDs, saved data and explicit preferences. Inspect iOS/Android differences relevant to the change, including image sizing, gestures, permissions and native APIs.
 
+#### U10.1. Prevent freezes and Android ANRs.
+
+- [ ] Record PASS / FAIL / PENDING / N/A with evidence for every change. For documentation-only changes, runtime profiling may be N/A; reviewing a runtime feature still requires its own evidence.
+- Trace changed work on the JS and native UI threads: synchronous parsing/serialization, layout/measurement, image decoding, large lists, native calls, timers and animation callbacks. Bound loops and queues; defer heavy work and lazy-load offscreen assets. An asynchronous storage/network API does not make its preceding JSON serialization or data preparation asynchronous.
+- Scheduling CPU work with a Promise, setTimeout or InteractionManager does not make it non-blocking. Inspect the largest uninterrupted unit, including nested calls before each generator yield. Single-day/profile matching must not scan a whole year. Record cold-cache step timings, test bounded work deterministically, and verify Back/tab taps while calculation is still pending.
+- Keep frame-by-frame animation off React state and JS timers where the native driver supports it. Reuse animation/layout graphs across count updates. Stop timers, listeners and animations on their owning screen's blur/background/unmount as appropriate; stale callbacks must not restart work, duplicate counts or retain obsolete screens. Explicitly document intentionally supported background work.
+- For changes to startup, continuous motion/audio, image-heavy screens or shared hot paths, compare a release-mode build against the previous version on a representative lower-configuration Android device. Record device/RAM, Android/build versions, dataset, duration and responsiveness/frame-time/memory observations. Exercise cold entry, repeated taps, scrolling, Back/reopen, offline/error paths and background/foreground; include longest content, large text and a realistic large saved history. Run continuous features for at least 20 minutes and repeat with audio and Reduced Motion where applicable.
+- Inspect Android ANR traces/logcat and available Android vitals or crash telemetry for the tested build; check iOS hangs separately when its runtime changes. Any observed ANR, frozen primary action, runaway background work or unexplained sustained memory growth is FAIL and must be investigated before readiness.
+- Unit tests, synthetic loop tests, typechecking, mockups and an absence of reported crashes do not prove an ANR-free app. If device profiling or telemetry is unavailable, mark that evidence PENDING, state the limitation and keep required acceptance pending; never claim “no performance/ANR issues” from automated tests alone.
+
 ### U11. Integrate against the current branch state.
 
 - [ ] Verified with evidence.

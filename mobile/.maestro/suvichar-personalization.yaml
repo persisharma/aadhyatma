@@ -38,5 +38,14 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element: { id: "suvichar-name-row" }
 - assertVisible: ".*Sharma family.*"
+# The switch hides the sender line without clearing the saved name.
+- scrollUntilVisible:
+    element: { id: "suvichar-name-toggle" }
+- tapOn: { id: "suvichar-name-toggle" }
+- assertNotVisible: { id: "suvichar-name-row" }
+- assertNotVisible: { id: "suvichar-card-sender" }
+- tapOn: { id: "suvichar-name-toggle" }
+- assertVisible: { id: "suvichar-name-row" }
+- assertVisible: ".*Sharma family.*"
 # With published artwork: share, select WhatsApp and inspect the complete exported
 # PNG including name, all message lines and footer. Do not actually send a message.

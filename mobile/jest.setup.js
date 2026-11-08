@@ -25,6 +25,18 @@ jest.mock('expo-file-system/legacy', () => ({
   })),
 }));
 
+// WebView is a native bridge reached by the docked video player in readers.
+// Reader tests keep the real player component; only its native WebView boundary
+// is inert here. Dedicated video/brand suites override this with their own spies.
+jest.mock('react-native-webview', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  const WebView = React.forwardRef(function MockWebView(props, ref) {
+    return React.createElement(View, { ...props, ref });
+  });
+  return { __esModule: true, default: WebView, WebView };
+});
+
 // expo-speech ships untranspiled ESM and is outside the RN preset's
 // transformIgnorePatterns, so Jest cannot even PARSE it — and it is reached
 // transitively by every reader screen (ReaderHeader → ReadAloudButton →

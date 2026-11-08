@@ -7,7 +7,7 @@ import {
   getUpcomingObservances,
 } from './festivalEngine';
 import { subscribeObservanceStore } from './observanceStore';
-import { cachedDayInputs, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
+import { cachedDayInputs, cachedDayInputsAsync, dateKeyFor, dayStoreFor, scopeKeyFor } from './panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
 import {
   getCalendarSystemHydrated,
@@ -238,9 +238,13 @@ export function usePanchangForSelection(
       // Disk → memory before solving; free when the day is already warm.
       await hydratePanchangDays(location, calendarSystem, [dateKeyFor(new Date(dateMs))]);
       if (cancelled) return;
-      const result = solvePanchangDay(new Date(dateMs), calendarSystem, location);
-      if (!cancelled) setPanchang(result);
-      void persistPanchangDays(location, calendarSystem);
+      const options = { calendarSystem, location };
+      const map = dayStoreFor(scopeKeyFor(location, calendarSystem));
+      const inputs = await cachedDayInputsAsync(map, new Date(dateMs), options, () => cancelled);
+      if (!cancelled && inputs) {
+        setPanchang(inputs.p);
+        void persistPanchangDays(location, calendarSystem);
+      }
     }, 0);
     return () => {
       cancelled = true;

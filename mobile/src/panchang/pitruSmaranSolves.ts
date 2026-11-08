@@ -42,7 +42,7 @@
  * `panchangDayCache`'s — otherwise one city's answers would be served for another.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { runInBackground } from './backgroundWork';
+import { runInBackground, type WorkPriority } from './backgroundWork';
 
 import { awaitDerivedCacheReset } from '@/utils/derivedCacheReset';
 import { addDays } from './calendarGrid';
@@ -223,7 +223,8 @@ export async function ensureOccurrencesAsync(
   today: Date,
   count: number,
   isCancelled: () => boolean = () => false,
-  reckoning: Reckoning = 'shraddha'
+  reckoning: Reckoning = 'shraddha',
+  priority: WorkPriority = 'background'
 ): Promise<Date[]> {
   if (isCancelled()) return [];
   const ruleKey = smaranRuleKey(rule, reckoning);
@@ -233,7 +234,7 @@ export async function ensureOccurrencesAsync(
   let cursor = solved.length ? addDays(solved[solved.length - 1], 1) : startOfLocalDay(today);
   while (solved.length < count) {
     const found = await runInBackground(
-      nextObservanceForEntrySteps({ tithiRule: rule }, cursor, {}, reckoning), isCancelled
+      nextObservanceForEntrySteps({ tithiRule: rule }, cursor, {}, reckoning), isCancelled, priority
     ).catch(() => null);
     if (isCancelled()) return [];
     if (!found) break;
@@ -271,12 +272,13 @@ export function ensurePakshaWindow(year: number): PitruPakshaWindow | null {
 /** Home's cold path must yield inside the scan, not just before it. */
 export async function ensurePakshaWindowAsync(
   year: number,
-  isCancelled: () => boolean = () => false
+  isCancelled: () => boolean = () => false,
+  priority: WorkPriority = 'background'
 ): Promise<PitruPakshaWindow | null> {
   if (isCancelled()) return null;
   const cached = windows.get(year);
   if (cached) return cached;
-  const window = await pitruPakshaWindowAsync(year, isCancelled).catch(() => null);
+  const window = await pitruPakshaWindowAsync(year, isCancelled, {}, priority).catch(() => null);
   if (!window || isCancelled()) return null;
   windows.set(year, window);
   dirtyYears.add(year);

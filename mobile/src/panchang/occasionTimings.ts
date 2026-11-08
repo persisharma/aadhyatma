@@ -1,13 +1,14 @@
 /** Pure ritual windows, distinct from Choghadiya. Source ledger and exclusions:
  * docs/reviews/festival-muhurat.md. No year-table/fallback-city dates. */
 import { OBSERVANCE_RULES } from './festivals';
-import { matchesRuleOnDate } from './festivalEngine';
+import { matchesRuleOnDateSteps } from './festivalEngine';
 import { crossingAfter, elongationAt, tithiSpan, type Span } from './dayRuleInstants';
 import { dayAt, type DayInputs, type ScanOptions } from './panchangDayStore';
 import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
+import type { ObservanceRule } from './types';
 
 export type FestivalMotif = 'diya' | 'fire' | 'shastra' | 'kalash' | 'moon' | 'sun' | 'shiva' | 'ganesh' | 'rakhi' | 'lotus';
-type Recipe = 'lakshmi' | 'midday' | 'rama' | 'vijaya' | 'nishita' | 'shiva' | 'holika' | 'moon' | 'karwa' | 'chhath' | 'afternoon' | 'morning' | 'pratah' | 'pradosh' | 'rakhi' | 'ekadashi' | 'ghata';
+type Recipe = 'lakshmi' | 'midday' | 'rama' | 'vijaya' | 'nishita' | 'shiva' | 'holika' | 'moon' | 'karwa' | 'chhath' | 'afternoon' | 'morning' | 'pratah' | 'pradosh' | 'rakhi' | 'ekadashi' | 'ghata' | 'guidance';
 export type OccasionProfile = { id: string; ruleId: string; recipe: Recipe; motif: FestivalMotif; nameHi?: string; nameEn?: string; before?: number; source: string; sunriseAnchor?: boolean };
 export type OccasionWindow = Span & { labelHi: string; labelEn: string; event?: boolean };
 export type OccasionTiming = { id: string; ruleId: string; date: Date; nameHi: string; nameEn: string; motif: FestivalMotif; windows: OccasionWindow[]; noteHi?: string; noteEn?: string };
@@ -17,25 +18,46 @@ const uniqueRules = [...new Map(OBSERVANCE_RULES.map(r => [r.id, r])).values()];
 export const OCCASION_PROFILES: readonly OccasionProfile[] = [
   profile('diwali', 'lakshmi', 'diya', '/festivals/lakshmipuja/festivals-lakshmipuja-timings.html', { nameHi: 'दीपावली · लक्ष्मी पूजा', nameEn: 'Diwali · Lakshmi puja' }),
   profile('dhanteras', 'lakshmi', 'diya', '/festivals/dhanteras/festivals-dhanteras-puja-timings.html'),
-  ...['ganesh-chaturthi', 'ganesh-jayanti', 'vinayaka-chaturthi-vrat'].map(id => profile(id, 'midday', 'ganesh', '/hindu-festivals/ganesha-chaturthi/ganesha-chaturthi.html')),
+  profile('ganesh-chaturthi', 'midday', 'ganesh', '/hindu-festivals/ganesha-chaturthi/ganesha-chaturthi.html'),
+  profile('ganesh-jayanti', 'midday', 'ganesh', '/hindu-gods/ganesha/ganesha-jayanti/ganesha-jayanti-date-time.html'),
+  profile('vinayaka-chaturthi-vrat', 'midday', 'ganesh', '/vrats/vinayaka-chaturthi-dates.html'),
   profile('ram-navami', 'rama', 'lotus', '/dashavatara/rama-navami/rama-navami-date-time.html'),
-  ...['maha-shivaratri', 'masik-shivaratri'].map(id => profile(id, 'shiva', 'shiva', '/festivals/maha-shivaratri/maha-shivaratri-date-time.html')),
-  profile('dussehra', 'vijaya', 'shastra', '/navratri/durga-puja/ayudha-puja-date-time.html', { nameHi: 'विजयादशमी · शस्त्र पूजा', nameEn: 'Vijayadashami · Shastra puja' }),
+  profile('maha-shivaratri', 'shiva', 'shiva', '/festivals/maha-shivaratri/maha-shivaratri-date-time.html'),
+  profile('masik-shivaratri', 'shiva', 'shiva', '/vrats/masik-shivaratri-dates.html'),
+  profile('dussehra', 'vijaya', 'shastra', '/festivals/vijayadashami/vijayadashami-date-time.html', { nameHi: 'विजयादशमी · शस्त्र पूजा', nameEn: 'Vijayadashami · Shastra puja' }),
   profile('maha-navami', 'vijaya', 'shastra', '/navratri/durga-puja/ayudha-puja-date-time.html', { sunriseAnchor: true, nameHi: 'नवमी · आयुध पूजा', nameEn: 'Navami · Ayudha puja' }),
-  ...['navratri-start', 'chaitra-navratri-start', 'ashadha-gupt-navratri', 'magha-gupt-navratri'].map(id => profile(id, 'ghata', 'kalash', '/navratri/info/ghatasthapana-puja-vidhi.html')),
+  profile('navratri-start', 'ghata', 'kalash', '/navratri/shardiya-navratri-ghatasthapana.html'),
+  profile('chaitra-navratri-start', 'ghata', 'kalash', '/navratri/chaitra-navratri-ghatasthapana.html'),
+  profile('ashadha-gupt-navratri', 'ghata', 'kalash', '/navratri/ashadha/ashadha-gupta-navratri-ghatasthapana.html'),
+  profile('magha-gupt-navratri', 'ghata', 'kalash', '/navratri/magha/magha-gupta-navratri-ghatasthapana.html'),
   profile('holi', 'holika', 'fire', '/festivals/holi/festivals-holika-dahan-timings.html', { before: 1, nameHi: 'होलिका दहन', nameEn: 'Holika Dahan' }),
   profile('raksha-bandhan', 'rakhi', 'rakhi', '/festivals/raksha-bandhan/raksha-bandhan-date-time.html'),
-  ...['janmashtami', 'janmashtami-vaishnava'].map(id => profile(id, 'nishita', 'lotus', '/festivals/janmashtami/krishna-janmashtami-date-time.html')),
+  profile('janmashtami', 'nishita', 'lotus', '/dashavatara/lord-krishna/krishna-janmashtami-date-time.html'),
+  profile('janmashtami-vaishnava', 'nishita', 'lotus', '/iskcon/lord/krishna-janmashtami-date-time.html'),
   profile('karwa-chauth', 'karwa', 'moon', '/festivals/karwa-chauth/karwa-chauth-date-time.html'),
   ...uniqueRules.filter(r => r.dayRule === 'chandrodaya' && r.id !== 'karwa-chauth').map(r => profile(r.id, 'moon', 'moon', '/vrats/sankashti-chaturthi-dates.html')),
   ...['chhath-puja', 'chaiti-chhath'].map(id => profile(id, 'chhath', 'sun', '/chhath/chhath-puja-calendar.html')),
   profile('bhai-dooj', 'afternoon', 'rakhi', '/festivals/bhai-dooj/bhai-dooj-date-time.html'),
   profile('akshaya-tritiya', 'morning', 'kalash', '/festivals/akshaya-tritiya/akshaya-tritiya-date-time.html'),
   profile('govardhan-puja', 'pratah', 'diya', '/festivals/govardhan-puja/govardhan-puja-date-time.html'),
-  ...uniqueRules.filter(r => r.id.startsWith('pradosh-vrat')).map(r => profile(r.id, 'pradosh', 'shiva', '/vrats/pradosh-dates.html')),
+  ...uniqueRules.filter(r => r.id.startsWith('pradosh-vrat')).map(r => profile(r.id, 'pradosh', 'shiva', '/vrats/pradoshdates.html')),
   // Vaishnava/Mahadvadashi deadlines cannot inherit Smarta's formula.
-  ...uniqueRules.filter(r => r.dayRule === 'ekadashi' && r.category === 'vrat' && r.tithi === 11).map(r => profile(r.id, 'ekadashi', 'lotus', '/ekadashis/parana/ekadashi-vrat-parana.html')),
+  ...uniqueRules.filter(r => r.dayRule === 'ekadashi' && r.category === 'vrat' && r.tithi === 11).map(r => profile(r.id, 'ekadashi', 'lotus', '/vrats/ekadashidates.html')),
 ];
+/** Every catalog identity has a share card. Only reviewed recipes emit clocks;
+ * the rest retain their own catalog guidance, never a manufactured muhurat. */
+export const OCCASION_CARD_PROFILES: readonly OccasionProfile[] = [
+  ...OCCASION_PROFILES,
+  ...uniqueRules.filter(r => ['holi', 'maha-navami'].includes(r.id) || !OCCASION_PROFILES.some(p => p.ruleId === r.id)).map(r => ({
+    id: `${r.id}-guidance`, ruleId: r.id, recipe: 'guidance' as const,
+    motif: 'kalash' as const, source: r.sourceUrl ?? `${drik}/calendars/hindu/hinducalendar.html`,
+  })),
+];
+export function occasionGuidance(rule: ObservanceRule, date: Date): OccasionTiming {
+  return { id: `${rule.id}-guidance`, ruleId: rule.id, date, nameHi: rule.nameHi,
+    nameEn: rule.nameEn, motif: 'kalash', windows: [],
+    noteHi: rule.shortDescriptionHi, noteEn: rule.shortDescriptionEn };
+}
 export function intersect(...spans: (Span | null | undefined)[]): Span | null {
   if (!spans.length || spans.some(s => !s)) return null;
   const start = Math.max(...spans.map(s => +s!.start)), end = Math.min(...spans.map(s => +s!.end));
@@ -46,22 +68,32 @@ export function paranaWindows(dwadashi: Span | null, sunrise: Date, sunset: Date
   if (!dwadashi || sunset <= sunrise) return [];
   const morning = fraction(sunrise, sunset, 0, .2);
   const permitted = { start: new Date(Math.max(+sunrise, +dwadashi.start + (+dwadashi.end - +dwadashi.start) / 4)), end: dwadashi.end };
-  const slot = dwadashi.end <= sunrise ? morning : intersect(morning, permitted) ?? intersect(fraction(sunrise, sunset, .6, 1), permitted);
+  const slot = dwadashi.end <= sunrise ? morning : intersect(morning, permitted) ?? intersect(fraction(sunrise, sunset, .6, .8), permitted);
   return slot ? [{ ...slot, labelHi: slot.start < fraction(sunrise, sunset, .4, .6).end ? 'पारण · प्रातःकाल' : 'पारण · मध्याह्न के बाद', labelEn: slot.start < fraction(sunrise, sunset, .4, .6).end ? 'Parana · morning' : 'Parana · after midday' }] : [];
 }
-export type TimingOccurrence = { profile: OccasionProfile; date: Date };
+export type TimingOccurrence = { profile: OccasionProfile; date: Date; rule: ObservanceRule };
 export function* findTimingOccurrences(day: Date, options: ScanOptions, lenses: ReadonlySet<ObservanceLens>, ruleId?: string): Generator<void, TimingOccurrence[], void> {
   const found: TimingOccurrence[] = [];
-  for (const p of OCCASION_PROFILES) {
+  for (const p of OCCASION_CARD_PROFILES) {
     if (ruleId && p.ruleId !== ruleId) continue;
-    const r = uniqueRules.find(r => r.id === p.ruleId);
-    if (r && ruleVisibleForLenses(r.lens, lenses) && matchesRuleOnDate(p.sunriseAnchor ? { ...r, dayRule: undefined } : r, dayAt(day, p.before ?? 0), options.calendarSystem, options.location)) found.push({ profile: p, date: dayAt(day, 0) });
+    // Putrada deliberately shares an ID across Shravana and Pausha. Match all
+    // catalog variants before deduplication, then carry the actual rule forward.
+    let r: ObservanceRule | undefined;
+    for (const candidate of OBSERVANCE_RULES) {
+      if (candidate.id !== p.ruleId || !ruleVisibleForLenses(candidate.lens, lenses)) continue;
+      if (yield* matchesRuleOnDateSteps(p.sunriseAnchor ? { ...candidate, dayRule: undefined } : candidate,
+        dayAt(day, p.before ?? 0), options.calendarSystem, options.location)) {
+        r = candidate;
+        break;
+      }
+    }
+    if (r) found.push({ profile: p, rule: r, date: dayAt(day, 0) });
     yield;
   }
   return found;
 }
-export function solveOccasion({ profile: r, date }: TimingOccurrence, days: readonly DayInputs[]): OccasionTiming {
-  const rule = uniqueRules.find(p => p.id === r.ruleId)!;
+export function solveOccasion({ profile: r, date, rule }: TimingOccurrence, days: readonly DayInputs[]): OccasionTiming {
+  if (r.recipe === 'guidance') return occasionGuidance(rule, date);
   const at = (offset: number) => days.find(d => +dayAt(d.p.date, 0) === +dayAt(date, offset));
   const current = at(0), tomorrow = at(1);
   const out: OccasionTiming = { id: r.id, ruleId: r.ruleId, date, nameHi: r.nameHi ?? rule.nameHi, nameEn: r.nameEn ?? rule.nameEn, motif: r.motif, windows: [] };
@@ -75,10 +107,11 @@ export function solveOccasion({ profile: r, date }: TimingOccurrence, days: read
   const event = (s: Date | null, hi: string, en: string) => { if (s) out.windows.push({ start: s, end: s, labelHi: hi, labelEn: en, event: true }); };
   switch (r.recipe) {
     case 'ghata':
-      add(intersect(day(0, 1 / 3), tithi), 'घटस्थापना · प्रथम तिहाई', 'Ghatasthapana · first third');
-      add(intersect(day(7 / 15, 8 / 15), tithi), 'अभिजीत · विकल्प', 'Abhijit · alternative');
-      out.noteHi = 'चित्रा नक्षत्र व वैधृति योग से बचना सुझाया जाता है; दृक्पंचांग पद्धति में यह पूर्ण निषेध नहीं है। अपनी परंपरा के अनुसार समय चुनें।';
-      out.noteEn = 'Avoiding Chitra and Vaidhriti is advised, but not an absolute prohibition in the Drik convention. Choose the period according to your tradition.';
+      // First-third/Abhijit alone do not reproduce Drik's preferred windows:
+      // Delhi Chaitra 2026 ends at Meena lagna (07:43), 2027 at 07:26.
+      // Do not turn that incomplete rule into an exact, shareable muhurat.
+      out.noteHi = 'घटस्थापना में प्रतिपदा, लग्न और योग के विशेष नियम लागू होते हैं। अपने शहर के मान्य पंचांग और अपनी परंपरा के अनुसार समय सुनिश्चित करें।';
+      out.noteEn = 'Ghatasthapana follows special Pratipada, lagna and yoga rules. Confirm the time in a trusted Panchang for your city and tradition.';
       break;
     case 'lakshmi': for (const lagna of current.lagnas.filter(l => l.rashiIndex === 1)) add(intersect(night(0, .2), tithi, lagna), 'पूजा · प्रदोष व वृषभ लग्न', 'Puja · Pradosh and Vrishabha lagna'); break;
     case 'midday': add(intersect(day(.4, .6), tithi), 'मध्याह्न पूजा', 'Madhyahna puja'); break;
@@ -94,7 +127,7 @@ export function solveOccasion({ profile: r, date }: TimingOccurrence, days: read
     case 'afternoon': add(intersect(day(.6, .8), tithi), 'अपराह्न तिलक', 'Afternoon tilak'); break;
     case 'karwa': add(night(0, .1), 'संध्या पूजा', 'Evening puja');
     // fall through: moonrise is an event, never guaranteed sighting.
-    case 'moon': event(p.moonrise, 'चंद्रोदय', 'Moonrise'); out.noteHi = 'व्रत खोलने से पहले वास्तविक चंद्र दर्शन करें।'; out.noteEn = 'Observe the actual Moon before breaking the fast.'; break;
+    case 'moon': event(p.moonrise, 'चंद्रोदय', 'Moonrise'); out.noteHi = 'यह खगोलीय चंद्रोदय का समय है। चंद्र दर्शन व व्रत खोलने में अपने व्रत की परंपरा का पालन करें।'; out.noteEn = 'This is astronomical moonrise. Follow your vrat’s tradition for Moon sighting and breaking the fast.'; break;
     case 'chhath': event(p.sunset, 'संध्या अर्घ्य', 'Evening arghya'); event(tomorrow.p.sunrise, 'अगले दिन उषा अर्घ्य', 'Next-day dawn arghya'); break;
     case 'ekadashi': out.windows = paranaWindows(tithiSpan(11 + (rule.paksha === 'krishna' ? 15 : 0), new Date(+date - 12 * 3600000)), tomorrow.p.sunrise, tomorrow.p.sunset); break;
     case 'rakhi': case 'holika': {

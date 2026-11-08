@@ -6,6 +6,6 @@ export default function CatalogBackground() {
   return <View pointerEvents="none" accessible={false} accessibilityElementsHidden
     importantForAccessibility="no-hide-descendants" style={StyleSheet.absoluteFillObject}>
     <Image source={require('@assets/ui/vrat-catalog-parchment.webp')}
-      resizeMode="cover" style={StyleSheet.absoluteFillObject} />
+      resizeMode="cover" style={[StyleSheet.absoluteFillObject, { width: '100%', height: '100%' }]} />
   </View>;
 }

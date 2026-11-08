@@ -1,0 +1,9 @@
+{
+  "sourceHead": "02d3771af57af8469d4bc855acd1495dcda3a9e1",
+  "sourceRun": 42226325104,
+  "sourceArtifact": 13507517139,
+  "artifactName": "native-ios-42226325104",
+  "appArchivePath": "Vedansh-simulator.zip",
+  "appArchiveSha256": "e20a88f97957fe92d775e7459eb09d57d4d8464f7b14090cc4ec7a4142c08e62",
+  "note": "Host and widget extension compiled and launched successfully. The original shell widget smoke then stopped at the OS Open confirmation; this artifact is SDK evidence, not passing native journey evidence."
+}

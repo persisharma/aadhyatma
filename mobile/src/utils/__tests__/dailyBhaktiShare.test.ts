@@ -1,5 +1,5 @@
 import { getVersePool } from '@/data/versePool';
-import { devotionalArtForVerse, devotionalSourceArt } from '@/data/devotionalShareArt';
+import { devotionalArtForVerse, devotionalSourceArt, devotionalSubjectArt } from '@/data/devotionalShareArt';
 import { dailyBhaktiShareable } from '../dailyBhaktiShare';
 import { devotionalBodyHeight, devotionalCardGeometry, devotionalTextHeight, paginateDevotional } from '../devotionalShareLayout';
 import { contentByLang, meaningByLang, verseLinesByLang } from '../localize';
@@ -34,7 +34,11 @@ it('gives a stored chaupai couplet one charan per row on the share card', () => 
   expect(dailyBhaktiShareable(gita).scopes[0].prepared!.hi.pages[0].devotional!.verseRows).toBeUndefined();
 });
 it('maps deity families and per-verse exceptions conservatively', () => {
-  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(30);
+  // Compare identities, not yesterday's count: an added subject cannot mask a missing one.
+  expect([...new Set(Object.values(devotionalSourceArt))].sort()).toEqual([
+    'krishna', 'shiva', 'durga', 'saraswati', 'ganesha', 'vishnu', 'hanuman', 'rama', 'surya', 'prayer',
+    ...Object.keys(devotionalSubjectArt),
+  ].sort());
   expect(devotionalArtForVerse({ sourceId: 'unknown', verseIndex: 0 })).toBe('prayer');
   expect(devotionalArtForVerse({ sourceId: 'gayatri-mantra', verseIndex: 0 })).toBe('surya');
   expect(devotionalArtForVerse({ sourceId: 'vidyarambha-prarthana', verseIndex: 1 })).toBe('ganesha');

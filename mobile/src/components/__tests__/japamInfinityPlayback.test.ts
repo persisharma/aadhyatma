@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { japaAutoCountSource, startInfinityMotion } from '../japamInfinityPlayback';
+import { INFINITY_CYCLE_MS, japaAutoCountSource, startInfinityMotion } from '../japamInfinityPlayback';
 
 function driver(phase = 0) {
   const callbacks: ((finished: boolean) => void)[] = [];
@@ -18,12 +18,16 @@ function driver(phase = 0) {
   return { motion, callbacks, durations, resets, get stops() { return stops; }, get nativeStops() { return nativeStops; } };
 }
 
+test('short-name fallback is 990ms', () => {
+  assert.equal(INFINITY_CYCLE_MS, 990);
+});
+
 test('one start continues across many full cycles without extra taps', () => {
   const d = driver();
   const stop = startInfinityMotion(d.motion);
   for (let i = 0; i < 20; i++) d.callbacks[i](true);
   assert.equal(d.durations.length, 21);
-  assert.ok(d.durations.every(ms => ms === 800));
+  assert.ok(d.durations.every(ms => ms === INFINITY_CYCLE_MS));
   stop();
   assert.equal(d.stops, 1);
   assert.equal(d.nativeStops, 1);
@@ -32,18 +36,18 @@ test('one start continues across many full cycles without extra taps', () => {
 test('stop freezes the marker and late completion cannot restart it', () => {
   const d = driver(.25);
   const stop = startInfinityMotion(d.motion);
-  assert.equal(d.durations[0], 600);
+  assert.equal(d.durations[0], 743);
   stop(); d.callbacks[0](true);
   assert.equal(d.durations.length, 1);
   assert.deepEqual(d.resets, []);
 });
 
-test('a later start resumes the paused fraction and then full 800ms cycles', () => {
+test('a later start resumes the paused fraction and then full 990ms cycles', () => {
   const d = driver(.625);
   const stop = startInfinityMotion(d.motion);
-  assert.equal(d.durations[0], 300);
+  assert.equal(d.durations[0], 371);
   d.callbacks[0](true);
-  assert.deepEqual(d.durations, [300, 800]);
+  assert.deepEqual(d.durations, [371, 990]);
   stop();
 });
 
@@ -67,7 +71,7 @@ test('a cancelled native cycle does not repeat', () => {
 test('the shared crossing resumes as a full loop', () => {
   const d = driver(1);
   const stop = startInfinityMotion(d.motion);
-  assert.deepEqual(d.durations, [800]);
+  assert.deepEqual(d.durations, [990]);
   assert.deepEqual(d.resets, [0]);
   stop();
 });
@@ -100,4 +104,48 @@ test('one count source is selected across audio, silent loops and pause', () => 
   assert.equal(japaAutoCountSource('infinity', false, false), 'none');
   assert.equal(japaAutoCountSource('mala', false, true), 'audio');
   assert.equal(japaAutoCountSource('mala', false, false), 'none');
+});
+
+
+test('ten thousand completed cycles keep one active animation and reject duplicate or stopped callbacks', () => {
+  let current: (finished: boolean) => void = () => { throw new Error('not started'); };
+  let active = 0;
+  let maximum = 0;
+  let count = 0;
+  const stop = startInfinityMotion({
+    readPhase: callback => callback(0),
+    setPhase: () => {},
+    stopPhase: () => {},
+    onCycle: () => { count++; },
+    animate: (_duration, callback) => {
+      active++;
+      maximum = Math.max(maximum, active);
+      current = callback;
+      return { stop: () => { active--; } };
+    },
+  });
+  for (let i = 0; i < 10000; i++) {
+    const completed = current;
+    active--; // The native animation has completed before invoking JS.
+    completed(true);
+    completed(true); // Duplicate completion must not spawn another animation.
+    assert.equal(active, 1);
+  }
+  assert.equal(count, 10000);
+  assert.equal(maximum, 1);
+  const late = current;
+  stop();
+  late(true);
+  assert.equal(active, 0);
+  assert.equal(count, 10000);
+});
+
+
+test('mantra-specific cadence applies to partial resume and every subsequent full utterance', () => {
+  const d = driver(0.25);
+  const stop = startInfinityMotion(d.motion, 10200);
+  assert.deepEqual(d.durations, [7650]);
+  d.callbacks[0](true);
+  assert.deepEqual(d.durations, [7650, 10200]);
+  stop();
 });

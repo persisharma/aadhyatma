@@ -33,6 +33,7 @@
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts
+- [[concepts/karaoke]] — shared whole-word native-opacity highlight progression, host-owned configurable reading clock, Infinity first and future स्वतः integration contract.
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
 - [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 
@@ -53,3 +54,5 @@ _(none yet — add per-model pages as they warrant)_
 - [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards, 84 original daily/deity/humility reflections (including Khatu Shyam Hare Ka Sahara) plus 621 preserved referenced meanings, deity-scoped search and 54 published masters across 18 painted deities.
 
 - [[subsystems/explore-sheet]] — Immersive Story launch sheet, sixteen destinations, cadence, persisted visit ledger and artwork provenance.
+
+- [[subsystems/engagement-prompts]] — rating → social-follow action prompts, confirmations, launch guards and independent campaign resets.

@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { OCCASION_PROFILES, findTimingOccurrences, intersect, paranaWindows, solveOccasion, timingsOnDay } from '../occasionTimings';
 import { computeDayInputs, dayAt, type ScanOptions } from '../panchangDayStore';
 import { runSynchronously } from '../backgroundWork';
-import { occasionRange } from '../occasionTimingFormat';
+import { compactOccasionRange, occasionRange } from '../occasionTimingFormat';
 import { buildPanchangShareModel } from '../panchangShareModel';
 import { computeMuhuratDay } from '../muhurat';
+import { PUBLISHED_OCCASIONS } from './fixtures/occasionPublished';
 const delhi = { cityId: 'delhi', latitude: 28.6139, longitude: 77.209, elevation: 216 };
 const bengaluru = { cityId: 'bengaluru', latitude: 12.9716, longitude: 77.5946, elevation: 920 };
 function solved(date: Date, location = delhi, system: ScanOptions['calendarSystem'] = 'purnimant') {
@@ -24,7 +25,6 @@ for (const [id, month, day, start, end, city] of [
   ['ram-navami', 3, 26, '11:13', '13:41', delhi],
   ['dussehra', 10, 20, '13:59', '14:45', delhi],
   ['maha-navami', 10, 20, '13:59', '14:45', delhi],
-  ['navratri-start', 10, 11, '06:19', '10:12', delhi],
   ['raksha-bandhan', 8, 28, '05:57', '09:48', delhi],
   ['bhai-dooj', 11, 11, '13:10', '15:20', delhi],
   ['akshaya-tritiya', 4, 19, '10:49', '12:20', delhi],
@@ -38,6 +38,43 @@ for (const [id, month, day, start, end, city] of [
     const [h, m] = clock.split(':').map(Number);
     assert.ok(Math.abs(minutes - h * 60 - m) <= 3, `${instant.toString()} vs ${clock}`);
   }
+});
+for (const fixture of PUBLISHED_OCCASIONS) test(`source audit: ${fixture.id} ${fixture.date}`, () => {
+  const [year, month, day] = fixture.date.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  for (const calendarSystem of ['purnimant', 'amanta'] as const) {
+    // Test the actual occurrence lookup, without injecting a profile on an
+    // engine-chosen date. Monthly Ganesh may be hidden by its annual sibling
+    // in timingsOnDay, so inspect the raw source-backed occurrence here.
+    const options = { calendarSystem, location: delhi };
+    const found = runSynchronously(findTimingOccurrences(date, options, new Set(), fixture.id));
+    assert.equal(found.length, 1, `${calendarSystem}: exact source date ${fixture.source}`);
+    const item = solveOccasion(found[0], [0, 1].map(i => computeDayInputs(dayAt(date, i), options)));
+    if (fixture.guidanceOnly) {
+      // This is a withholding regression, NOT a passed preferred-clock match.
+      assert.deepEqual(item.windows, [], 'unverified Ghatasthapana must not advertise a clock');
+      assert.match(item.noteEn ?? '', /Pratipada, lagna and yoga/);
+      continue;
+    }
+    assert.equal(item.windows.length, fixture.clocks.length, `${fixture.source}: complete window count`);
+    fixture.clocks.forEach((pair, index) => pair.forEach((clock, endpoint) => {
+      const [hm, offset] = clock.split('+');
+      const [h, m] = hm.split(':').map(Number);
+      const expected = dayAt(date, Number(offset ?? 0)); expected.setHours(h, m);
+      const actual = endpoint === 0 ? item.windows[index].start : item.windows[index].end;
+      assert.equal(+dayAt(actual, 0), +dayAt(expected, 0), 'civil date is exact, including next-day endpoints');
+      assert.ok(Math.abs(+actual - +expected) <= 3 * 60000, `${calendarSystem}: ${actual} vs ${expected}; ${fixture.source}`);
+    }));
+  }
+});
+test('source audit accounts for every registered occasion, including guidance-only profiles', () => {
+  assert.deepEqual(new Set(PUBLISHED_OCCASIONS.map(f => f.id)), new Set(OCCASION_PROFILES.map(p => p.ruleId)));
+});
+test('coincident Janmashtami traditions are not duplicated in 2026', () => {
+  const options = { calendarSystem: 'purnimant' as const, location: delhi };
+  const found = runSynchronously(findTimingOccurrences(new Date(2026, 8, 4), options, new Set()));
+  assert.ok(found.some(i => i.profile.ruleId === 'janmashtami'));
+  assert.ok(!found.some(i => i.profile.ruleId === 'janmashtami-vaishnava'));
 });
 test('Rama Ekadashi parana is on 6 Nov, after Hari Vasara, 06:37–08:48', () => {
   const item = solved(new Date(2026, 10, 6)).items.find(i => i.ruleId === 'rama-ekadashi');
@@ -87,4 +124,25 @@ test('share model retains all existing sections and receives exact same solved w
   const model = buildPanchangShareModel({ p, md, observances: [], placeHi: 'नई दिल्ली', placeEn: 'New Delhi', calendarSystem: 'purnimant', lang: 'hi', occasionTimings: items });
   assert.equal(model.occasionTimings, items); assert.equal(model.day.length, 8); assert.equal(model.night.length, 8);
   for (const key of ['tithi', 'nakshatra', 'yoga', 'karana', 'rahu', 'gulika', 'yamaganda', 'surya', 'chandra', 'dishaShool', 'agni'] as const) assert.ok(model[key]);
+});
+
+
+test('compact clocks keep previous-night dates on their own endpoints', () => {
+  const date = new Date(2026, 10, 8);
+  const w = { start: new Date(2026, 10, 7, 23, 44), end: new Date(2026, 10, 8, 0, 36), labelHi: '', labelEn: '' };
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '23:44', end: '00:36', startDate: '7 Nov', endDate: '8 Nov' });
+  assert.equal(occasionRange(w, date, 'en'), '23:44, 7 Nov – 00:36');
+});
+test('compact next-day parana and year boundaries retain both endpoint dates', () => {
+  const date = new Date(2026, 10, 5);
+  const w = { start: new Date(2026, 10, 6, 6, 36), end: new Date(2026, 10, 6, 8, 47), labelHi: '', labelEn: '' };
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '06:36', end: '08:47', startDate: '6 Nov', endDate: '6 Nov' });
+  const year = compactOccasionRange({ ...w, start: new Date(2026, 11, 31, 23), end: new Date(2027, 0, 1, 1) }, new Date(2026, 11, 31), 'en');
+  assert.equal(year.startDate, '31 Dec 2026'); assert.equal(year.endDate, '1 Jan 2027');
+});
+test('same-day windows need no date row and events keep just one timestamp', () => {
+  const date = new Date(2026, 10, 8);
+  const w = { start: new Date(2026, 10, 8, 18, 3), end: new Date(2026, 10, 8, 20), labelHi: '', labelEn: '' };
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '18:03', end: '20:00', startDate: undefined, endDate: undefined });
+  assert.deepEqual(compactOccasionRange({ ...w, event: true }, new Date(2026, 10, 7), 'hi'), { start: '18:03', end: undefined, startDate: '8 नवं', endDate: undefined });
 });

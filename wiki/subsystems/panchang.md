@@ -2,7 +2,7 @@
 title: Panchang, Muhurat & Jyotish
 type: subsystem
 sources: [mobile/src/panchang/kundaliLearning.ts, mobile/src/components/KundaliLearning.tsx, mobile/src/components/KundaliArtwork.tsx, mobile/src/panchang/moonHorizon.ts, mobile/src/panchang/useMoonHorizon.ts, mobile/src/components/useVratReminderAction.tsx, mobile/src/contexts/VratFollowContext.tsx, mobile/src/components/VratReminderSheet.tsx, mobile/src/components/VratReminderPermissionNotice.tsx, mobile/src/panchang/observancePortraits.ts, mobile/src/components/ObservanceArtwork.tsx, mobile/src/panchang/lenses.ts, mobile/src/panchang/lensRegistry.ts, mobile/src/panchang/lensStore.ts, mobile/src/panchang/useLenses.ts, mobile/src/components/LensPickerSheet.tsx, mobile/src/panchang/kundaliBasis.ts, mobile/src/panchang/kundaliYoga.ts, mobile/src/panchang/reportFormat.ts, mobile/src/panchang/prashna.ts, mobile/src/panchang/prashnaPurposes.ts, mobile/src/screens/PrashnaScreen.tsx, mobile/src/components/BasisChain.tsx, mobile/src/panchang/arcs.ts, mobile/src/panchang/arcChoiceStore.ts, mobile/src/panchang/useArcChoices.ts, mobile/src/components/ArcStrip.tsx, mobile/src/panchang/engine.ts, mobile/src/panchang/calendarGrid.ts, mobile/src/panchang/panchangDayStore.ts, mobile/src/panchang/backgroundWork.ts, mobile/src/panchang/panchangDayCache.ts, mobile/src/panchang/panchangDayPrewarm.ts, mobile/src/panchang/panchangPrefs.ts, mobile/src/panchang/birthProfiles.ts, mobile/src/panchang/birthProfileStore.ts, mobile/src/components/PersonChips.tsx, mobile/src/panchang/panchangLaunchPrefetch.ts, mobile/src/utils/derivedCacheReset.ts, mobile/src/utils/buildFingerprint.ts, mobile/src/panchang/panchangDaySerde.ts, mobile/src/panchang/muhuratFinderScan.ts, mobile/src/panchang/eventMuhurat.ts, mobile/src/panchang/lagnaSweep.ts, mobile/src/panchang/hora.ts, mobile/src/panchang/taraChandraBala.ts, mobile/src/panchang/useMuhuratBala.ts, mobile/src/components/MuhuratBalaStrip.tsx, docs/roadmap/conventions/muhurat-lagna-v1.md, docs/roadmap/conventions/muhurat-tarabala-v1.md, mobile/src/panchang/abujhMuhurat.ts, mobile/src/panchang/useMuhuratFinder.ts, mobile/src/panchang/pitruSmaran.ts, mobile/src/panchang/pitruSmaranSolves.ts, mobile/src/panchang/usePitruSmaranSolves.ts, mobile/src/screens/MuhuratFinderScreen.tsx, mobile/src/screens/MuhuratResultsScreen.tsx, mobile/src/screens/MuhuratDayDetailScreen.tsx, mobile/src/screens/AbujhDaysScreen.tsx, mobile/src/screens/PitruSmaranDetailScreen.tsx, mobile/src/screens/PitruSmaranListScreen.tsx, mobile/src/screens/PitruSmaranEditScreen.tsx, mobile/src/screens/PitruPakshaOverviewScreen.tsx, mobile/src/components/CalendarDatePicker.tsx, mobile/src/components/MuhuratFinderDoor.tsx, mobile/src/components/ObservanceDetailHero.tsx, mobile/src/components/ObservanceListRow.tsx, mobile/src/components/PanchangTimelineRow.tsx, mobile/src/components/PitruSmaranDayChip.tsx, mobile/src/panchang/festivalEngine.ts, mobile/src/panchang/festivals.ts, mobile/src/panchang/prevailingTithi.ts, mobile/src/panchang/upvasContent.ts, mobile/src/panchang/upvasParana.ts, mobile/src/panchang/useUpvasParana.ts, mobile/src/screens/ObservanceDetailScreen.tsx, docs/roadmap/prds/09-vrat-upvas-phase4.md, mobile/src/panchang/muhurat.ts, mobile/src/panchang/muhuratFormat.ts, mobile/src/panchang/useMuhurat.ts, mobile/src/panchang/usePanchang.ts, mobile/src/panchang/kundali.ts, mobile/src/panchang/useKundali.ts, mobile/src/panchang/gunaMilan.ts, mobile/src/panchang/gunaMilanConvention.ts, mobile/src/panchang/gunaMilanState.ts, mobile/src/panchang/gunaMilanShare.ts, mobile/src/panchang/namkaran.ts, mobile/src/panchang/namkaranConvention.ts, mobile/src/panchang/namkaranState.ts, mobile/src/panchang/namkaranShare.ts, mobile/src/screens/HomeScreen.tsx, mobile/src/screens/PanchangScreen.tsx, mobile/src/screens/MuhuratDetailScreen.tsx, mobile/src/screens/KundaliScreen.tsx, mobile/src/screens/RashifalScreen.tsx, mobile/src/screens/GunaMilanScreen.tsx, mobile/src/screens/NamkaranScreen.tsx, mobile/src/screens/NamkaranResultScreen.tsx, mobile/src/screens/NamkaranRashiScreen.tsx, mobile/src/components/TodayStrip.tsx, mobile/src/components/MuhuratGlanceCard.tsx, mobile/src/components/MuhuratCardBody.tsx, mobile/src/components/NorthIndianChart.tsx, mobile/src/components/KundaliOverview.tsx, mobile/src/components/JyotishGuidanceRows.tsx, mobile/src/components/JyotishPracticeCard.tsx, mobile/src/components/JyotishShareCard.tsx, mobile/src/components/JyotishShareSheet.tsx, mobile/src/components/JyotishStateCard.tsx, mobile/src/components/NamaksharCard.tsx, mobile/src/components/NameDetailSheet.tsx, mobile/src/components/NamkaranShareCard.tsx, mobile/src/navigation/TabNavigator.tsx, mobile/src/navigation/PanchangStackNavigator.tsx, mobile/.maestro/kundali-smoke.yaml, mobile/.maestro/guna-milan-smoke.yaml, mobile/.maestro/namkaran-smoke.yaml, docs/roadmap/prds/14-daily-muhurat.md, docs/roadmap/trds/14-daily-muhurat.trd.md, docs/roadmap/prds/16-guna-milan.md, docs/roadmap/conventions/guna-milan-v1.md, docs/roadmap/prds/17-namkaran.md, docs/roadmap/trds/17-namkaran.trd.md, mobile/src/components/CategoryCard.tsx, mobile/src/panchang/shubhYoga.ts, mobile/src/panchang/useShubhYoga.ts, mobile/src/components/MuhuratChip.tsx, mobile/src/components/ShubhYogaCard.tsx, docs/roadmap/conventions/shubh-yoga-v1.md, docs/roadmap/prds/27-shubh-yoga.md, mobile/src/panchang/prashnaPhase.ts, mobile/src/panchang/useJyotishNow.ts, mobile/src/components/PrashnaPhaseContent.tsx, mobile/src/panchang/prashnaGuidance.ts, mobile/src/panchang/prashnaQuestions.ts, mobile/src/panchang/vaas.ts, mobile/src/components/DayVaasCards.tsx, mobile/src/panchang/grahaReading.ts, mobile/src/panchang/grahaReadingContent.ts, mobile/src/panchang/grahaReviewSheet.ts, mobile/src/components/GrahaReadingList.tsx, mobile/scripts/export-graha-review.mts, docs/roadmap/conventions/graha-reading-v1.md]
-last_verified_date: 2026-10-29
+last_verified_date: 2026-11-07
 confidence: high
 status: current
 ---
@@ -115,6 +115,7 @@ The Panchang tab provides a Hindu-calendar almanac: date picker, festival/vrat o
 - Pitru Smaran is a device-only ledger with four standing/contextual touchpoints: the More management flow, an always-visible pinned row under My Vrat in the Vrat/Parv catalog, a zero-state Home DISCOVER card, and public/private chips on Home Today and the Panchang day panel. Private chips match both the saved annual tithi and the person's mapped Pitru-Paksha day. The person detail, Pitru-Paksha overview, and public Sarvapitri chip now open the narrow `shraddha-tarpan-vidhi`; only `{vidhiId, dateMs}` crosses the route, never a family name, relation or ledger id. Public season reminders follow the festive preference and never name family; a deliberately saved new person defaults their day-before/day-of reminder on after the shared OS grant succeeds, while denied and legacy-omitted preferences remain off.
 - `PanchangTimelineRow` — marker/date/title timeline shared by Panchang Upcoming and Pitru Paksha. Its compact and comfortable densities preserve the original layouts; Pitru can add one or more family-name lines.
 - **The पितृ स्मरण answers are persisted, and the detail screen paints in two stages.** Every date on those surfaces is a `scanForRule` walk over hundreds of civil days; cold, the detail screen's four solves measure ~423 ms on a desktop JIT (next 117 · following 259 · window 43 · mapping 3), which is multi-second on Hermes. `pitruSmaranSolves.ts` is the AsyncStorage layer (`@vedansh:pitru-solves:`, versioned with `PANCHANG_DAY_CACHE_VERSION`, registered in `DERIVED_CACHE_KEY_PREFIXES`) holding occurrences per tithi rule and windows per year; `usePitruSmaranSolves.ts` is the one hook path both screens take. The list solves through it and then prewarms the detail's dates on idle time.
+- **Every पितृ स्मरण / जन्म तिथि list and detail solve is cooperative** (Nov 2026). The hooks in `usePitruSmaranSolves.ts` / `useJanmaTithi.ts` used to run every person's annual scan, the Pitru Paksha window and the detail prewarm as ONE task behind `runAfterInteractions` + `setTimeout(0)` — a 5-person cold list measured a single 5,975 ms block under Jest (deferring a sync solve does not make it yield). They now await `ensureOccurrencesAsync` / `ensurePakshaWindowAsync` / `pakshaShraddhaDayAsync` (same generators as the sync APIs, so identical dates — pinned per tithi in `pitruSmaran.test.ts`), skip the solve when the list is warm, and run the detail prewarm after the rows publish. The detail seed computes the fortnight day only when `isPitruPakshaDayTableWarm` — a window primed from disk leaves its day table cold. `smaranSolvesYield.jest.test.tsx` fails if any of these hooks calls a synchronous solver or lets a solve finish before a queued input callback. Screen suites that mock the sync solvers must mock the `*Steps` / `*Async` variants from the SAME fns (see `PitruSmaranScreens.test.tsx`).
 - `PitruSmaranDayChip` remains dedicated: it owns private-device family matching and navigation and keeps the muted-gold treatment. The Pitru detail's annual-answer facts stay local information panels; only interactive Gita rows carry chevrons. In the edit flow, `Only date known` reuses `CalendarDatePicker` for the civil date, then shows the derived sunrise tithi for confirmation; the lunar month/paksha/tithi selector remains separate because it is not a Gregorian calendar date.
 
 **Testing** (run via `npm run test:engine` — tsx, not Jest):
@@ -183,7 +184,7 @@ food, abstentions, prohibitions, parana meal and regional variance separate and 
 - **`visibility: 'regional'` is RETIRED and a test fails the build if a rule carries it** — the value meant "invisible, with nothing that opts back in" (`getObservanceCatalog()` filters to `default` and no surface passes `includeHidden`). A regionally-kept observance that a whole state keeps ships `default` and carries its identity in `shortDescription*` + `searchTerms` (the `bhadwa-chauth` pattern); one that would be noise for everyone ships `default` + a `lens` (`karthigai-vrat` → `tamil`, `rohini-vrat` → `jain`) and then lists itself on the lens sheet and the आपके पंचांग से card automatically (see the lens block above; RULEBOOK §23a.5).
 - **A regional NAME for a day that already ships is an alias, not a rule** — `EKADASHI_EXTRA_SEARCH_TERMS` (जलझूलनी/देव झूलनी on Parivartini, मौन एकादशी on Mokshada) and `SANKRANTI_ALIASES` (सतुआनी/बैसाखी/बिहू/पुथांडु/विषु on Mesha, पोंगल/खिचड़ी on Makar) exist so the search finds the local name without a second rule putting the same tithi on the calendar twice.
 - **A vrat/upavas rule with no `bhogId` fails `bhogContent.test.ts`** — the gate counts every `category: 'vrat' | 'upavas'` rule and requires a verified, exposed bhog profile. Joining a shared profile is a two-sided edit: the `bhogId` hook on the rule AND the rule's id in that profile's `observanceIds` (the test checks both directions), plus the profile's tradition note extended to name the new vrat honestly.
-- **Regenerate the precomputed observance table after any matching change** — `TZ=Asia/Kolkata npx tsx scripts/gen-precomputed-observances.mts` (from `mobile/`); the app reads `precomputedObservances.ts` for Ujjain, so an engine fix that isn't regenerated never reaches users for 2024–2031.
+- **Regenerate the precomputed observance table after any matching change** — `TZ=Asia/Kolkata npx tsx scripts/gen-precomputed-observances.mts` (from `mobile/`); the app reads `precomputedObservances.ts` for Ujjain, so an engine fix that isn't regenerated never reaches users for 2024–2035. **The table also has an END** — a year outside it falls back to `resolveObservancesForYearLive`, a synchronous ~1.5 s (desktop) scan, and `getUpcomingObservances` / `getNextOccurrences` / the widget's late-December window read NEXT year, so running out freezes the Vrat tab and the launch-time vrat reminder pass a year early. `precomputedCoverage.test.ts` fails once coverage drops below this year + 2 (extended 2031 → 2035 in Nov 2026; all existing rows regenerated byte-identical).
 - **Bump `CACHE_VERSION` in `observanceCache.ts` with every such change** — non-Ujjain cities persist their scans to AsyncStorage keyed by version; without the bump, previously-scanned devices hydrate the old dates forever and never re-run the scan (the fix ships only to Ujjain and fresh installs). **A pure catalog ADDITION needs the bump too**, even though no matcher moved: the stored year has no rows for the new rule ids. (v4, Sept 2026, is exactly that case.)
 - **An area tag (`OBSERVANCE_AREAS`, `observanceAreas.ts`) is NOT a lens.** It only labels a row and narrows the क्षेत्र chip filter on `ObservanceListScreen`; it never hides a rule from a calendar. Hiding is `lens`. A lensed rule reads its lens as its area, so never list a lensed rule in the map (the test fails). The areas share the lens ids and the lens registry's names (RULEBOOK §23a.14, design.md §33).
 - **The Vishnu-avatar jayantis are read at APARAHNA, not sunrise** — `varaha-`, `matsya-`, `kalki-` and `hayagriva-jayanti` carry `dayRule: 'aparahna'` because Drik fixes their day by an afternoon puja window. For two of them this changes the date: Varaha 2026 is 13 Sep, not the sunrise 14th, and Hayagriva 2026 is 27 Aug, a day before Raksha Bandhan on the same Shravana Purnima. So `matsya-jayanti` is NOT a sibling of `gangaur` (they split in 2028–2031), and `hayagriva-jayanti` is NOT a sibling of `raksha-bandhan`. Do not "fix" either to udaya; the published dates are pinned in `observanceDates.test.ts` (SECTION_A_PUBLISHED).
@@ -276,7 +277,14 @@ The public Pitru Paksha chip uses `ensurePakshaWindowAsync`, yielding inside the
 civil-date scan. Synchronous and asynchronous callers drive the same generator,
 so kshaya/vriddhi/month rules and persisted schemas are unchanged. Both paths
 use `backgroundWork.ts`, a shared round-robin queue with a 4 ms slice budget
-checked after each engine unit. This is cooperative JavaScript scheduling, not a
+checked after each engine unit. Since Nov 2026 it has two lanes: `runInBackground(work,
+isCancelled, 'foreground')` is for an answer a person is looking at a spinner for (the
+पितृ स्मरण / जन्म तिथि list rows and detail stages); while any foreground job is queued a
+tick runs only foreground work, in a 12 ms slice. The default `background` lane is
+unchanged. Without it, a cold Pitru detail opened during the launch burst shared the
+4 ms slices round-robin with the widget plan, muhurat prewarm and reminder passes, and
+on the iOS Simulator its second stage missed the e2e flow's 15 s budget
+(`smaranSolvesYield.jest.test.tsx` reproduces it: 141 background units ran first). This is cooperative JavaScript scheduling, not a
 separate thread or a hard 4 ms bound on an individual astronomy primitive.
 Cache hydration still starts immediately, and warm results retain first-render
 seeding. Release-device tap latency requires Hermes verification; timer
@@ -382,6 +390,71 @@ publication by date/city/calendar/lenses. App and 4:5 share ribbon use typed
 painted FestivalMotif art and FestiveCorners; text sharing includes every window.
 Art is a bundled transparent 4x3 atlas, with reviewed source/hash metadata in
 `docs/reviews/festival-art/`. Full/focused export readiness waits for all painted
-slots, not only the brand mark. Ghatasthapana uses the first daylight third/Abhijit with explicit
-Chitra/Vaidhriti advisory; Ayudha and Shastra retain distinct dates. Coverage/exceptions and
+slots, not only the brand mark. Exact Ghatasthapana clocks are withheld: the
+first-third/Abhijit rule fails the published Chaitra 2026/2027 preferred windows.
+The Drik audit pins 115 cases across all 53 profiles; 109 are clock comparisons,
+six are withholding regressions. Shared-ID Putrada matches both months; Smarta
+after-midday parana ends with Aparahna; geometric-centre Moonrise is shared by
+Panchang and vrat matching, with persisted caches invalidated. Ayudha and Shastra retain distinct dates. Coverage/exceptions and
 verification: `docs/reviews/festival-muhurat.md`.
+
+
+### Individual year-round occasion cards
+Every catalog identity has an individual festive hero export. The verified timing registry remains separate from full-catalog guidance coverage. New heavy scene artwork is R2-only and publication/hash verification precedes manifest activation. Catalog-only cards omit dates; separate Holi/Holika and Maha Navami/Ayudha identities are preserved. See `docs/reviews/year-round-occasion-cards.md` for acceptance, routes and evidence.
+
+### Occasion date corrections — 6 November 2026
+
+`festivals.ts` declares Ganga Dussehra’s exclusive Adhik exception, Rishi Panchami’s Madhyahna span, Purnima fasting’s Madhyahna qualification and monthly Krishna’s Smarta midnight/Rohini convention. `specialDayRules.ts` uses the exact night midpoint, correcting annual Janmashtami 2029 and suppressing its coincident Vaishnava duplicate. Bundled years 2024–2031 and observance cache v12 are regenerated together. Published facts, independent Swiss/Moshier fixtures and before-change control hashes are separate evidence. See `docs/reviews/occasion-date-corrections.md` for sources, multi-city checks, regional uncertainty and acceptance status.
+
+
+### Compact Panchang muhurats and illustrated Vrat cards — 7 November 2026
+Panchang shows one CompactOccasionCard with the approved parchment/double-gold
+frame and painted motifs. The fitted revision uses 14dp padding, 42dp corners and
+a 17/29 heading, without a redundant subtitle. Each occasion has one 28dp motif
+and complete 14/24 heading, followed by every ritual window. A normal-width window
+pairs its 11/19 ritual label with a 132dp time column. Numeric endpoints use Inter
+SemiBold 18/26; civil dates sit under their own endpoint at script-safe 11/19.
+Dates never enter the large numeric text. An overnight range therefore reads
+23:44 – 00:36 with 7 Nov / 8 Nov beneath the respective endpoints. Both years
+are explicit across a year boundary. Events show one timestamp. Full date-aware
+accessibility descriptions and existing share formatting are preserved.
+
+The card measures its actual inner width once per width change; below 280dp, at
+Large reading size or enlarged system text, each window stacks and endpoints
+wrap as whole groups. No repeated publication for identical layout callbacks,
+content truncation, accessibility-scaling suppression or font shrinking. Every
+window is retained without repeating its occasion heading. Ordinary days omit
+the card; guidance-only days retain a Vrat door, and failures retain Retry. The
+44dp minimum action opens Vrat with the selected date and catalog mode, clears an
+old search and reveals the cards. Detail Back retains the dated catalog state.
+
+OccasionSection evaluates the full OccasionTimingsCard module only for the
+illustrated view. The Vrat landing owns the complete 3:2 painted cards, local
+date/city label, ritual windows/guidance, independent per-occasion share and
+Details & katha action. Details use each occurrence's own date, including a
+prior-day midnight ceremony. Today introductions are not duplicated. Muhurat and
+Observance detail keep their illustrated cards and export contracts.
+
+OccasionInlineArtwork retains reserved frames, offline thumbnails, deferred
+loading and blur/unmount cancellation. The summary uses the existing bundled
+atlas only. Yielded/cancelled calculation, location/calendar/lens keys and the
+complete Panchang export gate remain. No new asset, runtime dependency, timer or
+calculation was introduced. Regression dimensions must reach the actual RN hook;
+namespace-only spies do not establish a responsive matrix. Font bounds are pinned
+to the shipped Inter bytes and all 1,440 clocks. The native iOS PR gate executes
+the compact-fit matrix; manual/push festival runs retain the full occasion set.
+Human native visual review, Android and lower-end ANR/frame-time acceptance remain
+separate gates. See docs/reviews/2026-11-07-compact-muhurat-fit.md.
+
+
+### Panchang entry responsiveness — 7 November 2026
+Occasion lookup uses the shared yielding day matcher. Solar matches inspect the
+queried civil day's two midnight longitudes; Varalakshmi checks only the selected
+weekday's 0–6 forward Purnima anchors and yields between candidates. A profile
+must never resolve a year inside a single scheduler step. The synchronous year
+resolver remains available for offline generators; its source conventions and
+published calendar dates are unchanged. Panchang selection now fills missing day
+inputs through cachedDayInputsAsync, not a synchronous solve inside setTimeout.
+Text/tab/Back input must remain responsive while these tasks resolve; delayed
+publication is distinct from blocked input. Device ANR/frame-time acceptance is
+required separately from unit timing and absence of crash reports.

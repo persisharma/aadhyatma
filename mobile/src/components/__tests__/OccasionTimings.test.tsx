@@ -16,6 +16,7 @@ import { buildPanchangShareModel } from '@/panchang/panchangShareModel';
 import { computeMuhuratDay } from '@/panchang/muhurat';
 import { panchangShareable } from '@/utils/panchangShare';
 import { hydrateShareBrand } from '@/utils/shareBrandStore';
+jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: (_request: unknown, callback: (uri: string) => void) => { callback('file:///decoded-hero.webp'); return () => {}; }, evictBackgroundAsset: jest.fn() }));
 const mockShare = jest.fn();
 let mockFontFactor = 1;
 jest.mock('@/contexts/FontScaleContext', () => ({ useFontScale: () => ({ factor: mockFontFactor }) }));
@@ -80,11 +81,11 @@ test('full export waits for both painted corners and the festival miniature befo
 });
 test('focused export also waits for the complete painted artwork', async () => {
   const onReady = jest.fn();
-  const tree = await mount(<OccasionShareCard items={items} date={date} placeHi="नई दिल्ली" placeEn="New Delhi" lang="en" onReady={onReady} />);
+  const tree = await mount(<OccasionShareCard items={[items[0]]} date={date} placeHi="नई दिल्ली" placeEn="New Delhi" lang="en" onReady={onReady} />);
   const load = (id: string) => tree.root.findAllByType(Image).find(n => n.props.testID === id)!.props.onLoad();
   act(() => { load('festival-art-left'); load('festival-art-right'); });
   expect(onReady).not.toHaveBeenCalledWith(true);
-  act(() => load('festival-art-diya'));
+  act(() => tree.root.findAllByType(Image).filter(n => n.props.testID === 'occasion-hero-image').forEach(n => n.props.onLoad()));
   expect(onReady).toHaveBeenCalledWith(true);
 });
 test('bundled painted art matches the reviewed transparent source and atlas map', () => {

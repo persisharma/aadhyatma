@@ -250,32 +250,26 @@ export function GitaSaarStoryDetails({
           {copy(story.everyday)}
         </ProseParagraph>
       </View>
-      <ProseParagraph style={[label, { color: colors.inkMuted, marginTop: 18 }]}>
+      {story.sources.some(source => source.inAppRef) && <ProseParagraph style={[label, { color: colors.inkMuted, marginTop: 18 }]}>
         {pick(lang, {
-          hi: 'मूल ग्रंथ',
-          en: 'Story sources',
-          gu: 'મૂળ ગ્રંથ',
-          kn: 'ಮೂಲ ಗ್ರಂಥಗಳು',
+          hi: 'ऐप में संबंधित पाठ',
+          en: 'Related readings in Vedansh',
+          gu: 'ઍપમાં સંબંધિત પાઠ',
+          kn: 'ಆ್ಯಪ್‌ನಲ್ಲಿ ಸಂಬಂಧಿತ ಪಠ್ಯಗಳು',
         })}
       </ProseParagraph>
-      {story.sources.map((source) => {
+      }
+      {story.sources.filter(source => source.inAppRef).map((source) => {
         const passage =
           lang === 'hi' ? source.passageHi ?? source.passage : source.passage;
         const ref = source.inAppRef;
         const citation = `${copy(source.title)} · ${passage}`;
-        if (!ref) {
-          return (
-            <View key={source.url} style={[styles.source, { borderColor: colors.divider }]}>
-              <AppIcon name="text" color={colors.saffronDeep} size={16} />
-              <ProseParagraph style={[label, { flex: 1 }]}>{citation}</ProseParagraph>
-            </View>
-          );
-        }
+        if (!ref) return null;
         const canOpen =
           ref.kind === 'gita' ? Boolean(onOpenGitaRef) : Boolean(onOpenRamayanRef);
         return (
           <Pressable
-            key={source.url}
+            key={ref.kind === 'gita' ? `gita-${ref.chapter}.${ref.verse}` : `valmiki-${ref.kanda}.${ref.sarga}`}
             testID={
               ref.kind === 'gita'
                 ? `gita-saar-source-gita-${ref.chapter}.${ref.verse}`

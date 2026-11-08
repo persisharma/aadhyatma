@@ -155,7 +155,7 @@ export default function DaanKathaScreen({ navigation, route }: Props) {
         </View>
 
         <ProseParagraph style={{ fontFamily: bodyFont, fontSize: 12, lineHeight: 18, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
-          {contentByLang(lang, `स्रोत: ${katha.canonHi}`, `Source: ${katha.canonEn}`)}
+          {contentByLang(lang, katha.canonHi, katha.canonEn)}
         </ProseParagraph>
         <Text style={{ fontFamily: titleFont, fontSize: 16, color: colors.gold, textAlign: 'center', marginTop: spacing.md, opacity: 0.8 }}>
           ॥ ॐ ॥

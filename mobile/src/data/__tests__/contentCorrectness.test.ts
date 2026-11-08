@@ -969,6 +969,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       rel !== 'suvicharManifest.json' &&
       // Parshuram activation contains only verified artwork hashes, not scripture.
       rel !== 'parshuramPublication.json' &&
+      // Text-free festival art hashes, not scripture. OccasionYearCards checks
+      // the complete source ledger, SHA-256 and catalog subject coverage.
+      rel !== 'festivalHeroManifest.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);

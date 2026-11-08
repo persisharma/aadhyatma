@@ -1,13 +1,14 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import KidsStoriesHomeCard from '../KidsStoriesHomeCard';
 import manifest from '@/data/kidsStoryAssetManifest.json';
 
 let mockUri: string | null = null;
+let mockLang = 'en';
 const mockCache = jest.fn<string | null, [unknown]>(() => mockUri);
 jest.mock('@/utils/useCachedAsset', () => ({ useCachedAsset: (request: unknown) => mockCache(request) }));
-jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'en' }) }));
+jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('expo-linear-gradient', () => ({ LinearGradient: 'LinearGradient' }));
 
 test('the Home story door remains usable while CDN art loads, then uses the cached file without resizing', () => {
@@ -15,7 +16,10 @@ test('the Home story door remains usable while CDN art loads, then uses the cach
   const element = <KidsStoriesHomeCard onPress={onPress} onPressIn={() => undefined} onPressOut={() => undefined} />;
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(element); });
-  const placeholder = tree.root.findAllByType(View).find(n => StyleSheet.flatten(n.props.style)?.width === 100)!;
+  const placeholder = tree.root.findAllByType(View).find(n => {
+    const style = StyleSheet.flatten(n.props.style);
+    return style?.width === 100 && style.backgroundColor;
+  })!;
   expect(StyleSheet.flatten(placeholder.props.style).height).toBe(100);
   expect(tree.root.findAllByType(Image)).toHaveLength(0);
   const request = mockCache.mock.calls[0][0];
@@ -30,4 +34,18 @@ test('the Home story door remains usable while CDN art loads, then uses the cach
   expect(StyleSheet.flatten(image.props.style)).toMatchObject({ width: 100, height: 100 });
   act(() => tree.unmount());
   mockUri = null;
+});
+
+test('the Kannada primary title contains no Gujarati or Devanagari glyphs', () => {
+  mockLang = 'kn';
+  let tree!: TestRenderer.ReactTestRenderer;
+  try {
+    act(() => { tree = TestRenderer.create(<KidsStoriesHomeCard onPress={() => undefined} onPressIn={() => undefined} onPressOut={() => undefined} />); });
+    const primary = tree.root.findAllByType(Text)[0].props.children as string;
+    expect(primary).toMatch(/[\u0C80-\u0CFF]/);
+    expect(primary).not.toMatch(/[\u0900-\u097F\u0A80-\u0AFF]/);
+  } finally {
+    act(() => tree.unmount());
+    mockLang = 'en';
+  }
 });

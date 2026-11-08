@@ -14,10 +14,10 @@ export async function prepareOccasionTimings(date: Date, options: ScanOptions, l
     occurrences.push(...found);
   }
   const days = new Map<string, Date>();
-  for (const o of occurrences) for (const offset of [0, 1]) {
+  for (const o of occurrences.filter(o => o.profile.recipe !== 'guidance')) for (const offset of [0, 1]) {
     const day = dayAt(o.date, offset); days.set(dateKeyFor(day), day);
   }
-  if (!days.size) return [];
+  if (!occurrences.length) return [];
   await hydratePanchangDays(options.location, options.calendarSystem, [...days.keys()]);
   if (cancelled()) return;
   const store = dayStoreFor(scopeKeyFor(options.location, options.calendarSystem));

@@ -31,7 +31,10 @@ test('26 Oct 2026, Bengaluru: the card carries the engine solve, in the order th
   assert.equal(m.place, 'बेंगलुरु');
   assert.equal(m.date, 'सोमवार, 26 अक्टूबर 2026');
   assert.equal(m.identity, 'आश्विन शुक्ल पूर्णिमा · पूर्णिमांत · विक्रम संवत् 2083');
-  assert.deepEqual([m.brahma, m.sunrise, m.sunset, m.moonrise], ['04:35 – 05:23', '06:11', '17:55', '17:58']);
+  // The shared engine now uses geometric-centre chandrodaya, rather than the
+  // old upper-limb/refraction clock. Published Moon regressions live in
+  // occasionTimings.test.ts; this snapshot pins formatting/order on the share.
+  assert.deepEqual([m.brahma, m.sunrise, m.sunset, m.moonrise], ['04:35 – 05:23', '06:11', '17:55', '18:01']);
   assert.deepEqual(m.festival, { name: 'वाल्मीकि जयंती · महर्षि वाल्मीकि' });
 
   assert.deepEqual(m.tithi, { name: 'पूर्णिमा', lines: ['09:41 तक, फिर प्रतिपदा'] });

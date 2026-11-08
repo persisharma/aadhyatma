@@ -155,3 +155,12 @@ design.md §74 (+ §63.5); contract: RULEBOOK §28; PRD + annotated HTML prototy
   date-independently in Jest. Authored 2026-09-23 without a simulator; not yet run.
 - **Jest `testMatch`** gained `src/data/pitru/__tests__/**` (no tsx scripts live there). Do not
   add these suites to `test:data`.
+
+
+## Public research boundary — 6 November 2026
+
+RULEBOOK §11.16 supersedes prior public-source-display descriptions above.
+Research bibliographies, publisher/verification notes and source actions stay
+internal; meaningful scripture identities, poet attribution and real related
+in-app reading links remain. See `docs/reviews/2026-11-06-content-source-ui.md`
+for the audited callers, preserved provenance and separate native acceptance.

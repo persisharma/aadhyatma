@@ -1,0 +1,20 @@
+# Start on Home's visible section heading, away from the Today carousel and
+# system screen edges. A successful gesture must expose the actual entry card.
+appId: com.prashantsharma.vedansh
+---
+- runFlow:
+    when:
+      visible: CATEGORIES
+    commands:
+      - swipe:
+          from: { text: CATEGORIES }
+          direction: UP
+          duration: 700
+- scrollUntilVisible:
+    element: { id: home-sanatan-card }
+    direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 100
+    centerElement: true
+- waitForAnimationToEnd
+- assertVisible: { id: home-sanatan-card }

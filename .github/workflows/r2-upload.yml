@@ -1,0 +1,121 @@
+name: R2 Upload
+
+# A merge into main is a push. PRs validate locally without receiving R2 secrets.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'mobile/assets/**'
+      - 'mobile/src/data/*Manifest.json'
+      - 'docs/content-parity/ramayan-comic/**'
+      - 'scripts/r2-collections.json'
+      - 'scripts/r2-client.mjs'
+      - 'scripts/publish-r2-assets.mjs'
+      - 'scripts/upload-r2-assets.mjs'
+      - 'scripts/tests/r2-*.test.mjs'
+      - '.github/workflows/r2-upload.yml'
+  pull_request:
+    paths:
+      - 'mobile/assets/**'
+      - 'mobile/src/data/*Manifest.json'
+      - 'docs/content-parity/ramayan-comic/**'
+      - 'scripts/r2-collections.json'
+      - 'scripts/r2-client.mjs'
+      - 'scripts/publish-r2-assets.mjs'
+      - 'scripts/upload-r2-assets.mjs'
+      - 'scripts/tests/r2-*.test.mjs'
+      - '.github/workflows/r2-upload.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Upload and verify, or validate sources without network calls
+        type: choice
+        default: publish
+        options: [publish, dry-run]
+      collection:
+        description: Asset collection (all also catches up previously skipped uploads)
+        type: choice
+        default: all
+        options:
+          - all
+          - kids-stories
+          - audio-library
+          - reading-backgrounds
+          - reader-illustrations
+          - suvichar
+          - devotional-share
+          - vidhi-steps
+          - festival-hero
+          - comic-balakanda
+          - comic-ayodhya
+
+permissions:
+  contents: read
+
+# Serialize main's automatic/manual uploads. Never cancel a partial publication.
+concurrency:
+  group: r2-upload-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test uploader, publication failures and recovery
+        run: node --test scripts/tests/r2-*.test.mjs
+      - name: Validate committed sources and manifests without uploading
+        env:
+          COLLECTION: ${{ inputs.collection || 'all' }}
+        run: node scripts/publish-r2-assets.mjs --dry-run --collection "$COLLECTION"
+      - name: Retain source validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r2-source-plan-${{ github.sha }}
+          path: tmp/r2-publication/report.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+  publish:
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && (github.event_name == 'push' || inputs.mode == 'publish')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check credentials (skip gracefully until configured)
+        id: credentials
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: node scripts/publish-r2-assets.mjs --check-secrets
+      - name: Upload missing objects and verify every public SHA-256
+        if: steps.credentials.outputs.ready == 'true'
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          COLLECTION: ${{ inputs.collection || 'all' }}
+        run: node scripts/publish-r2-assets.mjs --collection "$COLLECTION"
+      - name: Retain CDN publication evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r2-publication-${{ github.sha }}
+          path: tmp/r2-publication/report.json
+          if-no-files-found: ignore
+          retention-days: 30

@@ -1,0 +1,92 @@
+[
+  {
+    "name": "govardhan",
+    "path": "mobile/assets/festival-hero/govardhan.webp",
+    "sha256": "43aea39a45e220b01d82d97fbb87a351b865157597ca81af0bf97cb852a3678d",
+    "bytes": 478206,
+    "originalSha256": "2b894856f9d55bd4ab0eada56cb53e0e82488d6da962a88a3ed84cc0885ac689",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "dhanteras",
+    "path": "mobile/assets/festival-hero/dhanteras.webp",
+    "sha256": "c4e4d3628359d208b998053a010296861fe5bf8e598e9b762dffeaadd66eab74",
+    "bytes": 561088,
+    "originalSha256": "e4d48a82435db672320236e7dea0e5b8832a712c6e20ecffdf723cba2d41a851",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "holika",
+    "path": "mobile/assets/festival-hero/holika.webp",
+    "sha256": "37039f16aa186d11a1c778782a4641c4340ae7f531908afc7ad186165cb8f1a1",
+    "bytes": 533698,
+    "originalSha256": "a2a7d36398b87068a1987c6d324d583d99e387ac70fe68e6a560664eca0092e4",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "shastra",
+    "path": "mobile/assets/festival-hero/shastra.webp",
+    "sha256": "229136b973248b9d570786169fa63cbc7fb1a509cb049200b89004bb93f5cce8",
+    "bytes": 630358,
+    "originalSha256": "a498796ed7814e98cb0df6c21346f61e7b17a7324c8c25e6622391850b95c160",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "raksha-bandhan",
+    "path": "mobile/assets/festival-hero/raksha-bandhan.webp",
+    "sha256": "c4b9a5bb4509db849285c8957a57176f7d8bc722748eeb508368f60aa87bcd05",
+    "bytes": 497186,
+    "originalSha256": "3217e156b97b727a4ad7dd01da5abb962a13679bd0b4db2be2adcc45c1bc0d3d",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "bhai-dooj",
+    "path": "mobile/assets/festival-hero/bhai-dooj.webp",
+    "sha256": "95a96f83eba7627ac8842f370d967c5f16d9c6bf165cc0566c8c0071e8528d1c",
+    "bytes": 452384,
+    "originalSha256": "bc7af69cb2351e09d4c2d8b9b153c7010cc9d25c6cf906ba452aff7326a21cba",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "chhath",
+    "path": "mobile/assets/festival-hero/chhath.webp",
+    "sha256": "5d0b5319696240bc14362100c9bc55163b8820cf1b4c45783801b6905cd866bb",
+    "bytes": 509720,
+    "originalSha256": "72a1ff577b17b330f71cad3276406f731bbe361f958288cccc1f677e2b204648",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "navratri",
+    "path": "mobile/assets/festival-hero/navratri.webp",
+    "sha256": "ebed48223d3dd088752097500da74fec9c370acbcb3cfc64a6aed667d13a1a96",
+    "bytes": 559868,
+    "originalSha256": "898364dab0507529bd1f2ff660d5ab6020a3b700d5337c565c2bf1090d027001",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "tulsi-vivah",
+    "path": "mobile/assets/festival-hero/tulsi-vivah.webp",
+    "sha256": "a7172ad4c39fd9c5b767887f9ddf6b757b1674597970309c12e302a8210334df",
+    "bytes": 565288,
+    "originalSha256": "0e8467c314ca7434d448563363cd29b12c2cd0c2e89013914fc175d26e004bfc",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "name": "sankranti",
+    "path": "mobile/assets/festival-hero/sankranti.webp",
+    "sha256": "612e3a41167d21707b899d27e4d174518e779ac738da1c25b9f1cdccb6cd6a61",
+    "bytes": 466438,
+    "originalSha256": "f22ca85620636de677fa250d692657ef8f039ce4698a5c50a5ceb57602db0fe6",
+    "width": 1536,
+    "height": 1024
+  }
+]

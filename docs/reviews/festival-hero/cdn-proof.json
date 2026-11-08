@@ -1,0 +1,65 @@
+{
+  "verifiedAt": "2026-11-06T17:11:19.472Z",
+  "assets": [
+    {
+      "name": "govardhan",
+      "url": "https://cdn.vedansh.app/festival-hero/43aea39a45e220b0.webp",
+      "sha256": "43aea39a45e220b01d82d97fbb87a351b865157597ca81af0bf97cb852a3678d",
+      "bytes": 478206
+    },
+    {
+      "name": "dhanteras",
+      "url": "https://cdn.vedansh.app/festival-hero/c4e4d3628359d208.webp",
+      "sha256": "c4e4d3628359d208b998053a010296861fe5bf8e598e9b762dffeaadd66eab74",
+      "bytes": 561088
+    },
+    {
+      "name": "holika",
+      "url": "https://cdn.vedansh.app/festival-hero/37039f16aa186d11.webp",
+      "sha256": "37039f16aa186d11a1c778782a4641c4340ae7f531908afc7ad186165cb8f1a1",
+      "bytes": 533698
+    },
+    {
+      "name": "shastra",
+      "url": "https://cdn.vedansh.app/festival-hero/229136b973248b9d.webp",
+      "sha256": "229136b973248b9d570786169fa63cbc7fb1a509cb049200b89004bb93f5cce8",
+      "bytes": 630358
+    },
+    {
+      "name": "raksha-bandhan",
+      "url": "https://cdn.vedansh.app/festival-hero/c4b9a5bb4509db84.webp",
+      "sha256": "c4b9a5bb4509db849285c8957a57176f7d8bc722748eeb508368f60aa87bcd05",
+      "bytes": 497186
+    },
+    {
+      "name": "bhai-dooj",
+      "url": "https://cdn.vedansh.app/festival-hero/95a96f83eba7627a.webp",
+      "sha256": "95a96f83eba7627ac8842f370d967c5f16d9c6bf165cc0566c8c0071e8528d1c",
+      "bytes": 452384
+    },
+    {
+      "name": "chhath",
+      "url": "https://cdn.vedansh.app/festival-hero/5d0b5319696240bc.webp",
+      "sha256": "5d0b5319696240bc14362100c9bc55163b8820cf1b4c45783801b6905cd866bb",
+      "bytes": 509720
+    },
+    {
+      "name": "navratri",
+      "url": "https://cdn.vedansh.app/festival-hero/ebed48223d3dd088.webp",
+      "sha256": "ebed48223d3dd088752097500da74fec9c370acbcb3cfc64a6aed667d13a1a96",
+      "bytes": 559868
+    },
+    {
+      "name": "tulsi-vivah",
+      "url": "https://cdn.vedansh.app/festival-hero/a7172ad4c39fd9c5.webp",
+      "sha256": "a7172ad4c39fd9c5b767887f9ddf6b757b1674597970309c12e302a8210334df",
+      "bytes": 565288
+    },
+    {
+      "name": "sankranti",
+      "url": "https://cdn.vedansh.app/festival-hero/612e3a41167d2170.webp",
+      "sha256": "612e3a41167d21707b899d27e4d174518e779ac738da1c25b9f1cdccb6cd6a61",
+      "bytes": 466438
+    }
+  ]
+}
