@@ -2,19 +2,48 @@ import { formatClock, formatEndInstant, formatShortDate, isSameLocalDay } from '
 import type { OccasionTiming, OccasionWindow } from './occasionTimings';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
-export function occasionRange(w: OccasionWindow, date: Date, lang: Lang): string {
-  return w.event ? formatEndInstant(w.start, date, lang) : `${formatEndInstant(w.start, date, lang)} – ${formatEndInstant(w.end, date, lang)}`;
+
+const MINUTE_MS = 60_000;
+
+/** Display only: do not round astronomical timestamps, cache inputs or event instants.
+ * For ritual windows, choose the first whole minute at/after the real start,
+ * and the last whole minute at/before the real end.
+ * Extremely short windows with no full displayed minute retain the raw bounds
+ * rather than showing an inverted/zero-length minute range.
+ */
+export function occasionDisplayEndpoints(w: OccasionWindow): { start: Date; end?: Date } {
+  if (w.event) return { start: w.start };
+  const start = new Date(Math.ceil(w.start.getTime() / MINUTE_MS) * MINUTE_MS);
+  const end = new Date(Math.floor(w.end.getTime() / MINUTE_MS) * MINUTE_MS);
+  return start < end ? { start, end } : { start: w.start, end: w.end };
 }
+
+/** Shared by compact Panchang, illustrated Vrat, full/focused PNG and text. */
+export function occasionRangeParts(w: OccasionWindow, date: Date, lang: Lang) {
+  const { start, end } = occasionDisplayEndpoints(w);
+  return {
+    start, end,
+    startText: formatEndInstant(start, date, lang),
+    endText: end ? formatEndInstant(end, date, lang) : undefined,
+  };
+}
+
+export function occasionRange(w: OccasionWindow, date: Date, lang: Lang): string {
+  const { startText, endText } = occasionRangeParts(w, date, lang);
+  return endText ? `${startText} – ${endText}` : startText;
+}
+
 /** Compact UI keeps dates beside their own endpoint, out of the large clock.
  * The full range remains the screen-reader/share description. */
 export function compactOccasionRange(w: OccasionWindow, date: Date, lang: Lang) {
-  const dated = !isSameLocalDay(w.start, date) || (!w.event && !isSameLocalDay(w.end, date));
-  const year = w.start.getFullYear() !== date.getFullYear() || (!w.event && w.end.getFullYear() !== date.getFullYear());
+  const { start, end } = occasionDisplayEndpoints(w);
+  const dated = !isSameLocalDay(start, date) || (end !== undefined && !isSameLocalDay(end, date));
+  const year = start.getFullYear() !== date.getFullYear() || (end !== undefined && end.getFullYear() !== date.getFullYear());
   const label = (d: Date) => `${formatShortDate(d, lang)}${year ? ` ${d.getFullYear()}` : ''}`;
   return {
-    start: formatClock(w.start), end: w.event ? undefined : formatClock(w.end),
-    startDate: dated ? label(w.start) : undefined,
-    endDate: dated && !w.event ? label(w.end) : undefined,
+    start: formatClock(start), end: end ? formatClock(end) : undefined,
+    startDate: dated ? label(start) : undefined,
+    endDate: dated && end ? label(end) : undefined,
   };
 }
 export function occasionShareText(items: readonly OccasionTiming[], date: Date, lang: Lang): string {
