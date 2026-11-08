@@ -1,0 +1,62 @@
+# Native verse-style journey. OS handoff and actual PNG review remain separate checks.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- openLink: "vedansh://widget/verse?sourceId=bhagavad-gita&chapter=2&verseIndex=46"
+- extendedWaitUntil:
+    visible: { id: daily-bhakti-next }
+    timeout: 15000
+- tapOn: Share verse
+- assertVisible: "Card style: Current card"
+- assertVisible: "Card style: Daily Bhakti card"
+- tapOn: "Card style: Current card"
+- assertVisible: { id: current-card-preview }
+- tapOn: "Change card style"
+- tapOn: "Card style: Daily Bhakti card"
+- extendedWaitUntil:
+    visible: { id: devotional-preview-ready }
+    timeout: 20000
+- tapOn: "Card language: English"
+- extendedWaitUntil:
+    visible: { id: devotional-preview-ready }
+    timeout: 20000
+- scrollUntilVisible:
+    element: { text: Share as Instagram story or reel }
+    direction: DOWN
+- assertVisible: Share on Instagram
+- assertVisible: Share as Instagram story or reel
+- scrollUntilVisible:
+    element: { text: Send as text }
+    direction: DOWN
+- assertVisible: Send as text
+- tapOn: Cancel
+- assertVisible: { id: daily-bhakti-next }
+# A new opening keeps Daily Bhakti's illustrated default and no previous card language.
+- tapOn: Share verse
+- assertVisible: "Card style: Daily Bhakti card"
+- tapOn: Cancel
+# A different prayer must keep its own verse/artwork identity after leaving the sheet.
+- openLink: "vedansh://widget/verse?sourceId=ratri-shloka&verseIndex=2"
+- extendedWaitUntil:
+    visible: { id: daily-bhakti-next }
+    timeout: 15000
+- tapOn: Share verse
+- tapOn: "Card style: Daily Bhakti card"
+- extendedWaitUntil:
+    visible: { id: devotional-preview-ready }
+    timeout: 20000
+- tapOn: Cancel
+- assertVisible: { id: daily-bhakti-next }
+# Repeated open/change/cancel must leave the reading controls responsive.
+- repeat:
+    times: 3
+    commands:
+      - tapOn: Share verse
+      - tapOn: "Card style: Daily Bhakti card"
+      - tapOn: "Change card style"
+      - tapOn: "Card style: Current card"
+      - tapOn: Cancel
+      - assertVisible: { id: daily-bhakti-next }
+- tapOn: { id: daily-bhakti-next }
+- assertVisible: Share verse
+- stopApp

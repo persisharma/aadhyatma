@@ -235,6 +235,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: stutiId,
+                            verseIndex: index,
                             sectionNameHi: stuti.titleHi,
                             sectionNameEn: stuti.titleEn,
                             verseLabelHi: item.labelHi,

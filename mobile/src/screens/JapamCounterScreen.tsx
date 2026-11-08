@@ -387,7 +387,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               onPress={() => {
                 share(
                   {
-                    sourceId: mantra.id,
+                    sourceId: mantra.sloka?.sourceId ?? mantra.id,
+                    stanza: mantra.sloka?.chapter,
                     sectionNameHi: mantra.nameHi,
                     sectionNameEn: mantra.nameEn,
                     verseLabelHi: `जप · ${entry.rounds} आवृत्ति`,

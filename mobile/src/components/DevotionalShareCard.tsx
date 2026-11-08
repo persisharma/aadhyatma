@@ -26,8 +26,11 @@ const MeasuredCard = React.forwardRef<View, DevotionalShareCardProps>(function M
   const spacerHeight = validBody ? Math.max(0, geometry.height - geometry.heroHeight - bodyHeight - m.footerSpace) : 0;
   const laidOut = validBody && nativeHeight === geometry.height;
   React.useEffect(() => {
+    // Geometry is independent of download/decode. Let capture finish its short
+    // layout wait, then use the existing separate artwork timeout/barrier.
+    if (laidOut) onHeight?.(geometry.height);
     if (failed || (bodyHeight !== null && !validBody)) onReady?.(false);
-    else if (laidOut && heroPainted && footerPainted && bodyPainted && (!spacerHeight || spacerPainted)) { onHeight?.(geometry.height); onReady?.(true); }
+    else if (laidOut && heroPainted && footerPainted && bodyPainted && (!spacerHeight || spacerPainted)) onReady?.(true);
   }, [heroPainted, footerPainted, bodyPainted, spacerHeight, spacerPainted, failed, bodyHeight, validBody, laidOut, geometry.height, onReady, onHeight]);
   const latin = lang === 'en';
   const face = devotionalFace(lang);
@@ -56,7 +59,8 @@ const MeasuredCard = React.forwardRef<View, DevotionalShareCardProps>(function M
   </View>;
 });
 const DevotionalShareCard = React.forwardRef<View, DevotionalShareCardProps>(function DevotionalShareCard(props, ref) {
-  const identity = JSON.stringify([props.header, props.page.art, props.page.verse, props.page.meaning, props.lang]);
+  const identity = React.useMemo(() => JSON.stringify([props.header, props.page.art, props.page.verse, props.page.meaning, props.lang]),
+    [props.header, props.page.art, props.page.verse, props.page.meaning, props.lang]);
   return <MeasuredCard key={identity} ref={ref} {...props} />;
 });
 export default DevotionalShareCard;

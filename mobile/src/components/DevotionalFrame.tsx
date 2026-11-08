@@ -91,7 +91,22 @@ function Tiles({ art, width, top, bottom, height, stretch, testID, onLoad, onErr
   const tile = (bottom - top) * width / canvas.width * stretch;
   const count = height > 0 ? Math.ceil(height / tile) : 0;
   const painted = React.useRef(new Set<number>());
-  const report = () => { if (count && Array.from({ length: count }, (_, i) => i).every(i => painted.current.has(i))) onLoad?.(); };
+  // Each index is checked at most once as paint events arrive, even in reverse
+  // order. Do not rebuild/rescan an N-element array after every tile decode.
+  const contiguousPainted = React.useRef(0);
+  const previousCount = React.useRef(count);
+  React.useLayoutEffect(() => {
+    if (count < previousCount.current) {
+      // Only committed removals invalidate paint; abandoned renders do not.
+      for (const index of painted.current) if (index >= count) painted.current.delete(index);
+      contiguousPainted.current = Math.min(contiguousPainted.current, count);
+    }
+    previousCount.current = count;
+  }, [count]);
+  const report = () => {
+    while (contiguousPainted.current < count && painted.current.has(contiguousPainted.current)) contiguousPainted.current++;
+    if (count > 0 && contiguousPainted.current >= count) onLoad?.();
+  };
   React.useEffect(report, [count]); // eslint-disable-line react-hooks/exhaustive-deps
   return <View style={{ height, overflow: 'hidden' }}>
     {Array.from({ length: count }, (_, i) => <View key={i} style={i % 2 ? { transform: [{ scaleY: -1 }] } : undefined}>
@@ -114,7 +129,7 @@ function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, tile, child
   return <View testID={testID} onLayout={e => setHeight(e.nativeEvent.layout.height)} style={{ minHeight: minimum }}>
     <View pointerEvents="none" accessible={false} style={StyleSheet.absoluteFill}>
       {topCap ? <DevotionalSlice art={art} width={width} top={top} bottom={top + topCap} onLoad={() => paintedPart('top')} onError={onError} /> : null}
-      {tile ? <Tiles art={art} width={width} top={top + topCap} bottom={bottom - bottomCap} height={middle} stretch={tile}
+      {tile ? <Tiles key={`${art}:${width}:${top}:${bottom}:${topCap}:${bottomCap}:${tile}`} art={art} width={width} top={top + topCap} bottom={bottom - bottomCap} height={middle} stretch={tile}
         testID={`${testID}-tile`} onLoad={() => paintedPart('middle')} onError={onError} />
         : <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
           height={middle} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />}

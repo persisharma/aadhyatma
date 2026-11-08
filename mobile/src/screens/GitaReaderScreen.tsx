@@ -320,6 +320,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                           share(
                             {
                               sourceId: 'bhagavad-gita',
+                              verseIndex: verseIdx,
                               sectionNameHi: 'भगवद् गीता',
                               sectionNameEn: 'Bhagavad Gītā',
                               verseLabelHi: `श्लोक ${item.chapter}.${item.number}`,

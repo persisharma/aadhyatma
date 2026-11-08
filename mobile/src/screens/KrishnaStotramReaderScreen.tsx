@@ -169,6 +169,7 @@ export default function KrishnaStotramReaderScreen({ navigation, route }: Props)
                         share(
                           {
                             sourceId: 'krishna-stotram',
+                            verseIndex: index,
                             sectionNameHi: chapter.titleHi,
                             sectionNameEn: chapter.titleEn,
                             verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,
