@@ -1,0 +1,29 @@
+{
+  "prefix": "sanatan-learning",
+  "assets": {
+    "ganesha-attributes": {
+      "file": "mobile/assets/sanatan-learning/ganesha-attributes.webp",
+      "sha256": "87b29f57149388f2d9279636ea151065cc3a858be6019e876cd1aa8fbc85be27",
+      "hash": "87b29f57149388f2",
+      "width": 960,
+      "height": 640,
+      "ext": "webp",
+      "bytes": 205240,
+      "topicId": "deity",
+      "masterSha256": "3d71b7f0d41aa7dd7affb2f0ff81b1530ec1a1f158683358778c086485d34d63",
+      "publication": "pending"
+    },
+    "tulasi-objects": {
+      "file": "mobile/assets/sanatan-learning/tulasi-objects.webp",
+      "sha256": "39e984dc98664cb8bb2cd5deb673c57e43bab91d40c07ddbbfa5e6f83961a7cd",
+      "hash": "39e984dc98664cb8",
+      "width": 1200,
+      "height": 600,
+      "ext": "webp",
+      "bytes": 226204,
+      "topicId": "plants",
+      "masterSha256": "cdebac1cffeb9c875400cb0c440875e48174d30f09f1d61e5f38bb2486f51a0a",
+      "publication": "pending"
+    }
+  }
+}

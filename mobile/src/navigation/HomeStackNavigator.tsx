@@ -16,6 +16,7 @@ import type { HomeStackParamList } from './types';
  */
 
 const SanatanParichayScreen = lazyScreen('SanatanParichay', 2, () => import('@/screens/SanatanParichayScreen'));
+const GrahaReferenceScreen = lazyScreen('SanatanGrahaReference', 4, () => import('@/screens/GrahaReferenceScreen'));
 const SanatanReaderScreen = lazyScreen('SanatanReader', 3, () => import('@/screens/SanatanReaderScreen'));
 
 const SuvicharScreen = lazyScreen('Suvichar', 2, () => import('@/screens/SuvicharScreen'));
@@ -116,6 +117,7 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="SanatanParichay" component={SanatanParichayScreen} />
       <Stack.Screen name="SanatanReader" component={SanatanReaderScreen} />
+      <Stack.Screen name="GrahaReference" component={GrahaReferenceScreen} />
       <Stack.Screen name="Suvichar" component={SuvicharScreen} />
       <Stack.Screen
         name="Search"

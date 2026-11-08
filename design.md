@@ -4243,6 +4243,25 @@ order, finger or dots are not presented as universal ritual requirements.
 Gujarati/Kannada retain Hindi re-scripting. Internal source review and native
 acceptance are tracked in `docs/content-parity/sanatan-parichay/swastika-guide.md`.
 
+### Visual learning revision — 8 November 2026
+
+Retain the approved painted collection family, then lead each lesson with a short
+answer and native glossary. The exploration page puts its teaching diagram before
+prose; the final page adds one takeaway and related in-app readings. Definition
+heads and numbered instructions receive native hierarchy without shortening text.
+Show the actual lesson title above the broader collection name.
+
+Directions use a tilted plane with eight numbered positions and a vertical
+Above/Below axis, plus ten scalable direction/guardian controls. Temple spaces,
+literary forms, Gargi's dialogue, the lamp analogy and the illustrative Panchang
+row each receive a specific teaching figure. Full alternate avatar lists stay
+separate. New four-arm Ganesha and Tulasi object paintings are R2-only supplemental
+art, pending upload and hash-verified activation. Search opens page-specific taught
+concepts. Related readers remain on the same stack to preserve Back and position.
+The UI uses bounded static diagrams, with no continuous 3D animation. Native
+fidelity, exports and device performance remain required pending acceptance; see
+`docs/content-parity/sanatan-parichay/visual-learning/README.md`.
+
 ## 88. भक्तिमय दोहे — selected Kabir and Rahim readings
 
 Two Granth cards, `kabir-bhakti-dohe` and `rahim-bhakti-dohe`, each open four complete selected couplets in the existing flat `StutiReaderScreen`/`VersePage` shell. This is reader reuse, not a Stotram classification: the library category is Granth, the titles name the poet, and subtitles explicitly say चयनित / selected. Preserve original Hindi couplets, pronunciation-based ASCII romanization and editorial Hindi/English meanings. Gujarati/Kannada follow the shared re-scripting policy, not an authored-translation claim.

@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { getSanatanTopic, getSanatanPageTitles, validSanatanPage, type SanatanTopic } from '@/data/sanatan-parichay';
+import { getSanatanTopic, getSanatanPageTitles, getSanatanReadingPages, validSanatanPage, type SanatanTopic } from '@/data/sanatan-parichay';
 import { useSanatanLearning } from '@/data/sanatan-parichay/store';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -19,6 +19,8 @@ import { useShare, type ShareableProse } from '@/utils/shareVerse';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import { readingParchment } from '@/data/backgroundAsset';
 import { Action, Copy, Painting, PrimaryAction, ToolAction, useSanatanText } from '@/components/sanatan/Primitives';
+import {LessonAnswer,LessonTerms,LessonTakeaway,LessonRelated,ReadingBlocks} from '@/components/sanatan/LessonPanels';
+import {openSanatanRelated} from '@/navigation/sanatanRelated';
 import ExploreDiagram from '@/components/sanatan/ExploreDiagram';
 import SwastikaGuide from '@/components/sanatan/SwastikaGuide';
 import type { KathaContentSection } from '@/panchang/types';
@@ -51,7 +53,8 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
   const listRef = useRef<FlatList<KathaContentSection>>(null);
   const { share, busy } = useShare();
   const titles = getSanatanPageTitles(topic);
-  const data = useMemo<KathaContentSection[]>(() => topic.pages.map((body, index) => ({
+  const readingPages=useMemo(()=>getSanatanReadingPages(topic),[topic]);
+  const data = useMemo<KathaContentSection[]>(() => readingPages.map((body, index) => ({
     id: `sanatan-${topic.id}-${index}`, titleHi: titles[index][0], titleEn: titles[index][1],
     bodyHi: [body[0]], bodyEn: [body[1]],
   })), [topic]);
@@ -74,10 +77,15 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
     changed(next);
     listRef.current?.scrollToIndex({ index: next, animated: true });
   };
+  const openRelated=(link:import('@/data/sanatan-parichay/experience').RelatedLesson)=>{
+    readAloud.stop();autoSlide.stop();
+    if(link.target.kind==='lesson'&&link.target.id===topic.id){go(link.target.page??0);return;}
+    openSanatanRelated(navigation,link);
+  };
   const shareLesson = () => {
     const scope = (whole: boolean) => ({ id: whole ? 'whole' : `page-${page}`, labelHi: whole ? 'पूरा परिचय' : 'यह पृष्ठ', labelEn: whole ? 'Whole introduction' : 'This page',
       headerHi: topic.title[0], headerEn: topic.title[1], titleHi: topic.question[0], titleEn: topic.question[1],
-      blocks: (whole ? topic.pages : [topic.pages[page]]).map(body => ({ kind: 'para' as const, hi: body[0], en: body[1] })),
+      blocks: (whole ? readingPages : [readingPages[page]]).map(body => ({ kind: 'para' as const, hi: body[0], en: body[1] })),
     });
     const content: ShareableProse = { kind: 'prose', sourceId: `sanatan-${topic.id}`, background: null,
       sectionNameHi: 'सनातन परिचय', sectionNameEn: 'Sanatan Parichay', tagNameHi: topic.name[0], tagNameEn: topic.name[1],
@@ -87,9 +95,9 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
   return <View style={{ flex: 1, backgroundColor: colors.parchment }}>
     <BackgroundLayer source={readingParchment} />
     <SafeAreaView style={{ flex: 1 }}>
-      <ReaderHeader title={t(topic.name)} onBack={() => navigation.goBack()} sideWidth={52}
-        right={<Text style={{ color: colors.ink }}>{page + 1}/3</Text>} />
-      <ReadingProgressBar current={page + 1} total={3} />
+      <ReaderHeader title={t(topic.title)} onBack={() => navigation.goBack()} sideWidth={52}
+        right={<Text style={{ color: colors.ink }}>{`${page + 1}/${data.length}`}</Text>} />
+      <ReadingProgressBar current={page + 1} total={data.length} />
       <View style={{ paddingHorizontal: 22, paddingVertical: 8, gap: 8 }}>
         <LanguageToggle />
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
@@ -105,19 +113,22 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
           <AutoSlideScrollView contentContainerStyle={{ padding: 22, paddingBottom: 40, gap: 16 }}>
             <ProseReadingCard heading={<Copy heading>{t(titles[index])}</Copy>}>
               {index === 0 && <Painting id={topic.id} />}
-              {index === 0 && <Copy heading>{t(topic.question)}</Copy>}
+              {index === 0 && <LessonAnswer id={topic.id}/>}
+              {index === 1 && <ExploreDiagram topic={topic} onCollection={topicId => navigation.push('SanatanParichay', { topicId })} onRelated={openRelated}/>}
               {topic.kind === 'swastika' && index === 2 && <SwastikaGuide mode="drawing" />}
-              {t(topic.pages[index]).split(/\n\s*\n/).map((paragraph, paragraphIndex) => <Copy key={paragraphIndex}>{paragraph}</Copy>)}
-              {index === 1 && <ExploreDiagram topic={topic} onCollection={topicId => navigation.push('SanatanParichay', { topicId })} />}
+              <ReadingBlocks body={topic.pages[index]}/>
+              {index===0&&<LessonTerms id={topic.id}/>}
+              {index===data.length-1&&<LessonTakeaway id={topic.id}/>}
             </ProseReadingCard>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
             <ToolAction icon="saved" label={t(learning.saved.includes(topic.id) ? ['सहेजा हुआ हटाएँ','Remove saved lesson'] : ['बाद के लिए सहेजें','Save for later'])}
               selected={learning.saved.includes(topic.id)} onPress={() => void learning.toggleSaved(topic.id).catch(failed)} />
             <ToolAction icon="share" disabled={busy} label={t(['साझा करें','Share'])} onPress={shareLesson} />
             </View>
+            {index===data.length-1&&<LessonRelated id={topic.id} onOpen={openRelated}/>}
             {index > 0 && <Action label={t(['पिछला पृष्ठ','Previous page'])} onPress={() => go(index - 1)} />}
-            <PrimaryAction testID="sanatan-next" label={t(index === 2 ? ['परिचय पूरा हुआ','Finish introduction'] : ['अगला पृष्ठ','Next page'])}
-              onPress={() => { if (index < 2) go(index + 1); else { readAloud.stop(); autoSlide.stop(); void learning.readPage(topic.id, index, true).then(() => navigation.goBack()).catch(failed); } }} />
+            <PrimaryAction testID="sanatan-next" label={t(index === data.length-1 ? ['परिचय पूरा हुआ','Finish introduction'] : ['अगला पृष्ठ','Next page'])}
+              onPress={() => { if (index < data.length-1) go(index + 1); else { readAloud.stop(); autoSlide.stop(); void learning.readPage(topic.id, index, true).then(() => navigation.goBack()).catch(failed); } }} />
           </AutoSlideScrollView>
         </View>} />
     </SafeAreaView>

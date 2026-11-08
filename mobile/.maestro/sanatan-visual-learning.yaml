@@ -1,0 +1,61 @@
+# Executed by the native search matrix; parsing this file is not device evidence.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- scrollUntilVisible:
+    element: { id: sanatan-collection-dikpal }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-collection-dikpal }
+- scrollUntilVisible:
+    element: { id: sanatan-start }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-start }
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-next }
+- scrollUntilVisible:
+    element: { text: "9 · Above — Brahma" }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-directions-vertical-axis
+- scrollUntilVisible:
+    element: { id: sanatan-direction-9 }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-direction-9 }
+- scrollUntilVisible:
+    element: { text: "Below · Vishnu" }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-directions-below
+- tapOn: Back
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: sanatan-search }
+    direction: UP
+    timeout: 60000
+- tapOn: { id: sanatan-search }
+- inputText: Maitreyi
+- pressKey: Enter
+- scrollUntilVisible:
+    element: { id: sanatan-collection-rishis }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-collection-rishis }
+- scrollUntilVisible:
+    element: { text: "Maitreyi’s distinct question" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Maitreyi’s distinct question"
+- assertVisible: "3\\s*/\\s*3"
+- takeScreenshot: e2e-shots/sanatan-search-maitreyi-exact-page
+- tapOn: Back
+- tapOn: Back
+- assertVisible: { id: sanatan-search, text: Maitreyi }
