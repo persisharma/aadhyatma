@@ -7,6 +7,9 @@ import { karaokeDurationMs } from './karaokeTiming';
 export const MIN_SILENT_JAPA_MS = 880;
 export const MIN_JAPA_RATE = 0.5;
 export const MAX_JAPA_RATE = 1.5;
+/** Extra wall-clock time per automatic jap, after the selected tempo. */
+export const EXTRA_JAPA_MS = 500;
+const MIN_NATIVE_PLAYBACK_RATE = 0.1;
 // Calibrated to the requested full Gayatri loop of 4 seconds at 1×.
 const MS_PER_UNIT = 125;
 const LONG_VOWELS = new Set('आ ई ऊ ॠ ए ऐ ओ औ'.split(' '));
@@ -43,11 +46,23 @@ export function estimateRecitationMs(lines: readonly string[]): number {
   return words.length <= 3 ? Math.min(1000, duration) : duration;
 }
 
-/** Playing audio owns cadence through its measured average recitation time.
- * Without audio, use canonical text and the same visible tempo control.
+/** Native audio and its bead counter use this same effective rate. Stretch the
+ * recorded utterance instead of adding a second pause/count timer. Pitch
+ * correction stays enabled by the player. Invalid/loading metadata keeps the
+ * user's rate; very short malformed clips respect Android's native lower bound.
+ */
+export function japaAudioPlaybackRate(recitationMs: number, rate = 1): number {
+  const requested = normalizeJapaRate(rate);
+  if (!Number.isFinite(recitationMs) || recitationMs <= 0) return requested;
+  return Math.max(MIN_NATIVE_PLAYBACK_RATE, recitationMs / (karaokeDurationMs(recitationMs, requested) + EXTRA_JAPA_MS));
+}
+
+/** Every automatic jap takes 500ms longer at the currently selected tempo.
+ * Recorded playback, wall-clock beads and the visual loop share that cadence.
  */
 export function infinityRecitationMs(lines: readonly string[], rate = 1, audioRecitationMs?: number | null): number {
   const audio = typeof audioRecitationMs === 'number' && Number.isFinite(audioRecitationMs) && audioRecitationMs > 0;
   const base = audio ? audioRecitationMs : estimateRecitationMs(lines);
-  return karaokeDurationMs(base, normalizeJapaRate(rate));
+  return audio ? Math.max(1, Math.round(base / japaAudioPlaybackRate(base, rate)))
+    : karaokeDurationMs(base, normalizeJapaRate(rate)) + EXTRA_JAPA_MS;
 }

@@ -1,3 +1,5 @@
+import { EXTRA_JAPA_MS, MIN_SILENT_JAPA_MS } from './japamRecitationTiming';
+
 export type InfinityMotionDriver = {
   readPhase: (callback: (phase: number) => void) => void;
   setPhase: (phase: number) => void;
@@ -7,7 +9,7 @@ export type InfinityMotionDriver = {
 };
 
 /** 1× short-name fallback. The screen supplies the full mantra's cadence. */
-export const INFINITY_CYCLE_MS = 880;
+export const INFINITY_CYCLE_MS = MIN_SILENT_JAPA_MS + EXTRA_JAPA_MS;
 
 /** Continuous motion; only successfully completed foreground cycles are emitted. */
 export function startInfinityMotion(driver: InfinityMotionDriver, cycleMs = INFINITY_CYCLE_MS): () => void {
