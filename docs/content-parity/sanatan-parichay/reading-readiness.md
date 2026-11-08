@@ -19,7 +19,7 @@ Gujarati and Kannada use the app's established Hindi-to-script transliteration p
 | Thirty-three | Dialogue, 8+11+12+1+1, movement toward unity; limits of the koti claim | Brihadaranyaka 3.9.1–9, Madhavananda/Shankara and Muller |
 | Dikpals | Eight horizontal directions plus above/below; complete selected roster and Ananta variation | Kamika Purvapada direction passages; UOU CVK01 pp155–157 |
 | Navagraha | Nine names, hymn epithets, astronomical categories and nodes | Navagraha Stotra 1–9; NASA Moon Essentials: Orbit |
-| Swastika | Auspicious use, arms/dots, community variation and historical context | HAF guide; ISKCON Educational Services symbols |
+| Swastika | Auspicious use; all four purusharthas; other interpretations; clockwise drawing stages; optional dots, tradition variation and historical context | HAF guide; Himalayan Academy Loving Ganesha ch7; AWGP Jan–Feb 2005 geometry; ISKCON Educational Services symbols |
 | Dashavatara | Two separate ten-member selections and Krishna as hymn addressee | Drik Panchang list; Jayadeva Gitagovinda opening hymn |
 | Tulasi | Sacred plant, leaves versus wooden beads, Kartika marriage observance | Sri Deva Sthanam; CPREEC |
 | Elements | Five terms, text's sequence, explicitly app-written clay-lamp analogy | Taittiriya 2.1.1 |

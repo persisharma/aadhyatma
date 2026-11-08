@@ -45,3 +45,15 @@ describe('Sanatan reader copy acceptance boundary', () => {
     expect(content.source.approvalScope).toContain('requires separate acceptance');
   });
 });
+
+it('teaches the four aims and a complete drawing sequence without inventing mandatory stroke rules', () => {
+  const topic = getSanatanTopics().find(item => item.id === 'symbols')!;
+  for (const term of ['धर्म', 'अर्थ', 'काम', 'मोक्ष']) expect(topic.pages[1][0]).toContain(term);
+  for (const term of ['Dharma:', 'Artha:', 'Kama:', 'Moksha:']) expect(topic.pages[1][1]).toContain(term);
+  expect(topic.pages[2][0]).toContain('ऊपर का सिरा दाईं ओर, दायाँ नीचे, नीचे वाला बाईं ओर और बायाँ ऊपर');
+  expect(topic.pages[2][1]).toContain('top to the right, right downwards, bottom to the left, and left upwards');
+  expect(topic.pages[2][1]).toContain('not the only scripturally required stroke order');
+  expect(topic.pages[2][1]).toContain('A form without dots is not automatically incorrect');
+  expect(topic.pages[2][1]).toContain('Do not label all reverse-facing religious forms inauspicious');
+  expect(topic.refs).toEqual(expect.arrayContaining(['HAF-SWASTIKA', 'HA-SWASTIKA', 'AWGP-SWASTIKA']));
+});

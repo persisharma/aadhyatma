@@ -20,6 +20,7 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import { readingParchment } from '@/data/backgroundAsset';
 import { Action, Copy, Painting, PrimaryAction, ToolAction, useSanatanText } from '@/components/sanatan/Primitives';
 import ExploreDiagram from '@/components/sanatan/ExploreDiagram';
+import SwastikaGuide from '@/components/sanatan/SwastikaGuide';
 import type { KathaContentSection } from '@/panchang/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'SanatanReader'>;
@@ -105,6 +106,7 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
             <ProseReadingCard heading={<Copy heading>{t(titles[index])}</Copy>}>
               {index === 0 && <Painting id={topic.id} />}
               {index === 0 && <Copy heading>{t(topic.question)}</Copy>}
+              {topic.kind === 'swastika' && index === 2 && <SwastikaGuide mode="drawing" />}
               {t(topic.pages[index]).split(/\n\s*\n/).map((paragraph, paragraphIndex) => <Copy key={paragraphIndex}>{paragraph}</Copy>)}
               {index === 1 && <ExploreDiagram topic={topic} onCollection={topicId => navigation.push('SanatanParichay', { topicId })} />}
             </ProseReadingCard>

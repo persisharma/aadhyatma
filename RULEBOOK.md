@@ -1528,6 +1528,15 @@ Device rendering, four scripts × Standard/Large, native playback and real share
 exports remain required acceptance checks; written Maestro flows do not establish
 those checks passed.
 
+**Swastika teaching contract (8 November 2026).** Keep `symbols` and page indices
+0–2 stable. Teach each purushartha, identify other meanings as interpretations,
+and describe all four bends in text as well as precise SVG. Dots are customary,
+not universally mandatory; do not turn a learning sequence into an unsupported
+exclusive ritual rule. Preserve the full instructions in narration/prose shares.
+Research URLs and source comparisons stay in the internal provenance ledger.
+The source/copy, four-script/size reader-share regression and
+`.maestro/sanatan-swastika-guide.yaml` accompany native visual/export acceptance.
+
 ## 33. Selected devotional dohas — Kabir and Rahim
 
 - `mobile/src/data/doha/` owns the selected complete Hindi couplets, stable semantic IDs, editorial Hindi/English meanings and pronunciation-based ASCII romanization. Each payload declares that it is a selection; each verse records the two actually consulted sources, retrieval date, chosen edition and wording variants. Never blend variants or present these selections as a complete dohavali. The general §11 source, Unicode and meaning gates still apply.
