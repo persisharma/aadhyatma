@@ -13,7 +13,11 @@ Approved reference: [single Hindi-logo card](https://chatgpt.com/library?file_id
 
 ## Verification and reproducibility
 
-Regression test: `DevotionalBranding.test.tsx` failed on the base (7/7), then passes with the implementation. Focused frame/branding/export suites: 70/70 pass. TypeScript passes. Full-suite and browser evidence will be recorded after final validation.
+Regression test: `DevotionalBranding.test.tsx` failed on the base (7/7), then passes with the implementation. Focused frame/branding/export suites: 70/70 pass. Final TypeScript passes. All three configured Jest shards pass: **377 suites / 3,963 tests** (126/1,313; 126/1,410; 125/1,240). Widgets, engine (**830** tests), data (**223**) and Ask (**49**) gates pass. `npm test` initially stops because the `tsx` CLI cannot open its optional Unix IPC socket (`EPERM`); the same package-script test arguments, environment and file lists were run with `node --import tsx --test`. No test/timeout/assertion was skipped or weakened. The reader shards ran through their normal npm commands, independently so an earlier failure could not hide a later shard.
+
+**50 browser component cells pass**, using every current delivery-manifest subject, all four scripts, M/L and 288/358dp reader widths, plus the fixed export. Actual component screenshots were visually inspected, including all subject header/footer crops and the complete Hanuman card. The English suffix’s negative margin compensates for the logo’s transparent feather extension, keeping `Vedansh.app` joined. Browser rasterization remains separate from native capture.
+
+Policy verifier, YAML parsing and `git diff --check` pass. No master/manifest/font/lockfile changed.
 
 The browser harness renders production `DevotionalShareCard`, `DevotionalFrame`, `DevotionalBranding`, `WordmarkArtwork`, actual master files, actual approved logo PNGs, actual fonts and the stored Hanuman chaupai 2. Only native host/cache adapters are replaced. It checks all delivery-manifest subjects, four scripts, reader M/L and 288/358dp layouts; fixed exports retain their own 540dp sizing.
 
@@ -34,11 +38,19 @@ Native flow: `mobile/.maestro/daily-bhakti-flute-branding-smoke.yaml`. Maestro, 
 | U3/U4 fidelity/languages | PENDING: component matrix available; native device and enlarged system text pending |
 | U5/U6 journeys/failure | PENDING: source integration and decode/language/error regressions pass; native journey/cancellation/offline/export pending |
 | U7/U8 assets/siblings | PASS: existing shipped logo PNGs reused, paintings/manifests unchanged; shared Wordmark/Frame callers inspected |
-| U9 tests | PENDING: focused suites and typecheck pass; full suite and native execution pending |
+| U9 tests | PENDING for native; PASS for all automated gates: 377/3,963 Jest, engine 830, data 223, Ask 49, widgets, typecheck, policy/YAML/diff |
 | U10/U10.1 performance/ANR | PENDING: bounded two-event gates and static layers; no animation/network/CPU loop added; physical release comparison unavailable |
 | U11 integration/docs | PASS: based on current main, design/RULEBOOK/wiki and flow updated; final CI pending |
-| U12 preservation | PENDING: remote checkpoint to be recorded |
+| U12 preservation | PASS: implementation remotely preserved in draft [PR #661](https://github.com/persisharma/aadhyatma/pull/661); local/remote Git tree identity verified |
 
 C1/C3/C4/C9 apply: existing scripture preserved, approved art identity, capture/error readiness, shared component layout. C2/C5–C8/C10 N/A: no story, solver, reminders, navigation/persistence, audio or release changes.
 
 Implementation is for review. No merge, native binary build, version bump, OTA or store release.
+
+## Remote checkpoint and handover
+
+- [Draft PR #661](https://github.com/persisharma/aadhyatma/pull/661), branch `codex/daily-bhakti-flute-branding`.
+- Tested source: local `fbcd7ef6aec0512a8bcbfaf9864f904450cbae1d`; remotely preserved implementation `6662488ec054a8771b03c0569f29c1f5d04306db`. Their exact Git tree is `7655c80ec219f0c1ddd33787a9f18e3ce2f32c9c`. The following checkpoint changes this verification document only; PR metadata records its final head.
+- GitHub reports the source checkpoint mergeable with current main. Agent policy CI passed; full CI/brand browser workflow were in progress when inspected. Final CI must be checked on the final remote head.
+- The only untracked local item is the development `mobile/node_modules` symlink, intentionally excluded. Reproducible intermediate browser bundles/screenshots live in ignored `tmp/`; no required app asset is outside Git. No worktree cleanup occurred.
+- Remaining: execute the committed native flow on iOS/Android; review actual exported images and OS/WhatsApp handoff; verify Standard/Large, compact/enlarged-system text, offline/retry/language-switch/Back; compare lower-configuration Android release responsiveness and inspect ANR/logcat plus iOS hangs. Keep draft until required native acceptance passes.
