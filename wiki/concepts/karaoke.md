@@ -38,7 +38,7 @@ Infinity is wired now. Other sections' स्वतः integration is deferred b
   completion owner. Mixed verse/meaning blocks need one overall page schedule.
 - Full word shaping and source text are invariants. Do not split Indic glyphs,
   ellipsize long words, or drop content to reduce native node count.
-- Current 22-mantra catalogue peaks at 16 word runs. Long prose and all native
+- Current 31-mantra catalogue peaks at 16 word runs. Long prose and all native
   script/size/layout/performance checks remain per-integration requirements.
 - Recording-derived average cadence is not verified word-level audio cues or
   speech recognition. Native colour support does not prove device fidelity.

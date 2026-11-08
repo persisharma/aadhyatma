@@ -32,6 +32,8 @@ const validDeities: ReadonlySet<Deity> = new Set([
   'savitr',
   'radha',
   'saraswati',
+  'lakshmi',
+  'kubera',
   'surya',
   'shani',
   'navagraha',

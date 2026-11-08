@@ -1,5 +1,5 @@
 import { buildListingShare } from '@/utils/listingShare';
-import { bodyHeightFor, proseScript, proseType } from '@/utils/shareCardPages';
+import { bodyHeightFor, MAX_SHARE_PAGES, proseScript, proseType } from '@/utils/shareCardPages';
 import { contentByLang } from '@/utils/localize';
 import { library } from '@/data/texts';
 import { categories } from '@/data/categories';
@@ -31,7 +31,9 @@ describe('listing share cards', () => {
       })),
     });
     for (const lang of languages) {
-      const pages = share.scopes[0].prepared![lang].pages;
+      // A list longer than one ten-card sheet splits into parts; together they keep every entry, in order.
+      const pages = share.scopes.flatMap((scope) => scope.prepared![lang].pages);
+      for (const scope of share.scopes) expect(scope.prepared![lang].pages.length).toBeLessThanOrEqual(MAX_SHARE_PAGES);
       const headings = pages.flatMap((page) => page.blocks.filter((block) => block.kind === 'heading').map((block) => block.text));
       expect(headings).toEqual(entries.map((entry) => contentByLang(lang, entry.nameHi, entry.nameEn)));
       const budget = bodyHeightFor() - proseType[proseScript(lang)].body.lineHeight;
