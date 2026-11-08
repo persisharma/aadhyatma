@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { OCCASION_PROFILES, findTimingOccurrences, intersect, paranaWindows, solveOccasion, timingsOnDay } from '../occasionTimings';
 import { computeDayInputs, dayAt, type ScanOptions } from '../panchangDayStore';
 import { runSynchronously } from '../backgroundWork';
-import { compactOccasionRange, occasionRange } from '../occasionTimingFormat';
+import { compactOccasionRange, occasionDisplayEndpoints, occasionRange, occasionRangeParts, occasionShareText } from '../occasionTimingFormat';
 import { buildPanchangShareModel } from '../panchangShareModel';
 import { computeMuhuratDay } from '../muhurat';
 import { PUBLISHED_OCCASIONS } from './fixtures/occasionPublished';
@@ -145,4 +145,44 @@ test('same-day windows need no date row and events keep just one timestamp', () 
   const w = { start: new Date(2026, 10, 8, 18, 3), end: new Date(2026, 10, 8, 20), labelHi: '', labelEn: '' };
   assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '18:03', end: '20:00', startDate: undefined, endDate: undefined });
   assert.deepEqual(compactOccasionRange({ ...w, event: true }, new Date(2026, 10, 7), 'hi'), { start: '18:03', end: undefined, startDate: '8 नवं', endDate: undefined });
+});
+
+
+test('occasion minute precision: start rounds up and end rounds down without changing source timestamps', () => {
+  const date = new Date(2026, 10, 8);
+  const start = new Date(2026, 10, 8, 18, 3, 1, 500);
+  const end = new Date(2026, 10, 8, 20, 0, 59, 999);
+  const w = { labelHi: 'पूजा', labelEn: 'Puja', start, end };
+  const before = [+start, +end];
+  assert.equal(occasionRange(w, date, 'en'), '18:04 – 20:00');
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '18:04', end: '20:00', startDate: undefined, endDate: undefined });
+  assert.equal(occasionRangeParts(w, date, 'hi').endText, '20:00');
+  assert.deepEqual([+start, +end], before, 'display must never mutate exact astronomical instants');
+  assert.equal(occasionDisplayEndpoints(w).start.getSeconds(), 0);
+});
+test('occasion minute precision: exact-minute boundaries stay unchanged', () => {
+  const date = new Date(2026, 10, 8);
+  const w = { start: new Date(2026, 10, 8, 18, 3), end: new Date(2026, 10, 8, 19, 59), labelHi: '', labelEn: '' };
+  for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+    assert.equal(occasionRange(w, date, lang), '18:03 – 19:59');
+    assert.deepEqual(compactOccasionRange(w, date, lang), { start: '18:03', end: '19:59', startDate: undefined, endDate: undefined });
+  }
+});
+test('occasion minute precision: rounded timestamps carry their own dates across midnight', () => {
+  const date = new Date(2026, 10, 8);
+  const w = { start: new Date(2026, 10, 8, 23, 59, 40), end: new Date(2026, 10, 9, 0, 2, 20), labelHi: '', labelEn: '' };
+  assert.equal(occasionRange(w, date, 'en'), '00:00, 9 Nov – 00:02, 9 Nov');
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '00:00', end: '00:02', startDate: '9 Nov', endDate: '9 Nov' });
+  const item = { id: 'test', ruleId: 'test', date, nameHi: 'पूजा', nameEn: 'Puja', motif: 'diya' as const, windows: [w] };
+  assert.match(occasionShareText([item], date, 'en'), /00:00, 9 Nov – 00:02, 9 Nov/);
+});
+test('occasion minute precision: event instants are not rounded up and short windows do not invert', () => {
+  const date = new Date(2026, 10, 8);
+  const event = { event: true as const, start: new Date(2026, 10, 8, 19, 4, 59), end: new Date(2026, 10, 8, 19, 4, 59), labelHi: '', labelEn: '' };
+  assert.equal(occasionRange(event, date, 'en'), '19:04');
+  assert.equal(compactOccasionRange(event, date, 'en').end, undefined);
+  const narrow = { start: new Date(2026, 10, 8, 18, 3, 59), end: new Date(2026, 10, 8, 18, 4, 2), labelHi: '', labelEn: '' };
+  assert.equal(+occasionDisplayEndpoints(narrow).start, +narrow.start);
+  assert.equal(+occasionDisplayEndpoints(narrow).end!, +narrow.end);
+  assert.equal(occasionRange(narrow, date, 'en'), '18:03 – 18:04');
 });
