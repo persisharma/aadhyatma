@@ -1248,8 +1248,16 @@ Use `occasionTimings.ts` and the location-scoped shared day store; source URLs
 and reviewed recipe conventions travel with each profile. Never manufacture
 an occasion window from Choghadiya. Bhadra exceptions and tradition-specific
 parana cannot silently inherit another convention. Screen/export/text share
-one result and date-aware formatter. Bundled painted FestivalMotif subjects avoid
-network-dependent art during capture. Preserve approved painted artwork: a
+one result and date-aware formatter. Only *displayed ritual window ends* use floor(end) at whole-minute
+precision; starts retain their previous unrounded timestamp and displayed
+clock. Keep exact source instants for the engine, caching, date matching and
+reminders; do not shift point events or silently subtract a minute from
+exact-minute endpoints. Use
+the same helper for compact/screen, full/focused export, accessible labels and
+text sharing, preserving overnight dates. If rounding removes the entire
+window, show its original bounds rather than a reversed/zero-length range.
+A display-policy change cannot be presented as a validated source-clock fix.
+Bundled painted FestivalMotif subjects avoid network-dependent art during capture. Preserve approved painted artwork: a
 flat SVG/glyph is not a faithful substitute. Compare the actual complete export
 with the approved reference, including corners, border, subject and type
 hierarchy. Capture waits for all painted slots to decode; provenance pins the
@@ -1450,6 +1458,8 @@ Every `ShareableVerse` uses one provider picker with Current/Daily Bhakti style 
 Reuse the measured devotional renderer and existing published R2/cache/artwork barriers. Style/language changes must update preview and export together. Capture uses a fresh immutable payload and waits for native height plus all decoded slices; stale preview readiness never unlocks it. Preserve complete long text and existing platform sizing, text sharing, attribution, caption/download links and rating signals. The builder stays off startup and never constructs the pool. Cover both directions, all scripts, text, system/Instagram dimensions, cancellation, stale/failed paint and repeated actions with tests plus native flow `verse-card-style-smoke.yaml`. Device export/WhatsApp, native four-language Standard/Large/system-text and responsiveness checks remain mandatory before merge.
 
 ### Daily Bhakti devotional export fit — 19 Oct 2026
+
+Daily Bhakti branding uses the approved flute/peacock PNGs via `DevotionalBranding`: one localized name in the upper-left badge (Hindi for hi, English otherwise), never stacked bilingual names; English wordmark + unchanged serif `.app` in the footer. Use the shared native overlays rather than re-encoding/publishing the paintings or adding a generic-font brand. Capture waits for both master and mark decoding in hero/footer and rejects either failure; art/language changes must invalidate readiness and ignore old callbacks. Verify all current manifest subjects, four scripts, compact/large reading layouts and actual platform exports.
 
 Daily Bhakti sharing keeps the complete verse and meaning in one measured image in every reading language. Preserve fixed readable type and all stored text; grow a long PNG instead of splitting its meaning or shrinking it into a short frame. The devotional source set (nine original full deity masters plus neutral prayer and eighteen complete 1080×1456 subject masters; `assets/devotional-share/manifest.json` is the provenance source of truth, combined delivery sources <9MiB; each optimized original portrait <600KiB, full 1080×1456 resolution) uses the separate `devotional-share` R2 prefix and shared persistent artwork cache. No Daily Bhakti painting may enter the bundled asset graph. `manifest.assets.*.authoringMaster` retains the nine lossless originals at a pinned Git revision; zero protected-pixel changes applies to authoring, not perceptually compressed delivery. Re-encode from these originals with `scripts/optimize-devotional-share.mjs` (reviewed WebP q94/m6/sharp YUV), never from a previously lossy delivery. Preserve all fitted geometry, and visually compare all changed paintings before publishing. `src/data/devotionalShareManifest.json` pins all 28 published objects; `prepare-devotional-share.mjs --verify --cdn` must confirm public bytes. Keep text/navigation usable on paper during first download or failure; cached art remains available offline. Each new subject is one complete portrait composition with a continuous painting-to-parchment transition, brand plaque, border and footer. Slice the same subject master throughout; never paste a landscape reader banner onto another deity’s body. Rows `meaningTop + 82`…`meaningTop + 128` of the meaning box must hold only paper and the box/side rules: they are mirror-tiled to grow the explanation (महत्त्व) box, so an ornament there repeats down the card. Image decode and final native measurement must both finish before capture. Preview and Story framing must use the full height. Test Hanuman Ashtak 1.5, all 1,676 candidates/four scripts, post/Story capture dimensions and failure refusal. Installed device export and WhatsApp validation remain required before merge. See design.md §39.9.
 
