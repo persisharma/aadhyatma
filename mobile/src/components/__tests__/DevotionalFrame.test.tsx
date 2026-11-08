@@ -216,3 +216,26 @@ describe('R2 master states', () => {
     act(() => tree!.unmount());
   });
 });
+
+it('waits for unique tile paints in any order and rechecks tiles removed then added by layout', () => {
+  const ready = jest.fn();
+  const width = 540, spec = devotionalFrameSpec('hanuman'), tile = (128 - 82) * 3 * width / 1080;
+  const caps = (spec.meaningBottom - spec.meaningTop) * width / 1080 - tile / 3;
+  let tree: ReactTestRenderer;
+  act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={'Meaning.\n\n' + 'Commentary. '.repeat(60)} lang="en" art="hanuman" verseStyle={{}} meaningStyle={{}} width={width} exportMode onLoad={ready} />); });
+  const panel = () => tree!.root.findAllByProps({ testID: 'devotional-commentary-panel' }).find(n => n.props.onLayout)!;
+  const size = (count: number) => act(() => panel().props.onLayout({ nativeEvent: { layout: { height: caps + tile * (count - .5) } } }));
+  const tiles = () => panel().findAllByType(Image).filter(n => n.props.testID === 'devotional-commentary-panel-tile');
+  const paint = (indices: number[]) => act(() => { for (const i of indices) tiles()[i].props.onLoad(); });
+  size(4);
+  act(() => { for (const image of tree!.root.findAllByType(Image)) if (image.props.testID !== 'devotional-commentary-panel-tile') image.props.onLoad?.(); });
+  paint([3, 2, 1, 3]); expect(ready).not.toHaveBeenCalled();
+  paint([0]); expect(ready).toHaveBeenCalled(); ready.mockClear();
+  size(7); paint([6, 5, 6]); expect(ready).not.toHaveBeenCalled();
+  paint([4]); expect(ready).toHaveBeenCalled();
+  size(3); ready.mockClear(); size(7);
+  expect(ready).not.toHaveBeenCalled();
+  paint([6, 5, 4]); expect(ready).not.toHaveBeenCalled();
+  paint([3]); expect(ready).toHaveBeenCalled();
+  act(() => tree!.unmount());
+});

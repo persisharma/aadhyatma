@@ -230,6 +230,7 @@ export default function SuktamReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: suktamId,
+                            verseIndex: index,
                             sectionNameHi: suktam.titleHi,
                             sectionNameEn: suktam.titleEn,
                             verseLabelHi: item.labelHi,

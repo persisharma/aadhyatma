@@ -230,6 +230,7 @@ export default function KavachamReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: kavachamId,
+                            verseIndex: index,
                             sectionNameHi: kavacham.titleHi,
                             sectionNameEn: kavacham.titleEn,
                             verseLabelHi: item.labelHi,

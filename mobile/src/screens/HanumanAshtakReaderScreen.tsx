@@ -161,6 +161,7 @@ export default function HanumanAshtakReaderScreen({ navigation, route }: Props) 
                         share(
                           {
                             sourceId: 'hanuman-ashtak',
+                            verseIndex: index,
                             sectionNameHi: chapter.titleHi,
                             sectionNameEn: chapter.titleEn,
                             verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,

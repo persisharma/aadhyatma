@@ -83,6 +83,10 @@ appId: com.prashantsharma.vedansh
 # not an OS notification tap.
 - takeScreenshot: e2e-shots/daily-design-two-header
 - tapOn: "Share verse"
+- tapOn: "Card style: Daily Bhakti card"
+- scrollUntilVisible:
+    element: { text: "Share to other apps" }
+    direction: DOWN
 - assertVisible: "Share to other apps"
 - assertNotVisible: "Share all pages"
 - tapOn: "Cancel"

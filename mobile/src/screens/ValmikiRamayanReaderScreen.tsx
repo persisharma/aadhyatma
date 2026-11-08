@@ -322,6 +322,7 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
                           share(
                             {
                               sourceId: SOURCE_ID,
+                              verseIndex: verseIdx,
                               stanza: item.stanza,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,

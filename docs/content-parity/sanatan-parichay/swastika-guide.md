@@ -65,6 +65,9 @@ pending. Existing generic diagram callers were checked; only `swastika` changes.
 - PASS: actual-native-component browser harness bundles; this is not native QA.
 - PASS: all three full reader shards (374 suites, 3,931 tests); final focused
   run has 50 tests, including geometric perpendicular/clockwise/equal-arm checks.
+- PASS: integration against main d75ef4f6, typecheck and 69 focused reader/share tests.
+- The native search job now includes the drawing flow; screenshot prefixes match
+  the existing artifact collector. Native workflow results remain PENDING.
 - PENDING: remote CI results on the final PR head.
 - PENDING: installed iOS/Android, Home/search/page-door/saved/resume/Back journey,
   offline/lifecycle, four scripts × sizes, compact/system-text visual review,

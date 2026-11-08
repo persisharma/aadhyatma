@@ -51,6 +51,8 @@ import type { Lang } from '@/data/gita/language';
 
 export type ShareableVerse = {
   sourceId: string;
+  /** Zero-based position in the source chapter; preserves per-verse devotional artwork. */
+  verseIndex?: number;
   /**
    * Reader-background subsection key (optional) — the kāṇḍa/stanza number
    * `getReaderBackground` uses for sources whose plate varies per subsection
@@ -219,7 +221,11 @@ export type ShareTarget = 'system' | 'instagram';
  */
 export type ShareFormat = 'post' | 'story';
 
+export type VerseCardStyle = 'current' | 'daily-bhakti';
+
 type ShareOptions = {
+  /** Initial style only; the reader can change it in the picker. */
+  cardStyle?: VerseCardStyle;
   mode?: ShareMode;
   /** Used by mode='screenshot'; defaults to the off-screen card. */
   screenshotRef?: React.RefObject<View | null>;
@@ -355,14 +361,24 @@ type ProseCardSpec = {
 };
 
 /** Preview uses the measured complete card, so a long meaning is never clipped. */
-export function DevotionalPreview({ card }: { card: ProseCardSpec }) {
+export function DevotionalPreview({ card, width = 216, maxHeight = Infinity }: { card: ProseCardSpec; width?: number; maxHeight?: number }) {
   const [height, setHeight] = useState(CARD_HEIGHT);
-  const identity = JSON.stringify([card.header, card.lang, card.page.devotional]);
+  const identity = useMemo(() => JSON.stringify([card.header, card.lang, card.page.devotional]),
+    [card.header, card.lang, card.page.devotional]);
   const [painted, setPainted] = useState<string | null>(null);
   const onReady = useCallback((ready: boolean) => setPainted(ready ? identity : null), [identity]);
   return <View testID={painted === identity ? 'devotional-preview-ready' : 'devotional-preview-loading'}>
-    <ScaledShareCard width={216} metrics={{ width: CARD_WIDTH, height }}>
+    <ScaledShareCard width={Math.min(width, maxHeight * CARD_WIDTH / height)} metrics={{ width: CARD_WIDTH, height }}>
       <ProseShareCard {...card} onHeight={setHeight} onIllustrationReady={onReady} />
+    </ScaledShareCard>
+  </View>;
+}
+
+function VersePreview({ verse, lang, width = 216, maxHeight = Infinity }: { verse: ShareableVerse; lang: Lang; width?: number; maxHeight?: number }) {
+  const [height, setHeight] = useState(CARD_HEIGHT);
+  return <View testID="current-card-preview">
+    <ScaledShareCard width={Math.min(width, maxHeight * CARD_WIDTH / height)} metrics={{ width: CARD_WIDTH, height }}>
+      <ShareCard key={lang} {...verse} lang={lang} width={CARD_WIDTH} height={CARD_HEIGHT} onHeight={setHeight} />
     </ScaledShareCard>
   </View>;
 }
@@ -468,6 +484,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     /** What the card + caption are written in (§39.8); starts as `lang`. */
     cardLang: Lang;
     opts?: ShareOptions;
+    style: VerseCardStyle;
   } | null>(null);
   const [prose, setProse] = useState<ProseChooser | null>(null);
   const [cardChooser, setCardChooser] = useState<{
@@ -477,6 +494,17 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     /** What the card + caption are written in; switchable only when `content.languages`. */
     cardLang: Lang;
   } | null>(null);
+  const verseForStyle = chooser?.verse ?? null;
+  const selectedCardLang = chooser?.cardLang;
+  const devotionalChoice = useMemo(() => {
+    if (!verseForStyle) return null;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { devotionalVerseShareable } = require('@/utils/dailyBhaktiShare') as typeof import('@/utils/dailyBhaktiShare');
+    return devotionalVerseShareable(verseForStyle);
+  }, [verseForStyle]);
+  const devotionalScope = useMemo(() => devotionalChoice && selectedCardLang
+    ? resolveScopes(devotionalChoice, selectedCardLang)[0] : null,
+    [devotionalChoice, selectedCardLang]);
   const [busy, setBusy] = useState(false);
   const interactionActive = !!chooser || !!prose || !!cardChooser || busy;
   useEffect(() => {
@@ -703,7 +731,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       opts: ShareOptions | undefined,
       target: ShareTarget,
       format: ShareFormat,
-      uiLang: Lang = lang
+      uiLang: Lang = lang,
+      devotionalCard?: ProseCardSpec
     ) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
@@ -711,8 +740,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       const mode: ShareMode = opts?.mode ?? 'card';
 
       try {
-        const fileUri = await capture({ kind: 'verse', verse, lang, format }, mode, opts?.screenshotRef);
-        if (!fileUri && mode === 'card') {
+        const fileUri = devotionalCard
+          ? await capture({ kind: 'prose', card: devotionalCard, format, target }, 'card')
+          : await capture({ kind: 'verse', verse, lang, format }, mode, opts?.screenshotRef);
+        if (!fileUri && (devotionalCard || mode === 'card')) {
           alertCouldNotShare(uiLang);
           return;
         }
@@ -1035,7 +1066,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       // No explicit target → let the reader pick, so "Share on Instagram" is
       // discoverable from every share button without a second control.
       if (!opts?.target) {
-        setChooser({ verse, lang, cardLang: lang, opts });
+        setChooser({ verse, lang, cardLang: lang, opts, style: opts?.cardStyle ?? 'current' });
         return;
       }
       await run(verse, lang, opts, opts.target, opts.format ?? 'post');
@@ -1093,12 +1124,14 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
 
   const pickTarget = useCallback(
     (target: ShareTarget, format: ShareFormat) => {
-      if (!chooser) return;
+      if (!chooser || inFlightRef.current) return;
       const { verse, lang, cardLang, opts } = chooser;
+      const devotionalCard = chooser.style === 'daily-bhakti' && devotionalChoice && devotionalScope
+        ? cardSpec(devotionalChoice, devotionalScope, cardLang, 0) : undefined;
       setChooser(null);
-      void run(verse, cardLang, opts, target, format, lang);
+      void run(verse, cardLang, opts, target, format, lang, devotionalCard);
     },
-    [chooser, run]
+    [chooser, run, devotionalChoice, devotionalScope, cardSpec]
   );
 
   const pickText = useCallback(() => {
@@ -1246,7 +1279,15 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           onShareText={pickText}
           cardLang={chooser.cardLang}
           onCardLang={(next) => setChooser((c) => (c ? { ...c, cardLang: next } : c))}
-          onClose={() => setChooser(null)}
+          cardStyle={chooser.style}
+          onCardStyle={(style) => setChooser(c => c && !inFlightRef.current ? { ...c, style } : c)}
+          renderStylePreview={(style, width) => style === 'daily-bhakti' && devotionalChoice && devotionalScope
+            ? <DevotionalPreview key={chooser.cardLang} width={width} maxHeight={180} card={cardSpec(devotionalChoice, devotionalScope, chooser.cardLang, 0)} />
+            : <VersePreview key={chooser.cardLang} width={width} maxHeight={180} verse={chooser.verse} lang={chooser.cardLang} />}
+          singleCardPreview={chooser.style === 'daily-bhakti' && devotionalChoice && devotionalScope
+            ? <DevotionalPreview key={chooser.cardLang} card={cardSpec(devotionalChoice, devotionalScope, chooser.cardLang, 0)} />
+            : <VersePreview key={chooser.cardLang} verse={chooser.verse} lang={chooser.cardLang} />}
+          onClose={() => { if (!inFlightRef.current) setChooser(null); }}
         />
       ) : null}
       {prose ? (

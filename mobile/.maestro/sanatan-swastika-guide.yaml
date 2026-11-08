@@ -23,7 +23,7 @@ appId: com.prashantsharma.vedansh
     element: { text: "Moksha · Spiritual liberation" }
     direction: DOWN
     timeout: 60000
-- takeScreenshot: e2e-shots/swastika-four-aims
+- takeScreenshot: e2e-shots/sanatan-swastika-four-aims
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
@@ -34,17 +34,17 @@ appId: com.prashantsharma.vedansh
     element: { id: swastika-stage-0 }
     direction: DOWN
     timeout: 60000
-- takeScreenshot: e2e-shots/swastika-cross
+- takeScreenshot: e2e-shots/sanatan-swastika-cross
 - scrollUntilVisible:
     element: { id: swastika-stage-1 }
     direction: DOWN
     timeout: 60000
-- takeScreenshot: e2e-shots/swastika-four-bends
+- takeScreenshot: e2e-shots/sanatan-swastika-four-bends
 - scrollUntilVisible:
     element: { id: swastika-stage-2 }
     direction: DOWN
     timeout: 60000
-- takeScreenshot: e2e-shots/swastika-optional-dots
+- takeScreenshot: e2e-shots/sanatan-swastika-optional-dots
 - scrollUntilVisible:
     element: { text: "This guide does not prescribe.*" }
     direction: DOWN
