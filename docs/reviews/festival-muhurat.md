@@ -35,12 +35,12 @@ before sunrise. Moonrise is an astronomical event, not guaranteed sighting.
 The app shows all computed windows; the full 4:5 share card highlights the
 primary ritual/window in its existing festival ribbon slot.
 
-**Whole-minute presentation (8 November 2026):** Ritual window starts are
-rounded UP to the next whole minute; ends are rounded DOWN to the previous
-whole minute. Exact-minute boundaries stay unchanged. Moonrise/sunset and other
-point events retain the existing clock presentation. If a very short valid
-window has no displayable full-minute range, retain the unrounded source
-bounds instead of inventing a reversed or zero-length interval. The shared
+**Whole-minute presentation (8 November 2026):** Ritual window starts keep
+their existing display convention (no rounding up). Only window ends are
+floored to the previous whole-minute boundary. Exact-minute ends stay unchanged.
+Moonrise/sunset and other point events retain the existing clock presentation.
+If flooring the end would make it no later than the real start, keep the
+unrounded end rather than moving the ending instant outside the source window. The shared
 `occasionTimingFormat.ts` helper governs compact, illustrated, focused/full
 share and send-as-text clocks (including overnight endpoint dates). Underlying
 astronomical instants and cached day inputs are not modified, so this change
