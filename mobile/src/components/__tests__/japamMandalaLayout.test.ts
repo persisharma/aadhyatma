@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import { layoutMandala, mandalaClusters, mandalaPageOpacity, mandalaWordBounds } from '../japamMandalaLayout';
 import { ringSeparator, ringWords } from '../japamMantraRingLayout';
 import measurements from './fixtures/japamMandalaWidths.json';
-import { findJapamMantra } from '@/data/japam';
+import { findJapamMantra, japamMantras } from '@/data/japam';
 import { verseLinesByLang } from '@/utils/localize';
 
 test.each([
@@ -29,7 +29,7 @@ test('font fixtures match the actual locked reading faces and the current recita
   }
 });
 
-test('all 22 mantras and 16 long Tandav shlokas fit without cutting runs or dropping text in four scripts', () => {
+test('every catalogue mantra and the 16 long Tandav shlokas fit without cutting runs or dropping text in four scripts', () => {
   let checked = 0;
   for (const row of measurements.cases) for (const size of [280, 296, 340]) {
     const text = row.lines.join(' ');
@@ -63,7 +63,14 @@ test('all 22 mantras and 16 long Tandav shlokas fit without cutting runs or drop
     expect(nodeCount).toBeLessThanOrEqual(768);
     checked++;
   }
-  expect(checked).toBe(456);
+  // Every catalogue mantra plus the 16 Tandav shlokas, in four scripts, at three frame sizes.
+  expect(checked).toBe((japamMantras.length + 16) * 4 * 3);
+});
+
+test('the measured fixture covers every catalogue mantra in all four scripts (regenerate with scripts/measure-japam-mandala.mts)', () => {
+  const measured = new Set(measurements.cases.map(row => `${row.id}|${row.lang}`));
+  const missing = japamMantras.flatMap(m => ['hi', 'en', 'gu', 'kn'].map(lang => `${m.id}|${lang}`)).filter(key => !measured.has(key));
+  expect(missing).toEqual([]);
 });
 
 test('Gayatri in Hindi fits both ornamental bands in a single page even on the compact frame', () => {
