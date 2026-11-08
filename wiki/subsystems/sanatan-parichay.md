@@ -83,3 +83,13 @@ use shared script/reading tokens; narration and prose shares retain equivalent
 full drawing instructions. No universal stroke/finger/dot requirement is claimed.
 See `docs/content-parity/sanatan-parichay/swastika-guide.md` for source scope and
 pending native/editorial acceptance. This expansion is not a catalogue expansion.
+
+
+## Customs learning integration — 8 November 2026
+
+The hub now owns the Pratha/ऐसा क्यों? collection and searches its verified
+questions alongside introductions. Tulasi overview and final page link to K6;
+longer narratives retain one owner. Pratha has no separate Home/More door.
+Its routes also mount locally on Panchang for contextual Vrat/month entry.
+All existing Sanatan IDs, saved filters and progress storage remain unchanged.
+See [[subsystems/pratha]], RULEBOOK §34 and design.md §87.

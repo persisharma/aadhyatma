@@ -1,3 +1,4 @@
+import { PrathaMonthCard } from '@/components/PrathaCards';
 import OccasionSection from '@/components/OccasionSection';
 import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
@@ -685,6 +686,10 @@ export default function PanchangScreen({ route }: Props) {
               {panchangTab !== 'jyotish' && renderSystemHeader(null)}
             </>
           )}
+
+          {panchangTab === 'calendar' && p && <PrathaMonthCard month={p.lunarMonth}
+            onOpen={(prathaId) => rootNav.navigate('PrathaReader', { prathaId })}
+            onHub={() => rootNav.navigate('Pratha', { masa: p.lunarMonth.index, isAdhik: p.lunarMonth.isAdhik })} />}
 
           {panchangTab === 'calendar' ? (
             <>

@@ -1,3 +1,4 @@
+import { PrathaObservanceCard } from '@/components/PrathaCards';
 import { occasionGuidance } from '@/panchang/occasionTimings';
 import OccasionTimingsCard from '@/components/OccasionTimingsCard';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
@@ -344,6 +345,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 </Pressable>
               </View>
             )}
+            <PrathaObservanceCard ruleId={rule.id} onOpen={(prathaId) => navigation.navigate('PrathaReader', { prathaId })} />
+
             {/* "How to observe" — ONE home, four states (PRD-09/P4 §6.3):
                 (1) verified upvas facts only, (2) vidhi only — exactly the
                 shipped PRD-19 Phase 2B block, (3) both — facts frame the

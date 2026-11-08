@@ -60,7 +60,13 @@ export type GharVastuStackParamList = {
   GharVastuCompare: { homeIds: readonly string[] };
 };
 
-export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
+/** Sanatan customs and the contextual Vrat/Panchang journey keep Back local. */
+export type PrathaStackParamList = {
+  Pratha: { masa?: number; isAdhik?: boolean } | undefined;
+  PrathaReader: { prathaId: string };
+};
+
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & PrathaStackParamList & {
   SanatanParichay: { topicId?: string } | undefined;
   SanatanReader: { topicId: string; initialPage?: number };
   Home: undefined;
@@ -197,7 +203,7 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
+export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & PrathaStackParamList & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;

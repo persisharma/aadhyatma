@@ -4242,6 +4242,38 @@ publication is claimed. Source masters remain in the approved Site. Native
 appearance has not yet been established by device screenshots; see the acceptance
 matrix in `docs/content-parity/sanatan-parichay/native-verification.md`.
 
+### Customs & traditions — PR #564 adaptation, 8 November 2026
+
+The existing Sanatan hub owns a **प्रथा और मान्यता / Customs & traditions**
+listing frame with the question **ऐसा क्यों करते हैं?**. Use existing parchment,
+listing/script tokens, 16pt inner padding, intrinsically growing copy and a 48pt
+minimum target. Do not add a separate Home spotlight, More row or new painting.
+The card appears within All/Worship, outside Saved. Hub search returns matching
+verified customs beside introductory lessons and opens their exact reader IDs.
+Tulasi overview and its final lesson page link to K6, the single longer account.
+
+`PrathaScreen` keeps the shared header, LanguageToggle and a Sanatan collection
+subtitle. All questions is the year-round default; contextual month entry selects
+its lunar month. Show only populated category filters and qualifying month chips.
+Question rows use ListingCardFrame with complete question/practice text, the
+script-aware reading tokens and a chevron; no ellipsis or research badge. The
+header belongs to the same vertically scrolling list, leaving room for content
+on compact screens and enlarged system text.
+
+Reader: practice → each complete story → meaning → optional bodh → real in-app
+hand-offs/family-tradition footer. KathaSectionPage gains an optional scrolling
+footer only; other callers keep their existing anatomy. Language and wrapping
+playback controls precede the horizontal pager. Research locators/tier pills are
+internal under §11.16; brief folk/regional context remains in the authored public
+projection and exported prose. The counter follows settled pages, with bounded
+FlatList rendering. Sharing uses the existing prose composer.
+
+Home/Sanatan and Vrat/Panchang each own their local Pratha routes for Back. The
+observance Why card stays between Story and How to observe (§62); the Panchang
+month card uses the existing lunar-month selection. No date/muhurat rule changes.
+No custom save/progress store is introduced; the existing Sanatan store is intact.
+See docs/reviews/2026-11-08-pratha-sanatan-adaptation.md for current evidence.
+
 ### Swastika meaning and drawing — 8 November 2026
 
 The existing `symbols` lesson keeps its three stable pages: auspicious meaning,

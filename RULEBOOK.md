@@ -1642,3 +1642,37 @@ Approved card-first share flow (8 November 2026): verse Share opens two labelled
 Share generation performance contract (8 November 2026): `TimelyTagsResolver` reads only `getCachedObservancesForDate`, applies the selected regional lenses, and subscribes to existing observance-store updates while mounted. A cache miss retains standard scripture/deity/weekday tags; it must never call the solving day hook, schedule a new year scan or wait for astronomy. Day, city, calendar and lens changes refresh the cached tags; closing unsubscribes. This applies to every card style through the shared provider. Devotional preview/capture identity strings are memoized across native height/paint updates. Artwork tile readiness advances a contiguous painted prefix instead of allocating/rescanning every tile per decode; committed shrink removes discarded tile indices so re-added tiles must paint again. Subject/width/frame changes remount the tile tracker. Full text, image geometry, source artwork, styles and fresh capture barriers remain unchanged. Regression tests cover cache misses outside bundled years, existing scan results, regional filters, day/city changes, unsubscribe, duplicate/reversed tile callbacks and shrink/regrow. Native image decode, actual exports, Android frame/memory profiling and ANR evidence remain separate pending checks.
 
 The devotional export reports settled geometry before artwork readiness, allowing the existing short layout wait and separate artwork wait to function independently. Capture still waits for all decoded slices and final native layout. No timeout, text, image dimensions or visual frame is changed. See `docs/reviews/2026-11-08-share-performance.md`.
+
+
+## 34. Sanatan Parichay — प्रथा और मान्यता (ऐसा क्यों?)
+
+PRD-46 is the customs learning collection inside Sanatan (§32), not a separate
+Home/More destination. `data/pratha/` retains all 208 stable records, their story
+provenance and publication states: 19 verified, 189 hidden drafts at integration.
+Do not regenerate the axis files, promote drafts or treat owner approval as source
+verification. The existing two-opened-independent-publication gate applies per
+story. `verification.ts`, verified-only selectors and the ten-Kartik pilot gate
+remain authoritative; month cards require three matching entries.
+
+- Home opens Sanatan. Its customs card opens `Pratha`; hub search also returns
+  matching verified customs. The Tulasi introduction/closing page links to K6
+  rather than copying its longer narratives. Saved-only filters keep existing
+  Sanatan saved IDs and do not imply customs are saved.
+- `Pratha`/`PrathaReader` mount lazily on Home and Panchang (also used by Vrat).
+  No More registration or additional Discover spotlight. Contextual questions
+  remain between the observance story and instructions; the lunar-month card
+  remains beneath the Panchang sky. Back retraces the entry stack.
+- Default to all reviewed questions year-round. A month-card entry selects that
+  month. Hide empty categories and nonqualifying month chips; search spans all
+  verified questions in Hindi/English and the displayed Gujarati/Kannada scripts.
+- §11.16 governs every public projection: tier/canon and reference metadata stay
+  in editorial records, never a research footer, pill, narration or share appendix.
+  Preserve authored teaching, concise folk/regional context and genuine bundled
+  reading hand-offs. `prathaPages` is the shared screen/speech/share projection.
+- Use shared listing frames, script/reading-size tokens, scrolling prose and the
+  reader playback/share components. Controls wrap on narrow screens; update
+  page state on settled paging, not every animation frame. Preserve all existing
+  Sanatan saved/progress keys and all festival/muhurat behaviour from main.
+- Full unit/data/launch-graph gates plus `pratha-smoke.yaml` and the Sanatan
+  four-script × two-size native matrix are required. Renderer evidence does not
+  establish native layout, exported-image correctness or Android ANR acceptance.

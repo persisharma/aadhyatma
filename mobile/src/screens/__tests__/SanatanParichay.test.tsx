@@ -33,6 +33,34 @@ async function render(node: React.ReactNode, lang: Lang = 'en') {
   return tree;
 }
 afterEach(() => { jest.clearAllMocks(); jest.restoreAllMocks(); mockReadingFactor = 1; });
+test('customs live inside Sanatan and its query reaches the verified customs reader', async () => {
+  const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
+  const byId = (name: string) => tree.root.findAll(n => n.props.testID === name)[0];
+  expect(byId('sanatan-pratha')).toBeDefined();
+  act(() => byId('sanatan-pratha').props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('Pratha');
+  act(() => tree.root.findByType(TextInput).props.onChangeText('Yama'));
+  act(() => byId('sanatan-pratha-K10').props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('PrathaReader', { prathaId: 'K10' });
+  expect(tree.root.findByType(TextInput).props.value).toBe('Yama');
+  act(() => tree.unmount());
+});
+
+test('Tulasi introduction links to one deeper customs explanation; saved filtering excludes customs', async () => {
+  const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']}
+    route={{ key: 'plants', name: 'SanatanParichay', params: { topicId: 'plants' } }} />);
+  const related = tree.root.findAll(n => n.props.testID === 'pratha-related-K6')[0];
+  expect(related).toBeDefined();
+  act(() => related.props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('PrathaReader', { prathaId: 'K6' });
+  act(() => tree.unmount());
+  const hub = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'saved', name: 'SanatanParichay' }} />);
+  const saved = hub.root.findAll(n => n.props.accessibilityRole === 'button' && n.props.accessibilityLabel === 'Saved introductions')[0];
+  act(() => saved.props.onPress());
+  act(() => hub.root.findByType(TextInput).props.onChangeText('Yama'));
+  expect(hub.root.findAll(n => String(n.props.testID).startsWith('sanatan-pratha'))).toHaveLength(0);
+  act(() => hub.unmount());
+});
 test('question search opens the exact collection and keeps the query on Back', async () => {
   const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
   const input = tree.root.findByType(TextInput);

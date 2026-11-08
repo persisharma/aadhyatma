@@ -1,0 +1,86 @@
+# Native execution requires this branch's build; YAML parsing is not device proof.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- scrollUntilVisible:
+    element: { id: sanatan-pratha }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-pratha }
+- assertVisible: { id: pratha-hub }
+- tapOn: { id: pratha-search }
+- inputText: Yama
+- pressKey: Enter
+- scrollUntilVisible:
+    element: { id: pratha-question-K10 }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: pratha-question-K10 }
+- assertVisible: { id: pratha-reader }
+- assertVisible: { id: pratha-counter }
+- swipe: { direction: LEFT }
+- assertVisible: { id: pratha-page-katha-0 }
+- assertNotVisible: { id: pratha-canon }
+- assertNotVisible: 'Sources & context'
+- assertNotVisible: 'https?://.*'
+- takeScreenshot: e2e-shots/sanatan-customs-reader
+- tapOn: Back
+- assertVisible: Yama
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: sanatan-search }
+    direction: UP
+    timeout: 60000
+- tapOn: { id: sanatan-search }
+- inputText: Tulasi
+- pressKey: Enter
+- scrollUntilVisible:
+    element: { id: sanatan-collection-plants }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-collection-plants }
+- scrollUntilVisible:
+    element: { id: pratha-related-K6 }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: pratha-related-K6 }
+- assertVisible: { id: pratha-reader }
+- tapOn: Back
+- assertVisible: { id: pratha-related-K6 }
+- tapOn: Back
+- tapOn: { id: tab-panchang }
+- runFlow:
+    when: { visible: { id: pratha-month-card } }
+    commands:
+      # The card can sit at the bottom edge of a small screen (the 320×568dp search
+      # matrix): bring its footer link into view before tapping it.
+      - scrollUntilVisible:
+          element: { id: pratha-month-hub }
+          direction: DOWN
+          timeout: 60000
+      - tapOn: { id: pratha-month-hub }
+      - assertVisible: { id: pratha-hub }
+      - tapOn: Back
+      - assertVisible: { id: pratha-month-card }
+# Seasonal block above is not acceptance for months in which it does not execute.
+- tapOn: { id: tab-vrat }
+- scrollUntilVisible:
+    element: { text: 'Search vrat, festival, upvas, katha…' }
+    direction: UP
+    timeout: 60000
+- tapOn: 'Search vrat, festival, upvas, katha…'
+- inputText: Dhantera
+- hideKeyboard
+- extendedWaitUntil: { visible: Dhanteras, timeout: 60000 }
+- tapOn: Dhanteras
+- scrollUntilVisible:
+    element: { id: pratha-context-K10 }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: pratha-context-K10 }
+- assertVisible: { id: pratha-reader }
+- tapOn: Back
+- assertVisible: { id: pratha-observance-card }

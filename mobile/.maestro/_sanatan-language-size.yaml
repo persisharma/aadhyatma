@@ -44,3 +44,23 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+
+# Same selected script/size: customs use the shared learning/reader anatomy.
+- tapOn: Back
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: sanatan-pratha }
+    direction: UP
+    timeout: 60000
+- tapOn: { id: sanatan-pratha }
+- scrollUntilVisible:
+    element: { id: pratha-question-K1 }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-customs-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: pratha-question-K1 }
+- assertVisible: { id: pratha-reader }
+- swipe: { direction: LEFT }
+- assertVisible: { id: pratha-page-katha-0 }
+- assertNotVisible: { id: pratha-canon }
+- takeScreenshot: "e2e-shots/sanatan-customs-story-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

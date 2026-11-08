@@ -16,6 +16,9 @@ import Ornament from '@/components/Ornament';
 import { ListingSectionHeader, ListingCardFrame } from '@/components/ListingCard';
 import CollectionCard, { DiscoveryPair } from '@/components/sanatan/CollectionCard';
 import { Action, Copy, Painting, PrimaryAction, ToolAction, useSanatanText } from '@/components/sanatan/Primitives';
+import { getAllPratha, hasPratha } from '@/data/pratha';
+import { matchesPratha } from '@/data/pratha/presentation';
+import { PrathaQuestionCard, PrathaRelatedCard } from '@/components/PrathaCards';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'SanatanParichay'>;
 export default function SanatanParichayScreen({ route, navigation }: Props) {
@@ -33,6 +36,8 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
   const read = (id: string, initialPage = 0) => navigation.navigate('SanatanReader', { topicId: id, initialPage });
   const failed = () => Alert.alert(t(['सहेजा नहीं जा सका', 'Could not save']), t(['फिर प्रयास करें।','Please try again.']));
   const topics = (query.trim() ? searchSanatanTopics(query) : getSanatanTopics()).filter(x => (!savedOnly || learning.saved.includes(x.id)) && (!group || x.group[1] === group));
+  const showCustoms = !savedOnly && (!group || group === 'Symbols & worship') && hasPratha();
+  const customs = showCustoms && query.trim() ? getAllPratha().filter(entry => matchesPratha(entry, query)) : [];
   const resume = learning.resume && getSanatanTopic(learning.resume.id);
   return <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }}>
     <ReaderHeader title={t(['सनातन परिचय', 'Sanatan Parichay'])} onBack={() => navigation.goBack()} sideWidth={52}
@@ -55,6 +60,7 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
           <View style={{ minWidth: 32, minHeight: 32, paddingHorizontal: 6, justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: colors.saffronTint }}><Text style={listingText}>{String(i + 1)}</Text></View>
           <Text style={{ ...listingText, flex: 1, minWidth: 0 }}>{t(name)}</Text><AppIcon name="next" size={18} color={colors.saffronDeep} />
         </ListingCardFrame>)}
+        <PrathaRelatedCard topicId={topic.id} onOpen={prathaId => navigation.navigate('PrathaReader', { prathaId })} />
       </> : <>
         <Text accessibilityRole="header" style={{ fontFamily: titleFontByLang(lang), color: colors.ink, fontSize: 29, lineHeight: 49 }}>{t(['हर परम्परा में\nएक अर्थ छिपा है।','Every tradition\nhas a story to tell.'])}</Text>
         <Text style={{ fontFamily: titleFontByLang(lang), color: colors.inkMuted, fontSize: 14, lineHeight: 24 }}>{t(['आपके मन के प्रश्न, चित्रों के साथ सरल उत्तर।','Questions on your mind. Answers brought to life.'])}</Text>
@@ -86,11 +92,23 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
           {[['सभी','All',''],['देव और स्वरूप','Deities','Deities & forms'],['प्रतीक और पूजा','Worship','Symbols & worship'],['समय और ज्ञान','Knowledge','Time & knowledge']].map(([hi,en,value]) =>
             <Action key={value} label={t([hi,en])} selected={group === value} onPress={() => setGroup(value)} style={{ borderRadius: 24, minHeight: 48, paddingVertical: 8, paddingHorizontal: 14 }} />)}
         </View>
+        {showCustoms && !query.trim() && <ListingCardFrame testID="sanatan-pratha" accessibilityLabel={t(['प्रथा और मान्यता · ऐसा क्यों?', 'Customs and traditions · Why do we do this?'])}
+          onPress={() => navigation.navigate('Pratha')} contentStyle={{ padding: 16, gap: 8 }}>
+          <ListingSectionHeader>{t(['प्रथा और मान्यता', 'Customs & traditions'])}</ListingSectionHeader>
+          <Text style={listingText}>{t(['ऐसा क्यों करते हैं?', 'Why do we do this?'])}</Text>
+          <Copy>{t(['दीपदान, तुलसी विवाह, अन्नकूट… परम्पराओं के पीछे की कथा और भाव जानें।', 'Deepdaan, Tulasi Vivaha, Annakoot… discover the stories and meanings behind customs.'])}</Copy>
+          <Text style={{ ...listingText, color: colors.saffronDeep }}>{t(['प्रश्न देखें →', 'Explore questions →'])}</Text>
+        </ListingCardFrame>}
+        {customs.length > 0 && <View style={{ gap: 12 }}>
+          <ListingSectionHeader>{t(['प्रथा और मान्यता · ऐसा क्यों?', 'Customs & traditions · Why?'])}</ListingSectionHeader>
+          {customs.map(entry => <PrathaQuestionCard key={entry.id} entry={entry} testID={`sanatan-pratha-${entry.id}`}
+            onPress={() => navigation.navigate('PrathaReader', { prathaId: entry.id })} />)}
+        </View>}
         {[...new Set(topics.map(x => x.group[1]))].map(key => <View key={key} style={{ gap: 12 }}>
           <ListingSectionHeader>{t(topics.find(x => x.group[1] === key)!.group)}</ListingSectionHeader>
           {topics.filter(x => x.group[1] === key).map(x => <CollectionCard key={x.id} topic={x} testID={`sanatan-collection-${x.id}`} onPress={() => open(x.id)} />)}
         </View>)}
-        {!topics.length && <Copy>{t(['कोई परिचय नहीं मिला। दूसरा शब्द आज़माएँ।','No introductions found. Try another word.'])}</Copy>}
+        {!topics.length && !customs.length && <Copy>{t(['कोई परिचय नहीं मिला। दूसरा शब्द आज़माएँ।','No introductions found. Try another word.'])}</Copy>}
       </>}
     </ScrollView>
   </SafeAreaView>;

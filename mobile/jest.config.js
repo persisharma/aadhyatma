@@ -39,6 +39,8 @@ module.exports = {
     '<rootDir>/src/data/daan/__tests__/**/*.test.{ts,tsx}',
     // पितृ पक्ष परिचय (PRD-44): content registries — no tsx scripts in the dir.
     '<rootDir>/src/data/pitru/__tests__/**/*.test.{ts,tsx}',
+    // प्रथा और मान्यता (PRD-46): content registry — no tsx scripts in the dir.
+    '<rootDir>/src/data/pratha/__tests__/**/*.test.{ts,tsx}',
     // गीता सार (RULEBOOK §29): content registry — no tsx scripts in the dir.
     '<rootDir>/src/data/gita-saar/__tests__/**/*.test.{ts,tsx}',
   ],

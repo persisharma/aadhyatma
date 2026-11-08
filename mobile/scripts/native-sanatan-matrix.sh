@@ -48,6 +48,9 @@ if [[ "$MATRIX_SCOPE" == all || "$MATRIX_SCOPE" == journeys || "$MATRIX_SCOPE" =
     .maestro/sanatan-native-collections.yaml 2>&1 | tee "$SANATAN_OUTPUT/collections.log"
 fi
 if [[ "$MATRIX_SCOPE" == all || "$MATRIX_SCOPE" == journeys || "$MATRIX_SCOPE" == search ]]; then
+  SANATAN_PHASE=customs-journey
+  node scripts/run-native-diagnostic.cjs --timeout-ms 1200000 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/customs.xml" \
+    .maestro/pratha-smoke.yaml 2>&1 | tee "$SANATAN_OUTPUT/customs.log"
   SANATAN_PHASE=regional-search
   node scripts/run-native-diagnostic.cjs --timeout-ms 1500000 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/regional-search.xml" \
     .maestro/sanatan-regional-search.yaml 2>&1 | tee "$SANATAN_OUTPUT/regional-search.log"

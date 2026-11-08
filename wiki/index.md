@@ -7,13 +7,13 @@
 - [`docs/engineering/vedansh-build-checklist.md`](../docs/engineering/vedansh-build-checklist.md) — shared assistant acceptance checks, remote work preservation, conditional checks and evidence report.
 - [`RULEBOOK.md`](../RULEBOOK.md) — integration contract for adding a content section.
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
-- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–42 (incl. 28 पर्व-अर्क, 42 क्षेत्रीय पर्व — the Jain/per-state lens plan).
+- [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–46 (incl. 28 पर्व-अर्क, 42 क्षेत्रीय पर्व — the Jain/per-state lens plan, 46 प्रथा और मान्यता).
 - [`docs/superpowers/`](../docs/superpowers/) — deity-icon plan + design spec.
 - [`docs/content-parity/chalisa-aarti-existing-deities.md`](../docs/content-parity/chalisa-aarti-existing-deities.md) — source-candidate manifest for Chalisa/Aarti parity using only existing deity ids.
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
 
 ## Subsystems
-- [[subsystems/sanatan-parichay]] — question-led introductory learning, uniform painted collections, source credits and serialized progress.
+- [[subsystems/sanatan-parichay]] — question-led introductory learning, uniform painted collections, internal provenance, customs learning and serialized progress.
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
 - [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
@@ -30,6 +30,7 @@
 - [[pitru-shiksha]] — पितृ पक्ष परिचय (PRD-44): the education layer beside the Pitru reminder and the tila-tarpana vidhi — verified-only registry (lessons · tithis · glossary · verse spine with reader refs · kathas · प्रश्नोत्तर), the reading-order screen, the gated overview door, the stance guard.
 - [[gita-saar]] — गीता सार: themed readings over the bundled Gita (a chapter is a theme, a page is one shloka + its plain-language सार), refs never re-typed scripture, five-file theme additions with distinct sourced story art, sixteen themes, continuous learning and private reflections.
 - [[share]] — share cards: the one `ShareProvider`, verse/prose/illustrated story cards, density-correct PNG export, the measured paginator that splits long prose into a series, the pages strip / preview, all-pages share via the native-gated `react-native-share`, and the no-share Pitru surfaces.
+- [[subsystems/pratha]] — प्रथा और मान्यता (PRD-46): the "ऐसा क्यों?" registry and Phase 1 surfaces — 208 customs / 305 stories, six source tiers, 19 verified entries and 189 hidden drafts; ten-Kartik pilot gate and three-entry month cards. Native smoke pending.
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts

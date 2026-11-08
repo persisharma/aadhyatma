@@ -22,6 +22,7 @@ import { Action, Copy, Painting, PrimaryAction, ToolAction, useSanatanText } fro
 import ExploreDiagram from '@/components/sanatan/ExploreDiagram';
 import SwastikaGuide from '@/components/sanatan/SwastikaGuide';
 import type { KathaContentSection } from '@/panchang/types';
+import { PrathaRelatedCard } from '@/components/PrathaCards';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'SanatanReader'>;
 export default function SanatanReaderScreen(props: Props) {
@@ -109,6 +110,7 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
               {topic.kind === 'swastika' && index === 2 && <SwastikaGuide mode="drawing" />}
               {t(topic.pages[index]).split(/\n\s*\n/).map((paragraph, paragraphIndex) => <Copy key={paragraphIndex}>{paragraph}</Copy>)}
               {index === 1 && <ExploreDiagram topic={topic} onCollection={topicId => navigation.push('SanatanParichay', { topicId })} />}
+              {index === 2 && <PrathaRelatedCard topicId={topic.id} onOpen={prathaId => navigation.navigate('PrathaReader', { prathaId })} />}
             </ProseReadingCard>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
             <ToolAction icon="saved" label={t(learning.saved.includes(topic.id) ? ['सहेजा हुआ हटाएँ','Remove saved lesson'] : ['बाद के लिए सहेजें','Save for later'])}
