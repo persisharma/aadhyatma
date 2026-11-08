@@ -5,17 +5,17 @@ import { contentByLang } from '@/utils/localize';
 
 const MINUTE_MS = 60_000;
 
-/** Display only: do not round astronomical timestamps, cache inputs or event instants.
- * For ritual windows, choose the first whole minute at/after the real start,
- * and the last whole minute at/before the real end.
- * Extremely short windows with no full displayed minute retain the raw bounds
- * rather than showing an inverted/zero-length minute range.
+/** Display only: leave the start and all astronomical instants unchanged.
+ * Ritual window END clocks use the last whole minute no later than the end.
+ * Very short windows keep their raw endpoint if rounding would move the
+ * end before or exactly onto the real start; the clock formatter still
+ * truncates the display without inventing an invalid instant.
+ * Event instants (e.g. moonrise) are never adjusted.
  */
 export function occasionDisplayEndpoints(w: OccasionWindow): { start: Date; end?: Date } {
   if (w.event) return { start: w.start };
-  const start = new Date(Math.ceil(w.start.getTime() / MINUTE_MS) * MINUTE_MS);
   const end = new Date(Math.floor(w.end.getTime() / MINUTE_MS) * MINUTE_MS);
-  return start < end ? { start, end } : { start: w.start, end: w.end };
+  return { start: w.start, end: end > w.start ? end : w.end };
 }
 
 /** Shared by compact Panchang, illustrated Vrat, full/focused PNG and text. */
