@@ -385,7 +385,14 @@ Verification follow-up measured all 197 unique catalog title/deity pairs in four
 ## Festival-specific windows (6 November 2026)
 
 `occasionTimings.ts` derives reviewed ritual windows; `occasionTimingWork.ts`
-uses shared day inputs and cooperative cancellation. `useOccasionTimings` keys
+uses shared day inputs and cooperative cancellation.
+For the whole-minute festival window display, `occasionTimingFormat.ts` rounds
+starts upward and ends downward while preserving exact solver inputs. It also
+owns the full share's overnight start/end date labels, compact card, illustrated
+Vrat card, focused export, accessibility text and text sharing. Point events
+are unchanged; sub-minute windows retain the raw bounds if conservative rounding
+would make the displayed range invalid. This is not a clock-correction of the
+astronomy engine, and requires native share/device verification. `useOccasionTimings` keys
 publication by date/city/calendar/lenses. App and 4:5 share ribbon use typed
 painted FestivalMotif art and FestiveCorners; text sharing includes every window.
 Art is a bundled transparent 4x3 atlas, with reviewed source/hash metadata in
