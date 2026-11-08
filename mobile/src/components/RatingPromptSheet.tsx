@@ -219,13 +219,16 @@ export default function RatingPromptSheet() {
         const Icon = platform === 'instagram' ? InstagramLogoIcon : FacebookLogoIcon;
         return (
           <View key={platform} style={[styles.socialRow, { borderColor: colors.divider, borderRadius: radii.md }]}>
+            {/* Filled like "Write to us": the follow link is the row's primary action, so it
+                must outweigh the underlined "Already following" text link beneath it. */}
             <Pressable accessibilityRole="link" accessibilityLabel={`Follow Vedansh on ${name}`}
               onPress={() => { void follow(platform); }}
-              style={({ pressed }) => [styles.socialFollow, { opacity: pressed ? 0.6 : 1 }]}>
+              style={({ pressed }) => [styles.socialFollow,
+                { backgroundColor: colors.saffron, borderRadius: radii.md, opacity: pressed ? 0.85 : 1 }]}>
               <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-                <Icon size={28} color={colors.saffronDeep} />
+                <Icon size={24} color={colors.onPrimary} />
               </View>
-              <Text style={[styles.primaryText, styles.socialLabel, { color: colors.ink, fontFamily: labelFont }]}>
+              <Text style={[styles.primaryText, styles.socialLabel, { color: colors.onPrimary, fontFamily: titleFont }]}>
                 {pick(lang, { hi: `${name} पर फ़ॉलो करें`, en: `Follow on ${name}`,
                   gu: `${name} પર ફૉલો કરો`, kn: `${name} ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ` })}
               </Text>
@@ -282,9 +285,17 @@ const styles = StyleSheet.create({
     maxHeight: '100%',
     overflow: 'hidden',
   },
-  socialRow: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 4 },
-  socialFollow: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 48, paddingVertical: 8 },
-  socialLabel: { flex: 1, flexShrink: 1 },
+  socialRow: { borderWidth: 1, paddingHorizontal: 12, paddingTop: 12, paddingBottom: 2 },
+  socialFollow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    minHeight: 48,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  socialLabel: { flexShrink: 1, textAlign: 'center' },
   starRow: {
     flexDirection: 'row',
     justifyContent: 'center',

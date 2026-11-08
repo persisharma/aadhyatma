@@ -7,7 +7,8 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AppState, Linking, Modal, ScrollView, Text } from 'react-native';
+import { AppState, Linking, Modal, ScrollView, StyleSheet, Text } from 'react-native';
+import { lightColors } from '@/theme/colors';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { GitaLanguageProvider } from '@/data/gita/language';
@@ -725,6 +726,18 @@ describe('post-review social prompt', () => {
     await fireMoment();
     expect(allText(tree)).toContain('Enjoying Vedansh?');
     expect(allText(tree)).not.toContain('Stay connected with Vedansh');
+  });
+  test('each follow link reads as the filled primary action; "Already following" stays a plain text link', async () => {
+    ENGAGEMENT_PROMPTS.facebookUrl = 'https://www.facebook.com/test-vedansh-page';
+    reviewed();
+    const tree = await renderAndSettle();
+    for (const name of ['Instagram', 'Facebook']) {
+      const follow = StyleSheet.flatten(pressableByLabel(tree, `Follow Vedansh on ${name}`).props.style({ pressed: false }));
+      expect(follow.backgroundColor).toBe(lightColors.saffron);
+      expect(follow.minHeight).toBeGreaterThanOrEqual(48);
+      const already = StyleSheet.flatten(pressableByLabel(tree, `I already follow Vedansh on ${name}`).props.style);
+      expect(already.backgroundColor).toBeUndefined();
+    }
   });
   test.each(['hi', 'en', 'gu', 'kn'] as const)('social controls and scrolling remain available in %s at both reading sizes', async (lang) => {
     ENGAGEMENT_PROMPTS.facebookUrl = 'https://www.facebook.com/test-vedansh-page';
