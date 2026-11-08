@@ -1248,10 +1248,11 @@ Use `occasionTimings.ts` and the location-scoped shared day store; source URLs
 and reviewed recipe conventions travel with each profile. Never manufacture
 an occasion window from Choghadiya. Bhadra exceptions and tradition-specific
 parana cannot silently inherit another convention. Screen/export/text share
-one result and date-aware formatter. Only *displayed ritual windows* use
-ceiling(start) and floor(end) at whole-minute precision. Keep exact source
-instants for the engine, caching, date matching and reminders; do not shift
-point events or silently subtract a minute from exact-minute endpoints. Use
+one result and date-aware formatter. Only *displayed ritual window ends* use floor(end) at whole-minute
+precision; starts retain their previous unrounded timestamp and displayed
+clock. Keep exact source instants for the engine, caching, date matching and
+reminders; do not shift point events or silently subtract a minute from
+exact-minute endpoints. Use
 the same helper for compact/screen, full/focused export, accessible labels and
 text sharing, preserving overnight dates. If rounding removes the entire
 window, show its original bounds rather than a reversed/zero-length range.
