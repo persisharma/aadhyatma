@@ -2876,7 +2876,7 @@ the OS does not throttle us, so **we** own the throttling. Hence the gate below.
 **Structure** (`components/RatingPromptSheet.tsx`) — a centered card on a `modalBackdrop`
 (transparent `Modal`, `animationType="fade"`), matching `UpdateReadyModal` (§44) rather than the
 pageSheet modals: this is a short interruption, not a screen to work in. Max width 360, `radii.lg`,
-`parchment`, `spacing.xxl` padding, 12 gap, everything centered. Two steps:
+`parchment`, `spacing.xxl` padding, 12 gap, everything centered. The rating mode has two steps; the social mode is described below:
 
 *Asking step* (every opening starts here):
 
@@ -2918,14 +2918,17 @@ including calendar/Panchang and Suvichar, already report their share moment.
 | Response | Next automatic ask |
 |---|---|
 | Close / Maybe later / app killed while ask is open | After 2 days OR the next completed action, whichever is earlier; a launch before 2 days alone does not qualify |
-| 1–3 stars | After a full 30-day pause; actions cannot shorten it; closing the thank-you step, email and its store link preserve this pause |
-| First 4–5 stars | Open the store rating page immediately; wait for BOTH 2 days and the first subsequent completed action; remember an early action and wait until day 2, or show after a later action; a launch alone without an action does not qualify |
-| Second 4–5-star store hand-off | Stop automatic asks; the manual More row remains available |
+| 1–3 stars | After a full 30-day pause; actions cannot shorten it; closing the thank-you step or email preserves this pause; a successful store hand-off advances to social |
+| Any successful store hand-off | End automatic rating asks. On the next completed share/save/practice action, offer social following; no immediate prompt on store return |
+| Failed review URL and failed listing fallback | Keep review eligibility and the existing dismissal/low-star retry cadence; do not unlock social |
 
-A follow-up's own response follows this same table. Thus dismissals have no lifetime cap,
-while two positive hand-offs end asking. Store hand-off is observable; submitting a store
-review is not. Legacy `rated` records represented one hand-off and migrate to one required
-follow-up; explicitly stored `declined` is still respected.
+The low-star step still keeps store access. Its successful hand-off also advances to social; without it, preserve the full 30-day pause. Legacy `rated` and positive hand-off counters migrate to social; an initial-rollout legacy `declined` remains suppressed. The manual More rating row always opens rating.
+
+**Social follow stage (7 Nov 2026).** The same centered parchment modal offers a localized title (“भक्ति से जुड़े रहें” / “Stay connected with Vedansh”), one short sentence about daily thoughts and festival stories, and independent Instagram/Facebook rows. Each uses its Phosphor brand glyph in saffron-deep, a wrapping link label (16pt, min 48pt target), and a separate underlined “Already following” control (14pt, min 44pt). Only configured, valid HTTPS profile links appear. Facebook is configured with the owner-supplied page share link in `engagementPrompts.ts`; a missing or invalid target stays hidden. Opening a page uses the installed app/browser and does not mark it followed. Explicit confirmations hide that platform and persist independently. Completing every configured platform closes the sheet and suppresses it for this campaign. A link failure shows localized retry text without losing progress. “Maybe later” follows the same two days OR next action cadence; first entry needs a completed action, never foreground alone.
+
+The card has max-width 360, max-height 100% of the padded viewport and a scrollable content container with the existing 32pt gutter/12pt gap. Both rating and social content can scroll on compact screens or enlarged system text; no line truncation or disabled scaling. Indic fonts and untracked labels follow the existing four-language helper. Stable English accessibility labels distinguish opening a page and confirming a follow.
+
+**Owner-controlled re-asking.** `data/engagementPrompts.ts` supplies stable independent review/social campaign IDs and a social enable flag. A new social ID resets only its own ask count/date and confirmations once the updated bundle loads; review progress and unrelated app data survive. A new review ID intentionally resets only rating eligibility, including previous rating/decline pauses. Change both for a full engagement restart. Initial IDs migrate older installs without resetting them. This is a code/bundle control, not a live server toggle or an end-user Settings option. Re-armed prompts still wait for their normal trigger and coordination guards.
 
 **Coordination.** Every eligible request waits 1200 ms, then rechecks state, foreground,
 launch/tour/onboarding/What's New and Explore visibility. Active share pickers/capture/native
@@ -2935,15 +2938,7 @@ cause an immediate automatic reopen: only the next distinct action or the elapse
 qualifies. Foregrounding checks time-based eligibility; it never counts as the required
 post-store action. The manual More row cancels pending automatic opens.
 
-**Persistence.** `@vedansh/rating-prompt` retains existing counters/outcomes and adds
-`response`, `respondedAt`, `storeHandoffCount`, `followupActionAt`. `afterAsked` credits the moment and resets the
-response; dismissals and low/high-star responses persist their own time. Corrupt/old records
-parse defensively. New trigger IDs are additive. No native dependency or server tracking.
-Bookmarked saves use the lightweight reporting bridge because their provider is above rating.
-Direct text/CSV shares require `Share.sharedAction`; unsupported/failed hand-offs do not ask.
-Expo/multi-file image sharing retains its existing dispatched-sheet semantics when cancellation
-is unavailable. No permanent opt-out control is added. All four hand-authored UI languages,
-fonts, layout, stars, feedback link and manual entry remain unchanged.
+**Persistence.** `@vedansh/rating-prompt` keeps existing counters/outcomes and adds a review `campaignId` plus nested `social` (`campaignId`, `askCount`, `lastAskedAt`, independent `confirmed` flags). Keep the old follow-up timestamp readable for storage compatibility, but it no longer schedules another review. Parsing validates old/corrupt records and applies campaign changes at hydration; writes are serialized. No extra storage key, native dependency, backend tracking or automatic network fetch. Rating/share triggers stay additive and lightweight. Known failed/cancelled shares never earn either prompt. Store URL success is a dispatched hand-off, not a confirmed submitted review; social page opening is not a confirmed follow.
 
 **Placement.** `<RatingPromptSheet />` mounts last in `App.tsx`, inside `RatingPromptProvider`
 (itself inside `TourProvider` + `NotificationPreferencesProvider`, whose flags the gate reads).
@@ -2960,7 +2955,7 @@ provider: importing `RatingPromptContext` directly would drag `NotificationPrefe
 `mobile/src/utils/shareVerse.tsx` (`verse-shared`, `prose-shared`) and
 `mobile/src/screens/JapamCounterScreen.tsx` (`mala-complete`), row in
 `mobile/src/screens/MoreScreen.tsx`, store URLs from `mobile/src/data/shareLinks.ts`.
-Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, both cooldown boundaries,
+Tests: `src/data/__tests__/ratingPrompt.jest.test.ts` (every gate clause, cooldown boundaries,
 per-trigger credit, defensive parse incl. the pre-trigger blob, URL and mailto shapes),
 `src/components/__tests__/RatingPromptSheet.test.tsx` (silent cold start, the moment opens after
 the delay and is credited, response-specific repeat boundaries, one card for two simultaneous moments, a surface claiming the
@@ -2969,7 +2964,7 @@ with and without an inbox, persisted outcomes, no opt-out, both steps in all fou
 a11y-hidden echoed stars, the no-op hook outside the provider), `src/components/__tests__/RoutineCelebrationOverlay.test.tsx`
 (the moment is reported on `onDone`, not on completion),
 `src/screens/__tests__/MoreScreen.test.tsx` (the row opens the sheet instead of leaving the app).
-E2E: `.maestro/rating-prompt-smoke.yaml` and `wishlist-smoke.yaml`; automatic time/action combinations and legacy migration are provider integration tests. Installed native timing/exports remain separate acceptance evidence.
+E2E: `.maestro/rating-prompt-smoke.yaml`, `social-follow-smoke.yaml` and `wishlist-smoke.yaml`; automatic time/action combinations and legacy migration are provider integration tests. Installed native timing/exports remain separate acceptance evidence.
 
 ---
 
