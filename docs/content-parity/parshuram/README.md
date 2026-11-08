@@ -27,6 +27,8 @@ node scripts/prepare-parshuram.mjs --publish
 node scripts/prepare-parshuram.mjs --verify
 ```
 
+The post-merge R2 collection validator searches both reader illustrations and backgrounds for the reader-illustration collection, because the Parshuram reader alias deliberately uses the reviewed background bytes. The regression in `scripts/tests/r2-publication.test.mjs` checks the actual collection against the provenance record.
+
 The publisher verifies the full public SHA-256 of every object before updating any app manifest, writes the activation record last, and preserves unrelated entries. Commit the resulting manifests and publication evidence. Interrupted publication stays inactive. Neutral paper remains the shared offline fallback; no unrelated deity is substituted.
 
 ## Acceptance and remaining checks

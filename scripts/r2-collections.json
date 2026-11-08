@@ -2,7 +2,7 @@
   { "id": "kids-stories", "manifest": "mobile/src/data/kidsStoryAssetManifest.json", "prefix": "kids-stories", "sources": ["mobile/assets/kids-stories"] },
   { "id": "audio-library", "manifest": "mobile/src/data/audioAssetManifest.json", "prefix": "audio-library", "sources": ["mobile/assets/audio-library"] },
   { "id": "reading-backgrounds", "manifest": "mobile/src/data/backgroundAssetManifest.json", "prefix": "reading-backgrounds", "sources": ["mobile/assets/backgrounds", "mobile/assets/gita", "mobile/assets/chalisa", "mobile/assets/shiva-strotam", "mobile/assets/garud-puran"] },
-  { "id": "reader-illustrations", "manifest": "mobile/src/data/readerIllustrationManifest.json", "prefix": "reader-illustrations", "sources": ["mobile/assets/reader-illustrations"] },
+  { "id": "reader-illustrations", "manifest": "mobile/src/data/readerIllustrationManifest.json", "prefix": "reader-illustrations", "sources": ["mobile/assets/reader-illustrations", "mobile/assets/backgrounds"] },
   { "id": "suvichar", "manifest": "mobile/src/data/suvicharManifest.json", "prefix": "suvichar", "sources": ["mobile/assets/suvichar"] },
   { "id": "devotional-share", "manifest": "mobile/src/data/devotionalShareManifest.json", "prefix": "devotional-share", "sources": ["mobile/assets/devotional-share"] },
   { "id": "vidhi-steps", "manifest": "mobile/src/data/vidhiArtworkManifest.json", "prefix": "vidhi-steps", "sources": ["mobile/assets/vidhi-steps", "mobile/assets/reader-illustrations"] },
