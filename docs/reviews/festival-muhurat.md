@@ -33,7 +33,20 @@ prefers morning, avoids midday and stays inside Dwadashi unless it ended
 before sunrise. Moonrise is an astronomical event, not guaranteed sighting.
 
 The app shows all computed windows; the full 4:5 share card highlights the
-primary ritual/window in its existing festival ribbon slot. Complete windows
+primary ritual/window in its existing festival ribbon slot.
+
+**Whole-minute presentation (8 November 2026):** Ritual window starts are
+rounded UP to the next whole minute; ends are rounded DOWN to the previous
+whole minute. Exact-minute boundaries stay unchanged. Moonrise/sunset and other
+point events retain the existing clock presentation. If a very short valid
+window has no displayable full-minute range, retain the unrounded source
+bounds instead of inventing a reversed or zero-length interval. The shared
+`occasionTimingFormat.ts` helper governs compact, illustrated, focused/full
+share and send-as-text clocks (including overnight endpoint dates). Underlying
+astronomical instants and cached day inputs are not modified, so this change
+does NOT by itself guarantee agreement with Drik's Jaipur 19:59 Diwali end
+when the computed boundary really falls within 20:00. Device screenshots and
+real share capture still require native acceptance. Complete windows
 and exception guidance are included in Send as text. This prevents crowded
 multi-occasion dates from silently clipping the existing almanac sections.
 The approved floral strip uses painted marigold/mango corners, a fine double
