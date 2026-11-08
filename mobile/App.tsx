@@ -23,7 +23,6 @@ import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { TiroDevanagariSanskrit_400Regular } from '@expo-google-fonts/tiro-devanagari-sanskrit/400Regular';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider, useFontScale } from '@/contexts/FontScaleContext';
-import { lightColors } from '@/theme/colors';
 import { GitaLanguageProvider, useGitaLanguage } from '@/data/gita/language';
 import { BookmarksProvider } from '@/contexts/BookmarksContext';
 import { VratFollowProvider } from '@/contexts/VratFollowContext';
@@ -63,6 +62,7 @@ import { childRoutes } from '@/navigation/routeGraph';
 import '@/navigation/dataWarmups';
 import LaunchAskHost from '@/components/LaunchAskHost';
 import BrandLaunchGate, { BRAND_LAUNCH_REVEAL_ENABLED } from '@/components/BrandLaunchGate';
+import LaunchCover from '@/components/LaunchCover';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
 import WhatsNewModal from '@/components/WhatsNewModal';
@@ -154,7 +154,7 @@ export default function App() {
   // Set when the cold-start target came from the notification that launched us,
   // so the retry loop below does not dispatch the same tap a second time.
   const coldNotificationConsumedRef = useRef(false);
-  const [fontsReady] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     VedanshDevotionalText: require('./assets/fonts/VedanshDevotionalText.ttf'),
     NotoSerifDevanagari_500Medium,
     NotoSerifDevanagari_600SemiBold,
@@ -171,6 +171,9 @@ export default function App() {
     Inter_600SemiBold,
     TiroDevanagariSanskrit_400Regular,
   });
+  // A font that fails to register must not hold the launch cover forever: the
+  // app opens with platform fallback glyphs for that family instead.
+  const fontsReady = fontsLoaded || fontError != null;
 
   if (fontsReady) launchMarkOnce('fonts-ready');
 
@@ -326,7 +329,8 @@ export default function App() {
   }, [fontsReady, initialTarget]);
 
   if (!fontsReady || initialTarget === undefined) {
-    return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
+    // Android releases its native splash when this cover lays out (LaunchCover).
+    return <LaunchCover />;
   }
 
   return (
@@ -502,10 +506,12 @@ export default function App() {
 }
 
 /**
- * Font-size and language preferences both change Home geometry. Keep the native
- * splash in place until those two layout-critical reads finish, so Home's first
- * visible frame is already its final frame and an immediate press cannot be
- * cancelled by preference hydration moving the category grid.
+ * Font-size and language preferences both change Home geometry. Keep Home hidden
+ * until those two layout-critical reads finish, so Home's first visible frame is
+ * already its final frame and an immediate press cannot be cancelled by
+ * preference hydration moving the category grid. iOS holds the native splash for
+ * this; Android shows the identical ivory LaunchCover, because a held native
+ * splash leaves the window undrawn and unfocused (an ANR on any key press).
  */
 function AppReadyGate({ children, targeted }: { children: React.ReactNode; targeted: boolean }) {
   const { isLoading: fontScaleLoading } = useFontScale();
@@ -518,7 +524,7 @@ function AppReadyGate({ children, targeted }: { children: React.ReactNode; targe
   }, [ready]);
 
   if (!ready) {
-    return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
+    return <LaunchCover />;
   }
 
   return (
