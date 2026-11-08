@@ -148,17 +148,18 @@ test('same-day windows need no date row and events keep just one timestamp', () 
 });
 
 
-test('occasion minute precision: start rounds up and end rounds down without changing source timestamps', () => {
+test('occasion minute precision: start is unchanged and end is floored without changing source timestamps', () => {
   const date = new Date(2026, 10, 8);
   const start = new Date(2026, 10, 8, 18, 3, 1, 500);
   const end = new Date(2026, 10, 8, 20, 0, 59, 999);
   const w = { labelHi: 'पूजा', labelEn: 'Puja', start, end };
   const before = [+start, +end];
-  assert.equal(occasionRange(w, date, 'en'), '18:04 – 20:00');
-  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '18:04', end: '20:00', startDate: undefined, endDate: undefined });
+  assert.equal(occasionRange(w, date, 'en'), '18:03 – 20:00');
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '18:03', end: '20:00', startDate: undefined, endDate: undefined });
   assert.equal(occasionRangeParts(w, date, 'hi').endText, '20:00');
   assert.deepEqual([+start, +end], before, 'display must never mutate exact astronomical instants');
-  assert.equal(occasionDisplayEndpoints(w).start.getSeconds(), 0);
+  assert.equal(+occasionDisplayEndpoints(w).start, +start, 'start must remain the exact original instant');
+  assert.equal(occasionDisplayEndpoints(w).end!.getSeconds(), 0);
 });
 test('occasion minute precision: exact-minute boundaries stay unchanged', () => {
   const date = new Date(2026, 10, 8);
@@ -171,10 +172,10 @@ test('occasion minute precision: exact-minute boundaries stay unchanged', () => 
 test('occasion minute precision: rounded timestamps carry their own dates across midnight', () => {
   const date = new Date(2026, 10, 8);
   const w = { start: new Date(2026, 10, 8, 23, 59, 40), end: new Date(2026, 10, 9, 0, 2, 20), labelHi: '', labelEn: '' };
-  assert.equal(occasionRange(w, date, 'en'), '00:00, 9 Nov – 00:02, 9 Nov');
-  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '00:00', end: '00:02', startDate: '9 Nov', endDate: '9 Nov' });
+  assert.equal(occasionRange(w, date, 'en'), '23:59 – 00:02, 9 Nov');
+  assert.deepEqual(compactOccasionRange(w, date, 'en'), { start: '23:59', end: '00:02', startDate: '8 Nov', endDate: '9 Nov' });
   const item = { id: 'test', ruleId: 'test', date, nameHi: 'पूजा', nameEn: 'Puja', motif: 'diya' as const, windows: [w] };
-  assert.match(occasionShareText([item], date, 'en'), /00:00, 9 Nov – 00:02, 9 Nov/);
+  assert.match(occasionShareText([item], date, 'en'), /23:59 – 00:02, 9 Nov/);
 });
 test('occasion minute precision: event instants are not rounded up and short windows do not invert', () => {
   const date = new Date(2026, 10, 8);
@@ -183,6 +184,8 @@ test('occasion minute precision: event instants are not rounded up and short win
   assert.equal(compactOccasionRange(event, date, 'en').end, undefined);
   const narrow = { start: new Date(2026, 10, 8, 18, 3, 59), end: new Date(2026, 10, 8, 18, 4, 2), labelHi: '', labelEn: '' };
   assert.equal(+occasionDisplayEndpoints(narrow).start, +narrow.start);
-  assert.equal(+occasionDisplayEndpoints(narrow).end!, +narrow.end);
+  assert.equal(+occasionDisplayEndpoints(narrow).end!, +new Date(2026, 10, 8, 18, 4));
+  const tooNarrow = { ...narrow, start: new Date(2026, 10, 8, 18, 4, 2), end: new Date(2026, 10, 8, 18, 4, 8) };
+  assert.equal(+occasionDisplayEndpoints(tooNarrow).end!, +tooNarrow.end, 'must not move the end before the real start');
   assert.equal(occasionRange(narrow, date, 'en'), '18:03 – 18:04');
 });
