@@ -53,7 +53,7 @@ Android vitals → ANRs → clusters. Match the signatures in the table above. A
 | `android.os.MessageQueue.nativePollOnce` | — | Main thread **idle**. Input still waited, so no app code was blocking it **[Certain]** |
 | `com.facebook.react.common.assets.ReactFontManager…`, `com.facebook.react.views.text.ReactTextView…` | — | Main mounting text under the undrawn window **[Likely]** |
 | `com.swmansion.rnscreens.ScreenContainer…`, `android.view.ViewRootImpl.updateShowC…` | — | First mount/layout **[Likely]** |
-| `expo.modules.kotlin.types.JSTypeConverter…` (×2) | — | Expo module value conversion on main; frame only **[Guessing]** |
+| `expo.modules.kotlin.types.JSTypeConverter…` (×2) | — | expo-audio converts status events on main (`AudioPlayer.kt` `sendPlayerUpdate` → `withContext(Dispatchers.Main)` → `SharedObject.emit`). The root player was created at every launch (candidate #5) **[Likely]** |
 | `[libglslcompiler.so] GLSLCompileToUnifle…`, `[libart.so] art::ConditionVariable::WaitHol…` ("Unresponsive GPU") | 1.5.0 | GPU driver / runtime wait — device-side **[Likely]** |
 | `com.pairip.licensecheck.LicenseClient…` | — | Play **automatic protection**-injected licence check, not repo code (no `pairip` in the repo) **[Certain]** |
 | `unavailable - com.facebook.react.bridge…` | **1.5.5 (live)** | Unidentified — needs the full stack |
@@ -63,5 +63,6 @@ Android vitals → ANRs → clusters. Match the signatures in the table above. A
 **Changes (supersedes the "Reverted by owner direction" line in §4):**
 - **JS / OTA-able:** `LaunchCover` (`#FFF1D5`) replaces the pre-Home parchment placeholders. On Android it calls `SplashScreen.hideAsync()` on its first layout. The undrawn span therefore no longer includes 15 runtime fonts, the start-target race or font-size/language hydration. Font load errors fail open. iOS is unchanged.
 - **Native / next store build:** `plugins/withAndroidLaunchWindow.js` calls `SplashScreenManager.hide()` in `MainActivity.onCreate` before the first draw, and sets `AppTheme`'s window background to `#FFF1D5`. The window becomes focusable on its first traversal, and pre-React frames stay splash ivory. Verified in an `expo prebuild` output only; a Gradle build and device run are **PENDING**.
+- **JS / OTA-able (candidate #5):** `AudioPlayerProvider` now creates its native player on first use instead of at launch. Sessions that never play recorded audio construct no ExoPlayer and emit no main-thread status.
 - **Not code:** the PairIP cluster goes away only if Play Console → Test and release → App integrity → **Automatic protection** is turned off (owner decision). GPU-driver clusters are device-side.
 - **Still open:** the live 1.5.5 `com.facebook.react.bridge…` cluster. Its full stack is needed before any change.
