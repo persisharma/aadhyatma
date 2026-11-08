@@ -392,8 +392,8 @@ owns the full share's overnight start/end date labels, compact card, illustrated
 Vrat card, focused export, accessibility text and text sharing. Point events
 are unchanged; sub-minute windows retain the raw bounds if conservative rounding
 would make the displayed range invalid. This is not a clock-correction of the
-astronomy engine, and requires native share/device verification. `useOccasionTimings` keys
-publication by date/city/calendar/lenses. App and 4:5 share ribbon use typed
+astronomy engine, and requires native share/device verification.
+`useOccasionTimings` keys publication by date/city/calendar/lenses. App and 4:5 share ribbon use typed
 painted FestivalMotif art and FestiveCorners; text sharing includes every window.
 Art is a bundled transparent 4x3 atlas, with reviewed source/hash metadata in
 `docs/reviews/festival-art/`. Full/focused export readiness waits for all painted
