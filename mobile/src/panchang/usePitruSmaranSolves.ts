@@ -37,6 +37,7 @@ import {
   type SmaranEntry,
 } from './pitruSmaran';
 import { startOfLocalDay } from './pitruSmaranDisplay';
+import type { WorkPriority } from './backgroundWork';
 
 /**
  * The Gregorian year whose Pitru Paksha a surface should show: this one until its
@@ -45,12 +46,13 @@ import { startOfLocalDay } from './pitruSmaranDisplay';
  */
 async function pakshaYearFor(
   today: Date,
-  isCancelled: () => boolean
+  isCancelled: () => boolean,
+  priority: WorkPriority = 'background'
 ): Promise<{ year: number; window: PitruPakshaWindow | null }> {
   const year = today.getFullYear();
-  const thisYear = await ensurePakshaWindowAsync(year, isCancelled);
+  const thisYear = await ensurePakshaWindowAsync(year, isCancelled, priority);
   if (thisYear && thisYear.end.getTime() < today.getTime()) {
-    return { year: year + 1, window: await ensurePakshaWindowAsync(year + 1, isCancelled) };
+    return { year: year + 1, window: await ensurePakshaWindowAsync(year + 1, isCancelled, priority) };
   }
   return { year, window: thisYear };
 }
@@ -110,11 +112,12 @@ export function useSmaranListSolve(entries: SmaranEntry[], todayMs: number): Sma
           if (!warm) {
             const nextByEntryId = new Map<string, Date | null>();
             for (const entry of entries) {
-              const [next] = await ensureOccurrencesAsync(entry.tithiRule, today, 1, isCancelled);
+              // Foreground: the rows are what this screen is showing a spinner for.
+              const [next] = await ensureOccurrencesAsync(entry.tithiRule, today, 1, isCancelled, 'shraddha', 'foreground');
               if (cancelled) return;
               nextByEntryId.set(entry.id, next ?? null);
             }
-            const { window } = await pakshaYearFor(today, isCancelled);
+            const { window } = await pakshaYearFor(today, isCancelled, 'foreground');
             if (cancelled) return;
             setSolve({ nextByEntryId, window });
             void persistSmaranSolves();
@@ -238,19 +241,21 @@ export function useSmaranDetailSolve(rule: SmaranRule | undefined, todayMs: numb
       interaction = InteractionManager.runAfterInteractions(() => {
         void (async () => {
           const today = new Date(todayMs);
-          const [next] = await ensureOccurrencesAsync(rule, today, 1, isCancelled);
+          // Foreground lane: this screen is open and waiting on these answers, so
+          // they must not queue behind launch-time background work.
+          const [next] = await ensureOccurrencesAsync(rule, today, 1, isCancelled, 'shraddha', 'foreground');
           if (cancelled) return;
           // Stage one: the pill. Everything below it is still unsolved, and that
           // is the point — it used to wait on them.
           setSolve((prev) => ({ ...prev, next: next ?? null, nextReady: true }));
 
-          const [, following] = await ensureOccurrencesAsync(rule, today, 2, isCancelled);
+          const [, following] = await ensureOccurrencesAsync(rule, today, 2, isCancelled, 'shraddha', 'foreground');
           if (cancelled) return;
-          const { year } = await pakshaYearFor(today, isCancelled);
+          const { year } = await pakshaYearFor(today, isCancelled, 'foreground');
           if (cancelled) return;
           let pakshaDay: Date | null = null;
           try {
-            pakshaDay = (await pakshaShraddhaDayAsync(rule, year, isCancelled)) ?? null;
+            pakshaDay = (await pakshaShraddhaDayAsync(rule, year, isCancelled, {}, 'foreground')) ?? null;
           } catch {
             pakshaDay = null; // the rows render only when solved
           }

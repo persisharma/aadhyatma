@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSmaranDetailSolve, useSmaranListSolve } from '../../usePitruSmaranSolves';
 import { useJanmaTithiDetailSolve, useJanmaTithiList } from '../../useJanmaTithi';
 import { __resetSmaranSolvesForTests } from '../../pitruSmaranSolves';
+import { runInBackground } from '../../backgroundWork';
 import type { SmaranEntry, TithiRule } from '../../pitruSmaran';
 
 const mockOrder: string[] = [];
@@ -196,4 +197,35 @@ test('unmount mid-solve publishes nothing and stops the remaining work', async (
   expect(list).toBeNull();
   // At most the one in-flight unit completes; no further entry is started.
   expect(mockOrder.filter((step) => step === 'solved').length).toBeLessThanOrEqual(solvedAtUnmount + 1);
+});
+
+test('a cold detail opened during launch-time background work is not starved by it', async () => {
+  // Six launch-like background jobs (widget plan, muhurat prewarm, reminder
+  // passes …), each far longer than the detail's own solves.
+  let backgroundUnits = 0;
+  let stop = false;
+  function* launchWork(): Generator<void, void, void> {
+    for (let i = 0; i < 400 && !stop; i += 1) {
+      backgroundUnits += 1;
+      const t = performance.now();
+      while (performance.now() - t < 1) {
+        // busy
+      }
+      yield;
+    }
+  }
+  const launch = Array.from({ length: 6 }, () => runInBackground(launchWork()));
+  let detail: ReturnType<typeof useSmaranDetailSolve> | null = null;
+  function Probe() {
+    detail = useSmaranDetailSolve(RULE, TODAY);
+    return null;
+  }
+  await mountUntil(<Probe />, () => detail?.restReady === true);
+  const unitsWhenReady = backgroundUnits;
+  stop = true;
+  await Promise.all(launch);
+  // Round-robin with six jobs ran ~120 background units before the detail's ~20
+  // engine units finished; the foreground lane lets at most the slice already in
+  // flight run (a handful of 1 ms units) before every detail unit.
+  expect(unitsWhenReady).toBeLessThanOrEqual(12);
 });

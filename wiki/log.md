@@ -1462,3 +1462,6 @@ Updated [[subsystems/panchang]]: Pitru Smaran and Janma Tithi list/detail hooks 
 ## [2026-11-07] ingest | Japa shloka in the former count space
 
 Preserved the approved circular frame and Mala/footer designs; moved decorative counts inside infinity, paired Gayatri padas into two complete compact reading rows and introduced an Infinity-only gauge chip over the existing tempo stepper. Canonical cadence, count ownership and accessible/scalable complete text remain unchanged. Native visual/ANR evidence remains pending.
+
+## [2026-11-07] ingest | Foreground lane for screen-visible cooperative solves
+Native iOS Simulator run of `pitru-smaran.yaml` after #645: the detail's second stage (अगले वर्ष / पितृ पक्ष) arrived but missed 15 s while launch-time background jobs shared the 4 ms round-robin. `backgroundWork.ts` gained an opt-in `foreground` lane (12 ms slices, served first); Pitru/Janma list rows and detail stages use it, prewarms stay background. Also fixed the stale flow tap on the Vrat ledger (below the fold since #647). Updated [[subsystems/panchang]].
