@@ -24,7 +24,7 @@ Infinity is wired now. Other sections' स्वतः integration is deferred b
 - `karaokeDurationMs` applies a caller-selected speed without importing Japam,
   audio or page navigation. Empty/invalid duration means no passage.
 - Infinity supplies one phase to both words and marker. Its own loop still
-  counts, pauses and handles background/blur; the renderer never increments.
+  counts, pauses and handles background/blur; the renderer never increments. Japa adds a fixed 500ms after tempo scaling in its host timing adapter, shared with recorded playback and bead timing; the generic karaoke renderer/timeline is unchanged.
 
 ## Gotchas
 
