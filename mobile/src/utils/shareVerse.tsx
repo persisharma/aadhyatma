@@ -363,7 +363,8 @@ type ProseCardSpec = {
 /** Preview uses the measured complete card, so a long meaning is never clipped. */
 export function DevotionalPreview({ card, width = 216, maxHeight = Infinity }: { card: ProseCardSpec; width?: number; maxHeight?: number }) {
   const [height, setHeight] = useState(CARD_HEIGHT);
-  const identity = JSON.stringify([card.header, card.lang, card.page.devotional]);
+  const identity = useMemo(() => JSON.stringify([card.header, card.lang, card.page.devotional]),
+    [card.header, card.lang, card.page.devotional]);
   const [painted, setPainted] = useState<string | null>(null);
   const onReady = useCallback((ready: boolean) => setPainted(ready ? identity : null), [identity]);
   return <View testID={painted === identity ? 'devotional-preview-ready' : 'devotional-preview-loading'}>

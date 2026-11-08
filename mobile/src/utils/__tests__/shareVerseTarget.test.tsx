@@ -63,6 +63,10 @@ jest.mock('@/utils/useTodayKey', () => ({ useTodayKey: () => 'Wed Aug 26 2026' }
 // the share flow, and the tag rules themselves are pinned by shareHashtags.test.ts.
 // `mockObservances` drives the one test that checks the timely tags reach the caption.
 let mockObservances: { rule: { nameHi: string; nameEn: string; deityEn: string } }[] = [];
+jest.mock('@/panchang/festivalEngine', () => ({
+  ...jest.requireActual('@/panchang/festivalEngine'),
+  getCachedObservancesForDate: () => mockObservances,
+}));
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
   useObservancesForDate: () => mockObservances,

@@ -47,4 +47,16 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
 - tapOn: Cancel
 - assertVisible: { id: daily-bhakti-next }
+# Repeated open/change/cancel must leave the reading controls responsive.
+- repeat:
+    times: 3
+    commands:
+      - tapOn: Share verse
+      - tapOn: "Card style: Daily Bhakti card"
+      - tapOn: "Change card style"
+      - tapOn: "Card style: Current card"
+      - tapOn: Cancel
+      - assertVisible: { id: daily-bhakti-next }
+- tapOn: { id: daily-bhakti-next }
+- assertVisible: Share verse
 - stopApp

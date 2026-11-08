@@ -53,3 +53,12 @@ it('fills the short-card gap from the same unscaled master and waits for its pai
   act(() => spacer.props.onLoad()); expect(ready).toHaveBeenLastCalledWith(true);
   act(() => spacer.props.onError()); expect(ready).toHaveBeenLastCalledWith(false);
 });
+
+it('reports settled text geometry before slow artwork, but never reports capture ready before paint', () => {
+  const ready = jest.fn(); mount(ready); layout();
+  expect(height).toHaveBeenLastCalledWith(728);
+  expect(ready).not.toHaveBeenCalled();
+  paint('devotional-footer-image'); expect(ready).not.toHaveBeenCalled();
+  act(() => tree.root.findAllByType(Image).find(n => n.props.testID === 'devotional-footer-image')!.props.onLoad());
+  expect(ready).toHaveBeenLastCalledWith(true);
+});
