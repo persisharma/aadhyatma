@@ -300,3 +300,47 @@ describe('AudioPlayerContext end-of-track auto-advance', () => {
     expect(ctx.currentTrack?.id).toBe(AUDIO_TRACKS[2].id);
   });
 });
+
+// Android ANR audit §6: the native constructor builds ExoPlayer on the main
+// thread and emits from main, so launch must not create the player.
+describe('AudioPlayerContext lazy native player', () => {
+  const create = ExpoAudio.createAudioPlayer as jest.Mock;
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { ensureBackgroundAudioMode } = require('@/audio/audioSession') as { ensureBackgroundAudioMode: jest.Mock };
+
+  beforeEach(() => {
+    create.mockClear();
+    ensureBackgroundAudioMode.mockClear();
+    __resetPlaybackArbiter();
+  });
+
+  test('mounting the provider creates no player and configures no audio session', () => {
+    mount();
+    expect(create).not.toHaveBeenCalled();
+    expect(ensureBackgroundAudioMode).not.toHaveBeenCalled();
+  });
+
+  test('stop() from the arbiter never creates a player', () => {
+    mount();
+    act(() => ctx.stop());
+    act(() => ctx.setRate(1.25));
+    act(() => ctx.seekTo(10));
+    expect(create).not.toHaveBeenCalled();
+  });
+
+  test('the first play creates exactly one player, configured and subscribed before replace', async () => {
+    mount();
+    const addListener = (mockPlayer as unknown as { addListener: jest.Mock }).addListener;
+    addListener.mockClear();
+    // A cached source can report loaded during replace(); it must not be lost.
+    mockPlayer.replace.mockImplementationOnce(() => {
+      expect(addListener).toHaveBeenCalledWith('playbackStatusUpdate', expect.any(Function));
+    });
+    await playTrack(track);
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(ensureBackgroundAudioMode).toHaveBeenCalledTimes(1);
+    expect(mockPlayer.replace).toHaveBeenCalledTimes(1);
+    await playTrack(AUDIO_TRACKS.find((t) => t.id !== track.id) ?? track);
+    expect(create).toHaveBeenCalledTimes(1);
+  });
+});

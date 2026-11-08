@@ -106,6 +106,8 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 
 ## Gotchas
 
+- **The app-wide player is created on first use, never at launch (Nov 2026 ANR fix).** `AudioPlayerProvider` holds no player until `playTrack`/`togglePlay`/`toggleLoop` call `ensurePlayer()`. On Android, expo-audio's constructor builds ExoPlayer on the main thread (the JS thread blocks on it via `runBlocking`), and `sendPlayerUpdate` emits status from `Dispatchers.Main`. That is the `JSTypeConverter` frame in Play's launch ANR clusters. `stop()`, `seekTo` and `setRate` never create a player, because the arbiter calls `stop()` whenever read-aloud or japam starts. The status listener is attached inside `ensurePlayer()`, synchronously before `replace()`, because a cached file can report loaded before an effect would subscribe. `ensureBackgroundAudioMode()` moved there too.
+
 - **Never substitute a voice across languages, and never let the engine do it for you.** This is
   the whole point of the per-language design: reading Gujarati with only a Hindi voice installed must
   be *silent*, not Gujarati-read-as-Hindi. Three guards, all needed — `resolveVoice` returns `null`

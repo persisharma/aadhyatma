@@ -1469,6 +1469,7 @@ Native iOS Simulator run of `pitru-smaran.yaml` after #645: the detail's second 
 ## [2026-11-08] ingest | Single flute wordmark on Daily Bhakti cards
 Updated share/design/integration contracts for shared top/cartouche and English domain-footer overlays, logo paint failure refusal and per-language readiness invalidation. Native capture/performance remains pending.
 
+## [2026-11-08] ingest | Play ANR clusters (8 Nov) are almost all "Input dispatching timed out (No focused window)", with varied main-thread frames including an idle `nativePollOnce`. That confirms audit candidate #2: expo-splash-screen's draw veto leaves the window unfocused. Android now releases the splash on the first ivory `LaunchCover` layout (JS, OTA-able); new builds clear the keep flag in `MainActivity` and paint an ivory window background (`plugins/withAndroidLaunchWindow.js`). Font errors fail open. PairIP cluster = Play automatic protection (console setting). The live 1.5.5 `com.facebook.react.bridge…` cluster still needs its full stack. The `JSTypeConverter` clusters map to expo-audio emitting status from main, so the root player is now created on first use (audio.md gotcha). Audit §6, design.md §2.1/§64, RULEBOOK brand rule, overview.md updated.
 
 ## [2026-11-08] ingest | Adapt PR #564 into Sanatan Parichay
 

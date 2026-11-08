@@ -28,7 +28,7 @@ Code is canonical, but the docs may never lag it by more than the PR that change
 
 ### 0.2 Bundled icon registries
 
-**Approved brand launch and lettering.** The cold-start particle reveal is currently disabled on all platforms (`BRAND_LAUNCH_REVEAL_ENABLED = false`, November 2026 Android ANR mitigation); re-enabling it requires ANR evidence and restores the contract below. `docs/branding/approved-particle-preview.html` is the accepted particle source, not an approximate effect specification. `scripts/prepare-approved-brand.mjs --check` pins its source hash, native document, exact composition and lossless English/Hindi flute-master crops. The app and animation export script must execute this same source. Use the transparent `splash-blank.png` native placeholder on brand ivory; keep it until the canvas readiness message, await native splash dismissal, then explicitly start the approved renderer at timeline 1,000ms, trimming its initial second and retaining the exact 3,350ms final frame (2,350ms visible playback); navigation and automatic prompts remain below the reveal gate. All failure/cancellation paths release it, with a bounded watchdog. Do not introduce network dependencies or automatically publish a native build/OTA.
+**Approved brand launch and lettering.** The cold-start particle reveal is currently disabled on all platforms (`BRAND_LAUNCH_REVEAL_ENABLED = false`, November 2026 Android ANR mitigation); re-enabling it requires ANR evidence and restores the contract below. Android must never hold the native splash past React's first frame (a held splash leaves the window undrawn and unfocused, so Back ANRs): `LaunchCover` releases it on first layout and `plugins/withAndroidLaunchWindow.js` clears the keep flag before the first draw with an ivory window background; launch gates on Android cover with `LaunchCover`, not the native splash (design.md §64). `docs/branding/approved-particle-preview.html` is the accepted particle source, not an approximate effect specification. `scripts/prepare-approved-brand.mjs --check` pins its source hash, native document, exact composition and lossless English/Hindi flute-master crops. The app and animation export script must execute this same source. Use the transparent `splash-blank.png` native placeholder on brand ivory; keep it until the canvas readiness message, await native splash dismissal, then explicitly start the approved renderer at timeline 1,000ms, trimming its initial second and retaining the exact 3,350ms final frame (2,350ms visible playback); navigation and automatic prompts remain below the reveal gate. All failure/cancellation paths release it, with a bounded watchdog. Do not introduce network dependencies or automatically publish a native build/OTA.
 
 The brand name artwork intentionally remains English/Hindi: Hindi is primary in Hindi mode, English in other modes; optional bilingual marks are a fixed brand treatment. Accessibility labels and companion subtitles follow all four app languages and their script fonts. Do not transliterate or replace the approved name image with generic live typography. Actual mounted wordmark decodes participate in the common share-art paint barrier. Preserve source/export hashes and font provenance; Samarkan registration must be confirmed before production use. No font binary is added by this integration.
 
@@ -1248,8 +1248,16 @@ Use `occasionTimings.ts` and the location-scoped shared day store; source URLs
 and reviewed recipe conventions travel with each profile. Never manufacture
 an occasion window from Choghadiya. Bhadra exceptions and tradition-specific
 parana cannot silently inherit another convention. Screen/export/text share
-one result and date-aware formatter. Bundled painted FestivalMotif subjects avoid
-network-dependent art during capture. Preserve approved painted artwork: a
+one result and date-aware formatter. Only *displayed ritual window ends* use floor(end) at whole-minute
+precision; starts retain their previous unrounded timestamp and displayed
+clock. Keep exact source instants for the engine, caching, date matching and
+reminders; do not shift point events or silently subtract a minute from
+exact-minute endpoints. Use
+the same helper for compact/screen, full/focused export, accessible labels and
+text sharing, preserving overnight dates. If rounding removes the entire
+window, show its original bounds rather than a reversed/zero-length range.
+A display-policy change cannot be presented as a validated source-clock fix.
+Bundled painted FestivalMotif subjects avoid network-dependent art during capture. Preserve approved painted artwork: a
 flat SVG/glyph is not a faithful substitute. Compare the actual complete export
 with the approved reference, including corners, border, subject and type
 hierarchy. Capture waits for all painted slots to decode; provenance pins the
