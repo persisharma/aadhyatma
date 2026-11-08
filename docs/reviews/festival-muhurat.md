@@ -46,8 +46,9 @@ share and send-as-text clocks (including overnight endpoint dates). Underlying
 astronomical instants and cached day inputs are not modified, so this change
 does NOT by itself guarantee agreement with Drik's Jaipur 19:59 Diwali end
 when the computed boundary really falls within 20:00. Device screenshots and
-real share capture still require native acceptance. Complete windows
-and exception guidance are included in Send as text. This prevents crowded
+real share capture still require native acceptance.
+
+Complete windows and exception guidance are included in Send as text. This prevents crowded
 multi-occasion dates from silently clipping the existing almanac sections.
 The approved floral strip uses painted marigold/mango corners, a fine double
 gold frame, a vertical divider, maroon title/clock ink and a larger ritual
