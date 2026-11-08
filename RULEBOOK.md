@@ -1255,8 +1255,8 @@ point events or silently subtract a minute from exact-minute endpoints. Use
 the same helper for compact/screen, full/focused export, accessible labels and
 text sharing, preserving overnight dates. If rounding removes the entire
 window, show its original bounds rather than a reversed/zero-length range.
-A display-policy change cannot be presented as a validated source-clock fix. Bundled painted FestivalMotif subjects avoid
-network-dependent art during capture. Preserve approved painted artwork: a
+A display-policy change cannot be presented as a validated source-clock fix.
+Bundled painted FestivalMotif subjects avoid network-dependent art during capture. Preserve approved painted artwork: a
 flat SVG/glyph is not a faithful substitute. Compare the actual complete export
 with the approved reference, including corners, border, subject and type
 hierarchy. Capture waits for all painted slots to decode; provenance pins the
