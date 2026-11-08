@@ -40,7 +40,7 @@ test('opening is still; start repeats full loops until pause', async () => {
   await mount(false, 107);
   expect(start).not.toHaveBeenCalled();
   await act(async () => { tree.update(display(true, 107)); });
-  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 1380, useNativeDriver: true, isInteraction: false }));
+  expect(Animated.timing).toHaveBeenLastCalledWith(expect.anything(), expect.objectContaining({ toValue: 1, duration: 990, useNativeDriver: true, isInteraction: false }));
   for (let i = 0; i < 5; i++) act(() => completions[i]({ finished: true }));
   expect(start).toHaveBeenCalledTimes(6);
   expect(onCycle).toHaveBeenCalledTimes(5);

@@ -34,7 +34,7 @@ test('recording cadence is duration per recitation at natural tempo, without app
     rate={1.5} onRateChange={rate} onIteration={jest.fn()} onRecitationDurationChange={cadence} /></ThemeProvider>;
   await act(async () => { tree = TestRenderer.create(display()); });
   expect(cadence).toHaveBeenLastCalledWith('hare-krishna-mahamantra', 33500);
-  expect(mockPlayer.setPlaybackRate).toHaveBeenLastCalledWith(33500 / (Math.round(33500 / 1.5) + 500), 'high');
+  expect(mockPlayer.setPlaybackRate).toHaveBeenLastCalledWith(33500 / 25125, 'high');
   act(() => tree!.root.findByType(RateStepper).props.onChange(1.4));
   expect(rate).toHaveBeenCalledWith(1.4);
   mockStatus = { isLoaded: true, duration: 0 };
@@ -42,27 +42,27 @@ test('recording cadence is duration per recitation at natural tempo, without app
   expect(cadence).toHaveBeenCalledTimes(1);
 });
 
-test('recorded jap waits the extra 500ms, with one count owner and no double padding', async () => {
-  mockStatus = { isLoaded: true, duration: 16 }; // Four utterances: previously 4s each at 1×.
+test.each([[16, 4000, 4500, 750], [3.52, 880, 990, 250]])('recording %ss uses a proportional period, with one count owner', async (duration, baseline, period, sampleSlack) => {
+  mockStatus = { isLoaded: true, duration }; // Four utterances per recording.
   const iteration = jest.fn();
   const cadence = jest.fn();
   const display = () => <ThemeProvider><JapamAudioPlayer mantraId="hare-krishna-mahamantra" lang="hi"
     rate={1} onIteration={iteration} onRecitationDurationChange={cadence} /></ThemeProvider>;
   await act(async () => { tree = TestRenderer.create(display()); });
-  expect(mockPlayer.setPlaybackRate).toHaveBeenLastCalledWith(4000 / 4500, 'high');
+  expect(mockPlayer.setPlaybackRate).toHaveBeenLastCalledWith(baseline / period, 'high');
   expect(mockPlayer.shouldCorrectPitch).toBe(true);
-  expect(cadence).toHaveBeenLastCalledWith('hare-krishna-mahamantra', 4000);
-  expect(infinityRecitationMs(['हरे कृष्ण'], 1, cadence.mock.calls[0][1])).toBe(4500);
+  expect(cadence).toHaveBeenLastCalledWith('hare-krishna-mahamantra', baseline);
+  expect(infinityRecitationMs(['हरे कृष्ण'], 1, cadence.mock.calls[0][1])).toBe(period);
   await act(async () => { tree!.root.findAll(node => node.props.accessibilityLabel === 'Play auto-chant')[0].props.onPress(); });
   act(() => { jest.advanceTimersByTime(250); }); // Existing wall-clock reducer primes its clock.
-  act(() => { jest.advanceTimersByTime(4000); });
+  act(() => { jest.advanceTimersByTime(baseline); });
   expect(iteration).not.toHaveBeenCalled();
-  act(() => { jest.advanceTimersByTime(750); }); // Padded boundary plus one existing 250ms sample.
+  act(() => { jest.advanceTimersByTime(sampleSlack); }); // Padded boundary plus one existing 250ms sample.
   expect(iteration).toHaveBeenCalledTimes(1);
   expect(iteration).toHaveBeenLastCalledWith(1);
   mockStatus = { isLoaded: true, duration: 0 }; // Native loop seams retain the padded rate.
   await act(async () => { tree!.update(display()); });
-  expect(mockPlayer.setPlaybackRate).toHaveBeenLastCalledWith(4000 / 4500, 'high');
+  expect(mockPlayer.setPlaybackRate).toHaveBeenLastCalledWith(baseline / period, 'high');
   expect(cadence).toHaveBeenCalledTimes(1);
 });
 

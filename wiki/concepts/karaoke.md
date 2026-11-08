@@ -2,7 +2,7 @@
 title: Shared karaoke reading model
 type: concept
 sources: [mobile/src/components/KaraokeText.tsx, mobile/src/components/karaokeTiming.ts, mobile/src/components/JapamInfinity.tsx, mobile/src/screens/JapamCounterScreen.tsx, mobile/src/screens/_useAutoSlide.ts, docs/engineering/karaoke-integration.md, design.md]
-last_verified_date: 2026-11-07
+last_verified_date: 2026-11-08
 confidence: high
 status: current
 ---
@@ -24,7 +24,7 @@ Infinity is wired now. Other sections' स्वतः integration is deferred b
 - `karaokeDurationMs` applies a caller-selected speed without importing Japam,
   audio or page navigation. Empty/invalid duration means no passage.
 - Infinity supplies one phase to both words and marker. Its own loop still
-  counts, pauses and handles background/blur; the renderer never increments. Japa adds a fixed 500ms after tempo scaling in its host timing adapter, shared with recorded playback and bead timing; the generic karaoke renderer/timeline is unchanged.
+  counts, pauses and handles background/blur; the renderer never increments. Japa applies a proportional 1.125 duration scale before tempo in its host adapter (Gayatri +500ms at 1×, shorter chants proportionally less), shared with recorded playback and bead timing; the generic karaoke renderer/timeline is unchanged.
 
 ## Gotchas
 
