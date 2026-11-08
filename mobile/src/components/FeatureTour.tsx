@@ -44,12 +44,13 @@ const POINTER_H = 14;
 const TAB_COUNT = 5;
 const TAB_BAR_CONTENT_HEIGHT = 60; // matches TabNavigator tabBarStyle height (excl. safe area)
 
-export default function FeatureTour() {
+export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
   const { colors, typography, radii } = useTheme();
-  const { shouldShowFirstLaunchTour, markTourCompleted } = useTour();
+  const { shouldShowFirstLaunchTour: gate, markTourCompleted } = useTour();
   const insets = useSafeAreaInsets();
   const { width: screenW, height: screenH } = useWindowDimensions();
 
+  const shouldShowFirstLaunchTour = gate && !suppressed;
   const [visible, setVisible] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
   // Measured element rect for the current step, or null → ring the destination

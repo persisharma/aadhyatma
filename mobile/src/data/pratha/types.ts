@@ -1,18 +1,18 @@
 /**
- * प्रथा और मान्यता — "ऐसा क्यों करते हैं?" content shapes (PRD-46, RULEBOOK §32).
+ * प्रथा और मान्यता — "ऐसा क्यों करते हैं?" content shapes (PRD-46, RULEBOOK §34).
  *
  * Same registry discipline as पितृ पक्ष परिचय (§28): bilingual Hi/En parallel
  * fields, a review-only `source` block that is never rendered, and draft rows
  * invisible behind verified-only accessors. A row answers one question about a
  * custom or belief: what is done, the story (or several regional stories)
- * told about it, what it means, and — always rendered — where that story comes
- * from (`tier` + `canon*`). It never prescribes and never supplies liturgy.
+ * told about it, what it means, and internal research classification (`tier` + `canon*`). Public projections
+ * preserve concise folk/regional context, not research locators (§11.16). It never prescribes and never supplies liturgy.
  */
 
 export type PrathaContentStatus = 'draft' | 'verified';
 
 /**
- * Where a story comes from, rendered as a label on every katha (PRD-46 §4).
+ * Internal classification for source verification (PRD-46 §4).
  * `shastra` = Veda/Upanishad/Itihasa/Gita/Smriti/Grihya-sutra with the verse
  * named; `purana` = a named Purana or Mahatmya with its adhyaya named;
  * `lok` = folk telling, names no text; `itihas` = a dated historical origin;
@@ -54,7 +54,7 @@ export type PrathaKatha = {
   /** Paragraphs; Hi and En have the same count. */
   bodyHi: readonly string[];
   bodyEn: readonly string[];
-  /** Rendered source line. A `lok` canon says लोक-परम्परा and names no text. */
+  /** Internal canon locator. A `lok` canon says लोक-परम्परा and names no text. */
   canonHi: string;
   canonEn: string;
   /** Two independently published sources actually read for THIS story; required when its row is verified. */

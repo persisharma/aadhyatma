@@ -10,6 +10,8 @@
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import {
+  kabirBhaktiDoheTotal,
+  rahimBhaktiDoheTotal,
   garudPuranTotal,
   garudPuranReadingCount,
   achyutashtakamTotal,
@@ -42,6 +44,7 @@ import {
   narasimhaAshtakamTotal,
   narayanaSuktamTotal,
   navagrahaStotramTotal,
+  parshuramStotramTotal,
   purushaSuktamTotal,
   radhashtakamTotal,
   ramChalisaCounts,
@@ -63,6 +66,7 @@ import {
   vishnuSahasranamaTotal,
 } from './verseCounts';
 import { japamMantras } from './japam';
+import { parshuramPublished } from './parshuramAvailability';
 
 export type TextStatus = 'active' | 'coming';
 export type ContentCategory =
@@ -98,7 +102,8 @@ export type Deity =
   | 'dattatreya'
   | 'shani'
   | 'kali'
-  | 'navagraha';
+  | 'navagraha'
+  | 'parshuram';
 
 export type LibraryEntry = {
   id: string;
@@ -123,6 +128,7 @@ export type LibraryEntry = {
 };
 
 export const library: readonly LibraryEntry[] = [
+  { id: 'parshuram-stotram', nameHi: 'श्री परशुराम स्तोत्रम्', nameEn: 'Parshuram Stotram', sub: '७ श्लोक · अर्थ सहित', subEn: '7 verses · with meaning', thumb: 'प', status: parshuramPublished ? 'active' : 'coming', hidden: !parshuramPublished, category: 'stotram', deities: ['parshuram'], verseCount: parshuramStotramTotal },
   {
     id: 'hanuman-chalisa',
     nameHi: 'हनुमान चालीसा',
@@ -1259,4 +1265,30 @@ export const library: readonly LibraryEntry[] = [
     deities: ['navagraha'],
     verseCount: navagrahaStotramTotal,
   },
+  // Selected devotional dohas — append to preserve all earlier library positions.
+  {
+    id: 'kabir-bhakti-dohe',
+    nameHi: 'कबीर के भक्तिमय दोहे',
+    nameEn: 'Kabir Devotional Dohas',
+    sub: `${kabirBhaktiDoheTotal} चयनित दोहे · भक्ति और सुविचार`,
+    subEn: `${kabirBhaktiDoheTotal} selected dohas · devotion and reflection`,
+    thumb: 'क',
+    status: 'active',
+    category: 'granth',
+    deities: [],
+    verseCount: kabirBhaktiDoheTotal,
+  },
+  {
+    id: 'rahim-bhakti-dohe',
+    nameHi: 'रहीम के भक्तिमय दोहे',
+    nameEn: 'Rahim Devotional Dohas',
+    sub: `${rahimBhaktiDoheTotal} चयनित दोहे · भक्ति और सुविचार`,
+    subEn: `${rahimBhaktiDoheTotal} selected dohas · devotion and reflection`,
+    thumb: 'र',
+    status: 'active',
+    category: 'granth',
+    deities: [],
+    verseCount: rahimBhaktiDoheTotal,
+  },
 ];
+

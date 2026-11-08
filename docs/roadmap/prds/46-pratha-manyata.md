@@ -1,12 +1,22 @@
 # PRD-46 — प्रथा और मान्यता · "ऐसा क्यों करते हैं?"
 
+> **8 November 2026 adaptation (current integration contract):** Keep this content
+> within Sanatan Parichay. Home → Sanatan → प्रथा और मान्यता / ऐसा क्यों?. Retain
+> contextual Vrat/Panchang links and local Back. No separate Home/More promotion.
+> All 208 IDs and provenance remain; only the 19 verified entries are visible.
+> Sanatan search includes verified customs in all four scripts; Tulasi links to K6.
+> Empty categories/month chips are hidden and all questions is the year-round
+> default. RULEBOOK §§11.16/34 and design.md §87 supersede the older prototype's
+> source-label, navigation and eight-tab presentation. Native/export/profile
+> acceptance remains pending; no merge, build publication or release is claimed.
+
 | | |
 |---|---|
 | **Status** | **Verification continuation (2026-10-28):** registry `mobile/src/data/pratha/` holds all 208 Appendix A rows. 19 entries are verified (13 Kartik, M1–M3, P2, MG9, F1); 189 remain draft. Story-level provenance and the ten-row pilot gate are enforced. Phase 1 hub, reader, contextual cards, sharing and Jest coverage are implemented; native smoke execution remains pending. The monthly verification backlog is not complete. |
 | **T-shirt size** | Code: **M** (one registry, one hub, one reader, five contextual hooks — all existing patterns). Content: **XL** — 204 rows × (author + two-source verification). Content, not code, sets the schedule. |
 | **Parent / siblings** | Pattern parent: [PRD-44 पितृ पक्ष परिचय](./44-pitru-paksha-shiksha.md) (verified-only education registry, RULEBOOK §28). Siblings it must link to, never duplicate: the katha library (`panchang/kathaContent/`), [PRD-23 bhog](./23-bhog-naivedya-vrat-food.md), [PRD-19 vidhi](./19-puja-vidhi.md), [PRD-26 daan](./26-daan-punya.md), Theerth (`data/theerth/`), [PRD-41 जिज्ञासा](./41-jijnasa-ask-vedansh.md), [PRD-42 regional lens](./42-regional-parv.md). |
 | **Research input** | [`docs/content-parity/manyata-kathas.md`](../../content-parity/manyata-kathas.md) — ~200 rows of beliefs + stories with source tags. This PRD narrows that to **customs people actually perform or avoid**, and adds what it lacks (Kartik itself, weekdays, household, sanskar, nature). |
-| **Prototype** | [`docs/pratha-manyata-prototype.html`](../../pratha-manyata-prototype.html) — clickable. Covers every §6 surface: masa card + empty state, hub (8 tabs), reader (प्रथा → कथा pages → भाव/बोध → आगे), six-katha Diwali, बोध, Observance "यह क्यों?", आज क्यों?, bhog क्यों?, search, Ask (+ omen abstain), share card, opt-in month notice. Sample copy only — unverified. |
+| **Historical prototype** | [`docs/pratha-manyata-prototype.html`](../../pratha-manyata-prototype.html) — clickable. Covers every §6 surface: masa card + empty state, hub (8 tabs), reader (प्रथा → कथा pages → भाव/बोध → आगे), six-katha Diwali, बोध, Observance "यह क्यों?", आज क्यों?, bhog क्यों?, search, Ask (+ omen abstain), share card, opt-in month notice. Sample copy only — unverified. |
 | **Feasibility** | ✅ Pure TS + bundled text — OTA-shippable after approval (RULEBOOK §0.3). No engine change: every date comes from rules the Panchang already solves; the current masa comes from `PanchangData.lunarMonth` (`panchang/engine.ts:987`). |
 
 > **Design intent.** The app tells a family *when* Kartik starts, *what* to offer on Dhanteras and *how* to do a Tulsi puja. It never answers the question every child asks while the diya is being lit: **"ऐसा क्यों करते हैं?"** This PRD adds that answer for every famous custom: the custom, the story or stories behind it, what it means, and an honest label for where the story comes from (scripture, a Purana, folk tradition or history). It is surfaced on the day, in the month and inside the observance where the question comes up.
@@ -64,9 +74,9 @@ Kinds:
 - `manyata` — a belief: something held true, e.g. "death in Kashi gives moksha".
 - `bodh` — a gentle correction where the popular story and the text differ, e.g. "Lakshman rekha is in Ramcharitmanas, not in Valmiki".
 
-## 4. Provenance tiers (rendered — the core of the design)
+## 4. Internal provenance tiers and honest public teaching
 
-Every katha on a row carries exactly one tier. The tier renders as a small label above the canon line. It is never hidden.
+Every katha carries one internal tier and exact canon for editorial verification. Under RULEBOOK §11.16, neither a research label nor a canon footer is rendered or appended to sharing. Concise folk/regional context stays in the teaching; genuine in-app scripture hand-offs remain. The table below is the review contract, not a public UI specification.
 
 | Tier | Label | Meaning | Verification bar |
 |---|---|---|---|
@@ -133,13 +143,13 @@ type PrathaEntry = {
 
 | # | Surface | What | Where it plugs in | Phase |
 |---|---|---|---|---|
-| 6.1 | **Hub "ऐसा क्यों?"** `PrathaScreen` | Questions-first list. Default tab **इस मास** (current masa); then पर्व · वार · घर-आँगन · पूजा-नियम · प्रकृति · संस्कार · तीर्थ. Rows are questions, not topics. | New route on the Home stack (+ More, PRD-19 multi-stack pattern). Home DISCOVER spotlight key `pratha` | 1 |
-| 6.2 | **Reader** `PrathaReader {prathaId}` | Pages: प्रथा → कथा (one page per katha, tier label + canon) → भाव → बोध (if any) → hand-offs (katha library, Gita/Valmiki verse, vidhi, bhog, Theerth). Share = the existing prose story card. | The Vrat Katha reader shell (pitru-shiksha "a long text reads in the reader shell" rule); a row in `readerReadAloud.test.tsx` | 1 |
+| 6.1 | **Hub "ऐसा क्यों?"** `PrathaScreen` | Questions-first list. Default **सभी प्रश्न** year-round. Contextual month entry selects its month. Only populated categories and qualifying month chips appear. Rows are questions, not topics. | Inside Sanatan Parichay, on the Home and Panchang stacks. No separate Home spotlight or More door. Tulasi links to K6. | 1 |
+| 6.2 | **Reader** `PrathaReader {prathaId}` | Pages: प्रथा → कथा (one page per complete story with concise folk/regional context) → भाव → बोध (if any) → hand-offs (katha library, Gita/Valmiki verse, vidhi, bhog, Theerth). Share = the existing prose story card. | The Vrat Katha reader shell (pitru-shiksha "a long text reads in the reader shell" rule); a row in `readerReadAloud.test.tsx` | 1 |
 | 6.3 | **Observance Detail — "यह क्यों?" card** | Up to 3 linked questions → reader. Renders only when `getPrathaForRule(rule.id)` returns verified rows. | `ObservanceDetailScreen.tsx`, between Story/Katha (:316) and How to observe (:341) | 1 |
 | 6.4 | **Panchang — "इस मास की प्रथाएँ"** | The app's **first masa-level surface**: one card under the sky line naming the month and its 2–3 headline customs → hub on the इस मास tab. | `PanchangScreen.tsx` near the sky line (:242–255, :620); masa from `PanchangData.lunarMonth` | 1 |
 | 6.5 | **FOR TODAY row — "आज क्यों?"** | On a day with a verified pratha for today's observance, one chip. Respects the row's existing cap and priority. | `TodayRecommendationsRow.tsx` (the daan-card precedent, :70–72) | 2 |
 | 6.6 | **Bhog / vidhi "क्यों?" links** | The 3 reasonless `doNotOffer` rows (`bhogContent.ts:135,178`, `bhogContentExtended.ts:736`) gain a link to their pratha row (Ganesha/Tulsi, Shiva/Ketaki). | bhog panel + `bhog.avoid` Ask answer | 2 |
-| 6.7 | **Search** | One section row per verified entry: `section:pratha:<id>`; matches question + practice + region. | `searchIndex.buildSectionEntries` (:296–300); count pinned in `searchIndex.test.ts` | 2 |
+| 6.7 | **Search** | Sanatan hub search is implemented in Phase 1. Future global Search adds one section row per verified entry: `section:pratha:<id>`; matches question + practice + region. | `searchIndex.buildSectionEntries` (:296–300); count pinned in `searchIndex.test.ts` | 2 |
 | 6.8 | **जिज्ञासा** | New intent `pratha.why` ("कार्तिक में दीया क्यों जलाते हैं", "why no Tulsi for Ganesha"). A new `pratha` entity in the lexicon. It answers with the short answer + tier + "पूरी कथा पढ़ें". Answers never come from a draft. | `ask/intents/index.ts` INTENTS order; corpus cases in `ask/__tests__/corpus.ts`; RULEBOOK §25 | 3 |
 | 6.9 | **Theerth** | Temple `parampara` sections stay where they are. A `tirth` row links its temple via `theerthIds`, never copies its text. | `data/theerth/details/*` | 4 |
 | 6.10 | **Season notification (optional)** | "इस मास क्यों?" once at masa start. Off by default; arms last under the iOS pending budget. Take it only if 6.4 shows use. | notifications planner | 5 |
@@ -159,7 +169,7 @@ type PrathaEntry = {
 
 | Phase | Scope | Rows | Gate |
 |---|---|---|---|
-| **0** (S) — **built** | Registry + types + accessors + stance guard + RULEBOOK §32 (tiers, folk-verification rule). All 208 rows imported as bilingual drafts. No UI. | 0 visible | Tests green |
+| **0** (S) — **built** | Registry + types + accessors + stance guard + RULEBOOK §34 (tiers, folk-verification rule). All 208 rows imported as bilingual drafts. No UI. | 0 visible | Tests green |
 | **1** (M) | **Kartik pilot**: hub, reader, Observance Detail card, Panchang masa card. Appendix A §A.1 authored (26 rows). | 26 | ≥10 verified Kartik rows before the hub door shows |
 | **2** | Festival customs for the other 11 months, shipped **ahead of each season** in calendar order: Margashirsha → Paush → Magh (Makar Sankranti) → Phalgun (Holi) → … Also FOR TODAY chip, bhog links, search. | ~70 | Per-month: the hub's masa tab for a month opens only with ≥3 verified rows for it |
 | **3** | Year-round axes: वार, घर-आँगन, पूजा-नियम, प्रकृति + `bodh` corrections. Ask intent. | ~80 | — |
@@ -195,8 +205,8 @@ type PrathaEntry = {
 
 ## 10. Docs compliance
 
-- **Phase 0:** RULEBOOK **§32** — the pratha contract: tiers, the folk-verification rule, reuse-don't-retell, the stance list.
-- **Phase 1:** design.md **§86**, covering hub, reader, the "यह क्यों?" card, the masa card and tier labels (tokens: Pitru register for the tier label, `goldTint` भाव panel).
+- **Phase 0:** RULEBOOK **§34** — the pratha contract: tiers, the folk-verification rule, reuse-don't-retell, the stance list.
+- **Phase 1:** design.md **§87**, covering hub, reader, the "यह क्यों?" card, the masa card inside Sanatan, with shared listing/prose tokens and internal research metadata.
 - **Phase 1:** design.md §62 (Observance Detail slot order) updated.
 - **Phase 1:** wiki `subsystems/pratha.md` via the `llm-wiki` skill.
 - **Phase 1:** roadmap README entry.
@@ -220,9 +230,9 @@ type PrathaEntry = {
 Phase 0 was built in a session that could not open any source (§0.1). The next session should have open web access. That changes **who can verify, not the bar**: every rule below still holds, whatever model or tool does the work.
 
 ### 12.1 Rules that do not change
-- **Two opened sources per story** (RULEBOOK §11.1, §32.2). A search-results summary, a model's memory, or the existing draft text is not a source. Cite only pages actually read (§11.2). If one source is reachable and the second is not, the row stays draft, or the maintainer records an explicit attestation (§11.1 exception).
+- **Two opened sources per story** (RULEBOOK §11.1, §34.2). A search-results summary, a model's memory, or the existing draft text is not a source. Cite only pages actually read (§11.2). If one source is reachable and the second is not, the row stays draft, or the maintainer records an explicit attestation (§11.1 exception).
 - **No generated scripture** (§11.3). Rows quote no verse text; surfaces render verses from the bundled corpus through `ref`. Never type Sanskrit into a row.
-- **Stance** (§32.3) and **tier honesty** (§32.1). A folk story never gains a text name because a website claims one. A Purana story names the adhyaya the reviewer actually opened.
+- **Stance** (§34.3) and **tier honesty** (§34.1). A folk story never gains a text name because a website claims one. A Purana story names the adhyaya the reviewer actually opened.
 - **No build, release or OTA without explicit approval** (RULEBOOK §0.3).
 - **Every change ships with tests** (§0). `prathaContent.test.ts` must stay green. Phase 1 adds screen tests and a Maestro flow.
 
@@ -264,12 +274,12 @@ Work in `mobile/src/data/pratha/<axis>.ts`. The files are canonical: hand-edit t
 ### 12.4 Build Phase 1 (code)
 In the order of §6, each with its tests and the same-PR docs (§10):
 1. `PrathaReader {prathaId}` on the Vrat Katha reader shell (one row in `readerReadAloud.test.tsx`).
-2. Hub `PrathaScreen` on the Home and More stacks (route registration in both; `vidhiBackNavigation`-style stack tests).
+2. Hub `PrathaScreen` inside Sanatan on the Home and Panchang stacks (route registration in both; `vidhiBackNavigation`-style stack tests).
 3. Observance Detail "यह क्यों?" card between Story (`ObservanceDetailScreen.tsx:316`) and How to observe (`:341`), via `getPrathaForRule`.
 4. Panchang masa card under the sky line (`PanchangScreen.tsx:242–255`), via `getPrathaForMasa(lunarMonth.index, lunarMonth.isAdhik)`; absent below 3 verified rows.
-5. design.md §86 + §62; a wiki update; `.maestro/pratha-smoke.yaml` (season-gated like `pitru-paksha-smoke`).
+5. design.md §87 + §62; a wiki update; `.maestro/pratha-smoke.yaml` (season-gated like `pitru-paksha-smoke`).
 
-The clickable prototype (`docs/pratha-manyata-prototype.html`) is the visual reference. Its copy is the pre-correction draft, so the registry is the source of truth for text.
+The HTML prototype is a historical draft only. Current Sanatan components and design.md §87 define the integrated UI; the registry remains the source of truth for teaching.
 
 ### 12.5 Decisions only the product owner makes
 The owner approved §11 items 1 and 3 and separate `kavya`/`agama` tiers on 2026-10-28. Folk stories can now be verified as folk against two independent opened publications. Remaining choices in §11 stay open; none changes the source threshold. See `docs/content-parity/pratha-verification-2026-10-28.md` for the continuation’s source adjudications.
@@ -594,7 +604,7 @@ Also Kartik, as regional rows: **सामा-चकेवा** (Mithila — Kri
 
 | Existing | What it holds | Gate | How pratha uses it |
 |---|---|---|---|
-| Katha library `panchang/kathaContent/` (90 entries) | 13 entries already tell a custom's origin: `kartika-mahatmya`, `dhanteras-legends`, `narak-chaturdashi-katha`, `diwali-legends`, `ganesha-chaturthi-vrat-katha` (the moon), `mauni-amavasya-katha`, `govardhan-puja-katha`, `bhai-dooj-katha`, `raksha-bandhan-legends`, `sheetala-saptami-vrat-katha`, `holi-legends`, `vat-savitri-vrat-katha`, `nag-panchami-vrat-katha` | **None** — "app-authored, source-informed retelling" | Link via `anchors.kathaIds`; never re-tell. The pratha row adds the tier label the library lacks |
+| Katha library `panchang/kathaContent/` (90 entries) | 13 entries already tell a custom's origin: `kartika-mahatmya`, `dhanteras-legends`, `narak-chaturdashi-katha`, `diwali-legends`, `ganesha-chaturthi-vrat-katha` (the moon), `mauni-amavasya-katha`, `govardhan-puja-katha`, `bhai-dooj-katha`, `raksha-bandhan-legends`, `sheetala-saptami-vrat-katha`, `holi-legends`, `vat-savitri-vrat-katha`, `nag-panchami-vrat-katha` | **None** — "app-authored, source-informed retelling" | Link via `anchors.kathaIds`; never re-tell. The pratha row adds the focused explanation and verified editorial provenance |
 | Bhog `doNotOffer` (3 rows) | Ganesha/Tulsi ×2, Shiva/Ketaki | verified-only | Supplies the missing "why" (PN1, PN2) |
 | Daan occasions (20) | `why` per occasion (Makar Sankranti til, Akshaya Tritiya pot) | verified-only | Link (V1, MG1); never duplicate |
 | Pitru registry | crows, water, panchabali, Karna (draft) | verified-only | Owns Pitru Paksha; pratha links |

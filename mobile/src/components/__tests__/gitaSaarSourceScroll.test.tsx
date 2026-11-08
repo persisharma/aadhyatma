@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { getGitaSaarChapter } from '@/data/gita-saar';
 import GitaSaarVersePage from '../GitaSaarVersePage';
+import { GitaSaarStoryDetails } from '../GitaSaarStory';
 
 const mockScrollTo = jest.fn();
 
@@ -40,4 +41,22 @@ test('opening the original Gita text brings its newly laid out panel into view',
   act(() => tree.unmount());
   frame.mockRestore();
   mockScrollTo.mockClear();
+});
+
+test('a story without an in-app passage has no bibliography block (RULEBOOK §11.16)', () => {
+  // `atma` cites an external text (Katha Upanishad) as a story source.
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(
+      <GitaLanguageProvider initialLang="en">
+        <GitaSaarStoryDetails themeId="atma" />
+      </GitaLanguageProvider>
+    );
+  });
+  // No source is an external link out of the app.
+  expect(tree.root.findAll((n) => n.props.accessibilityRole === 'link').length).toBe(0);
+  // The story narrative can name Nachiketa’s scripture; no bibliography heading/row survives.
+  expect(tree.root.findAll(n => typeof n.props.children === 'string' && n.props.children === 'Story sources')).toHaveLength(0);
+  expect(tree.root.findAll(n => typeof n.props.children === 'string' && n.props.children === 'Related readings in Vedansh')).toHaveLength(0);
+  act(() => tree.unmount());
 });

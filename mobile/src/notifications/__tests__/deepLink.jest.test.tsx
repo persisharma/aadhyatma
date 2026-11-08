@@ -1,3 +1,4 @@
+import { subscribeBrandLaunchTarget } from '@/navigation/brandLaunchIntent';
 // Jest suite (note the `.jest.test.tsx` suffix — see jest.config.js): deepLink
 // imports @react-navigation/native + expo-notifications, so it can't run as a
 // bare tsx node:assert script like its sibling scheduler.test.ts.
@@ -72,6 +73,16 @@ describe('handleNotificationResponse', () => {
       expect(handleNotificationResponse(responseWithData(data))).toBe(false);
     }
     expect(dispatchSpy).not.toHaveBeenCalled();
+  });
+
+  test('a warm notification suppresses branding before destination dispatch', () => {
+    readySpy.mockReturnValue(true);
+    const order: string[] = [];
+    const unsubscribe = subscribeBrandLaunchTarget(() => order.push('brand'));
+    dispatchSpy.mockImplementationOnce(() => { order.push('navigate'); });
+    expect(handleNotificationResponse(responseWithData(dailyVerse))).toBe(true);
+    expect(order).toEqual(['brand', 'navigate']);
+    unsubscribe();
   });
 
   test('a daily-verse tap lands on the Daily Bhakti tab and reports handled', () => {

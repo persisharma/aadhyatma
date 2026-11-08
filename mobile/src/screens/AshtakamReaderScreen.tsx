@@ -231,6 +231,7 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: ashtakamId,
+                            verseIndex: index,
                             sectionNameHi: ashtakam.titleHi,
                             sectionNameEn: ashtakam.titleEn,
                             verseLabelHi: item.labelHi,

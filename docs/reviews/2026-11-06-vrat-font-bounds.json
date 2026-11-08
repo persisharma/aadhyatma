@@ -1,0 +1,137 @@
+{
+  "method": "Pillow RAQM shaping at 1000px using exact bundled faces. Required leading = top ink extent + full face descent. Mathematical font-bounds evidence only; NOT native layout, wrapping, screenshot or pixel acceptance.",
+  "source": "197 deduplicated OBSERVANCE_RULES, contentByLang hi/en/gu/kn, current catalogTitle/catalogMeta tokens",
+  "checked": 1576,
+  "prior_result": "Previous 18/28 title failed for 9 Kannada names (28.35px required). Shared floor was raised from 1.55em to 1.65em; bundled Kannada hhea extent is 1.62em.",
+  "results": {
+    "hi": [
+      {
+        "slot": "title",
+        "fontSize": 18,
+        "lineHeight": 30,
+        "checked": 197,
+        "font_sha256": "7745e265758ab84e200df9002a1b0c3712d9ed7681c5ccc84f7af0640cff46ea",
+        "hhea_extent_em": 1.555,
+        "worst": {
+          "id": "kalki-jayanti",
+          "text": "कल्कि जयंती",
+          "required_leading": 27.594,
+          "leading": 30,
+          "headroom": 2.406
+        }
+      },
+      {
+        "slot": "deity",
+        "fontSize": 12,
+        "lineHeight": 20,
+        "checked": 197,
+        "font_sha256": "80bf445f387378238d8392278398cd77f59c77bf5f5a3bf6f221a30119c5fca8",
+        "hhea_extent_em": 1.555,
+        "worst": {
+          "id": "kalki-jayanti",
+          "text": "भगवान कल्कि",
+          "required_leading": 18.372,
+          "leading": 20,
+          "headroom": 1.628
+        }
+      }
+    ],
+    "en": [
+      {
+        "slot": "title",
+        "fontSize": 18,
+        "lineHeight": 30,
+        "checked": 197,
+        "font_sha256": "7745e265758ab84e200df9002a1b0c3712d9ed7681c5ccc84f7af0640cff46ea",
+        "hhea_extent_em": 1.555,
+        "worst": {
+          "id": "hanuman-jayanti-kartik",
+          "text": "Hanuman Jayanti (Kartik)",
+          "required_leading": 25.074,
+          "leading": 30,
+          "headroom": 4.926
+        }
+      },
+      {
+        "slot": "deity",
+        "fontSize": 12,
+        "lineHeight": 20,
+        "checked": 197,
+        "font_sha256": "80bf445f387378238d8392278398cd77f59c77bf5f5a3bf6f221a30119c5fca8",
+        "hhea_extent_em": 1.555,
+        "worst": {
+          "id": "vishwakarma-puja",
+          "text": "Bhagwan Vishwakarma",
+          "required_leading": 16.656,
+          "leading": 20,
+          "headroom": 3.344
+        }
+      }
+    ],
+    "gu": [
+      {
+        "slot": "title",
+        "fontSize": 18,
+        "lineHeight": 30,
+        "checked": 197,
+        "font_sha256": "2e4da26835438e16949003448aa97c080f7ceccc9baae6136a788fe8bbb6ee64",
+        "hhea_extent_em": 1.447,
+        "worst": {
+          "id": "ishti-anvadhan",
+          "text": "ઇષ્ટિ ઔર અન્વાધાન",
+          "required_leading": 24.912,
+          "leading": 30,
+          "headroom": 5.088
+        }
+      },
+      {
+        "slot": "deity",
+        "fontSize": 12,
+        "lineHeight": 20,
+        "checked": 197,
+        "font_sha256": "f262fa6f84d9d702c810c5ba8c3bcaa911bd4907e5ad4f43a34c4c262f301bf5",
+        "hhea_extent_em": 1.447,
+        "worst": {
+          "id": "gangaur",
+          "text": "ઈસર જી વ ગૌરી માતા",
+          "required_leading": 16.38,
+          "leading": 20,
+          "headroom": 3.62
+        }
+      }
+    ],
+    "kn": [
+      {
+        "slot": "title",
+        "fontSize": 18,
+        "lineHeight": 30,
+        "checked": 197,
+        "font_sha256": "ee6201a9b586a47c1517b9fe3de33c659d67f40fee0e21d90f80dceba67e179f",
+        "hhea_extent_em": 1.62,
+        "worst": {
+          "id": "chitra-pournami",
+          "text": "ಚಿತ್ರಾ ಪೂರ್ಣಿಮಾ",
+          "required_leading": 28.35,
+          "leading": 30,
+          "headroom": 1.65
+        }
+      },
+      {
+        "slot": "deity",
+        "fontSize": 12,
+        "lineHeight": 20,
+        "checked": 197,
+        "font_sha256": "607747eb688d72cd7caa720b8b4b739255fba8ea29d4d562e186735939d68ddf",
+        "hhea_extent_em": 1.62,
+        "worst": {
+          "id": "sakat-chauth",
+          "text": "ಶ್ರೀ ಗಣೇಶ",
+          "required_leading": 18.36,
+          "leading": 20,
+          "headroom": 1.64
+        }
+      }
+    ]
+  },
+  "failures": []
+}

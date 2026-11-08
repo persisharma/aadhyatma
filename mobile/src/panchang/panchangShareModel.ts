@@ -1,3 +1,4 @@
+import type { OccasionTiming } from './occasionTimings';
 // The पूर्ण पंचांग share card's text (design.md §33a): one day, every detail
 // the day panel shows, shaped into the short strings a 540×675 card can hold.
 // Pure over the day's solved panchang + muhurat; no engine call, so it can run
@@ -30,6 +31,9 @@ export type ShareChoghadiya = { name: string; start: string; auspicious: boolean
 export type ShareVaas = { value: string; line: string; valueWarn: boolean; lineWarn: boolean };
 
 export type PanchangShareModel = {
+  /** One primary ritual in the full 4:5 card; complete timings also in text. */
+  occasionTimings?: readonly OccasionTiming[];
+  referenceDay?: Date;
   /** "बेंगलुरु" — every time on the card depends on it. A pincode label can run
    * to "३९६२१० · दादरा और नगर हवेली और दमन और दीव", so it has the chip to itself. */
   place: string;
@@ -43,8 +47,8 @@ export type PanchangShareModel = {
   sunset: string;
   /** Null on the rare day the Moon does not rise. */
   moonrise: string | null;
-  /** The first observance (name · deity) and how many more share the day. */
-  festival: { name: string; more: number } | null;
+  /** The day's observances: a lone one as name · deity, or every name joined by ·. */
+  festival: { name: string } | null;
   tithi: ShareAnga;
   nakshatra: ShareAnga;
   yoga: ShareAnga;
@@ -133,6 +137,7 @@ export function buildPanchangShareModel(input: {
   placeEn: string;
   calendarSystem: CalendarSystem;
   lang: Lang;
+  occasionTimings?: readonly OccasionTiming[];
 }): PanchangShareModel {
   const { p, md, observances, lang } = input;
   const day = p.date;
@@ -143,8 +148,10 @@ export function buildPanchangShareModel(input: {
   const first = observances[0]?.rule;
   const festival = first
     ? {
-        name: [name(lang, first.nameHi, first.nameEn), name(lang, first.deityHi, first.deityEn)].filter(Boolean).join(' · '),
-        more: observances.length - 1,
+        name:
+          observances.length === 1
+            ? [name(lang, first.nameHi, first.nameEn), name(lang, first.deityHi, first.deityEn)].filter(Boolean).join(' · ')
+            : observances.map((o) => name(lang, o.rule.nameHi, o.rule.nameEn)).join(' · '),
       }
     : null;
 
@@ -155,6 +162,8 @@ export function buildPanchangShareModel(input: {
   const agniNext = v.agni.until && v.agni.next ? { at: formatEndInstant(v.agni.until, day, lang), place: AGNI_VAAS_LABELS[v.agni.next] } : null;
 
   return {
+    occasionTimings: input.occasionTimings,
+    referenceDay: input.p.date,
     place: name(lang, input.placeHi, input.placeEn),
     date: name(
       lang,

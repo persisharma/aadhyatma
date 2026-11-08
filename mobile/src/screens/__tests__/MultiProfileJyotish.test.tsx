@@ -262,13 +262,16 @@ test('Jyotish landing: the switcher renders above everything it changes', () => 
 
   const switcher = source.indexOf('labelEn="Whose Jyotish"');
   const guidanceRows = source.indexOf('showContext="summary"');
-  const tileGrid = source.indexOf('styles.jyotishTileGrid');
+  const gallery = require('node:fs').readFileSync(require('node:path').resolve(__dirname, '../../components/JyotishLandingGallery.tsx'), 'utf8');
+  const childSlot = gallery.indexOf('{children}');
+  const tileGrid = gallery.indexOf('testID="jyotish-gallery"');
 
   expect(switcher).toBeGreaterThan(-1);
   // Since §51c the chips govern the tile readings too, not just the card — so
   // they must precede BOTH, or a switch leaves stale readings on screen.
   expect(guidanceRows).toBeGreaterThan(switcher);
-  expect(tileGrid).toBeGreaterThan(switcher);
+  expect(childSlot).toBeGreaterThan(-1);
+  expect(tileGrid).toBeGreaterThan(childSlot);
 });
 
 test('Jyotish landing: + जोड़ें opens the blank add form, never the edit form', () => {

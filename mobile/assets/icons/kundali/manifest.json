@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "budgetBytes": 300000,
+  "export": "256px transparent palette PNG; Lanczos fit, FASTOCTREE 256 colors, optimize; no repainting",
+  "promptProvenance": "Exact original generation-prompt transcript pending recovery; these are reused approved masters",
+  "assets": [
+    {
+      "id": "sun",
+      "file": "sun.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 26568,
+      "sha256": "47fc840c943ac40c5e8473b84b2532942af0f89d95255abfb031895ca405dfa8",
+      "masterName": "Radiant golden Surya sun.png",
+      "masterSha256": "d593d76deb7fe67dc4912acfd9f72065e6c0f817da6aa651ea4bac84eedea2ba",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "moon",
+      "file": "moon.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 17463,
+      "sha256": "697b7a9ca77d965b799860079e1ba9b067da349735d13181eade64304d4f0d12",
+      "masterName": "Pearly Chandra Moon Icon.png",
+      "masterSha256": "ff842d012a0ff7b184292e7c7aaf61ae37c497a67c490f425c3c2dd1259daec4",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "mars",
+      "file": "mars.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 19845,
+      "sha256": "d2f88a49292e6c694bc0c44c689d36f216f3c9631e7714fb16654c8369c9deee",
+      "masterName": "Terracotta Mars Icon.png",
+      "masterSha256": "7a39256043964c6d0573d5feca9086a262a2aa176dfbe69faed2b457f21ec9c0",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "mercury",
+      "file": "mercury.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 24571,
+      "sha256": "35ab08cf4b94269325dc9f58c143fa50f9a3a21332f9e5245a547c4ad076a9ea",
+      "masterName": "Cratered Mercury in Antique Gold.png",
+      "masterSha256": "09cc803a6c9f2d543c5206b61d223a205eb96645b8629e1240ba0281602755b4",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "jupiter",
+      "file": "jupiter.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 22429,
+      "sha256": "974a87bbed3f8565ec4941e7aee8eafcaa418ed17a89fc544a1ebce55a093080",
+      "masterName": "Ochre-ivory Jupiter icon.png",
+      "masterSha256": "127622a27723401ceb777243422bbae1332833f53beff042bcd79162e407b19d",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "venus",
+      "file": "venus.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 19749,
+      "sha256": "cd17a7ed07e7017750c300a038237aa8de7ccd6562daba08789ee0aac380ddf0",
+      "masterName": "Shukra’s Golden Cloud Planet.png",
+      "masterSha256": "b4bc4c6973e8a2af1af0563ac6e4a7ac6a2a93abb58909ec8db1fc925a6aea5c",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "saturn",
+      "file": "saturn.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 16582,
+      "sha256": "533fff5b1ca31c952b6f730b8dd17f20b3272d202a6b7477317545e37e1579f5",
+      "masterName": "Honey-ochre Shani with tilted rings.png",
+      "masterSha256": "d884566c39b2153c3ce6a5ab8ad62ad681012187f7a5ec0b23c25dfca1f85fd9",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "rahu",
+      "file": "rahu.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 26536,
+      "sha256": "18c526336f9cbc6efe741e2bfe2aeb05bde5af558634c555928aca1518e74c2e",
+      "masterName": "Golden Rahu eclipse icon.png",
+      "masterSha256": "11f3a64ed058cf24c2a4626513652fa95cd3e09a1920b818c4dfbd333c7787b2",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "ketu",
+      "file": "ketu.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 22896,
+      "sha256": "36ea09b0ce228601ccc78952d251954b944b3e6d429d11c0b4c972ddae660048",
+      "masterName": "Golden Ketu Eclipse Medallion.png",
+      "masterSha256": "d9e2cbe481e91dc89cff8bcd3bed00ea2a06ab0214dd0586ed190ff40eb651d0",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "lagna",
+      "file": "lagna.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 27625,
+      "sha256": "a418d36a36e845773652f8cf24b817826552599cd09ca13881fbd3db12946a45",
+      "masterName": "Golden Ascendant at Dawn.png",
+      "masterSha256": "a31949206bb5d1ef2e925b834371340fae2e184895ab4dcd7e6de8754c3952e9",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    },
+    {
+      "id": "nakshatra",
+      "file": "nakshatra.png",
+      "width": 256,
+      "height": 256,
+      "bytes": 30615,
+      "sha256": "53a835823a412597b708507e59444fe173c536a527351d42c9445c7022f5f613",
+      "masterName": "Golden Nakshatra and Crescent Moon.png",
+      "masterSha256": "d29fda45e7b7626300cb2681491335a7541258caf497bead110a76201e7cd8fe",
+      "source": "Owner-approved ImageGen master from the 1 November 2026 Kundali design conversation"
+    }
+  ]
+}

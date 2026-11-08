@@ -324,6 +324,12 @@
       "ext": "jpeg",
       "width": 1254,
       "height": 1254
+    },
+    "backgrounds--deity-parshuram": {
+      "hash": "c700a59650dc0b61",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1080
     }
   }
 }

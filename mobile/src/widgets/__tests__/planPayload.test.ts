@@ -14,6 +14,8 @@ test('real bundle planner produces a dated, validated 14-day Panchang and verse 
   assert.equal(payload.panchang.days[13].dateKey, '2026-08-23');
   assert.ok(payload.verses.days.every((day) => day.excerpt.kn.length > 0 && day.accessibilityLabel.kn.length > day.excerpt.kn.length));
   assert.ok(payload.panchang.days.every((day) => day.deepLink.endsWith(day.dateKey)));
+  assert.ok(payload.panchang.days.every((day) => !!day.sunriseAt && !!day.sunsetAt && Date.parse(day.sunriseAt) < Date.parse(day.sunsetAt)));
+  assert.ok(payload.verses.days.every((day) => !!day.artKey));
   assert.ok(payload.panchang.days.every((day) => day.sunrise.kn.startsWith('ಸೂರ್ಯೋದಯ')));
 });
 
@@ -78,3 +80,4 @@ test('Panchang dates and timings are stable when the process zone is non-IST', a
     else process.env.TZ = previous;
   }
 });
+

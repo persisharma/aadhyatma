@@ -166,6 +166,8 @@ describe('series share flow', () => {
 
   test('a verse share still opens the verse sheet with no series UI', async () => {
     const tree = await open(VERSE);
+    expect(byLabel(tree, 'Share on Instagram')).toBeUndefined();
+    act(() => byLabel(tree, 'Card style: Current card').props.onPress());
     expect(byLabel(tree, 'Share all pages')).toBeUndefined();
     expect(pageButtons(tree)).toHaveLength(0);
     expect(byLabel(tree, 'Share on Instagram')).toBeDefined();

@@ -1265,22 +1265,213 @@ Captured the painted waning Krishna Tritiya moon and sepia night header on the d
 
 The day panel reuses `ObservancePreviewCard` / `ListingCard` with event artwork and separate save/reminder controls. Named Sankashti display titles retain the original rule identity for artwork/reminders. Nakshatra's existing six-star painting has stronger sepia contours/connectors in the same 36dp slot; reference, new master, prompt, hashes and exports are retained. Typecheck, focused ESLint, 33 focused tests and Standard/Large iOS visual flow pass; evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/`. Android/VoiceOver remain pending.
 
+## [2026-10-28] ingest | Rise/set-aware Panchang night sky and top moonrise label
+
+The fixed phase illustration appears only while the moon is above the horizon (no bright Amavasya disc). Night stars and sunset/sunrise labels remain; the misleading lunar sunset-to-sunrise path is removed. A moonrise/state footer handles after-midnight and previous-civil-day dates. Exact night/location events are deferred, bounded and cached, with no persisted day-schema changes. Typecheck, focused ESLint, 23 Jest checks and five real-engine tests pass. Three native state captures pass and were visually reviewed; temporary preview clock restored. Evidence is in `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/`.
 ## [2026-10-28] ingest | App-wide 24-hour time format
 
 Every rendered clock is now zero-padded 24-hour `HH:MM`: `formatClock` dropped AM/PM, `formatRangeCompact` was removed (callers use `formatRange`), and the hand-rolled 12-hour formatters (Kundali/Jyotish birth time, Namkaran windows, widget IST clock, Routine offered time, Japam alarm label + `prefers12HourClock`) were converted. `ClockTimePicker` lost its AM/PM toggle (HR column `00`–`23`). Fixed reminder copy (ArcStrip, Janma Tithi, festive greeting, Prashna transit note) now reads 24-hour. design.md §3.2 added; [[panchang]] display helpers updated.
+
+## [2026-10-28] ingest | Gita Saar story citations stay inside Vedansh
+
+Valmiki Ramayan citations for Bala Kanda 43–44 and Yuddha Kanda 18 now open the first verse of the cited sarga in the bundled reader. Gita citations retain their exact in-app handoff. Bhagavatam and other sources without a bundled reader remain visible as plain attribution, with no browser action; source URLs remain in research metadata.
 
 ## [2026-10-28] ingest | Mahakaal masters published to R2
 
 PR #555 added four Mahakaal masters (three Suvichar frames + the Daily Bhakti card) with `scripts/prepare-mahakaal.mjs` but never ran its publish step, so Suvichar sources were 51 vs a 48-entry manifest and `prepare-suvichar.mjs --verify` failed on main. Uploaded the four with immutable caching, then `prepare-mahakaal.mjs --activate` re-verified public bytes and activated both manifests (Suvichar 51, devotional-share 29).
 
-## [2026-10-28] ingest | PRD-46 प्रथा और मान्यता — Phase 0 registry
+## [2026-10-29] ingest | Native horizon previews refreshed on current 24-hour main
 
-New subsystem page `wiki/subsystems/pratha.md`. `mobile/src/data/pratha/` holds all 208 Appendix A customs (304 stories, Hi+En) as invisible drafts, with verified-only accessors, a flipped-row selector test, registry-checked links and the stance guard (RULEBOOK §32). Also recorded: bundled Valmiki sarga 6.107 is a defective corpus row (never quote it), and festival `ruleIds` were derived from katha links, excluding mahatmyas.
+PR #556 is merged; the night-horizon follow-up is on `codex/panchang-night-moonrise`. Main's 24-hour formatter and subsequent share-card work are reconciled. Typecheck and 23 focused Jest checks pass on the combined tree; the five real-engine horizon checks also pass. Current native before-rise, after-rise and after-set captures all pass and are visually reviewed at Large size. Preview Date/Date.now overrides are restored, confirmed at 29 October 13:31 IST. No release action. See `docs/evaluations/panchang-day-icons-2026-10-27/night-horizon/README.md`.
 
-## [2026-10-28] gap | PRD-46 rows are unverified
+## [2026-10-29] ingest | Annapurna painted in Suvichar
 
-All 208 pratha rows are app-authored retellings that no reviewer has checked against an opened source. Verification is per row and needs network access or the maintainer-attested exception (RULEBOOK §11.1).
+Annapurna had reviewed Suvichar copy but no master, so her Bhakti Sandesh cards were a mostly blank text-only parchment. Codex generated three masters in the existing frame pipeline (1122×1402, hero 0.60/0.64/0.60, provenance in docs/evaluations/annapurna/sources.json); the user approved them; they were uploaded to R2 (immutable), added to sources and the manifest (54), and every text-only branch was removed from SuvicharCard, both pickers and the weekday filter.
 
-## [2026-10-28] ingest | PRD-46 verification continuation and Phase 1
+## [2026-10-30] ingest | Daily Bhakti strip offers the verse + Panchang widget pair
 
-19 entries verified against actually opened publications; 189 drafts remain hidden. Added story-level provenance and exact canon checks, six tiers, ten-Kartik pilot gate and three-entry month gate. Hub/reader, source-preserving prose sharing, observance/month cards and lazy local navigation now implemented. Updated pratha/index/design §86 and §62; source adjudications in `docs/content-parity/pratha-verification-2026-10-28.md`. Monthly source-review backlog and native smoke execution remain open; no build, release, OTA or merge.
+The setup strip's widget ask now adds both widgets from one Add. Android pins verse, then Panchang when the first launcher dialog closes (AppState return to `active`); iOS's how-to sheet previews both (Panchang facsimile reads the published widget snapshot). A new `panchangAddedAt` stamp drives a Panchang-only follow-up for verse-only users. Neither OS can place a widget without the user's confirmation — recorded as a [[home-widgets]] gotcha. design.md §23/§59 updated.
+
+## [2026-10-31] ingest | Quiet companion first-launch and widget asks
+
+Implemented the selected compact sheet direction, setup-before-tour phase persistence, explicit notification consent, staged city/GPS, later-day launch arbitration, and shared process-owned widget flow. Updated notification/widget wiki and design.md. Native device and pixel review remains pending.
+
+## [2026-10-31] ingest | Gita Saar keeps story copy concise
+
+Removed visible painting descriptions and the paragraph explaining source-link behavior. Image descriptions remain as accessibility labels. Source rows retain work/passage citations and chevrons for in-app readers; repeated “Read here” labels are omitted. The concise story labels still identify abridged retellings separately from scripture.
+
+## [2026-11-01] ingest | Draft particle launch boundary and shared branding
+
+Added the bounded intro/navigation invariant and explicit missing-lettering/native-verification gap to overview. See docs/reviews/2026-11-01-particle-logo.md.
+
+## [2026-11-01] ingest | Approved particle renderer replaces reconstruction
+
+Recorded the accepted-source hash, one-renderer app/export contract, splash readiness boundary and shared wordmark paint-barrier integration in overview. Native evidence remains pending.
+
+## [2026-11-02] ingest | Restore the compact Home crest
+
+Recorded the Home-only size/colour treatment, restored Om circles/rules and retained Hindi brand dot. Launch animation and share/export treatment remain unchanged. Native comparison is pending.
+
+## [2026-11-02] ingest | Launch placeholder, explicit native-to-particle start handoff and immediate inactive-return replay; native acceptance pending.
+
+## [2026-11-02] ingest | Native launch skips the first 1,000ms of the unchanged approved renderer; 2,350ms visible playback and exact final frame. Native timing checks pending.
+
+## [2026-11-02] ingest | Owner correction: particle introduction is cold-process only after kill/reopen; all warm background/inactive returns resume without branding. No persistent seen flag.
+
+## [2026-11-02] ingest | PR #602 CI version mismatch repaired; exact-branch unsigned iOS Release simulator launch workflow and cold/warm Maestro recording added. Execution evidence tracked in launch review.
+
+## [2026-11-02] ingest | Exact-branch native Release compile/install passed; Maestro XCTest startup timed out before assertions. Driver preflight/timeout, single-architecture compile and app checkpoint added; lifecycle rerun pending.
+
+- 2026-11-02: PR #602 native verification retry: Release compile/install, driver and setup passed; cold recording reaches Home, while Maestro retained a stale launch accessibility root. Explicitly load the existing iOS snapshot config without weakening assertions; guarded exact-source binary reuse preserves compiled checkpoint. Native lifecycle result pending retry.
+## [2026-11-02] ingest | Add 76 approved original Suvichar reflections, explicit shrine scope and original daily rotation; preserve 621 referenced entries and stable favorites. Native/export review pending.
+
+## [2026-11-02] ingest | Add eight Khatu Shyam-only Hare Ka Sahara original reflections after merged #603; preserve earlier 76 IDs and expand late-ID/theme-search coverage. Native/export review pending.
+
+## [2026-11-03] ingest | Explore replay visit-history reset
+Added the confirmed replay-only history reset, persistence/no-reseeding contract, next-eligible-launch timing and shared-budget preservation to [[subsystems/explore-sheet]]. Native visual/Maestro evidence remains pending.
+
+## [2026-11-04] ingest | Panchang share co-branding
+Added the opt-in pandit profile (name chip, title · contact footer line, Vedansh pill unchanged), the generic `ShareableCard.controls` sheet slot and the hydrate-before-open gotcha to [[subsystems/share]]. Native visual/WhatsApp evidence pending.
+
+## [2026-11-04] ingest | Panchang co-branding moves to the footer line
+The sharer's name no longer prints as a header chip; [[subsystems/share]] now records `<name> · <title> · <contact>` replacing the footer feature line (min scale 0.75), header untouched. Native visual/WhatsApp evidence pending.
+
+## [2026-11-04] ingest | Meta feature-tour video kit
+Added the 43.5 s Hindi/English all-features ad builder (9:16 + 4:5, deterministic Chromium frames, synthesised tanpura, store-copy claims only) to [[runbooks/store-submission]]. Voice-over added the same day with Kokoro hf_alpha, Whisper-checked; native listening review pending. Nothing uploaded to Meta.
+
+## [2026-11-05] ingest | Bhajan-cut Meta reel
+Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens, no TTS) after the voiced tour was judged slow and AI-like. Logged in [[runbooks/store-submission]]. Ad-use licence of the recording is unverified.
+
+## [2026-11-05] decision | Story-reel styles
+The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].
+
+
+## [2026-11-05] ingest | screen-clipping fixes
+
+Updated readers, audio and Panchang notes for complete header titles, contained city-search width and scrollable Now Playing controls. No native execution claim; see docs/reviews/2026-11-05-screen-clipping.md.
+
+## [2026-11-06] ingest | Covered animation-to-Home handoff
+
+PR #621 retains the completed approved canvas while Home mounts, waits for native content layout and two animation frames, then fades the cover for 180ms on the native driver. Shared brand visibility suppresses automatic asks through the fade. Targets, accessibility, interruptions and errors fail open; a separate 1,200ms deadline bounds the handoff. See design.md §§2.1/64 and docs/reviews/2026-11-06-launch-home-handoff.md. Native smoothness/full acceptance remain pending.
+
+
+## [2026-11-06] ingest | PR 621 main conflict resolution
+
+Merged main 77a0e0e692eaa31a1c96d29289771551b1680af8 into the launch handoff branch, preserving both appended clipping and launch records. RULEBOOK/design changes merged without conflict; launch implementation and tests remain unchanged. Focused launch tests and final CI are recorded in the PR. Native acceptance remains pending.
+
+
+## [2026-11-05] ingest | Sanatan Parichay native integration
+
+Added [[subsystems/sanatan-parichay]] for the approved thirteen-collection learning
+journey, exact search targets, plain source credits and durable save/resume store.
+RULEBOOK §32/design §87 document the native subset of research PR #605. Draft
+PR #622 preserves implementation and artwork; device and native export gates
+remain pending. Integrated main 3eb009b9c3748d21de9a0b1a737c50b10f23f75a.
+
+## [2026-11-05] ingest | Selected devotional dohas
+
+Added the Kabir/Rahim doha integration to `wiki/subsystems/readers.md`: lazy payloads, shared flat-reader dispatch, Granth/no-deity metadata, per-verse edition provenance and append-only pool integration. Source/content/pool checks pass; native reader and exported-share acceptance remain pending and are tracked in `docs/reviews/bhakti-dohe.md`. No merge or release performed.
+
+
+## [2026-11-06] ingest | Bhakti or Suvichar only in the doha collection
+
+Recorded explicit per-verse theme/rationale metadata, the curation validator and registry-wide test gate, and updated the two listing subtitles to name both themes. No original verse or count changed. The broader 60 opening lines remain research candidates pending full-text/source verification. Native visual/size/export evidence remains pending.
+
+
+## [2026-11-06] ingest | PR 618 conflict resolution
+
+Integrated main aba14c15a329bfb565ac62f6331a81a82987f5af into the Doha branch. Preserved both documentation additions, the clipping/launch records and Sanatan Parichay scope. Main retains RULEBOOK §32/design §87; Doha guidance moves to RULEBOOK §33/design §88 with matching references. Daily Bhakti and Suvichar implementation remains unchanged. Focused scope checks pass; native acceptance remains pending.
+## [2026-11-05] ingest | Japa Infinity variation: optional persisted presentation beside Mala, one shared counter/audio/history, native marker driven only by counted chants, rollover/reset/reduced-motion/background handling, four-language provider tests and extended Japam Maestro flow. design.md §35 and RULEBOOK §3 updated. Native verification remains pending in the cloud environment.
+
+## [2026-11-06] ingest | Japa Infinity motion corrected to the approved intent: one complete figure-eight swing per tap/chant, independent of 108-bead progress. Rapid taps queue full swings; reset/background/unmount cancel them without modifying counts. Native verification remains pending.
+
+## [2026-11-06] ingest | Japa Infinity now follows the clarified tap-toggle contract: first tap starts continuous full loops, next tap pauses, later tap resumes. Motion is independent of count changes and never logs chants. Added cancellable single-animation driver tests, updated native/provider coverage, Maestro flow and §35/contract documentation. Native and full React verification pending after workspace maintenance removed dependencies.
+
+## [2026-11-06] ingest | Infinity counting connected: each completed silent loop records one japa; audio exclusively owns counts while playing, and pause suppresses both sources. Added duplicate-completion guards and provider/rollover coverage. Refined the Infinity parchment background, ambient halo and layered jyoti/trail; native verification remains pending.
+
+
+## [2026-11-06] ingest | Prepared publication-gated Bhagwan Parshuram deity, seven-verse reader/Daily Bhakti, eight Suvichar reflections and standing artwork; publication and native evidence pending.
+
+## [2026-11-06] ingest | Vrat title clipping recurrence
+
+Recorded the local 17/24 override, shared full-line catalog/listing containment, rendered-style regression matrix and separate native acceptance boundary in subsystems/panchang.md.
+
+
+## [2026-11-06] ingest | Vrat font metrics verification
+
+Exact bundled-font checks found nine Kannada titles above the original 28pt line. Raised catalog/listing containment to 1.65em (Kannada hhea 1.62em), added actual TTF-metric regressions, and removed tight category/day-note/ledger overrides. All 1,576 catalog title/deity font-bounds checks pass; native pixel verification remains pending.
+
+## [2026-11-06] ingest | Festival timing solver, bundled subject miniatures and compact Panchang export strip; verification pending.
+
+## [2026-11-06] ingest | Full mobile suites and final focused checks pass; native share/visual matrix pending. GitHub publication blocked by automatic approval review; patch handover retained.
+
+## [2026-11-06] ingest | Correct approved festival design fidelity: painted subjects and marigold/mango corners, double gold frame, divider and maroon type; export decode barriers and pinned transparent-source provenance.
+
+## [2026-11-06] ingest | Occasion date corrections
+
+Updated [[subsystems/panchang]] for exclusive Adhik Jyeshtha, Rishi Panchami, Purnima fasting and Krishna midnight/Rohini rules; regenerated dates/cache and separate verification controls.
+
+## [2026-11-06] ingest | Automatic R2 publication after relevant main merges
+
+Added the ten-collection manifest allowlist, source preflight, shared bounded S3 uploader,
+full public CDN byte verification, missing-secret skip and manual catch-up. Updated
+integrations/reading-artwork.md and the setup runbook; activation and OTA remain separate.
+Credentialed publication is pending the user's later Actions-secret setup.
+
+## [2026-11-06] ingest | JapMala Hindi label and Infinity contrast
+
+Hindi category `nameHi` is now जपमाला (tile, catalog, tour; matches the counter title). Infinity ∞ moved onto a night panel with a saffron path and bright jyoti (the old pale marker vanished on parchment); default loop 880ms (~10% slower). Updated [[subsystems/japam]]; native visual check pending.
+
+## [2026-11-06] ingest | Infinity mantra rings
+
+Added rotating side rings of the mantra's words to the Infinity night panel (whole-word Text runs, not textPath, so Indic shaping holds; ॥/• separators present in bundled fonts). Panel widens, ∞ narrows to clear them. Updated [[subsystems/japam]]; native visual/perf check pending.
+
+## [2026-11-07] ingest | Seamless Japam, animation reuse and count footer
+Updated [[subsystems/japam]] and design.md §35: approved borderless parchment, reused native graph/ring elements, non-interaction continuous animations, and removed the duplicate daily tally from both styles. Focused tests include long-running cycle structure; physical low-end profiling remains pending.
+
+## [2026-11-07] ingest | Full-mantra Infinity cadence
+Replaced the universal 880ms screen cadence with canonical phonetic-length estimates, shared silent/audio tempo, recording averages and stale-identity guards. Updated design.md §35 and the Japam integration rule; exact voice-cue alignment and device checks remain pending.
+
+## [2026-11-07] ingest | User-approved faster Infinity cadence
+Calibrated the default to Gayatri 4s, short chants of up to three words 880–1000ms, and proportional longer-mantra pacing. Recording-owned cadence and configurable tempo remain. This supersedes the earlier slower examples.
+
+## [2026-11-07] ingest | Shared karaoke reading foundation
+Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infinity. Documented configurable speed, source-script shaping, memoized native colours and the deferred whole-page स्वतः adapter. Other readers are not integrated yet.
+
+## [2026-11-07] ingest | Suvichar sender switch and wishes heading
+Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.
+
+## [2026-11-07] ingest | Japa ornamental mandala and long-text fitting
+Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
+
+## [2026-11-07] ingest | Compact Panchang occasion summary; full dated illustrated cards in Vrat. Shared yielded/cancelled timing work and independent share/detail dates preserved; native visual/export/low-end performance acceptance pending. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
+
+## [2026-11-07] ingest | Correct compact muhurat card fit: grouped headings, numeric-only clock endpoints with separate dates, measured container width and stable layout callbacks. Correct the ineffective RN namespace dimensions spy; add exact-font clock bounds and a PR-triggered native compact-fit matrix. Native/device acceptance tracked in docs/reviews/2026-11-07-compact-muhurat-fit.md.
+## [2026-11-07] ingest | Android ANR review (Play 28-day 0.67%, 1.60% on 5 Nov): expo-splash-screen's hold vetoes the activity's first draw, so a held window has no input focus and Back past 5 s ANRs; the hold had grown to fonts + hydration + particle WebView/Chromium (7 s watchdog). Android now releases the native splash at the first JS frame onto the colour-identical `LaunchCover`; font-load errors fail open. overview.md launch paragraphs, design.md §2.1/§64 and RULEBOOK brand rule synced. Open items (WebView Chromium init per cold start, pre-JS native cap, eager expo-audio player with runBlocking, Meta activate on main, widget/notification broadcast work) recorded in docs/engineering/android-anr-review-2026-11.md.
+## [2026-11-07] gap | No Play ANR stack clusters were available; F3–F7 in the ANR review are code-derived and need cluster confirmation before native changes.
+## [2026-11-07] ingest | Particle launch reveal disabled on all platforms (`BRAND_LAUNCH_REVEAL_ENABLED = false`, gate bypass path, no launch WebView) as the ANR mitigation the owner chose. Meta SDK deliberately untouched: no Play data before 19 Oct, so its 1.5.0 release (11 Oct) cannot be aligned with the onset. design.md §2.1/§64, RULEBOOK brand rule, overview.md, review doc and brand Maestro flows updated.
+## [2026-11-07] prune | Owner-directed reset: reverted the Android first-frame splash release (`LaunchCover`), the font-error fail-open and the earlier ANR review doc; only the particle-reveal kill switch remains. Earlier 2026-11-07 entries about LaunchCover/font fail-open no longer describe the code. A fresh evidence-based ANR audit follows.
+## [2026-11-07] ingest | Fresh Android ANR audit (docs/engineering/android-anr-audit-2026-11.md): first Play production build was 1.5.0 on 11 Oct, so 19 Oct is the first reportable day, not a regression onset. Ranked candidates: (1) root ReadAloudProvider probes TTS voices on every cold start → expo-speech `getVoices()` binder call in the main-thread onInit; (2) undrawn launch window during the splash hold (16 fonts/5.3 MB); (3) first-WebView Chromium init (particles disabled; YouTube on demand). No unbounded main↔JS deadlock found. Play ANR clusters needed to confirm.
+## [2026-11-07] ingest | Read-aloud voice probe moved from provider mount to first need (`ensureVoices()` via `useReaderReadAloud` after interactions + voice sheet open) — removes the launch-time Android main-thread `getVoices()` binder call (ANR audit candidate #1). audio.md gotcha, design.md §56.4, RULEBOOK §3 and the audit doc updated; "probe timing" tests in ReadAloudContext.test + readerReadAloud.test pin it.
+## [2026-11-07] ingest | expo-speech patch (patches/expo-speech+14.0.8.patch): onInit drain of queued getVoices()/speakOut() moved from Android's main thread to the serial AsyncFunction queue; activity-destroy no longer constructs an engine. Verified by stub compile + JVM thread/order harness (patched off-main and ordered; original on main); Gradle/device build pending; ships only in a new store build. Guarded by src/readAloud/__tests__/expoSpeechPatch.test.ts.
+## [2026-11-07] ingest | PR #644 CI fix: the reader voice-probe deferral used `InteractionManager.runAfterInteractions`; its immediate, scheduled under Jest fake timers in PitruPakshaShikshaScreen.test, outlived `useRealTimers()` and left Jest shard 1 spinning (epoll busy loop, idle JS) until the 30-min job timeout. Replaced with a cleared `setTimeout(ensureVoices, VOICE_PROBE_DELAY_MS=500)`; reproduced locally (main shard passes, branch hangs, timer variant passes). design.md §56.4, RULEBOOK, audio.md updated.
+
+## [2026-11-07] ingest | Cooperative Pitru/Janma solves and the precomputed-table end
+Updated [[subsystems/panchang]]: Pitru Smaran and Janma Tithi list/detail hooks now solve through `runInBackground` (longest cold block 5,975 → 22 ms in Jest); the precomputed observance table is extended to 2035 with a coverage test that fails two years ahead (out-of-table years cost ~1.5 s synchronously). Hermes device timing remains pending.
+
+## [2026-11-07] ingest | Japa shloka in the former count space
+
+Preserved the approved circular frame and Mala/footer designs; moved decorative counts inside infinity, paired Gayatri padas into two complete compact reading rows and introduced an Infinity-only gauge chip over the existing tempo stepper. Canonical cadence, count ownership and accessible/scalable complete text remain unchanged. Native visual/ANR evidence remains pending.
+
+## [2026-11-07] ingest | Foreground lane for screen-visible cooperative solves
+Native iOS Simulator run of `pitru-smaran.yaml` after #645: the detail's second stage (अगले वर्ष / पितृ पक्ष) arrived but missed 15 s while launch-time background jobs shared the 4 ms round-robin. `backgroundWork.ts` gained an opt-in `foreground` lane (12 ms slices, served first); Pitru/Janma list rows and detail stages use it, prewarms stay background. Also fixed the stale flow tap on the Vrat ledger (below the fold since #647). Updated [[subsystems/panchang]].
+
+
+## [2026-11-08] ingest | Adapt PR #564 into Sanatan Parichay
+
+Preserved 208 customs entries/305 stories, 19 published via the existing verified
+gate. Moved discovery/search under Sanatan, linked Tulasi to K6, removed the
+separate Home/More doors and retained contextual Vrat/Panchang Back stacks.
+Research metadata remains editorial; public projection preserves teaching and
+folk/regional distinctions. Updated RULEBOOK §34/design.md §87 and test/native
+journeys. Native/export/profile acceptance is recorded separately.

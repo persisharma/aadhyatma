@@ -1,0 +1,47 @@
+# Release simulator flow after _launch.yaml has completed setup.
+appId: com.prashantsharma.vedansh
+---
+- stopApp
+- launchApp
+# Particle reveal is disabled (BRAND_LAUNCH_REVEAL_ENABLED, Nov 2026 ANR review).
+- extendedWaitUntil:
+    visible:
+      id: home-wordmark-crest
+    timeout: 30000
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
+    id: brand-particle-webview
+- assertNotVisible:
+    id: brand-launch-cover
+- assertVisible:
+    id: brand-launch-content
+- takeScreenshot: e2e-shots/brand-cold-home
+- tapOn: Search verses, sections, and mantras
+- assertVisible: Search input
+- tapOn: Back
+- assertVisible:
+    id: home-wordmark-crest
+- takeScreenshot: e2e-shots/brand-home-after-back
+- repeat:
+    times: 3
+    commands:
+      - pressKey: Home
+      - launchApp:
+          stopApp: false
+      - assertNotVisible:
+          id: brand-launch-reveal
+      - assertNotVisible:
+          id: brand-resume-modal
+      - assertVisible:
+          id: home-wordmark-crest
+- takeScreenshot: e2e-shots/brand-warm-home
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: home-wordmark-crest
+    timeout: 30000
+- assertNotVisible:
+    id: brand-launch-reveal
+

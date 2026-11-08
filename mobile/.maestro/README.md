@@ -194,3 +194,17 @@ For multi-instance readers (Chalisa, Aarti, Sanskar), `LibraryCard` uses `${name
 ### Referenced Suvichar catalogue
 
 `suvichar-scripture-catalogue.yaml` opens the composer, searches a late catalogue ID, selects it, checks native attribution and verifies custom editing removes the source link. It does not send a message. Use the dedicated device and this worktree's Metro port, for example `maestro --device <device-id> test -e METRO_PORT=8097 .maestro/suvichar-scripture-catalogue.yaml`. The flow is authored and parsed; it has not yet passed native verification for this integration.
+
+
+### Explore launch sheet (fixture-dependent)
+
+`explore-sheet.yaml` covers automatic sheet → section handoff and six-hour
+suppression. On an installed QA fixture, complete onboarding/What's New/reminder
+asks and seed `@vedansh/explore-sheet-v1` before cold launch:
+`{"version":1,"enabled":true,"createdAt":1,"visited":[],"shown":[],"declined":{},"streak":0,"sleepUntil":0}`.
+Launch normally onto Home without a notification response or URL. Do not clear
+state or add production timing overrides to make the flow pass. Repeat with
+prior sections in `visited` to inspect each subject, all four languages and both
+reading sizes. This native flow has not run in the Linux workspace (no simulator
+or Maestro). React integration tests cover the controller, policy, storage and
+UI handoffs; they do not replace native layout, keyboard, gesture or VoiceOver QA.

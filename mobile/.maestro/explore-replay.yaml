@@ -1,0 +1,44 @@
+# Explicit Settings replay works even during the automatic 24-hour quiet window.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element:
+      id: settings-explore
+    direction: DOWN
+- tapOn:
+    id: settings-explore
+- assertVisible:
+    id: explore-heading
+- scrollUntilVisible:
+    element:
+      id: explore-reset-history
+    direction: DOWN
+- tapOn:
+    id: explore-reset-history
+- assertVisible: 'Reset visit history\?|देखे गए भागों का इतिहास मिटाएँ\?|જોયેલા વિભાગોનો ઇતિહાસ સાફ કરવો\?|ಭೇಟಿ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಬೇಕೇ\?'
+- tapOn: 'Cancel|रद्द करें|રદ કરો|ರದ್ದುಮಾಡಿ'
+- assertNotVisible:
+    id: explore-reset-status
+- tapOn:
+    id: explore-reset-history
+- tapOn: 'Reset history|इतिहास मिटाएँ|ઇતિહાસ સાફ કરો|ಇತಿಹಾಸ ತೆರವುಗೊಳಿಸಿ'
+- scrollUntilVisible:
+    element:
+      id: explore-reset-status
+    direction: DOWN
+- assertVisible:
+    id: explore-reset-status
+- assertVisible: '.*History reset.*|.*इतिहास मिट गया.*|.*ઇતિહાસ સાફ થયો.*|.*ಇತಿಹಾಸ ತೆರವುಗೊಂಡಿದೆ.*'
+- assertNotVisible:
+    id: explore-disable
+- tapOn:
+    id: explore-next
+- assertVisible:
+    id: explore-heading
+- tapOn:
+    id: explore-not-now
+- assertVisible:
+    id: settings-explore
+

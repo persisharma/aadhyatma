@@ -36,8 +36,9 @@ context providers (Theme, GitaLanguage, Bookmarks, UserActivity, NewContent, Rea
 JapamCounter, Routine, RoutineSheet, NotificationPreferences, Share) around a
 `NavigationContainer` → `RootNavigator` → a **5-tab bottom navigator**:
 
-The native splash stays visible until fonts plus the persisted font-size and reading-language
-preferences have hydrated. Those preferences alter Home geometry, so this gate makes the first
+The native splash is an explicit transparent placeholder on brand ivory, held through fonts and persisted font-size/language hydration and particle-canvas readiness. The canvas waits at frame zero until native splash dismissal resolves; only then does the approved particle clock start at timeline 1,000ms, cutting its initial second. The final 3,350ms frame remains unchanged, so native visible playback lasts 2,350ms. This requires a new native binary to remove the old static emblem. Branding plays only in a new process after a kill/reopen. Completion or cancellation stays in memory: background returns, inactive app-switcher returns and system interruptions never replay. The gate has no AppState replay or resume modal; a temporary handoff-only listener cancels the outgoing cover. Initial inactive cold startup, target priority and accessibility/error bypass remain.
+
+The persisted font-size and reading-language preferences hydrate before Home mounts. Those preferences alter Home geometry, so this gate makes the first
 visible Home frame stable instead of moving the launcher grid immediately after landing.
 
 1. **Home** → `HomeStackNavigator` (native-stack, 30+ reader screens: Gita, chalisas,
@@ -161,3 +162,13 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 
 > Personal identifiers (owner email, bundle IDs, EAS project id/URL) live in `mobile/app.json`
 > and `mobile/eas.json` and are intentionally **not** reproduced here — see those files directly.
+
+## Approved particle launch boundary (1 November 2026)
+
+**Disabled 7 November 2026 on all platforms** (`BRAND_LAUNCH_REVEAL_ENABLED = false` in `BrandLaunchGate.tsx`; every launch uses the gate's bypass path, no WebView). Reason (Android ANR mitigation): the reveal mounted a WebView on every cold start, and a process's first WebView initialises Chromium on Android's main thread. The description below is the contract to restore if it is re-enabled with ANR evidence.
+
+`AppReadyGate` wraps navigation/launch surfaces in `BrandLaunchGate` after language/size hydration. The native splash is released on actual canvas readiness; ordinary navigation mounts after formation under the final canvas. Native content layout and two animation frames precede a 180ms native cover fade. App interaction and automatic asks remain blocked until that cover exits; a separate 1,200ms watchdog bounds the handoff. Targets, interruptions, accessibility changes and errors fail open. The approved 3,809-particle fragment is embedded verbatim and the existing WebView is loaded on demand; no substitute font/motion is used. Targeted launches bypass it, and cancellation/error/watchdog paths fail open. `scripts/prepare-approved-brand.mjs --check` verifies the accepted source and lossless name crops; `scripts/export-approved-particle-logo.mjs` executes the same source for downloads. Shared mark decodes join `ArtworkCaptureContext` before capture. Native fidelity/performance and font-registration confirmation remain separate release checks.
+
+## Home crest restoration (2 November 2026)
+
+Home retains the previous compact 42pt row, saffron Om circles/rules and dark-ink name. It uses the approved lettering at a 28pt image height, plus the Hindi dot below श, rather than mounting the larger launch/share lockup. The companion subtitle remains localized at 14/22; system text can grow/wrap. Original launch source, export colours, crops and capture readiness are unchanged. See design.md §§5/18 and `HomeWordmark.test.tsx`.

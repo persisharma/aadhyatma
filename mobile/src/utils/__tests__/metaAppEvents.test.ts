@@ -1,3 +1,9 @@
+jest.mock('expo-tracking-transparency', () => ({
+  getTrackingPermissionsAsync: jest
+    .fn()
+    .mockResolvedValue({ status: 'granted', canAskAgain: false }),
+  requestTrackingPermissionsAsync: jest.fn(),
+}));
 const mockPlatform = { OS: 'ios' };
 const mockConfig = { extra: { metaTrackingEnabled: true } };
 const mockNativeLookup = jest.fn();
@@ -7,8 +13,13 @@ jest.mock('react-native', () => ({
   Platform: mockPlatform,
   AppState: { currentState: 'active', addEventListener: mockAddListener },
 }));
-jest.mock('expo-constants', () => ({ __esModule: true, default: { expoConfig: mockConfig } }));
-jest.mock('expo-modules-core', () => ({ requireOptionalNativeModule: mockNativeLookup }));
+jest.mock('expo-constants', () => ({
+  __esModule: true,
+  default: { expoConfig: mockConfig },
+}));
+jest.mock('expo-modules-core', () => ({
+  requireOptionalNativeModule: mockNativeLookup,
+}));
 
 beforeEach(() => {
   jest.resetModules();
@@ -34,7 +45,10 @@ test('a disabled build does not start tracking or request ATT', () => {
 
 test("an OTA manifest's disabled flag cannot suppress an enabled binary", () => {
   mockConfig.extra.metaTrackingEnabled = false;
-  mockNativeLookup.mockReturnValue({ enabled: true, activate: jest.fn().mockResolvedValue(true) });
+  mockNativeLookup.mockReturnValue({
+    enabled: true,
+    activate: jest.fn().mockResolvedValue(true),
+  });
   const { startMetaAppEvents } = require('../metaAppEvents');
   startMetaAppEvents();
   expect(mockAddListener).toHaveBeenCalledTimes(1);
@@ -53,4 +67,33 @@ test('Expo Go and older binaries without the module keep opening normally', () =
   const { startMetaAppEvents } = require('../metaAppEvents');
   expect(() => startMetaAppEvents()).not.toThrow();
   expect(mockAddListener).not.toHaveBeenCalled();
+});
+
+test('an inactive iPhone cannot finish the setup tracking hand-off before becoming active', async () => {
+  const { AppState } = require('react-native');
+  AppState.currentState = 'inactive';
+  const activate = jest.fn().mockResolvedValue(true);
+  mockNativeLookup.mockReturnValue({ enabled: true, activate });
+  const remove = jest.fn();
+  mockAddListener.mockReturnValue({ remove });
+  const start = jest.fn().mockResolvedValue(undefined);
+  jest.doMock('../metaActivationController', () => ({
+    createMetaActivationController: () => ({ start, onStateChange: jest.fn() }),
+  }));
+  const { startMetaAppEvents } = require('../metaAppEvents');
+  let finished = false;
+  const pending = startMetaAppEvents().then(() => {
+    finished = true;
+  });
+  await Promise.resolve();
+  expect(finished).toBe(false);
+  expect(start).not.toHaveBeenCalled();
+  AppState.currentState = 'active';
+  mockAddListener.mock.calls[mockAddListener.mock.calls.length - 1][1](
+    'active',
+  );
+  await pending;
+  expect(finished).toBe(true);
+  expect(start).toHaveBeenCalledTimes(1);
+  expect(remove).toHaveBeenCalled();
 });

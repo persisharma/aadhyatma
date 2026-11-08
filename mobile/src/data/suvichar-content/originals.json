@@ -1,0 +1,1049 @@
+{
+  "source": {
+    "baseText": "User-approved original reflections written for Vedansh; not a scripture collection.",
+    "referenceUrls": [],
+    "kind": "app-written-original-reflections",
+    "approvedOn": "2026-11-02",
+    "approval": "User approved the daily-life, deity-specific and humility lists and requested all thoughts above be added.",
+    "scope": "All 74 numbered thoughts plus the two distinct earlier examples; three exact repeated examples occur only once. Eight new Khatu Shyam Hare Ka Sahara reflections follow as VD-0077 through VD-0084 (84 originals total). Eight Parshuram reflections VD-0085–VD-0092 follow (92 originals total).",
+    "languagePolicy": "Hindi copy preserved from the approved conversation. English is an editorial translation; Gujarati/Kannada use the existing runtime Hindi re-scripting policy.",
+    "attribution": "Vedansh original reflections; not scripture quotations, translations or words attributed to a deity or saint.",
+    "additions": [
+      {
+        "requestedOn": "2026-11-02",
+        "themeHi": "हारे का सहारा",
+        "deity": "khatu-shyam",
+        "ids": [
+          "VD-0077",
+          "VD-0078",
+          "VD-0079",
+          "VD-0080",
+          "VD-0081",
+          "VD-0082",
+          "VD-0083",
+          "VD-0084"
+        ],
+        "authorship": "App-written in response to the user request after PR #603 was merged; not an attributed scripture quotation."
+      },
+      {
+        "requestedOn": "2026-11-06",
+        "themeHi": "भगवान परशुराम",
+        "deity": "parshuram",
+        "ids": [
+          "VD-0085",
+          "VD-0086",
+          "VD-0087",
+          "VD-0088",
+          "VD-0089",
+          "VD-0090",
+          "VD-0091",
+          "VD-0092"
+        ],
+        "authorship": "Original Vedansh reflections written for the requested Parshuram addition; never quotations attributed to the deity or a scripture."
+      }
+    ]
+  },
+  "entries": [
+    {
+      "id": "VD-0001",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "हर बात का उत्तर देना ज़रूरी नहीं। कभी मन की शांति बचाना भी ज़रूरी होता है।",
+      "en": "You need not answer everything. Sometimes protecting your peace matters too.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0002",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "जो आपके हाथ में है, उसे प्रेम से कीजिए। जो नहीं है, उसके लिए खुद को मत थकाइए।",
+      "en": "Do what is in your hands with love. Do not exhaust yourself over what is beyond them.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0003",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "धीरे चलना गलत नहीं। हर किसी की यात्रा और समय अलग होता है।",
+      "en": "There is nothing wrong with moving slowly. Everyone has their own journey and timing.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0004",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "बीते हुए कल से सीख लीजिए, उसे आज की सारी खुशी मत लेने दीजिए।",
+      "en": "Learn from yesterday without letting it take all of today's joy.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0005",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "दूसरों की खुशी देखकर मुस्कुराना भी मन को सुख देता है।",
+      "en": "Smiling at someone else's happiness brings joy to your own heart too.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0006",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "दिन भर सबके लिए समय निकालते हैं। थोड़ा समय अपने मन के लिए भी रखिए।",
+      "en": "You make time for everyone through the day. Keep a little time for your own heart too.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0007",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "किसी का दिन अच्छा बनाने के लिए बड़ी चीज़ नहीं, दो मीठे शब्द भी काफ़ी हैं।",
+      "en": "It takes no grand gesture to brighten someone's day. A few kind words can be enough.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0008",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "रिश्तों को समय दीजिए। केवल याद करने से अपनापन नहीं बना रहता।",
+      "en": "Give your relationships time. Thinking of someone alone does not keep closeness alive.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0009",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "अपनी बात सही होने पर भी कहने का ढंग कोमल रखिए।",
+      "en": "Even when you are right, say what you need to say gently.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0010",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "किसी की परेशानी दूर न कर सकें, तो उसकी बात धैर्य से सुन लीजिए।",
+      "en": "If you cannot ease someone's trouble, listen to them patiently.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0011",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "मदद ऐसी कीजिए कि सामने वाले का सम्मान भी बना रहे।",
+      "en": "Offer help in a way that preserves the other person's dignity.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0012",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "अपनों की कद्र कहकर भी जताइए। हर भावना बिना कहे समझ नहीं आती।",
+      "en": "Tell your loved ones you value them. Not every feeling can be understood without words.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0013",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "प्रार्थना में केवल माँगिए मत। जो मिला है, उसके लिए धन्यवाद भी दीजिए।",
+      "en": "Do not only ask in prayer. Give thanks for what you have received too.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0014",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "दिन की शुरुआत भगवान के स्मरण से और किसी अपने से मीठी बात करके कीजिए।",
+      "en": "Begin the day remembering God and speaking kindly to someone you love.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0015",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "ईश्वर पर भरोसा रखिए और अपने हिस्से का प्रयास करते रहिए।",
+      "en": "Keep faith in God and continue doing your part.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0016",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "पूजा के बाद की वाणी में भी वही मिठास रहे, जो प्रार्थना के शब्दों में थी।",
+      "en": "Let your words after worship carry the same kindness as your prayer.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0017",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "किसी ज़रूरतमंद की सहायता भी आज की पूजा का हिस्सा बनाइए।",
+      "en": "Make helping someone in need a part of today's worship too.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0018",
+      "family": "original",
+      "categoryHi": "जीवन और रिश्ते",
+      "hi": "रात को चिंताओं के साथ दिन की एक अच्छी बात भी याद कीजिए।",
+      "en": "At night, alongside your worries, remember one good thing from the day.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0019",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "मन में डर हो तो हनुमान जी का स्मरण कीजिए और हिम्मत से पहला कदम बढ़ाइए।",
+      "en": "When you feel afraid, remember Hanuman ji and take the first step with courage.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "hanuman",
+        "salasar-balaji"
+      ]
+    },
+    {
+      "id": "VD-0020",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "राम का नाम होंठों पर हो और उनके आदर्श हमारे व्यवहार में भी उतरें।",
+      "en": "May Ram's name be on our lips and his ideals find a place in our actions too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0021",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "मनचाहा परिणाम मिले या न मिले, अपने अच्छे कर्मों का मूल्य कम मत समझिए।",
+      "en": "Whether or not you get the result you hoped for, do not undervalue your good actions.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "krishna",
+        "radha-krishna"
+      ]
+    },
+    {
+      "id": "VD-0022",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "आज कुछ पल शांत बैठिए। महादेव का स्मरण कीजिए और अपने मन की बात सुनिए।",
+      "en": "Sit quietly for a few moments today. Remember Mahadev and listen to your heart.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "shiva",
+        "mahakaal"
+      ]
+    },
+    {
+      "id": "VD-0023",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "बाबा के सामने मन की बात कहिए। हर समय मजबूत दिखना ज़रूरी नहीं।",
+      "en": "Tell Baba what is in your heart. You do not have to appear strong all the time.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam",
+        "sanwariya-seth"
+      ]
+    },
+    {
+      "id": "VD-0024",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "प्रभु के दर्शन से मिला सुकून, आज अपने व्यवहार से किसी और तक पहुँचाइए।",
+      "en": "Share the peace you find in the Lord's darshan through the way you treat someone today.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "jagannath",
+        "tirupati-balaji"
+      ]
+    },
+    {
+      "id": "VD-0025",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "हनुमान जी से शक्ति के साथ विनम्रता भी माँगिए। समर्थ होकर किसी का सहारा बनना बहुत सुंदर है।",
+      "en": "Ask Hanuman ji for humility as well as strength. Using your strength to support someone is beautiful.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "hanuman",
+        "salasar-balaji"
+      ]
+    },
+    {
+      "id": "VD-0026",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "राम का काम करते हुए हनुमान जी ने अपना मान नहीं खोजा। कुछ अच्छे काम केवल मन की खुशी के लिए कीजिए।",
+      "en": "Hanuman ji sought no recognition while serving Ram. Do some good simply for the joy it brings your heart.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "hanuman",
+        "salasar-balaji"
+      ]
+    },
+    {
+      "id": "VD-0027",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "हनुमान जी का स्मरण कीजिए। हिम्मत हमेशा बड़ी छलाँग नहीं होती, कभी कठिन दिन में उठाया एक छोटा कदम भी होती है।",
+      "en": "Remember Hanuman ji. Courage is not always a great leap; sometimes it is one small step on a difficult day.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "hanuman",
+        "salasar-balaji"
+      ]
+    },
+    {
+      "id": "VD-0028",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "राम का नाम लेना मन को सुकून देता है। किसी से किया वादा निभाना उस भक्ति को व्यवहार में उतारता है।",
+      "en": "Taking Ram's name brings peace to the heart. Keeping a promise puts that devotion into practice.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0029",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "आज घर में किसी की बात पूरी सुनिए। राम दरबार के सामने माँगी गई शांति की शुरुआत अपने व्यवहार से भी कीजिए।",
+      "en": "Listen fully to someone at home today. Let the peace you seek before Ram Darbar begin in your own conduct too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0030",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "सही रास्ता चुनना हमेशा आसान नहीं होता। श्रीराम का स्मरण कीजिए और अपने मूल्यों के साथ खड़े रहिए।",
+      "en": "Choosing the right path is not always easy. Remember Shri Ram and stand by your values.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0031",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "कृष्ण का स्मरण कीजिए और अपना कर्म प्रेम से कीजिए। परिणाम की चिंता में आज का पूरा दिन मत खो दीजिए।",
+      "en": "Remember Krishna and do your work with love. Do not lose all of today worrying about the outcome.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "krishna",
+        "radha-krishna"
+      ]
+    },
+    {
+      "id": "VD-0032",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "जीवन में जिम्मेदारियाँ भी रहें और बाँसुरी जैसी थोड़ी मिठास भी। अपनों के साथ हँसने का समय निकालिए।",
+      "en": "Make room in life for responsibilities and a little flute-like sweetness too. Take time to laugh with loved ones.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "krishna",
+        "radha-krishna"
+      ]
+    },
+    {
+      "id": "VD-0033",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "कृष्ण और सुदामा का स्नेह याद रखिए। मिलने आए अपने की स्थिति नहीं, उसका मन देखिए।",
+      "en": "Remember the affection between Krishna and Sudama. Welcome a loved one's heart, without judging their circumstances.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "krishna",
+        "radha-krishna"
+      ]
+    },
+    {
+      "id": "VD-0034",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "महादेव का सादा स्वरूप याद दिलाता है—सुकून के लिए जीवन में हर चीज़ का होना ज़रूरी नहीं।",
+      "en": "Mahadev's simple form reminds us that peace does not require having everything in life.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "shiva",
+        "mahakaal"
+      ]
+    },
+    {
+      "id": "VD-0035",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "शिव के सामने कुछ पल मौन बैठिए। हर समय कुछ माँगना नहीं, कभी अपने मन को सुनना भी प्रार्थना है।",
+      "en": "Sit in silence before Shiva for a few moments. Prayer need not always ask; sometimes it means listening to your heart.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "shiva",
+        "mahakaal"
+      ]
+    },
+    {
+      "id": "VD-0036",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "महादेव को जल चढ़ाते समय मन में एक संकल्प भी रखिए—आज क्रोध आए तो बोलने से पहले थोड़ा ठहरूँगा।",
+      "en": "While offering water to Mahadev, make a small resolve: if anger comes today, I will pause before speaking.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "shiva",
+        "mahakaal"
+      ]
+    },
+    {
+      "id": "VD-0037",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "श्याम के सामने अपनी थकान भी रख दीजिए। भक्त होने का अर्थ हर समय मुस्कुराते रहना नहीं है।",
+      "en": "Bring your weariness before Shyam too. Being a devotee does not mean you must always smile.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0038",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "बाबा को अपना सहारा कहते हैं, तो किसी थके हुए अपने का सहारा भी बनिए।",
+      "en": "If you call Baba your support, offer support to a tired loved one too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0039",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "श्याम का नाम लेकर आज फिर कोशिश कीजिए। पिछली हार आपके अगले प्रयास का मूल्य तय नहीं करती।",
+      "en": "Take Shyam's name and try again today. A past defeat does not determine the worth of your next effort.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0040",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "सांवरिया सेठ का धन्यवाद केवल मिलने पर नहीं, जो पहले से मिला है उसे पहचानकर भी कीजिए।",
+      "en": "Thank Sanwariya Seth not only when something arrives, but also by noticing what you already have.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "sanwariya-seth"
+      ]
+    },
+    {
+      "id": "VD-0041",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "सेठ के दरबार में मन की बात कहिए। प्रार्थना के लिए सजे हुए शब्दों से अधिक सच्चा भाव चाहिए।",
+      "en": "Speak your heart in Seth's darbar. Prayer needs sincerity more than polished words.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "sanwariya-seth"
+      ]
+    },
+    {
+      "id": "VD-0042",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "सांवरिया के नाम पर आज कोई छोटी भलाई कीजिए। देने की खुशी केवल धन देने से नहीं मिलती।",
+      "en": "Do a small kindness in Sanwariya's name today. The joy of giving is not limited to giving money.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "sanwariya-seth"
+      ]
+    },
+    {
+      "id": "VD-0043",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "जगन्नाथ के रथ की तरह जीवन भी साथ से आगे बढ़ता है। हर जिम्मेदारी अकेले उठाना ज़रूरी नहीं।",
+      "en": "Like Jagannath's chariot, life moves forward with shared effort. You need not carry every responsibility alone.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "jagannath"
+      ]
+    },
+    {
+      "id": "VD-0044",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "जगन्नाथ का स्मरण करते हुए आज अपने अपनत्व का दायरा थोड़ा बढ़ाइए। किसी अकेले व्यक्ति का हाल पूछिए।",
+      "en": "Remember Jagannath and widen your circle of care a little today. Ask someone who is lonely how they are.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "jagannath"
+      ]
+    },
+    {
+      "id": "VD-0045",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "प्रभु के सामने हाथ जोड़ते हैं, तो लोगों के बीच मन भी खुला रखिए। अपनापन भेद देखने से नहीं बढ़ता।",
+      "en": "As you fold your hands before the Lord, keep your heart open among people too. Belonging does not grow through division.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "jagannath"
+      ]
+    },
+    {
+      "id": "VD-0046",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "बालाजी के दर्शन की इच्छा के साथ आज किसी अपने को समय देने की इच्छा भी रखिए।",
+      "en": "Alongside your wish for Balaji's darshan, make room today for a wish to spend time with someone you love.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "tirupati-balaji"
+      ]
+    },
+    {
+      "id": "VD-0047",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "बालाजी के चरणों में सिर झुकाते समय अपनी उपलब्धियों का गर्व भी थोड़ा हल्का कर दीजिए।",
+      "en": "As you bow at Balaji's feet, loosen your pride in your achievements a little too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "tirupati-balaji"
+      ]
+    },
+    {
+      "id": "VD-0048",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "प्रभु को अर्पित करने के लिए फूल चुनते हैं। आज अपने शब्द भी उतने ही ध्यान से चुनिए।",
+      "en": "You choose flowers carefully to offer the Lord. Choose your words with the same care today.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "tirupati-balaji"
+      ]
+    },
+    {
+      "id": "VD-0049",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "गणेश जी का नाम लेकर शुरुआत कीजिए। सब कुछ सीख लेने के बाद ही पहला कदम उठाना ज़रूरी नहीं।",
+      "en": "Take Ganesh ji's name and begin. You need not learn everything before taking the first step.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "ganesha"
+      ]
+    },
+    {
+      "id": "VD-0050",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "गणपति से बुद्धि माँगते हैं, तो आज किसी की सलाह सुनने का धैर्य भी रखिए।",
+      "en": "As you ask Ganapati for wisdom, have the patience to listen to someone's advice today too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "ganesha"
+      ]
+    },
+    {
+      "id": "VD-0051",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "हर बाधा एक दिन में नहीं हटती। गणेश जी का स्मरण कीजिए और आज जितना संभव हो, उतना आगे बढ़िए।",
+      "en": "Not every obstacle clears in a day. Remember Ganesh ji and move forward as much as you can today.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "ganesha"
+      ]
+    },
+    {
+      "id": "VD-0052",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "माँ से शक्ति माँगिए—अपनों का साथ देने की भी और ज़रूरत पड़ने पर अपनी बात कहने की भी।",
+      "en": "Ask Maa for strength to support loved ones and to speak up for yourself when you need to.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "durga"
+      ]
+    },
+    {
+      "id": "VD-0053",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "माँ का साहसी रूप याद रखिए। विनम्र रहने के साथ अपने सम्मान की रक्षा भी कीजिए।",
+      "en": "Remember Maa's courageous form. Stay humble while protecting your dignity too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "durga"
+      ]
+    },
+    {
+      "id": "VD-0054",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "माँ के चरणों में सबकी चिंता रखते हैं। आज अपनी थकान और अपनी ज़रूरतों के लिए भी प्रार्थना कीजिए।",
+      "en": "You bring everyone's worries to Maa's feet. Pray for your own weariness and needs today too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "durga"
+      ]
+    },
+    {
+      "id": "VD-0055",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "हनुमान जी से बल माँगिए, पर साथ में वह विनम्रता भी—जो बड़ा काम करके भी उसका अभिमान न करे।",
+      "en": "Ask Hanuman ji for strength and also the humility to do great work without becoming proud of it.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "hanuman",
+        "salasar-balaji"
+      ]
+    },
+    {
+      "id": "VD-0056",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "सेवा करते समय “मैंने किया” थोड़ा कम कीजिए। हनुमान जी का स्मरण कीजिए और किसी के काम आने का अवसर मिलने पर धन्यवाद दीजिए।",
+      "en": "Say 'I did it' a little less while serving. Remember Hanuman ji and give thanks for the chance to be of help.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "hanuman",
+        "salasar-balaji"
+      ]
+    },
+    {
+      "id": "VD-0057",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "राम के सामने सिर झुकाते हैं, तो घर में अपनी गलती मानने से भी मत हिचकिए।",
+      "en": "As you bow before Ram, do not hesitate to admit a mistake at home too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0058",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "राम का नाम वाणी में हो, तो व्यवहार में भी आदर रखिए। अपने से छोटे व्यक्ति का सम्मान करने से आपका मान कम नहीं होता।",
+      "en": "If Ram's name is in your words, let respect be in your conduct too. Respecting someone younger does not lessen your dignity.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0059",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "कृष्ण का सारथी रूप याद रखिए। किसी को आगे बढ़ाने के लिए पीछे बैठना छोटा होना नहीं है।",
+      "en": "Remember Krishna as a charioteer. Taking a supporting place to help someone move forward does not make you small.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "krishna",
+        "radha-krishna"
+      ]
+    },
+    {
+      "id": "VD-0060",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "कृष्ण और सुदामा का प्रेम याद कीजिए। आपकी समृद्धि अपनों के बीच दूरी न बन जाए।",
+      "en": "Remember the love between Krishna and Sudama. Do not let your prosperity create distance from loved ones.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "krishna",
+        "radha-krishna"
+      ]
+    },
+    {
+      "id": "VD-0061",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "महादेव का सादा स्वरूप याद रखिए। अपनी पहचान दिखाने के लिए हर बार वैभव दिखाना ज़रूरी नहीं।",
+      "en": "Remember Mahadev's simple form. You need not display wealth every time to show who you are.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "shiva",
+        "mahakaal"
+      ]
+    },
+    {
+      "id": "VD-0062",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "शिव के सामने “मैं” को थोड़ा शांत कीजिए। हर बात में अपनी श्रेष्ठता सिद्ध करने से मन को विश्राम नहीं मिलता।",
+      "en": "Quiet the 'I' a little before Shiva. Trying to prove your superiority in everything leaves the mind no rest.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "shiva",
+        "mahakaal"
+      ]
+    },
+    {
+      "id": "VD-0063",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "बाबा से सहारा माँगते हैं, तो सहारे की ज़रूरत वाले किसी व्यक्ति को छोटा मत समझिए।",
+      "en": "As you ask Baba for support, do not look down on someone who needs support too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0064",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "श्याम के चरणों में चिंता के साथ अपना अभिमान भी रख दीजिए। हर बात अपने मन की होना ज़रूरी नहीं।",
+      "en": "Leave your pride along with your worries at Shyam's feet. Not everything needs to go your way.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0065",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "सांवरिया सेठ ने जो दिया, उसका धन्यवाद कीजिए। उसे दूसरों से बड़ा दिखने का कारण मत बनाइए।",
+      "en": "Give thanks for what Sanwariya Seth has given. Do not use it to appear greater than others.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "sanwariya-seth"
+      ]
+    },
+    {
+      "id": "VD-0066",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "सेठ के दरबार से लौटें, तो व्यवहार में थोड़ी और नम्रता लाएँ। धन की सुंदरता किसी के काम आने में भी है।",
+      "en": "Return from Seth's darbar with a little more humility in your conduct. Wealth is beautiful when it helps someone too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "sanwariya-seth"
+      ]
+    },
+    {
+      "id": "VD-0067",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "जगन्नाथ के रथ के सामने याद रखिए—जीवन की यात्रा में कोई अकेला सब कुछ नहीं खींचता। साथ देने वालों का आभार मानिए।",
+      "en": "Before Jagannath's chariot, remember that no one carries life's whole journey alone. Thank those who stand with you.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "jagannath"
+      ]
+    },
+    {
+      "id": "VD-0068",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "जगन्नाथ को प्रणाम करते हैं, तो उनके भक्तों में ऊँच-नीच मत खोजिए। आदर देने से आपका सम्मान घटता नहीं।",
+      "en": "As you bow to Jagannath, do not rank his devotees as high or low. Giving respect does not diminish your own dignity.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "jagannath"
+      ]
+    },
+    {
+      "id": "VD-0069",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "बालाजी के चरणों में अपनी सफलता का धन्यवाद रखिए। उसमें मिले सहयोग और अवसरों को भी याद कीजिए।",
+      "en": "Give thanks for your success at Balaji's feet. Remember the help and opportunities that contributed to it too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "tirupati-balaji"
+      ]
+    },
+    {
+      "id": "VD-0070",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "प्रभु के सामने झुका हुआ सिर सुंदर है। वही विनम्रता तब भी रखिए, जब कोई आपकी बात से सहमत न हो।",
+      "en": "A bowed head before the Lord is beautiful. Keep that humility when someone disagrees with you too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "tirupati-balaji"
+      ]
+    },
+    {
+      "id": "VD-0071",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "गणेश जी से सद्बुद्धि माँगिए—और यह समझ भी कि सही बात किसी छोटे से भी सीख सकते हैं।",
+      "en": "Ask Ganesh ji for wisdom, including the understanding that you can learn something right from someone younger too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "ganesha"
+      ]
+    },
+    {
+      "id": "VD-0072",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "गणपति का स्मरण करके आज एक गलती सहजता से मान लीजिए। “मुझसे भूल हुई” कहने से आपका सम्मान कम नहीं होता।",
+      "en": "Remember Ganapati and readily admit a mistake today. Saying 'I was wrong' does not lessen your dignity.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "ganesha"
+      ]
+    },
+    {
+      "id": "VD-0073",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "माँ से शक्ति माँगिए, किसी पर अपना दबदबा दिखाने के लिए नहीं—किसी निर्बल के साथ खड़े होने के लिए।",
+      "en": "Ask Maa for strength to stand beside someone vulnerable, rather than to dominate someone.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "durga"
+      ]
+    },
+    {
+      "id": "VD-0074",
+      "family": "original",
+      "categoryHi": "अहंकार और विनम्रता",
+      "hi": "माँ के चरणों में अभिमान छोड़िए, अपना आत्मसम्मान नहीं। विनम्र रहकर भी अपनी मर्यादा रखी जा सकती है।",
+      "en": "Leave pride at Maa's feet, while keeping your self-respect. You can be humble and still uphold your boundaries.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "durga"
+      ]
+    },
+    {
+      "id": "VD-0075",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "प्रार्थना में सिर्फ माँगिए मत, जो मिला है उसके लिए धन्यवाद भी दीजिए।",
+      "en": "Do not only ask in prayer; give thanks for what you have received too.",
+      "sourceId": "vedansh-original",
+      "deities": []
+    },
+    {
+      "id": "VD-0076",
+      "family": "original",
+      "categoryHi": "भक्ति और जीवन",
+      "hi": "राम का नाम लीजिए और अपने हिस्से का प्रयास कीजिए। अगला कदम वहीं से मिलेगा।",
+      "en": "Take Ram's name and do your part. That is where you can find your next step.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "rama",
+        "ram-darbar"
+      ]
+    },
+    {
+      "id": "VD-0077",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "हारे का सहारा बाबा श्याम हैं। एक हार को अपने पूरे जीवन की पहचान मत बनने दीजिए।",
+      "en": "Baba Shyam is the support of the defeated. Do not let one setback define your whole life.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0078",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "जब मन कहे “अब मुझसे नहीं होगा”, श्याम का नाम लेकर थोड़ा ठहरिए। फिर जितना हो सके, उतना आगे बढ़िए।",
+      "en": "When your heart says, “I cannot go on,” take Shyam’s name and pause. Then move forward as much as you can.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0079",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "बाबा के सामने अपनी हार कहने में संकोच कैसा? प्रार्थना में जीत की कहानी सुनाना ज़रूरी नहीं।",
+      "en": "Why hesitate to tell Baba about a defeat? You do not need a story of success to offer a prayer.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0080",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "श्याम से हिम्मत माँगिए, हर बार जीत नहीं। कभी हार के बाद फिर उठना भी बड़ी जीत होती है।",
+      "en": "Ask Shyam for courage, rather than a win every time. Sometimes rising after a defeat is a great victory too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0081",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "हारे का सहारा कहते हैं जिन्हें, उनके नाम पर किसी निराश मन का सहारा भी बनिए।",
+      "en": "In the name of the one you call the support of the defeated, offer support to someone who feels discouraged too.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0082",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "श्याम के दरबार में मन हल्का कीजिए। एक कठिन दिन आपके सारे अच्छे दिनों को मिटा नहीं देता।",
+      "en": "Lighten your heart in Shyam’s darbar. One difficult day does not erase all your good days.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0083",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "बाबा का नाम लेकर मदद माँग लीजिए। हर मुश्किल अकेले सहना साहस की शर्त नहीं है।",
+      "en": "Take Baba’s name and ask for help. Courage does not require facing every difficulty alone.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0084",
+      "family": "original",
+      "categoryHi": "हारे का सहारा",
+      "hi": "श्याम पर भरोसा रखिए और अपने प्रयास का सम्मान कीजिए। देर लगने से आपकी मेहनत व्यर्थ नहीं हो जाती।",
+      "en": "Keep faith in Shyam and respect your own effort. Taking longer does not make your hard work worthless.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "khatu-shyam"
+      ]
+    },
+    {
+      "id": "VD-0085",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम का स्मरण करें। शक्ति के साथ संयम और ज्ञान के साथ विनम्रता रखें।",
+      "en": "Remember Bhagwan Parshuram. Let restraint accompany strength and humility accompany knowledge.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0086",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी की भक्ति में अहंकार छोड़िए। सच्चा बल किसी निर्बल का सहारा बनने में है।",
+      "en": "In devotion to Parshuram ji, let go of pride. True strength helps someone who needs support.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0087",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम से प्रेरणा लें। अन्याय के सामने साहस और अपने क्रोध पर संयम रखें।",
+      "en": "Draw inspiration from Bhagwan Parshuram: courage before injustice, restraint over your anger.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0088",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी का नाम लें और आज अपने कर्म में ईमानदारी, वाणी में मर्यादा रखें।",
+      "en": "Remember Parshuram ji. Bring honesty to your actions and dignity to your words today.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0089",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम की भक्ति मन को दृढ़ करे। कठिन समय में भी सही कर्म का साथ न छोड़ें।",
+      "en": "May devotion to Bhagwan Parshuram strengthen your resolve. Keep doing what is right in difficult times.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0090",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी का स्मरण करके दिन शुरू करें। सीखने का भाव रखें और अभिमान को दूर रखें।",
+      "en": "Begin the day remembering Parshuram ji. Remain willing to learn and leave pride behind.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0091",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "भगवान परशुराम की कृपा से मन में धैर्य रहे और सामर्थ्य दूसरों के हित में लगे।",
+      "en": "May Bhagwan Parshuram bless you with patience and the will to use your abilities for others.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    },
+    {
+      "id": "VD-0092",
+      "family": "original",
+      "categoryHi": "भगवान परशुराम",
+      "hi": "परशुराम जी की भक्ति केवल शब्दों में नहीं। अपने व्यवहार में सत्य, संयम और करुणा रखें।",
+      "en": "Let devotion to Parshuram ji guide your conduct through truth, restraint, and compassion.",
+      "sourceId": "vedansh-original",
+      "deities": [
+        "parshuram"
+      ]
+    }
+  ]
+}

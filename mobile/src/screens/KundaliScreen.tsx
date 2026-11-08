@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -25,7 +26,9 @@ import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
-import NorthIndianChart from '@/components/NorthIndianChart';
+import { KundaliExplorer } from '@/components/KundaliLearning';
+import KundaliArtwork from '@/components/KundaliArtwork';
+import { useFontScale } from '@/contexts/FontScaleContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
@@ -40,11 +43,11 @@ import {
   RASHI_NAMES_EN,
   RASHI_NAMES_HI,
   RASHI_NAMES_WESTERN,
+  type Graha,
   type KundaliChart,
   type KundaliResultTab,
 } from '@/panchang/kundali';
 import { CITIES, cityMatchesQuery, getCityById, type City } from '@/panchang/locations';
-import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from '@/panchang/names';
 import {
   MAX_PEOPLE,
   useKundali,
@@ -75,12 +78,6 @@ const EMPTY_PROFILE: BirthProfile = {
 
 const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
 const DEFAULT_BIRTH_TIME = '06:00';
-
-function formatDegrees(value: number): string {
-  const degrees = Math.floor(value);
-  const minutes = Math.floor((value - degrees) * 60);
-  return `${degrees}° ${String(minutes).padStart(2, '0')}′`;
-}
 
 function formatPeriodDate(date: Date): string {
   return new Intl.DateTimeFormat('en-IN', {
@@ -463,7 +460,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 onOpenJapa={openPractice}
                 onManageDetails={() => setEditing(true)}
                 onOpenReport={() => navigation.navigate('KundaliReport')}
-                onOpenGrahaReference={() => navigation.navigate('GrahaReference')}
+                onOpenGrahaReference={(focusGraha) => navigation.navigate('GrahaReference', focusGraha ? { focusGraha } : undefined)}
                 colors={colors}
                 typography={typography}
                 radii={radii}
@@ -853,12 +850,25 @@ function KundaliResult({
   onOpenJapa: (sourceId: string) => void;
   onManageDetails: () => void;
   onOpenReport: () => void;
-  onOpenGrahaReference: () => void;
+  onOpenGrahaReference: (graha?: Graha) => void;
   colors: any;
   typography: any;
   radii: any;
   elevation: any;
 }) {
+  const { factor } = useFontScale();
+  const { width, fontScale } = useWindowDimensions();
+  const compact = width < 360 || factor > 1 || fontScale > 1.2;
+  const resultStyles = useMemo(() => Object.fromEntries(Object.entries(styles).map(([key, value]) => {
+    const item: Record<string, unknown> = { ...StyleSheet.flatten(value) };
+    if ('fontSize' in item && typeof item.fontSize === 'number') item.fontSize *= factor;
+    if ('lineHeight' in item && typeof item.lineHeight === 'number') item.lineHeight *= factor;
+    if ('fontFamily' in item && lang !== 'en') {
+      item.fontFamily = scriptBodyFont(lang, fontFamilies.devanagari);
+      if ('letterSpacing' in item) item.letterSpacing = 0;
+    }
+    return [key, item];
+  })) as typeof styles, [factor, lang]);
   const city = getCityById(profile.cityId)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
@@ -879,39 +889,40 @@ function KundaliResult({
     <>
       <View
         style={[
-          styles.resultHeader,
+          resultStyles.resultHeader,
+          compact && { flexDirection: 'column', alignItems: 'stretch' },
           { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
           elevation.card,
         ]}
       >
-        <View style={{ flex: 1 }}>
+        <View style={compact ? undefined : { flex: 1 }}>
           <Text
             accessibilityLabel="Kundali result"
             style={{
               color: colors.ink,
               fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 20,
+              fontSize: 20 * factor,
             }}
           >
             {profile.name || contentByLang(lang, 'जन्म कुंडली', 'Birth Kundali')}
           </Text>
-          <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
+          <Text style={[resultStyles.caption, { color: colors.inkMuted, marginTop: 4 }]}>
             {formatBirthDate(profile.date)} · {formatBirthTime(profile.time)} ·{' '}
             {contentByLang(lang, city.nameHi, city.nameEn)}
           </Text>
         </View>
-        <View style={[styles.lagnaPill, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
-          <Text style={[styles.lagnaLabel, { color: colors.saffronDeep }]}>
+        <View style={[resultStyles.lagnaPill, compact && { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, { backgroundColor: colors.saffronTint, borderRadius: radii.pill }]}>
+          <Text style={[resultStyles.lagnaLabel, { color: colors.saffronDeep }]}>
             {contentByLang(lang, 'लग्न', 'Lagna')}
           </Text>
-          <Text style={[styles.lagnaValue, { color: colors.ink }]}>
+          <Text style={[resultStyles.lagnaValue, { color: colors.ink }]}>
             {contentByLang(
               lang,
               RASHI_NAMES_HI[chart.lagnaRashiIndex],
               RASHI_NAMES_EN[chart.lagnaRashiIndex]
             )}
           </Text>
-          <Text style={[styles.lagnaTranslation, { color: colors.inkMuted }]}>
+          <Text style={[resultStyles.lagnaTranslation, { color: colors.inkMuted }]}>
             {lang === 'en'
               ? RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]
               : RASHI_NAMES_EN[chart.lagnaRashiIndex]}
@@ -922,8 +933,9 @@ function KundaliResult({
       <View
         accessibilityRole="tablist"
         style={[
-          styles.resultTabs,
-          { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.pill },
+          resultStyles.resultTabs,
+          compact && { flexWrap: 'wrap', gap: 4 },
+          { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: compact ? radii.lg : radii.pill },
         ]}
       >
         {RESULT_TABS.map((tab) => {
@@ -937,11 +949,12 @@ function KundaliResult({
               accessibilityState={{ selected }}
               accessibilityLabel={`${tab.en} tab`}
               style={[
-                styles.resultTab,
+                resultStyles.resultTab,
+                compact && { flexBasis: '48%', flexGrow: 1, flexShrink: 0 },
                 selected && { backgroundColor: colors.saffronTint, borderRadius: radii.pill },
               ]}
             >
-              <Text style={[styles.resultTabText, { color: selected ? colors.saffronDeep : colors.inkMuted }]}>
+              <Text style={[resultStyles.resultTabText, { color: selected ? colors.saffronDeep : colors.inkMuted }]}>
                 {contentByLang(lang, tab.hi, tab.en)}
               </Text>
             </Pressable>
@@ -961,7 +974,7 @@ function KundaliResult({
             accessibilityRole="button"
             accessibilityLabel="Open full Kundali reading"
             style={({ pressed }) => [
-              styles.reportCta,
+              resultStyles.reportCta,
               {
                 borderColor: colors.cardActiveBorder,
                 backgroundColor: colors.cardActiveFrom,
@@ -975,7 +988,7 @@ function KundaliResult({
                 style={{
                   color: colors.ink,
                   fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                  fontSize: 15,
+                  fontSize: 15 * factor,
                 }}
               >
                 {contentByLang(lang, 'पूर्ण कुंडली विवेचन', 'Full chart reading')}
@@ -984,8 +997,8 @@ function KundaliResult({
                 style={{
                   color: colors.inkMuted,
                   fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 11,
-                  lineHeight: 16,
+                  fontSize: 11 * factor,
+                  lineHeight: 16 * factor,
                   marginTop: 3,
                 }}
               >
@@ -996,121 +1009,20 @@ function KundaliResult({
                 )}
               </Text>
             </View>
-            <Text style={{ color: colors.saffronDeep, fontSize: 20 }}>›</Text>
+            <Text style={{ color: colors.saffronDeep, fontSize: 20 * factor }}>›</Text>
           </Pressable>
         </View>
       )}
-      {activeTab === 'chart' && (
-        <View>
-          <SectionIntro
-            hi="उत्तर भारतीय कुंडली"
-            en="North Indian chart"
-            bodyHi="भाव स्थिर हैं; प्रथम भाव ऊपर है। छोटी संख्या उस भाव की राशि दिखाती है।"
-            bodyEn="Houses stay fixed, with the first house at the top. The small number identifies its rashi."
-            lang={lang}
-            colors={colors}
-            typography={typography}
-          />
-          <View
-            style={[
-              styles.chartCard,
-              {
-                backgroundColor: colors.parchmentSoft,
-                borderColor: colors.divider,
-                borderRadius: radii.lg,
-              },
-            ]}
-          >
-            <NorthIndianChart chart={chart} />
-            <View
-              style={[
-                styles.chartNote,
-                { backgroundColor: colors.saffronTint, borderRadius: radii.md },
-              ]}
-            >
-              <Text
-                style={{
-                  color: colors.inkSoft,
-                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                  fontSize: 12,
-                  lineHeight: 18,
-                  textAlign: 'center',
-                }}
-              >
-                {contentByLang(
-                  lang,
-                  `प्रथम भाव उभारा गया है: जन्म के समय ${RASHI_NAMES_HI[chart.lagnaRashiIndex]} राशि उदित थी।`,
-                  `House 1 is highlighted: ${RASHI_NAMES_EN[chart.lagnaRashiIndex]} · ${RASHI_NAMES_WESTERN[chart.lagnaRashiIndex]} was rising at birth.`
-                )}
-              </Text>
-            </View>
-          </View>
-        </View>
-      )}
-      {activeTab === 'grahas' && (
-        <View>
-          <SectionIntro
-            hi="ग्रह स्थिति"
-            en="Graha positions"
-            bodyHi="राशि, अंश, नक्षत्र और भाव—एक ही गणना के अलग संकेत।"
-            bodyEn="Rashi, degrees, nakshatra, and house are different views of the same calculation."
-            lang={lang}
-            colors={colors}
-            typography={typography}
-          />
-          <View style={[styles.table, { borderColor: colors.divider, borderRadius: radii.lg }]}>
-            {chart.grahas.map((position, index) => (
-              <View
-                key={position.graha}
-                style={[
-                  styles.tableRow,
-                  { borderBottomColor: index < chart.grahas.length - 1 ? colors.divider : 'transparent' },
-                ]}
-              >
-                <View style={{ flex: 1.05 }}>
-                  <Text style={[styles.tablePrimary, { color: colors.ink }]}>
-                    {contentByLang(lang, GRAHA_NAMES_HI[position.graha], GRAHA_NAMES_EN[position.graha])}
-                    {position.retrograde ? ' ℞' : ''}
-                  </Text>
-                  <Text style={[styles.caption, { color: colors.inkMuted }]}>
-                    {contentByLang(lang, `भाव ${position.house}`, `House ${position.house}`)}
-                  </Text>
-                </View>
-                <View style={{ flex: 1.25, alignItems: 'flex-end' }}>
-                  <Text style={[styles.tablePrimary, { color: colors.ink }]}>
-                    {contentByLang(
-                      lang,
-                      RASHI_NAMES_HI[position.rashiIndex],
-                      RASHI_NAMES_EN[position.rashiIndex]
-                    )}
-                    <Text style={[styles.tableTranslation, { color: colors.inkMuted }]}>
-                      {' '}· {lang === 'en'
-                        ? RASHI_NAMES_WESTERN[position.rashiIndex]
-                        : RASHI_NAMES_EN[position.rashiIndex]}
-                    </Text>
-                    {' '}
-                    {formatDegrees(position.degreeInRashi)}
-                  </Text>
-                  <Text style={[styles.caption, { color: colors.inkMuted }]}>
-                    {contentByLang(
-                      lang,
-                      `${NAKSHATRA_NAMES_HI[position.nakshatraIndex]} · पद ${position.pada}`,
-                      `${NAKSHATRA_NAMES_EN[position.nakshatraIndex]} · Pada ${position.pada}`
-                    )}
-                  </Text>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
+      {(activeTab === 'chart' || activeTab === 'grahas') && (
+        <KundaliExplorer key={activeTab} chart={chart} mode={activeTab} onReference={onOpenGrahaReference} />
       )}
       {activeTab === 'dasha' && (
         <View>
           <SectionIntro
             hi="विम्शोत्तरी दशा"
             en="Vimshottari Dasha"
-            bodyHi="चन्द्र नक्षत्र से निकली ग्रह-अवधियाँ। ये समय पर चिंतन का पारम्परिक ढाँचा हैं, घटना की गारंटी नहीं।"
-            bodyEn="Planetary periods derived from the Moon's nakshatra. They are a traditional timing lens, not an event guarantee."
+            bodyHi="चन्द्र नक्षत्र से गणना की गई ग्रह-अवधियाँ। वर्तमान अवधि, उसकी प्रगति और आगे का क्रम देखें।"
+            bodyEn="Planetary periods calculated from the Moon’s nakshatra. Explore the current period, its progress, and the timeline ahead."
             lang={lang}
             colors={colors}
             typography={typography}
@@ -1129,7 +1041,7 @@ function KundaliResult({
                 .filter(Boolean)
                 .join(', ')}
               style={[
-                styles.currentDasha,
+                resultStyles.currentDasha,
                 {
                   backgroundColor: colors.goldTint,
                   borderColor: colors.cardActiveBorder,
@@ -1137,10 +1049,14 @@ function KundaliResult({
                 },
               ]}
             >
-              <Text style={[styles.eyebrowText, { color: colors.saffronDeep }]}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                <KundaliArtwork name={currentDasha.maha.lord} size={72} />
+                {currentDasha.antar && <KundaliArtwork name={currentDasha.antar.lord} size={48} />}
+              </View>
+              <Text style={[resultStyles.eyebrowText, { color: colors.saffronDeep }]}>
                 {contentByLang(lang, 'वर्तमान अवधि', 'CURRENT PERIOD')}
               </Text>
-              <Text style={[styles.currentDashaTitle, { color: colors.ink }]}>
+              <Text style={[resultStyles.currentDashaTitle, { color: colors.ink }]}>
                 {contentByLang(
                   lang,
                   GRAHA_NAMES_HI[currentDasha.maha.lord],
@@ -1168,7 +1084,7 @@ function KundaliResult({
                 );
                 return (
                   <View key={window.key} style={{ marginTop: window.key === 'maha' ? 4 : 10 }}>
-                    <Text style={[styles.caption, { color: colors.inkMuted }]}>
+                    <Text style={[resultStyles.caption, { color: colors.inkMuted }]}>
                       {contentByLang(lang, window.labelHi, window.labelEn)}{' '}
                       {formatPeriodDate(window.period.start)} — {formatPeriodDate(window.period.end)}
                     </Text>
@@ -1181,13 +1097,13 @@ function KundaliResult({
                         now: Math.round(progress * 100),
                       }}
                       style={[
-                        styles.progressTrack,
+                        resultStyles.progressTrack,
                         { backgroundColor: colors.divider, borderRadius: radii.pill },
                       ]}
                     >
                       <View
                         style={[
-                          styles.progressFill,
+                          resultStyles.progressFill,
                           {
                             width: `${progress * 100}%`,
                             backgroundColor: colors.saffron,
@@ -1196,25 +1112,25 @@ function KundaliResult({
                         ]}
                       />
                     </View>
-                    <View style={styles.progressCaptions}>
-                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                    <View testID={`dasha-progress-labels-${window.key}`} style={[resultStyles.progressCaptions, compact && { flexDirection: 'column', alignItems: 'flex-start' }]}>
+                      <Text style={[resultStyles.progressCaption, { color: colors.inkMuted }]}>
                         {formatDuration(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
                       </Text>
-                      <Text style={[styles.progressCaption, { color: colors.inkMuted }]}>
+                      <Text style={[resultStyles.progressCaption, { color: colors.inkMuted }]}>
                         {formatDuration(remaining, true)} {contentByLang(lang, 'शेष', 'left')}
                       </Text>
                     </View>
                   </View>
                 );
               })}
-              <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 10 }]}>
+              <Text style={[resultStyles.caption, { color: colors.inkMuted, marginTop: 10 }]}>
                 {contentByLang(
                   lang,
                   'इस महादशा की नौ अन्तर्दशाएँ',
                   'The nine Antardashas within this Mahadasha'
                 )}
               </Text>
-              <View style={styles.antarChips}>
+              <View style={resultStyles.antarChips}>
                 {currentDasha.maha.antardashas.map((antar) => {
                   const selected = antar === currentDasha.antar;
                   return (
@@ -1223,7 +1139,7 @@ function KundaliResult({
                       accessible
                       accessibilityLabel={`${GRAHA_NAMES_EN[antar.lord]}${selected ? ', Now' : ''}`}
                       style={[
-                        styles.antarChip,
+                        resultStyles.antarChip,
                         {
                           borderColor: selected ? colors.saffron : colors.divider,
                           backgroundColor: selected
@@ -1235,7 +1151,7 @@ function KundaliResult({
                     >
                       <Text
                         style={[
-                          styles.antarChipText,
+                          resultStyles.antarChipText,
                           { color: selected ? colors.saffronDeep : colors.inkMuted },
                         ]}
                       >
@@ -1264,12 +1180,12 @@ function KundaliResult({
                 accessibilityRole="button"
                 accessibilityLabel={`Chant ${beej.nameEn} on the mala, for the ${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha`}
                 style={({ pressed }) => [
-                  styles.beejJapaLink,
+                  resultStyles.beejJapaLink,
                   { borderColor: colors.cardActiveBorder, backgroundColor: colors.saffronTint, borderRadius: radii.pill },
                   pressed && { opacity: 0.7 },
                 ]}
               >
-                <Text style={[styles.beejJapaText, { color: colors.saffronDeep }]}>
+                <Text style={[resultStyles.beejJapaText, { color: colors.saffronDeep }]}>
                   {contentByLang(lang, `${beej.nameHi} · माला पर जप करें`, `${beej.nameEn} · Chant on the mala`)} ›
                 </Text>
               </Pressable>
@@ -1283,7 +1199,7 @@ function KundaliResult({
                 accessible
                 accessibilityLabel={`Dasha reading. ${reading.titleEn}. ${reading.themeEn} ${reading.placementEn}${reading.antarEn ? ` ${reading.antarEn}` : ''}`}
                 style={[
-                  styles.dashaReading,
+                  resultStyles.dashaReading,
                   {
                     borderColor: colors.divider,
                     backgroundColor: colors.parchmentSoft,
@@ -1294,7 +1210,7 @@ function KundaliResult({
                 <Text
                   style={[
                     pillTextStyle(lang, typography.sectionLabel),
-                    { color: colors.saffronDeep, fontSize: 10 },
+                    { color: colors.saffronDeep, fontSize: 10 * factor },
                   ]}
                 >
                   {contentByLang(lang, 'इस अवधि का पाठ', 'Reading this period')}
@@ -1303,20 +1219,20 @@ function KundaliResult({
                   style={{
                     color: colors.ink,
                     fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                    fontSize: 15,
+                    fontSize: 15 * factor,
                     marginTop: 4,
                   }}
                 >
                   {contentByLang(lang, reading.titleHi, reading.titleEn)}
                 </Text>
-                <Text style={[styles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                <Text style={[resultStyles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
                   {meaningByLang(lang, reading.themeHi, reading.themeEn)}
                 </Text>
-                <Text style={[styles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                <Text style={[resultStyles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
                   {meaningByLang(lang, reading.placementHi, reading.placementEn)}
                 </Text>
                 {reading.antarHi && reading.antarEn && (
-                  <Text style={[styles.dashaReadingBody, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                  <Text style={[resultStyles.dashaReadingBody, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
                     {meaningByLang(lang, reading.antarHi, reading.antarEn)}
                   </Text>
                 )}
@@ -1325,7 +1241,7 @@ function KundaliResult({
           })()}
           <Text
             style={[
-              styles.eyebrowText,
+              resultStyles.eyebrowText,
               { color: colors.saffronDeep, marginTop: 18, marginBottom: 8 },
             ]}
           >
@@ -1343,12 +1259,12 @@ function KundaliResult({
               return (
                 <View
                   key={`${period.lord}-${period.start.toISOString()}`}
-                  style={styles.dashaRow}
+                  style={resultStyles.dashaRow}
                 >
-                  <View style={styles.timelineRail}>
+                  <View style={resultStyles.timelineRail}>
                     <View
                       style={[
-                        styles.timelineDot,
+                        resultStyles.timelineDot,
                         {
                           backgroundColor: selected
                             ? colors.saffron
@@ -1359,7 +1275,7 @@ function KundaliResult({
                     {index < chart.vimshottari.length - 1 && (
                       <View
                         style={[
-                          styles.timelineLine,
+                          resultStyles.timelineLine,
                           { backgroundColor: colors.divider },
                         ]}
                       />
@@ -1367,7 +1283,7 @@ function KundaliResult({
                   </View>
                   <View
                     style={[
-                      styles.dashaCard,
+                      resultStyles.dashaCard,
                       {
                         borderColor: selected ? colors.saffron : colors.divider,
                         backgroundColor: selected
@@ -1377,8 +1293,8 @@ function KundaliResult({
                       },
                     ]}
                   >
-                    <View style={styles.dashaTitleRow}>
-                      <Text style={[styles.tablePrimary, { color: colors.ink }]}>
+                    <View style={resultStyles.dashaTitleRow}>
+                      <Text style={[resultStyles.tablePrimary, { color: colors.ink }]}>
                         {contentByLang(
                           lang,
                           GRAHA_NAMES_HI[period.lord],
@@ -1389,20 +1305,20 @@ function KundaliResult({
                       {selected && (
                         <View
                           style={[
-                            styles.nowTag,
+                            resultStyles.nowTag,
                             {
                               backgroundColor: colors.saffronTint,
                               borderRadius: radii.pill,
                             },
                           ]}
                         >
-                          <Text style={[styles.nowTagText, { color: colors.saffronDeep }]}>
+                          <Text style={[resultStyles.nowTagText, { color: colors.saffronDeep }]}>
                             {contentByLang(lang, 'अब', 'Now')}
                           </Text>
                         </View>
                       )}
                     </View>
-                    <Text style={[styles.caption, { color: colors.inkMuted, marginTop: 3 }]}>
+                    <Text style={[resultStyles.caption, { color: colors.inkMuted, marginTop: 3 }]}>
                       {formatPeriodDate(period.start)} — {formatPeriodDate(period.end)} ·{' '}
                       {durationLabel}
                     </Text>
@@ -1417,7 +1333,7 @@ function KundaliResult({
       <Text
         style={[
           pillTextStyle(lang, typography.sectionLabel),
-          styles.practiceLabel,
+          resultStyles.practiceLabel,
           { color: colors.inkMuted },
         ]}
       >
@@ -1427,16 +1343,16 @@ function KundaliResult({
 
       <Pressable
         testID="graha-reference-card"
-        onPress={onOpenGrahaReference}
+        onPress={() => onOpenGrahaReference()}
         accessibilityRole="button"
         accessibilityLabel="Know the nine grahas"
         style={({ pressed }) => [
-          styles.referenceCard,
+          resultStyles.referenceCard,
           { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.lg },
           pressed && { opacity: 0.72 },
         ]}
       >
-        <Text style={[styles.referenceGlyph, { color: colors.gold }]}>✦</Text>
+        <Text style={[resultStyles.referenceGlyph, { color: colors.gold }]}>✦</Text>
         <View style={{ flex: 1 }}>
           <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: lang === 'en' ? 10 : 12 }]}>
             {contentByLang(lang, 'जानें', 'Learn')}
@@ -1445,7 +1361,7 @@ function KundaliResult({
             style={{
               color: colors.ink,
               fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 15,
+              fontSize: 15 * factor,
               marginTop: 2,
             }}
           >
@@ -1455,23 +1371,23 @@ function KundaliResult({
             style={{
               color: colors.inkMuted,
               fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 11,
+              fontSize: 11 * factor,
               marginTop: 2,
             }}
           >
             {contentByLang(lang, 'हर ग्रह किसका कारक है', 'What each graha stands for')}
           </Text>
         </View>
-        <Text style={{ color: colors.saffron, fontSize: 18 }}>›</Text>
+        <Text style={{ color: colors.saffron, fontSize: 18 * factor }}>›</Text>
       </Pressable>
 
       <Pressable
         onPress={onManageDetails}
         accessibilityRole="button"
         accessibilityLabel="Manage birth details"
-        style={styles.secondaryAction}
+        style={resultStyles.secondaryAction}
       >
-        <Text style={[styles.actionText, { color: colors.saffronDeep }]}>
+        <Text style={[resultStyles.actionText, { color: colors.saffronDeep }]}>
           {contentByLang(lang, 'जन्म विवरण सँभालें', 'Manage birth details')}
         </Text>
       </Pressable>
@@ -1496,13 +1412,14 @@ function SectionIntro({
   colors: any;
   typography: any;
 }) {
+  const { factor } = useFontScale();
   return (
     <View style={styles.sectionIntro}>
       <Text
         style={{
           color: colors.ink,
           fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-          fontSize: 18,
+          fontSize: 18 * factor,
         }}
       >
         {contentByLang(lang, hi, en)}
@@ -1511,8 +1428,8 @@ function SectionIntro({
         style={{
           color: colors.inkMuted,
           fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 12,
-          lineHeight: 18,
+          fontSize: 12 * factor,
+          lineHeight: 18 * factor,
           marginTop: 4,
         }}
       >
@@ -1566,6 +1483,8 @@ function CityPicker({
                 color: colors.ink,
                 fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
                 fontSize: 18,
+                flex: 1,
+                minWidth: 0,
               }}
             >
               {contentByLang(lang, 'जन्म नगर चुनें', 'Choose birth city')}
@@ -1574,15 +1493,17 @@ function CityPicker({
               <Text style={{ color: colors.saffronDeep, fontSize: 24 }}>×</Text>
             </Pressable>
           </View>
-          <TextField
-            variant="form"
-            testID="kundali-city-search"
-            accessibilityLabel="Search birth cities"
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search Indian cities…"
-            style={[styles.modalSearch, { marginHorizontal: spacing.xxl }]}
-          />
+          <View style={{ paddingHorizontal: spacing.xxl }}>
+            <TextField
+              variant="form"
+              testID="kundali-city-search"
+              accessibilityLabel="Search birth cities"
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Search Indian cities…"
+              style={styles.modalSearch}
+            />
+          </View>
           {/* FlatList, not a mapped ScrollView: the list is ~390 rows once the
               Rajasthan tehsils are in, and mounting all of them stalled the sheet. */}
           <FlatList
@@ -1662,7 +1583,7 @@ const styles = StyleSheet.create({
   lagnaValue: { fontFamily: fontFamilies.latinSemiBold, fontSize: 15, marginTop: 2 },
   lagnaTranslation: { fontFamily: fontFamilies.inter, fontSize: 12, marginTop: 1 },
   resultTabs: { flexDirection: 'row', padding: 3, borderWidth: 1, marginVertical: 14 },
-  resultTab: { flex: 1, minHeight: 38, alignItems: 'center', justifyContent: 'center' },
+  resultTab: { flex: 1, minHeight: 48, paddingHorizontal: 4, paddingVertical: 10, alignItems: 'center', justifyContent: 'center' },
   resultTabText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   sectionIntro: { marginBottom: 14 },
   chartCard: { borderWidth: 1, padding: 13 },
@@ -1687,14 +1608,14 @@ const styles = StyleSheet.create({
   dashaReading: { borderWidth: 1, padding: 14, marginBottom: 14 },
   dashaReadingBody: { fontSize: 12, lineHeight: 19, marginTop: 6 },
   currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },
-  beejJapaLink: { minHeight: 44, marginBottom: 14, paddingHorizontal: 14, borderWidth: 1, alignSelf: 'flex-start', justifyContent: 'center' },
+  beejJapaLink: { minHeight: 44, maxWidth: '100%', marginBottom: 14, paddingHorizontal: 14, paddingVertical: 10, borderWidth: 1, alignSelf: 'flex-start', justifyContent: 'center' },
   beejJapaText: { fontFamily: fontFamilies.interSemiBold, fontSize: 13 },
   progressTrack: { height: 6, marginTop: 10, overflow: 'hidden' },
   progressFill: { height: '100%' },
   progressCaptions: { marginTop: 5, flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
-  progressCaption: { fontFamily: fontFamilies.inter, fontSize: 12 },
+  progressCaption: { fontFamily: fontFamilies.inter, fontSize: 12, maxWidth: '100%' },
   antarChips: { marginTop: 9, flexDirection: 'row', flexWrap: 'wrap', gap: 5 },
-  antarChip: { paddingHorizontal: 7, paddingVertical: 4, borderWidth: 1 },
+  antarChip: { maxWidth: '100%', paddingHorizontal: 7, paddingVertical: 4, borderWidth: 1 },
   antarChipText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
   dashaRow: { flexDirection: 'row', minHeight: 68 },
   timelineRail: { width: 22, alignItems: 'center' },
@@ -1713,3 +1634,4 @@ const styles = StyleSheet.create({
   modalSearch: { marginVertical: 12 },
   cityRow: { minHeight: 58, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center' },
 });
+

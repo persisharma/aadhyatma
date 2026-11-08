@@ -1,4 +1,5 @@
 export const lightColors = {
+  brandIvory: '#FFF1D5',
   parchment: '#F3E7C9',
   parchmentSoft: '#F8EFD6',
   parchmentDeep: '#E9D9B1',
@@ -20,6 +21,7 @@ export const lightColors = {
   // colors.contrast.test.ts.
   inkMuted: '#6E5230',
 
+  festivalInk: '#70251B',
   saffron: '#B8621B',
   saffronDeep: '#8A3E0B',
   gold: '#A67C34',

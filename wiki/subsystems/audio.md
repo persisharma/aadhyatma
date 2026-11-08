@@ -115,6 +115,12 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 - **Both platforms fail SILENTLY for a missing voice — `onError` never fires.** iOS leaves
   `utterance.voice = nil` and uses the system default; Android's `speakOut` falls back to
   `Locale.getDefault()`. Availability therefore comes from a `getAvailableVoicesAsync()` probe
+  (**on first need only** — `ensureVoices()` from `useReaderReadAloud` on a cleared 500 ms timer after mount — not `InteractionManager`, whose immediate outlived Jest fake timers and hung the CI reader shard — or the voice
+  sheet opening; never at provider mount, because Android answers it with a main-thread `getVoices()`
+  binder call in expo-speech's init callback — Nov 2026 ANR audit). `patches/expo-speech+14.0.8.patch`
+  also moves that init-callback drain onto expo's serial AsyncFunction queue (ready flag flipped there,
+  so queued work keeps order) and stops activity-destroy from constructing an engine just to shut it
+  down; `expoSpeechPatch.test.ts` pins the installed source — re-port it on any expo-speech upgrade
   (raced against a 4 s timeout — Android's engine binds slowly) plus a **3 s `onStart` watchdog**
   for the OEM engine that reports a language then emits nothing. Never gate on `onError`.
 - **Never pass `'hi-IN'` as Android's `language`.** `SpeechModule.kt` does `Locale(options.language)`
@@ -159,3 +165,8 @@ so a stale non-Indian preference can never resurrect a dropped accent.
   RULEBOOK forbids emoji. The visible label is localized; the `accessibilityLabel` stays English
   ("Read aloud" / "Pause reading aloud" / "Read aloud unavailable") for Maestro. The `♪`
   (`READ_ALOUD_GLYPH`) now only marks the More → Read Aloud settings row.
+
+
+### Screen-clipping corrections (5 November 2026)
+
+Now Playing keeps Minimize outside a vertically scrolling body. Full track titles wrap; compact/enlarged layouts can scroll through seek, transport and repeat without changing playback callbacks. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.

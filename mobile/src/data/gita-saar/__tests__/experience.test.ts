@@ -6,6 +6,7 @@ import {
 import { gitaSaarExperiences } from '../experience';
 import { gitaSaarStories } from '../stories';
 import { getGitaChapter } from '../../gita';
+import { getValmikiRamayanChapter } from '../../valmiki-ramayan';
 import illustrationManifest from '../../readerIllustrationManifest.json';
 test('all sixteen themes have distinct bilingual learning frames grounded in their own references', () => {
   expect(Object.keys(gitaSaarExperiences).sort()).toEqual(
@@ -63,7 +64,16 @@ test('every theme has its own published illustration and a source-grounded three
     expect(story.sources.every((source) => source.url.startsWith('https://'))).toBe(true);
     for (const source of story.sources) {
       if (!source.inAppRef) continue;
-      expect(getGitaChapter(source.inAppRef.chapter).verses[source.inAppRef.verse - 1]?.number).toBe(source.inAppRef.verse);
+      if (source.inAppRef.kind === 'gita') {
+        expect(getGitaChapter(source.inAppRef.chapter).verses[source.inAppRef.verse - 1]?.number).toBe(source.inAppRef.verse);
+      } else {
+        const { kanda, sarga } = source.inAppRef;
+        expect(
+          getValmikiRamayanChapter(kanda).verses.some((verse) =>
+            verse.reference.startsWith(`${kanda}.${sarga}.`)
+          )
+        ).toBe(true);
+      }
     }
     const refs = theme.groups.flatMap((group) => group.verses.map((verse) => `${verse.ref.chapter}.${verse.ref.verse}`));
     expect(story.gitaRefs.length).toBeGreaterThan(0);
@@ -73,4 +83,15 @@ test('every theme has its own published illustration and a source-grounded three
       expect(copy.en.trim().length).toBeGreaterThan(3);
     }
   }
+});
+
+test('the three Valmiki story citations resolve to the bundled sargas', () => {
+  const refs = Object.values(gitaSaarStories).flatMap((story) =>
+    story.sources.flatMap((source) =>
+      source.inAppRef?.kind === 'valmiki-ramayan'
+        ? [`${source.inAppRef.kanda}.${source.inAppRef.sarga}`]
+        : []
+    )
+  );
+  expect(refs).toEqual(['1.43', '1.44', '6.18']);
 });

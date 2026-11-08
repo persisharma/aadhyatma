@@ -167,3 +167,13 @@ information over the accessibility tree. Rules, in order:
 - `mobile/.maestro/_launch.yaml` — shared boot subflow (onboarding dismissal, Home canary).
 - [[readers]] — multi-instance reader dispatch (chalisas/aartis) the smokes exercise.
 - `RULEBOOK.md` §0 (test gate), §3 (multi-instance readers), §4 (readers serve right content).
+
+## Cold-process brand CI verification
+
+`.github/workflows/native-brand-ios.yml` runs on PRs touching the launch implementation. It builds an unsigned Release iOS Simulator app from the exact PR checkout, completes setup through `_launch.yaml`, and runs `brand-lifecycle.yaml`. The focused journey requires two killed-process starts to show the reveal and three warm returns to keep Home without a reveal/modal. `mobile/scripts/native-brand-ios.sh` retains the tested head, selected simulator, toolchain, build log, JUnit output, screenshots and a lifecycle recording in the workflow artifact. No signing credentials, EAS release, version bump or store upload is used.
+
+A passing workflow is simulator evidence for this journey, not physical-device or Android verification, nor the full language/size/accessibility/targeted-entry matrix. Inspect the recording and screenshots as well as the assertions; late snapshots alone cannot establish that no transient replay occurred.
+
+The brand job gives the fresh iOS XCTest driver five minutes to initialize and proves it can open Settings before compiling Vedansh. A driver timeout is infrastructure failure, not an app lifecycle result. Build only the runner's architecture for simulator verification and retain the unsigned .app ZIP before UI assertions, so a later driver failure does not discard a successful compile. The first exact-branch run compiled/installed successfully but hit Maestro's two-minute driver startup limit; native lifecycle evidence was still pending.
+
+Native brand explicit-file Maestro commands must pass `--config .maestro/config.yaml` so the existing iOS `snapshotKeyHonorModalViews: false` setting is applied. Preserve motion and warm-return assertions. The native driver may reuse the immutable successful Release archive only behind the production-source fingerprint, archive digest and runner toolchain/architecture guards in `native-brand-ios.sh`; retain binary-origin.txt alongside tested-head.txt.

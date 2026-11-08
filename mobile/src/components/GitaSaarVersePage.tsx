@@ -48,6 +48,7 @@ type Props = {
   closing?: { hi: string; en: string };
   onOpenInGita?: () => void;
   onOpenGitaRef?: (chapter: number, verse: number) => void;
+  onOpenRamayanRef?: (kanda: number, sarga: number) => void;
   isSaved?: boolean;
   initialReflection?: string;
   onSaveLearning?: (text: string) => Promise<void>;
@@ -65,6 +66,7 @@ export default function GitaSaarVersePage({
   closing,
   onOpenInGita,
   onOpenGitaRef,
+  onOpenRamayanRef,
   isSaved = false,
   initialReflection = '',
   onSaveLearning,
@@ -209,6 +211,7 @@ export default function GitaSaarVersePage({
           <GitaSaarStoryDetails
             themeId={themeId}
             onOpenGitaRef={onOpenGitaRef}
+            onOpenRamayanRef={onOpenRamayanRef}
           />
         )}
         <Pressable

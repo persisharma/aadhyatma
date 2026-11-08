@@ -56,10 +56,10 @@ const Stack = createNativeStackNavigator<PanchangStackParamList>();
 // katha reader itself still lives in HomeStack; "Read Katha" routes there.
 export default function PanchangStackNavigator({ initialMode = 'calendar' }: { initialMode?: PanchangHomeMode }) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="PanchangHome" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="PanchangHome" component={PanchangScreen} initialParams={{ initialTab: initialMode }} />
       <Stack.Screen name="Pratha" component={PrathaScreen} />
       <Stack.Screen name="PrathaReader" component={PrathaReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
-      <Stack.Screen name="PanchangHome" component={PanchangScreen} initialParams={{ initialTab: initialMode }} />
       <Stack.Screen
         name="ObservanceList"
         component={ObservanceListScreen}

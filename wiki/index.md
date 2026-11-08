@@ -4,6 +4,7 @@
 - [[overview]] — Vedansh: offline-first Hindu devotional-text reader (Expo/React Native), stack, module map, content pipeline.
 
 ## Reference Docs (in place — not copied into the wiki)
+- [`docs/engineering/vedansh-build-checklist.md`](../docs/engineering/vedansh-build-checklist.md) — shared assistant acceptance checks, remote work preservation, conditional checks and evidence report.
 - [`RULEBOOK.md`](../RULEBOOK.md) — integration contract for adding a content section.
 - [`design.md`](../design.md) — visual system spec (tokens, type scale, romanization rules).
 - [`docs/roadmap/`](../docs/roadmap/) — Q3 2026 roadmap + PRDs 01–46 (incl. 28 पर्व-अर्क, 42 क्षेत्रीय पर्व — the Jain/per-state lens plan, 46 प्रथा और मान्यता).
@@ -12,6 +13,7 @@
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
 
 ## Subsystems
+- [[subsystems/sanatan-parichay]] — question-led introductory learning, uniform painted collections, internal provenance, customs learning and serialized progress.
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
 - [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
@@ -32,6 +34,7 @@
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts
+- [[concepts/karaoke]] — shared whole-word native-opacity highlight progression, host-owned configurable reading clock, Infinity first and future स्वतः integration contract.
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
 - [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 
@@ -49,4 +52,8 @@ _(none yet — add per-model pages as they warrant)_
 ## Decisions
 - [[decisions/ramayan-comic-character-continuity]] — approved comic direction, event-based continuity, 29-episode Hindi/English edition and complete62-page/four-language illustrated preview drafts, measured frames, complete81-page/four-language Ayodhyakanda preview and editorial/native/production boundaries.
 
-- [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards, 621 referenced deity-specific meanings, searchable browsing, 48 published masters and a text-only Annapurna card.
+- [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards, 84 original daily/deity/humility reflections (including Khatu Shyam Hare Ka Sahara) plus 621 preserved referenced meanings, deity-scoped search and 54 published masters across 18 painted deities.
+
+- [[subsystems/explore-sheet]] — Immersive Story launch sheet, sixteen destinations, cadence, persisted visit ledger and artwork provenance.
+
+- [[subsystems/engagement-prompts]] — rating → social-follow action prompts, confirmations, launch guards and independent campaign resets.

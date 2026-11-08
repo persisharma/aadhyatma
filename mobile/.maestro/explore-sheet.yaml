@@ -1,0 +1,23 @@
+# QA fixture is documented in README. Never clearState: fresh installs collect silently.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible:
+      id: explore-heading
+    timeout: 30000
+- assertVisible:
+    id: explore-open
+- assertVisible:
+    id: explore-not-now
+- tapOn:
+    id: explore-open
+- assertNotVisible:
+    id: explore-heading
+- back
+- stopApp
+- launchApp:
+    clearState: false
+- assertNotVisible:
+    id: explore-heading

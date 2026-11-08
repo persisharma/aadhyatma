@@ -1,12 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { cleanSender, parseSuvicharPreferences, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharDeityCatalog, suvicharFrames, NAME_LIMIT } from '../suvichar';
+import { cleanSender, parseSuvicharPreferences, senderFrom, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharDeityCatalog, suvicharFrames, NAME_LIMIT } from '../suvichar';
 import { suvicharTemplatesFor } from '../suvicharTemplates';
 const suvicharTemplates = suvicharTemplatesFor(0);
-it('maps all seventeen catalog subjects to three distinct masters without fallback', () => {
+it('maps all eighteen catalog subjects to three distinct masters without fallback', () => {
   const keys = suvicharDeityCatalog.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id)));
-  expect(keys).toHaveLength(51); expect(new Set(keys).size).toBe(51);
+  expect(keys).toHaveLength(57); expect(new Set(keys).size).toBe(57);
+  expect(keys).toContain('annapurna--mandir-jharokha');
   expect(keys).toContain('ram-darbar--mandir-jharokha');
   expect(keys).toContain('salasar-balaji--bhakti-patra');
   expect(keys).toContain('khatu-shyam--pushp-aangan');
@@ -28,7 +29,19 @@ it.each([null, '{', 'null', '[]', '{}'])('recovers corrupt or missing preference
 });
 it('restores names, frame, message and only valid saved cards', () => {
   const f = { deity: 'ram-darbar', frame: 'pushp-aangan', name: 'शर्मा परिवार', message: 'जय श्रीराम' };
-  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, photo: '', photoFit: { x: 0, y: 0, w: 1, h: 1 }, photoOn: false, thoughtId: '', vaar: false, favorites: [f] });
+  expect(parseSuvicharPreferences(JSON.stringify({ ...f, favorites: [f, null, { deity: 'unknown' }] }))).toEqual({ ...f, nameOn: true, photo: '', photoFit: { x: 0, y: 0, w: 1, h: 1 }, photoOn: false, thoughtId: '', vaar: false, favorites: [f] });
+});
+it('keeps the sender line on unless it was switched off, so earlier saves keep their name', () => {
+  expect(parseSuvicharPreferences(JSON.stringify({ name: 'शर्मा परिवार' })).nameOn).toBe(true);
+  expect(parseSuvicharPreferences(JSON.stringify({ name: 'शर्मा परिवार', nameOn: false }))).toMatchObject({ name: 'शर्मा परिवार', nameOn: false });
+  expect(parseSuvicharPreferences(JSON.stringify({ nameOn: 0 })).nameOn).toBe(true);
+});
+it('applies a carried sender without ever clearing the saved name', () => {
+  expect(senderFrom('Patel family', 'Sharma family')).toEqual({ name: 'Patel family', nameOn: true });
+  expect(senderFrom('', 'Sharma family')).toEqual({ name: 'Sharma family', nameOn: false });
+  expect(senderFrom('  ', 'Sharma family')).toEqual({ name: 'Sharma family', nameOn: false });
+  // No saved name: keep the switch on so the first-time field stays visible.
+  expect(senderFrom('', '')).toEqual({ name: '', nameOn: true });
 });
 it('restores the weekday flag on preferences and favorites, and drops anything but true', () => {
   const f = { deity: 'hanuman', frame: 'bhakti-patra', name: '', message: '', vaar: true };
@@ -48,7 +61,7 @@ it('never activates unpublished artwork or substitutes an unrelated deity', () =
   if (result) expect(result.remoteUrl).toContain('/suvichar/'); else expect(result).toBeNull();
 });
 
-it('keeps exactly 51 complete unique source masters with matching provenance hashes', () => {
+it('keeps exactly 54 complete unique source masters with matching provenance hashes', () => {
   const folder = path.resolve(__dirname, '../../../assets/suvichar');
   const provenance = JSON.parse(fs.readFileSync(path.join(folder, 'sources.json'), 'utf8'));
   const expected = suvicharDeityCatalog.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id))).sort();
@@ -61,8 +74,8 @@ it('keeps exactly 51 complete unique source masters with matching provenance has
     expect(hash).toBe(a.sha256); hashes.add(hash); total += bytes.length;
     expect(a.heroFraction).toBe(suvicharHeroFraction(a.deity, a.frame));
     expect(a.width / a.height).toBeGreaterThan(.78); expect(a.width / a.height).toBeLessThan(.82);
-    expect(a.width).toBeGreaterThanOrEqual(1080); expect(a.prompt).toMatch(/Subject:|Use case: precise-object-edit/);
+    expect(a.width).toBeGreaterThanOrEqual(1080); expect(a.prompt).toMatch(a.deity === 'parshuram' ? /STAND|standing/ : /Subject:|Use case: precise-object-edit/);
     expect(a.authoringPngSha256).toMatch(/^[a-f0-9]{64}$/);
   }
-  expect(hashes.size).toBe(51); expect(total).toBeLessThan(30 * 1024 * 1024);
+  expect(hashes.size).toBe(57); expect(total).toBeLessThan(30 * 1024 * 1024);
 });

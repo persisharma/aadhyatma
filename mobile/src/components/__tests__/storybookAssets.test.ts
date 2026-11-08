@@ -27,11 +27,11 @@ it('ships only two shared celestial decorations within their 300KB budget', () =
 
 // Check the actual shipped files: stale metadata, missing assets and accidental
 // board crops must not pass merely because React Native mocks require() handles.
-it('ships all 62 normalized transparent icons with matching provenance hashes', () => {
+it('ships all 63 normalized transparent icons with matching provenance hashes', () => {
   const assets = path.resolve(__dirname, '../../../assets/icons/storybook');
   const manifest = JSON.parse(fs.readFileSync(path.join(assets, 'manifest.json'), 'utf8'));
   const registry = fs.readFileSync(path.resolve(__dirname, '../storybookSources.ts'), 'utf8');
-  expect(manifest.icons).toHaveLength(62);
+  expect(manifest.icons).toHaveLength(63);
   expect(fs.readdirSync(assets).filter((p) => p.endsWith('.png')).sort()).toEqual(manifest.icons.map((i: { file: string }) => i.file).sort());
   const dayIcons = manifest.icons.filter((icon: { name: string }) => ['chandra', 'karana', 'nitya-yoga', 'agni-vaas', 'sunset', 'moonrise'].includes(icon.name));
   expect(dayIcons).toHaveLength(6);

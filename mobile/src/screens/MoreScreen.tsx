@@ -1,6 +1,6 @@
-import { hasPratha } from '@/data/pratha';
+import { useRatingShare } from '@/utils/useRatingShare';
 import React, { useState } from 'react';
-import { Alert, Linking, Modal, Pressable, ScrollView, Share, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, Linking, Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -44,6 +44,8 @@ import type { MoreStackParamList } from '@/navigation/types';
 // Lazy: a sheet that only exists after a tap has no business on the launch
 // graph (`launchGraph.test.ts`), and `React.lazy` is the same treatment
 // `TabNavigator` gives the Panchang stack.
+// eslint-disable-next-line @typescript-eslint/no-require-imports -- Evaluate replay only after an explicit Settings tap.
+const ExplorePreview = React.lazy<React.ComponentType<{ onClose: () => void }>>(async () => ({ default: require('@/components/explore/ExplorePreview').default }));
 const LensPickerSheet = React.lazy(() => import('@/components/LensPickerSheet'));
 
 function formatReminderTimes(times: TimeOfDay[]): string {
@@ -129,6 +131,7 @@ function SettingsRow({
 type Props = NativeStackScreenProps<MoreStackParamList, 'MoreHome'>;
 
 export default function MoreScreen({ navigation }: Props) {
+  const shareWithRating = useRatingShare();
   const { colors, typography, spacing, radii } = useTheme();
   const { fontScale } = useWindowDimensions();
   const largeText = fontScale > 1.2;
@@ -137,6 +140,7 @@ export default function MoreScreen({ navigation }: Props) {
   const { lifetimeTotals, currentStreak } = useUserActivity();
   const { prefs: notifPrefs } = useNotificationPreferences();
   const { resetTour } = useTour();
+  const [showExplore, setShowExplore] = useState(false);
   const { open: openRatingPrompt } = useRatingPrompt();
   const { alarms: japamAlarms } = useJapamAlarms();
   const { scale } = useFontScale();
@@ -215,7 +219,7 @@ export default function MoreScreen({ navigation }: Props) {
   const currentLang = LANGUAGES.find((l) => l.value === lang) ?? LANGUAGES[0];
 
   const shareApp = () => {
-    Share.share(
+    shareWithRating(
       { message: buildAppShareMessage(lang) },
       { dialogTitle: pick(lang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ' }) }
     ).catch(() => {
@@ -364,9 +368,6 @@ export default function MoreScreen({ navigation }: Props) {
                   accessibilityLabel={kulHasRecord ? 'Kul Parampara' : 'Kul Parampara, new'}
                   testID="more-kul-parampara"
                 />
-                {hasPratha() && <SettingsRow icon="question" label={pick(lang, { hi: 'ऐसा क्यों?', en: 'Why do we do this?', gu: 'આવું શા માટે?', kn: 'ಹೀಗೆ ಏಕೆ?' })}
-                  labelFontFamily={labelFont} onPress={() => navigation.navigate('Pratha')}
-                  accessibilityLabel="Why do we do this? Explore customs" testID="more-pratha" />}
                 {/* पितृ स्मरण (PRD-17) — private tithi remembrance; the standard
                     More-row NEW state for one release, then count + soonest date. */}
                 <SettingsRow
@@ -468,6 +469,13 @@ export default function MoreScreen({ navigation }: Props) {
                     accessibilityLabel={`Language, ${currentLang.a11yLabel}`}
                   />
                 </View>
+                <SettingsRow icon="question"
+                  label={pick(lang, { hi: 'नए भाग देखें', en: 'Explore sections', gu: 'નવા વિભાગો જુઓ', kn: 'ವಿಭಾಗಗಳನ್ನು ನೋಡಿ' })}
+                  labelFontFamily={labelFont}
+                  onPress={() => setShowExplore(true)}
+                  accessibilityLabel="Explore sections"
+                  testID="settings-explore"
+                />
                 <View ref={readingSizeRowRef} collapsable={false}>
                   <SettingsRow
                     icon="textSize"
@@ -579,6 +587,7 @@ export default function MoreScreen({ navigation }: Props) {
           </View>
         </ScrollView>
       </SafeAreaView>
+      {showExplore && <React.Suspense fallback={null}><ExplorePreview onClose={() => setShowExplore(false)} /></React.Suspense>}
 
       {langSheet && <LanguagePickerSheet visible onClose={() => setLangSheet(false)} />}
       {sizeSheet && <ReadingSizePickerSheet visible onClose={() => setSizeSheet(false)} />}

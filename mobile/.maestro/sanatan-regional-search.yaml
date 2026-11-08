@@ -1,0 +1,15 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow:
+    file: _sanatan-search-case.yaml
+    env: { READING_LANGUAGE: Hindi, QUERY: "स्वस्तिक" }
+- runFlow:
+    file: _sanatan-search-case.yaml
+    env: { READING_LANGUAGE: English, QUERY: "swastika" }
+- runFlow:
+    file: _sanatan-search-case.yaml
+    env: { READING_LANGUAGE: Gujarati, QUERY: "સ્વસ્તિક" }
+- runFlow:
+    file: _sanatan-search-case.yaml
+    env: { READING_LANGUAGE: Kannada, QUERY: "ಸ್ವಸ್ತಿಕ" }

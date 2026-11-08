@@ -4,7 +4,7 @@ import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import SuvicharCard from '../SuvicharCard';
 import { suvicharBrandSlot, suvicharFooterBand, suvicharHeroFraction } from '@/data/suvichar';
 import { subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
-jest.mock('@/data/suvichar', () => ({ ...jest.requireActual('@/data/suvichar'), suvicharArtRequest: (deity: string) => deity === 'annapurna' ? null : ({ key: 'test', ext: 'webp', remoteUrl: 'https://cdn.vedansh.app/suvichar/test.webp' }) }));
+jest.mock('@/data/suvichar', () => ({ ...jest.requireActual('@/data/suvichar'), suvicharArtRequest: () => ({ key: 'test', ext: 'webp', remoteUrl: 'https://cdn.vedansh.app/suvichar/test.webp' }) }));
 jest.mock('@/utils/backgroundAssetCache', () => ({ subscribeBackgroundAsset: jest.fn((_: unknown, cb: (uri: string) => void) => { cb('file:///test.webp'); return () => undefined; }), evictBackgroundAsset: jest.fn() }));
 let tree: ReactTestRenderer;
 afterEach(() => { if (tree) act(() => tree.unmount()); });
@@ -74,6 +74,23 @@ it('reuses the artwork request while a sender is edited and remeasures the card'
   expect(subscribeBackgroundAsset).toHaveBeenCalledTimes(1);
 });
 
+it('heads wishes and reader-written text “शुभकामनाएँ”, with no second wishes label above the sender', () => {
+  const ready = jest.fn();
+  act(() => { tree = create(<SuvicharCard deity="lakshmi" frame="mandir-jharokha" name="शर्मा परिवार" message="दीपावली की हार्दिक शुभकामनाएँ।" original={false} lang="hi" width={360} onReady={ready} />); });
+  const texts = () => tree.root.findAllByType(Text).map(t => [t.props.children].flat().join(''));
+  expect(tree.root.findByProps({ testID: 'suvichar-card-label' }).props.children).toBe('शुभकामनाएँ');
+  expect(texts()).not.toContain('आपकी शुभकामना'); expect(texts()).not.toContain('आज का सुविचार');
+  expect(tree.root.findByProps({ testID: 'suvichar-card-sender' }).props.children.join('')).toBe('सप्रेम — शर्मा परिवार');
+  layout(); act(() => tree.root.findAllByType(Image).forEach(image => image.props.onLoad()));
+  expect(ready).toHaveBeenLastCalledWith(true);
+  // The heading is part of the measured body, so a change re-measures before capture.
+  act(() => tree.update(<SuvicharCard deity="lakshmi" frame="mandir-jharokha" name="शर्मा परिवार" message="दीपावली की हार्दिक शुभकामनाएँ।" lang="hi" width={360} onReady={ready} />));
+  expect(ready).toHaveBeenLastCalledWith(false);
+  expect(tree.root.findByProps({ testID: 'suvichar-card-label' }).props.children).toBe('आज का सुविचार');
+  act(() => tree.update(<SuvicharCard deity="lakshmi" frame="mandir-jharokha" name="" message="Happy Diwali!" original={false} lang="en" width={360} onReady={ready} />));
+  expect(tree.root.findByProps({ testID: 'suvichar-card-label' }).props.children).toBe('Warm wishes');
+});
+
 it('shows a weekday title in place of the label, and re-measures when the title changes', () => {
   const ready = jest.fn();
   act(() => { tree = create(<SuvicharCard deity="hanuman" frame="mandir-jharokha" name="" message="श्रद्धा रखिए।" title="शुभ मंगलवार" lang="hi" width={360} onReady={ready} />); });
@@ -97,13 +114,9 @@ it('prints the source label on the capture surface and invalidates readiness whe
   expect(ready).toHaveBeenLastCalledWith(false);
 });
 
-it('makes only the explicit Annapurna text card shareable without borrowing a deity master', () => {
-  const ready=jest.fn();
-  act(() => { tree=create(<SuvicharCard deity="annapurna" frame="mandir-jharokha" name="" message="ज्ञान और वैराग्य की भिक्षा माँगिए।" attribution="अन्नपूर्णास्तोत्र 11 · प्रार्थना-भाव" lang="hi" width={360} onReady={ready}/>); });
-  expect(tree.root.findAllByType(Image)).toHaveLength(1); // Real brand mark only.
-  act(() => tree.root.findByProps({testID:'suvichar-card-body'}).props.onLayout({nativeEvent:{layout:{height:354.6}}}));
-  act(() => tree.root.findByProps({testID:'suvichar-card'}).props.onLayout({nativeEvent:{layout:{height:450}}}));
-  expect(ready).toHaveBeenLastCalledWith(false);
-  act(() => tree.root.findByType(Image).props.onLoad());
-  expect(ready).toHaveBeenLastCalledWith(true);
+it('renders Annapurna as a painted card like every other deity, with no text-only fallback', () => {
+  act(() => { tree=create(<SuvicharCard deity="annapurna" frame="mandir-jharokha" name="" message="ज्ञान और वैराग्य की भिक्षा माँगिए।" attribution="अन्नपूर्णास्तोत्र 11 · प्रार्थना-भाव" lang="hi" width={360} onReady={jest.fn()}/>); });
+  const painted = tree.root.findAllByType(Image).filter(i => i.props.source?.uri === 'file:///test.webp');
+  expect(painted.length).toBeGreaterThanOrEqual(3); // hero, body and footer slices of her master
+  expect(JSON.stringify(tree.toJSON())).not.toContain('Maa Annapurna'); // the old text-only name line is gone
 });

@@ -1,6 +1,8 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { FlatList, Text } from 'react-native';
+import { contentByLang } from '@/utils/localize';
+import { toGujarati, toKannada } from '@/utils/transliterate';
 jest.mock('expo-linear-gradient', () => {
   const React = require('react');
   const { View } = require('react-native');
@@ -20,21 +22,26 @@ import PrathaScreen from '../PrathaScreen';
 import PrathaReaderScreen from '../PrathaReaderScreen';
 import { PrathaMonthCard, PrathaObservanceCard } from '@/components/PrathaCards';
 import { ThemeProvider } from '@/theme/ThemeContext';
-import { FontScaleProvider } from '@/contexts/FontScaleContext';
-import { GitaLanguageProvider } from '@/data/gita/language';
+import { FontScaleProvider, useFontScale } from '@/contexts/FontScaleContext';
+import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
 import { getPratha } from '@/data/pratha';
 import * as prathaRegistry from '@/data/pratha';
-import { PRATHA_FOOTER, prathaPages } from '@/data/pratha/presentation';
+import { PRATHA_FOOTER, prathaPages, matchesPratha } from '@/data/pratha/presentation';
 import { prathaShareable } from '@/utils/shareContent';
 import { ShareProvider } from '@/utils/shareVerse';
 import type { PanchangData } from '@/panchang/types';
 
 const trees: TestRenderer.ReactTestRenderer[] = [];
 const nav = () => ({ navigate: jest.fn(), push: jest.fn(), goBack: jest.fn() });
-async function render(element: React.ReactElement, lang: 'hi' | 'en' = 'hi') {
+function ReadingSize({ size }: { size: 'M' | 'L' }) {
+  const { setScale } = useFontScale();
+  React.useEffect(() => setScale(size), [size, setScale]);
+  return null;
+}
+async function render(element: React.ReactElement, lang: Lang = 'hi', size: 'M' | 'L' = 'M') {
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
-    tree = TestRenderer.create(<FontScaleProvider><ThemeProvider><GitaLanguageProvider initialLang={lang}><ShareProvider>{element}</ShareProvider></GitaLanguageProvider></ThemeProvider></FontScaleProvider>);
+    tree = TestRenderer.create(<FontScaleProvider><ReadingSize size={size} /><ThemeProvider><GitaLanguageProvider initialLang={lang}><ShareProvider>{element}</ShareProvider></GitaLanguageProvider></ThemeProvider></FontScaleProvider>);
   });
   trees.push(tree);
   return tree;
@@ -71,17 +78,19 @@ test('hub opens current verified questions; search reaches other months and excl
   expect(id(tree, 'pratha-empty')).toBeTruthy();
 });
 
-test('month chips gate sparse months and a route opens the requested month', async () => {
+test('month chips hide sparse months and only populated categories appear', async () => {
   const tree = await render(<PrathaScreen {...({ navigation: nav(), route: { params: { masa: 9, isAdhik: false } } } as any)} />);
   expect(id(tree, 'pratha-question-M1')).toBeTruthy();
-  expect(id(tree, 'pratha-filter-masa-10').props.disabled).toBe(true);
+  expect(id(tree, 'pratha-filter-masa-10')).toBeUndefined();
   act(() => id(tree, 'pratha-filter-masa-8').props.onPress());
   expect(id(tree, 'pratha-question-K1')).toBeTruthy();
-  act(() => id(tree, 'pratha-filter-tirth').props.onPress());
-  expect(id(tree, 'pratha-empty')).toBeTruthy();
+  expect(id(tree, 'pratha-filter-tirth')).toBeUndefined();
+  act(() => id(tree, 'pratha-filter-all').props.onPress());
+  // Offscreen rows stay virtualized; the all-questions data still includes Lohri.
+  expect(tree.root.findByType(FlatList).props.data.map((entry: { id: string }) => entry.id)).toContain('P2');
 });
 
-test('reader preserves page order, each story canon, optional bodh and the family footer', async () => {
+test('reader preserves complete teaching and shares it without internal research locators', async () => {
   const entry = getPratha('K1')!;
   const tree = await render(<PrathaReaderScreen {...({ navigation: nav(), route: { params: { prathaId: 'K1' } } } as any)} />);
   const list = tree.root.findByType(FlatList);
@@ -89,15 +98,18 @@ test('reader preserves page order, each story canon, optional bodh and the famil
   for (let i = 0; i < entry.kathas.length; i++) {
     const page = list.props.data[i + 1];
     const storyTree = await render(list.props.renderItem({ item: page, index: i + 1 }));
-    expect(text(storyTree)).toContain(entry.kathas[i].canonHi);
+    for (const paragraph of entry.kathas[i].bodyHi) expect(text(storyTree)).toContain(paragraph);
+    expect(text(storyTree)).not.toContain(entry.kathas[i].canonHi);
     const share = prathaShareable(entry, i + 1);
-    expect(share.scopes[0].blocks[0].hi).toContain(entry.kathas[i].canonHi);
-    expect(share.scopes[0].blocks[0].en).toContain(entry.kathas[i].canonEn);
+    expect(share.scopes[0].blocks).toEqual(page.bodyHi.map((hi: string, j: number) => ({ kind: 'para', hi, en: page.bodyEn[j] })));
+    expect(JSON.stringify(share)).not.toContain(entry.kathas[i].canonHi);
+    expect(JSON.stringify(share)).not.toMatch(/referenceUrls|verificationNote|https?:/);
   }
   const closing = await render(list.props.renderItem({ item: list.props.data.at(-1), index: list.props.data.length - 1 }));
   expect(text(closing)).toContain(PRATHA_FOOTER.hi);
   const width = list.props.getItemLayout(null, 0).length;
-  act(() => list.props.onScroll({ nativeEvent: { contentOffset: { x: width * 2 } } }));
+  expect(list.props.onScroll).toBeUndefined();
+  act(() => list.props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: width * 2 } } }));
   expect(id(tree, 'pratha-counter').props.children.join('')).toBe(`3 / ${list.props.data.length}`);
 });
 
@@ -139,5 +151,54 @@ test('month card shows at most three questions and opens month hub; sparse/adhik
   for (const value of [month(10), month(8, true)]) {
     const empty = await render(<PrathaMonthCard month={value} onOpen={open} onHub={hub} />);
     expect(id(empty, 'pratha-month-card')).toBeUndefined();
+  }
+});
+
+for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+  for (const size of ['M', 'L'] as const) {
+    test(`${lang}/${size}: customs question, complete story and share retain the selected script`, async () => {
+      const entry = getPratha('K6')!;
+      const navigation = nav();
+      const hub = await render(<PrathaScreen {...({ navigation, route: { params: undefined } } as any)} />, lang, size);
+      const query = contentByLang(lang, entry.questionHi, entry.questionEn);
+      act(() => id(hub, 'pratha-search').props.onChangeText(query));
+      expect(matchesPratha(entry, query)).toBe(true);
+      expect(id(hub, 'pratha-question-K6')).toBeDefined();
+      expect(id(hub, 'pratha-question-K3')).toBeUndefined();
+      act(() => id(hub, 'pratha-question-K6').props.onPress());
+      expect(navigation.navigate).toHaveBeenCalledWith('PrathaReader', { prathaId: 'K6' });
+      const reader = await render(<PrathaReaderScreen {...({ navigation, route: { params: { prathaId: 'K6' } } } as any)} />, lang, size);
+      const list = reader.root.findByType(FlatList);
+      for (let i = 0; i < list.props.data.length; i++) {
+        const page = list.props.data[i];
+        const rendered = await render(list.props.renderItem({ item: page, index: i }), lang, size);
+        const share = prathaShareable(entry, i);
+        page.bodyHi.forEach((hi: string, j: number) => {
+          expect(text(rendered)).toContain(contentByLang(lang, hi, page.bodyEn[j]));
+          expect(share.scopes[0].blocks[j]).toEqual({ kind: 'para', hi, en: page.bodyEn[j] });
+        });
+      }
+    });
+  }
+}
+
+test('regional search uses the same script as the displayed question', () => {
+  const entry = getPratha('K6')!;
+  expect(matchesPratha(entry, toGujarati('तुलसी विवाह'))).toBe(true);
+  expect(matchesPratha(entry, toKannada('तुलसी विवाह'))).toBe(true);
+});
+
+test('every published story keeps its regional/folk context but no research fields in its public projection', () => {
+  for (const entry of prathaRegistry.getAllPratha()) {
+    const pages = prathaPages(entry);
+    const publicText = JSON.stringify(pages);
+    expect(publicText).not.toMatch(/referenceUrls|verificationNote|canonHi|canonEn|https?:/);
+    entry.kathas.forEach((story, index) => {
+      const page = pages[index + 1];
+      expect(page.bodyHi.slice(-story.bodyHi.length)).toEqual(story.bodyHi);
+      expect(page.bodyEn.slice(-story.bodyEn.length)).toEqual(story.bodyEn);
+      if (story.tier === 'lok') expect(page.bodyHi[0]).toContain('लोक-परम्परा');
+      if (story.regionHi) expect(page.bodyHi[0]).toContain(story.regionHi);
+    });
   }
 });

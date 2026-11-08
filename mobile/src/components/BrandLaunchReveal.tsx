@@ -1,0 +1,70 @@
+import React, { useCallback, useEffect, useRef, useState, type ComponentType } from 'react';
+import { AccessibilityInfo, AppState, Linking, View } from 'react-native';
+import { useTheme } from '@/theme/ThemeContext';
+import type { BrandParticleProps } from './BrandParticleWebView';
+
+// Native launch skips the approved timeline's first 1000ms.
+export const BRAND_REVEAL_MS = 2350;
+export const BRAND_REVEAL_TIMEOUT_MS = 7000;
+
+/** Owns launch cancellation; the approved renderer owns every pixel and frame. */
+export default function BrandLaunchReveal({ onComplete, onReady }: BrandParticleProps) {
+  const { colors } = useTheme();
+  const completeCallback = useRef(onComplete);
+  const readyCallback = useRef(onReady);
+  completeCallback.current = onComplete;
+  readyCallback.current = onReady;
+  const active = useRef(true);
+  const completed = useRef<'formed' | 'cancelled' | null>(null);
+  const [Renderer, setRenderer] = useState<ComponentType<BrandParticleProps> | null>(null);
+  const complete = useCallback((formed = false) => {
+    if (!active.current || completed.current === 'cancelled' || (completed.current === 'formed' && formed)) return;
+    completed.current = formed ? 'formed' : 'cancelled';
+    completeCallback.current(formed);
+  }, []);
+  const cancel = useCallback(() => complete(), [complete]);
+  const ready = useCallback(() => {
+    if (active.current && !completed.current) return readyCallback.current?.();
+  }, []);
+
+  useEffect(() => {
+    active.current = true;
+    const watchdog = setTimeout(cancel, BRAND_REVEAL_TIMEOUT_MS);
+    const reduced = AccessibilityInfo.addEventListener('reduceMotionChanged', enabled => { if (enabled) complete(); });
+    const reader = AccessibilityInfo.addEventListener('screenReaderChanged', enabled => { if (enabled) complete(); });
+    let hasBeenActive = AppState.currentState === 'active';
+    let started = false;
+    const start = () => {
+      if (started || !active.current || completed.current) return;
+      started = true;
+      void Promise.all([AccessibilityInfo.isReduceMotionEnabled(), AccessibilityInfo.isScreenReaderEnabled()])
+      .then(([reduceMotion, screenReader]) => {
+        if (!active.current || completed.current) return;
+        if (reduceMotion || screenReader) { complete(); return; }
+        // Same source as the accepted preview. No substitute motion or typography.
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const { default: Surface } = require('./BrandParticleWebView') as typeof import('./BrandParticleWebView');
+        setRenderer(() => Surface);
+      }).catch(cancel);
+    };
+    const app = AppState.addEventListener('change', state => {
+      if (state === 'active') { hasBeenActive = true; start(); }
+      else if (state === 'background' || hasBeenActive) complete();
+    });
+    const link = Linking.addEventListener('url', cancel);
+    // Cached preferences can mount this gate before iOS becomes active. Do not
+    // play behind the native splash or treat that startup 'inactive' as exit.
+    if (hasBeenActive) start();
+    else if (AppState.currentState === 'background') complete();
+    return () => {
+      active.current = false;
+      clearTimeout(watchdog);
+      reduced.remove(); reader.remove(); app.remove(); link.remove();
+    };
+  }, [complete, cancel]);
+
+  return <View testID="brand-launch-reveal" pointerEvents="none" style={{ flex: 1, backgroundColor: colors.brandIvory }}>
+    {Renderer ? <Renderer onReady={ready} onComplete={complete} /> : null}
+  </View>;
+}
+

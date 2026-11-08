@@ -1,5 +1,7 @@
 import type { KathaContentSection } from '@/panchang/types';
 import type { PrathaEntry, PrathaTier } from './types';
+import { normalize } from '@/data/searchNormalize';
+import { toGujarati, toKannada } from '@/utils/transliterate';
 
 export const PRATHA_TIERS: Record<PrathaTier, { hi: string; en: string }> = {
   shastra: { hi: 'शास्त्र', en: 'Scripture' },
@@ -15,7 +17,7 @@ export const PRATHA_FOOTER = {
   en: 'This is an introduction, not a ritual prescription. Your family’s tradition comes first.',
 };
 
-export type PrathaPage = KathaContentSection & { tier?: PrathaTier; canonHi?: string; canonEn?: string };
+export type PrathaPage = KathaContentSection;
 
 /** Only registry prose enters the reader, speech and share card. Never inline a verse. */
 export function prathaPages(entry: PrathaEntry): PrathaPage[] {
@@ -23,8 +25,10 @@ export function prathaPages(entry: PrathaEntry): PrathaPage[] {
     { id: 'practice', titleHi: entry.questionHi, titleEn: entry.questionEn, bodyHi: [entry.practiceHi], bodyEn: [entry.practiceEn] },
     ...entry.kathas.map((story, i) => ({
       id: `katha-${i}`, titleHi: story.titleHi, titleEn: story.titleEn,
-      bodyHi: [...story.bodyHi], bodyEn: [...story.bodyEn],
-      tier: story.tier, canonHi: story.canonHi, canonEn: story.canonEn,
+      // Concise regional/folk context belongs to the teaching; research locators
+      // remain in the registry and never enter speech, screens or share payloads.
+      bodyHi: [...(story.tier === 'lok' ? [story.regionHi ? `लोक-परम्परा · ${story.regionHi}` : 'लोक-परम्परा'] : story.regionHi ? [story.regionHi] : []), ...story.bodyHi],
+      bodyEn: [...(story.tier === 'lok' ? [story.regionEn ? `Folk tradition · ${story.regionEn}` : 'Folk tradition'] : story.regionEn ? [story.regionEn] : []), ...story.bodyEn],
     })),
     { id: 'bhav', titleHi: 'भाव', titleEn: 'Meaning', bodyHi: [entry.bhavHi], bodyEn: [entry.bhavEn] },
     ...(entry.bodhHi && entry.bodhEn ? [{ id: 'bodh', titleHi: 'बोध', titleEn: 'A closer look', bodyHi: [entry.bodhHi], bodyEn: [entry.bodhEn] }] : []),
@@ -33,8 +37,9 @@ export function prathaPages(entry: PrathaEntry): PrathaPage[] {
 }
 
 export function matchesPratha(entry: PrathaEntry, query: string): boolean {
-  const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-  const text = [entry.questionHi, entry.questionEn, entry.practiceHi, entry.practiceEn,
-    ...entry.kathas.flatMap((s) => [s.regionHi ?? '', s.regionEn ?? ''])].join(' ').toLocaleLowerCase();
+  const words = normalize(query).split(/\s+/).filter(Boolean);
+  const hi = [entry.questionHi, entry.practiceHi, ...entry.kathas.map(s => s.regionHi ?? '')].join(' ');
+  const text = normalize([hi, toGujarati(hi), toKannada(hi), entry.questionEn, entry.practiceEn,
+    ...entry.kathas.map(s => s.regionEn ?? '')].join(' '));
   return words.every((word) => text.includes(word));
 }

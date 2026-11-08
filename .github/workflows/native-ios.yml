@@ -1,0 +1,127 @@
+name: Native iOS build and launch
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'mobile/plugins/**'
+      - 'mobile/modules/**'
+      - 'mobile/src/widgets/**'
+      - 'mobile/assets/widget-backgrounds/**'
+      - 'mobile/app.json'
+      - 'mobile/package-lock.json'
+      - 'mobile/scripts/native-ios-smoke.sh'
+      - 'mobile/scripts/*sanatan*'
+      - 'mobile/scripts/select-native-ios-device.cjs'
+      - 'mobile/scripts/run-native-diagnostic.cjs'
+      - 'mobile/.maestro/*widgets*.yaml'
+      - 'mobile/.maestro/native-ios-input-check.yaml'
+      - '.github/workflows/native-ios.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: native-ios-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 50
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    env:
+      CI: '1'
+      NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
+      NATIVE_SMOKE_DRIVER_CHECK: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Select matching XCTest toolchain
+        run: |
+          test -d /Applications/Xcode_26.2.app
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+      - name: Install pinned native test driver
+        run: |
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/widget-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/widget-maestro.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/widget-maestro.zip" -d "$RUNNER_TEMP/widget-tools"
+          echo "$RUNNER_TEMP/widget-tools/maestro/bin" >> "$GITHUB_PATH"
+      - name: Record native toolchain
+        run: |
+          xcodebuild -version
+          pod --version
+          mkdir -p "$GITHUB_WORKSPACE/native-output"
+      - name: Check preserved native SDK compatibility
+        id: compat
+        run: |
+          SDK_SOURCE_HEAD=$(node -p 'require("./scripts/sanatan-native-sdk.json").sourceHead')
+          git fetch --no-tags --depth=1 origin "$SDK_SOURCE_HEAD"
+          node <<'JS'
+          const sdk = require('./scripts/sanatan-native-sdk.json');
+          require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT, `sdk_run=${sdk.sourceRun}\nsdk_artifact=${sdk.artifactName}\n`);
+          JS
+          if node scripts/sanatan-native-sdk-compatible.cjs; then
+            echo 'reuse=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'reuse=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Retrieve verified host and widget SDK
+        id: sdk
+        if: steps.compat.outputs.reuse == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.compat.outputs.sdk_artifact }}
+          run-id: ${{ steps.compat.outputs.sdk_run }}
+          github-token: ${{ github.token }}
+          path: native-reuse
+      - name: Verify current widget journeys on the compiled SDK
+        if: steps.compat.outputs.reuse == 'true' && steps.sdk.outcome == 'success'
+        env:
+          SANATAN_REBUNDLE_JS: '1'
+          NATIVE_ACCEPTANCE_SCOPE: widgets
+          NATIVE_SDK_OUTPUT: ${{ github.workspace }}/native-output
+        run: bash scripts/native-sanatan-ios-reuse.sh
+      - name: Generate native app and widget target
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        run: pod install --project-directory=ios
+      - name: Build, install and launch on iOS Simulator
+        if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
+        run: bash scripts/native-ios-smoke.sh
+      - name: Retain native build and launch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-ios-${{ github.run_id }}
+          path: |
+            native-output/*.log
+            native-output/*.png
+            native-output/*.json
+            native-output/*.xml
+            native-output/*.zip
+            native-output/*.ips
+          retention-days: 7
+          if-no-files-found: warn
+      - name: Stop simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: node scripts/run-native-diagnostic.cjs xcrun simctl shutdown "$SIMULATOR_UDID"

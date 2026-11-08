@@ -1,4 +1,7 @@
 import { PrathaMonthCard } from '@/components/PrathaCards';
+import OccasionSection from '@/components/OccasionSection';
+import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
+import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
@@ -18,10 +21,8 @@ import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { backgroundImages } from '@assets/backgrounds';
-import BackgroundLayer from '@/components/BackgroundLayer';
 import CatalogBackground from '@/components/CatalogBackground';
-import { JyotishChakraSeal, PanchangChakraBackground } from '@/components/CelestialChakra';
+import { PanchangChakraBackground } from '@/components/CelestialChakra';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -46,8 +47,6 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
 import { getEventRule } from '@/panchang/eventMuhurat';
 import {
-  NAKSHATRA_NAMES_EN,
-  NAKSHATRA_NAMES_HI,
   PAKSHA_NAMES_EN,
   PAKSHA_NAMES_HI,
 } from '@/panchang/names';
@@ -80,7 +79,7 @@ import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import JyotishGuidanceRows from '@/components/JyotishGuidanceRows';
-import JyotishPracticeCard from '@/components/JyotishPracticeCard';
+import JyotishLandingGallery from '@/components/JyotishLandingGallery';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
@@ -181,6 +180,7 @@ export default function PanchangScreen({ route }: Props) {
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
     route.params?.initialTab ?? 'calendar'
   );
+  const scrollRef = useRef<ScrollView>(null);
   const [catalogQuery, setCatalogQuery] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
@@ -211,11 +211,12 @@ export default function PanchangScreen({ route }: Props) {
   // 2,500-line screen does not re-render every minute for it.
   const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
   const { share: sharePanchang, busy: shareBusy } = usePanchangShare();
-  const shareUnavailable = shareBusy || !p || !shareMd;
+  const occasion = useOccasionTimings(isFocused && panchangTab !== 'jyotish' ? selectedDate : null, calendarSystem);
+  const shareUnavailable = shareBusy || !p || !shareMd || occasion.loading || occasion.error;
   const shareDay = useCallback(() => {
-    if (!p || !shareMd) return;
-    void sharePanchang({ p, md: shareMd, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
-  }, [p, shareMd, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
+    if (!p || !shareMd || occasion.loading || occasion.error) return;
+    void sharePanchang({ p, md: shareMd, occasionTimings: occasion.items, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [p, shareMd, occasion.items, occasion.loading, occasion.error, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
   // The Panchang sky header (design.md §33) starts under the status bar, so it
   // needs the inset.
   const insets = useSafeAreaInsets();
@@ -309,12 +310,19 @@ export default function PanchangScreen({ route }: Props) {
   }, [route.params?.initialTab]);
 
   useEffect(() => {
-    if (route.params?.dateMs == null || !Number.isFinite(route.params.dateMs)) return;
-    const represented = startOfLocalDay(new Date(route.params.dateMs));
+    const entry = panchangDatedEntry(route.params);
+    if (!entry) return;
+    const represented = entry.date;
     setSelectedDate(represented);
     setVisibleMonth(startOfMonth(represented));
-    setPanchangTab('calendar');
-  }, [route.params?.dateMs]);
+    setPanchangTab(entry.mode);
+    if (entry.mode === 'catalog') {
+      setCatalogQuery('');
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }
+    // A new navigation request for the same day must also reveal the cards,
+    // even when Vrat was left with a search query or another local mode.
+  }, [route.params]);
 
   useFocusEffect(
     useCallback(() => {
@@ -379,7 +387,9 @@ export default function PanchangScreen({ route }: Props) {
   };
   const openVidhiCatalog = () => rootNav.navigate('VidhiCatalog');
 
-  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
+  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: selectedDate.getTime() });
+  const openVratOccasions = () => rootNav.navigate('VratTab', vratOccasionTarget(selectedDate));
+  const openOccasionDetail = (ruleId: string, date: Date) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: date.getTime() });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
@@ -422,7 +432,7 @@ export default function PanchangScreen({ route }: Props) {
             style={({ pressed }) => [
               styles.segmentOption,
               { borderRadius: radii.pill },
-              selected && { backgroundColor: sky ? sky.glassActive : tab === 'catalog' ? colors.catalogAccent : colors.saffronTint },
+              selected && { backgroundColor: sky ? sky.glassActive : tab === 'catalog' ? colors.catalogAccent : colors.saffronDeep },
               pressed && !selected && { opacity: 0.7 },
             ]}
           >
@@ -430,7 +440,7 @@ export default function PanchangScreen({ route }: Props) {
               style={{
                 fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
                 fontSize: 13,
-                color: selected ? (sky ? sky.glassActiveText : tab === 'catalog' ? colors.onPrimary : colors.saffronDeep) : (sky ? sky.inkSoft : colors.inkMuted),
+                color: selected ? (sky ? sky.glassActiveText : colors.onPrimary) : (sky ? sky.inkSoft : colors.inkMuted),
               }}
             >
               {contentByLang(lang, labels[tab].hi, labels[tab].en)}
@@ -557,9 +567,10 @@ export default function PanchangScreen({ route }: Props) {
       {panchangTab === 'calendar'
         ? <PanchangChakraBackground />
         : panchangTab === 'catalog' ? <CatalogBackground />
-        : <BackgroundLayer source={backgroundImages.panchang_celestial_almanac} />}
+        : <CatalogBackground />}
       <SafeAreaView style={styles.safe} edges={panchangTab === 'calendar' ? ['left', 'right'] : ['top', 'left', 'right']}>
         <ScrollView
+          ref={scrollRef}
           contentContainerStyle={[styles.scroll, { paddingHorizontal: 14 }, panchangTab === 'calendar' && { paddingTop: 0 }]}
           showsVerticalScrollIndicator={false}
         >
@@ -807,10 +818,12 @@ export default function PanchangScreen({ route }: Props) {
                 tonight={ribbonTonight}
                 sunrise={p.sunrise}
                 tithiIndex={p.tithi.index}
-                onOpen={openObservanceDetail}
+                onOpen={ruleId => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: (ribbonTonight ? carryOverDate : selectedDate).getTime() })}
               />
             </View>
           )}
+
+          <OccasionSection presentation="summary" onOpenVrat={openVratOccasions} items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
           {/* Daily Muhurat — Choghadiya / Rahu Kaal card (PRD-14). Promoted
               to lead the day panel, above the anga grid: "is now auspicious?" is
@@ -916,7 +929,7 @@ export default function PanchangScreen({ route }: Props) {
             </Pressable>
           )}
 
-          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={openObservanceDetail} />
+          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={ruleId => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: nextDate.getTime() })} />
           {/* Preserve existing regional and private reminder entry points while
               the owner considers their placement. */}
           {observances.length === 0 && lensAvailableCount > 0 && (
@@ -933,6 +946,8 @@ export default function PanchangScreen({ route }: Props) {
               calendarSystem={calendarSystem}
               query={catalogQuery}
               onChangeQuery={setCatalogQuery}
+              occasionCards={<OccasionSection presentation="illustrated" items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} onOpenVrat={openVratOccasions} onOpenDetail={openOccasionDetail} />}
+              replacesTodayCards={isSelectedToday && occasion.items.length > 0}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -1196,11 +1211,6 @@ function JyotishLanding({
   }
 
   if (loadState === 'saved' && profile && chart && moon && guidance && city) {
-    const lagnaPrimary = contentByLang(
-      lang,
-      RASHI_NAMES_HI[chart.lagnaRashiIndex],
-      RASHI_NAMES_EN[chart.lagnaRashiIndex]
-    );
     const moonPrimary = contentByLang(
       lang,
       RASHI_NAMES_HI[moon.rashiIndex],
@@ -1217,7 +1227,24 @@ function JyotishLanding({
         : SADE_SATI_PHASE_SHORT[guidance.sadeSatiPhase];
 
     return (
-      <View accessibilityLabel="Jyotish tools landing, saved profile" style={styles.jyotishSavedLanding}>
+      <JyotishLandingGallery lang={lang} saved
+        onOpenKundali={onOpenKundali} onOpenRashifal={onOpenRashifal}
+        onOpenGunaMilan={onOpenGunaMilan} onOpenNamkaran={onOpenNamkaran}
+        onOpenNavagraha={onOpenNavagraha}
+        additionalTools={<View style={{ gap: 10, marginTop: 14 }}>
+          <Pressable onPress={onOpenGochar} accessibilityRole="button" accessibilityLabel="Open Gochar"
+            accessibilityValue={{ text: sadeSatiValue?.en ?? 'Today’s nine grahas in your chart.' }}
+            style={[styles.prashnaDoor, { borderColor: colors.catalogBorder, backgroundColor: colors.catalogSurface, borderRadius: radii.lg }]}>
+            <View style={{ flex: 1 }}><Text style={{ color: colors.catalogAccent, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17 }}>{contentByLang(lang, 'गोचर', 'Gochar')}</Text>
+              <Text style={{ color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 21 }}>{sadeSatiValue ? contentByLang(lang, sadeSatiValue.hi, sadeSatiValue.en) : contentByLang(lang, 'आज के नौ ग्रह आपकी कुंडली में।', 'Today’s nine grahas in your chart.')}</Text>
+            </View><AppIcon name="next" size={20} />
+          </Pressable>
+          <Pressable onPress={onOpenPrashna} accessibilityRole="button" accessibilityLabel="Open Prashna"
+            testID="jyotish-prashna-door" style={[styles.prashnaDoor, { borderColor: colors.catalogBorder, backgroundColor: colors.catalogSurface, borderRadius: radii.lg }]}>
+            <View style={{ flex: 1 }}><Text style={{ color: colors.catalogAccent, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 17 }}>{contentByLang(lang, 'प्रश्न · अपनी कुंडली से पूछें', 'Prashna · ask your chart')}</Text></View><AppIcon name="next" size={20} />
+          </Pressable>
+        </View>}
+      >
         {/* Whose day this is, ABOVE everything it changes. The chips no longer
             govern only the guidance card: every tile in the grid below reads out
             of this same active person, so a switch has to re-answer the whole
@@ -1340,135 +1367,6 @@ function JyotishLanding({
           </View>
         </View>
 
-        {/* The four doors as ONE object, each answering for this person. This is
-            what replaces the deleted chart-glance card: लग्न and नक्षत्र moved
-            onto the कुंडली tile, and the साढ़े साती teaser onto the गोचर tile,
-            instead of a 2×2 fact grid restating numbers the doors needed anyway.
-            Open Kundali, Edit details and the full reading all live on
-            KundaliScreen, which is one tap away and already offers all three. */}
-        {sectionLabel(
-          profile.name ? `${profile.name} के लिए` : 'आपके लिए',
-          profile.name ? `For ${profile.name}` : 'For you'
-        )}
-        {/* प्रश्न leads the doors as a full-width card, not a fifth tile: the
-            grid answers "what does my chart say", this answers "what should I
-            do about X" — the question people actually bring (design.md §72). */}
-        <Pressable
-          onPress={onOpenPrashna}
-          accessibilityRole="button"
-          accessibilityLabel="Open Prashna"
-          testID="jyotish-prashna-door"
-          style={({ pressed }) => [
-            styles.prashnaDoor,
-            {
-              borderColor: colors.cardActiveBorder,
-              backgroundColor: colors.cardActiveFrom,
-              borderRadius: radii.lg,
-            },
-            elevation.card,
-            pressed && { opacity: 0.8 },
-          ]}
-        >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                color: colors.ink,
-                fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-                fontSize: 15,
-              }}
-            >
-              {contentByLang(lang, 'प्रश्न · अपनी कुंडली से पूछें', 'Prashna · ask your chart')}
-              <Text style={[styles.prashnaNew, { color: colors.newBadgeText }]}>  NEW</Text>
-            </Text>
-            <Text
-              style={{
-                color: colors.inkMuted,
-                fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-                fontSize: 11,
-                lineHeight: 16,
-                marginTop: 3,
-              }}
-            >
-              {meaningByLang(
-                lang,
-                'विद्या · व्यापार · नौकरी · धन · स्वास्थ्य — नौ विषय, हर उत्तर अपने आधार के साथ',
-                'Study · business · work · money · constitution — nine purposes, every answer with its basis'
-              )}
-            </Text>
-          </View>
-          <Text style={{ color: colors.saffronDeep, fontSize: 18 }}>›</Text>
-        </Pressable>
-        <View style={styles.jyotishTileGrid}>
-          <JyotishToolTile
-            titleHi="कुंडली"
-            titleEn="Kundali"
-            bodyHi="लग्न, ग्रह, भाव और दशा।"
-            bodyEn="Lagna, grahas, houses and Dasha."
-            value={{
-              hi: `${lagnaPrimary} लग्न · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} ${moon.pada}`,
-              en: `${lagnaPrimary} Lagna · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} ${moon.pada}`,
-            }}
-            glyph="कु"
-            onPress={onOpenKundali}
-            accessibilityLabel="Open Kundali"
-            lang={lang}
-          />
-          <JyotishToolTile
-            titleHi="गोचर"
-            titleEn="Gochar"
-            bodyHi="आज के नौ ग्रह आपकी कुंडली में।"
-            bodyEn="Today’s nine grahas in your chart."
-            // The one tile that can be LIVE: a running Sade Sati is a fact about
-            // this person today, and it used to sit 700 dp down the page as a
-            // teaser inside the chart card.
-            value={sadeSatiValue}
-            live={guidance.sadeSatiPhase !== 'none'}
-            badge="NEW"
-            glyph="गो"
-            onPress={onOpenGochar}
-            accessibilityLabel="Open Gochar"
-            lang={lang}
-          />
-          <JyotishToolTile
-            titleHi="अष्टकूट मिलान"
-            titleEn="Guna Milan"
-            bodyHi="वर-वधू के ३६ गुण।"
-            bodyEn="A private 36-point match."
-            // The saved person's own Moon sign and nakshatra ARE one side of a
-            // match, so naming them is a true reading, not a decoration.
-            value={{
-              hi: `${moonPrimary} · ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} से`,
-              en: `From ${moonPrimary} · ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]}`,
-            }}
-            badge="NEW"
-            glyph="मि"
-            onPress={onOpenGunaMilan}
-            accessibilityLabel="Open Guna Milan"
-            lang={lang}
-          />
-          <JyotishToolTile
-            titleHi="नामकरण"
-            titleEn="Namkaran"
-            // Deliberately DESCRIPTIVE where the other three read out a value:
-            // Namkaran answers for a newborn, not for the selected person, so a
-            // personalised line here would be a category error. Today's namakshar
-            // is also gated content (NAMAKSHAR_SOURCE.verified is false), and the
-            // landing is not where an unverified syllable gets promoted.
-            bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
-            bodyEn="A newborn’s namakshar, from the birth Moon or a nakshatra."
-            badge="NEW"
-            glyph="ना"
-            onPress={onOpenNamkaran}
-            accessibilityLabel="Open Namkaran"
-            lang={lang}
-          />
-        </View>
-        {sectionLabel('साधना', 'Practice')}
-        <JyotishPracticeCard
-          subtitleHi="आज के चन्द्र-राशि मार्गदर्शन के साथ"
-          subtitleEn="Suggested alongside today’s Moon-sign guidance"
-          onPress={onOpenNavagraha}
-        />
         <JyotishShareSheet
           visible={shareVisible}
           lang={lang}
@@ -1492,133 +1390,14 @@ function JyotishLanding({
             />
           )}
         />
-      </View>
+      </JyotishLandingGallery>
     );
   }
 
-  return (
-    <View accessibilityLabel="Jyotish tools landing">
-      <View
-        style={[
-          styles.jyotishHero,
-          {
-            backgroundColor: colors.cardActiveFrom,
-            borderColor: colors.cardActiveBorder,
-            borderRadius: radii.lg,
-          },
-          elevation.card,
-        ]}
-      >
-        <View style={[styles.jyotishHeroIcon, { backgroundColor: colors.saffronTint, borderRadius: radii.lg }]}>
-          <JyotishChakraSeal />
-        </View>
-        <View style={{ flex: 1 }}>
-          <Text
-            style={{
-              color: colors.ink,
-              fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
-              fontSize: 22,
-            }}
-          >
-            {contentByLang(lang, 'ज्योतिष को समझें', 'Understand Jyotish')}
-          </Text>
-          <Text
-            style={{
-              color: colors.inkMuted,
-              fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 12,
-              lineHeight: 18,
-              marginTop: 5,
-            }}
-          >
-            {meaningByLang(
-              lang,
-              'पंचांग की खगोलीय गणना से जन्म कुंडली और दैनिक राशि-मार्गदर्शन—सरल अर्थ के साथ।',
-              'Birth charts and daily rashi guidance from the same astronomy foundation as Panchang—explained in plain language.'
-            )}
-          </Text>
-        </View>
-      </View>
-
-      {/* The same grid as the saved landing (design.md §51c), with every tile
-          on its descriptive fallback — a guest has no chart, so no tile has a
-          reading. One geometry for both states, not a guest-only layout. */}
-      {sectionLabel('अपने लिए', 'For you')}
-      <View style={styles.jyotishTileGrid}>
-        <JyotishToolTile
-          titleHi="जन्म कुंडली"
-          titleEn="Create Kundali"
-          bodyHi="लग्न, ग्रह, भाव और दशा—सरल सार के साथ।"
-          bodyEn="Lagna, grahas, houses and Dasha—with plain-language insights."
-          badge="NEW"
-          glyph="कु"
-          onPress={onOpenKundali}
-          accessibilityLabel="Create Kundali"
-          lang={lang}
-        />
-        <JyotishToolTile
-          titleHi="आज का राशिफल"
-          titleEn="Daily Rashifal"
-          bodyHi="चन्द्र राशि और आज के गोचर से चिंतन-संकेत।"
-          bodyEn="Reflection prompts from your Moon sign and today's transits."
-          glyph="रा"
-          onPress={onOpenRashifal}
-          accessibilityLabel="Open Daily Rashifal"
-          lang={lang}
-        />
-        <JyotishToolTile
-          titleHi="अष्टकूट मिलान"
-          titleEn="Guna Milan"
-          bodyHi="वर-वधू के ३६ गुण—हर कूट का निजी हिसाब।"
-          bodyEn="A private 36-point match with every koota explained."
-          badge="NEW"
-          glyph="मि"
-          onPress={onOpenGunaMilan}
-          accessibilityLabel="Open Guna Milan"
-          lang={lang}
-        />
-        <JyotishToolTile
-          titleHi="नामकरण"
-          titleEn="Namkaran"
-          bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
-          bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
-          badge="NEW"
-          glyph="ना"
-          onPress={onOpenNamkaran}
-          accessibilityLabel="Open Namkaran"
-          lang={lang}
-        />
-      </View>
-
-      <View style={styles.jyotishMicroNote}>
-        <View
-          style={[
-            styles.jyotishInfoMark,
-            { borderColor: colors.divider, borderRadius: radii.pill },
-          ]}
-        >
-          <Text style={[styles.jyotishInfoText, { color: colors.saffronDeep }]}>i</Text>
-        </View>
-        <Text
-          style={{
-            flex: 1,
-            color: colors.inkMuted,
-            fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-            fontSize: 11,
-            lineHeight: 16,
-          }}
-        >
-          {meaningByLang(
-            lang,
-            'पारम्परिक मार्गदर्शन चिंतन का सहारा है, निश्चित भविष्यवाणी नहीं।',
-            'Traditional guidance is a reflection aid, not a certain prediction.'
-          )}
-        </Text>
-      </View>
-      {sectionLabel('साधना', 'Practice')}
-      <JyotishPracticeCard onPress={onOpenNavagraha} />
-    </View>
-  );
+  return <JyotishLandingGallery lang={lang}
+    onOpenKundali={onOpenKundali} onOpenRashifal={onOpenRashifal}
+    onOpenGunaMilan={onOpenGunaMilan} onOpenNamkaran={onOpenNamkaran}
+    onOpenNavagraha={onOpenNavagraha} />;
 }
 
 function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography, sky, bare }: {
@@ -1890,13 +1669,13 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, titleHi, titleEn)}
           </Text>
-          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
+          <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkMuted, marginTop: 4 }}>
             {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
           </Text>
         </>
       )}
       {dayNote && (
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+        <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.saffronDeep, marginTop: 6 }}>
           {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
@@ -1998,7 +1777,7 @@ function CatalogLedgerCell({
     >
       <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 22, color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
+        style={{ ...typography.listingScope, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
       >
         {label}
       </Text>
@@ -2260,7 +2039,7 @@ function CatalogLanding({
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
   onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
-  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi,
+  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi, occasionCards, replacesTodayCards,
 }: {
   lang: Lang;
   today: Date;
@@ -2281,6 +2060,8 @@ function CatalogLanding({
   lenses: ReadonlySet<ObservanceLens>;
   lensAvailableCount: number;
   followCount: number;
+  occasionCards: React.ReactNode;
+  replacesTodayCards: boolean;
   // Today's solve for the day note, or null when the calendar is on another day.
   todaySolve: ObservanceDaySolve | null;
   onOpenLink: (sectionId: string) => void;
@@ -2343,7 +2124,8 @@ function CatalogLanding({
         <>
           {/* Same occurrence names, day notes and reading actions as the calendar;
               the catalog opts into an illustrated, expandable introduction. */}
-          {todayItems.length > 0 && (
+          {occasionCards}
+          {!replacesTodayCards && todayItems.length > 0 && (
             <View testID="catalog-today" style={{ marginBottom: 0 }}>
               <View style={styles.todayHead}>
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>

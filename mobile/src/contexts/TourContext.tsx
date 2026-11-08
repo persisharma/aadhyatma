@@ -16,6 +16,7 @@ import { UPGRADER_SIGNAL_KEYS } from '@/contexts/NewContentContext';
 
 const TOUR_COMPLETED_KEY = '@vedansh/tour-completed-v';
 const WHATS_NEW_SEEN_KEY = '@vedansh/whats-new-seen-v';
+const PHASE_KEY = '@vedansh/onboarding-phase';
 const SETUP_COMPLETED_KEY = '@vedansh/onboarding-setup-v';
 
 type TourContextValue = {
@@ -23,7 +24,7 @@ type TourContextValue = {
   /** First-launch tour should be shown right now. */
   shouldShowFirstLaunchTour: boolean;
   /**
-   * Post-tour language + reading-size setup sheet should be shown right now.
+   * First-run language, city and reminder setup should be shown right now.
    * Fires for a fresh install (or a tour replay) once the tour's own gate has
    * closed, so the walkthrough that *showed* those settings is immediately
    * followed by the prompt to pick them. Never for a returning user.
@@ -39,7 +40,7 @@ type TourContextValue = {
    * what's-new modal too.
    */
   markTourCompleted: () => Promise<void>;
-  /** Marks the post-tour language/size setup sheet done for the current version. */
+  /** Marks the first-run setup done for the current version. */
   markOnboardingSetupCompleted: () => Promise<void>;
   /** Marks the what's-new modal seen for the current version. */
   markWhatsNewSeen: () => Promise<void>;
@@ -50,10 +51,14 @@ type TourContextValue = {
 const TourContext = createContext<TourContextValue | null>(null);
 
 export function TourProvider({ children }: { children: React.ReactNode }) {
+  const [phase, setPhase] = useState<'setup' | 'tour' | 'done'>('done');
   const [isLoading, setIsLoading] = useState(true);
-  const [tourCompletedVersion, setTourCompletedVersion] = useState<string | null>(null);
-  const [whatsNewSeenVersion, setWhatsNewSeenVersion] = useState<string | null>(null);
-  const [setupCompletedVersion, setSetupCompletedVersion] = useState<string | null>(null);
+  const [tourCompletedVersion, setTourCompletedVersion] = useState<
+    string | null
+  >(null);
+  const [whatsNewSeenVersion, setWhatsNewSeenVersion] = useState<string | null>(
+    null,
+  );
   // Distinguishes a genuine fresh install from a returning user on the debut
   // release (both lack the tour keys). A fresh install gets the full tour; a
   // returning user gets the version's What's New instead — matching "install →
@@ -63,21 +68,18 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   // Explicit replay request (More → Show App Tour). Forces the tour regardless
   // of install-vs-upgrade classification or a prior completion.
   const [replayRequested, setReplayRequested] = useState(false);
-  // Separate arming flag for the post-tour setup sheet: `replayRequested` is
-  // cleared the moment the replayed tour finishes, which is exactly when the
-  // setup sheet is supposed to open — so it needs its own flag that only
-  // markOnboardingSetupCompleted clears.
-  const [setupReplayRequested, setSetupReplayRequested] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const [[, tour], [, seen], [, setup]] = await AsyncStorage.multiGet([
-          TOUR_COMPLETED_KEY,
-          WHATS_NEW_SEEN_KEY,
-          SETUP_COMPLETED_KEY,
-        ]);
+        const [[, tour], [, seen], [, setup], [, savedPhase]] =
+          await AsyncStorage.multiGet([
+            TOUR_COMPLETED_KEY,
+            WHATS_NEW_SEEN_KEY,
+            SETUP_COMPLETED_KEY,
+            PHASE_KEY,
+          ]);
         let freshInstall = false;
         try {
           const keys = await AsyncStorage.getAllKeys();
@@ -91,18 +93,31 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
           freshInstall = false;
         }
         if (cancelled) return;
+        const nextPhase =
+          savedPhase === 'setup' || savedPhase === 'tour'
+            ? savedPhase
+            : savedPhase === 'done' || tour
+              ? 'done'
+              : setup
+                ? 'tour'
+                : freshInstall
+                  ? 'setup'
+                  : 'done';
+        await AsyncStorage.setItem(PHASE_KEY, nextPhase);
+        if (cancelled) return;
+        setPhase(nextPhase);
+        freshInstall = nextPhase !== 'done' || freshInstall;
         setTourCompletedVersion(tour ?? null);
         setWhatsNewSeenVersion(seen ?? null);
-        setSetupCompletedVersion(setup ?? null);
         setIsFreshInstall(freshInstall);
       } catch {
         // AsyncStorage is best-effort. On read failure, default to a fresh
         // install so the user still gets oriented — over-showing the tour is
         // friendlier than missing onboarding entirely.
         if (!cancelled) {
+          setPhase('setup');
           setTourCompletedVersion(null);
           setWhatsNewSeenVersion(null);
-          setSetupCompletedVersion(null);
           setIsFreshInstall(true);
         }
       } finally {
@@ -118,11 +133,13 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
     // Flip in-memory state FIRST (synchronously), before the awaited write, so
     // a consumer that hides on dismissal can't observe a stale "should show"
     // and bounce back open (mirrors NotificationPreferences.persistMeta).
+    setPhase('done');
     setTourCompletedVersion(APP_TOUR_VERSION);
     setWhatsNewSeenVersion(APP_TOUR_VERSION);
     setReplayRequested(false);
     try {
       await AsyncStorage.multiSet([
+        [PHASE_KEY, 'done'],
         [TOUR_COMPLETED_KEY, APP_TOUR_VERSION],
         [WHATS_NEW_SEEN_KEY, APP_TOUR_VERSION],
       ]);
@@ -132,10 +149,12 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const markOnboardingSetupCompleted = useCallback(async () => {
-    setSetupCompletedVersion(APP_TOUR_VERSION);
-    setSetupReplayRequested(false);
+    setPhase('tour');
     try {
-      await AsyncStorage.setItem(SETUP_COMPLETED_KEY, APP_TOUR_VERSION);
+      await AsyncStorage.multiSet([
+        [SETUP_COMPLETED_KEY, APP_TOUR_VERSION],
+        [PHASE_KEY, 'tour'],
+      ]);
     } catch {
       /* best-effort — in-memory state already updated */
     }
@@ -154,12 +173,10 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
     // Force the tour on the next render regardless of install-vs-upgrade or a
     // prior completion; clear the persisted markers so it re-shows.
     setReplayRequested(true);
-    setSetupReplayRequested(true);
     setTourCompletedVersion(null);
     setWhatsNewSeenVersion(null);
-    setSetupCompletedVersion(null);
     try {
-      await AsyncStorage.multiRemove([TOUR_COMPLETED_KEY, WHATS_NEW_SEEN_KEY, SETUP_COMPLETED_KEY]);
+      await AsyncStorage.multiRemove([TOUR_COMPLETED_KEY, WHATS_NEW_SEEN_KEY]);
     } catch {
       /* best-effort — in-memory state already updated */
     }
@@ -169,20 +186,17 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
     const whatsNewEntry = getWhatsNewForVersion(APP_TOUR_VERSION);
     // Tour: an explicit replay, or an un-completed genuine fresh install.
     const shouldShowFirstLaunchTour =
-      !isLoading && (replayRequested || (tourCompletedVersion === null && isFreshInstall));
-    // Setup sheet: right after the walkthrough closes, on a fresh install or a
-    // replay — the tour's last two steps point at the Language / Reading Size
-    // rows, and this is where the user actually picks them. Never runs while the
-    // tour is up, and never for a returning user (they already have a language).
-    const shouldShowOnboardingSetup =
       !isLoading &&
-      !shouldShowFirstLaunchTour &&
-      setupCompletedVersion === null &&
-      (isFreshInstall || setupReplayRequested);
+      (replayRequested ||
+        (phase === 'tour' && tourCompletedVersion === null && isFreshInstall));
+    // Setup owns the fresh-install phase; an explicit replay only re-arms the tour.
+    const shouldShowOnboardingSetup =
+      !isLoading && phase === 'setup' && !replayRequested;
     // What's New: a returning user on a version whose notes they haven't seen —
     // never alongside the tour, never on a fresh install (the tour covers it).
     const shouldShowWhatsNew =
       !isLoading &&
+      phase === 'done' &&
       !shouldShowFirstLaunchTour &&
       whatsNewEntry !== null &&
       whatsNewSeenVersion !== APP_TOUR_VERSION;
@@ -199,12 +213,11 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
     };
   }, [
     isLoading,
+    phase,
     tourCompletedVersion,
     whatsNewSeenVersion,
-    setupCompletedVersion,
     isFreshInstall,
     replayRequested,
-    setupReplayRequested,
     markTourCompleted,
     markOnboardingSetupCompleted,
     markWhatsNewSeen,

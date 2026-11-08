@@ -1,0 +1,36 @@
+name: Brand header browser checks
+on:
+  pull_request:
+    paths:
+      - 'mobile/src/components/HomeWordmark.tsx'
+      - 'mobile/src/components/VedanshWordmark.tsx'
+      - 'mobile/assets/branding/wordmarks/**'
+      - 'mobile/visual/brand/**'
+      - '.github/workflows/brand-visual.yml'
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - name: Install existing isolated browser test tools
+        run: npm install --prefix visual/kundali --ignore-scripts --no-audit --no-fund
+      - run: node visual/kundali/node_modules/playwright/cli.js install --with-deps chromium
+      - run: node visual/brand/check.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: brand-header-browser-evidence
+          path: mobile/visual-output/brand
+          if-no-files-found: warn

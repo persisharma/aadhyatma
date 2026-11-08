@@ -18,7 +18,7 @@ import type { DaanKathaEntry, DaanPrincipleEntry } from '@/data/daan/types';
 import type { KathaContentEntry } from '@/panchang/types';
 import type { TempleEntry } from '@/data/theerth/temples';
 import type { PrathaEntry } from '@/data/pratha/types';
-import { prathaPages, PRATHA_TIERS } from '@/data/pratha/presentation';
+import { prathaPages } from '@/data/pratha/presentation';
 import { getTheerthBackground, getDaanBackground } from '@/data/backgrounds';
 import { getKathaBackground } from '@/data/kathaBackgrounds';
 import type {
@@ -31,7 +31,7 @@ import type {
 const para = (hi: string, en: string): ShareableProseBlock => ({ kind: 'para', hi, en });
 const heading = (hi: string, en: string): ShareableProseBlock => ({ kind: 'heading', hi, en });
 
-/** Source labels travel with every shared story, using the existing prose card. */
+/** Authored customs teaching uses the shared prose export; research stays internal. */
 export function prathaShareable(entry: PrathaEntry, pageIndex: number): ShareableProse {
   const pages = prathaPages(entry);
   const page = pages[Math.max(0, Math.min(pages.length - 1, pageIndex))];
@@ -44,7 +44,6 @@ export function prathaShareable(entry: PrathaEntry, pageIndex: number): Shareabl
       headerHi: entry.questionHi, headerEn: entry.questionEn,
       titleHi: page.titleHi, titleEn: page.titleEn,
       blocks: [
-        ...(page.tier ? [para(`${PRATHA_TIERS[page.tier].hi} · ${page.canonHi}`, `${PRATHA_TIERS[page.tier].en} · ${page.canonEn}`)] : []),
         ...pairParagraphs(page.bodyHi, page.bodyEn),
       ],
     }],
@@ -185,7 +184,7 @@ export function daanKathaShareable(katha: DaanKathaEntry): ShareableProse {
           ...katha.sections.flatMap((s) => pairParagraphs(s.paragraphsHi, s.paragraphsEn)),
           heading('शिक्षा', 'The teaching'),
           para(katha.teachingHi, katha.teachingEn),
-          para(`स्रोत: ${katha.canonHi}`, `Source: ${katha.canonEn || katha.canonHi}`),
+          para(katha.canonHi, katha.canonEn || katha.canonHi),
         ],
       },
     ],

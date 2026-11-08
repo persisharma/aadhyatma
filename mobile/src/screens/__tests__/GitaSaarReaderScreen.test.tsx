@@ -165,7 +165,7 @@ test('the opening story is continuous and later verses offer one-tap return', ()
   assert.equal(new Set(tree.root.findAll((n) => String(n.props.testID).startsWith('gita-saar-story-beat-')).map((n) => n.props.testID)).size, 3);
   assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-connection').length > 0);
   assert.ok(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-everyday').length > 0);
-  assert.ok(tree.root.findAll((n) => n.props.accessibilityRole === 'link' && String(n.props.accessibilityLabel).startsWith('Open external story source')).length > 0);
+  assert.equal(tree.root.findAll((n) => n.props.accessibilityRole === 'link').length, 0);
   act(() => { tree.update(page(chapter.verses[1])); });
   assert.equal(tree.root.findAll((n) => n.props.testID === 'gita-saar-story-hero-true-prema').length, 0);
   const door = tree.root.findAll((n) => n.props.accessibilityLabel === "Read this theme's illustrated story" && typeof n.props.onPress === 'function')[0];
@@ -183,7 +183,7 @@ test('Shok story references open exact Gita verses inside the app', () => {
   assert.ok(ref);
   act(() => ref.props.onPress());
   expect(navigate).toHaveBeenCalledWith('GitaReader', { chapter: 2, initialIndex: 12 });
-  assert.ok(tree.root.findAll((node) => node.props.accessibilityRole === 'link' && String(node.props.accessibilityLabel).includes('external story source')).length > 0);
+  assert.equal(tree.root.findAll((node) => node.props.accessibilityRole === 'link').length, 0);
 });
 
 test('Gita passages cited as story sources stay inside the app', () => {
@@ -195,6 +195,30 @@ test('Gita passages cited as story sources stay inside the app', () => {
   assert.equal(source.props.accessibilityRole, 'button');
   act(() => source.props.onPress());
   expect(navigate).toHaveBeenCalledWith('GitaReader', { chapter: 17, initialIndex: 19 });
+});
+
+test('Bhagiratha story sources open Bala Kanda 43 and 44 inside Vedansh', () => {
+  const { tree, navigate } = render(0, 'en', 5);
+  for (const [sarga, initialIndex] of [[43, 1277], [44, 1318]]) {
+    const source = tree.root.findAll(
+      (node) => node.props.testID === `gita-saar-source-valmiki-1.${sarga}` && typeof node.props.onPress === 'function'
+    )[0];
+    assert.ok(source);
+    assert.equal(source.props.accessibilityRole, 'button');
+    act(() => source.props.onPress());
+    expect(navigate).toHaveBeenLastCalledWith('ValmikiRamayanReader', { chapter: 1, initialIndex });
+  }
+  assert.equal(tree.root.findAll((node) => node.props.accessibilityRole === 'link').length, 0);
+});
+
+test('Vibhishana story source opens Yuddha Kanda 18 inside Vedansh', () => {
+  const { tree, navigate } = render(0, 'hi', 9);
+  const source = tree.root.findAll(
+    (node) => node.props.testID === 'gita-saar-source-valmiki-6.18' && typeof node.props.onPress === 'function'
+  )[0];
+  assert.ok(source);
+  act(() => source.props.onPress());
+  expect(navigate).toHaveBeenCalledWith('ValmikiRamayanReader', { chapter: 6, initialIndex: 564 });
 });
 
 test('reader pages receive the measured viewport so long vertical content stays bounded', () => {

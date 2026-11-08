@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { suvicharTabTarget } from '@/navigation/entryRoutes';
-import { dailyBhaktiShareable } from '@/utils/dailyBhaktiShare';
+import { dailyBhaktiVerse } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -150,7 +150,7 @@ export default function DailyBhaktiScreen() {
                   previewHi: verse.textHi.slice(0, 2).join(' '), previewEn: verse.textEn.slice(0, 2).join(' ') });
               }} />
               <View ref={shareButtonRef} collapsable={false}>
-                <ShareButton busy={shareBusy} onPress={() => share(dailyBhaktiShareable(verse), lang)} />
+                <ShareButton busy={shareBusy} onPress={() => share(dailyBhaktiVerse(verse), lang, { cardStyle: 'daily-bhakti' })} />
               </View>
               <Pressable onPress={refresh} accessibilityRole="button"
                 accessibilityLabel={pick(lang, { hi: 'अगला श्लोक', en: 'Next verse', gu: 'આગળનો શ્લોક', kn: 'ಮುಂದಿನ ಶ್ಲೋಕ' })}

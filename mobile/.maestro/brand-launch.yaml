@@ -1,0 +1,53 @@
+# Particle reveal disabled (Nov 2026 ANR review); re-enable restores the 2350ms playback checks.
+# Installed native evidence still required: this file is not a visual verdict.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
+    id: brand-particle-webview
+- assertVisible:
+    id: vedansh-wordmark-hi
+- assertVisible:
+    id: home-wordmark-crest
+- assertVisible:
+    id: home-wordmark-artwork-frame
+- assertVisible:
+    id: home-settings
+- takeScreenshot: e2e-shots/brand-home-flute-compact-om-crest
+- stopApp
+- launchApp:
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+# Particle reveal is disabled (BRAND_LAUNCH_REVEAL_ENABLED, Nov 2026 ANR review):
+# a cold start goes straight to Home and never mounts the particle WebView.
+- extendedWaitUntil:
+    visible:
+      id: vedansh-wordmark-hi
+    timeout: 30000
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
+    id: brand-particle-webview
+- takeScreenshot: e2e-shots/brand-cold-home-no-reveal
+
+# Warm returns must keep Home visible, with no replay.
+- pressKey: Home
+- launchApp:
+    stopApp: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
+    id: brand-resume-modal
+- assertVisible:
+    id: home-wordmark-crest
+- pressKey: Home
+- launchApp:
+    stopApp: false
+- assertNotVisible:
+    id: brand-launch-reveal
+- assertVisible:
+    id: home-wordmark-crest

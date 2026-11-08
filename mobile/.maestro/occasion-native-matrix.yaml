@@ -1,0 +1,89 @@
+# Installed native Release only; run by scripts/native-festival-ios.sh.
+# Each case proves fresh setup, a saved city, language/reading preference,
+# reachable enlarged content and the actual OS image-share handoff.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: 'Language,.*' }
+    centerElement: true
+- tapOn: 'Language,.*'
+- tapOn: English
+- scrollUntilVisible:
+    element: { text: 'Reading size,.*' }
+    centerElement: true
+- tapOn: 'Reading size,.*'
+- tapOn: '${READING_SIZE}'
+- tapOn: Done
+- tapOn: { id: settings-back }
+- tapOn: { id: tab-panchang }
+- tapOn: 'Location: .*'
+- tapOn: 'Search city, village or pincode'
+- inputText: Delh
+- hideKeyboard
+- tapOn: Delhi
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: 'Language,.*' }
+    centerElement: true
+- tapOn: 'Language,.*'
+- tapOn: '${LANGUAGE_NAME}'
+- tapOn: { id: settings-back }
+- openLink: 'vedansh://widget/panchang?date=${OCCASION_DATE}'
+- scrollUntilVisible:
+    element: { text: '${EXPECTED_CLOCK}' }
+    direction: DOWN
+    centerElement: true
+    timeout: 30000
+- assertVisible: { id: compact-occasion-card }
+- takeScreenshot: 'e2e-shots/festival-${CASE_ID}-screen'
+- scrollUntilVisible:
+    element: { id: compact-occasion-open-vrat }
+    direction: DOWN
+    centerElement: true
+- assertVisible: { text: '${EXPECTED_CLOCK}' }
+- takeScreenshot: 'e2e-shots/festival-${CASE_ID}-compact-fit'
+- runFlow:
+    when: { true: '${String(FOCUSED) === "true"}' }
+    commands:
+      - scrollUntilVisible:
+          element: { id: compact-occasion-open-vrat }
+          direction: DOWN
+          centerElement: true
+      - tapOn: { id: compact-occasion-open-vrat }
+      - extendedWaitUntil:
+          visible: { id: occasion-timings-card }
+          timeout: 30000
+      - scrollUntilVisible:
+          element: { id: occasion-share }
+          direction: DOWN
+          centerElement: true
+      - assertVisible: { id: occasion-share }
+      - takeScreenshot: 'e2e-shots/festival-${CASE_ID}-action'
+      - tapOn: { id: occasion-share }
+      - extendedWaitUntil:
+          visible: { id: occasion-share-export }
+          timeout: 30000
+- runFlow:
+    when: { true: '${String(FOCUSED) !== "true"}' }
+    commands:
+      - scrollUntilVisible:
+          element: { text: 'Share panchang' }
+          direction: UP
+          centerElement: true
+      - tapOn: Share panchang
+      - extendedWaitUntil:
+          visible: { id: panchang-share-occasion }
+          timeout: 30000
+- extendedWaitUntil:
+    visible: Share to other apps
+    timeout: 30000
+- takeScreenshot: 'e2e-shots/festival-${CASE_ID}-share-preview'
+- tapOn: Share to other apps
+# The runner copies the newly created native PNG while this sheet is open.
+# No recipient or share action is selected.
+- extendedWaitUntil:
+    visible: 'Copy|AirDrop|Save Image|Add to Reading List'
+    timeout: 30000
+- takeScreenshot: 'e2e-shots/festival-${CASE_ID}-system-share'

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { library } from '@/data/texts';
 
 import { formatLocation } from '@/utils/formatLocation';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
@@ -39,6 +40,36 @@ const bm = (overrides: Partial<BookmarkRef>): BookmarkRef => ({
   previewEn: '',
   ...overrides,
 });
+
+// Doha cards, saved positions and bookmarks retain the poet and exact page.
+for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe']) {
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.equal(entry.category, 'granth');
+  assert.equal(entry.status, 'active');
+  assert.deepEqual(entry.deities, []);
+  assert.deepEqual(buildEntryStartTarget(entry), {
+    screen: 'StutiReader', params: { initialIndex: 0, stutiId: sourceId },
+  });
+  const target = { screen: 'StutiReader', params: { initialIndex: 3, stutiId: sourceId } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 3 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::3`, sourceId, verseIndex: 3 })), target);
+}
+
+// Sundarkand chaptered bookmark routes to SundarkandReader with chapter+initialIndex.
+for (const [sourceId, screen, discriminator] of [
+  ['krishna-stuti', 'StutiReader', 'stutiId'],
+  ['lingashtakam', 'AshtakamReader', 'ashtakamId'],
+  ['devi-suktam', 'SuktamReader', 'suktamId'],
+  ['rama-raksha-stotra', 'KavachamReader', 'kavachamId'],
+] as const) {
+  const { nav, calls } = makeNav();
+  const saved = bm({ id: `${sourceId}::2`, sourceId, verseIndex: 2 });
+  assert.deepEqual(buildBookmarkTarget(saved), {
+    screen, params: { initialIndex: 2, [discriminator]: sourceId },
+  });
+  assert.equal(navigateToBookmark(nav as never, saved), true);
+  assert.deepEqual(calls, [{ name: screen, params: { initialIndex: 2, [discriminator]: sourceId } }]);
+}
 
 // Sundarkand chaptered bookmark routes to SundarkandReader with chapter+initialIndex.
 {
@@ -481,3 +512,4 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   assert.deepEqual(buildBookmarkTarget({ ...progress, id: 'garud-12-1', savedAt: 1, previewHi: '', previewEn: '' }), target);
   assert.deepEqual(formatLocation(progress), { hi: 'पाठ 12 · पृष्ठ 2', en: 'Reading 12 · Page 2' });
 }
+

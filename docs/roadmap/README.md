@@ -8,6 +8,10 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Next
 
+- [**PRD-46 — पहली बार · First-launch asks**](./prds/46-first-launch-asks.md) — **plan for review (2026-10-30).**
+  Language → city → reminders on the first open, one ask per screen with its reason; widgets on a later
+  day; our own reminder re-ask until yes (the OS prompt itself cannot repeat). Prototype:
+  [`docs/first-launch-asks-prototype.html`](../first-launch-asks-prototype.html).
 - [**PRD-41 — जिज्ञासा · Ask Vedansh**](./prds/41-jijnasa-ask-vedansh.md) — **Q4 2026 flagship; Phases 0–3 built 2026-09-02 (§14 build record).** Numbered 41 because 25 stays reserved for सन्ध्या वन्दन (round 1 §3), 26–29 are round-2 reservations, 30 is retired and 31–40 are the 2027 feature bets.
   An on-device, deterministic answer engine over the engines the app already ships, so the computed
   half of the product (panchang, muhurat, vrat, bhog, vidhi, vastu, kundali, theerth) becomes

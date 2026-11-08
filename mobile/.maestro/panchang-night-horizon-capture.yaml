@@ -1,0 +1,19 @@
+# Native debug preview after temporary clock injection through the local inspector.
+# Never inject a fixed clock into shipped source. Requires completed app setup.
+# PREVIEW_DATE, RESET_DATE, EXPECTED_STATE and SCREENSHOT are supplied by the caller.
+appId: com.prashantsharma.vedansh
+---
+- openLink: "vedansh://widget/panchang?date=${RESET_DATE}"
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- openLink: "vedansh://widget/panchang?date=${PREVIEW_DATE}"
+- tapOn: { text: Open, optional: true }
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element: { text: Expand calendar }
+    direction: UP
+- extendedWaitUntil:
+    visible: { id: "moon-horizon-${EXPECTED_STATE}" }
+    timeout: 30000
+- assertVisible: { id: panchang-night-moon-info }
+- takeScreenshot: "${SCREENSHOT}"

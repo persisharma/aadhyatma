@@ -271,7 +271,7 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
         ) : null}
       </View>
 
-      <ShareBrandFooter />
+      <ShareBrandFooter lang={props.lang} />
     </View>
   );
 });

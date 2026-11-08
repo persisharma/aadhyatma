@@ -63,7 +63,7 @@ appId: com.prashantsharma.vedansh
     timeout: 10000
 - scrollUntilVisible:
     element:
-      text: "Japa & Mantras. Tap to open."        # japam → plain
+      text: "JapMala. Tap to open."        # japam → plain
     direction: DOWN
     timeout: 10000
 - scrollUntilVisible:

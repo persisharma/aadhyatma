@@ -108,7 +108,8 @@ export type ObservanceRelativeRule = 'friday-before-purnima';
  * the observance day (the vyapini convention).
  *
  * - `udaya` — the tithi running at sunrise. The default, and right for the
- *   large majority: Ekadashi, Purnima, Amavasya, Navratri.
+ *   large majority: Amavasya, Navratri and most jayantis. Purnima fasting
+ *   and Ekadashi have their own multi-clause rules below.
  * - `chandrodaya` — the tithi running at MOONRISE. Correct for vrats whose
  *   defining act is the evening moon that ends the fast: Sankashti Chaturthi,
  *   Karwa Chauth, Bahula Chaturthi. Their tithi typically begins mid-morning
@@ -159,7 +160,8 @@ export type ObservanceDayRule =
   | 'sunset' | 'sunset-last' | 'purvahna'
   // Multi-clause published rules (`specialDayRules.ts`, RULEBOOK §23.14–23.17):
   | 'ekadashi' | 'ekadashi-vaishnava' | 'shravani' | 'holika-dahan-next'
-  | 'janmashtami-smarta' | 'janmashtami-vaishnava';
+  | 'janmashtami-smarta' | 'janmashtami-vaishnava'
+  | 'rishi-panchami' | 'purnima-vrat';
 
 /**
  * Where a rule sits inside a multi-day festival arc (PRD-28, पर्व-अर्क).
@@ -202,6 +204,8 @@ export type ObservanceRule = {
   recurrence: ObservanceRecurrence;
   type?: 'lunar' | 'solar';
   lunarMonth?: number;
+  /** Ganga Dussehra's exception: use Adhik Jyeshtha once when it repeats. */
+  adhikMonthPolicy?: 'prefer-adhik';
   monthSystem?: CalendarSystem | 'both';
   paksha?: Paksha;
   tithi?: number;

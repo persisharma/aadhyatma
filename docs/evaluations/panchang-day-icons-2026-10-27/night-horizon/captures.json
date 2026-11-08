@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-29",
+  "device": "Vedansh-Panchang-556",
+  "udid": "489288DE-9051-4BFA-A154-3A1E51273DF5",
+  "os": "iOS 26.5",
+  "location": "Ujjain",
+  "readingSize": "Large",
+  "captures": [
+    {
+      "file": "ios-before.png",
+      "simulatedAt": "2026-10-28T19:00:00+05:30",
+      "expected": "not-risen",
+      "moonrise": "19:31",
+      "visualReview": "Stars only; moonrise time and yet-to-rise state visible; no night trajectory."
+    },
+    {
+      "file": "ios-after.png",
+      "simulatedAt": "2026-10-28T20:00:00+05:30",
+      "expected": "above",
+      "moonrise": "19:31",
+      "visualReview": "Painted waning moon shown in a fixed position, distinct from night boundaries; rise label retained."
+    },
+    {
+      "file": "ios-set.png",
+      "simulatedAt": "2026-10-20T02:00:00+05:30",
+      "expected": "set",
+      "moonrise": "13:39, 19 Oct",
+      "moonset": "00:44, 20 Oct",
+      "visualReview": "No moon in sky; previous-day rise date and moon-has-set label visible."
+    }
+  ],
+  "clockRestored": true,
+  "restoreResult": "Thu Oct 29 2026 13:31:39 GMT+0530",
+  "statusBar": "Retains actual capture time; only app runtime clock was simulated.",
+  "limits": [
+    "Dedicated debug simulator with completed setup; Android/VoiceOver are pending.",
+    "No compiler/runtime clock override is imported by app source."
+  ],
+  "sourceRevision": "75fd758d",
+  "timeFormat": "24-hour HH:MM"
+}

@@ -1,0 +1,66 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Language,.*"
+- tapOn: "${READING_LANGUAGE}"
+- scrollUntilVisible:
+    element: { text: "Reading size,.*" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Reading size,.*"
+- tapOn: "${READING_SIZE}"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-home }
+- runFlow: _sanatan-home-entry.yaml
+- takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: home-sanatan-card }
+- scrollUntilVisible:
+    element: { id: sanatan-collection-dikpal }
+    direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 50
+    centerElement: true
+- takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: sanatan-collection-dikpal }
+- scrollUntilVisible:
+    element: { id: sanatan-start }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: sanatan-start }
+- takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-next }
+- assertVisible: "2\\s*/\\s*3"
+- scrollUntilVisible:
+    element: { id: sanatan-explore-dikpal }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+
+# Same selected script/size: customs use the shared learning/reader anatomy.
+- tapOn: Back
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: sanatan-pratha }
+    direction: UP
+    timeout: 60000
+- tapOn: { id: sanatan-pratha }
+- scrollUntilVisible:
+    element: { id: pratha-question-K1 }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-customs-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: pratha-question-K1 }
+- assertVisible: { id: pratha-reader }
+- swipe: { direction: LEFT }
+- assertVisible: { id: pratha-page-katha-0 }
+- assertNotVisible: { id: pratha-canon }
+- takeScreenshot: "e2e-shots/sanatan-customs-story-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

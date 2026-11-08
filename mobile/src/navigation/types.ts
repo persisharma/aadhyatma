@@ -60,14 +60,17 @@ export type GharVastuStackParamList = {
   GharVastuCompare: { homeIds: readonly string[] };
 };
 
+/** Sanatan customs and the contextual Vrat/Panchang journey keep Back local. */
 export type PrathaStackParamList = {
   Pratha: { masa?: number; isAdhik?: boolean } | undefined;
   PrathaReader: { prathaId: string };
 };
 
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & PrathaStackParamList & {
+  SanatanParichay: { topicId?: string } | undefined;
+  SanatanReader: { topicId: string; initialPage?: number };
   Home: undefined;
-  Suvichar: undefined;
+  Suvichar: { exploreDraft?: { name:string; deity:'ram-darbar' } } | undefined;
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
   KidsStoryReader: { storyId: string; pageId?: string };
@@ -165,7 +168,7 @@ export type DaanStackParamList = {
   DaanKatha: { kathaId: string };
 };
 
-export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & PrathaStackParamList & {
+export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
   MoreHome: undefined;
   Wishlist: undefined;
   Profile: undefined;
@@ -210,7 +213,7 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
       }
     | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
-  ObservanceDetail: { ruleId: string };
+  ObservanceDetail: { ruleId: string; dateMs?: number };
   KathaLibrary: undefined;
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14

@@ -1,0 +1,6 @@
+# Validate XCTest readiness before building the app; this is infrastructure only.
+appId: com.apple.Preferences
+---
+- launchApp
+- assertVisible: Settings
+- takeScreenshot: e2e-shots/brand-driver-ready

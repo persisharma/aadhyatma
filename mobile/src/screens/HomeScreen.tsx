@@ -1,4 +1,3 @@
-import { hasPratha } from '@/data/pratha';
 import AppIcon from '@/components/AppIcon';
 import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
@@ -41,6 +40,7 @@ import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets
 
 // The illustrated card sits below the category grid. Load its art and copy in
 // a separate chunk so the Home launch graph stays within its byte budget.
+const SanatanHomeCard = React.lazy(() => import('@/components/SanatanHomeCard'));
 const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -212,14 +212,6 @@ export default function HomeScreen({ navigation }: Props) {
   // Spotlight content. One flexible card shell (FeatureCard) carries every
   // section so awareness of each surface is raised from a single carousel.
   const spotlights: (FeatureSpotlight & { onPress: () => void })[] = [
-    ...(hasPratha() ? [{
-      key: 'pratha', titleHi: 'ऐसा क्यों?', titleEn: 'Why do we do this?',
-      descHi: 'प्रथा, कथा और भाव — स्रोत के साथ परिचय।',
-      descEn: 'The stories and meanings behind customs, with their sources.',
-      ctaHi: 'प्रश्न देखें', ctaEn: 'Explore questions',
-      icon: <FeatureIcon name="pratha" />,
-      onPress: () => navigation.navigate('Pratha'),
-    }] : []),
     {
       key: 'routine',
       titleHi: 'नित्य साधना', titleEn: 'Daily Practice',
@@ -478,13 +470,22 @@ export default function HomeScreen({ navigation }: Props) {
           >
             STORIES FOR KIDS
           </Text>
-          <React.Suspense fallback={<View style={{ height: 138 }} />}>
-            <KidsStoriesHomeCard
-              onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
-              onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
-              onPressOut={finishTilePress}
-            />
-          </React.Suspense>
+          <View style={{ gap: 12, marginBottom: 12 }}>
+            <React.Suspense fallback={<View style={{ height: 138 }} />}>
+              <KidsStoriesHomeCard
+                onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
+                onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
+                onPressOut={finishTilePress}
+              />
+            </React.Suspense>
+            <React.Suspense fallback={<View style={{ height: 138 }} />}>
+              <SanatanHomeCard
+                onPress={() => activateTile(() => navigation.navigate('SanatanParichay'))}
+                onPressIn={() => beginTilePress(() => navigation.navigate('SanatanParichay'))}
+                onPressOut={finishTilePress}
+              />
+            </React.Suspense>
+          </View>
 
           <Text
             style={[

@@ -1,5 +1,5 @@
 /**
- * प्रथा और मान्यता registry accessors (PRD-46, RULEBOOK §32). Verified-only
+ * प्रथा और मान्यता registry accessors (PRD-46, RULEBOOK §34). Verified-only
  * across the board — a draft row is indistinguishable from absence on every
  * surface, so flipping a status lights the surface up with zero code change
  * (the §19/§26/§27/§28 pattern).
@@ -50,6 +50,15 @@ export function getPrathaForMasa(lunarMonth: number, isAdhik = false): readonly 
 
 export function getPrathaForVaar(weekday: number): readonly PrathaEntry[] {
   return registry().selectForVaar(getAllPratha(), weekday);
+}
+
+/** Introductions link to the canonical deeper explanation instead of copying it. */
+export function getPrathaForSanatanTopic(topicId: string): readonly PrathaEntry[] {
+  const ids: Readonly<Record<string, readonly string[]>> = { plants: ['K6'] };
+  return hasPratha() ? (ids[topicId] ?? []).flatMap(id => {
+    const entry = getPratha(id);
+    return entry ? [entry] : [];
+  }) : [];
 }
 
 /**

@@ -13,6 +13,21 @@ import {
 _resetSearchIndexForTest();
 const index = getSearchIndex();
 
+// Poet titles and exact doha wording remain discoverable with the correct page.
+for (const [query, sourceId, verseIndex] of [
+  ['माला फेरत जुग', 'kabir-bhakti-dohe', 2],
+  ['देनहार कोउ और', 'rahim-bhakti-dohe', 1],
+] as const) {
+  const rows = index.verses.filter(v => v.sourceId === sourceId);
+  assert.equal(rows.length, 4, `${sourceId} must index all four dohas`);
+  const hit = runSearch(query, index).verses.find(h => h.entry.sourceId === sourceId);
+  assert.ok(hit, `${query} should find its original couplet`);
+  assert.equal(hit.entry.verseIndex, verseIndex);
+}
+for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahim-bhakti-dohe']] as const) {
+  assert.ok(runSearch(query, index).sections.some(h => h.entry.sourceId === sourceId));
+}
+
 // Every active, non-hidden section in `library` is represented in the index.
 {
   const activeIds = library
@@ -276,3 +291,4 @@ const index = getSearchIndex();
     assert.ok(runSearch(query, index).verses.some(h => h.entry.sourceId === 'garud-puran'), query);
   }
 }
+

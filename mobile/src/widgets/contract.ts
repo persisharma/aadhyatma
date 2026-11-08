@@ -10,6 +10,7 @@ export type WidgetLocalizedText = Record<Lang, string>;
 export type VerseWidgetDay = {
   dateKey: string;
   sourceId: string;
+  artKey?: string;
   chapter?: number;
   verseIndex: number;
   lines: Record<Lang, string[]>;
@@ -55,6 +56,9 @@ export type PanchangWidgetDay = {
    */
   tithiSegments?: PanchangWidgetTithi[];
   vrat?: WidgetLocalizedText;
+  /** Solved city sunrise/sunset instants; optional together for old binaries. */
+  sunriseAt?: string;
+  sunsetAt?: string;
   sunrise: WidgetLocalizedText;
   rahuKaal: WidgetLocalizedText;
   abhijit?: WidgetLocalizedText;
@@ -142,7 +146,7 @@ export function widgetDateKey(date: Date, timeZone: string): string {
 }
 
 function isVerseDay(value: unknown): value is VerseWidgetDay {
-  if (!isRecord(value) || !isDateKey(value.dateKey) || typeof value.sourceId !== 'string' || value.sourceId.length === 0) return false;
+  if (!isRecord(value) || (value.artKey !== undefined && (typeof value.artKey !== 'string' || !/^[a-z]{1,32}$/.test(value.artKey))) || !isDateKey(value.dateKey) || typeof value.sourceId !== 'string' || value.sourceId.length === 0) return false;
   if (!Number.isInteger(value.verseIndex) || (value.verseIndex as number) < 0 ||
       (value.chapter !== undefined && (!Number.isInteger(value.chapter) || (value.chapter as number) < 1)) || !isRecord(value.lines)) return false;
   const lines = value.lines;
@@ -177,11 +181,19 @@ function isTithiSegments(value: unknown, sunriseTithi: WidgetLocalizedText): val
   return LANGS.every((lang) => first.name[lang] === sunriseTithi[lang]);
 }
 
+function isSolarWindow(value: Record<string, unknown>): boolean {
+  if (value.sunriseAt === undefined && value.sunsetAt === undefined) return true;
+  return isIso(value.sunriseAt) && isIso(value.sunsetAt) &&
+    Date.parse(value.sunriseAt) < Date.parse(value.sunsetAt) &&
+    widgetDateKey(new Date(value.sunriseAt), WIDGET_TIME_ZONE) === value.dateKey &&
+    widgetDateKey(new Date(value.sunsetAt), WIDGET_TIME_ZONE) === value.dateKey;
+}
+
 function isPanchangDay(value: unknown): value is PanchangWidgetDay {
   return isRecord(value) && isDateKey(value.dateKey) && isLocalized(value.representedDate) &&
     isLocalized(value.tithi) && (value.vrat === undefined || isLocalized(value.vrat)) &&
     (value.tithiSegments === undefined || isTithiSegments(value.tithiSegments, value.tithi)) &&
-    isLocalized(value.sunrise) && isLocalized(value.rahuKaal) &&
+    isSolarWindow(value) && isLocalized(value.sunrise) && isLocalized(value.rahuKaal) &&
     (value.abhijit === undefined || isLocalized(value.abhijit)) && typeof value.deepLink === 'string' &&
     value.deepLink === `vedansh://widget/panchang?date=${value.dateKey}`;
 }
@@ -229,3 +241,4 @@ export function stableWidgetPayloadKey(payload: WidgetPayloadV1): string {
     payload.japam.timeZone, payload.japam.dateKey, payload.japam.totalBeads,
     payload.japam.totalRounds, payload.japam.japaStreak, payload.japam.lastUsedMantraId ?? ''].join('|');
 }
+

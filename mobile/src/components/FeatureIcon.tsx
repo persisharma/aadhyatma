@@ -5,7 +5,6 @@ import { moreIconSources } from './MoreIcon';
 
 // Shared subjects reuse the actual More source rather than a second drawing.
 export const featureIconSources = {
-  pratha: moreIconSources.question,
   routine: storybookSources.practice,
   'daily-bhakti': storybookSources.stotram,
   'daan-punya': moreIconSources.daan,

@@ -46,8 +46,13 @@ appId: com.prashantsharma.vedansh
 # Gate on the FIRST real surface (native alert, tour, setup sheet, What's New,
 # or Home itself) before dismissing anything.
 - extendedWaitUntil:
-    visible: "Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*"
+    visible: "Setup language continue|Allow|Skip tour|Begin|Close|Got it|.*Today.s Panchang.*|.*आज का पंचांग.*"
     timeout: 90000
+# Automatic launch surfaces must wait for the bounded brand introduction.
+- extendedWaitUntil:
+    notVisible:
+      id: "brand-launch-reveal"
+    timeout: 8000
 # clearState resets iOS permission grants, so a fresh launch pops the native
 # "…Would Like to Send You Notifications" alert over Home (the app requests
 # permission on boot for reminders/japam alarms). It's a NATIVE alert that
@@ -59,6 +64,34 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Don't Allow"
     optional: true
+# Quiet companion setup precedes ATT and the tour; never opt into notifications in boot.
+- tapOn:
+    text: "Setup language continue"
+    optional: true
+- tapOn:
+    text: "Setup city continue"
+    optional: true
+# First-run widgets now start on city Continue, with no separate Add CTA.
+# iPhone instructions stay inside onboarding; Android launcher confirmations are
+# optional across hosts. Dismiss both requests so unrelated smoke flows stay clean.
+- tapOn:
+    text: "Setup widgets continue"
+    optional: true
+- tapOn:
+    text: "Cancel|CANCEL|रद्द करें"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Cancel|CANCEL|रद्द करें"
+    optional: true
+- tapOn:
+    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+    optional: true
+- waitForAnimationToEnd
+- tapOn:
+    text: "Ask App Not to Track"
+    optional: true
+- waitForAnimationToEnd
 # Dismiss whichever first-launch onboarding surface auto-appeared BEFORE
 # asserting Home — a fresh install can show the feature tour (an OVERLAY), a
 # returning user on a debut release gets the What's New sheet, and notification
@@ -105,6 +138,10 @@ appId: com.prashantsharma.vedansh
     text: "Begin"
     optional: true
 - waitForAnimationToEnd
+# Rating can qualify from an early share/save; never leave a stray ask blocking a flow.
+- tapOn:
+    text: "Maybe later"
+    optional: true
 # The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
 # text is one merged accessibility label — "Today's Panchang. <weekday>,
 # <tithi>. … Tap to open." — exposed in English regardless of display language.
@@ -127,3 +164,7 @@ appId: com.prashantsharma.vedansh
 - swipe:
     direction: DOWN
 - waitForAnimationToEnd
+
+- tapOn:
+    id: explore-not-now
+    optional: true

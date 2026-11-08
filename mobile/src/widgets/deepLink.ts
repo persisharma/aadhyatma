@@ -1,3 +1,4 @@
+import { signalBrandLaunchTarget } from '@/navigation/brandLaunchIntent';
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
 import { navigationRef } from '@/notifications/deepLink';
@@ -65,6 +66,7 @@ export function widgetStartTarget(target: WidgetDeepLinkTarget): StartTarget {
 export function handleWidgetDeepLink(raw: string): boolean {
   const target = parseWidgetDeepLink(raw);
   if (!target || !navigationRef.isReady()) return false;
+  signalBrandLaunchTarget();
   navigationRef.dispatch(CommonActions.navigate(startTargetToNavigateAction(widgetStartTarget(target))));
   return true;
 }

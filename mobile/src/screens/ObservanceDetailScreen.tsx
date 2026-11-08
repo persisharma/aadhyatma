@@ -1,4 +1,7 @@
 import { PrathaObservanceCard } from '@/components/PrathaCards';
+import { occasionGuidance } from '@/panchang/occasionTimings';
+import OccasionTimingsCard from '@/components/OccasionTimingsCard';
+import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import StoryIcon from '@/components/StoryIcon';
 import AppIcon from '@/components/AppIcon';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -91,8 +94,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const rule = getRuleById(route.params.ruleId);
   const today = useMemo(() => startOfLocalDay(new Date()), []);
   const next = useMemo(
-    () => (rule ? getNextOccurrence(rule.id, today, calendarSystem) : null),
-    [rule, today, calendarSystem]
+    () => (rule ? (route.params.dateMs !== undefined && Number.isFinite(route.params.dateMs) ? { rule, date: new Date(route.params.dateMs) } : getNextOccurrence(rule.id, today, calendarSystem)) : null),
+    [rule, today, calendarSystem, route.params.dateMs]
   );
   const katha = rule?.kathaId ? getKathaContent(rule.kathaId) : null;
   const vidhi = rule ? getVidhiForFestival(rule.id) : null;
@@ -110,6 +113,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const { location } = usePanchangLocation();
   // The derived parana date/time line (null for text-only kinds, while the
   // solve is in flight, or on an honest derivation miss — text renders alone).
+  const occasion = useOccasionTimings(next?.date ?? null, calendarSystem, rule?.id);
   const paranaDisplay = useUpvasParana(upvas?.parana ?? null, next?.date ?? null);
 
   const { isFollowing } = useVratFollows();
@@ -207,6 +211,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 ? `${contentByLang(lang, 'अगला', 'Next')} · ${formatDate(next.date, lang)} · ${relativeLabel(next.date, today, lang)}`
                 : null}
             />
+
+            <OccasionTimingsCard items={occasion.items.length ? occasion.items : rule && !occasion.loading && !occasion.error ? [occasionGuidance(rule, next?.date ?? today)] : []} dated={!!next} date={next?.date ?? today} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
             {/* Actions (P2: Follow + Read Katha; Remind arrives in P3) */}
             <View style={styles.actionRow}>
@@ -399,7 +405,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                           <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 20, color: colors.inkSoft }}>
                             {meaningByLang(lang, upvas.parana.textHi, upvas.parana.textEn)}
                           </Text>
-                          {paranaDisplay && (
+                          {paranaDisplay && rule.dayRule !== 'ekadashi' && rule.dayRule !== 'ekadashi-vaishnava' && (
                             <View
                               testID="observance-upvas-parana-computed"
                               style={[styles.upvasComputed, { backgroundColor: colors.goldTint, borderRadius: radii.md }]}

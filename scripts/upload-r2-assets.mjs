@@ -28,7 +28,7 @@
  * --dry-run hashes + builds the manifest and reports what WOULD upload, but
  * makes no network call. Re-runs skip any object already present (HEAD check).
  */
-import { createHash, createHmac } from 'node:crypto';
+import { CONTENT_TYPES, createR2Client, sha256 as sha256hex } from './r2-client.mjs';
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -56,53 +56,7 @@ if (!DRY && !WRANGLER && (!ACCOUNT || !AKID || !SECRET)) {
   console.error('Missing R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY env.');
   process.exit(1);
 }
-const HOST = ACCOUNT ? `${ACCOUNT}.r2.cloudflarestorage.com` : 'dry-run';
-const REGION = 'auto';
-const SERVICE = 's3';
-
-const CONTENT_TYPES = {
-  webp: 'image/webp', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg',
-  mp3: 'audio/mpeg', m4a: 'audio/mp4', wav: 'audio/wav',
-};
-
-const sha256hex = (buf) => createHash('sha256').update(buf).digest('hex');
-const hmac = (key, data) => createHmac('sha256', key).update(data).digest();
-
-// Minimal AWS SigV4 for a single-object request (PUT/HEAD, unsigned query).
-function signedHeaders(method, key, body) {
-  const now = new Date();
-  const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, ''); // YYYYMMDDTHHMMSSZ
-  const dateStamp = amzDate.slice(0, 8);
-  const payloadHash = sha256hex(body ?? Buffer.alloc(0));
-  const canonicalUri = `/${BUCKET}/${key}`.split('/').map(encodeURIComponent).join('/').replace(/%2F/g, '/');
-  const canonicalHeaders =
-    `host:${HOST}\n` + `x-amz-content-sha256:${payloadHash}\n` + `x-amz-date:${amzDate}\n`;
-  const signed = 'host;x-amz-content-sha256;x-amz-date';
-  const canonicalRequest = [method, canonicalUri, '', canonicalHeaders, signed, payloadHash].join('\n');
-  const scope = `${dateStamp}/${REGION}/${SERVICE}/aws4_request`;
-  const stringToSign = ['AWS4-HMAC-SHA256', amzDate, scope, sha256hex(canonicalRequest)].join('\n');
-  const kDate = hmac(`AWS4${SECRET}`, dateStamp);
-  const kRegion = hmac(kDate, REGION);
-  const kService = hmac(kRegion, SERVICE);
-  const kSigning = hmac(kService, 'aws4_request');
-  const signature = createHmac('sha256', kSigning).update(stringToSign).digest('hex');
-  return {
-    Authorization: `AWS4-HMAC-SHA256 Credential=${AKID}/${scope}, SignedHeaders=${signed}, Signature=${signature}`,
-    'x-amz-content-sha256': payloadHash,
-    'x-amz-date': amzDate,
-  };
-}
-
-async function objectExists(key) {
-  const res = await fetch(`https://${HOST}/${BUCKET}/${key}`, { method: 'HEAD', headers: signedHeaders('HEAD', key) });
-  return res.status === 200;
-}
-
-async function putObject(key, body, contentType) {
-  const headers = { ...signedHeaders('PUT', key, body), 'content-type': contentType };
-  const res = await fetch(`https://${HOST}/${BUCKET}/${key}`, { method: 'PUT', headers, body });
-  if (!res.ok) throw new Error(`PUT ${key} → ${res.status} ${await res.text()}`);
-}
+const client = !DRY && !WRANGLER ? createR2Client() : null;
 
 // ── run ──
 const files = readdirSync(DIR).filter((f) => CONTENT_TYPES[f.split('.').pop().toLowerCase()]);
@@ -125,9 +79,9 @@ for (const name of files.sort()) {
     uploaded++;
     continue;
   }
-  if (await objectExists(key)) { skipped++; console.log(`skip  ${name} → ${key} (exists)`); continue; }
-  await putObject(key, body, CONTENT_TYPES[ext]);
-  uploaded++; console.log(`put   ${name} → ${key}`);
+  const result = await client.uploadIfMissing(key, body, CONTENT_TYPES[ext]);
+  if (result === 'existing') { skipped++; console.log(`skip  ${name} → ${key} (exists)`); }
+  else { uploaded++; console.log(`put   ${name} → ${key}`); }
 }
 
 mkdirSync(path.dirname(MANIFEST), { recursive: true });

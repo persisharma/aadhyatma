@@ -1,0 +1,656 @@
+{
+  "generator": "scripts/build-widget-heritage.mjs",
+  "sources": {
+    "prayer": {
+      "file": "assets/reader-illustrations/category-granth-open-scripture.webp",
+      "sha256": "c54f7e15a8cabdc44125f85cd3a9bcb2ad040708b7a0eb70765a10389e3df208",
+      "focusX": 0.5
+    },
+    "vishnu": {
+      "file": "assets/reader-illustrations/source-vishnu-narayana.webp",
+      "sha256": "ea3ebd005c439ef456fe757e8b63d8eabb2c700ce58f3026d7de6ee15a3a2a1a",
+      "focusX": 0.28
+    },
+    "krishna": {
+      "file": "assets/reader-illustrations/deity-krishna-bansuri.webp",
+      "sha256": "f38054b6023adf221b4de2cf30281dff54fba7a5bd4b007e17277f1cef17b8ae",
+      "focusX": 0.5
+    },
+    "shiva": {
+      "file": "assets/reader-illustrations/shiva.webp",
+      "sha256": "7cb9287b40c1bbe01c909389d648fc356a9ee9ad499c09924c024a32de36dfda",
+      "focusX": 0.43
+    },
+    "hanuman": {
+      "file": "assets/reader-illustrations/ram-hanuman.webp",
+      "sha256": "85bbc10d3b9545e1eb7abf38023e7b6922ea6948bea8da6950e4e52470f28250",
+      "focusX": 0.42
+    },
+    "rama": {
+      "file": "assets/reader-illustrations/deity-rama-darbar.webp",
+      "sha256": "934c7e58e18e4c5df2932c0b9f923db76afec7d786002115e80f17004cd04976",
+      "focusX": 0.5
+    },
+    "ganesha": {
+      "file": "assets/reader-illustrations/deity-ganesha-modak.webp",
+      "sha256": "d25b9255ffa1b3f3805b8349f39933d51c09c230e7bd260da5546912e6a8bc69",
+      "focusX": 0.5
+    },
+    "durga": {
+      "file": "assets/reader-illustrations/deity-durga-lion.webp",
+      "sha256": "324b157dc73b990ec996dfd687e08e3a861c77067cfe6d0a0f28237f25855253",
+      "focusX": 0.5
+    },
+    "saraswati": {
+      "file": "assets/reader-illustrations/deity-saraswati-veena.webp",
+      "sha256": "0bfd51fab0c76639ced8675d2ffdbcfd0bfe1e19929109ab760afd8e61b74ddb",
+      "focusX": 0.5
+    },
+    "surya": {
+      "file": "assets/reader-illustrations/deity-surya.webp",
+      "sha256": "c7d38e9b8588d3766c0a95e38f93a9eb59ccf8fa9d1517f190468ac81b420101",
+      "focusX": 0.5
+    },
+    "panchang": {
+      "file": "assets/reader-illustrations/panchang-celestial-almanac.webp",
+      "sha256": "3476f2fc731e40a215257674245b2b8c29f4c897f444c98857b06719a3be5f67",
+      "focusX": 0.5
+    }
+  },
+  "assets": {
+    "vedansh_widget_bg_heritage_prayer_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 8329,
+      "sha256": "50d4788d87bde7d7ed99ba78f87f62a124a86be2f8aae56ead663dd2fde29b59",
+      "subject": "prayer",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_prayer_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 8739,
+      "sha256": "7dc057c5e4c8760da1293b84822057805447c87f1248fadcf1a99e750c94c0c9",
+      "subject": "prayer",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_prayer_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 16916,
+      "sha256": "74ceb7a7efcff6b64d8daf45c1c9738c11996b7b01a331d21d3013ed3db7b62c",
+      "subject": "prayer",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_prayer_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 17437,
+      "sha256": "037c50a3c5056d78f730bff8ee07bc78533ac6c733f5869126eb5a2753db6350",
+      "subject": "prayer",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_prayer_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 26770,
+      "sha256": "48adac2609cdef8cd46d5f867356155b356aa76d8fb520dfe8dcc4eef31b3076",
+      "subject": "prayer",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_prayer_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 27784,
+      "sha256": "4dfa1a304cc3c459e7b8569b964127b0c32e79f976204654dbf71ec75252e683",
+      "subject": "prayer",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_vishnu_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10362,
+      "sha256": "a96d890579f4f24d106cfa3fd790a7f1857754d68aad3b7792d59385b9ef8cef",
+      "subject": "vishnu",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_vishnu_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10744,
+      "sha256": "44dfc79a4800a92fa8b1b580253e1f4fbe93a36125ddf1d9631c06c6f83924ee",
+      "subject": "vishnu",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_vishnu_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 20579,
+      "sha256": "4dd8ff4ab3f63b01bcff2577adc7c981f28fe02a3720b55bf327690094f59c7d",
+      "subject": "vishnu",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_vishnu_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 21186,
+      "sha256": "8216e101dc1449fc0041c9358b495c7bae52ea127cdd7f5a7597b3753d184416",
+      "subject": "vishnu",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_vishnu_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 34059,
+      "sha256": "6f85c25dc8649abaac9620e298e18b1f30324f204b17244e6710643cd81b53eb",
+      "subject": "vishnu",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_vishnu_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 34911,
+      "sha256": "5d0c499da98216fb306821f33fc858b40967ceb9bf71927e904d205a4bc08e7c",
+      "subject": "vishnu",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_krishna_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10721,
+      "sha256": "858885ad4304058ef4432059d0043c1fa1abe443ec8ee869277d01120dad8002",
+      "subject": "krishna",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_krishna_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 11189,
+      "sha256": "f73c58e461d563c6d8154a0674f8125d881a0c41a41e206b0a0c369aeb272f88",
+      "subject": "krishna",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_krishna_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 21593,
+      "sha256": "7b8450e40f2a73a5aa6ce9bf6ea796b9cf425901ff5c0fbfa3c1a243c1c12e05",
+      "subject": "krishna",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_krishna_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 22278,
+      "sha256": "09720573a39a7302e313c0936e2de86bd01acbfacd326a46c9631ca8ef49c096",
+      "subject": "krishna",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_krishna_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 35842,
+      "sha256": "c2cbbbe467566cd05463b83107b888c55bf820c908f0ceee579f523f0b463103",
+      "subject": "krishna",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_krishna_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 36787,
+      "sha256": "eee2d5a1634acc22e04eb1727fa05290533b3b628d0b8c63cd137c9116e8b0b6",
+      "subject": "krishna",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_shiva_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10006,
+      "sha256": "4f8dab0284654925114e202ab12247c52cef14b4fff87192e4bec522b5339657",
+      "subject": "shiva",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_shiva_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10474,
+      "sha256": "1e8977174fcf5caaaf19ca32fc7da4a3b848d9698be014ef19e00440e0cb15a6",
+      "subject": "shiva",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_shiva_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 19263,
+      "sha256": "226d5c5d7a1bc0b7c2defdbaafb2ed8a9b1125e164467113d09d261a0ebf174e",
+      "subject": "shiva",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_shiva_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 19897,
+      "sha256": "a59af0c3316957cf14998aaab257e9080d2eadbc10e591ac39fe454074315f81",
+      "subject": "shiva",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_shiva_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 31007,
+      "sha256": "7eaf398b1dda5d17ad601dfc5bcb4554bf2e808fc3c4ae8f7bff51f1da8b6a10",
+      "subject": "shiva",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_shiva_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 32238,
+      "sha256": "2f1f3ed389966242ab3b264ddd039217607d4bf4ef73d2f230037a0788dd4f3b",
+      "subject": "shiva",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_hanuman_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 8786,
+      "sha256": "c17589196d11bf178d9b02d85de5691d69f4e9ec0e270c5b1b5f3a1d0ff70d18",
+      "subject": "hanuman",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_hanuman_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 9171,
+      "sha256": "a6e7e1c7a80fec456b186a5ba92296aaf5149af395d8c53d74488e4a6341c053",
+      "subject": "hanuman",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_hanuman_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 18561,
+      "sha256": "7591d15b65ed16aba0e4b0fd1bc9e9c304fbaeb7971d0f1dd43fcea662d5b110",
+      "subject": "hanuman",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_hanuman_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 19175,
+      "sha256": "6f307c0bd4a94857811f63caaa924d68ae380e9765a9bb7a132298e68ee5d2fd",
+      "subject": "hanuman",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_hanuman_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 26220,
+      "sha256": "882ced6814c276edbce2e5297802fdf44de2eba4026bbddc477067394afbb699",
+      "subject": "hanuman",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_hanuman_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 27087,
+      "sha256": "52e451196cb24f3ed631d183ba7ced65a636a3c51a1c424bd58d171b886d7544",
+      "subject": "hanuman",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_rama_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10752,
+      "sha256": "9f01a5c6125c632a0b20ecf0def2f2c48d9596a2a25d3ad7bc73735091a4c5e8",
+      "subject": "rama",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_rama_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 11089,
+      "sha256": "ed01e2f941959b1fcd6952b569eaed4d8f7754e4e38c530adbb5fd9860f96239",
+      "subject": "rama",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_rama_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 21220,
+      "sha256": "33d39563714f1720a124ba7d4bf21afba35c80131b7234cb147678f544a4ff5f",
+      "subject": "rama",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_rama_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 21804,
+      "sha256": "254ed5688bc440a98ec34f740536bcb92313a4731a71137b9c0e5745611c1ac8",
+      "subject": "rama",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_rama_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 35464,
+      "sha256": "e5fb08eabb84319ad0480206308b26f49bf46a578aa5da85295743fcdcd6a0c4",
+      "subject": "rama",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_rama_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 36172,
+      "sha256": "796a83bbaed9d26dafd31285630b31d2ea3c43972fa2cfcea28a0dc03c6f78a1",
+      "subject": "rama",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_ganesha_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 9936,
+      "sha256": "c536c8681cfb08f0dd034c866c7fefe0d4ad9374574e775a9fb51e0615e7d7b6",
+      "subject": "ganesha",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_ganesha_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10398,
+      "sha256": "22c6301e1813fe5ba4fe36c0a42c17fa563b488f0ad0eb977f896f245e9efc5b",
+      "subject": "ganesha",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_ganesha_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 19692,
+      "sha256": "5b6f117ca1e03ee4b011294e840475f984403205bcebe7d390f0440294196ddf",
+      "subject": "ganesha",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_ganesha_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 20355,
+      "sha256": "c9f39860321ba7ca178bdbe3b975025cbd707e6994266b9f87cafc9fa6517eca",
+      "subject": "ganesha",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_ganesha_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 32531,
+      "sha256": "9095ba04b749fc6080092cc5aa0b214841a0d4a617fe4be575d71c76b73ae6e7",
+      "subject": "ganesha",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_ganesha_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 33582,
+      "sha256": "c4b7f13cb4ed2b7c5d2febae89d9d657a733ab2ca853bb6b71b1161eccdf5e00",
+      "subject": "ganesha",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_durga_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10365,
+      "sha256": "6752f7aa180dca966e8f54eee2ee4147bf6135a008b366272b9e2e729850a5bc",
+      "subject": "durga",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_durga_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10732,
+      "sha256": "a433111a6e46035532420326f7c7d000d333e87669e01799f49040a9551a593d",
+      "subject": "durga",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_durga_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 20080,
+      "sha256": "258905bc8a1a16410e084b360ef5ec89a6234e6d7dedd4f68ce1fee74cd711b4",
+      "subject": "durga",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_durga_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 20694,
+      "sha256": "c9516886b0c8709d198d92a427be659e077e98267c928d9f4f7e497a7d912c5d",
+      "subject": "durga",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_durga_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 33675,
+      "sha256": "9ce1f8fcb1a954167d0bd8cdf11ba822ca97e470b712a7298ab62cc31e2930eb",
+      "subject": "durga",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_durga_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 34479,
+      "sha256": "212cfcbc7e103dc431504863279e9f655bb22ac852e5acd330251b3d65329d29",
+      "subject": "durga",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_saraswati_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 9271,
+      "sha256": "927cec0be56044a577758de85737036e3a3287049b9a9cc23a4c7c617d2a996c",
+      "subject": "saraswati",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_saraswati_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 9853,
+      "sha256": "4c90c99e2b67861dd96d33dc1b8b42f565c6d68ed9111fa872e6f34b2664ae51",
+      "subject": "saraswati",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_saraswati_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 18258,
+      "sha256": "e1d4bf11d68c3b4258dea5183cf7e22a74f41f15882a0bc6de3305cf24b68baf",
+      "subject": "saraswati",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_saraswati_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 19098,
+      "sha256": "395de167704efffe0f925e468db30771d08499af306a9effb306ef643137d55c",
+      "subject": "saraswati",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_saraswati_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 30615,
+      "sha256": "290674aaffc87e54a5db7f0dab0323b1fc74c4738dba574bcf395bf1a48a7962",
+      "subject": "saraswati",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_saraswati_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 32044,
+      "sha256": "c62b402f8f5fc6ba4187c1b41510edf9ea005d675e4fa81314bee5f814489dd4",
+      "subject": "saraswati",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_surya_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10163,
+      "sha256": "25873bc1c968cf9a3ca78c5c16bd7f10a5fc4fef1486433fcf094765f1dda4bf",
+      "subject": "surya",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_surya_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 10584,
+      "sha256": "d6866012ec07f99b3f955f91aebdde6feff0e763f4ee1a9e862035976cffc421",
+      "subject": "surya",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_surya_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 19731,
+      "sha256": "1500d2d9cc22430a057ef647b8b5c13e33a11e74abf7fd20dd2c78b23a939b31",
+      "subject": "surya",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_surya_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 20434,
+      "sha256": "659b08eba516d2da324b16bdf6cf08e51b53767508802b393e8001f713a8ff1d",
+      "subject": "surya",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_surya_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 32941,
+      "sha256": "6e7ca8046773babfa50faf6f619eb209277fbbba96d242a1754c529f46dac212",
+      "subject": "surya",
+      "appearance": "day",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_surya_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 33891,
+      "sha256": "95bfca99c22687c3e2e9eeac550d4643be87cd9b8fe59d17e7fef5224f122515",
+      "subject": "surya",
+      "appearance": "night",
+      "textSafeRight": 0.69
+    },
+    "vedansh_widget_bg_heritage_panchang_small_day": {
+      "width": 256,
+      "height": 256,
+      "bytes": 3916,
+      "sha256": "79998ca2ca30025cd22c8d8ea99ba61536c2a7ab0ba93f5b27c7b640960521d7",
+      "subject": "panchang",
+      "appearance": "day",
+      "textSafeRight": 0.73
+    },
+    "vedansh_widget_bg_heritage_panchang_small_night": {
+      "width": 256,
+      "height": 256,
+      "bytes": 4380,
+      "sha256": "52bb987bf5f305e2619f892282ce10dc2ab5abfaebe97b6196bed6172b4573b2",
+      "subject": "panchang",
+      "appearance": "night",
+      "textSafeRight": 0.73
+    },
+    "vedansh_widget_bg_heritage_panchang_medium_day": {
+      "width": 560,
+      "height": 260,
+      "bytes": 9417,
+      "sha256": "698cf64fe7d1b211f09f725b6aa488e2b6fcf27522a85c4ec2cd15ec152a4757",
+      "subject": "panchang",
+      "appearance": "day",
+      "textSafeRight": 0.73
+    },
+    "vedansh_widget_bg_heritage_panchang_medium_night": {
+      "width": 560,
+      "height": 260,
+      "bytes": 10110,
+      "sha256": "ef991afb617665e6670ae2ee9618d6ed420f12ddd4c0f259c95304208b9e4a25",
+      "subject": "panchang",
+      "appearance": "night",
+      "textSafeRight": 0.73
+    },
+    "vedansh_widget_bg_heritage_panchang_large_day": {
+      "width": 560,
+      "height": 560,
+      "bytes": 11487,
+      "sha256": "6e095abc0ee458f59238550c768de7114267238746d479af6a569e3f4b2efaf6",
+      "subject": "panchang",
+      "appearance": "day",
+      "textSafeRight": 0.73
+    },
+    "vedansh_widget_bg_heritage_panchang_large_night": {
+      "width": 560,
+      "height": 560,
+      "bytes": 12437,
+      "sha256": "a462b13307b7a4c058d8979e64dc374609b8545ae244e6a9eac01c7c6c45b1ec",
+      "subject": "panchang",
+      "appearance": "night",
+      "textSafeRight": 0.73
+    }
+  }
+}

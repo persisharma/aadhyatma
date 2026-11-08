@@ -1,10 +1,28 @@
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
-import { DEFAULT_LOCATION, getCityById, toPanchangLocation } from '@/panchang/locations';
-import { lookupPincode, snapToNearestLocation, toPincodeLocation } from '@/panchang/pincodes';
-import { hydrateObservanceCache, warmObservanceCache } from '@/panchang/observanceCache';
+import {
+  DEFAULT_LOCATION,
+  getCityById,
+  toPanchangLocation,
+} from '@/panchang/locations';
+import {
+  lookupPincode,
+  snapToNearestLocation,
+  toPincodeLocation,
+} from '@/panchang/pincodes';
+import {
+  hydrateObservanceCache,
+  warmObservanceCache,
+} from '@/panchang/observanceCache';
 import { UJJAIN_CITY_ID } from '@/panchang/engine';
 import {
   getCalendarSystemSnapshot,
@@ -39,6 +57,8 @@ type PanchangLocationContextValue = {
    */
   selectPincode: (pincode: string, place?: string) => boolean;
   requestDeviceLocation: () => Promise<'granted' | 'denied' | 'error'>;
+  resolveDeviceLocation: () => Promise<PanchangLocation | null>;
+  commitLocation: (next: PanchangLocation) => void;
 };
 
 const PanchangLocationContext = createContext<PanchangLocationContextValue>({
@@ -48,6 +68,8 @@ const PanchangLocationContext = createContext<PanchangLocationContextValue>({
   selectCity: () => undefined,
   selectPincode: () => false,
   requestDeviceLocation: async () => 'error',
+  resolveDeviceLocation: async () => null,
+  commitLocation: () => undefined,
 });
 
 /**
@@ -74,8 +96,13 @@ function warmInBackground(location: PanchangLocation) {
   });
 }
 
-async function getDevicePosition(): Promise<{ latitude: number; longitude: number } | null> {
-  const lastKnown = await Location.getLastKnownPositionAsync().catch(() => null);
+async function getDevicePosition(): Promise<{
+  latitude: number;
+  longitude: number;
+} | null> {
+  const lastKnown = await Location.getLastKnownPositionAsync().catch(
+    () => null,
+  );
   if (lastKnown) return lastKnown.coords;
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
@@ -93,12 +120,16 @@ async function getDevicePosition(): Promise<{ latitude: number; longitude: numbe
   }
 }
 
-export function PanchangLocationProvider({ children }: { children: React.ReactNode }) {
+export function PanchangLocationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // Lazy initializers, so a launch read that already landed costs zero renders
   // on the Ujjain placeholder — and, with it, zero cold panchang chains spent on
   // a scope the user is about to be moved off.
   const [location, setLocation] = useState<PanchangLocation>(
-    () => peekPanchangPrefs()?.location ?? DEFAULT_LOCATION
+    () => peekPanchangPrefs()?.location ?? DEFAULT_LOCATION,
   );
   const [isLoading, setIsLoading] = useState(() => peekPanchangPrefs() == null);
   const [gpsStatus, setGpsStatus] = useState<GpsStatus>('idle');
@@ -126,8 +157,11 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
             const currentYear = new Date().getFullYear();
             activeCalendarSystem()
               .then((system) =>
-                hydrateObservanceCache(stored.cityId, [system], [currentYear, currentYear + 1])
-                  .then(() => warmObservanceCache(stored, system))
+                hydrateObservanceCache(
+                  stored.cityId,
+                  [system],
+                  [currentYear, currentYear + 1],
+                ).then(() => warmObservanceCache(stored, system)),
               )
               .catch(() => undefined);
           }, 3000);
@@ -136,7 +170,9 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
       .catch(() => {
         loadedRef.current = true;
       })
-      .finally(() => { if (!cancelled) setIsLoading(false); });
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
     return () => {
       cancelled = true;
       if (warmTimer !== undefined) clearTimeout(warmTimer);
@@ -145,7 +181,9 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
 
   const applyLocation = useCallback((next: PanchangLocation) => {
     setLocation(next);
-    AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(next)).catch(
+      () => undefined,
+    );
     warmInBackground(next);
   }, []);
 
@@ -154,9 +192,14 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
       const city = getCityById(cityId);
       if (!city) return;
       setGpsStatus('idle');
-      applyLocation(toPanchangLocation(city, city.id === UJJAIN_CITY_ID ? 'default' : 'city'));
+      applyLocation(
+        toPanchangLocation(
+          city,
+          city.id === UJJAIN_CITY_ID ? 'default' : 'city',
+        ),
+      );
     },
-    [applyLocation]
+    [applyLocation],
   );
 
   const selectPincode = useCallback(
@@ -167,10 +210,21 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
       applyLocation(toPincodeLocation(entry, 'pincode', place));
       return true;
     },
-    [applyLocation]
+    [applyLocation],
   );
 
-  const requestDeviceLocation = useCallback(async (): Promise<'granted' | 'denied' | 'error'> => {
+  const resolveDeviceLocation = useCallback(async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') return null;
+    const coords = await getDevicePosition();
+    return coords
+      ? snapToNearestLocation(coords.latitude, coords.longitude)
+      : null;
+  }, []);
+
+  const requestDeviceLocation = useCallback(async (): Promise<
+    'granted' | 'denied' | 'error'
+  > => {
     setGpsStatus('locating');
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -198,7 +252,16 @@ export function PanchangLocationProvider({ children }: { children: React.ReactNo
 
   return (
     <PanchangLocationContext.Provider
-      value={{ location, isLoading, gpsStatus, selectCity, selectPincode, requestDeviceLocation }}
+      value={{
+        location,
+        isLoading,
+        gpsStatus,
+        selectCity,
+        selectPincode,
+        requestDeviceLocation,
+        resolveDeviceLocation,
+        commitLocation: applyLocation,
+      }}
     >
       {children}
     </PanchangLocationContext.Provider>

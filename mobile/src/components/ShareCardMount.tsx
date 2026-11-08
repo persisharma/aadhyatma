@@ -5,10 +5,11 @@ import { SMART_LINK } from '@/data/shareLinks';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { pick } from '@/utils/localize';
+import VedanshWordmark from './VedanshWordmark';
 import { titleFontByLang } from '@/utils/langType';
 import type { ShareableCard } from '@/utils/shareVerse';
 
-const brandMark = require('@assets/branding/brand-mark.png');
+const brandMark = require('@assets/splash-icon.png');
 
 /** The printed link, without the scheme: the caption carries the tappable one. */
 const PRINTED_LINK = SMART_LINK.replace(/^https?:\/\//, '');
@@ -24,9 +25,9 @@ export function ShareCardBrandStrip({ lang, onPainted }: { lang: Lang; onPainted
     <View testID="share-card-brand-strip" style={[styles.strip, { borderTopColor: colors.divider, backgroundColor: colors.parchment }]}>
       <View style={styles.brandRow}>
         {/* A bundled mark that fails to decode still leaves the wordmark, so it never blocks sharing. */}
-        <Image accessible={false} source={brandMark} style={styles.mark} onLoad={onPainted} onError={onPainted} />
+        <Image testID="share-card-brand-icon" accessible={false} source={brandMark} style={styles.mark} onLoad={onPainted} onError={onPainted} />
         {/* Full 1.65 leading: a tighter line box clips the matras on iOS (वेदांश → वदाश). */}
-        <Text allowFontScaling={false} style={[styles.wordmark, { color: colors.saffronDeep, fontFamily: fontFamilies.devanagariBold }]}>वेदांश</Text>
+        <VedanshWordmark lang={lang} compact showTagline={false} fixedExport />
       </View>
       <Text allowFontScaling={false} style={[styles.cta, { color: colors.inkSoft, fontFamily: titleFontByLang(lang) }]}>
         {pick(lang, {

@@ -1,0 +1,26 @@
+{
+  "source_sha256": "437c1c12f44d42b61453ffbfd9c17fdf63254a4fd55ecc821c6fae93de443788",
+  "source_bytes": 217403,
+  "method": "Executes the original preview JavaScript directly with Canvas2D; no rewritten animation",
+  "particles": 4012,
+  "duration_seconds": 4.6,
+  "frames": 138,
+  "size": [
+    720,
+    780
+  ],
+  "files": {
+    "vedansh-approved-preview-exact.mp4": {
+      "bytes": 3365788,
+      "sha256": "c4501ed122ac93d2d6e9d16185cb03409a297b26ec65404ce9c969a24c242c9e"
+    },
+    "vedansh-approved-preview-exact.gif": {
+      "bytes": 3720446,
+      "sha256": "1ee65ca76f433d4f2c197b264064ec8d65560851649ebbb38877b59782fbdf17"
+    },
+    "vedansh-approved-preview-exact.html": {
+      "bytes": 217795,
+      "sha256": "aa5d96a044f59a985fd6db693dc0c42714e7caef5910e322f63f5f8ca7cb3ac1"
+    }
+  }
+}

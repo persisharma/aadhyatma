@@ -1,6 +1,6 @@
 /** Illustrated prose page, adapted from KathaSectionPage (not a verse renderer). */
-import React, { useState } from 'react';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { garudPuranImages } from '@assets/garud-puran';
 import type { GarudPuranPage as Page, GarudPuranSource } from '@/data/garud-puran';
@@ -13,10 +13,9 @@ import ProseParagraph from './ProseParagraph';
 
 type Props = { verse: Page; source: GarudPuranSource; width: number; topActions?: React.ReactNode };
 
-export default function GarudPuranPage({ verse, source, width, topActions }: Props) {
+export default function GarudPuranPage({ verse, width, topActions }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const [showSources, setShowSources] = useState(false);
   const body = commentaryByLang(lang, verse.bodyHi, verse.bodyEn);
   const title = contentByLang(lang, verse.titleHi, verse.titleEn);
   const bodyStyle = { ...meaningToken(lang, typography), color: colors.ink };
@@ -36,27 +35,7 @@ export default function GarudPuranPage({ verse, source, width, topActions }: Pro
           <ReadingArtwork source={verse.number === 1 ? garudPuranImages[verse.artId] : null} />
         </View>
         {body.map((paragraph, index) => <ProseParagraph key={index} style={[styles.paragraph, bodyStyle]}>{paragraph}</ProseParagraph>)}
-        <Pressable onPress={() => setShowSources(value => !value)} accessibilityRole="button"
-          accessibilityState={{ expanded: showSources }} testID={`garud-sources-${verse.id}`}
-          style={[styles.sourceButton, { borderColor: colors.divider }]}>
-          <Text style={[pillTextStyle(lang, typography.versePill), { color: colors.saffronDeep }]}>
-            {contentByLang(lang, 'स्रोत और पाठ का परिचय', 'Sources and reading context')} {showSources ? '−' : '+'}
-          </Text>
-        </Pressable>
-        {showSources && <View testID="garud-source-details">
-          <Text style={[styles.sourceText, bodyStyle]}>{contentByLang(lang, source.citeHi, source.citeEn)}</Text>
-          <Text style={[styles.sourceText, bodyStyle]}>{contentByLang(lang,
-            'यह चुने हुए प्रसंगों की सरल व्याख्या है, पूरा अध्याय या शब्दशः अनुवाद नहीं। संस्कृत पाठ और गीताप्रेस के संक्षिप्त हिन्दी पाठ से तुलना की गई है। चित्र सांकेतिक हैं।',
-            'This is an editorial explanation of selected passages, not a complete chapter or a word-for-word translation. It was compared with the Sanskrit text and the Gita Press Hindi abridgement. The illustrations are interpretive.')}</Text>
-          <Text selectable style={[styles.sourceText, bodyStyle]}>{source.sanskritReferences.join(', ')}</Text>
-          {[source.referenceUrls[0], source.referenceUrls[1]].map((url, index) => (
-            <Pressable key={url} onPress={() => { Linking.openURL(url).catch(() => undefined); }} accessibilityRole="link" style={styles.link}>
-              <Text style={[bodyStyle, { color: colors.saffronDeep, textDecorationLine: 'underline' }]}>
-                {index === 0 ? contentByLang(lang, 'संस्कृत स्रोत खोलें', 'Open Sanskrit source') : contentByLang(lang, 'हिन्दी स्रोत खोलें', 'Open Hindi source')}
-              </Text>
-            </Pressable>
-          ))}
-        </View>}
+
       </AutoSlideScrollView>
     </View>
   );
@@ -66,7 +45,5 @@ const styles = StyleSheet.create({
   topRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   actions: { flexDirection: 'row', gap: 8 }, pill: { paddingHorizontal: 10, paddingVertical: 6 },
   title: { fontSize: 20, lineHeight: 30, marginTop: 8, marginBottom: 4 },
-  paragraph: { marginBottom: 14 }, sourceText: { marginTop: 14 },
-  sourceButton: { borderTopWidth: 1, marginTop: 24, minHeight: 48, justifyContent: 'center' },
-  link: { minHeight: 48, justifyContent: 'center', marginTop: 8 },
+  paragraph: { marginBottom: 14 },
 });

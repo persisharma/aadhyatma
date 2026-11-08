@@ -230,7 +230,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Far away in Gokul, baby Krishna slept happily in mother Yashoda's lap. Love and courage had turned that hard night into hope. Jai Shri Krishna!"
 - takeScreenshot: frame-krishna-janma-safe-caption
 - scrollUntilVisible:
-    element: { text: "A simple retelling of Bhagavata Purana, Book 10, chapters 1–4. The basket illustration follows folk tradition." }
+    element: { text: "Even in difficult times, love, courage and hope can guide us." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: frame-krishna-janma-source
@@ -367,7 +367,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "When Nanda returned, he joyfully held Krishna close. The Bhagavata tells us that even Putana, who had come with harmful intent, received a mother's place through Krishna's extraordinary mercy."
 - takeScreenshot: frame-putana-pt06-caption
 - scrollUntilVisible:
-    element: { text: "A children's retelling of Bhagavata Purana 10.5–6. Frightening details are shortened; the takeaway is editorial." }
+    element: { text: "Real love shows itself through care. This story celebrates Krishna's protection and boundless compassion." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: frame-putana-source
@@ -478,7 +478,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Once Kaliya had left, the Yamuna's water was free of poison. The river was clear again. Krishna's courage ended the danger, and his mercy gave Kaliya a chance to change."
 - takeScreenshot: frame-kaliya-nag-ka07-caption
 - scrollUntilVisible:
-    element: { text: "A simple retelling of Bhagavata Purana 10.15–16. Illustrations represent the many hoods with a smaller visible group. The takeaway is editorial." }
+    element: { text: "Let courage go with compassion. Humility means accepting a mistake and making it right. Caring for nature matters to everyone." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: frame-kaliya-nag-source
@@ -630,7 +630,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "The gods made Ganesha the leader of the ganas and blessed him to be honoured first in worship. Many auspicious beginnings are marked by remembering Ganesha."
 - takeScreenshot: frame-ganesha-birth-gb07-caption
 - scrollUntilVisible:
-    element: { text: "A children's retelling of the Shvetakalpa account in Shiva Purana, Rudra-samhita, Kumara-khanda 13–18. Other birth traditions exist. Violent details are shortened; the takeaway is editorial." }
+    element: { text: "Listening helps us understand one another. Love and compassion can bring a new beginning after sorrow." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: frame-ganesha-birth-source
@@ -769,7 +769,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Indra blessed Hanuman with protection from his thunderbolt. The sun promised brilliance and learning. Other gods gave blessings too. This extraordinary child would grow to serve Rama with devotion."
 - takeScreenshot: frame-hanuman-sun-hs06-caption
 - scrollUntilVisible:
-    element: { text: "A children's retelling of Valmiki Ramayana, Uttara-kanda 35–36. This account follows his flight towards the sun; swallowing the sun belongs to other popular retellings. The takeaway is editorial." }
+    element: { text: "Curiosity begins learning. Great strength also needs understanding and care." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: frame-hanuman-sun-source

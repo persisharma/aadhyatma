@@ -25,13 +25,16 @@ import { saraswatiChalisaCounts } from '../saraswati-chalisa';
 import { saraswatiStotramTotal } from '../saraswati-stotram';
 import { shivChalisaCounts } from '../shiv-chalisa';
 import { shivaStrotamTotal } from '../shiva-strotam';
-import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal } from '../stuti';
+import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal, parshuramStotramTotal } from '../stuti';
 import { deviSuktamTotal, narayanaSuktamTotal, purushaSuktamTotal } from '../suktam';
 import { sundarkandTotal } from '../sundarkand';
 import { valmikiRamayanTotal } from '../valmiki-ramayan';
 import { vishnuChalisaCounts } from '../vishnu-chalisa';
 import { vishnuSahasranamaTotal } from '../vishnu-sahasranama';
 import * as generated from '../verseCounts';
+import kabirDohe from '../doha/kabir-bhakti-dohe.json';
+import rahimDohe from '../doha/rahim-bhakti-dohe.json';
+
 
 /**
  * `texts.ts` renders every library row's verse count from `verseCounts.ts`, a
@@ -47,6 +50,8 @@ import * as generated from '../verseCounts';
  */
 test('every generated verse count still matches its corpus', () => {
   const pairs: readonly (readonly [string, unknown, unknown])[] = [
+  ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
+  ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length])), generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
@@ -79,6 +84,7 @@ test('every generated verse count still matches its corpus', () => {
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal, generated.narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal, generated.narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal, generated.navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal, generated.parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal, generated.purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal, generated.radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts, generated.ramChalisaCounts],
@@ -114,6 +120,8 @@ test('every generated verse count still matches its corpus', () => {
 test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothing stale', () => {
   const exported = Object.keys(generated).sort();
   const expected = [
+  ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
+  ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
   ['aartiVerseCounts', null, generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
@@ -146,6 +154,7 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal, generated.narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal, generated.narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal, generated.navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal, generated.parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal, generated.purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal, generated.radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts, generated.ramChalisaCounts],
@@ -204,3 +213,4 @@ test('texts.ts takes its verse counts from verseCounts.ts, never from a corpus',
       'Add the count to scripts/gen-verse-counts.mts, regenerate, and import it from ./verseCounts.'
   );
 });
+

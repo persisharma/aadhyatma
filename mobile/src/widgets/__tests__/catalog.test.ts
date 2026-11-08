@@ -179,7 +179,8 @@ test('every offered non-Lock-Screen size has a plate at its exact pixel budget, 
     assert.ok(fs.existsSync(file), `${name}.jpg is missing — run scripts/build-widget-backgrounds.mts`);
     assert.deepEqual(jpegSize(file), [...WIDGET_BACKGROUND_DIMENSIONS[size]], `${name}.jpg is not the ${size} plate size`);
   }
-  const expected = new Set(plates.map((plate) => `${plate.name}.jpg`));
+  const heritage = JSON.parse(fs.readFileSync(path.join(PLATE_DIR, 'heritage-manifest.json'), 'utf8'));
+  const expected = new Set([...plates.map((plate) => `${plate.name}.jpg`), ...Object.keys(heritage.assets).map((name) => `${name}.jpg`)]);
   for (const file of fs.readdirSync(PLATE_DIR).filter((f) => f.endsWith('.jpg'))) {
     assert.ok(expected.has(file), `${file} is not a catalog plate`);
   }
@@ -201,7 +202,7 @@ test('iOS loads each plate by name and refuses one over the family pixel budget'
   assert.match(swift, /cg\.width \* cg\.height <= budget/);
   // Recovery cards and tinted/vibrant rendering keep the plain parchment.
   assert.match(swift, /guard renderingMode == \.fullColor, case \.ready\(let payload\) = entry\.state, hasContent\(payload\)/);
-  assert.match(swift, /\.vedanshWidgetBackground\(art\)/);
+  assert.match(swift, /\.vedanshWidgetBackground\(art, night: palette\.night\)/);
   assert.match(read('withHomeWidgetsIos.js'), /'assets', 'widget-backgrounds'/);
 });
 
@@ -239,3 +240,4 @@ test('both native widgets draw the widget text tokens the plates were toned for'
     }
   }
 });
+

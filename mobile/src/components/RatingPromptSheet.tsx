@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { InstagramLogoIcon } from 'phosphor-react-native/src/icons/InstagramLogo';
+import { FacebookLogoIcon } from 'phosphor-react-native/src/icons/FacebookLogo';
+import { pendingSocialPlatforms } from '@/data/engagementPrompts';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
@@ -17,7 +20,7 @@ const STAR_VALUES = [1, 2, 3, 4, 5] as const;
  * wave off, not a screen to work in.
  *
  * Two steps. The asking step offers five stars and "Maybe later". A 4–5★ tap
- * hands straight off to the store's review page. A 1–3★ tap stays on the card's
+ * hands straight off to the store's review page and advances to social following after the next completed action. A 1–3★ tap stays on the card's
  * thank-you step, which offers "Write to us" (when a feedback inbox is set), a
  * smaller store link, and Close. The store link is deliberate: hiding the store
  * from unhappy users is review gating (product decision, Oct 2026).
@@ -34,7 +37,7 @@ const STAR_VALUES = [1, 2, 3, 4, 5] as const;
 export default function RatingPromptSheet() {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const { visible, rate, dismiss, recordLowRating, writeToUs } = useRatingPrompt();
+  const { visible, state, promptKind, socialLinkError, follow, confirmFollowing, rate, dismiss, recordLowRating, writeToUs } = useRatingPrompt();
   /** Stars from a 1–3★ tap on this opening; 0 = still on the asking step. */
   const [lowStars, setLowStars] = useState(0);
 
@@ -49,7 +52,7 @@ export default function RatingPromptSheet() {
 
   const chooseStars = (stars: number) => {
     if (stars >= STORE_MIN_STARS) {
-      rate();
+      rate(stars);
       return;
     }
     setLowStars(stars);
@@ -171,7 +174,7 @@ export default function RatingPromptSheet() {
       ) : null}
 
       <Pressable
-        onPress={rate}
+        onPress={() => rate(lowStars)}
         accessibilityRole="button"
         accessibilityLabel="Rate Vedansh on the store"
         style={({ pressed }) => [styles.storeLink, { opacity: pressed ? 0.6 : 1 }]}
@@ -199,16 +202,66 @@ export default function RatingPromptSheet() {
     </>
   );
 
+  const socialStep = (
+    <>
+      <Text accessibilityRole="header" style={[styles.title, { color: colors.ink, fontFamily: titleFont }]}>
+        {pick(lang, { hi: 'भक्ति से जुड़े रहें', en: 'Stay connected with Vedansh',
+          gu: 'ભક્તિ સાથે જોડાયેલા રહો', kn: 'ಭಕ್ತಿಯೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ' })}
+      </Text>
+      <Text style={[styles.body, { color: colors.inkSoft, fontFamily: bodyFont }]}>
+        {pick(lang, { hi: 'रोज़ के सुविचार, पर्व की कहानियाँ और भक्ति के लिए हमारे पेज फ़ॉलो करें।',
+          en: 'Follow our pages for daily thoughts, festival stories and devotion.',
+          gu: 'રોજના સુવિચાર, પર્વની વાર્તાઓ અને ભક્તિ માટે અમારા પેજ ફૉલો કરો.',
+          kn: 'ದಿನದ ಸುವಿಚಾರಗಳು, ಹಬ್ಬದ ಕಥೆಗಳು ಮತ್ತು ಭಕ್ತಿಗಾಗಿ ನಮ್ಮ ಪುಟಗಳನ್ನು ಫಾಲೋ ಮಾಡಿ.' })}
+      </Text>
+      {pendingSocialPlatforms(state.social).map((platform) => {
+        const name = platform === 'instagram' ? 'Instagram' : 'Facebook';
+        const Icon = platform === 'instagram' ? InstagramLogoIcon : FacebookLogoIcon;
+        return (
+          <View key={platform} style={[styles.socialRow, { borderColor: colors.divider, borderRadius: radii.md }]}>
+            <Pressable accessibilityRole="link" accessibilityLabel={`Follow Vedansh on ${name}`}
+              onPress={() => { void follow(platform); }}
+              style={({ pressed }) => [styles.socialFollow, { opacity: pressed ? 0.6 : 1 }]}>
+              <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+                <Icon size={28} color={colors.saffronDeep} />
+              </View>
+              <Text style={[styles.primaryText, styles.socialLabel, { color: colors.ink, fontFamily: labelFont }]}>
+                {pick(lang, { hi: `${name} पर फ़ॉलो करें`, en: `Follow on ${name}`,
+                  gu: `${name} પર ફૉલો કરો`, kn: `${name} ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ` })}
+              </Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" accessibilityLabel={`I already follow Vedansh on ${name}`}
+              onPress={() => confirmFollowing(platform)} style={styles.storeLink}>
+              <Text style={[styles.storeLinkText, { color: colors.inkSoft, fontFamily: bodyFont }]}>
+                {pick(lang, { hi: 'पहले से फ़ॉलो करते हैं', en: 'Already following',
+                  gu: 'પહેલેથી ફૉલો કરું છું', kn: 'ಈಗಾಗಲೇ ಫಾಲೋ ಮಾಡುತ್ತಿದ್ದೇನೆ' })}
+              </Text>
+            </Pressable>
+          </View>
+        );
+      })}
+      {socialLinkError && <Text accessibilityRole="alert" style={[styles.body, { color: colors.inkSoft, fontFamily: bodyFont }]}>
+        {pick(lang, { hi: 'पेज नहीं खुला। फिर कोशिश करें।', en: 'Could not open the page. Please try again.',
+          gu: 'પેજ ખુલ્યું નહીં. ફરી પ્રયાસ કરો.', kn: 'ಪುಟ ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' })}
+      </Text>}
+      <Pressable onPress={dismiss} accessibilityRole="button" accessibilityLabel="Maybe later" style={styles.secondary}>
+        <Text style={secondaryText}>{pick(lang, { hi: 'बाद में', en: 'Maybe later', gu: 'પછી', kn: 'ನಂತರ' })}</Text>
+      </Pressable>
+    </>
+  );
+
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={dismiss}>
       <View style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}>
         <View
           style={[
             styles.card,
-            { backgroundColor: colors.parchment, borderRadius: radii.lg, padding: spacing.xxl },
+            { backgroundColor: colors.parchment, borderRadius: radii.lg },
           ]}
         >
-          {lowStars > 0 ? thanksStep : askStep}
+          <ScrollView bounces={false} contentContainerStyle={{ padding: spacing.xxl, gap: 12 }}>
+            {promptKind === 'social' ? socialStep : lowStars > 0 ? thanksStep : askStep}
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -221,12 +274,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 28,
+    paddingVertical: 40,
   },
   card: {
     width: '100%',
     maxWidth: 360,
-    gap: 12,
+    maxHeight: '100%',
+    overflow: 'hidden',
   },
+  socialRow: { borderWidth: 1, paddingHorizontal: 12, paddingVertical: 4 },
+  socialFollow: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 48, paddingVertical: 8 },
+  socialLabel: { flex: 1, flexShrink: 1 },
   starRow: {
     flexDirection: 'row',
     justifyContent: 'center',

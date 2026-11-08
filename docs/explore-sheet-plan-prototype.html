@@ -1,0 +1,784 @@
+<title>Vedansh Explore Banner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: plan page with a live phone prototype beside its simulator; the phone keeps the app's own light-only parchment tokens. */
+:root {
+  --bg: #ECE8E1;
+  --surface: #FAF8F4;
+  --ink: #1F1A14;
+  --muted: #6B6257;
+  --line: rgba(60, 40, 20, 0.14);
+  --accent: #A9561A;
+  --accent-soft: rgba(184, 98, 27, 0.12);
+  --warn: #8F3A24;
+  --warn-soft: rgba(158, 74, 46, 0.12);
+  --ok: #6B5A1E;
+  --ok-soft: rgba(166, 124, 52, 0.16);
+  --code-bg: rgba(60, 40, 20, 0.06);
+
+  --f-display: "Cormorant Garamond", "Noto Serif Devanagari", Georgia, serif;
+  --f-body: "IBM Plex Sans", "Noto Serif Devanagari", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --f-dev: "Noto Serif Devanagari", "Cormorant Garamond", serif;
+
+  /* App tokens (mobile/src/theme/colors.ts). The phone is light-only, like the app. */
+  --a-parchment: #F3E7C9;
+  --a-parchment-soft: #F8EFD6;
+  --a-highlight: #F6ECD0;
+  --a-grad-end: #F1E3BF;
+  --a-ink: #1A0E03;
+  --a-ink-soft: #5A3A1E;
+  --a-ink-muted: #6E5230;
+  --a-saffron: #B8621B;
+  --a-saffron-deep: #8A3E0B;
+  --a-gold: #A67C34;
+  --a-divider: rgba(138, 62, 11, 0.18);
+  --a-saffron-tint: rgba(184, 98, 27, 0.12);
+  --a-gold-tint: rgba(166, 124, 52, 0.14);
+  --a-card-from: #FFF5E0;
+  --a-card-to: #F5DEAC;
+  --a-card-border: rgba(184, 98, 27, 0.4);
+  --a-backdrop: rgba(47, 30, 16, 0.55);
+  --a-on-primary: #FFFFFF;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14110D; --surface: #1D1914; --ink: #EDE5D8; --muted: #A59886;
+    --line: rgba(237, 229, 216, 0.13); --accent: #E3924A; --accent-soft: rgba(227, 146, 74, 0.14);
+    --warn: #E39A80; --warn-soft: rgba(227, 154, 128, 0.14); --ok: #D9BF72; --ok-soft: rgba(217, 191, 114, 0.14);
+    --code-bg: rgba(237, 229, 216, 0.07);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14110D; --surface: #1D1914; --ink: #EDE5D8; --muted: #A59886;
+  --line: rgba(237, 229, 216, 0.13); --accent: #E3924A; --accent-soft: rgba(227, 146, 74, 0.14);
+  --warn: #E39A80; --warn-soft: rgba(227, 154, 128, 0.14); --ok: #D9BF72; --ok-soft: rgba(217, 191, 114, 0.14);
+  --code-bg: rgba(237, 229, 216, 0.07);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px; display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(34px, 5vw, 46px); }
+h2 { font-size: 28px; }
+h3 { font-size: 20px; }
+p { margin: 0; }
+code { font-family: var(--f-mono); font-size: 0.86em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.lede { max-width: 68ch; color: var(--muted); font-size: 16px; }
+header.top { display: grid; gap: 10px; }
+.dev { font-family: var(--f-dev); }
+
+/* Read-first block */
+.truths { display: grid; border-top: 1px solid var(--line); }
+.truth { display: grid; grid-template-columns: 96px 1fr; gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.truth > div { min-width: 0; }
+.tag { display: inline-block; font-family: var(--f-mono); font-size: 11px; padding: 2px 7px; border-radius: 4px; white-space: nowrap; height: fit-content; }
+.tag.certain { background: var(--ok-soft); color: var(--ok); }
+.tag.likely { background: var(--accent-soft); color: var(--accent); }
+.tag.guessing { background: var(--warn-soft); color: var(--warn); }
+.truth b { font-weight: 600; }
+.truth p + p { margin-top: 4px; color: var(--muted); font-size: 14px; }
+
+/* Prototype layout */
+.proto { display: grid; grid-template-columns: 372px 1fr; gap: 28px; align-items: start; }
+.proto > * { min-width: 0; }
+@media (max-width: 860px) { .proto { grid-template-columns: 1fr; } .phone { margin: 0 auto; } }
+
+/* Phone + Home (background) */
+.phone { width: 372px; max-width: 100%; border-radius: 40px; padding: 10px; background: #2A1A0C; box-shadow: 0 20px 50px rgba(20, 10, 0, 0.28); }
+.screen { position: relative; border-radius: 31px; overflow: hidden; height: 740px; background: linear-gradient(180deg, var(--a-highlight), var(--a-grad-end)); color: var(--a-ink); display: flex; flex-direction: column; }
+.scroll { flex: 1; overflow-y: auto; padding: 0 16px 16px; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+.statusbar { display: flex; justify-content: space-between; font: 600 12px var(--f-body); padding: 12px 22px 4px; color: var(--a-ink); position: relative; z-index: 6; }
+.wordmark { position: relative; text-align: center; padding: 8px 0 10px; }
+.wordmark .om { font: 700 23px var(--f-dev); color: var(--a-saffron-deep); }
+.wordmark .tagline { font: italic 500 13px var(--f-display); color: var(--a-ink-muted); letter-spacing: 0.06em; }
+.gear { position: absolute; right: -4px; top: 8px; width: 44px; height: 44px; display: grid; place-items: center; color: var(--a-ink-soft); }
+.search { min-height: 48px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid var(--a-divider); border-radius: 14px; background: var(--a-parchment-soft); color: var(--a-ink-muted); font: italic 500 16px var(--f-display); margin-bottom: 14px; }
+.label { font: 600 11px var(--f-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--a-ink-muted); margin: 18px 0 8px; }
+.today { border: 1px solid var(--a-card-border); border-radius: 18px; background: linear-gradient(135deg, var(--a-card-from), var(--a-card-to)); padding: 12px 14px; }
+.today .head { font: 600 16px var(--f-dev); }
+.today .sub { font: italic 500 13px var(--f-display); color: var(--a-ink-muted); }
+.chips { display: flex; gap: 6px; margin-top: 8px; overflow: hidden; }
+.chip { flex: none; font: 500 12px var(--f-dev); padding: 3px 9px; border-radius: 999px; background: var(--a-gold-tint); color: var(--a-ink-soft); }
+.fortoday { display: flex; gap: 10px; overflow: hidden; margin: 0 -16px; padding: 0 16px; }
+.mini { flex: none; width: 196px; height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 18px; border: 1px solid var(--a-card-border); background: linear-gradient(135deg, var(--a-card-from), var(--a-card-to)); font: 600 16px var(--f-dev); }
+.gl { display: grid; place-items: center; border-radius: 14px; background: var(--a-saffron-tint); color: var(--a-saffron-deep); font: 700 14px var(--f-dev); flex: none; }
+.mini .gl { width: 34px; height: 34px; }
+.mini .chev { margin-left: auto; color: var(--a-saffron-deep); }
+.routine { margin-top: 16px; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1.5px dashed var(--a-gold); border-radius: 18px; font: 500 15px var(--f-dev); color: var(--a-ink-soft); }
+.routine .disc { width: 30px; height: 30px; border-radius: 50%; background: var(--a-gold-tint); display: grid; place-items: center; font: 700 13px var(--f-dev); color: var(--a-saffron-deep); }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tile { aspect-ratio: 1 / 1.05; border-radius: 18px; border: 1px solid var(--a-card-border); background: linear-gradient(160deg, var(--a-card-from), var(--a-card-to)); display: grid; place-items: center; align-content: center; gap: 6px; font: 600 14px var(--f-dev); }
+.tile .gl { width: 40px; height: 40px; }
+.tabbar { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--a-divider); background: var(--a-parchment-soft); padding: 8px 4px 14px; }
+.tabbar div { text-align: center; font: 500 11px var(--f-dev); color: var(--a-ink-muted); display: grid; gap: 2px; justify-items: center; }
+.tabbar .dot { width: 20px; height: 20px; border-radius: 6px; background: var(--a-gold-tint); }
+.tabbar .on { color: var(--a-saffron-deep); }
+.tabbar .on .dot { background: var(--a-saffron-tint); outline: 1.5px solid var(--a-saffron); }
+
+/* The proposed sheet */
+.scrim { position: absolute; inset: 0; background: var(--a-backdrop); z-index: 4; animation: fade 200ms ease-out; border: 0; padding: 0; cursor: pointer; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; max-height: 88%; overflow-y: auto; z-index: 5; background: var(--a-highlight); border-radius: 22px 22px 0 0; box-shadow: 0 -10px 30px rgba(47, 30, 16, 0.3); padding: 8px 18px 22px; animation: up 280ms cubic-bezier(.2,.8,.2,1); scrollbar-width: none; }
+.sheet::-webkit-scrollbar { display: none; }
+@keyframes up { from { transform: translateY(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .scrim, .sheet, .pane { animation: none; } }
+.grabber { width: 36px; height: 4px; border-radius: 2px; background: var(--a-divider); margin: 0 auto 8px; }
+.sh-x { position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; border: 0; background: none; color: var(--a-ink-muted); font-size: 16px; cursor: pointer; border-radius: 12px; }
+.sh-x:focus-visible, .sh-cta:focus-visible, .sh-later:focus-visible, .pv-tap:focus-visible { outline: 2px solid var(--a-saffron); outline-offset: 2px; }
+.hero { position: relative; height: 132px; border-radius: 18px; border: 1px solid var(--a-card-border); overflow: hidden; margin-top: 6px;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(184, 98, 27, 0.20) 0 34%, transparent 34.5%),
+    radial-gradient(circle at 50% 120%, rgba(166, 124, 52, 0.18) 0 52%, transparent 52.5%),
+    radial-gradient(circle at 50% 120%, rgba(166, 124, 52, 0.10) 0 72%, transparent 72.5%),
+    linear-gradient(160deg, var(--a-card-from), var(--a-card-to)); }
+.hero .medal { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: 76px; height: 76px; border-radius: 50%; background: var(--a-parchment-soft); border: 2px solid var(--a-gold); display: grid; place-items: center; font: 700 26px var(--f-dev); color: var(--a-saffron-deep); box-shadow: 0 6px 16px rgba(138, 62, 11, 0.22); }
+.hero .count { position: absolute; top: 10px; left: 10px; font: 600 11px var(--f-body); letter-spacing: 0.08em; color: var(--a-saffron-deep); background: var(--a-parchment-soft); border: 1px solid var(--a-card-border); border-radius: 999px; padding: 2px 9px; }
+.hero .count.dev { font: 600 12px var(--f-dev); letter-spacing: 0; }
+.hero .art { position: absolute; top: 10px; right: 10px; font: 500 10px var(--f-mono); color: var(--a-ink-muted); opacity: 0.8; }
+.sh-eyebrow { margin-top: 14px; font: 600 11px var(--f-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--a-saffron-deep); text-align: center; }
+.sh-eyebrow.dev { font: 600 13px var(--f-dev); letter-spacing: 0.02em; text-transform: none; }
+.sh-title { font: 700 24px var(--f-dev); text-align: center; margin-top: 2px; text-wrap: balance; }
+.sh-title.lat { font: 700 28px var(--f-display); }
+.sh-desc { font: 400 14.5px/1.6 var(--f-dev); color: var(--a-ink-soft); text-align: center; margin-top: 4px; text-wrap: pretty; }
+.sh-desc.lat { font: italic 500 17px/1.4 var(--f-display); }
+.pv-label { font: 600 11px var(--f-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--a-ink-muted); margin: 16px 0 6px; }
+.pv-tap { display: block; width: 100%; text-align: left; border: 1px solid var(--a-divider); background: var(--a-parchment-soft); border-radius: 18px; padding: 10px 12px; cursor: pointer; color: inherit; font: inherit; }
+.sh-cta { margin-top: 16px; width: 100%; min-height: 50px; border: 0; border-radius: 14px; background: var(--a-saffron); color: var(--a-on-primary); font: 600 17px var(--f-dev); cursor: pointer; }
+.sh-cta.lat { font: 600 16px var(--f-body); }
+.sh-later { display: block; margin: 6px auto 0; min-height: 44px; padding: 0 16px; border: 0; background: none; color: var(--a-ink-muted); font: 600 13px var(--f-body); letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; }
+.sh-later.dev { font: 600 14px var(--f-dev); letter-spacing: 0; text-transform: none; }
+
+/* Preview kinds */
+.pv-rows { display: grid; }
+.pv-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--a-divider); }
+.pv-row:last-child { border-bottom: 0; }
+.pv-row .gl { width: 34px; height: 34px; font-size: 12px; }
+.pv-row .t { font: 600 15px var(--f-dev); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pv-row .t.lat { font: 700 16.5px var(--f-display); }
+.pv-row .m { font: 400 12px var(--f-dev); color: var(--a-ink-muted); }
+.pv-row .m.lat { font: italic 500 13.5px var(--f-display); }
+.pv-row .tx { min-width: 0; flex: 1; display: grid; }
+.ring { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--a-gold); flex: none; }
+.pv-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pv-chip { font: 500 13px var(--f-dev); padding: 5px 11px; border-radius: 999px; background: var(--a-gold-tint); color: var(--a-ink-soft); }
+.pv-chip.lat { font: 600 14.5px var(--f-display); }
+.pv-chip.q { border-radius: 14px 14px 14px 4px; background: var(--a-saffron-tint); color: var(--a-saffron-deep); }
+.pv-center { display: grid; justify-items: center; gap: 6px; }
+.pv-cap { font: 400 12.5px var(--f-dev); color: var(--a-ink-muted); text-align: center; }
+.pv-cap.lat { font: italic 500 14px var(--f-display); }
+.dots41 { display: grid; grid-template-columns: repeat(14, 1fr); gap: 4px; margin: 6px 0 4px; }
+.dots41 span { aspect-ratio: 1; border-radius: 50%; background: var(--a-gold-tint); border: 1px solid rgba(166, 124, 52, 0.4); }
+.dots41 span:first-child { background: var(--a-saffron); border-color: var(--a-saffron); }
+.rashi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.rashi span { text-align: center; font: 500 13px var(--f-dev); padding: 6px 2px; border-radius: 10px; background: var(--a-gold-tint); }
+.rashi span.lat { font: 600 14px var(--f-display); }
+.flow { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; justify-content: center; }
+.flow .arr { color: var(--a-saffron-deep); }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pillars div { text-align: center; padding: 10px 4px; border-radius: 14px; background: var(--a-saffron-tint); font: 700 17px var(--f-dev); color: var(--a-saffron-deep); }
+.pillars div.lat { font: 700 19px var(--f-display); }
+.wish { border-radius: 14px; padding: 16px; text-align: center; background: linear-gradient(160deg, #F7D58E, #E8A85A); color: #3A1A04; }
+.wish .w1 { font: 700 24px var(--f-dev); }
+.wish .w1.lat { font: 700 28px var(--f-display); }
+.wish .w2 { font: italic 500 14px var(--f-display); opacity: 0.85; }
+.widgets { display: flex; gap: 10px; justify-content: center; }
+.wdg { width: 118px; height: 118px; border-radius: 22px; background: var(--a-parchment); border: 1px solid var(--a-divider); padding: 10px; display: grid; align-content: start; gap: 6px; box-shadow: 0 4px 10px rgba(47, 30, 16, 0.12); }
+.wdg .wt { font: 600 11px var(--f-dev); color: var(--a-saffron-deep); }
+.wdg .bar { height: 6px; border-radius: 3px; background: var(--a-gold-tint); }
+.wdg .big { font: 700 20px var(--f-dev); color: var(--a-ink); }
+
+/* Navigated pane */
+.pane { position: absolute; inset: 0; background: linear-gradient(180deg, var(--a-highlight), var(--a-grad-end)); display: flex; flex-direction: column; animation: slide 200ms ease-out; z-index: 7; }
+@keyframes slide { from { transform: translateX(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.pane .bar { display: flex; align-items: center; gap: 8px; padding: 44px 12px 12px; border-bottom: 1px solid var(--a-divider); }
+.pane .back { border: 0; background: none; font: 600 15px var(--f-body); color: var(--a-saffron-deep); min-height: 44px; padding: 0 8px; cursor: pointer; }
+.pane .ttl { font: 600 19px var(--f-dev); }
+.pane .body { padding: 20px 18px; display: grid; gap: 12px; color: var(--a-ink-soft); font-size: 14px; }
+.pane .rec { font: 500 12px var(--f-mono); background: var(--a-gold-tint); color: var(--a-ink-soft); padding: 8px 10px; border-radius: 10px; overflow-wrap: anywhere; }
+
+/* Simulator panel */
+.panel { display: grid; gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
+.card h3 { font-size: 19px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button.btn { font: 500 14px var(--f-body); border-radius: 10px; padding: 8px 14px; min-height: 40px; cursor: pointer; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+button.btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
+button.btn:focus-visible, .seg button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; user-select: none; }
+.toggle input { accent-color: var(--accent); width: 16px; height: 16px; margin: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg button { border: 0; background: none; padding: 7px 12px; font: 500 13px var(--f-body); color: var(--muted); cursor: pointer; min-height: 36px; }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+select { font: 500 13px var(--f-body); padding: 7px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); min-height: 36px; max-width: 100%; }
+.status { font-size: 14px; color: var(--muted); }
+.status b { color: var(--ink); font-weight: 600; }
+.ledger { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.ledger th { text-align: left; font: 600 11px var(--f-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.ledger td { padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.ledger td.num { font-variant-numeric: tabular-nums; text-align: right; color: var(--muted); }
+.ledger .nm { font-family: var(--f-dev); }
+.ledger .en { color: var(--muted); font-size: 12px; }
+.st { font: 500 11px var(--f-mono); padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+.st.visited { background: var(--ok-soft); color: var(--ok); }
+.st.showing { background: var(--accent); color: #fff; }
+.st.eligible { background: var(--accent-soft); color: var(--accent); }
+.st.resting { background: var(--warn-soft); color: var(--warn); }
+.mini-btn { font: 500 12px var(--f-body); border: 1px solid var(--line); background: none; color: var(--muted); border-radius: 6px; padding: 3px 8px; cursor: pointer; min-height: 28px; }
+.mini-btn:disabled { opacity: 0.35; cursor: default; }
+.scrollx { overflow-x: auto; }
+.log { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font: 400 12.5px var(--f-mono); color: var(--muted); max-height: 200px; overflow-y: auto; }
+.log li b { color: var(--ink); font-weight: 500; }
+
+/* Plan */
+section { display: grid; gap: 16px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.cols > * { min-width: 0; }
+ol.rules { margin: 0; padding-left: 22px; display: grid; gap: 8px; max-width: 72ch; }
+ol.rules li::marker { color: var(--accent); font-weight: 600; }
+.spec { display: grid; grid-template-columns: 110px 1fr; gap: 6px 14px; font-size: 14px; margin: 0; }
+.spec dt { color: var(--muted); }
+.spec dd { margin: 0; min-width: 0; }
+table.files { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.files th { text-align: left; font: 600 11px var(--f-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px; border-bottom: 1px solid var(--line); }
+table.files td { padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.files td:first-child { white-space: nowrap; color: var(--accent); font-weight: 600; font-size: 13px; }
+.phase-note { font-size: 13px; color: var(--muted); font-weight: 400; }
+.decisions { display: grid; gap: 10px; }
+.decision { display: grid; grid-template-columns: 28px 1fr; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.decision > div { min-width: 0; }
+.decision .n { font: 700 20px var(--f-display); color: var(--accent); }
+.decision p + p { color: var(--muted); font-size: 14px; margin-top: 2px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Proposal · launch surface · design.md §86 (new)</div>
+    <h1>Explore Sheet <span class="dev" style="font-size:0.7em;color:var(--muted)">आज खोजें</span></h1>
+    <p class="lede">On launch, a bottom sheet rises over Home and previews one section this user has never opened. The preview shows real content from that section. One tap opens the section. The sheet stops appearing once every section has been visited.</p>
+  </header>
+
+  <section aria-labelledby="h-first">
+    <h2 id="h-first">Read this first</h2>
+    <div class="truths">
+      <div class="truth"><span class="tag certain">Certain</span><div><p><b>A launch pop-up goes against a decision the team already made.</b> The rating prompt lost its cold-start trigger in Sept 2026 because it interrupted whatever the user opened the app to do. This sheet needs the guards that prompt lacked: one auto-opening surface per launch, never on a notification or widget launch, and an off switch in Settings.</p></div></div>
+      <div class="truth"><span class="tag certain">Decided</span><div><p><b>Cadence: on launch, at most 2 a day, at least 6 hours apart.</b> A sheet counts toward both limits once it is shown, whether the user opens it or taps "Not now". A day is the phone's local calendar day. The 6-hour gap already stops a sheet at 23:00 from being followed by another just after midnight.</p></div></div>
+      <div class="truth"><span class="tag certain">Certain</span><div><p><b>The app has no record of which sections a user has visited.</b> <code>UserActivityContext</code> logs verse reads and japa. <code>NewContentContext</code> logs individual texts. The visit ledger is new infrastructure.</p><p>Existing users start with an empty ledger, so ship it silently one OTA earlier and fill it from data they already have.</p></div></div>
+      <div class="truth"><span class="tag certain">Certain</span><div><p><b>Preview data must not load at launch.</b> The temple registry and other preview sources are deliberately kept out of Home's launch path, and a test enforces the launch budget. The sheet's code and data load only after the sheet decides to open.</p></div></div>
+      <div class="truth"><span class="tag certain">Certain</span><div><p><b>You won't be able to tell whether it works.</b> Meta app events only cover standard activation and carry no feature data, so taps on the sheet never leave the device.</p></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-proto">
+    <h2 id="h-proto">Prototype</h2>
+    <p class="lede">Launch the app and the sheet rises after Home settles. Relaunch after 1 hour or 6 hours to see the limits. Tap the button or the preview to open the section. Tap "Not now", ✕ or the dimmed area to dismiss. The preview names come from the bundled data. The hero is a stand-in for each section's existing R2 artwork.</p>
+    <div class="proto">
+      <div class="phone" aria-label="Phone prototype of Vedansh Home with the explore sheet">
+        <div class="screen" id="screen">
+          <div class="statusbar"><span>9:41</span><span>●●● ▮</span></div>
+          <div class="scroll">
+            <div class="wordmark">
+              <div class="om">ॐ वेदांश़ ॐ</div>
+              <div class="tagline">Sacred Texts · Daily Reading</div>
+              <div class="gear" aria-hidden="true">⚙</div>
+            </div>
+            <div class="search">⌕ <span id="searchTxt">खोजें — श्लोक, पाठ, मंत्र</span></div>
+            <div class="today">
+              <div class="head">आज · बुधवार</div>
+              <div class="sub">Sample panchang strip</div>
+              <div class="chips"><span class="chip">अभिजित मुहूर्त</span><span class="chip">राहु काल</span><span class="chip">चौघड़िया</span></div>
+            </div>
+            <div class="label">For today</div>
+            <div class="fortoday">
+              <div class="mini"><span class="gl">गी</span>गीता सार<span class="chev">›</span></div>
+              <div class="mini"><span class="gl">ग</span>गणेश चालीसा<span class="chev">›</span></div>
+            </div>
+            <div class="routine"><span class="disc">नि</span>अपनी नित्य साधना बनाएँ</div>
+            <div class="label">Categories</div>
+            <div class="grid">
+              <div class="tile"><span class="gl">चा</span>चालीसा</div>
+              <div class="tile"><span class="gl">आ</span>आरती</div>
+              <div class="tile"><span class="gl">स्तो</span>स्तोत्रम्</div>
+              <div class="tile"><span class="gl">ग्र</span>ग्रन्थ</div>
+              <div class="tile"><span class="gl">जप</span>जप</div>
+              <div class="tile"><span class="gl">सं</span>संस्कार</div>
+            </div>
+          </div>
+          <div class="tabbar" aria-hidden="true">
+            <div class="on"><span class="dot"></span>होम</div>
+            <div><span class="dot"></span>भक्ति</div>
+            <div><span class="dot"></span>पंचांग</div>
+            <div><span class="dot"></span>व्रत</div>
+            <div><span class="dot"></span>भजन</div>
+          </div>
+          <div id="sheetHost"></div>
+          <div id="paneHost"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="card">
+          <h3>Simulate</h3>
+          <div class="row">
+            <span class="status">Relaunch after</span>
+            <button class="btn" id="btn1h" type="button">1 hour</button>
+            <button class="btn" id="btn6h" type="button">6 hours</button>
+            <button class="btn primary" id="btnTomorrow" type="button">Next day, 8:00</button>
+            <button class="btn" id="btnReset" type="button">Reset</button>
+          </div>
+          <div class="row">
+            <label class="status" for="otherSurface">Next launch also has</label>
+            <select id="otherSurface">
+              <option value="">nothing else</option>
+              <option value="What's New">What's New</option>
+              <option value="the update-ready modal">Update ready</option>
+              <option value="the reminder opt-in">Reminder opt-in</option>
+            </select>
+            <label class="toggle"><input type="checkbox" id="tNotif"> Next launch from a notification</label>
+          </div>
+          <div class="row">
+            <label class="toggle"><input type="checkbox" id="tFresh"> Fresh install (tour on launch 1)</label>
+            <label class="toggle"><input type="checkbox" id="tSetting" checked> Settings: suggest sections</label>
+            <label class="toggle"><input type="checkbox" id="tFestival"> Festival day</label>
+          </div>
+          <div class="row">
+            <span class="status">Language</span>
+            <div class="seg" role="group" aria-label="Reading language">
+              <button type="button" id="lHi" aria-pressed="true">हिन्दी</button>
+              <button type="button" id="lEn" aria-pressed="false">English</button>
+            </div>
+            <button class="btn" id="btnSeed" type="button">Seed as upgrader</button>
+          </div>
+          <p class="status" id="statusLine" aria-live="polite"></p>
+        </div>
+
+        <div class="card">
+          <h3>Visit ledger <span class="status" id="ledgerCount"></span></h3>
+          <div class="scrollx">
+            <table class="ledger">
+              <thead><tr><th>Section</th><th>State</th><th>Not now</th><th>Other door</th></tr></thead>
+              <tbody id="ledgerBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Launch log</h3>
+          <ul class="log" id="log"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-rules">
+    <h2 id="h-rules">How a launch decides</h2>
+    <div class="cols">
+      <ol class="rules">
+        <li><b>Stand down</b> when any of these is true: Settings has it off; this is a fresh install's first session (the tour runs instead); another auto-opening surface wants this launch (What's New, update ready, reminder opt-in); the app was opened from a notification, widget or deep link; a sheet was shown less than 6 hours ago; 2 sheets have already been shown today; or the sheet is asleep.</li>
+        <li><b>Pool</b> = the 16 sections minus visited, minus any dismissed with "Not now" in the last 14 days, minus sections this device can't use (widgets on an unsupported OS, Vastu without a magnetometer).</li>
+        <li><b>No repeat</b> of the last section shown when anything else qualifies.</li>
+        <li><b>Score</b> = base priority + today's boost (a festival day lifts Guided Pujas; Pitru Paksha lifts Pitru Smaran) − 10 for each earlier "Not now".</li>
+        <li><b>Highest score wins.</b> Ties break on a shuffle seeded at launch.</li>
+        <li><b>Wait for Home to settle</b> (after interactions plus about 800ms), then rise. If the user has already left Home by then, skip this launch.</li>
+        <li><b>Two "Not now" in a row</b> put the sheet to sleep for 7 days. If the pool is empty, the sheet stops appearing.</li>
+      </ol>
+      <div class="card">
+        <h3>Definitions</h3>
+        <dl class="spec">
+          <dt>Section</dt><dd>One of 16 entries in <code>data/discovery/sections.ts</code>. Bottom tabs are left out because the tab bar always shows them. Content categories are left out because NEW badges already cover them.</dd>
+          <dt>Visit</dt><dd>Landing on any route that belongs to the section, by any route in: the sheet, DISCOVER, a tile, search, a deep link or a notification. Recorded in <code>App.tsx</code> <code>handleRouteChange</code>.</dd>
+          <dt>Launch</dt><dd>A cold start, or a return to the app after 30+ minutes in the background.</dd>
+          <dt>Limits</dt><dd>At most 2 sheets per local calendar day, and at least 6 hours between them, measured from when each one was shown. If the phone's clock moves backwards, the 6 hours start again from the current time instead of blocking indefinitely.</dd>
+          <dt>Fallback</dt><dd>If the ledger fails to load, show no sheet. Never treat every section as unvisited.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-spec">
+    <h2 id="h-spec">Sheet spec</h2>
+    <div class="cols">
+      <dl class="spec card">
+        <dt>Shell</dt><dd>Same sheet as <code>OnboardingSetupSheet</code>: transparent <code>Modal</code> sliding up over <code>modalBackdrop</code>, a grabber, <code>parchmentHighlight</code> fill, 22 top corners, <code>elevation.overlay</code>, max height 88% with the body in a ScrollView so large text still reaches the button.</dd>
+        <dt>Hero</dt><dd>132dp band showing the section's existing R2 artwork through <code>CachedArtwork</code>, with the parchment plate as the offline fallback. Progress chip: <span class="dev">3 / 16 देखे</span> / "3 of 16 explored".</dd>
+        <dt>Text</dt><dd>Only the active reading language, as in What's New (§47): text goes through <code>contentByLang</code> and fonts through <code>titleFontByLang</code>, so gu/kn never render in a Devanagari face. Title 24 (lat 28), description 2 lines in the meaning face.</dd>
+      </dl>
+      <dl class="spec card">
+        <dt>Preview</dt><dd>One of 13 preview kinds: list, checklist, mala, day grid, questions, occasion chips, three steps, three pillars, kundali chart, compass, rashi grid, wish card, widget mock. Each reads from the section's own bundled data and never retypes scripture (RULEBOOK §11.6). Tapping the preview opens the section.</dd>
+        <dt>Actions</dt><dd>Primary: solid <code>saffron</code>, <span class="dev">जप माला खोलें</span> / "Open Japa Mala". Secondary: "Not now" (a11y label <code>Not now</code>, distinct from the update modal's "Later"). ✕, swiping down, tapping the backdrop and Android back all count as Not now.</dd>
+        <dt>Motion</dt><dd>Backdrop fades in over 200ms and the sheet rises over 280ms. With Reduce Motion on, it appears without animation. No haptic.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-plan">
+    <h2 id="h-plan">Build plan</h2>
+    <p class="phase-note">All JS and AsyncStorage, so every phase ships over OTA. The day estimates are guesses.</p>
+    <div class="scrollx">
+      <table class="files">
+        <thead><tr><th>Phase</th><th>File</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Ledger<br><span class="phase-note">~1.5 days, silent OTA</span></td><td><code>mobile/src/data/discovery/sections.ts</code></td><td>Registry: id, route names, hi/en title, description and CTA, artwork key, preview kind plus a data loader, priority, availability check.</td></tr>
+          <tr><td></td><td><code>mobile/src/data/discovery/routeToSection.ts</code></td><td>Pure route → section map, typed against the ParamLists so a renamed route fails <code>tsc</code>.</td></tr>
+          <tr><td></td><td><code>mobile/src/data/discovery/seedVisits.ts</code></td><td>Seeds visits for upgraders from data they already have: routines, japam counter, reading progress, sankalps, Pitru records, vrat follows, daan ledger, Kundali profiles.</td></tr>
+          <tr><td></td><td><code>mobile/src/contexts/SectionVisitContext.tsx</code></td><td>Persists <code>@vedansh/section-visits</code>, including when each sheet was shown so the daily limit and 6-hour gap survive restarts. Exposes <code>recordRoute</code>, <code>markShown</code>, <code>markNotNow</code> and the <code>shouldShowExploreSheet</code> gate. Updates memory before the storage write, as <code>TourContext</code> does.</td></tr>
+          <tr><td></td><td><code>mobile/App.tsx</code></td><td>Adds the provider. <code>handleRouteChange</code> also calls <code>recordRoute(name)</code>.</td></tr>
+          <tr><td>2 · Sheet<br><span class="phase-note">~3 days</span></td><td><code>mobile/src/data/discovery/pickExploreSection.ts</code></td><td>Pure picker implementing the 7 rules above. It takes <code>now</code> as an argument so the time limits can be tested.</td></tr>
+          <tr><td></td><td><code>mobile/src/components/ExploreSheet.tsx</code></td><td>The sheet, loaded lazily. It mounts next to <code>WhatsNewModal</code> and opens only on the gate's rising edge, guarded by a ref the same way the tour is.</td></tr>
+          <tr><td></td><td><code>mobile/src/components/explore/*Preview.tsx</code></td><td>List, Checklist, Mala, Day grid, Questions and Occasion chips first. Together these cover 9 of the 16 sections.</td></tr>
+          <tr><td></td><td><code>mobile/src/contexts/RatingPromptContext.tsx</code></td><td>Add <code>shouldShowExploreSheet</code> to <code>blockedBySurface</code> (RULEBOOK §6.2 rule 1).</td></tr>
+          <tr><td></td><td><code>mobile/src/screens/MoreScreen.tsx</code></td><td>Settings toggle: <span class="dev">नए भाग सुझाएँ</span> / "Suggest sections on launch".</td></tr>
+          <tr><td>3 · Polish<br><span class="phase-note">~2 days</span></td><td><code>explore/*Preview.tsx</code>, picker</td><td>Three steps, Three pillars, Kundali chart, Compass, Rashi grid, Wish card and Widget mock previews. Festival and Pitru Paksha boosts, read from the observance the Today strip already computed.</td></tr>
+          <tr><td>Tests</td><td><code>data/discovery/__tests__/*</code></td><td>Picker: each stand-down, the 6-hour gap at 5:59 and 6:00, the daily limit, rollover at midnight, the clock moving backwards, each pool filter, no-repeat, sleep, empty pool, determinism. Route map covers every registry route. Seeding.</td></tr>
+          <tr><td></td><td><code>contexts/__tests__/SectionVisitContext.test.tsx</code>, <code>components/__tests__/ExploreSheet.test.tsx</code></td><td>Persistence; a storage failure means no sheet; four languages; a11y labels; Not now, ✕ and back all record a dismissal; the rating gate stands down.</td></tr>
+          <tr><td></td><td><code>.maestro/_launch.yaml</code>, <code>.maestro/explore-sheet.yaml</code></td><td>Add an optional tap on <code>Not now</code> to <code>_launch.yaml</code>. The sheet can fire on any relaunch after the first, so without this tap unrelated flows fail (§6.2 rule 2). New flow: second launch shows the sheet, the button opens the section, and the next launch shows a different section.</td></tr>
+          <tr><td>Docs</td><td><code>design.md</code> §86, §47, §37</td><td>New section for the sheet, its place in the onboarding-surface order, and the Settings toggle.</td></tr>
+          <tr><td></td><td><code>RULEBOOK.md</code> §6.2, <code>wiki/</code></td><td>List the sheet among auto-opening surfaces with its priority. Add a wiki page for the ledger.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-dec">
+    <h2 id="h-dec">Decisions for you</h2>
+    <div class="decisions">
+      <div class="decision"><span class="n">1</span><div><p><b>Off switch.</b> A row in Settings (recommended), a link inside the sheet, or both.</p><p>Shipping the rating prompt with no off switch is already noted as a store-review risk in RULEBOOK §6.2.</p></div></div>
+      <div class="decision"><span class="n">2</span><div><p><b>Measurement.</b> Ship without metrics, or decide separately to log when the sheet is shown and opened.</p></div></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  function L2(hi, en) { return { hi: hi, en: en }; }
+  var SECTIONS = [
+    { id: 'routine', t: L2('नित्य साधना', 'Daily Practice'), g: 'नि', p: 90,
+      d: L2('अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें। पाठ और जप पूरे होते ही अपने-आप अंकित।', 'Pick your daily rituals and keep the streak alive. Readings and japa tick themselves off as you finish.'),
+      route: 'RoutineToday', kind: 'steps',
+      rows: [[L2('हनुमान चालीसा', 'Hanuman Chalisa'), L2('1 पाठ', '1 recitation')], [L2('ॐ नमः शिवाय', 'Om Namah Shivaya'), L2('1 माला', '1 mala')], [L2('दैनिक श्लोक', 'Daily verse'), L2('1 श्लोक', '1 verse')]] },
+    { id: 'japam', t: L2('जप माला', 'Japa Mala'), g: 'जप', p: 85,
+      d: L2('108 मनकों की माला, हर मंत्र की अलग गिनती। जप-स्मरण का अलार्म भी।', 'A 108-bead mala that counts each mantra separately, with japa alarms.'),
+      route: 'JapamCounter', kind: 'mala',
+      main: L2('ॐ नमः शिवाय', 'Om Namah Shivaya'),
+      chips: [L2('हरे कृष्ण महामंत्र', 'Hare Krishna Mahamantra'), L2('गायत्री मंत्र', 'Gayatri Mantra'), L2('राधा नाम जप', 'Radha Naam Japa')] },
+    { id: 'puja-vidhi', t: L2('पूजा विधि', 'Guided Pujas'), g: 'पू', p: 75, boost: 'festival',
+      d: L2('सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।', 'Satyanarayan to Shivaratri — every step, guided in hand.'),
+      route: 'VidhiCatalog', kind: 'list', meta: L2('चरण-दर-चरण', 'Step by step'),
+      rows: [L2('श्री सत्यनारायण पूजा', 'Shri Satyanarayan Puja'), L2('महाशिवरात्रि पूजन', 'Maha Shivaratri Puja'), L2('दीपावली लक्ष्मी-गणेश पूजन', 'Diwali Lakshmi-Ganesh Puja')] },
+    { id: 'sankalp', t: L2('संकल्प', 'Sadhana Programs'), g: 'सं', p: 70,
+      d: L2('४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें। हर दिन का पाठ तय, प्रगति साथ।', 'Take a prebuilt vow, like the 41-day Hanuman Chalisa. Each day is planned and tracked.'),
+      route: 'SadhanaPrograms', kind: 'sankalp',
+      rows: [[L2('हनुमान चालीसा — ४१ दिन', 'Hanuman Chalisa — 41 Days'), L2('इकतालीस दिन का संकल्प', 'A 41-day sankalp')], [L2('श्रीमद्भगवद्गीता — १८ दिनों में', 'Bhagavad Gītā — in 18 Days'), L2('प्रतिदिन एक अध्याय', 'One chapter each day')]] },
+    { id: 'gita-saar', t: L2('गीता सार', 'Gita Saar'), g: 'गी', p: 70,
+      d: L2('जीवन के प्रश्नों पर गीता—एक श्लोक, एक सरल सार।', 'The Gita on life’s questions: one shloka, one plain takeaway.'),
+      route: 'GitaSaarChapters', kind: 'list', meta: L2('एक श्लोक, एक सार', 'One shloka, one takeaway'),
+      rows: [L2('क्या मैं अकेला हूँ', 'Am I alone?'), L2('भय और चिंता', 'When I am afraid'), L2('ध्यान और दिनचर्या', 'How to meditate')] },
+    { id: 'jijnasa', t: L2('जिज्ञासा', 'Ask Vedansh'), g: 'जि', p: 65,
+      d: L2('आज की तिथि, व्रत, भोग, मुहूर्त—एक प्रश्न में उत्तर।', "Today's tithi, vrat, bhog, muhurat — answered in one line."),
+      route: 'TodayVidhan', kind: 'questions',
+      chips: [L2('आज कौन सी तिथि है?', "What is today's tithi?"), L2('राहु काल कब है?', 'When is Rahu Kaal?'), L2('अगला व्रत कब है?', 'When is the next vrat?')] },
+    { id: 'kundali', t: L2('कुंडली', 'Kundali'), g: 'कुं', p: 60,
+      d: L2('जन्म तिथि, समय और स्थान से अपनी कुंडली देखें।', 'See your birth chart from your birth date, time and place.'),
+      route: 'Kundali', kind: 'chart', cap: L2('बारह भाव · उत्तर भारतीय शैली', 'Twelve houses · North Indian style') },
+    { id: 'pitru-smaran', t: L2('पितृ स्मरण', 'Pitru Smaran'), g: '॥', p: 55,
+      d: L2('एक बार तिथि जोड़ें—हर वर्ष श्राद्ध की सही तारीख़ जानें।', 'Save a tithi once and know its shraddha date every year.'),
+      route: 'PitruSmaranList', kind: 'flow',
+      steps: [L2('तिथि चुनें', 'Pick the tithi'), L2('सहेजें', 'Save it'), L2('हर वर्ष स्मरण', 'Reminded yearly')] },
+    { id: 'muhurat', t: L2('शुभ मुहूर्त', 'Muhurat Finder'), g: 'मु', p: 55,
+      d: L2('आने वाले दिनों में अपने कार्य के लिए शुभ समय खोजें।', 'Find an auspicious time for your occasion in the days ahead.'),
+      route: 'MuhuratFinder', kind: 'chips',
+      chips: [L2('गृह प्रवेश', 'Griha pravesh'), L2('विवाह', 'Vivah'), L2('वाहन क्रय', 'New vehicle'), L2('नामकरण', 'Namkaran')] },
+    { id: 'daan-punya', t: L2('दान-पुण्य', 'Daan Punya'), g: 'दा', p: 50,
+      d: L2('जप · व्रत · दान — पहले महत्व, फिर देना। कभी भी।', 'Japa · vrat · daan — understand first, then give. Any day.'),
+      route: 'DaanPunya', kind: 'pillars', pillars: [L2('जप', 'Japa'), L2('व्रत', 'Vrat'), L2('दान', 'Daan')], cap: L2('पहले महत्व, फिर देना', 'Understand first, then give') },
+    { id: 'theerth', t: L2('तीर्थ यात्रा', 'Sacred Journeys'), g: 'ती', p: 50,
+      d: L2('भारत के पवित्र मंदिरों और धामों की खोज करें।', 'Explore sacred temples and dhams across Bharat.'),
+      route: 'TheerthMap', kind: 'list', meta: L2('यात्रा', 'Yatra'),
+      rows: [L2('ज्योतिर्लिंग', 'Jyotirlingas'), L2('चार धाम', 'Char Dham'), L2('छोटा चार धाम', 'Chota Char Dham')] },
+    { id: 'rashifal', t: L2('दैनिक राशिफल', 'Daily Rashifal'), g: 'रा', p: 50,
+      d: L2('अपनी राशि चुनें और आज का फल पढ़ें।', "Pick your rashi and read today's reading."),
+      route: 'Rashifal', kind: 'rashi' },
+    { id: 'kids', t: L2('बच्चों की कहानियाँ', 'Stories for Kids'), g: 'क', p: 45,
+      d: L2('बच्चों के लिए चित्रों वाली देव-कथाएँ, चार भाषाओं में।', 'Illustrated deity stories for children, in four languages.'),
+      route: 'KidsStoryLibrary', kind: 'list', meta: L2('चित्रों सहित', 'Illustrated'),
+      rows: [L2('नवरात्रि: माँ दुर्गा के नौ रूप', 'Navaratri: Nine Forms of Maa Durga'), L2('दुर्गा और महिषासुर', 'Durga and Mahishasura'), L2('कूष्मांडा: प्रकाश और सृष्टि', 'Kushmanda: Light and Creation')] },
+    { id: 'suvichar', t: L2('सुविचार', 'Suvichar Wishes'), g: 'शु', p: 45,
+      d: L2('शुभकामना संदेश अपने नाम से भेजें।', 'Send devotional wishes signed with your name.'),
+      route: 'Suvichar', kind: 'wish', wish: L2('शुभ मंगलवार', 'Shubh Mangalvar') },
+    { id: 'vastu', t: L2('वास्तु दिशा', 'Vastu Compass'), g: 'वा', p: 40,
+      d: L2('आठ दिशाओं वाला जीवंत कम्पास और गृह वास्तु।', 'A live eight-direction compass and a home vastu reading.'),
+      route: 'VastuDisha', kind: 'compass' },
+    { id: 'home-widgets', t: L2('होम-स्क्रीन विजेट', 'Home-Screen Widgets'), g: 'वि', p: 35,
+      d: L2('आज का श्लोक, पंचांग और जप—होम स्क्रीन पर।', "Today's verse, Panchang, and japa on your home screen."),
+      route: 'WidgetGallery', kind: 'widget' }
+  ];
+  var BY_ID = {}; SECTIONS.forEach(function (s) { BY_ID[s.id] = s; });
+  var REST_DAYS = 14, SLEEP_DAYS = 7, SETTLE_MS = 800, GAP_MIN = 6 * 60, DAILY_MAX = 2;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function hhmm(t) { var m = t % 1440; return Math.floor(m / 60) + ':' + pad(m % 60); }
+  var RASHI = [['मेष','Aries'],['वृषभ','Taurus'],['मिथुन','Gemini'],['कर्क','Cancer'],['सिंह','Leo'],['कन्या','Virgo'],['तुला','Libra'],['वृश्चिक','Scorpio'],['धनु','Sagittarius'],['मकर','Capricorn'],['कुंभ','Aquarius'],['मीन','Pisces']];
+
+  var S, timer = null;
+  function freshState() {
+    return {
+      lang: 'hi', now: 8 * 60, day: 1, launch: 0,
+      ctx: { fresh: false, festival: false, setting: true },
+      ledger: { visited: {}, notNow: {}, restDay: {}, lastShownId: null, streak: 0, sleepUntil: 0, shownAt: [] },
+      sheet: null, pane: null, reason: '', log: []
+    };
+  }
+  function T(o) { return o[S.lang]; }
+  function isHi() { return S.lang === 'hi'; }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+  function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  function stateOf(s) {
+    var L = S.ledger;
+    if (L.visited[s.id]) return { k: 'visited', t: L.visited[s.id] === 'seed' ? 'visited · seeded' : 'visited' };
+    if (S.sheet === s.id) return { k: 'showing', t: 'showing' };
+    if (L.restDay[s.id] && S.day - L.restDay[s.id] < REST_DAYS) return { k: 'resting', t: 'resting to day ' + (L.restDay[s.id] + REST_DAYS) };
+    return { k: 'eligible', t: 'eligible' };
+  }
+
+  function decide(other, fromNotif) {
+    var L = S.ledger, c = S.ctx;
+    if (!c.setting) return { why: 'turned off in Settings' };
+    if (c.fresh && S.launch === 1) return { why: 'fresh install: the tour and setup sheet own launch 1' };
+    if (other) return { why: other + ' owns this launch (one auto-opening surface per launch)' };
+    if (fromNotif) return { why: 'opened from a notification: the user came for something specific' };
+    var last = L.shownAt.length ? L.shownAt[L.shownAt.length - 1] : null;
+    if (last != null && S.now - last < GAP_MIN) return { why: 'less than 6 hours since the last sheet; next at ' + hhmm(last + GAP_MIN) };
+    var today = L.shownAt.filter(function (t) { return Math.floor(t / 1440) === Math.floor(S.now / 1440); }).length;
+    if (today >= DAILY_MAX) return { why: 'already shown ' + DAILY_MAX + ' today; next tomorrow' };
+    if (L.sleepUntil > S.day) return { why: 'asleep after two Not now in a row, until day ' + L.sleepUntil };
+    var pool = SECTIONS.filter(function (s) { return stateOf(s).k === 'eligible'; });
+    if (!pool.length) return { why: 'no unvisited sections left: the sheet stops appearing' };
+    if (pool.length > 1 && L.lastShownId) pool = pool.filter(function (s) { return s.id !== L.lastShownId; });
+    var rnd = mulberry32(S.launch * 7919 + S.day);
+    var scored = pool.map(function (s) {
+      var score = s.p - 10 * (L.notNow[s.id] || 0);
+      if (s.boost === 'festival' && c.festival) score += 40;
+      return { s: s, score: score, tie: rnd() };
+    }).sort(function (a, b) { return b.score - a.score || b.tie - a.tie; });
+    return { id: scored[0].s.id, why: 'score ' + scored[0].score + ', ' + pool.length + ' in pool' };
+  }
+
+  // adv: minutes to move the clock forward, or 'next' for the next day at 8:00
+  function launch(adv) {
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (S.launch > 0) S.now = adv === 'next' ? (Math.floor(S.now / 1440) + 1) * 1440 + 8 * 60 : S.now + (adv || 0);
+    S.day = Math.floor(S.now / 1440) + 1;
+    S.launch += 1; S.sheet = null; S.pane = null;
+    var sel = document.getElementById('otherSurface'), notif = document.getElementById('tNotif');
+    var r = decide(sel.value, notif.checked);
+    sel.value = ''; notif.checked = false;
+    var head = 'Day ' + S.day + ' ' + hhmm(S.now) + ' · launch ' + S.launch + ' → ';
+    if (r.id) {
+      S.ledger.shownAt.push(S.now);
+      S.reason = 'Home settling…';
+      addLog(head + 'sheet: <b>' + BY_ID[r.id].t.en + '</b> (' + r.why + ')');
+      render();
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      timer = setTimeout(function () {
+        var L = S.ledger;
+        S.sheet = r.id; L.lastShownId = r.id;
+        render();
+        var cta = document.getElementById('shCta'); if (cta) cta.focus({ preventScroll: true });
+      }, reduce ? 0 : SETTLE_MS);
+    } else {
+      S.reason = r.why;
+      addLog(head + 'no sheet (' + r.why + ')');
+      render();
+    }
+  }
+
+  function openSection(id, door) {
+    var L = S.ledger;
+    if (!L.visited[id]) L.visited[id] = 'day ' + S.day;
+    if (door === 'sheet') { L.streak = 0; S.sheet = null; S.pane = id; }
+    addLog('Day ' + S.day + ' · visited <b>' + BY_ID[id].t.en + '</b> via ' + door);
+    render();
+  }
+
+  function notNow(how) {
+    var L = S.ledger, id = S.sheet;
+    if (!id) return;
+    L.restDay[id] = S.day; L.notNow[id] = (L.notNow[id] || 0) + 1; L.streak += 1;
+    var msg = 'Day ' + S.day + ' · ' + how + ' on <b>' + BY_ID[id].t.en + '</b>, rests ' + REST_DAYS + ' days';
+    if (L.streak >= 2) { L.sleepUntil = S.day + SLEEP_DAYS; L.streak = 0; msg += '; sheet sleeps until day ' + L.sleepUntil; }
+    S.sheet = null; S.reason = 'dismissed';
+    addLog(msg);
+    render();
+  }
+
+  function addLog(html) { S.log.unshift(html); if (S.log.length > 50) S.log.pop(); }
+
+  // ---- previews ----
+  function cls(base) { return base + (isHi() ? '' : ' lat'); }
+  function svgMala() {
+    var beads = '', n = 108, r = 58, cx = 75, cy = 75;
+    for (var i = 0; i < n; i++) {
+      var a = (i / n) * Math.PI * 2 - Math.PI / 2;
+      beads += '<circle cx="' + (cx + r * Math.cos(a)).toFixed(1) + '" cy="' + (cy + r * Math.sin(a)).toFixed(1) + '" r="2.3" fill="' + (i === 0 ? '#B8621B' : '#C9A262') + '"/>';
+    }
+    return '<svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="Mala of 108 beads">' + beads +
+      '<circle cx="75" cy="11" r="5" fill="#8A3E0B"/>' +
+      '<text x="75" y="76" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="26" font-weight="600" fill="#1A0E03">0</text>' +
+      '<text x="75" y="94" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#6E5230">/ 108</text></svg>';
+  }
+  function svgChart() {
+    var pos = [[70,42],[37,17],[17,37],[42,70],[17,103],[37,123],[70,98],[103,123],[123,103],[98,70],[123,37],[103,17]];
+    var nums = pos.map(function (p, i) { return '<text x="' + p[0] + '" y="' + (p[1] + 4) + '" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#6E5230">' + (i + 1) + '</text>'; }).join('');
+    return '<svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="North Indian chart with twelve houses">' +
+      '<rect x="2" y="2" width="136" height="136" fill="#FFF5E0" stroke="#A67C34" stroke-width="1.5"/>' +
+      '<path d="M2 2 L138 138 M138 2 L2 138" stroke="#A67C34" stroke-width="1.2" fill="none"/>' +
+      '<path d="M70 2 L138 70 L70 138 L2 70 Z" stroke="#A67C34" stroke-width="1.2" fill="none"/>' + nums + '</svg>';
+  }
+  function svgCompass() {
+    var hi = ['उ','ईशान','पू','आग्नेय','द','नैऋत्य','प','वायव्य'], en = ['N','NE','E','SE','S','SW','W','NW'];
+    var labs = (isHi() ? hi : en).map(function (t, i) {
+      var a = i * Math.PI / 4 - Math.PI / 2, r = 54;
+      return '<text x="' + (75 + r * Math.cos(a)).toFixed(1) + '" y="' + (79 + r * Math.sin(a)).toFixed(1) + '" text-anchor="middle" font-family="Noto Serif Devanagari, IBM Plex Sans, serif" font-size="' + (i % 2 ? 9.5 : 12) + '" font-weight="600" fill="' + (i === 0 ? '#8A3E0B' : '#5A3A1E') + '">' + t + '</text>';
+    }).join('');
+    return '<svg width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="Eight-direction compass">' +
+      '<circle cx="75" cy="75" r="70" fill="#FFF5E0" stroke="#A67C34" stroke-width="1.5"/>' +
+      '<circle cx="75" cy="75" r="38" fill="none" stroke="rgba(166,124,52,0.4)"/>' + labs +
+      '<path d="M75 40 L81 75 L75 110 L69 75 Z" fill="#B8621B" opacity="0.9"/><path d="M75 75 L81 75 L75 110 L69 75 Z" fill="#6E5230"/>' +
+      '<circle cx="75" cy="75" r="4" fill="#1A0E03"/></svg>';
+  }
+  function previewHTML(s) {
+    var k = s.kind, h = '';
+    if (k === 'list') {
+      h = '<div class="pv-rows">' + s.rows.map(function (r) {
+        return '<div class="pv-row"><span class="gl">' + s.g + '</span><span class="tx"><span class="' + cls('t') + '">' + esc(T(r)) + '</span><span class="' + cls('m') + '">' + esc(T(s.meta)) + '</span></span><span style="color:var(--a-saffron-deep)">›</span></div>';
+      }).join('') + '</div>';
+    } else if (k === 'steps') {
+      h = '<div class="pv-rows">' + s.rows.map(function (r) {
+        return '<div class="pv-row"><span class="tx"><span class="' + cls('t') + '">' + esc(T(r[0])) + '</span><span class="' + cls('m') + '">' + esc(T(r[1])) + '</span></span><span class="ring" aria-hidden="true"></span></div>';
+      }).join('') + '</div>';
+    } else if (k === 'mala') {
+      h = '<div class="pv-center">' + svgMala() + '<div class="' + cls('t') + '" style="font:600 16px var(--f-dev)">' + esc(T(s.main)) + '</div><div class="pv-chips" style="justify-content:center">' +
+        s.chips.map(function (c) { return '<span class="' + cls('pv-chip') + '">' + esc(T(c)) + '</span>'; }).join('') + '</div></div>';
+    } else if (k === 'sankalp') {
+      var dots = ''; for (var i = 0; i < 41; i++) dots += '<span></span>';
+      h = '<div class="pv-rows"><div class="pv-row" style="display:block"><span class="tx"><span class="' + cls('t') + '">' + esc(T(s.rows[0][0])) + '</span><span class="' + cls('m') + '">' + esc(T(s.rows[0][1])) + '</span></span><div class="dots41" aria-hidden="true">' + dots + '</div></div>' +
+        '<div class="pv-row"><span class="tx"><span class="' + cls('t') + '">' + esc(T(s.rows[1][0])) + '</span><span class="' + cls('m') + '">' + esc(T(s.rows[1][1])) + '</span></span><span style="color:var(--a-saffron-deep)">›</span></div></div>';
+    } else if (k === 'questions' || k === 'chips') {
+      h = '<div class="pv-chips">' + s.chips.map(function (c) { return '<span class="' + cls('pv-chip') + (k === 'questions' ? ' q' : '') + '">' + esc(T(c)) + '</span>'; }).join('') + '</div>';
+    } else if (k === 'chart') {
+      h = '<div class="pv-center">' + svgChart() + '<div class="' + cls('pv-cap') + '">' + esc(T(s.cap)) + '</div></div>';
+    } else if (k === 'compass') {
+      h = '<div class="pv-center">' + svgCompass() + '</div>';
+    } else if (k === 'rashi') {
+      h = '<div class="rashi">' + RASHI.map(function (r) { return '<span class="' + (isHi() ? '' : 'lat') + '">' + (isHi() ? r[0] : r[1]) + '</span>'; }).join('') + '</div>';
+    } else if (k === 'flow') {
+      h = '<div class="flow">' + s.steps.map(function (st, i) { return (i ? '<span class="arr">→</span>' : '') + '<span class="' + cls('pv-chip') + '">' + esc(T(st)) + '</span>'; }).join('') + '</div>';
+    } else if (k === 'pillars') {
+      h = '<div class="pillars">' + s.pillars.map(function (p) { return '<div class="' + (isHi() ? '' : 'lat') + '">' + esc(T(p)) + '</div>'; }).join('') + '</div><div class="' + cls('pv-cap') + '" style="margin-top:8px">' + esc(T(s.cap)) + '</div>';
+    } else if (k === 'wish') {
+      h = '<div class="wish"><div class="' + cls('w1') + '">' + esc(T(s.wish)) + '</div><div class="w2">— ' + (isHi() ? 'आपका नाम' : 'Your name') + '</div></div>';
+    } else if (k === 'widget') {
+      h = '<div class="widgets"><div class="wdg"><span class="wt">आज का श्लोक</span><span class="bar"></span><span class="bar" style="width:80%"></span><span class="bar" style="width:60%"></span></div>' +
+        '<div class="wdg"><span class="wt">पंचांग</span><span class="big">बुधवार</span><span class="bar" style="width:70%"></span></div></div>';
+    }
+    return h;
+  }
+
+  function sheetHTML(s) {
+    var visited = SECTIONS.filter(function (x) { return S.ledger.visited[x.id]; }).length;
+    var count = isHi() ? (visited + ' / ' + SECTIONS.length + ' देखे') : (visited + ' of ' + SECTIONS.length + ' explored');
+    var cta = isHi() ? (s.t.hi + ' खोलें') : ('Open ' + s.t.en);
+    return '<button class="scrim" id="scrim" type="button" aria-label="Not now"></button>' +
+      '<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">' +
+        '<div class="grabber" aria-hidden="true"></div>' +
+        '<button class="sh-x" id="shX" type="button" aria-label="Close">✕</button>' +
+        '<div class="hero" aria-hidden="true"><span class="count' + (isHi() ? ' dev' : '') + '">' + count + '</span><span class="art">R2 artwork</span><span class="medal">' + s.g + '</span></div>' +
+        '<div class="sh-eyebrow' + (isHi() ? ' dev' : '') + '">' + (isHi() ? 'आज खोजें' : 'Explore today') + '</div>' +
+        '<div class="' + cls('sh-title') + '" id="shTitle">' + esc(T(s.t)) + '</div>' +
+        '<p class="' + cls('sh-desc') + '">' + esc(T(s.d)) + '</p>' +
+        '<div class="pv-label">Preview</div>' +
+        '<button class="pv-tap" id="pvTap" type="button" aria-label="Preview of ' + esc(s.t.en) + '. Tap to open.">' + previewHTML(s) + '</button>' +
+        '<button class="' + cls('sh-cta') + '" id="shCta" type="button">' + esc(cta) + '</button>' +
+        '<button class="sh-later' + (isHi() ? ' dev' : '') + '" id="shLater" type="button" aria-label="Not now">' + (isHi() ? 'अभी नहीं' : 'Not now') + '</button>' +
+      '</div>';
+  }
+
+  function render() {
+    var host = document.getElementById('sheetHost');
+    if (S.sheet) {
+      host.innerHTML = sheetHTML(BY_ID[S.sheet]);
+      document.getElementById('shCta').addEventListener('click', function () { openSection(S.sheet, 'sheet'); });
+      document.getElementById('pvTap').addEventListener('click', function () { openSection(S.sheet, 'sheet'); });
+      document.getElementById('shLater').addEventListener('click', function () { notNow('Not now'); });
+      document.getElementById('shX').addEventListener('click', function () { notNow('✕'); });
+      document.getElementById('scrim').addEventListener('click', function () { notNow('backdrop tap'); });
+    } else host.innerHTML = '';
+    document.getElementById('searchTxt').textContent = isHi() ? 'खोजें — श्लोक, पाठ, मंत्र' : 'Search verses, sections, mantras';
+
+    var ph = document.getElementById('paneHost');
+    if (S.pane) {
+      var s = BY_ID[S.pane];
+      ph.innerHTML = '<div class="pane"><div class="bar"><button class="back" id="paneBack" type="button">‹ Home</button><span class="ttl">' + esc(T(s.t)) + '</span></div>' +
+        '<div class="body"><p>This stands in for the real screen.</p><div class="rec">recordRoute(\'' + s.route + '\') → ' + s.id + ' visited</div><p>Going back to Home does not bring the sheet back this session. The next launch shows a different section.</p></div></div>';
+      document.getElementById('paneBack').addEventListener('click', function () { S.pane = null; S.reason = 'section opened; the next launch shows another'; render(); });
+    } else ph.innerHTML = '';
+
+    var L = S.ledger, visitedN = 0;
+    document.getElementById('ledgerBody').innerHTML = SECTIONS.map(function (s) {
+      var st = stateOf(s); if (st.k === 'visited') visitedN++;
+      return '<tr><td><span class="nm">' + s.t.hi + '</span><br><span class="en">' + s.t.en + '</span></td>' +
+        '<td><span class="st ' + st.k + '">' + st.t + '</span></td>' +
+        '<td class="num">' + (L.notNow[s.id] || 0) + '</td>' +
+        '<td><button class="mini-btn" type="button" data-visit="' + s.id + '"' + (L.visited[s.id] ? ' disabled' : '') + '>Visit</button></td></tr>';
+    }).join('');
+    document.getElementById('ledgerCount').textContent = '· ' + visitedN + ' / ' + SECTIONS.length + ' visited';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-visit]'), function (b) {
+      b.addEventListener('click', function () { openSection(b.getAttribute('data-visit'), 'another door'); });
+    });
+
+    var shownToday = S.ledger.shownAt.filter(function (t) { return Math.floor(t / 1440) === Math.floor(S.now / 1440); }).length;
+    document.getElementById('statusLine').innerHTML = 'Day <b>' + S.day + ', ' + hhmm(S.now) + '</b> · launch <b>' + S.launch + '</b> · today <b>' + shownToday + ' of 2</b> · ' + (S.sheet ? 'sheet showing <b>' + BY_ID[S.sheet].t.en + '</b>' : esc(S.reason));
+    document.getElementById('log').innerHTML = S.log.map(function (l) { return '<li>' + l + '</li>'; }).join('') || '<li>No launches yet.</li>';
+    document.getElementById('lHi').setAttribute('aria-pressed', String(isHi()));
+    document.getElementById('lEn').setAttribute('aria-pressed', String(!isHi()));
+  }
+
+  // Reset keeps the fresh-install toggle so its first-session stand-down can be replayed
+  function reset() {
+    var keep = { fresh: document.getElementById('tFresh').checked, setting: document.getElementById('tSetting').checked, lang: S.lang };
+    S = freshState();
+    S.ctx.fresh = keep.fresh; S.ctx.setting = keep.setting; S.lang = keep.lang;
+    document.getElementById('tFestival').checked = false;
+    launch(false);
+  }
+
+  document.getElementById('btnTomorrow').addEventListener('click', function () { launch('next'); });
+  document.getElementById('btn1h').addEventListener('click', function () { launch(60); });
+  document.getElementById('btn6h').addEventListener('click', function () { launch(360); });
+  document.getElementById('btnReset').addEventListener('click', reset);
+  document.getElementById('btnSeed').addEventListener('click', function () {
+    ['routine', 'japam', 'gita-saar'].forEach(function (id) { if (!S.ledger.visited[id]) S.ledger.visited[id] = 'seed'; });
+    addLog('Seeded <b>Daily Practice, Japa Mala, Gita Saar</b> from existing routines, japam counter and reading progress');
+    render();
+  });
+  document.getElementById('tFresh').addEventListener('change', function (e) { addLog('Fresh install ' + (e.target.checked ? 'on' : 'off') + ': press Reset to replay from launch 1'); render(); });
+  document.getElementById('tSetting').addEventListener('change', function (e) { S.ctx.setting = e.target.checked; addLog('Settings toggle ' + (e.target.checked ? 'on' : 'off')); render(); });
+  document.getElementById('tFestival').addEventListener('change', function (e) { S.ctx.festival = e.target.checked; });
+  document.getElementById('lHi').addEventListener('click', function () { S.lang = 'hi'; render(); });
+  document.getElementById('lEn').addEventListener('click', function () { S.lang = 'en'; render(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && S.sheet) notNow('back'); });
+
+  S = freshState();
+  launch(false);
+})();
+</script>

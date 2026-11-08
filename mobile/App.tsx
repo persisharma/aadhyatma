@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { InteractionManager, Linking, View } from 'react-native';
+import { InteractionManager, Linking, Platform, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
@@ -61,11 +61,13 @@ import { childRoutes } from '@/navigation/routeGraph';
 // Side-effect import: enrols the non-screen warm-ups (search index) with the
 // walk. Must be imported before `startScreenPrefetch` runs.
 import '@/navigation/dataWarmups';
-import ReminderOptInModal from '@/components/ReminderOptInModal';
+import LaunchAskHost from '@/components/LaunchAskHost';
+import BrandLaunchGate, { BRAND_LAUNCH_REVEAL_ENABLED } from '@/components/BrandLaunchGate';
 import UpdateReadyModal from '@/components/UpdateReadyModal';
 import FeatureTour from '@/components/FeatureTour';
-import OnboardingSetupSheet from '@/components/OnboardingSetupSheet';
 import WhatsNewModal from '@/components/WhatsNewModal';
+import ExploreLaunch from '@/components/explore/ExploreLaunch';
+import { readLaunchNotificationResponse, clearLaunchNotificationResponse } from '@/notifications/launchResponse';
 import RatingPromptSheet from '@/components/RatingPromptSheet';
 import { TourProvider } from '@/contexts/TourContext';
 import { RatingPromptProvider } from '@/contexts/RatingPromptContext';
@@ -134,6 +136,16 @@ InteractionManager.runAfterInteractions(() => launchMark('first-ui-idle'));
 
 const INITIAL_TARGET_TIMEOUT_MS = 1_000;
 
+async function prepareStartTarget(target: StartTarget | null): Promise<StartTarget | null> {
+      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
+      try {
+        await preloadPanchangStack();
+        return target;
+      } catch {
+        return { tab: 'HomeTab', screen: 'Home' } as StartTarget;
+      }
+}
+
 export default function App() {
   launchMarkOnce('app-render');
   const [initialTarget, setInitialTarget] = useState<StartTarget | null | undefined>(
@@ -187,7 +199,7 @@ export default function App() {
         return parsed ? widgetStartTarget(parsed) : null;
       })
       .catch(() => null);
-    const notificationTarget = Notifications.getLastNotificationResponseAsync()
+    const notificationTarget = readLaunchNotificationResponse()
       .then((response) =>
         // Snooze taps never navigate (see the cold-start handler below).
         response?.actionIdentifier === JAPAM_SNOOZE_ACTION_ID
@@ -201,15 +213,7 @@ export default function App() {
     // mounts, and a chunk that cannot evaluate falls back to Home instead of
     // throwing past every boundary into a dead screen. Bounded by the same
     // timeout as the reads above.
-    const ready = async (target: StartTarget | null) => {
-      if (target?.tab !== 'PanchangTab' && target?.tab !== 'VratTab') return target;
-      try {
-        await preloadPanchangStack();
-        return target;
-      } catch {
-        return { tab: 'HomeTab', screen: 'Home' } as StartTarget;
-      }
-    };
+    const ready = prepareStartTarget;
     // A widget URL wins outright and need not wait on the notification read.
     widgetTarget.then(async (target) => { if (target) finish(await ready(target)); });
     Promise.all([widgetTarget, notificationTarget]).then(async ([fromWidget, fromNotification]) => {
@@ -239,7 +243,7 @@ export default function App() {
   const handleNavigationReady = useCallback(() => {
     startScreenPrefetch();
     // Show the app before asking ATT; don't add tracking to the splash gate.
-    InteractionManager.runAfterInteractions(startMetaAppEvents);
+    if (Platform.OS !== 'ios') InteractionManager.runAfterInteractions(() => { void startMetaAppEvents(); });
   }, []);
 
   // The handler is a no-op until `navigationRef.isReady()` so we don't lose
@@ -249,7 +253,7 @@ export default function App() {
 
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    Notifications.getLastNotificationResponseAsync()
+    readLaunchNotificationResponse()
       .then((response) => {
         if (cancelled || !response) return;
         // Already consumed as the navigator's initial route — dispatching it
@@ -276,7 +280,17 @@ export default function App() {
       .catch(() => undefined);
 
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      void clearLaunchNotificationResponse();
       if (maybeHandleJapamSnoozeResponse(response)) return;
+      if (!navigationRef.isReady()) {
+        const target = startTargetFromNotification(response);
+        if (target) void prepareStartTarget(target).then(prepared => {
+          if (cancelled || !prepared) return;
+          if (navigationRef.isReady()) handleNotificationResponse(response);
+          else setInitialTarget(prepared);
+        });
+        return;
+      }
       handleNotificationResponse(response);
     });
 
@@ -294,10 +308,21 @@ export default function App() {
   // links need an imperative dispatch after the container is already mounted.
   useEffect(() => {
     if (!fontsReady || initialTarget === undefined) return undefined;
+    let cancelled = false;
     const sub = Linking.addEventListener('url', ({ url }) => {
-      if (url.startsWith('vedansh://widget/')) handleWidgetDeepLink(url);
+      if (!url.startsWith('vedansh://widget/')) return;
+      if (!navigationRef.isReady()) {
+        const parsed = parseWidgetDeepLink(url);
+        if (parsed) void prepareStartTarget(widgetStartTarget(parsed)).then(prepared => {
+          if (cancelled || !prepared) return;
+          if (navigationRef.isReady()) handleWidgetDeepLink(url);
+          else setInitialTarget(prepared);
+        });
+        return;
+      }
+      handleWidgetDeepLink(url);
     });
-    return () => sub.remove();
+    return () => { cancelled = true; sub.remove(); };
   }, [fontsReady, initialTarget]);
 
   if (!fontsReady || initialTarget === undefined) {
@@ -351,7 +376,7 @@ export default function App() {
                             asking" flags so prompts can't stack (§54). */}
                         <RatingPromptProvider>
                         <ShareProvider>
-                          <AppReadyGate>
+                          <AppReadyGate targeted={!!initialTarget}>
                           <View style={{ flex: 1 }}>
                             {/* The cold-start destination is the container's
                                 INITIAL STATE, not a tab's initialParams: state
@@ -382,9 +407,10 @@ export default function App() {
                             >
                               <StatusBar style="dark" />
                               <RootNavigator />
-                              <ReminderOptInModal />
+                              <LaunchAskHost targeted={!!initialTarget} />
                               <UpdateReadyModal />
-                              <WhatsNewModal />
+                              <WhatsNewModal suppressed={!!initialTarget} />
+                              <ExploreLaunch targeted={!!initialTarget} />
                             </NavigationContainer>
                             <RoutineCelebrationOverlay />
                             <SadhanaCompletionOverlay />
@@ -438,11 +464,8 @@ export default function App() {
                             {/* Top-level so the spotlight overlays the tab bar +
                                 mini-player, and is in-tree (not a Modal) so it can
                                 ring the live UI and stay visible to a11y/Maestro. */}
-                            <FeatureTour />
-                            {/* Opens the moment the tour closes on a fresh
-                                install (or a replay) — language + reading size,
-                                the two settings the last tour steps point at. */}
-                            <OnboardingSetupSheet />
+                            <FeatureTour suppressed={!!initialTarget} />
+
                           {/* Last in the stack: the rating ask never competes
                               with the tour, onboarding, or What's New — its gate
                               stands down while any of those want the screen. */}
@@ -484,27 +507,25 @@ export default function App() {
  * visible frame is already its final frame and an immediate press cannot be
  * cancelled by preference hydration moving the category grid.
  */
-function AppReadyGate({ children }: { children: React.ReactNode }) {
+function AppReadyGate({ children, targeted }: { children: React.ReactNode; targeted: boolean }) {
   const { isLoading: fontScaleLoading } = useFontScale();
   const { isLoading: languageLoading } = useGitaLanguage();
   const ready = !fontScaleLoading && !languageLoading;
   const hideSplash = useCallback(() => {
     if (!ready) return;
     launchMarkOnce('splash-hidden (first frame)');
-    SplashScreen.hideAsync().catch(() => undefined);
+    return SplashScreen.hideAsync().catch(() => undefined);
   }, [ready]);
-
-  useEffect(() => {
-    hideSplash();
-  }, [hideSplash]);
 
   if (!ready) {
     return <View style={{ flex: 1, backgroundColor: lightColors.parchment }} />;
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={hideSplash}>
-      {children}
+    <View style={{ flex: 1 }}>
+      {/* Reveal disabled (ANR mitigation): every launch takes the bypass path. */}
+      <BrandLaunchGate targeted={targeted || !BRAND_LAUNCH_REVEAL_ENABLED} onReady={hideSplash}>{children}</BrandLaunchGate>
     </View>
   );
 }
+

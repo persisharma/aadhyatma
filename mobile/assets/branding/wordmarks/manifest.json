@@ -1,0 +1,117 @@
+{
+  "approvedSourceSha256": "437c1c12f44d42b61453ffbfd9c17fdf63254a4fd55ecc821c6fae93de443788",
+  "approvedPngSha256": "429bcb2891c232364764f7ae7802505c5232f2792b099da72626f4ca18ccd97a",
+  "canvas": {
+    "width": 720,
+    "height": 780
+  },
+  "particles": 4012,
+  "durationMs": 3350,
+  "names": {
+    "en": {
+      "crop": [
+        122,
+        16,
+        1687,
+        435
+      ],
+      "width": 1565,
+      "height": 419,
+      "homeFrame": {
+        "width": 124,
+        "height": 36,
+        "artworkWidth": 123.87862796833774,
+        "translateY": -1.345646437994723,
+        "letteringTop": 37,
+        "letteringBottom": 416,
+        "letteringHeight": 30
+      },
+      "launchFrame": {
+        "x": 139,
+        "y": 366.8313099041534,
+        "width": 442,
+        "height": 118.33738019169328
+      },
+      "file": "mobile/assets/branding/wordmarks/english.png"
+    },
+    "hi": {
+      "crop": [
+        419,
+        460,
+        1523,
+        851
+      ],
+      "width": 1104,
+      "height": 391,
+      "homeFrame": {
+        "width": 97,
+        "height": 36,
+        "artworkWidth": 96.84210526315789,
+        "translateY": -1.8859649122807016,
+        "letteringTop": 46,
+        "letteringBottom": 388,
+        "letteringHeight": 30
+      },
+      "launchFrame": {
+        "x": 277,
+        "y": 510.1041666666667,
+        "width": 166,
+        "height": 58.791666666666664
+      },
+      "file": "mobile/assets/branding/wordmarks/hindi.png"
+    }
+  },
+  "assets": {
+    "mobile/assets/branding/wordmarks/approved-lockup.png": {
+      "sha256": "429bcb2891c232364764f7ae7802505c5232f2792b099da72626f4ca18ccd97a",
+      "bytes": 159959
+    },
+    "mobile/assets/branding/wordmarks/english.png": {
+      "sha256": "75a1942786a124f10bd6d3dc150f2820b8dc85228ee95c96545b40b58bdfdcce",
+      "bytes": 313880
+    },
+    "mobile/assets/branding/wordmarks/hindi.png": {
+      "sha256": "9dbb463108f0bf37e07aac027452095895fbc49b1e8b4e28c22b245fbc02e2bf",
+      "bytes": 212207
+    },
+    "mobile/src/branding/approvedParticleDocument.json": {
+      "sha256": "0f14189afaea25a02321ac7a05a17628da64062b27fbf9f77cf58fcdb2d81502",
+      "bytes": 219632
+    }
+  },
+  "lettering": {
+    "masterSha256": "6c49799a3be827159046f82d0bfe0b401b00a677e4b43d5e9bebdf4004d805c6",
+    "style": "approved-flute-peacock",
+    "hindiNukta": "round separated dot below sh",
+    "hindiDotCorrections": {
+      "upper": {
+        "erase": [
+          607,
+          48,
+          70,
+          65
+        ],
+        "center": [
+          558,
+          81
+        ],
+        "radius": 18
+      },
+      "lower": {
+        "erase": [
+          733,
+          358,
+          37,
+          33
+        ],
+        "center": [
+          751,
+          381
+        ],
+        "radius": 7
+      }
+    },
+    "fontBinariesBundled": false,
+    "samarkanRegistration": "earlier Samarkan-inspired reference registration not verified; confirm before production use"
+  }
+}

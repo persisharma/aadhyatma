@@ -1,6 +1,6 @@
 import AppIcon from '@/components/AppIcon';
-import React, { useState } from 'react';
-import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +20,10 @@ import { buildBookmarkTarget } from '@/navigation/entryRoutes';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'Wishlist'>;
+
+// Session-only UI preference. Home's settings entry can recreate the More
+// screen after a reader visit; retain its filter without changing saved data.
+let rememberedSource: string | null = null;
 
 function getSourceLabel(bm: BookmarkRef, lang: Lang): string {
   const sourceId = canonicalSourceId(bm.sourceId);
@@ -63,8 +67,40 @@ export default function WishlistScreen({ navigation }: Props) {
   const removeLabel = pick(lang, { hi: 'हटायें', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' });
   const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' });
   const { bookmarks, isLoading, removeBookmark } = useBookmarks();
+  const { width } = useWindowDimensions();
   const rootNav = useNavigation<any>();
   const [pendingRemoveId, setPendingRemoveId] = useState<string | null>(null);
+  const [selectedSource, setSelectedSource] = useState<string | null>(rememberedSource);
+  // Group by identity, never translated labels. Map insertion order follows the
+  // existing newest-save-first list, and filtering never sorts/mutates it.
+  const sources = useMemo(() => {
+    const groups = new Map<string, { bookmark: BookmarkRef; count: number }>();
+    for (const bm of bookmarks) {
+      const id = canonicalSourceId(bm.sourceId);
+      const group = groups.get(id);
+      if (group) group.count += 1;
+      else groups.set(id, { bookmark: bm, count: 1 });
+    }
+    return groups;
+  }, [bookmarks]);
+  const activeSource = sources.size > 1 && selectedSource !== null && sources.has(selectedSource)
+    ? selectedSource : null;
+  useEffect(() => {
+    if (isLoading) return;
+    // A removed final source or now-redundant filter returns to All. Derive the
+    // effective value above too, so no render flashes a misleading empty state.
+    if (selectedSource !== activeSource) setSelectedSource(activeSource);
+    rememberedSource = activeSource;
+  }, [selectedSource, activeSource, isLoading]);
+  const visibleBookmarks = activeSource === null ? bookmarks
+    : bookmarks.filter((bm) => canonicalSourceId(bm.sourceId) === activeSource);
+  const allLabel = pick(lang, { hi: 'सभी', en: 'All', gu: 'બધા', kn: 'ಎಲ್ಲಾ' });
+  const filters = [
+    { id: null, label: allLabel, count: bookmarks.length },
+    ...Array.from(sources, ([id, group]) => ({
+      id, label: getSourceLabel(group.bookmark, lang), count: group.count,
+    })),
+  ];
 
   const handlePress = (bm: BookmarkRef) => {
     const target = buildBookmarkTarget(bm);
@@ -129,6 +165,42 @@ export default function WishlistScreen({ navigation }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
+          {!isLoading && sources.size > 1 && (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={styles.filterRail}
+              contentContainerStyle={styles.filters}
+            >
+              {filters.map((filter) => {
+                const selected = activeSource === filter.id;
+                return (
+                  <Pressable
+                    key={filter.id ?? 'all'}
+                    testID={`saved-source-${filter.id ?? 'all'}`}
+                    onPress={() => setSelectedSource(filter.id)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected }}
+                    accessibilityLabel={`${filter.label}, ${filter.count}`}
+                    style={({ pressed }) => [
+                      styles.filterChip,
+                      {
+                        maxWidth: Math.max(44, width - spacing.xxl * 2),
+                        borderRadius: radii.pill,
+                        borderColor: selected ? colors.saffronDeep : colors.divider,
+                        backgroundColor: selected ? colors.saffronDeep : colors.parchmentSoft,
+                      },
+                      pressed && { opacity: 0.7 },
+                    ]}
+                  >
+                    <Text style={{ fontFamily: titleFontByLang(lang), fontSize: 14, color: selected ? colors.onPrimary : colors.inkSoft }}>
+                      {filter.label} ({filter.count})
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
+          )}
           {isLoading ? (
             <View style={styles.empty}>
               <ActivityIndicator color={colors.saffron} />
@@ -147,47 +219,52 @@ export default function WishlistScreen({ navigation }: Props) {
               </Text>
             </View>
           ) : (
-            bookmarks.map((bm) => (
-              <Pressable
+            visibleBookmarks.map((bm) => (
+              <View
                 key={bm.id}
-                onPress={() => handlePress(bm)}
-                accessibilityRole="button"
-                accessibilityLabel={`${getSourceLabel(bm, lang)}, ${getVerseLabel(bm, lang)}`}
-                style={({ pressed }) => [
-                  styles.bmCard,
-                  { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
-                  pressed && { opacity: 0.85 },
-                ]}
+                style={[styles.bmCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
               >
-                <View style={styles.bmContent}>
-                  <Text
-                    style={{ fontFamily: scriptSerif ?? typography.verse.fontFamily, fontSize: 14, color: colors.ink, lineHeight: 22 }}
-                    numberOfLines={2}
-                  >
-                    {contentByLang(lang, bm.previewHi, readableRomanization([bm.previewEn])[0])}
-                  </Text>
-                  <View style={styles.bmMeta}>
-                    <View style={[styles.bmPillWrap, { backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>
-                      <Text style={[styles.bmPillText, { color: colors.saffronDeep }]}>
-                        {getVerseLabel(bm, lang)}
+                <Pressable
+                  testID={`saved-verse-${bm.id}`}
+                  onPress={() => handlePress(bm)}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${getSourceLabel(bm, lang)}, ${getVerseLabel(bm, lang)}`}
+                  style={({ pressed }) => [
+                    styles.bmOpen,
+                    pressed && { opacity: 0.85 },
+                  ]}
+                >
+                  <View style={styles.bmContent}>
+                    <Text
+                      style={{ fontFamily: scriptSerif ?? typography.verse.fontFamily, fontSize: 14, color: colors.ink, lineHeight: 22 }}
+                      numberOfLines={2}
+                    >
+                      {contentByLang(lang, bm.previewHi, readableRomanization([bm.previewEn])[0])}
+                    </Text>
+                    <View style={styles.bmMeta}>
+                      <View style={[styles.bmPillWrap, { backgroundColor: 'rgba(184, 98, 27, 0.14)' }]}>
+                        <Text style={[styles.bmPillText, { color: colors.saffronDeep }]}>
+                          {getVerseLabel(bm, lang)}
+                        </Text>
+                      </View>
+                      <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, color: colors.inkMuted }}>
+                        {getSourceLabel(bm, lang)}
                       </Text>
                     </View>
-                    <Text style={{ fontFamily: fontFamilies.latinItalic, fontSize: 12, color: colors.inkMuted }}>
-                      {getSourceLabel(bm, lang)}
-                    </Text>
                   </View>
-                </View>
+                </Pressable>
                 <Pressable
+                  testID={`remove-saved-${bm.id}`}
                   onPress={() => setPendingRemoveId(bm.id)}
                   accessibilityRole="button"
-                  accessibilityLabel="Remove from wishlist"
+                  accessibilityLabel={`${removeLabel}: ${getSourceLabel(bm, lang)}, ${getVerseLabel(bm, lang)}`}
                   hitSlop={12}
                   style={({ pressed }) => [styles.removeBtn, pressed && { opacity: 0.6 }]}
                 >
                   <AppIcon name="heart" size={21} color={colors.saffron} weight="fill" />
                 </Pressable>
                 <AppIcon name="next" size={18} color={colors.saffron} />
-              </Pressable>
+              </View>
             ))
           )}
         </ScrollView>
@@ -259,6 +336,9 @@ export default function WishlistScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
+  filterRail: { flexGrow: 0 },
+  filters: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingBottom: 4 },
+  filterChip: { minHeight: 44, minWidth: 44, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 8, justifyContent: 'center' },
   root: { flex: 1 },
   safe: { flex: 1 },
   topBar: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, gap: 12 },
@@ -267,7 +347,8 @@ const styles = StyleSheet.create({
   empty: { alignItems: 'center', justifyContent: 'center', paddingTop: 80 },
   bmCard: { borderRadius: 14, borderWidth: 1, padding: 14, flexDirection: 'row', alignItems: 'center', gap: 10 },
   bmContent: { flex: 1, minWidth: 0 },
-  bmMeta: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6 },
+  bmOpen: { flex: 1, minWidth: 0, minHeight: 44, justifyContent: 'center' },
+  bmMeta: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginTop: 6 },
   bmPillWrap: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
   bmPillText: { fontSize: 10, fontFamily: fontFamilies.latinSemiBold },
   removeBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },

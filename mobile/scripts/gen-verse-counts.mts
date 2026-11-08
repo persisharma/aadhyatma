@@ -1,4 +1,6 @@
 import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
+import kabirDohe from '../src/data/doha/kabir-bhakti-dohe.json';
+import rahimDohe from '../src/data/doha/rahim-bhakti-dohe.json';
 import { aartiIdByIndex, getAarti } from '../src/data/aarti';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -25,7 +27,7 @@ import { saraswatiChalisaCounts } from '../src/data/saraswati-chalisa';
 import { saraswatiStotramTotal } from '../src/data/saraswati-stotram';
 import { shivChalisaCounts } from '../src/data/shiv-chalisa';
 import { shivaStrotamTotal } from '../src/data/shiva-strotam';
-import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal } from '../src/data/stuti';
+import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal, parshuramStotramTotal } from '../src/data/stuti';
 import { deviSuktamTotal, narayanaSuktamTotal, purushaSuktamTotal } from '../src/data/suktam';
 import { sundarkandTotal } from '../src/data/sundarkand';
 import { valmikiRamayanTotal } from '../src/data/valmiki-ramayan';
@@ -44,6 +46,8 @@ import { vishnuSahasranamaTotal } from '../src/data/vishnu-sahasranama';
  * Run: npx tsx scripts/gen-verse-counts.mts
  */
 const VALUES: readonly (readonly [string, number | Record<string, number>])[] = [
+  ['kabirBhaktiDoheTotal', kabirDohe.verses.length],
+  ['rahimBhaktiDoheTotal', rahimDohe.verses.length],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length]))],
   ['achyutashtakamTotal', achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal],
@@ -77,6 +81,7 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts],
@@ -114,3 +119,4 @@ const body = VALUES.map(([name, value]) =>
 const out = path.resolve(import.meta.dirname, '../src/data/verseCounts.ts');
 fs.writeFileSync(out, `${header}\n${body}\n`, 'utf8');
 console.log(`wrote ${VALUES.length} counts to ${path.relative(process.cwd(), out)}`);
+

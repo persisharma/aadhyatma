@@ -200,6 +200,7 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: sanskarId,
+                            verseIndex: index,
                             sectionNameHi: sanskarData.titleHi,
                             sectionNameEn: sanskarData.titleEn,
                             verseLabelHi: item.labelHi,

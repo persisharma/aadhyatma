@@ -1,0 +1,50 @@
+# Native gate for both poet collections; execute on iOS and Android before merge.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: "Sacred Books.*Tap to open."
+- scrollUntilVisible:
+    element:
+      text: "Kabir Devotional Dohas.*Tap to open."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Kabir Devotional Dohas.*Tap to open."
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- tapOn: "English"
+- assertVisible: "Doha · 1.*"
+- repeat:
+    times: 3
+    commands:
+      - swipe:
+          direction: LEFT
+      - waitForAnimationToEnd
+- assertVisible: "Doha · 4.*"
+- tapOn: "Hindi"
+- assertVisible: "दोहा · ४.*"
+- tapOn: "English"
+- tapOn: "Back to home"
+- scrollUntilVisible:
+    element:
+      text: "Rahim Devotional Dohas.*Tap to open."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Rahim Devotional Dohas.*Tap to open."
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "Doha · 1.*"
+- repeat:
+    times: 3
+    commands:
+      - swipe:
+          direction: LEFT
+      - waitForAnimationToEnd
+- assertVisible: "Doha · 4.*"
+- tapOn: "Hindi"
+- assertVisible: "दोहा · ४.*"
+- tapOn: "English"
+- tapOn: "Back to home"
+- stopApp:
+    appId: com.prashantsharma.vedansh

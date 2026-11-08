@@ -1,94 +1,57 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
+import { fontFamilies } from '@/theme/typography';
+import { scriptBodyFont } from '@/utils/langType';
+import { contentByLang } from '@/utils/localize';
+import manifest from '@assets/branding/wordmarks/manifest.json';
+import { companionTagline, WordmarkArtwork } from './VedanshWordmark';
 
-/**
- * Home brand lockup: a compact single-row crest — ॐ on both sides of the
- * वेदांश़ wordmark, flanked by thin saffron rules — over the Latin tagline.
- * Replaces the old stacked crest + 34px title, reclaiming ~50dp of hero height
- * without losing the reverent, centered essence (design.md §5/§18).
- */
-export default function HomeWordmark({ compact = false, showTagline = true }: { compact?: boolean; showTagline?: boolean }) {
+/** Home keeps its small Om-flanked crest; only the lettering style is new. */
+export default function HomeWordmark({ compact = false, showTagline = true }: {
+  compact?: boolean; showTagline?: boolean;
+}) {
+  const { lang } = useGitaLanguage();
   const { colors, typography } = useTheme();
-
-  const renderMark = () => (
-    <View style={[styles.mark, { borderColor: colors.iconAccent }]}>
-      <Text allowFontScaling={false} style={[styles.markText, { color: colors.iconAccent, fontFamily: typography.thumb.fontFamily }]}>
-        ॐ
-      </Text>
+  const kind = lang === 'hi' ? 'hi' : 'en';
+  const metrics = manifest.names[kind];
+  // Align the visible dark lettering to the 30pt Om circles; decorative
+  // flute/feather bounds must not shrink or vertically displace the name.
+  // never tint the master, which would erase its copper/green accents.
+  const frame = metrics.homeFrame;
+  const width = frame.artworkWidth;
+  const mark = (side: 'left' | 'right') => (
+    <View testID={`home-wordmark-om-${side}`} style={[styles.mark, { borderColor: colors.iconAccent }]}>
+      <Text accessible={false} allowFontScaling={false} style={[styles.markText,
+        { color: colors.iconAccent, fontFamily: typography.thumb.fontFamily }]}>ॐ</Text>
     </View>
   );
-
-  return (
-    <View style={styles.wrap}>
-      <View style={[styles.lockup, compact && { gap: 6 }]}>
-        {!compact && <View style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
-        {renderMark()}
-        <Text
-          allowFontScaling={false}
-          style={[
-            styles.title,
-            {
-              color: colors.ink,
-              fontFamily: typography.screenTitle.fontFamily,
-              // no tracking on the Devanagari wordmark — it splits the shirorekha
-              letterSpacing: 0,
-            },
-          ]}
-        >
-          वेदांश़
-        </Text>
-        {renderMark()}
-        {!compact && <View style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
+  return <View testID="home-wordmark" style={styles.wrap}>
+    <View testID="home-wordmark-crest" accessible accessibilityRole="image"
+      accessibilityLabel={contentByLang(lang, 'वेदांश़', 'Vedansh')}
+      style={[styles.lockup, compact && styles.compact]}>
+      {!compact && <View testID="home-wordmark-rule-left" style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
+      {mark('left')}
+      <View testID="home-wordmark-artwork-frame" style={{ width: frame.width, height: frame.height, alignItems: 'center', justifyContent: 'center', transform: [{ translateY: frame.translateY }] }}>
+        <WordmarkArtwork kind={kind} width={width} />
       </View>
-      {showTagline && <Text
-        style={[
-          styles.subtitle,
-          {
-            color: colors.inkSoft,
-            fontFamily: typography.subtitle.fontFamily,
-            letterSpacing: typography.subtitle.letterSpacing,
-          },
-        ]}
-      >
-        Sacred Texts · Daily Reading
-      </Text>}
+      {mark('right')}
+      {!compact && <View testID="home-wordmark-rule-right" style={[styles.rule, { backgroundColor: colors.iconAccent }]} />}
     </View>
-  );
+    {showTagline && <Text testID="home-wordmark-tagline" allowFontScaling style={[styles.subtitle, {
+      color: colors.inkSoft,
+      fontFamily: lang === 'en' ? fontFamilies.latinItalic : scriptBodyFont(lang, fontFamilies.devanagari),
+    }]}>{companionTagline(lang)}</Text>}
+  </View>;
 }
 
 const styles = StyleSheet.create({
-  wrap: { alignItems: 'center' },
-  lockup: { height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 11 },
+  wrap: { alignItems: 'center', maxWidth: '100%' },
+  lockup: { height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 },
+  compact: { gap: 6 },
   rule: { width: 22, height: 1, opacity: 0.6 },
-  mark: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    borderWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  markText: {
-    fontSize: 19,
-    lineHeight: 30,
-    includeFontPadding: false,
-    textAlign: 'center',
-    transform: [{ translateY: 1.5 }],
-  },
-  title: {
-    fontSize: 27,
-    // A full line box keeps the top matra/nukta visible while the lockup row,
-    // then a slight optical nudge centers वेदांश़ against the Om circles.
-    lineHeight: 42,
-    includeFontPadding: false,
-    transform: [{ translateY: 4 }],
-  },
-  subtitle: {
-    marginTop: 5,
-    textAlign: 'center',
-    fontSize: 14,
-    fontStyle: 'italic',
-    includeFontPadding: false,
-  },
+  mark: { width: 30, height: 30, borderRadius: 15, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
+  markText: { fontSize: 19, lineHeight: 30, includeFontPadding: false, textAlign: 'center', transform: [{ translateY: 1.5 }] },
+  subtitle: { marginTop: 5, textAlign: 'center', fontSize: 14, lineHeight: 22, includeFontPadding: false },
 });

@@ -170,7 +170,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
         </Text>
       ) : null}
 
-      <ShareBrandFooter />
+      <ShareBrandFooter lang={props.lang} />
     </View>
   );
 });

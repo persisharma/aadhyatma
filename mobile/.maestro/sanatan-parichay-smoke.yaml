@@ -1,0 +1,70 @@
+# Requires a native build of this branch. Research bibliography must not appear in the app.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- takeScreenshot: e2e-shots/sanatan-entry-home
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- assertVisible: "Every tradition.*"
+- takeScreenshot: e2e-shots/sanatan-entry-hub
+- tapOn: { id: sanatan-search }
+- inputText: "33 koti devta"
+- pressKey: Enter
+- scrollUntilVisible:
+    element: { text: "Thirty-three devata" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Thirty-three devata"
+- scrollUntilVisible:
+    element: { id: sanatan-start }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-start }
+- scrollUntilVisible:
+    element: { text: "Save for later" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Save for later"
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-next }
+- assertVisible: "2\\s*/\\s*3"
+- scrollUntilVisible:
+    element: { text: "11 · Rudras" }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "11 · Rudras"
+- scrollUntilVisible:
+    element: { text: "Ten pranas and the self.*" }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-thirty-three-en
+- assertNotVisible: "Sources & context"
+- assertNotVisible: "https?://.*"
+- tapOn: Back
+- tapOn: Back
+- assertVisible: "33 koti devta"
+# Relaunch without clearing AsyncStorage: resume must restore the exact second page.
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- extendedWaitUntil:
+    visible: { id: tab-home }
+    timeout: 90000
+- tapOn:
+    text: "Maybe later"
+    optional: true
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- scrollUntilVisible:
+    element: { id: sanatan-resume }
+    direction: DOWN
+    timeout: 60000
+    centerElement: true
+- tapOn: { id: sanatan-resume }
+- assertVisible: "2\\s*/\\s*3"

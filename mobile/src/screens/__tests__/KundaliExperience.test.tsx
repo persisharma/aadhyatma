@@ -4,7 +4,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text, View as mockView } from 'react-native';
+import { Modal, StyleSheet, Text, View as mockView } from 'react-native';
+import TextField from '@/components/TextField';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -121,6 +122,21 @@ function periodDate(date: Date): string {
   }).format(date);
 }
 
+test('city search stays inside a padded host and still filters, selects and dismisses', () => {
+  const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'city-layout', name: 'Kundali', params: { editing: true } } as any} />);
+  act(() => tree.root.findByProps({ testID: 'kundali-city-button' }).props.onPress());
+  const input = tree.root.findAllByType(TextField).find(node => node.props.testID === 'kundali-city-search')!;
+  // Search geometry belongs to a host; a 100%-wide TextField must not carry
+  // extra outer margins (which clipped its trailing edge in the native sheet).
+  expect(StyleSheet.flatten(input.props.style).marginHorizontal).toBeUndefined();
+  expect(StyleSheet.flatten(input.parent!.props.style).paddingHorizontal).toBe(24);
+  act(() => input.props.onChangeText('Ujjain'));
+  const result = tree.root.findByProps({ accessibilityLabel: 'Select Ujjain birth city' });
+  act(() => result.props.onPress());
+  expect(tree.root.findAllByType(Modal).some(node => node.props.visible && node.props.accessibilityViewIsModal)).toBe(false);
+  expect(tree.root.findByProps({ testID: 'kundali-city-button' }).props.accessibilityLabel).toContain('Ujjain');
+});
+
 function textOf(tree: TestRenderer.ReactTestRenderer): string {
   return tree.root
     .findAllByType(Text)
@@ -138,52 +154,26 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   );
 
   let text = textOf(tree);
-  assert.ok(text.includes('Understand your chart first'));
-  assert.ok(text.includes('not certain predictions'));
+  assert.ok(text.includes('Your chart, in simple words'));
   assert.ok(text.includes('Aarav'));
-
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Overview tab' }));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Chart tab' }));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }));
-  assert.ok(tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }));
-
-  act(() => {
-    tree.root.findByProps({
-      accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][mockChart.lagnaRashiIndex]} Lagna · ${['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'][mockChart.lagnaRashiIndex]} rising. Learn more in chart.`,
-    }).props.onPress();
-  });
-  assert.equal(
-    tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.accessibilityState.selected,
-    true
-  );
-
-  act(() => {
-    tree.root.findByProps({ accessibilityLabel: 'Overview tab' }).props.onPress();
-  });
-  const moon = mockChart.grahas.find((position) => position.graha === 'moon')!;
-  act(() => {
-    tree.root.findByProps({
-      accessibilityLabel: `${['Mesha', 'Vrishabha', 'Mithuna', 'Karka', 'Simha', 'Kanya', 'Tula', 'Vrischika', 'Dhanu', 'Makara', 'Kumbha', 'Meena'][moon.rashiIndex]} Moon · ${['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'][moon.rashiIndex]}. Learn more in grahas.`,
-    }).props.onPress();
-  });
-  assert.equal(
-    tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.accessibilityState.selected,
-    true
-  );
-
-  act(() => {
-    tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.onPress();
-  });
-  text = textOf(tree);
-  assert.ok(text.includes('Graha positions'));
-  assert.ok(text.includes('House'));
+  for (const label of ['Overview tab', 'Chart tab', 'Grahas tab', 'Dasha tab']) assert.ok(tree.root.findByProps({ accessibilityLabel: label }));
+  for (const anchor of ['lagna', 'moon', 'nakshatra']) assert.ok(tree.root.findByProps({ testID: `kundali-summary-${anchor}` }));
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.onPress());
+  assert.equal(tree.root.findByProps({ testID: 'kundali-view-picture' }).props.accessibilityState.selected, true);
+  act(() => tree.root.findByProps({ testID: 'kundali-view-topics' }).props.onPress());
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Grahas tab' }).props.onPress());
+  assert.ok(textOf(tree).includes('Meet your grahas'));
+  for (const position of mockChart.grahas) assert.ok(tree.root.findByProps({ testID: `kundali-graha-${position.graha}` }));
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Chart tab' }).props.onPress());
+  assert.equal(tree.root.findByProps({ testID: 'kundali-view-picture' }).props.accessibilityState.selected, true);
 
   act(() => {
     tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }).props.onPress();
   });
   text = textOf(tree);
   assert.ok(text.includes('Vimshottari Dasha'));
-  assert.ok(text.includes('not an event guarantee'));
+  assert.ok(text.includes('Explore the current period, its progress, and the timeline ahead.'));
+  assert.ok(!text.includes('not an event guarantee'));
   // The Mahadasha lord's beej mantra opens its japam counter.
   const mahaLord = getCurrentDasha(mockChart, new Date())!.maha.lord;
   mockNavigation.navigate.mockClear();
@@ -252,6 +242,19 @@ test('Kundali result leads with plain-language insights and exposes all expert t
   });
   assert.ok(tree.root.findByProps({ accessibilityLabel: 'Share your Kundali image preview' }));
   assert.ok(textOf(tree).includes('Review it before sharing'));
+});
+
+test('compact enlarged-text Dasha keeps both progress captions within the card', () => {
+  const native = jest.requireActual<typeof import('react-native')>('react-native');
+  const dimensions = jest.spyOn(native, 'useWindowDimensions').mockReturnValue({ width: 320, height: 640, scale: 2, fontScale: 1.8 });
+  try {
+    const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'Kundali-compact', name: 'Kundali' } as any} />);
+    act(() => tree.root.findByProps({ accessibilityLabel: 'Dasha tab' }).props.onPress());
+    for (const key of ['maha', 'antar']) {
+      const row = tree.root.findByProps({ testID: `dasha-progress-labels-${key}` });
+      assert.equal(native.StyleSheet.flatten(row.props.style).flexDirection, 'column');
+    }
+  } finally { dimensions.mockRestore(); }
 });
 
 test('Daily Rashifal uses the saved Moon sign and remains guidance, not certainty', () => {
@@ -418,3 +421,4 @@ test('Panchang mode selector stays fixed above contextual controls', () => {
     'on the Panchang sky the mode selector also renders before the contextual controls'
   );
 });
+

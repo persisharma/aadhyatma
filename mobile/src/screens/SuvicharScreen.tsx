@@ -1,5 +1,6 @@
+import type { RouteProp } from '@react-navigation/native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -13,11 +14,11 @@ import SuvicharThoughtPicker from '@/components/SuvicharThoughtPicker';
 import AppIcon from '@/components/AppIcon';
 import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, type SuvicharTemplate } from '@/data/suvicharTemplates';
 import { suvicharVaarFor, suvicharVaarTemplates, withTodaysVaar } from '@/data/suvicharVaar';
-import { findSuvicharThought, nextSuvicharThought, sourceForSuvichar, suvicharSourceLabel, suvicharThoughtsFor, type SuvicharThought } from '@/data/suvicharContent';
+import { findSuvicharThought, nextSuvicharThought, suvicharSourceLabel, suvicharThoughtsFor, type SuvicharThought } from '@/data/suvicharContent';
 import { WEEKDAY_LABELS } from '@/data/routine/vaar';
 import { useGitaLanguage } from '@/data/gita/language';
 import { buildSuvicharShareMessage } from '@/data/shareLinks';
-import { cleanSender, fullPhotoFit, initialSuvichar, parseSuvicharPreferences, suvicharDeities, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
+import { cleanSender, fullPhotoFit, initialSuvichar, parseSuvicharPreferences, senderFrom, suvicharDeities, suvicharHeading, NAME_LIMIT, MESSAGE_LIMIT } from '@/data/suvichar';
 import { useTheme } from '@/theme/ThemeContext';
 import { androidBoxShadow } from '@/theme/elevation';
 import { contentByLang, pick, type LocalizedStrings } from '@/utils/localize';
@@ -30,7 +31,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 const KEY = '@vedansh/suvichar/v1';
 // Serialize writes: a slow earlier save must never replace the latest name.
 let saves: Promise<unknown> = Promise.resolve();
-export default function SuvicharScreen() {
+export default function SuvicharScreen({route}:{route?:RouteProp<HomeStackParamList,'Suvichar'>}={}) {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const { lang } = useGitaLanguage();
   const { colors, spacing, radii, typography } = useTheme();
@@ -53,6 +54,17 @@ export default function SuvicharScreen() {
   const scroll = useRef<ScrollView>(null);
   const picking = useRef(false);
   useEffect(() => { let active = true; void saves.then(() => AsyncStorage.getItem(KEY)).then(raw => { if (active) { const parsed = parseSuvicharPreferences(raw); setPrefs(withTodaysVaar(isSuvicharThought(parsed.message) ? { ...parsed, message: '', thoughtId: '' } : parsed, new Date())); setEditingName(!parsed.name); setLoaded(true); } }).catch(() => { if (active) { setPrefs(p => withTodaysVaar(p, new Date())); setEditingName(true); setLoaded(true); } }); return () => { active = false; }; }, []);
+  const appliedExploreDraft = useRef<object | null>(null);
+  useEffect(()=>{
+    const draft=route?.params?.exploreDraft;
+    if(!loaded||!draft||appliedExploreDraft.current===draft)return;
+    appliedExploreDraft.current=draft;
+    // A blank Explore name hides the sender line but keeps the saved name.
+    const sender=senderFrom(cleanSender(draft.name),prefs.name);
+    setPrefs(p=>({...p,...sender,deity:draft.deity,vaar:false}));
+    setPresetKind('daily');setEditingName(!sender.name.trim());
+    navigation.setParams({exploreDraft:undefined});
+  },[loaded,route?.params?.exploreDraft,navigation,prefs.name]);
   // A new day re-opens on its own card, unless the reader has written their own message.
   const openedDay = useRef(todayKey);
   useEffect(() => {
@@ -76,11 +88,13 @@ export default function SuvicharScreen() {
   const attribution = thought ? suvicharSourceLabel(thought, lang) : undefined;
   const selectedTemplate = prefs.vaar ? undefined : templates.find(t => t.deity === prefs.deity && contentByLang(lang, t.messageHi, t.messageEn) === message);
   const original = !prefs.message.trim() || selectedTemplate?.kind === 'daily' || !!thought || isSuvicharThought(message);
-  const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: prefs.name, ...(prefs.vaar ? { vaar: true as const } : {}), ...(prefs.message && thought ? { thoughtId: thought.id } : {}) };
+  // The name stays saved while its switch is off; the card, share text and favorites use only the shown name.
+  const shownName = prefs.nameOn ? prefs.name : '';
+  const favorite = { deity: prefs.deity, frame: prefs.frame, message: prefs.message, name: shownName, ...(prefs.vaar ? { vaar: true as const } : {}), ...(prefs.message && thought ? { thoughtId: thought.id } : {}) };
   const savedIndex = prefs.favorites.findIndex(f => JSON.stringify(f) === JSON.stringify(favorite));
   const photoUri = useMemo(() => prefs.photo ? senderPhotoUri(prefs.photo) : null, [prefs.photo]);
   const cardPhoto = prefs.photoOn ? photoUri : null;
-  const identity = JSON.stringify([prefs.deity, prefs.frame, prefs.name, cardPhoto, prefs.photoFit, message, cardTitle, attribution, width, lang, retry]);
+  const identity = JSON.stringify([prefs.deity, prefs.frame, shownName, cardPhoto, prefs.photoFit, message, cardTitle, attribution, original, width, lang, retry]);
   const ready = readyIdentity === identity;
   const update = (patch: Partial<typeof prefs>) => setPrefs(p => ({ ...p, ...patch }));
   // A weekday card keeps its message empty so it always shows the deity's thought for the current day.
@@ -98,9 +112,9 @@ export default function SuvicharScreen() {
   const share = () => {
     if (!ready || !loaded) return;
     const deity = suvicharDeities.find(d => d.id === prefs.deity)!;
-    const label = cardTitle ?? tr({ hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' });
-    const sender = cleanSender(prefs.name);
-    const card = { deity: prefs.deity, frame: prefs.frame, name: prefs.name, photo: cardPhoto, photoFit: prefs.photoFit, message, title: cardTitle, attribution, original };
+    const label = cardTitle ?? tr(original ? suvicharHeading.thought : suvicharHeading.wish);
+    const sender = cleanSender(shownName);
+    const card = { deity: prefs.deity, frame: prefs.frame, name: shownName, photo: cardPhoto, photoFit: prefs.photoFit, message, title: cardTitle, attribution, original };
     void openShare({
       kind: 'card',
       sourceId: `suvichar.${prefs.deity}`,
@@ -178,7 +192,7 @@ export default function SuvicharScreen() {
         <SuvicharFramePicker deity={prefs.deity} frame={prefs.frame} lang={lang} disabled={off} onSelect={frame => update({ frame })} />
       </View>
       <View style={{ gap: spacing.sm }}>
-        <View style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={prefs.name} photo={cardPhoto} photoFit={prefs.photoFit} onPhotoError={() => update({ photo: '', photoFit: fullPhotoFit })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} original={original} attribution={attribution} /></View>
+        <View style={{ alignSelf: 'center', width }}><SuvicharCard key={JSON.stringify([prefs.deity, prefs.frame, retry])} deity={prefs.deity} frame={prefs.frame} name={shownName} photo={cardPhoto} photoFit={prefs.photoFit} onPhotoError={() => update({ photo: '', photoFit: fullPhotoFit })} message={message} title={cardTitle} lang={lang} width={width} onReady={onReady} original={original} attribution={attribution} /></View>
         {!ready ? <Pressable testID="suvichar-retry" accessibilityRole="button" disabled={off} onPress={() => { setReadyIdentity(null); setRetry(n => n + 1); }} style={{ alignSelf: 'center', minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 14, color: colors.saffronDeep }}>{tr({ hi: 'चित्र फिर लाएँ', en: 'Reload artwork', gu: 'ચિત્ર ફરી લાવો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}</Text></Pressable> : null}
       </View>
@@ -193,13 +207,17 @@ export default function SuvicharScreen() {
         <Pressable testID="suvichar-browse-thoughts" accessibilityRole="button" disabled={off} onPress={() => setThoughtsOpen(true)} style={{ minHeight: 44, justifyContent: 'center' }}>
           <Text style={{ fontFamily: face, fontSize: 15, color: colors.saffronDeep }}>{tr({ hi: 'सभी सुविचार देखें', en: 'Browse all thoughts', gu: 'બધા સુવિચાર જુઓ', kn: 'ಎಲ್ಲ ಸುವಿಚಾರಗಳನ್ನು ನೋಡಿ' })} · {suvicharThoughtsFor(prefs.deity).length}</Text>
         </Pressable>
-        {thought ? <Pressable testID="suvichar-source-link" accessibilityRole="link" onPress={() => { void Linking.openURL(sourceForSuvichar(thought).url).catch(() => undefined); }} style={{ minHeight: 44, justifyContent: 'center' }}>
-          <Text style={hint}>{attribution} ↗</Text>
-        </Pressable> : null}
         <TextInput testID="suvichar-message" accessibilityLabel={tr({ hi: 'आपका संदेश', en: 'Your message', gu: 'તમારો સંદેશ', kn: 'ನಿಮ್ಮ ಸಂದೇಶ' })} multiline value={prefs.message ? message : ''} maxLength={MESSAGE_LIMIT} editable={!busy} onChangeText={message => update({ message, thoughtId: '' })} placeholder={message} placeholderTextColor={colors.inkMuted} style={inputStyle} />
         <Text style={hint}>{tr({ hi: 'तैयार संदेश बदलें या अपने शब्दों में लिखें', en: 'Edit the ready message or write your own', gu: 'તૈયાર સંદેશ બદલો અથવા તમારા શબ્દોમાં લખો', kn: 'ಸಿದ್ಧ ಸಂದೇಶ ಬದಲಿಸಿ ಅಥವಾ ನಿಮ್ಮ ಮಾತಿನಲ್ಲಿ ಬರೆಯಿರಿ' })} · {prefs.message.length}/{MESSAGE_LIMIT}</Text>
       </View>
-      {editingName ? <View style={{ gap: spacing.xs + 2 }}>
+      <View style={{ gap: spacing.sm }}>
+      <View style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
+        <Text style={[eyebrow, { flex: 1 }]}>{tr({ hi: 'कार्ड पर अपना नाम दिखाएँ', en: 'Show your name on the card', gu: 'કાર્ડ પર તમારું નામ બતાવો', kn: 'ಕಾರ್ಡ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು ತೋರಿಸಿ' })}</Text>
+        <Switch testID="suvichar-name-toggle" value={prefs.nameOn} onValueChange={nameOn => update({ nameOn })} disabled={off}
+          trackColor={{ true: colors.saffron, false: colors.divider }} thumbColor={colors.onPrimary} ios_backgroundColor={colors.divider}
+          accessibilityLabel={tr({ hi: 'कार्ड पर नाम चालू / बंद', en: 'Toggle name on card', gu: 'કાર્ડ પર નામ ચાલુ / બંધ', kn: 'ಕಾರ್ಡ್‌ನಲ್ಲಿ ಹೆಸರು ಆನ್ / ಆಫ್' })} />
+      </View>
+      {!prefs.nameOn ? null : editingName ? <View style={{ gap: spacing.xs + 2 }}>
         <Text style={eyebrow}>{tr({ hi: 'आपका नाम / परिवार (वैकल्पिक)', en: 'Your name / family (optional)', gu: 'તમારું નામ / પરિવાર (વૈકલ્પિક)', kn: 'ನಿಮ್ಮ ಹೆಸರು / ಕುಟುಂಬ (ಐಚ್ಛಿಕ)' })}</Text>
         <TextInput testID="suvichar-name" accessibilityLabel={tr({ hi: 'आपका नाम', en: 'Your name', gu: 'તમારું નામ', kn: 'ನಿಮ್ಮ ಹೆಸರು' })} value={prefs.name} maxLength={NAME_LIMIT} editable={!busy} autoFocus={!!prefs.name}
           onChangeText={name => update({ name })} onBlur={() => setEditingName(!prefs.name.trim())} returnKeyType="done" style={inputStyle} />
@@ -209,6 +227,7 @@ export default function SuvicharScreen() {
         <Text style={{ flex: 1, fontFamily: face, fontSize: 14, lineHeight: 22, color: colors.inkSoft }}>{tr({ hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — <Text style={{ color: colors.ink }}>{prefs.name}</Text></Text>
         <AppIcon name="edit" size={16} color={colors.saffronDeep} />
       </Pressable>}
+      </View>
       {photoAvailable || prefs.photo ? <View style={{ gap: spacing.sm }}>
       <View style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
         <Text style={[eyebrow, { flex: 1 }]}>{tr({ hi: 'कार्ड पर अपनी फ़ोटो भी लगाएँ', en: 'Add your photo to the card', gu: 'કાર્ડ પર તમારો ફોટો પણ મૂકો', kn: 'ಕಾರ್ಡ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಫೋಟೋ ಕೂಡ ಹಾಕಿ' })}</Text>
@@ -234,7 +253,7 @@ export default function SuvicharScreen() {
       {prefs.favorites.length ? <View style={{ gap: spacing.sm }}>
         <Text style={eyebrow}>{myFavorites}</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }}>
-          {prefs.favorites.map((f, i) => chip(`${contentByLang(lang, suvicharDeities.find(d => d.id === f.deity)!.hi, suvicharDeities.find(d => d.id === f.deity)!.en)} · ${f.name || contentByLang(lang, 'सुविचार', 'Suvichar')}`, () => update({ ...f, thoughtId: f.thoughtId ?? '', vaar: f.vaar === true }), `suvichar-saved-${i}`))}
+          {prefs.favorites.map((f, i) => chip(`${contentByLang(lang, suvicharDeities.find(d => d.id === f.deity)!.hi, suvicharDeities.find(d => d.id === f.deity)!.en)} · ${f.name || contentByLang(lang, 'सुविचार', 'Suvichar')}`, () => update({ ...f, ...senderFrom(f.name, prefs.name), thoughtId: f.thoughtId ?? '', vaar: f.vaar === true }), `suvichar-saved-${i}`))}
         </View>
       </View> : null}
     </ScrollView>}

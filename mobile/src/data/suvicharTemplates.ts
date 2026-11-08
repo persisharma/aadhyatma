@@ -1,15 +1,15 @@
 import { defaultSuvichar, suvicharDeities, suvicharReflections, suvicharWishes, type SuvicharDeity, type SuvicharFrame } from './suvichar';
 import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
-import { isSourcedSuvicharMessage, suvicharSourcedThoughts, suvicharThoughtForDay } from './suvicharContent';
+import { isSourcedSuvicharMessage, suvicharAllThoughts, suvicharThoughtForDay } from './suvicharContent';
 
 export type SuvicharTemplate = {
   id: string; kind: 'daily' | 'wish' | 'vaar'; deity: SuvicharDeity; frame: SuvicharFrame;
   hi: string; en: string; messageHi: string; messageEn: string; thoughtId?: string;
 };
 
-/** Complete approved collection; each deity rotates within its own family. */
-export const suvicharThoughts = suvicharSourcedThoughts;
+/** Complete approved collection; daily cards use eligible originals and sourced dohas. */
+export const suvicharThoughts = suvicharAllThoughts;
 const legacyThoughts = [defaultSuvichar, ...suvicharReflections];
 const LANGS: Lang[] = ['hi', 'en', 'gu', 'kn'];
 /** An unedited authored thought in any reading language (not a wish or a user's own words). */
@@ -34,3 +34,4 @@ export function suvicharTemplatesFor(day: number): SuvicharTemplate[] {
     ...suvicharWishes.map((wish): SuvicharTemplate => ({ ...wish, id: `wish-${wish.id}`, kind: 'wish', frame: 'mandir-jharokha' })),
   ];
 }
+

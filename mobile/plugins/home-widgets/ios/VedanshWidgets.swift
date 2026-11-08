@@ -52,6 +52,16 @@ enum WidgetArt {
     default: return nil
     }
   }
+  static func heritage(_ subject: String, _ family: WidgetFamily, night: Bool) -> UIImage? {
+    guard let size = sizeName(family), let budget = maxPixels(family) else { return nil }
+    let mode = night ? "night" : "day"
+    for key in [subject, "prayer"] {
+      guard let url = Bundle.main.url(forResource: "vedansh_widget_bg_heritage_\(key)_\(size)_\(mode)", withExtension: "jpg"),
+            let image = UIImage(contentsOfFile: url.path), let cg = image.cgImage, cg.width * cg.height <= budget else { continue }
+      return image
+    }
+    return nil
+  }
   static func image(_ surface: VedanshSurface, _ family: WidgetFamily) -> UIImage? {
     guard let size = sizeName(family), let budget = maxPixels(family),
           let url = Bundle.main.url(forResource: "vedansh_widget_bg_\(surface.rawValue)_\(size)", withExtension: "jpg"),
@@ -61,25 +71,35 @@ enum WidgetArt {
   }
 }
 
+private struct WidgetPalette {
+  let night: Bool
+  var parchment: Color { night ? Color(red: 0.035, green: 0.102, blue: 0.196) : WidgetTheme.parchment }
+  var ink: Color { night ? Color(red: 1.000, green: 0.957, blue: 0.863) : Color(red: 0.318, green: 0.106, blue: 0.098) }
+  var inkMuted: Color { night ? Color(red: 0.910, green: 0.839, blue: 0.706) : WidgetTheme.inkMuted }
+  var saffronDeep: Color { night ? Color(red: 0.922, green: 0.780, blue: 0.518) : WidgetTheme.saffronDeep }
+  var gold: Color { night ? Color(red: 0.851, green: 0.714, blue: 0.431) : WidgetTheme.gold }
+}
+
 private struct WidgetBackdrop: View {
   let art: UIImage?
+  let night: Bool
   var body: some View {
     ZStack {
-      WidgetTheme.parchment
+      WidgetPalette(night: night).parchment
       if let art { Image(uiImage: art).resizable().scaledToFill().accessibilityHidden(true) }
     }
   }
 }
 
 private extension View {
-  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?) -> some View {
+  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?, night: Bool) -> some View {
     if #available(iOSApplicationExtension 17.0, *) {
-      containerBackground(for: .widget) { WidgetBackdrop(art: art) }
+      containerBackground(for: .widget) { WidgetBackdrop(art: art, night: night) }
     } else if let art {
       // iOS 16 has no container background: the art must cover the whole cell, not
       // just the content's bounds, and scaledToFill must not spill past it.
-      frame(maxWidth: .infinity, maxHeight: .infinity).background(WidgetBackdrop(art: art)).clipped()
-    } else { background(WidgetTheme.parchment) }
+      frame(maxWidth: .infinity, maxHeight: .infinity).background(WidgetBackdrop(art: art, night: night)).clipped()
+    } else { background(WidgetPalette(night: night).parchment) }
   }
 }
 
@@ -120,6 +140,9 @@ struct VedanshProvider: TimelineProvider {
       // a further fifteen hours while the app's own glance had already moved on
       // (Sept 2026). One entry ON each solved handover is what makes the widget
       // turn over when the Panchang does (design.md §59).
+      for raw in [day.sunriseAt, day.sunsetAt].compactMap({ $0 }) {
+        if let solar = widgetInstant(raw), solar > now { dates.insert(solar) }
+      }
       for segment in day.tithiSegments ?? [] {
         if let raw = segment.endsAt, let ends = widgetInstant(raw)?.addingTimeInterval(1), ends > now { dates.insert(ends) }
       }
@@ -159,15 +182,25 @@ struct VedanshWidgetView: View {
       case .expired: recovery("पंचांग ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh")
       case .missing, .invalid: recovery("विजेट तैयार करने हेतु वेदांश़ खोलें", "Open Vedansh to prepare widgets")
       }
-    }.vedanshWidgetBackground(art)
+    }.vedanshWidgetBackground(art, night: palette.night)
   }
 
   // Art only behind real content in full colour. Recovery cards stay the plain
   // parchment they always were, and the tinted/vibrant modes (iOS 18 tinted Home
   // Screen, StandBy at night) would grey the sketch into a smudge behind the text.
+  private var palette: WidgetPalette {
+    guard surface != .japam, renderingMode == .fullColor,
+          case .ready(let payload) = entry.state, hasContent(payload) else { return WidgetPalette(night: false) }
+    return WidgetPalette(night: widgetIsNight(payload, at: entry.date))
+  }
+
   private var art: UIImage? {
     guard renderingMode == .fullColor, case .ready(let payload) = entry.state, hasContent(payload) else { return nil }
-    return WidgetArt.image(surface, family)
+    if surface == .japam { return WidgetArt.image(surface, family) }
+    if surface == .verse && family == .systemSmall { return nil }
+    let verseKey = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
+    let subject = surface == .panchang ? "panchang" : (payload.verses.days.first(where: { $0.dateKey == verseKey })?.artKey ?? "prayer")
+    return WidgetArt.heritage(subject, family, night: palette.night)
   }
 
   /// Whether this entry renders the surface's dated content rather than a refresh card.
@@ -199,34 +232,37 @@ struct VedanshWidgetView: View {
     let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
     let lang = payload.locale
     if let v = payload.verses.days.first(where: { $0.dateKey == key }) {
+      GeometryReader { geometry in
       VStack(alignment: .leading, spacing: family == .systemSmall ? 5 : 7) {
-        Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep).lineLimit(1)
+        Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(palette.saffronDeep).lineLimit(1)
         if family == .systemLarge {
           VStack(alignment: .leading, spacing: 5) {
             ForEach(Array(v.lines.value(lang).prefix(8).enumerated()), id: \.offset) { item in
-              Text(item.element).font(.custom(fontName(lang, bold: false), size: 18)).foregroundStyle(WidgetTheme.ink).lineLimit(2).minimumScaleFactor(0.8)
+              Text(item.element).font(.custom(fontName(lang, bold: false), size: 18)).foregroundStyle(palette.ink).lineLimit(2).minimumScaleFactor(0.8)
             }
           }
         } else if family == .systemSmall {
           Text(v.excerpt.value(lang))
             .font(.custom(fontName(lang, bold: false), size: 13))
-            .foregroundStyle(WidgetTheme.ink)
+            .foregroundStyle(palette.ink)
             .lineLimit(4)
             .minimumScaleFactor(0.8)
         } else {
           Text(flowedVerse(v.lines.value(lang)))
-            .font(.custom(fontName(lang, bold: false), size: 16))
-            .foregroundStyle(WidgetTheme.ink)
-            .lineLimit(3)
+            .font(.custom(fontName(lang, bold: false), size: 14))
+            .foregroundStyle(palette.ink)
+            .lineLimit(4)
             .minimumScaleFactor(0.8)
         }
         if family != .systemSmall {
-          Text(v.source.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1)
+          Text(v.source.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1)
         }
         brand()
       }
-      .frame(maxWidth: .infinity, alignment: .leading)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+      .padding(.trailing, family == .systemSmall || art == nil ? 0 : geometry.size.width * 0.32)
       .widgetURL(URL(string: v.deepLink)).accessibilityLabel(v.accessibilityLabel.value(lang))
+      }
     } else { recovery("विजेट ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
   }
 
@@ -254,32 +290,34 @@ struct VedanshWidgetView: View {
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
-            .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep)
-            .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)
+            .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(palette.saffronDeep)
+            .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(1)
+            .padding(.trailing, art == nil ? 0 : 36)
           Text(running.name.value(lang))
-            .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? 32 : family == .systemSmall ? 20 : 21))
-            .foregroundStyle(WidgetTheme.ink).lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.75)
+            .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? 32 : family == .systemSmall ? 24 : 24))
+            .foregroundStyle(palette.ink).lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.75)
           // "तक 10:48" — when the headline stops being true, the one fact a
           // dated tithi glance is useless without. Absent only when this day's
           // solve does not know the end (the successor's end belongs to
           // tomorrow's solve), matching the Home glance's own omission.
           if let till = running.till {
             Text(till.value(lang)).font(.system(size: family == .systemLarge ? 13 : 10, weight: .semibold))
-              .foregroundStyle(WidgetTheme.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
+              .foregroundStyle(palette.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
           }
           if let vrat = p.vrat {
-            Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).foregroundStyle(WidgetTheme.inkMuted)
+            Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).foregroundStyle(palette.inkMuted)
               .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)
           }
           if family == .systemSmall {
-            Text(p.sunrise.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
+            Divider().overlay(palette.gold.opacity(0.5))
+            Text(p.sunrise.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
           } else if family == .systemLarge {
             VStack(alignment: .leading, spacing: 4) {
               Text(p.sunrise.value(lang)); Text(p.rahuKaal.value(lang))
               if let abhijit = p.abhijit { Text(abhijit.value(lang)) }
-            }.font(.system(size: 13, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted)
+            }.font(.system(size: 13, weight: .semibold)).foregroundStyle(palette.inkMuted)
           } else {
-            Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted).lineLimit(1)
+            Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1)
           }
           brand()
         }
@@ -299,9 +337,9 @@ struct VedanshWidgetView: View {
         .widgetURL(URL(string: payload.japam.deepLink)).accessibilityLabel("\(payload.japam.totalBeads) beads, \(payload.japam.japaStreak) Japam days")
     } else {
       VStack(alignment: .leading, spacing: 8) {
-        Text(japamKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(WidgetTheme.saffronDeep).lineLimit(1)
-        Text("\(payload.japam.totalBeads) / 108").font(.custom(fontName(lang, bold: true), size: family == .systemMedium ? 34 : 27)).foregroundStyle(WidgetTheme.ink)
-        Text(lang == "en" ? "\(payload.japam.totalRounds) rounds · \(payload.japam.japaStreak) days" : "\(payload.japam.totalRounds) माला · \(payload.japam.japaStreak) जप-दिन").font(.system(size: 11, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted)
+        Text(japamKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(palette.saffronDeep).lineLimit(1)
+        Text("\(payload.japam.totalBeads) / 108").font(.custom(fontName(lang, bold: true), size: family == .systemMedium ? 34 : 27)).foregroundStyle(palette.ink)
+        Text(lang == "en" ? "\(payload.japam.totalRounds) rounds · \(payload.japam.japaStreak) days" : "\(payload.japam.totalRounds) माला · \(payload.japam.japaStreak) जप-दिन").font(.system(size: 11, weight: .semibold)).foregroundStyle(palette.inkMuted)
         brand()
       }
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -311,10 +349,10 @@ struct VedanshWidgetView: View {
 
   private func recovery(_ hi: String, _ en: String) -> some View {
     let key = widgetDateKey(entry.date, timeZone: widgetIstTimeZone)
-    return VStack(alignment: .leading, spacing: 8) { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 13)).foregroundStyle(WidgetTheme.ink); Text(hi).font(.custom("NotoSerifDevanagari-Medium", size: 13)).foregroundStyle(WidgetTheme.ink); Text(en).font(.system(size: 10, weight: .semibold)).foregroundStyle(WidgetTheme.inkMuted) }
+    return VStack(alignment: .leading, spacing: 8) { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 13)).foregroundStyle(palette.ink); Text(hi).font(.custom("NotoSerifDevanagari-Medium", size: 13)).foregroundStyle(palette.ink); Text(en).font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted) }
       .widgetURL(URL(string: "vedansh://widget/panchang?date=\(key)"))
   }
-  private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(WidgetTheme.gold) }
+  private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(palette.gold) }
   // The verse as one flowing paragraph, padas separated the way the planner's
   // excerpt separates them, so the wide cell keeps the shipped look while the
   // text wraps to whatever line count the cell actually has.
@@ -361,3 +399,4 @@ struct VedanshJapamWidget: Widget {
 @main struct VedanshWidgetBundle: WidgetBundle {
   var body: some Widget { VedanshVerseWidget(); VedanshPanchangWidget(); VedanshJapamWidget() }
 }
+

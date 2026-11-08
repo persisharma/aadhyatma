@@ -33,12 +33,12 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   useEffect(() => {
     if (story) pager.current?.scrollToIndex({ index: storyPageIndex(story, route.params.pageId), animated: false });
   }, [story, route.params.pageId]);
-  // Paced on the caption the page shows; the last page adds the takeaway and source.
+  // Pace only the visible caption and final takeaway.
   const pageChars = useCallback((pageIndex: number) => {
     const page = story?.pages[pageIndex];
     if (!story || !page) return 0;
     const parts = [page.title, page.text, page.dialogue?.speaker, page.dialogue?.text];
-    if (pageIndex === story.pages.length - 1) parts.push(story.takeaway, story.sourceNote);
+    if (pageIndex === story.pages.length - 1) parts.push(story.takeaway);
     return parts.reduce((n, part) => n + (part ? storyText(part, lang).length : 0), 0);
   }, [story, lang]);
   // Programmatic scrolls never fire onMomentumScrollEnd on iOS, so set the index too.
@@ -126,7 +126,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
             {isLast && <View style={{ padding: spacing.lg, gap: spacing.sm }}>
               <Text style={{ fontFamily: titleFontByLang(lang), fontSize: 22, color: colors.saffronDeep }}>{pick(lang, { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ' })}</Text>
               <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{storyText(story.takeaway, lang)}</Text>
-              <Text style={{ ...meaningToken(lang, typography), color: colors.inkSoft }}>{storyText(story.sourceNote, lang)}</Text>
             </View>}
           </AutoSlideScrollView>
       );

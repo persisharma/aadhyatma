@@ -98,6 +98,23 @@ appId: com.prashantsharma.vedansh
     timeout: 30000          #  "Panchang" tab label is exposed as "Panchang, tab, N of 4",
                             #  which never full-string-matches "Panchang" — drifted assertion.)
 - assertVisible: ".*Ujjain.*"      # location chip label "Location: Ujjain"
+# Shared-wordmark regression: inspect the fully mounted Panchang export preview.
+# A missing explicit image height used to push icon/place below the sky clip.
+- tapOn: "Share panchang"
+- extendedWaitUntil:
+    visible:
+      id: "share-card-preview-ready"
+    timeout: 15000
+- assertVisible: "Full Panchang"
+- takeScreenshot: e2e-shots/panchang-share-wordmark
+- tapOn: "Card language: Hindi"
+- waitForAnimationToEnd
+- takeScreenshot: e2e-shots/panchang-share-wordmark-hi
+# Alignment follow-up: inspect wordmark/subtitle separation, optical location
+# centering and both scripts centered in the Download pill.
+- takeScreenshot: e2e-shots/panchang-share-chrome-alignment-hi
+- tapOn: "Cancel"
+- assertVisible: "Share panchang"
 - assertVisible: "Purnimant calendar system"
 - assertVisible: "Amanta calendar system"
 # आज/Today shows only once the day has moved off today (the sky header hides a
@@ -223,3 +240,4 @@ appId: com.prashantsharma.vedansh
 # ── Cleanup — Expo Go termination resets navigation for the next flow ──
 - stopApp:
     appId: com.prashantsharma.vedansh
+

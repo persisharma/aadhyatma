@@ -24,8 +24,7 @@ type Props = {
   pillHi?: string;
   pillEn?: string;
   background?: BackgroundImage;
-  /** Rendered on the page, never hidden in an expandable source drawer. */
-  sourceLabel?: string;
+  /** Real in-app reading hand-offs, rendered within the scrolling page. */
   footer?: React.ReactNode;
 };
 
@@ -33,7 +32,7 @@ type Props = {
 // Body text stays at its normal reading size; the page scrolls vertically when a
 // section is longer than the screen, and you swipe left to the next section.
 // Top chrome is kept tight so content sits high and most sections fit without scrolling.
-export default function KathaSectionPage({ section, index, total, width, pillHi = 'प्रसंग', pillEn = 'Part', background = backgroundImages.category_granth_open_scripture, sourceLabel, footer }: Props) {
+export default function KathaSectionPage({ section, index, total, width, pillHi = 'प्रसंग', pillEn = 'Part', background = backgroundImages.category_granth_open_scripture, footer }: Props) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
 
@@ -72,7 +71,6 @@ export default function KathaSectionPage({ section, index, total, width, pillHi 
           <Text style={[styles.title, { color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily) }]}>
             {title}
           </Text>
-          {sourceLabel ? <Text testID="pratha-canon" style={[bodyStyle, { marginTop: 8, marginBottom: 12 }]}>{sourceLabel}</Text> : null}
 
         </>}>
           {body.map((paragraph, i) => (
