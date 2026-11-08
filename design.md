@@ -1510,9 +1510,10 @@ Kaal/Vaas and co-brand footer remain. Send as text carries complete windows. Nex
 the vrat day; long date-bearing clock ranges use two complete lines.
 Export readiness also waits for both painted corners and the miniature. The in-app ritual share action exposes `occasion-share` for native automation. `native-festival-ios.yml` builds an unsigned simulator app and retains compact/wide screenshots, Standard/Large and enlarged-system-text cases, plus actual full/focused PNGs; authored automation is not a native pass.
 See docs/reviews/festival-muhurat.md for rules and verification boundaries.
-Display-only minute contract for occasion *windows*: ceil start, floor end;
-keep exact-minute endpoints, events and solver/cached instants unchanged. If
-a window is too narrow to have a valid rounded range, use its original bounds.
+Display-only minute contract for occasion *windows*: preserve the original
+start formatting and floor only the end; keep exact-minute endpoints, events
+and solver/cached instants unchanged. If flooring would put the end at or
+before the real start, use the original end.
 Compact/screen/full and focused exports/text and accessibility must show the
 same clocks and correct next-day endpoint dates. This cannot manufacture Drik
 agreement when the engine's calculated boundary itself differs.
