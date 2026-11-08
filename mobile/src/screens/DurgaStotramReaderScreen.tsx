@@ -252,6 +252,7 @@ export default function DurgaStotramReaderScreen({ navigation, route }: Props) {
                           share(
                             {
                               sourceId: 'durga-stotram',
+                              verseIndex: verseIdx,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
                               verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,

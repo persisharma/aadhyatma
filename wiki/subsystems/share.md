@@ -135,3 +135,13 @@ editorial source notes. Sanatan shares contain exactly the selected authored
 paragraphs; kids endings keep the cover, full takeaway and app link. Canonical
 scripture identity and poet attribution remain distinct from publisher metadata.
 See `docs/reviews/2026-11-06-content-source-ui.md` for regression and native gates.
+
+
+## Universal verse card styles — 8 November 2026
+
+All verse callers receive Current card / Daily Bhakti card in the shared picker, with a measured preview. `ShareOptions.cardStyle` sets the initial choice only. Daily Bhakti now passes `dailyBhaktiVerse(verse)` with illustrated default; other readers remain classic. Closing/reopening resets the style, while switching it preserves card language and payload. `devotionalVerseShareable` lazily prepares only the exact chosen verse (no pool lookup), including native meanings and Saar title/closing. Readers supply `verseIndex` for artwork exceptions; sloka Japa uses the canonical source, and Gita Saar maps to Krishna. Existing published artwork, neutral fallback, capture-specific paint/height barriers and Instagram fit frames are reused. Text/caption/download/rating behavior is independent of style. Prose and self-drawn card contracts are unchanged.
+
+Tests: `verseCardStyleFlow.test.tsx`, `ShareTargetSheet.test.tsx`, actual `DailyBhaktiScreen.test.tsx` entry point, existing share suites and `.maestro/verse-card-style-smoke.yaml`. Native visual/export/handoff/performance evidence is pending; automated tests do not establish native acceptance. See `docs/reviews/2026-11-08-universal-bhakti-sharing.md`.
+
+
+Approved card-first share flow (8 November 2026): verse Share opens two labelled, tappable real previews, Current card and Daily Bhakti. Tapping either card immediately advances to the existing destinations and language controls, without a Continue button. Change card returns to both previews while retaining the selected language; Cancel exits the whole share, Android Back returns from destinations to styles first. Every opening begins at the style choice. Thumbnail previews fit their complete measured image inside 180dp; they do not crop long text or change export geometry. At enlarged system text the two tiles stack; labels and actions grow intrinsically. Both previews mount only after Share is invoked, reuse cached artwork, and remain separate from the fresh export paint/measurement gate. Non-verse shares keep their existing flow.

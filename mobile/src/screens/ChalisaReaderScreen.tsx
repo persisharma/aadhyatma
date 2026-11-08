@@ -346,6 +346,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: chalisaId,
+                            verseIndex: index,
                             sectionNameHi: chalisa.titleHi,
                             sectionNameEn: chalisa.titleEn,
                             verseLabelHi: item.labelHi,

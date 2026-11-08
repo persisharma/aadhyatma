@@ -168,6 +168,7 @@ export default function BajrangBaanReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: 'bajrang-baan',
+                            verseIndex: index,
                             sectionNameHi: chapter.titleHi,
                             sectionNameEn: chapter.titleEn,
                             verseLabelHi: item.labelHi,

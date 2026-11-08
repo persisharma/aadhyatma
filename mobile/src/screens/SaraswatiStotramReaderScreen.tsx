@@ -246,6 +246,7 @@ export default function SaraswatiStotramReaderScreen({ navigation, route }: Prop
                           share(
                             {
                               sourceId: 'saraswati-stotram',
+                              verseIndex: verseIdx,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
                               verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,

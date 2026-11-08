@@ -163,6 +163,7 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
                         share(
                           {
                             sourceId: 'ramcharitmanas',
+                            verseIndex: index,
                             sectionNameHi: chapter.titleHi,
                             sectionNameEn: chapter.titleEn,
                             verseLabelHi: item.labelHi,

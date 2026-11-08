@@ -1939,6 +1939,18 @@ Category, deity, purpose, katha, observance and puja-vidhi listings, plus the ch
 
 ---
 
+### §39.8a Verse card style — 8 November 2026
+
+Every `ShareableVerse` picker offers **Current card / Daily Bhakti card** above one measured preview. Reader, Japa, Daan verse and shareable Vidhi-mantra entry points use the existing classic card initially. Daily Bhakti passes the same complete verse payload with `cardStyle: 'daily-bhakti'`, keeping its illustrated default. Each opening resets to its entry point's default; switching style preserves the selected card language and full reading. No new preference or persistence key.
+
+The two radio rows have script-aware four-language labels, at least 48dp height and intrinsic wrapping text; the existing scrollable modal and fixed Cancel keep controls reachable on compact phones and with enlarged system text. Both styles show a 216dp-wide preview with native measured height. Interactive labels retain OS text scaling; fixed-image typography keeps the existing export contract.
+
+`devotionalVerseShareable` in `utils/dailyBhaktiShare.ts` renders the reader's exact text, complete meaning, authored Gujarati/Kannada overrides and optional Gita Saar theme/closing line through the existing Daily Bhakti painting and frame. Reader payloads carry their zero-based source `verseIndex` so per-verse artwork exceptions remain exact. Gita Saar uses Krishna; unnamed/unmapped subjects use the approved neutral prayer artwork. Sloka Japa shares use their canonical source rather than the synthetic counter ID. No full random pool is built, no new painting is bundled, and the devotional builder loads only when the illustrated choice is opened.
+
+Target handoff uses the chosen style from an immutable capture spec: system/WhatsApp retain the complete tall image at 1080px width; the Daily Bhakti Instagram choices fit it whole into 4:5 / 9:16. Capture waits for its own native layout and decoded artwork, including a fresh decode after Instagram reframing. A stale preview callback cannot unlock capture; failures refuse incomplete images and release the busy lock. Caption, source attribution, hashtags, download link, Send as text and post-share rating moments retain their existing contracts. Prose/listing/self-drawn personal-data cards do not receive these options.
+
+Automated provider/component/entry-point coverage and `mobile/.maestro/verse-card-style-smoke.yaml` cover this addition. Native visual, exported-file, OS-handoff and low-end Android responsiveness acceptance remains separately required.
+
 ### §39.9 Daily Bhakti: one complete devotional share image
 
 Daily Bhakti prepares one complete stored verse/meaning per language. The Bhakti tab resolves its screen with a literal `getComponent` loader when opened, including widget deep links, keeping the expanded card implementation out of Home’s static launch graph. Both screen and share use `DevotionalFrame.tsx`. Short cards preserve the approved 540×728dp baseline (1080×1456 PNG); long cards grow vertically with complete text at 1080px output width. Standard/Large reading sizes remain supported. Verse, meaning and commentary have no line cap or shrink-to-fit.
@@ -4348,3 +4360,6 @@ inputs through cachedDayInputsAsync, not a synchronous solve inside setTimeout.
 Text/tab/Back input must remain responsive while these tasks resolve; delayed
 publication is distinct from blocked input. Device ANR/frame-time acceptance is
 required separately from unit timing and absence of crash reports.
+
+
+Approved card-first share flow (8 November 2026): verse Share opens two labelled, tappable real previews, Current card and Daily Bhakti. Tapping either card immediately advances to the existing destinations and language controls, without a Continue button. Change card returns to both previews while retaining the selected language; Cancel exits the whole share, Android Back returns from destinations to styles first. Every opening begins at the style choice. Thumbnail previews fit their complete measured image inside 180dp; they do not crop long text or change export geometry. At enlarged system text the two tiles stack; labels and actions grow intrinsically. Both previews mount only after Share is invoked, reuse cached artwork, and remain separate from the fresh export paint/measurement gate. Non-verse shares keep their existing flow.

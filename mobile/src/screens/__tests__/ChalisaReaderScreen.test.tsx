@@ -14,6 +14,14 @@ afterEach(() => {
   act(() => { for (const tree of trees.splice(0)) tree.unmount(); });
 });
 
+// Native WebView is supplied by the installed app; keep the real docked player in this contract.
+jest.mock('react-native-webview', () => ({ WebView: 'WebView' }));
+
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useFocusEffect: () => undefined,
+}));
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   impactAsync: jest.fn(() => Promise.resolve()),

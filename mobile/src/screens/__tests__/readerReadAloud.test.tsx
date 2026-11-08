@@ -12,6 +12,9 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+// Native WebView is supplied by the installed app; keep the real docked player in this contract.
+jest.mock('react-native-webview', () => ({ WebView: 'WebView' }));
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -20,6 +23,7 @@ jest.mock('expo-haptics', () => ({
 // Only PitruKathaScreen reaches for the root navigator (useNavigation); every other
 // reader takes navigation via props. None of the providers use it, so a stub is safe.
 jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: () => undefined,
   useNavigation: () => ({ navigate: () => undefined, goBack: () => undefined }),
 }));
 

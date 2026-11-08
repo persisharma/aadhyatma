@@ -105,6 +105,7 @@ async function openPicker() {
   });
   trees.push(tree!);
   await act(async () => byLabel(tree!, 'trigger').props.onPress());
+  act(() => byLabel(tree!, 'Card style: Current card').props.onPress());
   return tree!;
 }
 
@@ -189,6 +190,7 @@ describe('share target flow', () => {
     mockCaptureRef.mockClear();
     mockMeasuredHeight = 675;
     await act(async () => byLabel(long, 'trigger').props.onPress());
+    act(() => byLabel(long, 'Card style: Current card').props.onPress());
     await act(async () => byLabel(long, 'Share to other apps').props.onPress());
     await settle();
     expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1350 / PixelRatio.get() });
@@ -197,8 +199,10 @@ describe('share target flow', () => {
   test('the share button opens the picker instead of sharing straight away', async () => {
     const tree = await openPicker();
     expect(byLabel(tree, 'Share on Instagram')).toBeDefined();
-    expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(0);
+    // The classic card is previewed; only the off-screen capture must stay absent.
+    expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(1);
     expect(tree.root.findAllByType('ShareStoryCanvas' as never)).toHaveLength(0);
+    expect(mockCaptureRef).not.toHaveBeenCalled();
     expect(mockShareAsync).not.toHaveBeenCalled();
     expect(rnShare).not.toHaveBeenCalled();
   });

@@ -109,3 +109,21 @@ test('the language toggle re-languages the verse card in place', () => {
   expect(texts()).not.toContain('अर्थ');
   act(() => tree!.unmount());
 });
+
+test('the real Bhakti share button opens illustrated with both card styles and can cancel back to the same verse', async () => {
+  let tree: TestRenderer.ReactTestRenderer;
+  await act(async () => { tree = TestRenderer.create(<GitaLanguageProvider initialLang="hi"><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+  const byLabel = (label: string) => tree.root.findAll(n => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function')[0];
+  const before = tree!.root.findByType(DevotionalVerseBody).props.verse;
+  await act(async () => { byLabel('Share verse').props.onPress(); });
+  expect(byLabel('Card style: Daily Bhakti card').props.accessibilityState.checked).toBe(true);
+  act(() => byLabel('Card style: Current card').props.onPress());
+  expect(byLabel('Change card style')).toBeDefined();
+  expect(byLabel('Share to other apps')).toBeDefined();
+  act(() => byLabel('Change card style').props.onPress());
+  expect(byLabel('Card style: Current card')).toBeDefined();
+  act(() => byLabel('Cancel').props.onPress());
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(before);
+  expect(byLabel('Card style: Current card')).toBeUndefined();
+  act(() => tree!.unmount());
+});
