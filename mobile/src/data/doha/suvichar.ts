@@ -45,6 +45,9 @@ for (const id of dohaIds) {
 }
 export const suvicharDohaThoughts: readonly SuvicharDohaThought[] = thoughts;
 export const suvicharDohaSources: readonly SuvicharSource[] = sources;
+// Parshuram keeps only its own reviewed collection; deity-agnostic dohas stay out.
+const ownCollectionOnly: readonly SuvicharDeity[] = ['parshuram'];
 export function suvicharDohasFor(deity: SuvicharDeity): readonly SuvicharDohaThought[] {
-  return thoughts.filter(thought => !thought.deities.length || thought.deities.includes(deity));
+  const general = !ownCollectionOnly.includes(deity);
+  return thoughts.filter(thought => thought.deities.includes(deity) || (general && !thought.deities.length));
 }

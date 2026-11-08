@@ -70,6 +70,7 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
   carry `lastUsedMantraId`; that's why sloka ids use `.` separators.
 - **Ids key on verse `number`, not page index** — counts and alarms persist by id, so an inserted
   verse must not silently move a user's count to another shloka.
+- **Parshuram Stotram** registers a lazy whole-stotra source only when `parshuramPublished` is true, matching its library activation gate. Its seven verse IDs resolve through the same sloka counter, persistence and route contracts.
 - **New stotram-category text** → add it to `SOURCES` and render `StartJapaButton` (with
   `verseIndex`) in its reader; `slokaJapa.test.ts` fails while the registry and the library
   category disagree.

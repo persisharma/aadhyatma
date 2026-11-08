@@ -52,7 +52,9 @@ test('named Ram and Hari dohas retain their deity scope across the full prepared
     const ids = suvicharDohasFor(deity.id).map(t => t.id);
     assert.equal(ids.includes('DH-rahim-doha-sharan'), ['rama','ram-darbar'].includes(deity.id));
     assert.equal(ids.includes('DH-rahim-doha-ahankar'), hari.includes(deity.id));
-    assert.equal(ids.length, 6 + Number(hari.includes(deity.id)) + Number(['rama','ram-darbar'].includes(deity.id)));
+    // Parshuram keeps only its own collection, so it takes none of the six general dohas.
+    const general = deity.id === 'parshuram' ? 0 : 6;
+    assert.equal(ids.length, general + Number(hari.includes(deity.id)) + Number(['rama','ram-darbar'].includes(deity.id)));
     assert.deepEqual(suvicharThoughtsFor(deity.id).filter(t => t.id.startsWith('DH-')).map(t => t.id), ids);
   }
 });
