@@ -49,6 +49,22 @@ it('retains the sender through deity/frame changes and saves the latest name', a
   const calls = jest.mocked(AsyncStorage.setItem).mock.calls;
   expect(JSON.parse(calls[calls.length - 1][1]).name).toBe('Sharma family');
 });
+it('selects Ram Lalla, saves the photo card and hands its selected frame and sender to sharing', async () => {
+  await mount();
+  act(() => node('suvichar-name').props.onChangeText('Sharma family'));
+  pickDeity('ram-lalla');
+  act(() => node('suvichar-frame-bhakti-patra').props.onPress());
+  act(() => node('suvichar-favorite').props.onPress());
+  await flush();
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family' });
+  const stored = JSON.parse(jest.mocked(AsyncStorage.setItem).mock.calls.at(-1)![1]);
+  expect(stored.favorites).toEqual(expect.arrayContaining([expect.objectContaining({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family' })]));
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  const element = sharedCard().render({ lang: 'hi', onReady: jest.fn() }) as React.ReactElement<Record<string, unknown>>;
+  expect(element.props).toMatchObject({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family', width: 540 });
+  expect(sharedCard().caption('hi').label).toBe('राम लला · अयोध्या');
+});
 it('shares nothing before art readiness, then hands the provider the branded card', async () => {
   await mount(); expect(node('suvichar-share').props.disabled).toBe(true);
   await act(async () => node('suvichar-share').props.onPress()); expect(mockShare).not.toHaveBeenCalled();

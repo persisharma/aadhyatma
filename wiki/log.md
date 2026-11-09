@@ -1466,6 +1466,10 @@ Preserved the approved circular frame and Mala/footer designs; moved decorative 
 ## [2026-11-07] ingest | Foreground lane for screen-visible cooperative solves
 Native iOS Simulator run of `pitru-smaran.yaml` after #645: the detail's second stage (अगले वर्ष / पितृ पक्ष) arrived but missed 15 s while launch-time background jobs shared the 4 ms round-robin. `backgroundWork.ts` gained an opt-in `foreground` lane (12 ms slices, served first); Pitru/Janma list rows and detail stages use it, prewarms stay background. Also fixed the stale flow tap on the Vrat ledger (below the fold since #647). Updated [[subsystems/panchang]].
 
+## [2026-11-08] ingest | Ram Lalla Ayodhya photo sharing cards
+
+Added the photographic-subject contract, actual-photo provenance/cache/paint gate and Ram content eligibility to [[subsystems/suvichar]]. Native export/device acceptance remains explicit.
+
 ## [2026-11-08] ingest | Single flute wordmark on Daily Bhakti cards
 Updated share/design/integration contracts for shared top/cartouche and English domain-footer overlays, logo paint failure refusal and per-language readiness invalidation. Native capture/performance remains pending.
 

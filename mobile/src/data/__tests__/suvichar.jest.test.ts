@@ -1,12 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { cleanSender, parseSuvicharPreferences, senderFrom, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharDeityCatalog, suvicharFrames, NAME_LIMIT } from '../suvichar';
+import { cleanSender, parseSuvicharPreferences, senderFrom, suvicharArtKey, suvicharArtRequest, suvicharHeroFraction, suvicharDeities, suvicharPaintedDeities, suvicharFrames, NAME_LIMIT } from '../suvichar';
+import { suvicharPhotoArt } from '../suvicharPhotoArt';
 import { suvicharTemplatesFor } from '../suvicharTemplates';
 const suvicharTemplates = suvicharTemplatesFor(0);
-it('maps all eighteen catalog subjects to three distinct masters without fallback', () => {
-  const keys = suvicharDeityCatalog.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id)));
-  expect(keys).toHaveLength(57); expect(new Set(keys).size).toBe(57);
+it('maps every painted subject to three distinct masters without fallback', () => {
+  const keys = suvicharPaintedDeities.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id)));
+  expect(keys).toHaveLength(suvicharPaintedDeities.length * suvicharFrames.length); expect(new Set(keys).size).toBe(keys.length);
   expect(keys).toContain('annapurna--mandir-jharokha');
   expect(keys).toContain('ram-darbar--mandir-jharokha');
   expect(keys).toContain('salasar-balaji--bhakti-patra');
@@ -61,10 +62,10 @@ it('never activates unpublished artwork or substitutes an unrelated deity', () =
   if (result) expect(result.remoteUrl).toContain('/suvichar/'); else expect(result).toBeNull();
 });
 
-it('keeps exactly 54 complete unique source masters with matching provenance hashes', () => {
+it('keeps every painted source master unique with matching provenance hashes', () => {
   const folder = path.resolve(__dirname, '../../../assets/suvichar');
   const provenance = JSON.parse(fs.readFileSync(path.join(folder, 'sources.json'), 'utf8'));
-  const expected = suvicharDeityCatalog.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id))).sort();
+  const expected = suvicharPaintedDeities.flatMap(d => suvicharFrames.map(f => suvicharArtKey(d.id, f.id))).sort();
   expect(provenance.assets.map((a: { id: string }) => a.id).sort()).toEqual(expected);
   const hashes = new Set<string>(); let total = 0;
   for (const a of provenance.assets) {
@@ -77,5 +78,17 @@ it('keeps exactly 54 complete unique source masters with matching provenance has
     expect(a.width).toBeGreaterThanOrEqual(1080); expect(a.prompt).toMatch(a.deity === 'parshuram' ? /STAND|standing/ : /Subject:|Use case: precise-object-edit/);
     expect(a.authoringPngSha256).toMatch(/^[a-f0-9]{64}$/);
   }
-  expect(hashes.size).toBe(57); expect(total).toBeLessThan(30 * 1024 * 1024);
+  expect(hashes.size).toBe(expected.length); expect(total).toBeLessThan(30 * 1024 * 1024);
+});
+
+it('preserves the real Ram Lalla photo, public source and licence within a bounded delivery size', () => {
+  const folder = path.resolve(__dirname, '../../../assets/suvichar/photos');
+  const source = JSON.parse(fs.readFileSync(path.join(folder, 'sources.json'), 'utf8'));
+  const bytes = fs.readFileSync(path.join(folder, source.file));
+  const hash = createHash('sha256').update(bytes).digest('hex');
+  expect(hash).toBe(source.sha256);
+  expect(bytes.length).toBe(source.bytes); expect(bytes.length).toBeLessThan(750 * 1024);
+  expect(suvicharPhotoArt('ram-lalla')!.request).toMatchObject({ key: hash.slice(0, 16), ext: 'jpg', remoteUrl: source.deliveryUrl });
+  expect(source.license).toBe('GODL-India'); expect(source.author).toBe("Prime Minister's Office, Government of India");
+  expect(source.sourceUrl).toContain('commons.wikimedia.org/wiki/');
 });

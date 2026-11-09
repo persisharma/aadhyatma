@@ -1,6 +1,7 @@
 import { assetBaseUrl, remoteAssetRequest } from './assetManifest';
 import manifest from './suvicharManifest.json';
 import { parshuramPublished } from './parshuramAvailability';
+import { suvicharPhotoArt } from './suvicharPhotoArt';
 
 export const suvicharDeityCatalog = [
   { id: 'parshuram', hi: 'भगवान परशुराम', en: 'Bhagwan Parshuram' },
@@ -14,6 +15,7 @@ export const suvicharDeityCatalog = [
     "hi": "श्रीराम",
     "en": "Shri Ram"
   },
+  { id: 'ram-lalla', hi: 'राम लला · अयोध्या', en: 'Ram Lalla · Ayodhya' },
   {
     "id": "hanuman",
     "hi": "श्रीहनुमान",
@@ -98,7 +100,9 @@ export const suvicharFrames = [
 ] as const;
 /** Offer a deity only after every frame has passed publication verification. */
 export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
-  (deity.id !== 'parshuram' || parshuramPublished) && suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
+  (deity.id !== 'parshuram' || parshuramPublished) && suvicharFrames.every(frame => `${suvicharPhotoArt(deity.id) ? 'rama' : deity.id}--${frame.id}` in manifest.assets));
+/** Photographs reuse only the reviewed paper/footer slices; they do not invent painted masters. */
+export const suvicharPaintedDeities = suvicharDeityCatalog.filter(deity => !suvicharPhotoArt(deity.id));
 export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
 export const NAME_LIMIT = 48;
@@ -187,7 +191,13 @@ export function suvicharArtKey(deity: SuvicharDeity, frame: SuvicharFrame): stri
 /** Only published and byte-verified assets belong in the runtime manifest. No deity fallback. */
 export function suvicharArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
   if (deity === 'parshuram' && !parshuramPublished) return null;
+  const photo = suvicharPhotoArt(deity);
+  if (photo) return photo.request;
   return remoteAssetRequest(manifest, suvicharArtKey(deity, frame), assetBaseUrl());
+}
+/** Explicit paper template for a photographic card; no painted deity is shown in its hero. */
+export function suvicharPaperArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
+  return suvicharArtRequest(suvicharPhotoArt(deity) ? 'rama' : deity, frame);
 }
 /** Newly authored reflection, never presented as a scripture quotation. */
 export const defaultSuvichar = { hi: 'मन में श्रद्धा, वाणी में मधुरता और कर्म में सेवा रखिए। हर दिन सुंदर बन जाएगा।',

@@ -1,0 +1,39 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- tapOn: { id: "suvichar-mode-custom" }
+- scrollUntilVisible:
+    element: { id: "suvichar-deity-ram-lalla" }
+    direction: RIGHT
+- tapOn: { id: "suvichar-deity-ram-lalla" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-deity-photo" }
+- assertVisible: { id: "suvichar-card-deity-photo" }
+- assertVisible: { id: "suvichar-card-deity-name" }
+- scrollUntilVisible:
+    element: { id: "suvichar-frame-pushp-aangan" }
+    direction: UP
+- tapOn: { id: "suvichar-frame-pushp-aangan" }
+- tapOn: { id: "suvichar-frame-bhakti-patra" }
+- scrollUntilVisible:
+    element: { id: "suvichar-name" }
+- tapOn: { id: "suvichar-name" }
+- inputText: "Sharma family"
+- hideKeyboard
+- tapOn: { id: "suvichar-favorite" }
+- tapOn: { id: "suvichar-share" }
+- assertVisible: "Share to other apps"
+- tapOn: "Cancel"
+- back
+- tapOn: { id: "open-suvichar" }
+- scrollUntilVisible:
+    element: { id: "suvichar-saved-0" }
+- tapOn: { id: "suvichar-saved-0" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-deity-photo" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-deity-photo" }
+# Repeat offline after the first successful fetch. Inspect the actual 1080px PNG
+# and WhatsApp/Instagram handoff on iOS and Android without sending to anyone.
