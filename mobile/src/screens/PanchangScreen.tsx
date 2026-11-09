@@ -100,6 +100,7 @@ import {
 } from '@/panchang/useKundali';
 import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
+import { birthCity } from '@/panchang/birthProfiles';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1053,7 +1054,7 @@ function JyotishLanding({
     () => (chart ? computePersonalGuidance(chart, today) : null),
     [chart, today]
   );
-  const city = profile ? getCityById(profile.cityId) : null;
+  const city = profile ? birthCity(profile) : null;
 
   const sectionLabel = (hi: string, en: string) => (
     <Text

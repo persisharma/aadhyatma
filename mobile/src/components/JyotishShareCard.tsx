@@ -54,6 +54,16 @@ const KUNDALI_CHROME_HEIGHT = 196;
  * Capped at the historic 208 / 61%-of-width so a wide card never grows past today's
  * chart; floored well below any real card width so the value stays positive.
  */
+/**
+ * A town or pincode birth place is labelled for the picker, pincode included —
+ * `North Lakhimpur · 787001, Assam` (`toPincodeLocation`). The card's single meta line
+ * has no room for the digits, so it reads `North Lakhimpur, Assam`. Bundled city names
+ * carry no pincode and pass through unchanged.
+ */
+export function compactPlaceLabelEn(label: string): string {
+  return label.replace(/ · [1-9]\d{5},/, ',');
+}
+
 export function kundaliChartSize(width: number): number {
   const contentHeight = width / CARD_ASPECT - width * CARD_PADDING_RATIO * 2;
   return Math.max(96, Math.min(208, width * 0.61, contentHeight - KUNDALI_CHROME_HEIGHT));
@@ -443,9 +453,11 @@ function KundaliShareCard(props: KundaliProps) {
         >
           {props.profile.name || contentByLang(props.lang, 'आपकी कुंडली', 'Your Kundali')}
         </Text>
-        <Text style={[styles.birthMeta, { color: colors.inkMuted }]}>
+        {/* One line inside the fixed chrome budget (KUNDALI_CHROME_HEIGHT): a wrapped
+            meta line pushes the method footer out of the 4:5 box. */}
+        <Text numberOfLines={1} style={[styles.birthMeta, { color: colors.inkMuted }]}>
           {formatBirthDate(props.profile.date)} · {formatBirthTime(props.profile.time)} ·{' '}
-          {contentByLang(props.lang, props.city.nameHi, props.city.nameEn)}
+          {contentByLang(props.lang, props.city.nameHi, compactPlaceLabelEn(props.city.nameEn))}
         </Text>
       </View>
       <View style={{ alignItems: 'center', marginTop: 6 }}>
