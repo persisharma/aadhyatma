@@ -1,5 +1,5 @@
 import type { PanchangData, PanchangElement, Paksha } from './types';
-import { TITHI_NAMES_HI, TITHI_NAMES_EN } from './names';
+import { TITHI_NAMES_HI, TITHI_NAMES_EN, LUNAR_MONTH_NAMES_HI, LUNAR_MONTH_NAMES_EN } from './names';
 
 export type PrevailingTithi = {
   index: number;
@@ -100,4 +100,39 @@ export function successorTithiToday(p: PanchangData): { nameHi: string; nameEn: 
     || end.getDate() !== p.date.getDate()) return null;
   const successor = (p.tithi.index + 1) % 30;
   return { nameHi: TITHI_NAMES_HI[successor], nameEn: TITHI_NAMES_EN[successor] };
+}
+
+/**
+ * The lunar month running at `at`, for the same live "today" surfaces that
+ * read `prevailingTithi`. PURE — `nextDayMonth` is a thunk so the engine solve
+ * stays with the caller and only runs when it is needed.
+ *
+ * A day's `lunarMonth` is fixed at sunrise. Only two handovers can change it:
+ * the end of Amavasya (index 29: the amanta month turns, and either system's
+ * Adhik flag follows the new lunation) and the end of Purnima (index 14: the
+ * purnimanta month turns). Once the walk to `at` has passed either, the month
+ * now running is the one tomorrow's sunrise reports — a tithi lasts at least
+ * ~19 h and month boundaries are fifteen tithis apart, so no second boundary
+ * can fall between `at` and the next sunrise. Before either, the sunrise month
+ * holds; without the hand-over, "कार्तिक कृष्ण प्रतिपदा" would pair the old
+ * month with the new tithi.
+ */
+export function prevailingLunarMonth(
+  p: PanchangData,
+  at: Date,
+  nextDayMonth: () => { lunarMonth: number; isAdhik: boolean },
+): PanchangData['lunarMonth'] {
+  for (const link of tithiChain(p)) {
+    if (!link.endTime || at.getTime() <= link.endTime.getTime()) break;
+    if (link.index === 14 || link.index === 29) {
+      const { lunarMonth, isAdhik } = nextDayMonth();
+      return {
+        index: lunarMonth,
+        nameHi: LUNAR_MONTH_NAMES_HI[lunarMonth - 1],
+        nameEn: LUNAR_MONTH_NAMES_EN[lunarMonth - 1],
+        isAdhik,
+      };
+    }
+  }
+  return p.lunarMonth;
 }

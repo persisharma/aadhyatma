@@ -56,13 +56,15 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import { useShubhYoga } from '@/panchang/useShubhYoga';
-import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import type { CalendarSystem, PanchangComputationOptions, PanchangData, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import { seedFromLocationOnce } from '@/panchang/lensStore';
-import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { prevailingLunarMonth, prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
+import { computeTithiAndMonth } from '@/panchang/engine';
+import { useMinuteTick } from '@/utils/useMinuteTick';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, getLensAdditions, getNextOccurrence, type BrowseCategory } from '@/panchang/vratCatalog';
@@ -248,20 +250,6 @@ export default function PanchangScreen({ route }: Props) {
       handle.cancel();
     };
   }, [location.cityId, location.labelEn]);
-  // The day's full identity (vara · masa paksha · Vikram Samvat) for the date
-  // button's a11y label — the explicit label would otherwise hide the visible
-  // line from screen readers, so it must carry at least what the sky shows.
-  const dayIdentityEn = p
-    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
-    : null;
-  // The sky's shorter visible line names the day's tithi in place of the संवत्
-  // (vara · masa paksha tithi); the full identity stays in the a11y label.
-  const daySkyLineHi = p
-    ? `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} ${p.tithi.nameHi}`
-    : null;
-  const daySkyLineEn = p
-    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} ${p.tithi.nameEn}`
-    : null;
   // PRD-27: the day's शुभ योग windows — store-backed (no private cache), []
   // while the solve is in flight and on days with none, so the card below
   // renders zero chrome for the absent case.
@@ -626,27 +614,17 @@ export default function PanchangScreen({ route }: Props) {
                     >
                       <Text style={{ color: ink.ink, fontSize: 22 }}>‹</Text>
                     </Pressable>
-                    <Pressable
-                      testID="panchang-selected-date"
+                    <SkyDateButton
+                      selectedDate={selectedDate}
+                      p={p}
+                      live={isSelectedToday && isFocused}
+                      calendarSystem={calendarSystem}
+                      location={location}
                       onPress={() => setCalendarExpanded((expanded) => !expanded)}
-                      accessibilityRole="button"
-                      accessibilityLabel={dayIdentityEn ? `${formatFullDate(selectedDate, 'en')}. ${dayIdentityEn}` : formatFullDate(selectedDate, 'en')}
-                      style={({ pressed }) => [styles.skyDateBlock, pressed && { opacity: 0.7 }]}
-                    >
-                      <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 20, color: ink.ink, textAlign: 'center' }}>
-                        {formatFullDate(selectedDate, lang)}
-                      </Text>
-                      {/* The day's identity (vara · masa paksha tithi) — a space
-                          while the day solves so the row height is stable. */}
-                      <Text
-                        numberOfLines={1}
-                        adjustsFontSizeToFit
-                        minimumFontScale={0.75}
-                        style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, color: ink.inkSoft, marginTop: 1, textAlign: 'center' }}
-                      >
-                        {daySkyLineHi && daySkyLineEn ? contentByLang(lang, daySkyLineHi, daySkyLineEn) : ' '}
-                      </Text>
-                    </Pressable>
+                      lang={lang}
+                      ink={ink}
+                      typography={typography}
+                    />
                     <Pressable
                       onPress={() => shiftSelectedDate(1)}
                       accessibilityRole="button"
@@ -1394,6 +1372,69 @@ function JyotishLanding({
     onOpenKundali={onOpenKundali} onOpenRashifal={onOpenRashifal}
     onOpenGunaMilan={onOpenGunaMilan} onOpenNamkaran={onOpenNamkaran}
     onOpenNavagraha={onOpenNavagraha} />;
+}
+
+/**
+ * The sky's date block: full date over the day's identity line
+ * (vara · masa paksha tithi). On today the line follows the clock — the tithi
+ * through `prevailingTithi` and the masa through `prevailingLunarMonth` — so an
+ * Amavasya that ended at noon reads शुक्ल प्रतिपदा by evening, as the Muhurat
+ * card's kicker already does. Other days keep the sunrise (udaya) identity.
+ * The minute tick lives here, gated on `live` (today and focused), so the
+ * screen itself never re-renders per minute.
+ */
+function SkyDateButton({ selectedDate, p, live, calendarSystem, location, onPress, lang, ink, typography }: {
+  selectedDate: Date;
+  p: PanchangData | null;
+  live: boolean;
+  calendarSystem: CalendarSystem;
+  location: NonNullable<PanchangComputationOptions['location']>;
+  onPress: () => void;
+  lang: Lang;
+  ink: SkyInk;
+  typography: any;
+}) {
+  useMinuteTick(live);
+  const at = new Date();
+  const tithi = p ? (live ? prevailingTithi(p, at) : p.tithi) : null;
+  const month = p
+    ? (live ? prevailingLunarMonth(p, at, () => computeTithiAndMonth(addDays(p.date, 1), { calendarSystem, location })) : p.lunarMonth)
+    : null;
+  // The full identity (vara · masa paksha · Vikram Samvat) for the a11y label —
+  // the explicit label hides the visible line from screen readers, so it must
+  // carry at least what the sky shows.
+  const identityEn = p && tithi && month
+    ? `${p.vara.nameEn} · ${month.nameEn}${month.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
+    : null;
+  // The visible line names the tithi in place of the संवत्.
+  const lineHi = p && tithi && month
+    ? `${p.vara.nameHi} · ${month.nameHi}${month.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[tithi.paksha]} ${tithi.nameHi}`
+    : null;
+  const lineEn = p && tithi && month
+    ? `${p.vara.nameEn} · ${month.nameEn}${month.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[tithi.paksha]} ${tithi.nameEn}`
+    : null;
+  return (
+    <Pressable
+      testID="panchang-selected-date"
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={identityEn ? `${formatFullDate(selectedDate, 'en')}. ${identityEn}` : formatFullDate(selectedDate, 'en')}
+      style={({ pressed }) => [styles.skyDateBlock, pressed && { opacity: 0.7 }]}
+    >
+      <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 20, color: ink.ink, textAlign: 'center' }}>
+        {formatFullDate(selectedDate, lang)}
+      </Text>
+      {/* A space while the day solves so the row height is stable. */}
+      <Text
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.75}
+        style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, color: ink.inkSoft, marginTop: 1, textAlign: 'center' }}
+      >
+        {lineHi && lineEn ? contentByLang(lang, lineHi, lineEn) : ' '}
+      </Text>
+    </Pressable>
+  );
 }
 
 function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography, sky, bare }: {
