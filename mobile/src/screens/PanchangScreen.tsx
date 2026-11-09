@@ -62,8 +62,9 @@ import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEn
 import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import { seedFromLocationOnce } from '@/panchang/lensStore';
-import { prevailingLunarMonth, prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
-import { computeTithiAndMonth } from '@/panchang/engine';
+import { passedMonthBoundary, prevailingLunarMonth, prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
+import { computeTithiAndMonthSteps, locationKey } from '@/panchang/engine';
+import { runInBackground } from '@/panchang/backgroundWork';
 import { useMinuteTick } from '@/utils/useMinuteTick';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
@@ -1381,7 +1382,10 @@ function JyotishLanding({
  * Amavasya that ended at noon reads शुक्ल प्रतिपदा by evening, as the Muhurat
  * card's kicker already does. Other days keep the sunrise (udaya) identity.
  * The minute tick lives here, gated on `live` (today and focused), so the
- * screen itself never re-renders per minute.
+ * screen itself never re-renders per minute. Render does no engine solve:
+ * tomorrow's month is needed only after an Amavasya/Purnima end (~2 evenings a
+ * month) and is resolved time-sliced in the background; until it lands the
+ * sunrise month holds.
  */
 function SkyDateButton({ selectedDate, p, live, calendarSystem, location, onPress, lang, ink, typography }: {
   selectedDate: Date;
@@ -1397,8 +1401,26 @@ function SkyDateButton({ selectedDate, p, live, calendarSystem, location, onPres
   useMinuteTick(live);
   const at = new Date();
   const tithi = p ? (live ? prevailingTithi(p, at) : p.tithi) : null;
+  const nextKey = live && p && passedMonthBoundary(p, at)
+    ? `${p.date.getTime()}|${calendarSystem}|${locationKey(location)}`
+    : null;
+  const [nextMonth, setNextMonth] = useState<{ key: string; value: { lunarMonth: number; isAdhik: boolean } } | null>(null);
+  useEffect(() => {
+    if (!nextKey || !p) return undefined;
+    let cancelled = false;
+    runInBackground(computeTithiAndMonthSteps(addDays(p.date, 1), { calendarSystem, location }), () => cancelled)
+      .then((value) => {
+        if (!cancelled && value) setNextMonth({ key: nextKey, value });
+      })
+      .catch(() => {}); // the sunrise month holds
+    return () => {
+      cancelled = true;
+    };
+    // `nextKey` already encodes the day, system and location the solve reads.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextKey]);
   const month = p
-    ? (live ? prevailingLunarMonth(p, at, () => computeTithiAndMonth(addDays(p.date, 1), { calendarSystem, location })) : p.lunarMonth)
+    ? (live ? prevailingLunarMonth(p, at, nextMonth && nextMonth.key === nextKey ? nextMonth.value : null) : p.lunarMonth)
     : null;
   // The full identity (vara · masa paksha · Vikram Samvat) for the a11y label —
   // the explicit label hides the visible line from screen readers, so it must
