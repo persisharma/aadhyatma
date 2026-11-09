@@ -60,7 +60,7 @@ const balajiReveal = [
   {id: 'face', at: [0, 0], amp: 1, freq: 0.4, shapes: face},
 ];
 
-function person({skin, robe, shawl, beard, moustache, hair = 'hair', jata, turban, kalgi, halo, sleep, tilak, mala, bigEyes, frontItem = [], frontBase = -55, frontAmp = 5, frontFreq = 0.7}) {
+export function person({skin, robe, shawl, beard, moustache, hair = 'hair', jata, turban, kalgi, halo, sleep, tilak, mala, bigEyes, frontItem = [], frontBase = -55, frontAmp = 5, frontFreq = 0.7}) {
   const parts = [];
   if (halo) parts.push({id: 'halo', parent: 'head', at: [0, -50], spin: 18, first: true, shapes: [...rays(14, 70, 108, 128), s(ell(0, 0, 78, 78), 'halo')]});
   parts.push({id: 'armBack', parent: 'body', at: [-48, -150], base: 14, amp: 5, freq: 0.7, first: true, shapes: limb(100, 28, skin)});
