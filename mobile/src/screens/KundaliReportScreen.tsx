@@ -25,7 +25,7 @@ import { RASHI_NAMES_EN, RASHI_NAMES_HI } from '@/panchang/kundali';
 import type { Graha } from '@/panchang/kundali';
 import { buildKundaliReport } from '@/panchang/kundaliReport';
 import type { KundaliReportSection } from '@/panchang/kundaliReportModel';
-import { getCityById } from '@/panchang/locations';
+import { birthCity } from '@/panchang/birthProfiles';
 import { useKundali } from '@/panchang/useKundali';
 import { useJyotishNow } from '@/panchang/useJyotishNow';
 import { useTheme } from '@/theme/ThemeContext';
@@ -71,7 +71,7 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
   const { chart, profile, loadState } = useKundali();
   const [shareVisible, setShareVisible] = useState(false);
   const now = useJyotishNow(chart);
-  const city = profile ? getCityById(profile.cityId) : null;
+  const city = profile ? birthCity(profile) : null;
 
   const report = useMemo(() => {
     if (!chart || !profile || !city) return null;

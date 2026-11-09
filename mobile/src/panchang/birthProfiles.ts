@@ -18,15 +18,34 @@
  * to `@vedansh:kundali-profiles:v1` and is what `activeId` points at. Never
  * rewrite ids for cosmetic reasons — that silently unselects the user's person.
  */
-import { getCityById } from './locations';
+import { getCityById, type City } from './locations';
+import {
+  isPincodeCityId,
+  parsePincodePlaceRecord,
+  toPincodeLocation,
+  type PincodeEntry,
+  type PincodePlaceRecord,
+} from './pincodes';
 import type { KundaliInput } from './kundali';
 
-/** One person's birth details. Unchanged from the single-profile record. */
+/**
+ * A birth place below the bundled city list — a town, village or pincode picked from
+ * the same search as the Panchang location (`panchang/locationSearch.ts`). Present iff
+ * `cityId` is a `pin-` id, and SELF-DESCRIBING for the same reason a stored Panchang
+ * pincode location is: resolving it would load the lazy 605 KB pincode table on every
+ * Jyotish surface. It also pins the chart: a later directory rebuild that re-centres the
+ * pincode must not silently move someone's lagna.
+ */
+export type BirthPlace = PincodePlaceRecord;
+
+/** One person's birth details: the single-profile record plus an optional town place. */
 export type BirthProfile = {
   name?: string;
   date: string;
   time: string;
+  /** A bundled city id (`locations.ts`), or `pin-<6 digits>` with `place` beside it. */
   cityId: string;
+  place?: BirthPlace;
 };
 
 /** A saved person: birth details plus the persisted identity the roster points at. */
@@ -54,6 +73,43 @@ const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
 const IST_OFFSET_MINUTES = 330;
 
+/**
+ * The birth place as a `City`, whichever tier it came from — the one accessor every
+ * surface reads (chart input, Kundali header, share card, report, Janma Tithi line,
+ * Kul Parampara export). A `pin-` place maps its labels onto `nameHi`/`nameEn`
+ * (`७८७००१ · असम` / `North Lakhimpur · 787001, Assam`). Undefined when the id is neither
+ * a bundled city nor a pincode with a valid record — validation's "choose a city".
+ */
+export function birthCity(profile: Pick<BirthProfile, 'cityId' | 'place'>): City | undefined {
+  if (isPincodeCityId(profile.cityId)) {
+    const place = profile.place ? parsePincodePlaceRecord(profile.place) : null;
+    if (!place) return undefined;
+    return {
+      id: profile.cityId,
+      nameHi: place.labelHi,
+      nameEn: place.labelEn,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      elevation: place.elevation,
+    };
+  }
+  return getCityById(profile.cityId);
+}
+
+/**
+ * The `{ cityId, place }` a picked pincode or town row stores. Labels come from
+ * `toPincodeLocation` — the Panchang location's own labelling — so a place reads the
+ * same in both features (`North Lakhimpur · 787001, Assam`). A place IS its pincode:
+ * the coordinate is the pincode's consensus point, as in the Panchang picker.
+ */
+export function birthPlaceFromPincode(
+  entry: PincodeEntry,
+  placeName?: string
+): { cityId: string; place: BirthPlace } {
+  const { cityId, labelHi, labelEn, latitude, longitude, elevation } = toPincodeLocation(entry, 'pincode', placeName);
+  return { cityId, place: { labelHi, labelEn, latitude, longitude, elevation } };
+}
+
 export function validateBirthProfile(profile: BirthProfile): BirthProfileErrors {
   const errors: BirthProfileErrors = {};
   const dateMatch = DATE_PATTERN.exec(profile.date);
@@ -74,7 +130,7 @@ export function validateBirthProfile(profile: BirthProfile): BirthProfileErrors 
     }
   }
   if (!TIME_PATTERN.test(profile.time)) errors.time = 'Use 24-hour HH:mm';
-  if (!getCityById(profile.cityId)) errors.cityId = 'Choose an Indian city';
+  if (!birthCity(profile)) errors.cityId = 'Choose an Indian city';
   return errors;
 }
 
@@ -83,7 +139,7 @@ export function birthProfileToInput(profile: BirthProfile): KundaliInput {
   if (Object.keys(errors).length > 0) {
     throw new Error(Object.values(errors)[0]);
   }
-  const city = getCityById(profile.cityId)!;
+  const city = birthCity(profile)!;
   const [year, month, day] = profile.date.split('-').map(Number);
   const [hour, minute] = profile.time.split(':').map(Number);
   const date = new Date(
@@ -98,12 +154,20 @@ export function birthProfileToInput(profile: BirthProfile): KundaliInput {
   };
 }
 
-/** Trim the optional name away entirely rather than storing an empty string. */
+/**
+ * Trim the optional name away entirely rather than storing an empty string, and keep
+ * `place` only beside a `pin-` id — re-picking a bundled city must not leave a stale
+ * town record behind on disk.
+ */
 export function normalizeBirthProfile(profile: BirthProfile): BirthProfile {
+  const place = isPincodeCityId(profile.cityId) && profile.place
+    ? parsePincodePlaceRecord(profile.place)
+    : null;
   return {
     date: profile.date,
     time: profile.time,
     cityId: profile.cityId,
+    ...(place ? { place } : {}),
     ...(profile.name?.trim() ? { name: profile.name.trim() } : {}),
   };
 }
@@ -129,6 +193,7 @@ export function parseStoredBirthProfile(raw: string | null): BirthProfile | null
       date: candidate.date,
       time: candidate.time,
       cityId: candidate.cityId,
+      ...(candidate.place && typeof candidate.place === 'object' ? { place: candidate.place } : {}),
       ...(candidate.name !== undefined ? { name: candidate.name } : {}),
     });
     return Object.keys(validateBirthProfile(profile)).length === 0 ? profile : null;
@@ -183,6 +248,7 @@ export function parseStoredRoster(raw: string | null): ParsedRoster {
         date: candidate.date,
         time: candidate.time,
         cityId: candidate.cityId,
+        ...(candidate.place !== undefined ? { place: candidate.place } : {}),
         ...(candidate.name !== undefined ? { name: candidate.name } : {}),
       })
     );
