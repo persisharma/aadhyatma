@@ -3,40 +3,44 @@ import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Defs, Ellipse, LinearGradient, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
 import type { Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
+import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { WordmarkArtwork } from './VedanshWordmark';
 
 type PaintProps = { width: number; onLoad?: () => void; onError?: () => void };
 
-/** Master-space badge. It hugs the unchanged 196px approved wordmark with a slim double frame,
- * and must still hide the painted legacy plaque (outer gold edge ≈ 38–210 × 53–163 on every
- * subject master, Parshuram's blank plaque to ≈ 227): never narrower or shorter than that. */
-export const devotionalHeaderBadge = { left: 32, top: 48, width: 224, height: 120 } as const;
-/** The approved wordmark keeps its original size; only the box around it was tightened. */
-export const devotionalHeaderMarkWidth = 196;
+/** Master-space badge = the painted legacy plaque it hides (outer gold edge ≈ 37–209 × 54–167
+ * on every subject master) plus a 3–4px margin; Parshuram's blank plaque alone runs to ≈ 227.
+ * Never smaller, or the old printed name/edge shows. The wordmark is sized to this box. */
+export function devotionalHeaderBadge(art: DevotionalArt) {
+  return { left: 34, top: 48, width: art === 'parshuram' ? 198 : 180, height: 120 };
+}
+/** Approved wordmark widths that fit inside the badge's inner frame with ≈6px clearance. */
+export const devotionalHeaderMarkWidth = { hi: 150, en: 152 } as const;
 
 /** Master-space coordinates. Covers the old painted names without republishing
  * the scenery or adding a bitmap/network request. Branding stays fixed in exports. */
-export function DevotionalHeaderBrand({ lang, width, onLoad, onError }: PaintProps & { lang: Lang }) {
+export function DevotionalHeaderBrand({ art, lang, width, onLoad, onError }: PaintProps & { art: DevotionalArt; lang: Lang }) {
   const scale = width / 1080;
   const gradient = `plaque-${React.useId().replace(/:/g, '')}`;
-  const badge = devotionalHeaderBadge;
+  const badge = devotionalHeaderBadge(art);
+  const w = badge.width, kind = lang === 'hi' ? 'hi' : 'en';
   return <View testID="devotional-header-brand" pointerEvents="none" accessible accessibilityRole="image"
     accessibilityLabel={lang === 'hi' ? 'वेदांश' : 'Vedansh'}
-    style={{ position: 'absolute', left: badge.left * scale, top: badge.top * scale, width: badge.width * scale, height: badge.height * scale, alignItems: 'center', justifyContent: 'center' }}>
-    <Svg width={badge.width * scale} height={badge.height * scale} viewBox="0 0 224 120" style={StyleSheet.absoluteFill} accessible={false}>
+    style={{ position: 'absolute', left: badge.left * scale, top: badge.top * scale, width: w * scale, height: badge.height * scale, alignItems: 'center', justifyContent: 'center' }}>
+    <Svg width={w * scale} height={badge.height * scale} viewBox={`0 0 ${w} 120`} style={StyleSheet.absoluteFill} accessible={false}>
       <Defs><LinearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">
         <Stop offset="0" stopColor="#FFF4D6" /><Stop offset="0.55" stopColor="#FCECC5" /><Stop offset="1" stopColor="#F4DCA3" />
       </LinearGradient></Defs>
-      <Rect x="1" y="1" width="222" height="118" rx="10" fill={`url(#${gradient})`} stroke="#99651F" strokeWidth="2" />
-      <Path d="M18 5H206Q206 13 219 13V107Q206 107 206 115H18Q18 107 5 107V13Q18 13 18 5Z"
+      <Rect x="1" y="1" width={w - 2} height="118" rx="10" fill={`url(#${gradient})`} stroke="#99651F" strokeWidth="2" />
+      <Path d={`M18 5H${w - 18}Q${w - 18} 13 ${w - 5} 13V107Q${w - 18} 107 ${w - 18} 115H18Q18 107 5 107V13Q18 13 18 5Z`}
         fill="none" stroke="#B9812E" strokeWidth="1.6" />
-      <Path d="M21 8H203Q203 16 216 16V104Q203 104 203 112H21Q21 104 8 104V16Q21 16 21 8Z"
+      <Path d={`M21 8H${w - 21}Q${w - 21} 16 ${w - 8} 16V104Q${w - 21} 104 ${w - 21} 112H21Q21 104 8 104V16Q21 16 21 8Z`}
         fill="none" stroke="#C99A4B" strokeWidth="0.8" />
-      <Path d="M92 18H102Q107 18 108 13Q109 9 112 13Q115 9 116 13Q117 18 122 18H132M112 13V22"
+      <Path d="M-20 0H-10Q-5 0 -4 -5Q-3 -9 0 -5Q3 -9 4 -5Q5 0 10 0H20M0 -5V4" transform={`translate(${w / 2} 18)`}
         fill="none" stroke="#A46B21" strokeWidth="1.3" strokeLinecap="round" />
     </Svg>
     <View style={{ marginTop: 6 * scale }}>
-      <WordmarkArtwork kind={lang === 'hi' ? 'hi' : 'en'} width={devotionalHeaderMarkWidth * scale} onLoad={onLoad} onError={onError} />
+      <WordmarkArtwork kind={kind} width={devotionalHeaderMarkWidth[kind] * scale} onLoad={onLoad} onError={onError} />
     </View>
   </View>;
 }

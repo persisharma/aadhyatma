@@ -57,9 +57,10 @@ Implementation is for review. No merge, native binary build, version bump, OTA o
 
 ## Follow-up: fitted header badge — 10 November 2026
 
-Feedback (Sundarkand 11.4 on an iPhone): the box around the top Vedansh logo was too big; the logo itself should stay the same size. A first pass that also shrank the logo was rejected.
+Feedback (Sundarkand 11.4 on an iPhone): the box around the top Vedansh logo was too big. Final direction: the box should be the size of the painted plaque it hides, with the logo scaled to fit inside.
 
-- Measured the painted legacy plaque on all 30 masters: outer gold edge ≈38–210 × 53–163 (Mahakaal and prayer have none; Parshuram's blank plaque reaches ≈227). The badge must cover it, which sets the minimum box size.
-- New badge: 224×120 at (32,48), down from 244×132 at (32,44). The 196px wordmark is unchanged; the double frame and ornament were redrawn tighter around it.
-- Evidence: `DevotionalBranding.test.tsx` footprint cases (logo stays 196px; box covers the plaque and is ≤28px wider than the logo) pass; the old badge fails them. Devotional suites pass; `tsc --noEmit` is clean. Browser component renders (this harness) of all 30 delivery subjects in Hindi, plus reader hi/en/gu/kn × M/L × 288/358dp, were visually inspected with no legacy edge visible. `browser-matrix.json` was not regenerated.
+- 28 of the 30 masters carry the legacy painted plaque (outer gold edge ≈37–209 × 54–167; Mahakaal and prayer have none; Parshuram's blank plaque reaches ≈227). An overlay drawn at the badge footprint over each master, inspected at 3× zoom, leaves no legacy edge visible. A 176×116 box would leave Hanuman's lower gold bevel (y≈166–167) showing.
+- Badge: 180×120 at (34,48) (Parshuram 198 wide), slim double frame and top ornament; wordmark Hindi 150px / English 152px. The badge was 244×132 at (32,44) with a 196px wordmark.
+- Rejected iterations: keeping the 196px logo in a 224×120 box (still larger than the plaque); a shorter box with the exposed plaque strips covered by mirrored scenery (visible reflection seams in 1080px exports).
+- Evidence: `DevotionalBranding.test.tsx` footprint cases fail on the old badge and pass now; Devotional suites pass; `tsc --noEmit` is clean. Browser component renders (this harness) of all 30 delivery subjects in Hindi, plus reader hi/en/gu/kn × M/L × 288/358dp, were visually inspected. `browser-matrix.json` was not regenerated.
 - PENDING: native iOS/Android render and export, Standard/Large on device, enlarged system text.

@@ -60,21 +60,21 @@ it('resets hero branding readiness on a language switch and ignores the removed 
   expect(loaded).toHaveBeenCalledTimes(1);
 });
 
-it.each(['hanuman', 'prayer', 'parshuram'] as const)(
-  'keeps the %s header wordmark at its approved size inside a box fitted over the painted plaque', art => {
+it.each([['hanuman', 180], ['prayer', 180], ['parshuram', 198]] as const)(
+  'sizes the %s header badge to the painted plaque and fits the wordmark inside it', (art, badgeWidth) => {
     for (const lang of ['hi', 'en'] as const) {
       act(() => { tree = create(<DevotionalHero art={art} lang={lang} width={1080} />); });
       const header = tree.root.findByProps({ testID: 'devotional-header-brand' });
-      // At width 1080 master-space coordinates are 1:1. The old 244×132 badge left ~half the
-      // wordmark's height as empty paper; the box still has to cover the painted plaque
-      // (≈38–210 × 53–163, Parshuram to ≈227).
+      // At width 1080 master-space coordinates are 1:1. The painted plaque's outer edge is
+      // ≈37–209 × 54–167 (Parshuram to ≈227); the old 244×132 badge spilled past it.
       const box = StyleSheet.flatten(header.props.style);
-      expect(box).toMatchObject({ left: 32, top: 48, width: 224, height: 120 });
-      expect(box.left).toBeLessThanOrEqual(38 - 4); expect(box.top).toBeLessThanOrEqual(53 - 4);
-      expect(box.left + box.width).toBeGreaterThanOrEqual(227 + 4); expect(box.top + box.height).toBeGreaterThanOrEqual(163 + 4);
+      expect(box).toMatchObject({ left: 34, top: 48, width: badgeWidth, height: 120 });
+      expect(box.left + box.width).toBeGreaterThanOrEqual(art === 'parshuram' ? 231 : 212);
+      expect(box.top + box.height).toBeGreaterThanOrEqual(168);
       const mark = StyleSheet.flatten(header.findByType(Image).props.style);
-      expect(mark.width).toBe(196);
-      expect(box.width - mark.width).toBeLessThanOrEqual(28);
+      // Inside the inner frame line (8px inset) with clearance on both sides.
+      expect(mark.width).toBeLessThanOrEqual(180 - 2 * 14);
+      expect(mark.width).toBeGreaterThanOrEqual(180 - 2 * 16);
       act(() => tree.unmount());
     }
   });
