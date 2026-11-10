@@ -10,7 +10,6 @@ import {
   RAIL_CLEARANCE,
   RAIL_HEIGHT,
   RAIL_KEEP_OUT,
-  RAIL_TOGGLE,
   railBox,
 } from '../japamControlRail';
 import { ThemeProvider } from '@/theme/ThemeContext';
@@ -26,13 +25,11 @@ const points = (d: string) => {
 };
 
 describe('control column geometry (design.md §35)', () => {
-  test('open: three 44 dp buttons + the 32 dp toggle, 8 apart; the view is sized for the folded toggle', () => {
-    expect(RAIL_HEIGHT).toBe(188);
+  test('the always-shown column: three 44 dp buttons 8 apart, 64 dp in from the right edge', () => {
+    expect(RAIL_HEIGHT).toBe(148);
     expect(RAIL_CLEARANCE).toBe(64);
-    expect(RAIL_KEEP_OUT).toBe(RAIL_TOGGLE);
-    // Sizing uses the folded toggle only, so folding/unfolding never resizes anything.
-    expect(railBox(390, 530)).toEqual({ left: 326, top: 486, bottom: 522 });
-    expect(railBox(390, 530, RAIL_HEIGHT)).toEqual({ left: 326, top: 330, bottom: 522 });
+    expect(RAIL_KEEP_OUT).toBe(RAIL_HEIGHT);
+    expect(railBox(390, 530)).toEqual({ left: 326, top: 370, bottom: 522 });
   });
 
   test.each([230, 262, 302, 330])('malaOuterReach(%i) covers everything the mala draws, tassel included', async (size) => {
@@ -60,15 +57,16 @@ describe('control column geometry (design.md §35)', () => {
     // Tall viewport: the ring sits well above the column.
     expect(fitMalaBesideRail({ width: 440, viewport: 640, head: 63, size: 330, min: 230 })).toBe(330);
     // Tight viewports shrink only as far as needed, and never below the floor.
-    expect(fitMalaBesideRail({ width: 320, viewport: 280, head: 40, size: 300, min: 230 })).toBe(244);
+    expect(fitMalaBesideRail({ width: 390, viewport: 530, head: 63, size: 330, min: 230 })).toBe(300);
     expect(fitMalaBesideRail({ width: 320, viewport: 300, head: 120, size: 260, min: 230 })).toBe(230);
     expect(fitMandalaBesideRail({ width: 390, viewport: 530, size: 340, min: 280 })).toBe(340);
-    expect(fitMandalaBesideRail({ width: 320, viewport: 320, size: 296, min: 280 })).toBe(290);
+    expect(fitMandalaBesideRail({ width: 375, viewport: 425, size: 340, min: 280 })).toBe(292);
+    expect(fitMandalaBesideRail({ width: 320, viewport: 320, size: 296, min: 280 })).toBe(280);
   });
 
   test('distance is zero inside the box and grows away from it', () => {
-    expect(distanceToRail(390, 530, 360, 500)).toBe(0);
-    expect(distanceToRail(390, 530, 195, 500)).toBe(131);
-    expect(distanceToRail(390, 530, 326, 300)).toBe(186);
+    expect(distanceToRail(390, 530, 360, 450)).toBe(0);
+    expect(distanceToRail(390, 530, 195, 450)).toBe(131);
+    expect(distanceToRail(390, 530, 326, 300)).toBe(70);
   });
 });

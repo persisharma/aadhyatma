@@ -13,7 +13,6 @@ on:
       - 'mobile/src/components/japamControlRail.ts'
       - 'mobile/src/components/JapamInfinity.tsx'
       - 'mobile/src/components/JapamTempoControl.tsx'
-      - 'mobile/src/utils/useJapamControls.ts'
       - 'mobile/src/components/japaSankalpCopy.ts'
       - 'mobile/src/components/JapamAudioPlayer.tsx'
       - 'mobile/src/contexts/JapamCounterContext.tsx'

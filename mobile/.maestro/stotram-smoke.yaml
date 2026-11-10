@@ -105,10 +105,6 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Bajrang Baan · Doha\\. Tap to count one bead.*"
 # Counts persist across runs; clear them so the bead assertions are exact.
-# Reset lives in the control column, folded by default.
-- tapOn:
-    text: "Show controls"
-    optional: true
 - tapOn:
     text: "Reset or clear the count"
     optional: true

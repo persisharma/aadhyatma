@@ -99,9 +99,8 @@ appId: com.prashantsharma.vedansh
 - tapOn: ".*Tap to count one bead.*"
 - assertVisible: ".*3 of 108 on this mala.*"
 
-# Reset (↺) is in the control column, folded by default; picking
+# Reset (↺) is the bottom button of the control column; picking
 # "Reset bead count" in its sheet zeroes the current mala.
-- tapOn: "Show controls"
 - tapOn: "Reset or clear the count"
 - tapOn: "Reset bead count"
 - assertVisible: ".*0 of 108 on this mala.*"

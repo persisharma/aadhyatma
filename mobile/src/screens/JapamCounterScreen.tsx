@@ -43,7 +43,6 @@ import KaraokeText from '@/components/KaraokeText';
 import { compactJapamReadingLines } from '@/components/japamReadingLayout';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
-import { useJapamControls } from '@/utils/useJapamControls';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -75,8 +74,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // Full screen pads past the notch/home indicator; zeros when no provider is mounted.
   const insets = React.useContext(SafeAreaInsetsContext) ?? NO_INSETS;
   const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
-  // The control column is folded by default and remembers the reader's choice.
-  const { open: controlsOpen, ready: controlsReady, setOpen: setControlsOpen } = useJapamControls();
   // Full screen (§35): only the mala or the Infinity frame, over everything —
   // an overlay, so the screen underneath (and the tab bar) never resizes.
   const [fullScreen, setFullScreen] = useState(false);
@@ -629,19 +626,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </ScrollView>
 
-        {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺ on a soft panel over
-            a faint fold toggle that stays in place above the count bar's Sankalp
-            target. Folded by default. The player owns the recording, so it stays
-            mounted (hidden) while folded. */}
+        {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺, always shown, standing
+            above the count bar's Sankalp target. The player owns the recording. */}
         <View style={styles.railSlot} pointerEvents="box-none">
-          <View
-            testID="japam-controls-panel"
-            style={[
-              styles.railPanel,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
-              !(controlsReady && controlsOpen) && styles.hidden,
-            ]}
-          >
           <JapamAudioPlayer
             layout="rail"
             mantraId={mantra.id}
@@ -671,22 +658,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           >
             <AppIcon name="reset" size={18} color={colors.saffronDeep} />
           </Pressable>
-          </View>
-          {controlsReady ? (
-            <Pressable
-              testID="japam-controls-toggle"
-              onPress={() => setControlsOpen(!controlsOpen)}
-              accessibilityRole="button"
-              accessibilityLabel={controlsOpen ? 'Hide controls' : 'Show controls'}
-              accessibilityState={{ expanded: controlsOpen }}
-              hitSlop={{ top: 4, bottom: 8, left: 8, right: 8 }}
-              style={({ pressed }) => [styles.toggle, { opacity: pressed ? 0.35 : 0.55 }]}
-            >
-              <View style={[styles.toggleDot, { borderColor: colors.divider, backgroundColor: colors.parchmentSoft }]}>
-                <AppIcon name={controlsOpen ? 'caretDown' : 'caretUp'} size={14} color={colors.inkMuted} />
-              </View>
-            </Pressable>
-          ) : null}
         </View>
         </View>
 
@@ -1165,31 +1136,6 @@ const styles = StyleSheet.create({
     bottom: 8,
     alignItems: 'center',
     gap: 8,
-  },
-  // The open column floats on its own soft panel; the −6 margin keeps the buttons
-  // on the toggle's and the target's centre line.
-  railPanel: {
-    alignItems: 'center',
-    gap: 8,
-    padding: 6,
-    marginHorizontal: -6,
-    borderRadius: 28,
-    borderWidth: 1,
-  },
-  hidden: { display: 'none' },
-  toggle: {
-    width: 44,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  toggleDot: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   fullTap: {
     flex: 1,
