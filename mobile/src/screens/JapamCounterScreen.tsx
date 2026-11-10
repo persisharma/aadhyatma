@@ -1,16 +1,19 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
+  AccessibilityInfo,
   Animated,
   Easing,
   Modal,
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaInsetsContext, SafeAreaView } from 'react-native-safe-area-context';
+import { useKeepAwake } from 'expo-keep-awake';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -40,10 +43,15 @@ import KaraokeText from '@/components/KaraokeText';
 import { compactJapamReadingLines } from '@/components/japamReadingLayout';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
+import { useJapamControls } from '@/utils/useJapamControls';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
+import JapaSankalpSheet from '@/components/JapaSankalpSheet';
+import JapaSankalpRow from '@/components/JapaSankalpRow';
+import { fitMalaBesideRail, fitMandalaBesideRail, RAIL_CLEARANCE } from '@/components/japamControlRail';
+import { SANKALP_COPY, sankalpA11yLabel } from '@/components/japaSankalpCopy';
 import { useShare } from '@/utils/shareVerse';
 import { useRatingAsk } from '@/contexts/ratingAsk';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -55,13 +63,49 @@ const japaWordWeight = (word: string) => recitationUnits([word]);
 export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { getEntry, increment, resetBeads, clear, isLoading: counterLoading } = useJapamCounter();
+  const {
+    getEntry, increment, resetBeads, clear, isLoading: counterLoading,
+    getSankalp, takeSankalp, releaseSankalp,
+  } = useJapamCounter();
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
   const requestRatingAsk = useRatingAsk();
   const { factor } = useFontScale();
-  const { width: windowWidth } = useWindowDimensions();
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+  // Full screen pads past the notch/home indicator; zeros when no provider is mounted.
+  const insets = React.useContext(SafeAreaInsetsContext) ?? NO_INSETS;
   const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
+  // The control column is open by default; minimising it is remembered.
+  const { open: controlsOpen, ready: controlsReady, setOpen: setControlsOpen } = useJapamControls();
+  const showControls = controlsReady && controlsOpen;
+  // Full screen (§35): only the mala or the Infinity frame, over everything —
+  // an overlay, so the screen underneath (and the tab bar) never resizes.
+  const [fullScreen, setFullScreen] = useState(false);
+  const [fullHint, setFullHint] = useState(false);
+  const fullHintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The faint enter icon sits at the view's top-right (below the Mala/Anant row);
+  // the exit icon takes its place on screen, so one corner opens and closes.
+  const fullEnterRef = useRef<View>(null);
+  const [fullExitTop, setFullExitTop] = useState<number | null>(null);
+  const enterFullScreen = useCallback(() => {
+    setFullScreen(true);
+    setFullHint(true);
+    if (fullHintTimer.current) clearTimeout(fullHintTimer.current);
+    fullHintTimer.current = setTimeout(() => setFullHint(false), 2500);
+    const node = fullEnterRef.current as { measureInWindow?: (cb: (x: number, y: number) => void) => void } | null;
+    if (typeof node?.measureInWindow === 'function') {
+      node.measureInWindow((_x, y) => setFullExitTop(Number.isFinite(y) ? y : null));
+    }
+  }, []);
+  const exitFullScreen = useCallback(() => {
+    if (fullHintTimer.current) clearTimeout(fullHintTimer.current);
+    fullHintTimer.current = null;
+    setFullHint(false);
+    setFullScreen(false);
+  }, []);
+  useEffect(() => () => {
+    if (fullHintTimer.current) clearTimeout(fullHintTimer.current);
+  }, []);
   const [infinityRunning, setInfinityRunning] = useState(false);
   const [infinityPhase] = useState(() => new Animated.Value(0));
   const [tempo, setTempo] = useState({ mantraId: route.params.mantraId, rate: 1 });
@@ -105,9 +149,21 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [headH, setHeadH] = useState(0);
   const measured = tapViewportH > 0 && headH > 0;
   const fitH = tapViewportH - headH - TAP_CHROME_H;
-  const malaSize = Math.round(
+  const fittedMala = Math.round(
     Math.min(windowWidth - 2 * spacing.xxl, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
   );
+  // The control column (speedometer, ▶/❚❚, ↺) stands in the tap area's bottom-
+  // right corner. From the same measurement, the ring shrinks only as far as it
+  // must for its beads, Sumeru and rotating tassel to clear it — computed before
+  // the ring is revealed, so it never resizes on screen.
+  const malaSize = measured
+    ? fitMalaBesideRail({ width: windowWidth, viewport: tapViewportH, head: headH, size: fittedMala, min: MALA_MIN })
+    : fittedMala;
+  // Infinity: the frame (280–340) likewise, sized from the viewport alone and
+  // held hidden until the viewport is known.
+  const mandalaSize = tapViewportH > 0
+    ? fitMandalaBesideRail({ width: windowWidth, viewport: tapViewportH, size: Math.min(windowWidth - 24, 340), min: 280 })
+    : Math.min(windowWidth - 24, 340);
 
   const mantra: JapamMantra | null = useMemo(
     () => findJapamMantra(route.params.mantraId),
@@ -125,6 +181,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   }, [mantra, navigation]);
 
   const entry = getEntry(mantra?.id ?? '__none__');
+  // Japa sankalp (§35.2): a one-time per-mantra vow; progress accrues in the provider.
+  const sankalp = getSankalp(mantra?.id ?? '__none__');
+  const [sankalpSheetOpen, setSankalpSheetOpen] = useState(false);
   const [resetSheetOpen, setResetSheetOpen] = useState(false);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
@@ -174,6 +233,44 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   useEffect(
     () => () => {
       if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
+    },
+    []
+  );
+  // A sankalp reaching its target here (not one restored complete on open, nor a
+  // mantra switch) gets a Success haptic and briefly takes the ring's notice slot.
+  // Reaching the target also pauses automatic chanting (Infinity loops and the
+  // recording), so an unattended session never keeps adding beads past the vow.
+  const [sankalpNotice, setSankalpNotice] = useState(false);
+  const [audioStopToken, setAudioStopToken] = useState(0);
+  const infinityRunningRef = useRef(infinityRunning);
+  infinityRunningRef.current = infinityRunning;
+  const audioPlayingRef = useRef(audioPlaying);
+  audioPlayingRef.current = audioPlaying;
+  const sankalpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSankalpRef = useRef<{ id: string; complete: boolean } | null>(null);
+  const sankalpComplete = sankalp?.completedAt !== undefined;
+  useEffect(() => {
+    if (counterLoading) {
+      lastSankalpRef.current = null;
+      return;
+    }
+    const previous = lastSankalpRef.current;
+    lastSankalpRef.current = { id: beatId, complete: sankalpComplete };
+    if (!previous || previous.id !== beatId || previous.complete || !sankalpComplete) return;
+    const autoChanting = infinityRunningRef.current || audioPlayingRef.current;
+    setInfinityRunning(false);
+    if (audioPlayingRef.current) setAudioStopToken((n) => n + 1);
+    setSankalpNotice(true);
+    if (sankalpTimerRef.current) clearTimeout(sankalpTimerRef.current);
+    sankalpTimerRef.current = setTimeout(() => setSankalpNotice(false), 3200);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+    AccessibilityInfo.announceForAccessibility(
+      autoChanting ? 'Japa sankalp complete. Automatic chanting paused.' : 'Japa sankalp complete.'
+    );
+  }, [counterLoading, beatId, sankalpComplete]);
+  useEffect(
+    () => () => {
+      if (sankalpTimerRef.current) clearTimeout(sankalpTimerRef.current);
     },
     []
   );
@@ -263,6 +360,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     hi: 'माला पूर्ण · 108 जप', en: 'Mala complete · 108 chants',
     gu: 'માળા પૂર્ણ · 108 જપ', kn: 'ಮಾಲೆ ಪೂರ್ಣ · 108 ಜಪ',
   });
+  const sankalpCompleteLabel = pick(lang, {
+    hi: 'संकल्प पूर्ण 🙏', en: 'Sankalp complete 🙏', gu: 'સંકલ્પ પૂર્ણ 🙏', kn: 'ಸಂಕಲ್ಪ ಪೂರ್ಣ 🙏',
+  });
   const infinityHint = infinityRunning
     ? pick(lang, { hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' })
     : pick(lang, { hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' });
@@ -295,21 +395,51 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
   const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
+  const infinityReading = <Animated.View style={{ width: '100%', transform: [{ scale: nameBeat }] }}>
+    <KaraokeText lines={compactReadingLines} referenceLines={mantra.lines} wordWeight={japaWordWeight}
+      progress={infinityPhase} color={colors.ink} highlightColor={colors.saffronDeep}
+      fontFamily={isLatinLang(lang) ? typography.cardLatin.fontFamily : scriptSerif ?? typography.verse.fontFamily}
+      fontSize={Math.round(18 * factor)} lineHeight={Math.round(30 * factor)}
+      fontStyle={isLatinLang(lang) ? 'italic' : 'normal'} includeFontPadding={!isLatinLang(lang)} />
+  </Animated.View>;
+  const labelFont = scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily);
+  const infinityNotice = sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? infinityCompleteLabel : null;
   // Keep the approved frame; the complete reader replaces its former count row.
-  const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
-    <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340)}
-      running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
-      notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
-      ringText={displayedLines.join(' ')} ringsActive={screenFocused}
-      labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)}
-      reading={<Animated.View style={{ width: '100%', transform: [{ scale: nameBeat }] }}>
-        <KaraokeText lines={compactReadingLines} referenceLines={mantra.lines} wordWeight={japaWordWeight}
-          progress={infinityPhase} color={colors.ink} highlightColor={colors.saffronDeep}
-          fontFamily={isLatinLang(lang) ? typography.cardLatin.fontFamily : scriptSerif ?? typography.verse.fontFamily}
-          fontSize={Math.round(18 * factor)} lineHeight={Math.round(30 * factor)}
-          fontStyle={isLatinLang(lang) ? 'italic' : 'normal'} includeFontPadding={!isLatinLang(lang)} />
-      </Animated.View>} />
+  // Only one Infinity drives the shared phase: this one rests while full screen runs.
+  const infinityVisual = japaStyle === 'infinity' ? <View style={[styles.malaBlock, tapViewportH === 0 && styles.unmeasured]}>
+    <JapamInfinity key={mantra.id} count={entry.count} size={mandalaSize}
+      running={infinityRunning && !fullScreen} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
+      railClearance={RAIL_CLEARANCE}
+      notice={infinityNotice} hint={tapHint}
+      ringText={displayedLines.join(' ')} ringsActive={screenFocused && !fullScreen}
+      labelFontFamily={labelFont}
+      reading={infinityReading} />
   </View> : null;
+  // Minimise / show the control column: a faint 28 dp circle (44 dp touch area)
+  // in the count bar, left of the Sankalp target. Not drawn until the remembered
+  // choice is known.
+  const controlsToggle = controlsReady ? (
+    <Pressable
+      testID="japam-controls-toggle"
+      onPress={() => setControlsOpen(!controlsOpen)}
+      accessibilityRole="button"
+      accessibilityLabel={controlsOpen ? 'Hide controls' : 'Show controls'}
+      accessibilityState={{ expanded: controlsOpen }}
+      hitSlop={{ top: 6, bottom: 6, left: 6, right: 2 }}
+      style={({ pressed }) => [styles.toggle, { opacity: pressed ? 0.35 : 0.55 }]}
+    >
+      <View style={[styles.toggleDot, { borderColor: colors.divider, backgroundColor: colors.parchmentSoft }]}>
+        <AppIcon name={controlsOpen ? 'caretDown' : 'caretUp'} size={14} color={colors.inkMuted} />
+      </View>
+    </Pressable>
+  ) : null;
+  const fullMalaSize = Math.round(Math.max(MALA_MIN, Math.min(windowWidth - 48, 360, windowHeight - insets.top - insets.bottom - 240)));
+  const fullHintLabel = pick(lang, {
+    hi: 'बाहर निकलने के लिए देर तक दबाएँ',
+    en: 'Press and hold to exit full screen',
+    gu: 'બહાર નીકળવા લાંબું દબાવો',
+    kn: 'ಹೊರಬರಲು ಒತ್ತಿ ಹಿಡಿಯಿರಿ',
+  });
 
 
   return (
@@ -428,6 +558,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           })}
         </View>
 
+        <View style={styles.tapArea}>
         <ScrollView
           style={styles.tapArea}
           contentContainerStyle={styles.tapScroll}
@@ -455,6 +586,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                     key={`${lang}-${i}`}
                     style={[
                       isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
+                      i === 0 && styles.firstLineIconRoom,
                       isLatinLang(lang)
                         ? {
                             color: colors.ink,
@@ -466,7 +598,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                             color: colors.ink,
                             fontFamily: scriptSerif ?? typography.verse.fontFamily,
                             fontSize: naam ? Math.round(verseFontSize * 1.5) : verseFontSize,
-                            lineHeight: naam ? Math.round(verseLineHeight * 1.25) : verseLineHeight,
+                            // Scale the leading with the name (the verse token's ~1.7×). The
+                            // former ×1.25 left 35/49 (1.40×) at M and 39/56 at L, and iOS cut
+                            // the ी loop above the shirorekha of सीता / श्री (Nov 2026 report).
+                            lineHeight: naam ? Math.round(verseLineHeight * 1.5) : verseLineHeight,
                           },
                     ]}
                   >
@@ -500,7 +635,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 rounds={entry.rounds}
                 size={malaSize}
                 playing={audioPlaying}
-                notice={sumeruNotice ? sumeruLabel : null}
+                notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? sumeruLabel : null}
                 hint={tapHint}
                 labelFontFamily={scriptSerif ?? undefined}
               />
@@ -508,41 +643,28 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </ScrollView>
 
-        {/* Completed malas and reset; the current bead count is in the visualization. */}
-        <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
-          <JapamMalaTray
-            rounds={entry.rounds}
-            label={malasDoneLabel}
-            emptyLabel={firstMalaLabel}
-          />
-          <Pressable
-            onPress={() => setResetSheetOpen(true)}
-            accessibilityRole="button"
-            accessibilityLabel="Reset or clear the count"
-            accessibilityState={{ disabled: nothingToReset }}
-            disabled={nothingToReset}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.resetBtn,
-              {
-                backgroundColor: colors.parchmentSoft,
-                borderColor: colors.cardActiveBorder,
-              },
-              pressed && { opacity: 0.7 },
-              nothingToReset && { opacity: 0.4 },
-            ]}
-          >
-            <AppIcon name="reset" size={18} color={colors.saffronDeep} />
-          </Pressable>
-        </View>
-
-        <View
-          style={[
-            styles.audioRow,
-            { borderTopColor: colors.divider },
-          ]}
+        {/* Faint full-screen icon at the view's top-right, on the control column's axis
+            (right 16). It floats over the tap surface, so the first mantra line keeps
+            FIRST_LINE_ICON_ROOM on each side to stay clear of it. */}
+        <Pressable
+          ref={fullEnterRef}
+          testID="japam-fullscreen"
+          onPress={enterFullScreen}
+          accessibilityRole="button"
+          accessibilityLabel="Full screen"
+          style={({ pressed }) => [styles.fullEnter, pressed && { opacity: 0.3 }]}
         >
+          <AppIcon name="fullscreen" size={18} color={colors.inkMuted} />
+        </Pressable>
+
+        {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺ above the count bar's
+            Sankalp target. Open by default; the count bar's toggle minimises it. The
+            player owns the recording, so it stays mounted (hidden) while minimised.
+            The view is sized for the open column, so minimising never resizes it. */}
+        <View style={styles.railSlot} pointerEvents="box-none">
+          <View testID="japam-controls" style={[styles.railColumn, !showControls && styles.hidden]}>
           <JapamAudioPlayer
+            layout="rail"
             mantraId={mantra.id}
             lang={lang}
             onIteration={handleAudioIteration}
@@ -552,8 +674,73 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             onRecitationDurationChange={receiveAudioCadence}
             showSilentTempo={japaStyle === 'infinity'}
             autoPlay={route.params.autoPlay === true}
+            stopToken={audioStopToken}
           />
+          <Pressable
+            onPress={() => setResetSheetOpen(true)}
+            accessibilityRole="button"
+            accessibilityLabel="Reset or clear the count"
+            accessibilityState={{ disabled: nothingToReset }}
+            disabled={nothingToReset}
+            hitSlop={4}
+            style={({ pressed }) => [
+              styles.resetBtn,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+              pressed && { opacity: 0.7 },
+              nothingToReset && { opacity: 0.4 },
+            ]}
+          >
+            <AppIcon name="reset" size={18} color={colors.saffronDeep} />
+          </Pressable>
+          </View>
         </View>
+        </View>
+
+        {/* Count bar: all-time malas + [controls toggle] + the Sankalp target, or — while a vow is active —
+            the vow's own count in the same 56 dp row (§35.2), so nothing above moves. */}
+        <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
+          {sankalp && !sankalpComplete ? (
+            <>
+              <JapaSankalpRow
+                sankalp={sankalp}
+                lang={lang}
+                disabled={counterLoading}
+                onPress={() => setSankalpSheetOpen(true)}
+              />
+              {controlsToggle}
+            </>
+          ) : (
+            <>
+              <JapamMalaTray
+                rounds={entry.rounds}
+                label={malasDoneLabel}
+                emptyLabel={firstMalaLabel}
+              />
+              <View style={styles.barEnd}>
+              {controlsToggle}
+              <Pressable
+                testID="japa-sankalp-open"
+                onPress={() => setSankalpSheetOpen(true)}
+                accessibilityRole="button"
+                accessibilityLabel={sankalp ? `${sankalpA11yLabel(sankalp)}. Take a new sankalp or clear it.` : 'Take a japa sankalp'}
+                accessibilityState={{ disabled: counterLoading }}
+                disabled={counterLoading}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.resetBtn,
+                  sankalp
+                    ? { backgroundColor: colors.saffron, borderColor: colors.saffronDeep }
+                    : { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <AppIcon name="sankalp" size={20} color={sankalp ? colors.onPrimary : colors.saffronDeep} />
+              </Pressable>
+              </View>
+            </>
+          )}
+        </View>
+
       </SafeAreaView>
 
       {/* The ↺ icon opens both choices; picking one is the confirmation. */}
@@ -593,6 +780,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               >
                 {pick(lang, { hi: 'गिनती साफ़ करें?', en: 'Clear the count?', gu: 'ગણતરી સાફ કરવી?', kn: 'ಎಣಿಕೆ ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
               </Text>
+              {sankalp && !sankalpComplete ? (
+                <Text
+                  style={[
+                    styles.sheetNote,
+                    { color: colors.inkMuted, fontFamily: scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily) },
+                  ]}
+                >
+                  {pick(lang, SANKALP_COPY.keptOnReset)}
+                </Text>
+              ) : null}
 
               <Pressable
                 onPress={() => {
@@ -700,6 +897,104 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         </Pressable>
       </Modal>
 
+      {/* Full screen: the view only, no controls. Taps count (Mala) or start/pause
+          (Infinity) as usual; the faint corner icon, a long press or Back exits. */}
+      <Modal
+        visible={fullScreen}
+        transparent
+        animationType="fade"
+        statusBarTranslucent
+        supportedOrientations={['portrait']}
+        onRequestClose={exitFullScreen}
+      >
+        {fullScreen ? (
+          <View testID="japam-fullscreen-view" style={[StyleSheet.absoluteFill, { backgroundColor: colors.parchment }]}>
+            <KeepAwakeWhileMounted />
+            <StatusBar hidden animated />
+            <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
+            <Pressable
+              testID={`japam-full-${japaStyle}`}
+              onPress={handleTap}
+              onLongPress={exitFullScreen}
+              delayLongPress={550}
+              disabled={counterLoading}
+              accessibilityRole="button"
+              accessibilityLabel={`${titleEn}. ${japaStyle === 'infinity' ? infinityHint : 'Tap to count one bead'}. Press and hold to exit full screen. ${entry.count} of ${JAPAM_BEADS_PER_ROUND} on this mala, ${entry.rounds} malas completed.`}
+              style={[styles.fullTap, { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 16 }]}
+            >
+              {japaStyle === 'mala' ? (
+                <>
+                  <Animated.View style={[styles.mantraBlock, { transform: [{ scale: nameBeat }] }]}>
+                    {displayedLines.map((line, i) => (
+                      <Text
+                        key={`full-${lang}-${i}`}
+                        style={[
+                          isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
+                          isLatinLang(lang)
+                            ? { color: colors.ink, fontFamily: typography.cardLatin.fontFamily, fontSize: verseFontSizeEn, lineHeight: verseLineHeightEn }
+                            : { color: colors.ink, fontFamily: scriptSerif ?? typography.verse.fontFamily, fontSize: verseFontSize, lineHeight: verseLineHeight },
+                        ]}
+                      >
+                        {line}
+                      </Text>
+                    ))}
+                  </Animated.View>
+                  <View style={styles.fullMala}>
+                    <JapamMala
+                      count={entry.count}
+                      rounds={entry.rounds}
+                      size={fullMalaSize}
+                      playing={audioPlaying}
+                      notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? sumeruLabel : null}
+                      hint=""
+                      labelFontFamily={scriptSerif ?? undefined}
+                    />
+                  </View>
+                </>
+              ) : (
+                <JapamInfinity key={`${mantra.id}-full`} count={entry.count} size={Math.min(windowWidth - 24, 340)}
+                  running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
+                  notice={infinityNotice} hint="" ringText={displayedLines.join(' ')} ringsActive
+                  labelFontFamily={labelFont} reading={infinityReading} />
+              )}
+            </Pressable>
+            <Pressable
+              testID="japam-fullscreen-exit"
+              onPress={exitFullScreen}
+              accessibilityRole="button"
+              accessibilityLabel="Exit full screen"
+              hitSlop={8}
+              style={[styles.fullExit, { top: Math.max(insets.top + 8, fullExitTop ?? 0) }]}
+            >
+              <AppIcon name="exitFullscreen" size={18} color={colors.inkMuted} />
+            </Pressable>
+            {fullHint ? (
+              <Text
+                accessibilityLiveRegion="polite"
+                style={[styles.fullHint, { bottom: insets.bottom + 24, color: colors.inkMuted, fontFamily: labelFont }]}
+              >
+                {fullHintLabel}
+              </Text>
+            ) : null}
+          </View>
+        ) : null}
+      </Modal>
+
+      <JapaSankalpSheet
+        visible={sankalpSheetOpen}
+        lang={lang}
+        mantraName={contentByLang(lang, mantra.nameHi, mantra.nameEn)}
+        sankalp={sankalp}
+        onTake={(unit, amount) => {
+          if (takeSankalp(mantra.id, unit, amount)) setSankalpSheetOpen(false);
+        }}
+        onRelease={() => {
+          releaseSankalp(mantra.id);
+          setSankalpSheetOpen(false);
+        }}
+        onClose={() => setSankalpSheetOpen(false)}
+      />
+
       <AlarmEditorSheet
         state={alarmEditorOpen ? { kind: 'new' } : null}
         presetMantraId={mantra.id}
@@ -719,6 +1014,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       />
     </View>
   );
+}
+
+const NO_INSETS = { top: 0, bottom: 0, left: 0, right: 0 };
+
+/** Keeps the phone awake only while full screen is shown. */
+function KeepAwakeWhileMounted() {
+  useKeepAwake('japam-full-screen');
+  return null;
 }
 
 // Mala box bounds; the fitted size lands between them (and under the width cap).
@@ -797,6 +1100,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row', gap: 8, paddingHorizontal: 24, paddingBottom: 4,
     width: '100%', maxWidth: 420, alignSelf: 'center',
   },
+  fullEnter: {
+    position: 'absolute',
+    top: 8,
+    right: 16,
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.6,
+  },
   styleChoice: {
     flex: 1, minHeight: 44, paddingHorizontal: 12, paddingVertical: 6,
     borderRadius: 22, borderWidth: 1, justifyContent: 'center',
@@ -823,6 +1136,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mantraFullWidth: { width: '100%' },
+  // The full-screen icon's glyph ends 47 dp from the right edge; with the 24 dp
+  // tap-surface padding and 4 dp air, the (centred) first line gives up 27 dp a
+  // side. Only lines wider than ~288 dp on a 390 pt phone wrap differently
+  // (today: Mahamrityunjaya, Kubera).
+  firstLineIconRoom: { marginHorizontal: 27 },
   mantraLine: {
     textAlign: 'center',
     // No includeFontPadding:false here — this line is Devanagari, and on Android
@@ -867,9 +1185,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  audioRow: {
-    borderTopWidth: 1,
-    paddingVertical: 8,
+  railSlot: {
+    position: 'absolute',
+    // Centred over the count bar's Sankalp target (statsRow paddingRight 16 + 44 dp).
+    right: 16,
+    bottom: 8,
+    alignItems: 'center',
+    gap: 8,
+  },
+  railColumn: { alignItems: 'center', gap: 8 },
+  hidden: { display: 'none' },
+  barEnd: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  toggle: {
+    width: 32,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toggleDot: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fullTap: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  fullMala: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
+  fullExit: {
+    position: 'absolute',
+    right: 16,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.45,
+  },
+  fullHint: {
+    position: 'absolute',
+    left: 24,
+    right: 24,
+    textAlign: 'center',
+    fontSize: 13,
+    lineHeight: 20,
   },
   backdrop: {
     flex: 1,
@@ -893,6 +1260,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     includeFontPadding: false,
     marginBottom: 14,
+  },
+  sheetNote: {
+    fontSize: 13,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginTop: -8,
+    marginBottom: 12,
   },
   sheetOption: {
     borderWidth: 1,

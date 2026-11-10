@@ -46,9 +46,6 @@ jest.mock('@react-navigation/native', () => ({
   }),
 }));
 
-// The docked banner drags in the routine store + navigation stack — out of
-// scope for this suite.
-jest.mock('@/components/RoutineBanner', () => () => null);
 // The setup strip needs the notification provider; it has its own suite.
 jest.mock('@/components/DailyBhaktiNudge', () => () => null);
 
@@ -77,6 +74,12 @@ test('Bhakti uses the same deity artwork, framed meaning and footer as export', 
   const strings = tree!.root.findAllByType(Text).map(n => n.props.children);
   expect(strings).not.toContain('Daily Verse');
   expect(strings).not.toContain('दैनिक भक्ति');
+  // The नित्य साधना routine banner lives on Home only (Nov 2026); this page
+  // must not dock it over the verse card.
+  const flat = tree!.root.findAllByType(Text).map(n => [n.props.children].flat().join(''));
+  expect(flat.some(t => t.includes('नित्य साधना') || t.includes('साधना पूर्ण'))).toBe(false);
+  expect(tree!.root.findAll(n => typeof n.props.accessibilityLabel === 'string'
+    && /साधना/.test(n.props.accessibilityLabel)).length).toBe(0);
   act(() => tree!.unmount());
 });
 

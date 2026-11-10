@@ -24,10 +24,10 @@ jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockL
 jest.mock('@/data/routine/useRoutineToday', () => ({ useRoutineToday: () => mockToday }));
 jest.mock('@/data/sadhana/useSadhanaToday', () => ({ useSadhanaToday: () => [] }));
 
-function render(variant?: 'docked' | 'inline'): TestRenderer.ReactTestRenderer {
+function render(): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
-    tree = TestRenderer.create(<RoutineBanner variant={variant} />);
+    tree = TestRenderer.create(<RoutineBanner />);
   });
   return tree;
 }
@@ -88,11 +88,11 @@ describe('RoutineBanner — first-tap recovery (Home ScrollView)', () => {
   // cancel a plain Pressable's onPress on the very first tap. Like every other
   // Home card, the banner must route its press through the shared TilePress
   // controller so a no-drag press still navigates via the one-tick fallback.
-  function TilePressHarness({ variant }: { variant?: 'docked' | 'inline' }) {
+  function TilePressHarness() {
     const controller = useTilePressController();
     return (
       <TilePressProvider value={controller}>
-        <RoutineBanner variant={variant} />
+        <RoutineBanner />
       </TilePressProvider>
     );
   }
@@ -103,7 +103,7 @@ describe('RoutineBanner — first-tap recovery (Home ScrollView)', () => {
       mockToday = { hasRoutine: true, doneCount: 1, total: 3 };
       let tree!: TestRenderer.ReactTestRenderer;
       act(() => {
-        tree = TestRenderer.create(<TilePressHarness variant="inline" />);
+        tree = TestRenderer.create(<TilePressHarness />);
       });
       const pressable = tree.root.findAll((n) => typeof n.props?.onPressIn === 'function')[0];
       // Simulate the swallowed tap: pressIn + pressOut fire, but onPress never does.
@@ -133,13 +133,9 @@ describe('RoutineBanner — progress', () => {
   });
 });
 
-describe('RoutineBanner — layout variant', () => {
-  it('defaults to a docked (absolutely-positioned) floating chip', () => {
-    expect(rootStyle(render()).position).toBe('absolute');
-  });
-
-  it('inline variant flows in the page — not absolutely positioned', () => {
-    const style = rootStyle(render('inline'));
+describe('RoutineBanner — layout', () => {
+  it('flows in the page — not absolutely positioned', () => {
+    const style = rootStyle(render());
     expect(style.position).toBeUndefined();
     expect(style.minHeight).toBe(57);
   });
