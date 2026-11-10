@@ -114,3 +114,11 @@ All 11 app-owned Kotlin files were read: the Japam alarm module and receivers, t
 - **Guard:** `src/utils/__tests__/patchedExpoModulesBuildFromSource.test.ts`. Any patch to the `android/src` of a module that has a publication must be listed. The test fails on the previous `package.json`.
 - **Still PENDING:** a Gradle build that compiles the three from source. The Android SDK host is blocked in this environment.
 
+### 7.6 Compile evidence (10 Nov 2026)
+
+`dl.google.com`, which serves maven.google.com, and `repo.reactnative.dev` are blocked here. So is `/dev/kvm`, which means no Gradle build and no emulator. Instead, kotlinc 2.1.20 compiled the patched sources against Robolectric `android-all` 14 (the real API 34 framework classes).
+- **expo-notifications:** the patched `NotificationForwarderActivity.kt` and the whole patched `NotificationsService.kt` compiled against the unpatched 0.32.17 AAR classes, with stubs for `androidx.core.app.RemoteInput`/`NotificationManagerCompat` and `DoNotStrip`. Exit 0. `javap` shows two `java/lang/RuntimeException` handlers in `onCreate` (the response path and the fallback launch) and the byte-array fallback in `NotificationsService$Companion`.
+- **expo-splash-screen:** `SplashScreenManager.kt` compiled against the 31.0.13 AAR classes, with stubs for androidx `SplashScreen` and `ReactMarker`. Exit 0. The bytecode returns before registering the listener when `SDK_INT` is 31 or 32.
+- **Home widgets:** all four plugin Kotlin files compiled with the package placeholder resolved, generated `R`/`BuildConfig` stubs and React bridge stubs. Exit 0.
+- **Limits:** the androidx and React classes are hand-written stubs that match only the signatures used. This proves the patched code type-checks against the real Android API. It does not replace the Gradle release build or the device repro, which remain **PENDING**.
+
