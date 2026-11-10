@@ -107,3 +107,10 @@ All 11 app-owned Kotlin files were read: the Japam alarm module and receivers, t
 - **Already safe [Certain]:** every Japam alarm `@ReactMethod` has a try/catch. The receivers null-check their extras and wrap their AlarmManager calls. Widget render catches `Exception`. The `!!` at `WidgetPayloadContract.kt:187` is preceded by a null check on line 181. The boot receiver is registered only for `BOOT_COMPLETED`, so it never reads credential-encrypted preferences before unlock. In Expo modules (Meta, Suvichar face), exceptions become rejected promises.
 - **[Certain]** A JS null access surfaces in Play as `JavascriptException`, never as a Java `NullPointerException`.
 
+### 7.5 The patches were not in the build (fixed 10 Nov 2026)
+
+- **[Certain]** Expo SDK 54 publishes expo-notifications, expo-splash-screen, expo-speech and 16 other modules as prebuilt AARs (`android.publication` in `expo-module.config.json`, stored in `local-maven-repo`). `expo-modules-autolinking` `SettingsManager.configurePublication` links that AAR unless the project matches `expo.autolinking.android.buildFromSource`. `mobile/package.json` had no such key. A string check of the shipped AARs found no `notificationBytes` or fallback in expo-notifications and no `onTextToSpeechReady` in expo-speech. So the 1.5.6 build would have shipped all three patches as no-ops, including §4's expo-speech fix.
+- **Fix:** `mobile/package.json` sets `expo.autolinking.android.buildFromSource` to `expo-notifications`, `expo-splash-screen` and `expo-speech`. `npx expo-modules-autolinking resolve --platform android --json` now returns that configuration, and with the plugin's full-match rule those three resolve to source while the other 16 stay prebuilt.
+- **Guard:** `src/utils/__tests__/patchedExpoModulesBuildFromSource.test.ts`. Any patch to the `android/src` of a module that has a publication must be listed. The test fails on the previous `package.json`.
+- **Still PENDING:** a Gradle build that compiles the three from source. The Android SDK host is blocked in this environment.
+
