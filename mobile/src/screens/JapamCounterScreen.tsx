@@ -44,6 +44,9 @@ import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
+import JapaSankalpSheet from '@/components/JapaSankalpSheet';
+import JapaSankalpStrip from '@/components/JapaSankalpStrip';
+import { SANKALP_COPY } from '@/components/japaSankalpCopy';
 import { useShare } from '@/utils/shareVerse';
 import { useRatingAsk } from '@/contexts/ratingAsk';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -55,7 +58,10 @@ const japaWordWeight = (word: string) => recitationUnits([word]);
 export default function JapamCounterScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { getEntry, increment, resetBeads, clear, isLoading: counterLoading } = useJapamCounter();
+  const {
+    getEntry, increment, resetBeads, clear, isLoading: counterLoading,
+    getSankalp, takeSankalp, releaseSankalp,
+  } = useJapamCounter();
   const { addAlarm, updateAlarm, removeAlarm } = useJapamAlarms();
   const { share, busy: shareBusy } = useShare();
   const requestRatingAsk = useRatingAsk();
@@ -125,6 +131,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   }, [mantra, navigation]);
 
   const entry = getEntry(mantra?.id ?? '__none__');
+  // Japa sankalp (§35.2): a one-time per-mantra vow; progress accrues in the provider.
+  const sankalp = getSankalp(mantra?.id ?? '__none__');
+  const [sankalpSheetOpen, setSankalpSheetOpen] = useState(false);
   const [resetSheetOpen, setResetSheetOpen] = useState(false);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
@@ -174,6 +183,31 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   useEffect(
     () => () => {
       if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
+    },
+    []
+  );
+  // A sankalp reaching its target here (not one restored complete on open, nor a
+  // mantra switch) gets a Success haptic and briefly takes the ring's notice slot.
+  const [sankalpNotice, setSankalpNotice] = useState(false);
+  const sankalpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSankalpRef = useRef<{ id: string; complete: boolean } | null>(null);
+  const sankalpComplete = sankalp?.completedAt !== undefined;
+  useEffect(() => {
+    if (counterLoading) {
+      lastSankalpRef.current = null;
+      return;
+    }
+    const previous = lastSankalpRef.current;
+    lastSankalpRef.current = { id: beatId, complete: sankalpComplete };
+    if (!previous || previous.id !== beatId || previous.complete || !sankalpComplete) return;
+    setSankalpNotice(true);
+    if (sankalpTimerRef.current) clearTimeout(sankalpTimerRef.current);
+    sankalpTimerRef.current = setTimeout(() => setSankalpNotice(false), 3200);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+  }, [counterLoading, beatId, sankalpComplete]);
+  useEffect(
+    () => () => {
+      if (sankalpTimerRef.current) clearTimeout(sankalpTimerRef.current);
     },
     []
   );
@@ -263,6 +297,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     hi: 'माला पूर्ण · 108 जप', en: 'Mala complete · 108 chants',
     gu: 'માળા પૂર્ણ · 108 જપ', kn: 'ಮಾಲೆ ಪೂರ್ಣ · 108 ಜಪ',
   });
+  const sankalpCompleteLabel = pick(lang, {
+    hi: 'संकल्प पूर्ण 🙏', en: 'Sankalp complete 🙏', gu: 'સંકલ્પ પૂર્ણ 🙏', kn: 'ಸಂಕಲ್ಪ ಪೂರ್ಣ 🙏',
+  });
   const infinityHint = infinityRunning
     ? pick(lang, { hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' })
     : pick(lang, { hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' });
@@ -299,7 +336,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
     <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340)}
       running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
-      notice={sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
+      notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
       ringText={displayedLines.join(' ')} ringsActive={screenFocused}
       labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)}
       reading={<Animated.View style={{ width: '100%', transform: [{ scale: nameBeat }] }}>
@@ -500,13 +537,23 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 rounds={entry.rounds}
                 size={malaSize}
                 playing={audioPlaying}
-                notice={sumeruNotice ? sumeruLabel : null}
+                notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? sumeruLabel : null}
                 hint={tapHint}
                 labelFontFamily={scriptSerif ?? undefined}
               />
             </View> : null}
           </Pressable>
         </ScrollView>
+
+        {/* Japa sankalp progress (§35.2) — fixed height, present only while a vow exists. */}
+        {sankalp ? (
+          <JapaSankalpStrip
+            sankalp={sankalp}
+            lang={lang}
+            disabled={counterLoading}
+            onPress={() => setSankalpSheetOpen(true)}
+          />
+        ) : null}
 
         {/* Completed malas and reset; the current bead count is in the visualization. */}
         <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
@@ -515,6 +562,25 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             label={malasDoneLabel}
             emptyLabel={firstMalaLabel}
           />
+          <View style={styles.statsActions}>
+          {sankalp ? null : (
+            <Pressable
+              testID="japa-sankalp-open"
+              onPress={() => setSankalpSheetOpen(true)}
+              accessibilityRole="button"
+              accessibilityLabel="Take a japa sankalp"
+              accessibilityState={{ disabled: counterLoading }}
+              disabled={counterLoading}
+              hitSlop={8}
+              style={({ pressed }) => [
+                styles.resetBtn,
+                { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+                pressed && { opacity: 0.7 },
+              ]}
+            >
+              <AppIcon name="sankalp" size={20} color={colors.saffronDeep} />
+            </Pressable>
+          )}
           <Pressable
             onPress={() => setResetSheetOpen(true)}
             accessibilityRole="button"
@@ -534,6 +600,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           >
             <AppIcon name="reset" size={18} color={colors.saffronDeep} />
           </Pressable>
+          </View>
         </View>
 
         <View
@@ -593,6 +660,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               >
                 {pick(lang, { hi: 'गिनती साफ़ करें?', en: 'Clear the count?', gu: 'ગણતરી સાફ કરવી?', kn: 'ಎಣಿಕೆ ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
               </Text>
+              {sankalp && !sankalpComplete ? (
+                <Text
+                  style={[
+                    styles.sheetNote,
+                    { color: colors.inkMuted, fontFamily: scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily) },
+                  ]}
+                >
+                  {pick(lang, SANKALP_COPY.keptOnReset)}
+                </Text>
+              ) : null}
 
               <Pressable
                 onPress={() => {
@@ -699,6 +776,21 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </Pressable>
       </Modal>
+
+      <JapaSankalpSheet
+        visible={sankalpSheetOpen}
+        lang={lang}
+        mantraName={contentByLang(lang, mantra.nameHi, mantra.nameEn)}
+        sankalp={sankalp}
+        onTake={(unit, amount) => {
+          if (takeSankalp(mantra.id, unit, amount)) setSankalpSheetOpen(false);
+        }}
+        onRelease={() => {
+          releaseSankalp(mantra.id);
+          setSankalpSheetOpen(false);
+        }}
+        onClose={() => setSankalpSheetOpen(false)}
+      />
 
       <AlarmEditorSheet
         state={alarmEditorOpen ? { kind: 'new' } : null}
@@ -859,6 +951,11 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderTopWidth: 1,
   },
+  statsActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   resetBtn: {
     width: 44,
     height: 44,
@@ -893,6 +990,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     includeFontPadding: false,
     marginBottom: 14,
+  },
+  sheetNote: {
+    fontSize: 13,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginTop: -8,
+    marginBottom: 12,
   },
   sheetOption: {
     borderWidth: 1,
