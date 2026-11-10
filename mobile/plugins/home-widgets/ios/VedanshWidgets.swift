@@ -263,6 +263,7 @@ struct VedanshWidgetView: View {
           }
         }
         .widgetURL(URL(string: v.deepLink))
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel(v.accessibilityLabel.value(lang))
       }
     } else { recovery("विजेट ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
