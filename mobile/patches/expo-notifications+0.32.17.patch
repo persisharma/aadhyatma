@@ -1,5 +1,5 @@
 diff --git a/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/service/NotificationForwarderActivity.kt b/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/service/NotificationForwarderActivity.kt
-index cefcccf..c03f640 100644
+index cefcccf..81ac117 100644
 --- a/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/service/NotificationForwarderActivity.kt
 +++ b/node_modules/expo-notifications/android/src/main/java/expo/modules/notifications/service/NotificationForwarderActivity.kt
 @@ -3,6 +3,7 @@ package expo.modules.notifications.service
@@ -10,7 +10,7 @@ index cefcccf..c03f640 100644
  import expo.modules.notifications.BuildConfig
  import expo.modules.notifications.service.delegates.ExpoHandlingDelegate
  
-@@ -14,11 +15,20 @@ import expo.modules.notifications.service.delegates.ExpoHandlingDelegate
+@@ -14,11 +15,26 @@ import expo.modules.notifications.service.delegates.ExpoHandlingDelegate
  class NotificationForwarderActivity : Activity() {
    override fun onCreate(savedInstanceState: Bundle?) {
      super.onCreate(savedInstanceState)
@@ -25,12 +25,18 @@ index cefcccf..c03f640 100644
 +      val notificationResponse = NotificationsService.getNotificationResponseFromBroadcastIntent(intent)
 +      ExpoHandlingDelegate.openAppToForeground(this, notificationResponse)
 +      sendBroadcast(broadcastIntent)
-+    } catch (e: IllegalArgumentException) {
++    } catch (e: RuntimeException) {
 +      // Vedansh backport of expo/expo#43203: never crash a notification tap.
++      // Widened from IllegalArgumentException: a corrupt extras parcel throws
++      // BadParcelableException instead of reading back null.
 +      Log.e("expo-notifications", "Failed to handle notification response: could not recover notification data from intent extras. This may happen on some Android versions. Opening app to foreground.", e)
 +      // Open the app anyway so the user isn't stuck
-+      packageManager.getLaunchIntentForPackage(packageName)?.let {
-+        startActivity(it)
++      try {
++        packageManager.getLaunchIntentForPackage(packageName)?.let {
++          startActivity(it)
++        }
++      } catch (fallback: RuntimeException) {
++        Log.e("expo-notifications", "Could not open the app after a failed notification response.", fallback)
 +      }
 +    }
      finish()

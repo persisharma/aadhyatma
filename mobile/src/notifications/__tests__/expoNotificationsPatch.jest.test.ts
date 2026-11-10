@@ -28,7 +28,9 @@ test('the expo-notifications patch matches the installed version', () => {
 test('a notification tap whose extras cannot be read opens the app instead of crashing', () => {
   const activity = read('NotificationForwarderActivity.kt');
   expect(activity).toMatch(/try \{\s*val broadcastIntent =/);
-  expect(activity).toMatch(/catch \(e: IllegalArgumentException\)/);
+  // RuntimeException also covers BadParcelableException from a corrupt extras parcel.
+  expect(activity).toMatch(/catch \(e: RuntimeException\)/);
+  expect(activity).toMatch(/catch \(fallback: RuntimeException\)/);
   expect(activity).toMatch(/getLaunchIntentForPackage\(packageName\)/);
   // finish() must run on both paths, outside the try.
   expect(activity).toMatch(/\}\s*finish\(\)\s*\}/);
