@@ -8,11 +8,13 @@ let mockWidth = 390;
 let mockSystemScale = 1;
 jest.mock('@/contexts/FontScaleContext', () => ({ useFontScale: () => ({ scale: mockScale, factor: mockScale === 'L' ? 1.15 : 1 }) }));
 jest.mock('react-native/Libraries/Utilities/useWindowDimensions', () => ({ __esModule: true, default: () => ({ width: mockWidth, height: 844, fontScale: mockSystemScale, scale: 2 }) }));
+let mockNamkaranVisible = true;
+jest.mock('@/panchang/namkaranRelease', () => ({ namkaranDoorVisible: () => mockNamkaranVisible }));
 jest.mock('react-native-safe-area-context', () => ({ SafeAreaView: ({ children }: React.PropsWithChildren) => <>{children}</> }));
 const actions = { onOpenKundali: jest.fn(), onOpenRashifal: jest.fn(), onOpenGunaMilan: jest.fn(), onOpenNamkaran: jest.fn(), onOpenNavagraha: jest.fn() };
 function render(node: React.ReactElement) { let tree!: ReactTestRenderer; act(() => { tree = create(node); }); return tree; }
 function press(tree: ReactTestRenderer, label: string) { act(() => tree.root.findByProps({ accessibilityLabel: label, accessibilityRole: 'button' }).props.onPress()); }
-beforeEach(() => { mockScale = 'M'; mockWidth = 390; mockSystemScale = 1; jest.clearAllMocks(); });
+beforeEach(() => { mockScale = 'M'; mockWidth = 390; mockSystemScale = 1; mockNamkaranVisible = true; jest.clearAllMocks(); });
 describe.each<Lang>(['hi', 'en', 'gu', 'kn'])('%s gallery', lang => {
   test.each(['M', 'L'])('%s keeps full copy and all routes; education opens and closes', scale => {
     mockScale = scale;
@@ -59,5 +61,20 @@ test.each(['M', 'L'])('%s artwork uses a frame independent of intrinsic image di
     expect(frame.flexShrink).toBe(0);
     expect(frame.height).toBeUndefined();
   }
+  act(() => tree.unmount());
+});
+
+// RULEBOOK §18.5: while the namakshar convention and corpus are unverified, a release
+// build must not expose a Namkaran door. The three remaining doors keep their own copy,
+// and the odd last one takes the full-width row layout instead of a stranded half card.
+test.each<Lang>(['hi', 'en', 'gu', 'kn'])('%s release build hides the Namkaran door', lang => {
+  mockNamkaranVisible = false;
+  const tree = render(<Gallery {...actions} lang={lang} />);
+  expect(tree.root.findAllByProps({ accessibilityLabel: 'Open Namkaran' })).toHaveLength(0);
+  const milan = tree.root.findByProps({ accessibilityLabel: 'Open Guna Milan', accessibilityRole: 'button' });
+  expect(StyleSheet.flatten(milan.props.style({ pressed: false })).width).toBe('100%');
+  const kundali = tree.root.findByProps({ accessibilityLabel: 'Create Kundali', accessibilityRole: 'button' });
+  expect(StyleSheet.flatten(kundali.props.style({ pressed: false })).width).toBe('48.5%');
+  press(tree, 'Open Guna Milan'); expect(actions.onOpenGunaMilan).toHaveBeenCalledTimes(1);
   act(() => tree.unmount());
 });

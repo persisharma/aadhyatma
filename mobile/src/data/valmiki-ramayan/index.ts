@@ -84,8 +84,25 @@ export function getValmikiRamayanChapter(chapter: number): ValmikiRamayanChapter
   if (cached) return cached;
   const loaded = chapterLoaders[idx]();
   assertChapterInvariants(loaded, valmikiRamayanChaptersManifest[idx]);
-  chapterCache.set(chapter, loaded);
-  return loaded;
+  const resolved = { ...loaded, verses: loaded.verses.map(withMeaningFallback) };
+  chapterCache.set(chapter, resolved);
+  return resolved;
+}
+
+/**
+ * A blank meaning means the pinned upstream had no usable text for that language
+ * (site-navigation residue, a Sanskrit echo, or an English "Missing" placeholder —
+ * see `scripts/build-valmiki-ramayan.py`). Show the verse's other sourced meaning
+ * rather than nothing or the residue, so every consumer (reader, share, read-aloud,
+ * bookmarks) still receives non-empty strings.
+ */
+export function withMeaningFallback(v: ValmikiRamayanVerse): ValmikiRamayanVerse {
+  if (v.meaningHi.trim() && v.meaningEn.trim()) return v;
+  return {
+    ...v,
+    meaningHi: v.meaningHi.trim() ? v.meaningHi : v.meaningEn,
+    meaningEn: v.meaningEn.trim() ? v.meaningEn : v.meaningHi,
+  };
 }
 
 const DEVANAGARI = /[ऀ-ॿ]/;
@@ -144,8 +161,10 @@ function assertChapterInvariants(
         throw new Error(`valmiki-ramayan: ${v.id} has Devanagari in linesEn`);
       }
     }
-    if (!v.meaningHi.trim() || !v.meaningEn.trim()) {
-      throw new Error(`valmiki-ramayan: ${v.id} has empty meaning`);
+    // One side may be blank (unusable upstream row, filled by `withMeaningFallback`);
+    // a verse with no usable meaning in either language is a corpus defect.
+    if (!v.meaningHi.trim() && !v.meaningEn.trim()) {
+      throw new Error(`valmiki-ramayan: ${v.id} has no meaning in either language`);
     }
     if (!v.reference.trim()) throw new Error(`valmiki-ramayan: ${v.id} has no reference`);
     seenSargas.add(v.reference.split('.')[1] ?? '');

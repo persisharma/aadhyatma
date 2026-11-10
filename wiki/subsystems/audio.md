@@ -37,7 +37,14 @@ Exclusivity is arbitrated by `src/audio/playbackArbiter.ts`, **not** by any cont
 
 A plain module singleton: `registerStopper(kind, stop)` returns an unregister callback suitable
 for a `useEffect`, and `claimPlayback(kind)` silences every *other* source. `PlaybackKind` is
-`'recorded' | 'tts' | 'japam'`.
+`'recorded' | 'tts' | 'japam' | 'youtube'`.
+
+**Gotcha — a source with its own controls must claim on *their* start too.** The docked YouTube
+embed keeps YouTube's in-video ▶ (`controls: true`), which never passes through the strip's
+`play()`. Until Nov 2026 its `onChangeState(PLAYING)` set state without claiming, so resuming from
+the embed played over the bhajan that had paused it. It now claims when PLAYING arrives while its
+`playingRef` says paused (design.md §91). Any future source with native/embedded controls needs
+the same hook.
 
 It is a module rather than a context field on purpose: routing exclusion through
 `AudioPlayerContext`'s value would force every screen test that stubs `useAudioPlayerContext` to

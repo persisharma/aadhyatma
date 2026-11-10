@@ -112,6 +112,40 @@ it('claims the playback arbiter the moment it opens', () => {
   act(() => r.unmount());
 });
 
+it('a resume from the embed’s own controls silences the source that paused it', () => {
+  // Regression: the in-video ▶ (controls: true) reported PLAYING without claiming the
+  // arbiter, so the bhajan that had paused the video kept playing over it.
+  const stopRecorded = jest.fn();
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  const unregister = arbiter.registerStopper('recorded', stopRecorded);
+  // A bhajan starts: the arbiter pauses the video.
+  act(() => arbiter.claimPlayback('recorded'));
+  expect(mockRnyi.props?.play).toBe(false);
+  expect(stopRecorded).not.toHaveBeenCalled();
+  // The user taps play inside the video itself.
+  const claim = jest.spyOn(arbiter, 'claimPlayback');
+  act(() => (mockRnyi.props?.onChangeState as (s: string) => void)('playing'));
+  expect(claim).toHaveBeenCalledWith('youtube');
+  expect(stopRecorded).toHaveBeenCalledTimes(1);
+  expect(mockRnyi.props?.play).toBe(true);
+  unregister();
+  act(() => r.unmount());
+});
+
+it('does not re-claim on a PLAYING report for playback it already owns', () => {
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  const claim = jest.spyOn(arbiter, 'claimPlayback');
+  act(() => (mockRnyi.props?.onChangeState as (s: string) => void)('playing'));
+  expect(claim).not.toHaveBeenCalled();
+  act(() => r.unmount());
+});
+
 it('shows the localized error card on a player error', () => {
   let r!: TestRenderer.ReactTestRenderer;
   act(() => {

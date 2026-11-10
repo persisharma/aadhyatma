@@ -16,7 +16,9 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { contentByLang, pick } from '@/utils/localize';
+import { isLatinLang, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useJapamAlarms, type AlarmDraft, type AlarmPatch } from '@/contexts/JapamAlarmsContext';
 import { japamMantras, findJapamMantra } from '@/data/japam';
 import { getJapamAudioSource } from '@assets/japam-audio';
@@ -24,9 +26,8 @@ import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets
 import TimeStepper from '@/components/TimeStepper';
 import {
   ALL_WEEKDAYS,
-  DAY_LETTERS_EN,
-  DAY_LETTERS_HI,
   MAX_JAPAM_ALARMS,
+  dayLetters as dayLettersFor,
   describeUntilFire,
   formatTimeLabel,
   localDateKey,
@@ -42,16 +43,18 @@ type Props = NativeStackScreenProps<MoreStackParamList, 'JapamAlarms'>;
 
 const DEFAULT_TIME: TimeOfDay = { hour: 6, minute: 0 };
 
-// Tracking/uppercase are Latin-only affordances — on Devanagari they split the
-// shirorekha ("शि व"), so Hindi labels reset both and take the Devanagari face.
+// Tracking/uppercase are Latin-only affordances — on Indic scripts they split the
+// shirorekha ("शि व"), so hi/gu/kn labels reset both and take their script face.
 const INDIC_LABEL_RESET = { letterSpacing: 0, textTransform: 'none' } as const;
 
 /** "Mon, 6 Jul" — the short date used by skip-next copy. Locale-formatted
  *  with a plain fallback when Intl data is unavailable. */
-function shortDateLabel(ts: number, isHi: boolean): string {
+const DATE_LOCALE: Record<Lang, string> = { hi: 'hi-IN', en: 'en-IN', gu: 'gu-IN', kn: 'kn-IN' };
+
+function shortDateLabel(ts: number, lang: Lang): string {
   const d = new Date(ts);
   try {
-    return d.toLocaleDateString(isHi ? 'hi-IN' : 'en-IN', {
+    return d.toLocaleDateString(DATE_LOCALE[lang], {
       weekday: 'short',
       day: 'numeric',
       month: 'short',
@@ -101,7 +104,10 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
   const japamAddRef = useTourTarget('japamAdd', (ref) => scrollNodeIntoView(alarmsScrollRef, ref));
 
   const [editor, setEditor] = useState<EditorState>(null);
-  const isHi = lang === 'hi';
+  const latin = isLatinLang(lang);
+  const labelFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
+  const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
+  const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   // Countdowns only render on enabled rows — no interval when nothing ticks.
   const nowMs = useNowTick(30_000, alarms.some((a) => a.enabled));
 
@@ -114,8 +120,9 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 
   const titleHi = 'जप स्मरण';
   const titleEn = 'Japam Alarms';
-  const subHi = 'चुने हुए समय पर मंत्र-ध्वनि शुरू हो जायेगी।';
-  const subEn = 'Wake to the mantra you chose, at the time you chose.';
+  const title = pick(lang, { hi: titleHi, en: titleEn, gu: 'જપ સ્મરણ', kn: 'ಜಪ ಸ್ಮರಣ' });
+  // The second title line is the bilingual companion: Hindi under English, English under the rest.
+  const titleCompanion = latin ? titleHi : titleEn;
 
   return (
     <View style={styles.root}>
@@ -145,10 +152,10 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
             <Text
               style={[
                 styles.titleHi,
-                { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                { color: colors.ink, fontFamily: titleFont },
               ]}
             >
-              {isHi ? titleHi : titleEn}
+              {title}
             </Text>
             <Text
               style={[
@@ -159,7 +166,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                 },
               ]}
             >
-              {isHi ? titleEn : titleHi}
+              {titleCompanion}
             </Text>
           </View>
           <View style={styles.backSpacer} />
@@ -176,10 +183,15 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
           <Text
             style={[
               styles.intro,
-              { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
+              { color: colors.inkMuted, fontFamily: bodyFont },
             ]}
           >
-            {isHi ? subHi : subEn}
+            {pick(lang, {
+              hi: 'चुने हुए समय पर मंत्र-ध्वनि शुरू हो जायेगी।',
+              en: 'Wake to the mantra you chose, at the time you chose.',
+              gu: 'પસંદ કરેલા સમયે મંત્ર-ધ્વનિ શરૂ થશે.',
+              kn: 'ಆಯ್ಕೆ ಮಾಡಿದ ಸಮಯದಲ್ಲಿ ಮಂತ್ರ-ಧ್ವನಿ ಆರಂಭವಾಗುತ್ತದೆ.',
+            })}
           </Text>
 
           {permissionStatus === 'denied' && (
@@ -200,12 +212,15 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
               <Text
                 style={[
                   styles.permissionText,
-                  { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily },
+                  { color: colors.inkSoft, fontFamily: bodyFont },
                 ]}
               >
-                {isHi
-                  ? 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।'
-                  : 'Notifications are disabled. Tap to open Settings.'}
+                {pick(lang, {
+                  hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।',
+                  en: 'Notifications are disabled. Tap to open Settings.',
+                  gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ચાલુ કરો.',
+                  kn: 'ಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಆನ್ ಮಾಡಿ.',
+                })}
               </Text>
             </Pressable>
           )}
@@ -232,13 +247,16 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                     styles.permissionText,
                     {
                       color: colors.inkSoft,
-                      fontFamily: typography.meaning.fontFamily,
+                      fontFamily: bodyFont,
                     },
                   ]}
                 >
-                  {isHi
-                    ? 'सटीक समय पर जप अलार्म के लिए “अलार्म और रिमाइंडर” की अनुमति दें। अनुमति न होने पर अलार्म देर से बज सकता है।'
-                    : 'Allow “Alarms & reminders” for precise Japam timing. Without it, Android may delay the alarm. Tap to open Settings.'}
+                  {pick(lang, {
+                    hi: 'सटीक समय पर जप अलार्म के लिए “अलार्म और रिमाइंडर” की अनुमति दें। अनुमति न होने पर अलार्म देर से बज सकता है।',
+                    en: 'Allow “Alarms & reminders” for precise Japam timing. Without it, Android may delay the alarm. Tap to open Settings.',
+                    gu: 'ચોક્કસ સમયે જપ અલાર્મ માટે “અલાર્મ અને રિમાઇન્ડર”ની પરવાનગી આપો. પરવાનગી ન હોય તો અલાર્મ મોડું વાગી શકે છે.',
+                    kn: 'ನಿಖರ ಸಮಯದ ಜಪ ಅಲಾರಂಗಾಗಿ “ಅಲಾರಂಗಳು ಮತ್ತು ಜ್ಞಾಪನೆಗಳು” ಅನುಮತಿ ನೀಡಿ. ಅನುಮತಿ ಇಲ್ಲದಿದ್ದರೆ ಅಲಾರಂ ತಡವಾಗಿ ಮೊಳಗಬಹುದು.',
+                  })}
                 </Text>
               </Pressable>
             )}
@@ -257,20 +275,23 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
               <Text
                 style={[
                   styles.emptyTitle,
-                  { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+                  { color: colors.ink, fontFamily: titleFont },
                 ]}
               >
-                {isHi ? 'अभी कोई स्मरण नहीं' : 'No alarms yet'}
+                {pick(lang, { hi: 'अभी कोई स्मरण नहीं', en: 'No alarms yet', gu: 'હજી કોઈ સ્મરણ નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸ್ಮರಣ ಇಲ್ಲ' })}
               </Text>
               <Text
                 style={[
                   styles.emptyBody,
-                  { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
+                  { color: colors.inkMuted, fontFamily: bodyFont },
                 ]}
               >
-                {isHi
-                  ? 'पहला जप-स्मरण जोड़ें।'
-                  : 'Add your first Japam alarm to begin.'}
+                {pick(lang, {
+                  hi: 'पहला जप-स्मरण जोड़ें।',
+                  en: 'Add your first Japam alarm to begin.',
+                  gu: 'પહેલું જપ-સ્મરણ ઉમેરો.',
+                  kn: 'ಮೊದಲ ಜಪ-ಸ್ಮರಣ ಸೇರಿಸಿ.',
+                })}
               </Text>
             </View>
           ) : (
@@ -279,7 +300,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                 <AlarmRow
                   key={alarm.id}
                   alarm={alarm}
-                  isHi={isHi}
+                  lang={lang}
                   nowMs={nowMs}
                   onPress={() => setEditor({ kind: 'edit', alarm })}
                   onToggle={(v) => toggleAlarm(alarm.id, v)}
@@ -294,7 +315,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
               collapsable={false}
               onPress={() => setEditor({ kind: 'new' })}
               accessibilityRole="button"
-              accessibilityLabel={isHi ? 'स्मरण जोड़ें' : 'Add alarm'}
+              accessibilityLabel={pick(lang, { hi: 'स्मरण जोड़ें', en: 'Add alarm', gu: 'સ્મરણ ઉમેરો', kn: 'ಸ್ಮರಣ ಸೇರಿಸಿ' })}
               style={({ pressed }) => [
                 styles.addBtn,
                 {
@@ -309,25 +330,28 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   styles.addBtnText,
                   {
                     color: colors.saffronDeep,
-                    fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily,
+                    fontFamily: labelFont,
                   },
-                  isHi && INDIC_LABEL_RESET,
+                  !latin && INDIC_LABEL_RESET,
                 ]}
               >
-                {isHi ? '+ स्मरण जोड़ें' : '+ Add alarm'}
+                {pick(lang, { hi: '+ स्मरण जोड़ें', en: '+ Add alarm', gu: '+ સ્મરણ ઉમેરો', kn: '+ ಸ್ಮರಣ ಸೇರಿಸಿ' })}
               </Text>
             </Pressable>
           ) : (
             <Text
               style={[
                 styles.note,
-                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-                isHi && INDIC_LABEL_RESET,
+                { color: colors.inkMuted, fontFamily: labelFont },
+                !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {isHi
-                ? `अधिकतम ${MAX_JAPAM_ALARMS} स्मरण।`
-                : `Up to ${MAX_JAPAM_ALARMS} alarms.`}
+              {pick(lang, {
+                hi: `अधिकतम ${MAX_JAPAM_ALARMS} स्मरण।`,
+                en: `Up to ${MAX_JAPAM_ALARMS} alarms.`,
+                gu: `વધુમાં વધુ ${MAX_JAPAM_ALARMS} સ્મરણ.`,
+                kn: `ಗರಿಷ್ಠ ${MAX_JAPAM_ALARMS} ಸ್ಮರಣ.`,
+              })}
             </Text>
           )}
         </ScrollView>
@@ -355,18 +379,20 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 
 function AlarmRow({
   alarm,
-  isHi,
+  lang,
   nowMs,
   onPress,
   onToggle,
 }: {
   alarm: JapamAlarm;
-  isHi: boolean;
+  lang: Lang;
   nowMs: number;
   onPress: () => void;
   onToggle: (next: boolean) => void;
 }) {
   const { colors, typography, radii } = useTheme();
+  const latin = isLatinLang(lang);
+  const labelFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
   const mantra = findJapamMantra(alarm.mantraId);
   // The a11y label stays 24 h regardless of display so tests and screen
   // readers address a stable name.
@@ -374,24 +400,23 @@ function AlarmRow({
   const mm = `${alarm.time.minute}`.padStart(2, '0');
 
   const repeatLine = useMemo(() => {
-    const parts = [repeatSummary(alarm.repeatDays, isHi)];
+    const parts = [repeatSummary(alarm.repeatDays, lang)];
     if (alarm.enabled) {
       const fireAt = nextAlarmFireTimestamp(alarm, new Date(nowMs));
-      parts.push(describeUntilFire(fireAt, nowMs, isHi));
+      parts.push(describeUntilFire(fireAt, nowMs, lang));
       if (
         alarm.skipNextDate !== undefined &&
         alarm.skipNextDate >= localDateKey(new Date(nowMs))
       ) {
         const skipped = new Date(`${alarm.skipNextDate}T12:00:00`);
+        const date = shortDateLabel(skipped.getTime(), lang);
         parts.push(
-          isHi
-            ? `${shortDateLabel(skipped.getTime(), true)} छोड़ेंगे`
-            : `skips ${shortDateLabel(skipped.getTime(), false)}`
+          pick(lang, { hi: `${date} छोड़ेंगे`, en: `skips ${date}`, gu: `${date} છોડશે`, kn: `${date} ಬಿಡಲಾಗುವುದು` })
         );
       }
     }
     return parts.join(' · ');
-  }, [alarm, isHi, nowMs]);
+  }, [alarm, lang, nowMs]);
 
   return (
     <Pressable
@@ -426,23 +451,19 @@ function AlarmRow({
         <Text
           style={[
             styles.rowMantra,
-            { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily },
+            { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) },
           ]}
           numberOfLines={1}
         >
           {mantra
-            ? isHi
-              ? mantra.nameHi
-              : mantra.nameEn
-            : isHi
-              ? 'अज्ञात मंत्र'
-              : 'Unknown mantra'}
+            ? contentByLang(lang, mantra.nameHi, mantra.nameEn)
+            : pick(lang, { hi: 'अज्ञात मंत्र', en: 'Unknown mantra', gu: 'અજ્ઞાત મંત્ર', kn: 'ಅಜ್ಞಾತ ಮಂತ್ರ' })}
         </Text>
         <Text
           style={[
             styles.rowRepeat,
-            { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-            isHi && INDIC_LABEL_RESET,
+            { color: colors.inkMuted, fontFamily: labelFont },
+            !latin && INDIC_LABEL_RESET,
           ]}
           numberOfLines={1}
         >
@@ -452,8 +473,8 @@ function AlarmRow({
           <Text
             style={[
               styles.rowLabel,
-              { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-              isHi && INDIC_LABEL_RESET,
+              { color: colors.inkMuted, fontFamily: labelFont },
+              !latin && INDIC_LABEL_RESET,
             ]}
             numberOfLines={1}
           >
@@ -467,7 +488,7 @@ function AlarmRow({
         trackColor={{ false: colors.divider, true: colors.saffron }}
         thumbColor={colors.parchment}
         ios_backgroundColor={colors.divider}
-        accessibilityLabel={isHi ? 'स्मरण चालू / बंद' : 'Toggle alarm'}
+        accessibilityLabel={pick(lang, { hi: 'स्मरण चालू / बंद', en: 'Toggle alarm', gu: 'સ્મરણ ચાલુ / બંધ', kn: 'ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
       />
     </Pressable>
   );
@@ -495,7 +516,11 @@ export function AlarmEditorSheet({
 }: EditorProps) {
   const { colors, typography, radii, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHi = lang === 'hi';
+  const latin = isLatinLang(lang);
+  const labelFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
+  const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
+  // Text that stayed in the Latin face for hi too; gu/kn need their own script face.
+  const chromeFont = scriptBodyFont(lang, typography.cardLatin.fontFamily);
 
   const initial = useMemo<{
     mantraId: string;
@@ -617,7 +642,7 @@ export function AlarmEditorSheet({
     }
   }, [state, mantraId, time, label, repeatDaysValue, skipNextDate, onCreate, onSave]);
 
-  const dayLetters = isHi ? DAY_LETTERS_HI : DAY_LETTERS_EN;
+  const dayLetters = dayLettersFor(lang);
 
   return (
     <Modal
@@ -653,27 +678,23 @@ export function AlarmEditorSheet({
           <Text
             style={[
               styles.editorTitle,
-              { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
+              { color: colors.ink, fontFamily: titleFont },
             ]}
           >
             {state?.kind === 'edit'
-              ? isHi
-                ? 'स्मरण सम्पादन'
-                : 'Edit alarm'
-              : isHi
-                ? 'नया स्मरण'
-                : 'New alarm'}
+              ? pick(lang, { hi: 'स्मरण सम्पादन', en: 'Edit alarm', gu: 'સ્મરણ સંપાદન', kn: 'ಸ್ಮರಣ ಸಂಪಾದನೆ' })
+              : pick(lang, { hi: 'नया स्मरण', en: 'New alarm', gu: 'નવું સ્મરણ', kn: 'ಹೊಸ ಸ್ಮರಣ' })}
           </Text>
 
           <View style={styles.editorBlock}>
             <Text
               style={[
                 styles.editorLabel,
-                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-                isHi && INDIC_LABEL_RESET,
+                { color: colors.inkMuted, fontFamily: labelFont },
+                !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {isHi ? 'समय' : 'Time'}
+              {pick(lang, { hi: 'समय', en: 'Time', gu: 'સમય', kn: 'ಸಮಯ' })}
             </Text>
             <TimeStepper value={time} onChange={onChangeTime} minuteStep={1} />
           </View>
@@ -682,11 +703,11 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.editorLabel,
-                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-                isHi && INDIC_LABEL_RESET,
+                { color: colors.inkMuted, fontFamily: labelFont },
+                !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {isHi ? 'दोहराव' : 'Repeat'}
+              {pick(lang, { hi: 'दोहराव', en: 'Repeat', gu: 'પુનરાવર્તન', kn: 'ಪುನರಾವರ್ತನೆ' })}
             </Text>
             <View style={styles.dayChipsRow}>
               {ALL_WEEKDAYS.map((day) => {
@@ -717,7 +738,7 @@ export function AlarmEditorSheet({
                         styles.dayChipText,
                         {
                           color: selected ? colors.saffronDeep : colors.inkMuted,
-                          fontFamily: typography.cardLatin.fontFamily,
+                          fontFamily: chromeFont,
                         },
                       ]}
                     >
@@ -730,14 +751,17 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.repeatSummary,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: chromeFont },
               ]}
             >
-              {repeatSummary(repeatDaysValue, isHi)}
+              {repeatSummary(repeatDaysValue, lang)}
               {isOnce
-                ? isHi
-                  ? ' — बजने के बाद बंद हो जायेगा'
-                  : ' — turns off after ringing'
+                ? pick(lang, {
+                    hi: ' — बजने के बाद बंद हो जायेगा',
+                    en: ' — turns off after ringing',
+                    gu: ' — વાગ્યા પછી બંધ થઈ જશે',
+                    kn: ' — ಮೊಳಗಿದ ನಂತರ ಆಫ್ ಆಗುತ್ತದೆ',
+                  })
                 : ''}
             </Text>
           </View>
@@ -747,11 +771,11 @@ export function AlarmEditorSheet({
               <Text
                 style={[
                   styles.editorLabel,
-                  { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-                  isHi && INDIC_LABEL_RESET,
+                  { color: colors.inkMuted, fontFamily: labelFont },
+                  !latin && INDIC_LABEL_RESET,
                 ]}
               >
-                {isHi ? 'मंत्र' : 'Mantra'}
+                {pick(lang, { hi: 'मंत्र', en: 'Mantra', gu: 'મંત્ર', kn: 'ಮಂತ್ರ' })}
               </Text>
               <ScrollView
                 horizontal
@@ -767,7 +791,7 @@ export function AlarmEditorSheet({
                       onPress={() => setMantraId(m.id)}
                       accessibilityRole="radio"
                       accessibilityState={{ selected }}
-                      accessibilityLabel={isHi ? m.nameHi : m.nameEn}
+                      accessibilityLabel={contentByLang(lang, m.nameHi, m.nameEn)}
                       style={({ pressed }) => [
                         styles.mantraChip,
                         {
@@ -787,11 +811,11 @@ export function AlarmEditorSheet({
                           styles.mantraChipText,
                           {
                             color: selected ? colors.saffronDeep : colors.ink,
-                            fontFamily: typography.readerTitle.fontFamily,
+                            fontFamily: titleFont,
                           },
                         ]}
                       >
-                        {isHi ? m.nameHi : m.nameEn}
+                        {contentByLang(lang, m.nameHi, m.nameEn)}
                       </Text>
                       {!hasAudio && (
                         <Text
@@ -799,12 +823,12 @@ export function AlarmEditorSheet({
                             styles.mantraChipSub,
                             {
                               color: colors.inkMuted,
-                              fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily,
-                              fontStyle: isHi ? 'normal' : 'italic',
+                              fontFamily: labelFont,
+                              fontStyle: latin ? 'italic' : 'normal',
                             },
                           ]}
                         >
-                          {isHi ? 'ध्वनि शीघ्र' : 'audio soon'}
+                          {pick(lang, { hi: 'ध्वनि शीघ्र', en: 'audio soon', gu: 'ધ્વનિ ટૂંક સમયમાં', kn: 'ಧ್ವನಿ ಶೀಘ್ರದಲ್ಲೇ' })}
                         </Text>
                       )}
                     </Pressable>
@@ -818,20 +842,20 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.editorLabel,
-                { color: colors.inkMuted, fontFamily: isHi ? typography.meaning.fontFamily : typography.cardLatin.fontFamily },
-                isHi && INDIC_LABEL_RESET,
+                { color: colors.inkMuted, fontFamily: labelFont },
+                !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {isHi ? 'नाम (वैकल्पिक)' : 'Label (optional)'}
+              {pick(lang, { hi: 'नाम (वैकल्पिक)', en: 'Label (optional)', gu: 'નામ (વૈકલ્પિક)', kn: 'ಹೆಸರು (ಐಚ್ಛಿಕ)' })}
             </Text>
             <TextInput
               value={label}
               onChangeText={setLabel}
-              placeholder={isHi ? 'जैसे — ब्रह्ममुहूर्त' : 'e.g. Brahmamuhurta'}
+              placeholder={pick(lang, { hi: 'जैसे — ब्रह्ममुहूर्त', en: 'e.g. Brahmamuhurta', gu: 'જેમ કે — બ્રહ્મમુહૂર્ત', kn: 'ಉದಾ — ಬ್ರಹ್ಮಮುಹೂರ್ತ' })}
               placeholderTextColor={colors.inkMuted}
               maxLength={40}
               returnKeyType="done"
-              accessibilityLabel={isHi ? 'स्मरण का नाम' : 'Alarm label'}
+              accessibilityLabel={pick(lang, { hi: 'स्मरण का नाम', en: 'Alarm label', gu: 'સ્મરણનું નામ', kn: 'ಸ್ಮರಣದ ಹೆಸರು' })}
               style={[
                 styles.labelInput,
                 {
@@ -839,7 +863,7 @@ export function AlarmEditorSheet({
                   borderColor: colors.divider,
                   backgroundColor: colors.parchmentSoft,
                   borderRadius: radii.sm,
-                  fontFamily: typography.meaning.fontFamily,
+                  fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
                 },
               ]}
             />
@@ -850,7 +874,7 @@ export function AlarmEditorSheet({
               onPress={onToggleSkip}
               accessibilityRole="button"
               accessibilityState={{ selected: skipNextDate !== undefined }}
-              accessibilityLabel={isHi ? 'अगली बार छोड़ें' : 'Skip next alarm'}
+              accessibilityLabel={pick(lang, { hi: 'अगली बार छोड़ें', en: 'Skip next alarm', gu: 'આગલી વાર છોડો', kn: 'ಮುಂದಿನ ಬಾರಿ ಬಿಡಿ' })}
               style={({ pressed }) => [
                 styles.skipBtn,
                 {
@@ -873,23 +897,29 @@ export function AlarmEditorSheet({
                       skipNextDate !== undefined
                         ? colors.saffronDeep
                         : colors.inkSoft,
-                    fontFamily: typography.cardLatin.fontFamily,
+                    fontFamily: chromeFont,
                   },
                 ]}
               >
                 {skipNextDate !== undefined
-                  ? isHi
-                    ? `छोड़ेंगे: ${shortDateLabel(
-                        new Date(`${skipNextDate}T12:00:00`).getTime(),
-                        true
-                      )} ✓`
-                    : `Skipping ${shortDateLabel(
-                        new Date(`${skipNextDate}T12:00:00`).getTime(),
-                        false
-                      )} ✓`
-                  : isHi
-                    ? `अगली बार छोड़ें (${shortDateLabel(skipCandidateTs, true)})`
-                    : `Skip next (${shortDateLabel(skipCandidateTs, false)})`}
+                  ? (() => {
+                      const date = shortDateLabel(new Date(`${skipNextDate}T12:00:00`).getTime(), lang);
+                      return pick(lang, {
+                        hi: `छोड़ेंगे: ${date} ✓`,
+                        en: `Skipping ${date} ✓`,
+                        gu: `છોડશે: ${date} ✓`,
+                        kn: `ಬಿಡಲಾಗುವುದು: ${date} ✓`,
+                      });
+                    })()
+                  : (() => {
+                      const date = shortDateLabel(skipCandidateTs, lang);
+                      return pick(lang, {
+                        hi: `अगली बार छोड़ें (${date})`,
+                        en: `Skip next (${date})`,
+                        gu: `આગલી વાર છોડો (${date})`,
+                        kn: `ಮುಂದಿನ ಬಾರಿ ಬಿಡಿ (${date})`,
+                      });
+                    })()}
               </Text>
             </Pressable>
           )}
@@ -897,13 +927,20 @@ export function AlarmEditorSheet({
           <Text
             style={[
               styles.previewText,
-              { color: colors.inkSoft, fontFamily: typography.cardLatin.fontFamily },
+              { color: colors.inkSoft, fontFamily: chromeFont },
             ]}
             accessibilityLabel="Next ring preview"
           >
-            {isHi
-              ? `${formatTimeLabel(time)} — ${describeUntilFire(previewFireAt, nowMs, true)} बजेगा`
-              : `Rings ${describeUntilFire(previewFireAt, nowMs, false)} — at ${formatTimeLabel(time)}`}
+            {(() => {
+              const at = formatTimeLabel(time);
+              const until = describeUntilFire(previewFireAt, nowMs, lang);
+              return pick(lang, {
+                hi: `${at} — ${until} बजेगा`,
+                en: `Rings ${until} — at ${at}`,
+                gu: `${at} — ${until} વાગશે`,
+                kn: `${at} — ${until} ಮೊಳಗುತ್ತದೆ`,
+              });
+            })()}
           </Text>
 
           <Pressable
@@ -924,17 +961,13 @@ export function AlarmEditorSheet({
                 styles.editorPrimaryText,
                 {
                   color: colors.onPrimary,
-                  fontFamily: typography.readerTitle.fontFamily,
+                  fontFamily: titleFont,
                 },
               ]}
             >
               {state?.kind === 'edit'
-                ? isHi
-                  ? 'सहेजें'
-                  : 'Save'
-                : isHi
-                  ? 'जोड़ें'
-                  : 'Add'}
+                ? pick(lang, { hi: 'सहेजें', en: 'Save', gu: 'સાચવો', kn: 'ಉಳಿಸಿ' })
+                : pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' })}
             </Text>
           </Pressable>
 
@@ -947,10 +980,10 @@ export function AlarmEditorSheet({
               <Text
                 style={[
                   styles.editorDeleteText,
-                  { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                  { color: colors.inkMuted, fontFamily: chromeFont },
                 ]}
               >
-                {isHi ? 'हटायें' : 'Delete'}
+                {pick(lang, { hi: 'हटायें', en: 'Delete', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' })}
               </Text>
             </Pressable>
           )}
@@ -959,10 +992,10 @@ export function AlarmEditorSheet({
             <Text
               style={[
                 styles.editorCancelText,
-                { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily },
+                { color: colors.inkMuted, fontFamily: chromeFont },
               ]}
             >
-              {isHi ? 'रद्द करें' : 'Cancel'}
+              {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
             </Text>
           </Pressable>
           </ScrollView>

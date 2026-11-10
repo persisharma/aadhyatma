@@ -45,6 +45,7 @@ import { formatClock, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
 import { getEventRule } from '@/panchang/eventMuhurat';
+import { namkaranDoorVisible } from '@/panchang/namkaranRelease';
 import {
   PAKSHA_NAMES_EN,
   PAKSHA_NAMES_HI,
@@ -1169,17 +1170,19 @@ function JyotishLanding({
             accessibilityLabel="Open Guna Milan"
             lang={lang}
           />
-          <JyotishToolTile
-            titleHi="नामकरण"
-            titleEn="Namkaran"
-            bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
-            bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
-            badge="NEW"
-            glyph="ना"
-            onPress={onOpenNamkaran}
-            accessibilityLabel="Open Namkaran"
-            lang={lang}
-          />
+          {namkaranDoorVisible() && (
+            <JyotishToolTile
+              titleHi="नामकरण"
+              titleEn="Namkaran"
+              bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
+              bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
+              badge="NEW"
+              glyph="ना"
+              onPress={onOpenNamkaran}
+              accessibilityLabel="Open Namkaran"
+              lang={lang}
+            />
+          )}
         </View>
       </View>
     );

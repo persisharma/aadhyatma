@@ -8,6 +8,7 @@ import type { Lang } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { pick } from '@/utils/localize';
+import { namkaranDoorVisible } from '@/panchang/namkaranRelease';
 import copy from './jyotishLandingCopy.json';
 
 const art = {
@@ -43,7 +44,10 @@ export default function JyotishLandingGallery({ lang, saved = false, children, a
     { id: 'rashifal', source: art.rashifal, action: actions.onOpenRashifal, label: saved ? 'Browse Daily Rashifal' : 'Open Daily Rashifal' },
     { id: 'milan', source: art.milan, action: actions.onOpenGunaMilan, label: 'Open Guna Milan' },
     { id: 'namkaran', source: art.namkaran, action: actions.onOpenNamkaran, label: 'Open Namkaran' },
-  ];
+  ]
+    // Copy is paired by position before the release gate can drop a door.
+    .map((door, index) => ({ ...door, copy: t.cards[index] }))
+    .filter((door) => door.id !== 'namkaran' || namkaranDoorVisible());
   // A bundled Image supplies its intrinsic height before Yoga applies aspectRatio.
   // Let a View own geometry so a 640×427 source cannot make a card 427 dp tall.
   const painting = (source: number, style: object) => <View style={[styles.artFrame, style]} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
@@ -62,15 +66,19 @@ export default function JyotishLandingGallery({ lang, saved = false, children, a
     {children}
     <Text accessibilityRole="header" style={[title, styles.sectionTitle]}>{t.choose}</Text>
     <View testID="jyotish-gallery" style={styles.grid}>
-      {doors.map((door, index) => <Pressable key={door.id} onPress={door.action} accessibilityRole="button" accessibilityLabel={door.label}
-        style={({ pressed }) => [styles.card, { width: large ? '100%' : '48.5%', backgroundColor: colors.catalogSurface, borderColor: colors.catalogBorder }, large && styles.cardLarge, pressed && styles.pressed]}>
-        {painting(door.source, large ? styles.artLarge : styles.art)}
-        <View style={[styles.cardCopy, large && styles.flex]}>
-          <Text style={[title, { fontSize: 18 * factor, lineHeight: 29 * factor }]}>{t.cards[index][0]}</Text>
-          <Text style={[body, { marginTop: 5 }]}>{t.cards[index][1]}</Text>
+      {doors.map((door, index) => {
+        // An odd last door (Namkaran gated out of release builds) takes the full-width row layout.
+        const wide = large || (doors.length % 2 === 1 && index === doors.length - 1);
+        return <Pressable key={door.id} onPress={door.action} accessibilityRole="button" accessibilityLabel={door.label}
+        style={({ pressed }) => [styles.card, { width: wide ? '100%' : '48.5%', backgroundColor: colors.catalogSurface, borderColor: colors.catalogBorder }, wide && styles.cardLarge, pressed && styles.pressed]}>
+        {painting(door.source, wide ? styles.artLarge : styles.art)}
+        <View style={[styles.cardCopy, wide && styles.flex]}>
+          <Text style={[title, { fontSize: 18 * factor, lineHeight: 29 * factor }]}>{door.copy[0]}</Text>
+          <Text style={[body, { marginTop: 5 }]}>{door.copy[1]}</Text>
           <View style={styles.arrowEnd}>{arrow}</View>
         </View>
-      </Pressable>)}
+      </Pressable>;
+      })}
     </View>
     {additionalTools}
     <Pressable onPress={() => setLearnVisible(true)} accessibilityRole="button" accessibilityLabel="How Jyotish works"

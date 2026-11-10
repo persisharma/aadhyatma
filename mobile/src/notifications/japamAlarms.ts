@@ -8,6 +8,7 @@
  */
 
 import type { TimeOfDay } from './pure';
+import type { Lang } from '../data/gita/language';
 
 /** Identifier prefix for every Japam-alarm notification we schedule. Lets us
  *  cancel just our own slots without touching daily-verse reminders. */
@@ -317,12 +318,39 @@ export function skipOneshotPlan(
   }));
 }
 
-const DAY_NAMES_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const DAY_NAMES_HI = ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'];
+const DAY_NAMES: Record<Lang, readonly string[]> = {
+  en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  hi: ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'],
+  gu: ['રવિ', 'સોમ', 'મંગળ', 'બુધ', 'ગુરુ', 'શુક્ર', 'શનિ'],
+  kn: ['ಭಾನು', 'ಸೋಮ', 'ಮಂಗಳ', 'ಬುಧ', 'ಗುರು', 'ಶುಕ್ರ', 'ಶನಿ'],
+};
 
 /** Single-letter chip labels for the editor's day row. */
 export const DAY_LETTERS_EN = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 export const DAY_LETTERS_HI = ['र', 'सो', 'मं', 'बु', 'गु', 'शु', 'श'];
+const DAY_LETTERS_GU = ['ર', 'સો', 'મં', 'બુ', 'ગુ', 'શુ', 'શ'];
+const DAY_LETTERS_KN = ['ಭಾ', 'ಸೋ', 'ಮಂ', 'ಬು', 'ಗು', 'ಶು', 'ಶ'];
+
+/** Day-chip letters in the reading language (every UI language, never a hi/en split). */
+export function dayLetters(lang: Lang): readonly string[] {
+  switch (lang) {
+    case 'hi':
+      return DAY_LETTERS_HI;
+    case 'gu':
+      return DAY_LETTERS_GU;
+    case 'kn':
+      return DAY_LETTERS_KN;
+    default:
+      return DAY_LETTERS_EN;
+  }
+}
+
+const REPEAT_COPY: Record<Lang, { daily: string; once: string; weekdays: string; weekends: string }> = {
+  en: { daily: 'Daily', once: 'Once', weekdays: 'Weekdays', weekends: 'Weekends' },
+  hi: { daily: 'प्रतिदिन', once: 'एक बार', weekdays: 'सोम–शुक्र', weekends: 'शनि–रवि' },
+  gu: { daily: 'દરરોજ', once: 'એક વાર', weekdays: 'સોમ–શુક્ર', weekends: 'શનિ–રવિ' },
+  kn: { daily: 'ಪ್ರತಿದಿನ', once: 'ಒಮ್ಮೆ', weekdays: 'ಸೋಮ–ಶುಕ್ರ', weekends: 'ಶನಿ–ಭಾನು' },
+};
 
 function sameDays(a: number[], b: number[]): boolean {
   return a.length === b.length && a.every((d, i) => d === b[i]);
@@ -332,41 +360,43 @@ function sameDays(a: number[], b: number[]): boolean {
  *  a short day list. Expects `repeatDays` in canonical (sorted) form. */
 export function repeatSummary(
   repeatDays: number[] | undefined,
-  isHi: boolean
+  lang: Lang
 ): string {
-  if (repeatDays === undefined || repeatDays.length === 7) {
-    return isHi ? 'प्रतिदिन' : 'Daily';
-  }
-  if (repeatDays.length === 0) return isHi ? 'एक बार' : 'Once';
-  if (sameDays(repeatDays, [1, 2, 3, 4, 5])) {
-    return isHi ? 'सोम–शुक्र' : 'Weekdays';
-  }
-  if (sameDays(repeatDays, [0, 6])) {
-    return isHi ? 'शनि–रवि' : 'Weekends';
-  }
-  const names = isHi ? DAY_NAMES_HI : DAY_NAMES_EN;
+  const copy = REPEAT_COPY[lang];
+  if (repeatDays === undefined || repeatDays.length === 7) return copy.daily;
+  if (repeatDays.length === 0) return copy.once;
+  if (sameDays(repeatDays, [1, 2, 3, 4, 5])) return copy.weekdays;
+  if (sameDays(repeatDays, [0, 6])) return copy.weekends;
+  const names = DAY_NAMES[lang];
   return repeatDays.map((d) => names[d]).join(', ');
 }
 
 /** "in 7 hr 25 min" / "7 घं 25 मि में" — countdown copy from `nowMs` to
  *  `fireAtMs`. Sub-minute gaps read "in <1 min" rather than "in 0 min". */
+const UNTIL_COPY: Record<Lang, { d: string; h: string; m: string; wrap: (span: string) => string }> = {
+  en: { d: 'd', h: 'hr', m: 'min', wrap: (span) => `in ${span}` },
+  hi: { d: 'दिन', h: 'घं', m: 'मि', wrap: (span) => `${span} में` },
+  gu: { d: 'દિવસ', h: 'કલાક', m: 'મિનિટ', wrap: (span) => `${span} પછી` },
+  kn: { d: 'ದಿನ', h: 'ಗಂಟೆ', m: 'ನಿಮಿಷ', wrap: (span) => `${span} ನಂತರ` },
+};
+
 export function describeUntilFire(
   fireAtMs: number,
   nowMs: number,
-  isHi: boolean
+  lang: Lang
 ): string {
+  const copy = UNTIL_COPY[lang];
   const totalMin = Math.ceil(Math.max(0, fireAtMs - nowMs) / 60_000);
   const parts: string[] = [];
   const days = Math.floor(totalMin / (24 * 60));
   const hours = Math.floor((totalMin % (24 * 60)) / 60);
   const mins = totalMin % 60;
-  if (days > 0) parts.push(isHi ? `${days} दिन` : `${days} d`);
-  if (hours > 0) parts.push(isHi ? `${hours} घं` : `${hours} hr`);
+  if (days > 0) parts.push(`${days} ${copy.d}`);
+  if (hours > 0) parts.push(`${hours} ${copy.h}`);
   // Minutes are noise once the fire is days out.
-  if (days === 0 && mins > 0) parts.push(isHi ? `${mins} मि` : `${mins} min`);
-  if (parts.length === 0) parts.push(isHi ? '<1 मि' : '<1 min');
-  const span = parts.join(' ');
-  return isHi ? `${span} में` : `in ${span}`;
+  if (days === 0 && mins > 0) parts.push(`${mins} ${copy.m}`);
+  if (parts.length === 0) parts.push(`<1 ${copy.m}`);
+  return copy.wrap(parts.join(' '));
 }
 
 /** "06:30" — 24-hour, whatever the device locale prefers. */
