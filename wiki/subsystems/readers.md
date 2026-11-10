@@ -51,7 +51,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 Readers call `useReaderPlayback(args)` (`_useAutoSlide.ts`) in place of `useReaderReadAloud(args)` —
 same args, returns `{ readAloud, autoSlide }`, and keeps the two hands-free modes mutually exclusive.
 Kids Stories and the comic call `useAutoSlide` directly with their own `pageChars`/`goToPage`.
-Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval; pace persists in
+Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval, at four paces
+(slow 1.6 · normal 1 · fast 0.6 · very fast 0.3 — Nov 2026; very fast is half of fast and the meter
+has four bars). Pace persists in
 the `autoSlideStore` module store (no provider — launch graph untouched), which also carries the
 3 s hand-off that keeps a slideshow playing across a chapter `navigation.replace`. Long pages scroll
 to the bottom in 70%-of-a-screen steps (each holding for its share of the page time by height)
