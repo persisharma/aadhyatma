@@ -341,22 +341,27 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(modal().props.visible).toBe(false);
   });
 
-  test('the faint full-screen icon sits at the view\'s top-right (end of the Mala/Anant row), not in the top bar', async () => {
+  test('the faint full-screen icon sits at the view\'s top-right, below the Mala/Anant row, clear of the first line', async () => {
     const tree = await renderJapam();
     const enter = byTestId(tree, 'japam-fullscreen');
     expect(enter.props.accessibilityLabel).toBe('Full screen');
+    // Not in the top bar, not inside the style radiogroup.
     const topBar = byLabel(tree, 'Back').parent!;
     expect(topBar.findAll((n) => n.props.accessibilityLabel === 'Full screen')).toHaveLength(0);
-    const bar = enter.parent!;
-    expect(bar.findAll((n) => n.props.accessibilityRole === 'radiogroup').length).toBeGreaterThan(0);
-    // On the control column's axis (right 16), borderless and faint, 44 dp target.
-    expect(ReactNative.StyleSheet.flatten(bar.props.style)).toMatchObject({ flexDirection: 'row', paddingRight: 16 });
-    const look = ReactNative.StyleSheet.flatten(enter.props.style({ pressed: false }));
-    expect(look).toMatchObject({ width: 44, height: 44, opacity: 0.6 });
-    expect(look.borderWidth).toBeUndefined();
-    // Not a radio: the button stays outside the radiogroup.
     const group = tree.root.findAll((n) => n.props.accessibilityRole === 'radiogroup')[0];
     expect(group.findAll((n) => n.props.testID === 'japam-fullscreen')).toHaveLength(0);
+    // Floats over the tap surface (a sibling of its scroll view), top-right on the column's axis.
+    const tapArea = enter.parent!;
+    expect(tapArea.findAllByType(ReactNative.ScrollView).length).toBeGreaterThan(0);
+    const look = ReactNative.StyleSheet.flatten(enter.props.style({ pressed: false }));
+    expect(look).toMatchObject({ position: 'absolute', top: 8, right: 16, width: 44, height: 44, opacity: 0.6 });
+    expect(look.borderWidth).toBeUndefined();
+    // The first mantra line keeps 27 dp a side so a wide line wraps before reaching the glyph.
+    const lines = tree.root.findAll((n) => n.type === ReactNative.Text
+      && typeof n.props.children === 'string' && n.parent?.props.style !== undefined)
+      .filter((n) => ReactNative.StyleSheet.flatten(n.props.style).textAlign === 'center'
+        && ReactNative.StyleSheet.flatten(n.props.style).lineHeight === 39);
+    expect(ReactNative.StyleSheet.flatten(lines[0].props.style).marginHorizontal).toBe(27);
   });
 
   test('the exit icon takes the enter icon\'s place on screen', async () => {

@@ -83,7 +83,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [fullScreen, setFullScreen] = useState(false);
   const [fullHint, setFullHint] = useState(false);
   const fullHintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // The faint enter icon sits at the view's top-right (end of the Mala/Anant row);
+  // The faint enter icon sits at the view's top-right (below the Mala/Anant row);
   // the exit icon takes its place on screen, so one corner opens and closes.
   const fullEnterRef = useRef<View>(null);
   const [fullExitTop, setFullExitTop] = useState<number | null>(null);
@@ -535,7 +535,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View style={styles.styleBar}>
         <View style={styles.styleChoices} accessibilityRole="radiogroup">
           {(['mala', 'infinity'] as const).map((value: JapamStyle) => {
             const label = value === 'mala'
@@ -557,19 +556,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               </Pressable>
             );
           })}
-        </View>
-          {/* Faint full-screen icon at the view's top-right, on the column's axis (right 16).
-              Kept out of the tap area so it never covers a long mantra's first line. */}
-          <Pressable
-            ref={fullEnterRef}
-            testID="japam-fullscreen"
-            onPress={enterFullScreen}
-            accessibilityRole="button"
-            accessibilityLabel="Full screen"
-            style={({ pressed }) => [styles.fullEnter, pressed && { opacity: 0.3 }]}
-          >
-            <AppIcon name="fullscreen" size={18} color={colors.inkMuted} />
-          </Pressable>
         </View>
 
         <View style={styles.tapArea}>
@@ -600,6 +586,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                     key={`${lang}-${i}`}
                     style={[
                       isLatinLang(lang) ? styles.mantraLineEn : styles.mantraLine,
+                      i === 0 && styles.firstLineIconRoom,
                       isLatinLang(lang)
                         ? {
                             color: colors.ink,
@@ -655,6 +642,20 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             </View> : null}
           </Pressable>
         </ScrollView>
+
+        {/* Faint full-screen icon at the view's top-right, on the control column's axis
+            (right 16). It floats over the tap surface, so the first mantra line keeps
+            FIRST_LINE_ICON_ROOM on each side to stay clear of it. */}
+        <Pressable
+          ref={fullEnterRef}
+          testID="japam-fullscreen"
+          onPress={enterFullScreen}
+          accessibilityRole="button"
+          accessibilityLabel="Full screen"
+          style={({ pressed }) => [styles.fullEnter, pressed && { opacity: 0.3 }]}
+        >
+          <AppIcon name="fullscreen" size={18} color={colors.inkMuted} />
+        </Pressable>
 
         {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺ above the count bar's
             Sankalp target. Open by default; the count bar's toggle minimises it. The
@@ -1095,12 +1096,14 @@ const styles = StyleSheet.create({
   tapArea: {
     flex: 1,
   },
-  styleBar: {
-    flexDirection: 'row', alignItems: 'center', gap: 8, paddingLeft: 24, paddingRight: 16, paddingBottom: 4,
+  styleChoices: {
+    flexDirection: 'row', gap: 8, paddingHorizontal: 24, paddingBottom: 4,
     width: '100%', maxWidth: 420, alignSelf: 'center',
   },
-  styleChoices: { flex: 1, flexDirection: 'row', gap: 8 },
   fullEnter: {
+    position: 'absolute',
+    top: 8,
+    right: 16,
     width: 44,
     height: 44,
     alignItems: 'center',
@@ -1133,6 +1136,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   mantraFullWidth: { width: '100%' },
+  // The full-screen icon's glyph ends 47 dp from the right edge; with the 24 dp
+  // tap-surface padding and 4 dp air, the (centred) first line gives up 27 dp a
+  // side. Only lines wider than ~288 dp on a 390 pt phone wrap differently
+  // (today: Mahamrityunjaya, Kubera).
+  firstLineIconRoom: { marginHorizontal: 27 },
   mantraLine: {
     textAlign: 'center',
     // No includeFontPadding:false here — this line is Devanagari, and on Android

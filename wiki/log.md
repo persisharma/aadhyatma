@@ -1488,3 +1488,4 @@ Updated share/design/integration contracts for shared top/cartouche and English 
 ## [2026-11-10] ingest | Dropped the fold toggle (column always shown, ring 300 on 390 pt); full screen kept. design.md §35 + subsystems/japam.md synced.
 ## [2026-11-10] ingest | Control column minimise restored as an option (default open, remembered; toggle in the count bar). design.md §35 + subsystems/japam.md synced.
 ## [2026-11-10] ingest | Full-screen icon moved from the top bar to the view's top-right (end of the Mala/Anant row, faint, column axis); exit icon opens in the same on-screen spot. design.md §35 + subsystems/japam.md synced.
+## [2026-11-10] ingest | Full-screen icon moved again to the user's marked spot: floating at the tap surface's top-right (top 8, right 16) below the Mala/Anant row; first Mala line keeps 27 dp a side. design.md §35 + subsystems/japam.md synced.
