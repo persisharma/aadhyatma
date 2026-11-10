@@ -21,7 +21,11 @@ it.each(['hi', 'en', 'gu', 'kn'] as const)('shows just one approved %s header ma
   expect(logos[0].props.testID).toBe(`vedansh-wordmark-${lang === 'hi' ? 'hi' : 'en'}`);
   expect(logos[0].props.source).toBe(lang === 'hi'
     ? require('@assets/branding/wordmarks/hindi.png') : require('@assets/branding/wordmarks/english.png'));
-  expect(header.findAllByType(Text)).toHaveLength(0);
+  // Like the legacy painted plaque: the name above, one fixed (never system-scaled) domain line below.
+  const domain = header.findAllByType(Text);
+  expect(domain).toHaveLength(1);
+  expect(domain[0].props.children).toBe('Vedansh.app');
+  expect(domain[0].props.allowFontScaling).toBe(false);
   const footer = tree.root.findByProps({ testID: 'devotional-footer-brand' });
   expect(footer.findAllByType(Image)).toHaveLength(1);
   expect(footer.findByType(Image).props.source).toBe(require('@assets/branding/wordmarks/english.png'));
@@ -59,3 +63,24 @@ it('resets hero branding readiness on a language switch and ignores the removed 
   act(() => { for (const img of tree.root.findAllByType(Image)) img.props.onLoad(); });
   expect(loaded).toHaveBeenCalledTimes(1);
 });
+
+it.each([['hanuman', 180], ['prayer', 180], ['parshuram', 198]] as const)(
+  'sizes the %s header badge to the painted plaque and fits the wordmark and domain inside it', (art, badgeWidth) => {
+    for (const lang of ['hi', 'en'] as const) {
+      act(() => { tree = create(<DevotionalHero art={art} lang={lang} width={1080} />); });
+      const header = tree.root.findByProps({ testID: 'devotional-header-brand' });
+      // At width 1080 master-space coordinates are 1:1. The painted plaque's outer edge is
+      // ≈37–209 × 54–167 (Parshuram to ≈227); the old 244×132 badge spilled past it.
+      const box = StyleSheet.flatten(header.props.style);
+      expect(box).toMatchObject({ left: 34, top: 48, width: badgeWidth, height: 120 });
+      expect(box.left + box.width).toBeGreaterThanOrEqual(art === 'parshuram' ? 231 : 212);
+      expect(box.top + box.height).toBeGreaterThanOrEqual(168);
+      const mark = StyleSheet.flatten(header.findByType(Image).props.style);
+      // Inside the inner frame line (8px inset) with clearance on both sides, leaving room
+      // below for the fixed Vedansh.app line within the 120px height.
+      expect(mark.width).toBeLessThanOrEqual(180 - 2 * 14);
+      const domain = StyleSheet.flatten(header.findByProps({ testID: 'devotional-header-domain' }).props.style);
+      expect(mark.height + domain.lineHeight + domain.marginTop).toBeLessThanOrEqual(120 - 2 * 12);
+      act(() => tree.unmount());
+    }
+  });

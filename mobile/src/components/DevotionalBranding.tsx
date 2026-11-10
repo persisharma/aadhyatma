@@ -3,32 +3,48 @@ import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Defs, Ellipse, LinearGradient, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
 import type { Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
+import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { WordmarkArtwork } from './VedanshWordmark';
 
 type PaintProps = { width: number; onLoad?: () => void; onError?: () => void };
 
+/** Master-space badge = the painted legacy plaque it hides (outer gold edge ≈ 37–209 × 54–167
+ * on every subject master) plus a 3–4px margin; Parshuram's blank plaque alone runs to ≈ 227.
+ * Never smaller, or the old printed name/edge shows. The wordmark is sized to this box. */
+export function devotionalHeaderBadge(art: DevotionalArt) {
+  return { left: 34, top: 48, width: art === 'parshuram' ? 198 : 180, height: 120 };
+}
+/** Approved wordmark widths, stacked above the live `Vedansh.app` line like the old plaque. */
+export const devotionalHeaderMarkWidth = { hi: 140, en: 148 } as const;
+/** Fixed master-space type for the header domain line (never system-scaled: it is badge art). */
+export const devotionalHeaderDomain = { text: 'Vedansh.app', fontSize: 25, lineHeight: 28 } as const;
+
 /** Master-space coordinates. Covers the old painted names without republishing
  * the scenery or adding a bitmap/network request. Branding stays fixed in exports. */
-export function DevotionalHeaderBrand({ lang, width, onLoad, onError }: PaintProps & { lang: Lang }) {
+export function DevotionalHeaderBrand({ art, lang, width, onLoad, onError }: PaintProps & { art: DevotionalArt; lang: Lang }) {
   const scale = width / 1080;
   const gradient = `plaque-${React.useId().replace(/:/g, '')}`;
+  const badge = devotionalHeaderBadge(art);
+  const w = badge.width, kind = lang === 'hi' ? 'hi' : 'en';
   return <View testID="devotional-header-brand" pointerEvents="none" accessible accessibilityRole="image"
-    accessibilityLabel={lang === 'hi' ? 'वेदांश' : 'Vedansh'}
-    style={{ position: 'absolute', left: 32 * scale, top: 44 * scale, width: 244 * scale, height: 132 * scale, alignItems: 'center', justifyContent: 'center' }}>
-    <Svg width={244 * scale} height={132 * scale} viewBox="0 0 244 132" style={StyleSheet.absoluteFill} accessible={false}>
+    accessibilityLabel={lang === 'hi' ? `वेदांश · ${devotionalHeaderDomain.text}` : devotionalHeaderDomain.text}
+    style={{ position: 'absolute', left: badge.left * scale, top: badge.top * scale, width: w * scale, height: badge.height * scale, alignItems: 'center', justifyContent: 'center' }}>
+    <Svg width={w * scale} height={badge.height * scale} viewBox={`0 0 ${w} 120`} style={StyleSheet.absoluteFill} accessible={false}>
       <Defs><LinearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">
         <Stop offset="0" stopColor="#FFF4D6" /><Stop offset="0.55" stopColor="#FCECC5" /><Stop offset="1" stopColor="#F4DCA3" />
       </LinearGradient></Defs>
-      <Rect x="1" y="1" width="242" height="130" rx="12" fill={`url(#${gradient})`} stroke="#99651F" strokeWidth="2" />
-      <Path d="M24 6H220Q220 18 238 18V114Q220 114 220 126H24Q24 114 6 114V18Q24 18 24 6Z"
+      <Rect x="1" y="1" width={w - 2} height="118" rx="10" fill={`url(#${gradient})`} stroke="#99651F" strokeWidth="2" />
+      <Path d={`M18 5H${w - 18}Q${w - 18} 13 ${w - 5} 13V107Q${w - 18} 107 ${w - 18} 115H18Q18 107 5 107V13Q18 13 18 5Z`}
         fill="none" stroke="#B9812E" strokeWidth="1.6" />
-      <Path d="M29 11H215Q215 23 233 23V109Q215 109 215 121H29Q29 109 11 109V23Q29 23 29 11Z"
+      <Path d={`M21 8H${w - 21}Q${w - 21} 16 ${w - 8} 16V104Q${w - 21} 104 ${w - 21} 112H21Q21 104 8 104V16Q21 16 21 8Z`}
         fill="none" stroke="#C99A4B" strokeWidth="0.8" />
-      <Path d="M94 23H109Q115 23 116 17Q117 12 122 17Q127 12 128 17Q129 23 135 23H150M122 17V27"
-        fill="none" stroke="#A46B21" strokeWidth="1.5" strokeLinecap="round" />
     </Svg>
-    <View style={{ marginTop: 12 * scale }}>
-      <WordmarkArtwork kind={lang === 'hi' ? 'hi' : 'en'} width={196 * scale} onLoad={onLoad} onError={onError} />
+    <View style={{ alignItems: 'center' }}>
+      <WordmarkArtwork kind={kind} width={devotionalHeaderMarkWidth[kind] * scale} onLoad={onLoad} onError={onError} />
+      <Text testID="devotional-header-domain" accessible={false} allowFontScaling={false} numberOfLines={1} style={{
+        fontFamily: fontFamilies.latinBold, color: '#4A210F', includeFontPadding: false, textAlign: 'center',
+        fontSize: devotionalHeaderDomain.fontSize * scale, lineHeight: devotionalHeaderDomain.lineHeight * scale, marginTop: 2 * scale,
+      }}>{devotionalHeaderDomain.text}</Text>
     </View>
   </View>;
 }
