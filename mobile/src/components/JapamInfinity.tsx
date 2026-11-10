@@ -14,10 +14,14 @@ type Props = {
   labelFontFamily: string; running: boolean; cycleMs?: number;
   phase?: Animated.Value; onCycle: () => void; ringText?: string; ringsActive?: boolean;
   reading?: React.ReactNode;
+  /** Width (from the right screen edge) of the counter's control column. The
+   *  reading, count and hint are inset by whatever of it overlaps the
+   *  centred frame, symmetrically, so no text sits under the buttons. */
+  railClearance?: number;
 };
 
 /** The clock and counting owner are unchanged; ornamentation is decorative. */
-export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running, cycleMs, phase, onCycle, ringText, ringsActive = true, reading }: Props) {
+export default function JapamInfinity({ count, size, hint, notice, labelFontFamily, running, cycleMs, phase, onCycle, ringText, ringsActive = true, reading, railClearance = 0 }: Props) {
   const { colors } = useTheme();
   const reduced = useReducedMotion();
   const { factor } = useFontScale();
@@ -48,6 +52,7 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
     }, cycleMs);
   }, [running, active, progress, cycleMs]);
   const width = ringText ? mandalaSize : size;
+  const sideInset = railClearance > 0 ? Math.max(0, Math.ceil(width / 2 - windowWidth / 2 + railClearance)) : 0;
   return <View testID="japam-infinity" style={[styles.root, { width, minHeight: width }]} pointerEvents="none"
     importantForAccessibility={reading ? 'auto' : 'no-hide-descendants'} accessibilityElementsHidden={!reading}>
     <View testID="japam-infinity-panel" style={{ width, alignItems: 'center' }}
@@ -62,19 +67,19 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
       </JapamMandala> : <JapamInfinityLoop loop={size} progress={progress} running={running} reduced={reduced}
         count={count} total={N} factor={factor} showNumbers={!numbersBelow} />}
     </View>
-    {reading ? <View testID="japam-infinity-reading" style={styles.reading}>{reading}</View> : null}
-    {numbersBelow ? <Text testID="japam-infinity-count" style={{ fontSize: 32 * factor, color: colors.ink,
-      fontFamily: fontFamilies.latinSemiBold, textAlign: 'center', marginTop: 8 }}>{count} / {N}</Text> : null}
-    <View style={[styles.track, { backgroundColor: colors.divider }]}>
-      <View style={{ width: `${count / N * 100}%`, height: 3, backgroundColor: colors.saffron }} />
+    <View testID="japam-infinity-below" style={[styles.below, { paddingHorizontal: sideInset }]}
+      accessibilityElementsHidden={false} importantForAccessibility="auto">
+      {reading ? <View testID="japam-infinity-reading" style={styles.reading}>{reading}</View> : null}
+      {numbersBelow ? <Text testID="japam-infinity-count" style={{ fontSize: 32 * factor, color: colors.ink,
+        fontFamily: fontFamilies.latinSemiBold, textAlign: 'center', marginTop: 8 }}>{count} / {N}</Text> : null}
+      <Text style={[styles.hint, { fontSize: 12 * factor, color: notice ? colors.saffronDeep : colors.inkMuted, fontFamily: labelFontFamily }]}>{notice ?? hint}</Text>
     </View>
-    <Text style={[styles.hint, { fontSize: 12 * factor, color: notice ? colors.saffronDeep : colors.inkMuted, fontFamily: labelFontFamily }]}>{notice ?? hint}</Text>
   </View>;
 }
 
 const styles = StyleSheet.create({
   root: { justifyContent: 'center', alignItems: 'center', paddingVertical: 8 },
+  below: { width: '100%', alignItems: 'center' },
   reading: { width: '100%', paddingHorizontal: 8, marginTop: 6 },
-  track: { width: '80%', height: 3, borderRadius: 2, overflow: 'hidden', marginTop: 12 },
   hint: { fontSize: 12, textAlign: 'center', marginTop: 12, paddingHorizontal: 12 },
 });

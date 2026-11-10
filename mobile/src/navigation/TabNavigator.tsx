@@ -27,9 +27,10 @@ const Tab = createBottomTabNavigator<TabParamList>();
 // Full-screen reader routes that should hide the bottom tab bar so it doesn't
 // compete with immersive reading. Lives at the tab level (rather than per-screen
 // setOptions) so the bar animates out cleanly and restores itself on blur.
-// Focused practice/reading surfaces hide the bar and own the bottom inset.
-// JapamCounter joined in Nov 2026: the bar's ~60 dp went to the mantra and mala.
-const IMMERSIVE_ROUTES = ['VratKathaReader', 'VidhiConduct', 'JapamCounter'];
+// Focused reading/conduct surfaces hide the bar. JapamCounter must NOT join:
+// hiding the bar on a pushed Home-stack screen blanks its band before the push
+// lands and re-lays the counter mid-animation (Nov 2026 device recording).
+const IMMERSIVE_ROUTES = ['VratKathaReader', 'VidhiConduct'];
 
 export default function TabNavigator() {
   const { colors } = useTheme();

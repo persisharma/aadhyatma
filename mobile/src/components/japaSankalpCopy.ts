@@ -114,3 +114,14 @@ export const SANKALP_COPY = {
   },
   cancel: { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' },
 } as const;
+
+/** Count-bar label after "3 / 11": "माला पूर्ण · संकल्प" / "malas done · Sankalp". */
+export function sankalpRowLabel(lang: Lang, s: JapaSankalp): string {
+  const unit = sankalpUnitWord(lang, s.unit, s.amount);
+  return pick(lang, {
+    hi: `${unit} पूर्ण · संकल्प`,
+    en: `${unit} done · Sankalp`,
+    gu: `${unit} પૂર્ણ · સંકલ્પ`,
+    kn: `${unit} ಪೂರ್ಣ · ಸಂಕಲ್ಪ`,
+  });
+}

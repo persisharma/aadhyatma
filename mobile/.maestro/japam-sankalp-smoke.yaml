@@ -6,8 +6,8 @@
 #     completion with the mala rollover, taking a new vow on a completed one,
 #     Infinity loops filling it hands-free, the automatic pause at the target
 #     (the count must not move afterwards), clearing the completed vow, and
-#     Gayatri / Hare Krishna in Anant with a vow (screenshots: the frame gives
-#     back the strip's height so the full japa reading stays on screen).
+#     Gayatri / Hare Krishna in Anant with a vow, minimising the controls, and
+#     full screen (tap counts, long press exits).
 #   - Typed amounts, japa-count presets, Reset/set-aside copy and the four-
 #     language strings are pinned by JapamCounterSankalp.test.tsx; the number
 #     pad is avoided here because iOS has no Return key to dismiss it.
@@ -112,6 +112,27 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Take a japa sankalp"
 - assertNotVisible: "Japa sankalp, .*"
+
+# ── Controls open by default; the count-bar toggle minimises them; full
+#    screen shows only the view ──
+- assertVisible: "Play auto-chant"
+- assertVisible: "Reset or clear the count"
+- takeScreenshot: japa-sankalp-11-controls
+- tapOn: "Hide controls"
+- assertNotVisible: "Play auto-chant"
+- takeScreenshot: japa-sankalp-12-controls-minimised
+- tapOn: "Show controls"
+- assertVisible: "Play auto-chant"
+- tapOn: "Full screen"
+- waitForAnimationToEnd
+- assertVisible: ".*Press and hold to exit full screen.*0 of 108 on this mala.*"
+- takeScreenshot: japa-sankalp-13-full-screen
+- tapOn: ".*Press and hold to exit full screen.*"
+- assertVisible: ".*1 of 108 on this mala.*"
+- longPressOn: ".*Press and hold to exit full screen.*"
+- waitForAnimationToEnd
+- assertVisible: "Play auto-chant"
+- assertVisible: ".*1 of 108 on this mala.*"
 
 - tapOn: "Back"
 - waitForAnimationToEnd
