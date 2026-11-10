@@ -15,7 +15,7 @@ type Props = {
   phase?: Animated.Value; onCycle: () => void; ringText?: string; ringsActive?: boolean;
   reading?: React.ReactNode;
   /** Width (from the right screen edge) of the counter's control column. The
-   *  reading, count, track and hint are inset by whatever of it overlaps the
+   *  reading, count and hint are inset by whatever of it overlaps the
    *  centred frame, symmetrically, so no text sits under the buttons. */
   railClearance?: number;
 };
@@ -72,9 +72,6 @@ export default function JapamInfinity({ count, size, hint, notice, labelFontFami
       {reading ? <View testID="japam-infinity-reading" style={styles.reading}>{reading}</View> : null}
       {numbersBelow ? <Text testID="japam-infinity-count" style={{ fontSize: 32 * factor, color: colors.ink,
         fontFamily: fontFamilies.latinSemiBold, textAlign: 'center', marginTop: 8 }}>{count} / {N}</Text> : null}
-      <View style={[styles.track, { backgroundColor: colors.divider }]}>
-        <View style={{ width: `${count / N * 100}%`, height: 3, backgroundColor: colors.saffron }} />
-      </View>
       <Text style={[styles.hint, { fontSize: 12 * factor, color: notice ? colors.saffronDeep : colors.inkMuted, fontFamily: labelFontFamily }]}>{notice ?? hint}</Text>
     </View>
   </View>;
@@ -84,6 +81,5 @@ const styles = StyleSheet.create({
   root: { justifyContent: 'center', alignItems: 'center', paddingVertical: 8 },
   below: { width: '100%', alignItems: 'center' },
   reading: { width: '100%', paddingHorizontal: 8, marginTop: 6 },
-  track: { width: '80%', height: 3, borderRadius: 2, overflow: 'hidden', marginTop: 12 },
   hint: { fontSize: 12, textAlign: 'center', marginTop: 12, paddingHorizontal: 12 },
 });

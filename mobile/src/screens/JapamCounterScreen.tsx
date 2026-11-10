@@ -46,8 +46,9 @@ import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
 import { AlarmEditorSheet } from '@/screens/JapamAlarmsScreen';
 import JapaSankalpSheet from '@/components/JapaSankalpSheet';
-import JapaSankalpStrip from '@/components/JapaSankalpStrip';
-import { SANKALP_COPY } from '@/components/japaSankalpCopy';
+import JapaSankalpRow from '@/components/JapaSankalpRow';
+import { fitMalaBesideRail, fitMandalaBesideRail, RAIL_CLEARANCE } from '@/components/japamControlRail';
+import { SANKALP_COPY, sankalpA11yLabel } from '@/components/japaSankalpCopy';
 import { useShare } from '@/utils/shareVerse';
 import { useRatingAsk } from '@/contexts/ratingAsk';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -112,12 +113,21 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [headH, setHeadH] = useState(0);
   const measured = tapViewportH > 0 && headH > 0;
   const fitH = tapViewportH - headH - TAP_CHROME_H;
-  // The control column stands at the right edge above ↺; the centred ring keeps
-  // the same clearance on both sides so no bead or the Sumeru sits under it.
-  const railCap = Math.max(MALA_MIN, windowWidth - 2 * RAIL_CLEARANCE);
-  const malaSize = Math.round(
-    Math.min(windowWidth - 2 * spacing.xxl, railCap, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
+  const fittedMala = Math.round(
+    Math.min(windowWidth - 2 * spacing.xxl, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
   );
+  // The control column (speedometer, ▶/❚❚, ↺) stands in the tap area's bottom-
+  // right corner. From the same measurement, the ring shrinks only as far as it
+  // must for its beads, Sumeru and rotating tassel to clear it — computed before
+  // the ring is revealed, so it never resizes on screen.
+  const malaSize = measured
+    ? fitMalaBesideRail({ width: windowWidth, viewport: tapViewportH, head: headH, size: fittedMala, min: MALA_MIN })
+    : fittedMala;
+  // Infinity: the frame (280–340) likewise, sized from the viewport alone and
+  // held hidden until the viewport is known.
+  const mandalaSize = tapViewportH > 0
+    ? fitMandalaBesideRail({ width: windowWidth, viewport: tapViewportH, size: Math.min(windowWidth - 24, 340), min: 280 })
+    : Math.min(windowWidth - 24, 340);
 
   const mantra: JapamMantra | null = useMemo(
     () => findJapamMantra(route.params.mantraId),
@@ -138,12 +148,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // Japa sankalp (§35.2): a one-time per-mantra vow; progress accrues in the provider.
   const sankalp = getSankalp(mantra?.id ?? '__none__');
   const [sankalpSheetOpen, setSankalpSheetOpen] = useState(false);
-  // In Infinity the fixed frame would otherwise lose the strip's height from the
-  // scroll viewport and push the mantra reading below the fold. The frame gives
-  // that height back instead (down to its 280 floor), so the japa text keeps the
-  // place it had without a vow. Estimated until the strip reports its layout.
-  const [stripH, setStripH] = useState(SANKALP_STRIP_EST_H);
-  const sankalpStripH = sankalp ? stripH : 0;
   const [resetSheetOpen, setResetSheetOpen] = useState(false);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
@@ -356,8 +360,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
 
   // Keep the approved frame; the complete reader replaces its former count row.
-  const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
-    <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340) - sankalpStripH}
+  const infinityVisual = japaStyle === 'infinity' ? <View style={[styles.malaBlock, tapViewportH === 0 && styles.unmeasured]}>
+    <JapamInfinity key={mantra.id} count={entry.count} size={mandalaSize}
       running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
       railClearance={RAIL_CLEARANCE}
       notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
@@ -573,8 +577,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </ScrollView>
 
-        {/* Icon-only control column (§35): speedometer above ▶/❚❚, standing right
-            above ↺ in the count bar. It owns the recording, so it stays mounted. */}
+        {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺, standing above the
+            count bar's Sankalp target. The player owns the recording, so it stays mounted. */}
         <View style={styles.railSlot} pointerEvents="box-none">
           <JapamAudioPlayer
             layout="rail"
@@ -589,73 +593,62 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             autoPlay={route.params.autoPlay === true}
             stopToken={audioStopToken}
           />
+          <Pressable
+            onPress={() => setResetSheetOpen(true)}
+            accessibilityRole="button"
+            accessibilityLabel="Reset or clear the count"
+            accessibilityState={{ disabled: nothingToReset }}
+            disabled={nothingToReset}
+            hitSlop={6}
+            style={({ pressed }) => [
+              styles.resetBtn,
+              { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+              pressed && { opacity: 0.7 },
+              nothingToReset && { opacity: 0.4 },
+            ]}
+          >
+            <AppIcon name="reset" size={18} color={colors.saffronDeep} />
+          </Pressable>
         </View>
         </View>
 
-        {/* Japa sankalp progress (§35.2) — fixed height, present only while a vow exists. */}
-        {sankalp ? (
-          <View
-            testID="japa-sankalp-strip-slot"
-            onLayout={(e) => {
-              const h = Math.ceil(e.nativeEvent.layout.height);
-              setStripH((prev) => (prev === h ? prev : h));
-            }}
-          >
-            <JapaSankalpStrip
+        {/* Count bar: all-time malas + the Sankalp target, or — while a vow is active —
+            the vow's own count in the same 56 dp row (§35.2), so nothing above moves. */}
+        <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
+          {sankalp && !sankalpComplete ? (
+            <JapaSankalpRow
               sankalp={sankalp}
               lang={lang}
               disabled={counterLoading}
               onPress={() => setSankalpSheetOpen(true)}
             />
-          </View>
-        ) : null}
-
-        {/* Completed malas and reset; the current bead count is in the visualization. */}
-        <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
-          <JapamMalaTray
-            rounds={entry.rounds}
-            label={malasDoneLabel}
-            emptyLabel={firstMalaLabel}
-          />
-          <View style={styles.statsActions}>
-            {sankalp ? null : (
+          ) : (
+            <>
+              <JapamMalaTray
+                rounds={entry.rounds}
+                label={malasDoneLabel}
+                emptyLabel={firstMalaLabel}
+              />
               <Pressable
                 testID="japa-sankalp-open"
                 onPress={() => setSankalpSheetOpen(true)}
                 accessibilityRole="button"
-                accessibilityLabel="Take a japa sankalp"
+                accessibilityLabel={sankalp ? `${sankalpA11yLabel(sankalp)}. Take a new sankalp or clear it.` : 'Take a japa sankalp'}
                 accessibilityState={{ disabled: counterLoading }}
                 disabled={counterLoading}
                 hitSlop={8}
                 style={({ pressed }) => [
                   styles.resetBtn,
-                  { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+                  sankalp
+                    ? { backgroundColor: colors.saffron, borderColor: colors.saffronDeep }
+                    : { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
                   pressed && { opacity: 0.7 },
                 ]}
               >
-                <AppIcon name="sankalp" size={20} color={colors.saffronDeep} />
+                <AppIcon name="sankalp" size={20} color={sankalp ? colors.onPrimary : colors.saffronDeep} />
               </Pressable>
-            )}
-            <Pressable
-              onPress={() => setResetSheetOpen(true)}
-              accessibilityRole="button"
-              accessibilityLabel="Reset or clear the count"
-              accessibilityState={{ disabled: nothingToReset }}
-              disabled={nothingToReset}
-              hitSlop={8}
-              style={({ pressed }) => [
-                styles.resetBtn,
-                {
-                  backgroundColor: colors.parchmentSoft,
-                  borderColor: colors.cardActiveBorder,
-                },
-                pressed && { opacity: 0.7 },
-                nothingToReset && { opacity: 0.4 },
-              ]}
-            >
-              <AppIcon name="reset" size={18} color={colors.saffronDeep} />
-            </Pressable>
-          </View>
+            </>
+          )}
         </View>
 
       </SafeAreaView>
@@ -850,13 +843,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   );
 }
 
-// The sankalp strip's standard-text height (6 + 24 + 4 + 5 + 8 padding/rows + 1
-// hairline), used for the Infinity frame until the strip's own layout arrives.
-const SANKALP_STRIP_EST_H = 48;
-
-// Right-edge width the control column needs: 16 margin + 44 button + 4 air.
-const RAIL_CLEARANCE = 64;
-
 // Mala box bounds; the fitted size lands between them (and under the width cap).
 // Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.
 const MALA_MAX = 330;
@@ -995,12 +981,6 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderTopWidth: 1,
   },
-  statsActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    // Two 44 px circles with hitSlop 8 each: a 16 gap keeps their touch areas apart.
-    gap: 16,
-  },
   resetBtn: {
     width: 44,
     height: 44,
@@ -1011,9 +991,11 @@ const styles = StyleSheet.create({
   },
   railSlot: {
     position: 'absolute',
-    // Centred over ↺ (statsRow paddingRight 16 + 44 dp button).
+    // Centred over the count bar's Sankalp target (statsRow paddingRight 16 + 44 dp).
     right: 16,
     bottom: 8,
+    alignItems: 'center',
+    gap: 8,
   },
   backdrop: {
     flex: 1,

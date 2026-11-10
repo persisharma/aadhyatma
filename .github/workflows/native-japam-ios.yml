@@ -10,6 +10,9 @@ on:
     paths:
       - 'mobile/src/data/japam/sankalp.ts'
       - 'mobile/src/components/JapaSankalp*.tsx'
+      - 'mobile/src/components/japamControlRail.ts'
+      - 'mobile/src/components/JapamInfinity.tsx'
+      - 'mobile/src/components/JapamTempoControl.tsx'
       - 'mobile/src/components/japaSankalpCopy.ts'
       - 'mobile/src/components/JapamAudioPlayer.tsx'
       - 'mobile/src/contexts/JapamCounterContext.tsx'

@@ -15,6 +15,27 @@ const N = JAPAM_BEADS_PER_ROUND;
 /** Degrees of ring left empty on each side of the Sumeru. */
 export const MALA_SUMERU_GAP_DEG = 8;
 
+/** Space inside the mala box around the bead ring, for the Sumeru + tassel. */
+export const MALA_RING_INSET = 34;
+
+/** Bead radius for a mala box of `size` (beads nearly touch on the thread). */
+export function malaBeadRadius(size: number): number {
+  const r = size / 2 - MALA_RING_INSET;
+  return Math.max(2.2, ((2 * Math.PI * r) / N) * 0.46);
+}
+
+/**
+ * Farthest any part of the mala reaches from its centre. The Sumeru and tassel
+ * hang below the ring and rotate with it, so they can point anywhere: the tassel's
+ * outer corners sit 10.6 beadR below the ring (Sumeru centre r + 2.6 beadR, tassel
+ * end + 8 beadR) and 2.5 beadR to each side (JapamMala's tassel path).
+ */
+export function malaOuterReach(size: number): number {
+  const r = size / 2 - MALA_RING_INSET;
+  const beadR = malaBeadRadius(size);
+  return Math.hypot(beadR * 2.5, r + beadR * 10.6);
+}
+
 /** Angle (SVG degrees: 0 = +x, 90 = bottom) of bead `i`, walking clockwise
  *  from just beside the Sumeru. */
 export function malaBeadAngle(i: number, gapDeg: number = MALA_SUMERU_GAP_DEG): number {

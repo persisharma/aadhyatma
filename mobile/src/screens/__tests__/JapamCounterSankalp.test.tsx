@@ -3,7 +3,9 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { AccessibilityInfo, Alert, Animated, Text, TextInput } from 'react-native';
 import * as ReactNative from 'react-native';
 import JapamInfinity from '@/components/JapamInfinity';
-import JapamMala from '@/components/JapamMala';
+import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
+import { distanceToRail } from '@/components/japamControlRail';
+import { malaOuterReach } from '@/components/japamMalaGeometry';
 import * as Haptics from 'expo-haptics';
 import type { Lang } from '@/data/gita/language';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
@@ -113,7 +115,14 @@ const pressable = (tree: TestRenderer.ReactTestRenderer, match: (p: Record<strin
 const byTestId = (tree: TestRenderer.ReactTestRenderer, id: string) => pressable(tree, (p) => p.testID === id);
 const byLabel = (tree: TestRenderer.ReactTestRenderer, label: string) =>
   pressable(tree, (p) => p.accessibilityLabel === label);
-const strip = (tree: TestRenderer.ReactTestRenderer) => byTestId(tree, 'japa-sankalp-strip');
+// The vow's control in the count bar: the progress row while active, the filled
+// target once complete — both carry "Japa sankalp, N of M …" labels.
+const strip = (tree: TestRenderer.ReactTestRenderer) =>
+  pressable(tree, (p) => String(p.accessibilityLabel ?? '').startsWith('Japa sankalp,'));
+const rowTexts = (tree: TestRenderer.ReactTestRenderer) =>
+  tree.root.findAll((n) => n.props.testID === 'japa-sankalp-row' && typeof n.props.onPress === 'function')[0]
+    .findAllByType(Text).map((n) => [n.props.children].flat().join(''));
+const layout = (height: number) => ({ nativeEvent: { layout: { x: 0, y: 0, width: 390, height } } });
 const amountInput = (tree: TestRenderer.ReactTestRenderer) =>
   tree.root.findAll((n) => n.type === TextInput && n.props.testID === 'japa-sankalp-amount')[0];
 const tap = async (tree: TestRenderer.ReactTestRenderer, times = 1) => {
@@ -130,7 +139,7 @@ const press = async (node: TestRenderer.ReactTestInstance) => {
 };
 
 describe('Japa sankalp on the counter (§35.2)', () => {
-  test('fresh counter offers the opener and no strip; taking 1 mala shows progress', async () => {
+  test('fresh counter offers the target; taking 1 mala turns the count bar into its progress', async () => {
     const tree = await renderJapam();
     expect(strip(tree)).toBeUndefined();
     await press(byLabel(tree, 'Take a japa sankalp'));
@@ -141,7 +150,17 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     await press(byLabel(tree, 'Take this sankalp'));
     expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 0 of 1 mala\./);
     expect(byLabel(tree, 'Take a japa sankalp')).toBeUndefined();
-    expect(texts(tree)).toContain('0 / 1 माला');
+    // One count in the bar while the vow runs: the vow's own, not the all-time tray.
+    expect(rowTexts(tree)).toEqual(['0', '/ 1', 'माला पूर्ण · संकल्प', '›']);
+    expect(tree.root.findAllByType(JapamMalaTray)).toHaveLength(0);
+  });
+
+  test('a finished vow hands the bar back to the all-time tray with a filled target', async () => {
+    withStoredSankalp({ unit: 'mala', amount: 1, done: 108, startedAt: 1, updatedAt: 2, completedAt: 2 });
+    const tree = await renderJapam();
+    expect(tree.root.findAllByType(JapamMalaTray)).toHaveLength(1);
+    const target = byTestId(tree, 'japa-sankalp-open');
+    expect(target.props.accessibilityLabel).toBe('Japa sankalp, 1 of 1 mala, complete. Take a new sankalp or clear it.');
   });
 
   test('beads advance the vow; reaching it shows the notice and a Success haptic once', async () => {
@@ -203,59 +222,91 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
   });
 
-  test('in Infinity the frame gives the strip its height back, so the japa reading does not move down', async () => {
+  test.each(['mala', 'infinity'] as const)('taking, finishing and clearing a vow never resizes the %s (no jerk)', async (style) => {
+    mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? JSON.stringify(style) : null));
     const tree = await renderJapam();
-    await press(byTestId(tree, 'japam-style-infinity'));
-    const frameSize = () => tree.root.findByType(JapamInfinity).props.size;
-    const base = frameSize();
-    expect(base).toBe(340);
-    // Taking a vow adds the strip; the frame shrinks by the strip's estimated height…
+    const scroll = tree.root.findAll((n) => n.type === ReactNative.ScrollView && typeof n.props.onLayout === 'function')[0];
+    await act(async () => { scroll.props.onLayout(layout(530)); });
+    if (style === 'mala') {
+      const head = tree.root.findAll((n) => typeof n.props.onLayout === 'function' && n.props.style && n.type === ReactNative.View)
+        .find((n) => n !== scroll && !n.props.testID)!;
+      await act(async () => { head.props.onLayout(layout(63)); });
+    }
+    const size = () => (style === 'mala' ? tree.root.findByType(JapamMala) : tree.root.findByType(JapamInfinity)).props.size;
+    const before = size();
     await press(byLabel(tree, 'Take a japa sankalp'));
-    await press(byTestId(tree, 'japa-sankalp-preset-1'));
+    await press(byLabel(tree, '1 mala'));
     await press(byLabel(tree, 'Take this sankalp'));
-    expect(frameSize()).toBe(base - 48);
-    // …then by its measured height (e.g. enlarged system text).
-    const slot = tree.root.findAll((n) => n.props.testID === 'japa-sankalp-strip-slot' && typeof n.props.onLayout === 'function')[0];
-    await act(async () => {
-      slot.props.onLayout({ nativeEvent: { layout: { x: 0, y: 0, width: 390, height: 58.4 } } });
-    });
-    expect(frameSize()).toBe(base - 59);
-    // Clearing the vow returns the full frame.
+    expect(size()).toBe(before);
+    const scrollViews = tree.root.findAll((n) => n.type === ReactNative.ScrollView && typeof n.props.onLayout === 'function');
+    expect(scrollViews).toHaveLength(1);
+    // The bar is the same 56 dp row in every state: nothing reports a new height.
+    const rowStyle = byTestId(tree, 'japa-sankalp-row').props.style;
+    expect(ReactNative.StyleSheet.flatten(typeof rowStyle === 'function' ? rowStyle({ pressed: false }) : rowStyle))
+      .toMatchObject({ minHeight: 44 });
     await press(strip(tree));
     const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
     await press(byLabel(tree, 'Set this sankalp aside'));
-    await act(async () => {
-      alert.mock.calls[0][2]!.find((b) => b.style === 'destructive')!.onPress!();
-    });
-    expect(frameSize()).toBe(base);
+    await act(async () => { alert.mock.calls[0][2]!.find((b) => b.style === 'destructive')!.onPress!(); });
+    expect(size()).toBe(before);
   });
 
-  test('play and speed stand in an icon column above ↺; no Play bar remains', async () => {
+  test('speedometer, play and ↺ stand in one icon column above the Sankalp target; no Play bar remains', async () => {
     const tree = await renderJapam();
     expect(mockAudio.props!.layout).toBe('rail');
     // Exactly one player (the column) — the old full-width audio bar is gone.
     expect(tree.root.findAll((n) => n.props.onIteration && n.props.layout).length).toBe(1);
     const slot = tree.root.findAll((n) => n.props.pointerEvents === 'box-none'
       && ReactNative.StyleSheet.flatten(n.props.style)?.position === 'absolute')[0];
-    expect(ReactNative.StyleSheet.flatten(slot.props.style)).toMatchObject({ right: 16 });
-    expect(byLabel(tree, 'Reset or clear the count')).toBeDefined();
+    expect(ReactNative.StyleSheet.flatten(slot.props.style)).toMatchObject({ right: 16, bottom: 8, gap: 8 });
+    // ↺ is the column's last (bottom) button; the target sits below it in the count bar.
+    const inSlot = slot.findAll((n) => typeof n.props.onPress === 'function' && n.props.accessibilityLabel);
+    expect(inSlot.map((n) => n.props.accessibilityLabel)).toEqual(['Reset or clear the count']);
+    expect(slot.findAll((n) => n.props.accessibilityLabel === 'Take a japa sankalp')).toHaveLength(0);
+    expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
   });
 
-  test.each(['mala', 'infinity'] as const)('on a 390 pt phone the column never sits over the %s', async (style) => {
-    jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
-    jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
-    mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? JSON.stringify(style) : null));
+  test.each<[string, number, number, number]>([
+    ['390 pt phone, short mantra', 390, 530, 63],
+    ['375 pt SE, short mantra', 375, 425, 63],
+    ['390 pt phone, long mantra', 390, 530, 160],
+  ])('on a %s no bead, Sumeru or tassel can sit under the column', async (_name, width, viewport, head) => {
+    jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width, height: 844, scale: 3, fontScale: 1 });
+    jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width, height: 844, scale: 3, fontScale: 1 });
     const tree = await renderJapam();
-    if (style === 'mala') {
-      // 390 − 2 × 64 (16 margin + 44 button + 4 air): the ring keeps both sides clear.
-      expect(tree.root.findByType(JapamMala).props.size).toBeLessThanOrEqual(262);
-    } else {
-      expect(tree.root.findByType(JapamInfinity).props.railClearance).toBe(64);
-      const below = tree.root.findAll((n) => n.props.testID === 'japam-infinity-below' && n.props.style)[0];
-      // Frame 340 centred on 390 ends at 365; the column starts at 326 → inset 39 each side.
-      expect(ReactNative.StyleSheet.flatten(below.props.style).paddingHorizontal).toBe(39);
+    const scroll = tree.root.findAll((n) => n.type === ReactNative.ScrollView && typeof n.props.onLayout === 'function')[0];
+    const headNode = tree.root.findAll((n) => typeof n.props.onLayout === 'function' && n.type === ReactNative.View && !n.props.testID)[0];
+    await act(async () => { scroll.props.onLayout(layout(viewport)); headNode.props.onLayout(layout(head)); });
+    const size = tree.root.findByType(JapamMala).props.size;
+    const cy = 16 + head + 4 + size <= viewport ? viewport / 2 + head / 2 + 2 : 12 + head + size / 2;
+    expect(distanceToRail(width, viewport, width / 2, cy)).toBeGreaterThanOrEqual(malaOuterReach(size));
+    // …and it is the largest such ring: two points more would reach under it.
+    const unfitted = Math.min(width - 48, 330, Math.max(230, viewport - head - 20));
+    if (size < unfitted && size > 230) {
+      const cy2 = 16 + head + 4 + size + 2 <= viewport ? viewport / 2 + head / 2 + 2 : 12 + head + (size + 2) / 2;
+      expect(distanceToRail(width, viewport, width / 2, cy2)).toBeLessThan(malaOuterReach(size + 2));
     }
   });
+
+  test.each<[number, number, number, number]>([[390, 530, 340, 39], [375, 425, 292, 23]])(
+    'Infinity on a %i pt phone: the frame is sized clear of the column and its text inset', async (width, viewport, frame, inset) => {
+      jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width, height: 844, scale: 3, fontScale: 1 });
+      jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width, height: 844, scale: 3, fontScale: 1 });
+      mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
+      const tree = await renderJapam();
+      // Hidden until the viewport is known, so it never appears at one size and jumps to another.
+      const block = () => tree.root.findByType(JapamInfinity).parent!;
+      expect(ReactNative.StyleSheet.flatten(block().props.style).opacity).toBe(0);
+      const scroll = tree.root.findAll((n) => n.type === ReactNative.ScrollView && typeof n.props.onLayout === 'function')[0];
+      await act(async () => { scroll.props.onLayout(layout(viewport)); });
+      expect(ReactNative.StyleSheet.flatten(block().props.style).opacity).toBeUndefined();
+      expect(tree.root.findByType(JapamInfinity).props.size).toBe(frame);
+      expect(tree.root.findByType(JapamInfinity).props.railClearance).toBe(64);
+      const below = tree.root.findAll((n) => n.props.testID === 'japam-infinity-below' && n.props.style)[0];
+      expect(ReactNative.StyleSheet.flatten(below.props.style).paddingHorizontal).toBe(inset);
+      // The duplicate progress bar under the frame is gone: the ∞ lobes carry the count.
+      expect(tree.root.findAll((n) => n.props.style && ReactNative.StyleSheet.flatten(n.props.style)?.height === 3)).toHaveLength(0);
+    });
 
   test('a playing recording is stopped when its repetitions complete the vow', async () => {
     withStoredSankalp({ unit: 'japa', amount: 2, done: 0, startedAt: 1, updatedAt: 1 });
@@ -327,7 +378,7 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(amountInput(tree).props.value).toBe('77');
     await press(byLabel(tree, 'Update sankalp target'));
     expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 0 of 77 malas\./);
-    expect(texts(tree)).toContain('0 / 77 माला');
+    expect(rowTexts(tree).slice(0, 2)).toEqual(['0', '/ 77']);
   });
 
   test('Reset keeps the vow and says so; setting aside asks first', async () => {
@@ -352,17 +403,18 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
   });
 
-  test.each<[Lang, string, string, string]>([
-    ['hi', '12 / 21 माला', 'जप संकल्प', 'अब तक 1,336 जप'],
-    ['en', '12 / 21 malas', 'Japa Sankalp', '1,336 japa so far'],
-    ['gu', '12 / 21 માળા', 'જપ સંકલ્પ', 'અત્યાર સુધી 1,336 જપ'],
-    ['kn', '12 / 21 ಮಾಲೆ', 'ಜಪ ಸಂಕಲ್ಪ', 'ಇದುವರೆಗೆ 1,336 ಜಪ'],
-  ])('%s strip and sheet copy', async (lang, headline, title, soFar) => {
+  test.each<[Lang, string, string, string, string]>([
+    ['hi', 'माला पूर्ण · संकल्प', '12 / 21 माला', 'जप संकल्प', 'अब तक 1,336 जप'],
+    ['en', 'malas done · Sankalp', '12 / 21 malas', 'Japa Sankalp', '1,336 japa so far'],
+    ['gu', 'માળા પૂર્ણ · સંકલ્પ', '12 / 21 માળા', 'જપ સંકલ્પ', 'અત્યાર સુધી 1,336 જપ'],
+    ['kn', 'ಮಾಲೆ ಪೂರ್ಣ · ಸಂಕಲ್ಪ', '12 / 21 ಮಾಲೆ', 'ಜಪ ಸಂಕಲ್ಪ', 'ಇದುವರೆಗೆ 1,336 ಜಪ'],
+  ])('%s count-bar row and sheet copy', async (lang, rowLabel, headline, title, soFar) => {
     withStoredSankalp({ unit: 'mala', amount: 21, done: 12 * 108 + 40, startedAt: 1, updatedAt: 1 });
     const tree = await renderJapam(lang);
-    expect(texts(tree)).toContain(headline);
+    expect(rowTexts(tree)).toEqual(['12', '/ 21', rowLabel, '›']);
     await press(strip(tree));
     const shown = texts(tree);
+    expect(shown).toContain(headline);
     expect(shown).toContain(title);
     expect(shown).toContain(soFar);
   });
