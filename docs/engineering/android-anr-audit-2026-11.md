@@ -66,3 +66,35 @@ Android vitals → ANRs → clusters. Match the signatures in the table above. A
 - **JS / OTA-able (candidate #5):** `AudioPlayerProvider` now creates its native player on first use instead of at launch. Sessions that never play recorded audio construct no ExoPlayer and emit no main-thread status.
 - **Not code:** the PairIP cluster goes away only if Play Console → Test and release → App integrity → **Automatic protection** is turned off (owner decision). GPU-driver clusters are device-side.
 - **Still open:** the live 1.5.5 `com.facebook.react.bridge…` cluster. Its full stack is needed before any change.
+
+## 7. Play Vitals 3–10 Nov 2026 (1.5.5 / versionCode 15) — crashes and the box-shadow ANR
+
+Confidence tags as above. No Android SDK or device was available in this session, so every native result is **PENDING** until a Gradle release build and device run.
+
+| Issue | Users / events | Decision |
+|---|---|---|
+| Crash: `NotificationForwarderActivity.onCreate` → `createNotificationResponseBroadcastIntent`, `IllegalArgumentException: notification (null) and action (null) should not be null` (Android 12, Samsung M11/M31) | 2 / 2 | **Fixed by backport.** See §7.1 |
+| Crash: `SurfaceControl.checkNotReleased` NPE in `ActivityThread.syncTransferSplashscreenViewTransaction` (Android 12L, Jio tablet) | 1 / 1 | **Guarded on API 31–32.** See §7.2 |
+| ANR: main thread in `Paint.<init>` ← `OutsetBoxShadowDrawable` ← `BaseViewManager.setBoxShadow` (Android 12, OPPO) | 1 / 1 | **Not changed. Needs a design decision.** See §7.3 |
+| ANRs in GPU/driver/OEM frames: `DrawFrameTask`, `nNotifyFramePending`, `WaitHoldingLocks`, `updateShowChinBar`; also `ReactTextView.<init>` (no focused window) | 1 each | Ignored. No app frames. The no-focused-window ANR is §6's candidate #2, already addressed |
+
+### 7.1 Notification-tap crash
+
+- **[Certain]** `expo-notifications` 0.32.17 is the newest release on the SDK 54 line (`npm view expo-notifications dist-tags`: `sdk-54 → 0.32.17`). Its `NotificationForwarderActivity` throws whenever the activity's `Notification`/`NotificationAction` Parcelable extras read back as null. On API 31+ every tap that opens the app goes through this activity.
+- **[Certain]** Upstream fixed this in expo/expo#43203 (merged 17 Feb 2026, SDK 55; issues #38908 and #24451). The fix stores a byte-array copy of both objects in the tap `PendingIntent`, falls back to that copy, and if recovery still fails it opens the app instead of throwing. Upgrading would mean an SDK bump, so `patches/expo-notifications+0.32.17.patch` backports only the `NotificationForwarderActivity` and `NotificationsService` hunks, verbatim. The unrelated `ExpoHandlingDelegate` and Firebase changes in that release are not included.
+- **[Likely]** Cause: Parcelable extras lost between the PendingIntent and the activity, concentrated on Samsung Android 11/12 according to the upstream reports. Relaunch with empty extras is also caught by the same `catch`. The forwarder is `exported=false`, `excludeFromRecents`, `noHistory` in the library manifest. The app overrides none of these (no `tools:replace` in `plugins/`). Checking the merged manifest needs a prebuild + Gradle build and is **PENDING**.
+- **Why not a bare `finish()`:** the user's tap would then do nothing. The backport recovers the full response from the bytes when possible, and otherwise opens the app at its normal launch.
+- **Residual:** notifications already queued by 1.5.5 carry no byte copy. If their extras are lost, the tap opens the app at Home without the deep link, but it does not crash.
+- **Payload audit [Certain]:** all 12 `scheduleNotificationAsync` call sites in `src/notifications/` set typed `data` (the japam slots via `buildContent`). The default action identifier is supplied by the library. The crash happens before any payload is read, so payload shape is not a factor. The remote-push path (`pushToken.ts`) only registers tokens.
+- **Guard:** `src/notifications/__tests__/expoNotificationsPatch.jest.test.ts` pins the patch file to the installed version and checks the patched source.
+
+### 7.2 Android 12/12L splash-transfer crash
+
+- **[Certain]** `expo-splash-screen` 31.0.13 `SplashScreenManager.registerOnActivity` always registers `setOnExitAnimationListener` (a 400 ms fade). **[Likely]** On API 31+ a registered exit listener is what makes the platform transfer the `SplashScreenView` into the app. That transfer path is the crashing frame, and it is a framework bug on 12/12L.
+- `patches/expo-splash-screen+31.0.13.patch` skips the listener on `S`/`S_V2` only, so the system dismisses its own splash. Both the splash and `LaunchCover` are blank `#FFF1D5`, so the missing fade cannot be seen. API ≤30 and ≥33 are unchanged. Guarded by `src/components/__tests__/expoSplashScreenPatch.test.ts`.
+
+### 7.3 Box-shadow ANR: evidence too thin for an app-wide visual change
+
+- **[Certain]** No component writes `boxShadow` directly. All 9 occurrences go through `androidBoxShadow()` in `src/theme/elevation.ts`. That covers 5 token tiers used at about 90 call sites in 56 files, plus the routine banner and the mini-player. The token deliberately avoids integer `elevation` because Android draws it as a grey box on all four sides (design.md §4).
+- **[Certain]** In RN 0.81.5, `OutsetBoxShadowDrawable` paints with a `BlurMaskFilter` and allocates new `Path`s on every draw. **[Likely]** This is real CPU/GPU cost per shadowed card on low-end GPUs, and it overlaps with the GPU-wait ANRs listed above. **[Guessing]** It caused this ANR: the sample was one main-thread snapshot in a `Paint` constructor, which is cheap on its own.
+- Replacing list-item shadows with `elevation` changes the look of about 56 screens and components on Android, and it needs native visual QA at Standard and Large sizes. One event does not justify that. **Revisit if** the cluster reaches ≥3 users in a 28-day window, or if GPU-wait ANRs rise after 1.5.6. The cheapest next step would then be flattening the `subtle`/`card` tiers in list rows to a warm hairline border on Android, after design sign-off.
