@@ -135,6 +135,8 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 
 ## Gotchas
 
+- **Patching an Expo module's native code also needs `buildFromSource`.** Expo SDK 54 links prebuilt AARs from each module's `local-maven-repo`. That covers expo-notifications, expo-splash-screen, expo-speech and 16 more. A patch-package edit to their `android/src` is never compiled unless `mobile/package.json` → `expo.autolinking.android.buildFromSource` names the module. `patchedExpoModulesBuildFromSource.test.ts` fails when a patched prebuilt module is missing from that list. The shipped 0.32.17/31.0.13/14.0.8 AARs contain none of the patches.
+
 - **App icon exports** — `mobile/assets/branding/app-icon-master.png` is the approved copper-relief master; `node mobile/scripts/export-app-icons.mjs` regenerates all four Expo icon/splash/favicon assets and their hash manifest. Android receives padded adaptive artwork; `mobile/app.json` supplies an explicit splash plugin and ivory backgrounds. These native-shell changes require a rebuilt app, not OTA. The Home wordmark and share-footer text are separate from the launcher icon (design.md §2.1).
 
 - **OTA + `runtimeVersion: appVersion`** — an OTA update reaches only users on a matching store
