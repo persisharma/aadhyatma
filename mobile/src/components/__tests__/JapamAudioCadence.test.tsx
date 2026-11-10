@@ -1,5 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
+import { Text } from 'react-native';
 import JapamAudioPlayer from '../JapamAudioPlayer';
 import RateStepper from '../RateStepper';
 import type { Lang } from '@/data/gita/language';
@@ -137,4 +138,45 @@ test('a changed stopToken ends the chant session; the mount value never pauses',
   expect(tree!.root.findAll(node => node.props.accessibilityLabel === 'Play auto-chant').length).toBeGreaterThan(0);
   act(() => { jest.advanceTimersByTime(20000); });
   expect(iteration).toHaveBeenCalledTimes(1);
+});
+
+test('rail layout is icon-only: speedometer above play, no text, same labels and ids', async () => {
+  mockStatus = { isLoaded: true, duration: 16 };
+  const rate = jest.fn();
+  await act(async () => { tree = TestRenderer.create(<ThemeProvider>
+    <JapamAudioPlayer layout="rail" mantraId="hare-krishna-mahamantra" lang="hi" rate={1} onRateChange={rate}
+      onIteration={jest.fn()} />
+  </ThemeProvider>); });
+  const texts = () => tree!.root.findAllByType(Text).map(n => [n.props.children].flat().join(''));
+  expect(texts()).not.toContain('चलाएँ');
+  expect(texts().some(t => /×/.test(t))).toBe(false);
+  expect(tree!.root.findAllByType(RateStepper)).toHaveLength(0);
+  const play = () => tree!.root.findAll(n => n.props.testID === 'japam-play' && typeof n.props.onPress === 'function')[0];
+  const speed = tree!.root.findAll(n => n.props.testID === 'japam-tempo-open' && typeof n.props.onPress === 'function')[0];
+  expect(play().props.accessibilityLabel).toBe('Play auto-chant');
+  expect(speed.props.accessibilityLabel).toContain('1.0×');
+  // Order: speedometer first (top), then play.
+  const order = tree!.root.findAll(n => ['japam-tempo-open', 'japam-play'].includes(n.props.testID) && typeof n.props.onPress === 'function')
+    .map(n => n.props.testID);
+  expect(order).toEqual(['japam-tempo-open', 'japam-play']);
+  await act(async () => { play().props.onPress(); });
+  expect(play().props.accessibilityLabel).toBe('Pause auto-chant');
+  expect(texts()).not.toContain('विराम');
+  // The speed sheet still owns rate changes.
+  act(() => speed.props.onPress());
+  act(() => tree!.root.findByType(RateStepper).props.onChange(1.2));
+  expect(rate).toHaveBeenCalledWith(1.2);
+});
+
+test.each([[true, 1], [false, 0]])('rail without a recording dims play; speedometer only for silent Infinity (%s)', async (silent, speeds) => {
+  await act(async () => { tree = TestRenderer.create(<ThemeProvider>
+    <JapamAudioPlayer layout="rail" mantraId="radha-naam" lang="hi" rate={1} onRateChange={jest.fn()}
+      showSilentTempo={silent} onIteration={jest.fn()} />
+  </ThemeProvider>); });
+  const play = tree!.root.findAll(n => n.props.testID === 'japam-play' && n.props.accessibilityLabel)[0];
+  expect(play.props.accessibilityLabel).toBe('Audio not available');
+  expect(play.props.accessibilityState).toEqual({ disabled: true });
+  expect(tree!.root.findAllByType(Text).map(n => [n.props.children].flat().join(''))).not.toContain('इस मंत्र की ध्वनि उपलब्ध नहीं है');
+  expect(tree!.root.findAll(n => n.props.testID === 'japam-tempo-open' && typeof n.props.onPress === 'function')).toHaveLength(speeds);
+  expect(mockPlayer.play).not.toHaveBeenCalled();
 });

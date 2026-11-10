@@ -112,8 +112,11 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [headH, setHeadH] = useState(0);
   const measured = tapViewportH > 0 && headH > 0;
   const fitH = tapViewportH - headH - TAP_CHROME_H;
+  // The control column stands at the right edge above ↺; the centred ring keeps
+  // the same clearance on both sides so no bead or the Sumeru sits under it.
+  const railCap = Math.max(MALA_MIN, windowWidth - 2 * RAIL_CLEARANCE);
   const malaSize = Math.round(
-    Math.min(windowWidth - 2 * spacing.xxl, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
+    Math.min(windowWidth - 2 * spacing.xxl, railCap, MALA_MAX, measured ? Math.max(MALA_MIN, fitH) : MALA_MAX)
   );
 
   const mantra: JapamMantra | null = useMemo(
@@ -356,6 +359,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
     <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340) - sankalpStripH}
       running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
+      railClearance={RAIL_CLEARANCE}
       notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
       ringText={displayedLines.join(' ')} ringsActive={screenFocused}
       labelFontFamily={scriptSerif ?? (isLatinLang(lang) ? typography.cardLatin.fontFamily : typography.verse.fontFamily)}
@@ -485,6 +489,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           })}
         </View>
 
+        <View style={styles.tapArea}>
         <ScrollView
           style={styles.tapArea}
           contentContainerStyle={styles.tapScroll}
@@ -568,6 +573,25 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </ScrollView>
 
+        {/* Icon-only control column (§35): speedometer above ▶/❚❚, standing right
+            above ↺ in the count bar. It owns the recording, so it stays mounted. */}
+        <View style={styles.railSlot} pointerEvents="box-none">
+          <JapamAudioPlayer
+            layout="rail"
+            mantraId={mantra.id}
+            lang={lang}
+            onIteration={handleAudioIteration}
+            onPlayingChange={setAudioPlaying}
+            rate={chantRate}
+            onRateChange={setChantRate}
+            onRecitationDurationChange={receiveAudioCadence}
+            showSilentTempo={japaStyle === 'infinity'}
+            autoPlay={route.params.autoPlay === true}
+            stopToken={audioStopToken}
+          />
+        </View>
+        </View>
+
         {/* Japa sankalp progress (§35.2) — fixed height, present only while a vow exists. */}
         {sankalp ? (
           <View
@@ -634,25 +658,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </View>
         </View>
 
-        <View
-          style={[
-            styles.audioRow,
-            { borderTopColor: colors.divider },
-          ]}
-        >
-          <JapamAudioPlayer
-            mantraId={mantra.id}
-            lang={lang}
-            onIteration={handleAudioIteration}
-            onPlayingChange={setAudioPlaying}
-            rate={chantRate}
-            onRateChange={setChantRate}
-            onRecitationDurationChange={receiveAudioCadence}
-            showSilentTempo={japaStyle === 'infinity'}
-            stopToken={audioStopToken}
-            autoPlay={route.params.autoPlay === true}
-          />
-        </View>
       </SafeAreaView>
 
       {/* The ↺ icon opens both choices; picking one is the confirmation. */}
@@ -849,6 +854,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 // hairline), used for the Infinity frame until the strip's own layout arrives.
 const SANKALP_STRIP_EST_H = 48;
 
+// Right-edge width the control column needs: 16 margin + 44 button + 4 air.
+const RAIL_CLEARANCE = 64;
+
 // Mala box bounds; the fitted size lands between them (and under the width cap).
 // Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.
 const MALA_MAX = 330;
@@ -1001,10 +1009,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  audioRow: {
-    borderTopWidth: 1,
-    // The player's own row adds 4 above/below its 44 dp controls.
-    paddingVertical: 2,
+  railSlot: {
+    position: 'absolute',
+    // Centred over ↺ (statsRow paddingRight 16 + 44 dp button).
+    right: 16,
+    bottom: 8,
   },
   backdrop: {
     flex: 1,

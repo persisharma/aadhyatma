@@ -1,7 +1,9 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { AccessibilityInfo, Alert, Animated, Text, TextInput } from 'react-native';
+import * as ReactNative from 'react-native';
 import JapamInfinity from '@/components/JapamInfinity';
+import JapamMala from '@/components/JapamMala';
 import * as Haptics from 'expo-haptics';
 import type { Lang } from '@/data/gita/language';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
@@ -226,6 +228,33 @@ describe('Japa sankalp on the counter (§35.2)', () => {
       alert.mock.calls[0][2]!.find((b) => b.style === 'destructive')!.onPress!();
     });
     expect(frameSize()).toBe(base);
+  });
+
+  test('play and speed stand in an icon column above ↺; no Play bar remains', async () => {
+    const tree = await renderJapam();
+    expect(mockAudio.props!.layout).toBe('rail');
+    // Exactly one player (the column) — the old full-width audio bar is gone.
+    expect(tree.root.findAll((n) => n.props.onIteration && n.props.layout).length).toBe(1);
+    const slot = tree.root.findAll((n) => n.props.pointerEvents === 'box-none'
+      && ReactNative.StyleSheet.flatten(n.props.style)?.position === 'absolute')[0];
+    expect(ReactNative.StyleSheet.flatten(slot.props.style)).toMatchObject({ right: 16 });
+    expect(byLabel(tree, 'Reset or clear the count')).toBeDefined();
+  });
+
+  test.each(['mala', 'infinity'] as const)('on a 390 pt phone the column never sits over the %s', async (style) => {
+    jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+    jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width: 390, height: 844, scale: 3, fontScale: 1 });
+    mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? JSON.stringify(style) : null));
+    const tree = await renderJapam();
+    if (style === 'mala') {
+      // 390 − 2 × 64 (16 margin + 44 button + 4 air): the ring keeps both sides clear.
+      expect(tree.root.findByType(JapamMala).props.size).toBeLessThanOrEqual(262);
+    } else {
+      expect(tree.root.findByType(JapamInfinity).props.railClearance).toBe(64);
+      const below = tree.root.findAll((n) => n.props.testID === 'japam-infinity-below' && n.props.style)[0];
+      // Frame 340 centred on 390 ends at 365; the column starts at 326 → inset 39 each side.
+      expect(ReactNative.StyleSheet.flatten(below.props.style).paddingHorizontal).toBe(39);
+    }
   });
 
   test('a playing recording is stopped when its repetitions complete the vow', async () => {
