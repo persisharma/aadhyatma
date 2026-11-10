@@ -1,0 +1,167 @@
+# Japa Sankalp — native end-to-end coverage (design.md §35.2)
+#
+# Scope:
+#   - COVERS the stats-row opener on a fresh counter, taking a 1-mala vow from
+#     the sheet (preset chip, no keyboard), 108 manual beads filling the strip,
+#     completion with the mala rollover, taking a new vow on a completed one,
+#     Infinity loops filling it hands-free, the automatic pause at the target
+#     (the count must not move afterwards), clearing the completed vow, and
+#     Gayatri / Hare Krishna in Anant with a vow (screenshots: the frame gives
+#     back the strip's height so the full japa reading stays on screen).
+#   - Typed amounts, japa-count presets, Reset/set-aside copy and the four-
+#     language strings are pinned by JapamCounterSankalp.test.tsx; the number
+#     pad is avoided here because iOS has no Return key to dismiss it.
+#
+# Selector notes: every control is matched on its stable English a11y label
+# ("Take a japa sankalp", "1 mala", "Take this sankalp", "Japa sankalp, N of 1
+# mala…", "Clear completed sankalp") or testID (japam-style-*, japam-counter-*),
+# never on Devanagari copy. The sheet's backdrop/card are not accessible
+# elements, so its controls stay in the tree (unlike the Reset sheet).
+#
+# Screenshots (japa-sankalp-*.png) are written to the working directory; the
+# native workflow moves them into its evidence artifact.
+#
+# _launch.yaml clears state, so the counter and the sankalp start empty.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- scrollUntilVisible:
+    element:
+      text: "JapMala.*Tap to open\\."
+    direction: DOWN
+    timeout: 20000
+    centerElement: true
+- tapOn: "JapMala.*Tap to open\\."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Om Namah Shivaya\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala, 0 malas completed.*"
+
+# ── Fresh counter: opener beside Reset, no strip ──
+- assertNotVisible: "Japa sankalp, .*"
+- assertVisible: "Take a japa sankalp"
+- takeScreenshot: japa-sankalp-1-fresh-counter
+
+# ── Take a 1-mala vow ──
+- tapOn: "Take a japa sankalp"
+- waitForAnimationToEnd
+- assertVisible: "Count in malas"
+- takeScreenshot: japa-sankalp-2-sheet
+- tapOn: "1 mala"
+- tapOn: "Take this sankalp"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+- assertNotVisible: "Take a japa sankalp"
+
+# ── 108 manual beads fill and complete it ──
+- repeat:
+    times: 54
+    commands:
+      - tapOn: ".*Tap to count one bead.*"
+- assertVisible: ".*54 of 108 on this mala.*"
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+- takeScreenshot: japa-sankalp-3-in-progress
+- repeat:
+    times: 54
+    commands:
+      - tapOn: ".*Tap to count one bead.*"
+- assertVisible: "Japa sankalp, 1 of 1 mala, complete\\..*"
+- assertVisible: ".*0 of 108 on this mala, 1 malas completed.*"
+- takeScreenshot: japa-sankalp-4-complete
+
+# ── A completed vow offers a fresh one ──
+- tapOn: "Japa sankalp, 1 of 1 mala, complete\\..*"
+- waitForAnimationToEnd
+- assertVisible: "Clear completed sankalp"
+- takeScreenshot: japa-sankalp-5-sheet-complete
+- tapOn: "1 mala"
+- tapOn: "Take a new sankalp"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+
+# ── Infinity loops fill it hands-free, then pause at the target ──
+- tapOn:
+    id: "japam-style-infinity"
+- waitForAnimationToEnd
+- takeScreenshot: japa-sankalp-6-infinity-active
+- tapOn:
+    id: "japam-counter-infinity"
+- extendedWaitUntil:
+    visible: "Japa sankalp, 1 of 1 mala, complete\\..*"
+    timeout: 300000
+- takeScreenshot: japa-sankalp-7-infinity-complete
+# Several loop lengths pass; a paused session must not add a single bead.
+- extendedWaitUntil:
+    visible: "never-present-sentinel"
+    timeout: 5000
+    optional: true
+- tapOn:
+    id: "japam-style-mala"
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala, 2 malas completed.*"
+
+# ── Clear the completed vow; the opener returns ──
+- tapOn: "Japa sankalp, 1 of 1 mala, complete\\..*"
+- waitForAnimationToEnd
+- tapOn: "Clear completed sankalp"
+- waitForAnimationToEnd
+- assertVisible: "Take a japa sankalp"
+- assertNotVisible: "Japa sankalp, .*"
+
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Long mantras in Anant with a vow: the frame gives back the strip's
+#    height, so the full japa reading stays on screen (screenshot evidence) ──
+- tapOn: "Gayatri Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn: "Take a japa sankalp"
+- waitForAnimationToEnd
+- tapOn: "1 mala"
+- tapOn: "Take this sankalp"
+- waitForAnimationToEnd
+- tapOn:
+    id: "japam-style-infinity"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+- takeScreenshot: japa-sankalp-8-gayatri-infinity
+- tapOn:
+    id: "japam-style-mala"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+- tapOn: "Hare Krishna Mahamantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn: "Take a japa sankalp"
+- waitForAnimationToEnd
+- tapOn: "1 mala"
+- tapOn: "Take this sankalp"
+- waitForAnimationToEnd
+- tapOn:
+    id: "japam-style-infinity"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+- takeScreenshot: japa-sankalp-9-hare-krishna-infinity
+- tapOn:
+    id: "japam-style-mala"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Naam japa: the enlarged सीता राम keeps its ी loop (≥1.5× leading) ──
+- scrollUntilVisible:
+    element:
+      text: "Sita Ram Naam Japa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 20000
+    centerElement: true
+- tapOn: "Sita Ram Naam Japa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+- takeScreenshot: japa-sankalp-10-sita-ram-naam
+- tapOn: "Back"
+- waitForAnimationToEnd

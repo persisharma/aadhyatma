@@ -116,3 +116,25 @@ test('switching recordings cannot reuse the previous file duration while the new
   await act(async () => { tree!.update(display('om-namah-shivaya')); });
   expect(cadence).not.toHaveBeenCalledWith('om-namah-shivaya', expect.anything());
 });
+
+test('a changed stopToken ends the chant session; the mount value never pauses', async () => {
+  mockStatus = { isLoaded: true, duration: 16 };
+  const iteration = jest.fn();
+  const playing = jest.fn();
+  const display = (stopToken: number) => <ThemeProvider><JapamAudioPlayer mantraId="hare-krishna-mahamantra" lang="en"
+    rate={1} onIteration={iteration} onPlayingChange={playing} stopToken={stopToken} /></ThemeProvider>;
+  await act(async () => { tree = TestRenderer.create(display(5)); });
+  await act(async () => { tree!.root.findAll(node => node.props.accessibilityLabel === 'Play auto-chant')[0].props.onPress(); });
+  expect(playing).toHaveBeenLastCalledWith(true);
+  const pausesBefore = mockPlayer.pause.mock.calls.length;
+  act(() => { jest.advanceTimersByTime(250 + 4500 + 750); });
+  expect(iteration).toHaveBeenCalledTimes(1);
+  await act(async () => { tree!.update(display(5)); }); // same token: nothing happens
+  expect(mockPlayer.pause.mock.calls.length).toBe(pausesBefore);
+  await act(async () => { tree!.update(display(6)); });
+  expect(mockPlayer.pause.mock.calls.length).toBe(pausesBefore + 1);
+  expect(playing).toHaveBeenLastCalledWith(false);
+  expect(tree!.root.findAll(node => node.props.accessibilityLabel === 'Play auto-chant').length).toBeGreaterThan(0);
+  act(() => { jest.advanceTimersByTime(20000); });
+  expect(iteration).toHaveBeenCalledTimes(1);
+});

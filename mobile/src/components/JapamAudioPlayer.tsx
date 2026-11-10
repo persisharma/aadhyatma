@@ -37,6 +37,9 @@ type Props = {
   onRecitationDurationChange?: (mantraId: string, durationMs: number) => void;
   /** Infinity supports tempo adjustment even without a bundled recording. */
   showSilentTempo?: boolean;
+  /** Changing this value pauses an active chant — the counter bumps it when a
+   *  japa sankalp reaches its target (design.md §35.2). The value on mount is ignored. */
+  stopToken?: number;
 };
 
 const RATE_STEP = 0.1;
@@ -62,6 +65,7 @@ export default function JapamAudioPlayer({
   onRateChange,
   onRecitationDurationChange,
   showSilentTempo,
+  stopToken,
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
@@ -83,6 +87,7 @@ export default function JapamAudioPlayer({
       onRateChange={onRateChange}
       onRecitationDurationChange={onRecitationDurationChange}
       showSilentTempo={showSilentTempo}
+      stopToken={stopToken}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -108,6 +113,7 @@ function ActiveAudioPlayer({
   onRateChange,
   onRecitationDurationChange,
   showSilentTempo,
+  stopToken,
   colors,
   typography,
   radii,
@@ -277,6 +283,21 @@ function ActiveAudioPlayer({
       }),
     [player, clearCapTimer]
   );
+
+  // A changed `stopToken` ends the chant session (a japa sankalp reached its
+  // target). Ignored on mount, so remounting for a new mantra never pauses.
+  const stopTokenRef = useRef(stopToken);
+  useEffect(() => {
+    if (stopTokenRef.current === stopToken) return;
+    stopTokenRef.current = stopToken;
+    clearCapTimer();
+    try {
+      player.pause();
+    } catch {
+      /* player may already be released */
+    }
+    setChanting(false);
+  }, [stopToken, player, clearCapTimer]);
 
   const isPlaying = chanting;
 

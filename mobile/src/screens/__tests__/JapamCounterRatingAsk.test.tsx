@@ -39,6 +39,9 @@ jest.mock('@/contexts/JapamCounterContext', () => ({
     increment: mockIncrement,
     resetBeads: jest.fn(),
     clear: jest.fn(),
+    getSankalp: () => null,
+    takeSankalp: jest.fn(),
+    releaseSankalp: jest.fn(),
   }),
 }));
 

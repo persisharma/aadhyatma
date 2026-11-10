@@ -60,6 +60,7 @@ import { SparkleIcon } from 'phosphor-react-native/src/icons/Sparkle';
 import { GearSixIcon } from 'phosphor-react-native/src/icons/GearSix';
 import { ChatTextIcon } from 'phosphor-react-native/src/icons/ChatText';
 import { PencilSimpleIcon } from 'phosphor-react-native/src/icons/PencilSimple';
+import { TargetIcon } from 'phosphor-react-native/src/icons/Target';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
@@ -123,6 +124,7 @@ const icons = {
   moksha: BirdIcon,
   auspicious: SparkleIcon,
   morning: SunHorizonIcon,
+  sankalp: TargetIcon,
 } as const;
 
 export type AppIconName = keyof typeof icons;
