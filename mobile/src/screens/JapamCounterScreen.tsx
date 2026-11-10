@@ -135,6 +135,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // Japa sankalp (§35.2): a one-time per-mantra vow; progress accrues in the provider.
   const sankalp = getSankalp(mantra?.id ?? '__none__');
   const [sankalpSheetOpen, setSankalpSheetOpen] = useState(false);
+  // In Infinity the fixed frame would otherwise lose the strip's height from the
+  // scroll viewport and push the mantra reading below the fold. The frame gives
+  // that height back instead (down to its 280 floor), so the japa text keeps the
+  // place it had without a vow. Estimated until the strip reports its layout.
+  const [stripH, setStripH] = useState(SANKALP_STRIP_EST_H);
+  const sankalpStripH = sankalp ? stripH : 0;
   const [resetSheetOpen, setResetSheetOpen] = useState(false);
   const [alarmEditorOpen, setAlarmEditorOpen] = useState(false);
   const lastRoundRef = useRef(entry.rounds);
@@ -348,7 +354,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   // Keep the approved frame; the complete reader replaces its former count row.
   const infinityVisual = japaStyle === 'infinity' ? <View style={styles.malaBlock}>
-    <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340)}
+    <JapamInfinity key={mantra.id} count={entry.count} size={Math.min(windowWidth - 24, 340) - sankalpStripH}
       running={infinityRunning} cycleMs={infinityCycleMs} phase={infinityPhase} onCycle={handleInfinityCycle}
       notice={sankalpNotice ? sankalpCompleteLabel : sumeruNotice ? infinityCompleteLabel : null} hint={tapHint}
       ringText={displayedLines.join(' ')} ringsActive={screenFocused}
@@ -561,12 +567,20 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
         {/* Japa sankalp progress (§35.2) — fixed height, present only while a vow exists. */}
         {sankalp ? (
-          <JapaSankalpStrip
-            sankalp={sankalp}
-            lang={lang}
-            disabled={counterLoading}
-            onPress={() => setSankalpSheetOpen(true)}
-          />
+          <View
+            testID="japa-sankalp-strip-slot"
+            onLayout={(e) => {
+              const h = Math.ceil(e.nativeEvent.layout.height);
+              setStripH((prev) => (prev === h ? prev : h));
+            }}
+          >
+            <JapaSankalpStrip
+              sankalp={sankalp}
+              lang={lang}
+              disabled={counterLoading}
+              onPress={() => setSankalpSheetOpen(true)}
+            />
+          </View>
         ) : null}
 
         {/* Completed malas and reset; the current bead count is in the visualization. */}
@@ -827,6 +841,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     </View>
   );
 }
+
+// The sankalp strip's standard-text height (6 + 22 + 4 + 5 + 8 padding/rows + 1
+// hairline), used for the Infinity frame until the strip's own layout arrives.
+const SANKALP_STRIP_EST_H = 46;
 
 // Mala box bounds; the fitted size lands between them (and under the width cap).
 // Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.

@@ -201,6 +201,33 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
   });
 
+  test('in Infinity the frame gives the strip its height back, so the japa reading does not move down', async () => {
+    const tree = await renderJapam();
+    await press(byTestId(tree, 'japam-style-infinity'));
+    const frameSize = () => tree.root.findByType(JapamInfinity).props.size;
+    const base = frameSize();
+    expect(base).toBe(340);
+    // Taking a vow adds the strip; the frame shrinks by the strip's estimated height…
+    await press(byLabel(tree, 'Take a japa sankalp'));
+    await press(byTestId(tree, 'japa-sankalp-preset-1'));
+    await press(byLabel(tree, 'Take this sankalp'));
+    expect(frameSize()).toBe(base - 46);
+    // …then by its measured height (e.g. enlarged system text).
+    const slot = tree.root.findAll((n) => n.props.testID === 'japa-sankalp-strip-slot' && typeof n.props.onLayout === 'function')[0];
+    await act(async () => {
+      slot.props.onLayout({ nativeEvent: { layout: { x: 0, y: 0, width: 390, height: 58.4 } } });
+    });
+    expect(frameSize()).toBe(base - 59);
+    // Clearing the vow returns the full frame.
+    await press(strip(tree));
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    await press(byLabel(tree, 'Set this sankalp aside'));
+    await act(async () => {
+      alert.mock.calls[0][2]!.find((b) => b.style === 'destructive')!.onPress!();
+    });
+    expect(frameSize()).toBe(base);
+  });
+
   test('a playing recording is stopped when its repetitions complete the vow', async () => {
     withStoredSankalp({ unit: 'japa', amount: 2, done: 0, startedAt: 1, updatedAt: 1 });
     const tree = await renderJapam();

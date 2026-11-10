@@ -5,7 +5,9 @@
 #     the sheet (preset chip, no keyboard), 108 manual beads filling the strip,
 #     completion with the mala rollover, taking a new vow on a completed one,
 #     Infinity loops filling it hands-free, the automatic pause at the target
-#     (the count must not move afterwards), and clearing the completed vow.
+#     (the count must not move afterwards), clearing the completed vow, and
+#     Gayatri / Hare Krishna in Anant with a vow (screenshots: the frame gives
+#     back the strip's height so the full japa reading stays on screen).
 #   - Typed amounts, japa-count presets, Reset/set-aside copy and the four-
 #     language strings are pinned by JapamCounterSankalp.test.tsx; the number
 #     pad is avoided here because iOS has no Return key to dismiss it.
@@ -111,5 +113,41 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Take a japa sankalp"
 - assertNotVisible: "Japa sankalp, .*"
 
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+# ── Long mantras in Anant with a vow: the frame gives back the strip's
+#    height, so the full japa reading stays on screen (screenshot evidence) ──
+- tapOn: "Gayatri Mantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn: "Take a japa sankalp"
+- waitForAnimationToEnd
+- tapOn: "1 mala"
+- tapOn: "Take this sankalp"
+- waitForAnimationToEnd
+- tapOn:
+    id: "japam-style-infinity"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+- takeScreenshot: japa-sankalp-8-gayatri-infinity
+- tapOn:
+    id: "japam-style-mala"
+- tapOn: "Back"
+- waitForAnimationToEnd
+
+- tapOn: "Hare Krishna Mahamantra\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn: "Take a japa sankalp"
+- waitForAnimationToEnd
+- tapOn: "1 mala"
+- tapOn: "Take this sankalp"
+- waitForAnimationToEnd
+- tapOn:
+    id: "japam-style-infinity"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 1 mala\\..*"
+- takeScreenshot: japa-sankalp-9-hare-krishna-infinity
+- tapOn:
+    id: "japam-style-mala"
 - tapOn: "Back"
 - waitForAnimationToEnd
