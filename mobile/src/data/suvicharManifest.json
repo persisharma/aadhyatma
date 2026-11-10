@@ -216,6 +216,24 @@
     "vishnu--pushp-aangan": {
       "hash": "cd145fe21e14d2cc",
       "ext": "webp"
+    },
+    "parshuram--mandir-jharokha": {
+      "hash": "c1e27ebd5dc41dea",
+      "ext": "webp",
+      "width": 1122,
+      "height": 1402
+    },
+    "parshuram--pushp-aangan": {
+      "hash": "8babe6780d7654cb",
+      "ext": "webp",
+      "width": 1122,
+      "height": 1402
+    },
+    "parshuram--bhakti-patra": {
+      "hash": "810ec124ea4704c1",
+      "ext": "webp",
+      "width": 1122,
+      "height": 1402
     }
   }
 }

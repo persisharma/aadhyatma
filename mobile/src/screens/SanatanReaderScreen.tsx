@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, FlatList, Modal, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, FlatList, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { getSanatanTopic, getSanatanPageTitles, validSanatanPage, sanatanSources, type SanatanTopic } from '@/data/sanatan-parichay';
+import { getSanatanTopic, getSanatanPageTitles, validSanatanPage, type SanatanTopic } from '@/data/sanatan-parichay';
 import { useSanatanLearning } from '@/data/sanatan-parichay/store';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
@@ -19,8 +19,8 @@ import { useShare, type ShareableProse } from '@/utils/shareVerse';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import { readingParchment } from '@/data/backgroundAsset';
 import { Action, Copy, Painting, PrimaryAction, ToolAction, useSanatanText } from '@/components/sanatan/Primitives';
-import SourceCredits from '@/components/sanatan/SourceCredits';
 import ExploreDiagram from '@/components/sanatan/ExploreDiagram';
+import SwastikaGuide from '@/components/sanatan/SwastikaGuide';
 import type { KathaContentSection } from '@/panchang/types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'SanatanReader'>;
@@ -48,7 +48,6 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
   const learning = useSanatanLearning();
   const [page, setPage] = useState(initialPage);
   const pageRef = useRef(initialPage);
-  const [sources, setSources] = useState(false);
   const listRef = useRef<FlatList<KathaContentSection>>(null);
   const { share, busy } = useShare();
   const titles = getSanatanPageTitles(topic);
@@ -78,8 +77,7 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
   const shareLesson = () => {
     const scope = (whole: boolean) => ({ id: whole ? 'whole' : `page-${page}`, labelHi: whole ? 'पूरा परिचय' : 'यह पृष्ठ', labelEn: whole ? 'Whole introduction' : 'This page',
       headerHi: topic.title[0], headerEn: topic.title[1], titleHi: topic.question[0], titleEn: topic.question[1],
-      blocks: [...(whole ? topic.pages : [topic.pages[page]]).map(body => ({ kind: 'para' as const, hi: body[0], en: body[1] })),
-        ...topic.refs.map(id => { const s = sanatanSources[id]; const credit = `${s.title} · ${s.edition} · ${s.location}`; return { kind: 'para' as const, hi: credit, en: credit }; })],
+      blocks: (whole ? topic.pages : [topic.pages[page]]).map(body => ({ kind: 'para' as const, hi: body[0], en: body[1] })),
     });
     const content: ShareableProse = { kind: 'prose', sourceId: `sanatan-${topic.id}`, background: null,
       sectionNameHi: 'सनातन परिचय', sectionNameEn: 'Sanatan Parichay', tagNameHi: topic.name[0], tagNameEn: topic.name[1],
@@ -108,13 +106,13 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
             <ProseReadingCard heading={<Copy heading>{t(titles[index])}</Copy>}>
               {index === 0 && <Painting id={topic.id} />}
               {index === 0 && <Copy heading>{t(topic.question)}</Copy>}
+              {topic.kind === 'swastika' && index === 2 && <SwastikaGuide mode="drawing" />}
               {t(topic.pages[index]).split(/\n\s*\n/).map((paragraph, paragraphIndex) => <Copy key={paragraphIndex}>{paragraph}</Copy>)}
               {index === 1 && <ExploreDiagram topic={topic} onCollection={topicId => navigation.push('SanatanParichay', { topicId })} />}
             </ProseReadingCard>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
             <ToolAction icon="saved" label={t(learning.saved.includes(topic.id) ? ['सहेजा हुआ हटाएँ','Remove saved lesson'] : ['बाद के लिए सहेजें','Save for later'])}
               selected={learning.saved.includes(topic.id)} onPress={() => void learning.toggleSaved(topic.id).catch(failed)} />
-            <ToolAction icon="info" label={t(['स्रोत और सन्दर्भ','Sources & context'])} onPress={() => { readAloud.stop(); autoSlide.stop(); setSources(true); }} />
             <ToolAction icon="share" disabled={busy} label={t(['साझा करें','Share'])} onPress={shareLesson} />
             </View>
             {index > 0 && <Action label={t(['पिछला पृष्ठ','Previous page'])} onPress={() => go(index - 1)} />}
@@ -122,12 +120,6 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
               onPress={() => { if (index < 2) go(index + 1); else { readAloud.stop(); autoSlide.stop(); void learning.readPage(topic.id, index, true).then(() => navigation.goBack()).catch(failed); } }} />
           </AutoSlideScrollView>
         </View>} />
-      <Modal visible={sources} animationType="slide" onRequestClose={() => setSources(false)}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }}>
-          <ReaderHeader title={t(['स्रोत और सन्दर्भ','Sources & context'])} onBack={() => setSources(false)} />
-          <SourceCredits topic={topic} />
-        </SafeAreaView>
-      </Modal>
     </SafeAreaView>
   </View>;
 }

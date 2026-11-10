@@ -36,7 +36,8 @@ it('gives every pooled named-subject its distinct portrait', () => {
 
 it('pools the flat ashtakam/suktam/kavach/stuti sources without the neutral fallback', () => {
   const pool = getVersePool();
-  expect(pool).toHaveLength(parshuramPublished ? 1691 : 1684);
+  // +8 non-naam japam mantras (7 Nov 2026); Sita Ram naam japa stays out of the pool.
+  expect(pool).toHaveLength(parshuramPublished ? 1699 : 1692);
   // The flat sources that remain after chalisas and aartis left the rotation.
   const flatSourceIds = new Set(["lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram", "parshuram-stotram"]);
   const flat = pool.filter(v => flatSourceIds.has(v.sourceId));

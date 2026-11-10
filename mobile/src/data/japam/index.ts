@@ -32,6 +32,8 @@ const validDeities: ReadonlySet<Deity> = new Set([
   'savitr',
   'radha',
   'saraswati',
+  'lakshmi',
+  'kubera',
   'surya',
   'shani',
   'navagraha',
@@ -94,7 +96,7 @@ list.forEach((m, i) => assertMantra(m, i));
 
 export const japamMantras: readonly JapamMantra[] = list as JapamMantra[];
 
-export const japamTitleHi = 'जप';
+export const japamTitleHi = 'जपमाला';
 export const japamTitleEn = 'JapMala';
 
 export function getJapamMantra(id: string): JapamMantra {

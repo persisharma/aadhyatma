@@ -43,7 +43,7 @@ content is generated from the registries, so it cannot drift from the code).
   standing doors in a sticky action bar above the tab bar — Sept 2026 UX
   review), DaanJourney (one skippable scroll with always-present terminal
   actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
-  (interstitial → `Linking.openURL`), DaanKatha (story → शिक्षा → source →
+  (interstitial → `Linking.openURL`), DaanKatha (story → शिक्षा → canonical work/passage →
   ॥ ॐ ॥ → `अगली कथा` row with position dots + `दान करें` / `खाते में दर्ज करें`
   doors, so the story never dead-ends). All but DaanPunya registered
   on Home, More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).
@@ -137,3 +137,8 @@ content is generated from the registries, so it cannot drift from the code).
   integrity test.
 - The release that first carries the directory must be a STORE release
   (PRD-26 §6.1 review-visibility gate) even though the code is OTA-safe JS.
+
+
+Research publisher and verification records remain internal under RULEBOOK
+§11.16. Canonical work/passage identity may remain as teaching context; do not
+wrap it in a source feature or append a bibliography to the app or share output.

@@ -30,7 +30,7 @@ const answer: AskAnswer = {
     { label: { hi: 'न चढ़ाएँ', en: 'Do not offer' }, value: { hi: 'तुलसी', en: 'Tulsi' }, tone: 'avoid' },
   ],
   working: ['deity ganesha → bhogId ganesha-bhog (status: verified)'],
-  provenance: { hi: 'स्रोत-सत्यापित', en: 'Source-verified' },
+  provenance: { hi: 'परिवार की परम्परा में भिन्नता हो सकती है।', en: 'Family traditions may differ.' },
   actions: [
     { label: { hi: 'व्रत विवरण', en: 'Observance' }, target: { tab: 'panchang', screen: 'ObservanceDetail', params: { ruleId: 'ganesh-chaturthi' } } },
     { label: { hi: 'पूजा विधि', en: 'Puja vidhi' }, target: { tab: 'home', screen: 'VidhiDetail', params: { vidhiId: 'ganesh-chaturthi-sthapana' } } },
@@ -57,7 +57,8 @@ test('renders tag, headline, rows, provenance and actions in Hindi', () => {
   expect(all).toContain('श्री गणेश का नैवेद्य');
   expect(all).toContain('मोदक या लड्डू');
   expect(all).toContain('तुलसी');
-  expect(all).toContain('स्रोत-सत्यापित');
+  expect(all).toContain('परिवार की परम्परा में भिन्नता हो सकती है।');
+  expect(all).not.toContain('स्रोत-सत्यापित');
   expect(all).toContain('व्रत विवरण');
   // The working trail is collapsed until asked for.
   expect(all).not.toContain('bhogId ganesha-bhog');

@@ -51,6 +51,9 @@ if [[ "$MATRIX_SCOPE" == all || "$MATRIX_SCOPE" == journeys || "$MATRIX_SCOPE" =
   SANATAN_PHASE=regional-search
   node scripts/run-native-diagnostic.cjs --timeout-ms 1500000 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/regional-search.xml" \
     .maestro/sanatan-regional-search.yaml 2>&1 | tee "$SANATAN_OUTPUT/regional-search.log"
+  SANATAN_PHASE=swastika-guide
+  node scripts/run-native-diagnostic.cjs --timeout-ms 1200000 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/swastika-guide.xml" \
+    .maestro/sanatan-swastika-guide.yaml 2>&1 | tee "$SANATAN_OUTPUT/swastika-guide.log"
 fi
 for text_setting in standard enlarged; do
   if [[ "$MATRIX_SCOPE" != all && "$MATRIX_SCOPE" != "$text_setting" ]]; then continue; fi

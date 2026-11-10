@@ -11,7 +11,7 @@ const shelf = { hi: 'बच्चों की चित्र-कथाएँ',
 type Unit = { scene: number | null; pages: Record<Lang, ProsePage[]> };
 const translated = <T,>(fn: (lang: Lang) => T): Record<Lang, T> => Object.fromEntries(languages.map(lang => [lang, fn(lang)])) as Record<Lang, T>;
 const layout = 'picture' as const;
-const endingTitle = { hi: 'कथा की सीख और स्रोत', en: 'Takeaway & source', gu: 'વાર્તાની શીખ અને સ્રોત', kn: 'ಕಥೆಯ ಪಾಠ ಮತ್ತು ಮೂಲ' };
+const endingTitle = { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ' };
 /** The app link on the last card: a PNG cannot be tapped, so the URL is printed and the share message carries it too. */
 const appLink = { hi: 'पूरी चित्र-कथा Vedansh ऐप में पढ़ें', en: 'Read the whole picture story in the Vedansh app', gu: 'આખી ચિત્રવાર્તા Vedansh ઍપમાં વાંચો', kn: 'ಸಂಪೂರ್ಣ ಚಿತ್ರಕಥೆ Vedansh ಆ್ಯಪ್‌ನಲ್ಲಿ ಓದಿ' };
 
@@ -33,7 +33,7 @@ function illustrated(art: string, label: string, title: string, lang: Lang, bloc
 /**
  * The series looks like the reader: one 9:16 picture card per scene (art, title,
  * narration, dialogue in its tinted box), then a closing card with the cover art, the
- * takeaway, the source note and the app link. No scene, ending or source is dropped.
+ * takeaway and the app link. Review-only provenance never enters the export.
  */
 export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareableProse {
   const units: Unit[] = story.pages.map((page, i) => ({
@@ -45,7 +45,6 @@ export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareablePr
   }));
   const ending: Unit = { scene: null, pages: translated(lang => illustrated(story.coverArt, storyText(story.title, lang), pick(lang, endingTitle), lang, [
     { kind: 'para', text: storyText(story.takeaway, lang) },
-    { kind: 'para', text: storyText(story.sourceNote, lang) },
     { kind: 'link', text: pick(lang, appLink), url: SMART_LINK },
   ], pictureCardMetrics.coverMinHeight)) };
   const parts: Unit[][] = [];

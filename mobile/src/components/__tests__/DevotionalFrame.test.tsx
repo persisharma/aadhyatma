@@ -96,14 +96,14 @@ it.each([288, 358, 540])('uses explicit full-master dimensions at width %s', wid
     expect(hero.width).toBe(width); expect(hero.height).toBe(art === 'prayer' ? devotionalFrameSpec(art).hero * width / 1080 : width * 1456 / 1080); act(() => tree!.unmount());
   }
 });
-it('adds native Vedansh branding to the text-free Mahakaal hero and footer', () => {
+it('uses the shared approved flute branding on the text-free Mahakaal hero and footer', () => {
   const original = devotionalArtData.devotionalArtRequest;
   const spy = jest.spyOn(devotionalArtData, 'devotionalArtRequest').mockImplementation(art => original(art === 'mahakaal' ? 'shiva' : art));
   let tree: ReactTestRenderer;
   act(() => { tree = create(<><DevotionalHero art="mahakaal" lang="hi" width={360} /><DevotionalFooter art="mahakaal" width={360} /></>); });
-  expect(tree!.root.findByProps({ testID: 'mahakaal-brand' }).findAllByType(Image)).toHaveLength(0);
-  expect(tree!.root.findByProps({ testID: 'mahakaal-footer-brand' }).props.children).toBe('Vedansh.app');
-  expect(tree!.root.findAllByType(Image).map(n => n.props.testID)).toEqual(['devotional-hero-image', 'devotional-footer-image']);
+  expect(tree!.root.findByProps({ testID: 'devotional-header-brand' }).findAllByType(Image)).toHaveLength(1);
+  expect(tree!.root.findByProps({ testID: 'devotional-domain-suffix' }).props.children).toBe('.app');
+  expect(tree!.root.findAllByType(Image).map(n => n.props.testID)).toEqual(['devotional-hero-image', 'vedansh-wordmark-hi', 'devotional-footer-image', 'vedansh-wordmark-en']);
   act(() => tree!.unmount());
   spy.mockRestore();
 });
@@ -168,7 +168,7 @@ it.each((Object.keys(devotionalSubjectArt) as (keyof typeof devotionalSubjectArt
   let clip = hero.parent!; while (clip.type !== View) clip = clip.parent!;
   expect(StyleSheet.flatten(clip.props.style).height).toBe(devotionalFrameSpec(art).hero * 324 / 1080);
   expect(devotionalPlateArt(art)).toBe(art);
-  for (const image of tree!.root.findAllByType(Image).filter(n => n !== hero)) {
+  for (const image of tree!.root.findAllByType(Image).filter(n => n !== hero && !n.props.testID?.startsWith('vedansh-wordmark-'))) {
     expect(image.props.source).toEqual({ uri: `file:///cache/${devotionalArtRequest(art)!.key}.webp` });
   }
   act(() => tree!.unmount());
@@ -179,15 +179,15 @@ it('does not report a subject ready until its native image decodes, including so
   const ready = jest.fn(), error = jest.fn();
   act(() => { tree = create(<DevotionalHero art="lakshmi" lang="hi" width={324} onLoad={ready} onError={error} />); });
   expect(tree!.root.findAllByProps({ testID: 'devotional-subject-lakshmi' })).toHaveLength(0);
-  act(() => tree!.root.findByType(Image).props.onLoad());
+  act(() => { for (const image of tree!.root.findAllByType(Image)) image.props.onLoad(); });
   expect(tree!.root.findAllByProps({ testID: 'devotional-subject-lakshmi' }).length).toBeGreaterThan(0);
   expect(ready).toHaveBeenCalledTimes(1);
   act(() => { tree!.update(<DevotionalHero art="kali" lang="hi" width={324} onLoad={ready} onError={error} />); });
   expect(tree!.root.findAllByProps({ testID: 'devotional-subject-kali' })).toHaveLength(0);
-  act(() => tree!.root.findByType(Image).props.onError());
+  act(() => tree!.root.findAllByType(Image).find(n => n.props.testID === 'devotional-hero-image')!.props.onError());
   expect(error).toHaveBeenCalledTimes(1);
   expect(tree!.root.findAllByProps({ testID: 'devotional-subject-kali' })).toHaveLength(0);
-  act(() => tree!.root.findByType(Image).props.onLoad());
+  act(() => { for (const image of tree!.root.findAllByType(Image)) image.props.onLoad(); });
   expect(tree!.root.findAllByProps({ testID: 'devotional-subject-kali' }).length).toBeGreaterThan(0);
   act(() => tree!.unmount());
 });
@@ -200,7 +200,8 @@ describe('R2 master states', () => {
     cache.subscribeBackgroundAsset = () => () => undefined;
     const onLoad = jest.fn(), onError = jest.fn();
     let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} onLoad={onLoad} onError={onError} />); });
-    expect(tree!.root.findAllByType(Image)).toHaveLength(0);
+    expect(tree!.root.findAllByType(Image).filter(n => n.props.testID === 'devotional-footer-image')).toHaveLength(0);
+    expect(tree!.root.findAllByType(Image).filter(n => n.props.testID === 'vedansh-wordmark-en')).toHaveLength(1);
     expect(StyleSheet.flatten(tree!.root.findAllByType(View).find(n => n.props.testID === 'devotional-footer-image')!.props.style).backgroundColor).toBe('#FAE7BE');
     expect(onLoad).not.toHaveBeenCalled(); expect(onError).not.toHaveBeenCalled(); act(() => tree!.unmount());
   });
@@ -212,7 +213,30 @@ describe('R2 master states', () => {
   });
   it('paints the cached local file once downloaded', () => {
     let tree: ReactTestRenderer; act(() => { tree = create(<DevotionalFooter art="durga" width={324} />); });
-    expect(tree!.root.findByType(Image).props.source).toEqual({ uri: expect.stringMatching(/^file:\/\/\/cache\/[0-9a-f]{16}\.webp$/) });
+    expect(tree!.root.findAllByType(Image).find(n => n.props.testID === 'devotional-footer-image')!.props.source).toEqual({ uri: expect.stringMatching(/^file:\/\/\/cache\/[0-9a-f]{16}\.webp$/) });
     act(() => tree!.unmount());
   });
+});
+
+it('waits for unique tile paints in any order and rechecks tiles removed then added by layout', () => {
+  const ready = jest.fn();
+  const width = 540, spec = devotionalFrameSpec('hanuman'), tile = (128 - 82) * 3 * width / 1080;
+  const caps = (spec.meaningBottom - spec.meaningTop) * width / 1080 - tile / 3;
+  let tree: ReactTestRenderer;
+  act(() => { tree = create(<DevotionalVerseBody header="Test" verse="Om" meaning={'Meaning.\n\n' + 'Commentary. '.repeat(60)} lang="en" art="hanuman" verseStyle={{}} meaningStyle={{}} width={width} exportMode onLoad={ready} />); });
+  const panel = () => tree!.root.findAllByProps({ testID: 'devotional-commentary-panel' }).find(n => n.props.onLayout)!;
+  const size = (count: number) => act(() => panel().props.onLayout({ nativeEvent: { layout: { height: caps + tile * (count - .5) } } }));
+  const tiles = () => panel().findAllByType(Image).filter(n => n.props.testID === 'devotional-commentary-panel-tile');
+  const paint = (indices: number[]) => act(() => { for (const i of indices) tiles()[i].props.onLoad(); });
+  size(4);
+  act(() => { for (const image of tree!.root.findAllByType(Image)) if (image.props.testID !== 'devotional-commentary-panel-tile') image.props.onLoad?.(); });
+  paint([3, 2, 1, 3]); expect(ready).not.toHaveBeenCalled();
+  paint([0]); expect(ready).toHaveBeenCalled(); ready.mockClear();
+  size(7); paint([6, 5, 6]); expect(ready).not.toHaveBeenCalled();
+  paint([4]); expect(ready).toHaveBeenCalled();
+  size(3); ready.mockClear(); size(7);
+  expect(ready).not.toHaveBeenCalled();
+  paint([6, 5, 4]); expect(ready).not.toHaveBeenCalled();
+  paint([3]); expect(ready).toHaveBeenCalled();
+  act(() => tree!.unmount());
 });

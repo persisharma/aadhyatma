@@ -1417,3 +1417,75 @@ Added the ten-collection manifest allowlist, source preflight, shared bounded S3
 full public CDN byte verification, missing-secret skip and manual catch-up. Updated
 integrations/reading-artwork.md and the setup runbook; activation and OTA remain separate.
 Credentialed publication is pending the user's later Actions-secret setup.
+
+## [2026-11-06] ingest | JapMala Hindi label and Infinity contrast
+
+Hindi category `nameHi` is now जपमाला (tile, catalog, tour; matches the counter title). Infinity ∞ moved onto a night panel with a saffron path and bright jyoti (the old pale marker vanished on parchment); default loop 880ms (~10% slower). Updated [[subsystems/japam]]; native visual check pending.
+
+## [2026-11-06] ingest | Infinity mantra rings
+
+Added rotating side rings of the mantra's words to the Infinity night panel (whole-word Text runs, not textPath, so Indic shaping holds; ॥/• separators present in bundled fonts). Panel widens, ∞ narrows to clear them. Updated [[subsystems/japam]]; native visual/perf check pending.
+
+## [2026-11-07] ingest | Seamless Japam, animation reuse and count footer
+Updated [[subsystems/japam]] and design.md §35: approved borderless parchment, reused native graph/ring elements, non-interaction continuous animations, and removed the duplicate daily tally from both styles. Focused tests include long-running cycle structure; physical low-end profiling remains pending.
+
+## [2026-11-07] ingest | Full-mantra Infinity cadence
+Replaced the universal 880ms screen cadence with canonical phonetic-length estimates, shared silent/audio tempo, recording averages and stale-identity guards. Updated design.md §35 and the Japam integration rule; exact voice-cue alignment and device checks remain pending.
+
+## [2026-11-07] ingest | User-approved faster Infinity cadence
+Calibrated the default to Gayatri 4s, short chants of up to three words 880–1000ms, and proportional longer-mantra pacing. Recording-owned cadence and configurable tempo remain. This supersedes the earlier slower examples.
+
+## [2026-11-07] ingest | Shared karaoke reading foundation
+Added [[concepts/karaoke]] and wired shared host-clock word colouring into Infinity. Documented configurable speed, source-script shaping, memoized native colours and the deferred whole-page स्वतः adapter. Other readers are not integrated yet.
+
+## [2026-11-07] ingest | Suvichar sender switch and wishes heading
+Updated [[subsystems/suvichar]]: persisted `nameOn` switch hides the sender line without clearing the name; favorites/Explore apply senders via `senderFrom`; “आपकी शुभकामना” label removed in favour of a “शुभकामनाएँ” heading for wishes and reader-written text.
+
+## [2026-11-07] ingest | Japa ornamental mandala and long-text fitting
+Approved full circular animation replaces clipped side rings. Documented complete-syllable native shaping, annular clearance, host-phase windows, smaller infinity/counter layout, pause/background cleanup and pending native visual/ANR evidence.
+
+## [2026-11-07] ingest | Compact Panchang occasion summary; full dated illustrated cards in Vrat. Shared yielded/cancelled timing work and independent share/detail dates preserved; native visual/export/low-end performance acceptance pending. See docs/reviews/2026-11-07-compact-muhurat-vrat.md.
+
+## [2026-11-07] ingest | Correct compact muhurat card fit: grouped headings, numeric-only clock endpoints with separate dates, measured container width and stable layout callbacks. Correct the ineffective RN namespace dimensions spy; add exact-font clock bounds and a PR-triggered native compact-fit matrix. Native/device acceptance tracked in docs/reviews/2026-11-07-compact-muhurat-fit.md.
+## [2026-11-07] ingest | Android ANR review (Play 28-day 0.67%, 1.60% on 5 Nov): expo-splash-screen's hold vetoes the activity's first draw, so a held window has no input focus and Back past 5 s ANRs; the hold had grown to fonts + hydration + particle WebView/Chromium (7 s watchdog). Android now releases the native splash at the first JS frame onto the colour-identical `LaunchCover`; font-load errors fail open. overview.md launch paragraphs, design.md §2.1/§64 and RULEBOOK brand rule synced. Open items (WebView Chromium init per cold start, pre-JS native cap, eager expo-audio player with runBlocking, Meta activate on main, widget/notification broadcast work) recorded in docs/engineering/android-anr-review-2026-11.md.
+## [2026-11-07] gap | No Play ANR stack clusters were available; F3–F7 in the ANR review are code-derived and need cluster confirmation before native changes.
+## [2026-11-07] ingest | Particle launch reveal disabled on all platforms (`BRAND_LAUNCH_REVEAL_ENABLED = false`, gate bypass path, no launch WebView) as the ANR mitigation the owner chose. Meta SDK deliberately untouched: no Play data before 19 Oct, so its 1.5.0 release (11 Oct) cannot be aligned with the onset. design.md §2.1/§64, RULEBOOK brand rule, overview.md, review doc and brand Maestro flows updated.
+## [2026-11-07] prune | Owner-directed reset: reverted the Android first-frame splash release (`LaunchCover`), the font-error fail-open and the earlier ANR review doc; only the particle-reveal kill switch remains. Earlier 2026-11-07 entries about LaunchCover/font fail-open no longer describe the code. A fresh evidence-based ANR audit follows.
+## [2026-11-07] ingest | Fresh Android ANR audit (docs/engineering/android-anr-audit-2026-11.md): first Play production build was 1.5.0 on 11 Oct, so 19 Oct is the first reportable day, not a regression onset. Ranked candidates: (1) root ReadAloudProvider probes TTS voices on every cold start → expo-speech `getVoices()` binder call in the main-thread onInit; (2) undrawn launch window during the splash hold (16 fonts/5.3 MB); (3) first-WebView Chromium init (particles disabled; YouTube on demand). No unbounded main↔JS deadlock found. Play ANR clusters needed to confirm.
+## [2026-11-07] ingest | Read-aloud voice probe moved from provider mount to first need (`ensureVoices()` via `useReaderReadAloud` after interactions + voice sheet open) — removes the launch-time Android main-thread `getVoices()` binder call (ANR audit candidate #1). audio.md gotcha, design.md §56.4, RULEBOOK §3 and the audit doc updated; "probe timing" tests in ReadAloudContext.test + readerReadAloud.test pin it.
+## [2026-11-07] ingest | expo-speech patch (patches/expo-speech+14.0.8.patch): onInit drain of queued getVoices()/speakOut() moved from Android's main thread to the serial AsyncFunction queue; activity-destroy no longer constructs an engine. Verified by stub compile + JVM thread/order harness (patched off-main and ordered; original on main); Gradle/device build pending; ships only in a new store build. Guarded by src/readAloud/__tests__/expoSpeechPatch.test.ts.
+## [2026-11-07] ingest | PR #644 CI fix: the reader voice-probe deferral used `InteractionManager.runAfterInteractions`; its immediate, scheduled under Jest fake timers in PitruPakshaShikshaScreen.test, outlived `useRealTimers()` and left Jest shard 1 spinning (epoll busy loop, idle JS) until the 30-min job timeout. Replaced with a cleared `setTimeout(ensureVoices, VOICE_PROBE_DELAY_MS=500)`; reproduced locally (main shard passes, branch hangs, timer variant passes). design.md §56.4, RULEBOOK, audio.md updated.
+
+## [2026-11-07] ingest | Cooperative Pitru/Janma solves and the precomputed-table end
+Updated [[subsystems/panchang]]: Pitru Smaran and Janma Tithi list/detail hooks now solve through `runInBackground` (longest cold block 5,975 → 22 ms in Jest); the precomputed observance table is extended to 2035 with a coverage test that fails two years ahead (out-of-table years cost ~1.5 s synchronously). Hermes device timing remains pending.
+
+## [2026-11-07] ingest | Japa shloka in the former count space
+
+Preserved the approved circular frame and Mala/footer designs; moved decorative counts inside infinity, paired Gayatri padas into two complete compact reading rows and introduced an Infinity-only gauge chip over the existing tempo stepper. Canonical cadence, count ownership and accessible/scalable complete text remain unchanged. Native visual/ANR evidence remains pending.
+
+## [2026-11-07] ingest | Foreground lane for screen-visible cooperative solves
+Native iOS Simulator run of `pitru-smaran.yaml` after #645: the detail's second stage (अगले वर्ष / पितृ पक्ष) arrived but missed 15 s while launch-time background jobs shared the 4 ms round-robin. `backgroundWork.ts` gained an opt-in `foreground` lane (12 ms slices, served first); Pitru/Janma list rows and detail stages use it, prewarms stay background. Also fixed the stale flow tap on the Vrat ledger (below the fold since #647). Updated [[subsystems/panchang]].
+
+## [2026-11-08] ingest | Ram Lalla Ayodhya photo sharing cards
+
+Added the photographic-subject contract, actual-photo provenance/cache/paint gate and Ram content eligibility to [[subsystems/suvichar]]. Native export/device acceptance remains explicit.
+
+## [2026-11-08] ingest | Single flute wordmark on Daily Bhakti cards
+Updated share/design/integration contracts for shared top/cartouche and English domain-footer overlays, logo paint failure refusal and per-language readiness invalidation. Native capture/performance remains pending.
+
+## [2026-11-08] ingest | Play ANR clusters (8 Nov) are almost all "Input dispatching timed out (No focused window)", with varied main-thread frames including an idle `nativePollOnce`. That confirms audit candidate #2: expo-splash-screen's draw veto leaves the window unfocused. Android now releases the splash on the first ivory `LaunchCover` layout (JS, OTA-able); new builds clear the keep flag in `MainActivity` and paint an ivory window background (`plugins/withAndroidLaunchWindow.js`). Font errors fail open. PairIP cluster = Play automatic protection (console setting). The live 1.5.5 `com.facebook.react.bridge…` cluster still needs its full stack. The `JSTypeConverter` clusters map to expo-audio emitting status from main, so the root player is now created on first use (audio.md gotcha). Audit §6, design.md §2.1/§64, RULEBOOK brand rule, overview.md updated.
+
+## [2026-11-09] ingest | Kundali birth place now searches towns, villages and pincodes. Report: North Lakhimpur (Assam, 787001) resolved in the Panchang location picker but not in Kundali, because the birth-city sheet filtered only the 394 bundled `CITIES` and `validateBirthProfile`/`birthProfileToInput` accepted only a bundled `cityId`. The two pickers had been in lockstep only through `cityMatchesQuery`; the Aug pincode tier and Oct town/village names were wired into `LocationPickerModal` alone. Fix: new `panchang/locationSearch.ts` (`buildLocationSearchRows`, row keys, `placesSummary`, `labelIsPlace`) used by both sheets; `BirthProfile.place?` — a self-describing `{ labelHi, labelEn, latitude, longitude, elevation }` beside a `pin-` id (`birthPlaceFromPincode` reuses `toPincodeLocation` labels), never re-resolved from the table so a directory rebuild cannot move a saved lagna; `birthCity(profile)` is the only accessor (chart input, Kundali header + share card, report, Jyotish landing, Janma Tithi line, Kul Parampara export — all previously `getCityById(profile.cityId)`, which is undefined for a town and would have hidden the report/landing). `parsePincodePlaceRecord` moved from `panchangPrefs` into `pincodes.ts` and is shared. Share card birth line pinned to one line and drops the pincode (`compactPlaceLabelEn`) so the 4:5 chrome budget holds. Docs: design.md §33/§51, RULEBOOK §14.5. Guards: `panchang/__tests__/birthPlace.test.ts`, town case in `birthProfiles.jest.test.ts`, `KundaliExperience.test.tsx` (fails on the old sheet), `jyotishShareCardFit.test.tsx`. Not changed: the first-launch `OnboardingSetupSheet` city search is still `CITIES`-only.
+
+## [2026-11-09] gap | `OnboardingSetupSheet` (first-launch Panchang city) still searches only the bundled `CITIES`; it should adopt `buildLocationSearchRows` + `selectPincode` like `LocationPickerModal`. Native Maestro/visual verification of the Kundali town search is pending (no simulator in the cloud container).
+## [2026-11-10] ingest | Japa Sankalp (one-time vow of N malas / N japa per mantra) on the JapaMala counter: pure model data/japam/sankalp.ts, provider-owned progress at @vedansh/japam-sankalp credited only in increment, strip + sheet + Target opener, japam-sankalp-smoke.yaml. subsystems/japam.md, design.md §35/§35.2 and RULEBOOK japa rules synced.
+
+## [2026-11-10] ingest | Daily Bhakti no longer docks the नित्य साधना banner. The floating `RoutineBanner` above the tab bar covered the lower verse card / meaning frame and duplicated Home's door; it was removed from `DailyBhaktiScreen`. With Home as the last consumer, the `variant` prop and the docked layout were deleted (`RoutineBanner` is inline-only). Docs: design.md §18 item 5, §23 item 6, §30, §34; routine.md UI surfaces + FAB gotcha. Guard: `DailyBhaktiScreen.test.tsx` asserts no `साधना` text/label on the page. Native visual check at Standard/Large pending (no simulator in the cloud container).
+## [2026-11-10] ingest | Reverted the immersive JapaMala counter from #667 after a device recording showed a blank tab-bar band during push/pop and a ~50 pt mid-animation jump; added japamCounterTabBar.test.ts guard. design.md §17/§35 and subsystems/japam.md synced.
+## [2026-11-10] ingest | JapaMala controls moved to an icon-only column above reset (speedometer, play); full-width audio row removed; mala width cap + Infinity inset for the column. design.md §35/§35.2, subsystems/japam.md synced.
+## [2026-11-10] ingest | JapaMala control column v2 (speedometer, play, reset above the Sankalp target), vow progress inside the count bar, geometry-fitted ring/frame (japamControlRail.ts), Infinity progress line removed. design.md §35/§35.2 + subsystems/japam.md synced.
+## [2026-11-10] ingest | JapaMala controls fold (default folded, remembered) and full-screen overlay (view only; corner/long-press/Back exit; keep-awake). design.md §35 + subsystems/japam.md synced; Maestro flows tap Show controls first.
+## [2026-11-10] ingest | Dropped the fold toggle (column always shown, ring 300 on 390 pt); full screen kept. design.md §35 + subsystems/japam.md synced.
+## [2026-11-10] ingest | Control column minimise restored as an option (default open, remembered; toggle in the count bar). design.md §35 + subsystems/japam.md synced.
+## [2026-11-10] ingest | Full-screen icon moved from the top bar to the view's top-right (end of the Mala/Anant row, faint, column axis); exit icon opens in the same on-screen spot. design.md §35 + subsystems/japam.md synced.
+## [2026-11-10] ingest | Full-screen icon moved again to the user's marked spot: floating at the tap surface's top-right (top 8, right 16) below the Mala/Anant row; first Mala line keeps 27 dp a side. design.md §35 + subsystems/japam.md synced.

@@ -16,8 +16,7 @@ import { deities, getDeityMeta } from '@/data/deities';
 import type { Deity } from '@/data/texts';
 import { tithiRuleLabel, type SmaranEntry } from './pitruSmaran';
 import { janmaTithiRuleFromBirthDate } from './janmaTithi';
-import { getCityById } from './locations';
-import type { PersonProfile } from './birthProfiles';
+import { birthCity, type PersonProfile } from './birthProfiles';
 
 export const KUL_PARAMPARA_STORAGE_KEY = '@vedansh:kul-parampara:v1';
 const PAYLOAD_VERSION = 1;
@@ -228,7 +227,7 @@ export function buildKulParamparaExport(input: {
     kul,
     people: people.map((person) => {
       const rule = janmaTithiRuleFromBirthDate(person.date);
-      const city = getCityById(person.cityId);
+      const city = birthCity(person);
       return {
         ...(person.name ? { name: person.name } : {}),
         birthDate: person.date,

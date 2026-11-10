@@ -15,10 +15,10 @@ const deityScope: Readonly<Record<string, readonly SuvicharDeity[]>> = {
   'kabir-doha-santosh': [],
   'kabir-doha-man': [],
   'kabir-doha-daya': [],
-  'rahim-doha-ahankar': ['rama', 'ram-darbar', 'krishna', 'radha-krishna', 'vishnu', 'tirupati-balaji', 'khatu-shyam', 'sanwariya-seth', 'jagannath'],
+  'rahim-doha-ahankar': ['rama', 'ram-lalla', 'ram-darbar', 'krishna', 'radha-krishna', 'vishnu', 'tirupati-balaji', 'khatu-shyam', 'sanwariya-seth', 'jagannath'],
   'rahim-doha-daan': [],
   'rahim-doha-santosh': [],
-  'rahim-doha-sharan': ['rama', 'ram-darbar'],
+  'rahim-doha-sharan': ['rama', 'ram-lalla', 'ram-darbar'],
 };
 
 // This module belongs to the Suvichar content graph, never the launch registry.
@@ -45,6 +45,9 @@ for (const id of dohaIds) {
 }
 export const suvicharDohaThoughts: readonly SuvicharDohaThought[] = thoughts;
 export const suvicharDohaSources: readonly SuvicharSource[] = sources;
+// Parshuram keeps only its own reviewed collection; deity-agnostic dohas stay out.
+const ownCollectionOnly: readonly SuvicharDeity[] = ['parshuram'];
 export function suvicharDohasFor(deity: SuvicharDeity): readonly SuvicharDohaThought[] {
-  return thoughts.filter(thought => !thought.deities.length || thought.deities.includes(deity));
+  const general = !ownCollectionOnly.includes(deity);
+  return thoughts.filter(thought => thought.deities.includes(deity) || (general && !thought.deities.length));
 }

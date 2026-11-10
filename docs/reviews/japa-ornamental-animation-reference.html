@@ -1,0 +1,166 @@
+<div id="vedansh-mantra-mandala" class="viz-dotted-background">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&display=swap');
+    #vedansh-mantra-mandala {display:flex;justify-content:center;padding:20px 8px;color-scheme:light;}
+    #vedansh-mantra-mandala * {box-sizing:border-box;}
+    #vedansh-mantra-mandala .japa-surface {--paper:#F3E7C9;--ink:#1A0E03;--muted:#6E5230;--saffron:#B8621B;--deep:#8A3E0B;--gold:#A67C34;width:min(100%,390px);background:radial-gradient(ellipse at 50% 43%,#FCF3DB 0%,#F3E7C9 65%,#E9D9B1 100%);color:var(--ink);border:1px solid #D7BD8D;border-radius:26px;padding:26px 12px 24px;box-shadow:0 16px 48px #5A3A1E14;text-align:center;font-family:'Noto Serif Devanagari',serif;overflow:hidden;}
+    #vedansh-mantra-mandala .japa-brand {font-size:13px;color:var(--muted);letter-spacing:.08em;margin-bottom:22px;}
+    #vedansh-mantra-mandala .japa-title {font-size:23px;font-weight:500;margin:0;line-height:1.7;}
+    #vedansh-mantra-mandala .japa-subtitle {font-size:12px;color:var(--muted);margin:3px 0 12px;}
+    #vedansh-mantra-mandala .japa-stage {position:relative;width:100%;aspect-ratio:1;margin:0 auto;isolation:isolate;}
+    #vedansh-mantra-mandala .japa-ring {position:absolute;inset:0;pointer-events:none;transform-origin:50% 50%;will-change:transform;}
+    #vedansh-mantra-mandala .japa-word {position:absolute;display:block;white-space:nowrap;line-height:1.9;font-size:var(--ring-font);font-weight:500;color:var(--ring-ink);text-align:center;backface-visibility:hidden;}
+    #vedansh-mantra-mandala .japa-word[data-separator] {opacity:.55;}
+    #vedansh-mantra-mandala .japa-rule {position:absolute;border:1px solid #A67C3442;border-radius:50%;pointer-events:none;}
+    #vedansh-mantra-mandala .japa-rule.outer {inset:4%;border:1px solid #A67C34A0;box-shadow:0 0 0 3px #F3E7C9,0 0 0 4px #A67C3470;}
+    #vedansh-mantra-mandala .japa-rule.middle {inset:11.8%;border:1px solid #A67C3470;box-shadow:0 0 0 2px #F3E7C9,0 0 0 3px #A67C3455;}
+    #vedansh-mantra-mandala .japa-rule.inner {inset:20.8%;border:1px solid #A67C3470;box-shadow:inset 0 0 0 2px #F3E7C9,inset 0 0 0 3px #A67C3445;}
+    #vedansh-mantra-mandala .japa-ornaments {position:absolute;inset:0;pointer-events:none;}
+    #vedansh-mantra-mandala .japa-lotus {position:absolute;width:4.1%;height:4.1%;color:#9D5522;}
+    #vedansh-mantra-mandala .japa-lotus i {position:absolute;display:block;border:1px solid currentColor;background:#B8621B20;}
+    #vedansh-mantra-mandala .japa-lotus .petal-centre {width:30%;height:64%;left:35%;top:0;border-radius:85% 85% 45% 45%;}
+    #vedansh-mantra-mandala .japa-lotus .petal-left {width:30%;height:56%;left:10%;top:28%;border-radius:85% 20% 70% 20%;transform:rotate(-38deg);}
+    #vedansh-mantra-mandala .japa-lotus .petal-right {width:30%;height:56%;right:10%;top:28%;border-radius:20% 85% 20% 70%;transform:rotate(38deg);}
+    #vedansh-mantra-mandala .japa-lotus .petal-stem {width:1px;height:26%;left:50%;bottom:0;border:0;background:currentColor;}
+    #vedansh-mantra-mandala .japa-bead {position:absolute;width:2px;height:2px;background:#A67C34B0;border-radius:50%;transform:translate(-50%,-50%);}
+    #vedansh-mantra-mandala .japa-diamond {position:absolute;width:3px;height:3px;background:#A67C34;transform:translate(-50%,-50%) rotate(45deg);}
+    #vedansh-mantra-mandala .japa-small-dot {position:absolute;width:1.5px;height:1.5px;background:#A67C3490;border-radius:50%;transform:translate(-50%,-50%);}
+    #vedansh-mantra-mandala .japa-core {position:absolute;inset:28% 18%;display:flex;align-items:center;justify-content:center;}
+    #vedansh-mantra-mandala .japa-flow {width:100%;height:100%;overflow:visible;color:var(--deep);}
+    #vedansh-mantra-mandala .japa-flow path {stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;}
+    #vedansh-mantra-mandala .japa-count {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:82%;display:flex;justify-content:space-between;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:34px;color:var(--muted);pointer-events:none;}
+    #vedansh-mantra-mandala .japa-count span {width:38%;}
+    #vedansh-mantra-mandala .japa-jyoti {position:absolute;width:13px;height:13px;border:1px solid var(--deep);background:#FFF9DF;border-radius:50%;box-shadow:0 0 7px 4px #DFA13D50;transform:translate(-50%,-50%);pointer-events:none;}
+    #vedansh-mantra-mandala .japa-chant {margin:14px 0 0;font-size:30px;font-weight:500;line-height:1.8;color:var(--muted);}
+    #vedansh-mantra-mandala .japa-chant span {display:inline-block;}
+    #vedansh-mantra-mandala .japa-chant .spoken {color:var(--saffron);}
+    #vedansh-mantra-mandala .japa-caption {margin:0 0 20px;font-size:12px;color:var(--muted);}
+    #vedansh-mantra-mandala .japa-toggle {appearance:none;min-width:160px;min-height:46px;border:1px solid #A67C3470;border-radius:24px;padding:10px 24px;background:#F8EFD6;color:var(--deep);font:500 15px/1.6 'Noto Serif Devanagari',serif;box-shadow:0 3px 12px #5A3A1E0C;}
+    #vedansh-mantra-mandala .japa-toggle:active {background:#E9D9B1;}
+    #vedansh-mantra-mandala .japa-rounds {margin-top:17px;font-size:12px;color:var(--muted);}
+    #vedansh-mantra-mandala .japa-motion {animation:japa-turn var(--turn-time) linear infinite;animation-direction:var(--turn-dir,normal);}
+    #vedansh-mantra-mandala[data-paused="true"] .japa-motion {animation-play-state:paused;}
+    @keyframes japa-turn {to {transform:rotate(360deg);}}
+    @media (prefers-reduced-motion:reduce) {#vedansh-mantra-mandala .japa-motion {animation:none;}}
+    @media(max-width:350px) {#vedansh-mantra-mandala {padding:12px 0;}#vedansh-mantra-mandala .japa-surface {padding:22px 8px;}#vedansh-mantra-mandala .japa-count {font-size:30px;}}
+  </style>
+  <section class="japa-surface" aria-label="जप माला — वृत्ताकार मंत्र का प्रस्तावित रूप">
+    <div class="japa-brand">ॐ वेदांश</div>
+    <h2 class="japa-title">अनन्त जप</h2>
+    <div class="japa-subtitle">हर आवृत्ति, भक्ति का एक मनका</div>
+    <div class="japa-stage" aria-label="दो गोलाकार मंत्र वलय और बीच में अनन्त जप की गिनती">
+      <div class="japa-rule outer" aria-hidden="true"></div>
+      <div class="japa-rule middle" aria-hidden="true"></div>
+      <div class="japa-rule inner" aria-hidden="true"></div>
+      <div class="japa-ornaments" aria-hidden="true"></div>
+      <div class="japa-ring japa-motion" data-ring="outer" style="--ring-font:18px;--ring-ink:#8A3E0B;--turn-time:56s" aria-hidden="true"></div>
+      <div class="japa-ring japa-motion" data-ring="inner" style="--ring-font:15px;--ring-ink:#6E5230;--turn-time:72s;--turn-dir:reverse" aria-hidden="true"></div>
+      <div class="japa-core">
+        <svg class="japa-flow" viewBox="0 0 1000 650" aria-hidden="true"><path></path></svg>
+        <div class="japa-count" aria-hidden="true"><span data-count>0</span><span>108</span></div>
+        <div class="japa-jyoti" aria-hidden="true"></div>
+      </div>
+    </div>
+    <p class="japa-chant" aria-label="जय श्री राम"><span>जय</span> <span>श्री</span> <span>राम</span></p>
+    <p class="japa-caption">श्री राम नाम जप</p>
+    <button type="button" class="japa-toggle cursor-interaction" aria-pressed="true">जप रोकें</button>
+    <div class="japa-rounds" aria-live="polite">पूर्ण माला · <span data-rounds>0</span></div>
+  </section>
+  <script>
+    (()=>{
+      const root=document.getElementById('vedansh-mantra-mandala');
+      const stage=root.querySelector('.japa-stage');
+      const outer=root.querySelector('[data-ring="outer"]');
+      const inner=root.querySelector('[data-ring="inner"]');
+      const core=root.querySelector('.japa-core');
+      const jyoti=root.querySelector('.japa-jyoti');
+      const countNode=root.querySelector('[data-count]');
+      const roundNode=root.querySelector('[data-rounds]');
+      const button=root.querySelector('.japa-toggle');
+      const chant=Array.from(root.querySelectorAll('.japa-chant span'));
+      const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+      // A stationary lotus rim and patterned bands frame the moving text.
+      const ornaments=root.querySelector('.japa-ornaments');
+      function ornament(className,radius,angle){
+        const a=angle*Math.PI/180;
+        const node=document.createElement('span');node.className=className;
+        node.style.left=`${50+radius*Math.sin(a)}%`;
+        node.style.top=`${50-radius*Math.cos(a)}%`;
+        ornaments.appendChild(node);return node;
+      }
+      for(let i=0;i<16;i++){
+        const angle=i*22.5;
+        const flower=ornament('japa-lotus',47.6,angle);
+        flower.style.transform=`translate(-50%,-50%) rotate(${angle}deg)`;
+        ['petal-centre','petal-left','petal-right','petal-stem'].forEach(name=>{
+          const petal=document.createElement('i');petal.className=name;flower.appendChild(petal);
+        });
+      }
+      for(let i=0;i<96;i++)ornament('japa-bead',46.5,i*3.75);
+      for(let i=0;i<32;i++){
+        ornament('japa-diamond',38.65,i*11.25);
+        ornament('japa-small-dot',38.65,i*11.25+5.625);
+      }
+      for(let i=0;i<64;i++)ornament('japa-small-dot',28.5,i*5.625);
+      let running=true, count=0, phase=0, last=null, raf=null;
+      const cycle=880;
+      function point(t){return {x:.5+.44*Math.sin(t*2*Math.PI),y:.325-.25*Math.sin(t*4*Math.PI)};}
+      root.querySelector('.japa-flow path').setAttribute('d',Array.from({length:217},(_,i)=>{const p=point(i/216);return `${i?'L':'M'}${p.x*1000} ${p.y*1000}`;}).join(' '));
+      function ring(el,radius,tokens,fontSize,offset){
+        // Measure complete shaped words, then space by their actual arc widths.
+        // Every revolution contains whole repetitions with an even final seam.
+        el.replaceChildren();
+        el.style.setProperty('--ring-font',`${fontSize}px`);
+        const measure=document.createElement('span');
+        measure.className='japa-word';measure.style.visibility='hidden';el.appendChild(measure);
+        const r=stage.clientWidth*radius/100;
+        const widths=tokens.map(text=>{measure.textContent=text;return measure.getBoundingClientRect().width;});
+        measure.remove();
+        const tau=2*Math.PI;
+        const gaps=fontSize*.7;
+        const arcs=widths.map(width=>2*Math.asin(Math.min(.95,(width+gaps)/(2*r))));
+        const groupArc=arcs.reduce((a,b)=>a+b,0);
+        const repetitions=Math.max(1,Math.min(30,Math.floor(tau/groupArc)));
+        const used=groupArc*repetitions;
+        const extra=(tau-used)/(tokens.length*repetitions);
+        let angle=offset*Math.PI/180;
+        const fragment=document.createDocumentFragment();
+        for(let i=0;i<tokens.length*repetitions;i++){
+          const index=i%tokens.length, width=arcs[index]+extra;
+          const centre=angle+width/2;
+          const span=document.createElement('span');span.className='japa-word';span.textContent=tokens[index];
+          if(tokens[index]==='•')span.dataset.separator='true';
+          span.style.left=`${50+radius*Math.sin(centre)}%`;span.style.top=`${50-radius*Math.cos(centre)}%`;
+          span.style.transform=`translate(-50%,-50%) rotate(${centre*180/Math.PI}deg)`;
+          fragment.appendChild(span);angle+=width;
+        }
+        el.appendChild(fragment);
+      }
+      function layout(){
+        const narrow=stage.clientWidth<315;
+        if(stage.clientWidth<=0)return;
+        ring(outer,42.8,['राम','•'],narrow?16:18,-9);
+        ring(inner,33.7,['जय','श्री','राम','•'],narrow?14:15,4);
+        paint();
+      }
+      function paint(){
+        const p=point(reduced.matches?0:phase);
+        jyoti.style.left=`${p.x*100}%`;jyoti.style.top=`${p.y/.65*100}%`;
+        chant.forEach((word,i)=>word.classList.toggle('spoken',!reduced.matches&&phase>i/3));
+        countNode.textContent=String(count%108);roundNode.textContent=String(Math.floor(count/108));
+      }
+      function tick(time){
+        if(!running||document.hidden){last=null;raf=null;return;}
+        if(last!==null){phase+=Math.min(time-last,100)/cycle;if(phase>=1){count+=Math.floor(phase);phase%=1;}}
+        last=time;paint();raf=requestAnimationFrame(tick);
+      }
+      function restart(){last=null;if(raf!==null)cancelAnimationFrame(raf);raf=null;root.dataset.paused=String(!running||document.hidden);if(running&&!document.hidden)raf=requestAnimationFrame(tick);}
+      button.addEventListener('click',()=>{running=!running;button.textContent=running?'जप रोकें':'जप जारी रखें';button.setAttribute('aria-pressed',String(running));restart();});
+      document.addEventListener('visibilitychange',restart);
+      new ResizeObserver(layout).observe(stage);
+      reduced.addEventListener('change',paint);
+      layout();restart();
+      if(document.fonts)document.fonts.ready.then(layout);
+    })();
+  </script>
+</div>

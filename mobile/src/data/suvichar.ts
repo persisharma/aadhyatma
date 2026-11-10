@@ -1,6 +1,7 @@
 import { assetBaseUrl, remoteAssetRequest } from './assetManifest';
 import manifest from './suvicharManifest.json';
 import { parshuramPublished } from './parshuramAvailability';
+import { suvicharPhotoArt } from './suvicharPhotoArt';
 
 export const suvicharDeityCatalog = [
   { id: 'parshuram', hi: 'भगवान परशुराम', en: 'Bhagwan Parshuram' },
@@ -14,6 +15,7 @@ export const suvicharDeityCatalog = [
     "hi": "श्रीराम",
     "en": "Shri Ram"
   },
+  { id: 'ram-lalla', hi: 'राम लला · अयोध्या', en: 'Ram Lalla · Ayodhya' },
   {
     "id": "hanuman",
     "hi": "श्रीहनुमान",
@@ -98,7 +100,9 @@ export const suvicharFrames = [
 ] as const;
 /** Offer a deity only after every frame has passed publication verification. */
 export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
-  (deity.id !== 'parshuram' || parshuramPublished) && suvicharFrames.every(frame => `${deity.id}--${frame.id}` in manifest.assets));
+  (deity.id !== 'parshuram' || parshuramPublished) && suvicharFrames.every(frame => `${suvicharPhotoArt(deity.id) ? 'rama' : deity.id}--${frame.id}` in manifest.assets));
+/** Photographs reuse only the reviewed paper/footer slices; they do not invent painted masters. */
+export const suvicharPaintedDeities = suvicharDeityCatalog.filter(deity => !suvicharPhotoArt(deity.id));
 export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
 export const NAME_LIMIT = 48;
@@ -107,6 +111,18 @@ export const MESSAGE_LIMIT = 280;
 export function cleanSender(value: string): string {
   return value.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
 }
+/**
+ * A favorite or Explore hand-off carries the sender shown on its card. A name turns the line on;
+ * none hides the line but keeps the saved name, so the reader never has to retype it.
+ */
+export function senderFrom(name: string, saved: string): { name: string; nameOn: boolean } {
+  return name.trim() ? { name, nameOn: true } : { name: saved, nameOn: !saved.trim() };
+}
+/** The card's muted heading: authored thoughts are today's thought; wishes and reader-written text are wishes. */
+export const suvicharHeading = {
+  thought: { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' },
+  wish: { hi: 'शुभकामनाएँ', en: 'Warm wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' },
+} as const;
 /** Sender photos are written by utils/suvicharPhoto.ts only; a corrupt preference can never point at another file. */
 export function isSenderPhotoName(value: unknown): value is string { return typeof value === 'string' && /^sender-\d+\.(jpe?g|png|heic|webp)$/i.test(value); }
 /** The square of the sender photo shown in the round frame, as fractions of the displayed image's width and height. */
@@ -145,9 +161,10 @@ const savedThoughtId = (value: unknown): string => typeof value === 'string' && 
 /**
  * `photo` belongs to the sender, like the name, but favorites never store it: removing the photo removes it everywhere.
  * The photo section is opt-in: `photoOn` (off by default) shows it; turning it off hides the photo but keeps the file.
+ * `nameOn` (on by default, so earlier saves keep their line) hides “सप्रेम — name” without clearing the saved name.
  */
 export const initialSuvichar = { deity: 'krishna' as SuvicharDeity, frame: 'mandir-jharokha' as SuvicharFrame,
-  name: '', photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', thoughtId: '', vaar: false, favorites: [] as SuvicharFavorite[] };
+  name: '', nameOn: true, photo: '', photoFit: fullPhotoFit, photoOn: false, message: '', thoughtId: '', vaar: false, favorites: [] as SuvicharFavorite[] };
 export type SuvicharPreferences = typeof initialSuvichar;
 export function parseSuvicharPreferences(raw: string | null): SuvicharPreferences {
   try {
@@ -156,6 +173,7 @@ export function parseSuvicharPreferences(raw: string | null): SuvicharPreference
       deity: suvicharDeities.some(d => d.id === p.deity) ? p.deity : initialSuvichar.deity,
       frame: suvicharFrames.some(f => f.id === p.frame) ? p.frame : initialSuvichar.frame,
       name: typeof p.name === 'string' ? p.name.slice(0, NAME_LIMIT) : '',
+      nameOn: p.nameOn !== false,
       photo: isSenderPhotoName(p.photo) ? p.photo : '',
       photoOn: p.photoOn === true,
       photoFit: isPhotoFit(p.photoFit) ? { x: p.photoFit.x, y: p.photoFit.y, w: p.photoFit.w, h: p.photoFit.h } : fullPhotoFit,
@@ -173,7 +191,13 @@ export function suvicharArtKey(deity: SuvicharDeity, frame: SuvicharFrame): stri
 /** Only published and byte-verified assets belong in the runtime manifest. No deity fallback. */
 export function suvicharArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
   if (deity === 'parshuram' && !parshuramPublished) return null;
+  const photo = suvicharPhotoArt(deity);
+  if (photo) return photo.request;
   return remoteAssetRequest(manifest, suvicharArtKey(deity, frame), assetBaseUrl());
+}
+/** Explicit paper template for a photographic card; no painted deity is shown in its hero. */
+export function suvicharPaperArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
+  return suvicharArtRequest(suvicharPhotoArt(deity) ? 'rama' : deity, frame);
 }
 /** Newly authored reflection, never presented as a scripture quotation. */
 export const defaultSuvichar = { hi: 'मन में श्रद्धा, वाणी में मधुरता और कर्म में सेवा रखिए। हर दिन सुंदर बन जाएगा।',

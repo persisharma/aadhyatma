@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import Svg, { Circle, Line, Path, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, Line, Text as SvgText } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
 import type { Pair, SanatanTopic } from '@/data/sanatan-parichay';
 import { Action, Copy, Painting, Panel, useSanatanText } from './Primitives';
+import SwastikaGuide from './SwastikaGuide';
 
 const directions = [
   ['उत्तर', 'North', 'कुबेर', 'Kubera'], ['ईशान', 'Northeast', 'ईशान', 'Ishana'],
@@ -65,7 +66,7 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
           {directions.slice(8).map((d, i) => <Action key={d[1]} label={t([d[0],d[1]])}
             selected={selected === i + 8} onPress={() => setSelected(i + 8)} />)}
         </View>
-        <Copy>{t(['कामिक आगम · चुना हुआ संदर्भ', 'Kamika Agama · selected source'])}</Copy>
+        <Copy>{t(['कामिक आगम का दिशाक्रम', 'Direction sequence in Kamika Agama'])}</Copy>
       </>;
       break;
     }
@@ -77,7 +78,7 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
       break;
     case 'avatars': {
       const names: Pair[] = [['मत्स्य','Matsya'],['कूर्म','Kurma'],['वराह','Varaha'],['नरसिंह','Narasimha'],['वामन','Vamana'],['परशुराम','Parashurama'],['राम','Rama'],['बलराम','Balarama'],lens ? ['बुद्ध','Buddha'] : ['कृष्ण','Krishna'],['कल्कि','Kalki']];
-      body = <><Action label="Drik Panchang" selected={lens === 0} onPress={() => setLens(0)} />
+      body = <><Action label={t(['बलराम–कृष्ण क्रम', 'Balarama–Krishna sequence'])} selected={lens === 0} onPress={() => setLens(0)} />
         <Action label={t(['जयदेव', 'Jayadeva'])} selected={lens === 1} onPress={() => setLens(1)} />
         {names.map((name, i) => <Copy key={i}>{`${i + 1}. ${t(name)}`}</Copy>)}
         <Copy>{t(lens ? ['कृष्ण इस स्तवन में सम्बोधित हैं।', 'Krishna is the addressee in this hymn.'] : ['बलराम और कृष्ण वाला चयन।', 'The selection with Balarama and Krishna.'])}</Copy></>;
@@ -89,10 +90,7 @@ export default function ExploreDiagram({ topic, onCollection }: { topic: Sanatan
         <Copy>{t(['नवग्रह स्तोत्र · पद्य 1–9','Navagraha Stotra · verses 1–9'])}</Copy></>;
       break;
     case 'swastika':
-      body = <><Svg width="100%" height={200} viewBox="0 0 120 120" accessibilityLabel={t(['स्वस्तिक चिह्न','Swastika symbol'])} accessible>
-        <Path d="M60 17v86M17 60h86M60 17h35M103 60v35M60 103H25M17 60V25" stroke={colors.saffronDeep} strokeWidth={8} fill="none" />
-        {[39,81].flatMap(x => [39,81].map(y => <Circle key={`${x}-${y}`} cx={x} cy={y} r={3} fill={colors.gold} />))}
-      </Svg><Copy>{t(['मंगल का चिह्न','An auspicious sign'])}</Copy></>;
+      body = <SwastikaGuide mode="meaning" />;
       break;
     case 'elements':
       body = <>{[['आकाश','Space'],['वायु','Air'],['अग्नि','Fire'],['जल','Water'],['पृथ्वी','Earth']].map((p, i) => <Copy key={i}>{`${i + 1}. ${t([p[0], p[1]])}`}</Copy>)}

@@ -515,6 +515,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                             share(
                               {
                                 sourceId: SOURCE_ID,
+                                verseIndex: verseIdx,
                                 sectionNameHi: `${gitaSaarTitleHi} · ${chapter.titleHi}`,
                                 sectionNameEn: `${gitaSaarTitleEn} · ${chapter.titleEn}`,
                                 verseLabelHi: `श्लोक ${item.gitaChapter}.${item.gitaVerse}`,

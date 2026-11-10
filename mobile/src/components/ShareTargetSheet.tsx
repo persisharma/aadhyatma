@@ -1,6 +1,7 @@
+import type { VerseCardStyle } from '@/utils/shareVerse';
 import AppIcon, { type AppIconName } from './AppIcon';
-import React from 'react';
-import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { LANGUAGES, type Lang } from '@/data/gita/language';
 import { pick } from '@/utils/localize';
@@ -65,6 +66,10 @@ export type ShareSeriesProps = {
 
 type Props = {
   singleCardPreview?: React.ReactNode;
+  /** Offered for scripture only. */
+  cardStyle?: VerseCardStyle;
+  renderStylePreview?: (style: VerseCardStyle, width: number) => React.ReactNode;
+  onCardStyle?: (style: VerseCardStyle) => void;
   visible: boolean;
   lang: Lang;
   /** Sheet title; defaults to "Share this verse". */
@@ -174,6 +179,9 @@ export default function ShareTargetSheet({
   onCardLang,
   onShareText,
   singleCardPreview,
+  cardStyle,
+  renderStylePreview,
+  onCardStyle,
   wholeCard,
   note,
   controls,
@@ -182,6 +190,12 @@ export default function ShareTargetSheet({
   textA11y,
 }: Props) {
   const { colors, spacing, radii } = useTheme();
+  const [stylePicked, setStylePicked] = useState(false);
+  const { width: windowWidth, fontScale } = useWindowDimensions();
+  const choosingStyle = !!cardStyle && !!onCardStyle && !stylePicked;
+  const stackedChoices = fontScale > 1.3;
+  const thumbWidth = Math.max(90, Math.min(170, (windowWidth - spacing.xxl * 2 - 12) / (stackedChoices ? 1 : 2) - 18));
+  const backToStyles = () => { if (!busy) setStylePicked(false); };
   const cardSize = cardMetricsFor(cardLayout);
   const wholeImage = fullVerseImage || wholeCard;
   const subLabel = eyebrowTextStyle(lang, 12);
@@ -199,7 +213,7 @@ export default function ShareTargetSheet({
       accessibilityRole="header"
       style={{ fontFamily: titleFont, fontSize: 18, color: colors.ink, textAlign: 'center', marginBottom: multi ? 2 : spacing.md }}
     >
-      {title ??
+      {choosingStyle ? pick(lang, { hi: 'कैसा कार्ड साझा करें?', en: 'Which card would you like to share?', gu: 'કયું કાર્ડ શેર કરવું છે?', kn: 'ಯಾವ ಕಾರ್ಡ್ ಹಂಚಿಕೊಳ್ಳಲು ಬಯಸುತ್ತೀರಿ?' }) : title ??
         pick(lang, { hi: 'श्लोक साझा करें', en: 'Share this verse', gu: 'શ્લોક શેર કરો', kn: 'ಶ್ಲೋಕ ಹಂಚಿಕೊಳ್ಳಿ' })}
     </Text>
   );
@@ -255,6 +269,37 @@ export default function ShareTargetSheet({
           );
         })}
       </View>
+    </View>
+  ) : null;
+
+  const styleChoices = cardStyle && onCardStyle ? (
+    <View testID="share-card-styles" style={{ gap: 12, marginVertical: spacing.sm, flexDirection: stackedChoices ? 'column' : 'row', alignItems: 'stretch' }}>
+      {([
+        { value: 'current', label: { hi: 'मौजूदा कार्ड', en: 'Current card', gu: 'હાલનું કાર્ડ', kn: 'ಪ್ರಸ್ತುತ ಕಾರ್ಡ್' },
+          detail: { hi: 'सादा पाठ और अर्थ', en: 'Classic verse and meaning', gu: 'સાદો પાઠ અને અર્થ', kn: 'ಸರಳ ಪಠ್ಯ ಮತ್ತು ಅರ್ಥ' } },
+        { value: 'daily-bhakti', label: { hi: 'दैनिक भक्ति कार्ड', en: 'Daily Bhakti card', gu: 'દૈનિક ભક્તિ કાર્ડ', kn: 'ದೈನಂದಿನ ಭಕ್ತಿ ಕಾರ್ಡ್' },
+          detail: { hi: 'चित्र के साथ पाठ और अर्थ', en: 'Illustrated verse and meaning', gu: 'ચિત્ર સાથે પાઠ અને અર્થ', kn: 'ಚಿತ್ರದೊಂದಿಗೆ ಪಠ್ಯ ಮತ್ತು ಅರ್ಥ' } },
+      ] as const).map(option => {
+        const selected = cardStyle === option.value;
+        return <Pressable key={option.value} testID={`share-card-style-${option.value}`}
+          accessibilityRole="button" accessibilityLabel={`Card style: ${option.value === 'current' ? 'Current card' : 'Daily Bhakti card'}`}
+          accessibilityState={{ checked: selected, disabled: !!busy }} disabled={busy}
+          onPress={() => { onCardStyle(option.value); setStylePicked(true); }}
+          style={({ pressed }) => ({ flex: stackedChoices ? undefined : 1, minWidth: 0, minHeight: 48, borderWidth: 1, borderRadius: radii.md, padding: 8,
+            backgroundColor: selected ? colors.saffronTint : colors.parchmentSoft,
+            borderColor: selected ? colors.saffron : colors.divider, opacity: busy ? .5 : pressed ? .7 : 1 })}>
+          {renderStylePreview ? <View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={{ height: 180, alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
+            {renderStylePreview(option.value, thumbWidth)}
+          </View> : null}
+          <Text style={{ fontFamily: titleFont, fontSize: 16, color: selected ? colors.saffronDeep : colors.ink }}>
+            {pick(lang, option.label)}
+          </Text>
+          <Text style={[subLabel, { color: colors.inkMuted }]}>{pick(lang, option.detail)}</Text>
+          <Text style={[subLabel, { color: colors.saffronDeep, marginTop: 12, paddingVertical: 8 }]}>
+            {pick(lang, { hi: 'यह कार्ड चुनें →', en: 'Choose this card →', gu: 'આ કાર્ડ પસંદ કરો →', kn: 'ಈ ಕಾರ್ಡ್ ಆರಿಸಿ →' })}
+          </Text>
+        </Pressable>;
+      })}
     </View>
   ) : null;
 
@@ -500,7 +545,7 @@ export default function ShareTargetSheet({
   const showCancel = !multi || multi.view === 'targets' || multi.view === 'carouselReady';
 
   return (
-    <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
+    <Modal visible={visible} animationType="slide" transparent onRequestClose={cardStyle && stylePicked ? backToStyles : onClose}>
       {/* Card settings can hold text fields (co-branding): keep them above the iOS keyboard. */}
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.keyboard}>
       <Pressable
@@ -520,14 +565,28 @@ export default function ShareTargetSheet({
           {multi?.view === 'preview' ? null : heading}
           {/* Always scrollable: the language chips and text row make even the verse
               sheet taller than a small phone's 92 %. */}
-          <ScrollView style={styles.body} bounces={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-            {!multi || multi.view === 'targets' ? langChips : null}
-            {!multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12 }}>{singleCardPreview}</View> : null}
+          <ScrollView key={choosingStyle ? 'styles' : 'targets'} style={styles.body} bounces={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+            {!choosingStyle && (!multi || multi.view === 'targets') ? langChips : null}
+            {choosingStyle ? <>
+              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center' }]}>{pick(lang, { hi: 'दो रूप, वही श्लोक और पूरा अर्थ।', en: 'Two styles. The same complete verse and meaning.', gu: 'બે શૈલી, એ જ સંપૂર્ણ શ્લોક અને અર્થ.', kn: 'ಎರಡು ಶೈಲಿಗಳು. ಅದೇ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ.' })}</Text>
+              {styleChoices}
+              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center' }]}>{pick(lang, { hi: 'कार्ड चुनते ही साझा करने के विकल्प खुलेंगे।', en: 'Tap a card to open sharing options.', gu: 'શેર કરવાના વિકલ્પો માટે કાર્ડ પસંદ કરો.', kn: 'ಹಂಚಿಕೆ ಆಯ್ಕೆಗಳಿಗೆ ಕಾರ್ಡ್ ಆರಿಸಿ.' })}</Text>
+            </> : cardStyle ? <Pressable onPress={backToStyles} disabled={busy} accessibilityRole="button" accessibilityLabel="Change card style" style={{ minHeight: 44, justifyContent: 'center' }}>
+              <Text style={{ fontFamily: titleFont, color: colors.saffronDeep }}>{pick(lang, { hi: '← कार्ड बदलें', en: '← Change card', gu: '← કાર્ડ બદલો', kn: '← ಕಾರ್ಡ್ ಬದಲಿಸಿ' })}</Text>
+            </Pressable> : null}
+            {!choosingStyle && !multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12, flexDirection: cardStyle ? 'row' : 'column', gap: 16 }}>
+              {cardStyle && renderStylePreview ? <>
+                {renderStylePreview(cardStyle, 64)}
+                <Text style={{ flex: 1, fontFamily: titleFont, fontSize: 16, color: colors.ink }}>{cardStyle === 'current'
+                  ? pick(lang, { hi: 'मौजूदा कार्ड', en: 'Current card', gu: 'હાલનું કાર્ડ', kn: 'ಪ್ರಸ್ತುತ ಕಾರ್ಡ್' })
+                  : pick(lang, { hi: 'दैनिक भक्ति कार्ड', en: 'Daily Bhakti card', gu: 'દૈનિક ભક્તિ કાર્ડ', kn: 'ದೈನಂದಿನ ಭಕ್ತಿ ಕಾರ್ಡ್' })}</Text>
+              </> : singleCardPreview}
+            </View> : null}
             {!multi && note ? (
               <Text testID="share-sheet-note" style={[subLabel, { color: colors.inkMuted, textAlign: 'center', marginBottom: spacing.sm }]}>✓ {note}</Text>
             ) : null}
             {!multi && controls ? <View testID="share-sheet-controls" style={{ marginBottom: spacing.md }}>{controls}</View> : null}
-            {body}
+            {!choosingStyle ? body : null}
           </ScrollView>
           {showCancel ? (
             <Pressable

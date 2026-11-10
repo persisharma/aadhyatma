@@ -9,6 +9,7 @@ import { fontFamilies } from '@/theme/typography';
 import { pick } from '@/utils/localize';
 import { splitDevotionalMeaning, type DevotionalArt } from '@/utils/devotionalShareLayout';
 import { withMarkHeadroom } from '@/utils/markHeadroom';
+import { DevotionalHeaderBrand, DevotionalFooterBrand } from './DevotionalBranding';
 
 export function devotionalFace(lang: Lang): string {
   return lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : fontFamilies.sanskritLatin;
@@ -59,13 +60,35 @@ export function DevotionalSlice({ art, width, top, bottom, height, testID, onLoa
       onLoad={onLoad} onError={onError} />
   </View>;
 }
-export function DevotionalHero({ art, width, onLoad, onError }: {
-  art: DevotionalArt; lang: Lang; width: number; onLoad?: () => void; onError?: () => void;
-}) {
+/** Two bounded paint events, with stale callbacks disabled on unmount. A broken
+ * logo must never release a successful capture merely because its master decoded. */
+function useBrandedPaint(onLoad?: () => void, onError?: () => void) {
+  const active = React.useRef(true), failed = React.useRef(false), reported = React.useRef(false);
+  const painted = React.useRef(new Set<string>());
+  useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
+  return {
+    loaded(part: 'master' | 'brand') {
+      if (!active.current || failed.current || reported.current) return;
+      painted.current.add(part);
+      if (painted.current.size === 2) { reported.current = true; onLoad?.(); }
+    },
+    error() {
+      if (!active.current || failed.current) return;
+      failed.current = true; onError?.();
+    },
+  };
+}
+
+type HeroProps = { art: DevotionalArt; lang: Lang; width: number; onLoad?: () => void; onError?: () => void };
+export function DevotionalHero(props: HeroProps) {
+  return <BrandedHero key={`${props.art}:${props.lang}`} {...props} />;
+}
+function BrandedHero({ art, lang, width, onLoad, onError }: HeroProps) {
   const h = devotionalFrameSpec(art).hero;
   const [paintedArt, setPaintedArt] = useState<DevotionalArt | null>(null);
-  const loaded = () => { setPaintedArt(art); onLoad?.(); };
-  const failed = () => { setPaintedArt(null); onError?.(); };
+  const paint = useBrandedPaint(onLoad, onError);
+  const loaded = () => { setPaintedArt(art); paint.loaded('master'); };
+  const failed = () => { setPaintedArt(null); paint.error(); };
   return <View testID="devotional-share-artwork">
     <View testID={`devotional-subject-${paintedArt === art ? art : `loading-${art}`}`} collapsable={false}>
       {art === 'prayer' ? <View style={{ height: h * width / canvas.width, overflow: 'hidden' }}>
@@ -74,12 +97,7 @@ export function DevotionalHero({ art, width, onLoad, onError }: {
       </View> : <DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
         testID="devotional-hero-image" onLoad={loaded} onError={failed} />}
     </View>
-    {art === 'mahakaal' ? <View testID="mahakaal-brand" pointerEvents="none" style={{ position: 'absolute', left: 42 * width / canvas.width,
-      top: 52 * width / canvas.width, width: 176 * width / canvas.width, paddingVertical: 12 * width / canvas.width,
-      backgroundColor: devotionalFrameColors.paper, borderColor: '#B28745', borderWidth: width / canvas.width, alignItems: 'center' }}>
-      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 38 * width / canvas.width, color: '#6D231A' }}>वेदांश</Text>
-      <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 19 * width / canvas.width, color: '#6D231A' }}>Vedansh.app</Text>
-    </View> : null}
+    <DevotionalHeaderBrand lang={lang} width={width} onLoad={() => paint.loaded('brand')} onError={failed} />
   </View>;
 }
 /** Mirror-tile a clean band of paper and rules into `height`, each tile `stretch`× the band, so a
@@ -91,7 +109,22 @@ function Tiles({ art, width, top, bottom, height, stretch, testID, onLoad, onErr
   const tile = (bottom - top) * width / canvas.width * stretch;
   const count = height > 0 ? Math.ceil(height / tile) : 0;
   const painted = React.useRef(new Set<number>());
-  const report = () => { if (count && Array.from({ length: count }, (_, i) => i).every(i => painted.current.has(i))) onLoad?.(); };
+  // Each index is checked at most once as paint events arrive, even in reverse
+  // order. Do not rebuild/rescan an N-element array after every tile decode.
+  const contiguousPainted = React.useRef(0);
+  const previousCount = React.useRef(count);
+  React.useLayoutEffect(() => {
+    if (count < previousCount.current) {
+      // Only committed removals invalidate paint; abandoned renders do not.
+      for (const index of painted.current) if (index >= count) painted.current.delete(index);
+      contiguousPainted.current = Math.min(contiguousPainted.current, count);
+    }
+    previousCount.current = count;
+  }, [count]);
+  const report = () => {
+    while (contiguousPainted.current < count && painted.current.has(contiguousPainted.current)) contiguousPainted.current++;
+    if (count > 0 && contiguousPainted.current >= count) onLoad?.();
+  };
   React.useEffect(report, [count]); // eslint-disable-line react-hooks/exhaustive-deps
   return <View style={{ height, overflow: 'hidden' }}>
     {Array.from({ length: count }, (_, i) => <View key={i} style={i % 2 ? { transform: [{ scaleY: -1 }] } : undefined}>
@@ -114,7 +147,7 @@ function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, tile, child
   return <View testID={testID} onLayout={e => setHeight(e.nativeEvent.layout.height)} style={{ minHeight: minimum }}>
     <View pointerEvents="none" accessible={false} style={StyleSheet.absoluteFill}>
       {topCap ? <DevotionalSlice art={art} width={width} top={top} bottom={top + topCap} onLoad={() => paintedPart('top')} onError={onError} /> : null}
-      {tile ? <Tiles art={art} width={width} top={top + topCap} bottom={bottom - bottomCap} height={middle} stretch={tile}
+      {tile ? <Tiles key={`${art}:${width}:${top}:${bottom}:${topCap}:${bottomCap}:${tile}`} art={art} width={width} top={top + topCap} bottom={bottom - bottomCap} height={middle} stretch={tile}
         testID={`${testID}-tile`} onLoad={() => paintedPart('middle')} onError={onError} />
         : <DevotionalSlice art={art} width={width} top={top + topCap} bottom={bottom - bottomCap}
           height={middle} testID={`${testID}-image`} onLoad={() => paintedPart('middle')} onError={onError} />}
@@ -202,11 +235,15 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
     <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />
   </View>;
 }
-export function DevotionalFooter({ art, width, onLoad, onError }: { art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void }) {
-  return <View testID="devotional-footer" accessible accessibilityLabel="Vedansh.app"><DevotionalSlice art={art} width={width} top={canvas.footerTop} bottom={canvas.height}
-    testID="devotional-footer-image" onLoad={onLoad} onError={onError} />
-    {art === 'mahakaal' ? <Text testID="mahakaal-footer-brand" allowFontScaling={false} style={{ position: 'absolute', left: 0, right: 0,
-      bottom: 56 * width / canvas.width, textAlign: 'center', fontFamily: fontFamilies.latinSemiBold,
-      fontSize: 28 * width / canvas.width, color: '#4A210F' }}>Vedansh.app</Text> : null}
+type FooterProps = { art: DevotionalArt; width: number; onLoad?: () => void; onError?: () => void };
+export function DevotionalFooter(props: FooterProps) {
+  return <BrandedFooter key={props.art} {...props} />;
+}
+function BrandedFooter({ art, width, onLoad, onError }: FooterProps) {
+  const paint = useBrandedPaint(onLoad, onError);
+  return <View testID="devotional-footer" accessible accessibilityLabel="Vedansh.app">
+    <DevotionalSlice art={art} width={width} top={canvas.footerTop} bottom={canvas.height}
+      testID="devotional-footer-image" onLoad={() => paint.loaded('master')} onError={paint.error} />
+    <DevotionalFooterBrand width={width} onLoad={() => paint.loaded('brand')} onError={paint.error} />
   </View>;
 }

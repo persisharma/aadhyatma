@@ -1,43 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import type { Lang } from '@/data/gita/language';
-import { cleanSender, fullPhotoFit, suvicharArtRequest, suvicharBrandSlot, suvicharFooterBand, suvicharHeroFraction, type SuvicharDeity, type SuvicharFrame, type SuvicharPhotoFit } from '@/data/suvichar';
+import { cleanSender, fullPhotoFit, suvicharPaperArtRequest, suvicharHeading, suvicharBrandSlot, suvicharFooterBand, suvicharHeroFraction, type SuvicharDeity, type SuvicharFrame, type SuvicharPhotoFit } from '@/data/suvichar';
+import { suvicharPhotoArt } from '@/data/suvicharPhotoArt';
 import SuvicharSenderPhoto from '@/components/SuvicharSenderPhoto';
 import { subscribeBackgroundAsset, evictBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { useTheme } from '@/theme/ThemeContext';
 import { suvicharCardType as t } from '@/theme/suvichar';
 import { fontFamilies } from '@/theme/typography';
 import { titleFontByLang } from '@/utils/langType';
-import { pick } from '@/utils/localize';
+import { contentByLang, pick } from '@/utils/localize';
 
 const brandMark = require('@assets/splash-icon.png');
 
 type Props = {
   deity: SuvicharDeity; frame: SuvicharFrame; message: string; name: string; lang: Lang; width: number;
-  /** Weekday title (शुभ मंगलवार) shown in place of the “आज का सुविचार” label; the message never names the day. */
+  /** Weekday title (शुभ मंगलवार) shown in place of the muted heading; the message never names the day. */
   title?: string;
   /** Scripture reference or original authorship label. Omitted as soon as the message is edited. */
   attribution?: string;
   /** Resolved sender photo URI, drawn round above “सप्रेम — name” and fitted to its faces; it joins the decode gate. */
   photo?: string | null; photoFit?: SuvicharPhotoFit; onPhotoError?: () => void;
-  onReady: (ready: boolean) => void; onHeight?: (height: number) => void; original?: boolean;
+  onReady: (ready: boolean) => void; onHeight?: (height: number) => void;
+  /** False for wishes and reader-written text: the heading reads “शुभकामनाएँ” instead of “आज का सुविचार”. */
+  original?: boolean;
 };
 /** Keep the artwork subscription alive while names/messages are being typed. */
 export default function SuvicharCard(props: Props) {
-  const request = suvicharArtRequest(props.deity, props.frame);
-  const [uri, setUri] = useState<string | null>(null);
+  const request = suvicharPaperArtRequest(props.deity, props.frame);
+  const portrait = suvicharPhotoArt(props.deity);
+  const [art, setArt] = useState<{ url: string; uri: string } | null>(null);
+  const [deityPhoto, setDeityPhoto] = useState<{ url: string; uri: string } | null>(null);
   useEffect(() => {
     if (!request) return;
-    return subscribeBackgroundAsset(request, setUri);
+    return subscribeBackgroundAsset(request, uri => setArt(uri ? { url: request.remoteUrl, uri } : null));
   }, [request?.remoteUrl]); // eslint-disable-line react-hooks/exhaustive-deps
-  const failed = () => { setUri(null); if (request) void evictBackgroundAsset(request); };
-  return <MeasuredCard key={JSON.stringify([props.title, props.attribution, props.message, props.name, props.photo, props.photoFit, props.lang, props.width])}
-    {...props} uri={uri} onFailure={failed} />;
+  useEffect(() => {
+    if (!portrait) return;
+    return subscribeBackgroundAsset(portrait.request, uri => setDeityPhoto(uri ? { url: portrait.request.remoteUrl, uri } : null));
+  }, [portrait?.request.remoteUrl]); // eslint-disable-line react-hooks/exhaustive-deps
+  const uri = art?.url === request?.remoteUrl ? art?.uri ?? null : null;
+  const deityPhotoUri = deityPhoto?.url === portrait?.request.remoteUrl ? deityPhoto?.uri ?? null : null;
+  const failed = () => { setArt(null); if (request) void evictBackgroundAsset(request); };
+  const photoFailed = () => { setDeityPhoto(null); if (portrait) void evictBackgroundAsset(portrait.request); };
+  return <MeasuredCard key={JSON.stringify([props.deity, props.frame, uri, deityPhotoUri, props.title, props.attribution, props.original, props.message, props.name, props.photo, props.photoFit, props.lang, props.width])}
+    {...props} uri={uri} deityPhotoUri={deityPhotoUri} onFailure={failed} onDeityPhotoFailure={photoFailed} />;
 }
-function MeasuredCard({ deity, frame, message, name, lang, width, title, attribution, photo, photoFit = fullPhotoFit, onPhotoError, onReady, onHeight, original = true, uri, onFailure }: Props & {
-  uri: string | null; onFailure: () => void;
+function MeasuredCard({ deity, frame, message, name, lang, width, title, attribution, photo, photoFit = fullPhotoFit, onPhotoError, onReady, onHeight, original = true, uri, deityPhotoUri, onFailure, onDeityPhotoFailure }: Props & {
+  uri: string | null; deityPhotoUri: string | null; onFailure: () => void; onDeityPhotoFailure: () => void;
 }) {
   const { colors } = useTheme();
+  const portrait = suvicharPhotoArt(deity);
   const heroFraction = suvicharHeroFraction(deity, frame);
   const band = suvicharFooterBand(frame, deity);
   const brand = suvicharBrandSlot(frame, deity);
@@ -48,7 +61,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
   const [rootHeight, setRootHeight] = useState(0);
   const [measured, setMeasured] = useState(false);
   const [bodyHeight, setBodyHeight] = useState(full * (band.start - heroFraction));
-  useEffect(() => { onReady((!!uri && painted.hero && painted.body && painted.footer) && painted.mark && painted.photo && measured && Math.abs(rootHeight - (hero + bodyHeight + footer)) < 1); }, [uri, painted, measured, rootHeight, bodyHeight, hero, footer, onReady]);
+  useEffect(() => { onReady((!!uri && (!portrait || !!deityPhotoUri) && painted.hero && painted.body && painted.footer) && painted.mark && painted.photo && measured && Math.abs(rootHeight - (hero + bodyHeight + footer)) < 1); }, [uri, portrait, deityPhotoUri, painted, measured, rootHeight, bodyHeight, hero, footer, onReady]);
   const scale = width / t.baseWidth;
   const face = titleFontByLang(lang);
   const text = (size: number) => ({ color: colors.ink, fontFamily: face, fontSize: size * scale, lineHeight: size * scale * t.leading, textAlign: 'center' as const });
@@ -58,7 +71,15 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
   const failed = () => { setPainted(p => ({ ...p, hero: false, body: false, footer: false })); onFailure(); };
   return <View testID="suvichar-card" onLayout={e => { setRootHeight(e.nativeEvent.layout.height); onHeight?.(e.nativeEvent.layout.height); }} style={{ width, backgroundColor: colors.parchmentSoft }} collapsable={false}>
     <View style={{ height: hero, overflow: 'hidden' }}>
-      {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: full }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
+      {portrait ? <View testID="suvichar-card-deity-photo-frame" style={{ position: 'absolute', top: full * .085, left: width * .07, width: width * .86, height: hero - full * .095,
+        overflow: 'hidden', borderWidth: 1.5 * width / t.baseWidth, borderColor: colors.gold,
+        borderTopLeftRadius: frame === 'mandir-jharokha' ? width * .32 : frame === 'pushp-aangan' ? width * .06 : 2,
+        borderTopRightRadius: frame === 'mandir-jharokha' ? width * .32 : frame === 'pushp-aangan' ? width * .06 : 2,
+        borderBottomLeftRadius: frame === 'pushp-aangan' ? width * .06 : 2, borderBottomRightRadius: frame === 'pushp-aangan' ? width * .06 : 2 }}>
+        {deityPhotoUri ? <Image testID="suvichar-card-deity-photo" accessible={false} source={{ uri: deityPhotoUri }} resizeMode="stretch"
+          style={{ width: width * .86, height: width * .86 * portrait.height / portrait.width }}
+          onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={() => { setPainted(p => ({ ...p, hero: false })); onDeityPhotoFailure(); }} /> : null}
+      </View> : uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: full }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
       <View testID="suvichar-card-brand" style={{ position: 'absolute', left: 0, right: 0, top: full * brand.top, height: full * (brand.bottom - brand.top), alignItems: 'center', justifyContent: 'center' }}>
         <BrandBadge scale={scale} onPainted={() => setPainted(p => ({ ...p, mark: true }))} />
       </View>
@@ -66,19 +87,20 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
     <View testID="suvichar-card-body" onLayout={e => { setBodyHeight(e.nativeEvent.layout.height); setMeasured(Number.isFinite(e.nativeEvent.layout.height) && e.nativeEvent.layout.height > 0); }} style={{ minHeight: full * (band.start - heroFraction), justifyContent: 'center', overflow: 'hidden' }}>
       {uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', width, height: backgroundHeight, top: -backgroundHeight * heroFraction }} onLoad={() => setPainted(p => ({ ...p, body: true }))} onError={failed} /> : null}
       <View style={{ paddingHorizontal: width * t.horizontalInset, paddingTop: (deity === 'saraswati' && frame === 'mandir-jharokha' ? 20 : 8) * scale, paddingBottom: 8 * scale }}>
+        {portrait ? <Text testID="suvichar-card-deity-name" allowFontScaling={false} style={[text(t.name), { color: colors.saffronDeep }]}>{contentByLang(lang, portrait.hi, portrait.en)}</Text> : null}
         {title ? <Text testID="suvichar-card-title" allowFontScaling={false} style={[text(t.title), { color: colors.saffronDeep }]}>{title}</Text>
-          : attribution ? null : <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' })}</Text>}
+          : attribution ? null : <Text testID="suvichar-card-label" allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, original ? suvicharHeading.thought : suvicharHeading.wish)}</Text>}
         {attribution ? <Text testID="suvichar-card-source" allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{attribution}</Text> : null}
         <Text testID="suvichar-card-message" allowFontScaling={false} style={text(t.message)}>{message}</Text>
         <View testID="suvichar-card-divider" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 * scale, marginVertical: 6 * scale }}>
           <View style={{ width: 36 * scale, height: StyleSheet.hairlineWidth * 2, backgroundColor: colors.gold }} /><Diamond size={3.5 * scale} />
           <View style={{ width: 36 * scale, height: StyleSheet.hairlineWidth * 2, backgroundColor: colors.gold }} />
         </View>
-        {original ? null : <Text allowFontScaling={false} style={[text(t.label), { color: colors.inkMuted }]}>{pick(lang, { hi: 'आपकी शुभकामना', en: 'Your warm wishes', gu: 'તમારી શુભેચ્છા', kn: 'ನಿಮ್ಮ ಶುಭಾಶಯ' })}</Text>}
         {photo ? <SuvicharSenderPhoto testID="suvichar-card-photo" uri={photo} fit={photoFit} size={t.photo * scale} ring={1.5 * scale} color={colors.gold}
           onLoad={() => setPainted(p => ({ ...p, photo: true }))} onError={onPhotoError} style={{ alignSelf: 'center', marginTop: 4 * scale, marginBottom: 2 * scale }} /> : null}
         {sender ? <Text testID="suvichar-card-sender" allowFontScaling={false} style={text(t.name)}>{pick(lang, { hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — {sender}</Text> : null}
         <Text testID="suvichar-card-download" allowFontScaling={false} style={[text(t.download), { color: colors.saffronDeep, marginTop: 6 * scale, marginHorizontal: width * .14 }]}>{pick(lang, { hi: 'ऐसे और संदेशों के लिए वेदांश ऐप डाउनलोड करें', en: 'Download the Vedansh app for more wishes like this', gu: 'આવા વધુ સંદેશ માટે વેદાંશ ઍપ ડાઉનલોડ કરો', kn: 'ಇಂತಹ ಇನ್ನಷ್ಟು ಸಂದೇಶಗಳಿಗೆ ವೇದಾಂಶ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' })}</Text>
+        {portrait ? <Text testID="suvichar-card-photo-credit" allowFontScaling={false} style={{ color: colors.inkMuted, fontFamily: fontFamilies.latin, fontSize: t.download * scale, lineHeight: t.download * t.leading * scale, textAlign: 'center', marginTop: 6 * scale }}>{portrait.credit}</Text> : null}
       </View>
     </View>
     <View testID="suvichar-card-footer" style={{ height: footer, overflow: 'hidden' }}>

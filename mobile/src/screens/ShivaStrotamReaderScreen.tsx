@@ -325,6 +325,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                           share(
                             {
                               sourceId: 'shiva-strotam',
+                              verseIndex,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
                               verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,

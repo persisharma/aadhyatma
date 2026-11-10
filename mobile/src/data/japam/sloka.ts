@@ -1,5 +1,6 @@
 import type { Deity } from '../texts';
 import type { JapamMantra } from './index';
+import { parshuramPublished } from '../parshuramAvailability';
 
 /**
  * Sloka japa (design.md §35.1): any shloka of a स्तोत्रम्-category text can be
@@ -68,6 +69,8 @@ function stuti(id: string): () => Corpus {
  * (`slokaJapa.test.ts` keeps this list and the library in step).
  */
 const SOURCES: readonly SlokaSource[] = [
+  // Listed only once its artwork is published, like its library entry.
+  ...(parshuramPublished ? [{ sourceId: 'parshuram-stotram', deities: ['parshuram'] as Deity[], unit: 'whole' as const, corpus: stuti('parshuram-stotram') }] : []),
   {
     sourceId: 'shiva-strotam',
     deities: ['shiva'],

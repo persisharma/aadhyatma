@@ -4,7 +4,9 @@ import { StyleSheet, Text, View as mockView, type TextStyle } from 'react-native
 
 import { computeKundali, computeRashifal } from '@/panchang/kundali';
 import { getCityById } from '@/panchang/locations';
-import JyotishShareCard, { kundaliChartSize } from '../JyotishShareCard';
+import JyotishShareCard, { compactPlaceLabelEn, kundaliChartSize } from '../JyotishShareCard';
+import { birthCity, birthPlaceFromPincode } from '@/panchang/birthProfiles';
+import { lookupPincode } from '@/panchang/pincodes';
 import type { Lang } from '@/data/gita/language';
 
 jest.mock('expo-linear-gradient', () => ({
@@ -126,5 +128,33 @@ describe('Kundali share card chart budget', () => {
     const diagram = tree.root.findByProps({ testID: 'north-indian-chart' });
     const style = StyleSheet.flatten(diagram.props.style) as { width?: number };
     expect(style.width).toBe(kundaliChartSize(312));
+  });
+});
+
+describe('Kundali share card birth line', () => {
+  // A town birth place (Nov 2026) is labelled for the picker with its pincode —
+  // "North Lakhimpur · 787001, Assam" — which would wrap the 10 pt meta line on a
+  // 312 dp card and push the method footer out of the fixed 4:5 box.
+  test('drops only the pincode from a town label; bundled names pass through', () => {
+    expect(compactPlaceLabelEn('North Lakhimpur · 787001, Assam')).toBe('North Lakhimpur, Assam');
+    expect(compactPlaceLabelEn('787001 · Lakhimpur, Assam')).toBe('787001 · Lakhimpur, Assam');
+    expect(compactPlaceLabelEn('Thiruvananthapuram')).toBe('Thiruvananthapuram');
+  });
+
+  test('the meta line is one line, showing the compact town label', () => {
+    const picked = birthPlaceFromPincode(lookupPincode('787001')!, 'North Lakhimpur');
+    const townProfile = { ...profile, ...picked };
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(
+        <JyotishShareCard kind="kundali" width={312} lang="en" chart={chart} profile={townProfile} city={birthCity(townProfile)!} />
+      );
+    });
+    const meta = tree.root
+      .findAllByType(Text)
+      .find((node) => [node.props.children].flat(Infinity).join('').includes('North Lakhimpur'))!;
+    expect(meta.props.numberOfLines).toBe(1);
+    expect([meta.props.children].flat(Infinity).join('')).toContain('North Lakhimpur, Assam');
+    expect([meta.props.children].flat(Infinity).join('')).not.toContain('787001');
   });
 });

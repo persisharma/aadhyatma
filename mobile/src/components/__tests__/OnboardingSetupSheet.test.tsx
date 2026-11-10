@@ -28,7 +28,7 @@ const mockCommit = jest.fn(),
   mockScale = jest.fn();
 jest.mock('../QuietCompanionSheet', () => {
   const React = require('react');
-  return (p: any) => React.createElement('QuietSheet', p, p.children);
+  return function MockQuietSheet(p: any) { return React.createElement('QuietSheet', p, p.children); };
 });
 jest.mock('../QuietReminderBody', () => () => null);
 jest.mock('../AppIcon', () => () => null);

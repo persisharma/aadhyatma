@@ -43,7 +43,7 @@ for a `useEffect`, and `claimPlayback(kind)` silences every *other* source. `Pla
 embed keeps YouTube's in-video ▶ (`controls: true`), which never passes through the strip's
 `play()`. Until Nov 2026 its `onChangeState(PLAYING)` set state without claiming, so resuming from
 the embed played over the bhajan that had paused it. It now claims when PLAYING arrives while its
-`playingRef` says paused (design.md §89). Any future source with native/embedded controls needs
+`playingRef` says paused (design.md §91). Any future source with native/embedded controls needs
 the same hook.
 
 It is a module rather than a context field on purpose: routing exclusion through
@@ -113,6 +113,8 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 
 ## Gotchas
 
+- **The app-wide player is created on first use, never at launch (Nov 2026 ANR fix).** `AudioPlayerProvider` holds no player until `playTrack`/`togglePlay`/`toggleLoop` call `ensurePlayer()`. On Android, expo-audio's constructor builds ExoPlayer on the main thread (the JS thread blocks on it via `runBlocking`), and `sendPlayerUpdate` emits status from `Dispatchers.Main`. That is the `JSTypeConverter` frame in Play's launch ANR clusters. `stop()`, `seekTo` and `setRate` never create a player, because the arbiter calls `stop()` whenever read-aloud or japam starts. The status listener is attached inside `ensurePlayer()`, synchronously before `replace()`, because a cached file can report loaded before an effect would subscribe. `ensureBackgroundAudioMode()` moved there too.
+
 - **Never substitute a voice across languages, and never let the engine do it for you.** This is
   the whole point of the per-language design: reading Gujarati with only a Hindi voice installed must
   be *silent*, not Gujarati-read-as-Hindi. Three guards, all needed — `resolveVoice` returns `null`
@@ -122,6 +124,12 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 - **Both platforms fail SILENTLY for a missing voice — `onError` never fires.** iOS leaves
   `utterance.voice = nil` and uses the system default; Android's `speakOut` falls back to
   `Locale.getDefault()`. Availability therefore comes from a `getAvailableVoicesAsync()` probe
+  (**on first need only** — `ensureVoices()` from `useReaderReadAloud` on a cleared 500 ms timer after mount — not `InteractionManager`, whose immediate outlived Jest fake timers and hung the CI reader shard — or the voice
+  sheet opening; never at provider mount, because Android answers it with a main-thread `getVoices()`
+  binder call in expo-speech's init callback — Nov 2026 ANR audit). `patches/expo-speech+14.0.8.patch`
+  also moves that init-callback drain onto expo's serial AsyncFunction queue (ready flag flipped there,
+  so queued work keeps order) and stops activity-destroy from constructing an engine just to shut it
+  down; `expoSpeechPatch.test.ts` pins the installed source — re-port it on any expo-speech upgrade
   (raced against a 4 s timeout — Android's engine binds slowly) plus a **3 s `onStart` watchdog**
   for the OEM engine that reports a language then emits nothing. Never gate on `onError`.
 - **Never pass `'hi-IN'` as Android's `language`.** `SpeechModule.kt` does `Locale(options.language)`

@@ -166,6 +166,7 @@ export default function RamStutiReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: 'ram-stuti',
+                            verseIndex: index,
                             sectionNameHi: chapter.titleHi,
                             sectionNameEn: chapter.titleEn,
                             verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,

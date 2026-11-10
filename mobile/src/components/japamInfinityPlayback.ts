@@ -1,3 +1,5 @@
+import { japaCycleDurationMs, MIN_SILENT_JAPA_MS } from './japamRecitationTiming';
+
 export type InfinityMotionDriver = {
   readPhase: (callback: (phase: number) => void) => void;
   setPhase: (phase: number) => void;
@@ -6,14 +8,18 @@ export type InfinityMotionDriver = {
   onCycle?: () => void;
 };
 
+/** 1× short-name fallback. The screen supplies the full mantra's cadence. */
+export const INFINITY_CYCLE_MS = japaCycleDurationMs(MIN_SILENT_JAPA_MS);
+
 /** Continuous motion; only successfully completed foreground cycles are emitted. */
-export function startInfinityMotion(driver: InfinityMotionDriver): () => void {
+export function startInfinityMotion(driver: InfinityMotionDriver, cycleMs = INFINITY_CYCLE_MS): () => void {
+  const fullCycleMs = Number.isFinite(cycleMs) && cycleMs > 0 ? cycleMs : INFINITY_CYCLE_MS;
   let live = true;
   let animation: { stop: () => void } | undefined;
   function cycle(from: number) {
     if (!live) return;
     let consumed = false;
-    animation = driver.animate(Math.max(1, Math.round(800 * (1 - from))), (finished) => {
+    animation = driver.animate(Math.max(1, Math.round(fullCycleMs * (1 - from))), (finished) => {
       if (!live || consumed) return;
       consumed = true;
       if (!finished) return;

@@ -10,14 +10,21 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
 import type { AutoSlideSpeed } from '@/utils/autoSlideStore';
 import type { AutoSlideControl } from '@/screens/_useAutoSlide';
 
-/** Pace as a three-bar meter: language-neutral and narrow enough for a toggle row. */
-const SPEED_LEVEL: Record<AutoSlideSpeed, number> = { slow: 1, normal: 2, fast: 3 };
-const BAR_HEIGHTS = [5, 8, 11];
+/** Pace as a four-bar meter: language-neutral and narrow enough for a toggle row. */
+const SPEED_LEVEL: Record<AutoSlideSpeed, number> = { slow: 1, normal: 2, fast: 3, veryFast: 4 };
+const BAR_HEIGHTS = [5, 8, 11, 14];
+/** English for Maestro, like every reader control; ids stay internal. */
+const SPEED_A11Y: Record<AutoSlideSpeed, string> = {
+  slow: 'slow',
+  normal: 'normal',
+  fast: 'fast',
+  veryFast: 'very fast',
+};
 
 /**
  * The auto-slide (स्वतः) control (design.md §85). Idle it is one pill — ▶ + "स्वतः /
- * Auto"; playing it splits into ❚❚ and a three-bar pace meter (slow · normal · fast) that
- * cycles on tap, over a hairline countdown to the next scroll or page turn.
+ * Auto"; playing it splits into ❚❚ and a four-bar pace meter (slow · normal · fast · very
+ * fast) that cycles on tap, over a hairline countdown to the next scroll or page turn.
  *
  * `floating` (the default) anchors it bottom-left of a verse pager, mirroring
  * `JumpToStartButton` on the right. Screens whose pager bottom is caption text (Kids
@@ -91,7 +98,7 @@ export default function AutoSlideButton({
             onPress={control.cycleSpeed}
             hitSlop={10}
             accessibilityRole="button"
-            accessibilityLabel={`Slideshow speed: ${control.speed}`}
+            accessibilityLabel={`Slideshow speed: ${SPEED_A11Y[control.speed]}`}
             accessibilityHint="Changes how long each page stays"
             style={({ pressed }) => [
               styles.segment,

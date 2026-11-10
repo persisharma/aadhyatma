@@ -118,6 +118,13 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Pitru Smaran.*1 entries"
     timeout: 15000
+# On a day with an observance the illustrated occasion cards (#647) sit above
+# the ledger, so the row can be below the fold: bring it on screen before the
+# tap, or the tap lands under the tab bar and nothing opens.
+- scrollUntilVisible:
+    element:
+      text: "Pitru Smaran.*1 entries"
+    centerElement: true
 - tapOn: "Pitru Smaran.*1 entries"
 - waitForAnimationToEnd
 - extendedWaitUntil:

@@ -142,3 +142,17 @@ test('preflight failure retains a failed report and never calls the network', as
   assert.equal(report.verified.length, 0);
   assert.equal(network.mock.callCount(), 0);
 });
+
+test('reader publication resolves the reviewed Parshuram background alias', async () => {
+  const root = path.resolve(import.meta.dirname, '../..');
+  const catalog = JSON.parse(await readFile(path.join(root, 'scripts/r2-collections.json'), 'utf8'));
+  const record = JSON.parse(await readFile(path.join(root, 'docs/content-parity/parshuram/artwork.json'), 'utf8'));
+  const reviewed = record.assets.find(a => a.prefix === 'reader-illustrations' && a.stem === 'deity-parshuram');
+  assert.ok(reviewed);
+  const plan = await buildPlan(root, catalog.filter(c => c.id === 'reader-illustrations'));
+  const alias = plan.find(item => item.stems.includes(reviewed.stem));
+  assert.ok(alias);
+  assert.equal(alias.source, reviewed.file);
+  assert.equal(alias.sha256, reviewed.sha256);
+  assert.equal(alias.key, `reader-illustrations/${reviewed.sha256.slice(0, 16)}.webp`);
+});

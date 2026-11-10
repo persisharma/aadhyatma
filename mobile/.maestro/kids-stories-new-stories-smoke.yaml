@@ -138,7 +138,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-mercy-and-home" }
 - takeScreenshot: kids-putana-en-pt06
 - scrollUntilVisible:
-    element: { text: "A children's retelling of Bhagavata Purana 10.5–6. Frightening details are shortened; the takeaway is editorial." }
+    element: { text: "Real love shows itself through care. This story celebrates Krishna's protection and boundless compassion." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-en-source
@@ -249,7 +249,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-river-restored" }
 - takeScreenshot: kids-kaliya-nag-en-ka07
 - scrollUntilVisible:
-    element: { text: "A simple retelling of Bhagavata Purana 10.15–16. Illustrations represent the many hoods with a smaller visible group. The takeaway is editorial." }
+    element: { text: "Let courage go with compassion. Humility means accepting a mistake and making it right. Caring for nature matters to everyone." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-en-source
@@ -401,7 +401,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-ganapati-blessing" }
 - takeScreenshot: kids-ganesha-birth-en-gb07
 - scrollUntilVisible:
-    element: { text: "A children's retelling of the Shvetakalpa account in Shiva Purana, Rudra-samhita, Kumara-khanda 13–18. Other birth traditions exist. Violent details are shortened; the takeaway is editorial." }
+    element: { text: "Listening helps us understand one another. Love and compassion can bring a new beginning after sorrow." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-en-source
@@ -540,7 +540,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-gods-blessings" }
 - takeScreenshot: kids-hanuman-sun-en-hs06
 - scrollUntilVisible:
-    element: { text: "A children's retelling of Valmiki Ramayana, Uttara-kanda 35–36. This account follows his flight towards the sun; swallowing the sun belongs to other popular retellings. The takeaway is editorial." }
+    element: { text: "Curiosity begins learning. Great strength also needs understanding and care." }
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-en-source

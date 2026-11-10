@@ -33,6 +33,7 @@ async function flush() { await act(async () => { for (let i = 0; i < 8; i++) awa
 async function mount(custom = true) { await act(async () => { tree = create(<SuvicharScreen />); }); await flush(); if (custom) act(() => node('suvichar-mode-custom').props.onPress()); }
 const pickDeity = (deity: string) => act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.kind === 'daily' && t.deity === deity)!));
 const node = (id: string) => tree.root.findAllByProps({ testID: id }).find(n => typeof n.props.onPress === 'function' || typeof n.props.onChangeText === 'function')!;
+const nameToggle = () => tree.root.findAllByProps({ testID: 'suvichar-name-toggle' }).find(n => typeof n.props.onValueChange === 'function')!;
 // Only Date is faked; promises, frames and timers stay real. Tests run on Sunday 25 October 2026 unless they pick a day.
 const day = (date: number) => jest.useFakeTimers({ now: new Date(2026, 9, date, 9), doNotFake: ['hrtime', 'nextTick', 'performance', 'queueMicrotask',
   'requestAnimationFrame', 'cancelAnimationFrame', 'requestIdleCallback', 'cancelIdleCallback', 'setImmediate', 'clearImmediate', 'setInterval', 'clearInterval', 'setTimeout', 'clearTimeout'] });
@@ -47,6 +48,22 @@ it('retains the sender through deity/frame changes and saves the latest name', a
   expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ name: 'Sharma family', deity: 'rama', frame: 'pushp-aangan' });
   const calls = jest.mocked(AsyncStorage.setItem).mock.calls;
   expect(JSON.parse(calls[calls.length - 1][1]).name).toBe('Sharma family');
+});
+it('selects Ram Lalla, saves the photo card and hands its selected frame and sender to sharing', async () => {
+  await mount();
+  act(() => node('suvichar-name').props.onChangeText('Sharma family'));
+  pickDeity('ram-lalla');
+  act(() => node('suvichar-frame-bhakti-patra').props.onPress());
+  act(() => node('suvichar-favorite').props.onPress());
+  await flush();
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family' });
+  const stored = JSON.parse(jest.mocked(AsyncStorage.setItem).mock.calls.at(-1)![1]);
+  expect(stored.favorites).toEqual(expect.arrayContaining([expect.objectContaining({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family' })]));
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  const element = sharedCard().render({ lang: 'hi', onReady: jest.fn() }) as React.ReactElement<Record<string, unknown>>;
+  expect(element.props).toMatchObject({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family', width: 540 });
+  expect(sharedCard().caption('hi').label).toBe('राम लला · अयोध्या');
 });
 it('shares nothing before art readiness, then hands the provider the branded card', async () => {
   await mount(); expect(node('suvichar-share').props.disabled).toBe(true);
@@ -167,6 +184,66 @@ it('asks for the sender once, then shows it as an editable row', async () => {
   act(() => node('suvichar-name').props.onBlur());
   expect(tree.root.findAllByProps({ testID: 'suvichar-name' })).toHaveLength(0);
   expect(tree.root.findByType(SuvicharCard).props.name).toBe('Patel family');
+});
+
+it('switches the sender line off and on without clearing the saved name', async () => {
+  jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(JSON.stringify({ deity: 'krishna', frame: 'mandir-jharokha', message: '', name: 'Sharma family', favorites: [] }));
+  await mount(false);
+  expect(nameToggle().props.value).toBe(true);
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  act(() => nameToggle().props.onValueChange(false));
+  await flush();
+  expect(tree.root.findByType(SuvicharCard).props.name).toBe('');
+  expect(tree.root.findAllByProps({ testID: 'suvichar-name-row' })).toHaveLength(0);
+  expect(tree.root.findAllByProps({ testID: 'suvichar-name' })).toHaveLength(0);
+  // The card changed, so the old readiness cannot unlock sharing.
+  expect(node('suvichar-share').props.disabled).toBe(true);
+  const calls = jest.mocked(AsyncStorage.setItem).mock.calls;
+  expect(JSON.parse(calls[calls.length - 1][1])).toMatchObject({ name: 'Sharma family', nameOn: false });
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  expect(sharedCard().text?.('hi')).not.toContain('Sharma family');
+  expect((sharedCard().render({ lang: 'hi', onReady: jest.fn() }) as React.ReactElement<Record<string, unknown>>).props.name).toBe('');
+  act(() => node('suvichar-favorite').props.onPress());
+  await flush();
+  expect(JSON.parse(calls[calls.length - 1][1]).favorites[0]).toMatchObject({ name: '' });
+  expect(JSON.parse(calls[calls.length - 1][1]).name).toBe('Sharma family');
+  act(() => nameToggle().props.onValueChange(true));
+  expect(tree.root.findByType(SuvicharCard).props.name).toBe('Sharma family');
+  expect(node('suvichar-name-row')).toBeTruthy();
+});
+
+it('restores a nameless favorite without erasing the saved sender', async () => {
+  const f = { deity: 'lakshmi', frame: 'pushp-aangan', message: '', name: '' };
+  jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(JSON.stringify({ deity: 'krishna', frame: 'mandir-jharokha', message: '', name: 'Sharma family', favorites: [f, { ...f, deity: 'rama', name: 'Patel family' }] }));
+  await mount(false);
+  act(() => node('suvichar-saved-0').props.onPress());
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'lakshmi', name: '' });
+  expect(nameToggle().props.value).toBe(false);
+  expect(node('suvichar-favorite').props.accessibilityState.selected).toBe(true);
+  act(() => nameToggle().props.onValueChange(true));
+  expect(tree.root.findByType(SuvicharCard).props.name).toBe('Sharma family');
+  act(() => node('suvichar-saved-1').props.onPress());
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'rama', name: 'Patel family' });
+  expect(nameToggle().props.value).toBe(true);
+});
+
+it('keeps the saved sender when an Explore hand-off arrives without a name', async () => {
+  jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(JSON.stringify({ deity: 'krishna', frame: 'mandir-jharokha', message: '', name: 'Sharma family', favorites: [] }));
+  const route = { key: 'explore', name: 'Suvichar' as const, params: { exploreDraft: { name: '  ', deity: 'ram-darbar' as const } } };
+  await act(async () => { tree = create(<SuvicharScreen route={route} />); }); await flush();
+  expect(tree.root.findByType(SuvicharCard).props).toMatchObject({ deity: 'ram-darbar', name: '' });
+  act(() => nameToggle().props.onValueChange(true));
+  expect(tree.root.findByType(SuvicharCard).props.name).toBe('Sharma family');
+});
+
+it('titles the shared text of a wish “शुभकामनाएँ”', async () => {
+  await mount(false);
+  act(() => node('suvichar-presets-wish').props.onPress());
+  act(() => tree.root.findByType(SuvicharPresetPicker).props.onSelect(templatesToday().find(t => t.id === 'wish-diwali')!));
+  act(() => tree.root.findByType(SuvicharCard).props.onReady(true));
+  await act(async () => node('suvichar-share').props.onPress());
+  expect(sharedCard().text?.('hi').split('\n')[0]).toBe('शुभकामनाएँ');
 });
 
 describe('weekday cards', () => {

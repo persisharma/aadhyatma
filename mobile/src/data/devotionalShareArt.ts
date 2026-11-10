@@ -40,7 +40,7 @@ export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'parshuram-stotram': 'parshuram',
   // Poet collections use the existing neutral master, with no invented deity portrait.
   'kabir-bhakti-dohe': 'prayer', 'rahim-bhakti-dohe': 'prayer',
-  'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
+  'gita-saar': 'krishna', 'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
   'shiva-strotam': 'shiva', 'om-namah-shivaya': 'mahakaal', 'mahamrityunjaya-mantra': 'shiva',
   'durga-stotram': 'durga', 'saraswati-stotram': 'saraswati',
   'saraswati-moola-mantra': 'saraswati', 'vidyarambha-prarthana': 'saraswati',
@@ -50,6 +50,9 @@ export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   ramcharitmanas: 'rama', 'valmiki-ramayan': 'rama', 'hare-krishna-mahamantra': 'krishna',
   'gayatri-mantra': 'surya', 'surya-namaskar': 'surya', 'bhojan-mantra': 'krishna',
   'ganapati-gam-mantra': 'ganesha', 'om-namo-narayanaya': 'vishnu',
+  'mahalakshmi-mantra': 'lakshmi', 'kubera-mantra': 'kubera',
+  'krishna-beej-mantra': 'krishna', 'rudra-mantra': 'shiva', 'sita-ram-naam': 'rama', 'om-ham-hanumate-namah': 'hanuman',
+  'rama-moola-mantra': 'rama', 'navarna-mantra': 'durga', 'shani-moola-mantra': 'shani',
   'hanuman-moola-mantra': 'hanuman', 'shri-ram-jai-ram': 'rama', 'durga-beej-mantra': 'durga',
   'surya-beej-mantra': 'surya',
   'gau-seva': 'prayer', 'matribhumi-vandana': 'prayer', 'prabhati-shloka': 'prayer',
@@ -87,7 +90,7 @@ const verseArt: Readonly<Record<string, DevotionalArt>> = {
   'ratri-shloka:3': 'prayer', 'gau-seva:1': 'krishna',
   'bhojan-mantra:2': 'prayer', 'bhojan-mantra:3': 'prayer',
 };
-export function devotionalArtForVerse(v: { sourceId: string; verseIndex: number }): DevotionalArt {
+export function devotionalArtForVerse(v: { sourceId: string; verseIndex?: number }): DevotionalArt {
   const art = verseArt[`${v.sourceId}:${v.verseIndex}`] ?? devotionalSourceArt[v.sourceId] ?? 'prayer';
   // Keep the existing Shiva painting until Mahakaal's public object is byte-verified.
   return art === 'mahakaal' && !devotionalShareManifest.assets.mahakaal ? 'shiva' : art;

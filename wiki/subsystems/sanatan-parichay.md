@@ -2,7 +2,7 @@
 title: Sanatan Parichay
 type: subsystem
 sources: [mobile/src/data/sanatan-parichay/index.ts, mobile/src/data/sanatan-parichay/store.ts, mobile/src/screens/SanatanParichayScreen.tsx, mobile/src/screens/SanatanReaderScreen.tsx]
-last_verified_date: 2026-11-06
+last_verified_date: 2026-11-08
 confidence: high
 status: current
 ---
@@ -11,7 +11,7 @@ status: current
 
 Thirteen approved editorial introductions form a question-led learning journey.
 Each has three Hindi/English paragraphs, a topic-specific visual explanation,
-one approved painted scene and text/edition/passage credits. This is a native
+one approved painted scene and internal review provenance. This is a native
 subset of research PR #605, not the full 201-topic catalogue.
 
 ## Details
@@ -23,7 +23,7 @@ up to three deterministic matching lessons. All routes live in the Home stack.
 
 The reader uses the shared header, progress, prose, read-aloud, auto-slide and
 share components. Diagrams keep selected-source variants separate. Share uses
-authored introductory paragraphs and source credits, without any saved state.
+authored introductory paragraphs without bibliography or saved state.
 The language helper derives Gujarati/Kannada script from Hindi prose.
 
 `@vedansh/sanatan-learning-v1` is independent of existing bookmarks/progress.
@@ -33,8 +33,7 @@ records resume only; forward turns record the previous page; Finish records the
 final page and clears resume. Existing stores are not migrated or cleared.
 
 `artwork.ts` maps thirteen 960×640 WebP exports. The same 3:2 scene serves every
-collection thumbnail and banner. Home references only one image. Research URLs
-are confined to repository provenance; the renderable source registry has no URLs.
+collection thumbnail and banner. Home references only one image. Research references stay internal; there is no source action, modal or share appendix.
 
 ## Dependencies
 
@@ -63,3 +62,24 @@ RULEBOOK §11.17 requires geometry regression tests and actual device screenshot
 The native Yoga harness reproduces the old sizing error and verifies corrected
 constraints across fractional widths/densities. This is layout-engine evidence,
 not installed-screen visual QA. Do not mark device acceptance passed from it.
+
+
+## Public research boundary — 6 November 2026
+
+RULEBOOK §11.16 supersedes prior public-source-display descriptions above.
+Research bibliographies, publisher/verification notes and source actions stay
+internal; meaningful scripture identities, poet attribution and real related
+in-app reading links remain. See `docs/reviews/2026-11-06-content-source-ui.md`
+for the audited callers, preserved provenance and separate native acceptance.
+
+
+## Swastika lesson expansion — 8 November 2026
+
+`symbols` retains three pages and existing save/resume IDs. The authored lesson
+now explains auspicious use, each purushartha, other interpretations and a
+clockwise drawing exercise. `SwastikaGuide` supplies the second-page meaning
+schematic and third-page cross → four bends → optional dots sequence. Captions
+use shared script/reading tokens; narration and prose shares retain equivalent
+full drawing instructions. No universal stroke/finger/dot requirement is claimed.
+See `docs/content-parity/sanatan-parichay/swastika-guide.md` for source scope and
+pending native/editorial acceptance. This expansion is not a catalogue expansion.

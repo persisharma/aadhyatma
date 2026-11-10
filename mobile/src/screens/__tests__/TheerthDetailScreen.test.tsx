@@ -67,7 +67,7 @@ test('renders sourced temple detail content in Hindi', () => {
   assert.match(text, /सोमनाथ/, 'temple name');
   assert.match(text, /शिव/, 'deity badge');
   assert.match(text, /सोमराज|चन्द्र/, 'Somnath story');
-  assert.match(text, /स्रोत/, 'source label');
+  assert.ok(!text.includes('स्रोत —'), 'source label');
   assert.doesNotMatch(text, /RULEBOOK §11\.3/, 'placeholder should not render');
 });
 
@@ -76,7 +76,7 @@ test('renders sourced statewise temple detail content in English', () => {
   assert.match(text, /Srinathji/);
   assert.match(text, /Nathdwara/);
   assert.match(text, /Govardhan|Pushtimarg/);
-  assert.match(text, /Sources/);
+  assert.ok(!text.includes('Sources —'));
   assert.doesNotMatch(text, /RULEBOOK §11\.3/);
 });
 
@@ -90,7 +90,7 @@ test('renders Salasar Balaji extended sections after the origin story (Hindi)', 
   assert.match(text, /मेले और उत्सव/, 'melas section label');
   assert.match(text, /अंजनी माता/, 'journey section body');
   assert.ok(text.indexOf('उद्भव कथा') < text.indexOf('मंदिर स्थापना कथा'), 'sections follow the origin story');
-  assert.ok(text.indexOf('अंजनी माता') < text.indexOf('स्रोत'), 'sources footer stays last');
+  assert.ok(!text.includes('स्रोत —'), 'review-only bibliography stays hidden');
 });
 
 test('renders Salasar Balaji extended sections in English', () => {
@@ -100,7 +100,7 @@ test('renders Salasar Balaji extended sections in English', () => {
   assert.match(text, /Savamani/);
   assert.match(text, /Chaitra Purnima/);
   assert.match(text, /Anjani Mata/);
-  assert.match(text, /Sources/);
+  assert.ok(!text.includes('Sources —'));
 });
 
 test('Salasar Balaji uses its published illustration with an immediate offline fallback', () => {
@@ -160,14 +160,14 @@ for (const temple of RAJASTHAN_WAVE) {
     const text = render(temple.id, 'hi');
     for (const re of temple.hi) assert.match(text, re);
     assert.ok(text.indexOf('उद्भव कथा') < text.indexOf('मंदिर स्थापना कथा'), 'sections follow the origin story');
-    assert.ok(text.indexOf('यात्रा और आसपास') < text.indexOf('स्रोत'), 'sources footer stays last');
+    assert.ok(!text.includes('स्रोत —'), 'review-only bibliography stays hidden');
   });
 
   test(`renders ${temple.id} extended sections in English`, () => {
     const text = render(temple.id, 'en');
     for (const re of temple.en) assert.match(text, re);
     assert.match(text, /Journey and Around/);
-    assert.match(text, /Sources/);
+    assert.ok(!text.includes('Sources —'));
   });
 }
 
@@ -200,7 +200,7 @@ describe('every enriched temple renders its full reading', () => {
         `${id}: Hindi heading "${section.titleHi}" is missing from the detail screen`,
       );
     }
-    assert.match(text, /स्रोत/);
+    assert.ok(!text.includes('स्रोत —'));
   });
 
   test.each(enriched.map((t) => [t.id] as const))('%s renders five sections in English', (id) => {
@@ -211,7 +211,7 @@ describe('every enriched temple renders its full reading', () => {
         `${id}: English heading "${section.titleEn}" is missing from the detail screen`,
       );
     }
-    assert.match(text, /Sources/);
+    assert.ok(!text.includes('Sources —'));
   });
 });
 
@@ -225,7 +225,7 @@ test('renders Khatu Shyam as a Krishna lokdevta with sourced prose', () => {
   assert.match(text, /Khatu Shyam/, 'temple name');
   assert.match(text, /KRISHNA/, 'deity badge maps the lokdevta to Krishna');
   assert.match(text, /Barbarika|Krishna|Shyam/, 'Khatu Shyam origin story');
-  assert.match(text, /Sources/, 'sourced prose footer');
+  assert.ok(!text.includes('Sources —'), 'no research footer');
   assert.doesNotMatch(text, /RULEBOOK/, 'placeholder should not render');
 });
 
@@ -306,7 +306,7 @@ test('lists the presiding deity\'s chalisa and aarti between the reading and the
   assert.doesNotMatch(text, /Hanuman Chalisa/, 'other deities\' readings stay off a Krishna shrine');
   assert.ok(text.indexOf('Origin Story') < text.indexOf('Krishna Chalisa'), 'readings follow the temple\'s own reading');
   assert.ok(text.indexOf('Krishna Chalisa') < text.indexOf('Aarti Kunj Bihari Ki'), 'chalisa before aarti');
-  assert.ok(text.indexOf('Aarti Kunj Bihari Ki') < text.indexOf('Sources'), 'sources footer stays last');
+  assert.ok(!text.includes('Sources —'), 'review-only bibliography stays hidden');
 });
 
 test('lists the presiding deity\'s chalisa and aarti in Hindi (Somnath → Shiva)', () => {
@@ -354,7 +354,7 @@ test('Konark shows the newly shipped Surya Chalisa in its readings block', () =>
   const text = tree.root.findAllByType(Text).map((n) => n.props.children).flat(Number.POSITIVE_INFINITY).join(' ');
   assert.match(text, /Aarti & Chalisa/);
   assert.match(text, /Surya Chalisa/);
-  assert.match(text, /Sources/, 'the rest of the screen is unaffected');
+  assert.ok(!text.includes('Sources —'), 'no publisher bibliography');
 });
 
 test('every temple with a mapped reading renders at least one openable card', () => {

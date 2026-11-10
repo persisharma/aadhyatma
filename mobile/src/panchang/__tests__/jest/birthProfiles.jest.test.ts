@@ -194,6 +194,31 @@ test('the store publishes every mutation to its subscribers and persists what it
   unsubscribe();
 });
 
+test('a town birth place persists across a cold restart, and re-picking a city sheds it', async () => {
+  // North Lakhimpur, Assam — a town the bundled city list never had (Nov 2026).
+  const town: BirthProfile = {
+    name: 'Rimi',
+    date: '1994-06-21',
+    time: '04:50',
+    cityId: 'pin-787001',
+    place: { labelHi: '७८७००१ · असम', labelEn: 'North Lakhimpur · 787001, Assam', latitude: 27.2376, longitude: 94.1156, elevation: 101 },
+  };
+  await loadRoster();
+  const added = await addPerson(town);
+  expect(added).toBeTruthy();
+
+  __resetBirthProfileStoreForTests();
+  const reloaded = await loadRoster();
+  expect(reloaded.error).toBe(false);
+  expect(activePerson(reloaded.roster)).toEqual({ id: added!.id, ...town });
+
+  await updatePerson(added!.id, { ...town, cityId: 'guwahati' });
+  __resetBirthProfileStoreForTests();
+  const moved = activePerson((await loadRoster()).roster)!;
+  expect(moved.cityId).toBe('guwahati');
+  expect('place' in moved).toBe(false);
+});
+
 test('saveActivePerson edits the person on screen instead of adding a duplicate', async () => {
   await addPerson(AARAV);
   const meera = await addPerson(MEERA);
