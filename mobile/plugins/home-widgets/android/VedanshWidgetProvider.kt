@@ -57,7 +57,8 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
         }
 
         fun updateAll(context: Context) {
-            val manager = AppWidgetManager.getInstance(context)
+            // Null without FEATURE_APP_WIDGETS: there is nothing placed to update.
+            val manager: AppWidgetManager = AppWidgetManager.getInstance(context) ?: return
             for (surface in Surface.values()) {
                 val component = ComponentName(context, providerFor(surface))
                 manager.getAppWidgetIds(component).forEach { render(context, manager, it, surface) }

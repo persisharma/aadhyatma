@@ -85,5 +85,16 @@
     "react-test-renderer": "^19.1.0",
     "tsx": "^4.22.3",
     "typescript": "~5.9.2"
+  },
+  "expo": {
+    "autolinking": {
+      "android": {
+        "buildFromSource": [
+          "expo-notifications",
+          "expo-splash-screen",
+          "expo-speech"
+        ]
+      }
+    }
   }
 }

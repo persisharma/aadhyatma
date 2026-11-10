@@ -61,6 +61,8 @@ pending until a device run with screenshots is recorded.
 
 ## Gotchas
 
+- **`AppWidgetManager.getInstance()` can be null.** Devices without `FEATURE_APP_WIDGETS` have no widget service. `VedanshWidgetModule` is a legacy `@ReactMethod` module, where a throw is not a promise rejection, so every method settles its promise (pin support/request resolve `false`) and `updateAll` returns early. `androidWidgetNullSafety.jest.test.ts` pins this.
+
 - Native decoders fail closed on missing, corrupt, newer-schema, wrong-time-zone, incomplete-localization, or expired documents. Never partially render a decoded payload.
 - **The app cannot know whether a widget is placed.** Neither bridge exposes `getAppWidgetIds` / `WidgetCenter.getCurrentConfigurations`, and an Android pin request resolving `true` only means the launcher showed its dialog. Anything that offers a widget (the Daily Bhakti strip) must therefore end its ask on a completed add *flow*, not on placement; real detection needs a native bridge change and a store build.
 - **Neither OS lets the app place a widget itself** — iOS has no API at all, and Android's `requestPinAppWidget` always shows a launcher confirmation, one widget per dialog. The native `requestPinWidget` passes no success callback, so the strip chains the second pin on the AppState return to `active` after the first dialog paused the app; the queue is set *before* the first request so the pause is never missed. A launcher that never pauses the app simply leaves the Panchang ask on the strip.
