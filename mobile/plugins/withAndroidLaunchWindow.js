@@ -1,5 +1,8 @@
 const { AndroidConfig, withAndroidColors, withAndroidStyles, withMainActivity } = require('@expo/config-plugins');
 const { mergeContents } = require('@expo/config-plugins/build/utils/generateCode');
+const { addImports } = require('@expo/config-plugins/build/android/codeMod');
+
+const SPLASH_MANAGER_IMPORT = 'expo.modules.splashscreen.SplashScreenManager';
 
 /**
  * Android launch window: draw on the first traversal, in brand ivory.
@@ -28,12 +31,18 @@ const TAG = 'vedansh-android-launch-window';
 function addSplashRelease(src) {
   // Already present (prebuild without --clean re-runs mods on the same file).
   if (src.includes(`@generated begin ${TAG}`)) return src;
+  // Add the import and call SplashScreenManager unqualified. A fully-qualified
+  // `expo.modules.splashscreen.SplashScreenManager.hide()` embeds the import's
+  // substring, which defeats expo-splash-screen's own addImports() dedup (a naive
+  // String.includes). That left its unqualified `registerOnActivity(this)` call
+  // with no import and broke `:app:compileReleaseKotlin`. See the plugin test.
+  const withImport = addImports(src, [SPLASH_MANAGER_IMPORT], false);
   return mergeContents({
     tag: TAG,
-    src,
+    src: withImport,
     newSrc:
       '    // Never veto the first draw: an undrawn window has no input focus (ANR).\n' +
-      '    expo.modules.splashscreen.SplashScreenManager.hide()',
+      '    SplashScreenManager.hide()',
     anchor: /super\.onCreate\(/,
     offset: 0,
     comment: '//',
