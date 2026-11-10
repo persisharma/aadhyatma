@@ -1,0 +1,81 @@
+{
+  "story": "salasar-balaji-short",
+  "format": "ig",
+  "title": "सालासर बालाजी",
+  "source": "35 s re-cut of salasar-balaji (same app source: theerth/details/legacy.ts 'salasar-balaji'). Hook rules (user request 2026-11-10): climax image on frame 1, speech from 0 s, big on-screen text, the answer held to the end. Story order compressed: the vision to Mohandas Ji is told as the reason at the end ('दर्शन दिए थे'); one dream (the Thakur's) instead of two.",
+  "brand": {
+    "name": "वेदांश",
+    "handle": "@vedansh.app"
+  },
+  "ctaAfterVo": true,
+  "cta": {
+    "line": "सालासर बालाजी की पूरी कथा और यात्रा",
+    "button": "अभी डाउनलोड करें"
+  },
+  "highlight": [
+    "दाढ़ी-मूँछ",
+    "बालाजी!",
+    "बालाजी",
+    "हल",
+    "आसोटा",
+    "सपना",
+    "सालासर",
+    "अपने",
+    "आप",
+    "मोहनदास",
+    "साधु",
+    "वेदांश",
+    "क्यों?",
+    "यही।"
+  ],
+  "voice": {
+    "engine": "Kokoro-82M v1.0 (Apache-2.0)",
+    "voice": "hf_alpha",
+    "speed": 1.1,
+    "phonemeFixes": {
+      "dˈaːr.hi": "dˈaːɖʰi ",
+      "mˈũncʰ": "mˈuːnʧʰ",
+      "ɡˈaːr.i": "ɡˈaːɖi",
+      "pˈõcʰi": "pˈõːtʃʰiː"
+    },
+    "pacing": true,
+    "pauseScale": 0.9
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "chip": "सालासर बालाजी",
+      "vo": "ये हनुमान जी हैं, दाढ़ी-मूँछ के साथ! माना जाता है, दुनिया में बस यही। पर क्यों?"
+    },
+    {
+      "id": "plough",
+      "chip": "1754 की बात",
+      "vo": "आसोटा गाँव में, एक किसान का हल पत्थर से टकराया।"
+    },
+    {
+      "id": "wipe",
+      "chip": "1754 की बात",
+      "vo": "मिट्टी पोंछी, तो प्रकट हुए दाढ़ी-मूँछ वाले {बालाजी!|बालाजी।}"
+    },
+    {
+      "id": "dream",
+      "chip": "उसी रात",
+      "vo": "उसी रात ठाकुर को सपना आया — मूर्ति सालासर भेजो।"
+    },
+    {
+      "id": "cart",
+      "chip": "सालासर",
+      "vo": "बैलगाड़ी चली, और सालासर में अपने आप रुक गई।"
+    },
+    {
+      "id": "payoff",
+      "chip": "जवाब",
+      "vo": "और दाढ़ी-मूँछ? क्योंकि संत मोहनदास जी को, बालाजी ने इसी साधु रूप में दर्शन दिए थे!"
+    },
+    {
+      "id": "cta",
+      "chip": "जय श्री बालाजी",
+      "vo": "पूरी कथा, {वेदांश|वेदान्श} ऐप में। {जय श्री बालाजी!|जय श्री बालाजी।}"
+    }
+  ]
+}

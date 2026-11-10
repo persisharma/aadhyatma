@@ -215,6 +215,8 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  dropIn:(c,u,d)=>{const p=clamp((u-(c.o.t0||0)*d)/(c.o.dur||.7));return{op:p>0?1:0,y:lerp(c.o.y0??c.y-500,c.y,eo(p)),rot:c.rot+(1-p)*(c.o.spinIn||0)}},
  // grows from c.s to o.s2 with its feet kept on o.ground (o.foot = feet offset at scale 1)
  grow:(c,u,d)=>{const p=eio((u-(c.o.t0||0)*d)/(c.o.dur||.8)),sc=lerp(c.s,c.o.s2,p);return{s:sc,y:c.o.ground-(c.o.foot||170)*sc}},
+ // starts as an extreme close-up (scale o.s0 at o.y0) and pulls back to its place within o.dur seconds
+ zoomOut:(c,u,d)=>{const p=eio(u/(c.o.dur||1.4));return{s:lerp(c.o.s0,c.s,p),y:lerp(c.o.y0,c.y,p)}},
  fadeAway:(c,u,d)=>({op:1-clamp((u-(c.o.t0||0)*d)/(c.o.dur||.6))}),
  // travels in from the left and halts at c.x by fraction t1; st = distance rolled (drives wheel spin), am = gait (legs stop)
  cartStop:(c,u,d)=>{const t1=(c.o.t1||.6)*d,x0=c.x-(c.o.dist||700),x=lerp(x0,c.x,eo(u/t1));return{x,st:(x-x0)/c.s,am:clamp((t1-u)/(.3*t1)),y:c.y-(u<t1?Math.abs(Math.sin(u*5))*3:0)}}};
