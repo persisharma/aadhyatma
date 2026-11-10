@@ -54,7 +54,6 @@ const JapamCounterScreen = jest.requireActual<typeof import('../JapamCounterScre
   '../JapamCounterScreen'
 ).default;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const nav: any = { goBack() {}, navigate() {}, replace() {} };
 const MANTRA = 'om-namah-shivaya';
 
@@ -85,7 +84,6 @@ async function renderJapam(lang: Lang = 'hi'): Promise<TestRenderer.ReactTestRen
           <GitaLanguageProvider initialLang={lang}>
             <ShareProvider>
               <JapamCounterProvider>
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 <JapamCounterScreen navigation={nav} route={{ key: 'k', name: 'JapamCounter', params: { mantraId: MANTRA } } as any} />
               </JapamCounterProvider>
             </ShareProvider>

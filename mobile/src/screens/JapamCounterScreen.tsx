@@ -563,43 +563,43 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             emptyLabel={firstMalaLabel}
           />
           <View style={styles.statsActions}>
-          {sankalp ? null : (
+            {sankalp ? null : (
+              <Pressable
+                testID="japa-sankalp-open"
+                onPress={() => setSankalpSheetOpen(true)}
+                accessibilityRole="button"
+                accessibilityLabel="Take a japa sankalp"
+                accessibilityState={{ disabled: counterLoading }}
+                disabled={counterLoading}
+                hitSlop={8}
+                style={({ pressed }) => [
+                  styles.resetBtn,
+                  { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+                  pressed && { opacity: 0.7 },
+                ]}
+              >
+                <AppIcon name="sankalp" size={20} color={colors.saffronDeep} />
+              </Pressable>
+            )}
             <Pressable
-              testID="japa-sankalp-open"
-              onPress={() => setSankalpSheetOpen(true)}
+              onPress={() => setResetSheetOpen(true)}
               accessibilityRole="button"
-              accessibilityLabel="Take a japa sankalp"
-              accessibilityState={{ disabled: counterLoading }}
-              disabled={counterLoading}
+              accessibilityLabel="Reset or clear the count"
+              accessibilityState={{ disabled: nothingToReset }}
+              disabled={nothingToReset}
               hitSlop={8}
               style={({ pressed }) => [
                 styles.resetBtn,
-                { backgroundColor: colors.parchmentSoft, borderColor: colors.cardActiveBorder },
+                {
+                  backgroundColor: colors.parchmentSoft,
+                  borderColor: colors.cardActiveBorder,
+                },
                 pressed && { opacity: 0.7 },
+                nothingToReset && { opacity: 0.4 },
               ]}
             >
-              <AppIcon name="sankalp" size={20} color={colors.saffronDeep} />
+              <AppIcon name="reset" size={18} color={colors.saffronDeep} />
             </Pressable>
-          )}
-          <Pressable
-            onPress={() => setResetSheetOpen(true)}
-            accessibilityRole="button"
-            accessibilityLabel="Reset or clear the count"
-            accessibilityState={{ disabled: nothingToReset }}
-            disabled={nothingToReset}
-            hitSlop={8}
-            style={({ pressed }) => [
-              styles.resetBtn,
-              {
-                backgroundColor: colors.parchmentSoft,
-                borderColor: colors.cardActiveBorder,
-              },
-              pressed && { opacity: 0.7 },
-              nothingToReset && { opacity: 0.4 },
-            ]}
-          >
-            <AppIcon name="reset" size={18} color={colors.saffronDeep} />
-          </Pressable>
           </View>
         </View>
 
@@ -954,7 +954,8 @@ const styles = StyleSheet.create({
   statsActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    // Two 44 px circles with hitSlop 8 each: a 16 gap keeps their touch areas apart.
+    gap: 16,
   },
   resetBtn: {
     width: 44,

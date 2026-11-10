@@ -1,0 +1,58 @@
+# Japa Sankalp smoke (design.md §35.2)
+#
+# Takes a one-time japa sankalp on the Om Namah Shivaya counter, counts beads
+# toward it, and checks that the vow completes. Selectors are the stable English
+# accessibility labels (the sheet's wrappers are not accessible elements, so its
+# controls stay drivable — unlike the Reset sheet's accessible backdrop).
+#
+# _launch.yaml clears state, so the counter and the sankalp start empty.
+
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- assertVisible: "JapMala. Tap to open."
+- tapOn: "JapMala. Tap to open."
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Om Namah Shivaya\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Om Namah Shivaya\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+
+# No vow yet: the opener sits beside Reset and there is no progress strip.
+- assertNotVisible: "Japa sankalp, .*"
+- tapOn: "Take a japa sankalp"
+- waitForAnimationToEnd
+
+# Count in japa and vow three.
+- tapOn: "Count in japa"
+- tapOn: "Number of japa"
+- eraseText: 10
+- inputText: "3"
+- hideKeyboard
+- tapOn: "Take this sankalp"
+- waitForAnimationToEnd
+- assertVisible: "Japa sankalp, 0 of 3 japa\\..*"
+
+# Each counted bead advances the vow; the third completes it.
+- tapOn: ".*Tap to count one bead.*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: "Japa sankalp, 2 of 3 japa\\..*"
+- tapOn: ".*Tap to count one bead.*"
+- assertVisible: "Japa sankalp, 3 of 3 japa, complete\\..*"
+- assertVisible: ".*3 of 108 on this mala.*"
+
+# A completed vow offers a fresh one and can be cleared without confirmation.
+- tapOn: "Japa sankalp, 3 of 3 japa, complete\\..*"
+- waitForAnimationToEnd
+- assertVisible: "Take a new sankalp"
+- tapOn: "Clear completed sankalp"
+- waitForAnimationToEnd
+- assertVisible: "Take a japa sankalp"
+
+- tapOn: "Back"
+- waitForAnimationToEnd
+- stopApp:
+    appId: com.prashantsharma.vedansh
