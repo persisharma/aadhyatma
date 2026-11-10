@@ -519,8 +519,10 @@ export function AlarmEditorSheet({
   const latin = isLatinLang(lang);
   const labelFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
-  // Text that stayed in the Latin face for hi too; gu/kn need their own script face.
-  const chromeFont = scriptBodyFont(lang, typography.cardLatin.fontFamily);
+  // Editor chrome (repeat summary, Delete/Cancel): Cormorant for English only.
+  // Cormorant has no Devanagari, so hi needs the Devanagari face like labelFont;
+  // gu/kn get their own script face from scriptBodyFont.
+  const chromeFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const initial = useMemo<{
     mantraId: string;
