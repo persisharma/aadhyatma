@@ -520,7 +520,7 @@ export function AlarmEditorSheet({
   const labelFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   // Text that stayed in the Latin face for hi too; gu/kn need their own script face.
-  const chromeFont = scriptBodyFont(lang, typography.cardLatin.fontFamily);
+  const chromeFont = latin ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily);
 
   const initial = useMemo<{
     mantraId: string;
