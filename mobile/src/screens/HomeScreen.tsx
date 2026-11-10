@@ -402,7 +402,7 @@ export default function HomeScreen({ navigation }: Props) {
               Today strip as the "today" cluster, above the library grid, so it
               no longer floats over and clips the DISCOVER carousel below. */}
           <View style={styles.routineInline}>
-            <RoutineBanner variant="inline" bannerRef={routineCardRef} />
+            <RoutineBanner bannerRef={routineCardRef} />
           </View>
 
           <Text

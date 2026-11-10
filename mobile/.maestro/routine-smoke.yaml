@@ -1,8 +1,8 @@
 # Daily Routine (Nitya Sadhana) Smoke Test — PRD-07, feat(routine) Phase 1
 #
 # Routine is NOT a Home category nor a bottom tab. It is reached from the
-# RoutineBanner — inline in the Home scroll (below the Today strip) and docked
-# above the tab bar on Daily Bhakti — and lives as a stack of five screens
+# RoutineBanner — inline in the Home scroll (below the Today strip); Daily
+# Bhakti no longer carries it — and lives as a stack of five screens
 # inside HomeStackNavigator:
 #   RoutineBanner → RoutineCreate → RoutineAddItems → RoutineToday
 #                                                    ↘ RoutineList → RoutineDetail

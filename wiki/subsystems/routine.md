@@ -69,9 +69,10 @@ Routine + ReadingProgress + UserActivity into `{entries, doneCount, total, hasRo
 `doneMode` is `'manual' | 'auto' | null` (manual wins).
 
 **UI surfaces:** internal `RoutineToday` uses the approved banner + list layout: full 2:1 R2 devotional hero, separate mala/progress strip and immediately visible daily `PracticeItemRow`s. Shared portrait rows also render within expandable Sankalp cards. `data/routine/artwork.ts` resolves all 21 deity subjects from text/japa/vidhi metadata to published R2 reader art. Read/open and offering targets are separate; manual undo and derived completion remain unchanged. Home is unchanged. Also: a `RoutineBanner` (pure view-model in
-`routineBannerView.ts`; single-line chip since #110) with a `variant` prop — **`inline`** on Home
-(flows in the scroll between the Today strip and CATEGORIES; July 2026 — it used to dock at the
-bottom and floated over the DISCOVER carousel) and **`docked`** above the tab bar on Daily Bhakti;
+`routineBannerView.ts`; single-line chip since #110), **Home only** — it flows in the scroll
+between the Today strip and CATEGORIES (July 2026 — it used to dock at the bottom and floated over
+the DISCOVER carousel). Daily Bhakti dropped its docked copy in Nov 2026 (it covered the verse
+card), and the `variant` prop / docked layout went with it;
 `RoutineCelebration` (pushpa-varsha)
 plays once per day when everything is done; five native-stack routes — `RoutineToday`,
 `RoutineList`, `RoutineCreate`, `RoutineDetail`, `RoutineAddItems`; every reader's toggle row
@@ -116,8 +117,8 @@ and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__t
 - **Search FAB vs banner z-order (historical)** — the search ⌕ FAB once had to be lifted above the
   docked banner (it was swallowing the tap; caught by `search-smoke.yaml`). Since the Home banner
   moved **inline** (July 2026) the two no longer overlap on Home, so the FAB uses its default bottom
-  offset; the z-order concern only ever applied where a docked banner shares a screen with the FAB
-  (Home no longer does; Daily Bhakti has no FAB).
+  offset. No screen docks the banner any more (Daily Bhakti dropped it in Nov 2026), so the
+  concern is closed unless a docked layout is reintroduced.
 - **Waiting sankalps are previews, not completions** — `waiting.items` powers the visible
   preselected content row, but `useSadhanaToday()` only computes completion and `SankalpTodayCard`
   only shows the completion checkbox for `active` days (the waiting-preview row has no check

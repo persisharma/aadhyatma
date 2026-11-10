@@ -28,7 +28,6 @@ import ShareButton from '@/components/ShareButton';
 import BookmarkButton from '@/components/BookmarkButton';
 import { useShare } from '@/utils/shareVerse';
 import { useBookmarks } from '@/contexts/BookmarksContext';
-import RoutineBanner from '@/components/RoutineBanner';
 import DailyBhaktiNudge from '@/components/DailyBhaktiNudge';
 import SuvicharEntryCard from '@/components/SuvicharEntryCard';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -176,7 +175,6 @@ export default function DailyBhaktiScreen() {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <RoutineBanner />
     </View>
   );
 }
