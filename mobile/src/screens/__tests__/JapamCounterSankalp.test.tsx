@@ -158,6 +158,28 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
   });
 
+  test('Infinity (अनंत) shows the same opener/strip and its loops fill the vow', async () => {
+    withStoredSankalp({ unit: 'japa', amount: 2, done: 0, startedAt: 1, updatedAt: 1 });
+    const tree = await renderJapam();
+    await press(byTestId(tree, 'japam-style-infinity'));
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 0 of 2 japa\./);
+    const loop = () => tree.root.findAll((n) => typeof n.props.onCycle === 'function')[0];
+    // A paused Infinity session never counts.
+    await act(async () => { loop().props.onCycle(); });
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 0 of 2 japa\./);
+    await press(byTestId(tree, 'japam-counter-infinity')); // start looping
+    await act(async () => { loop().props.onCycle(); });
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 1 of 2 japa\./);
+    await act(async () => { loop().props.onCycle(); });
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/2 of 2 japa, complete/);
+    expect(texts(tree)).toContain('संकल्प पूर्ण 🙏');
+    expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
+    // Releasing the vow brings the opener back in Infinity too.
+    await press(strip(tree));
+    await press(byLabel(tree, 'Clear completed sankalp'));
+    expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
+  });
+
   test('a vow restored complete on open does not replay the completion', async () => {
     withStoredSankalp({ unit: 'mala', amount: 1, done: 108, startedAt: 1, updatedAt: 2, completedAt: 2 });
     const tree = await renderJapam();
