@@ -65,6 +65,13 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   const appearance = payloadState.kind === 'ready' ? widgetAppearance(payloadState.payload, now) : 'day';
   const palette = WIDGET_APPEARANCE_TOKENS[appearance];
   const versePalette = verse ? palette : WIDGET_APPEARANCE_TOKENS.day;
+  // The gallery is a medium-cell facsimile. The native iOS widget measures
+  // actual glyphs with ViewThatFits; this conservative approximation similarly
+  // gives text more width before shrinking it on a crowded verse.
+  const previewVerseLength = verse ? flowedVerse(verse.lines[lang]).length : 0;
+  const previewVerseDense = previewVerseLength > 105;
+  const previewVerseMedium = previewVerseLength > 64;
+  const verseArtPadding = previewVerseDense ? spacing.md : previewVerseMedium ? 52 : 90;
   const panchangPalette = day ? palette : WIDGET_APPEARANCE_TOKENS.day;
   const tithi = day ? runningTithi(day, now) : undefined;
   const recovery = payloadState.kind === 'expired'
@@ -81,15 +88,16 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
       <ReaderHeader title={contentByLang(lang, 'होम-स्क्रीन विजेट', 'Home-Screen Widgets')} onBack={navigation.goBack} variant="index" />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <Text style={[styles.intro, { color: colors.inkMuted, fontFamily: bodyFont }]}>
-          {pick(lang, { hi: 'हर विजेट अलग है — जो चाहें, जिस आकार में चाहें जोड़ें। श्लोक चौड़े आकार में पूरा दिखता है, पंचांग छोटे में एक नज़र का रहता है।', en: 'Each widget is separate — add the one you want, in the size you want. The verse reads whole at Wide; the Panchang stays a glance at Small.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. શ્લોક પહોળામાં આખો દેખાય છે, પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಶ್ಲೋಕ ಅಗಲದಲ್ಲಿ ಪೂರ್ಣ ಕಾಣುತ್ತದೆ, ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.' })}
+          {pick(lang, { hi: 'हर विजेट का अपना आकार है। चौड़े में श्लोक के लिए अधिक जगह है, लंबे श्लोक टैप करके पूरे पढ़ें। छोटा पंचांग एक नज़र में दिखता है।', en: 'Each widget has its own sizes. Wide gives verses more room, and long verses open fully on tap; Small keeps the Panchang at a glance.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. પહોળા વિજેટમાં શ્લોકને વધુ જગ્યા મળે છે; લાંબો શ્લોક ટૅપ કરીને આખો વાંચો. પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಅಗಲದ ವಿಜೆಟ್‌ನಲ್ಲಿ ಶ್ಲೋಕಕ್ಕೆ ಹೆಚ್ಚು ಜಾಗ; ದೀರ್ಘ ಶ್ಲೋಕವನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಸಂಪೂರ್ಣ ಓದಿ. ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.' })}
         </Text>
         <View style={styles.grid}>
-          <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
+          <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel={verse?.accessibilityLabel[lang] ?? 'Daily verse widget preview'} verseArtPadding={verseArtPadding} colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The facsimile stands in for the recommended (wide) cell, which
                 renders the whole verse flowed across three lines — not the
                 small-cell excerpt (design.md §59). */}
-            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
-            {verse ? <Text style={[styles.meta, { color: versePalette.inkMuted }]}>{verse.source[lang]}</Text> : null}
+            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
+            {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{verse.source[lang]}</Text> : null}
+            {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>
           <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
@@ -122,6 +130,7 @@ type PreviewProps = {
   contentReady?: boolean;
   appearance?: WidgetAppearance;
   subject?: string;
+  verseArtPadding?: number;
   content: WidgetContent;
   title: string;
   accessibilityLabel: string;
@@ -138,7 +147,7 @@ type PreviewProps = {
 // (its best size marked), and — where the launcher supports pinning — an add
 // action for that kind alone. The sizes come from the shared catalog the native
 // surfaces mirror, so this screen can never advertise a size iOS/Android refuses.
-function Preview({ heritageImages = {}, contentReady = true, appearance = 'day', subject = 'prayer', content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
+function Preview({ heritageImages = {}, contentReady = true, appearance = 'day', subject = 'prayer', verseArtPadding = 90, content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
   const entry = widgetCatalogEntry(content);
   const canPin = Platform.OS === 'android' && !!entry.androidProvider;
   const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
@@ -148,7 +157,7 @@ function Preview({ heritageImages = {}, contentReady = true, appearance = 'day',
   const palette = WIDGET_APPEARANCE_TOKENS[appearance];
   const art = !contentReady || entry.recommended === 'lock' ? undefined : content === 'japam' ? widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)] : heritageImages[widgetHeritageName(subject, entry.recommended, appearance)];
   const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
-  const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? 90 : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
+  const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? verseArtPadding : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
   const previewBody = <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={previewStyle}>
     <Text style={[eyebrowStyle, { color: palette.accent }]}>{title}</Text>{children}<Text style={[styles.brand, { color: palette.gold }]}>ॐ वेदांश़</Text>
   </View>;
