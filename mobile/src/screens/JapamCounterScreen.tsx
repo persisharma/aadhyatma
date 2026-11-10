@@ -375,9 +375,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       {japaStyle === 'infinity' ? <LinearGradient pointerEvents="none"
         colors={[colors.parchmentSoft, colors.parchment, colors.parchmentDeep]}
         locations={[0, 0.55, 1]} style={[StyleSheet.absoluteFill, { opacity: 0.65 }]} /> : null}
-      {/* Immersive route (TabNavigator IMMERSIVE_ROUTES): no tab bar, so the
-          screen owns the bottom safe-area inset below the audio row. */}
-      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+      {/* The visible bottom tab bar already owns the bottom safe-area inset. */}
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         <View style={styles.topBar}>
           <Pressable
             onPress={() => navigation.goBack()}
