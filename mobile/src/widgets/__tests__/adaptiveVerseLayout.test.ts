@@ -23,7 +23,7 @@ const sources = [
   'shiva-strotam',
   'madhurashtakam',
   'purusha-suktam',
-  'om-namo-bhagavate-vasudevaya',
+  'ramcharitmanas',
 ] as const;
 
 function selected(sourceId: string): UniformVerse {
