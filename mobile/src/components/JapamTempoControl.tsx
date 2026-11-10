@@ -22,7 +22,7 @@ export default function JapamTempoControl({ value, onChange, lang, fontFamily, i
   return <View>
     <Pressable testID="japam-tempo-open" onPress={() => setOpen(true)} accessibilityRole="button"
       accessibilityLabel={`${label}, ${value.toFixed(1)}×`} accessibilityState={{ expanded: open }}
-      hitSlop={iconOnly ? 6 : undefined}
+      hitSlop={iconOnly ? 4 : undefined}
       style={({ pressed }) => [iconOnly ? styles.circle : styles.chip, {
         backgroundColor: colors.parchmentSoft,
         borderColor: iconOnly ? colors.cardActiveBorder : colors.divider,

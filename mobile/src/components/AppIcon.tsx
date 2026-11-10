@@ -61,6 +61,10 @@ import { GearSixIcon } from 'phosphor-react-native/src/icons/GearSix';
 import { ChatTextIcon } from 'phosphor-react-native/src/icons/ChatText';
 import { PencilSimpleIcon } from 'phosphor-react-native/src/icons/PencilSimple';
 import { TargetIcon } from 'phosphor-react-native/src/icons/Target';
+import { CornersOutIcon } from 'phosphor-react-native/src/icons/CornersOut';
+import { CornersInIcon } from 'phosphor-react-native/src/icons/CornersIn';
+import { CaretUpIcon } from 'phosphor-react-native/src/icons/CaretUp';
+import { CaretDownIcon } from 'phosphor-react-native/src/icons/CaretDown';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
@@ -125,6 +129,10 @@ const icons = {
   auspicious: SparkleIcon,
   morning: SunHorizonIcon,
   sankalp: TargetIcon,
+  fullscreen: CornersOutIcon,
+  exitFullscreen: CornersInIcon,
+  caretUp: CaretUpIcon,
+  caretDown: CaretDownIcon,
 } as const;
 
 export type AppIconName = keyof typeof icons;

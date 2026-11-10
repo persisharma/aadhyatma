@@ -362,7 +362,7 @@ function ActiveAudioPlayer({
           accessibilityLabel={a11yPlay}
           accessibilityState={{ disabled: !status.isLoaded }}
           disabled={!status.isLoaded}
-          hitSlop={6}
+          hitSlop={4}
           style={({ pressed }) => [
             styles.railBtn,
             {

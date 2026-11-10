@@ -7,6 +7,8 @@ import JapamMala, { JapamMalaTray } from '@/components/JapamMala';
 import { distanceToRail } from '@/components/japamControlRail';
 import { malaOuterReach } from '@/components/japamMalaGeometry';
 import * as Haptics from 'expo-haptics';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useKeepAwake } from 'expo-keep-awake';
 import type { Lang } from '@/data/gita/language';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
@@ -259,11 +261,87 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     const slot = tree.root.findAll((n) => n.props.pointerEvents === 'box-none'
       && ReactNative.StyleSheet.flatten(n.props.style)?.position === 'absolute')[0];
     expect(ReactNative.StyleSheet.flatten(slot.props.style)).toMatchObject({ right: 16, bottom: 8, gap: 8 });
-    // ↺ is the column's last (bottom) button; the target sits below it in the count bar.
+    // Panel (player + ↺) above the in-place toggle; the target sits below in the count bar.
     const inSlot = slot.findAll((n) => typeof n.props.onPress === 'function' && n.props.accessibilityLabel);
-    expect(inSlot.map((n) => n.props.accessibilityLabel)).toEqual(['Reset or clear the count']);
+    expect(inSlot.map((n) => n.props.accessibilityLabel)).toEqual(['Reset or clear the count', 'Show controls']);
     expect(slot.findAll((n) => n.props.accessibilityLabel === 'Take a japa sankalp')).toHaveLength(0);
     expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
+  });
+
+  test('the column starts folded, opens and folds in place, remembers the choice and never resizes the mala', async () => {
+    const tree = await renderJapam();
+    const panel = () => tree.root.findAll((n) => n.props.testID === 'japam-controls-panel' && n.props.style)[0];
+    const hidden = () => ReactNative.StyleSheet.flatten(panel().props.style).display === 'none';
+    const size = () => tree.root.findByType(JapamMala).props.size;
+    expect(hidden()).toBe(true);
+    // The player stays mounted while folded (it owns the recording and alarm autoplay).
+    expect(mockAudio.props).not.toBeNull();
+    const before = size();
+    await press(byLabel(tree, 'Show controls'));
+    expect(hidden()).toBe(false);
+    expect(byLabel(tree, 'Hide controls')).toBeDefined();
+    expect(size()).toBe(before);
+    expect(jest.mocked(AsyncStorage.setItem)).toHaveBeenCalledWith('@vedansh/japam-controls', '"open"');
+    await press(byLabel(tree, 'Hide controls'));
+    expect(hidden()).toBe(true);
+    expect(size()).toBe(before);
+    expect(jest.mocked(AsyncStorage.setItem)).toHaveBeenLastCalledWith('@vedansh/japam-controls', '"folded"');
+  });
+
+  test('a remembered open column comes back open, and shows no toggle until the choice is read', async () => {
+    let release: (v: string | null) => void = () => undefined;
+    mockGetItem.mockImplementation((key: string) => key === '@vedansh/japam-controls'
+      ? new Promise((r) => { release = r; }) : Promise.resolve(null));
+    const tree = await renderJapam();
+    expect(tree.root.findAll((n) => n.props.testID === 'japam-controls-toggle')).toHaveLength(0);
+    await act(async () => { release('"open"'); });
+    expect(byLabel(tree, 'Hide controls')).toBeDefined();
+  });
+
+  test('full screen shows only the view: taps count, the corner icon, a long press and Back exit, and the phone stays awake', async () => {
+    const tree = await renderJapam();
+    const modal = () => tree.root.findAll((n) => n.type === ReactNative.Modal && n.props.onRequestClose
+      && n.findAll((c) => c.props.testID === 'japam-fullscreen-view').length >= 0)
+      .find((m) => m.props.supportedOrientations)!;
+    expect(modal().props.visible).toBe(false);
+    await press(byLabel(tree, 'Full screen'));
+    expect(modal().props.visible).toBe(true);
+    expect(tree.root.findAll((n) => n.props.testID === 'japam-fullscreen-view').length).toBeGreaterThan(0);
+    expect(jest.mocked(useKeepAwake)).toHaveBeenCalledWith('japam-full-screen');
+    expect(texts(tree)).toContain('बाहर निकलने के लिए देर तक दबाएँ');
+    // No controls inside: only the view and the faint exit icon.
+    const full = tree.root.findAll((n) => n.props.testID === 'japam-fullscreen-view')[0];
+    const controls = full.findAll((n) => typeof n.props.onPress === 'function' && n.props.accessibilityLabel)
+      .map((n) => String(n.props.accessibilityLabel));
+    expect(controls.some((l) => /Play auto-chant|Reset|speed|sankalp/i.test(l))).toBe(false);
+    const fullTap = () => byTestId(tree, 'japam-full-mala');
+    await press(fullTap());
+    expect(String(fullTap().props.accessibilityLabel)).toContain('1 of 108 on this mala');
+    // Long press exits without counting.
+    await act(async () => { fullTap().props.onLongPress(); });
+    expect(modal().props.visible).toBe(false);
+    expect(String(byTestId(tree, 'japam-counter-mala').props.accessibilityLabel)).toContain('1 of 108 on this mala');
+    // The corner icon and Back (onRequestClose) exit too.
+    await press(byLabel(tree, 'Full screen'));
+    await press(byLabel(tree, 'Exit full screen'));
+    expect(modal().props.visible).toBe(false);
+    await press(byLabel(tree, 'Full screen'));
+    await act(async () => { modal().props.onRequestClose(); });
+    expect(modal().props.visible).toBe(false);
+  });
+
+  test('in Infinity full screen only one frame drives the loop, so each cycle counts once', async () => {
+    mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
+    const tree = await renderJapam();
+    await press(byTestId(tree, 'japam-counter-infinity'));
+    expect(tree.root.findAllByType(JapamInfinity).map((n) => n.props.running)).toEqual([true]);
+    await press(byLabel(tree, 'Full screen'));
+    expect(tree.root.findAllByType(JapamInfinity).map((n) => n.props.running)).toEqual([false, true]);
+    const full = tree.root.findAllByType(JapamInfinity)[1];
+    await act(async () => { full.props.onCycle(); });
+    expect(String(byTestId(tree, 'japam-full-infinity').props.accessibilityLabel)).toContain('1 of 108 on this mala');
+    await press(byLabel(tree, 'Exit full screen'));
+    expect(tree.root.findAllByType(JapamInfinity).map((n) => n.props.running)).toEqual([true]);
   });
 
   test.each<[string, number, number, number]>([
@@ -288,7 +366,7 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     }
   });
 
-  test.each<[number, number, number, number]>([[390, 530, 340, 39], [375, 425, 292, 23]])(
+  test.each<[number, number, number, number]>([[390, 530, 340, 39], [375, 425, 340, 47]])(
     'Infinity on a %i pt phone: the frame is sized clear of the column and its text inset', async (width, viewport, frame, inset) => {
       jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width, height: 844, scale: 3, fontScale: 1 });
       jest.spyOn(ReactNative, 'useWindowDimensions').mockReturnValue({ width, height: 844, scale: 3, fontScale: 1 });

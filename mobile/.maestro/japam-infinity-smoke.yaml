@@ -16,6 +16,8 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[0-9]+ of 108.*"
 # Om Namah Shivaya uses its complete-text cadence (1.125s at 1×, with the proportional 12.5% increase); long mantras use their own pacing.
 # Verify tempo changes only pace the loop and never add a bead themselves.
+# The control column starts folded; open it to reach the speedometer.
+- tapOn: "Show controls"
 - tapOn:
     id: "japam-tempo-open"
 - tapOn: "Faster"

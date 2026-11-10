@@ -1,7 +1,8 @@
 /**
  * The JapaMala counter's control column (design.md §35): speedometer, ▶/❚❚ and ↺
- * as 44 dp circles stacked at the right edge of the tap area, just above the
- * count bar. Pure geometry so the screen can size the mala and the Infinity
+ * as 44 dp circles stacked at the right edge of the tap area, above a small
+ * fold/unfold toggle that stays in place, just above the count bar. Folded, only
+ * the toggle shows. Pure geometry so the screen can size the mala and the Infinity
  * frame to stay clear of it *before* they are shown — computed from the measured
  * viewport, never adjusted afterwards, so nothing jumps.
  */
@@ -14,22 +15,33 @@ export const RAIL_GAP = 8;
 /** Extra air kept between the column and anything it must not cover. */
 export const RAIL_AIR = 4;
 export const RAIL_BUTTONS = 3;
-export const RAIL_HEIGHT = RAIL_BUTTONS * RAIL_BUTTON + (RAIL_BUTTONS - 1) * RAIL_GAP;
+/** The fold/unfold toggle's slot (a faint 28 dp circle; its touch area is 44). */
+export const RAIL_TOGGLE = 32;
+/** The open column — the keep-out is sized for it, so folding never resizes anything. */
+export const RAIL_HEIGHT = RAIL_BUTTONS * RAIL_BUTTON + RAIL_TOGGLE + RAIL_BUTTONS * RAIL_GAP;
 /** Width from the right screen edge the column claims (margin + button + air). */
 export const RAIL_CLEARANCE = RAIL_RIGHT + RAIL_BUTTON + RAIL_AIR;
 
-/** The column's keep-out box in tap-area coordinates (width × viewport height). */
-export function railBox(width: number, viewport: number) {
+/**
+ * What the view is sized around: the FOLDED column (just the toggle). It is folded
+ * by default, so the mala and the Infinity frame keep their full size; the open
+ * column floats on its own panel over the corner. Sizing never depends on the
+ * open/folded state, so folding or unfolding never resizes anything.
+ */
+export const RAIL_KEEP_OUT = RAIL_TOGGLE;
+
+/** The keep-out box in tap-area coordinates (width × viewport height). */
+export function railBox(width: number, viewport: number, height: number = RAIL_KEEP_OUT) {
   return {
     left: width - RAIL_CLEARANCE,
-    top: viewport - RAIL_BOTTOM - RAIL_HEIGHT - RAIL_AIR,
+    top: viewport - RAIL_BOTTOM - height - RAIL_AIR,
     bottom: viewport - RAIL_BOTTOM,
   };
 }
 
-/** Distance from (cx, cy) to the nearest point of the column's keep-out box. */
-export function distanceToRail(width: number, viewport: number, cx: number, cy: number): number {
-  const box = railBox(width, viewport);
+/** Distance from (cx, cy) to the nearest point of the keep-out box. */
+export function distanceToRail(width: number, viewport: number, cx: number, cy: number, height: number = RAIL_KEEP_OUT): number {
+  const box = railBox(width, viewport, height);
   const dx = cx < box.left ? box.left - cx : 0;
   const py = Math.min(Math.max(cy, box.top), box.bottom);
   return Math.hypot(dx, py - cy);
