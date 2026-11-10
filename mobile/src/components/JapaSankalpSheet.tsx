@@ -283,7 +283,8 @@ export default function JapaSankalpSheet({
                         borderColor: amount === null ? colors.avoid : colors.divider,
                         backgroundColor: colors.parchmentSoft,
                         borderRadius: radii.sm,
-                        fontFamily: fontFamilies.latinSemiBold,
+                        // Inter's lining figures: Cormorant's old-style "11" reads as "ıı".
+                        fontFamily: fontFamilies.interSemiBold,
                       },
                     ]}
                   />
