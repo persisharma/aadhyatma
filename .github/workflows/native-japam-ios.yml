@@ -1,0 +1,144 @@
+name: Native iOS Japa Sankalp journey
+
+# Builds the unsigned Release app for the iOS Simulator (no EAS, no signing, no
+# TestFlight/OTA) and drives the Japa Sankalp journey on it, keeping screenshots
+# as evidence. Same shape as native-pitru-ios.yml.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'mobile/src/data/japam/sankalp.ts'
+      - 'mobile/src/components/JapaSankalp*.tsx'
+      - 'mobile/src/components/japaSankalpCopy.ts'
+      - 'mobile/src/components/JapamAudioPlayer.tsx'
+      - 'mobile/src/contexts/JapamCounterContext.tsx'
+      - 'mobile/src/screens/JapamCounterScreen.tsx'
+      - 'mobile/.maestro/japam-sankalp-smoke.yaml'
+      - '.github/workflows/native-japam-ios.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: native-japam-ios-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulator:
+    runs-on: macos-26
+    timeout-minutes: 75
+    defaults:
+      run:
+        working-directory: mobile
+        shell: bash
+    env:
+      CI: '1'
+      EXPO_NO_DOTENV: '1'
+      NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
+      NATIVE_SMOKE_DRIVER_CHECK: '1'
+      NATIVE_SMOKE_SCOPE: host
+      MAESTRO_CLI_NO_ANALYTICS: 'true'
+      MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true'
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Select matching XCTest toolchain
+        run: |
+          test -d /Applications/Xcode_26.2.app
+          sudo xcode-select -s /Applications/Xcode_26.2.app/Contents/Developer
+      - name: Install pinned native test driver
+        run: |
+          curl -fsSL https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.12.1/maestro.zip -o "$RUNNER_TEMP/japam-maestro.zip"
+          echo "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7  $RUNNER_TEMP/japam-maestro.zip" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/japam-maestro.zip" -d "$RUNNER_TEMP/japam-tools"
+          echo "$RUNNER_TEMP/japam-tools/maestro/bin" >> "$GITHUB_PATH"
+      - name: Record tested head and toolchain
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/native-output"
+          git rev-parse HEAD > "$GITHUB_WORKSPACE/native-output/tested-head.txt"
+          xcodebuild -version | tee "$GITHUB_WORKSPACE/native-output/toolchain.txt"
+      - name: Generate unsigned simulator project
+        run: npx expo prebuild --platform ios --clean --no-install
+      - name: Install CocoaPods
+        run: pod install --project-directory=ios
+      - name: Build Release, install and launch on iOS Simulator
+        run: bash scripts/native-ios-smoke.sh
+      - name: Japa Sankalp native journey
+        run: |
+          node scripts/run-native-diagnostic.cjs --timeout-ms 1800000 maestro --device "$SIMULATOR_UDID" test \
+            --config .maestro/config.yaml --format junit --output "$GITHUB_WORKSPACE/native-output/japam-sankalp.xml" \
+            --debug-output "$GITHUB_WORKSPACE/native-output/maestro-debug" \
+            .maestro/japam-sankalp-smoke.yaml 2>&1 | tee "$GITHUB_WORKSPACE/native-output/japam-sankalp.log"
+      - name: Collect journey screenshots
+        if: always()
+        run: |
+          shopt -s nullglob
+          for f in japa-sankalp-*.png .maestro/japa-sankalp-*.png; do mv "$f" "$GITHUB_WORKSPACE/native-output/"; done
+          ls -1 "$GITHUB_WORKSPACE/native-output" | grep -E '^japa-sankalp-.*\.png$' || echo 'no journey screenshots'
+      - name: Capture failure screen and device log
+        if: failure() && env.SIMULATOR_UDID != ''
+        run: |
+          node scripts/run-native-diagnostic.cjs xcrun simctl io "$SIMULATOR_UDID" screenshot "$GITHUB_WORKSPACE/native-output/japam-failure.png" || true
+          node scripts/run-native-diagnostic.cjs xcrun simctl spawn "$SIMULATOR_UDID" log show --last 5m --style compact \
+            --predicate 'process == "Vedansh"' > "$GITHUB_WORKSPACE/native-output/japam-device.log" 2>&1 || true
+      # Artifacts are not always reachable by whoever triages the run, so the
+      # failing step, each command's duration and the visible screen text are
+      # also printed into the job log itself.
+      - name: Print failing step, step timings and on-screen text
+        if: failure() && env.SIMULATOR_UDID != ''
+        run: |
+          node - "$GITHUB_WORKSPACE/native-output/maestro-debug" <<'JS' || true
+          const fs = require('node:fs'); const path = require('node:path');
+          const walk = (d) => fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]) : [];
+          const roots = [process.argv[2], path.join(require('node:os').homedir(), '.maestro', 'tests')];
+          for (const file of roots.flatMap(walk).filter((f) => /commands-.*\.json$/.test(f))) {
+            console.log(`== ${path.basename(file)}`);
+            for (const entry of JSON.parse(fs.readFileSync(file, 'utf8'))) {
+              const command = Object.entries(entry.command ?? {}).find(([, v]) => v)?.[0] ?? '?';
+              const detail = JSON.stringify(Object.values(entry.command ?? {}).find(Boolean) ?? {}).slice(0, 140);
+              const meta = entry.metadata ?? {};
+              console.log(`${String(meta.status ?? '?').padEnd(10)} ${String(meta.duration ?? '').padStart(7)}ms  ${command} ${detail}${meta.error ? `  ERROR: ${JSON.stringify(meta.error).slice(0, 300)}` : ''}`);
+            }
+          }
+          JS
+          maestro --device "$SIMULATOR_UDID" hierarchy > "$GITHUB_WORKSPACE/native-output/japam-hierarchy.json" 2>/dev/null || true
+          node - "$GITHUB_WORKSPACE/native-output/japam-hierarchy.json" <<'JS' || true
+          const fs = require('node:fs');
+          const raw = fs.readFileSync(process.argv[2], 'utf8'); const tree = JSON.parse(raw.slice(raw.indexOf('{')));
+          const seen = new Set();
+          (function visit(node) {
+            const a = node.attributes ?? {};
+            for (const k of ['text', 'accessibilityText', 'resource-id']) if (a[k] && !seen.has(`${k}:${a[k]}`)) { seen.add(`${k}:${a[k]}`); console.log(`${k}: ${a[k]}`); }
+            (node.children ?? []).forEach(visit);
+          })(tree);
+          JS
+      - name: Retain native evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-japam-ios-${{ github.run_id }}
+          path: |
+            native-output/*.txt
+            native-output/*.log
+            native-output/*.png
+            native-output/*.xml
+            native-output/*.ips
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Stop simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: node scripts/run-native-diagnostic.cjs xcrun simctl shutdown "$SIMULATOR_UDID"

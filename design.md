@@ -1674,7 +1674,7 @@ Tests: `data/__tests__/slokaJapa.test.ts` (registry ↔ stotram category, every 
 
 **Not yet surfaced elsewhere.** The vow lives on the counter only: Today's Practice, the Home banner, Profile and widgets do not show it.
 
-Tests: `data/__tests__/japaSankalp.test.ts` (model, input parsing, grouping, storage validation), `contexts/__tests__/JapaSankalpContext.test.tsx` (real provider: accrual, Reset/Clear independence, completion cap, retarget/release, cold-start hydration, corrupt storage, hydration gate), `screens/__tests__/JapamCounterSankalp.test.tsx` (opener → sheet → strip, completion notice/haptic once, restored-complete silence, invalid input, draft preserved under live progress, Reset note + set-aside confirmation, four-language copy), `.maestro/japam-sankalp-smoke.yaml`.
+Tests: `data/__tests__/japaSankalp.test.ts` (model, input parsing, grouping, storage validation), `contexts/__tests__/JapaSankalpContext.test.tsx` (real provider: accrual, Reset/Clear independence, completion cap, retarget/release, cold-start hydration, corrupt storage, hydration gate), `screens/__tests__/JapamCounterSankalp.test.tsx` (opener → sheet → strip, completion notice/haptic once, restored-complete silence, invalid input, draft preserved under live progress, Reset note + set-aside confirmation, four-language copy), `.maestro/japam-sankalp-smoke.yaml` (run natively on the iOS Simulator Release build by `.github/workflows/native-japam-ios.yml`, which keeps journey screenshots).
 
 ---
 
