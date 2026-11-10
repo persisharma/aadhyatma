@@ -8,6 +8,7 @@ import { distanceToRail } from '@/components/japamControlRail';
 import { malaOuterReach } from '@/components/japamMalaGeometry';
 import * as Haptics from 'expo-haptics';
 import { useKeepAwake } from 'expo-keep-awake';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Lang } from '@/data/gita/language';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
@@ -260,13 +261,52 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     const slot = tree.root.findAll((n) => n.props.pointerEvents === 'box-none'
       && ReactNative.StyleSheet.flatten(n.props.style)?.position === 'absolute')[0];
     expect(ReactNative.StyleSheet.flatten(slot.props.style)).toMatchObject({ right: 16, bottom: 8, gap: 8 });
-    // ↺ is the column's last (bottom) button; the target sits below it in the count bar.
-    // Always shown: there is no fold toggle.
+    // ↺ is the column's last (bottom) button; the target sits below it in the count bar,
+    // with the minimise toggle beside it (not in the column).
     const inSlot = slot.findAll((n) => typeof n.props.onPress === 'function' && n.props.accessibilityLabel);
     expect(inSlot.map((n) => n.props.accessibilityLabel)).toEqual(['Reset or clear the count']);
-    expect(tree.root.findAll((n) => /controls$/.test(String(n.props.accessibilityLabel ?? '')))).toHaveLength(0);
+    expect(slot.findAll((n) => n.props.testID === 'japam-controls-toggle')).toHaveLength(0);
     expect(slot.findAll((n) => n.props.accessibilityLabel === 'Take a japa sankalp')).toHaveLength(0);
     expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
+  });
+
+  test('the column starts open; the count-bar toggle minimises it, remembers the choice and never resizes the mala', async () => {
+    const tree = await renderJapam();
+    const column = () => tree.root.findAll((n) => n.props.testID === 'japam-controls' && n.props.style)[0];
+    const hidden = () => ReactNative.StyleSheet.flatten(column().props.style).display === 'none';
+    const size = () => tree.root.findByType(JapamMala).props.size;
+    expect(hidden()).toBe(false);
+    const before = size();
+    await press(byLabel(tree, 'Hide controls'));
+    expect(hidden()).toBe(true);
+    // The player stays mounted while minimised (it owns the recording and alarm autoplay).
+    expect(mockAudio.props).not.toBeNull();
+    expect(size()).toBe(before);
+    expect(jest.mocked(AsyncStorage.setItem)).toHaveBeenCalledWith('@vedansh/japam-controls', '"folded"');
+    await press(byLabel(tree, 'Show controls'));
+    expect(hidden()).toBe(false);
+    expect(size()).toBe(before);
+    expect(jest.mocked(AsyncStorage.setItem)).toHaveBeenLastCalledWith('@vedansh/japam-controls', '"open"');
+  });
+
+  test('a remembered minimised column stays minimised, and nothing shows until the choice is read', async () => {
+    let release: (v: string | null) => void = () => undefined;
+    mockGetItem.mockImplementation((key: string) => key === '@vedansh/japam-controls'
+      ? new Promise((r) => { release = r; }) : Promise.resolve(null));
+    const tree = await renderJapam();
+    const column = () => tree.root.findAll((n) => n.props.testID === 'japam-controls' && n.props.style)[0];
+    expect(ReactNative.StyleSheet.flatten(column().props.style).display).toBe('none');
+    expect(tree.root.findAll((n) => n.props.testID === 'japam-controls-toggle')).toHaveLength(0);
+    await act(async () => { release('"folded"'); });
+    expect(ReactNative.StyleSheet.flatten(column().props.style).display).toBe('none');
+    expect(byLabel(tree, 'Show controls')).toBeDefined();
+  });
+
+  test('the toggle stays in the count bar while a vow is active', async () => {
+    withStoredSankalp({ unit: 'mala', amount: 11, done: 0, startedAt: 1, updatedAt: 1 });
+    const tree = await renderJapam();
+    expect(byTestId(tree, 'japa-sankalp-row')).toBeDefined();
+    expect(byLabel(tree, 'Hide controls')).toBeDefined();
   });
 
   test('full screen shows only the view: taps count, the corner icon, a long press and Back exit, and the phone stays awake', async () => {

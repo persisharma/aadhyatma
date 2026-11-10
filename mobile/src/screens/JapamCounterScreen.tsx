@@ -43,6 +43,7 @@ import KaraokeText from '@/components/KaraokeText';
 import { compactJapamReadingLines } from '@/components/japamReadingLayout';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useJapamStyle, type JapamStyle } from '@/utils/useJapamStyle';
+import { useJapamControls } from '@/utils/useJapamControls';
 import LanguageToggle from '@/components/LanguageToggle';
 import Ornament from '@/components/Ornament';
 import ShareButton from '@/components/ShareButton';
@@ -74,6 +75,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   // Full screen pads past the notch/home indicator; zeros when no provider is mounted.
   const insets = React.useContext(SafeAreaInsetsContext) ?? NO_INSETS;
   const { style: japaStyle, ready: styleReady, selectStyle } = useJapamStyle();
+  // The control column is open by default; minimising it is remembered.
+  const { open: controlsOpen, ready: controlsReady, setOpen: setControlsOpen } = useJapamControls();
+  const showControls = controlsReady && controlsOpen;
   // Full screen (§35): only the mala or the Infinity frame, over everything —
   // an overlay, so the screen underneath (and the tab bar) never resizes.
   const [fullScreen, setFullScreen] = useState(false);
@@ -403,6 +407,24 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       labelFontFamily={labelFont}
       reading={infinityReading} />
   </View> : null;
+  // Minimise / show the control column: a faint 28 dp circle (44 dp touch area)
+  // in the count bar, left of the Sankalp target. Not drawn until the remembered
+  // choice is known.
+  const controlsToggle = controlsReady ? (
+    <Pressable
+      testID="japam-controls-toggle"
+      onPress={() => setControlsOpen(!controlsOpen)}
+      accessibilityRole="button"
+      accessibilityLabel={controlsOpen ? 'Hide controls' : 'Show controls'}
+      accessibilityState={{ expanded: controlsOpen }}
+      hitSlop={{ top: 6, bottom: 6, left: 6, right: 2 }}
+      style={({ pressed }) => [styles.toggle, { opacity: pressed ? 0.35 : 0.55 }]}
+    >
+      <View style={[styles.toggleDot, { borderColor: colors.divider, backgroundColor: colors.parchmentSoft }]}>
+        <AppIcon name={controlsOpen ? 'caretDown' : 'caretUp'} size={14} color={colors.inkMuted} />
+      </View>
+    </Pressable>
+  ) : null;
   const fullMalaSize = Math.round(Math.max(MALA_MIN, Math.min(windowWidth - 48, 360, windowHeight - insets.top - insets.bottom - 240)));
   const fullHintLabel = pick(lang, {
     hi: 'बाहर निकलने के लिए देर तक दबाएँ',
@@ -626,9 +648,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </Pressable>
         </ScrollView>
 
-        {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺, always shown, standing
-            above the count bar's Sankalp target. The player owns the recording. */}
+        {/* Icon-only control column (§35): speedometer, ▶/❚❚, ↺ above the count bar's
+            Sankalp target. Open by default; the count bar's toggle minimises it. The
+            player owns the recording, so it stays mounted (hidden) while minimised.
+            The view is sized for the open column, so minimising never resizes it. */}
         <View style={styles.railSlot} pointerEvents="box-none">
+          <View testID="japam-controls" style={[styles.railColumn, !showControls && styles.hidden]}>
           <JapamAudioPlayer
             layout="rail"
             mantraId={mantra.id}
@@ -658,19 +683,23 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           >
             <AppIcon name="reset" size={18} color={colors.saffronDeep} />
           </Pressable>
+          </View>
         </View>
         </View>
 
-        {/* Count bar: all-time malas + the Sankalp target, or — while a vow is active —
+        {/* Count bar: all-time malas + [controls toggle] + the Sankalp target, or — while a vow is active —
             the vow's own count in the same 56 dp row (§35.2), so nothing above moves. */}
         <View style={[styles.statsRow, { borderTopColor: colors.divider }]}>
           {sankalp && !sankalpComplete ? (
-            <JapaSankalpRow
-              sankalp={sankalp}
-              lang={lang}
-              disabled={counterLoading}
-              onPress={() => setSankalpSheetOpen(true)}
-            />
+            <>
+              <JapaSankalpRow
+                sankalp={sankalp}
+                lang={lang}
+                disabled={counterLoading}
+                onPress={() => setSankalpSheetOpen(true)}
+              />
+              {controlsToggle}
+            </>
           ) : (
             <>
               <JapamMalaTray
@@ -678,6 +707,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                 label={malasDoneLabel}
                 emptyLabel={firstMalaLabel}
               />
+              <View style={styles.barEnd}>
+              {controlsToggle}
               <Pressable
                 testID="japa-sankalp-open"
                 onPress={() => setSankalpSheetOpen(true)}
@@ -696,6 +727,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               >
                 <AppIcon name="sankalp" size={20} color={sankalp ? colors.onPrimary : colors.saffronDeep} />
               </Pressable>
+              </View>
             </>
           )}
         </View>
@@ -1136,6 +1168,23 @@ const styles = StyleSheet.create({
     bottom: 8,
     alignItems: 'center',
     gap: 8,
+  },
+  railColumn: { alignItems: 'center', gap: 8 },
+  hidden: { display: 'none' },
+  barEnd: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  toggle: {
+    width: 32,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toggleDot: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   fullTap: {
     flex: 1,

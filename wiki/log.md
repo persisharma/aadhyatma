@@ -1486,3 +1486,4 @@ Updated share/design/integration contracts for shared top/cartouche and English 
 ## [2026-11-10] ingest | JapaMala control column v2 (speedometer, play, reset above the Sankalp target), vow progress inside the count bar, geometry-fitted ring/frame (japamControlRail.ts), Infinity progress line removed. design.md §35/§35.2 + subsystems/japam.md synced.
 ## [2026-11-10] ingest | JapaMala controls fold (default folded, remembered) and full-screen overlay (view only; corner/long-press/Back exit; keep-awake). design.md §35 + subsystems/japam.md synced; Maestro flows tap Show controls first.
 ## [2026-11-10] ingest | Dropped the fold toggle (column always shown, ring 300 on 390 pt); full screen kept. design.md §35 + subsystems/japam.md synced.
+## [2026-11-10] ingest | Control column minimise restored as an option (default open, remembered; toggle in the count bar). design.md §35 + subsystems/japam.md synced.
