@@ -15,6 +15,7 @@ on:
       - 'mobile/src/contexts/JapamCounterContext.tsx'
       - 'mobile/src/screens/JapamCounterScreen.tsx'
       - 'mobile/.maestro/japam-sankalp-smoke.yaml'
+      - 'mobile/src/navigation/TabNavigator.tsx'
       - '.github/workflows/native-japam-ios.yml'
 
 permissions:
