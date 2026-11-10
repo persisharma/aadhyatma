@@ -341,6 +341,36 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(modal().props.visible).toBe(false);
   });
 
+  test('the faint full-screen icon sits at the view\'s top-right (end of the Mala/Anant row), not in the top bar', async () => {
+    const tree = await renderJapam();
+    const enter = byTestId(tree, 'japam-fullscreen');
+    expect(enter.props.accessibilityLabel).toBe('Full screen');
+    const topBar = byLabel(tree, 'Back').parent!;
+    expect(topBar.findAll((n) => n.props.accessibilityLabel === 'Full screen')).toHaveLength(0);
+    const bar = enter.parent!;
+    expect(bar.findAll((n) => n.props.accessibilityRole === 'radiogroup').length).toBeGreaterThan(0);
+    // On the control column's axis (right 16), borderless and faint, 44 dp target.
+    expect(ReactNative.StyleSheet.flatten(bar.props.style)).toMatchObject({ flexDirection: 'row', paddingRight: 16 });
+    const look = ReactNative.StyleSheet.flatten(enter.props.style({ pressed: false }));
+    expect(look).toMatchObject({ width: 44, height: 44, opacity: 0.6 });
+    expect(look.borderWidth).toBeUndefined();
+    // Not a radio: the button stays outside the radiogroup.
+    const group = tree.root.findAll((n) => n.props.accessibilityRole === 'radiogroup')[0];
+    expect(group.findAll((n) => n.props.testID === 'japam-fullscreen')).toHaveLength(0);
+  });
+
+  test('the exit icon takes the enter icon\'s place on screen', async () => {
+    const tree = await renderJapam();
+    // The enter icon's view, measured in window coordinates when pressed.
+    const host = tree.root.findAll((n) => n.props.testID === 'japam-fullscreen'
+      && typeof (n.instance as { measureInWindow?: unknown } | null)?.measureInWindow === 'function')[0];
+    host.instance.measureInWindow = (cb: (x: number, y: number) => void) => cb(330, 132);
+    await press(byLabel(tree, 'Full screen'));
+    const exit = byLabel(tree, 'Exit full screen');
+    expect(ReactNative.StyleSheet.flatten(exit.props.style)).toMatchObject({ top: 132, right: 16, width: 44, height: 44 });
+    await press(exit);
+  });
+
   test('in Infinity full screen only one frame drives the loop, so each cycle counts once', async () => {
     mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
     const tree = await renderJapam();

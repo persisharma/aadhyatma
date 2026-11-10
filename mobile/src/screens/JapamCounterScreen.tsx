@@ -83,11 +83,19 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const [fullScreen, setFullScreen] = useState(false);
   const [fullHint, setFullHint] = useState(false);
   const fullHintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The faint enter icon sits at the view's top-right (end of the Mala/Anant row);
+  // the exit icon takes its place on screen, so one corner opens and closes.
+  const fullEnterRef = useRef<View>(null);
+  const [fullExitTop, setFullExitTop] = useState<number | null>(null);
   const enterFullScreen = useCallback(() => {
     setFullScreen(true);
     setFullHint(true);
     if (fullHintTimer.current) clearTimeout(fullHintTimer.current);
     fullHintTimer.current = setTimeout(() => setFullHint(false), 2500);
+    const node = fullEnterRef.current as { measureInWindow?: (cb: (x: number, y: number) => void) => void } | null;
+    if (typeof node?.measureInWindow === 'function') {
+      node.measureInWindow((_x, y) => setFullExitTop(Number.isFinite(y) ? y : null));
+    }
   }, []);
   const exitFullScreen = useCallback(() => {
     if (fullHintTimer.current) clearTimeout(fullHintTimer.current);
@@ -485,20 +493,6 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <View style={styles.topRightCluster}>
             <LanguageToggle compact />
             <Pressable
-              testID="japam-fullscreen"
-              onPress={enterFullScreen}
-              accessibilityRole="button"
-              accessibilityLabel="Full screen"
-              hitSlop={4}
-              style={({ pressed }) => [
-                styles.alarmBtn,
-                { backgroundColor: colors.parchmentSoft, borderColor: colors.divider },
-                pressed && { opacity: 0.7 },
-              ]}
-            >
-              <AppIcon name="fullscreen" size={16} color={colors.saffronDeep} />
-            </Pressable>
-            <Pressable
               onPress={() => setAlarmEditorOpen(true)}
               accessibilityRole="button"
               accessibilityLabel={
@@ -541,6 +535,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           </View>
         </View>
 
+        <View style={styles.styleBar}>
         <View style={styles.styleChoices} accessibilityRole="radiogroup">
           {(['mala', 'infinity'] as const).map((value: JapamStyle) => {
             const label = value === 'mala'
@@ -562,6 +557,19 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               </Pressable>
             );
           })}
+        </View>
+          {/* Faint full-screen icon at the view's top-right, on the column's axis (right 16).
+              Kept out of the tap area so it never covers a long mantra's first line. */}
+          <Pressable
+            ref={fullEnterRef}
+            testID="japam-fullscreen"
+            onPress={enterFullScreen}
+            accessibilityRole="button"
+            accessibilityLabel="Full screen"
+            style={({ pressed }) => [styles.fullEnter, pressed && { opacity: 0.3 }]}
+          >
+            <AppIcon name="fullscreen" size={18} color={colors.inkMuted} />
+          </Pressable>
         </View>
 
         <View style={styles.tapArea}>
@@ -955,7 +963,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               accessibilityRole="button"
               accessibilityLabel="Exit full screen"
               hitSlop={8}
-              style={[styles.fullExit, { top: insets.top + 8 }]}
+              style={[styles.fullExit, { top: Math.max(insets.top + 8, fullExitTop ?? 0) }]}
             >
               <AppIcon name="exitFullscreen" size={18} color={colors.inkMuted} />
             </Pressable>
@@ -1087,9 +1095,17 @@ const styles = StyleSheet.create({
   tapArea: {
     flex: 1,
   },
-  styleChoices: {
-    flexDirection: 'row', gap: 8, paddingHorizontal: 24, paddingBottom: 4,
+  styleBar: {
+    flexDirection: 'row', alignItems: 'center', gap: 8, paddingLeft: 24, paddingRight: 16, paddingBottom: 4,
     width: '100%', maxWidth: 420, alignSelf: 'center',
+  },
+  styleChoices: { flex: 1, flexDirection: 'row', gap: 8 },
+  fullEnter: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.6,
   },
   styleChoice: {
     flex: 1, minHeight: 44, paddingHorizontal: 12, paddingVertical: 6,
