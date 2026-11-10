@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
+  AccessibilityInfo,
   Animated,
   Easing,
   Modal,
@@ -188,7 +189,14 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   );
   // A sankalp reaching its target here (not one restored complete on open, nor a
   // mantra switch) gets a Success haptic and briefly takes the ring's notice slot.
+  // Reaching the target also pauses automatic chanting (Infinity loops and the
+  // recording), so an unattended session never keeps adding beads past the vow.
   const [sankalpNotice, setSankalpNotice] = useState(false);
+  const [audioStopToken, setAudioStopToken] = useState(0);
+  const infinityRunningRef = useRef(infinityRunning);
+  infinityRunningRef.current = infinityRunning;
+  const audioPlayingRef = useRef(audioPlaying);
+  audioPlayingRef.current = audioPlaying;
   const sankalpTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSankalpRef = useRef<{ id: string; complete: boolean } | null>(null);
   const sankalpComplete = sankalp?.completedAt !== undefined;
@@ -200,10 +208,16 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     const previous = lastSankalpRef.current;
     lastSankalpRef.current = { id: beatId, complete: sankalpComplete };
     if (!previous || previous.id !== beatId || previous.complete || !sankalpComplete) return;
+    const autoChanting = infinityRunningRef.current || audioPlayingRef.current;
+    setInfinityRunning(false);
+    if (audioPlayingRef.current) setAudioStopToken((n) => n + 1);
     setSankalpNotice(true);
     if (sankalpTimerRef.current) clearTimeout(sankalpTimerRef.current);
     sankalpTimerRef.current = setTimeout(() => setSankalpNotice(false), 3200);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+    AccessibilityInfo.announceForAccessibility(
+      autoChanting ? 'Japa sankalp complete. Automatic chanting paused.' : 'Japa sankalp complete.'
+    );
   }, [counterLoading, beatId, sankalpComplete]);
   useEffect(
     () => () => {
@@ -618,6 +632,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
             onRateChange={setChantRate}
             onRecitationDurationChange={receiveAudioCadence}
             showSilentTempo={japaStyle === 'infinity'}
+            stopToken={audioStopToken}
             autoPlay={route.params.autoPlay === true}
           />
         </View>

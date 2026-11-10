@@ -1,6 +1,7 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Alert, Animated, Text, TextInput } from 'react-native';
+import { AccessibilityInfo, Alert, Animated, Text, TextInput } from 'react-native';
+import JapamInfinity from '@/components/JapamInfinity';
 import * as Haptics from 'expo-haptics';
 import type { Lang } from '@/data/gita/language';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
@@ -37,7 +38,12 @@ jest.mock('expo-sharing', () => ({
   isAvailableAsync: jest.fn(() => Promise.resolve(false)),
   shareAsync: jest.fn(() => Promise.resolve()),
 }));
-jest.mock('@/components/JapamAudioPlayer', () => () => null);
+// Captures the counter's props to the recording player (onIteration, onPlayingChange, stopToken).
+const mockAudio: { props: Record<string, any> | null } = { props: null };
+jest.mock('@/components/JapamAudioPlayer', () => (props: Record<string, any>) => {
+  mockAudio.props = props;
+  return null;
+});
 jest.mock('@/screens/JapamAlarmsScreen', () => ({ AlarmEditorSheet: () => null }));
 jest.mock('@/contexts/JapamAlarmsContext', () => ({
   useJapamAlarms: () => ({ addAlarm: jest.fn(), updateAlarm: jest.fn(), removeAlarm: jest.fn() }),
@@ -62,6 +68,7 @@ beforeEach(() => {
   jest.spyOn(Animated, 'timing').mockImplementation(() => ({ start: jest.fn(), stop: jest.fn(), reset: jest.fn() }));
   mockGetItem.mockReset().mockResolvedValue(null);
   jest.mocked(Haptics.notificationAsync).mockClear();
+  mockAudio.props = null;
 });
 afterEach(() => {
   act(() => mounted?.unmount());
@@ -158,7 +165,7 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
   });
 
-  test('Infinity (अनंत) shows the same opener/strip and its loops fill the vow', async () => {
+  test('Infinity (अनंत) shows the same opener/strip, its loops fill the vow and completion pauses it', async () => {
     withStoredSankalp({ unit: 'japa', amount: 2, done: 0, startedAt: 1, updatedAt: 1 });
     const tree = await renderJapam();
     await press(byTestId(tree, 'japam-style-infinity'));
@@ -170,14 +177,57 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     await press(byTestId(tree, 'japam-counter-infinity')); // start looping
     await act(async () => { loop().props.onCycle(); });
     expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 1 of 2 japa\./);
+    const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
+    expect(tree.root.findByType(JapamInfinity).props.running).toBe(true);
     await act(async () => { loop().props.onCycle(); });
     expect(String(strip(tree).props.accessibilityLabel)).toMatch(/2 of 2 japa, complete/);
     expect(texts(tree)).toContain('संकल्प पूर्ण 🙏');
     expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
+    expect(announce).toHaveBeenCalledWith('Japa sankalp complete. Automatic chanting paused.');
+    // Reaching the vow pauses the loop: no more automatic beads past the target.
+    expect(tree.root.findByType(JapamInfinity).props.running).toBe(false);
+    expect(byTestId(tree, 'japam-counter-infinity').props.accessibilityLabel).toContain('2 of 108 on this mala');
+    await act(async () => { loop().props.onCycle(); });
+    expect(byTestId(tree, 'japam-counter-infinity').props.accessibilityLabel).toContain('2 of 108 on this mala');
+    // Resuming is the user's choice and counts on the mala; the vow stays complete.
+    await press(byTestId(tree, 'japam-counter-infinity'));
+    await act(async () => { loop().props.onCycle(); });
+    expect(byTestId(tree, 'japam-counter-infinity').props.accessibilityLabel).toContain('3 of 108 on this mala');
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/2 of 2 japa, complete/);
+    expect(tree.root.findByType(JapamInfinity).props.running).toBe(true);
     // Releasing the vow brings the opener back in Infinity too.
     await press(strip(tree));
     await press(byLabel(tree, 'Clear completed sankalp'));
     expect(byLabel(tree, 'Take a japa sankalp')).toBeDefined();
+  });
+
+  test('a playing recording is stopped when its repetitions complete the vow', async () => {
+    withStoredSankalp({ unit: 'japa', amount: 2, done: 0, startedAt: 1, updatedAt: 1 });
+    const tree = await renderJapam();
+    const token = mockAudio.props!.stopToken;
+    await act(async () => { mockAudio.props!.onPlayingChange(true); });
+    await act(async () => { mockAudio.props!.onIteration(1); });
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 1 of 2 japa\./);
+    expect(mockAudio.props!.stopToken).toBe(token);
+    await act(async () => { mockAudio.props!.onIteration(1); });
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/2 of 2 japa, complete/);
+    expect(mockAudio.props!.stopToken).toBe(token + 1);
+    // A later completion-free session never bumps it again.
+    await act(async () => { mockAudio.props!.onPlayingChange(false); });
+    await act(async () => { mockAudio.props!.onPlayingChange(true); });
+    await act(async () => { mockAudio.props!.onIteration(1); });
+    expect(mockAudio.props!.stopToken).toBe(token + 1);
+  });
+
+  test('manual taps completing the vow pause nothing and announce completion only', async () => {
+    withStoredSankalp({ unit: 'japa', amount: 1, done: 0, startedAt: 1, updatedAt: 1 });
+    const tree = await renderJapam();
+    const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
+    const token = mockAudio.props!.stopToken;
+    await tap(tree);
+    expect(String(strip(tree).props.accessibilityLabel)).toMatch(/1 of 1 japa, complete/);
+    expect(announce).toHaveBeenCalledWith('Japa sankalp complete.');
+    expect(mockAudio.props!.stopToken).toBe(token);
   });
 
   test('a vow restored complete on open does not replay the completion', async () => {
