@@ -341,6 +341,41 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     expect(modal().props.visible).toBe(false);
   });
 
+  test('the faint full-screen icon sits at the view\'s top-right, below the Mala/Anant row, clear of the first line', async () => {
+    const tree = await renderJapam();
+    const enter = byTestId(tree, 'japam-fullscreen');
+    expect(enter.props.accessibilityLabel).toBe('Full screen');
+    // Not in the top bar, not inside the style radiogroup.
+    const topBar = byLabel(tree, 'Back').parent!;
+    expect(topBar.findAll((n) => n.props.accessibilityLabel === 'Full screen')).toHaveLength(0);
+    const group = tree.root.findAll((n) => n.props.accessibilityRole === 'radiogroup')[0];
+    expect(group.findAll((n) => n.props.testID === 'japam-fullscreen')).toHaveLength(0);
+    // Floats over the tap surface (a sibling of its scroll view), top-right on the column's axis.
+    const tapArea = enter.parent!;
+    expect(tapArea.findAllByType(ReactNative.ScrollView).length).toBeGreaterThan(0);
+    const look = ReactNative.StyleSheet.flatten(enter.props.style({ pressed: false }));
+    expect(look).toMatchObject({ position: 'absolute', top: 8, right: 16, width: 44, height: 44, opacity: 0.6 });
+    expect(look.borderWidth).toBeUndefined();
+    // The first mantra line keeps 27 dp a side so a wide line wraps before reaching the glyph.
+    const lines = tree.root.findAll((n) => n.type === ReactNative.Text
+      && typeof n.props.children === 'string' && n.parent?.props.style !== undefined)
+      .filter((n) => ReactNative.StyleSheet.flatten(n.props.style).textAlign === 'center'
+        && ReactNative.StyleSheet.flatten(n.props.style).lineHeight === 39);
+    expect(ReactNative.StyleSheet.flatten(lines[0].props.style).marginHorizontal).toBe(27);
+  });
+
+  test('the exit icon takes the enter icon\'s place on screen', async () => {
+    const tree = await renderJapam();
+    // The enter icon's view, measured in window coordinates when pressed.
+    const host = tree.root.findAll((n) => n.props.testID === 'japam-fullscreen'
+      && typeof (n.instance as { measureInWindow?: unknown } | null)?.measureInWindow === 'function')[0];
+    host.instance.measureInWindow = (cb: (x: number, y: number) => void) => cb(330, 132);
+    await press(byLabel(tree, 'Full screen'));
+    const exit = byLabel(tree, 'Exit full screen');
+    expect(ReactNative.StyleSheet.flatten(exit.props.style)).toMatchObject({ top: 132, right: 16, width: 44, height: 44 });
+    await press(exit);
+  });
+
   test('in Infinity full screen only one frame drives the loop, so each cycle counts once', async () => {
     mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/japam-style' ? '"infinity"' : null));
     const tree = await renderJapam();
