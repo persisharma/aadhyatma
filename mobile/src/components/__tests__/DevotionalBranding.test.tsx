@@ -59,3 +59,18 @@ it('resets hero branding readiness on a language switch and ignores the removed 
   act(() => { for (const img of tree.root.findAllByType(Image)) img.props.onLoad(); });
   expect(loaded).toHaveBeenCalledTimes(1);
 });
+
+it.each([['hanuman', 180], ['prayer', 180], ['parshuram', 198]] as const)(
+  'fits the %s header badge over the painted plaque, with the wordmark inside its inner frame', (art, badgeWidth) => {
+    for (const lang of ['hi', 'en'] as const) {
+      act(() => { tree = create(<DevotionalHero art={art} lang={lang} width={1080} />); });
+      const header = tree.root.findByProps({ testID: 'devotional-header-brand' });
+      // At width 1080 the master-space coordinates are 1:1. The painted plaque is ≈38–210 × 53–163
+      // (Parshuram to ≈227); the old 244×132 badge spilled over the scenery around it.
+      expect(StyleSheet.flatten(header.props.style)).toMatchObject({ left: 34, top: 48, width: badgeWidth, height: 120 });
+      const mark = StyleSheet.flatten(header.findByType(Image).props.style);
+      expect(mark.width).toBeLessThanOrEqual(badgeWidth - 2 * 15);
+      expect(mark.height).toBeLessThanOrEqual(120 - 2 * 24);
+      act(() => tree.unmount());
+    }
+  });

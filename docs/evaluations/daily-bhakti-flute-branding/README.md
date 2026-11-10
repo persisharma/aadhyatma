@@ -54,3 +54,12 @@ Implementation is for review. No merge, native binary build, version bump, OTA o
 - GitHub reports the source checkpoint mergeable with current main. Agent policy CI passed; full CI/brand browser workflow were in progress when inspected. Final CI must be checked on the final remote head.
 - The only untracked local item is the development `mobile/node_modules` symlink, intentionally excluded. Reproducible intermediate browser bundles/screenshots live in ignored `tmp/`; no required app asset is outside Git. No worktree cleanup occurred.
 - Remaining: execute the committed native flow on iOS/Android; review actual exported images and OS/WhatsApp handoff; verify Standard/Large, compact/enlarged-system text, offline/retry/language-switch/Back; compare lower-configuration Android release responsiveness and inspect ANR/logcat plus iOS hangs. Keep draft until required native acceptance passes.
+
+## Follow-up: fitted header badge — 10 November 2026
+
+Feedback (Sundarkand 11.4 on an iPhone): the top Vedansh badge looked too big. Cause: the 244×132 master-space badge was ≈64px wider than the painted legacy plaque it hides, and its 196px wordmark filled the frame edge to edge; the English flute crossed the left border.
+
+- Measured the painted plaque on all 30 masters: outer gold edge ≈38–210 × 53–163 (Mahakaal and prayer have none; Parshuram's blank plaque reaches ≈227). An overlay drawn at the new footprint over each master left no legacy edge visible except on Parshuram, which now gets its own 198px width.
+- New badge: 180×120 at (34,48), double inner frame and ornament redrawn for that size, Hindi mark 142px / English 146px.
+- Evidence: new `DevotionalBranding.test.tsx` footprint cases fail on the old badge (3/3) and pass now; Devotional suites 76/76; `tsc --noEmit` clean. Browser component renders (this harness) of all 30 delivery subjects in Hindi plus reader hi/en/gu/kn × M/L × 288/358dp were visually inspected. `browser-matrix.json` was not regenerated.
+- PENDING: native iOS/Android render and export, Standard/Large on device, enlarged system text.
