@@ -97,7 +97,7 @@ function BrandedHero({ art, lang, width, onLoad, onError }: HeroProps) {
       </View> : <DevotionalSlice key={art} art={art} width={width} top={0} bottom={h}
         testID="devotional-hero-image" onLoad={loaded} onError={failed} />}
     </View>
-    <DevotionalHeaderBrand art={art} lang={lang} width={width} onLoad={() => paint.loaded('brand')} onError={failed} />
+    <DevotionalHeaderBrand lang={lang} width={width} onLoad={() => paint.loaded('brand')} onError={failed} />
   </View>;
 }
 /** Mirror-tile a clean band of paper and rules into `height`, each tile `stretch`× the band, so a

@@ -60,17 +60,21 @@ it('resets hero branding readiness on a language switch and ignores the removed 
   expect(loaded).toHaveBeenCalledTimes(1);
 });
 
-it.each([['hanuman', 180], ['prayer', 180], ['parshuram', 198]] as const)(
-  'fits the %s header badge over the painted plaque, with the wordmark inside its inner frame', (art, badgeWidth) => {
+it.each(['hanuman', 'prayer', 'parshuram'] as const)(
+  'keeps the %s header wordmark at its approved size inside a box fitted over the painted plaque', art => {
     for (const lang of ['hi', 'en'] as const) {
       act(() => { tree = create(<DevotionalHero art={art} lang={lang} width={1080} />); });
       const header = tree.root.findByProps({ testID: 'devotional-header-brand' });
-      // At width 1080 the master-space coordinates are 1:1. The painted plaque is ≈38–210 × 53–163
-      // (Parshuram to ≈227); the old 244×132 badge spilled over the scenery around it.
-      expect(StyleSheet.flatten(header.props.style)).toMatchObject({ left: 34, top: 48, width: badgeWidth, height: 120 });
+      // At width 1080 master-space coordinates are 1:1. The old 244×132 badge left ~half the
+      // wordmark's height as empty paper; the box still has to cover the painted plaque
+      // (≈38–210 × 53–163, Parshuram to ≈227).
+      const box = StyleSheet.flatten(header.props.style);
+      expect(box).toMatchObject({ left: 32, top: 48, width: 224, height: 120 });
+      expect(box.left).toBeLessThanOrEqual(38 - 4); expect(box.top).toBeLessThanOrEqual(53 - 4);
+      expect(box.left + box.width).toBeGreaterThanOrEqual(227 + 4); expect(box.top + box.height).toBeGreaterThanOrEqual(163 + 4);
       const mark = StyleSheet.flatten(header.findByType(Image).props.style);
-      expect(mark.width).toBeLessThanOrEqual(badgeWidth - 2 * 15);
-      expect(mark.height).toBeLessThanOrEqual(120 - 2 * 24);
+      expect(mark.width).toBe(196);
+      expect(box.width - mark.width).toBeLessThanOrEqual(28);
       act(() => tree.unmount());
     }
   });

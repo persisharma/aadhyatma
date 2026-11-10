@@ -57,9 +57,9 @@ Implementation is for review. No merge, native binary build, version bump, OTA o
 
 ## Follow-up: fitted header badge — 10 November 2026
 
-Feedback (Sundarkand 11.4 on an iPhone): the top Vedansh badge looked too big. Cause: the 244×132 master-space badge was ≈64px wider than the painted legacy plaque it hides, and its 196px wordmark filled the frame edge to edge; the English flute crossed the left border.
+Feedback (Sundarkand 11.4 on an iPhone): the box around the top Vedansh logo was too big; the logo itself should stay the same size. A first pass that also shrank the logo was rejected.
 
-- Measured the painted plaque on all 30 masters: outer gold edge ≈38–210 × 53–163 (Mahakaal and prayer have none; Parshuram's blank plaque reaches ≈227). An overlay drawn at the new footprint over each master left no legacy edge visible except on Parshuram, which now gets its own 198px width.
-- New badge: 180×120 at (34,48), double inner frame and ornament redrawn for that size, Hindi mark 142px / English 146px.
-- Evidence: new `DevotionalBranding.test.tsx` footprint cases fail on the old badge (3/3) and pass now; Devotional suites 76/76; `tsc --noEmit` clean. Browser component renders (this harness) of all 30 delivery subjects in Hindi plus reader hi/en/gu/kn × M/L × 288/358dp were visually inspected. `browser-matrix.json` was not regenerated.
+- Measured the painted legacy plaque on all 30 masters: outer gold edge ≈38–210 × 53–163 (Mahakaal and prayer have none; Parshuram's blank plaque reaches ≈227). The badge must cover it, which sets the minimum box size.
+- New badge: 224×120 at (32,48), down from 244×132 at (32,44). The 196px wordmark is unchanged; the double frame and ornament were redrawn tighter around it.
+- Evidence: `DevotionalBranding.test.tsx` footprint cases (logo stays 196px; box covers the plaque and is ≤28px wider than the logo) pass; the old badge fails them. Devotional suites pass; `tsc --noEmit` is clean. Browser component renders (this harness) of all 30 delivery subjects in Hindi, plus reader hi/en/gu/kn × M/L × 288/358dp, were visually inspected with no legacy edge visible. `browser-matrix.json` was not regenerated.
 - PENDING: native iOS/Android render and export, Standard/Large on device, enlarged system text.
