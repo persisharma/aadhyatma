@@ -88,7 +88,8 @@ RULEBOOK §3 "Every stotram shloka is startable as japa".
   Ashtakam text (why Ganesh's is `ganapati-gam-mantra`), and must not reuse an Audio-library track id. If its text is also a stotram shloka, add it to
   `LIST_MANTRA`. The Audio-library `mahamrityunjay-mantra` recording is CDN-only, so the japam entry is
   a silent manual counter (bundling it would grow the binary).
-- **Anant frame gives back the strip height.** With a vow, `JapamInfinity` gets `size − stripH` (estimate 46, then measured via the strip slot's `onLayout`), floored at 280, so the karaoke reading under the frame does not slide below the fold. Changing this needs the Gayatri/Hare Krishna Anant screenshots from `native-japam-ios.yml` re-checked.
+- **Anant frame gives back the strip height.** With a vow, `JapamInfinity` gets `size − stripH` (estimate 48, then measured via the strip slot's `onLayout`), floored at 280, so the karaoke reading under the frame does not slide below the fold. Changing this needs the Gayatri/Hare Krishna Anant screenshots from `native-japam-ios.yml` re-checked.
+- **Naam line leading must scale with the name.** The enlarged naam line (1.5× verse) needs its line height ×1.5 too; ×1.25 (1.40×) clipped the ी of सीता / श्री on iOS. `JapamCounterMala.test.tsx` pins ≥1.5× for all naam entries in hi/gu/kn at M and L.
 - **Sankalp sheet draft resets only on open.** Infinity/audio keep counting behind the modal, so the sheet reads the stored vow through a ref on `visible` — keying the reset effect on the vow object would wipe a target mid-typing.
 - **Don't fold the sankalp into `JapamCounterEntry`.** `WidgetCoordinator` sorts `entries` by `updatedAt` and `NewContentContext` reads the counter key as an upgrader signal; a separate key keeps both untouched.
 - The audio row shows the generic "इस मंत्र की ध्वनि उपलब्ध नहीं है" notice for slokas (no recordings).

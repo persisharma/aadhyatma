@@ -211,7 +211,7 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     await press(byLabel(tree, 'Take a japa sankalp'));
     await press(byTestId(tree, 'japa-sankalp-preset-1'));
     await press(byLabel(tree, 'Take this sankalp'));
-    expect(frameSize()).toBe(base - 46);
+    expect(frameSize()).toBe(base - 48);
     // …then by its measured height (e.g. enlarged system text).
     const slot = tree.root.findAll((n) => n.props.testID === 'japa-sankalp-strip-slot' && typeof n.props.onLayout === 'function')[0];
     await act(async () => {

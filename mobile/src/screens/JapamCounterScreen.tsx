@@ -523,7 +523,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                             color: colors.ink,
                             fontFamily: scriptSerif ?? typography.verse.fontFamily,
                             fontSize: naam ? Math.round(verseFontSize * 1.5) : verseFontSize,
-                            lineHeight: naam ? Math.round(verseLineHeight * 1.25) : verseLineHeight,
+                            // Scale the leading with the name (the verse token's ~1.7×). The
+                            // former ×1.25 left 35/49 (1.40×) at M and 39/56 at L, and iOS cut
+                            // the ी loop above the shirorekha of सीता / श्री (Nov 2026 report).
+                            lineHeight: naam ? Math.round(verseLineHeight * 1.5) : verseLineHeight,
                           },
                     ]}
                   >
@@ -842,9 +845,9 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   );
 }
 
-// The sankalp strip's standard-text height (6 + 22 + 4 + 5 + 8 padding/rows + 1
+// The sankalp strip's standard-text height (6 + 24 + 4 + 5 + 8 padding/rows + 1
 // hairline), used for the Infinity frame until the strip's own layout arrives.
-const SANKALP_STRIP_EST_H = 46;
+const SANKALP_STRIP_EST_H = 48;
 
 // Mala box bounds; the fitted size lands between them (and under the width cap).
 // Below ~230 the 108 beads (min radius 2.2) start to overlap on the thread.

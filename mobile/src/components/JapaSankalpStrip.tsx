@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
   headline: {
     flex: 1,
     fontSize: 15,
-    lineHeight: 22,
+    // ≥1.5×: Kannada/Devanagari vowel signs above the line (ಲೆ, ी) must not clip.
+    lineHeight: 24,
     textAlign: 'right',
   },
   chevron: {

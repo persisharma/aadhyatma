@@ -151,3 +151,17 @@ appId: com.prashantsharma.vedansh
     id: "japam-style-mala"
 - tapOn: "Back"
 - waitForAnimationToEnd
+
+# ── Naam japa: the enlarged सीता राम keeps its ी loop (≥1.5× leading) ──
+- scrollUntilVisible:
+    element:
+      text: "Sita Ram Naam Japa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 20000
+    centerElement: true
+- tapOn: "Sita Ram Naam Japa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- assertVisible: ".*0 of 108 on this mala.*"
+- takeScreenshot: japa-sankalp-10-sita-ram-naam
+- tapOn: "Back"
+- waitForAnimationToEnd
