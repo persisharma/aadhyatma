@@ -2,7 +2,7 @@
 title: Overview
 type: overview
 sources: [README.md, mobile/package.json, mobile/app.json, mobile/jest.config.js, mobile/App.tsx, mobile/src/navigation/, mobile/src/data/texts.ts, mobile/src/data/backgrounds.ts, mobile/src/data/routine/, mobile/src/panchang/, mobile/src/notifications/japamAlarms.ts, mobile/assets/backgrounds/, RULEBOOK.md, design.md, scripts/, push.sh, mobile/eslint.config.js, mobile/src/theme/, mobile/src/components/ReaderHeader.tsx, mobile/src/components/TextField.tsx]
-last_verified_date: 2026-10-11
+last_verified_date: 2026-11-11
 confidence: medium
 status: current
 ---
@@ -137,6 +137,9 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 - `docs/superpowers/` — deity-icon plan + design spec.
 
 ## Gotchas
+
+- **`index.ts` has two imports that must stay first, in order.** `launchTrace` (temporary) and then `utils/devicePace` (permanent): its module body starts the stopwatch that `markBundleEvaluated()` stops once `App`'s whole graph has been evaluated. At or above 800 ms the launch is "constrained" and the background warm-up narrows to what Home opens directly, with no background search-index build (design.md §75). Both modules import nothing, on purpose.
+- **Low-end / slow-network numbers are reproducible, not anecdotal.** `mobile/scripts/perf-report.mts` (downloads, icon bitmaps, warm-up, search-index cost) and `PERF_REPORT=1 npx jest src/notifications/__tests__/rearmCost.jest.test.ts` print the figures recorded in `docs/engineering/android-low-end-performance-2026-11.md`. They are counted, modelled or desktop-measured — never a substitute for a device run.
 
 - **App icon exports** — `mobile/assets/branding/app-icon-master.png` is the approved copper-relief master; `node mobile/scripts/export-app-icons.mjs` regenerates all four Expo icon/splash/favicon assets and their hash manifest. Android receives padded adaptive artwork; `mobile/app.json` supplies an explicit splash plugin and ivory backgrounds. These native-shell changes require a rebuilt app, not OTA. The Home wordmark and share-footer text are separate from the launcher icon (design.md §2.1).
 

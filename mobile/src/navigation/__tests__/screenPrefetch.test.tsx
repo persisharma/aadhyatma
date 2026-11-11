@@ -302,3 +302,94 @@ describe('screens registered on more than one stack', () => {
     expect(calls).toBe(1);
   });
 });
+
+describe('screenPrefetch on a constrained phone', () => {
+  const entries = (order: string[]) => (label: string, depth: number) =>
+    registerPrefetch({ label, depth, load: async () => void order.push(label) });
+
+  it('warms what Home opens and stops there', async () => {
+    const order: string[] = [];
+    const entry = entries(order);
+    entry('deep-a', 3);
+    entry('near-a', 2);
+    entry('deepest', 5);
+    entry('near-b', 2);
+
+    await startScreenPrefetch({ yieldToUI: async () => {}, constrained: true });
+
+    expect(order).toEqual(['near-a', 'near-b']);
+  });
+
+  it('does not chase screens a nested stack registers', async () => {
+    const order: string[] = [];
+    registerPrefetch({
+      label: 'nested-stack',
+      depth: 2,
+      load: async () => {
+        order.push('nested-stack');
+        registerPrefetch({ label: 'nested-child', depth: 3, load: async () => void order.push('nested-child') });
+      },
+    });
+
+    await startScreenPrefetch({ yieldToUI: async () => {}, constrained: true });
+
+    expect(order).toEqual(['nested-stack']);
+  });
+
+  it('is woken by the user arriving somewhere, and warms only that screen’s children', async () => {
+    const order: string[] = [];
+    const entry = entries(order);
+    entry('near', 2);
+    entry('child-of-current', 3);
+    entry('unrelated-deep', 3);
+    entry('grandchild', 4);
+
+    await startScreenPrefetch({ yieldToUI: async () => {}, constrained: true });
+    expect(order).toEqual(['near']);
+
+    prioritise(['child-of-current']);
+    await startScreenPrefetch();
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    expect(order).toEqual(['near', 'child-of-current']);
+
+    // Deeper again, as the user goes deeper — each screen still only once.
+    prioritise(['grandchild', 'child-of-current']);
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    expect(order).toEqual(['near', 'child-of-current', 'grandchild']);
+  });
+
+  it('a screen prioritised before the walk starts is warmed with the first pass', async () => {
+    const order: string[] = [];
+    const entry = entries(order);
+    entry('near', 2);
+    entry('cold-landing-child', 4);
+
+    prioritise(['cold-landing-child']);
+    await startScreenPrefetch({ yieldToUI: async () => {}, constrained: true });
+
+    expect(order).toEqual(['cold-landing-child', 'near']);
+  });
+
+  it('yields between every evaluation, exactly as the full walk does', async () => {
+    const trace: string[] = [];
+    registerPrefetch({ label: 'a', depth: 2, load: async () => void trace.push('load:a') });
+    registerPrefetch({ label: 'b', depth: 2, load: async () => void trace.push('load:b') });
+
+    await startScreenPrefetch({ yieldToUI: async () => void trace.push('yield'), constrained: true });
+
+    expect(trace).toEqual(['yield', 'load:a', 'yield', 'load:b']);
+  });
+
+  it('an unconstrained phone still warms every depth after being prioritised', async () => {
+    const order: string[] = [];
+    const entry = entries(order);
+    entry('near', 2);
+    entry('deep', 3);
+    entry('deepest', 6);
+
+    await startScreenPrefetch({ yieldToUI: async () => {}, constrained: false });
+    prioritise(['deep']);
+
+    expect(order).toEqual(['near', 'deep', 'deepest']);
+  });
+});

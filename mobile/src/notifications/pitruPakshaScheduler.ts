@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import type { Lang } from '@/data/gita/language';
 import {
   formatPitruPakshaReminderContent,
@@ -10,9 +11,10 @@ import type { PitruPakshaWindow } from '@/panchang/pitruSmaran';
 
 export const PITRU_PAKSHA_CHANNEL_ID = 'festive-reminders';
 
+let channelEnsured = false;
+
 export async function cancelAllPitruPakshaReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(pending.filter((n) => n.identifier.startsWith(PITRU_PAKSHA_NOTIF_PREFIX)).map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier)));
+  await cancelNotificationFamily(PITRU_PAKSHA_NOTIF_PREFIX);
 }
 
 export async function schedulePitruPakshaReminders(
@@ -20,27 +22,24 @@ export async function schedulePitruPakshaReminders(
   now = new Date(),
   lang: Lang = 'hi'
 ): Promise<number> {
-  await cancelAllPitruPakshaReminders();
   const planned = planPitruPakshaReminders(windows, now);
-  if (Platform.OS === 'android' && planned.length > 0) {
+  // A channel's attributes are pinned at creation, so once per process is enough.
+  if (Platform.OS === 'android' && planned.length > 0 && !channelEnsured) {
     await Notifications.setNotificationChannelAsync(PITRU_PAKSHA_CHANNEL_ID, {
       name: 'Festival reminders',
       importance: Notifications.AndroidImportance.DEFAULT,
       sound: 'default',
       lightColor: '#B8621B',
-    }).catch(() => undefined);
+    }).then(() => { channelEnsured = true; }, () => undefined);
   }
-  let count = 0;
-  for (const item of planned) {
+  const slots: FamilySlot[] = planned.map((item) => {
     const { title, body } = formatPitruPakshaReminderContent(item, lang);
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: item.identifier,
-        content: { title, body, sound: 'default', data: { type: 'pitru-paksha-reminder', year: item.year, kind: item.kind } },
-        trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: item.fireDate, ...(Platform.OS === 'android' ? { channelId: PITRU_PAKSHA_CHANNEL_ID } : {}) } as Notifications.NotificationTriggerInput,
-      });
-      count += 1;
-    } catch { /* per-slot failure is non-fatal */ }
-  }
-  return count;
+    return {
+      identifier: item.identifier,
+      content: { title, body, sound: 'default', data: { type: 'pitru-paksha-reminder', year: item.year, kind: item.kind } },
+      trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: item.fireDate, ...(Platform.OS === 'android' ? { channelId: PITRU_PAKSHA_CHANNEL_ID } : {}) } as Notifications.NotificationTriggerInput,
+    };
+  });
+  // Per-slot failure is non-fatal (see `armNotificationFamily`).
+  return armNotificationFamily(PITRU_PAKSHA_NOTIF_PREFIX, slots);
 }

@@ -15,6 +15,15 @@
  * keeps its existing local file — no blanket cache-bust, no stale bytes.
  */
 import { Directory, File, Paths } from 'expo-file-system';
+import { downloadWithResume, sweepAbandonedScratch } from './resumableDownload';
+
+/**
+ * No byte for this long means the connection is dead. Audio runs to megabytes,
+ * so there is no ceiling on duration: a slow download is allowed to finish, and
+ * on Android an interrupted one continues from its stored bytes on the next
+ * request instead of starting over (see `resumableDownload`).
+ */
+export const ASSET_DOWNLOAD_STALL_MS = 15000;
 
 export interface CachedAssetRequest {
   /** Content hash — the stable, unguessable filename stem. */
@@ -56,19 +65,27 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
   if (pending) return pending;
 
   const task = (async () => {
-    const part = new File(dir, `${key}.${ext}.part`);
     try {
       if (!dir.exists) dir.create({ intermediates: true });
-      // Clear a leftover from a prior interrupted attempt, else the native
-      // downloader rejects (DestinationAlreadyExists) and never retries.
-      if (part.exists) part.delete();
-      await File.downloadFileAsync(remoteUrl, part);
-      part.move(file); // atomic: the final file only ever exists complete
+      // Scratch left by a killed process (including the single `.part` older
+      // builds wrote) is never progress and is cleared once per process.
+      await sweepAbandonedScratch(`${dir.uri.replace(/\/+$/, '')}/`);
+      const scratch = new File(
+        await downloadWithResume({
+          key: file.uri,
+          url: remoteUrl,
+          scratchBase: file.uri,
+          stallMs: ASSET_DOWNLOAD_STALL_MS,
+        })
+      );
+      try {
+        scratch.move(file); // atomic: the final file only ever exists complete
+      } catch (err) {
+        // Leave nothing half-written that a later call would treat as a cache hit.
+        if (scratch.exists) scratch.delete();
+        throw err;
+      }
       return file.uri;
-    } catch (err) {
-      // Leave nothing half-written that a later call would treat as a cache hit.
-      if (part.exists) part.delete();
-      throw err;
     } finally {
       inFlight.delete(file.uri);
     }
