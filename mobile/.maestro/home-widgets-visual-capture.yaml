@@ -1,0 +1,19 @@
+# Optional native visual evidence: the *placed* Home Screen widget, not an RN
+# facsimile. Runs only after the app and its WidgetKit extension compile/install.
+# Any OS-specific accessibility failure is recorded; never call app-launch art
+# a widget screenshot.
+appId: com.prashantsharma.vedansh
+---
+- pressKey: Home
+- waitForAnimationToEnd
+- longPressOn:
+    id: "Home screen icons"
+- tapOn: "Edit"
+- tapOn: "Add Widget"
+- tapOn: "Search Widgets"
+- inputText: "Vedansh"
+- tapOn: "Vedansh"
+- takeScreenshot: "../native-output/widget-picker-native"
+- tapOn: "Add Widget"
+- waitForAnimationToEnd
+- takeScreenshot: "../native-output/widget-homescreen-native"
