@@ -2,7 +2,7 @@
 title: Shared Storybook Icon System
 type: concept
 sources: [mobile/src/components/CelestialGlyph.tsx, mobile/src/utils/moonPhase.ts, mobile/src/panchang/observancePortraits.ts, mobile/src/components/ObservanceArtwork.tsx, mobile/src/components/observancePortraitSources.ts, mobile/src/data/__tests__/paintedIconsOnly.test.ts, mobile/src/components/FeatureIcon.tsx, mobile/src/components/HomeWordmark.tsx, docs/evaluations/home-gutter-2026-10-06/README.md, mobile/src/components/CelestialChakra.tsx, mobile/assets/decorations/celestial-chakra/manifest.json, docs/evaluations/celestial-chakra-2026-10-06/README.md, mobile/src/components/MoreIcon.tsx, mobile/src/screens/MoreScreen.tsx, mobile/assets/icons/more-storybook/manifest.json, docs/evaluations/storybook-icons-2026-10-06/more-alignment/README.md, mobile/src/components/DeityIcon.tsx, mobile/src/components/deityArtwork.ts, mobile/src/components/storybookSources.ts, mobile/src/components/StoryIcon.tsx, mobile/src/components/AppIcon.tsx, mobile/assets/icons/storybook/manifest.json, mobile/src/navigation/tabBarIcons.tsx, design.md, docs/evaluations/storybook-icons-2026-10-06/README.md, design-qa.md, mobile/src/screens/HomeScreen.tsx, mobile/src/components/CategoryCard.tsx, mobile/src/utils/homeLayout.ts, mobile/src/components/ReaderHeader.tsx, mobile/src/components/BookmarkButton.tsx, mobile/src/components/ShareButton.tsx, mobile/src/components/HomeWordmark.tsx, mobile/src/components/TodayRecommendationsRow.tsx, docs/evaluations/storybook-icons-2026-10-06/size-audit/README.md]
-last_verified_date: 2026-10-29
+last_verified_date: 2026-11-11
 confidence: high
 status: current
 ---
@@ -53,6 +53,8 @@ The night header’s existing painted phase is now shown only between calculated
 [[overview]] · [[daan-punya]] · design.md §5/17/42.
 
 ## Gotchas
+
+- **Painted icons must spread `PAINTED_ICON_DECODE` (Android decode size, 11 Nov 2026).** React Native only size-matches `file://`/`content://` images by default, so a bundled 512 px master was decoded whole — 1 MB of bitmap for an 88 px tile, 31.5 MB for Home's thirty icons. `components/paintedIconDecode.ts` (`resizeMethod="resize"`, `resizeMultiplier={1.5}`) makes Fresco decode near the drawn size; the 1.5 margin guarantees the bitmap is never smaller than the view (`utils/androidImageDecode.ts` models the Fresco rule and `paintedIconDecode.test.tsx` asserts it for every size and density in use). A new component that draws a painted master should spread it; an image inside an exported share card must not.
 
 - Home tile width is snapped one physical pixel below the exact-fit track (`homeLayout.ts`). Exact fits wrapped the third launcher of every row on fractional-dp Android widths (e.g. 411.43dp at density 2.625), because Yoga sums the row in float32 and saw a ~3e-5dp overflow. Never compute flex-wrap tracks that sum exactly to the container.
 - Keep full eight-ray Gayatri sun distinct from Surya's rising half-disc.
