@@ -15,6 +15,29 @@ const FONTS = [
   ['@expo-google-fonts/inter', '600SemiBold/Inter_600SemiBold.ttf'],
 ];
 
+// Reviewed full-colour illustrations supply the visual weight of the approved
+// heritage concept. Each is bundled locally: WidgetKit never downloads images.
+const HERITAGE_PAINTINGS = {
+  prayer: 'category-granth-open-scripture.webp',
+  vishnu: 'source-vishnu-narayana.webp',
+  krishna: 'deity-krishna-bansuri.webp',
+  shiva: 'shiva.webp',
+  hanuman: 'ram-hanuman.webp',
+  rama: 'deity-rama-darbar.webp',
+  ganesha: 'deity-ganesha-modak.webp',
+  durga: 'deity-durga-lion.webp',
+  saraswati: 'deity-saraswati-veena.webp',
+  surya: 'deity-surya.webp',
+  panchang: 'panchang-celestial-almanac.webp',
+};
+function heritageSources(projectRoot) {
+  return Object.entries(HERITAGE_PAINTINGS).map(([subject, source]) => {
+    const from = path.join(projectRoot, 'assets', 'reader-illustrations', source);
+    if (!fs.existsSync(from)) throw new Error(`Widget heritage painting missing: ${source}`);
+    return { from, filename: `vedansh_heritage_source_${subject}.webp` };
+  });
+}
+
 // The widget background plates (design.md §59), generated into the app's assets by
 // scripts/build-widget-backgrounds.mts. The Swift side treats each as optional, so a
 // plate that is absent here only costs that widget its art, never the widget.
@@ -41,6 +64,9 @@ function withFiles(config) {
     }
     for (const plate of widgetBackgroundPlates(projectRoot)) {
       fs.copyFileSync(plate, path.join(destination, path.basename(plate)));
+    }
+    for (const { from, filename } of heritageSources(projectRoot)) {
+      fs.copyFileSync(from, path.join(destination, filename));
     }
     return cfg;
   }]);
@@ -85,6 +111,11 @@ function withTarget(config) {
     project.addToPbxFileReferenceSection(fixture); project.addToPbxBuildFileSection(fixture); project.addToPbxResourcesBuildPhase(fixture); project.addToPbxGroup(fixture, group.uuid);
     for (const plate of widgetBackgroundPlates(cfg.modRequest.projectRoot)) {
       const file = new PbxFile(path.basename(plate));
+      file.target = target.uuid; file.uuid = project.generateUuid(); file.fileRef = project.generateUuid();
+      project.addToPbxFileReferenceSection(file); project.addToPbxBuildFileSection(file); project.addToPbxResourcesBuildPhase(file); project.addToPbxGroup(file, group.uuid);
+    }
+    for (const { filename } of heritageSources(cfg.modRequest.projectRoot)) {
+      const file = new PbxFile(filename);
       file.target = target.uuid; file.uuid = project.generateUuid(); file.fileRef = project.generateUuid();
       project.addToPbxFileReferenceSection(file); project.addToPbxBuildFileSection(file); project.addToPbxResourcesBuildPhase(file); project.addToPbxGroup(file, group.uuid);
     }
