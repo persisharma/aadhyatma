@@ -152,6 +152,7 @@ function walk(): Promise<void> {
   const { yieldToUI, constrained } = started;
   const worthWarming = (entry: PrefetchEntry) =>
     !constrained || entry.depth <= CONSTRAINED_MAX_DEPTH || urgent.has(entry.label);
+  let running = true;
   const pass = (async () => {
     // DRAIN the registry, do not snapshot it. Warming a lazily-loaded navigator
     // evaluates that module, and evaluating it runs its own `lazyScreen()`
@@ -162,7 +163,15 @@ function walk(): Promise<void> {
     // depth and get warmed like any other.
     for (;;) {
       const next = prefetchOrder().find((entry) => !done.has(entry) && worthWarming(entry));
-      if (!next) break;
+      if (!next) {
+        // Given up in the SAME turn as the look that found nothing — not in a
+        // reaction to this promise, which runs later. A `prioritise()` landing
+        // in between would be handed this finished walk as if it were still
+        // running, and the screens it asked for would stay cold.
+        running = false;
+        walking = null;
+        return;
+      }
       done.add(next);
       await yieldToUI();
       try {
@@ -174,9 +183,8 @@ function walk(): Promise<void> {
       }
     }
   })();
-  walking = pass;
-  const finished = () => { if (walking === pass) walking = null; };
-  pass.then(finished, finished);
+  // A pass with nothing to warm has already finished by the time it returns.
+  if (running) walking = pass;
   return pass;
 }
 

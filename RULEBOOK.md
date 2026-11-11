@@ -163,6 +163,18 @@ static import graph from `index.ts` and fails if a payload is reachable (it prin
 the import chain) or if the graph exceeds its byte budget. Never raise the budget
 to make it pass, and never add a payload to an allowlist — fix the importer.
 
+**A native resource found by name needs a keep entry (Nov 2026).** Android release
+builds shrink resources (`plugins/withAndroidReleaseShrink.js`), and the shrinker
+empties or drops anything it cannot see a reference to. A resource reached through
+`getIdentifier` with a name built at runtime is exactly that: the Japam alarm sounds
+(`app.json` → `expo-notifications` → `sounds[]`, copied to `res/raw`, found by mantra
+id) and the widget backgrounds. Raw resources are all kept by
+`res/raw/vedansh_release_keep.xml`, which the plugin writes; widget drawables by the
+widget plugin's own keep file. Adding a lookup of any other resource type from
+app-owned native code fails `AndroidReleaseShrinkPlugin.test.ts` until it has a
+`tools:keep` entry. A shrunk alarm sound does not crash — it rings silent — so this
+is never caught by a launch test.
+
 **A corpus too large for the bundle ships as assets (Nov 2026).** Lazy loading keeps
 a payload off the *launch path*; it does not keep it out of the *bundle*. Every
 `require()`d JSON is compiled into the Hermes bundle, which every OTA update
@@ -170,18 +182,32 @@ downloads whole. `valmiki-ramayan` (27 MB) is the worked case and the pattern fo
 anything of that order:
 1. The JSON masters stay where they are and remain the source of truth for
    provenance, the corpus tests and the builder. **No app module may import one**
-   (`src/data/__tests__/valmikiAssets.test.ts` fails if any does).
+   except `corpusSource.inbundle.ts` (rule 4), and nothing may import that file
+   by name (`src/data/__tests__/valmikiAssets.test.ts` fails on either).
 2. `mobile/scripts/build-valmiki-assets.mjs` writes the parts the app reads
    (`mobile/assets/valmiki-ramayan/*.txt`), the part table (`parts.ts`) and the
    sarga table (`sargaStarts.ts`). **Re-run it after any change to a master**;
    `--check` runs inside the same test and fails on drift.
-3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches the part
-   table and the native reader only through `require()` thunks, and the reader
-   screen owns a loading and a retry state (design.md §53).
-4. **Release order.** An OTA published to a runtime whose store binary does not
-   already contain these assets makes that update download all of them once
-   (27 MB in 73 files) before it can apply. Publish such an update only to
-   runtimes at or after the store build that embeds them.
+3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches its source
+   only through a `require()` thunk, and the reader screen owns a loading and a
+   retry state (design.md §53).
+4. **An OTA from the latest branch must work on every store build still in
+   use.** A runtime whose binary does not embed the parts would have to download
+   all of them (27 MB in 73 files) before the update applied, and would read them
+   through a path that build has never run. So the delivery is chosen when the
+   app is **bundled**, by the app version it is bundled for — which is the
+   runtime (`mobile/corpusDelivery.js`, applied in `mobile/metro.config.js`):
+   below `VALMIKI_ASSETS_SINCE_VERSION` the corpus module's `./corpusSource` is
+   answered by `corpusSource.inbundle.ts` and the masters are compiled into the
+   bundle exactly as before; at or above it, by `corpusSource.ts` and the parts.
+   A store build and every OTA published to it are bundled with the same
+   version (`ota-push.yml` rewrites `expo.version` to the target runtime), so
+   they cannot disagree. Never lower that constant past a version that has
+   shipped. `push.sh` prints the delivery before it publishes;
+   `VALMIKI_CORPUS_DELIVERY=assets|bundle` forces one for a single run.
+   Anything else that needs the new binary must be gated the same way: **the
+   JavaScript on the latest branch has to run on the oldest build an OTA can
+   still reach.**
 
 **Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 

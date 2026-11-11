@@ -109,6 +109,27 @@ export function takeAutoSlideHandoff(sourceId: string, owner: number): boolean {
   return Date.now() - h.at <= HANDOFF_MS;
 }
 
+/** Whether a hand-off for `sourceId` is pending and still inside its window. Claims nothing. */
+export function hasLiveAutoSlideHandoff(sourceId: string): boolean {
+  const h = snapshot.handoff;
+  return !!h && h.sourceId === sourceId && Date.now() - h.at <= HANDOFF_MS;
+}
+
+/**
+ * Restart the window of the pending hand-off for `sourceId`.
+ *
+ * For a reader that has to LOAD its text before the component that claims the
+ * hand-off can mount: it checks `hasLiveAutoSlideHandoff` when it opens and
+ * calls this the moment the text is ready, so the wait for the load does not
+ * count against the window. Never call it for a hand-off that was not live when
+ * the screen opened — that would revive one the reader had already let lapse.
+ */
+export function renewAutoSlideHandoff(sourceId: string): void {
+  const h = snapshot.handoff;
+  if (!h || h.sourceId !== sourceId) return;
+  set({ handoff: { ...h, at: Date.now() } });
+}
+
 /** Test seam — restores defaults. Not used in app code. */
 export function __resetAutoSlideStore(): void {
   snapshot = { speed: 'normal', handoff: null };
