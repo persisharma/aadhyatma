@@ -114,7 +114,11 @@ enum WidgetArt {
       let ratio = sqrt(CGFloat(budget) / CGFloat(crop.width * crop.height))
       let size = CGSize(width: max(1, floor(CGFloat(crop.width) * ratio)),
                         height: max(1, floor(CGFloat(crop.height) * ratio)))
-      let renderer = UIGraphicsImageRenderer(size: size)
+      let format = UIGraphicsImageRendererFormat.default()
+      // A 2x/3x device renderer would silently exceed WidgetKit's pixel
+      // archival budget even after our crop math: this is a pixel-sized plate.
+      format.scale = 1
+      let renderer = UIGraphicsImageRenderer(size: size, format: format)
       prepared = renderer.image { _ in
         UIImage(cgImage: crop).draw(in: CGRect(origin: .zero, size: size))
       }
