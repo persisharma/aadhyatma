@@ -1507,3 +1507,7 @@ Updated share/design/integration contracts for shared top/cartouche and English 
 ## [2026-11-11] gap | Android store builds carry the fifteen fonts twice (embedded and as Metro assets), 5.6 MB before compression; size effect unmeasured, removal is a release-order decision. The alarm-sound keep, like every other store-build check, is unverified on a real build.
 ## [2026-11-11] ingest | OTAs from the latest branch stay compatible with older store builds. The Valmiki corpus delivery is now chosen at bundle time from the app version (`mobile/corpusDelivery.js`, `metro.config.js`): 1.5.6 and older keep the masters in the JS bundle through `corpusSource.inbundle.ts`; 1.5.7 and newer read the asset parts. Real exports: runtime 1.5.6 → 51.7 MB, 318 assets, no parts; runtime 1.5.7 → 26.6 MB, 391 assets. Replaces the unenforceable "release order" rule (RULEBOOK §2). Pages: [[overview]], [[readers]].
 
+
+## [2026-11-11] ingest | Ram Lalla generated artwork integration
+
+Located the final approved front-facing image omitted from merged #663. Added immutable portrait delivery manifest/catalog registration and shared source clipping across the composer/selectors. Removed Ayodhya and the obsolete photographic credit while preserving stable IDs and archived rights. Public R2 bytes and native/export/device acceptance remain pending; see docs/evaluations/ram-lalla/generated-art-review.md.
