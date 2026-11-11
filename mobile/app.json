@@ -108,6 +108,7 @@
       "./plugins/withJapamAlarmIos.js",
       "./plugins/withHomeWidgets.js",
       "./plugins/withAndroidLaunchWindow.js",
+      "./plugins/withAndroidReleaseShrink.js",
       [
         "expo-location",
         {
