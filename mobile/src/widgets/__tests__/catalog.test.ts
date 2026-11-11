@@ -241,3 +241,43 @@ test('both native widgets draw the widget text tokens the plates were toned for'
   }
 });
 
+
+
+test('approved Ornate Heritage visual contract is native, not only a gallery mockup', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+  const plugin = read('withHomeWidgetsIos.js');
+  const verse = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('private struct AlmanacMoonSeal'));
+  const small = swift.slice(swift.indexOf('private func smallPanchang('), swift.indexOf('MARK: - आज का पंचांग'));
+  assert.match(swift, /private struct HeritageFiligree: View/);
+  assert.match(swift, /Canvas \{ context, size in/);
+  assert.match(swift, /CGImageSourceCreateThumbnailAtIndex/);
+  assert.match(swift, /private static let vividCache = NSCache<NSString, UIImage>/);
+  assert.match(swift, /vivid: vividArt, surface: surface/);
+  assert.match(verse, /Text\("ॐ वेदांश"\)/);
+  assert.match(verse, /LinearGradient\(colors: \[palette\.saffronDeep/);
+  assert.match(verse, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)/);
+  assert.match(verse, /Text\(v\.source\.value\(lang\)\)/);
+  assert.match(small, /AlmanacMoonSeal\(palette: palette\)/);
+  assert.match(small, /p\.representedDate\.value\(lang\)/);
+  assert.match(small, /running\.name\.value\(lang\)/);
+  assert.match(small, /p\.vrat/);
+  assert.match(small, /almanacSolarColumn/);
+  assert.match(swift, /guard let raw = p\.sunsetAt, let instant = widgetInstant\(raw\)/);
+  assert.match(swift, /renderingMode == \.fullColor, !palette\.night/);
+  assert.match(swift, /crop\.width \* crop\.height <= budget/);
+  assert.match(plugin, /function heritageSources\(projectRoot\)/);
+  assert.match(plugin, /fs\.copyFileSync\(from, path\.join\(destination, filename\)\)/);
+  assert.doesNotMatch(swift, /URLSession|computePanchang\(/);
+});
+
+test('every ornate heritage subject has a reviewed painting in both the extension and gallery', () => {
+  const plugin = read('withHomeWidgetsIos.js');
+  const registry = fs.readFileSync(path.join(__dirname, '..', 'approvedPaintings.ts'), 'utf8');
+  for (const subject of WIDGET_HERITAGE_SUBJECTS) {
+    const entry = plugin.match(new RegExp('\\b' + subject + ": '([^']+\\.webp)'"));
+    assert.ok(entry, 'native painting missing for ' + subject);
+    const resource = path.join(__dirname, '..', '..', '..', 'assets', 'reader-illustrations', entry![1]);
+    assert.ok(fs.existsSync(resource), 'missing reviewed painting ' + resource);
+    assert.ok(registry.includes(subject + ': require('), 'gallery painting missing for ' + subject);
+  }
+});
