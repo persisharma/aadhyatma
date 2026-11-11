@@ -2913,12 +2913,17 @@ the Rāma darbār plate (§6, RULEBOOK §3 "deterministic per verse id").
 `ch`, epenthetic `ṛi`) — the same style as the Gita corpus, never the Awadhi ASCII used for
 Tulsidas.
 
-**Delivery: assets, not JavaScript (Nov 2026).** The seven kāṇḍa masters are 27 MB. Required as
-modules they were more than half of the Hermes bundle (51.7 MB) and were re-downloaded by every
-OTA update. They now ship as **73 bundled asset parts** (`mobile/assets/valmiki-ramayan/k<N>_p<MM>.txt`,
-JSON arrays of verses in reading order, ≈390 KB each) written from the masters by
-`mobile/scripts/build-valmiki-assets.mjs`; the bundle is 26.6 MB. The `chapter-0N.json` masters
-stay in place as the editorial source of truth and are never imported by the app. `metro.config.js`
+**Delivery: assets, not JavaScript, from app version 1.5.7 (Nov 2026).** The seven kāṇḍa masters
+are 27 MB. Required as modules they were more than half of the Hermes bundle (51.7 MB) and were
+re-downloaded by every OTA update. For a runtime whose store binary embeds them they ship as
+**73 bundled asset parts** (`mobile/assets/valmiki-ramayan/k<N>_p<MM>.txt`, JSON arrays of verses
+in reading order, ≈390 KB each) written from the masters by
+`mobile/scripts/build-valmiki-assets.mjs`; the bundle is then 26.6 MB. **A bundle built for an
+older runtime (1.5.6 and below) still carries the masters**, exactly as before, so an OTA from the
+latest branch asks nothing of a build that predates the parts: the choice is made at bundle time
+from the app version (`mobile/corpusDelivery.js`; RULEBOOK §2). The reader behaves the same either
+way — both deliveries feed one loader. The `chapter-0N.json` masters stay in place as the editorial
+source of truth and are imported only by `corpusSource.inbundle.ts`. `metro.config.js`
 registers `txt` as an asset extension; part names use `_` only because Android derives the
 resource name by deleting every other punctuation character.
 

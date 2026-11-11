@@ -82,9 +82,11 @@ The temple registry includes substantial detail prose. `NewContentContext` loads
 
 ## Data Layer
 
-All content is **bundled**, not fetched — as JSON modules, with one exception: the Valmiki
-Ramayan corpus (27 MB) ships as bundled asset files read on demand, because a required JSON is
-compiled into the Hermes bundle and re-downloaded by every OTA (see [[readers]], RULEBOOK §2).
+All content is **bundled**, not fetched — as JSON modules, with one exception: from app version
+1.5.7 the Valmiki Ramayan corpus (27 MB) ships as bundled asset files read on demand, because a
+required JSON is compiled into the Hermes bundle and re-downloaded by every OTA. A bundle built
+for an older runtime still carries it as JSON, so OTAs from the latest branch keep working on
+older store builds (see [[readers]], RULEBOOK §2).
 The canonical source is markdown at the repo
 root; `scripts/*.mjs` (Node ESM) transform it into per-text JSON under `mobile/src/data/`,
 which the reader screens consume. `texts.ts` is the library index (`LibraryEntry`: id, names,
@@ -168,7 +170,7 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 
 - **`mobile/metro.config.js` exists for one line.** It registers `txt` as an asset extension so the Valmiki parts are assets. Removing it turns 73 `require('….txt')` calls into parse errors.
 - **Android store builds embed the fonts and shrink the binary (11 Nov 2026).** `app.json` lists all fifteen font files under `expo-font` → `android.fonts`, so `useFonts` is already satisfied on the first render; `EmbeddedAndroidFonts.test.ts` fails if that list and the `useFonts` map diverge. `plugins/withAndroidReleaseShrink.js` turns on R8 and resource shrinking, keeps app-owned native code, and writes `res/raw/vedansh_release_keep.xml` keeping every raw resource — the Japam alarm sounds are found only by `getIdentifier(<mantra id>, "raw")`, so a shrunk build would otherwise ring silent (RULEBOOK §2). The fonts are in the Android binary twice (embedded, and still as Metro assets through the unchanged `useFonts` map): 5.6 MB before compression, a known cost. Both are native-shell changes: a rebuilt app, not OTA. Neither has been built or run yet — see `docs/engineering/android-low-end-performance-native-2026-11.md`.
-- **Do not OTA the asset-based corpus to a runtime that predates it.** An update published to a store build without the Valmiki parts embedded downloads all 27 MB of them once before it applies.
+- **An OTA from the latest branch must run on the oldest store build it can reach — and the Valmiki corpus is the one place that needed a switch.** `mobile/corpusDelivery.js` picks the delivery from the app version being bundled for (= the runtime; `ota-push.yml` rewrites `expo.version` to the target): below `VALMIKI_ASSETS_SINCE_VERSION` (1.5.7) `metro.config.js` answers the corpus module's `./corpusSource` with `corpusSource.inbundle.ts` and the masters stay in the bundle, as before; from 1.5.7 the parts are read as assets. Verified with real exports: a 1.5.6 update is 51.7 MB with 318 assets and no part files, a 1.5.7 update is 26.6 MB with 391. `push.sh` prints the delivery; `VALMIKI_CORPUS_DELIVERY` forces one. Nothing else in the low-end pass depends on the binary (fonts and R8 are native-only; the JS is unchanged for them). Before adding anything that needs a new native file or module, gate it the same way.
 
 - **Patching an Expo module's native code also needs `buildFromSource`.** Expo SDK 54 links prebuilt AARs from each module's `local-maven-repo`. That covers expo-notifications, expo-splash-screen, expo-speech and 16 more. A patch-package edit to their `android/src` is never compiled unless `mobile/package.json` → `expo.autolinking.android.buildFromSource` names the module. `patchedExpoModulesBuildFromSource.test.ts` fails when a patched prebuilt module is missing from that list. The shipped 0.32.17/31.0.13/14.0.8 AARs contain none of the patches.
 

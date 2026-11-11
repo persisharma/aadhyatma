@@ -44,7 +44,14 @@ function appSources(dir: string, out: string[] = []): string[] {
   return out;
 }
 
-test('no app module imports or requires a kāṇḍa master', () => {
+/**
+ * The one module allowed to require a master: Metro's alternative answer to
+ * `./corpusSource` for a runtime whose store binary does not embed the parts
+ * (`mobile/corpusDelivery.js`). It is never imported by name.
+ */
+const IN_BUNDLE_SOURCE = 'src/data/valmiki-ramayan/corpusSource.inbundle.ts';
+
+test('no app module imports or requires a kāṇḍa master, except the in-bundle source', () => {
   const loads = /(?:from\s+|require\(\s*|import\(\s*)['"][^'"]*valmiki-ramayan\/chapter-\d+\.json['"]|(?:from\s+|require\(\s*|import\(\s*)['"]\.\/chapter-\d+\.json['"]/;
   const offenders = [...appSources(path.join(ROOT, 'src')), path.join(ROOT, 'App.tsx'), path.join(ROOT, 'index.ts')]
     .filter((file) => {
@@ -52,12 +59,23 @@ test('no app module imports or requires a kāṇḍa master', () => {
       // `./chapter-NN.json` is only the Valmiki master inside its own directory.
       return file.startsWith(CORPUS) ? loads.test(source) : /valmiki-ramayan\/chapter-\d+\.json/.test(source) && loads.test(source);
     })
-    .map((file) => path.relative(ROOT, file));
+    .map((file) => path.relative(ROOT, file).split(path.sep).join('/'));
   assert.deepEqual(
     offenders,
-    [],
-    'These modules put the corpus back in the JS bundle. Load a kāṇḍa with loadValmikiRamayanChapter() instead.'
+    [IN_BUNDLE_SOURCE],
+    'These modules put the corpus back in the JS bundle for every runtime. Load a kāṇḍa with loadValmikiRamayanChapter() instead.'
   );
+});
+
+test('the in-bundle source is reachable only as Metro’s answer to ./corpusSource', () => {
+  const named = [...appSources(path.join(ROOT, 'src')), path.join(ROOT, 'App.tsx'), path.join(ROOT, 'index.ts')]
+    .filter((file) => /(?:from\s+|require\(\s*|import\(\s*)['"][^'"]*corpusSource\.inbundle['"]/.test(fs.readFileSync(file, 'utf8')))
+    .map((file) => path.relative(ROOT, file).split(path.sep).join('/'));
+  assert.deepEqual(named, [], 'Importing it by name would compile the corpus into every bundle.');
+  // And the corpus module reaches its source lazily, never at module scope.
+  const index = fs.readFileSync(path.join(CORPUS, 'index.ts'), 'utf8');
+  assert.match(index, /require\('\.\/corpusSource'\)/);
+  assert.doesNotMatch(index, /^import .*corpusSource/m);
 });
 
 test('the published parts are generated from the current masters', () => {
