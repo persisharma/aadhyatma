@@ -11,6 +11,7 @@ import {
   widgetSizeLabel,
   type WidgetSize,
 } from '../catalog';
+import { WIDGET_HERITAGE_SUBJECTS } from '../heritage';
 
 const PLUGIN_ROOT = path.join(__dirname, '..', '..', '..', 'plugins');
 const read = (...parts: string[]) => fs.readFileSync(path.join(PLUGIN_ROOT, ...parts), 'utf8');
@@ -278,6 +279,7 @@ test('every ornate heritage subject has a reviewed painting in both the extensio
     assert.ok(entry, 'native painting missing for ' + subject);
     const resource = path.join(__dirname, '..', '..', '..', 'assets', 'reader-illustrations', entry![1]);
     assert.ok(fs.existsSync(resource), 'missing reviewed painting ' + resource);
-    assert.ok(registry.includes(subject + ': require('), 'gallery painting missing for ' + subject);
+    assert.ok(registry.includes(subject + ': readerIllustrationAsset('),
+      'R2-backed gallery art missing for ' + subject);
   }
 });

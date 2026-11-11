@@ -1,16 +1,19 @@
-// Approved Ornate Heritage Widget Gallery — vivid source paintings.
-// Reuses reviewed app art. Loaded lazily in WidgetGalleryScreen only; the
-// WidgetKit extension bundles the corresponding WebP resources separately.
-export const vividHeritageImages: Record<string, number> = {
-  prayer: require('../../assets/reader-illustrations/category-granth-open-scripture.webp'),
-  vishnu: require('../../assets/reader-illustrations/source-vishnu-narayana.webp'),
-  krishna: require('../../assets/reader-illustrations/deity-krishna-bansuri.webp'),
-  shiva: require('../../assets/reader-illustrations/shiva.webp'),
-  hanuman: require('../../assets/reader-illustrations/ram-hanuman.webp'),
-  rama: require('../../assets/reader-illustrations/deity-rama-darbar.webp'),
-  ganesha: require('../../assets/reader-illustrations/deity-ganesha-modak.webp'),
-  durga: require('../../assets/reader-illustrations/deity-durga-lion.webp'),
-  saraswati: require('../../assets/reader-illustrations/deity-saraswati-veena.webp'),
-  surya: require('../../assets/reader-illustrations/deity-surya.webp'),
-  panchang: require('../../assets/reader-illustrations/panchang-celestial-almanac.webp'),
+// Approved Heritage painted subjects for the in-app widget gallery.
+// Use the existing published R2 manifest + CachedArtwork queue. Loading 11
+// source WebPs with require() would violate RULEBOOK 11.8 and bloat the app
+// bundle. The independent iOS WidgetKit extension bundles bounded native art.
+import { readerIllustrationAsset, type ReaderIllustration } from '@/data/readerIllustrationAsset';
+
+export const vividHeritageImages: Record<string, ReaderIllustration> = {
+  prayer: readerIllustrationAsset('category-granth-open-scripture'),
+  vishnu: readerIllustrationAsset('source-vishnu-narayana'),
+  krishna: readerIllustrationAsset('deity-krishna-bansuri'),
+  shiva: readerIllustrationAsset('shiva'),
+  hanuman: readerIllustrationAsset('ram-hanuman'),
+  rama: readerIllustrationAsset('deity-rama-darbar'),
+  ganesha: readerIllustrationAsset('deity-ganesha-modak'),
+  durga: readerIllustrationAsset('deity-durga-lion'),
+  saraswati: readerIllustrationAsset('deity-saraswati-veena'),
+  surya: readerIllustrationAsset('deity-surya'),
+  panchang: readerIllustrationAsset('panchang-celestial-almanac'),
 };

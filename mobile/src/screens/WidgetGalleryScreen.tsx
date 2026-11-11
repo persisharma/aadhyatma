@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, AppState, Image, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
+import { Alert, AppState, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import CachedArtwork from '@/components/CachedArtwork';
+import type { ReaderIllustration } from '@/data/readerIllustrationAsset';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -36,7 +38,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   const [payloadState, setPayloadState] = useState<WidgetPayloadState>({ kind: 'missing' });
   const [pinSupported, setPinSupported] = useState(false);
   const [heritageImages, setHeritageImages] = useState<Record<string, number>>({});
-  const [vividImages, setVividImages] = useState<Record<string, number>>({});
+  const [vividImages, setVividImages] = useState<Record<string, ReaderIllustration>>({});
   useEffect(() => {
     let live = true;
     import('@assets/widget-backgrounds/heritage').then((module) => { if (live) setHeritageImages(module.widgetHeritageImages); });
@@ -155,7 +157,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
 
 type PreviewProps = {
   heritageImages?: Record<string, number>;
-  vividImages?: Record<string, number>;
+  vividImages?: Record<string, ReaderIllustration>;
   contentReady?: boolean;
   appearance?: WidgetAppearance;
   subject?: string;
@@ -190,7 +192,7 @@ function Preview({ heritageImages = {}, vividImages = {}, contentReady = true, a
   const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? verseArtPadding : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
   const previewBody = <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={previewStyle}>
     {vivid ? <View pointerEvents="none" style={[StyleSheet.absoluteFillObject, { overflow: 'hidden', borderRadius: radii.lg }]}>
-      <Image source={vivid} resizeMode="cover" style={{ position: 'absolute', right: 0, top: 0, width: content === 'panchang' ? '38%' : '55%', height: content === 'panchang' ? '53%' : '100%' }} />
+      <CachedArtwork source={vivid} resizeMode="cover" style={{ position: 'absolute', right: 0, top: 0, width: content === 'panchang' ? '38%' : '55%', height: content === 'panchang' ? '53%' : '100%' }} />
       <LinearGradient colors={[palette.background, palette.background + 'CC', palette.background + '00']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFillObject} />
     </View> : null}
     {content === 'verse' ? <>
