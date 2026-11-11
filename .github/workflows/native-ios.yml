@@ -112,11 +112,19 @@ jobs:
         if: success()
         continue-on-error: true
         run: |
+          ART="$GITHUB_WORKSPACE/native-output/maestro-widget-visual"
+          mkdir -p "$ART"
+          set +e
           node scripts/run-native-diagnostic.cjs --timeout-ms 240000 maestro --device "$SIMULATOR_UDID" test \
             --config .maestro/config.yaml --format junit \
+            --test-output-dir "$ART" \
             --output "$GITHUB_WORKSPACE/native-output/widget-visual.xml" \
             .maestro/home-widgets-visual-capture.yaml \
             > "$GITHUB_WORKSPACE/native-output/widget-visual.log" 2>&1
+          code=$?
+          find "$ART" -type f -name '*.png' -exec cp {} "$GITHUB_WORKSPACE/native-output/" \;
+          printf 'system-widget-capture-exit=%s\n' "$code" >> "$GITHUB_WORKSPACE/native-output/widget-visual.log"
+          exit "$code"
       - name: Retain native build and launch evidence
         if: always()
         uses: actions/upload-artifact@v4
