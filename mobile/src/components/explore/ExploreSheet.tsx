@@ -10,6 +10,7 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
 import { EXPLORE_ART } from '@/data/discovery/artwork';
 import type { ExploreSection } from '@/data/discovery/sections';
 import AppIcon from '@/components/AppIcon';
+import { PAINTED_ICON_DECODE } from '@/components/paintedIconDecode';
 import TextField from '@/components/TextField';
 export default function ExploreSheet({ section, onDismiss, onOpen, onNext, onReset, resetting = false, resetMessage }: {
     section: ExploreSection;
@@ -57,7 +58,7 @@ export default function ExploreSheet({ section, onDismiss, onOpen, onNext, onRes
        {section.kind === 'wish' ? <><Text style={small}>{pick(lang, { hi: 'कार्ड पर आपका नाम', en: 'Your name on the card', gu: 'કાર્ડ પર તમારું નામ', kn: 'ಕಾರ್ಡ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರು' })}</Text><TextField testID="explore-sender-name" variant="form" value={name} onChangeText={setName} maxLength={24} accessibilityLabel={pick(lang, { hi: 'आपका नाम', en: 'Your name', gu: 'તમારું નામ', kn: 'ನಿಮ್ಮ ಹೆಸರು' })}/></> :
             section.kind === 'steps' ? <View style={styles.steps}>{section.examples.map((e, i) => <View key={e[1]} style={styles.step}><Text style={[small, { color: colors.saffronDeep }]}>{i + 1}</Text><Text style={small}>{tr(e)}</Text></View>)}</View> :
                 section.kind === 'chips' ? <View style={styles.chips}>{section.examples.map(e => <Pressable key={e[1]} accessibilityRole="button" onPress={() => onOpen(name)} style={[styles.chip, { borderColor: colors.divider }]}><Text style={small}>{tr(e)}</Text></Pressable>)}</View> :
-                    <Pressable accessibilityRole="button" onPress={() => onOpen(name)} style={styles.row}><Image source={EXPLORE_ART[section.id]} style={styles.thumb} accessible={false}/><View style={styles.grow}>{section.examples.slice(0, section.kind === 'widgets' ? 2 : 1).map(e => <Text key={e[1]} style={text}>{tr(e)}</Text>)}{section.kind === 'mala' && <Text style={small}>{tr(['108 मनकों की माला', '108-bead mala'])}</Text>}{section.kind === 'days' && <Text style={small}>{tr(['प्रतिदिन का पाठ और प्रगति', 'Daily readings and progress'])}</Text>}</View><AppIcon name="next" size={18}/></Pressable>}
+                    <Pressable accessibilityRole="button" onPress={() => onOpen(name)} style={styles.row}><Image source={EXPLORE_ART[section.id]} style={styles.thumb} accessible={false} {...PAINTED_ICON_DECODE}/><View style={styles.grow}>{section.examples.slice(0, section.kind === 'widgets' ? 2 : 1).map(e => <Text key={e[1]} style={text}>{tr(e)}</Text>)}{section.kind === 'mala' && <Text style={small}>{tr(['108 मनकों की माला', '108-bead mala'])}</Text>}{section.kind === 'days' && <Text style={small}>{tr(['प्रतिदिन का पाठ और प्रगति', 'Daily readings and progress'])}</Text>}</View><AppIcon name="next" size={18}/></Pressable>}
       </View>
       {onReset && <View style={{ marginTop: 16, borderTopWidth: 1, borderTopColor: colors.divider }}>
        <Pressable testID="explore-reset-history" accessibilityRole="button" accessibilityState={{ disabled: resetting, busy: resetting }} disabled={resetting} onPress={onReset} style={styles.secondary}><Text style={[small, { color: colors.saffronDeep, textAlign: 'center' }]}>{pick(lang, { hi: 'देखे गए भागों का इतिहास मिटाएँ', en: 'Reset visit history', gu: 'જોયેલા વિભાગોનો ઇતિહાસ સાફ કરો', kn: 'ಭೇಟಿ ಇತಿಹಾಸ ತೆರವುಗೊಳಿಸಿ' })}</Text></Pressable>

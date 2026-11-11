@@ -378,10 +378,30 @@ Reading plates use `backgroundAssetManifest.json` and content-hashed R2 URLs und
 persistent cached artwork after navigation focus and interactions. Deduplicated disk lookups
 bypass the network queue, so unrelated slow downloads do not delay cached paintings. Only
 misses enter the bounded download queue. All file operations are async;
-downloads deduplicate by hash/extension, limit concurrency to two, time out after eight seconds
-and cancel when the final viewer leaves. Completed valid artwork has no expiry, revalidation or
-automatic eviction. Text and controls never await artwork; native decode errors preserve the
-fallback and evict damaged files for recovery.
+downloads deduplicate by hash/extension, limit concurrency to two and cancel when the final
+viewer leaves. Completed valid artwork has no expiry, revalidation or automatic eviction. Text
+and controls never await artwork; native decode errors preserve the fallback and evict damaged
+files for recovery.
+
+**Slow connections (Nov 2026).** A download is abandoned when **no byte has arrived for eight
+seconds** (`BACKGROUND_DOWNLOAD_STALL_MS`), not after eight seconds in total: an offline phone
+settles to its fallback exactly as before, while a slow one is allowed to finish. The old total
+limit meant a 340 KB plate needed 42 KB/s to ever appear and re-spent the reader's data on every
+visit below that. One attempt still holds a slot for at most two minutes
+(`BACKGROUND_DOWNLOAD_MAX_MS`). On Android an interrupted attempt — a stall, the ceiling, the
+viewer leaving, the network dropping — keeps the bytes it received, and the next request for that
+picture asks the CDN only for the rest (`Range`); iOS restarts it. A resumed file is promoted
+only after three checks agree (the resumed response reports the original total, is HTTP 206, and
+the finished file is exactly that length); a response that fails any of them is discarded. One
+that shows `Range` being ignored (a different total, a whole 2xx body, a wrong final length) also
+turns resuming off for the session; an error status (5xx, 429, 404) costs only that file its kept
+bytes. Resume state lives in memory only, and scratch files left by a
+killed process are swept once per process, never reused. A download that completes just as its
+last viewer leaves is still stored. The kids-story, comic and audio cache (`assetCache`) shares
+the same transfer with no ceiling and a stall limit of 15 seconds on Android and 60 on iOS (the
+system's own idle limit there, because iOS cannot resume). Shared code:
+`utils/resumableDownload.ts`; gates: `utils/__tests__/backgroundAssetCache.test.ts`,
+`assetCache.test.ts`.
 
 Five reviewed corrections (14 Oct) correct Karni Mata's background and colored banner, remove the Hanuman–Sita corner mark, and recreate Rama blessing Hanuman and Rama Darbar. Since 16 Oct they are the publishing sources for their own slots (`backgrounds/theerth-karni-mata`, `backgrounds/deity-rama-darbar`, `chalisa/Hanuman_sita`, `chalisa/Ram_hanuman`, `reader-illustrations/theerth-karni-mata`) and ship from R2 like all other artwork; nothing is bundled. Their new hashes are new cache files, so a device that downloaded the old art fetches the correction once. `scripts/verify-artwork-corrections.mjs` checks the sources and manifest hashes against the approval record in `docs/evaluations/artwork-corrections-2026-10-14/`. The Vishnu background uses the published sepia Narayana plate; colored banners remain separate. Full-strength previews retain source detail while normal backgrounds receive the parchment overlay.
 
@@ -1738,10 +1758,12 @@ Tests: `data/__tests__/japaSankalp.test.ts` (model, input parsing, grouping, sto
 
 **Purpose.** All notifications are **local and on-device** — scheduled with `expo-notifications` (plus the native alarm tiers of §35); no server push. Nine families, each owning an identifier prefix so cancel/re-arm cycles never touch each other's slots: daily verse (`daily-verse`), vrat reminders (`vrat-…`, PRD-09), muhurat reminders (`muhurat-reminder`, §60), festive reminders (`festive-reminder`), return reminders (`return-reminder`), sadhana reminders (`sadhana-reminder`, §46), routine reminders (`routine-reminder`, §45 — PRD-07 P3), Pitru Smaran / Pitru Paksha reminders (`pitru-smaran-reminder` / `pitru-paksha-reminder`, §63), and japam alarms. **One OS permission grant serves all of them** — the daily-verse and festive defaults request it at launch, the Pitru save flow and the routine-detail reminder toggle ask on their own opt-in moments, and the remaining schedulers only ever ride whatever the user already granted.
 
+**How a family is armed** (`notifications/familyArm.ts`, every family except the japam alarms). A re-arm makes the OS hold exactly the planned set; what it may skip is native work that could not change that set. (1) **An identical plan is not re-armed within a process** — same identifiers, fire instants, copy and payload means the queue already holds it, so returning from the share sheet or a permission dialog costs no native call. This is an equality check, never a "recently armed" shortcut, and it is not persisted: the **first arm of every process always schedules every slot**, because a force-stop or an OEM task-killer clears an app's alarms without touching the store that lists them, and scheduling again is what restores them. (2) **Only slots that left the plan are cancelled**; a slot that is about to be scheduled again is replaced in place, which both platforms do for a repeated identifier. (3) **Families arming in the same wave share one read of the pending list**, and a family never uses a read that began before its own last write finished. Operations on one family run strictly in order. Measured on the real glue for daily verse + festive + return (`__tests__/rearmCost.jest.test.ts`): a relaunch went from 77 native calls to 38 and a same-day return to the app from 77 to 0.
+
 **Daily verse** (`notifications/scheduler.ts` + pure helpers in `pure.ts` / `seed.ts`; state in `NotificationPreferencesContext`, `@…/prefs` + meta in AsyncStorage):
 
 - **Default on at 07:00.** Up to `MAX_REMINDER_TIMES = 4` times per day, edited in Reminder Settings (`ReminderSettingsScreen`: master Switch, per-time `TimeStepper` rows, add/remove up to the cap).
-- A rolling **30-day window** (`ROLLING_WINDOW_DAYS`) is scheduled ahead, hard-capped at iOS's 64 pending-notification budget (`IOS_PENDING_CAP`, shared fairly across configured times). Idempotent cancel-then-reschedule on every relevant change and app foreground.
+- A rolling **30-day window** (`ROLLING_WINDOW_DAYS`) is scheduled ahead, hard-capped at iOS's 64 pending-notification budget (`IOS_PENDING_CAP`, shared fairly across configured times). Idempotent re-arm on every relevant change and app foreground, through the shared arming rule below.
 - **Deterministic verse per slot**: the local `YYYY-MM-DD` key is FNV-1a-hashed into the verse pool (`seed.ts`), so rescheduling never changes today's verse; multiple same-day times get distinct verses.
 - **Localized by reading language** (§10): title `दैनिक भक्ति` / `Daily Verse`, body = first verse line + `source · label`, all rendered through the same language helpers the readers use — gu/kn arrive re-scripted, en romanized.
 - **Panchang-aware title** (`notifications/dayAnga.ts` pure + `dayAngaResolver.ts` engine glue, fed by the headless `<DailyVerseAngaBridge>` in `App.tsx`). The title leads with the **fire day's** panchang context, then ` · ` + the base title: an observance day names its vrat/festival (`निर्जला एकादशी · दैनिक भक्ति`), an ordinary day its sunrise tithi with paksha (`शुक्ल एकादशी · दैनिक भक्ति`), and Purnima/Amavasya render bare since they name their paksha implicitly. **The body never changes** — the verse line stays the first thing read. One observance per day is chosen deterministically (`default` visibility only, ordered by `marker` significance → category → id), so a reschedule can never reword a day. Past `TITLE_MAX_CHARS = 38` the ` · दैनिक भक्ति` suffix is dropped whole rather than letting the OS slice a festival name or a Devanagari conjunct — the app name is already in the notification chrome. A day with no resolved anga falls back to the plain title, so a pending or failed solve is indistinguishable from the pre-panchang behaviour.
@@ -2136,7 +2158,7 @@ Twenty-two catalog deities (Parshuram is hidden until publication), each `{ id, 
 ### Data-shape families (one directory per module under `mobile/src/data/`)
 
 - **Linear `lines`/`linesEn` verses (swap-on-toggle, §3.1/§10)** — one JSON, one `Verse[]`, no chapters. Three registry-driven *multi-instance* readers dispatch on a route param instead of importing one section's data (RULEBOOK §3): **chalisas** (`chalisaRegistry.ts` → hanuman/shiv/durga/ganesh/gayatri/ram/krishna/vishnu/saraswati/khatu-shyam/lakshmi chalisa dirs — eleven total; `khatu-shyam-chalisa` (Oct 2026, 1 doha + 40 chaupais + 1 doha) is tagged `krishna` and shares the Khatu Shyam temple plate with the aarti below; `lakshmi-chalisa` (1.5.0) is the Ramdas recension with 39 verified chaupais, deliberately not padded to 40), **aartis** (`aarti/index.ts` `aartiCollection`, 22 aartis, appended only because the index is persisted in legacy `aarti-N` ids — the id order itself lives in the payload-free `aarti/ids.ts`, which is all the launch path (`sourceIdMigration`, `entryRoutes`, `backgrounds`) may import, `refrain`/`stanza` verse types; the 9th, `khatu-shyam-aarti` (श्री खाटू श्याम जी की आरती, Oct 2026), is tagged `krishna` rather than a new deity and reads on the commissioned Khatu Shyam temple plate (`theerth_khatu_shyam`) instead of Krishna's bansuri art; the 10th, `om-jai-lakshmi-mata` (1.5.0), is tagged `lakshmi`; the 11th, `jay-adhya-shakti` (जय आद्या शक्ति, 1.5.2), is Shivanand Swami's Gujarati Amba aarti with the familiar extended ending: 21 stanzas (the first seventeen stanzas remain in place; closing positions 18–21 follow the maintainer's order: unity (`jas-19`), signature (`jas-18`), devotional-service (`jas-20`), mandap (`jas-21`); IDs retain their text identity while display numbers/labels follow position; variant and attribution notes live in `source.closingStanzas`), all `stanza` type, each keeping its printed cue `॥ ॐ जयो जयो मा जगदंबे ॥` as its last line, stored in Devanagari so the `gu` reading language restores the Gujarati letter for letter (§3.1; stanza-ending full stops are dandas, per the maintainer's Devanagari copy), with authored `meaningGu`, tagged `durga` on the Durga lion plate; the 12th, `shani-aarti` (1.5.2), has five verified stanzas, is tagged `shani`, and uses the Shani deity plate; the 13th, `dattatreya-aarti` (1.5.2), preserves Sant Eknath's Marathi text (four stanzas and a refrain), names that source language explicitly and uses the Datta deity plate; the Aarti *category* also lists the `ram-aarti` card, which is an alias that opens the existing `ram-stuti` Stotram content rather than an `aartiCollection` entry), **sanskar** (9 practice modules — prabhati-shloka, surya-namaskar, tulsi-puja, bhojan-mantra, gau-seva, sandhya-deepam, ratri-shloka, vidyarambha-prarthana, matribhumi-vandana — whose `SanskarVerse` adds `vidhiHi/En` method prose and `intro`/`mantra`/`step`/`vidhi` types).
-- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the large Valmiki payload is the exception that validates lazily per loaded kāṇḍa.
+- **Chaptered `chapter-NN.json` + `chapters-manifest.json`** — the Gita pattern (§10, §15): `gita/` (18 chapters, sanskrit + transliteration + meaning + commentary), `sundarkand/` (16 sargas), `shiva-strotam/` (4), `durga-stotram/` (3), `ganesh-stotram/` (3), `saraswati-stotram/` (3), `vishnu-sahasranama/` (4), `krishna-stotram/` (2), `ramcharitmanas/` (1 — Mangalacharan only today), `valmiki-ramayan/` (7 kāṇḍas / 648 sargas / 23,289 verified verse records, §53), plus single-chapter `hanuman-ashtak/`, `bajrang-baan/`, `ram-stuti/`. Each `index.ts` is a typed loader with module-load invariants; the Valmiki corpus is the exception — too large for the JS bundle, it ships as bundled asset parts and is loaded and validated asynchronously per kāṇḍa (§53).
 - **Themed readings over a bundled corpus (`gita-saar/`, §75)** — a chapter is a *theme*, a verse is a `{chapter, verse}` **ref** into `gita/` plus the theme's own plain-language सार. The loader pulls the Sanskrit/IAST from the corpus at open time; the theme files carry no scripture (RULEBOOK §29). Routes, bookmarks, progress, search and the routine picker treat it as one more chaptered text.
 - **Japam** (`japam/japam.json`) — mantras with round targets; routes to the counter, not a verse pager.
 - **Theerth** (`theerth/temples.ts`) — the prose-per-temple shape of §26–27 / RULEBOOK §12; no verse pages. Temples carry their own `addedInVersion` for NEW tracking (§44).
@@ -2194,6 +2216,8 @@ Namkaran's nakshatra/rashi browse doors use their shared 40dp paintings; its Muh
 Library thumbnails and FOR TODAY cards show the first tagged deity attribute, preserving distinctions between texts of the same category; category artwork is the fallback. The single-akshara `thumb` stays a data contract only; it is never drawn as an icon or a fallback (RULEBOOK §3). The routine nudge shows the selected source’s two olive leaves. More uses pale warm icon tiles with named illustration or duotone utility symbols, replacing emoji/letter approximations.
 
 The exact selected source is `docs/evaluations/storybook-icons-2026-10-06/selected-storybook-reference.png`. The corrected set preserves flat burnt-ochre Om/diamond dot, smooth wooden beads, Japa’s large lower-left pendant, Kundali’s house marks, layered folios and muted pigment shading. Source fidelity is checked at native display size. Suktam carries abstract marks rather than fabricated scripture. Bhakti and Panchang navigation use separate broad silhouettes matching the source, tinted from the same tokens.
+
+**Decode size (Android, Nov 2026).** The painted sets are 256–512 px masters drawn at 22–96 dp. Every component that draws one (`StoryIcon`, `MoreIcon`, `FeatureIcon`, `KundaliArtwork`, the `CelestialGlyph` sun, the Shubh Yoga star, the Explore sheet's 52 dp thumbs) spreads `PAINTED_ICON_DECODE` (`components/paintedIconDecode.ts`: `resizeMethod="resize"`, `resizeMultiplier={1.5}`). Without it a bundled icon is decoded whole — 1 MB of bitmap for an 88 px tile — because React Native only size-matches `file://` and `content://` images by default; with it Home's thirty icons take 5.1 MB instead of 31.5 MB on a 720p phone. The multiplier is the sharpness margin: the decoded bitmap is never smaller than the view for any size or density in use (`paintedIconDecode.test.tsx`). Appearance, size, tint and layout are unchanged; iOS ignores both props. **Never spread it on an image inside an exported share card** — a capture can be drawn at more pixels than the on-screen view; the share surfaces use `brandMark`/`VedanshWordmark`, which do not take it, and the same test pins that.
 
 `AppIcon` owns consistent search, share, heart, arrows, play/pause, audio transport and settings icons. Utility ink uses `iconInk`; selected navigation/saved states use `iconAccent` (filled primary controls retain `onPrimary`). More no longer varies utility icon tint row by row. These shared mappings take precedence over older font-glyph descriptions in individual screen sections. Audio filter chips use the same deity attributes as the catalog. Import individual Phosphor modules, never its runtime barrel. The parent control keeps its existing accessibility label, role, hit area and event behavior. Saved hearts use fill vs outline in addition to tint; reduced-motion and haptic behavior remain in `BookmarkButton`.
 
@@ -2845,7 +2869,7 @@ chapter's `source` object.
 **Unusable upstream meanings ship blank, never as residue (Nov 2026).** 80 pinned Hindi rows were
 not meanings — RamCharit.in navigation labels (`Hindu Dharma`, `मिथक व लोकथाएं`, …) or the Sanskrit
 line repeated — and 5 English rows read `Missing`/`In Progress`. The builder writes those fields
-blank (`EXPECTED_BLANK_MEANINGS` pins the per-kāṇḍa counts), and `getValmikiRamayanChapter` fills a
+blank (`EXPECTED_BLANK_MEANINGS` pins the per-kāṇḍa counts), and `loadValmikiRamayanChapter` fills a
 blank side from the verse's other sourced meaning (`withMeaningFallback`), so the reader, share,
 read-aloud and bookmarks always receive a real meaning. A Hindi/gu/kn reader therefore sees the
 English meaning on those 80 verses until the Gita Press Hindi is captured; never fill them from
@@ -2889,9 +2913,45 @@ the Rāma darbār plate (§6, RULEBOOK §3 "deterministic per verse id").
 `ch`, epenthetic `ṛi`) — the same style as the Gita corpus, never the Awadhi ASCII used for
 Tulsidas.
 
+**Delivery: assets, not JavaScript, from app version 1.5.7 (Nov 2026).** The seven kāṇḍa masters
+are 27 MB. Required as modules they were more than half of the Hermes bundle (51.7 MB) and were
+re-downloaded by every OTA update. For a runtime whose store binary embeds them they ship as
+**73 bundled asset parts** (`mobile/assets/valmiki-ramayan/k<N>_p<MM>.txt`, JSON arrays of verses
+in reading order, ≈390 KB each) written from the masters by
+`mobile/scripts/build-valmiki-assets.mjs`; the bundle is then 26.6 MB. **A bundle built for an
+older runtime (1.5.6 and below) still carries the masters**, exactly as before, so an OTA from the
+latest branch asks nothing of a build that predates the parts: the choice is made at bundle time
+from the app version (`mobile/corpusDelivery.js`; RULEBOOK §2). The reader behaves the same either
+way — both deliveries feed one loader. The `chapter-0N.json` masters stay in place as the editorial
+source of truth and are imported only by `corpusSource.inbundle.ts`. `metro.config.js`
+registers `txt` as an asset extension; part names use `_` only because Android derives the
+resource name by deleting every other punctuation character.
+
+**Loading states.** `loadValmikiRamayanChapter()` reads a kāṇḍa's parts through `expo-asset`
+(`partReader.ts`, the one native seam), four files at a time, parsing and validating one part per
+turn of the event loop, then caches the kāṇḍa for the life of the process.
+`ValmikiRamayanReaderScreen` is therefore two components: a loader, and the reader, which mounts
+only with its kāṇḍa in memory so its opening verse and the position it reports are initialised
+from real data.
+- *Already loaded in this process* → the reader paints on the first frame; no loading state.
+- *Loading* → the shared `ReaderHeader` (title, live Back) over a centred `saffron`
+  `ActivityIndicator` on `parchment`, announced as a progress bar labelled **खुल रहा है · Opening** —
+  the §75 cold-tap state with a header.
+- *Could not be read* → the same header over **यह काण्ड खुल नहीं सका · This kanda could not open**
+  (17/28, title face of the reading language) and a 44 pt `saffron` pill **पुनः प्रयास · Retry**
+  (14/22; Inter in English, the script serif otherwise). gu/kn re-script both through `contentByLang`.
+- *Not a kāṇḍa number* → redirected to the chapters index, as every chaptered reader does.
+The next kāṇḍa starts loading when the reader is within eight verses of the end, so the automatic
+hand-over opens on text. Auto-slide crosses the boundary through its 3 s hand-off
+(`autoSlideStore.HANDOFF_MS`), which the reader claims — and the reader mounts only after the load.
+So a hand-off that is live when the screen opens on a kāṇḍa it still has to load is renewed the
+moment the text is ready: the slideshow carries on however long the load took. One that had
+already lapsed is not revived, and a failed load drops it — after Retry the slideshow is started
+by hand. A `kāṇḍa.sarga` link from Gita Saar is resolved from the generated
+`sargaStarts.ts` and loads nothing until the reader opens.
+
 **Loading and cross-feature budget.** `texts.ts` reads the lightweight manifest total without
-loading scripture. `getValmikiRamayanChapter()` requires and validates only the selected kāṇḍa,
-then caches it. Daily Bhakti and global search deliberately retain the 28 established anchor
+loading scripture. Daily Bhakti and global search deliberately retain the 28 established anchor
 verses from `daily-selection.json`; indexing all 23,289 long-form verses would duplicate their
 normalized text in memory and put every multi-megabyte kāṇḍa on a non-reader path. The complete
 corpus remains continuously readable and directly addressable in the reader.
@@ -3301,6 +3361,31 @@ because they are different concerns that happen to agree today.
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
 
+### Adaptive illustrated iOS Shloka layout — 10 November 2026
+
+The approved illustrated day/night style is preserved, but text controls image
+reservation. The native iOS Wide and Large widget uses SwiftUI `ViewThatFits(in:
+.vertical)` with complete, intrinsically measured lines before any clipping:
+full illustration strip (32% width), reduced strip (16%), and text-first (0%,
+parchment-backed to preserve contrast). Large prioritizes individual padas;
+Wide flows all supplied padas. The final fixed-height safety fallback alone
+limits visual lines and visibly offers a localized tap-to-read cue; VoiceOver
+retains the **complete** verse plus source, and the source/deep link never
+changes. Small continues to use the existing planner excerpt, with the full
+verse in accessibility. No heuristic based on raw character count determines
+native truncation because Indic shaping and line wrapping vary by font.
+
+The in-app gallery remains an approximate medium-cell facsimile: it increases
+text width and reduces type size on longer verses while retaining the same
+source/art mapping and localized tap target. The native/widget family is the
+authoritative measured layout. Existing prebuilt Heritage and Midnight Temple
+plates are reused, with no new payload, images, downloads or startup work.
+The widget extension layout change requires a **new iOS binary**, not OTA.
+Release acceptance requires actual Standard/Large/compact and four-language
+native screenshots with short, multi-pada and unusually long verses, plus
+VoiceOver and source/tap checks; source tests alone are not visual acceptance.
+
+
 ### Solar Heritage / Midnight Temple — 2 November 2026
 
 Approved: Illustrated Heritage during the selected city's daylight, Midnight Temple at night. Both the verse and Panchang switch together: sunrise is inclusive and sunset exclusive, using solved ISO instants in each IST Panchang day. Device appearance is not the selector. The native offline timeline includes all 14 days' solar boundaries alongside existing tithi and midnight entries; Android requests the next solar/content boundary with its existing best-effort idle alarm. OS refresh timing remains best effort.
@@ -3529,7 +3614,7 @@ Full-screen, one step per page, a horizontal paged `FlatList` exactly like the r
 
 **The reveal pipeline (`mobile/App.tsx`).**
 1. `SplashScreen.preventAutoHideAsync()` at module scope; the derived-cache reset and `prefetchTodayPanchang()` start beside it (§60) so storage is already in flight before React renders anything.
-2. The five font families gate the provider tree (`fontsReady`) — an unloaded family silently falls back to the system font (§3), so no text renders before the real faces exist. A font that **fails** to register fails open (`fontsReady = fontsLoaded || fontError != null`): the app opens with fallback glyphs for that family rather than holding launch forever. Until fonts and the start target resolve, App renders **`LaunchCover`** — a full-screen `brandIvory` (`#FFF1D5`) view with a dark status bar.
+2. The five font families gate the provider tree (`fontsReady`). **Android store builds embed all fifteen font files** (`app.json` → `expo-font` → `android.fonts`), so `useFonts` finds every family already registered and is `true` on the first render — the gate costs nothing there. The unchanged `useFonts` map still bundles the same files as Metro assets (it is what keeps an older binary working), so an Android store build carries them twice — 5.6 MB before compression, a known cost recorded in `docs/engineering/android-low-end-performance-native-2026-11.md` §7. An older binary, and iOS, still load them at runtime as described next. In either case — an unloaded family silently falls back to the system font (§3), so no text renders before the real faces exist. A font that **fails** to register fails open (`fontsReady = fontsLoaded || fontError != null`): the app opens with fallback glyphs for that family rather than holding launch forever. Until fonts and the start target resolve, App renders **`LaunchCover`** — a full-screen `brandIvory` (`#FFF1D5`) view with a dark status bar.
 3. **`AppReadyGate`** holds the splash until the two **layout-critical** preferences have hydrated — font scale and reading language — because both change Home geometry. The native splash hides on particle-canvas readiness after hydration; bypasses release it immediately. While the reveal is disabled (§2.1) every launch is a bypass, so the splash hides as soon as hydration completes. While hydrating, the gate also renders `LaunchCover`.
    - **Android never holds the native splash past React's first frame.** expo-splash-screen holds by vetoing the activity's first draw; an undrawn window has no input focus, so a Back press past 5 s is a "No focused window" ANR (Play clusters, Nov 2026). `LaunchCover` calls `SplashScreen.hideAsync()` once on its first layout (Android only; retried on the next layout if it rejects), so the colour-identical cover — not the native splash — hides Home until it is final. New builds go further: `plugins/withAndroidLaunchWindow.js` calls `SplashScreenManager.hide()` in `MainActivity.onCreate` before the first draw and sets `AppTheme`'s `android:windowBackground` to `@color/vedansh_launch_window` (`#FFF1D5`), so every pre-React frame is splash ivory instead of the DayNight default. iOS keeps the native hold. On Android 12/12L (API 31–32) the expo-splash-screen exit fade is not registered (`patches/expo-splash-screen+31.0.13.patch`), because registering it triggers the framework splash-view transfer that crashes on those versions (Play Vitals, Nov 2026). The system removes its own blank ivory splash instead, which looks the same over `LaunchCover`. Normal formation retains the final canvas over the app's first mount; native content layout, two animation frames and a 180ms native cover fade complete the handoff (§2.1), without remounting navigation.
 4. **Safe-area insets are seeded, not awaited**: the root `SafeAreaProvider` receives `initialMetrics={initialWindowMetrics}`. Without it the provider renders nothing until the first native inset event crosses the launch-busy JS thread, and the tree then mounts on whatever that event carried — on Android cold starts under `edgeToEdgeEnabled` that can be a pre-attach zero, so Home painted flush under the status bar, sat unresponsive behind the mount burst, and lurched down by the status-bar height when the corrected insets applied (the August 2026 "launch jerk" report). With the seed, the first committed frame carries its final insets and any later inset event is a no-op.
@@ -3855,6 +3940,7 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 2. **Warm-up order.** After `NavigationContainer.onReady`, screens are warmed breadth-first by tap-distance from Home (depth 2, then 3, …), one module per idle slice: each waits for `InteractionManager` to go idle and yields 60 ms before the next, so an in-flight touch, navigation or animation always wins the thread. Non-screen warm-ups ride the same walk — the Panchang stack chunk and the search index, both at depth 2. The search index runs *alongside* the walk rather than inside it: it is a many-second job at background pace, so its entry starts it and returns, and the walk carries on. It is built in ~8 ms time-budgeted slices over units of one chapter or one temple, each behind `InteractionManager` plus a one-frame gap; the worst slice measured one frame (§36).
 3. **Following the user.** On every navigation the current route's children (from the generated `routeGraph.ts`) move to the front of the queue, so the walk stays one tap ahead of wherever the user actually is rather than finishing a depth they have left. Ordering only — it never blocks or drops a screen.
 4. **Nested stacks.** Warming a lazily-loaded stack registers its own screens; the walk drains the registry rather than snapshotting it, so those join the queue at their own depth. A route registered on several stacks (Daan, Vidhi, GitaReader, VastuDisha) has each stack's copy warmed.
+5. **Constrained phones (Nov 2026).** The walk is invisible only where a module evaluates in a few milliseconds. `utils/devicePace.ts` times how long this launch's own bundle took to evaluate (`index.ts` → `markBundleEvaluated`); at or above `CONSTRAINED_BUNDLE_EVALUATION_MS` (800 ms) the phone is treated as constrained for that launch. There the walk warms only what Home opens directly (depth 2: 13 screens instead of 136, 1.6 MB of source instead of 7.0 MB), leaves 250 ms between evaluations instead of 60, and then stops; arriving on a screen wakes it for that screen's children, so the next tap is still usually warm. The search index is **not** built in the background on those phones — it is built when Search opens, through the same foreground path a tap that beats the warm-up has always used ("preparing" until it lands). An unmeasured launch counts as ordinary, so nothing is ever taken away by a missing reading. The threshold is a judgement pending device traces (`launchTrace` with `FORCE_ON` on a release build).
 
 **Loading state (cold tap only).** Full-screen `parchment` surface, centred `ActivityIndicator` in `saffron`. No text, no skeleton — a cold module resolves in a few milliseconds, so anything richer would flash. Announced to screen readers as a progress bar labelled **खुल रहा है · Opening** (via `contentByLang`). Cold modules resolve through a cancellable effect rather than a `use(promise)` / Suspense hide-and-reveal cycle. This avoids Android Fabric re-attaching an already-parented SVG path when a cold route opens. Warm screens still paint synchronously; once mounted, the resolved screen keeps its element type and local state across updates. A load that fails reaches the existing error boundary and is retried on the next attempt rather than cached.
 
@@ -4084,15 +4170,13 @@ References and the editorial type (भावार्थ, prayer meaning, hymn m
 
 Annapurna is a painted deity like the others (since 29 Oct): three reviewed masters, one per frame, show her ladling anna into Shiva-as-bhikshu's bowl, matching the Daan plate. Her 51 reviewed entries use the same card, frame thumbnails and capture gate as every image-based deity; there is no text-only path. Friday includes Annapurna. Existing image-based deities still require all verified masters and decoded image sections before capture. Saraswati's temple frame uses a 20 pt message-panel top inset to clear its painted border. Native iOS/Android, four-script, Large and WhatsApp export acceptance for this integration remains pending.
 
-### Ram Lalla Ayodhya photo cards — 8 November 2026
+### Front-facing Ram Lalla cards — 11 November 2026
 
-The Daily Bhakti → Suvichar composer offers `ram-lalla` as **राम लला · अयोध्या / Ram Lalla · Ayodhya**, separate from Shri Ram and Ram Darbar. Ready-made devotional cards, custom selection, all three frames, Thursday cards, favorite restoration and the existing shared-provider export support it. Inserting the photo option preserves existing deities’ default frame assignments.
+Daily Bhakti → Suvichar offers `ram-lalla` as **श्री राम लला / Shri Ram Lalla**, with ready-made/custom selection, all three paper frames, Thursday cards, editable messages/sender, favorites and the shared 1080px export provider. Preserve existing default frames, content eligibility and stored IDs.
 
-The hero displays the real 22 January 2024 Ram Janmabhoomi photograph by the Prime Minister’s Office, delivered by Wikimedia Commons under GODL-India. It is never redrawn. `suvicharPhotoArt.ts` describes the reviewed 960×1619 JPEG (663,352 bytes), source aspect and printed legal credit. The native hero has a gold-bordered viewport at x=.07w, y=.085 of the 1.25w master height; its width=.86w and height=hero−.095 of master height. The source keeps its aspect and top alignment, retaining the crown/face while cropping the lower body. Temple arch rounds the two top corners to .32w; Lotus garden uses .06w corners; Devotional letter uses 2dp corners. All styles reuse only the existing Rama master’s paper/body/footer slices; its painted hero is not rendered. The subject name and photo credit are measured text inside the growing body. Legal credit remains separate from message/scripture attribution.
+The hero uses the exact approved generated **Front-Facing Ram Lalla Darshan Card.png** from 8 November. The source and 1122×1402 WebP delivery (553,850 bytes) are preserved under `assets/suvichar/portraits/`. The native clipping rectangle is x=.025/y=.082/w=.95/h=.482: it starts below the baked wordmark and ends before the name/message panel. `SuvicharPortraitImage` contains that rectangle in the existing gold-bordered viewport, preserving the complete crown/face, bow and front-facing composition. Rectangular top corners retain the source’s own arch. The actual message, source, sender and branding remain live native layers. The generated art has no PMO/GODL photograph credit or Ayodhya label. The old photograph/rights record remains archived only.
 
-The photo thumbnail and full card share one content-hash cache entry across all frames. Cold entry downloads the public reviewed Commons rendition through the existing bounded/cancellable persistent cache; later use works offline. The existing frame slices remain on R2. No new photo is bundled or registered as a fictitious painted master. Share readiness includes photo decode, paper/footer decode, brand/sender-photo decode and final measured layout. Changing subject/frame cannot reuse old artwork/readiness. Retry remains the existing Reload artwork action.
-
-Six existing Ram originals and the eligible Ram/Hari dohas join the Ram scripture family; Ram-Darbar-specific copy is excluded. Source IDs, authored messages, sender settings and existing saved cards stay stable. All four languages use current localization/font helpers, fixed image typography and 1080px provider output. The component preview is browser evidence; native iOS/Android geometry, actual PNG/handoff and lower-configuration release performance remain separate required acceptance.
+Cards, preset/deity selectors, frame selectors and the cache-only Daily Bhakti miniature use the same cropped scene. The hero resolves through `suvicharPortraitManifest.json` and the registered `suvichar-portraits` R2 prefix. All frames share one cache object; only their reviewed Rama paper/footer slices differ. Native decode/layout still gates sharing and errors refuse capture. No painting is bundled, no eager prefetch/timer is added, and no stable preference key changes. Public-byte verification and installed iOS/Android geometry, long content, export/handoff and device responsiveness are separate pending acceptance; component tests do not establish these.
 
 ### Suvichar ready-made collection — 23 October 2026
 

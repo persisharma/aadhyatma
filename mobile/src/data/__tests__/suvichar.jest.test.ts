@@ -88,7 +88,26 @@ it('preserves the real Ram Lalla photo, public source and licence within a bound
   const hash = createHash('sha256').update(bytes).digest('hex');
   expect(hash).toBe(source.sha256);
   expect(bytes.length).toBe(source.bytes); expect(bytes.length).toBeLessThan(750 * 1024);
-  expect(suvicharPhotoArt('ram-lalla')!.request).toMatchObject({ key: hash.slice(0, 16), ext: 'jpg', remoteUrl: source.deliveryUrl });
+  // The historical photo remains preserved, but it is no longer a runtime request.
+  expect(suvicharPhotoArt('ram-lalla')!.request.remoteUrl).not.toBe(source.deliveryUrl);
   expect(source.license).toBe('GODL-India'); expect(source.author).toBe("Prime Minister's Office, Government of India");
   expect(source.sourceUrl).toContain('commons.wikimedia.org/wiki/');
+});
+
+
+it('links the exact approved generated Ram Lalla master to the registered R2 upload object', () => {
+  const folder = path.resolve(__dirname, '../../../assets/suvichar/portraits');
+  const source = JSON.parse(fs.readFileSync(path.join(folder, 'sources.json'), 'utf8'));
+  const bytes = fs.readFileSync(path.join(folder, source.file));
+  const master = fs.readFileSync(path.join(folder, source.master));
+  const hash = createHash('sha256').update(bytes).digest('hex');
+  expect(hash).toBe(source.sha256);
+  expect(createHash('sha256').update(master).digest('hex')).toBe(source.masterSha256);
+  expect(bytes.length).toBe(source.bytes); expect(bytes.length).toBeLessThan(600 * 1024);
+  expect(source.library_file_id).toBe('libfile_26f416810ac081918d18d2a8aadb4927');
+  expect(suvicharPhotoArt('ram-lalla')).toMatchObject({ kind: 'generated', width: source.width, height: source.height, crop: source.crop, credit: '' });
+  expect(suvicharPhotoArt('ram-lalla')!.request).toMatchObject({ key: hash.slice(0, 16), ext: 'webp', subdir: 'suvichar-portraits' });
+  expect(suvicharPhotoArt('ram-lalla')!.request.remoteUrl).toBe(`https://cdn.vedansh.app/suvichar-portraits/${hash.slice(0, 16)}.webp`);
+  const catalog = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../../scripts/r2-collections.json'), 'utf8'));
+  expect(catalog).toContainEqual({ id: 'suvichar-portraits', prefix: 'suvichar-portraits', manifest: 'mobile/src/data/suvicharPortraitManifest.json', sources: ['mobile/assets/suvichar/portraits'] });
 });

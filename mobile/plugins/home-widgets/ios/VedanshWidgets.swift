@@ -218,52 +218,122 @@ struct VedanshWidgetView: View {
   }
 
   // MARK: - आज का श्लोक
-  // Large renders the verse line-by-line from `lines`; medium flows those same
-  // lines across the three lines its cell budgets; only small falls back to the
-  // planner's excerpt, whose character cap is sized for that square.
-  //
-  // Medium used to draw the excerpt too, and that was the "shloka cut with space
-  // still on the card" bug: `twoLineExcerpt`'s 88-character cap is a small-cell
-  // budget, so a two-line Gita shloka (~90 characters) lost its closing pada to
-  // an ellipsis on a card whose third line sat empty. The full verse is in the
-  // payload — the wide cell reads it, and lets SwiftUI shrink/truncate only when
-  // the text genuinely overruns.
+  // Short verses keep a generous illustrated right margin. Longer verses give
+  // back that space and eventually use the full width. ViewThatFits measures
+  // rendered SwiftUI text (including Indic glyph shaping) instead of guessing
+  // from String.count. Full-text candidates cannot silently truncate: their
+  // intrinsic heights decide whether the next composition is needed.
   @ViewBuilder private func verse(_ payload: WidgetPayload) -> some View {
     let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
     let lang = payload.locale
     if let v = payload.verses.days.first(where: { $0.dateKey == key }) {
       GeometryReader { geometry in
-      VStack(alignment: .leading, spacing: family == .systemSmall ? 5 : 7) {
-        Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(palette.saffronDeep).lineLimit(1)
-        if family == .systemLarge {
-          VStack(alignment: .leading, spacing: 5) {
-            ForEach(Array(v.lines.value(lang).prefix(8).enumerated()), id: \.offset) { item in
-              Text(item.element).font(.custom(fontName(lang, bold: false), size: 18)).foregroundStyle(palette.ink).lineLimit(2).minimumScaleFactor(0.8)
+        Group {
+          if family == .systemSmall {
+            VStack(alignment: .leading, spacing: 6) {
+              Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10))
+                .foregroundStyle(palette.saffronDeep)
+              Text(v.excerpt.value(lang))
+                .font(.custom(fontName(lang, bold: false), size: 13))
+                .foregroundStyle(palette.ink)
+                .lineLimit(4).minimumScaleFactor(0.9)
+              Spacer(minLength: 0)
+              brand()
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+          } else {
+            // The first complete composition that *actually fits* wins.
+            // Long stotras can remain complete on Large even when a medium
+            // widget must explicitly offer a tap-to-read preview.
+            ViewThatFits(in: .vertical) {
+              verseComposition(v, lang: lang, width: geometry.size.width,
+                               artFraction: 0.32, fontSize: family == .systemLarge ? 19 : 16,
+                               separated: family == .systemLarge, condensed: false)
+              verseComposition(v, lang: lang, width: geometry.size.width,
+                               artFraction: 0.16, fontSize: family == .systemLarge ? 17 : 15,
+                               separated: family == .systemLarge, condensed: false)
+              verseComposition(v, lang: lang, width: geometry.size.width,
+                               artFraction: 0, fontSize: family == .systemLarge ? 16 : 14,
+                               separated: false, condensed: false)
+              verseComposition(v, lang: lang, width: geometry.size.width,
+                               artFraction: 0, fontSize: family == .systemLarge ? 15 : 14,
+                               separated: false, condensed: true)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
           }
-        } else if family == .systemSmall {
-          Text(v.excerpt.value(lang))
-            .font(.custom(fontName(lang, bold: false), size: 13))
-            .foregroundStyle(palette.ink)
-            .lineLimit(4)
-            .minimumScaleFactor(0.8)
-        } else {
-          Text(flowedVerse(v.lines.value(lang)))
-            .font(.custom(fontName(lang, bold: false), size: 14))
-            .foregroundStyle(palette.ink)
-            .lineLimit(4)
-            .minimumScaleFactor(0.8)
         }
-        if family != .systemSmall {
-          Text(v.source.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1)
-        }
-        brand()
-      }
-      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-      .padding(.trailing, family == .systemSmall || art == nil ? 0 : geometry.size.width * 0.32)
-      .widgetURL(URL(string: v.deepLink)).accessibilityLabel(v.accessibilityLabel.value(lang))
+        .widgetURL(URL(string: v.deepLink))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(v.accessibilityLabel.value(lang))
       }
     } else { recovery("विजेट ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
+  }
+
+  // A compositional variant, not a different verse: source, full lines and
+  // deep-link identity are unchanged. Zero artFraction means the underlying
+  // right-side sketch remains decorative; a parchment wash restores contrast
+  // wherever the text must cross it.
+  private func verseComposition(_ v: VerseDay, lang: String, width: CGFloat,
+                                artFraction: CGFloat, fontSize: CGFloat,
+                                separated: Bool, condensed: Bool) -> some View {
+    let reserved = art == nil ? CGFloat(0) : width * artFraction
+    return VStack(alignment: .leading, spacing: 5) {
+      HStack(alignment: .center, spacing: 5) {
+        Text(verseKicker(lang))
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .foregroundStyle(palette.saffronDeep)
+          .padding(.horizontal, 7).padding(.vertical, 3)
+          .background(palette.saffronDeep.opacity(0.10), in: Capsule())
+        Spacer(minLength: 3)
+        Text("ॐ वेदांश़")
+          .font(.custom("NotoSerifDevanagari-SemiBold", size: 10))
+          .foregroundStyle(palette.gold)
+      }
+      if separated {
+        VStack(alignment: .leading, spacing: 3) {
+          ForEach(Array(v.lines.value(lang).enumerated()), id: \.offset) { item in
+            Text(item.element)
+              .font(.custom(fontName(lang, bold: false), size: fontSize))
+              .foregroundStyle(palette.ink)
+              .fixedSize(horizontal: false, vertical: true)
+          }
+        }
+      } else {
+        Text(flowedVerse(v.lines.value(lang)))
+          .font(.custom(fontName(lang, bold: false), size: fontSize))
+          .foregroundStyle(palette.ink)
+          .lineLimit(condensed ? (family == .systemLarge ? 10 : 4) : nil)
+          .truncationMode(.tail)
+          .fixedSize(horizontal: false, vertical: !condensed)
+      }
+      Rectangle().fill(palette.gold.opacity(0.42)).frame(height: 1)
+      Text(v.source.value(lang))
+        .font(.custom(fontName(lang, bold: true), size: 10))
+        .foregroundStyle(palette.inkMuted)
+        .fixedSize(horizontal: false, vertical: true)
+      if condensed {
+        Text(readFullVerseKicker(lang))
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .foregroundStyle(palette.saffronDeep)
+      }
+    }
+    .padding(.trailing, reserved)
+    .padding(.vertical, 2)
+    .background {
+      if art != nil && artFraction == 0 {
+        // Preserve native contrast on the decorative right side for dense text
+        // in both the daylight and Midnight Temple palettes.
+        palette.parchment.opacity(0.88)
+      }
+    }
+    .fixedSize(horizontal: false, vertical: true)
+  }
+
+  private func readFullVerseKicker(_ lang: String) -> String {
+    lang == "en" ? "Tap to read the complete verse ›"
+      : lang == "gu" ? "આખો શ્લોક વાંચવા ટૅપ કરો ›"
+      : lang == "kn" ? "ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಲು ಸ್ಪರ್ಶಿಸಿ ›"
+      : "पूरा श्लोक पढ़ने के लिए टैप करें ›"
   }
 
   // MARK: - आज का पंचांग

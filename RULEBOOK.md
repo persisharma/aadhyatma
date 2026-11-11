@@ -41,7 +41,7 @@ Home's shared outer gutter is supplied by `homeLayout.ts` (16dp). Full-bleed chi
 
 Home/category artwork is registered in `mobile/src/components/storybookSources.ts`; deity attribute mappings live in `deityArtwork.ts`. More's settings subjects are registered separately in `MoreIcon.tsx`, which combines seventeen painted utility assets with three existing Home subjects. Sixteen utility subjects appear in More; the painted question seal is used by Ask Vedansh in Discover. `FeatureIcon.tsx` maps all nine Discover cards to these existing registries: shared subjects reuse the same image source, with a uniform centered 32dp canvas inside the 36dp feature tile. Do not reintroduce outline glyphs or duplicate paintings for the same feature. Row callers use the registry's typed names; navigation/reader controls retain `AppIcon`.
 
-Every new painted icon is a statically required local transparent square PNG with a matching provenance manifest. `storybookAssets.test.ts` verifies registry coverage, shipped hashes, dimensions, alpha, centered visible bounds and the separate Home/More byte budgets. Keep exact generation prompts and source/master hashes alongside the assets. Update the owning registry, manifest, asset contract and the matching `design.md` spec together; verify the installed native surface rather than treating the artwork sheet as integration evidence. More's row/profile sizing and enlarged-text behavior are specified in design.md §37. The six Panchang day-panel additions (`chandra`, `karana`, `nitya-yoga`, `agni-vaas`, `sunset`, `moonrise`) share a separate 300,000-byte budget; the existing 1.5MB / 750KB / 150KB limits remain unchanged. Their export pipeline clears alpha below 8, fits visible bounds to 432px, centers on 512px, and retains a 256-color alpha palette. Chandra and moonrise use plain lunar discs without stars. Dynamic celestial marks reuse the original `chandra` and `gayatri` paintings through `CelestialGlyph`, rather than registering static per-phase bitmaps. The representative 30-Tithi cycle must reach a fully lit Purnima and a dark Amavasya, with opposite waxing/waning limbs. Preserve the tile’s sunrise Tithi and the night header’s running Tithi; `tithiChain`/`prevailingTithi` expose each link’s existing zero-based index. Keep the marks decorative, preserve the live sky arc/reduce-motion behavior, and verify phase transitions plus native rendering.
+Every new painted icon is a statically required local transparent square PNG with a matching provenance manifest. `storybookAssets.test.ts` verifies registry coverage, shipped hashes, dimensions, alpha, centered visible bounds and the separate Home/More byte budgets. A component that draws a painted master spreads `PAINTED_ICON_DECODE` (`mobile/src/components/paintedIconDecode.ts`) on its `<Image>` so Android decodes near the drawn size rather than the whole 256–512 px master (design.md, *Decode size*; `paintedIconDecode.test.tsx`) — except inside an exported share card, where it must not be used. Keep exact generation prompts and source/master hashes alongside the assets. Update the owning registry, manifest, asset contract and the matching `design.md` spec together; verify the installed native surface rather than treating the artwork sheet as integration evidence. More's row/profile sizing and enlarged-text behavior are specified in design.md §37. The six Panchang day-panel additions (`chandra`, `karana`, `nitya-yoga`, `agni-vaas`, `sunset`, `moonrise`) share a separate 300,000-byte budget; the existing 1.5MB / 750KB / 150KB limits remain unchanged. Their export pipeline clears alpha below 8, fits visible bounds to 432px, centers on 512px, and retains a 256-color alpha palette. Chandra and moonrise use plain lunar discs without stars. Dynamic celestial marks reuse the original `chandra` and `gayatri` paintings through `CelestialGlyph`, rather than registering static per-phase bitmaps. The representative 30-Tithi cycle must reach a fully lit Purnima and a dark Amavasya, with opposite waxing/waning limbs. Preserve the tile’s sunrise Tithi and the night header’s running Tithi; `tithiChain`/`prevailingTithi` expose each link’s existing zero-based index. Keep the marks decorative, preserve the live sky arc/reduce-motion behavior, and verify phase transitions plus native rendering.
 
 **Vrat illustrated listings.** Vrat/Parv/Upvas, Panchang following-day observances, landing search, My Vrat, Katha and followed muhurats use the Kids Stories `ListingCard` shell. Calendar rows use complete square paintings and intrinsically growing bilingual/date metadata. Upcoming tiles are 155pt wide with a 141×72 banner filling the inner width. Their independent 44pt save target overlays the banner’s top-right corner; never reserve a blank side column for it. Calendar surfaces use the shared shell’s cream catalog tone, 14pt corners and shallow shadows; standard reading cards keep their established treatment. Horizontal rails reserve shadow clearance, settle at complete-card boundaries and let full titles/date metadata grow rather than clipping. Trailing padding must also permit a complete final group. The three-column ledger uses the shared cream frame, aligned icons/status and centered14/24 labels with intrinsic height. Audit saturation across every unique painting as well as subject correctness; use subdued painted colors, preserving meaningful deity colors rather than applying a blanket tint. Save/reminder/open controls stay siblings with 44pt targets. Never use vertical `flex: 1`/zero-basis layout on calendar copy or its open target: long and enlarged text must increase card height. The Katha category uses typed `granth` artwork; unknown icon names must not silently fall back. `ObservanceArtwork` resolves explicit event/identity paintings immediately from bundled thumbnails/portraits/scenes, including neutral ritual/scripture paintings for non-deity traditions. Avoid social-poster crops, symbolic fallbacks and split strips of deity faces. Preserve every named subject through a reviewed shared scene. Existing source hashes remain recorded; new artwork requires exact prompts, master/shipped hashes and native visual inspection. All-rule assignment/contact-sheet coverage and native route/state coverage are distinct acceptance evidence.
 
@@ -148,7 +148,7 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 may statically import its `chapters-manifest.json` and nothing else. Every verse
 payload must sit behind a `require()` thunk resolved by `get<Section>Chapter()`,
 with that chapter's invariant check run on first load — the shape
-`valmiki-ramayan/index.ts` and `gita/index.ts` both use. This is not a
+`gita/index.ts` uses. This is not a
 micro-optimisation. Metro bundles every static import reachable from `index.ts`
 and Hermes evaluates all of it before the first frame, so one eager
 `import ch18 from './chapter-18.json'` in a module that anything on the launch
@@ -162,6 +162,52 @@ never a payload. **Gate:** `src/data/__tests__/launchGraph.test.ts` walks the re
 static import graph from `index.ts` and fails if a payload is reachable (it prints
 the import chain) or if the graph exceeds its byte budget. Never raise the budget
 to make it pass, and never add a payload to an allowlist — fix the importer.
+
+**A native resource found by name needs a keep entry (Nov 2026).** Android release
+builds shrink resources (`plugins/withAndroidReleaseShrink.js`), and the shrinker
+empties or drops anything it cannot see a reference to. A resource reached through
+`getIdentifier` with a name built at runtime is exactly that: the Japam alarm sounds
+(`app.json` → `expo-notifications` → `sounds[]`, copied to `res/raw`, found by mantra
+id) and the widget backgrounds. Raw resources are all kept by
+`res/raw/vedansh_release_keep.xml`, which the plugin writes; widget drawables by the
+widget plugin's own keep file. Adding a lookup of any other resource type from
+app-owned native code fails `AndroidReleaseShrinkPlugin.test.ts` until it has a
+`tools:keep` entry. A shrunk alarm sound does not crash — it rings silent — so this
+is never caught by a launch test.
+
+**A corpus too large for the bundle ships as assets (Nov 2026).** Lazy loading keeps
+a payload off the *launch path*; it does not keep it out of the *bundle*. Every
+`require()`d JSON is compiled into the Hermes bundle, which every OTA update
+downloads whole. `valmiki-ramayan` (27 MB) is the worked case and the pattern for
+anything of that order:
+1. The JSON masters stay where they are and remain the source of truth for
+   provenance, the corpus tests and the builder. **No app module may import one**
+   except `corpusSource.inbundle.ts` (rule 4), and nothing may import that file
+   by name (`src/data/__tests__/valmikiAssets.test.ts` fails on either).
+2. `mobile/scripts/build-valmiki-assets.mjs` writes the parts the app reads
+   (`mobile/assets/valmiki-ramayan/*.txt`), the part table (`parts.ts`) and the
+   sarga table (`sargaStarts.ts`). **Re-run it after any change to a master**;
+   `--check` runs inside the same test and fails on drift.
+3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches its source
+   only through a `require()` thunk, and the reader screen owns a loading and a
+   retry state (design.md §53).
+4. **An OTA from the latest branch must work on every store build still in
+   use.** A runtime whose binary does not embed the parts would have to download
+   all of them (27 MB in 73 files) before the update applied, and would read them
+   through a path that build has never run. So the delivery is chosen when the
+   app is **bundled**, by the app version it is bundled for — which is the
+   runtime (`mobile/corpusDelivery.js`, applied in `mobile/metro.config.js`):
+   below `VALMIKI_ASSETS_SINCE_VERSION` the corpus module's `./corpusSource` is
+   answered by `corpusSource.inbundle.ts` and the masters are compiled into the
+   bundle exactly as before; at or above it, by `corpusSource.ts` and the parts.
+   A store build and every OTA published to it are bundled with the same
+   version (`ota-push.yml` rewrites `expo.version` to the target runtime), so
+   they cannot disagree. Never lower that constant past a version that has
+   shipped. `push.sh` prints the delivery before it publishes;
+   `VALMIKI_CORPUS_DELIVERY=assets|bundle` forces one for a single run.
+   Anything else that needs the new binary must be gated the same way: **the
+   JavaScript on the latest branch has to run on the oldest build an OTA can
+   still reach.**
 
 **Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 
@@ -445,7 +491,7 @@ Ship the full canonical version (all verses) only after internet verification. M
 ### 11.6 No fabricated content
 Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.
 
-**Scraper residue is not a meaning.** A meaning field that holds website navigation text, an upstream placeholder (`Missing`, `In Progress`) or the verse's own Sanskrit is as wrong as a fabricated line. Write that field blank in the builder and fall back to the verse's other *sourced* meaning at load time — never fill it from memory or machine translation. `valmiki-ramayan` is the worked case (Nov 2026: 80 Hindi + 5 English rows): `scripts/build-valmiki-ramayan.py` pins the per-kāṇḍa blank counts (`EXPECTED_BLANK_MEANINGS`), `getValmikiRamayanChapter` applies `withMeaningFallback`, and `contentCorrectness.test.ts` + `valmikiMeaningFallback.jest.test.ts` fail on residue, on both sides blank, and on a count that grows. The count may only shrink, when the published text is captured.
+**Scraper residue is not a meaning.** A meaning field that holds website navigation text, an upstream placeholder (`Missing`, `In Progress`) or the verse's own Sanskrit is as wrong as a fabricated line. Write that field blank in the builder and fall back to the verse's other *sourced* meaning at load time — never fill it from memory or machine translation. `valmiki-ramayan` is the worked case (Nov 2026: 80 Hindi + 5 English rows): `scripts/build-valmiki-ramayan.py` pins the per-kāṇḍa blank counts (`EXPECTED_BLANK_MEANINGS`), `loadValmikiRamayanChapter` applies `withMeaningFallback`, and `contentCorrectness.test.ts` + `valmikiMeaningFallback.jest.test.ts` fail on residue, on both sides blank, and on a count that grows. The count may only shrink, when the published text is captured.
 
 ### 11.7 Both platforms per change
 Every content/data change must be verified on both iOS and Android before OTA push. Bundle and test on both platforms — a rendering issue on one platform (especially with Devanagari fonts) may not appear on the other.
@@ -1471,9 +1517,11 @@ Daily Bhakti branding uses the approved flute/peacock PNGs via `DevotionalBrandi
 
 Daily Bhakti sharing keeps the complete verse and meaning in one measured image in every reading language. Preserve fixed readable type and all stored text; grow a long PNG instead of splitting its meaning or shrinking it into a short frame. The devotional source set (nine original full deity masters plus neutral prayer and eighteen complete 1080×1456 subject masters; `assets/devotional-share/manifest.json` is the provenance source of truth, combined delivery sources <9MiB; each optimized original portrait <600KiB, full 1080×1456 resolution) uses the separate `devotional-share` R2 prefix and shared persistent artwork cache. No Daily Bhakti painting may enter the bundled asset graph. `manifest.assets.*.authoringMaster` retains the nine lossless originals at a pinned Git revision; zero protected-pixel changes applies to authoring, not perceptually compressed delivery. Re-encode from these originals with `scripts/optimize-devotional-share.mjs` (reviewed WebP q94/m6/sharp YUV), never from a previously lossy delivery. Preserve all fitted geometry, and visually compare all changed paintings before publishing. `src/data/devotionalShareManifest.json` pins all 28 published objects; `prepare-devotional-share.mjs --verify --cdn` must confirm public bytes. Keep text/navigation usable on paper during first download or failure; cached art remains available offline. Each new subject is one complete portrait composition with a continuous painting-to-parchment transition, brand plaque, border and footer. Slice the same subject master throughout; never paste a landscape reader banner onto another deity’s body. Rows `meaningTop + 82`…`meaningTop + 128` of the meaning box must hold only paper and the box/side rules: they are mirror-tiled to grow the explanation (महत्त्व) box, so an ornament there repeats down the card. Image decode and final native measurement must both finish before capture. Preview and Story framing must use the full height. Test Hanuman Ashtak 1.5, all 1,676 candidates/four scripts, post/Story capture dimensions and failure refusal. Installed device export and WhatsApp validation remain required before merge. See design.md §39.9.
 
-### Photographic Suvichar subjects — 8 November 2026
+### Standalone Suvichar portraits — 11 November 2026
 
-A real shrine photograph uses `suvicharPhotoArt.ts` and a separate reviewed source/byte/hash/license ledger in `assets/suvichar/photos/`. Keep the original photographic identity and aspect; never generate an idol replacement. Print required image credit on the captured surface independently of scripture credit. Use the persistent shared cache and native decode/layout gate; no bundled photo, unbounded prefetch or share before paint. Existing painted-master provenance/publication checks still cover `suvicharPaintedDeities` exactly. A photo option may reuse explicitly reviewed paper/footer-only slices with its photographed hero; never expose the old painted deity in its card or thumbnail. Include all frame selectors, ready-made/custom selection, deity-specific content eligibility, weekday coverage, persistence and actual exports. Maintain existing default frame assignments when inserting new options. The first enabled photo (`ram-lalla`) uses a byte-verified Commons rendition; its paper masters remain on R2. A future host/encoding change needs updated provenance/hash and public-byte verification.
+`ram-lalla` now uses the exact generated front-facing card approved on 8 November, not the earlier PMO photograph. Preserve the lossless approved master, delivery/source hashes and request history under `assets/suvichar/portraits/`. The original full generation prompt is unavailable; never invent provenance. The legacy `suvicharPhotoArt.ts` API resolves the standalone portrait through `suvicharPortraitManifest.json`; `suvichar-portraits` is a registered R2 collection. A source file without its manifest/catalog entry is not an uploaded asset. Before merging activation, verify the public object’s full SHA-256. Post-merge R2 Upload rechecks/publishes registered objects; PR validation does not upload.
+
+Print **श्री राम लला / Shri Ram Lalla** without Ayodhya or the old photo credit. Preserve the stable `ram-lalla` ID, favorites, Ram content eligibility and Thursday coverage. `SuvicharPortraitImage` clips only the reviewed text-free scene (`x=.025, y=.082, w=.95, h=.482`) from the approved source, with aspect-preserving contain geometry shared by cards and selectors. Never display the source card’s baked message, sender, footer or branding as live content. Only the existing Rama masters’ reviewed paper/footer slices are reused. Keep editable scripture credit separate and retain the persistent cache, image decode/layout gate, cancellation and offline reuse. The historical PMO photo and rights ledger remain archived; they are not runtime delivery. Native four-script, Standard/Large and exported-file acceptance remain required.
 
 ### Suvichar personalization — 22 Oct 2026
 

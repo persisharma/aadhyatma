@@ -73,7 +73,7 @@ const { getSanskar } = jest.requireActual<typeof import('@/data/sanskar')>('@/da
 const ValmikiRamayanVersePage = jest.requireActual<typeof import('../ValmikiRamayanVersePage')>(
   '../ValmikiRamayanVersePage'
 ).default;
-const { getValmikiRamayanChapter } = jest.requireActual<typeof import('@/data/valmiki-ramayan')>(
+const { loadValmikiRamayanChapter } = jest.requireActual<typeof import('@/data/valmiki-ramayan')>(
   '@/data/valmiki-ramayan'
 );
 
@@ -183,8 +183,8 @@ describe('reader type scale — rendered per component', () => {
     expect(fontSizeOf(el, 'hi', verse.meaningHi)).toBe(MEANING_HI);
   });
 
-  test('ValmikiRamayanVersePage (Sundarkand re-export): verse above meaning at the token sizes', () => {
-    const verse = getValmikiRamayanChapter(1).verses[0];
+  test('ValmikiRamayanVersePage (Sundarkand re-export): verse above meaning at the token sizes', async () => {
+    const verse = (await loadValmikiRamayanChapter(1)).verses[0];
     const el = (
       <ValmikiRamayanVersePage verse={verse} sourceId="valmiki-ramayan" width={375} />
     );

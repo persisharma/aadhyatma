@@ -147,6 +147,14 @@ function renderAt(Screen: AnyScreen, routeName: string, chapter: number) {
   return { tree: tree!, navigation, data: list.props.data as any[], list };
 }
 
+// The Valmiki corpus is loaded, not required. These tests are about what the
+// reader does once its kāṇḍa is in memory, so put the three they open there
+// first; the load itself is covered in ValmikiRamayanReaderScreen.test.tsx.
+beforeAll(async () => {
+  const last = valmiki.valmikiRamayanChaptersManifest.length;
+  await Promise.all([1, 2, last].map((chapter) => valmiki.loadValmikiRamayanChapter(chapter)));
+});
+
 for (const r of READERS) {
   test(`${r.name}: swiping past the last page of chapter 1 reaches a "next" transition page`, () => {
     const { data } = renderAt(r.Screen, r.routeName, 1);

@@ -15,8 +15,10 @@ bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHea
 July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
 same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
 component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`. Valmiki
-Ramayan is the large-corpus case: its 23,289 verified verse records stay split across seven
-kāṇḍa JSON modules, and the accessor requires/caches only the kāṇḍa the reader opens. The Home,
+Ramayan is the large-corpus case and the one exception (11 Nov 2026): its 23,289 verse records are
+**not in the JS bundle**. They ship as 73 bundled asset parts generated from the kāṇḍa masters,
+and `loadValmikiRamayanChapter()` reads and caches a kāṇḍa asynchronously; the reader screen is
+a loader wrapping the unchanged reader, with a loading and a retry state (design.md §53). The Home,
 Daily Bhakti, and search paths use the 28-row `daily-selection.json` projection so they do not
 parse the complete epic during startup; the platform bundle still carries every kāṇḍa offline.
 
@@ -236,6 +238,12 @@ measured popularity ranking, and every item remains ineligible for release.
   `JumpToStartButton.tsx`, `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
 
 ## Gotchas
+
+- **Two answers to `./corpusSource`, chosen at bundle time.** `corpusSource.ts` reads the asset parts; `corpusSource.inbundle.ts` requires the masters. Metro picks by app version (`mobile/corpusDelivery.js`, threshold 1.5.7) so an OTA to an older store build keeps the corpus in the bundle. TypeScript and Jest always see `corpusSource.ts`; `valmikiBundleDelivery.jest.test.ts` loads every kāṇḍa through the in-bundle source and compares it byte for byte with the asset one. Keep the two files' exports identical, never import the in-bundle one by name, and put shared behaviour (validation, meaning fallback, caching) in `index.ts`, not in a source.
+- **The Valmiki masters must never be imported by app code (other than `corpusSource.inbundle.ts`), and the parts must be regenerated after any master edit.** `mobile/scripts/build-valmiki-assets.mjs` writes `assets/valmiki-ramayan/*.txt`, `parts.ts` and `sargaStarts.ts`; `valmikiAssets.test.ts` fails on an import of a master or on drift. One `import ch from './chapter-06.json'` puts 6.4 MB back into every OTA.
+- **The Valmiki reader mounts only with its kāṇḍa in memory.** `ValmikiRamayanReaderScreen` is a loader; `LoadedReader` is the reader. Do not merge them back: `currentIndex` is initialised from the opening verse, and a reader mounted before its verses exist would report verse 1 as the resume position.
+- **Auto-slide's hand-off is renewed across the Valmiki load.** The 3 s hand-off (`autoSlideStore.HANDOFF_MS`) is claimed by `useReaderPlayback`, which lives in `LoadedReader` and so mounts only after the kāṇḍa is in memory. `useAutoSlideCarriedAcrossLoad` (in `ValmikiRamayanReaderScreen.tsx`) notes a hand-off that is live when the screen opens on an unloaded kāṇḍa and calls `renewAutoSlideHandoff` in a layout effect when the text is ready — before the playback hook's passive effect claims it. Without it the slideshow stops silently at a kāṇḍa boundary whenever the load outlasts 3 s (found in the post-merge review, 11 Nov 2026). A lapsed hand-off is never revived; a failed load drops it. Any other reader that becomes asynchronous needs the same treatment.
+- **Tests read the real parts.** `jest/textAssetTransformer.js` turns a part's asset handle into its path and `jest.setup.js` replaces `partReader` with a file read, so `loadValmikiRamayanChapter` works in Jest. Load the kāṇḍa in `beforeAll` when a test needs the reader on its synchronous path.
 
 - **Auto-slide's `goToPage` must set the index itself where the pager tracks position via
   `onMomentumScrollEnd`** (Kids Stories, comic): a programmatic `scrollToIndex` never fires it on

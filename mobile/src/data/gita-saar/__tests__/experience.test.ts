@@ -6,7 +6,7 @@ import {
 import { gitaSaarExperiences } from '../experience';
 import { gitaSaarStories } from '../stories';
 import { getGitaChapter } from '../../gita';
-import { getValmikiRamayanChapter } from '../../valmiki-ramayan';
+import { loadValmikiRamayanChapter, valmikiSargaStartIndex } from '../../valmiki-ramayan';
 import illustrationManifest from '../../readerIllustrationManifest.json';
 test('all sixteen themes have distinct bilingual learning frames grounded in their own references', () => {
   expect(Object.keys(gitaSaarExperiences).sort()).toEqual(
@@ -51,7 +51,7 @@ test('all 170 existing pages retain the original reference identities and order'
   expect(total).toBe(170);
 });
 
-test('every theme has its own published illustration and a source-grounded three-beat story', () => {
+test('every theme has its own published illustration and a source-grounded three-beat story', async () => {
   const ids = gitaSaarChaptersManifest.map((theme) => theme.id);
   expect(Object.keys(gitaSaarStories).sort()).toEqual([...ids].sort());
   expect(new Set(ids.map((id) => gitaSaarStories[id].imageStem)).size).toBe(16);
@@ -68,11 +68,13 @@ test('every theme has its own published illustration and a source-grounded three
         expect(getGitaChapter(source.inAppRef.chapter).verses[source.inAppRef.verse - 1]?.number).toBe(source.inAppRef.verse);
       } else {
         const { kanda, sarga } = source.inAppRef;
-        expect(
-          getValmikiRamayanChapter(kanda).verses.some((verse) =>
-            verse.reference.startsWith(`${kanda}.${sarga}.`)
-          )
-        ).toBe(true);
+        const firstOfSarga = (await loadValmikiRamayanChapter(kanda)).verses.findIndex((verse) =>
+          verse.reference.startsWith(`${kanda}.${sarga}.`)
+        );
+        expect(firstOfSarga).toBeGreaterThanOrEqual(0);
+        // The reader opens the link from the generated table, without loading
+        // the kāṇḍa; it must name the same verse the loaded kāṇḍa does.
+        expect(valmikiSargaStartIndex(kanda, sarga)).toBe(firstOfSarga);
       }
     }
     const refs = theme.groups.flatMap((group) => group.verses.map((verse) => `${verse.ref.chapter}.${verse.ref.verse}`));

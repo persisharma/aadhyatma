@@ -9,6 +9,7 @@
 
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import type { Lang } from '@/data/gita/language';
 import {
   planFestiveReminders,
@@ -56,16 +57,11 @@ async function ensureFestiveChannel(): Promise<string | undefined> {
 
 /** Cancel every festive reminder we own, leaving other notifications untouched. */
 export async function cancelAllFestiveReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(FESTIVE_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await cancelNotificationFamily(FESTIVE_NOTIF_PREFIX);
 }
 
 /**
- * Re-arm festive reminders: cancel ours, then schedule the planned set (soonest
+ * Re-arm festive reminders: replace ours with the planned set (soonest
  * first, within the rolling window, under the dedicated cap). Idempotent and safe
  * to call on every app foreground. Returns the count actually scheduled.
  */
@@ -74,15 +70,13 @@ export async function scheduleFestiveReminders(
   now: Date = new Date(),
   lang: Lang = 'hi'
 ): Promise<number> {
-  await cancelAllFestiveReminders();
-
   const { planned } = planFestiveReminders(inputs, now);
-  if (planned.length === 0) return 0;
+  // An empty plan still means "hold nothing": it cancels ours.
+  if (planned.length === 0) return armNotificationFamily(FESTIVE_NOTIF_PREFIX, []);
 
   const channelId = await ensureFestiveChannel();
 
-  let scheduled = 0;
-  for (const p of planned) {
+  const slots: FamilySlot[] = planned.map((p) => {
     const { title, body } = formatFestiveReminderContent(p, lang);
     const payload: FestiveNotificationPayload = {
       type: 'festive-reminder',
@@ -90,26 +84,22 @@ export async function scheduleFestiveReminders(
       sourceId: p.sourceId,
       occurrenceDateKey: p.occurrenceDateKey,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-          ...(channelId !== undefined ? { channelId } : {}),
-        } as Notifications.NotificationTriggerInput,
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return armNotificationFamily(FESTIVE_NOTIF_PREFIX, slots);
 }

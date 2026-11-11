@@ -123,6 +123,20 @@ async function settle() {
   });
 }
 
+/**
+ * A fixed 200 ms delay can finish before React schedules the off-screen
+ * Story/Reel layout on a busy CI runner. Poll only in the test that expects a
+ * capture; tests asserting no capture retain the short settle() check.
+ */
+async function waitForCapture() {
+  for (let attempt = 0; attempt < 20 && mockCaptureRef.mock.calls.length === 0; attempt += 1) {
+    await act(async () => {
+      await new Promise<void>((resolve) => setTimeout(resolve, 100));
+    });
+  }
+  expect(mockCaptureRef).toHaveBeenCalled();
+}
+
 function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
   return tree.root.findAll(
     (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function'
@@ -181,7 +195,7 @@ describe('share target flow', () => {
     mockMeasuredHeight = 1800;
     const tree = await openPicker();
     await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
-    await settle();
+    await waitForCapture();
     expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 4170 / PixelRatio.get() });
   });
 
