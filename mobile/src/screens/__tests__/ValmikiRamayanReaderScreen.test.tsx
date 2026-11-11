@@ -176,6 +176,34 @@ describe('a kāṇḍa that is not in memory yet', () => {
   });
 });
 
+test('the next kāṇḍa starts loading while the last verses of this one are on screen', async () => {
+  // Kāṇḍa 6 is in memory from the test above; kāṇḍa 7 was refused and is not.
+  const sixth = await loadValmikiRamayanChapter(6);
+  expect(peekValmikiRamayanChapter(7)).toBeNull();
+  mount(6, sixth.verses.length - 3);
+  for (let i = 0; i < 400 && !peekValmikiRamayanChapter(7); i += 1) {
+    await act(async () => {
+      await new Promise<void>((resolve) => setImmediate(resolve));
+    });
+  }
+  expect(peekValmikiRamayanChapter(7)).not.toBeNull();
+});
+
+test('opening a kāṇḍa at its start does not load the next one', async () => {
+  // Kāṇḍa 2 has not been opened by any test above.
+  await loadValmikiRamayanChapter(1);
+  expect(peekValmikiRamayanChapter(2)).toBeNull();
+  const reads = mockReadPart.mock.calls.length;
+  mount(1, 0);
+  for (let i = 0; i < 20; i += 1) {
+    await act(async () => {
+      await new Promise<void>((resolve) => setImmediate(resolve));
+    });
+  }
+  expect(mockReadPart.mock.calls.length).toBe(reads);
+  expect(peekValmikiRamayanChapter(2)).toBeNull();
+});
+
 describe('a kāṇḍa already in memory', () => {
   test('renders its first verse on the very first commit — no loading state', async () => {
     const chapter = await loadValmikiRamayanChapter(1);
