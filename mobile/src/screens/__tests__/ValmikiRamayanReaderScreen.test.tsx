@@ -90,15 +90,24 @@ const textOf = (t: TestRenderer.ReactTestRenderer) =>
     .flat(Number.POSITIVE_INFINITY)
     .join(' ');
 const has = (t: TestRenderer.ReactTestRenderer, testID: string) => t.root.findAllByProps({ testID }).length > 0;
-/** Let the part reads, the parses and the yields between them run to the end. */
-async function settle() {
-  for (let i = 0; i < 400; i += 1) {
+/**
+ * Wait, in real time, until `done()` holds. Bounded by a clock rather than by
+ * a number of event-loop turns: how many turns a load takes depends on how fast
+ * the runtime spins them, which differs between Node versions and machines.
+ */
+async function waitFor(done: () => boolean, timeoutMs = 15_000) {
+  const deadline = Date.now() + timeoutMs;
+  while (!done() && Date.now() < deadline) {
     await act(async () => {
-      await new Promise<void>((resolve) => setImmediate(resolve));
+      await new Promise<void>((resolve) => setTimeout(resolve, 5));
     });
-    if (tree && !has(tree, 'valmiki-chapter-loading')) return;
   }
 }
+/** Let the part reads, the parses and the yields between them run to the end. */
+const settle = () => waitFor(() => !!tree && !has(tree, 'valmiki-chapter-loading'));
+
+// A cold first render of the reader plus a kāṇḍa read can take a few seconds.
+jest.setTimeout(30_000);
 
 afterEach(() => {
   act(() => tree?.unmount());
@@ -181,11 +190,7 @@ test('the next kāṇḍa starts loading while the last verses of this one are o
   const sixth = await loadValmikiRamayanChapter(6);
   expect(peekValmikiRamayanChapter(7)).toBeNull();
   mount(6, sixth.verses.length - 3);
-  for (let i = 0; i < 400 && !peekValmikiRamayanChapter(7); i += 1) {
-    await act(async () => {
-      await new Promise<void>((resolve) => setImmediate(resolve));
-    });
-  }
+  await waitFor(() => peekValmikiRamayanChapter(7) !== null);
   expect(peekValmikiRamayanChapter(7)).not.toBeNull();
 });
 
@@ -195,11 +200,8 @@ test('opening a kāṇḍa at its start does not load the next one', async () =>
   expect(peekValmikiRamayanChapter(2)).toBeNull();
   const reads = mockReadPart.mock.calls.length;
   mount(1, 0);
-  for (let i = 0; i < 20; i += 1) {
-    await act(async () => {
-      await new Promise<void>((resolve) => setImmediate(resolve));
-    });
-  }
+  // Long enough for a preload to have started and read its first parts.
+  await waitFor(() => false, 300);
   expect(mockReadPart.mock.calls.length).toBe(reads);
   expect(peekValmikiRamayanChapter(2)).toBeNull();
 });
