@@ -352,7 +352,7 @@ struct VedanshWidgetView: View {
   // its own saffron-tinted band; sunrise and branding share the footer.
   // This only formats already-validated, localized payload fields: no native
   // Panchang calculation, network work or added artwork.
-  private func smallPanchang(_ p: PanchangDay, running: PanchangTithi,
+  private func smallPanchang(_ p: PanchangDay, running: (name: LocalizedText, till: LocalizedText?),
                              city: String, lang: String, compact: Bool) -> some View {
     VStack(alignment: .leading, spacing: compact ? 3 : 6) {
       HStack(spacing: 4) {
