@@ -259,7 +259,9 @@ struct VedanshWidgetView: View {
                                artFraction: 0, fontSize: family == .systemLarge ? 15 : 14,
                                separated: false, condensed: true)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            // Centre shorter complete verses in the wide canvas instead of
+            // leaving a conspicuous unused lower half beneath the artwork.
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
           }
         }
         .widgetURL(URL(string: v.deepLink))
@@ -306,11 +308,20 @@ struct VedanshWidgetView: View {
           .truncationMode(.tail)
           .fixedSize(horizontal: false, vertical: !condensed)
       }
-      Rectangle().fill(palette.gold.opacity(0.42)).frame(height: 1)
-      Text(v.source.value(lang))
-        .font(.custom(fontName(lang, bold: true), size: 10))
-        .foregroundStyle(palette.inkMuted)
-        .fixedSize(horizontal: false, vertical: true)
+      HStack(spacing: 5) {
+        Rectangle().fill(palette.gold.opacity(0.42)).frame(height: 1)
+        Image(systemName: "diamond.fill").font(.system(size: 5))
+          .foregroundStyle(palette.gold).accessibilityHidden(true)
+        Rectangle().fill(palette.gold.opacity(0.42)).frame(height: 1)
+      }
+      HStack(alignment: .firstTextBaseline, spacing: 4) {
+        Image(systemName: "book.closed.fill").font(.system(size: 9))
+          .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+        Text(v.source.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .foregroundStyle(palette.inkMuted)
+          .fixedSize(horizontal: false, vertical: true)
+      }
       if condensed {
         Text(readFullVerseKicker(lang))
           .font(.custom(fontName(lang, bold: true), size: 10))
@@ -336,6 +347,83 @@ struct VedanshWidgetView: View {
       : "पूरा श्लोक पढ़ने के लिए टैप करें ›"
   }
 
+  // A small Panchang is a devotional glance, not a compressed text list. The
+  // date/city is a quiet masthead; the tithi is the hero; an actual vrat gets
+  // its own saffron-tinted band; sunrise and branding share the footer.
+  // This only formats already-validated, localized payload fields: no native
+  // Panchang calculation, network work or added artwork.
+  private func smallPanchang(_ p: PanchangDay, running: PanchangTithi,
+                             city: String, lang: String, compact: Bool) -> some View {
+    VStack(alignment: .leading, spacing: compact ? 3 : 6) {
+      HStack(spacing: 4) {
+        Image(systemName: "sun.max.fill")
+          .font(.system(size: 9, weight: .semibold))
+          .accessibilityHidden(true)
+        Text("\(p.representedDate.value(lang)) · \(city)")
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .lineLimit(1).minimumScaleFactor(0.85)
+      }
+      .foregroundStyle(palette.saffronDeep)
+
+      VStack(alignment: .leading, spacing: 1) {
+        Text(running.name.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: compact ? 21 : 25))
+          .foregroundStyle(palette.ink)
+          .lineLimit(2).minimumScaleFactor(0.85)
+          .fixedSize(horizontal: false, vertical: true)
+        if let till = running.till {
+          Text(till.value(lang))
+            .font(.custom(fontName(lang, bold: false), size: compact ? 10 : 11))
+            .foregroundStyle(palette.inkMuted)
+            .lineLimit(1).minimumScaleFactor(0.85)
+        }
+      }
+
+      if let vrat = p.vrat {
+        HStack(spacing: 5) {
+          RoundedRectangle(cornerRadius: 2)
+            .fill(palette.saffronDeep).frame(width: 3)
+            .accessibilityHidden(true)
+          Text(vrat.value(lang))
+            .font(.custom(fontName(lang, bold: true), size: compact ? 10 : 11))
+            .foregroundStyle(palette.ink)
+            .lineLimit(2).minimumScaleFactor(0.85)
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, compact ? 5 : 7)
+        .padding(.vertical, compact ? 3 : 5)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(palette.saffronDeep.opacity(palette.night ? 0.16 : 0.09),
+                    in: RoundedRectangle(cornerRadius: 8))
+      }
+
+      HStack(spacing: 4) {
+        Image(systemName: "sunrise.fill")
+          .font(.system(size: 9, weight: .semibold))
+          .foregroundStyle(palette.saffronDeep)
+          .accessibilityHidden(true)
+        Text(p.sunrise.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: 9))
+          .foregroundStyle(palette.inkMuted)
+          .lineLimit(1).minimumScaleFactor(0.85)
+        Spacer(minLength: 1)
+        Text("ॐ वेदांश़")
+          .font(.custom("NotoSerifDevanagari-SemiBold", size: 9))
+          .foregroundStyle(palette.gold)
+          .lineLimit(1).minimumScaleFactor(0.9)
+      }
+      .padding(.top, compact ? 4 : 7)
+      .overlay(alignment: .top) {
+        Rectangle().fill(palette.gold.opacity(0.55)).frame(height: 1)
+          .accessibilityHidden(true)
+      }
+    }
+    .padding(.vertical, 2)
+    // Intrinsic height lets WidgetKit select the decorative or compact
+    // composition by real Indic glyph layout, not a character-count guess.
+    .fixedSize(horizontal: false, vertical: true)
+  }
+
   // MARK: - आज का पंचांग
   // Small is the glance (date, tithi, sunrise); medium adds Rahu Kaal on one line;
   // large gives every window its own labelled row, Abhijit included.
@@ -357,6 +445,14 @@ struct VedanshWidgetView: View {
         Text(p.vrat?.value(lang) ?? running.name.value(lang))
           .widgetURL(URL(string: p.deepLink))
           .accessibilityLabel("\(p.representedDate.value(lang)), \(running.name.value(lang))")
+      } else if family == .systemSmall {
+        ViewThatFits(in: .vertical) {
+          smallPanchang(p, running: running, city: payload.panchang.cityLabel.value(lang), lang: lang, compact: false)
+          smallPanchang(p, running: running, city: payload.panchang.cityLabel.value(lang), lang: lang, compact: true)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .widgetURL(URL(string: p.deepLink))
+        .accessibilityElement(children: .combine)
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
