@@ -112,7 +112,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
                 <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{day.vrat[lang]}</Text>
               </View> : null}
               <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', borderTopWidth: 1, borderTopColor: panchangPalette.gold, paddingTop: 7 }}>
-                <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 9, color: panchangPalette.inkMuted }}>{day.sunrise[lang]}</Text>
+                <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{day.sunrise[lang]}</Text>
                 <Text style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 9, color: panchangPalette.gold }}>ॐ वेदांश़</Text>
               </View>
             </View> : <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{recovery}</Text>}
