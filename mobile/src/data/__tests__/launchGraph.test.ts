@@ -106,6 +106,9 @@ const FORBIDDEN = [
   /^src\/screens\/DailyBhaktiScreen\.tsx$/,
   /^src\/data\/gita\/chapter-\d+\.json$/,
   /^src\/data\/valmiki-ramayan\/chapter-\d+\.json$/,
+  // The Valmiki corpus is bundled as asset files. Neither their handles nor the
+  // native reader behind them belongs on the launch path.
+  /^src\/data\/valmiki-ramayan\/(parts|partReader)\.ts$/,
   /^src\/panchang\/pincode(Data|Offices)\.json$/,
   // The shared artwork loader is eager, but puja metadata is needed only when
   // opening a guide. Keep that category behind its request-time require().

@@ -148,7 +148,7 @@ Exact paths, in build order. Each row maps to a Phase-C step in `/add-section`.
 may statically import its `chapters-manifest.json` and nothing else. Every verse
 payload must sit behind a `require()` thunk resolved by `get<Section>Chapter()`,
 with that chapter's invariant check run on first load — the shape
-`valmiki-ramayan/index.ts` and `gita/index.ts` both use. This is not a
+`gita/index.ts` uses. This is not a
 micro-optimisation. Metro bundles every static import reachable from `index.ts`
 and Hermes evaluates all of it before the first frame, so one eager
 `import ch18 from './chapter-18.json'` in a module that anything on the launch
@@ -162,6 +162,26 @@ never a payload. **Gate:** `src/data/__tests__/launchGraph.test.ts` walks the re
 static import graph from `index.ts` and fails if a payload is reachable (it prints
 the import chain) or if the graph exceeds its byte budget. Never raise the budget
 to make it pass, and never add a payload to an allowlist — fix the importer.
+
+**A corpus too large for the bundle ships as assets (Nov 2026).** Lazy loading keeps
+a payload off the *launch path*; it does not keep it out of the *bundle*. Every
+`require()`d JSON is compiled into the Hermes bundle, which every OTA update
+downloads whole. `valmiki-ramayan` (27 MB) is the worked case and the pattern for
+anything of that order:
+1. The JSON masters stay where they are and remain the source of truth for
+   provenance, the corpus tests and the builder. **No app module may import one**
+   (`src/data/__tests__/valmikiAssets.test.ts` fails if any does).
+2. `mobile/scripts/build-valmiki-assets.mjs` writes the parts the app reads
+   (`mobile/assets/valmiki-ramayan/*.txt`), the part table (`parts.ts`) and the
+   sarga table (`sargaStarts.ts`). **Re-run it after any change to a master**;
+   `--check` runs inside the same test and fails on drift.
+3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches the part
+   table and the native reader only through `require()` thunks, and the reader
+   screen owns a loading and a retry state (design.md §53).
+4. **Release order.** An OTA published to a runtime whose store binary does not
+   already contain these assets makes that update download all of them once
+   (27 MB in 73 files) before it can apply. Publish such an update only to
+   runtimes at or after the store build that embeds them.
 
 **Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 
@@ -445,7 +465,7 @@ Ship the full canonical version (all verses) only after internet verification. M
 ### 11.6 No fabricated content
 Every line in a content file must exist in at least one published source. Fake closing verses, paraphrased refrains, composite mashups from different texts = hard reject. If a line appears in zero internet sources, it is fabricated and must be removed. Origin: "हनुमत बीर सकल दुख भावे" (Hanuman Aarti closing) appeared in zero published sources.
 
-**Scraper residue is not a meaning.** A meaning field that holds website navigation text, an upstream placeholder (`Missing`, `In Progress`) or the verse's own Sanskrit is as wrong as a fabricated line. Write that field blank in the builder and fall back to the verse's other *sourced* meaning at load time — never fill it from memory or machine translation. `valmiki-ramayan` is the worked case (Nov 2026: 80 Hindi + 5 English rows): `scripts/build-valmiki-ramayan.py` pins the per-kāṇḍa blank counts (`EXPECTED_BLANK_MEANINGS`), `getValmikiRamayanChapter` applies `withMeaningFallback`, and `contentCorrectness.test.ts` + `valmikiMeaningFallback.jest.test.ts` fail on residue, on both sides blank, and on a count that grows. The count may only shrink, when the published text is captured.
+**Scraper residue is not a meaning.** A meaning field that holds website navigation text, an upstream placeholder (`Missing`, `In Progress`) or the verse's own Sanskrit is as wrong as a fabricated line. Write that field blank in the builder and fall back to the verse's other *sourced* meaning at load time — never fill it from memory or machine translation. `valmiki-ramayan` is the worked case (Nov 2026: 80 Hindi + 5 English rows): `scripts/build-valmiki-ramayan.py` pins the per-kāṇḍa blank counts (`EXPECTED_BLANK_MEANINGS`), `loadValmikiRamayanChapter` applies `withMeaningFallback`, and `contentCorrectness.test.ts` + `valmikiMeaningFallback.jest.test.ts` fail on residue, on both sides blank, and on a count that grows. The count may only shrink, when the published text is captured.
 
 ### 11.7 Both platforms per change
 Every content/data change must be verified on both iOS and Android before OTA push. Bundle and test on both platforms — a rendering issue on one platform (especially with Devanagari fonts) may not appear on the other.
