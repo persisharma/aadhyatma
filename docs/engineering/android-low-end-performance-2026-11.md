@@ -28,7 +28,7 @@ The work is split by how it ships:
 
 - **Stall, not duration.** `backgroundAssetCache` abandons a download when no byte arrives for 8 s, not after 8 s in total. An offline phone still settles to its fallback after 8 s. One attempt holds a slot for at most 2 minutes.
 - **Resume on Android.** An interrupted attempt (stall, ceiling, viewer leaving, network drop) keeps its bytes; the next request sends `Range`. iOS restarts.
-- **`assetCache`** (kids stories, comics, audio) uses the same transfer with a 15 s stall limit and no ceiling.
+- **`assetCache`** (kids stories, comics, audio) uses the same transfer with no ceiling and a stall limit of 15 s on Android, 60 s on iOS (see §6).
 - A completed download is stored even if its last viewer has just left.
 
 How many files could **never** finish before, at a steady link speed with 1.5 s of connection setup (`scripts/perf-report.mts`):
@@ -113,3 +113,18 @@ The queue holds the same 37 notifications in every case. A relaunch still schedu
 ## 5. Baseline for the store-build work — **built**
 
 `npx expo export --platform android` on `main` at `729a96e`: Hermes bundle **51.7 MB** (51,709,334 bytes), **16.3 MB gzipped**. That is what every OTA downloads today.
+
+## 6. Post-merge review (11 November 2026)
+
+Both halves were merged to `main` (`d4a5a8b`) with the pending checks in §3 still pending. An independent review of the merged diff then found the following in this half. None changes a figure in §2. Each fix has a test that fails on `d4a5a8b`.
+
+| Finding | Effect | Status |
+|---|---|---|
+| A viewer leaving while the downloader was clearing its scratch path was not noticed: the cancel check ran before that wait and the abort handle was registered after it. | The download started anyway and held one of the two background slots until it finished, stalled or hit the 2-minute ceiling. | **Fixed** — the check is the last thing before the transfer starts. |
+| Any non-206 answer to a resumed request turned resuming off for the whole session, including a 503 or 429. | One flaky answer sent every later interrupted download back to byte 0 — the cost §2.1 exists to remove. | **Fixed** — only an answer that shows `Range` being ignored does that; an error status costs that one file its kept bytes. |
+| A download that finished kept its progress listener: the legacy task removes it only when cancelled or paused. | One listener per completed file for the life of the process, each handed every later progress event. New with this work, which added the progress callback. | **Fixed** — the finished task is released. |
+| The kids-story / comic / audio cache gave up after 15 s without a byte on every platform. iOS's own client used to wait 60 s, and iOS cannot resume. | On iOS, a download that paused for 15–60 s on a poor link was abandoned and restarted from byte 0 where it used to continue. (Android's client used to give up at 10 s, so 15 s with kept bytes is the more patient there.) | **Fixed** — 60 s on iOS, 15 s on Android. Found in the author's own pass, not by the independent review. |
+| On a constrained phone, an arrival in the instant a warm-up pass ran dry was handed the finished pass as if it were running. | The screens just asked for stayed cold until the next navigation. A narrow window. | **Fixed** — the pass gives up in the same turn it finds nothing. |
+
+Also checked and found sound: all ten notification families go through `familyArm` and nothing else cancels or schedules their identifiers; no two family prefixes overlap; none uses a relative (seconds-from-now) trigger, so "an identical plan is not re-armed" cannot hold a reminder at a stale time.
+

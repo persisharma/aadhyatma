@@ -16,7 +16,7 @@
  *   3. No silent corruption — a failed download propagates (never a blank
  *      fallback) and leaves nothing stored, so the next mount retries cleanly.
  */
-import { ASSET_DOWNLOAD_STALL_MS, cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
+import { ASSET_DOWNLOAD_STALL_MS, assetDownloadStallMs, cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
 import { resetResumableDownloadsForTests } from '@/utils/resumableDownload';
 
 /**
@@ -295,4 +295,12 @@ describe('slow and interrupted connections', () => {
     await expect(pending).resolves.toBe('failed');
     expect(fsState.files.has('file:///doc/kids-stories/a3f9c2.webp')).toBe(false);
   });
+});
+
+test('the stall limit is never stricter than the platform’s own client was', () => {
+  // Android's client gave up after 10 s without a byte; resuming keeps what arrived.
+  expect(assetDownloadStallMs('android')).toBe(15_000);
+  // iOS's waits 60 s and cannot resume, so an earlier cut-off would discard a download that was only waiting.
+  expect(assetDownloadStallMs('ios')).toBe(60_000);
+  expect([15_000, 60_000]).toContain(ASSET_DOWNLOAD_STALL_MS);
 });

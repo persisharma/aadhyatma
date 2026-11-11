@@ -392,11 +392,14 @@ visit below that. One attempt still holds a slot for at most two minutes
 viewer leaving, the network dropping — keeps the bytes it received, and the next request for that
 picture asks the CDN only for the rest (`Range`); iOS restarts it. A resumed file is promoted
 only after three checks agree (the resumed response reports the original total, is HTTP 206, and
-the finished file is exactly that length); the first failure discards the bytes and turns
-resuming off for the session. Resume state lives in memory only, and scratch files left by a
+the finished file is exactly that length); a response that fails any of them is discarded. One
+that shows `Range` being ignored (a different total, a whole 2xx body, a wrong final length) also
+turns resuming off for the session; an error status (5xx, 429, 404) costs only that file its kept
+bytes. Resume state lives in memory only, and scratch files left by a
 killed process are swept once per process, never reused. A download that completes just as its
 last viewer leaves is still stored. The kids-story, comic and audio cache (`assetCache`) shares
-the same transfer with a 15-second stall limit and no ceiling. Shared code:
+the same transfer with no ceiling and a stall limit of 15 seconds on Android and 60 on iOS (the
+system's own idle limit there, because iOS cannot resume). Shared code:
 `utils/resumableDownload.ts`; gates: `utils/__tests__/backgroundAssetCache.test.ts`,
 `assetCache.test.ts`.
 
@@ -2934,7 +2937,12 @@ from real data.
   (14/22; Inter in English, the script serif otherwise). gu/kn re-script both through `contentByLang`.
 - *Not a kāṇḍa number* → redirected to the chapters index, as every chaptered reader does.
 The next kāṇḍa starts loading when the reader is within eight verses of the end, so the automatic
-hand-over opens on text. A `kāṇḍa.sarga` link from Gita Saar is resolved from the generated
+hand-over opens on text. Auto-slide crosses the boundary through its 3 s hand-off
+(`autoSlideStore.HANDOFF_MS`), which the reader claims — and the reader mounts only after the load.
+So a hand-off that is live when the screen opens on a kāṇḍa it still has to load is renewed the
+moment the text is ready: the slideshow carries on however long the load took. One that had
+already lapsed is not revived, and a failed load drops it — after Retry the slideshow is started
+by hand. A `kāṇḍa.sarga` link from Gita Saar is resolved from the generated
 `sargaStarts.ts` and loads nothing until the reader opens.
 
 **Loading and cross-feature budget.** `texts.ts` reads the lightweight manifest total without
@@ -3601,7 +3609,7 @@ Full-screen, one step per page, a horizontal paged `FlatList` exactly like the r
 
 **The reveal pipeline (`mobile/App.tsx`).**
 1. `SplashScreen.preventAutoHideAsync()` at module scope; the derived-cache reset and `prefetchTodayPanchang()` start beside it (§60) so storage is already in flight before React renders anything.
-2. The five font families gate the provider tree (`fontsReady`). **Android store builds embed all fifteen font files** (`app.json` → `expo-font` → `android.fonts`), so `useFonts` finds every family already registered and is `true` on the first render — the gate costs nothing there. An older binary, and iOS, still load them at runtime as described next. In either case — an unloaded family silently falls back to the system font (§3), so no text renders before the real faces exist. A font that **fails** to register fails open (`fontsReady = fontsLoaded || fontError != null`): the app opens with fallback glyphs for that family rather than holding launch forever. Until fonts and the start target resolve, App renders **`LaunchCover`** — a full-screen `brandIvory` (`#FFF1D5`) view with a dark status bar.
+2. The five font families gate the provider tree (`fontsReady`). **Android store builds embed all fifteen font files** (`app.json` → `expo-font` → `android.fonts`), so `useFonts` finds every family already registered and is `true` on the first render — the gate costs nothing there. The unchanged `useFonts` map still bundles the same files as Metro assets (it is what keeps an older binary working), so an Android store build carries them twice — 5.6 MB before compression, a known cost recorded in `docs/engineering/android-low-end-performance-native-2026-11.md` §7. An older binary, and iOS, still load them at runtime as described next. In either case — an unloaded family silently falls back to the system font (§3), so no text renders before the real faces exist. A font that **fails** to register fails open (`fontsReady = fontsLoaded || fontError != null`): the app opens with fallback glyphs for that family rather than holding launch forever. Until fonts and the start target resolve, App renders **`LaunchCover`** — a full-screen `brandIvory` (`#FFF1D5`) view with a dark status bar.
 3. **`AppReadyGate`** holds the splash until the two **layout-critical** preferences have hydrated — font scale and reading language — because both change Home geometry. The native splash hides on particle-canvas readiness after hydration; bypasses release it immediately. While the reveal is disabled (§2.1) every launch is a bypass, so the splash hides as soon as hydration completes. While hydrating, the gate also renders `LaunchCover`.
    - **Android never holds the native splash past React's first frame.** expo-splash-screen holds by vetoing the activity's first draw; an undrawn window has no input focus, so a Back press past 5 s is a "No focused window" ANR (Play clusters, Nov 2026). `LaunchCover` calls `SplashScreen.hideAsync()` once on its first layout (Android only; retried on the next layout if it rejects), so the colour-identical cover — not the native splash — hides Home until it is final. New builds go further: `plugins/withAndroidLaunchWindow.js` calls `SplashScreenManager.hide()` in `MainActivity.onCreate` before the first draw and sets `AppTheme`'s `android:windowBackground` to `@color/vedansh_launch_window` (`#FFF1D5`), so every pre-React frame is splash ivory instead of the DayNight default. iOS keeps the native hold. On Android 12/12L (API 31–32) the expo-splash-screen exit fade is not registered (`patches/expo-splash-screen+31.0.13.patch`), because registering it triggers the framework splash-view transfer that crashes on those versions (Play Vitals, Nov 2026). The system removes its own blank ivory splash instead, which looks the same over `LaunchCover`. Normal formation retains the final canvas over the app's first mount; native content layout, two animation frames and a 180ms native cover fade complete the handoff (§2.1), without remounting navigation.
 4. **Safe-area insets are seeded, not awaited**: the root `SafeAreaProvider` receives `initialMetrics={initialWindowMetrics}`. Without it the provider renders nothing until the first native inset event crosses the launch-busy JS thread, and the tree then mounts on whatever that event carried — on Android cold starts under `edgeToEdgeEnabled` that can be a pre-attach zero, so Home painted flush under the status bar, sat unresponsive behind the mount burst, and lurched down by the status-bar height when the corrected insets applied (the August 2026 "launch jerk" report). With the seed, the first committed frame carries its final insets and any later inset event is a no-op.

@@ -358,6 +358,28 @@ describe('screenPrefetch on a constrained phone', () => {
     expect(order).toEqual(['near', 'child-of-current', 'grandchild']);
   });
 
+  it('an arrival in the instant a pass runs dry still starts the next one', async () => {
+    const order: string[] = [];
+    entries(order)('asked-for-late', 3);
+    registerPrefetch({
+      label: 'near',
+      depth: 2,
+      load: () => {
+        order.push('near');
+        // Lands after the walk has looked for more work and found none, and
+        // before anything that reacts to the walk's own promise has run — the
+        // window in which a finished walk used to still read as "running".
+        queueMicrotask(() => queueMicrotask(() => prioritise(['asked-for-late'])));
+        return Promise.resolve();
+      },
+    });
+
+    await startScreenPrefetch({ yieldToUI: async () => {}, constrained: true });
+    await new Promise<void>((resolve) => setImmediate(resolve));
+
+    expect(order).toEqual(['near', 'asked-for-late']);
+  });
+
   it('a screen prioritised before the walk starts is warmed with the first pass', async () => {
     const order: string[] = [];
     const entry = entries(order);

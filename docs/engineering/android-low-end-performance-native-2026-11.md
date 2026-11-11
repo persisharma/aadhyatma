@@ -75,3 +75,16 @@ So: merge this with the store build that embeds the assets, and publish OTAs fro
 - **Pincode tables (4.2 MB) and the Gītā (6.3 MB) stay in the bundle.** Both are read through synchronous accessors used across location, Kundali, search, Daily Bhakti and the readers. Moving them is a wider change than the corpus above and should be its own piece of work; the pincode tables are the better candidate.
 - **Fonts are not embedded on iOS.** An embedded iOS font is addressed by its PostScript name, not its file name, so it would not satisfy the same `useFonts` map.
 - **R8 is on by default in this PR, not behind a flag.** To back it out, remove `./plugins/withAndroidReleaseShrink.js` from `app.json`.
+
+## 7. Post-merge review (11 November 2026)
+
+Both halves were merged to `main` (`d4a5a8b`) with the pending checks in §4 still pending. An independent review of the merged diff then found the following in this half. Each fix has a test that fails on `d4a5a8b`.
+
+| Finding | Effect on a store build | Status |
+|---|---|---|
+| Resource shrinking was on, but the three Japam alarm sounds are raw resources found only by `getIdentifier(<mantra id>, "raw", …)` (`JapamAlarmReceiver.kt`); Expo's `keep.xml` lists Metro assets, not these. | The shrinker would empty or drop them: the alarm rings silent, or falls back to the system tone. No crash, so a launch test would not show it. | **Fixed.** The plugin writes `res/raw/vedansh_release_keep.xml` (`tools:keep="@raw/*"`). A guard test fails when app-owned native code looks up any resource type by name that has no keep entry. Still **PENDING** on a real build: an alarm ringing with its own sound. |
+| Auto-slide's 3 s hand-off is claimed by the reader, which now mounts only after the kāṇḍa has loaded. | Hands-free reading stopped at a kāṇḍa boundary whenever the next kāṇḍa took longer than the window to load (preload missed, or play started on the last pages of a large kāṇḍa on a slow phone). | **Fixed.** A hand-off that is live when the screen opens is renewed when the text is ready; a lapsed one is not revived and a failed load drops it. |
+| The fifteen fonts are in the Android binary twice: embedded under `assets/fonts`, and still bundled as Metro assets because the `useFonts` map is unchanged. | 5,555,316 bytes carried twice before compression. The effect on download and install size has not been measured. | **Not changed — a decision.** The unchanged map is what lets the same JS run on a binary without embedded fonts. Dropping the Metro copies on Android (a platform-split font map) removes the duplicate, and from then on an OTA of that tree to an older Android binary would render in fallback fonts. Take it together with the release-order rule in §5, after an APK has been measured. |
+
+Not changed: `_useValmikiChapter.validChapter` repeats the range check in the data module (a duplicate, not a defect).
+

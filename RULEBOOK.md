@@ -163,6 +163,18 @@ static import graph from `index.ts` and fails if a payload is reachable (it prin
 the import chain) or if the graph exceeds its byte budget. Never raise the budget
 to make it pass, and never add a payload to an allowlist — fix the importer.
 
+**A native resource found by name needs a keep entry (Nov 2026).** Android release
+builds shrink resources (`plugins/withAndroidReleaseShrink.js`), and the shrinker
+empties or drops anything it cannot see a reference to. A resource reached through
+`getIdentifier` with a name built at runtime is exactly that: the Japam alarm sounds
+(`app.json` → `expo-notifications` → `sounds[]`, copied to `res/raw`, found by mantra
+id) and the widget backgrounds. Raw resources are all kept by
+`res/raw/vedansh_release_keep.xml`, which the plugin writes; widget drawables by the
+widget plugin's own keep file. Adding a lookup of any other resource type from
+app-owned native code fails `AndroidReleaseShrinkPlugin.test.ts` until it has a
+`tools:keep` entry. A shrunk alarm sound does not crash — it rings silent — so this
+is never caught by a launch test.
+
 **A corpus too large for the bundle ships as assets (Nov 2026).** Lazy loading keeps
 a payload off the *launch path*; it does not keep it out of the *bundle*. Every
 `require()`d JSON is compiled into the Hermes bundle, which every OTA update
