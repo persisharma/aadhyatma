@@ -108,6 +108,15 @@ jobs:
       - name: Build, install and launch on iOS Simulator
         if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
         run: bash scripts/native-ios-smoke.sh
+      - name: Capture placed WidgetKit visual evidence (best effort)
+        if: success()
+        continue-on-error: true
+        run: |
+          node scripts/run-native-diagnostic.cjs --timeout-ms 240000 maestro --device "$SIMULATOR_UDID" test \
+            --config .maestro/config.yaml --format junit \
+            --output "$GITHUB_WORKSPACE/native-output/widget-visual.xml" \
+            .maestro/home-widgets-visual-capture.yaml \
+            > "$GITHUB_WORKSPACE/native-output/widget-visual.log" 2>&1
       - name: Retain native build and launch evidence
         if: always()
         uses: actions/upload-artifact@v4
