@@ -13,7 +13,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Search Widgets"
 - inputText: "Vedansh"
 - tapOn: "Vedansh"
-- takeScreenshot: "../native-output/widget-picker-native"
+- takeScreenshot: "widget-picker-native"
 - tapOn: "Add Widget"
 - waitForAnimationToEnd
-- takeScreenshot: "../native-output/widget-homescreen-native"
+- takeScreenshot: "widget-homescreen-native"
