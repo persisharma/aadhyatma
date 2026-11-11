@@ -333,11 +333,9 @@ struct VedanshWidgetView: View {
   }
 
   // MARK: - आज का श्लोक
-  // Short verses keep a generous illustrated right margin. Longer verses give
-  // back that space and eventually use the full width. ViewThatFits measures
-  // rendered SwiftUI text (including Indic glyph shaping) instead of guessing
-  // from String.count. Full-text candidates cannot silently truncate: their
-  // intrinsic heights decide whether the next composition is needed.
+  // Visual contract: ornate brand centered above a saffron ribbon, readable
+  // Sanskrit in a left ink-safe zone, an integrated scripture credit, and
+  // vibrant deity painting on the right. All visible text remains native.
   @ViewBuilder private func verse(_ payload: WidgetPayload) -> some View {
     let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
     let lang = payload.locale
@@ -346,10 +344,11 @@ struct VedanshWidgetView: View {
         Group {
           if family == .systemSmall {
             VStack(alignment: .leading, spacing: 6) {
-              Text(verseKicker(lang)).font(.custom(fontName(lang, bold: true), size: 10))
+              Text(verseKicker(lang))
+                .font(.custom(fontName(lang, bold: true), size: 11))
                 .foregroundStyle(palette.saffronDeep)
               Text(v.excerpt.value(lang))
-                .font(.custom(fontName(lang, bold: false), size: 13))
+                .font(.custom(fontName(lang, bold: false), size: 14))
                 .foregroundStyle(palette.ink)
                 .lineLimit(4).minimumScaleFactor(0.9)
               Spacer(minLength: 0)
@@ -357,24 +356,40 @@ struct VedanshWidgetView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
           } else {
-            // The first complete composition that *actually fits* wins.
-            // Long stotras can remain complete on Large even when a medium
-            // widget must explicitly offer a tap-to-read preview.
-            ViewThatFits(in: .vertical) {
-              verseComposition(v, lang: lang, width: geometry.size.width,
-                               artFraction: 0.32, fontSize: family == .systemLarge ? 19 : 16,
-                               separated: family == .systemLarge, condensed: false)
-              verseComposition(v, lang: lang, width: geometry.size.width,
-                               artFraction: 0.16, fontSize: family == .systemLarge ? 17 : 15,
-                               separated: family == .systemLarge, condensed: false)
-              verseComposition(v, lang: lang, width: geometry.size.width,
-                               artFraction: 0, fontSize: family == .systemLarge ? 16 : 14,
-                               separated: false, condensed: false)
-              verseComposition(v, lang: lang, width: geometry.size.width,
-                               artFraction: 0, fontSize: family == .systemLarge ? 15 : 14,
-                               separated: false, condensed: true)
+            VStack(alignment: .leading, spacing: 5) {
+              HStack(spacing: 8) {
+                Rectangle().fill(palette.gold.opacity(0.56)).frame(height: 1)
+                Image(systemName: "leaf.fill").font(.system(size: 9, weight: .regular))
+                  .foregroundStyle(palette.gold).accessibilityHidden(true)
+                Text("ॐ वेदांश")
+                  .font(.custom("NotoSerifDevanagari-SemiBold", size: family == .systemLarge ? 19 : 15))
+                  .foregroundStyle(palette.ink)
+                  .fixedSize()
+                Image(systemName: "leaf.fill").font(.system(size: 9, weight: .regular))
+                  .foregroundStyle(palette.gold).scaleEffect(x: -1, y: 1).accessibilityHidden(true)
+                Rectangle().fill(palette.gold.opacity(0.56)).frame(height: 1)
+              }
+              .padding(.horizontal, family == .systemLarge ? 16 : 36)
+              .accessibilityHidden(true)
+              Spacer(minLength: 0)
+              ViewThatFits(in: .vertical) {
+                verseComposition(v, lang: lang, width: geometry.size.width,
+                                 artFraction: 0.32, fontSize: family == .systemLarge ? 21 : 18,
+                                 separated: family == .systemLarge, condensed: false)
+                verseComposition(v, lang: lang, width: geometry.size.width,
+                                 artFraction: 0.16, fontSize: family == .systemLarge ? 18 : 16,
+                                 separated: family == .systemLarge, condensed: false)
+                verseComposition(v, lang: lang, width: geometry.size.width,
+                                 artFraction: 0, fontSize: family == .systemLarge ? 16 : 14,
+                                 separated: false, condensed: false)
+                verseComposition(v, lang: lang, width: geometry.size.width,
+                                 artFraction: 0, fontSize: family == .systemLarge ? 15 : 14,
+                                 separated: false, condensed: true)
+              }
+              Spacer(minLength: 0)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.horizontal, 2)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
           }
         }
         .widgetURL(URL(string: v.deepLink))
@@ -384,26 +399,28 @@ struct VedanshWidgetView: View {
     } else { recovery("विजेट ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
   }
 
-  // A compositional variant, not a different verse: source, full lines and
-  // deep-link identity are unchanged. Zero artFraction means the underlying
-  // right-side sketch remains decorative; a parchment wash restores contrast
-  // wherever the text must cross it.
   private func verseComposition(_ v: VerseDay, lang: String, width: CGFloat,
                                 artFraction: CGFloat, fontSize: CGFloat,
                                 separated: Bool, condensed: Bool) -> some View {
     let reserved = art == nil ? CGFloat(0) : width * artFraction
-    return VStack(alignment: .leading, spacing: 5) {
-      HStack(alignment: .center, spacing: 5) {
+    return VStack(alignment: .leading, spacing: family == .systemLarge ? 8 : 5) {
+      HStack(spacing: 5) {
+        Image(systemName: "leaf.fill")
+          .font(.system(size: 10, weight: .regular)).accessibilityHidden(true)
         Text(verseKicker(lang))
-          .font(.custom(fontName(lang, bold: true), size: 10))
-          .foregroundStyle(palette.saffronDeep)
-          .padding(.horizontal, 7).padding(.vertical, 3)
-          .background(palette.saffronDeep.opacity(0.10), in: Capsule())
-        Spacer(minLength: 3)
-        Text("ॐ वेदांश़")
-          .font(.custom("NotoSerifDevanagari-SemiBold", size: 10))
-          .foregroundStyle(palette.gold)
+          .font(.custom(fontName(lang, bold: true), size: 11))
+          .lineLimit(1)
+          .minimumScaleFactor(0.85)
       }
+      .foregroundStyle(palette.night ? palette.parchment : .white)
+      .padding(.horizontal, 9).padding(.vertical, 5)
+      .background(
+        LinearGradient(colors: [palette.saffronDeep, palette.saffronDeep.opacity(0.83)],
+                       startPoint: .leading, endPoint: .trailing),
+        in: UnevenRoundedRectangle(topLeadingRadius: 2, bottomLeadingRadius: 2,
+                                   bottomTrailingRadius: 11, topTrailingRadius: 11)
+      )
+
       if separated {
         VStack(alignment: .leading, spacing: 3) {
           ForEach(Array(v.lines.value(lang).enumerated()), id: \.offset) { item in
@@ -421,11 +438,23 @@ struct VedanshWidgetView: View {
           .truncationMode(.tail)
           .fixedSize(horizontal: false, vertical: !condensed)
       }
-      Rectangle().fill(palette.gold.opacity(0.42)).frame(height: 1)
-      Text(v.source.value(lang))
-        .font(.custom(fontName(lang, bold: true), size: 10))
-        .foregroundStyle(palette.inkMuted)
-        .fixedSize(horizontal: false, vertical: true)
+
+      HStack(alignment: .center, spacing: 6) {
+        Image(systemName: "book.closed")
+          .font(.system(size: 12, weight: .regular))
+          .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+        Text(v.source.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: 11))
+          .foregroundStyle(palette.inkMuted)
+          .fixedSize(horizontal: false, vertical: true)
+      }
+      HStack(spacing: 4) {
+        Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
+        Image(systemName: "flower").font(.system(size: 9))
+          .foregroundStyle(palette.gold).accessibilityHidden(true)
+        Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
+      }
+      .padding(.top, 1)
       if condensed {
         Text(readFullVerseKicker(lang))
           .font(.custom(fontName(lang, bold: true), size: 10))
@@ -436,9 +465,7 @@ struct VedanshWidgetView: View {
     .padding(.vertical, 2)
     .background {
       if art != nil && artFraction == 0 {
-        // Preserve native contrast on the decorative right side for dense text
-        // in both the daylight and Midnight Temple palettes.
-        palette.parchment.opacity(0.88)
+        palette.parchment.opacity(0.93)
       }
     }
     .fixedSize(horizontal: false, vertical: true)
