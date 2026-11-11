@@ -82,7 +82,10 @@ The temple registry includes substantial detail prose. `NewContentContext` loads
 
 ## Data Layer
 
-All content is **bundled JSON**, not fetched. The canonical source is markdown at the repo
+All content is **bundled**, not fetched — as JSON modules, with one exception: the Valmiki
+Ramayan corpus (27 MB) ships as bundled asset files read on demand, because a required JSON is
+compiled into the Hermes bundle and re-downloaded by every OTA (see [[readers]], RULEBOOK §2).
+The canonical source is markdown at the repo
 root; `scripts/*.mjs` (Node ESM) transform it into per-text JSON under `mobile/src/data/`,
 which the reader screens consume. `texts.ts` is the library index (`LibraryEntry`: id, names,
 category, deities, verseCount, `addedInVersion` for the NEW badge). `searchIndex.ts` is the
@@ -135,8 +138,6 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
 
 ## Gotchas
 
-- **Patching an Expo module's native code also needs `buildFromSource`.** Expo SDK 54 links prebuilt AARs from each module's `local-maven-repo`. That covers expo-notifications, expo-splash-screen, expo-speech and 16 more. A patch-package edit to their `android/src` is never compiled unless `mobile/package.json` → `expo.autolinking.android.buildFromSource` names the module. `patchedExpoModulesBuildFromSource.test.ts` fails when a patched prebuilt module is missing from that list. The shipped 0.32.17/31.0.13/14.0.8 AARs contain none of the patches.
-
 - **App icon exports** — `mobile/assets/branding/app-icon-master.png` is the approved copper-relief master; `node mobile/scripts/export-app-icons.mjs` regenerates all four Expo icon/splash/favicon assets and their hash manifest. Android receives padded adaptive artwork; `mobile/app.json` supplies an explicit splash plugin and ivory backgrounds. These native-shell changes require a rebuilt app, not OTA. The Home wordmark and share-footer text are separate from the launcher icon (design.md §2.1).
 
 - **OTA + `runtimeVersion: appVersion`** — an OTA update reaches only users on a matching store
@@ -161,6 +162,12 @@ See [[integrations/reading-artwork]] for publishing, caching and QA limits.
   text-input spec (`variant="search"` 44/Cormorant for content search, `"form"` 48/Inter for data
   entry). Both were extracted in July 2026 from ~32 and 3 divergent copies respectively;
   hand-rolling either is a RULEBOOK §3 hard reject.
+
+- **`mobile/metro.config.js` exists for one line.** It registers `txt` as an asset extension so the Valmiki parts are assets. Removing it turns 73 `require('….txt')` calls into parse errors.
+- **Android store builds embed the fonts and shrink the binary (11 Nov 2026).** `app.json` lists all fifteen font files under `expo-font` → `android.fonts`, so `useFonts` is already satisfied on the first render; `EmbeddedAndroidFonts.test.ts` fails if that list and the `useFonts` map diverge. `plugins/withAndroidReleaseShrink.js` turns on R8 and resource shrinking and keeps app-owned native code. Both are native-shell changes: a rebuilt app, not OTA. Neither has been built or run yet — see `docs/engineering/android-low-end-performance-native-2026-11.md`.
+- **Do not OTA the asset-based corpus to a runtime that predates it.** An update published to a store build without the Valmiki parts embedded downloads all 27 MB of them once before it applies.
+
+- **Patching an Expo module's native code also needs `buildFromSource`.** Expo SDK 54 links prebuilt AARs from each module's `local-maven-repo`. That covers expo-notifications, expo-splash-screen, expo-speech and 16 more. A patch-package edit to their `android/src` is never compiled unless `mobile/package.json` → `expo.autolinking.android.buildFromSource` names the module. `patchedExpoModulesBuildFromSource.test.ts` fails when a patched prebuilt module is missing from that list. The shipped 0.32.17/31.0.13/14.0.8 AARs contain none of the patches.
 
 > Personal identifiers (owner email, bundle IDs, EAS project id/URL) live in `mobile/app.json`
 > and `mobile/eas.json` and are intentionally **not** reproduced here — see those files directly.

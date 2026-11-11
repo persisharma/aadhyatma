@@ -15,8 +15,10 @@ bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHea
 July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
 same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
 component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`. Valmiki
-Ramayan is the large-corpus case: its 23,289 verified verse records stay split across seven
-kāṇḍa JSON modules, and the accessor requires/caches only the kāṇḍa the reader opens. The Home,
+Ramayan is the large-corpus case and the one exception (11 Nov 2026): its 23,289 verse records are
+**not in the JS bundle**. They ship as 73 bundled asset parts generated from the kāṇḍa masters,
+and `loadValmikiRamayanChapter()` reads and caches a kāṇḍa asynchronously; the reader screen is
+a loader wrapping the unchanged reader, with a loading and a retry state (design.md §53). The Home,
 Daily Bhakti, and search paths use the 28-row `daily-selection.json` projection so they do not
 parse the complete epic during startup; the platform bundle still carries every kāṇḍa offline.
 
@@ -236,6 +238,10 @@ measured popularity ranking, and every item remains ineligible for release.
   `JumpToStartButton.tsx`, `LanguageToggle.tsx`, `BookmarkButton.tsx`, `ShareButton.tsx`.
 
 ## Gotchas
+
+- **The Valmiki masters must never be imported by app code, and the parts must be regenerated after any master edit.** `mobile/scripts/build-valmiki-assets.mjs` writes `assets/valmiki-ramayan/*.txt`, `parts.ts` and `sarga-starts.json`; `valmikiAssets.test.ts` fails on an import of a master or on drift. One `import ch from './chapter-06.json'` puts 6.4 MB back into every OTA.
+- **The Valmiki reader mounts only with its kāṇḍa in memory.** `ValmikiRamayanReaderScreen` is a loader; `LoadedReader` is the reader. Do not merge them back: `currentIndex` is initialised from the opening verse, and a reader mounted before its verses exist would report verse 1 as the resume position.
+- **Tests read the real parts.** `jest/textAssetTransformer.js` turns a part's asset handle into its path and `jest.setup.js` replaces `partReader` with a file read, so `loadValmikiRamayanChapter` works in Jest. Load the kāṇḍa in `beforeAll` when a test needs the reader on its synchronous path.
 
 - **Auto-slide's `goToPage` must set the index itself where the pager tracks position via
   `onMomentumScrollEnd`** (Kids Stories, comic): a programmatic `scrollToIndex` never fires it on
