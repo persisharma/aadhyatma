@@ -6,18 +6,28 @@ Format: about 38 s, Instagram format. Hook rules: the climax image on frame 1, s
 on-screen text, and the answer held to the end. The user generates the images with an AI image tool
 (commercial use permitted); this kit adds pan/zoom, captions, voice and branding.
 
-## Script
+## Script (v2, hook fixes applied)
+
+Fixes from the Govardhan retention data (half of viewers gone by ~2 s):
+- Frame 1 is the most dramatic image (the grieving king), with a fast push-in (1.3x to 1.06x in 1.2 s).
+- Big on-screen question **छठी मैया कौन हैं?** from frame 1 (`hookText`); this frame is also the cover.
+- Speech starts at 0 s, with no "…" pauses and no filler.
+- Open loop: the goddess is not named until the reveal scene, 25 s in.
+- About 37 s of narration (all reels so far were 70–95 s).
+- Subjects fill the frame; the top 30% of each image is kept clear for captions.
+- At upload: add an Instagram music track at low volume, and choose frame 1 as the cover.
 
 | # | Image | Narration |
 |---|---|---|
-| 1 HOOK | 01-arghya | छठ में सूर्य देव के साथ जिनकी पूजा होती है, वो छठी मैया कौन हैं? |
-| 2 | 02-palace | राजा प्रियव्रत और रानी मालिनी की कोई संतान नहीं थी। |
-| 3 | 03-yagya | महर्षि कश्यप के यज्ञ से पुत्र तो हुआ, पर मृत। |
-| 4 | 04-grief | दुखी राजा शिशु को लेकर श्मशान पहुँचे, और प्राण त्यागने को तैयार हो गए। |
-| 5 | 05-devi | तभी आकाश से उतरीं देवी षष्ठी, यानी छठी मैया! |
-| 6 | 06-alive | उन्होंने शिशु पर हाथ फेरा, और बालक जी उठा! |
-| 7 | 07-ghat | देवी ने कहा, कार्तिक शुक्ल षष्ठी को डूबते और उगते सूर्य को अर्घ्य दो, संतान और आरोग्य मिलेगा। तभी से मनता है छठ महापर्व। |
-| 8 CTA | 01-arghya (reused) | छठ की पूरी कथा और प्रसाद, वेदांश ऐप में। जय छठी मैया! |
+| 1 HOOK | 04-grief | एक राजा, अपने मृत बेटे को गोद में लिए, श्मशान में बैठा था। |
+| 2 | 03-yagya | निःसंतान राजा प्रियव्रत को, महर्षि कश्यप के यज्ञ से पुत्र मिला था, पर वह मृत जन्मा। |
+| 3 | 05-devi | राजा प्राण त्यागने ही वाले थे, कि आकाश से एक देवी उतरीं। |
+| 4 | 06-alive | उन्होंने शिशु पर हाथ फेरा, और बालक जी उठा! |
+| 5 | 07-ghat | देवी बोलीं, कार्तिक शुक्ल षष्ठी को, डूबते और उगते सूर्य को अर्घ्य देना। |
+| 6 REVEAL | 01-arghya | वो देवी थीं षष्ठी देवी, यानी छठी मैया! तभी से मनता है छठ। |
+| 7 CTA | 01-arghya | पूरी कथा और छठ का प्रसाद, वेदांश ऐप में। जय छठी मैया! |
+
+Six images are needed (02-palace is no longer used).
 
 ## Shared style block (paste at the start of every prompt)
 
@@ -52,16 +62,15 @@ gloss, no neon, no harsh black outlines.
    soop. Behind her, a ghat with sugarcane canopies and diyas on the steps, and other devotees
    blurred in the distance. Emotion: devotion, peace. The sun and the soop sit in the centre of
    the frame.
-2. **02-palace**: Scene: a palace chamber at dusk. King Priyavrat and Queen Malini sit together
-   on a carved seat, sad. The queen looks at an empty wooden cradle beside them; the king rests a
-   hand on her shoulder. Oil lamps, carved pillars, silk curtains. Emotion: quiet longing.
 3. **03-yagya**: Scene: a palace courtyard yagya. Maharshi Kashyap offers ghee into a bright
    fire altar; King Priyavrat and Queen Malini sit with folded hands; the sage hands the queen a
    small bowl of kheer prasad. Smoke rises; marigold garlands. Emotion: hope.
-4. **04-grief**: Scene: a riverside cremation ground at dusk, dry trees, ash, faint smoke, empty
-   pyre frame in the background. King Priyavrat kneels alone, holding the swaddled infant close to
-   his chest, eyes closed in grief, crown fallen beside him. No fire on any person, no injury, no
-   blood. Emotion: deep sorrow.
+4. **04-grief (FRAME 1 AND COVER: make this the strongest image)**: Scene: a riverside cremation
+   ground at dusk, dry trees, faint smoke, an empty pyre frame far in the background. CLOSE
+   composition: King Priyavrat's face and the swaddled infant fill the middle of the frame (from
+   the chest up). He holds the baby against his chest, eyes closed, a tear on his cheek; a warm
+   orange rim light from the setting sun behind him; his gold crown lies on the ground beside
+   him. No fire on any person, no injury, no blood. Emotion: deep sorrow that makes the viewer stop.
 5. **05-devi**: Scene: the same cremation ground. From a glowing golden sky, a small ornate
    flower-decked celestial vimana descends. Devi Shashthi stands in it with soft golden light
    around her, looking down with compassion. The kneeling king, holding the infant, looks up in

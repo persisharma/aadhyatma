@@ -21,7 +21,8 @@ const preview = process.argv.includes('--preview');
 const bed = arg('bed', 'none'), remux = process.argv.includes('--remux');
 const story = arg('story', 'hanuman-surya');
 const out = path.resolve(arg('out', path.join(root, 'marketing/reels/out/story-reel', story)));
-const {FOLK} = await import(`./stories/${story}/scenes.mjs`);
+// Image stories (scene "image": a full 9:16 picture in the story folder) need no scenes.mjs.
+const {FOLK} = fs.existsSync(path.join(here, 'stories', story, 'scenes.mjs')) ? await import(`./stories/${story}/scenes.mjs`) : {FOLK: {}};
 const styles = arg('style', 'all') === 'all' ? ['puppet', 'patta', 'painted'] : [arg('style')];
 const W = 1080, H = 1920, FPS = 30;
 let T = 0.3;
@@ -142,9 +143,10 @@ function page(style) {
     patta: 'background:#FFF4D8;border:8px double #120B06;box-shadow:0 0 0 6px #F0B53C;color:#120B06',
     painted: 'background:#7A1D0C;border:3px solid #E7B864;color:#FFF4DF;border-radius:20px'}[style];
   const folk = style !== 'painted';
-  if (!folk && scenes.some(sc => !sc.pages)) throw Error(`${story} has no painted pages: use --style puppet (style rule: unillustrated stories use puppets)`);
+  if (!folk && scenes.some(sc => !sc.pages && !sc.image)) throw Error(`${story} has no painted pages: use --style puppet (style rule: unillustrated stories use puppets)`);
   const casts = scenes.map(sc => folk ? FOLK[sc.id].cast.map(([name, x, y, s, rot, flip, m, o]) => ({x, y, s, rot, flip, m, o: o || {}, parts: CHARACTERS[name].map(({shapes, ...p}) => p)})) : []);
-  const painted = folk ? '' : scenes.map((sc, i) => `<div class="pscene" data-i="${i}">${sc.pages.map((p, k) => { const f = `mobile/assets/kids-stories/${p.slice(0, 2)}-${p.slice(2)}.webp`; return `<div class="pp" data-k="${k}"><img class="pbg" src="${url(f)}"><img class="part" src="${url(f)}"></div>`; }).join('')}</div>`).join('');
+  const painted = folk ? '' : scenes.map((sc, i) => `<div class="pscene" data-i="${i}">${sc.image ? `<div class="pp" data-k="0"><img class="part full" style="transform-origin:${sc.focus || '50% 55%'}" src="${url(path.relative(root, path.join(here, 'stories', story, sc.image)))}"></div>` : sc.pages.map((p, k) => { const f = `mobile/assets/kids-stories/${p.slice(0, 2)}-${p.slice(2)}.webp`; return `<div class="pp" data-k="${k}"><img class="pbg" src="${url(f)}"><img class="part" src="${url(f)}"></div>`; }).join('')}</div>`).join('');
+  const hook = script.hookText ? `<div class="hook">${esc(script.hookText)}</div>` : '';
   return `<!doctype html><html lang="hi"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@600;700&family=Mukta:wght@600;800&display=block">
 <style>*{margin:0;box-sizing:border-box}html,body{width:${W}px;height:${H}px;overflow:hidden;background:#140803}
@@ -170,8 +172,10 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 .cta .row{display:flex;justify-content:center;align-items:center;gap:22px}.cta .icon{width:110px;height:110px;border-radius:26px}.cta .mark{height:96px}
 .cta .t{margin-top:10px;font:700 40px/1.4 'Noto Serif Devanagari';color:#5A3A1E}
 .cta .b{margin:16px auto 0;width:560px;padding:14px 0 8px;border-radius:999px;background:linear-gradient(180deg,#C4321A,#8E1B08);color:#FFF4DF;font:700 44px/1.3 'Noto Serif Devanagari'}
+.part.full{top:0;height:${H}px;object-fit:cover}
+.hook{position:absolute;left:40px;right:40px;top:1520px;text-align:center;font:800 88px/1.15 'Mukta';color:#FFC94A;text-shadow:0 0 3px #000,0 5px 0 #000,0 8px 22px rgba(0,0,0,.8);z-index:6}
 .flash{position:absolute;inset:0;background:#FFF6D8;opacity:0;z-index:4;pointer-events:none}
-</style></head><body>${painted}
+</style></head><body>${painted}${hook}
 <svg viewBox="0 0 ${W} ${H}"><defs><radialGradient id="lamp" cx="50%" cy="52%" r="60%"><stop offset="0" stop-color="#B5561C" stop-opacity=".95"/><stop offset=".55" stop-color="#7A2E10" stop-opacity=".55"/><stop offset="1" stop-color="#2B0E06" stop-opacity="0"/></radialGradient>
 <pattern id="pf" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="#120B06"/>${[0, 1, 2, 3, 4].map(k => `<ellipse cx="${30 + 11 * Math.cos(k * 1.2566)}" cy="${30 + 11 * Math.sin(k * 1.2566)}" rx="7" ry="7" fill="#FFF7E2"/>`).join('')}<circle cx="30" cy="30" r="6" fill="#F0B53C"/></pattern></defs>
 ${folk ? scenes.map((sc, i) => folkScene(style, sc, i)).join('') : ''}
@@ -183,7 +187,7 @@ ${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.p
 <script>
 const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).voSecs + 0.15).toFixed(3) : 'null'};
 const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
-const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
+const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 1, zoom: s.zoom || null, zoomDur: s.zoomDur || 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
 const back=x=>{x=clamp(x);const c=1.5;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
 const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
@@ -238,7 +242,8 @@ window.renderAt=t=>{
   });
   document.querySelectorAll('.pscene').forEach((g,i)=>{const o=vis(i,t);g.style.opacity=o;if(!o)return;const u=t-SC[i].start,d=SC[i].dur,n=SC[i].pages;
     g.querySelectorAll('.pp').forEach((p,k)=>{const a=n===1?1:(k===0?1-clamp((u-d/2)/.4):clamp((u-d/2)/.4));p.style.opacity=a;
-      p.querySelector('.part').style.transform='scale('+((i+k)%2?1.1-.07*u/d:1.03+.07*u/d)+')';});});
+      const z=SC[i].zoom;p.querySelector('.part').style.transform='scale('+(z?(u<SC[i].zoomDur?lerp(z[0],z[1],eo(u/SC[i].zoomDur)):z[1]+.04*(u-SC[i].zoomDur)/d):((i+k)%2?1.1-.07*u/d:1.03+.07*u/d))+')';});});
+  const hk=document.querySelector('.hook');if(hk){const u=t-SC[0].start;hk.style.opacity=u<SC[0].dur?1:0;}
   document.querySelectorAll('.sub').forEach((e,i)=>{const s=SC[i],u=t-s.start;const o=Math.min(clamp((u-.05)/.25),vis(i,t)?1:0)*(u<s.dur?1:1-clamp((u-s.dur)/T));e.style.opacity=o;});
   const vi=SC.findIndex(s=>s.id==='vajra'),fl=document.querySelector('.flash');
   if(vi>=0&&FX[vi].includes('flash')){const u=t-SC[vi].start-.56*SC[vi].dur;fl.style.opacity=u<0||u>.6?0:(u<.06?u/.06:1-(u-.06)/.54)*.9;}else fl.style.opacity=0;
