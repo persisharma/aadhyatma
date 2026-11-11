@@ -160,8 +160,8 @@ async function readChapter(chapter: number): Promise<ValmikiRamayanChapter> {
  * "kāṇḍa.sarga" reference does not load a kāṇḍa just to find where to open it.
  */
 export function valmikiSargaStartIndex(kanda: number, sarga: number): number {
-  const starts = (require('./sarga-starts.json') as Record<string, number[]>)[String(kanda)];
-  return starts?.[sarga - 1] ?? -1;
+  const { valmikiSargaStarts } = require('./sargaStarts') as typeof import('./sargaStarts');
+  return valmikiSargaStarts[kanda]?.[sarga - 1] ?? -1;
 }
 
 /**

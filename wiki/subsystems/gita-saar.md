@@ -44,7 +44,7 @@ Design: design.md §77; contract: RULEBOOK §30.
   progress, bookmarks, routine, share, narration and auto-scroll. Direct previous/next controls
   also cross theme boundaries. `GitaSaarVersePage` is one vertically scrolling lesson. Its first page opens with that theme's
   painting and title, then the complete existing Saar, three visible story beats, Gita connection,
-  everyday example and related in-app readings. Gita connection references and Gita story-source citations open exact bundled verses in `GitaReader`. Valmiki Ramayan source rows resolve their cited kāṇḍa and sarga to the first matching verse in `ValmikiRamayanReader` through `valmikiSargaStartIndex` (the generated `sarga-starts.json`), without loading the kāṇḍa. Sources without a bundled reader remain internal research records; no bibliography is shown. Other verses offer a direct illustrated door back to this
+  everyday example and related in-app readings. Gita connection references and Gita story-source citations open exact bundled verses in `GitaReader`. Valmiki Ramayan source rows resolve their cited kāṇḍa and sarga to the first matching verse in `ValmikiRamayanReader` through `valmikiSargaStartIndex` (the generated `sargaStarts.ts`), without loading the kāṇḍa. Sources without a bundled reader remain internal research records; no bibliography is shown. Other verses offer a direct illustrated door back to this
   story, then the usual takeaway, optional reflection and one save action. Group context, optional
   original verse/corpus meaning and full-Gita handoff remain available. Opening the
   original scripture disclosure scrolls its newly laid out panel into view so a reader

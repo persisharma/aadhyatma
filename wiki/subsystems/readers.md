@@ -239,7 +239,7 @@ measured popularity ranking, and every item remains ineligible for release.
 
 ## Gotchas
 
-- **The Valmiki masters must never be imported by app code, and the parts must be regenerated after any master edit.** `mobile/scripts/build-valmiki-assets.mjs` writes `assets/valmiki-ramayan/*.txt`, `parts.ts` and `sarga-starts.json`; `valmikiAssets.test.ts` fails on an import of a master or on drift. One `import ch from './chapter-06.json'` puts 6.4 MB back into every OTA.
+- **The Valmiki masters must never be imported by app code, and the parts must be regenerated after any master edit.** `mobile/scripts/build-valmiki-assets.mjs` writes `assets/valmiki-ramayan/*.txt`, `parts.ts` and `sargaStarts.ts`; `valmikiAssets.test.ts` fails on an import of a master or on drift. One `import ch from './chapter-06.json'` puts 6.4 MB back into every OTA.
 - **The Valmiki reader mounts only with its kāṇḍa in memory.** `ValmikiRamayanReaderScreen` is a loader; `LoadedReader` is the reader. Do not merge them back: `currentIndex` is initialised from the opening verse, and a reader mounted before its verses exist would report verse 1 as the resume position.
 - **Tests read the real parts.** `jest/textAssetTransformer.js` turns a part's asset handle into its path and `jest.setup.js` replaces `partReader` with a file read, so `loadValmikiRamayanChapter` works in Jest. Load the kāṇḍa in `beforeAll` when a test needs the reader on its synchronous path.
 

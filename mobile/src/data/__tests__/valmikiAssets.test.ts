@@ -20,6 +20,7 @@ import { test } from 'node:test';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { valmikiSargaStarts } from '../valmiki-ramayan/sargaStarts';
 
 const ROOT = path.resolve(import.meta.dirname, '../../..');
 const CORPUS = path.join(ROOT, 'src/data/valmiki-ramayan');
@@ -100,10 +101,9 @@ test('Android resource names derived from the part files do not collide', () => 
 });
 
 test('the sarga table names the first verse of every sarga', () => {
-  const starts = JSON.parse(fs.readFileSync(path.join(CORPUS, 'sarga-starts.json'), 'utf8')) as Record<string, number[]>;
   for (const summary of manifest) {
     const verses = master(summary.chapter).verses;
-    const table = starts[String(summary.chapter)];
+    const table = valmikiSargaStarts[summary.chapter];
     assert.equal(table.length, summary.sargaCount);
     for (let sarga = 1; sarga <= summary.sargaCount; sarga += 1) {
       const expected = verses.findIndex((verse) => verse.reference.startsWith(`${summary.chapter}.${sarga}.`));

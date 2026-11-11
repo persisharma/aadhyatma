@@ -14,9 +14,12 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 // The Valmiki corpus is read from bundled asset parts through expo-asset, which
 // has no native module here. `jest/textAssetTransformer.js` makes each part's
 // asset handle its own path, so this stand-in can read the real published file.
-jest.mock('@/data/valmiki-ramayan/partReader', () => ({
-  readValmikiPart: jest.fn(async (source) => require('fs').readFileSync(source, 'utf8')),
-}));
+jest.mock('@/data/valmiki-ramayan/partReader', () => {
+  // Bound here, not at call time: a load can still be reading parts after the
+  // test that started it has finished, and nothing may be required by then.
+  const fs = require('fs');
+  return { readValmikiPart: jest.fn(async (source) => fs.readFileSync(source, 'utf8')) };
+});
 
 // Decorative R2 backgrounds use the already-installed async file-system API.
 // Default to offline; cache/lifecycle suites override this with controlled tasks.

@@ -2914,7 +2914,7 @@ from real data.
 - *Not a kāṇḍa number* → redirected to the chapters index, as every chaptered reader does.
 The next kāṇḍa starts loading when the reader is within eight verses of the end, so the automatic
 hand-over opens on text. A `kāṇḍa.sarga` link from Gita Saar is resolved from the generated
-`sarga-starts.json` and loads nothing until the reader opens.
+`sargaStarts.ts` and loads nothing until the reader opens.
 
 **Loading and cross-feature budget.** `texts.ts` reads the lightweight manifest total without
 loading scripture. Daily Bhakti and global search deliberately retain the 28 established anchor

@@ -173,7 +173,7 @@ anything of that order:
    (`src/data/__tests__/valmikiAssets.test.ts` fails if any does).
 2. `mobile/scripts/build-valmiki-assets.mjs` writes the parts the app reads
    (`mobile/assets/valmiki-ramayan/*.txt`), the part table (`parts.ts`) and the
-   sarga table (`sarga-starts.json`). **Re-run it after any change to a master**;
+   sarga table (`sargaStarts.ts`). **Re-run it after any change to a master**;
    `--check` runs inside the same test and fails on drift.
 3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches the part
    table and the native reader only through `require()` thunks, and the reader

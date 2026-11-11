@@ -41,7 +41,7 @@ Fifteen files, 5,555,316 bytes. Today each is registered at runtime behind the l
 
 ## 3. How the corpus is delivered
 
-- `mobile/scripts/build-valmiki-assets.mjs` writes `mobile/assets/valmiki-ramayan/k<N>_p<MM>.txt` (JSON arrays of verses in reading order), `src/data/valmiki-ramayan/parts.ts` (asset handles and verse ranges) and `sarga-starts.json`. `--check` fails if any of them is stale.
+- `mobile/scripts/build-valmiki-assets.mjs` writes `mobile/assets/valmiki-ramayan/k<N>_p<MM>.txt` (JSON arrays of verses in reading order), `src/data/valmiki-ramayan/parts.ts` (asset handles and verse ranges) and `sargaStarts.ts`. `--check` fails if any of them is stale.
 - The `chapter-0N.json` masters stay in place: provenance, the corpus tests and `scripts/build-valmiki-ramayan.py` still use them. No app module may import one.
 - `loadValmikiRamayanChapter(n)` reads a kāṇḍa through `expo-asset` (`partReader.ts`), validates each verse as its part arrives with the same invariants as before, applies the same meaning fallback, and caches the kāṇḍa for the life of the process. A failed load is forgotten, so a retry is a real retry.
 - `ValmikiRamayanReaderScreen` is a loader around the unchanged reader. The reader mounts only with its kāṇḍa in memory, so its opening verse and the resume position it writes are initialised from real data. A kāṇḍa already loaded in this process opens on the first frame.
