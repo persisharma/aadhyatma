@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
   StyleSheet,
   Text,
   View,
@@ -14,10 +16,11 @@ import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import {
-  getValmikiRamayanChapter,
+  loadValmikiRamayanChapter,
   valmikiRamayanChaptersManifest,
   valmikiRamayanTitleEn,
   valmikiRamayanTitleHi,
+  type ValmikiRamayanChapter,
   type ValmikiRamayanVerse,
 } from '@/data/valmiki-ramayan';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -37,7 +40,9 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import ValmikiRamayanVersePage from '@/components/ValmikiRamayanVersePage';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
-import { useSafeChapter } from './_useSafeChapter';
+import { useValmikiChapter } from './_useValmikiChapter';
+import { fontFamilies } from '@/theme/typography';
+import { isLatinLang, scriptTitleFont, titleFontByLang } from '@/utils/langType';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import AutoSlideButton from '@/components/AutoSlideButton';
 import { useReaderPlayback } from './_useAutoSlide';
@@ -67,7 +72,99 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ValmikiRamayanReader'>;
 const SOURCE_ID = 'valmiki-ramayan';
 const DOT_COUNT = 5;
 
+/** How close to the end of a kāṇḍa the next one starts loading. */
+const PRELOAD_NEXT_WITHIN = 8;
+
+/**
+ * The kāṇḍa is loaded, not required (see `data/valmiki-ramayan/index.ts`), so
+ * the screen is two components. This one owns the load and its two extra
+ * states. `LoadedReader` below is the reader exactly as it was, mounted only
+ * once its kāṇḍa is in memory — every piece of its state (the opening verse,
+ * the resume position it reports) is therefore initialised from real data, as
+ * it was when the kāṇḍa arrived synchronously. Keyed by kāṇḍa so a route that
+ * is re-targeted in place starts that state afresh.
+ */
 export default function ValmikiRamayanReaderScreen({ navigation, route }: Props) {
+  const state = useValmikiChapter(route.params.chapter, navigation, 'ValmikiRamayanChapters');
+  if (state.status === 'ready') {
+    return <LoadedReader key={state.chapter.chapter} chapter={state.chapter} navigation={navigation} route={route} />;
+  }
+  return <ChapterPending state={state} onBack={() => navigation.goBack()} />;
+}
+
+/**
+ * What the reader shows while its kāṇḍa is not in memory. The header stays, so
+ * Back works throughout. A bad chapter number keeps the plain parchment it
+ * always had while it is redirected.
+ */
+function ChapterPending({
+  state,
+  onBack,
+}: {
+  state: { status: 'loading' } | { status: 'failed'; retry: () => void } | { status: 'invalid' };
+  onBack: () => void;
+}) {
+  const { colors } = useTheme();
+  const { lang } = useGitaLanguage();
+  if (state.status === 'invalid') return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
+  return (
+    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+      <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>
+        <ReaderHeader
+          title={contentByLang(lang, valmikiRamayanTitleHi, valmikiRamayanTitleEn)}
+          onBack={onBack}
+          backAccessibilityLabel="Back to chapters"
+        />
+        {state.status === 'loading' ? (
+          <View
+            testID="valmiki-chapter-loading"
+            accessible
+            accessibilityRole="progressbar"
+            accessibilityLabel={contentByLang(lang, 'खुल रहा है', 'Opening')}
+            style={styles.pending}
+          >
+            <ActivityIndicator color={colors.saffron} />
+          </View>
+        ) : (
+          <View testID="valmiki-chapter-failed" style={styles.pending}>
+            <Text
+              style={{
+                color: colors.ink,
+                // Fonts follow the script (design.md §3): the message is Latin in
+                // English and re-scripted for gu/kn.
+                fontFamily: titleFontByLang(lang),
+                fontSize: 17,
+                lineHeight: 28,
+                textAlign: 'center',
+              }}
+            >
+              {contentByLang(lang, 'यह काण्ड खुल नहीं सका', 'This kanda could not open')}
+            </Text>
+            <Pressable
+              testID="valmiki-chapter-retry"
+              onPress={state.retry}
+              accessibilityRole="button"
+              style={[styles.retry, { backgroundColor: colors.saffron }]}
+            >
+              <Text
+                style={{
+                  color: colors.parchment,
+                  fontFamily: isLatinLang(lang) ? fontFamilies.inter : scriptTitleFont(lang, fontFamilies.devanagariBold),
+                  fontSize: 14,
+                  lineHeight: 22,
+                }}
+              >
+                {contentByLang(lang, 'पुनः प्रयास', 'Retry')}
+              </Text>
+            </Pressable>
+          </View>
+        )}
+      </SafeAreaView>
+    </View>
+  );
+}
+
+function LoadedReader({ chapter, navigation, route }: Props & { chapter: ValmikiRamayanChapter }) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
@@ -75,20 +172,12 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
-  const chapter = useSafeChapter(
-    route.params.chapter,
-    getValmikiRamayanChapter,
-    navigation,
-    'ValmikiRamayanChapters'
-  );
-  const verses = useMemo(() => (chapter?.verses ?? []) as ValmikiRamayanVerse[], [chapter]);
+  const verses = useMemo(() => chapter.verses as ValmikiRamayanVerse[], [chapter]);
   const verseCount = verses.length;
   const initialIndex = clampIndex(route.params?.initialIndex, verseCount);
-  const isLastChapter =
-    chapter == null ? true : chapter.chapter >= valmikiRamayanChaptersManifest.length;
-  const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
+  const isLastChapter = chapter.chapter >= valmikiRamayanChaptersManifest.length;
+  const isFirstChapter = chapter.chapter <= 1;
   const data: FlatListItem[] = useMemo(() => {
-    if (chapter == null) return [];
     const items: FlatListItem[] = [];
     if (!isFirstChapter) {
       const prev = valmikiRamayanChaptersManifest[chapter.chapter - 2];
@@ -124,8 +213,6 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
 
-  // Called before the null-chapter early return below, so hook order stays stable;
-  // with no chapter it simply has zero pages to speak.
   const { readAloud, autoSlide } = useReaderPlayback({
     sourceId: SOURCE_ID,
     data,
@@ -136,7 +223,6 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
   });
 
   useEffect(() => {
-    if (chapter == null) return;
     setProgress({
       sourceId: SOURCE_ID,
       chapter: chapter.chapter,
@@ -144,7 +230,15 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
       updatedAt: Date.now(),
     });
   }, [chapter, currentIndex, setProgress]);
-  useReadDwell(SOURCE_ID, chapter?.chapter, chapter ? currentIndex : -1);
+  useReadDwell(SOURCE_ID, chapter.chapter, currentIndex);
+
+  // The reader slides straight into the next kāṇḍa from its last page. Start
+  // reading that kāṇḍa's parts while the last few verses are on screen, so the
+  // hand-over opens on text rather than on a loading state.
+  const nearEnd = !isLastChapter && currentIndex >= verseCount - PRELOAD_NEXT_WITHIN;
+  useEffect(() => {
+    if (nearEnd) loadValmikiRamayanChapter(chapter.chapter + 1).catch(() => undefined);
+  }, [nearEnd, chapter.chapter]);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -225,8 +319,6 @@ export default function ValmikiRamayanReaderScreen({ navigation, route }: Props)
     () => ({ lang, bookmarks, shareBusy }),
     [lang, bookmarks, shareBusy]
   );
-
-  if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -388,6 +480,19 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
+  },
+  pending: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  retry: {
+    marginTop: 16,
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: 22,
+    borderRadius: 999,
   },
   counter: {
     includeFontPadding: false,

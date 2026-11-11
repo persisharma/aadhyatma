@@ -38,61 +38,200 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 const { ShareProvider } = jest.requireActual<typeof import('@/utils/shareVerse')>(
   '@/utils/shareVerse'
 );
-const { getValmikiRamayanChapter, valmikiRamayanChaptersManifest } = jest.requireActual<
-  typeof import('@/data/valmiki-ramayan')
->('@/data/valmiki-ramayan');
+const {
+  loadValmikiRamayanChapter,
+  peekValmikiRamayanChapter,
+  valmikiRamayanChaptersManifest,
+} = jest.requireActual<typeof import('@/data/valmiki-ramayan')>('@/data/valmiki-ramayan');
 const ValmikiRamayanReaderScreen = jest.requireActual<
   typeof import('../ValmikiRamayanReaderScreen')
 >('../ValmikiRamayanReaderScreen').default;
+// The global stand-in for the one native seam (jest.setup.js): reads the real
+// published part files from disk.
+const { readValmikiPart } = jest.requireMock<typeof import('@/data/valmiki-ramayan/partReader')>(
+  '@/data/valmiki-ramayan/partReader'
+);
+const mockReadPart = readValmikiPart as jest.MockedFunction<typeof readValmikiPart>;
+const readPartFromDisk = mockReadPart.getMockImplementation()!;
 
 type ReaderProps = React.ComponentProps<typeof ValmikiRamayanReaderScreen>;
 
 const navigation = {} as ReaderProps['navigation'];
-navigation.goBack = () => undefined;
+navigation.goBack = jest.fn();
 navigation.navigate = (() => undefined) as ReaderProps['navigation']['navigate'];
-navigation.replace = (() => undefined) as ReaderProps['navigation']['replace'];
+navigation.replace = jest.fn() as unknown as ReaderProps['navigation']['replace'];
 
-function renderChapter(chapter: number) {
-  const route = {
+const routeFor = (chapter: number, initialIndex = 0) =>
+  ({
     key: 'ValmikiRamayanReader-test',
     name: 'ValmikiRamayanReader',
-    params: { chapter, initialIndex: 0 },
-  } as ReaderProps['route'];
+    params: { chapter, initialIndex },
+  }) as ReaderProps['route'];
 
-  let tree: TestRenderer.ReactTestRenderer | undefined;
+const screen = (route: ReaderProps['route']) => (
+  <GitaLanguageProvider initialLang="hi">
+    <ShareProvider>
+      <ValmikiRamayanReaderScreen navigation={navigation} route={route} />
+    </ShareProvider>
+  </GitaLanguageProvider>
+);
+
+let tree: TestRenderer.ReactTestRenderer | undefined;
+function mount(chapter: number, initialIndex = 0): TestRenderer.ReactTestRenderer {
   act(() => {
-    tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
-        <ShareProvider>
-          <ValmikiRamayanReaderScreen navigation={navigation} route={route} />
-        </ShareProvider>
-      </GitaLanguageProvider>
-    );
+    tree = TestRenderer.create(screen(routeFor(chapter, initialIndex)));
   });
-
-  return tree!
-    .root.findAllByType(Text)
+  return tree!;
+}
+const textOf = (t: TestRenderer.ReactTestRenderer) =>
+  t.root
+    .findAllByType(Text)
     .map((node) => node.props.children)
     .flat(Number.POSITIVE_INFINITY)
     .join(' ');
+const has = (t: TestRenderer.ReactTestRenderer, testID: string) => t.root.findAllByProps({ testID }).length > 0;
+/** Let the part reads, the parses and the yields between them run to the end. */
+async function settle() {
+  for (let i = 0; i < 400; i += 1) {
+    await act(async () => {
+      await new Promise<void>((resolve) => setImmediate(resolve));
+    });
+    if (tree && !has(tree, 'valmiki-chapter-loading')) return;
+  }
 }
 
-test('renders the first Valmiki Ramayan verse without throwing', () => {
-  const firstVerse = getValmikiRamayanChapter(1).verses[0];
-  const renderedText = renderChapter(1);
-
-  assert.match(renderedText, /वाल्मीकि रामायण/);
-  assert.ok(renderedText.includes(firstVerse.lines[0]));
-  assert.ok(renderedText.includes(firstVerse.meaningHi));
+afterEach(() => {
+  act(() => tree?.unmount());
+  tree = undefined;
+  mockReadPart.mockImplementation(readPartFromDisk);
+  jest.clearAllMocks();
 });
 
-test('every kāṇḍa renders its first verse', () => {
-  for (const summary of valmikiRamayanChaptersManifest) {
-    const chapter = getValmikiRamayanChapter(summary.chapter);
-    const renderedText = renderChapter(summary.chapter);
-    assert.ok(
-      renderedText.includes(chapter.verses[0].lines[0]),
-      `kāṇḍa ${summary.chapter} (${summary.titleEn}) did not render its first verse`
-    );
-  }
+describe('a kāṇḍa that is not in memory yet', () => {
+  test('opens on a loading state with a working Back, then on its first verse', async () => {
+    // Kāṇḍa 4: no other test in this file loads it first.
+    expect(peekValmikiRamayanChapter(4)).toBeNull();
+    const t = mount(4);
+
+    expect(has(t, 'valmiki-chapter-loading')).toBe(true);
+    assert.match(textOf(t), /वाल्मीकि रामायण/);
+    const loading = t.root.findByProps({ testID: 'valmiki-chapter-loading' });
+    expect(loading.props.accessibilityRole).toBe('progressbar');
+    expect(loading.props.accessibilityLabel).toBe('खुल रहा है');
+    // Back is live while the kāṇḍa is still being read.
+    const back = t.root.findAll(
+      (node) => node.props.accessibilityLabel === 'Back to chapters' && typeof node.props.onPress === 'function'
+    )[0];
+    act(() => back.props.onPress());
+    expect(navigation.goBack).toHaveBeenCalledTimes(1);
+
+    await settle();
+    const firstVerse = (await loadValmikiRamayanChapter(4)).verses[0];
+    expect(has(t, 'valmiki-chapter-loading')).toBe(false);
+    assert.ok(textOf(t).includes(firstVerse.lines[0]));
+    assert.ok(textOf(t).includes(firstVerse.meaningHi));
+  });
+
+  test('a read that fails offers Retry, and Retry opens the kāṇḍa', async () => {
+    expect(peekValmikiRamayanChapter(5)).toBeNull();
+    mockReadPart.mockRejectedValue(new Error('asset unreadable'));
+    const t = mount(5);
+    await settle();
+
+    expect(has(t, 'valmiki-chapter-failed')).toBe(true);
+    assert.match(textOf(t), /यह काण्ड खुल नहीं सका/);
+    // Nothing half-read is kept as if it were the kāṇḍa.
+    expect(peekValmikiRamayanChapter(5)).toBeNull();
+
+    mockReadPart.mockImplementation(readPartFromDisk);
+    act(() => {
+      t.root.findByProps({ testID: 'valmiki-chapter-retry' }).props.onPress();
+    });
+    expect(has(t, 'valmiki-chapter-loading')).toBe(true);
+    await settle();
+
+    const firstVerse = (await loadValmikiRamayanChapter(5)).verses[0];
+    expect(has(t, 'valmiki-chapter-failed')).toBe(false);
+    assert.ok(textOf(t).includes(firstVerse.lines[0]));
+  });
+
+  test('a part that is not the published part is refused, not shown', async () => {
+    expect(peekValmikiRamayanChapter(7)).toBeNull();
+    mockReadPart.mockResolvedValue('[]');
+    const t = mount(7);
+    await settle();
+    expect(has(t, 'valmiki-chapter-failed')).toBe(true);
+    expect(peekValmikiRamayanChapter(7)).toBeNull();
+  });
+
+  test('leaving while it loads is harmless', async () => {
+    expect(peekValmikiRamayanChapter(6)).toBeNull();
+    const t = mount(6);
+    expect(has(t, 'valmiki-chapter-loading')).toBe(true);
+    act(() => t.unmount());
+    tree = undefined;
+    // The load itself still completes and is kept for the next visit.
+    await loadValmikiRamayanChapter(6);
+    expect(peekValmikiRamayanChapter(6)).not.toBeNull();
+  });
+});
+
+describe('a kāṇḍa already in memory', () => {
+  test('renders its first verse on the very first commit — no loading state', async () => {
+    const chapter = await loadValmikiRamayanChapter(1);
+    const reads = mockReadPart.mock.calls.length;
+    const t = mount(1);
+
+    expect(has(t, 'valmiki-chapter-loading')).toBe(false);
+    assert.match(textOf(t), /वाल्मीकि रामायण/);
+    assert.ok(textOf(t).includes(chapter.verses[0].lines[0]));
+    assert.ok(textOf(t).includes(chapter.verses[0].meaningHi));
+    // ...and nothing is read from disk again.
+    expect(mockReadPart.mock.calls.length).toBe(reads);
+  });
+
+  test('every kāṇḍa renders its first verse', async () => {
+    for (const summary of valmikiRamayanChaptersManifest) {
+      const chapter = await loadValmikiRamayanChapter(summary.chapter);
+      expect(chapter.verses).toHaveLength(summary.verseCount);
+      const t = mount(summary.chapter);
+      assert.ok(
+        textOf(t).includes(chapter.verses[0].lines[0]),
+        `kāṇḍa ${summary.chapter} (${summary.titleEn}) did not render its first verse`
+      );
+      act(() => t.unmount());
+      tree = undefined;
+    }
+  });
+
+  test('opens at the requested verse and reports that position, never verse 1', async () => {
+    const chapter = await loadValmikiRamayanChapter(2);
+    const t = mount(2, 120);
+    // The page counter is the reader's own account of where it is.
+    assert.match(textOf(t), new RegExp(`121\\s*/\\s*${chapter.verses.length}`));
+  });
+
+  test('a route re-targeted in place to another kāṇḍa starts from that kāṇḍa’s verse', async () => {
+    const second = await loadValmikiRamayanChapter(2);
+    const third = await loadValmikiRamayanChapter(3);
+    const t = mount(2, 50);
+    assert.match(textOf(t), new RegExp(`51\\s*/\\s*${second.verses.length}`));
+    act(() => {
+      t.update(screen(routeFor(3, 0)));
+    });
+    assert.match(textOf(t), new RegExp(`1\\s*/\\s*${third.verses.length}`));
+    assert.ok(textOf(t).includes(third.verses[0].lines[0]));
+  });
+});
+
+test('a chapter number that is not a kāṇḍa is sent back to the chapters index', async () => {
+  jest.useFakeTimers();
+  const t = mount(99);
+  expect(has(t, 'valmiki-chapter-loading')).toBe(false);
+  expect(has(t, 'valmiki-chapter-failed')).toBe(false);
+  act(() => {
+    jest.runOnlyPendingTimers();
+  });
+  expect(navigation.replace).toHaveBeenCalledWith('ValmikiRamayanChapters');
+  jest.useRealTimers();
 });

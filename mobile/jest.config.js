@@ -2,6 +2,11 @@ module.exports = {
   preset: 'react-native',
   transformIgnorePatterns: ['node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation|phosphor-react-native)/)'],
   setupFiles: ['<rootDir>/jest.setup.js'],
+  // Merged over the preset's transforms. The Valmiki corpus parts are Metro
+  // assets with a `.txt` extension (metro.config.js); see the transformer.
+  transform: {
+    '[/\\\\]assets[/\\\\]valmiki-ramayan[/\\\\].+\\.txt$': '<rootDir>/jest/textAssetTransformer.js',
+  },
   // Scoped to the dirs holding Jest-style suites. src/data/__tests__ and the
   // plain `*.test.ts` files in src/notifications/__tests__ are node:assert
   // scripts (run via tsx), NOT Jest tests — including them here makes Jest fail
