@@ -73,7 +73,12 @@ enum WidgetArt {
   // Downsample once into a bounded image, with its devotional subject in focus.
   // Source files are copied into the WidgetKit extension by withHomeWidgetsIos.
   // Cache only the small prepared image, not the full resolution painting.
-  private static let vividCache = NSCache<NSString, UIImage>()
+  private static let vividCache: NSCache<NSString, UIImage> = {
+    let cache = NSCache<NSString, UIImage>()
+    cache.countLimit = 4
+    cache.totalCostLimit = 6 * 1024 * 1024
+    return cache
+  }()
   private static let focusX: [String: CGFloat] = [
     "prayer": 0.5, "vishnu": 0.28, "krishna": 0.5, "shiva": 0.43,
     "hanuman": 0.42, "rama": 0.5, "ganesha": 0.5, "durga": 0.5,
@@ -98,10 +103,24 @@ enum WidgetArt {
     let cropWidth = min(thumb.width, max(1, Int(CGFloat(thumb.height) * aspect)))
     let focus = focusX[safe] ?? 0.5
     let start = max(0, min(thumb.width - cropWidth, Int(CGFloat(thumb.width) * focus) - cropWidth / 2))
-    guard let crop = thumb.cropping(to: CGRect(x: start, y: 0, width: cropWidth, height: thumb.height)),
-          crop.width * crop.height <= budget else { return nil }
-    let prepared = UIImage(cgImage: crop)
-    vividCache.setObject(prepared, forKey: cacheKey)
+    guard let crop = thumb.cropping(to: CGRect(x: start, y: 0, width: cropWidth, height: thumb.height)) else { return nil }
+    // Portrait/square source paintings can exceed the rectangular medium-cell
+    // budget after cropping. Downscale them instead of silently losing vivid
+    // artwork for every source other than the landscape Vishnu image.
+    let prepared: UIImage
+    if crop.width * crop.height <= budget {
+      prepared = UIImage(cgImage: crop)
+    } else {
+      let ratio = sqrt(CGFloat(budget) / CGFloat(crop.width * crop.height))
+      let size = CGSize(width: max(1, floor(CGFloat(crop.width) * ratio)),
+                        height: max(1, floor(CGFloat(crop.height) * ratio)))
+      let renderer = UIGraphicsImageRenderer(size: size)
+      prepared = renderer.image { _ in
+        UIImage(cgImage: crop).draw(in: CGRect(origin: .zero, size: size))
+      }
+    }
+    let pixelCost = Int(prepared.size.width * prepared.scale * prepared.size.height * prepared.scale * 4)
+    vividCache.setObject(prepared, forKey: cacheKey, cost: pixelCost)
     return prepared
   }
 }
