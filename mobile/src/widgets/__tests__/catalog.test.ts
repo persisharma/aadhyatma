@@ -251,7 +251,7 @@ test('approved Ornate Heritage visual contract is native, not only a gallery moc
   assert.match(swift, /private struct HeritageFiligree: View/);
   assert.match(swift, /Canvas \{ context, size in/);
   assert.match(swift, /CGImageSourceCreateThumbnailAtIndex/);
-  assert.match(swift, /private static let vividCache = NSCache<NSString, UIImage>/);
+  assert.match(swift, /private static let vividCache: NSCache<NSString, UIImage>/);
   assert.match(swift, /vivid: vividArt, surface: surface/);
   assert.match(verse, /Text\("ॐ वेदांश"\)/);
   assert.match(verse, /LinearGradient\(colors: \[palette\.saffronDeep/);
