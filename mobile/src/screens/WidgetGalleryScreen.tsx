@@ -113,7 +113,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
               </View> : null}
               <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', borderTopWidth: 1, borderTopColor: panchangPalette.gold, paddingTop: 7 }}>
                 <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{day.sunrise[lang]}</Text>
-                <Text style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 9, color: panchangPalette.gold }}>ॐ वेदांश़</Text>
+                <Text style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 10, color: panchangPalette.gold }}>ॐ वेदांश़</Text>
               </View>
             </View> : <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{recovery}</Text>}
           </Preview>
