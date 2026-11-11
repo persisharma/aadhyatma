@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, type ImageSourcePropType } from 'react-native';
 import type { Graha } from '@/panchang/kundali';
+import { PAINTED_ICON_DECODE } from './paintedIconDecode';
 
 export type KundaliArtworkName = Graha | 'lagna' | 'nakshatra';
 export const KUNDALI_ARTWORK: Record<KundaliArtworkName, ImageSourcePropType> = {
@@ -18,5 +19,5 @@ export const KUNDALI_ARTWORK: Record<KundaliArtworkName, ImageSourcePropType> = 
 };
 
 export default function KundaliArtwork({ name, size = 64 }: { name: KundaliArtworkName; size?: number }) {
-  return <Image source={KUNDALI_ARTWORK[name]} accessible={false} resizeMode="contain" style={{ width: size, height: size }} />;
+  return <Image source={KUNDALI_ARTWORK[name]} accessible={false} resizeMode="contain" {...PAINTED_ICON_DECODE} style={{ width: size, height: size }} />;
 }

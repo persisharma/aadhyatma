@@ -1,6 +1,7 @@
 import React from 'react';
 import PanchangDaySurface from './PanchangDaySurface';
 import { moreIconSources } from './MoreIcon';
+import { PAINTED_ICON_DECODE } from './paintedIconDecode';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -48,7 +49,7 @@ export default function ShubhYogaCard({
       ]}
     >
       <View style={styles.heading}>
-        {painted && <Image source={moreIconSources.star} style={{ width: 22, height: 22 }} resizeMode="contain" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />}
+        {painted && <Image source={moreIconSources.star} style={{ width: 22, height: 22 }} resizeMode="contain" {...PAINTED_ICON_DECODE} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />}
         <Text style={[eyebrowTextStyle(lang, 11), { color: colors.saffronDeep }]}>
           {contentByLang(lang, 'शुभ योग', 'Shubh Yoga')}
         </Text>

@@ -30,6 +30,7 @@ export {
   NOTIF_IDENTIFIER_PREFIX,
   ROLLING_WINDOW_DAYS,
 } from './pure';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 export type { DailyReminderConfig, NotificationPayload, TimeOfDay } from './pure';
 export type { DayAnga, DayAngaMap } from './dayAnga';
 
@@ -38,18 +39,14 @@ export type { DayAnga, DayAngaMap } from './dayAnga';
  * notifications (today: none, but JapamAudioPlayer could grow some) alone.
  */
 export async function cancelAllDailyVerseNotifications(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(NOTIF_IDENTIFIER_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await cancelNotificationFamily(NOTIF_IDENTIFIER_PREFIX);
 }
 
 /**
- * Schedule the rolling 30-day window. Cancels any existing daily-verse
- * notifications first so this function is idempotent and safe to call on every
- * app foreground.
+ * Schedule the rolling 30-day window. Replaces whatever daily-verse
+ * notifications are pending with exactly the planned set, so this function is
+ * idempotent and safe to call on every app foreground (an unchanged plan is not
+ * re-armed within a process — see `familyArm`).
  *
  * `angas` supplies each fire day's panchang context (tithi / vrat) for the title;
  * it is optional and partial by design — any day missing from it gets the plain
@@ -65,13 +62,11 @@ export async function scheduleDailyVerseRollingWindow(
   lang: Lang = 'hi',
   angas: DayAngaMap = {}
 ): Promise<number> {
-  await cancelAllDailyVerseNotifications();
-
-  if (!config.enabled) return 0;
-  if (config.times.length === 0) return 0;
+  // Nothing to schedule still means "hold nothing": an empty plan cancels ours.
+  if (!config.enabled || config.times.length === 0) return armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, []);
 
   const poolSize = getVersePoolSize();
-  if (poolSize === 0) return 0;
+  if (poolSize === 0) return armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, []);
 
   const dates = computeFireDatesMulti(config.times, now);
 
@@ -89,7 +84,7 @@ export async function scheduleDailyVerseRollingWindow(
   }));
   const verseIndices = assignSlotVerseIndices(slots, poolSize);
 
-  let scheduled = 0;
+  const requests: FamilySlot[] = [];
   for (let i = 0; i < fires.length; i += 1) {
     const fire = fires[i];
     const { dateKey, hhmm } = slots[i];
@@ -105,26 +100,22 @@ export async function scheduleDailyVerseRollingWindow(
       ...(verse.chapter != null ? { chapter: verse.chapter } : {}),
     };
 
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}:${hhmm}`,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: fire,
-        },
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal — a future PRD-06 diagnostics
-      // pass can ingest these via a local crash log.
-    }
+    requests.push({
+      identifier: `${NOTIF_IDENTIFIER_PREFIX}:${dateKey}:${hhmm}`,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: fire,
+      },
+    });
   }
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`) — a
+  // future PRD-06 diagnostics pass can ingest these via a local crash log.
+  return armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, requests);
 }

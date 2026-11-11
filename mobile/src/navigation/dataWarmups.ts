@@ -1,5 +1,6 @@
 import { registerPrefetch, idleTick } from './screenPrefetch';
 import { preloadPanchangStack } from './lazyPanchangStack';
+import { isConstrainedDevice } from '@/utils/devicePace';
 
 /**
  * Warm-ups that are not screens.
@@ -27,19 +28,39 @@ import { preloadPanchangStack } from './lazyPanchangStack';
  * If the user opens Search before it finishes, the screen takes the same job
  * over at a foreground pace (`screens/_useSearchIndex.ts`); nothing is built
  * twice.
+ *
+ * NOT ON A CONSTRAINED PHONE. The build pulls every Gītā chapter and the rest
+ * of the indexed corpora into memory and keeps the index for the life of the
+ * process, on every launch, whether or not the user ever searches. Where the
+ * launch bundle itself was slow to evaluate (`utils/devicePace`) that is several
+ * seconds of sliced JS-thread work competing with whatever the user is doing.
+ * There the index is built when Search opens — the same foreground path a user
+ * who beats the warm-up has always taken, which renders at once and shows
+ * "preparing" until the index lands.
  */
 const SEARCH_SLICE_GAP_MS = 16;
+
+/**
+ * Start the background build and return at once. `load` is a parameter only so
+ * the decision can be tested without a real dynamic import.
+ */
+export function warmSearchIndexInBackground(
+  load: () => Promise<Pick<typeof import('@/data/searchIndex'), 'warmSearchIndex'>> = () => import('@/data/searchIndex'),
+): void {
+  if (isConstrainedDevice()) return;
+  void load()
+    .then(({ warmSearchIndex }) => warmSearchIndex(() => idleTick(SEARCH_SLICE_GAP_MS)))
+    // A background warm-up never fails the app. A corpus that cannot be
+    // indexed still fails loudly — on the Search screen, which builds the
+    // same job and throws.
+    .catch(() => undefined);
+}
 
 registerPrefetch({
   label: 'search-index',
   depth: 2,
   load: async () => {
-    void import('@/data/searchIndex')
-      .then(({ warmSearchIndex }) => warmSearchIndex(() => idleTick(SEARCH_SLICE_GAP_MS)))
-      // A background warm-up never fails the app. A corpus that cannot be
-      // indexed still fails loudly — on the Search screen, which builds the
-      // same job and throws.
-      .catch(() => undefined);
+    warmSearchIndexInBackground();
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, type ImageSourcePropType } from 'react-native';
 import { storybookSources } from './storybookSources';
+import { PAINTED_ICON_DECODE } from './paintedIconDecode';
 
 // More's settings illustrations share Home's painted palette and normalized
 // transparent canvas. Navigation chevrons remain the shared utility glyphs.
@@ -34,6 +35,7 @@ export default function MoreIcon({ name }: { name: MoreIconName }) {
   return (
     <Image
       source={moreIconSources[name] as ImageSourcePropType}
+      {...PAINTED_ICON_DECODE}
       style={{ width: 30, height: 30 }}
       resizeMode="contain"
       fadeDuration={0}
