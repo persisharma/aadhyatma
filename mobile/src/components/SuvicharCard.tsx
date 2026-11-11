@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import type { Lang } from '@/data/gita/language';
 import { cleanSender, fullPhotoFit, suvicharPaperArtRequest, suvicharHeading, suvicharBrandSlot, suvicharFooterBand, suvicharHeroFraction, type SuvicharDeity, type SuvicharFrame, type SuvicharPhotoFit } from '@/data/suvichar';
 import { suvicharPhotoArt } from '@/data/suvicharPhotoArt';
+import SuvicharPortraitImage from '@/components/SuvicharPortraitImage';
 import SuvicharSenderPhoto from '@/components/SuvicharSenderPhoto';
 import { subscribeBackgroundAsset, evictBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { useTheme } from '@/theme/ThemeContext';
@@ -73,11 +74,10 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
     <View style={{ height: hero, overflow: 'hidden' }}>
       {portrait ? <View testID="suvichar-card-deity-photo-frame" style={{ position: 'absolute', top: full * .085, left: width * .07, width: width * .86, height: hero - full * .095,
         overflow: 'hidden', borderWidth: 1.5 * width / t.baseWidth, borderColor: colors.gold,
-        borderTopLeftRadius: frame === 'mandir-jharokha' ? width * .32 : frame === 'pushp-aangan' ? width * .06 : 2,
-        borderTopRightRadius: frame === 'mandir-jharokha' ? width * .32 : frame === 'pushp-aangan' ? width * .06 : 2,
+        borderTopLeftRadius: 2,
+        borderTopRightRadius: 2,
         borderBottomLeftRadius: frame === 'pushp-aangan' ? width * .06 : 2, borderBottomRightRadius: frame === 'pushp-aangan' ? width * .06 : 2 }}>
-        {deityPhotoUri ? <Image testID="suvichar-card-deity-photo" accessible={false} source={{ uri: deityPhotoUri }} resizeMode="stretch"
-          style={{ width: width * .86, height: width * .86 * portrait.height / portrait.width }}
+        {deityPhotoUri ? <SuvicharPortraitImage testID="suvichar-card-deity-photo" portrait={portrait} uri={deityPhotoUri} width={width * .86} height={hero - full * .095}
           onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={() => { setPainted(p => ({ ...p, hero: false })); onDeityPhotoFailure(); }} /> : null}
       </View> : uri ? <Image accessible={false} source={{ uri }} resizeMode="stretch" style={{ width, height: full }} onLoad={() => setPainted(p => ({ ...p, hero: true }))} onError={failed} /> : null}
       <View testID="suvichar-card-brand" style={{ position: 'absolute', left: 0, right: 0, top: full * brand.top, height: full * (brand.bottom - brand.top), alignItems: 'center', justifyContent: 'center' }}>
@@ -100,7 +100,7 @@ function MeasuredCard({ deity, frame, message, name, lang, width, title, attribu
           onLoad={() => setPainted(p => ({ ...p, photo: true }))} onError={onPhotoError} style={{ alignSelf: 'center', marginTop: 4 * scale, marginBottom: 2 * scale }} /> : null}
         {sender ? <Text testID="suvichar-card-sender" allowFontScaling={false} style={text(t.name)}>{pick(lang, { hi: 'सप्रेम', en: 'With love', gu: 'સપ્રેમ', kn: 'ಪ್ರೀತಿಯಿಂದ' })} — {sender}</Text> : null}
         <Text testID="suvichar-card-download" allowFontScaling={false} style={[text(t.download), { color: colors.saffronDeep, marginTop: 6 * scale, marginHorizontal: width * .14 }]}>{pick(lang, { hi: 'ऐसे और संदेशों के लिए वेदांश ऐप डाउनलोड करें', en: 'Download the Vedansh app for more wishes like this', gu: 'આવા વધુ સંદેશ માટે વેદાંશ ઍપ ડાઉનલોડ કરો', kn: 'ಇಂತಹ ಇನ್ನಷ್ಟು ಸಂದೇಶಗಳಿಗೆ ವೇದಾಂಶ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ' })}</Text>
-        {portrait ? <Text testID="suvichar-card-photo-credit" allowFontScaling={false} style={{ color: colors.inkMuted, fontFamily: fontFamilies.latin, fontSize: t.download * scale, lineHeight: t.download * t.leading * scale, textAlign: 'center', marginTop: 6 * scale }}>{portrait.credit}</Text> : null}
+        {portrait?.credit ? <Text testID="suvichar-card-photo-credit" allowFontScaling={false} style={{ color: colors.inkMuted, fontFamily: fontFamilies.latin, fontSize: t.download * scale, lineHeight: t.download * t.leading * scale, textAlign: 'center', marginTop: 6 * scale }}>{portrait.credit}</Text> : null}
       </View>
     </View>
     <View testID="suvichar-card-footer" style={{ height: footer, overflow: 'hidden' }}>

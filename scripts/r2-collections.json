@@ -8,5 +8,6 @@
   { "id": "vidhi-steps", "manifest": "mobile/src/data/vidhiArtworkManifest.json", "prefix": "vidhi-steps", "sources": ["mobile/assets/vidhi-steps", "mobile/assets/reader-illustrations"] },
   { "id": "festival-hero", "manifest": "mobile/src/data/festivalHeroManifest.json", "prefix": "festival-hero", "sources": ["mobile/assets/festival-hero"] },
   { "id": "comic-balakanda", "manifest": "mobile/src/data/comicAssetManifest.json", "prefix": "comics/balakanda-illustrated-v3", "sources": ["docs/content-parity/ramayan-comic/balakanda-illustrated-v3/assets"] },
-  { "id": "comic-ayodhya", "manifest": "mobile/src/data/ayodhyaComicAssetManifest.json", "prefix": "comics/ayodhyakanda-illustrated-v1", "sources": ["docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets"] }
+  { "id": "comic-ayodhya", "manifest": "mobile/src/data/ayodhyaComicAssetManifest.json", "prefix": "comics/ayodhyakanda-illustrated-v1", "sources": ["docs/content-parity/ramayan-comic/ayodhyakanda-preview-v1/assets"] },
+  { "id": "suvichar-portraits", "manifest": "mobile/src/data/suvicharPortraitManifest.json", "prefix": "suvichar-portraits", "sources": ["mobile/assets/suvichar/portraits"] }
 ]

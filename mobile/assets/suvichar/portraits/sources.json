@@ -1,0 +1,27 @@
+{
+  "subject": "Shri Ram Lalla",
+  "kind": "generated",
+  "library_file_id": "libfile_26f416810ac081918d18d2a8aadb4927",
+  "generatedOn": "2026-11-08",
+  "request": "Front facing",
+  "earlierConstraints": [
+    "Generate fresh artwork instead of the source photograph",
+    "Remove Ayodhya"
+  ],
+  "promptAvailability": "The complete generation prompt was not retained; request and final approved source are preserved without inventing a prompt.",
+  "master": "ram-lalla-front-facing.png",
+  "masterSha256": "6e49a41b265a9f4be637ffebda05ee5a3b51297015101be9d2c896565cb8062f",
+  "file": "ram-lalla-front-facing.webp",
+  "sha256": "7d047a1e8c39a2002ab86deb312f0a2f70502a34bce71209f27717016b26ccda",
+  "bytes": 553850,
+  "width": 1122,
+  "height": 1402,
+  "crop": {
+    "x": 0.025,
+    "y": 0.082,
+    "w": 0.95,
+    "h": 0.482
+  },
+  "treatment": "Format-only WebP delivery from the exact generated card. Native clipping shows the front-facing deity region, excluding baked brand/name/message/sender/footer text. No idol redraw or derivative generation.",
+  "publication": "pending"
+}

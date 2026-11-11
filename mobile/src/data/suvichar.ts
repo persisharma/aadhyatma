@@ -15,7 +15,7 @@ export const suvicharDeityCatalog = [
     "hi": "श्रीराम",
     "en": "Shri Ram"
   },
-  { id: 'ram-lalla', hi: 'राम लला · अयोध्या', en: 'Ram Lalla · Ayodhya' },
+  { id: 'ram-lalla', hi: 'श्री राम लला', en: 'Shri Ram Lalla' },
   {
     "id": "hanuman",
     "hi": "श्रीहनुमान",
@@ -101,7 +101,7 @@ export const suvicharFrames = [
 /** Offer a deity only after every frame has passed publication verification. */
 export const suvicharDeities = suvicharDeityCatalog.filter(deity =>
   (deity.id !== 'parshuram' || parshuramPublished) && suvicharFrames.every(frame => `${suvicharPhotoArt(deity.id) ? 'rama' : deity.id}--${frame.id}` in manifest.assets));
-/** Photographs reuse only the reviewed paper/footer slices; they do not invent painted masters. */
+/** Standalone portraits reuse only the reviewed paper/footer slices; they do not invent painted masters. */
 export const suvicharPaintedDeities = suvicharDeityCatalog.filter(deity => !suvicharPhotoArt(deity.id));
 export type SuvicharDeity = typeof suvicharDeityCatalog[number]['id'];
 export type SuvicharFrame = typeof suvicharFrames[number]['id'];
@@ -195,7 +195,7 @@ export function suvicharArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
   if (photo) return photo.request;
   return remoteAssetRequest(manifest, suvicharArtKey(deity, frame), assetBaseUrl());
 }
-/** Explicit paper template for a photographic card; no painted deity is shown in its hero. */
+/** Explicit paper template for a standalone portrait card; no painted deity is shown in its hero. */
 export function suvicharPaperArtRequest(deity: SuvicharDeity, frame: SuvicharFrame) {
   return suvicharArtRequest(suvicharPhotoArt(deity) ? 'rama' : deity, frame);
 }
