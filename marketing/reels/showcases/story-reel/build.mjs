@@ -186,6 +186,7 @@ ${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.p
 <div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div>${script.brand ? `<div class="h">फ़ॉलो करें ${esc(script.brand.handle)}</div>` : ''}</div>
 <script>
 const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).voSecs + 0.15).toFixed(3) : 'null'};
+const ZM=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].zoom) || null))};
 const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
 const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 1, zoom: s.zoom || null, zoomDur: s.zoomDur || 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
@@ -227,8 +228,8 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
 const vis=(i,t)=>{const s=SC[i],u=t-s.start,last=i===SC.length-1;if(u<0||(!last&&u>s.dur+T))return 0;return Math.min(i===0?1:clamp(u/T),last?1:1-clamp((u-s.dur)/T));};
 window.renderAt=t=>{
   document.querySelectorAll('.scene').forEach((g,i)=>{const o=vis(i,t);g.setAttribute('opacity',o);g.style.display=o>0?'':'none';if(!o)return;
-    if(IG){const u0=t-SC[i].start,k=1+.07*(1-eo(u0/.35));let sx=0,sy=0;for(const f of SHK[i]){const q=u0-f*SC[i].dur;if(q>0&&q<.35){const a=(1-q/.35)*12;sx=Math.sin(q*90)*a;sy=Math.cos(q*77)*a;}}
-      g.setAttribute('transform','translate('+(540+sx)+','+(960+sy)+') scale('+k+') translate(-540,-960)');}
+    if(IG){const u0=t-SC[i].start,zm=ZM[i],k=zm?lerp(zm[0],zm[1],eo(u0/zm[2])):1+.07*(1-eo(u0/.35)),fx=zm?zm[3]:540,fy=zm?zm[4]:960;let sx=0,sy=0;for(const f of SHK[i]){const q=u0-f*SC[i].dur;if(q>0&&q<.35){const a=(1-q/.35)*12;sx=Math.sin(q*90)*a;sy=Math.cos(q*77)*a;}}
+      g.setAttribute('transform','translate('+(fx+sx)+','+(fy+sy)+') scale('+k+') translate('+(-fx)+','+(-fy)+')');}
     const u=t-SC[i].start,d=SC[i].dur;
     CASTS[i].forEach((c,n)=>{const r={x:c.x,y:c.y,rot:c.rot,s:c.s,op:1,...MO[c.m](c,u,d)};
       const M=new DOMMatrix().translate(r.x,r.y).rotate(r.rot).scale(r.s*(r.flip??c.flip),r.s),by={},cache={};c.parts.forEach(p=>by[p.id]=p);
