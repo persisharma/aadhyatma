@@ -177,6 +177,63 @@ private struct HeritageFiligree: View {
   }
 }
 
+// Small almanac cameo from the approved design: a warm temple spire/flag.
+// Purely decorative, with no unsupported festival, direction or time claim.
+private struct TempleDawnCameo: View {
+  let palette: WidgetPalette
+  var body: some View {
+    ZStack {
+      Circle()
+        .fill(RadialGradient(colors: [palette.gold.opacity(0.25), .clear],
+                             center: .center, startRadius: 2, endRadius: 36))
+        .frame(width: 66, height: 66)
+      Canvas { context, size in
+        let x = size.width
+        let y = size.height
+        var building = Path()
+        building.move(to: CGPoint(x: 0.20 * x, y: 0.80 * y))
+        building.addLine(to: CGPoint(x: 0.80 * x, y: 0.80 * y))
+        building.addLine(to: CGPoint(x: 0.73 * x, y: 0.68 * y))
+        building.addLine(to: CGPoint(x: 0.27 * x, y: 0.68 * y))
+        building.closeSubpath()
+        context.fill(building, with: .color(palette.saffronDeep.opacity(0.54)))
+        var spire = Path()
+        spire.move(to: CGPoint(x: 0.34 * x, y: 0.68 * y))
+        spire.addLine(to: CGPoint(x: 0.38 * x, y: 0.42 * y))
+        spire.addLine(to: CGPoint(x: 0.50 * x, y: 0.18 * y))
+        spire.addLine(to: CGPoint(x: 0.62 * x, y: 0.42 * y))
+        spire.addLine(to: CGPoint(x: 0.66 * x, y: 0.68 * y))
+        spire.closeSubpath()
+        context.fill(spire, with: .color(palette.saffronDeep.opacity(0.58)))
+        var flag = Path()
+        flag.move(to: CGPoint(x: 0.50 * x, y: 0.20 * y))
+        flag.addLine(to: CGPoint(x: 0.50 * x, y: 0.04 * y))
+        flag.addLine(to: CGPoint(x: 0.76 * x, y: 0.11 * y))
+        flag.addLine(to: CGPoint(x: 0.50 * x, y: 0.15 * y))
+        context.stroke(flag, with: .color(palette.gold), lineWidth: 1)
+      }
+      .frame(width: 57, height: 57)
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+}
+
+private struct FestivalMountain: Shape {
+  func path(in rect: CGRect) -> Path {
+    var outline = Path()
+    outline.move(to: CGPoint(x: 0, y: rect.maxY))
+    outline.addLine(to: CGPoint(x: rect.width * 0.38, y: rect.minY))
+    outline.addLine(to: CGPoint(x: rect.width * 0.65, y: rect.maxY))
+    outline.closeSubpath()
+    outline.move(to: CGPoint(x: rect.width * 0.43, y: rect.maxY))
+    outline.addLine(to: CGPoint(x: rect.width * 0.73, y: rect.height * 0.35))
+    outline.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+    outline.closeSubpath()
+    return outline
+  }
+}
+
 private struct WidgetBackdrop: View {
   let art: UIImage?
   let vivid: UIImage?
@@ -210,6 +267,11 @@ private struct WidgetBackdrop: View {
             .position(x: geo.size.width - width * 0.50 - 4,
                       y: square ? height * 0.5 + 4 : geo.size.height * 0.5)
             .accessibilityHidden(true)
+        }
+        if surface == .panchang && vivid != nil {
+          TempleDawnCameo(palette: WidgetPalette(night: night))
+            .frame(width: 60, height: 60)
+            .position(x: geo.size.width - 31, y: 36)
         }
         if art != nil || vivid != nil {
           HeritageFiligree(palette: WidgetPalette(night: night))
@@ -590,8 +652,13 @@ struct VedanshWidgetView: View {
       }
       if let vrat = p.vrat {
         HStack(alignment: .firstTextBaseline, spacing: 5) {
-          Image(systemName: "sparkles").font(.system(size: 11))
-            .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+          if vrat.hi.contains("गोवर्धन") {
+            FestivalMountain().fill(palette.saffronDeep)
+              .frame(width: 18, height: 14).accessibilityHidden(true)
+          } else {
+            Image(systemName: "sparkles").font(.system(size: 11))
+              .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+          }
           Text(vrat.value(lang))
             .font(.custom(fontName(lang, bold: true), size: compact ? 12 : 14))
             .foregroundStyle(palette.ink)
