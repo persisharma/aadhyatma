@@ -1,6 +1,7 @@
 import WidgetKit
 import SwiftUI
 import UIKit
+import ImageIO
 
 private let appGroup = "group.com.prashantsharma.vedansh.widgets"
 private let payloadName = "widget-payload-v1.json"
@@ -69,6 +70,40 @@ enum WidgetArt {
           cg.width * cg.height <= budget else { return nil }
     return image
   }
+  // Downsample once into a bounded image, with its devotional subject in focus.
+  // Source files are copied into the WidgetKit extension by withHomeWidgetsIos.
+  // Cache only the small prepared image, not the full resolution painting.
+  private static let vividCache = NSCache<NSString, UIImage>()
+  private static let focusX: [String: CGFloat] = [
+    "prayer": 0.5, "vishnu": 0.28, "krishna": 0.5, "shiva": 0.43,
+    "hanuman": 0.42, "rama": 0.5, "ganesha": 0.5, "durga": 0.5,
+    "saraswati": 0.5, "surya": 0.5, "panchang": 0.5
+  ]
+  static func vivid(_ subject: String, _ family: WidgetFamily) -> UIImage? {
+    guard let budget = maxPixels(family) else { return nil }
+    let safe = focusX[subject] == nil ? "prayer" : subject
+    let cacheKey = "\(safe)-\(family)" as NSString
+    if let cached = vividCache.object(forKey: cacheKey) { return cached }
+    guard let url = Bundle.main.url(forResource: "vedansh_heritage_source_\(safe)", withExtension: "webp"),
+          let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
+    let maxSize = family == .systemSmall ? 256 : 560
+    let opts: [CFString: Any] = [
+      kCGImageSourceCreateThumbnailFromImageAlways: true,
+      kCGImageSourceCreateThumbnailMaxPixelSize: maxSize,
+      kCGImageSourceCreateThumbnailWithTransform: true,
+      kCGImageSourceShouldCacheImmediately: true
+    ]
+    guard let thumb = CGImageSourceCreateThumbnailAtIndex(source, 0, opts as CFDictionary) else { return nil }
+    let aspect: CGFloat = family == .systemLarge ? 0.77 : (family == .systemSmall ? 1.0 : 1.23)
+    let cropWidth = min(thumb.width, max(1, Int(CGFloat(thumb.height) * aspect)))
+    let focus = focusX[safe] ?? 0.5
+    let start = max(0, min(thumb.width - cropWidth, Int(CGFloat(thumb.width) * focus) - cropWidth / 2))
+    guard let crop = thumb.cropping(to: CGRect(x: start, y: 0, width: cropWidth, height: thumb.height)),
+          crop.width * crop.height <= budget else { return nil }
+    let prepared = UIImage(cgImage: crop)
+    vividCache.setObject(prepared, forKey: cacheKey)
+    return prepared
+  }
 }
 
 private struct WidgetPalette {
@@ -80,25 +115,95 @@ private struct WidgetPalette {
   var gold: Color { night ? Color(red: 0.851, green: 0.714, blue: 0.431) : WidgetTheme.gold }
 }
 
+// Ornamentation is native vector drawing, not text baked into a picture.
+// It stays crisp on every iPhone scale and is never decoded from the network.
+private struct HeritageFiligree: View {
+  let palette: WidgetPalette
+  var body: some View {
+    Canvas { context, size in
+      guard size.width > 35, size.height > 35 else { return }
+      let outer = Path(roundedRect: CGRect(x: 2.7, y: 2.7, width: size.width - 5.4, height: size.height - 5.4), cornerRadius: 21)
+      let inner = Path(roundedRect: CGRect(x: 6, y: 6, width: size.width - 12, height: size.height - 12), cornerRadius: 18)
+      context.stroke(outer, with: .color(palette.gold.opacity(0.76)), lineWidth: 0.9)
+      context.stroke(inner, with: .color(palette.gold.opacity(0.30)), lineWidth: 0.4)
+      for mirror in [false, true] {
+        let x = mirror ? size.width - 12 : 12
+        let sign: CGFloat = mirror ? -1 : 1
+        var curl = Path()
+        curl.move(to: CGPoint(x: x, y: 35))
+        curl.addQuadCurve(to: CGPoint(x: x + 20 * sign, y: 10), control: CGPoint(x: x + 1 * sign, y: 10))
+        curl.addQuadCurve(to: CGPoint(x: x + 34 * sign, y: 10), control: CGPoint(x: x + 25 * sign, y: 15))
+        context.stroke(curl, with: .color(palette.gold.opacity(0.50)), lineWidth: 0.8)
+        var base = Path()
+        base.move(to: CGPoint(x: x, y: size.height - 35))
+        base.addQuadCurve(to: CGPoint(x: x + 20 * sign, y: size.height - 10), control: CGPoint(x: x + sign, y: size.height - 10))
+        base.addQuadCurve(to: CGPoint(x: x + 34 * sign, y: size.height - 10), control: CGPoint(x: x + 25 * sign, y: size.height - 15))
+        context.stroke(base, with: .color(palette.gold.opacity(0.50)), lineWidth: 0.8)
+      }
+      let center = CGPoint(x: size.width * 0.5, y: size.height - 12)
+      for i in 0..<5 {
+        let angle = CGFloat(i) * (.pi / 4) - .pi / 2
+        let px = center.x + cos(angle) * 4
+        let py = center.y + sin(angle) * 4
+        let petal = Path(ellipseIn: CGRect(x: px - 2.1, y: py - 4.1, width: 4.2, height: 8.2))
+        context.stroke(petal, with: .color(palette.gold.opacity(0.68)), lineWidth: 0.7)
+      }
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+}
+
 private struct WidgetBackdrop: View {
   let art: UIImage?
+  let vivid: UIImage?
+  let surface: VedanshSurface
   let night: Bool
   var body: some View {
-    ZStack {
-      WidgetPalette(night: night).parchment
-      if let art { Image(uiImage: art).resizable().scaledToFill().accessibilityHidden(true) }
+    GeometryReader { geo in
+      ZStack {
+        WidgetPalette(night: night).parchment
+        // The prewashed original is the safe fallback and protects tinted/legacy
+        // cases. Daytime full-colour mode overlays the approved vivid painting.
+        if let art {
+          Image(uiImage: art).resizable().scaledToFill()
+            .frame(width: geo.size.width, height: geo.size.height)
+            .clipped().accessibilityHidden(true)
+        }
+        if let vivid {
+          let square = surface == .panchang
+          let width = geo.size.width * (square ? 0.38 : 0.59)
+          let height = geo.size.height * (square ? 0.50 : 1)
+          Image(uiImage: vivid).resizable().scaledToFill()
+            .frame(width: width, height: height)
+            .clipped()
+            .mask {
+              LinearGradient(stops: [
+                .init(color: .clear, location: 0),
+                .init(color: .white.opacity(0.35), location: 0.18),
+                .init(color: .white, location: 0.46)
+              ], startPoint: .leading, endPoint: .trailing)
+            }
+            .position(x: geo.size.width - width * 0.50 - 4,
+                      y: square ? height * 0.5 + 4 : geo.size.height * 0.5)
+            .accessibilityHidden(true)
+        }
+        if art != nil || vivid != nil {
+          HeritageFiligree(palette: WidgetPalette(night: night))
+        }
+      }
+      .frame(width: geo.size.width, height: geo.size.height)
     }
   }
 }
 
 private extension View {
-  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?, night: Bool) -> some View {
+  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?, vivid: UIImage?, surface: VedanshSurface, night: Bool) -> some View {
     if #available(iOSApplicationExtension 17.0, *) {
-      containerBackground(for: .widget) { WidgetBackdrop(art: art, night: night) }
-    } else if let art {
-      // iOS 16 has no container background: the art must cover the whole cell, not
-      // just the content's bounds, and scaledToFill must not spill past it.
-      frame(maxWidth: .infinity, maxHeight: .infinity).background(WidgetBackdrop(art: art, night: night)).clipped()
+      containerBackground(for: .widget) { WidgetBackdrop(art: art, vivid: vivid, surface: surface, night: night) }
+    } else if art != nil || vivid != nil {
+      frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(WidgetBackdrop(art: art, vivid: vivid, surface: surface, night: night)).clipped()
     } else { background(WidgetPalette(night: night).parchment) }
   }
 }
@@ -182,7 +287,7 @@ struct VedanshWidgetView: View {
       case .expired: recovery("पंचांग ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh")
       case .missing, .invalid: recovery("विजेट तैयार करने हेतु वेदांश़ खोलें", "Open Vedansh to prepare widgets")
       }
-    }.vedanshWidgetBackground(art, night: palette.night)
+    }.vedanshWidgetBackground(art, vivid: vividArt, surface: surface, night: palette.night)
   }
 
   // Art only behind real content in full colour. Recovery cards stay the plain
@@ -201,6 +306,16 @@ struct VedanshWidgetView: View {
     let verseKey = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
     let subject = surface == .panchang ? "panchang" : (payload.verses.days.first(where: { $0.dateKey == verseKey })?.artKey ?? "prayer")
     return WidgetArt.heritage(subject, family, night: palette.night)
+  }
+
+  private var vividArt: UIImage? {
+    guard surface != .japam, renderingMode == .fullColor, !palette.night,
+          case .ready(let payload) = entry.state, hasContent(payload) else { return nil }
+    if surface == .verse && family == .systemSmall { return nil }
+    let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
+    let source = surface == .panchang ? "panchang"
+      : (payload.verses.days.first(where: { $0.dateKey == key })?.artKey ?? "prayer")
+    return WidgetArt.vivid(source, family)
   }
 
   /// Whether this entry renders the surface's dated content rather than a refresh card.
