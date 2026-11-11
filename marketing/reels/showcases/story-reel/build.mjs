@@ -146,7 +146,8 @@ function page(style) {
   const folk = style !== 'painted';
   if (!folk && scenes.some(sc => !sc.pages && !sc.image)) throw Error(`${story} has no painted pages: use --style puppet (style rule: unillustrated stories use puppets)`);
   const casts = scenes.map(sc => folk ? FOLK[sc.id].cast.map(([name, x, y, s, rot, flip, m, o]) => ({x, y, s, rot, flip, m, o: o || {}, parts: CHARACTERS[name].map(({shapes, ...p}) => p)})) : []);
-  const painted = folk ? '' : scenes.map((sc, i) => `<div class="pscene" data-i="${i}">${sc.image ? `<div class="pp" data-k="0"><img class="part full" style="transform-origin:${sc.focus || '50% 55%'}" src="${url(path.relative(root, path.join(here, 'stories', story, sc.image)))}"></div>` : sc.pages.map((p, k) => { const f = `mobile/assets/kids-stories/${p.slice(0, 2)}-${p.slice(2)}.webp`; return `<div class="pp" data-k="${k}"><img class="pbg" src="${url(f)}"><img class="part" src="${url(f)}"></div>`; }).join('')}</div>`).join('');
+  const painted = folk ? '' : scenes.map((sc, i) => `<div class="pscene" data-i="${i}">${sc.image ? `<div class="pp" data-k="0"><div class="cam" style="transform-origin:${sc.focus || '50% 55%'}"><img class="part full" src="${url(path.relative(root, path.join(here, 'stories', story, sc.image)))}"><canvas class="fxc" width="${W}" height="${H}"></canvas></div></div>` : sc.pages.map((p, k) => { const f = `mobile/assets/kids-stories/${p.slice(0, 2)}-${p.slice(2)}.webp`; return `<div class="pp" data-k="${k}"><img class="pbg" src="${url(f)}"><img class="part" src="${url(f)}"></div>`; }).join('')}</div>`).join('');
+  const grade = folk ? '' : '<canvas id="grain" width="540" height="960"></canvas><div class="leak"></div><div class="vig"></div>';
   const hook = script.hookText ? `<div class="hook">${esc(script.hookText)}</div>` : '';
   return `<!doctype html><html lang="hi"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@600;700&family=Mukta:wght@600;800&display=block">
@@ -174,9 +175,13 @@ svg{position:absolute;inset:0}.pscene,.pp{position:absolute;inset:0;opacity:0}
 .cta .t{margin-top:10px;font:700 40px/1.4 'Noto Serif Devanagari';color:#5A3A1E}
 .cta .b{margin:16px auto 0;width:560px;padding:14px 0 8px;border-radius:999px;background:linear-gradient(180deg,#C4321A,#8E1B08);color:#FFF4DF;font:700 44px/1.3 'Noto Serif Devanagari'}
 .part.full{top:0;height:${H}px;object-fit:cover}
+.cam{position:absolute;inset:0;will-change:transform}.fxc{position:absolute;inset:0;width:${W}px;height:${H}px}
+#grain{position:absolute;inset:0;width:${W}px;height:${H}px;opacity:.07;mix-blend-mode:overlay;z-index:3;pointer-events:none}
+.vig{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 75% 62% at 50% 52%,rgba(0,0,0,0) 55%,rgba(20,6,0,.55) 100%)}
+.leak{position:absolute;width:1400px;height:1400px;left:-200px;top:300px;z-index:3;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle,rgba(255,170,70,.55),rgba(255,120,40,.15) 40%,rgba(0,0,0,0) 70%)}
 .hook{position:absolute;left:40px;right:40px;top:1520px;text-align:center;font:800 88px/1.15 'Mukta';color:#FFC94A;text-shadow:0 0 3px #000,0 5px 0 #000,0 8px 22px rgba(0,0,0,.8);z-index:6}
 .flash{position:absolute;inset:0;background:#FFF6D8;opacity:0;z-index:4;pointer-events:none}
-</style></head><body>${painted}${hook}
+</style></head><body>${painted}${grade}${hook}
 <svg viewBox="0 0 ${W} ${H}"><defs><radialGradient id="lamp" cx="50%" cy="52%" r="60%"><stop offset="0" stop-color="#B5561C" stop-opacity=".95"/><stop offset=".55" stop-color="#7A2E10" stop-opacity=".55"/><stop offset="1" stop-color="#2B0E06" stop-opacity="0"/></radialGradient>
 <pattern id="pf" width="60" height="60" patternUnits="userSpaceOnUse"><rect width="60" height="60" fill="#120B06"/>${[0, 1, 2, 3, 4].map(k => `<ellipse cx="${30 + 11 * Math.cos(k * 1.2566)}" cy="${30 + 11 * Math.sin(k * 1.2566)}" rx="7" ry="7" fill="#FFF7E2"/>`).join('')}<circle cx="30" cy="30" r="6" fill="#F0B53C"/></pattern></defs>
 ${folk ? scenes.map((sc, i) => folkScene(style, sc, i)).join('') : ''}
@@ -187,10 +192,10 @@ ${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.p
 <div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div>${script.brand ? `<div class="h">फ़ॉलो करें ${esc(script.brand.handle)}</div>` : ''}</div>
 <script>
 const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).voSecs + 0.15).toFixed(3) : 'null'};
-const FL=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && (FOLK[sc.id].flashAt ?? (sc.id === 'vajra' ? 0.56 : 0))) || 0))};
+const FL=${JSON.stringify(scenes.map(sc => style === 'painted' ? (sc.flashAt ?? 0) : ((FOLK[sc.id] && (FOLK[sc.id].flashAt ?? (sc.id === 'vajra' ? 0.56 : 0))) || 0)))};
 const ZM=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].zoom) || null))};
-const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
-const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 1, zoom: s.zoom || null, zoomDur: s.zoomDur || 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
+const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => style === 'painted' ? (sc.shake || []) : ((FOLK[sc.id] && FOLK[sc.id].shake) || [])))};
+const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 1, zoom: s.zoom || null, zoomDur: s.zoomDur || 0, pan: s.pan || null, efx: s.efx || {}})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : s.fx) || []))},T=${folk ? T : 0.32};
 const clamp=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-clamp(x),3),eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2},lerp=(a,b,p)=>a+(b-a)*p;
 const back=x=>{x=clamp(x);const c=1.5;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
 const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
@@ -230,6 +235,22 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  // travels in from the left and halts at c.x by fraction t1; st = distance rolled (drives wheel spin), am = gait (legs stop)
  cartStop:(c,u,d)=>{const t1=(c.o.t1||.6)*d,x0=c.x-(c.o.dist||700),x=lerp(x0,c.x,eo(u/t1));return{x,st:(x-x0)/c.s,am:clamp((t1-u)/(.3*t1)),y:c.y-(u<t1?Math.abs(Math.sin(u*5))*3:0)}}};
 const vis=(i,t)=>{const s=SC[i],u=t-s.start,last=i===SC.length-1;if(u<0||(!last&&u>s.dur+T))return 0;return Math.min(i===0?1:clamp(u/T),last?1:1-clamp((u-s.dur)/T));};
+const IMG=${JSON.stringify(scenes.map(s => !!s.image))},GR=document.getElementById('grain');let fr=0;
+// Seeded particle effects drawn per image scene (moves with the camera). efx keys (coordinates in 1080x1920 px):
+// petals, dust, embers:[x,y,w], rays:[x,y], flare:[x,y], shimmer:[yTop], bloom:[x,y,atFraction]
+const RNG=sd=>()=>{sd|=0;sd=sd+0x6D2B79F5|0;let q=Math.imul(sd^sd>>>15,1|sd);q=q+Math.imul(q^q>>>7,61|q)^q;return((q^q>>>14)>>>0)/4294967296;};
+const PS={};const parts=(key,n,f)=>PS[key]||(PS[key]=Array.from({length:n},(_,k)=>f(RNG(k*977+key.length*31+7))));
+function drawFx(cv,e,u,d,i){if(!cv)return;const c=cv.getContext('2d');c.clearRect(0,0,1080,1920);
+  if(e.rays){const [x,y]=e.rays;c.save();c.globalCompositeOperation='lighter';for(let k=0;k<14;k++){const a=k*Math.PI/7+u*.12;const g=c.createLinearGradient(x,y,x+Math.cos(a)*1500,y+Math.sin(a)*1500);g.addColorStop(0,'rgba(255,214,120,.22)');g.addColorStop(1,'rgba(255,214,120,0)');c.fillStyle=g;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(a-.07)*1500,y+Math.sin(a-.07)*1500);c.lineTo(x+Math.cos(a+.07)*1500,y+Math.sin(a+.07)*1500);c.closePath();c.fill();}
+    const R=260*(1+.08*Math.sin(u*2.2));const g2=c.createRadialGradient(x,y,0,x,y,R);g2.addColorStop(0,'rgba(255,236,170,.55)');g2.addColorStop(1,'rgba(255,200,90,0)');c.fillStyle=g2;c.fillRect(x-R,y-R,2*R,2*R);c.restore();}
+  if(e.bloom){const [x,y,at]=e.bloom,w=u-at*d;if(w>0&&w<1.6){const a=w<.25?w/.25:1-(w-.25)/1.35,R=200+700*Math.min(1,w/.8);c.save();c.globalCompositeOperation='lighter';const g=c.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,'rgba(255,245,210,'+(.8*a)+')');g.addColorStop(1,'rgba(255,220,140,0)');c.fillStyle=g;c.fillRect(x-R,y-R,2*R,2*R);c.restore();}}
+  if(e.flare){const [x,y]=e.flare;c.save();c.globalCompositeOperation='lighter';const R=230*(1+.1*Math.sin(u*1.8));let g=c.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,'rgba(255,240,190,.7)');g.addColorStop(1,'rgba(255,160,60,0)');c.fillStyle=g;c.fillRect(x-R,y-R,2*R,2*R);
+    [[.35,40,.18],[.6,22,.22],[.85,70,.1]].forEach(([f,r,al])=>{const gx=x+(540-x)*2*f,gy=y+(960-y)*2*f;const gg=c.createRadialGradient(gx,gy,0,gx,gy,r);gg.addColorStop(0,'rgba(255,220,150,'+al+')');gg.addColorStop(1,'rgba(255,220,150,0)');c.fillStyle=gg;c.fillRect(gx-r,gy-r,2*r,2*r);});c.restore();}
+  if(e.shimmer){const y0=e.shimmer[0];parts('sh'+i,70,r=>[r()*1080,y0+r()*(1920-y0),r()*6,1.5+r()*3,4+r()*8]).forEach(([x,y,ph,sp,sz])=>{const a=Math.pow(Math.max(0,Math.sin(u*sp+ph)),8);if(a<.02)return;c.save();c.globalCompositeOperation='lighter';c.fillStyle='rgba(255,246,220,'+a.toFixed(3)+')';c.beginPath();c.moveTo(x-sz*2,y);c.lineTo(x,y-sz*.4);c.lineTo(x+sz*2,y);c.lineTo(x,y+sz*.4);c.closePath();c.fill();c.beginPath();c.arc(x,y,sz*.5,0,7);c.fill();c.restore();});}
+  if(e.embers){const [ex,ey,ew]=e.embers;parts('em'+i,55,r=>[r()-.5,r()*6,70+r()*110,2+r()*4,r()*900]).forEach(([dx,ph,v,rad,off])=>{const h=(u*v+off)%900,y=ey-h,x=ex+dx*ew+Math.sin(u*1.4+ph)*24,a=Math.max(0,1-h/900);c.save();c.globalCompositeOperation='lighter';c.shadowColor='rgba(255,140,40,1)';c.shadowBlur=14;c.fillStyle='rgba(255,'+(150+((ph*20)|0)%80)+',60,'+(.9*a).toFixed(2)+')';c.beginPath();c.arc(x,y,rad,0,7);c.fill();c.restore();});}
+  if(e.dust){parts('du'+i,40,r=>[r()*1080,r()*1920,r()*6,3+r()*8,10+r()*25]).forEach(([x0,y0,ph,rad,v])=>{const x=(x0+Math.sin(u*.5+ph)*40+u*v)%1100,y=(y0-u*v*.6+1920)%1920,a=.18+.22*Math.sin(u*1.3+ph);c.save();c.globalCompositeOperation='lighter';const g=c.createRadialGradient(x,y,0,x,y,rad*2.2);g.addColorStop(0,'rgba(255,228,160,'+Math.max(0,a).toFixed(2)+')');g.addColorStop(1,'rgba(255,228,160,0)');c.fillStyle=g;c.fillRect(x-rad*2.2,y-rad*2.2,rad*4.4,rad*4.4);c.restore();});}
+  if(e.petals){parts('pe'+i,34,r=>[r()*1080,r()*1920,r()*6,90+r()*120,r()<.6]).forEach(([x0,y0,ph,v,pink])=>{const y=(y0+u*v)%2000-40,x=x0+Math.sin(u*1.2+ph)*50,rot=u*1.5+ph;c.save();c.translate(x,y);c.rotate(rot);c.fillStyle=pink?'rgba(240,150,170,.9)':'rgba(245,190,70,.9)';c.beginPath();c.ellipse(0,0,13,7,0,0,7);c.fill();c.restore();});}
+}
 window.renderAt=t=>{
   document.querySelectorAll('.scene').forEach((g,i)=>{const o=vis(i,t);g.setAttribute('opacity',o);g.style.display=o>0?'':'none';if(!o)return;
     if(IG){const u0=t-SC[i].start,zm=ZM[i],k=zm?lerp(zm[0],zm[1],eo(u0/zm[2])):1+.07*(1-eo(u0/.35)),fx=zm?zm[3]:540,fy=zm?zm[4]:960;let sx=0,sy=0;for(const f of SHK[i]){const q=u0-f*SC[i].dur;if(q>0&&q<.35){const a=(1-q/.35)*12;sx=Math.sin(q*90)*a;sy=Math.cos(q*77)*a;}}
@@ -247,12 +268,22 @@ window.renderAt=t=>{
     g.querySelectorAll('.petal').forEach(e=>{const x=+e.dataset.x+Math.sin(u*1.6+ +e.dataset.p)*40,y=520+((u*+e.dataset.v+ +e.dataset.p*200)%1300);e.setAttribute('cx',x.toFixed(1));e.setAttribute('cy',y.toFixed(1));e.setAttribute('opacity',clamp(u/1.2));});
   });
   document.querySelectorAll('.pscene').forEach((g,i)=>{const o=vis(i,t);g.style.opacity=o;if(!o)return;const u=t-SC[i].start,d=SC[i].dur,n=SC[i].pages;
+    // image scenes fade in through blur and glow (outgoing ones blur out)
+    if(SC[i].efx&&IMG[i]){const b=1-o;g.style.filter=b>.01?'blur('+(b*12).toFixed(1)+'px) brightness('+(1+.45*b).toFixed(2)+')':'none';}
     g.querySelectorAll('.pp').forEach((p,k)=>{const a=n===1?1:(k===0?1-clamp((u-d/2)/.4):clamp((u-d/2)/.4));p.style.opacity=a;
-      const z=SC[i].zoom;p.querySelector('.part').style.transform='scale('+(z?(u<SC[i].zoomDur?lerp(z[0],z[1],eo(u/SC[i].zoomDur)):z[1]+.04*(u-SC[i].zoomDur)/d):((i+k)%2?1.1-.07*u/d:1.03+.07*u/d))+')';});});
+      const z=SC[i].zoom,sc=(z?(u<SC[i].zoomDur?lerp(z[0],z[1],eo(u/SC[i].zoomDur)):z[1]+.05*(u-SC[i].zoomDur)/d):((i+k)%2?1.12-.08*u/d:1.04+.08*u/d));
+      const cam=p.querySelector('.cam');
+      if(cam){const pn=SC[i].pan||[0,0,0,0],q=eio(u/d);let x=lerp(pn[0],pn[2],q)+3*Math.sin(t*1.7)+2*Math.sin(t*2.9),y=lerp(pn[1],pn[3],q)+3*Math.sin(t*1.3+1),r=.25*Math.sin(t*.9);
+        for(const f of SHK[i]){const w=u-f*d;if(w>0&&w<.4){const a2=(1-w/.4)*14;x+=Math.sin(w*90)*a2;y+=Math.cos(w*77)*a2;}}
+        cam.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+r.toFixed(3)+'deg) scale('+(sc*(1+.06*(1-o))).toFixed(4)+')';
+        drawFx(cam.querySelector('.fxc'),SC[i].efx,u,d,i);}
+      else p.querySelector('.part').style.transform='scale('+sc+')';});});
+  if(GR){fr++;const c=GR.getContext('2d'),im=c.createImageData(540,960);let sd=(Math.round(t*30)*2654435761)>>>0;for(let k=0;k<im.data.length;k+=4){sd^=sd<<13;sd^=sd>>>17;sd^=sd<<5;const v=(sd>>>0)&255;im.data[k]=im.data[k+1]=im.data[k+2]=v;im.data[k+3]=255;}c.putImageData(im,0,0);
+    const lk=document.querySelector('.leak');lk.style.transform='translate('+(260*Math.sin(t*.23)).toFixed(0)+'px,'+(-320+220*Math.sin(t*.17+1)).toFixed(0)+'px)';lk.style.opacity=(.18+.12*Math.sin(t*.5)).toFixed(3);}
   const hk=document.querySelector('.hook');if(hk){const u=t-SC[0].start;hk.style.opacity=u<SC[0].dur?1:0;}
   document.querySelectorAll('.sub').forEach((e,i)=>{const s=SC[i],u=t-s.start;const o=Math.min(clamp((u-.05)/.25),vis(i,t)?1:0)*(u<s.dur?1:1-clamp((u-s.dur)/T));e.style.opacity=o;});
   // 'flash' fx: a light burst at FL[i] (fraction of the scene); the vajra scene keeps its 0.56. At 0 it starts already lit.
-  const fl=document.querySelector('.flash');let fo=0;FX.forEach((f,i)=>{if(!f.includes('flash'))return;const u=t-SC[i].start-FL[i]*SC[i].dur;if(u>=-(FL[i]===0?1e-3:0)&&u<=.6)fo=Math.max(fo,FL[i]===0?.45*(1-u/.3):(u<.06?u/.06:1-(u-.06)/.54)*.9);});fl.style.opacity=Math.max(0,fo);
+  const fl=document.querySelector('.flash');let fo=0;FX.forEach((f,i)=>{if(!f.includes('flash'))return;const u=t-SC[i].start-FL[i]*SC[i].dur;if(u>=-(FL[i]===0?1e-3:0)&&u<=.6)fo=Math.max(fo,FL[i]===0?.45*(1-u/.3):(u<.06?u/.06:1-(u-.06)/.54)*(IMG[i]?.5:.9));});fl.style.opacity=Math.max(0,fo);
   if(CTR){const el=document.querySelector('.ctr'),n=CTR.filter(x=>t>=x).length,last=CTR.filter(x=>t>=x).pop();el.style.opacity=1;el.querySelector('.n').textContent=n;
     const q=last===undefined?9:t-last;el.style.transform='scale('+(q<.35?1+.25*(1-q/.35):1)+')';}
   if(IG){document.querySelectorAll('.chip').forEach((e,i)=>{const s=SC[i],u=t-s.start;const on=u>=0&&u<s.dur+(i===SC.length-1?99:0);e.style.opacity=on?(i===0?1:clamp(u/.12)):0;e.style.transform='scale('+(on?(.7+.3*back(u/.3)):1)+')';});
