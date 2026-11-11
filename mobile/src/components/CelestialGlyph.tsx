@@ -4,6 +4,7 @@ import Svg, { Circle, ClipPath, Defs, G, Image as SvgImage, Path } from 'react-n
 import { useTheme } from '@/theme/ThemeContext';
 import { moonLitPath, moonPhaseForTithi } from '@/utils/moonPhase';
 import { storybookSources } from './storybookSources';
+import { PAINTED_ICON_DECODE } from './paintedIconDecode';
 
 /**
  * The Panchang sky's mark (design.md §33): the moon in the day's phase on
@@ -46,7 +47,7 @@ export default function CelestialGlyph({
       }}
     >
       {kind === 'sun' ? (
-        <Image source={storybookSources.gayatri} resizeMode="contain" fadeDuration={0}
+        <Image source={storybookSources.gayatri} resizeMode="contain" fadeDuration={0} {...PAINTED_ICON_DECODE}
           accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
           style={{ width: size * 512 / 432, height: size * 512 / 432 }} />
       ) : (
