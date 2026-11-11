@@ -202,7 +202,7 @@ test('iOS loads each plate by name and refuses one over the family pixel budget'
   assert.match(swift, /cg\.width \* cg\.height <= budget/);
   // Recovery cards and tinted/vibrant rendering keep the plain parchment.
   assert.match(swift, /guard renderingMode == \.fullColor, case \.ready\(let payload\) = entry\.state, hasContent\(payload\)/);
-  assert.match(swift, /\.vedanshWidgetBackground\(art, night: palette\.night\)/);
+  assert.match(swift, /\.vedanshWidgetBackground\(art, vivid: vividArt, surface: surface, night: palette\.night\)/);
   assert.match(read('withHomeWidgetsIos.js'), /'assets', 'widget-backgrounds'/);
 });
 
