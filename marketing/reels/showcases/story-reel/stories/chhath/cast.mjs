@@ -49,6 +49,12 @@ Object.assign(CHARACTERS, {
   vrati: lady({skin: 'farmerSkin', saree: 'vratiSaree', sindoor: true, frontBase: -168, backBase: 160, frontItem: soop}),
   riverFront: [{id: 'body', at: [0, 0], amp: 1.5, freq: 0.5, shapes: [s(rr(-620, 0, 1240, 340, 0), 'river'),
     ...Array.from({length: 9}, (_, k) => s(`M${-560 + k * 140},18 q35,-22 70,0 q35,22 70,0`, 'river2', flat))]}],
+  sunset: [{id: 'rays', at: [0, 0], spin: 6, shapes: Array.from({length: 24}, (_, k) => { const a = k * Math.PI / 12, p = (r, t) => [Math.round(r * Math.cos(t)), Math.round(r * Math.sin(t))];
+      return s(poly(p(330, a - 0.05), p(k % 2 ? 470 : 560, a), p(330, a + 0.05)), k % 2 ? '#F0A92C' : '#E8551E', flat); })},
+    {id: 'disc', at: [0, 0], amp: 1, freq: 0.4, shapes: [s(ell(0, 0, 330, 330), '#E8551E'), s(ell(0, 0, 290, 290), '#F07A26', flat), s(ell(0, 0, 230, 230), '#F5A23A', flat)]}],
+  tear: [{id: 'body', at: [0, 0], shapes: [s('M0,-20 Q13,0 0,12 Q-13,0 0,-20Z', '#E8F6FF')]}],
+  pyre: [{id: 'body', at: [0, 0], shapes: [...[0, 1, 2, 3].map(k => s(rr(-150, -k * 26, 300, 20, 6), 'wood')), s(ell(0, -110, 70, 50), 'mud', flat)]},
+    {id: 'smoke', at: [0, -130], amp: 10, freq: 0.5, shapes: [s('M-30,0 C-80,-80 20,-120 -20,-220 C40,-140 60,-80 30,0Z', '#5A4A44', flat)]}],
   havan: CHARACTERS.dhuni.filter(p => p.id !== 'trishul').map(p => p.id === 'base' ? {...p, shapes: [s(rr(-130, -10, 260, 60, 6), 'brick'), s(rr(-130, -10, 260, 14, 4), 'gold', flat)]} : p),
 });
 export {CHARACTERS, PALETTES};

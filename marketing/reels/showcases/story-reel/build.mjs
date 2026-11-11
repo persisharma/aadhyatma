@@ -133,6 +133,7 @@ function folkScene(style, sc, i) {
   }).join('');
   if (f.fx?.includes('rain')) o = o.replace('<!--cast-->', Array.from({length: 46}, (_, k) => `<path class="rain" d="M${(k * 97) % 1100 - 20},${560 + (k * 211) % 1050} l-26,90" stroke="#BFE3F2" stroke-width="5" stroke-linecap="round" opacity=".75"/>`).join('') + '<!--cast-->');
   for (const [x, y, t, size, t0] of f.labels || []) o += `<text class="lbl" data-t0="${t0}" x="${x}" y="${y}" text-anchor="middle" font-family="Noto Serif Devanagari" font-weight="700" font-size="${size}" fill="#F3DFAE" stroke="#170904" stroke-width="${Math.max(4, size / 9)}" paint-order="stroke" opacity="0">${esc(t)}</text>`;
+  if (f.fx?.includes('embers')) { let seed = 9; const r = () => ((seed = (seed * 16807) % 2147483647) / 2147483647); o += Array.from({length: 40}, (_, k) => `<circle class="ember" data-x="${(r() * W) | 0}" data-v="${(90 + r() * 140) | 0}" data-p="${r() * 6}" r="${(3 + r() * 5).toFixed(1)}" fill="${k % 3 ? '#FF8A2A' : '#FFD36B'}"/>`).join(''); }
   if (f.fx?.includes('petals')) { let seed = 5; const r = () => ((seed = (seed * 16807) % 2147483647) / 2147483647); o += Array.from({length: 36}, (_, k) => `<ellipse class="petal" data-x="${(r() * W) | 0}" data-v="${(120 + r() * 160) | 0}" data-p="${r() * 6}" rx="11" ry="6" fill="${k % 3 ? '#F0A98A' : '#F0B53C'}" stroke="#170904" stroke-width="2"/>`).join(''); }
   return o + '</g>';
 }
@@ -186,6 +187,7 @@ ${script.brand ? `<div class="brand"><span><img src="${url('mobile/assets/icon.p
 <div class="cta"><div class="row"><img class="icon" src="${url('mobile/assets/icon.png')}"><img class="mark" src="${url('mobile/assets/branding/wordmarks/hindi.png')}"></div><div class="t">${esc(script.cta.line)}</div><div class="b">${esc(script.cta.button)}</div>${script.brand ? `<div class="h">फ़ॉलो करें ${esc(script.brand.handle)}</div>` : ''}</div>
 <script>
 const CTA_AT=${script.ctaAfterVo ? (scenes.at(-1).voAt + scenes.at(-1).voSecs + 0.15).toFixed(3) : 'null'};
+const FL=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && (FOLK[sc.id].flashAt ?? (sc.id === 'vajra' ? 0.56 : 0))) || 0))};
 const ZM=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].zoom) || null))};
 const CTR=${JSON.stringify(counter ? counter.at : null)},IG=${ig},SHK=${JSON.stringify(scenes.map(sc => (style !== 'painted' && FOLK[sc.id] && FOLK[sc.id].shake) || []))};
 const SC=${JSON.stringify(scenes.map(s => ({start: s.start, dur: s.dur, id: s.id, pages: s.pages ? s.pages.length : 1, zoom: s.zoom || null, zoomDur: s.zoomDur || 0})))},CASTS=${JSON.stringify(casts)},FX=${JSON.stringify(scenes.map(s => (folk ? FOLK[s.id].fx : null) || []))},T=${T};
@@ -222,6 +224,8 @@ const MO={idle:()=>({}),sunPulse:(c,u)=>({s:c.s*(1+.03*Math.sin(u*2.2))}),
  grow:(c,u,d)=>{const p=eio((u-(c.o.t0||0)*d)/(c.o.dur||.8)),sc=lerp(c.s,c.o.s2,p);return{s:sc,y:c.o.ground-(c.o.foot||170)*sc}},
  // starts as an extreme close-up (scale o.s0 at o.y0) and pulls back to its place within o.dur seconds
  zoomOut:(c,u,d)=>{const p=eio(u/(c.o.dur||1.4));return{s:lerp(c.o.s0,c.s,p),y:lerp(c.o.y0,c.y,p)}},
+ // tear drops: fall o.len px every o.per seconds, fading out
+ tears:(c,u)=>{const q=((u+(c.o.phase||0))%(c.o.per||.9))/(c.o.per||.9);return{y:c.y+q*(c.o.len||110),op:q<.15?q/.15:1-q}},
  fadeAway:(c,u,d)=>({op:1-clamp((u-(c.o.t0||0)*d)/(c.o.dur||.6))}),
  // travels in from the left and halts at c.x by fraction t1; st = distance rolled (drives wheel spin), am = gait (legs stop)
  cartStop:(c,u,d)=>{const t1=(c.o.t1||.6)*d,x0=c.x-(c.o.dist||700),x=lerp(x0,c.x,eo(u/t1));return{x,st:(x-x0)/c.s,am:clamp((t1-u)/(.3*t1)),y:c.y-(u<t1?Math.abs(Math.sin(u*5))*3:0)}}};
@@ -239,6 +243,7 @@ window.renderAt=t=>{
     g.querySelectorAll('.lbl').forEach(e=>{const p=(i===0&&+e.dataset.t0<=0)?1:clamp((u-(+e.dataset.t0)*d)/.4); /* hook label on the first frame */e.setAttribute('opacity',p);});
     g.querySelectorAll('.rain').forEach((e,k)=>{const y=((u*900+k*137)%1100);e.setAttribute('transform','translate(0,'+(y-550).toFixed(0)+')');e.setAttribute('opacity',(.75*(1-clamp((u-.8*d)/(.15*d)))).toFixed(2));});
     g.querySelectorAll('.wind').forEach((e,k)=>e.setAttribute('stroke-dashoffset',(-(u*900+k*260)%1560).toFixed(0)));
+    g.querySelectorAll('.ember').forEach(e=>{const x=+e.dataset.x+Math.sin(u*1.3+ +e.dataset.p)*30,y=1700-((u*+e.dataset.v+ +e.dataset.p*200)%1150);e.setAttribute('cx',x.toFixed(1));e.setAttribute('cy',y.toFixed(1));e.setAttribute('opacity',(.9*clamp((y-520)/300)).toFixed(2));});
     g.querySelectorAll('.petal').forEach(e=>{const x=+e.dataset.x+Math.sin(u*1.6+ +e.dataset.p)*40,y=520+((u*+e.dataset.v+ +e.dataset.p*200)%1300);e.setAttribute('cx',x.toFixed(1));e.setAttribute('cy',y.toFixed(1));e.setAttribute('opacity',clamp(u/1.2));});
   });
   document.querySelectorAll('.pscene').forEach((g,i)=>{const o=vis(i,t);g.style.opacity=o;if(!o)return;const u=t-SC[i].start,d=SC[i].dur,n=SC[i].pages;
@@ -246,8 +251,8 @@ window.renderAt=t=>{
       const z=SC[i].zoom;p.querySelector('.part').style.transform='scale('+(z?(u<SC[i].zoomDur?lerp(z[0],z[1],eo(u/SC[i].zoomDur)):z[1]+.04*(u-SC[i].zoomDur)/d):((i+k)%2?1.1-.07*u/d:1.03+.07*u/d))+')';});});
   const hk=document.querySelector('.hook');if(hk){const u=t-SC[0].start;hk.style.opacity=u<SC[0].dur?1:0;}
   document.querySelectorAll('.sub').forEach((e,i)=>{const s=SC[i],u=t-s.start;const o=Math.min(clamp((u-.05)/.25),vis(i,t)?1:0)*(u<s.dur?1:1-clamp((u-s.dur)/T));e.style.opacity=o;});
-  const vi=SC.findIndex(s=>s.id==='vajra'),fl=document.querySelector('.flash');
-  if(vi>=0&&FX[vi].includes('flash')){const u=t-SC[vi].start-.56*SC[vi].dur;fl.style.opacity=u<0||u>.6?0:(u<.06?u/.06:1-(u-.06)/.54)*.9;}else fl.style.opacity=0;
+  // 'flash' fx: a light burst at FL[i] (fraction of the scene); the vajra scene keeps its 0.56. At 0 it starts already lit.
+  const fl=document.querySelector('.flash');let fo=0;FX.forEach((f,i)=>{if(!f.includes('flash'))return;const u=t-SC[i].start-FL[i]*SC[i].dur;if(u>=-(FL[i]===0?1e-3:0)&&u<=.6)fo=Math.max(fo,FL[i]===0?.45*(1-u/.3):(u<.06?u/.06:1-(u-.06)/.54)*.9);});fl.style.opacity=Math.max(0,fo);
   if(CTR){const el=document.querySelector('.ctr'),n=CTR.filter(x=>t>=x).length,last=CTR.filter(x=>t>=x).pop();el.style.opacity=1;el.querySelector('.n').textContent=n;
     const q=last===undefined?9:t-last;el.style.transform='scale('+(q<.35?1+.25*(1-q/.35):1)+')';}
   if(IG){document.querySelectorAll('.chip').forEach((e,i)=>{const s=SC[i],u=t-s.start;const on=u>=0&&u<s.dur+(i===SC.length-1?99:0);e.style.opacity=on?(i===0?1:clamp(u/.12)):0;e.style.transform='scale('+(on?(.7+.3*back(u/.3)):1)+')';});

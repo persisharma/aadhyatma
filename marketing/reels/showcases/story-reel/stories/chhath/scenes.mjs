@@ -3,8 +3,12 @@
 import './cast.mjs';
 const row = [130, 335, 540, 745, 950];
 export const FOLK = {
-  hook: {bg: 'night', fx: ['dim'], zoom: [1.45, 1.0, 1.2, 560, 1150], cast: [['crownFallen', 820, 1610, 1.0, 12, 1, 'idle'],
-    ['kingGrief', 520, 1310, 1.45, 0, 1, 'sigh'], ['infant', 575, 1125, 1.1, -12, 1, 'idle']]},
+  // Hook: blood-orange setting sun behind the grieving king, white flash on frame 1, shake, rising embers, tears,
+  // and a hard push-in from his face.
+  hook: {bg: 'night', fx: ['embers', 'flash'], flashAt: 0, shake: [0.02, 0.3], zoom: [1.7, 1.0, 1.3, 540, 1020], cast: [
+    ['sunset', 540, 1240, 1.0, 0, 1, 'sunPulse'], ['pyre', 880, 1640, 0.9, 0, 1, 'idle'], ['crownFallen', 230, 1615, 1.1, 14, 1, 'idle'],
+    ['kingGrief', 520, 1310, 1.5, 0, 1, 'sigh'], ['infant', 578, 1112, 1.15, -12, 1, 'idle'],
+    ['tear', 496, 1010, 1.4, 0, 1, 'tears', {per: 0.9, len: 120}], ['tear', 548, 1010, 1.4, 0, 1, 'tears', {per: 1.1, len: 110, phase: 0.45}]]},
   yagya: {bg: 'home', cast: [['mohandas', 230, 1330, 1.15, 0, 1, 'idle'], ['havan', 540, 1590, 1.1, 0, 1, 'idle'], ['king', 850, 1330, 1.15, 0, -1, 'idle'],
     ['infant', 850, 1080, 0.6, 0, 1, 'popAt', {t0: 0.7}]], labels: [[850, 920, 'पर मृत', 52, 0.72]]},
   devi: {bg: 'night', fx: ['petals'], cast: [['kingGrief', 280, 1320, 1.2, 0, 1, 'sigh'], ['infant', 325, 1170, 0.9, -12, 1, 'idle'],
