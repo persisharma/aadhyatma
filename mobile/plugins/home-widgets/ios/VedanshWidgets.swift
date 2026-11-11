@@ -86,7 +86,7 @@ enum WidgetArt {
     if let cached = vividCache.object(forKey: cacheKey) { return cached }
     guard let url = Bundle.main.url(forResource: "vedansh_heritage_source_\(safe)", withExtension: "webp"),
           let source = CGImageSourceCreateWithURL(url as CFURL, nil) else { return nil }
-    let maxSize = family == .systemSmall ? 256 : 560
+    let maxSize = family == .systemSmall ? 256 : (family == .systemLarge ? 1024 : 768)
     let opts: [CFString: Any] = [
       kCGImageSourceCreateThumbnailFromImageAlways: true,
       kCGImageSourceCreateThumbnailMaxPixelSize: maxSize,
@@ -417,8 +417,7 @@ struct VedanshWidgetView: View {
       .background(
         LinearGradient(colors: [palette.saffronDeep, palette.saffronDeep.opacity(0.83)],
                        startPoint: .leading, endPoint: .trailing),
-        in: UnevenRoundedRectangle(topLeadingRadius: 2, bottomLeadingRadius: 2,
-                                   bottomTrailingRadius: 11, topTrailingRadius: 11)
+        in: RoundedRectangle(cornerRadius: 8)
       )
 
       if separated {
@@ -450,7 +449,7 @@ struct VedanshWidgetView: View {
       }
       HStack(spacing: 4) {
         Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
-        Image(systemName: "flower").font(.system(size: 9))
+        Image(systemName: "leaf.fill").font(.system(size: 9))
           .foregroundStyle(palette.gold).accessibilityHidden(true)
         Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
       }
@@ -478,6 +477,130 @@ struct VedanshWidgetView: View {
       : "पूरा श्लोक पढ़ने के लिए टैप करें ›"
   }
 
+  // The decorative crescent is an almanac emblem, NOT a computed Moon phase.
+  // A precise phase would need its own numerical ephemeris field.
+  private struct AlmanacMoonSeal: View {
+    let palette: WidgetPalette
+    var body: some View {
+      ZStack {
+        Circle().fill(palette.gold.opacity(0.10))
+        Circle().strokeBorder(palette.gold.opacity(0.88), lineWidth: 1)
+        Circle().fill(palette.inkMuted.opacity(0.88)).padding(8)
+        Circle().fill(palette.parchment).padding(9)
+          .offset(x: 6, y: -2)
+      }
+      .accessibilityHidden(true)
+    }
+  }
+
+  private func widgetSolarLabel(_ lang: String, sunset: Bool) -> String {
+    if sunset {
+      return lang == "en" ? "Sunset" : lang == "gu" ? "સૂર્યાસ્ત" :
+        lang == "kn" ? "ಸೂರ್ಯಾಸ್ತ" : "सूर्यास्त"
+    }
+    return lang == "en" ? "Sunrise" : lang == "gu" ? "સૂર્યોદય" :
+      lang == "kn" ? "ಸೂರ್ಯೋದಯ" : "सूर्योदय"
+  }
+
+  private func sunsetTime(_ p: PanchangDay) -> String? {
+    guard let raw = p.sunsetAt, let instant = widgetInstant(raw) else { return nil }
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(identifier: widgetIstTimeZone)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.dateFormat = "HH:mm"
+    return formatter.string(from: instant)
+  }
+
+  private func sunriseTime(_ p: PanchangDay, lang: String) -> String {
+    let full = p.sunrise.value(lang)
+    return full.split(separator: " ").last.map(String.init) ?? full
+  }
+
+  private func almanacSolarColumn(_ title: String, time: String, sunset: Bool, lang: String,
+                                  condensed: Bool) -> some View {
+    VStack(alignment: .center, spacing: condensed ? 1 : 3) {
+      HStack(spacing: 3) {
+        Image(systemName: sunset ? "sunset.fill" : "sunrise.fill")
+          .font(.system(size: condensed ? 10 : 11)).accessibilityHidden(true)
+        Text(title)
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .lineLimit(1).minimumScaleFactor(0.78)
+      }
+      .foregroundStyle(palette.saffronDeep)
+      Text(time)
+        .font(.custom(fontName(lang, bold: true), size: condensed ? 13 : 16))
+        .foregroundStyle(palette.ink)
+        .lineLimit(1)
+    }
+    .frame(maxWidth: .infinity)
+  }
+
+  private func smallPanchang(_ p: PanchangDay,
+                             running: (name: LocalizedText, till: LocalizedText?),
+                             city: String, lang: String, compact: Bool) -> some View {
+    let sunset = sunsetTime(p)
+    return VStack(alignment: .leading, spacing: compact ? 4 : 7) {
+      HStack(spacing: 4) {
+        Image(systemName: "calendar").font(.system(size: 11, weight: .semibold))
+          .accessibilityHidden(true)
+        Text("\(p.representedDate.value(lang)) · \(city)")
+          .font(.custom(fontName(lang, bold: true), size: 11))
+          .lineLimit(1).minimumScaleFactor(0.8)
+      }
+      .foregroundStyle(palette.saffronDeep)
+      .padding(.trailing, 27)
+
+      HStack(alignment: .center, spacing: compact ? 7 : 9) {
+        AlmanacMoonSeal(palette: palette)
+          .frame(width: compact ? 32 : 43, height: compact ? 32 : 43)
+        Text(running.name.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: compact ? 22 : 28))
+          .foregroundStyle(palette.ink)
+          .lineLimit(2).minimumScaleFactor(0.82)
+          .fixedSize(horizontal: false, vertical: true)
+      }
+      if let till = running.till {
+        Text(till.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .foregroundStyle(palette.inkMuted)
+          .lineLimit(1).minimumScaleFactor(0.8)
+      }
+      if let vrat = p.vrat {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+          Image(systemName: "sparkles").font(.system(size: 11))
+            .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+          Text(vrat.value(lang))
+            .font(.custom(fontName(lang, bold: true), size: compact ? 12 : 14))
+            .foregroundStyle(palette.ink)
+            .lineLimit(compact ? 1 : 2)
+            .minimumScaleFactor(0.84)
+        }
+        .padding(.vertical, compact ? 1 : 2)
+      }
+      Spacer(minLength: 0)
+      HStack(spacing: 4) {
+        Rectangle().fill(palette.gold.opacity(0.69)).frame(height: 1)
+        Image(systemName: "leaf.fill").font(.system(size: 8))
+          .foregroundStyle(palette.gold).accessibilityHidden(true)
+        Rectangle().fill(palette.gold.opacity(0.69)).frame(height: 1)
+      }
+      HStack(alignment: .center, spacing: 0) {
+        almanacSolarColumn(widgetSolarLabel(lang, sunset: false),
+                           time: sunriseTime(p, lang: lang),
+                           sunset: false, lang: lang, condensed: compact)
+        if let sunset {
+          Rectangle().fill(palette.gold.opacity(0.6))
+            .frame(width: 1, height: compact ? 22 : 29)
+          almanacSolarColumn(widgetSolarLabel(lang, sunset: true),
+                             time: sunset, sunset: true, lang: lang, condensed: compact)
+        }
+      }
+    }
+    .padding(.vertical, 1)
+    .frame(maxWidth: .infinity, alignment: .topLeading)
+    .fixedSize(horizontal: false, vertical: true)
+  }
+
   // MARK: - आज का पंचांग
   // Small is the glance (date, tithi, sunrise); medium adds Rahu Kaal on one line;
   // large gives every window its own labelled row, Abhijit included.
@@ -499,6 +622,16 @@ struct VedanshWidgetView: View {
         Text(p.vrat?.value(lang) ?? running.name.value(lang))
           .widgetURL(URL(string: p.deepLink))
           .accessibilityLabel("\(p.representedDate.value(lang)), \(running.name.value(lang))")
+      } else if family == .systemSmall {
+        ViewThatFits(in: .vertical) {
+          smallPanchang(p, running: running, city: payload.panchang.cityLabel.value(lang),
+                        lang: lang, compact: false)
+          smallPanchang(p, running: running, city: payload.panchang.cityLabel.value(lang),
+                        lang: lang, compact: true)
+        }
+        .widgetURL(URL(string: p.deepLink))
+        .accessibilityElement(children: .combine)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
