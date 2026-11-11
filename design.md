@@ -3301,6 +3301,31 @@ because they are different concerns that happen to agree today.
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
 
+### Adaptive illustrated iOS Shloka layout — 10 November 2026
+
+The approved illustrated day/night style is preserved, but text controls image
+reservation. The native iOS Wide and Large widget uses SwiftUI `ViewThatFits(in:
+.vertical)` with complete, intrinsically measured lines before any clipping:
+full illustration strip (32% width), reduced strip (16%), and text-first (0%,
+parchment-backed to preserve contrast). Large prioritizes individual padas;
+Wide flows all supplied padas. The final fixed-height safety fallback alone
+limits visual lines and visibly offers a localized tap-to-read cue; VoiceOver
+retains the **complete** verse plus source, and the source/deep link never
+changes. Small continues to use the existing planner excerpt, with the full
+verse in accessibility. No heuristic based on raw character count determines
+native truncation because Indic shaping and line wrapping vary by font.
+
+The in-app gallery remains an approximate medium-cell facsimile: it increases
+text width and reduces type size on longer verses while retaining the same
+source/art mapping and localized tap target. The native/widget family is the
+authoritative measured layout. Existing prebuilt Heritage and Midnight Temple
+plates are reused, with no new payload, images, downloads or startup work.
+The widget extension layout change requires a **new iOS binary**, not OTA.
+Release acceptance requires actual Standard/Large/compact and four-language
+native screenshots with short, multi-pada and unusually long verses, plus
+VoiceOver and source/tap checks; source tests alone are not visual acceptance.
+
+
 ### Solar Heritage / Midnight Temple — 2 November 2026
 
 Approved: Illustrated Heritage during the selected city's daylight, Midnight Temple at night. Both the verse and Panchang switch together: sunrise is inclusive and sunset exclusive, using solved ISO instants in each IST Panchang day. Device appearance is not the selector. The native offline timeline includes all 14 days' solar boundaries alongside existing tithi and midnight entries; Android requests the next solar/content boundary with its existing best-effort idle alarm. OS refresh timing remains best effort.
