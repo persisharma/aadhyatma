@@ -1511,3 +1511,7 @@ Updated share/design/integration contracts for shared top/cartouche and English 
 ## [2026-11-11] ingest | Ram Lalla generated artwork integration
 
 Located the final approved front-facing image omitted from merged #663. Added immutable portrait delivery manifest/catalog registration and shared source clipping across the composer/selectors. Removed Ayodhya and the obsolete photographic credit while preserving stable IDs and archived rights. Public R2 bytes and native/export/device acceptance remain pending; see docs/evaluations/ram-lalla/generated-art-review.md.
+
+## [2026-11-12] ingest | Dasha tab — what to do in a Mahadasha
+
+Added `panchang/dashaPractice.ts` (`buildDashaPractice`: the period lord's `GRAHA_UPAY` row, adults only, `dasha` basis) and extracted `components/GrahaUpayPanel.tsx` from the report's graha cards so the Dasha tab and the report share one upay treatment. The Dasha tab gains a `dasha-practice` card under the unchanged beej pill and a collapsed upay toggle per non-running timeline row. No new prescriptive content was authored. Updated [[panchang]], design.md §51/§78, RULEBOOK §14.3.5/§14.4. Maestro steps authored, native run and visual QA pending.

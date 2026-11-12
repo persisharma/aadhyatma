@@ -23,6 +23,7 @@ import CalendarDatePicker from '@/components/CalendarDatePicker';
 import ClockTimePicker from '@/components/ClockTimePicker';
 import KundaliOverview from '@/components/KundaliOverview';
 import TextField from '@/components/TextField';
+import GrahaUpayPanel from '@/components/GrahaUpayPanel';
 import JyotishPracticeCard from '@/components/JyotishPracticeCard';
 import JyotishShareCard from '@/components/JyotishShareCard';
 import JyotishShareSheet from '@/components/JyotishShareSheet';
@@ -35,6 +36,7 @@ import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { buildDashaPractice } from '@/panchang/dashaPractice';
 import { buildDashaReading } from '@/panchang/dashaReading';
 import {
   DASHA_YEARS,
@@ -862,7 +864,7 @@ function KundaliResult({
   lang: Lang;
   onChangeTab: (tab: KundaliResultTab) => void;
   onOpenPractice: () => void;
-  /** Opens a japam counter by its library id (the Mahadasha lord's beej mantra). */
+  /** Opens a library entry by id — the Mahadasha lord's beej-mantra counter, or its upay paath. */
   onOpenJapa: (sourceId: string) => void;
   onManageDetails: () => void;
   onOpenReport: () => void;
@@ -888,6 +890,15 @@ function KundaliResult({
   const city = birthCity(profile)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
+  // Which timeline rows have their Mahadasha's upay open. The nine lords are
+  // distinct within the 120-year cycle, so the lord names the row.
+  const [openPractices, setOpenPractices] = useState<ReadonlySet<string>>(() => new Set());
+  const togglePractice = (lord: string) => setOpenPractices((current) => {
+    const next = new Set(current);
+    if (next.has(lord)) next.delete(lord);
+    else next.add(lord);
+    return next;
+  });
   // Both nested periods are running at once, so the card shows each one —
   // Mahadasha and Antardasha — with its own dates, progress bar and
   // elapsed/remaining readings; neither level speaks for the other. The
@@ -1207,6 +1218,62 @@ function KundaliResult({
               </Pressable>
             );
           })()}
+          {currentDasha && (() => {
+            // What to do in this Mahadasha: the lord's own GRAHA_UPAY row
+            // (RULEBOOK §14.3.5). Adults only — null for a minor, who keeps
+            // the pill above and nothing instructive. The counter pill stays
+            // above the card, so the panel offers the paath alone.
+            const practice = buildDashaPractice(chart, currentDasha.maha, now);
+            if (!practice) return null;
+            return (
+              <View
+                testID="dasha-practice"
+                style={[
+                  resultStyles.dashaReading,
+                  {
+                    borderColor: colors.divider,
+                    backgroundColor: colors.parchmentSoft,
+                    borderRadius: radii.lg,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    pillTextStyle(lang, typography.sectionLabel),
+                    { color: colors.saffronDeep, fontSize: 10 * factor },
+                  ]}
+                >
+                  {contentByLang(lang, 'इस महादशा में क्या करें', 'What to do in this Mahadasha')}
+                </Text>
+                <Text
+                  style={{
+                    color: colors.ink,
+                    fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                    fontSize: 15 * factor,
+                    marginTop: 4,
+                  }}
+                >
+                  {contentByLang(lang, practice.titleHi, practice.titleEn)}
+                </Text>
+                <Text style={[resultStyles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                  {meaningByLang(lang, practice.introHi, practice.introEn)}
+                </Text>
+                <GrahaUpayPanel
+                  testID="dasha-practice-upay"
+                  graha={practice.lord}
+                  upay={practice.upay}
+                  lang={lang}
+                  onPractice={onOpenJapa}
+                  showJapa={false}
+                  scale={factor}
+                  stacked={compact}
+                />
+                <Text style={[resultStyles.dashaReadingBody, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily) }]}>
+                  {meaningByLang(lang, practice.noteHi, practice.noteEn)}
+                </Text>
+              </View>
+            );
+          })()}
           {(() => {
             const reading = buildDashaReading(chart, now);
             if (!reading) return null;
@@ -1272,6 +1339,10 @@ function KundaliResult({
               const durationLabel = birthWithin
                 ? `${formatDuration(period.end.getTime() - chart.input.date.getTime(), true)} ${contentByLang(lang, 'जन्म पर शेष', 'left at birth')}`
                 : `${DASHA_YEARS[period.lord]} ${contentByLang(lang, 'वर्ष', 'years')}`;
+              // Every other Mahadasha's upay sits behind its own toggle; the
+              // running one is the card above, so its row does not repeat it.
+              const rowPractice = selected ? null : buildDashaPractice(chart, period, now);
+              const practiceOpen = openPractices.has(period.lord);
               return (
                 <View
                   key={`${period.lord}-${period.start.toISOString()}`}
@@ -1338,6 +1409,34 @@ function KundaliResult({
                       {formatPeriodDate(period.start)} — {formatPeriodDate(period.end)} ·{' '}
                       {durationLabel}
                     </Text>
+                    {rowPractice && (
+                      <Pressable
+                        testID={`dasha-timeline-practice-${period.lord}`}
+                        onPress={() => togglePractice(period.lord)}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${practiceOpen ? 'Hide' : 'Show'} what to do in the ${GRAHA_NAMES_EN[period.lord]} Mahadasha`}
+                        accessibilityState={{ expanded: practiceOpen }}
+                        style={({ pressed }) => [resultStyles.timelinePracticeToggle, pressed && { opacity: 0.7 }]}
+                      >
+                        <Text style={[resultStyles.timelinePracticeText, { color: colors.saffronDeep }]}>
+                          {practiceOpen
+                            ? contentByLang(lang, 'उपाय छिपाएँ', 'Hide the upay')
+                            : contentByLang(lang, 'इस महादशा में क्या करें', 'What to do in this Mahadasha')}{' '}
+                          {practiceOpen ? '▴' : '▾'}
+                        </Text>
+                      </Pressable>
+                    )}
+                    {rowPractice && practiceOpen && (
+                      <GrahaUpayPanel
+                        testID={`dasha-timeline-upay-${period.lord}`}
+                        graha={rowPractice.lord}
+                        upay={rowPractice.upay}
+                        lang={lang}
+                        onPractice={onOpenJapa}
+                        scale={factor}
+                        stacked={compact}
+                      />
+                    )}
                   </View>
                 </View>
               );
@@ -1771,6 +1870,8 @@ const styles = StyleSheet.create({
   dashaTitleRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
   nowTag: { paddingHorizontal: 7, paddingVertical: 3 },
   nowTagText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
+  timelinePracticeToggle: { minHeight: 44, alignSelf: 'flex-start', justifyContent: 'center', marginTop: 2 },
+  timelinePracticeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
   practiceLabel: { fontSize: 12, marginTop: 18, marginBottom: 8 },
   referenceCard: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderWidth: 1, marginTop: 10 },
   referenceGlyph: { fontSize: 22, width: 24, textAlign: 'center' },

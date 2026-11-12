@@ -6,7 +6,7 @@
  * short bullet list under its own heading: about this graha (meaning, sign,
  * karaka), friends and enemies, why it carries its label (+ helps, − asks for
  * care), what it gives, where to take care, the houses it rules for this
- * Lagna; then its upay (day, daan, seva, mantra, one paath). After the rows,
+ * Lagna; then its upay (`GrahaUpayPanel`: day, daan, seva, mantra, one paath). After the rows,
  * the empty houses — each read through its lord (§14.7.9). Every आधार chain
  * sits behind its own toggle so the reading stays plain; it is always one tap
  * away (§14.3.1).
@@ -15,9 +15,8 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import BasisChain from '@/components/BasisChain';
+import GrahaUpayPanel from '@/components/GrahaUpayPanel';
 import type { Lang } from '@/data/gita/language';
-import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
-import { library } from '@/data/texts';
 import { MAITRI_LABELS, narrativeReadingsApproved } from '@/panchang/grahaReadingContent';
 import type { Graha } from '@/panchang/kundali';
 import type { KundaliEmptyHouses, KundaliGrahaCard, KundaliGrahaTone } from '@/panchang/kundaliReportModel';
@@ -171,21 +170,14 @@ export default function GrahaReadingList({ cards, introHi, introEn, emptyHouses,
                 </>
                 )}
 
-                <View style={[styles.upay, { borderColor: colors.divider, backgroundColor: colors.goldTint, borderRadius: radii.md }]}>
-                  <Label lang={lang} hi={`उपाय · ${card.upay.introHi}`} en={`Upay · ${card.upay.introEn}`} />
-                  <UpayRow lang={lang} labelHi="वार" labelEn="Day" hi={card.upay.vaarHi} en={card.upay.vaarEn} />
-                  <UpayRow lang={lang} labelHi="दान" labelEn="Daan" hi={card.upay.daanHi} en={card.upay.daanEn} />
-                  <UpayRow lang={lang} labelHi="सेवा" labelEn="Seva" hi={card.upay.sevaHi} en={card.upay.sevaEn} />
-                  <UpayRow
-                    lang={lang}
-                    labelHi="मंत्र"
-                    labelEn="Mantra"
-                    hi={`${card.upay.mantraHi} — ${card.upay.mantraCountHi}`}
-                    en={`${card.upay.mantraEn} — ${card.upay.mantraCountEn}`}
-                  />
-                  <PracticeLink sourceId={GRAHA_BEEJ_JAPA_ID[card.graha]} lang={lang} onPractice={onPractice} japa />
-                  <PracticeLink sourceId={card.upay.practiceSourceId} lang={lang} onPractice={onPractice} />
-                </View>
+                <GrahaUpayPanel
+                  graha={card.graha}
+                  upay={card.upay}
+                  labelHi={`उपाय · ${card.upay.introHi}`}
+                  labelEn={`Upay · ${card.upay.introEn}`}
+                  lang={lang}
+                  onPractice={onPractice}
+                />
 
                 {onLearnGraha && (
                   <Pressable
@@ -349,60 +341,6 @@ function Bullet({
   );
 }
 
-function UpayRow({ lang, labelHi, labelEn, hi, en }: { lang: Lang; labelHi: string; labelEn: string; hi: string; en: string }) {
-  const { colors, typography } = useTheme();
-  return (
-    <View style={styles.upayRow}>
-      <Text
-        maxFontSizeMultiplier={1.25}
-        style={[
-          pillTextStyle(lang, typography.sectionLabel),
-          styles.upayLabel,
-          { color: colors.inkMuted, fontSize: lang === 'en' ? 10 : 12 },
-        ]}
-      >
-        {contentByLang(lang, labelHi, labelEn)}
-      </Text>
-      <Text
-        style={{
-          flex: 1,
-          color: colors.ink,
-          fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
-          fontSize: 12,
-          lineHeight: 19,
-        }}
-      >
-        {meaningByLang(lang, hi, en)}
-      </Text>
-    </View>
-  );
-}
-
-/** The paath pill, or with `japa` the beej mantra's counter (`Chant … on the mala`). */
-function PracticeLink({ sourceId, lang, onPractice, japa = false }: { sourceId: string; lang: Lang; onPractice: (sourceId: string) => void; japa?: boolean }) {
-  const { colors, radii } = useTheme();
-  const entry = library.find((candidate) => candidate.id === sourceId && candidate.status === 'active');
-  if (!entry) return null;
-  return (
-    <Pressable
-      onPress={() => onPractice(entry.id)}
-      accessibilityRole="button"
-      accessibilityLabel={japa ? `Chant ${entry.nameEn} on the mala` : `Open ${entry.nameEn} practice`}
-      style={({ pressed }) => [
-        styles.practiceLink,
-        { borderColor: colors.divider, backgroundColor: colors.cardSurface, borderRadius: radii.pill },
-        pressed && { opacity: 0.7 },
-      ]}
-    >
-      <Text style={[styles.practiceLinkText, { color: colors.saffronDeep }]}>
-        {japa
-          ? contentByLang(lang, `माला पर जप करें`, `Chant on the mala`)
-          : contentByLang(lang, `${entry.nameHi} पढ़ें`, `Read ${entry.nameEn}`)} ›
-      </Text>
-    </Pressable>
-  );
-}
-
 /**
  * The narrative-voice reading: the lead paragraph synthesised for this chart,
  * then one line to tend. Shown in place of the legacy bullet blocks; the upay
@@ -462,30 +400,9 @@ const styles = StyleSheet.create({
   label: { fontSize: 10, marginTop: 12, marginBottom: 2 },
   bulletRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 7, marginTop: 4 },
   bulletGlyph: { width: 10, fontSize: 13, lineHeight: 19, textAlign: 'center' },
-  upay: {
-    marginTop: 12,
-    padding: 10,
-    borderWidth: 1,
-  },
   tendBox: { marginTop: 11, paddingVertical: 8, paddingHorizontal: 11, borderLeftWidth: 3 },
   learnLink: { minHeight: 36, marginTop: 10, alignSelf: 'flex-start', justifyContent: 'center' },
   learnLinkText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
-  upayRow: { flexDirection: 'row', gap: 8, marginTop: 6 },
-  // 64 pt fits MANTRA at the section-label tracking (2.4) without breaking the word.
-  upayLabel: { width: 64, fontSize: 10, paddingTop: 2 },
-  practiceLink: {
-    minHeight: 38,
-    marginTop: 10,
-    paddingHorizontal: 13,
-    borderWidth: 1,
-    alignSelf: 'flex-start',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  practiceLinkText: {
-    fontFamily: fontFamilies.interSemiBold,
-    fontSize: 10,
-  },
   emptyBlock: { borderWidth: 1, paddingHorizontal: 12, paddingTop: 2, paddingBottom: 4 },
   basisToggle: { minHeight: 36, justifyContent: 'center', marginTop: 6, alignSelf: 'flex-start' },
   basisToggleText: { fontFamily: fontFamilies.interSemiBold, fontSize: 10 },
