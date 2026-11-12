@@ -246,6 +246,16 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: "dasha-beej-japa"
 - assertVisible: "Chant Guru Beej Mantra on the mala, for the Jupiter Mahadasha"
+# What to do in this Mahadasha: the lord's upay row (day, daan, seva, mantra,
+# paath) sits under the pill for an adult subject.
+- scrollUntilVisible:
+    element:
+      id: "dasha-practice-upay"
+    direction: DOWN
+    timeout: 15000
+- assertVisible: "What to do in this Mahadasha"
+- assertVisible: "Jupiter Mahadasha · Upay"
+- assertVisible: ".*not a fix or a guarantee.*"
 # Each "Now" level is named; anchor on a concrete row in the full Mahadasha
 # timeline because the two section captions can scroll past as one block.
 - scrollUntilVisible:
@@ -254,6 +264,20 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
 - assertVisible: "Mercury Mahadasha"
+# Another Mahadasha's upay opens from its own timeline row.
+- scrollUntilVisible:
+    element:
+      id: "dasha-timeline-practice-mercury"
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: "dasha-timeline-practice-mercury"
+- scrollUntilVisible:
+    element:
+      id: "dasha-timeline-upay-mercury"
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Hide what to do in the Mercury Mahadasha"
 
 # Kundali sharing is explicit because the card contains personal birth details.
 - tapOn: "Share your Kundali"

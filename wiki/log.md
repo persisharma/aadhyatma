@@ -1594,3 +1594,7 @@ Fixes from the 17 Nov 2026 mobile audit that need no native build: Panchang date
 ## [2026-11-18] ingest | Mobile audit fixes (store-build set)
 
 Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages aligned to the SDK 54 expected versions (expo-doctor 18/18), the four patched packages pinned exactly, unused `expo-secure-store` removed (it added a Face ID usage string), storage permissions blocked on Android, `expo-clipboard` added behind a probe so OTAs to older binaries keep the React Native API, the Japam alarm receiver guarded so a failed post cannot end the repeating alarm, config plugins importing `expo/config-plugins`, and a prebuild introspection test. Runbook gotchas added for the Android release gate and the Meta SDK bump. Not built or run on a device.
+
+## [2026-11-12] ingest | Dasha tab — what to do in a Mahadasha
+
+Added `panchang/dashaPractice.ts` (`buildDashaPractice`: the period lord's `GRAHA_UPAY` row, adults only, `dasha` basis) and extracted `components/GrahaUpayPanel.tsx` from the report's graha cards so the Dasha tab and the report share one upay treatment. The Dasha tab gains a `dasha-practice` card under the unchanged beej pill and a collapsed upay toggle per non-running timeline row. No new prescriptive content was authored. Updated [[panchang]], design.md §51/§78, RULEBOOK §14.3.5/§14.4. Maestro steps authored, native run and visual QA pending.
