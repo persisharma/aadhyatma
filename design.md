@@ -1542,6 +1542,9 @@ confirmation in the compact export, without an unverified clock. The date,
 artwork and sharing remain. Single-occasion redesign concepts requested on
 6 November are exploration only; no new layout is approved or shipped yet.
 
+
+**Individual timing text shares (Proposal 08, 13 November 2026).** `OccasionTimingsCard` opts into a civil-date line after the occasion name in `occasionShareText`. It uses the existing localized short month plus the year (for example, `8 Nov 2026`), and exactly the `occasionCardReference` passed to the image. Adjacent ceremonies retain their own reference; parana visible on the selected day retains that day. Undated catalog guidance omits the date, while dated guidance keeps it. Individual text endpoints crossing the reference year explicitly include both endpoint years. Location, windows, notes, provider-added download links, image design and astronomical instants are unchanged. Full Panchang retains the default date-heading-free formatter because its body already carries the date. No extra interaction, storage, timer, asset or solver work is introduced.
+
 ### §33a Share card: पूर्ण पंचांग (`PanchangShareCard`)
 
 **Purpose.** One image that carries the whole day the Panchang tab shows, sized for WhatsApp/feeds (4:5), branded, with the download link — so a forwarded panchang brings people back to the app.

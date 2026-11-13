@@ -101,3 +101,13 @@ test('bundled painted art matches the reviewed transparent source and atlas map'
   }
   expect(provenance.files[0].bytes).toBeLessThan(500_000);
 });
+
+for (const lang of ['hi', 'en', 'gu', 'kn'] as Lang[]) test(`${lang}: individual text includes its poster date and year`, async () => {
+  const tree = await mount(<OccasionTimingsCard items={[items[0]]} date={date} place="नई दिल्ली" placeEn="New Delhi" />, lang);
+  act(() => tree.root.findAll(n => n.props.testID === 'occasion-share' && typeof n.props.onPress === 'function').at(-1)!.props.onPress());
+  const payload = mockShare.mock.calls[0][0];
+  const text = payload.text(lang);
+  expect(text).toContain(`8 ${lang === 'en' ? 'Nov' : lang === 'hi' ? 'नवं' : lang === 'gu' ? 'નવં' : 'ನವಂ'} 2026`);
+  expect(payload.render({ lang }).props.date).toEqual(date);
+  expect(text).toContain('19:50');
+});
