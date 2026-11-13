@@ -994,6 +994,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       rel !== 'devotionalShareManifest.json' &&
       // Suvichar is a published artwork hash map, not a scripture corpus.
       rel !== 'suvicharManifest.json' &&
+      // Generated portrait delivery hashes, not scripture. suvichar.jest.test
+      // verifies the exact manifest, source/master hashes and R2 registration.
+      rel !== 'suvicharPortraitManifest.json' &&
       // Parshuram activation contains only verified artwork hashes, not scripture.
       rel !== 'parshuramPublication.json' &&
       // Text-free festival art hashes, not scripture. OccasionYearCards checks
