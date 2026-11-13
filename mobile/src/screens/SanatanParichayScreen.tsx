@@ -41,7 +41,8 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
       <LanguageToggle />
       {route.params?.topicId && !topic ? <Copy>{t(['यह परिचय उपलब्ध नहीं है।','This introduction is unavailable.'])}</Copy> : topic ? <>
         <ListingSectionHeader>{t(topic.group)}</ListingSectionHeader>
-        <Copy heading>{t(topic.name)}</Copy>
+        <Copy heading>{t(topic.title)}</Copy>
+        <Text style={{...listingText,...typography.catalogMeta,color:colors.inkMuted}}>{t(topic.name)}</Text>
         <Painting id={topic.id} />
         <Ornament compact />
         <Copy heading>{t(topic.question)}</Copy>

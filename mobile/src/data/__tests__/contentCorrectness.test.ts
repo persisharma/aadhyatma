@@ -981,6 +981,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       entry.name !== 'ayodhyaComicAssetManifest.json' &&
       entry.name !== 'backgroundAssetManifest.json' &&
       entry.name !== 'readerIllustrationManifest.json' &&
+      // Supplemental teaching artwork is an upload-gated hash map. Its source
+      // ledger and byte budgets are verified by prepare-sanatan-learning.mjs.
+      rel !== 'sanatan-parichay/lessonArtManifest.json' &&
       // Art aliases are semantic asset mappings, not scripture. Their manifest
       // coverage and approved bytes are checked by readerIllustrationAsset tests.
       entry.name !== 'readerIllustrationAliases.json' &&

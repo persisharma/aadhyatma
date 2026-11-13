@@ -1,4 +1,6 @@
 import content from './content.json';
+import {experiences} from './experience';
+import {knowledgeText} from './knowledge';
 import { normalize } from '@/data/searchNormalize';
 import { toGujarati, toKannada } from '@/utils/transliterate';
 export type Pair = readonly [string,string];
@@ -19,17 +21,38 @@ export const SANATAN_PAGE_TITLES:readonly Pair[]=[['पहचान','Introducti
 export const getSanatanPageTitles=(topic:SanatanTopic)=>topic.pageTitles??SANATAN_PAGE_TITLES;
 export const getSanatanTopics=()=>topics.filter(t=>t.status==='published');
 export const getSanatanTopic=(id:string)=>getSanatanTopics().find(t=>t.id===id);
-// Match the same regional-script labels that the app renders, as well as Hindi,
-// English and aliases. Pre-normalize once when this lazy registry is loaded.
-const searchDocuments = topics.filter(t => t.status === 'published').map(t => {
- const fields = [...t.name, ...t.title, ...t.question, ...t.aliases, t.id];
- const regional = fields.filter(field => /[\u0900-\u097F]/.test(field)).flatMap(field => [toGujarati(field), toKannada(field)]);
- return {t, fields: [...new Set([...fields, ...regional].map(normalize))]};
+// Build a small concept index once, behind the existing lazy section boundary.
+// Prose is deliberately not duplicated/transliterated into an unbounded full-text corpus.
+type SearchMatch={topic:SanatanTopic;page:number};
+const searchDocuments=topics.filter(t=>t.status==='published').map(topic=>{
+ const fields=[...topic.name,...topic.title,...topic.question,...topic.aliases,topic.id];
+ const expand=(values:readonly string[])=>[...new Set(values.flatMap(v=>/[\u0900-\u097F]/.test(v)?[v,toGujarati(v),toKannada(v)]:[v]).map(normalize))];
+ return {topic,fields:expand(fields),pages:topic.pages.map((_,page)=>expand([
+  ...(topic.pageTitles?.[page]??[]),
+  ...(page===0?(experiences[topic.id]?.terms??[]).flatMap(t=>[...t.name]):[]),
+ ]))};
 });
-/** Exact registry targets; no remote answer generation or draft visibility. */
-export function searchSanatanTopics(query:string):SanatanTopic[]{
- const q=normalize(query.trim());if(!q)return [...getSanatanTopics()];
+export function searchSanatanMatches(query:string):SearchMatch[]{
+ const q=normalize(query.trim());if(!q)return getSanatanTopics().map(topic=>({topic,page:0}));
  const words=q.split(/\s+/).filter(w=>w.length>1&&!['kyu','kyon','kya','hai','hain','why','what','is','are','the','in','of'].includes(w));
- return searchDocuments.map(({t,fields})=>({t,score:fields.reduce((n,k)=>Math.max(n,k===q?100:k.includes(q)?80:words.length&&words.every(w=>k.includes(w))?60:0),0)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(x=>x.t);
+ const score=(fields:readonly string[])=>fields.reduce((n,k)=>Math.max(n,k===q?100:k.includes(q)?80:words.length&&words.every(w=>k.includes(w))?60:0),0);
+ return searchDocuments.map(({topic,fields,pages})=>{
+  let best=score(fields),page=0;
+  pages.forEach((p,i)=>{const value=score(p);if(value>best){best=value;page=i;}});
+  return {topic,page,score:best};
+ }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).map(({topic,page})=>({topic,page}));
+}
+export function searchSanatanTopics(query:string):SanatanTopic[]{return searchSanatanMatches(query).map(x=>x.topic);}
+const narrated=new Map<string,readonly Pair[]>();
+/** Same definitions and complete rosters as the visible educational components. */
+export function getSanatanReadingPages(topic:SanatanTopic):readonly Pair[]{
+ const cached=narrated.get(topic.id);if(cached)return cached;
+ const experience=experiences[topic.id];
+ const pages=topic.pages.map((p,i):Pair=>{
+  const supplement=knowledgeText(topic.id,i);
+  const terms=i===0&&experience?experience.terms.map(t=>[t.name[0]+': '+t.meaning[0],t.name[1]+': '+t.meaning[1]] as Pair):[];
+  const extra=[...(i===0&&experience?[experience.answer]:[]),p,...terms,...(supplement?[supplement]:[]),...(i===topic.pages.length-1&&experience?[experience.takeaway]:[])];
+  return [extra.map(x=>x[0]).join('\n\n'),extra.map(x=>x[1]).join('\n\n')];
+ });narrated.set(topic.id,pages);return pages;
 }
 export function validSanatanPage(id:string,page:number){const t=getSanatanTopic(id);return !!t&&Number.isInteger(page)&&page>=0&&page<t.pages.length;}

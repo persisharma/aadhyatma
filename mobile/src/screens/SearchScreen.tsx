@@ -381,7 +381,7 @@ export default function SearchScreen({ navigation, route }: Props) {
             radii={radii}
             lang={lang}
             header={<>{askHeader}<React.Suspense fallback={null}><SanatanSearchResults query={query}
-              onOpen={topicId => navigation.navigate('SanatanReader', { topicId, initialPage: 0 })} /></React.Suspense></>}
+              onOpen={(topicId, initialPage) => navigation.navigate('SanatanReader', { topicId, initialPage })} /></React.Suspense></>}
             empty={
               askHeader ? null : index ? (
                 <ZeroState colors={colors} typography={typography} lang={lang} />

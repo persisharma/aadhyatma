@@ -1619,6 +1619,17 @@ Research URLs and source comparisons stay in the internal provenance ledger.
 The source/copy, four-script/size reader-share regression and
 `.maestro/sanatan-swastika-guide.yaml` accompany native visual/export acceptance.
 
+**Visual-learning contract (8 November 2026).** All ten directions must be
+represented in the visual teaching model: eight on the horizontal plane and two
+on a separately readable vertical axis. Do not use a decorative eight-spoke image
+as a complete ten-direction lesson. Keep exact teaching diagrams vector-based,
+names in scalable native text and selection work bounded. Preserve full rosters,
+definitions and instructions in narration/prose shares. Supplemental teaching art
+requires verified public bytes before manifest activation; a pending asset makes
+no request and leaves no empty frame. Prepared art and component previews do not
+establish native visual/ANR acceptance. Follow the evidence and upload contract in
+`docs/content-parity/sanatan-parichay/visual-learning/README.md`.
+
 ## 33. Selected devotional dohas — Kabir and Rahim
 
 - `mobile/src/data/doha/` owns the selected complete Hindi couplets, stable semantic IDs, editorial Hindi/English meanings and pronunciation-based ASCII romanization. Each payload declares that it is a selection; each verse records the two actually consulted sources, retrieval date, chosen edition and wording variants. Never blend variants or present these selections as a complete dohavali. The general §11 source, Unicode and meaning gates still apply.
