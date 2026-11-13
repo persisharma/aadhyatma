@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
+  Pressable,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
@@ -28,8 +29,10 @@ import LanguageToggle from '@/components/LanguageToggle';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, pick } from '@/utils/localize';
+import AppIcon from '@/components/AppIcon';
 import ReaderHeader from '@/components/ReaderHeader';
+import GitaVerseJumpSheet, { JUMP_LABEL } from '@/components/GitaVerseJumpSheet';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -110,6 +113,12 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const listRef = useRef<FlatList<FlatListItem>>(null);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const hasNavigatedRef = useRef(false);
+  const [jumpVisible, setJumpVisible] = useState(false);
+  const jumpVisibleRef = useRef(false);
+  const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => {
+    if (transitionTimer.current) clearTimeout(transitionTimer.current);
+  }, []);
 
   // Called before the null-chapter early return below, so hook order stays stable;
   // with no chapter it simply has zero pages to speak.
@@ -131,12 +140,12 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       updatedAt: Date.now(),
     });
   }, [chapter, currentIndex, setProgress]);
-  useReadDwell('bhagavad-gita', chapter?.chapter, chapter ? currentIndex : -1);
+  useReadDwell('bhagavad-gita', chapter?.chapter, chapter && !jumpVisible ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ViewToken[] }) => {
-    if (viewableItems.length === 0) return;
+    if (jumpVisibleRef.current || hasNavigatedRef.current || viewableItems.length === 0) return;
     const first = viewableItems[0];
     if (first.index == null) return;
     const item = first.item as FlatListItem;
@@ -144,7 +153,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       if (!hasNavigatedRef.current) {
         hasNavigatedRef.current = true;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
-        setTimeout(() => {
+        transitionTimer.current = setTimeout(() => {
           navigation.replace('GitaReader', { chapter: item.nextChapter });
         }, 400);
       }
@@ -154,7 +163,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       if (!hasNavigatedRef.current) {
         hasNavigatedRef.current = true;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
-        setTimeout(() => {
+        transitionTimer.current = setTimeout(() => {
           navigation.replace('GitaReader', {
             chapter: item.prevChapter,
             initialIndex: item.prevVerseCount - 1,
@@ -207,6 +216,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
 
   const handleScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (jumpVisibleRef.current || hasNavigatedRef.current) return;
       const offsetX = e.nativeEvent.contentOffset.x;
       const idx = Math.round(offsetX / width) - offset;
       if (idx < 0 || idx >= verseCount) return;
@@ -221,6 +231,36 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
     [width, verseCount, offset]
   );
 
+  const openJump = () => {
+    if (hasNavigatedRef.current) return;
+    jumpVisibleRef.current = true;
+    readAloud.stop();
+    autoSlide.stop();
+    setJumpVisible(true);
+  };
+  const closeJump = () => {
+    jumpVisibleRef.current = false;
+    setJumpVisible(false);
+  };
+  const jumpToVerse = (targetChapter: number, targetVerse: number): boolean => {
+    if (hasNavigatedRef.current) return true;
+    // Resolve only the chosen chapter, and locate the actual verse number. Never
+    // scroll through skipped pages or substitute a clamped, incorrect target.
+    try {
+      const target = getGitaChapter(targetChapter);
+      const index = target.verses.findIndex(verse => verse.number === targetVerse);
+      if (index < 0) return false;
+      readAloud.stop();
+      autoSlide.stop();
+      hasNavigatedRef.current = true;
+      navigation.replace('GitaReader', { chapter: targetChapter, initialIndex: index });
+      return true;
+    } catch {
+      hasNavigatedRef.current = false;
+      return false;
+    }
+  };
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
@@ -230,9 +270,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           title={topTitle}
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
-          // Bare counter only — the read-aloud control now lives on the toggle row.
+          // Keep the original counter text; the surrounding target opens the picker.
           sideWidth={60}
           right={
+            <Pressable testID="gita-jump-trigger" accessibilityRole="button"
+              accessibilityLabel={pick(lang, JUMP_LABEL)}
+              accessibilityValue={{ text: `${chapter.chapter}.${currentIndex + 1}` }}
+              onPress={openJump} style={styles.counterTarget}>
             <Text
               style={[
                 styles.counter,
@@ -246,6 +290,8 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             >
               {currentIndex + 1} / {verseCount}
             </Text>
+            <AppIcon name="caretDown" size={12} color={colors.saffronDeep} />
+            </Pressable>
           }
         />
 
@@ -341,6 +387,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             }}
             extraData={listExtraData}
             horizontal
+            scrollEnabled={!jumpVisible}
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             initialNumToRender={1}
@@ -375,6 +422,8 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
       </SafeAreaView>
+      {jumpVisible && <GitaVerseJumpSheet chapter={chapter.chapter}
+        verse={chapter.verses[currentIndex].number} onClose={closeJump} onOpen={jumpToVerse} />}
     </View>
   );
 }
@@ -386,6 +435,7 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
+  counterTarget: { minHeight: 48, minWidth: 60, flexDirection: 'row', alignItems: 'center', gap: 4 },
   counter: {
     includeFontPadding: false,
     minWidth: 48,

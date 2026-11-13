@@ -1,0 +1,119 @@
+# Bhagavad Gītā Chaptered-Reader Smoke Test
+#
+# The one chaptered reader the category smokes deliberately skip: granth-smoke
+# opens Sundarkand "to keep the verify path simple (no chapter selection)", so
+# the Gita chapter index (GitaChaptersIndexScreen) and its verse reader
+# (GitaReaderScreen) had ZERO Maestro coverage. This flow drives the full path:
+#   Home → Sacred Books → Bhagavad Gītā → chapter index → Chapter 1 reader,
+# and exercises horizontal verse paging + the JumpToStartButton (the "back to
+# verse 1" affordance introduced with PR #97's per-subsection reading-progress).
+#
+# Resume sheet: tapping a chaptered entry with saved progress (verseIndex > 0)
+# pops ResumeReadingSheet (CategoryListScreen.handlePress). Both "Start over"
+# AND the no-progress path call navigateToEntryStart('bhagavad-gita') →
+# GitaChapters index (entryRoutes.ts), so the optional "Start over" tap below
+# lands on the chapter index either way — keeping the flow deterministic.
+#
+# Auto-advance to the next chapter (PR #29) fires only after the reader's
+# horizontal FlatList scrolls PAST the last verse (47 in Ch.1). Driving ~47
+# deterministic page-swipes in Maestro is impractical and flaky, so the
+# scroll→navigation.replace logic is unit-tested in
+# src/screens/__tests__/gitaAutoAdvance.test.tsx instead (see header there).
+#
+# Why English first: GitaChapterCard exposes "Chapter N. <titleEn>. ..." only
+# in English mode (Hindi = "अध्याय N. ..."), and Maestro's iOS a11y tree can't
+# reliably read Devanagari. We flip the global reading language to English on
+# the More tab, then assert. Hindi is restored at the end via the index toggle.
+
+appId: com.prashantsharma.vedansh
+---
+# ── Boot Vedansh in Expo Go (exits on Home) ──
+- runFlow: _launch.yaml
+
+# ── Set global reading language to English (More tab) ──
+- runFlow: _open-settings.yaml
+- waitForAnimationToEnd
+# The ऐप section (Language/Reading size) sits below the fold on standard-height
+# iPhones since the More hub grew (Janma Tithi / Kul Parampara / Vastu Disha rows) —
+# tapping the off-screen row's estimated center hits the tab bar instead. Scroll first.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"   # More now opens a Language picker sheet, not inline pills
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "English"
+    timeout: 15000
+- tapOn: "English"
+- waitForAnimationToEnd
+
+# ── Home → Sacred Books (Granth) category ──
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- assertVisible: "Sacred Books\\..*Tap to open\\."
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- waitForAnimationToEnd
+
+# ── Open Bhagavad Gītā → chapter index ──
+- extendedWaitUntil:
+    visible: "Bhagavad Gītā\\..*Tap to open\\."
+    timeout: 15000
+- tapOn: "Bhagavad Gītā\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+# Dismiss the Resume sheet if a prior session left chapter progress (lands on
+# the chapter index either way — see header).
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- waitForAnimationToEnd
+
+# ── Chapter index: assert chapters render, open Chapter 1 ──
+- extendedWaitUntil:
+    visible: "Chapter 1\\..*Tap to open\\."
+    timeout: 15000
+- assertVisible: "Chapter 2\\..*Tap to open\\."
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- waitForAnimationToEnd:
+    timeout: 15000
+
+# ── Reader opened at Chapter 1 ──
+- extendedWaitUntil:
+    visible: "Chapter 1.*"
+    timeout: 15000
+# Same-chapter draft cancellation retains the original verse.
+- tapOn: { id: gita-jump-trigger }
+- tapOn: { id: gita-jump-input }
+- eraseText
+- inputText: "12"
+- hideKeyboard
+- tapOn: { id: gita-jump-cancel }
+- assertVisible: "Verse 1\\.1.*"
+# Cross-chapter reference, no intermediate pages.
+- tapOn: { id: gita-jump-trigger }
+- tapOn: { id: gita-jump-chapter }
+- tapOn: { id: gita-jump-chapter-2 }
+- tapOn: { id: gita-jump-input }
+- eraseText
+- inputText: "47"
+- hideKeyboard
+- takeScreenshot: e2e-shots/gita-jump-2-47-picker
+- tapOn: { id: gita-jump-open }
+- assertVisible: "Verse 2\\.47.*"
+- takeScreenshot: e2e-shots/gita-jump-2-47-reader
+# Keyboard and long chapter list remain usable; first/last bounds.
+- tapOn: { id: gita-jump-trigger }
+- tapOn: { id: gita-jump-chapter }
+- scrollUntilVisible:
+    element: { id: gita-jump-chapter-18 }
+    direction: DOWN
+- tapOn: { id: gita-jump-chapter-18 }
+- tapOn: { id: gita-jump-input }
+- eraseText
+- inputText: "78"
+- hideKeyboard
+- tapOn: { id: gita-jump-open }
+- assertVisible: "Verse 18\\.78.*"
+- tapOn: "Back to chapters"
+- assertVisible: "Chapter 1\\..*Tap to open\\."

@@ -1514,3 +1514,5 @@ Located the final approved front-facing image omitted from merged #663. Added im
 
 ## [2026-11-13] ingest | Daan record-specific deletion confirmation
 Privacy-safe confirmation and no-write cancellation documented in [[daan-punya]]. Existing optimistic persistence limitation retained.
+
+- 2026-11-13: Proposal 06 adds Gita counter → chapter/verse picker. Updated readers subsystem from implementation; native verification remains pending.
