@@ -142,3 +142,9 @@ content is generated from the registries, so it cannot drift from the code).
 Research publisher and verification records remain internal under RULEBOOK
 §11.16. Canonical work/passage identity may remain as teaching context; do not
 wrap it in a source feature or append a bibliography to the app or share output.
+
+## Record deletion confirmation (Proposal 09)
+
+`DaanLedgerScreen` keeps a pending stable ID in screen memory and opens the Saved Verses-style modal. Ordinary records show category, original ISO date and complete optional note, never amount. Gupt records show only label/date. Cancellation paths and route blur clear memory without storage calls; confirmation consumes the ID synchronously before calling the existing provider. Restart while pending preserves the record. The provider still updates optimistically and swallows storage errors; a failed write can reappear after restart. No storage-format change or undo is introduced.
+
+Native iOS/Android layout, screen-reader focus and lifecycle acceptance remain required; component/provider tests are not device evidence.

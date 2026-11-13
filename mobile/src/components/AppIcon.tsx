@@ -37,6 +37,7 @@ import { SpeakerHighIcon } from 'phosphor-react-native/src/icons/SpeakerHigh';
 import { PaletteIcon } from 'phosphor-react-native/src/icons/Palette';
 import { StarIcon } from 'phosphor-react-native/src/icons/Star';
 import { InstagramLogoIcon } from 'phosphor-react-native/src/icons/InstagramLogo';
+import { WhatsappLogoIcon } from 'phosphor-react-native/src/icons/WhatsappLogo';
 import { InfoIcon } from 'phosphor-react-native/src/icons/Info';
 import { FlagIcon } from 'phosphor-react-native/src/icons/Flag';
 import { ArrowCounterClockwiseIcon } from 'phosphor-react-native/src/icons/ArrowCounterClockwise';
@@ -107,6 +108,7 @@ const icons = {
   theme: PaletteIcon,
   star: StarIcon,
   instagram: InstagramLogoIcon,
+  whatsapp: WhatsappLogoIcon,
   info: InfoIcon,
   report: FlagIcon,
   reset: ArrowCounterClockwiseIcon,

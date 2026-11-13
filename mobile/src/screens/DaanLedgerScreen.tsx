@@ -6,8 +6,8 @@ import { useRatingShare } from '@/utils/useRatingShare';
  * and it leaves the device only by the user's hand (PRD-06 posture). Gupt
  * entries render as date + "गुप्त दान" only (their detail was never stored).
  */
-import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -39,6 +39,28 @@ export default function DaanLedgerScreen({ navigation }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
   const { entries, removeEntry } = useDaanLedger();
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  // Consume synchronously: two taps before React commits still delete once.
+  const pendingRef = useRef<string | null>(null);
+  const pendingEntry = entries.find((entry) => entry.id === pendingId);
+  const cancelRemove = () => { pendingRef.current = null; setPendingId(null); };
+  useEffect(() => navigation.addListener('blur', cancelRemove), [navigation]);
+  const requestRemove = (id: string) => {
+    if (pendingRef.current !== null) return;
+    pendingRef.current = id;
+    setPendingId(id);
+  };
+  const confirmRemove = () => {
+    const id = pendingRef.current;
+    if (id !== pendingId) return;
+    cancelRemove();
+    if (id !== null && entries.some((entry) => entry.id === id)) removeEntry(id);
+  };
+  const removeLabel = pick(lang, { hi: 'प्रविष्टि हटाएँ', en: 'Remove entry', gu: 'નોંધ દૂર કરો', kn: 'ದಾಖಲೆ ತೆಗೆದುಹಾಕಿ' });
+  const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' });
+  const entryLabel = (entry: DaanLedgerEntry) => entry.gupt
+    ? pick(lang, { hi: 'गुप्त दान', en: 'Gupt daan', gu: 'ગુપ્ત દાન', kn: 'ಗುಪ್ತ ದಾನ' })
+    : contentByLang(lang, DAAN_CATEGORY_LABELS[entry.category].hi, DAAN_CATEGORY_LABELS[entry.category].en);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
@@ -145,8 +167,9 @@ export default function DaanLedgerScreen({ navigation }: Props) {
                   <Pressable
                     testID={`daan-entry-remove-${entry.id}`}
                     accessibilityRole="button"
-                    accessibilityLabel="Remove this entry"
-                    onPress={() => removeEntry(entry.id)}
+                    accessibilityLabel={`${removeLabel}: ${entryLabel(entry)}, ${entry.isoDate}`}
+                    onPress={() => requestRemove(entry.id)}
+                    style={styles.removeButton}
                     hitSlop={8}
                   >
                     <Text style={{ fontSize: 15, color: colors.inkMuted }}>✕</Text>
@@ -176,12 +199,59 @@ export default function DaanLedgerScreen({ navigation }: Props) {
           </Pressable>
         ) : null}
       </ScrollView>
+      {pendingEntry ? (
+        <Modal transparent animationType="fade" onRequestClose={cancelRemove}>
+          <View style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}>
+            <Pressable testID="daan-remove-backdrop" accessible={false} style={StyleSheet.absoluteFill} onPress={cancelRemove} />
+            <View testID="daan-remove-dialog" accessibilityViewIsModal importantForAccessibility="yes"
+              onAccessibilityEscape={cancelRemove}
+              style={[styles.confirmCard, { backgroundColor: colors.parchment, borderColor: colors.cardActiveBorder, borderRadius: radii.lg }]}>
+              <ScrollView style={styles.confirmScroll} contentContainerStyle={styles.confirmContent}>
+                <Text accessibilityRole="header" style={[styles.confirmTitle, { fontFamily: titleFont, color: colors.ink }]}>
+                  {pick(lang, { hi: 'यह दान प्रविष्टि हटाएँ?', en: 'Remove this daan entry?', gu: 'આ દાનની નોંધ દૂર કરવી?', kn: 'ಈ ದಾನದ ದಾಖಲೆ ತೆಗೆದುಹಾಕಬೇಕೆ?' })}
+                </Text>
+                <Text testID="daan-remove-identity" style={[styles.confirmIdentity, { fontFamily: titleFont, color: colors.ink }]}>
+                  {entryLabel(pendingEntry)} · {pendingEntry.isoDate}
+                </Text>
+                {!pendingEntry.gupt && pendingEntry.note ? (
+                  <Text testID="daan-remove-note" style={[typography.meaning, styles.confirmText, { fontFamily: bodyFont, color: colors.inkSoft }]}>{pendingEntry.note}</Text>
+                ) : null}
+                <Text style={[typography.meaning, styles.confirmText, { fontFamily: bodyFont, color: colors.inkSoft, marginTop: spacing.md }]}>
+                  {pick(lang, {
+                    hi: 'यह प्रविष्टि आपके खाते से हट जाएगी। खाते में इसे वापस लाने का विकल्प नहीं है।',
+                    en: 'This entry will leave your register. There is no undo in the register.',
+                    gu: 'આ નોંધ તમારા ખાતામાંથી દૂર થશે. ખાતામાં તેને પાછી લાવવાનો વિકલ્પ નથી.',
+                    kn: 'ಈ ದಾಖಲೆ ನಿಮ್ಮ ಖಾತೆಯಿಂದ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ. ಖಾತೆಯಲ್ಲಿ ಇದನ್ನು ಹಿಂದಿರುಗಿಸುವ ಆಯ್ಕೆ ಇಲ್ಲ.',
+                  })}
+                </Text>
+              </ScrollView>
+              <Pressable testID="daan-remove-confirm" accessibilityRole="button" accessibilityLabel={removeLabel} onPress={confirmRemove}
+                style={[styles.confirmPrimary, { backgroundColor: colors.saffron, borderRadius: radii.md }]}>
+                <Text style={{ fontFamily: titleFont, fontSize: 16, color: colors.onPrimary, textAlign: 'center' }}>{removeLabel}</Text>
+              </Pressable>
+              <Pressable testID="daan-remove-cancel" accessibilityRole="button" accessibilityLabel={cancelLabel} onPress={cancelRemove} style={styles.confirmCancel}>
+                <Text style={{ fontFamily: bodyFont, fontSize: 15, color: colors.inkMuted, textAlign: 'center' }}>{cancelLabel}</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      ) : null}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  removeButton: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  backdrop: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
+  confirmCard: { width: '100%', maxWidth: 420, maxHeight: '90%', padding: 20, borderWidth: 1 },
+  confirmScroll: { flexGrow: 0, flexShrink: 1 },
+  confirmContent: { paddingBottom: 20 },
+  confirmTitle: { fontSize: 20, lineHeight: 30, textAlign: 'center', marginBottom: 16 },
+  confirmIdentity: { fontSize: 16, lineHeight: 25, textAlign: 'center', marginBottom: 6 },
+  confirmText: { textAlign: 'center' },
+  confirmPrimary: { minHeight: 48, paddingVertical: 12, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' },
+  confirmCancel: { minHeight: 48, padding: 12, alignItems: 'center', justifyContent: 'center' },
   addBtn: { minHeight: 44, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
   card: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 14 },
   chipBtn: { borderWidth: 1.5, paddingHorizontal: 14, paddingVertical: 7, marginTop: 11 },
