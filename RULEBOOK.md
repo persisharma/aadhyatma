@@ -316,6 +316,10 @@ New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (n
 
 No manual routing in HomeScreen is needed — `CategoryListScreen` filters items by their `category` field automatically.
 
+### Gita direct verse navigation
+
+The Gita counter picker is manifest-only until explicit Open. Resolve the chosen chapter lazily and look up its actual verse number, then replace the current reader route without adding a Back-stack entry. Never advance through skipped pages or infer completion from the selected number. Suspend read dwell and stop hands-free playback while the dialog is open; cancellation must not change resume data. Preserve all four numeral scripts and bounded chapter/verse controls. Tests must exercise navigation, storage, coverage, invalid inputs, load failure/retry and cancellation together; native journeys remain required. See design.md §9.1.
+
 ### 6.0 Cross-tab hand-offs: build them with a `*TabTarget` helper
 
 The bottom tab navigator is **lazy** (`TabNavigator.tsx`) — every tab except the first (`HomeTab`) mounts on its first `navigate`. React Navigation's nested `navigate` defaults to `initial: true`, which makes the named screen that stack's **initial route** instead of pushing it above the stack's own `initialRouteName`. The result is always the same: the target's back button has nothing to pop, and the stack's real root stays unreachable **for the rest of the session**.
