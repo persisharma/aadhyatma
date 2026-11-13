@@ -44,6 +44,7 @@ import {
   type ShareCardLayout,
 } from '@/utils/shareCardPages';
 import { isMultiShareAvailable, shareFiles } from '@/utils/multiShare';
+import { isWhatsAppDirectAvailable, shareToInstagram, shareToWhatsApp } from '@/utils/directShare';
 import { capturePixelSize } from '@/utils/captureSize';
 import { buildProseShareText, buildVerseShareText } from '@/utils/shareText';
 import { useRatingAsk } from '@/contexts/ratingAsk';
@@ -209,6 +210,13 @@ type ShareMode = 'card' | 'screenshot';
  *   accepts no pre-filled caption from a share intent (design.md §39).
  */
 export type ShareTarget = 'system' | 'instagram';
+
+/**
+ * A system-target share that should open one named app instead of the OS list
+ * (design.md §39.11). The capture and caption are the system ones; only the hand-off
+ * differs, and it falls back to the OS sheet when the app cannot be opened.
+ */
+export type DirectApp = 'whatsapp';
 
 /**
  * Aspect of the exported image.
@@ -510,6 +518,16 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (interactionActive) return beginRatingInteraction();
   }, [interactionActive]);
+  // The WhatsApp rows (§39.11) render only when WhatsApp itself can be opened: probed
+  // each time a sheet opens (two package lookups), keeping the last answer meanwhile.
+  const [whatsAppDirect, setWhatsAppDirect] = useState(false);
+  const sheetOpen = !!chooser || !!prose || !!cardChooser;
+  useEffect(() => {
+    if (!sheetOpen) return undefined;
+    let live = true;
+    void isWhatsAppDirectAvailable().then((ok) => { if (live) setWhatsAppDirect(ok); });
+    return () => { live = false; };
+  }, [sheetOpen]);
   const inFlightRef = useRef(false);
   const cardRef = useRef<View>(null);
   const imageReady = useRef<{ id: number; resolve: (ready: boolean) => void } | null>(null);
@@ -650,7 +668,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       target: ShareTarget,
       format: ShareFormat,
       /** Alert language — the reader's, not the card's. */
-      lang: Lang
+      lang: Lang,
+      app?: DirectApp
     ): Promise<boolean> => {
       if (target === 'instagram') {
         // Instagram's share intent ignores any text handed to it, so the caption
@@ -665,9 +684,12 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       }
 
       if (fileUri) {
-        if (target === 'instagram') {
-          // Always the expo-sharing route: on iOS the RN Share `message` would
-          // ride along uselessly (Instagram drops it) and on some builds pushes
+        if (target === 'instagram' && (await shareToInstagram(fileUri, format))) {
+          // Landed in Instagram itself (§39.11): story composer, or the feed composer /
+          // Instagram's own chooser. The caption is already on the clipboard.
+        } else if (target === 'instagram') {
+          // Instagram could not be opened directly: the OS sheet, always through
+          // expo-sharing — on iOS the RN Share `message` would ride along uselessly (Instagram drops it) and on some builds pushes
           // Instagram out of the activity list in favour of text-capable targets.
           const canShare = await Sharing.isAvailableAsync();
           if (canShare) {
@@ -686,6 +708,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               }
             );
           }
+        } else if (app === 'whatsapp' && (await shareToWhatsApp([fileUri], caption))) {
+          // WhatsApp's chat picker with the image and the caption (Android, §39.11).
         } else if (Platform.OS === 'ios') {
           // iOS UIActivityViewController accepts file + caption together; WhatsApp
           // populates the caption field automatically.
@@ -732,7 +756,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       target: ShareTarget,
       format: ShareFormat,
       uiLang: Lang = lang,
-      devotionalCard?: ProseCardSpec
+      devotionalCard?: ProseCardSpec,
+      app?: DirectApp
     ) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
@@ -766,7 +791,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               })
             : buildShareCaption(captionParams);
 
-        const dispatched = await deliver(fileUri, caption, target, format, uiLang);
+        const dispatched = await deliver(fileUri, caption, target, format, uiLang, app);
         // Report the moment once the sheet has closed (the awaits in deliver have
         // resolved). The rating gate + 1200 ms settle delay live in the provider;
         // here we only say "a verse share just happened" (§54).
@@ -843,7 +868,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   );
 
   const runProsePage = useCallback(
-    async (target: ShareTarget, format: ShareFormat) => {
+    async (target: ShareTarget, format: ShareFormat, app?: DirectApp) => {
       if (!prose || !activeScope || inFlightRef.current) return;
       const { content, lang, uiLang, highlighted } = prose;
       const scope = activeScope;
@@ -856,7 +881,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         if ((spec.page.illustration || spec.page.devotional) && !fileUri) { alertCouldNotShare(uiLang); return; }
         const label = spec.pageCount > 1 ? pageWord(highlighted + 1, spec.pageCount) : null;
         const caption = proseCaption(content, scope, lang, target, label);
-        const dispatched = await deliver(fileUri, caption, target, format, uiLang);
+        const dispatched = await deliver(fileUri, caption, target, format, uiLang, app);
         if (dispatched) requestRatingAskRef.current(proseShareMoment(spec.page));
       } catch {
         // Dismissal or failure: swallow, as the verse path does.
@@ -888,7 +913,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   );
 
   const runSeries = useCallback(
-    async (target: ShareTarget) => {
+    async (target: ShareTarget, app?: DirectApp) => {
       if (!prose || !activeScope || inFlightRef.current) return;
       const state = prose;
       const scope = activeScope;
@@ -915,7 +940,10 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         }
         setProse(null);
         await wait(SHEET_DISMISS_MS);
-        const dispatched = await shareFiles(uris, { message: caption, title: 'Share pages' });
+        // WhatsApp album straight into its chat picker (§39.11); the OS sheet otherwise.
+        const dispatched =
+          (app === 'whatsapp' && (await shareToWhatsApp(uris, caption))) ||
+          (await shareFiles(uris, { message: caption, title: 'Share pages' }));
         if (dispatched) requestRatingAskRef.current(proseShareMoment(scope.pagination.pages[0]));
       } catch {
         // Dismissal or failure: swallow.
@@ -999,7 +1027,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const runCard = useCallback(
-    async (target: ShareTarget, format: ShareFormat) => {
+    async (target: ShareTarget, format: ShareFormat, app?: DirectApp) => {
       if (!cardChooser || inFlightRef.current) return;
       const { content, lang: uiLang, cardLang } = cardChooser;
       setCardChooser(null);
@@ -1010,7 +1038,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         // Never a text-only fallback: the card is the share.
         if (!fileUri) { alertCouldNotShare(uiLang); return; }
         content.onShared?.();
-        const dispatched = await deliver(fileUri, cardCaption(content, cardLang, target), target, format, uiLang);
+        const dispatched = await deliver(fileUri, cardCaption(content, cardLang, target), target, format, uiLang, app);
         if (dispatched) requestRatingAskRef.current('prose-shared');
       } catch {
         // Dismissal or failure: swallow, as the verse path does.
@@ -1123,13 +1151,13 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   }, [chooser, cardChooser, prose, activeScope, timely]);
 
   const pickTarget = useCallback(
-    (target: ShareTarget, format: ShareFormat) => {
+    (target: ShareTarget, format: ShareFormat, app?: DirectApp) => {
       if (!chooser || inFlightRef.current) return;
       const { verse, lang, cardLang, opts } = chooser;
       const devotionalCard = chooser.style === 'daily-bhakti' && devotionalChoice && devotionalScope
         ? cardSpec(devotionalChoice, devotionalScope, cardLang, 0) : undefined;
       setChooser(null);
-      void run(verse, cardLang, opts, target, format, lang, devotionalCard);
+      void run(verse, cardLang, opts, target, format, lang, devotionalCard, app);
     },
     [chooser, run, devotionalChoice, devotionalScope, cardSpec]
   );
@@ -1190,6 +1218,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
             ),
           multiShareAvailable: isMultiShareAvailable(),
           onShareAll: () => void runSeries('system'),
+          onShareAllWhatsApp: whatsAppDirect ? () => void runSeries('system', 'whatsapp') : undefined,
           onInstagramCarousel: () => void runSeries('instagram'),
           view: prose.view,
           onView: (view: ShareSeriesView) => setProse((p) => (p ? { ...p, view } : p)),
@@ -1249,6 +1278,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           hashtagPreview={hashtagPreview}
           busy={busy}
           onShareSystem={() => void runCard('system', 'post')}
+          onShareWhatsApp={whatsAppDirect ? () => void runCard('system', 'post', 'whatsapp') : undefined}
           onShareInstagramPost={() => void runCard('instagram', 'post')}
           onShareInstagramStory={() => void runCard('instagram', 'story')}
           onShareText={cardChooser.content.text || cardChooser.content.onShareText ? runCardText : undefined}
@@ -1274,6 +1304,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           hashtagPreview={hashtagPreview}
           busy={busy}
           onShareSystem={() => pickTarget('system', 'post')}
+          onShareWhatsApp={whatsAppDirect ? () => pickTarget('system', 'post', 'whatsapp') : undefined}
           onShareInstagramPost={() => pickTarget('instagram', 'post')}
           onShareInstagramStory={() => pickTarget('instagram', 'story')}
           onShareText={pickText}
@@ -1306,6 +1337,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           hashtagPreview={hashtagPreview}
           busy={busy}
           onShareSystem={() => void runProsePage('system', 'post')}
+          onShareWhatsApp={whatsAppDirect ? () => void runProsePage('system', 'post', 'whatsapp') : undefined}
           onShareInstagramPost={() => void runProsePage('instagram', 'post')}
           onShareInstagramStory={() => void runProsePage('instagram', 'story')}
           onShareText={runProseText}

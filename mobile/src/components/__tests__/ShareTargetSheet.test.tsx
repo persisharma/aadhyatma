@@ -117,6 +117,39 @@ describe('ShareTargetSheet', () => {
     expect(byLabel(tree, 'Share as Instagram story or reel').props.disabled).toBe(true);
   });
 
+  test('WhatsApp row (§39.11): only when WhatsApp opens directly, first, localized, and disabled while busy', async () => {
+    const none = await renderSheet();
+    expect(byLabel(none, 'Share on WhatsApp')).toBeUndefined();
+    const onShareWhatsApp = jest.fn();
+    const subs = {
+      hi: 'सीधे WhatsApp में — कार्ड और ऐप का लिंक',
+      en: 'Straight to WhatsApp — the card and the app link',
+      gu: 'સીધું WhatsApp માં — કાર્ડ અને ઍપની લિંક',
+      kn: 'ನೇರವಾಗಿ WhatsApp ಗೆ — ಕಾರ್ಡ್ ಮತ್ತು ಆ್ಯಪ್ ಲಿಂಕ್',
+    } as const;
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      const tree = await renderSheet({ lang, onShareWhatsApp });
+      expect(tree.root.findAll((n) => n.props.children === subs[lang]).length).toBeGreaterThan(0);
+    }
+    const tree = await renderSheet({ onShareWhatsApp });
+    const labels = tree.root
+      .findAll((n) => typeof n.props.onPress === 'function' && typeof n.props.accessibilityLabel === 'string')
+      .map((n) => n.props.accessibilityLabel);
+    expect(labels.indexOf('Share on WhatsApp')).toBeLessThan(labels.indexOf('Share to other apps'));
+    await act(async () => byLabel(tree, 'Share on WhatsApp').props.onPress());
+    expect(onShareWhatsApp).toHaveBeenCalledTimes(1);
+    const busy = await renderSheet({ onShareWhatsApp, busy: true });
+    expect(byLabel(busy, 'Share on WhatsApp').props.disabled).toBe(true);
+    const whole = await renderSheet({ onShareWhatsApp, fullVerseImage: true });
+    expect(whole.root.findAll((n) => n.props.children === 'Straight to WhatsApp — the whole image and the app link').length).toBeGreaterThan(0);
+  });
+
+  test('Instagram rows announce that they open Instagram', async () => {
+    const tree = await renderSheet();
+    expect(byLabel(tree, 'Share on Instagram').props.accessibilityHint).toMatch(/then opens Instagram$/);
+    expect(byLabel(tree, 'Share as Instagram story or reel').props.accessibilityHint).toMatch(/then opens Instagram$/);
+  });
+
   test('Send as text appears only when offered, and calls its handler', async () => {
     const without = await renderSheet();
     expect(byLabel(without, 'Send as text')).toBeUndefined();
@@ -218,6 +251,20 @@ describe('ShareTargetSheet · series (design.md §39.5)', () => {
     });
     expect(byLabel(many, 'Share all pages').props.disabled).toBe(true);
     expect(byLabel(many, 'Share to other apps').props.disabled).toBeFalsy();
+  });
+
+  test('a series puts the WhatsApp album in the all-pages group, never as a single-page row', async () => {
+    const onShareAllWhatsApp = jest.fn();
+    const tree = await renderSheet({ series: series({ onShareAllWhatsApp }), onShareWhatsApp: jest.fn() });
+    expect(byLabel(tree, 'Share on WhatsApp')).toBeUndefined();
+    await act(async () => byLabel(tree, 'Share all pages on WhatsApp').props.onPress());
+    expect(onShareAllWhatsApp).toHaveBeenCalledTimes(1);
+    const capped = await renderSheet({
+      series: series({ pageCount: 12, selected: Array(12).fill(true), highlighted: 0, onShareAllWhatsApp }),
+    });
+    expect(byLabel(capped, 'Share all pages on WhatsApp').props.disabled).toBe(true);
+    const plain = await renderSheet({ series: series() });
+    expect(byLabel(plain, 'Share all pages on WhatsApp')).toBeUndefined();
   });
 
   test('the carousel-ready view offers Continue', async () => {

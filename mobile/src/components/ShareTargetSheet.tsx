@@ -55,6 +55,8 @@ export type ShareSeriesProps = {
   /** False on a binary that predates the multi-image module — rows show, disabled. */
   multiShareAvailable: boolean;
   onShareAll: () => void;
+  /** Every selected page straight into WhatsApp (§39.11). Absent → no row. */
+  onShareAllWhatsApp?: () => void;
   onInstagramCarousel: () => void;
   view: ShareSeriesView;
   onView: (view: ShareSeriesView) => void;
@@ -77,6 +79,11 @@ type Props = {
   /** The hashtag line exactly as it will be pasted (`#A #B …`). */
   hashtagPreview: string;
   onShareSystem: () => void;
+  /**
+   * Opens WhatsApp itself rather than the OS list (§39.11). The provider passes it only
+   * when WhatsApp can be opened directly (Android); absent → no row, as before.
+   */
+  onShareWhatsApp?: () => void;
   /** 4:5 — the tallest a feed post shows whole. */
   onShareInstagramPost: () => void;
   /** 9:16 — the card inside the Story/Reel safe area, so nothing is cropped. */
@@ -168,6 +175,7 @@ export default function ShareTargetSheet({
   title,
   hashtagPreview,
   onShareSystem,
+  onShareWhatsApp,
   onShareInstagramPost,
   onShareInstagramStory,
   onClose,
@@ -412,6 +420,20 @@ export default function ShareTargetSheet({
             <Text style={eyebrow}>
               {pick(lang, { hi: `सभी चुने पृष्ठ · ${selectedCount}`, en: `ALL SELECTED PAGES · ${selectedCount}`, gu: `બધાં પસંદ પૃષ્ઠ · ${selectedCount}`, kn: `ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು · ${selectedCount}` })}
             </Text>
+            {multi.onShareAllWhatsApp ? (
+              <TargetRow
+                lang={lang}
+                icon="whatsapp"
+                title={pick(lang, { hi: 'WhatsApp एल्बम', en: 'WhatsApp album', gu: 'WhatsApp આલ્બમ', kn: 'WhatsApp ಆಲ್ಬಮ್' })}
+                sub={pick(lang, { hi: 'सभी चुने पृष्ठ सीधे WhatsApp में', en: 'Every selected page, straight to WhatsApp', gu: 'બધાં પસંદ પૃષ્ઠ સીધાં WhatsApp માં', kn: 'ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು ನೇರವಾಗಿ WhatsApp ಗೆ' })}
+                chips={[String(selectedCount)]}
+                hotChip
+                onPress={multi.onShareAllWhatsApp}
+                disabled={allDisabled}
+                accessibilityLabel="Share all pages on WhatsApp"
+                accessibilityHint="Renders every selected page, then opens WhatsApp with them and the app link"
+              />
+            ) : null}
             <TargetRow
               lang={lang}
               icon="share"
@@ -443,6 +465,20 @@ export default function ShareTargetSheet({
           </>
         ) : null}
 
+        {onShareWhatsApp && !multi ? (
+          <TargetRow
+            lang={lang}
+            icon="whatsapp"
+            title="WhatsApp"
+            sub={wholeImage
+              ? pick(lang, { hi: 'सीधे WhatsApp में — पूरा चित्र और ऐप का लिंक', en: 'Straight to WhatsApp — the whole image and the app link', gu: 'સીધું WhatsApp માં — આખું ચિત્ર અને ઍપની લિંક', kn: 'ನೇರವಾಗಿ WhatsApp ಗೆ — ಇಡೀ ಚಿತ್ರ ಮತ್ತು ಆ್ಯಪ್ ಲಿಂಕ್' })
+              : pick(lang, { hi: 'सीधे WhatsApp में — कार्ड और ऐप का लिंक', en: 'Straight to WhatsApp — the card and the app link', gu: 'સીધું WhatsApp માં — કાર્ડ અને ઍપની લિંક', kn: 'ನೇರವಾಗಿ WhatsApp ಗೆ — ಕಾರ್ಡ್ ಮತ್ತು ಆ್ಯಪ್ ಲಿಂಕ್' })}
+            onPress={onShareWhatsApp}
+            disabled={busy}
+            accessibilityLabel="Share on WhatsApp"
+            accessibilityHint="Opens WhatsApp with the image and the app link"
+          />
+        ) : null}
         <TargetRow
           lang={lang}
           icon="share"
@@ -465,7 +501,7 @@ export default function ShareTargetSheet({
             onPress={onShareInstagramPost}
             disabled={busy}
             accessibilityLabel="Share on Instagram"
-            accessibilityHint={wholeCard ? 'The whole card in a 4 by 5 frame. Copies the caption and hashtags, then opens the share sheet' : fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens the share sheet' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet'}
+            accessibilityHint={wholeCard ? 'The whole card in a 4 by 5 frame. Copies the caption and hashtags, then opens Instagram' : fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens Instagram' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens Instagram'}
           />
         )}
         <TargetRow
@@ -482,7 +518,7 @@ export default function ShareTargetSheet({
           disabled={busy}
           divider={!multi && !!textRow}
           accessibilityLabel="Share as Instagram story or reel"
-          accessibilityHint={wholeCard ? 'The whole card in a story frame. Copies the caption and hashtags, then opens the share sheet' : fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens the share sheet' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet'}
+          accessibilityHint={wholeCard ? 'The whole card in a story frame. Copies the caption and hashtags, then opens Instagram' : fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens Instagram' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens Instagram'}
         />
         {multi ? null : textRow}
 

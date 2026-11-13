@@ -1520,3 +1520,7 @@ Privacy-safe confirmation and no-write cancellation documented in [[daan-punya]]
 Proposal 08 adds the image-reference civil date/year to dated individual text shares, preserves undated guidance/full Panchang headings, and disambiguates year-crossing text windows. See [[panchang]]. Provider integration covers all four export languages, cancellation and retained download links; native handoff verification remains pending.
 
 - 2026-11-13: Proposal 06 adds Gita counter → chapter/verse picker. Updated readers subsystem from implementation; native verification remains pending.
+
+## [2026-11-13] ingest | Direct WhatsApp / Instagram share hand-off
+
+The share sheet's WhatsApp and Instagram choices now open the app itself (design.md §39.11, RULEBOOK §3): Android WhatsApp row + series WhatsApp album, Instagram post/story on both platforms, with fallback to the unchanged OS sheet. Native config in `plugins/withShareTargetApps.js` (store build required). iOS keeps the OS sheet for WhatsApp — no public image API. Updated [[subsystems/share]]. Targeted Jest suites only; full suite, Maestro and device hand-offs pending.
