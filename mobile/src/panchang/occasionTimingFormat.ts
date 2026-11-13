@@ -46,8 +46,25 @@ export function compactOccasionRange(w: OccasionWindow, date: Date, lang: Lang) 
     endDate: dated && end ? label(end) : undefined,
   };
 }
-export function occasionShareText(items: readonly OccasionTiming[], date: Date, lang: Lang): string {
-  return items.map(i => [contentByLang(lang, i.nameHi, i.nameEn), ...i.windows.map(w => `${contentByLang(lang, w.labelHi, w.labelEn)} · ${occasionRange(w, date, lang)}`), i.noteHi ? contentByLang(lang, i.noteHi, i.noteEn ?? '') : ''].filter(Boolean).join('\n')).join('\n\n');
+/** Full Panchang already supplies its date. Individual dated shares opt in,
+ * using the same reference date as their image; undated guidance stays undated. */
+export function occasionShareText(items: readonly OccasionTiming[], date: Date, lang: Lang, includeDate = false): string {
+  const range = (w: OccasionWindow) => {
+    const { start, end } = occasionDisplayEndpoints(w);
+    // A forwarded message must distinguish December from the following January.
+    // Keep the image and all calculated instants unchanged.
+    if (includeDate && (start.getFullYear() !== date.getFullYear() || (end && end.getFullYear() !== date.getFullYear()))) {
+      const endpoint = (d: Date) => `${formatClock(d)}, ${formatShortDate(d, lang)} ${d.getFullYear()}`;
+      return end ? `${endpoint(start)} – ${endpoint(end)}` : endpoint(start);
+    }
+    return occasionRange(w, date, lang);
+  };
+  return items.map(i => [
+    contentByLang(lang, i.nameHi, i.nameEn),
+    includeDate ? `${formatShortDate(date, lang)} ${date.getFullYear()}` : '',
+    ...i.windows.map(w => `${contentByLang(lang, w.labelHi, w.labelEn)} · ${range(w)}`),
+    i.noteHi ? contentByLang(lang, i.noteHi, i.noteEn ?? '') : '',
+  ].filter(Boolean).join('\n')).join('\n\n');
 }
 
 /** Adjacent rites in a festival detail keep their own poster date. A parana
