@@ -105,6 +105,13 @@ it('links the exact approved generated Ram Lalla master to the registered R2 upl
   expect(createHash('sha256').update(master).digest('hex')).toBe(source.masterSha256);
   expect(bytes.length).toBe(source.bytes); expect(bytes.length).toBeLessThan(600 * 1024);
   expect(source.library_file_id).toBe('libfile_26f416810ac081918d18d2a8aadb4927');
+  const manifest = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../suvicharPortraitManifest.json'), 'utf8'));
+  expect(manifest).toEqual({ prefix: 'suvichar-portraits', assets: {
+    'ram-lalla': { hash: hash.slice(0, 16), ext: 'webp', width: source.width, height: source.height },
+  } });
+  expect(source.kind).toBe('generated');
+  expect(source.generatedOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  expect(source.earlierConstraints).toContain('Remove Ayodhya');
   expect(suvicharPhotoArt('ram-lalla')).toMatchObject({ kind: 'generated', width: source.width, height: source.height, crop: source.crop, credit: '' });
   expect(suvicharPhotoArt('ram-lalla')!.request).toMatchObject({ key: hash.slice(0, 16), ext: 'webp', subdir: 'suvichar-portraits' });
   expect(suvicharPhotoArt('ram-lalla')!.request.remoteUrl).toBe(`https://cdn.vedansh.app/suvichar-portraits/${hash.slice(0, 16)}.webp`);
