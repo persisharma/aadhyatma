@@ -28,11 +28,17 @@ type RNShareModule = {
     subject?: string;
     failOnCancel?: boolean;
   }) => Promise<unknown>;
+  /** One named app (WhatsApp / Instagram), `utils/directShare.ts`. */
+  shareSingle?: (options: Record<string, unknown>) => Promise<unknown>;
+  /** Android only (throws on iOS); needs the app's `<queries>` entry to see the package. */
+  isPackageInstalled?: (packageName: string) => Promise<{ isInstalled: boolean }>;
+  Social?: Record<string, string>;
 };
 
 let cached: RNShareModule | null | undefined;
 
-function load(): RNShareModule | null {
+/** The probed `react-native-share` module, or null on a binary without it. */
+export function loadRNShare(): RNShareModule | null {
   if (cached !== undefined) return cached;
   try {
     if (!TurboModuleRegistry.get('RNShare')) {
@@ -50,7 +56,7 @@ function load(): RNShareModule | null {
 
 /** True when this binary can hand several images to the share sheet at once. */
 export function isMultiShareAvailable(): boolean {
-  return load() !== null;
+  return loadRNShare() !== null;
 }
 
 /**
@@ -61,7 +67,7 @@ export async function shareFiles(
   urls: string[],
   opts: { message?: string; title?: string } = {}
 ): Promise<boolean> {
-  const mod = load();
+  const mod = loadRNShare();
   if (!mod || urls.length === 0) return false;
   await mod.open({
     urls,
