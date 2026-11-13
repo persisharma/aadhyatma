@@ -35,7 +35,7 @@ export type DashaPractice = {
 };
 
 export const DASHA_PRACTICE_NOTE = {
-  hi: 'उपाय मन की स्थिरता और अच्छे आचरण का अभ्यास है — कोई समाधान या वचन नहीं।',
+  hi: 'ये उपाय मन को स्थिर रखने का अभ्यास हैं — कोई इलाज या गारंटी नहीं।',
   en: 'An upay is a practice for steadiness and good conduct — not a fix or a guarantee.',
 } as const;
 
