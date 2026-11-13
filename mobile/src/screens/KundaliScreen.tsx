@@ -1339,9 +1339,11 @@ function KundaliResult({
               const durationLabel = birthWithin
                 ? `${formatDuration(period.end.getTime() - chart.input.date.getTime(), true)} ${contentByLang(lang, 'जन्म पर शेष', 'left at birth')}`
                 : `${DASHA_YEARS[period.lord]} ${contentByLang(lang, 'वर्ष', 'years')}`;
-              // Every other Mahadasha's upay sits behind its own toggle; the
-              // running one is the card above, so its row does not repeat it.
-              const rowPractice = selected ? null : buildDashaPractice(chart, period, now);
+              // Each Mahadasha still ahead keeps its upay behind its own
+              // toggle. The running one is the card above, so its row does not
+              // repeat it, and a period that has ended asks for nothing now.
+              const ended = period.end.getTime() <= now.getTime();
+              const rowPractice = selected || ended ? null : buildDashaPractice(chart, period, now);
               const practiceOpen = openPractices.has(period.lord);
               return (
                 <View
