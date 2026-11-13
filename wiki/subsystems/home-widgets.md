@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/assets/widget-backgrounds, mobile/scripts/build-widget-backgrounds.mts, mobile/src/data/versePool.ts, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/src/components/DailyBhaktiNudge.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-11-10
+last_verified_date: 2026-11-13
 confidence: high
 status: current
 ---
@@ -97,3 +97,10 @@ Native compilation, signed device timelines, four-language/size visual and acces
 ## First-run widget setup (5 November 2026)
 
 `OnboardingSetupSheet` starts widgets from language Continue. Android saves city as its resume point before the existing process-owned pair pin flow; iPhone persists a `widgets` substep and embeds the shared `WidgetHowToBody` in the same Modal. Continue records instruction completion, Not now records widget dismissal, and both lead to city without changing reminder preferences. No iOS placement API exists; flow records remain bookkeeping only. Missing hosts and failed/unsupported Android pinning continue onboarding. The later launch offer retains its day/priority policy and the gallery remains available. Source tests and native evidence must be reported separately.
+
+
+## Android composition parity (13 November 2026)
+
+The solar change (2 Nov) gave Android the palettes and plates but none of the iOS composition, so placed Android widgets looked like the old design. The verse layout now has a header row (eyebrow capsule `vedansh_widget_pill[_night]` + `widget_brand_header`), a 1 dp gold `widget_rule` above the source, and a footer mark only on the small cell. The Panchang layout has a rule for the small cell's divided sunrise row, and large gets separate sunrise / Rahu Kaal / Abhijit lines under a 32 sp tithi. The rule is an `ImageView` (RemoteViews rejects a bare `View`). Every toggled view is set explicitly on every render path, and recovery clears the capsule and rule, because launchers reapply RemoteViews onto the previous tree. The Kotlin was compiled against Robolectric's `android-all` 12 jar with a stub `R`; no Gradle/AAPT build or launcher run was done. This needs a new Android binary. Pins: `appearance.test.ts`.
+
+- **Gotcha:** native widget work needs a store build on **each** platform. iOS 1.5.6 (build 76) shipped the 2 Nov design. `app.json`'s Android `versionCode` stayed at 15 (1.5.5, bumped 27 Oct, before #595 merged). Check which binary a device runs before treating a missing native design as a code bug.

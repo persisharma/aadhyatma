@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The verse eyebrow capsule (design.md §59): saffronDeep #6B2E05 at 10%, the iOS
+     `palette.saffronDeep.opacity(0.10)` Capsule on the Heritage card. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#1A6B2E05" />
+    <corners android:radius="100dp" />
+</shape>

@@ -1517,3 +1517,5 @@ Located the final approved front-facing image omitted from merged #663. Added im
 Proposal 08 adds the image-reference civil date/year to dated individual text shares, preserves undated guidance/full Panchang headings, and disambiguates year-crossing text windows. See [[panchang]]. Provider integration covers all four export languages, cancellation and retained download links; native handoff verification remains pending.
 
 - 2026-11-13: Proposal 06 adds Gita counter → chapter/verse picker. Updated readers subsystem from implementation; native verification remains pending.
+
+- 2026-11-13: Android widgets gain the iOS Heritage/Midnight composition (eyebrow capsule, header mark, gold rule, divided small-Panchang sunrise, large-Panchang rows). Updated [[home-widgets]]; needs a new Android binary; launcher verification pending.
