@@ -247,9 +247,20 @@ test('Kundali result leads with plain-language insights and exposes all expert t
     currentPanel.findAll((node) => String(node.props.accessibilityLabel ?? '').startsWith('Open ') && typeof node.props.onPress === 'function')[0].props.onPress();
   });
   expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', expect.objectContaining({ screen: expect.any(String) }));
-  // Every other Mahadasha keeps its upay behind its own toggle; the running one does not repeat it.
+  // Each Mahadasha still ahead keeps its upay behind its own toggle. The running one
+  // does not repeat it, and a period that has ended offers no action.
   assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-practice-${mahaLord}` }).length, 0);
-  const otherLord = mockChart.vimshottari.find((period) => period.lord !== mahaLord)!.lord;
+  const rightNow = Date.now();
+  const endedPeriods = mockChart.vimshottari.filter((period) => period.end.getTime() <= rightNow);
+  const aheadPeriods = mockChart.vimshottari.filter((period) => period.start.getTime() > rightNow);
+  assert.ok(endedPeriods.length > 0 && aheadPeriods.length > 0, 'fixture has both ended and upcoming Mahadashas');
+  for (const period of endedPeriods) {
+    assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-practice-${period.lord}` }).length, 0, `${period.lord} has ended`);
+  }
+  for (const period of aheadPeriods) {
+    assert.ok(tree.root.findByProps({ testID: `dasha-timeline-practice-${period.lord}` }), `${period.lord} is ahead`);
+  }
+  const otherLord = aheadPeriods[0].lord;
   const toggle = () => tree.root.findByProps({ testID: `dasha-timeline-practice-${otherLord}` });
   assert.equal(toggle().props.accessibilityState.expanded, false);
   assert.equal(toggle().props.accessibilityLabel, `Show what to do in the ${GRAHA_NAMES_EN[otherLord]} Mahadasha`);

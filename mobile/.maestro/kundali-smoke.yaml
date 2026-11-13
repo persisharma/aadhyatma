@@ -264,7 +264,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
 - assertVisible: "Mercury Mahadasha"
-# Another Mahadasha's upay opens from its own timeline row.
+# An upcoming Mahadasha's upay opens from its own timeline row (ended periods
+# and the running one carry no toggle).
 - scrollUntilVisible:
     element:
       id: "dasha-timeline-practice-mercury"
