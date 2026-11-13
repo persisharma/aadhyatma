@@ -67,6 +67,17 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Daan Punya register"
 - assertVisible: "Anna"
 
+# ── Confirmation keeps the record until explicitly removed ──
+- tapOn: { id: "daan-entry-remove-.*", index: 0 }
+- assertVisible: { id: "daan-remove-dialog" }
+- takeScreenshot: daan-remove-confirmation
+- tapOn: { id: "daan-remove-cancel" }
+- assertNotVisible: { id: "daan-remove-dialog" }
+- assertVisible: "Anna"
+- tapOn: { id: "daan-entry-remove-.*", index: 0 }
+- tapOn: { id: "daan-remove-confirm" }
+- assertNotVisible: { id: "daan-remove-dialog" }
+
 # ── Back out cleanly ──
 - tapOn: "Back"
 - waitForAnimationToEnd

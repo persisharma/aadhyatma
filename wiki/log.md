@@ -1511,3 +1511,6 @@ Updated share/design/integration contracts for shared top/cartouche and English 
 ## [2026-11-11] ingest | Ram Lalla generated artwork integration
 
 Located the final approved front-facing image omitted from merged #663. Added immutable portrait delivery manifest/catalog registration and shared source clipping across the composer/selectors. Removed Ayodhya and the obsolete photographic credit while preserving stable IDs and archived rights. Public R2 bytes and native/export/device acceptance remain pending; see docs/evaluations/ram-lalla/generated-art-review.md.
+
+## [2026-11-13] ingest | Daan record-specific deletion confirmation
+Privacy-safe confirmation and no-write cancellation documented in [[daan-punya]]. Existing optimistic persistence limitation retained.
