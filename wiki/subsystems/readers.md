@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-11-05
+last_verified_date: 2026-11-13
 confidence: high
 status: current
 ---
@@ -328,3 +328,9 @@ Daily/weekday Suvichar cards rotate eligible originals followed by eligible doha
 
 Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
 
+
+## Gita verse picker — Proposal 06
+
+`GitaVerseJumpSheet` is mounted only while choosing. It reads chapter counts/titles from the manifest and accepts four numeral scripts. `GitaReaderScreen` stops playback, suppresses pager callbacks and suspends dwell until dismissal. Only Open loads the selected chapter and resolves the real verse number. Route replacement preserves the calling stack and mounts a new reader directly at the target, so no skipped page receives progress/coverage. Cancel does not write position; the original verse may still receive legitimate dwell credit accrued before opening. Existing transition timers are cancelled on unmount. No other reader or routine completion contract changes.
+
+Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.

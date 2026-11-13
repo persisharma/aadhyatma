@@ -672,6 +672,16 @@ e2e. Screens override it where the destination is worth naming (`"Back to chapte
 
 ---
 
+### 9.1 Gita chapter-and-verse picker (Proposal 06)
+
+The Gita reader's existing counter is a minimum 48pt button with a small caret and localized “Go to verse” label. It opens a parchment dialog, following the approved 4 November Proposal 06 reference: heading, chapter selector beside verse-number input, chapter name/range, selectable verse grid, explicit Open and Cancel. Reuse script-safe fonts, shared colors and AppIcon navigation glyphs. The chapter menu and grid scroll within bounded regions; the complete sheet also scrolls and avoids the keyboard/safe areas so actions remain reachable at enlarged text sizes. All four languages retain system scaling; no line caps or text shrinking.
+
+Only the lightweight chapter manifest is used while choosing. Accept Latin, Devanagari, Gujarati and Kannada numerals, and reject empty, fractional, malformed or out-of-range input. Chapter selection resets the draft verse to 1. Open loads only the chosen chapter, resolves the actual verse number and replaces the current GitaReader route, including same-chapter jumps; this preserves the caller's Back stack and avoids animated traversal through skipped verses. A load failure keeps the draft with retry copy. Repeat submissions are guarded.
+
+Opening stops read-aloud/auto-slide and suspends read dwell while the sheet covers the verse. Cancel, backdrop, accessibility escape and Android Back discard the draft without changing position or resume data; playback stays stopped. Selecting alone does not persist progress or mark coverage. The opened verse follows ordinary dwell tracking; skipped verses and routines are never completed by the jump. Existing swipes, chapter transitions, bookmarks, shares, first-verse artwork and jump-to-start remain. Other readers keep their existing counters: the approved initial scope is Gita only. Native iOS/Android visual and accessibility acceptance must be recorded separately from component tests.
+
+---
+
 ## 10. Content Model
 
 Each module normalises its source into a typed, module-specific shape. Shapes stay separate so one module's reader never has to know another module's vocabulary (Chalisa doesn't know `'shloka'`; Gita doesn't know `'chaupai'`). A shared reader may be introduced later via a broader union — until then, keep types module-local.
