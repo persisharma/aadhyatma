@@ -3396,6 +3396,27 @@ because they are different concerns that happen to agree today.
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
 
+### Native small Panchang visual hierarchy — 11 November 2026
+
+The previous small Panchang was still a flat text stack even after the adaptive
+Shloka PR. The small native widget now uses the validated represented date +
+selected city as a ten-point saffron masthead, running Tithi as the readable
+hero, optional *real* vrat as a subtle saffron band, and a compact sunrise plus
+Vedansh footer separated by a gold rule. SwiftUI ViewThatFits selects a normal
+or compact composition from rendered geometry, preserving Gujarati/Kannada/
+Devanagari shaping without computing astronomical data in WidgetKit.
+There is no festival icon/image download; the pre-reviewed almanac Heritage/
+Midnight Temple background and safe tinted/recovery presentation remain.
+
+Medium and large illustrated Shloka text is vertically balanced for short
+verses; full long-verse variants still win before the bounded tap-to-read
+fallback. A restrained icon/divider treatment gives the source attribution
+a distinctive place without reducing verse text area. The in-app widget gallery
+now mirrors the small Panchang hierarchy as a clearly approximate preview;
+the actual OS widget is definitive. Delivery requires a new iOS binary.
+Acceptance: native compile, visual widget placement screenshot, all four
+languages and sizes, appearance/VoiceOver, long tithi and vrat names.
+
 ### Adaptive illustrated iOS Shloka layout — 10 November 2026
 
 The approved illustrated day/night style is preserved, but text controls image

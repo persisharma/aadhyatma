@@ -100,13 +100,22 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
             {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>
           <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
-            {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
-                mid-day, so the facsimile would otherwise show the sunrise tithi
-                while the placed widget (and the Home glance) had moved on. */}
-            <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
-            {tithi?.till ? <Text style={[styles.meta, { color: panchangPalette.inkMuted }]}>{tithi.till[lang]}</Text> : null}
-            {day?.vrat ? <Text style={[styles.meta, { color: panchangPalette.inkMuted, fontFamily: bodyFont }]}>{day.vrat[lang]}</Text> : null}
-            {day ? <Text style={[styles.meta, { color: panchangPalette.inkMuted }]}>{day.sunrise[lang]}</Text> : null}
+            {/* This is the small native widget's masthead / tithi / vrat-band /
+                sunrise-footer hierarchy, drawn from the same running tithi. */}
+            {day && tithi && payloadState.kind === 'ready' ? <View style={{ gap: 7, justifyContent: 'center', flex: 1 }}>
+              <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.accent }}>
+                {day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}
+              </Text>
+              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: 35, color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
+              {tithi.till ? <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{tithi.till[lang]}</Text> : null}
+              {day.vrat ? <View style={{ borderLeftWidth: 3, borderLeftColor: panchangPalette.accent, borderRadius: 7, backgroundColor: appearance === 'night' ? '#24344A' : '#F1E3C6', paddingHorizontal: 7, paddingVertical: 5 }}>
+                <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{day.vrat[lang]}</Text>
+              </View> : null}
+              <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', borderTopWidth: 1, borderTopColor: panchangPalette.gold, paddingTop: 7 }}>
+                <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{day.sunrise[lang]}</Text>
+                <Text style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 10, color: panchangPalette.gold }}>ॐ वेदांश़</Text>
+              </View>
+            </View> : <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{recovery}</Text>}
           </Preview>
           <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
@@ -159,7 +168,7 @@ function Preview({ heritageImages = {}, contentReady = true, appearance = 'day',
   const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
   const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? verseArtPadding : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
   const previewBody = <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={previewStyle}>
-    <Text style={[eyebrowStyle, { color: palette.accent }]}>{title}</Text>{children}<Text style={[styles.brand, { color: palette.gold }]}>ॐ वेदांश़</Text>
+    {content === 'panchang' ? null : <Text style={[eyebrowStyle, { color: palette.accent }]}>{title}</Text>}{children}{content === 'panchang' ? null : <Text style={[styles.brand, { color: palette.gold }]}>ॐ वेदांश़</Text>}
   </View>;
   const body = <>
     {art ? <ImageBackground testID={`widget-art-${content}`} source={art} resizeMode="cover" style={[styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }]} imageStyle={styles.cardArt}>
