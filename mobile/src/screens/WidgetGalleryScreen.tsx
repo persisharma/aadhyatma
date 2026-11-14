@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, AppState, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import CachedArtwork from '@/components/CachedArtwork';
+import type { ReaderIllustration } from '@/data/readerIllustrationAsset';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -21,15 +24,25 @@ import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'WidgetGallery'>;
 
+function istClock(raw: string): string {
+  const minute = Math.floor(Date.parse(raw) / 60000);
+  if (!Number.isFinite(minute)) return '—';
+  const ist = ((minute + 330) % 1440 + 1440) % 1440;
+  return String(Math.floor(ist / 60)).padStart(2, '0') + ':' + String(ist % 60).padStart(2, '0');
+}
+
+
 export default function WidgetGalleryScreen({ navigation }: Props) {
   const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const [payloadState, setPayloadState] = useState<WidgetPayloadState>({ kind: 'missing' });
   const [pinSupported, setPinSupported] = useState(false);
   const [heritageImages, setHeritageImages] = useState<Record<string, number>>({});
+  const [vividImages, setVividImages] = useState<Record<string, ReaderIllustration>>({});
   useEffect(() => {
     let live = true;
     import('@assets/widget-backgrounds/heritage').then((module) => { if (live) setHeritageImages(module.widgetHeritageImages); });
+    import('@/widgets/approvedPaintings').then((module) => { if (live) setVividImages(module.vividHeritageImages); });
     return () => { live = false; };
   }, []);
   const titleFont = scriptTitleFont(lang, fontFamilies.devanagariBold);
@@ -91,7 +104,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
           {pick(lang, { hi: 'हर विजेट का अपना आकार है। चौड़े में श्लोक के लिए अधिक जगह है, लंबे श्लोक टैप करके पूरे पढ़ें। छोटा पंचांग एक नज़र में दिखता है।', en: 'Each widget has its own sizes. Wide gives verses more room, and long verses open fully on tap; Small keeps the Panchang at a glance.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. પહોળા વિજેટમાં શ્લોકને વધુ જગ્યા મળે છે; લાંબો શ્લોક ટૅપ કરીને આખો વાંચો. પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಅಗಲದ ವಿಜೆಟ್‌ನಲ್ಲಿ ಶ್ಲೋಕಕ್ಕೆ ಹೆಚ್ಚು ಜಾಗ; ದೀರ್ಘ ಶ್ಲೋಕವನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಸಂಪೂರ್ಣ ಓದಿ. ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.' })}
         </Text>
         <View style={styles.grid}>
-          <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" verseArtPadding={verseArtPadding} colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
+          <Preview heritageImages={heritageImages} vividImages={vividImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" verseArtPadding={verseArtPadding} colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The facsimile stands in for the recommended (wide) cell, which
                 renders the whole verse flowed across three lines — not the
                 small-cell excerpt (design.md §59). */}
@@ -99,14 +112,31 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
             {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{verse.source[lang]}</Text> : null}
             {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>
-          <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
-            {/* The tithi RUNNING NOW plus its तक line — a tithi hands over
-                mid-day, so the facsimile would otherwise show the sunrise tithi
-                while the placed widget (and the Home glance) had moved on. */}
-            <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{tithi ? tithi.name[lang] : recovery}</Text>
-            {tithi?.till ? <Text style={[styles.meta, { color: panchangPalette.inkMuted }]}>{tithi.till[lang]}</Text> : null}
-            {day?.vrat ? <Text style={[styles.meta, { color: panchangPalette.inkMuted, fontFamily: bodyFont }]}>{day.vrat[lang]}</Text> : null}
-            {day ? <Text style={[styles.meta, { color: panchangPalette.inkMuted }]}>{day.sunrise[lang]}</Text> : null}
+          <Preview heritageImages={heritageImages} vividImages={vividImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
+            {day && tithi && payloadState.kind === 'ready' ? <View style={{ gap: 6, justifyContent: 'center', flex: 1 }}>
+              <Text numberOfLines={1} style={{ color: panchangPalette.accent, fontSize: 11, fontFamily: bodyFont }}>{day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}</Text>
+              <View style={{ flexDirection: 'row', gap: 7, alignItems: 'center' }}>
+                <View style={{ height: 36, width: 36, borderRadius: 18, borderWidth: 1, borderColor: panchangPalette.gold, alignItems: 'center', justifyContent: 'center', backgroundColor: appearance === 'night' ? '#182C43' : '#F0DFBD' }}>
+                  <View style={{ width: 23, height: 23, borderRadius: 12, backgroundColor: panchangPalette.inkMuted }}>
+                    <View style={{ position: 'absolute', top: -2, right: -5, width: 23, height: 23, borderRadius: 12, backgroundColor: appearance === 'night' ? '#182C43' : '#F0DFBD' }} />
+                  </View>
+                </View>
+                <Text numberOfLines={2} style={{ color: panchangPalette.ink, fontFamily: titleFont, fontSize: 23, lineHeight: 32, flexShrink: 1 }}>{tithi.name[lang]}</Text>
+              </View>
+              {tithi.till ? <Text numberOfLines={1} style={{ fontSize: 10, color: panchangPalette.inkMuted, fontFamily: bodyFont }}>{tithi.till[lang]}</Text> : null}
+              {day.vrat ? <Text numberOfLines={2} style={{ fontSize: 13, lineHeight: 20, color: panchangPalette.ink, fontFamily: bodyFont }}>✦ {day.vrat[lang]}</Text> : null}
+              <View style={{ height: 1, backgroundColor: panchangPalette.gold, opacity: 0.65 }} />
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={{ fontSize: 10, color: panchangPalette.accent, fontFamily: bodyFont }}>{pick(lang, { hi: 'सूर्योदय', en: 'Sunrise', gu: 'સૂર્યોદય', kn: 'ಸೂರ್ಯೋದಯ' })}</Text>
+                  <Text style={{ fontSize: 14, color: panchangPalette.ink, fontFamily: bodyFont }}>{day.sunrise[lang].split(' ').slice(-1)[0]}</Text>
+                </View>
+                {day.sunsetAt ? <View style={{ alignItems: 'center', borderLeftWidth: 1, borderLeftColor: panchangPalette.gold, paddingLeft: 12 }}>
+                  <Text style={{ fontSize: 10, color: panchangPalette.accent, fontFamily: bodyFont }}>{pick(lang, { hi: 'सूर्यास्त', en: 'Sunset', gu: 'સૂર્યાસ્ત', kn: 'ಸೂರ್ಯಾಸ್ತ' })}</Text>
+                  <Text style={{ fontSize: 14, color: panchangPalette.ink, fontFamily: bodyFont }}>{istClock(day.sunsetAt)}</Text>
+                </View> : null}
+              </View>
+            </View> : <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{recovery}</Text>}
           </Preview>
           <Preview content="japam" title={contentByLang(lang, 'जप-साधना', 'Japam practice')} accessibilityLabel="Japam widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             <Text style={[styles.headline, { color: colors.ink, fontFamily: titleFont }]}>{japam ? `${japam.totalBeads} / 108` : recovery}</Text>
@@ -127,6 +157,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
 
 type PreviewProps = {
   heritageImages?: Record<string, number>;
+  vividImages?: Record<string, ReaderIllustration>;
   contentReady?: boolean;
   appearance?: WidgetAppearance;
   subject?: string;
@@ -147,7 +178,7 @@ type PreviewProps = {
 // (its best size marked), and — where the launcher supports pinning — an add
 // action for that kind alone. The sizes come from the shared catalog the native
 // surfaces mirror, so this screen can never advertise a size iOS/Android refuses.
-function Preview({ heritageImages = {}, contentReady = true, appearance = 'day', subject = 'prayer', verseArtPadding = 90, content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
+function Preview({ heritageImages = {}, vividImages = {}, contentReady = true, appearance = 'day', subject = 'prayer', verseArtPadding = 90, content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
   const entry = widgetCatalogEntry(content);
   const canPin = Platform.OS === 'android' && !!entry.androidProvider;
   const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
@@ -156,10 +187,23 @@ function Preview({ heritageImages = {}, contentReady = true, appearance = 'day',
   // without one the card is the plain parchment it was.
   const palette = WIDGET_APPEARANCE_TOKENS[appearance];
   const art = !contentReady || entry.recommended === 'lock' ? undefined : content === 'japam' ? widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)] : heritageImages[widgetHeritageName(subject, entry.recommended, appearance)];
+  const vivid = contentReady && appearance === 'day' && content !== 'japam' ? vividImages[subject] : undefined;
   const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
   const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? verseArtPadding : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
   const previewBody = <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={previewStyle}>
-    <Text style={[eyebrowStyle, { color: palette.accent }]}>{title}</Text>{children}<Text style={[styles.brand, { color: palette.gold }]}>ॐ वेदांश़</Text>
+    {vivid ? <View pointerEvents="none" style={[StyleSheet.absoluteFillObject, { overflow: 'hidden', borderRadius: radii.lg }]}>
+      <CachedArtwork source={vivid} resizeMode="cover" style={{ position: 'absolute', right: 0, top: 0, width: content === 'panchang' ? '38%' : '55%', height: content === 'panchang' ? '53%' : '100%' }} />
+      <LinearGradient colors={[palette.background, palette.background + 'CC', palette.background + '00']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFillObject} />
+    </View> : null}
+    {content === 'verse' ? <>
+      <Text style={{ textAlign: 'center', fontFamily: fontFamilies.devanagariBold, fontSize: 15, color: palette.ink }}>✦ ॐ वेदांश ✦</Text>
+      <View style={{ backgroundColor: palette.accent, paddingVertical: 4, paddingHorizontal: 8, borderRadius: 7, alignSelf: 'flex-start' }}>
+        <Text style={[eyebrowStyle, { color: appearance === 'night' ? '#091A32' : '#FFF4DC', fontSize: 11 }]}>{title}</Text>
+      </View>
+    </> : content === 'japam' ? <Text style={[eyebrowStyle, { color: palette.accent }]}>{title}</Text> : null}
+    {children}
+    {content === 'japam' ? <Text style={[styles.brand, { color: palette.gold }]}>ॐ वेदांश़</Text> : null}
+    {content !== 'japam' ? <View pointerEvents="none" style={[StyleSheet.absoluteFillObject, { borderWidth: 1, borderColor: palette.gold, borderRadius: radii.lg }]} /> : null}
   </View>;
   const body = <>
     {art ? <ImageBackground testID={`widget-art-${content}`} source={art} resizeMode="cover" style={[styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }]} imageStyle={styles.cardArt}>

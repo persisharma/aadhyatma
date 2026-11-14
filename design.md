@@ -3396,6 +3396,36 @@ because they are different concerns that happen to agree today.
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
 
+### Approved Ornate Heritage (11 November 2026) — native target
+
+The signed-off iPhone Home Screen concept shows a **vivid Vishnu reclining
+on Shesha painting across the right of the medium Shloka**, a centered Vedansh
+flourish, a saffron ribbon for today's Shloka, dark-maroon native Sanskrit,
+book/source attribution and a delicate floral rule. The **small Panchang**
+shows ornamental gold-edged parchment, date/city masthead, an artistic lunar
+medallion beside the large Tithi, observance line, upper-right almanac scene
+and sunrise/sunset in balanced columns. This is the approved reference, not
+the simplified text-stack layout from PR #677.
+
+WidgetKit packages the app's reviewed reader paintings via the Expo config
+plugin. The iOS extension downsamples, focus-crops and caches a bounded image,
+with the legacy painted plate as its local fallback. A SwiftUI Canvas draws
+filigree at native screen resolution. There are no new network requests,
+astro computations, schema changes or JavaScript startup tasks. Existing night,
+tinted and missing-asset fallbacks retain readable native text.
+
+Sunset is derived only from the validated solar ISO instant for the selected
+city, and omitted for legacy snapshots lacking that value. The moon medallion
+is *pure decoration*, not a claimed calculated Moon phase. Keep the running
+Tithi handover, source/day identities and deep links unchanged.
+
+Shlokas still use measured adaptive layouts: 32% art, 16% art, then full text
+width for longer verses. The bounded fallback must explicitly cue tap-through.
+Verify the approved look, short/medium/long verse sources and all four languages
+against actual placed iOS WidgetKit screenshots at Small, Medium and Large,
+day/night/tinted with VoiceOver. The concept image or CI alone never proves
+native visual fidelity. Native changes require a new iOS binary, not OTA.
+
 ### Adaptive illustrated iOS Shloka layout — 10 November 2026
 
 The approved illustrated day/night style is preserved, but text controls image

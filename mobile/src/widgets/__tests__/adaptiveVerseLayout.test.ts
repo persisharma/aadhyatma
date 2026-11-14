@@ -90,6 +90,6 @@ test('the iOS layout measures complete verses before switching to an explicitly 
 
 test('the chosen native layout retains a safe plain-parchment path', () => {
   assert.match(verseView, /art == nil \? CGFloat\(0\)/);
-  assert.match(verseView, /palette\.parchment\.opacity\(0\.88\)/);
+  assert.match(verseView, /palette\.parchment\.opacity\(0\.93\)/);
   assert.match(swift, /guard renderingMode == \.fullColor, case \.ready\(let payload\) = entry\.state/);
 });
