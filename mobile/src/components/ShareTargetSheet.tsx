@@ -86,8 +86,13 @@ type Props = {
   onShareWhatsApp?: () => void;
   /** 4:5 — the tallest a feed post shows whole. */
   onShareInstagramPost: () => void;
-  /** 9:16 — the card inside the Story/Reel safe area, so nothing is cropped. */
+  /** 9:16 — the card inside the Story/Reel safe area, so nothing is cropped. Opens the story editor. */
   onShareInstagramStory: () => void;
+  /**
+   * The same 9:16 export through the OS sheet, where Instagram's extension offers Reel —
+   * its story hand-off cannot make one (§39.11). Absent → no row.
+   */
+  onShareInstagramReel?: () => void;
   onClose: () => void;
   /** True while a capture/share is running — every row disables. */
   busy?: boolean;
@@ -178,6 +183,7 @@ export default function ShareTargetSheet({
   onShareWhatsApp,
   onShareInstagramPost,
   onShareInstagramStory,
+  onShareInstagramReel,
   onClose,
   busy,
   series,
@@ -507,7 +513,7 @@ export default function ShareTargetSheet({
         <TargetRow
           lang={lang}
           icon="instagram"
-          title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್' })}
+          title={pick(lang, { hi: 'Instagram स्टोरी', en: 'Instagram story', gu: 'Instagram સ્ટોરી', kn: 'Instagram ಸ್ಟೋರಿ' })}
           sub={wholeCard
             ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा कार्ड', en: 'Story frame with the whole card', gu: 'સ્ટોરી ફ્રેમમાં આખું કાર્ડ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಇಡೀ ಕಾರ್ಡ್' })
             : fullVerseImage
@@ -516,10 +522,24 @@ export default function ShareTargetSheet({
           chips={wholeImage ? pageChip : [...pageChip, '9:16']}
           onPress={onShareInstagramStory}
           disabled={busy}
-          divider={!multi && !!textRow}
-          accessibilityLabel="Share as Instagram story or reel"
+          divider={onShareInstagramReel ? true : !multi && !!textRow}
+          accessibilityLabel="Share as Instagram story"
           accessibilityHint={wholeCard ? 'The whole card in a story frame. Copies the caption and hashtags, then opens Instagram' : fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens Instagram' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens Instagram'}
         />
+        {onShareInstagramReel ? (
+          <TargetRow
+            lang={lang}
+            icon="instagram"
+            title={pick(lang, { hi: 'Instagram रील', en: 'Instagram reel', gu: 'Instagram રીલ', kn: 'Instagram ರೀಲ್' })}
+            sub={pick(lang, { hi: 'वही 9:16 फ्रेम — Instagram में रील चुनें', en: 'The same 9:16 frame — pick Reel in Instagram', gu: 'એ જ 9:16 ફ્રેમ — Instagram માં રીલ પસંદ કરો', kn: 'ಅದೇ 9:16 ಚೌಕಟ್ಟು — Instagram ನಲ್ಲಿ ರೀಲ್ ಆಯ್ಕೆಮಾಡಿ' })}
+            chips={wholeImage ? pageChip : [...pageChip, '9:16']}
+            onPress={onShareInstagramReel}
+            disabled={busy}
+            divider={!multi && !!textRow}
+            accessibilityLabel="Share as Instagram reel"
+            accessibilityHint="The same 9 by 16 frame. Copies the caption and hashtags, then opens the share sheet; choose Instagram, then Reel"
+          />
+        ) : null}
         {multi ? null : textRow}
 
         {wholeCard ? (
@@ -544,10 +564,10 @@ export default function ShareTargetSheet({
 
         <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
           {pick(lang, {
-            hi: 'दोनों में कैप्शन और हैशटैग कॉपी हो जाएँगे — Instagram में पेस्ट कर दें',
-            en: 'Either way the caption + hashtags are copied — just paste in Instagram',
-            gu: 'બંનેમાં કૅપ્શન અને હૅશટૅગ કૉપી થશે — Instagram માં પેસ્ટ કરો',
-            kn: 'ಎರಡರಲ್ಲೂ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — Instagram ನಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ',
+            hi: 'Instagram के हर विकल्प में कैप्शन और हैशटैग कॉपी हो जाएँगे — Instagram में पेस्ट कर दें',
+            en: 'Every Instagram option copies the caption + hashtags — just paste in Instagram',
+            gu: 'Instagram ના દરેક વિકલ્પમાં કૅપ્શન અને હૅશટૅગ કૉપી થશે — Instagram માં પેસ્ટ કરો',
+            kn: 'ಪ್ರತಿ Instagram ಆಯ್ಕೆಯಲ್ಲೂ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — Instagram ನಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ',
           })}
         </Text>
 

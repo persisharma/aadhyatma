@@ -2,7 +2,8 @@
 #
 # Covers design.md §39.1: tapping a reader's Share button no longer opens the OS
 # share sheet directly, it opens the in-app target picker with three destinations
-# (Share / Instagram post 4:5 / Instagram story or reel 9:16), a "Send as text"
+# (Share / Instagram post 4:5 / Instagram story 9:16 / Instagram reel 9:16, §39.11),
+# a "Send as text"
 # row and card-language chips (§39.8), and a live hashtag preview built from the
 # verse (§39.2). The post/story split exists because a 4:5
 # image posted to a story or reel gets cropped top and bottom (§39.3), so both
@@ -17,7 +18,7 @@
 #
 # Selectors use the stable English a11y labels — "Share verse" on the reader
 # button, "Share to other apps" / "Share on Instagram" / "Share as Instagram
-# story or reel" / "Cancel" in the picker.
+# story" / "Share as Instagram reel" / "Cancel" in the picker.
 # The visible row titles localize to Devanagari in the default hi mode, which
 # Maestro's iOS tree cannot read. The picker's system row is deliberately NOT
 # labelled "Share verse": that would collide with the reader button underneath
@@ -58,10 +59,11 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: current-card-preview }
 - tapOn: "Card language: English"
 - scrollUntilVisible:
-    element: { text: "Share as Instagram story or reel" }
+    element: { text: "Share as Instagram story" }
     direction: DOWN
 - assertVisible: "Share on Instagram"
-- assertVisible: "Share as Instagram story or reel"
+- assertVisible: "Share as Instagram story"
+- assertVisible: "Share as Instagram reel"
 - scrollUntilVisible:
     element: { text: ".*Hashtags: .*#HanumanChalisa.*" }
     direction: DOWN

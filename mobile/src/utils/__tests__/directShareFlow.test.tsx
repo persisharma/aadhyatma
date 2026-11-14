@@ -204,10 +204,21 @@ describe('direct WhatsApp / Instagram share', () => {
   test('Instagram story falls back to the OS sheet when Instagram cannot be opened', async () => {
     mockShareToInstagram.mockImplementation(() => Promise.resolve(false));
     const tree = await open(VERSE);
-    await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
+    await act(async () => byLabel(tree, 'Share as Instagram story').props.onPress());
     await waitFor(() => mockShareAsync.mock.calls.length > 0);
     expect(mockShareToInstagram).toHaveBeenCalledWith('file:///tmp/page-1.png', 'story');
     expect(mockShareAsync).toHaveBeenCalledWith('file:///tmp/page-1.png', expect.objectContaining({ dialogTitle: 'Share to Instagram story' }));
+  });
+
+  test('Instagram reel skips the story hand-off and opens the share sheet, where Instagram offers Reel', async () => {
+    const tree = await open(VERSE);
+    await act(async () => byLabel(tree, 'Share as Instagram reel').props.onPress());
+    await waitFor(() => mockShareAsync.mock.calls.length > 0);
+    expect(mockShareToInstagram).not.toHaveBeenCalled();
+    expect(mockShareAsync).toHaveBeenCalledWith('file:///tmp/page-1.png', expect.objectContaining({ dialogTitle: 'Share as Instagram reel' }));
+    // The hashtag caption is still copied first.
+    expect(setString).toHaveBeenCalledTimes(1);
+    expect(mockRequestAsk).toHaveBeenCalledWith('verse-shared');
   });
 
   test('a series offers a WhatsApp album that sends every selected page straight to WhatsApp', async () => {

@@ -1526,3 +1526,7 @@ Proposal 08 adds the image-reference civil date/year to dated individual text sh
 The share sheet's WhatsApp and Instagram choices now open the app itself (design.md §39.11, RULEBOOK §3): Android WhatsApp row + series WhatsApp album, Instagram post/story on both platforms, with fallback to the unchanged OS sheet. Native config in `plugins/withShareTargetApps.js` (store build required). iOS keeps the OS sheet for WhatsApp — no public image API. Updated [[subsystems/share]]. Targeted Jest suites only; full suite, Maestro and device hand-offs pending.
 
 - 2026-11-13: Android widgets gain the iOS Heritage/Midnight composition (eyebrow capsule, header mark, gold rule, divided small-Panchang sunrise, large-Panchang rows). Updated [[home-widgets]]; needs a new Android binary; launcher verification pending.
+
+## [2026-11-14] update | Instagram reel row; no direct iOS Instagram post
+
+iPhone device test of #686: story landed directly in the story editor; WhatsApp kept the iOS sheet (as designed); the direct iOS post opened Instagram on a different photo and saved a copy to Photos, and the combined story/reel row lost Reel. Fix: iOS post back to the OS sheet (JS-only, OTA), `instagram` dropped from the iOS query schemes, the row split into "Instagram story" (direct) and "Instagram reel" (always the sheet, `'sheet'` hand-off). design.md §39.1/§39.11, RULEBOOK §3, [[subsystems/share]] updated.

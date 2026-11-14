@@ -258,7 +258,7 @@ test('MuhuratDayDetailScreen renders answer-first with provenance and the doshas
     await share.props.onPress();
   });
   expect(r.root.findAllByProps({ accessibilityLabel: 'Share to other apps' }).length).toBeGreaterThan(0);
-  expect(r.root.findAllByProps({ accessibilityLabel: 'Share as Instagram story or reel' }).length).toBeGreaterThan(0);
+  expect(r.root.findAllByProps({ accessibilityLabel: 'Share as Instagram story' }).length).toBeGreaterThan(0);
   expect(r.root.findAllByProps({ testID: 'share-card-brand-strip' }).length).toBeGreaterThan(0);
   act(() => r.unmount());
 });

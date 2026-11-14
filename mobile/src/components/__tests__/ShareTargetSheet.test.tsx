@@ -53,14 +53,14 @@ describe('ShareTargetSheet', () => {
     expect(tree.root.findAll(n => n.props.children === '4:5' || n.props.children === '9:16')).toHaveLength(0);
     expect(tree.root.findAll(n => n.props.children === 'Long verses use one taller image. You may need to adjust its framing in Instagram.').length).toBeGreaterThan(0);
     expect(byLabel(tree, 'Share to other apps')).toBeDefined();
-    expect(byLabel(tree, 'Share as Instagram story or reel').props.accessibilityHint).not.toContain('nothing cropped');
+    expect(byLabel(tree, 'Share as Instagram story').props.accessibilityHint).not.toContain('nothing cropped');
   });
 
   test('offers all three destinations, post and story separately', async () => {
     const tree = await renderSheet();
     expect(byLabel(tree, 'Share to other apps')).toBeDefined();
     expect(byLabel(tree, 'Share on Instagram')).toBeDefined();
-    expect(byLabel(tree, 'Share as Instagram story or reel')).toBeDefined();
+    expect(byLabel(tree, 'Share as Instagram story')).toBeDefined();
   });
 
   test('picking a destination calls the matching handler', async () => {
@@ -78,7 +78,7 @@ describe('ShareTargetSheet', () => {
     expect(onShareInstagramStory).not.toHaveBeenCalled();
     expect(onShareSystem).not.toHaveBeenCalled();
 
-    await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
+    await act(async () => byLabel(tree, 'Share as Instagram story').props.onPress());
     expect(onShareInstagramStory).toHaveBeenCalledTimes(1);
     expect(onShareInstagramPost).toHaveBeenCalledTimes(1);
 
@@ -114,7 +114,7 @@ describe('ShareTargetSheet', () => {
     const tree = await renderSheet({ busy: true });
     expect(byLabel(tree, 'Share to other apps').props.disabled).toBe(true);
     expect(byLabel(tree, 'Share on Instagram').props.disabled).toBe(true);
-    expect(byLabel(tree, 'Share as Instagram story or reel').props.disabled).toBe(true);
+    expect(byLabel(tree, 'Share as Instagram story').props.disabled).toBe(true);
   });
 
   test('WhatsApp row (§39.11): only when WhatsApp opens directly, first, localized, and disabled while busy', async () => {
@@ -144,10 +144,34 @@ describe('ShareTargetSheet', () => {
     expect(whole.root.findAll((n) => n.props.children === 'Straight to WhatsApp — the whole image and the app link').length).toBeGreaterThan(0);
   });
 
+  test('Reel row (§39.11): only when offered, after the story row, localized, busy-disabled', async () => {
+    expect(byLabel(await renderSheet(), 'Share as Instagram reel')).toBeUndefined();
+    const onShareInstagramReel = jest.fn();
+    const subs = {
+      hi: 'वही 9:16 फ्रेम — Instagram में रील चुनें',
+      en: 'The same 9:16 frame — pick Reel in Instagram',
+      gu: 'એ જ 9:16 ફ્રેમ — Instagram માં રીલ પસંદ કરો',
+      kn: 'ಅದೇ 9:16 ಚೌಕಟ್ಟು — Instagram ನಲ್ಲಿ ರೀಲ್ ಆಯ್ಕೆಮಾಡಿ',
+    } as const;
+    for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+      const tree = await renderSheet({ lang, onShareInstagramReel });
+      expect(tree.root.findAll((n) => n.props.children === subs[lang]).length).toBeGreaterThan(0);
+    }
+    const tree = await renderSheet({ onShareInstagramReel });
+    const labels = tree.root
+      .findAll((n) => typeof n.props.onPress === 'function' && typeof n.props.accessibilityLabel === 'string')
+      .map((n) => n.props.accessibilityLabel);
+    expect(labels.indexOf('Share as Instagram story')).toBeLessThan(labels.indexOf('Share as Instagram reel'));
+    expect(tree.root.findAll((n) => n.props.children === 'Instagram story').length).toBeGreaterThan(0);
+    await act(async () => byLabel(tree, 'Share as Instagram reel').props.onPress());
+    expect(onShareInstagramReel).toHaveBeenCalledTimes(1);
+    expect(byLabel(await renderSheet({ onShareInstagramReel, busy: true }), 'Share as Instagram reel').props.disabled).toBe(true);
+  });
+
   test('Instagram rows announce that they open Instagram', async () => {
     const tree = await renderSheet();
     expect(byLabel(tree, 'Share on Instagram').props.accessibilityHint).toMatch(/then opens Instagram$/);
-    expect(byLabel(tree, 'Share as Instagram story or reel').props.accessibilityHint).toMatch(/then opens Instagram$/);
+    expect(byLabel(tree, 'Share as Instagram story').props.accessibilityHint).toMatch(/then opens Instagram$/);
   });
 
   test('Send as text appears only when offered, and calls its handler', async () => {
@@ -277,10 +301,10 @@ describe('ShareTargetSheet · series (design.md §39.5)', () => {
   test('the picture layout drops the 4:5 Instagram-post row: both Instagram routes would export the same 9:16 card', async () => {
     const plain = await renderSheet();
     expect(byLabel(plain, 'Share on Instagram')).toBeDefined();
-    expect(byLabel(plain, 'Share as Instagram story or reel')).toBeDefined();
+    expect(byLabel(plain, 'Share as Instagram story')).toBeDefined();
     const picture = await renderSheet({ cardLayout: 'picture' });
     expect(byLabel(picture, 'Share on Instagram')).toBeUndefined();
-    expect(byLabel(picture, 'Share as Instagram story or reel')).toBeDefined();
+    expect(byLabel(picture, 'Share as Instagram story')).toBeDefined();
     expect(byLabel(picture, 'Share to other apps')).toBeDefined();
   });
 });
