@@ -1524,3 +1524,5 @@ Proposal 08 adds the image-reference civil date/year to dated individual text sh
 ## [2026-11-13] ingest | Direct WhatsApp / Instagram share hand-off
 
 The share sheet's WhatsApp and Instagram choices now open the app itself (design.md §39.11, RULEBOOK §3): Android WhatsApp row + series WhatsApp album, Instagram post/story on both platforms, with fallback to the unchanged OS sheet. Native config in `plugins/withShareTargetApps.js` (store build required). iOS keeps the OS sheet for WhatsApp — no public image API. Updated [[subsystems/share]]. Targeted Jest suites only; full suite, Maestro and device hand-offs pending.
+
+- 2026-11-13: Android widgets gain the iOS Heritage/Midnight composition (eyebrow capsule, header mark, gold rule, divided small-Panchang sunrise, large-Panchang rows). Updated [[home-widgets]]; needs a new Android binary; launcher verification pending.

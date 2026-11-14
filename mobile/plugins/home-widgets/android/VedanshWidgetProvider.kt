@@ -11,6 +11,7 @@ import android.net.Uri
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import org.json.JSONObject
@@ -92,6 +93,12 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // The till row exists on the Panchang layout only.
             if (surface == Surface.PANCHANG) views.setViewVisibility(__APP_PACKAGE__.R.id.widget_till, View.GONE)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
+            // Recovery is the plain card on both layouts: no rule, the mark in the
+            // footer, and the title back at its XML size after a tall render grew it.
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_rule, View.GONE)
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_brand, View.VISIBLE)
+            if (surface == Surface.VERSE) views.setViewVisibility(__APP_PACKAGE__.R.id.widget_brand_header, View.GONE)
+            views.setTextViewTextSize(__APP_PACKAGE__.R.id.widget_title, TypedValue.COMPLEX_UNIT_SP, if (surface == Surface.PANCHANG) 24f else 15f)
             // Recovery is always the plain parchment card, and it must say so: the
             // launcher keeps a previous render's art visible unless this hides it.
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_art, View.GONE)
@@ -131,17 +138,26 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
          * the root cannot clip to its rounded outline, so the plate's square corners
          * would poke past the card's — those devices keep the flat card.
          */
-        private fun applyAppearance(views: RemoteViews, surface: Surface, night: Boolean) {
+        private fun applyAppearance(views: RemoteViews, surface: Surface, night: Boolean, pill: Boolean = false) {
             val ink = Color.parseColor(if (night) "#FFF4DC" else "#511B19")
             val muted = Color.parseColor(if (night) "#E8D6B4" else "#4A3420")
             val accent = Color.parseColor(if (night) "#EBC784" else "#6B2E05")
             val gold = Color.parseColor(if (night) "#D9B66E" else "#7E5A1E")
             views.setInt(__APP_PACKAGE__.R.id.widget_root, "setBackgroundResource", if (night) __APP_PACKAGE__.R.drawable.vedansh_widget_background_night else __APP_PACKAGE__.R.drawable.vedansh_widget_background)
             views.setTextColor(__APP_PACKAGE__.R.id.widget_kicker, accent)
+            // The verse eyebrow capsule (iOS `saffronDeep.opacity(0.10)` Capsule) on the
+            // wide/large verse only; 0 clears it for Panchang, small and recovery cards,
+            // which a reapplied RemoteViews would otherwise inherit from a previous render.
+            views.setInt(__APP_PACKAGE__.R.id.widget_kicker, "setBackgroundResource",
+                if (!pill) 0 else if (night) __APP_PACKAGE__.R.drawable.vedansh_widget_pill_night else __APP_PACKAGE__.R.drawable.vedansh_widget_pill)
             views.setTextColor(__APP_PACKAGE__.R.id.widget_title, ink)
             for (id in listOf(__APP_PACKAGE__.R.id.widget_subtitle, __APP_PACKAGE__.R.id.widget_meta)) views.setTextColor(id, muted)
             if (surface == Surface.PANCHANG) views.setTextColor(__APP_PACKAGE__.R.id.widget_till, muted)
             views.setTextColor(__APP_PACKAGE__.R.id.widget_brand, gold)
+            if (surface == Surface.VERSE) views.setTextColor(__APP_PACKAGE__.R.id.widget_brand_header, gold)
+            // The gold rule: 42% on the verse, 50% under the Panchang, as on iOS.
+            val ruleAlpha = if (surface == Surface.VERSE) 0x6B else 0x80
+            views.setInt(__APP_PACKAGE__.R.id.widget_rule, "setBackgroundColor", (ruleAlpha shl 24) or (gold and 0x00FFFFFF))
         }
 
         private fun contentPadding(context: Context, views: RemoteViews, right: Int = 16) {
@@ -212,16 +228,22 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
                 val height = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, 110)
                 val views = RemoteViews(context.packageName, layoutFor(surface))
                 when (surface) {
-                    Surface.PANCHANG -> renderPanchang(context, views, root, locale, id, width)
+                    Surface.PANCHANG -> renderPanchang(context, views, root, locale, id, width, height)
                     Surface.VERSE -> renderVerse(context, views, root, locale, id, width, height)
                 } ?: return recovery(context, manager, id, surface, true)
                 val nowMs = System.currentTimeMillis()
                 val night = WidgetPayloadContract.isNight(root, nowMs)
-                applyAppearance(views, surface, night)
+                val pill = surface == Surface.VERSE && width >= 180
+                applyAppearance(views, surface, night, pill)
                 val hasArt = applyArt(context, views, root, surface, width, height, night)
                 contentPadding(context, views, if (hasArt && surface == Surface.VERSE) 16 + (width * 0.29).toInt() else 16)
-                val cameoInset = if (hasArt && surface == Surface.PANCHANG) (width * 0.24 * context.resources.displayMetrics.density).toInt() else 0
-                views.setViewPadding(__APP_PACKAGE__.R.id.widget_kicker, 0, 0, cameoInset, 0)
+                val density = context.resources.displayMetrics.density
+                if (pill) {
+                    views.setViewPadding(__APP_PACKAGE__.R.id.widget_kicker, (7 * density).toInt(), (3 * density).toInt(), (7 * density).toInt(), (3 * density).toInt())
+                } else {
+                    val cameoInset = if (hasArt && surface == Surface.PANCHANG) (width * 0.24 * density).toInt() else 0
+                    views.setViewPadding(__APP_PACKAGE__.R.id.widget_kicker, 0, 0, cameoInset, 0)
+                }
                 manager.updateAppWidget(id, views)
                 val slice = root.getJSONObject(if (surface == Surface.PANCHANG) "panchang" else "verses")
                 scheduleNextRender(context, surface, minOf(WidgetPayloadContract.nextBoundaryMs(
@@ -230,12 +252,16 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
         }
 
         /** Returns null when today's dated entry is absent, so the caller falls back to the refresh card. */
-        private fun renderPanchang(context: Context, views: RemoteViews, root: JSONObject, locale: String, id: Int, width: Int): Unit? {
+        private fun renderPanchang(context: Context, views: RemoteViews, root: JSONObject, locale: String, id: Int, width: Int, height: Int): Unit? {
             val panchang = root.getJSONObject("panchang")
             val today = WidgetPayloadContract.currentDateKey("Asia/Kolkata")
             val days = panchang.getJSONArray("days")
             val pd = (0 until days.length()).map { days.getJSONObject(it) }.firstOrNull { it.getString("dateKey") == today } ?: return null
             val compact = width < 180
+            // Same size classes as iOS: small (compact) is the glance with a divided
+            // sunrise row, wide puts Rahu Kaal on that line, tall (large) gives
+            // sunrise / Rahu Kaal / Abhijit a row each under a 32sp headline.
+            val tall = !compact && height >= 180
             val represented = pd.getJSONObject("representedDate").getString(locale)
             val city = panchang.getJSONObject("cityLabel").getString(locale)
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_kicker, if (compact) represented else "$represented · $city")
@@ -244,6 +270,8 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             // made this card disagree with the app's own Panchang glance.
             val (tithi, till) = WidgetPayloadContract.runningTithi(pd, System.currentTimeMillis())
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, tithi.getString(locale))
+            views.setTextViewTextSize(__APP_PACKAGE__.R.id.widget_title, TypedValue.COMPLEX_UNIT_SP, if (tall) 32f else 24f)
+            views.setTextViewTextSize(__APP_PACKAGE__.R.id.widget_till, TypedValue.COMPLEX_UNIT_SP, if (tall) 13f else 11f)
             // "तक 10:48" — absent only when this day's solve does not know the
             // end (the successor's belongs to tomorrow's), as in the app.
             val tillText = till?.getString(locale)
@@ -254,8 +282,15 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_subtitle, if (vrat == null) View.GONE else View.VISIBLE)
             val sunrise = pd.getJSONObject("sunrise").getString(locale)
             val rahuKaal = pd.getJSONObject("rahuKaal").getString(locale)
-            views.setTextViewText(__APP_PACKAGE__.R.id.widget_meta, if (compact) sunrise else "$sunrise · $rahuKaal")
+            val abhijit = pd.optJSONObject("abhijit")?.getString(locale)
+            views.setTextViewText(__APP_PACKAGE__.R.id.widget_meta, when {
+                compact -> sunrise
+                tall -> listOfNotNull(sunrise, rahuKaal, abhijit).joinToString("\n")
+                else -> "$sunrise · $rahuKaal"
+            })
+            views.setTextViewTextSize(__APP_PACKAGE__.R.id.widget_meta, TypedValue.COMPLEX_UNIT_SP, if (tall) 13f else 11f)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.VISIBLE)
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_rule, if (compact) View.VISIBLE else View.GONE)
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, pd.getString("deepLink"), requestCode(id, Surface.PANCHANG)))
             return Unit
         }
@@ -287,6 +322,12 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_subtitle, vd.getJSONObject("source").getString(locale))
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_subtitle, if (narrow) View.GONE else View.VISIBLE)
             views.setViewVisibility(__APP_PACKAGE__.R.id.widget_meta, View.GONE)
+            // iOS composition: wide/large carry the ॐ mark in the header beside the
+            // eyebrow capsule and a gold rule above the source; the small cell has
+            // neither rule nor source and keeps the mark in its footer.
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_brand_header, if (narrow) View.GONE else View.VISIBLE)
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_brand, if (narrow) View.VISIBLE else View.GONE)
+            views.setViewVisibility(__APP_PACKAGE__.R.id.widget_rule, if (narrow) View.GONE else View.VISIBLE)
             views.setContentDescription(__APP_PACKAGE__.R.id.widget_root, vd.getJSONObject("accessibilityLabel").getString(locale))
             views.setOnClickPendingIntent(__APP_PACKAGE__.R.id.widget_root, link(context, vd.getString("deepLink"), requestCode(id, Surface.VERSE)))
             return Unit
