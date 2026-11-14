@@ -25,11 +25,39 @@ const TEMPLATE = `class MainActivity : ReactActivity() {
 
 test('MainActivity clears the splash keep flag before the activity first draws', () => {
   const out: string = plugin.addSplashRelease(TEMPLATE);
-  const release = out.indexOf('expo.modules.splashscreen.SplashScreenManager.hide()');
+  const release = out.indexOf('SplashScreenManager.hide()');
   expect(release).toBeGreaterThan(-1);
   expect(release).toBeLessThan(out.indexOf('super.onCreate(null)'));
+  // The unqualified call must be backed by an import (see the regression test below).
+  expect(out).toContain('import expo.modules.splashscreen.SplashScreenManager');
   // Re-running prebuild on the same file must not stack a second copy.
   expect(plugin.addSplashRelease(out)).toBe(out);
+});
+
+test('does not suppress expo-splash-screen’s SplashScreenManager import', () => {
+  // Regression: expo-splash-screen's own withAndroidSplashMainActivity adds the
+  // import with a naive String.includes() dedup, then inserts an *unqualified*
+  // `SplashScreenManager.registerOnActivity(this)`. A fully-qualified call in our
+  // injected code embeds the import's substring, fools that dedup, drops the import
+  // and breaks `:app:compileReleaseKotlin`. Reproduce the pipeline and assert the
+  // import is added exactly once.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { addImports } = require('@expo/config-plugins/build/android/codeMod');
+  const raw = `package com.prashantsharma.vedansh
+
+class MainActivity : ReactActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    SplashScreenManager.registerOnActivity(this)
+    super.onCreate(null)
+  }
+}
+`;
+  const afterOurs: string = plugin.addSplashRelease(raw);
+  const afterExpo: string = addImports(afterOurs, ['expo.modules.splashscreen.SplashScreenManager'], false);
+  const imports = afterExpo.match(/^import expo\.modules\.splashscreen\.SplashScreenManager$/gm) ?? [];
+  expect(imports).toHaveLength(1);
+  expect(afterExpo).toContain('SplashScreenManager.hide()');
+  expect(afterExpo).toContain('SplashScreenManager.registerOnActivity(this)');
 });
 
 test('the launch window background is the splash ivory', () => {

@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 15,
+      "versionCode": 20,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFF1D5"
