@@ -219,13 +219,6 @@ export type ShareTarget = 'system' | 'instagram';
 export type DirectApp = 'whatsapp';
 
 /**
- * How the PNG leaves the app: a named app (`DirectApp`), or `'sheet'` to skip the direct
- * Instagram hand-off — the reel row, because Instagram's story hand-off cannot make a
- * reel and only its share-sheet extension offers Reel (§39.11).
- */
-export type ShareHandoff = DirectApp | 'sheet';
-
-/**
  * Aspect of the exported image.
  *
  * - `post`  — 1080×1350 (4:5), the tallest a feed post shows whole.
@@ -676,7 +669,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       format: ShareFormat,
       /** Alert language — the reader's, not the card's. */
       lang: Lang,
-      app?: ShareHandoff
+      app?: DirectApp
     ): Promise<boolean> => {
       if (target === 'instagram') {
         // Instagram's share intent ignores any text handed to it, so the caption
@@ -691,7 +684,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       }
 
       if (fileUri) {
-        if (target === 'instagram' && app !== 'sheet' && (await shareToInstagram(fileUri, format))) {
+        if (target === 'instagram' && (await shareToInstagram(fileUri, format))) {
           // Landed in Instagram itself (§39.11): story composer, or the feed composer /
           // Instagram's own chooser. The caption is already on the clipboard.
         } else if (target === 'instagram') {
@@ -704,14 +697,14 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               mimeType: 'image/png',
               UTI: 'public.png',
               dialogTitle:
-                format === 'story' ? (app === 'sheet' ? 'Share as Instagram reel' : 'Share to Instagram story') : 'Share on Instagram',
+                format === 'story' ? 'Share to Instagram story' : 'Share on Instagram',
             });
           } else {
             await Share.share(
               { message: caption },
               {
                 dialogTitle:
-                  format === 'story' ? (app === 'sheet' ? 'Share as Instagram reel' : 'Share to Instagram story') : 'Share on Instagram',
+                  format === 'story' ? 'Share to Instagram story' : 'Share on Instagram',
               }
             );
           }
@@ -764,7 +757,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
       format: ShareFormat,
       uiLang: Lang = lang,
       devotionalCard?: ProseCardSpec,
-      app?: ShareHandoff
+      app?: DirectApp
     ) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
@@ -875,7 +868,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   );
 
   const runProsePage = useCallback(
-    async (target: ShareTarget, format: ShareFormat, app?: ShareHandoff) => {
+    async (target: ShareTarget, format: ShareFormat, app?: DirectApp) => {
       if (!prose || !activeScope || inFlightRef.current) return;
       const { content, lang, uiLang, highlighted } = prose;
       const scope = activeScope;
@@ -920,7 +913,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   );
 
   const runSeries = useCallback(
-    async (target: ShareTarget, app?: ShareHandoff) => {
+    async (target: ShareTarget, app?: DirectApp) => {
       if (!prose || !activeScope || inFlightRef.current) return;
       const state = prose;
       const scope = activeScope;
@@ -1034,7 +1027,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const runCard = useCallback(
-    async (target: ShareTarget, format: ShareFormat, app?: ShareHandoff) => {
+    async (target: ShareTarget, format: ShareFormat, app?: DirectApp) => {
       if (!cardChooser || inFlightRef.current) return;
       const { content, lang: uiLang, cardLang } = cardChooser;
       setCardChooser(null);
@@ -1158,7 +1151,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
   }, [chooser, cardChooser, prose, activeScope, timely]);
 
   const pickTarget = useCallback(
-    (target: ShareTarget, format: ShareFormat, app?: ShareHandoff) => {
+    (target: ShareTarget, format: ShareFormat, app?: DirectApp) => {
       if (!chooser || inFlightRef.current) return;
       const { verse, lang, cardLang, opts } = chooser;
       const devotionalCard = chooser.style === 'daily-bhakti' && devotionalChoice && devotionalScope
@@ -1288,7 +1281,6 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           onShareWhatsApp={whatsAppDirect ? () => void runCard('system', 'post', 'whatsapp') : undefined}
           onShareInstagramPost={() => void runCard('instagram', 'post')}
           onShareInstagramStory={() => void runCard('instagram', 'story')}
-          onShareInstagramReel={() => void runCard('instagram', 'story', 'sheet')}
           onShareText={cardChooser.content.text || cardChooser.content.onShareText ? runCardText : undefined}
           textTitle={cardChooser.content.textRow?.title}
           textSub={cardChooser.content.textRow?.sub}
@@ -1315,7 +1307,6 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           onShareWhatsApp={whatsAppDirect ? () => pickTarget('system', 'post', 'whatsapp') : undefined}
           onShareInstagramPost={() => pickTarget('instagram', 'post')}
           onShareInstagramStory={() => pickTarget('instagram', 'story')}
-          onShareInstagramReel={() => pickTarget('instagram', 'story', 'sheet')}
           onShareText={pickText}
           cardLang={chooser.cardLang}
           onCardLang={(next) => setChooser((c) => (c ? { ...c, cardLang: next } : c))}
@@ -1349,7 +1340,6 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
           onShareWhatsApp={whatsAppDirect ? () => void runProsePage('system', 'post', 'whatsapp') : undefined}
           onShareInstagramPost={() => void runProsePage('instagram', 'post')}
           onShareInstagramStory={() => void runProsePage('instagram', 'story')}
-          onShareInstagramReel={() => void runProsePage('instagram', 'story', 'sheet')}
           onShareText={runProseText}
           cardLang={prose.lang}
           onCardLang={setProseCardLang}
