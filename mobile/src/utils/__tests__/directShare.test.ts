@@ -31,10 +31,6 @@ jest.mock('react-native-share', () => {
   };
 });
 
-const mockBase64 = jest.fn(() => Promise.resolve('UE5H'));
-jest.mock('expo-file-system', () => ({
-  File: jest.fn().mockImplementation(() => ({ base64: mockBase64 })),
-}));
 
 const osDescriptor = Object.getOwnPropertyDescriptor(Platform, 'OS')!;
 function onPlatform(os: 'ios' | 'android') {
@@ -51,7 +47,6 @@ describe('directShare', () => {
     canOpen.mockResolvedValue(true);
     mockShareSingle.mockClear();
     mockShareSingle.mockImplementation(() => Promise.resolve({ success: true }));
-    mockBase64.mockClear();
     mockInstalled = {};
     mockRequired = 0;
   });
@@ -130,14 +125,21 @@ describe('directShare', () => {
     mockInstalled = { 'com.instagram.android': true };
     expect(await shareToInstagram('file:///post.png', 'post')).toBe(true);
     expect(mockShareSingle).toHaveBeenCalledWith({ social: 'instagram', url: 'file:///post.png', type: 'image/png' });
-    expect(mockBase64).not.toHaveBeenCalled();
   });
 
-  test('iOS Instagram post sends a data URL (the only form iOS routes to the Photos + library path)', async () => {
+  test('iOS Instagram post is never direct: the Photos + instagram://library route opened the wrong photo on device', async () => {
     onPlatform('ios');
-    expect(await shareToInstagram('file:///post.png', 'post')).toBe(true);
-    expect(canOpen).toHaveBeenCalledWith('instagram://app');
-    expect(mockShareSingle).toHaveBeenCalledWith({ social: 'instagram', url: 'data:image/png;base64,UE5H', type: 'image/png' });
+    expect(await isInstagramDirectAvailable('post')).toBe(false);
+    expect(await shareToInstagram('file:///post.png', 'post')).toBe(false);
+    expect(mockShareSingle).not.toHaveBeenCalled();
+    expect(canOpen).not.toHaveBeenCalled();
+  });
+
+  test('iOS Instagram story lands in the story editor', async () => {
+    onPlatform('ios');
+    expect(await shareToInstagram('file:///story.png', 'story')).toBe(true);
+    expect(canOpen).toHaveBeenCalledWith('instagram-stories://share');
+    expect(mockShareSingle.mock.calls[0][0]).toMatchObject({ social: 'instagramstories', backgroundImage: 'file:///story.png', appId: INSTAGRAM_SOURCE_APP_ID });
   });
 
   test('iOS probes the story scheme, and an unlisted/absent scheme keeps the OS sheet', async () => {
@@ -178,11 +180,11 @@ describe('withShareTargetApps config plugin', () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const plugin = require('../../../plugins/withShareTargetApps');
 
-  test('iOS: adds the Instagram probe schemes and keeps existing ones', () => {
-    const plist = plugin.addQuerySchemes({ LSApplicationQueriesSchemes: ['fbapi', 'instagram'], CFBundleName: 'Vedansh' });
-    expect(plist.LSApplicationQueriesSchemes).toEqual(['fbapi', 'instagram', 'instagram-stories']);
+  test('iOS: adds the Instagram story probe scheme once and keeps existing ones', () => {
+    const plist = plugin.addQuerySchemes({ LSApplicationQueriesSchemes: ['fbapi', 'instagram-stories'], CFBundleName: 'Vedansh' });
+    expect(plist.LSApplicationQueriesSchemes).toEqual(['fbapi', 'instagram-stories']);
     expect(plist.CFBundleName).toBe('Vedansh');
-    expect(plugin.addQuerySchemes({}).LSApplicationQueriesSchemes).toEqual(['instagram', 'instagram-stories']);
+    expect(plugin.addQuerySchemes({}).LSApplicationQueriesSchemes).toEqual(['instagram-stories']);
   });
 
   test('Android: names WhatsApp, WhatsApp Business and Instagram once, keeping existing queries', () => {

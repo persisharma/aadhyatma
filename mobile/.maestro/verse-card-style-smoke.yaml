@@ -21,10 +21,10 @@ appId: com.prashantsharma.vedansh
     visible: { id: devotional-preview-ready }
     timeout: 20000
 - scrollUntilVisible:
-    element: { text: Share as Instagram story or reel }
+    element: { text: Share as Instagram story }
     direction: DOWN
 - assertVisible: Share on Instagram
-- assertVisible: Share as Instagram story or reel
+- assertVisible: Share as Instagram story
 - scrollUntilVisible:
     element: { text: Send as text }
     direction: DOWN

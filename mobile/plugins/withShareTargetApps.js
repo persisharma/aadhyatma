@@ -5,8 +5,8 @@ const { withAndroidManifest, withInfoPlist } = require('@expo/config-plugins');
  * `src/utils/directShare.ts`).
  *
  * - iOS: `Linking.canOpenURL` answers only for schemes listed in
- *   `LSApplicationQueriesSchemes`; the Instagram post/story hand-offs probe
- *   `instagram://` and `instagram-stories://` before opening them.
+ *   `LSApplicationQueriesSchemes`; the Instagram story hand-off probes
+ *   `instagram-stories://` before opening it (iOS post keeps the OS sheet).
  * - Android 11+: package visibility hides other apps unless the manifest names them
  *   in `<queries>`; react-native-share's installed check would otherwise always say
  *   "not installed" and the rows would keep the OS share list.
@@ -14,7 +14,7 @@ const { withAndroidManifest, withInfoPlist } = require('@expo/config-plugins');
  * Native: takes effect only in a new store build. On an older binary every probe is
  * false and the share sheet keeps the OS share list (the unchanged path).
  */
-const IOS_QUERY_SCHEMES = ['instagram', 'instagram-stories'];
+const IOS_QUERY_SCHEMES = ['instagram-stories'];
 const ANDROID_QUERY_PACKAGES = ['com.whatsapp', 'com.whatsapp.w4b', 'com.instagram.android'];
 
 /** Merge the schemes into an Info.plist object without dropping existing entries. */

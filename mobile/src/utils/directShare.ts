@@ -17,10 +17,13 @@ import { loadRNShare } from '@/utils/multiShare';
  *   the caption; Instagram post opens Instagram's own Feed/Chats/Story chooser; Instagram
  *   story opens the story composer. Needs the manifest `<queries>` entries — without
  *   them Android hides the packages and every probe says "not installed".
- * - iOS: Instagram story uses the pasteboard + `instagram-stories://` hand-off; Instagram
- *   post saves the card to Photos (the OS asks for Photos access once) and opens the
- *   feed composer on it. Needs `LSApplicationQueriesSchemes`. WhatsApp has no public iOS
- *   API that takes an image straight into a chat, so iOS keeps the OS sheet for it.
+ * - iOS: Instagram story uses the pasteboard + `instagram-stories://` hand-off (needs
+ *   `instagram-stories` in `LSApplicationQueriesSchemes`). Instagram post is NOT direct:
+ *   the save-to-Photos + `instagram://library?LocalIdentifier=` route (undocumented by
+ *   Meta) opened Instagram on a different photo whenever Instagram could not see the new
+ *   asset (Nov 2026 device test), and left a copy in Photos. iOS post therefore keeps the
+ *   OS sheet, where Instagram's own extension shows the right card. WhatsApp has no
+ *   public iOS API that takes an image straight into a chat, so iOS keeps the sheet too.
  */
 
 /**
@@ -33,14 +36,12 @@ export const INSTAGRAM_SOURCE_APP_ID = '1128589089734962';
 export const WHATSAPP_PACKAGE = 'com.whatsapp';
 export const WHATSAPP_BUSINESS_PACKAGE = 'com.whatsapp.w4b';
 export const INSTAGRAM_PACKAGE = 'com.instagram.android';
-/** iOS probe URLs; their schemes must be in `LSApplicationQueriesSchemes`. */
-export const INSTAGRAM_FEED_PROBE = 'instagram://app';
+/** iOS probe URL; its scheme must be in `LSApplicationQueriesSchemes`. */
 export const INSTAGRAM_STORIES_PROBE = 'instagram-stories://share';
 
 /**
- * The iOS post path waits on a Photos prompt and a Photos write. react-native-share
- * never settles one of its branches, so a hand-off still pending after this long
- * releases the share lock instead of blocking every later share in the session.
+ * A hand-off still pending after this long releases the share lock instead of blocking
+ * every later share in the session (a native call that never settles).
  */
 export const DIRECT_SHARE_SETTLE_MS = 90_000;
 
@@ -111,29 +112,15 @@ export async function shareToWhatsApp(urls: readonly string[], message: string):
   return settle(share({ social, urls: [...urls], type: 'image/png', message, failOnCancel: false }));
 }
 
-/** True when this binary can open Instagram itself for `format`. */
+/** True when this binary can open Instagram itself for `format` (never an iOS post). */
 export async function isInstagramDirectAvailable(format: InstagramFormat): Promise<boolean> {
   if (!rnShare()?.shareSingle) return false;
   if (Platform.OS === 'android') return packageVisible(INSTAGRAM_PACKAGE);
-  if (Platform.OS === 'ios') return schemeOpens(format === 'story' ? INSTAGRAM_STORIES_PROBE : INSTAGRAM_FEED_PROBE);
+  if (Platform.OS === 'ios') return format === 'story' && schemeOpens(INSTAGRAM_STORIES_PROBE);
   return false;
 }
 
-/**
- * iOS routes only a `data:image` URL to its save-to-Photos + `instagram://library` path
- * (RNShare.mm `isImageMimeType`); a file URL would be read as a Photos identifier.
- */
-async function pngDataUri(fileUri: string): Promise<string | null> {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { File } = require('expo-file-system') as typeof import('expo-file-system');
-    return `data:image/png;base64,${await new File(fileUri).base64()}`;
-  } catch {
-    return null;
-  }
-}
-
-/** The PNG straight into Instagram (feed composer / story composer). `false` → OS sheet. */
+/** The PNG straight into Instagram (story composer; Android feed chooser). `false` → OS sheet. */
 export async function shareToInstagram(fileUri: string, format: InstagramFormat): Promise<boolean> {
   if (!(await isInstagramDirectAvailable(format))) return false;
   const mod = rnShare();
@@ -150,7 +137,5 @@ export async function shareToInstagram(fileUri: string, format: InstagramFormat)
       backgroundBottomColor: paper,
     }));
   }
-  const url = Platform.OS === 'ios' ? await pngDataUri(fileUri) : fileUri;
-  if (!url) return false;
-  return settle(share({ social: mod.Social?.INSTAGRAM ?? 'instagram', url, type: 'image/png' }));
+  return settle(share({ social: mod.Social?.INSTAGRAM ?? 'instagram', url: fileUri, type: 'image/png' }));
 }

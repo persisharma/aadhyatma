@@ -194,7 +194,7 @@ describe('share target flow', () => {
   test('a tall story export preserves the whole card and the story frame', async () => {
     mockMeasuredHeight = 1800;
     const tree = await openPicker();
-    await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
+    await act(async () => byLabel(tree, 'Share as Instagram story').props.onPress());
     await waitForCapture();
     expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 4170 / PixelRatio.get() });
   });
@@ -262,7 +262,7 @@ describe('share target flow', () => {
       mockCaptureRef.mockClear();
       const story = await openPicker();
       await act(async () =>
-        byLabel(story, 'Share as Instagram story or reel').props.onPress()
+        byLabel(story, 'Share as Instagram story').props.onPress()
       );
       await settle();
       // A 4:5 export here is the bug: Instagram fills the 9:16 frame from it and
@@ -295,7 +295,7 @@ describe('share target flow', () => {
 
     const story = await openPicker();
     await act(async () =>
-      byLabel(story, 'Share as Instagram story or reel').props.onPress()
+      byLabel(story, 'Share as Instagram story').props.onPress()
     );
     expect(story.root.findAllByType('ShareStoryCanvas' as never).length).toBe(1);
     expect(story.root.findAllByType('ShareCard' as never).length).toBe(0);
