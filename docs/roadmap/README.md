@@ -8,6 +8,11 @@ This folder holds the product roadmap and PRDs for upcoming releases.
 
 ## Next
 
+- [**सनातन परिचय — Draft feature scope**](./prds/sanatan-parichay-draft.md) — **draft for scope review (2026-11-02).**
+  Illustrated learning about deities, ten Dikpal, 33 devata, sacred symbols and worship objects.
+  First release: two complete deity collections, twelve symbol introductions and six foundational lessons;
+  links to existing deity/Navgraha content, with later scripture, calendar and temple learning.
+
 - [**PRD-46 — पहली बार · First-launch asks**](./prds/46-first-launch-asks.md) — **plan for review (2026-10-30).**
   Language → city → reminders on the first open, one ask per screen with its reason; widgets on a later
   day; our own reminder re-ask until yes (the OS prompt itself cannot repeat). Prototype:
