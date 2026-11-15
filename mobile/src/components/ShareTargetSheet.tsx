@@ -55,8 +55,6 @@ export type ShareSeriesProps = {
   /** False on a binary that predates the multi-image module — rows show, disabled. */
   multiShareAvailable: boolean;
   onShareAll: () => void;
-  /** Every selected page straight into WhatsApp (§39.11). Absent → no row. */
-  onShareAllWhatsApp?: () => void;
   onInstagramCarousel: () => void;
   view: ShareSeriesView;
   onView: (view: ShareSeriesView) => void;
@@ -79,20 +77,10 @@ type Props = {
   /** The hashtag line exactly as it will be pasted (`#A #B …`). */
   hashtagPreview: string;
   onShareSystem: () => void;
-  /**
-   * Opens WhatsApp itself rather than the OS list (§39.11). The provider passes it only
-   * when WhatsApp can be opened directly (Android); absent → no row, as before.
-   */
-  onShareWhatsApp?: () => void;
   /** 4:5 — the tallest a feed post shows whole. */
   onShareInstagramPost: () => void;
-  /** 9:16 — the card inside the Story/Reel safe area, so nothing is cropped. Opens the story editor. */
+  /** 9:16 — the card inside the Story/Reel safe area, so nothing is cropped. */
   onShareInstagramStory: () => void;
-  /**
-   * The same 9:16 export through the OS sheet, where Instagram's extension offers Reel —
-   * its story hand-off cannot make one (§39.11). Absent → no row.
-   */
-  onShareInstagramReel?: () => void;
   onClose: () => void;
   /** True while a capture/share is running — every row disables. */
   busy?: boolean;
@@ -180,10 +168,8 @@ export default function ShareTargetSheet({
   title,
   hashtagPreview,
   onShareSystem,
-  onShareWhatsApp,
   onShareInstagramPost,
   onShareInstagramStory,
-  onShareInstagramReel,
   onClose,
   busy,
   series,
@@ -426,20 +412,6 @@ export default function ShareTargetSheet({
             <Text style={eyebrow}>
               {pick(lang, { hi: `सभी चुने पृष्ठ · ${selectedCount}`, en: `ALL SELECTED PAGES · ${selectedCount}`, gu: `બધાં પસંદ પૃષ્ઠ · ${selectedCount}`, kn: `ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು · ${selectedCount}` })}
             </Text>
-            {multi.onShareAllWhatsApp ? (
-              <TargetRow
-                lang={lang}
-                icon="whatsapp"
-                title={pick(lang, { hi: 'WhatsApp एल्बम', en: 'WhatsApp album', gu: 'WhatsApp આલ્બમ', kn: 'WhatsApp ಆಲ್ಬಮ್' })}
-                sub={pick(lang, { hi: 'सभी चुने पृष्ठ सीधे WhatsApp में', en: 'Every selected page, straight to WhatsApp', gu: 'બધાં પસંદ પૃષ્ઠ સીધાં WhatsApp માં', kn: 'ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು ನೇರವಾಗಿ WhatsApp ಗೆ' })}
-                chips={[String(selectedCount)]}
-                hotChip
-                onPress={multi.onShareAllWhatsApp}
-                disabled={allDisabled}
-                accessibilityLabel="Share all pages on WhatsApp"
-                accessibilityHint="Renders every selected page, then opens WhatsApp with them and the app link"
-              />
-            ) : null}
             <TargetRow
               lang={lang}
               icon="share"
@@ -471,20 +443,6 @@ export default function ShareTargetSheet({
           </>
         ) : null}
 
-        {onShareWhatsApp && !multi ? (
-          <TargetRow
-            lang={lang}
-            icon="whatsapp"
-            title="WhatsApp"
-            sub={wholeImage
-              ? pick(lang, { hi: 'सीधे WhatsApp में — पूरा चित्र और ऐप का लिंक', en: 'Straight to WhatsApp — the whole image and the app link', gu: 'સીધું WhatsApp માં — આખું ચિત્ર અને ઍપની લિંક', kn: 'ನೇರವಾಗಿ WhatsApp ಗೆ — ಇಡೀ ಚಿತ್ರ ಮತ್ತು ಆ್ಯಪ್ ಲಿಂಕ್' })
-              : pick(lang, { hi: 'सीधे WhatsApp में — कार्ड और ऐप का लिंक', en: 'Straight to WhatsApp — the card and the app link', gu: 'સીધું WhatsApp માં — કાર્ડ અને ઍપની લિંક', kn: 'ನೇರವಾಗಿ WhatsApp ಗೆ — ಕಾರ್ಡ್ ಮತ್ತು ಆ್ಯಪ್ ಲಿಂಕ್' })}
-            onPress={onShareWhatsApp}
-            disabled={busy}
-            accessibilityLabel="Share on WhatsApp"
-            accessibilityHint="Opens WhatsApp with the image and the app link"
-          />
-        ) : null}
         <TargetRow
           lang={lang}
           icon="share"
@@ -507,13 +465,13 @@ export default function ShareTargetSheet({
             onPress={onShareInstagramPost}
             disabled={busy}
             accessibilityLabel="Share on Instagram"
-            accessibilityHint={wholeCard ? 'The whole card in a 4 by 5 frame. Copies the caption and hashtags, then opens Instagram' : fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens Instagram' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens Instagram'}
+            accessibilityHint={wholeCard ? 'The whole card in a 4 by 5 frame. Copies the caption and hashtags, then opens the share sheet' : fullVerseImage ? 'Complete verse image. Copies the caption and hashtags, then opens the share sheet' : 'Instagram post, 4 by 5. Copies the caption and hashtags, then opens the share sheet'}
           />
         )}
         <TargetRow
           lang={lang}
           icon="instagram"
-          title={pick(lang, { hi: 'Instagram स्टोरी', en: 'Instagram story', gu: 'Instagram સ્ટોરી', kn: 'Instagram ಸ್ಟೋರಿ' })}
+          title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್' })}
           sub={wholeCard
             ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा कार्ड', en: 'Story frame with the whole card', gu: 'સ્ટોરી ફ્રેમમાં આખું કાર્ડ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಇಡೀ ಕಾರ್ಡ್' })
             : fullVerseImage
@@ -522,24 +480,10 @@ export default function ShareTargetSheet({
           chips={wholeImage ? pageChip : [...pageChip, '9:16']}
           onPress={onShareInstagramStory}
           disabled={busy}
-          divider={onShareInstagramReel ? true : !multi && !!textRow}
-          accessibilityLabel="Share as Instagram story"
-          accessibilityHint={wholeCard ? 'The whole card in a story frame. Copies the caption and hashtags, then opens Instagram' : fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens Instagram' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens Instagram'}
+          divider={!multi && !!textRow}
+          accessibilityLabel="Share as Instagram story or reel"
+          accessibilityHint={wholeCard ? 'The whole card in a story frame. Copies the caption and hashtags, then opens the share sheet' : fullVerseImage ? 'Complete verse image in a story frame. Copies the caption and hashtags, then opens the share sheet' : 'Full screen 9 by 16, nothing cropped. Copies the caption and hashtags, then opens the share sheet'}
         />
-        {onShareInstagramReel ? (
-          <TargetRow
-            lang={lang}
-            icon="instagram"
-            title={pick(lang, { hi: 'Instagram रील', en: 'Instagram reel', gu: 'Instagram રીલ', kn: 'Instagram ರೀಲ್' })}
-            sub={pick(lang, { hi: 'वही 9:16 फ्रेम — Instagram में रील चुनें', en: 'The same 9:16 frame — pick Reel in Instagram', gu: 'એ જ 9:16 ફ્રેમ — Instagram માં રીલ પસંદ કરો', kn: 'ಅದೇ 9:16 ಚೌಕಟ್ಟು — Instagram ನಲ್ಲಿ ರೀಲ್ ಆಯ್ಕೆಮಾಡಿ' })}
-            chips={wholeImage ? pageChip : [...pageChip, '9:16']}
-            onPress={onShareInstagramReel}
-            disabled={busy}
-            divider={!multi && !!textRow}
-            accessibilityLabel="Share as Instagram reel"
-            accessibilityHint="The same 9 by 16 frame. Copies the caption and hashtags, then opens the share sheet; choose Instagram, then Reel"
-          />
-        ) : null}
         {multi ? null : textRow}
 
         {wholeCard ? (
@@ -564,10 +508,10 @@ export default function ShareTargetSheet({
 
         <Text style={[subLabel, styles.copyNote, { color: colors.inkMuted }]}>
           {pick(lang, {
-            hi: 'Instagram के हर विकल्प में कैप्शन और हैशटैग कॉपी हो जाएँगे — Instagram में पेस्ट कर दें',
-            en: 'Every Instagram option copies the caption + hashtags — just paste in Instagram',
-            gu: 'Instagram ના દરેક વિકલ્પમાં કૅપ્શન અને હૅશટૅગ કૉપી થશે — Instagram માં પેસ્ટ કરો',
-            kn: 'ಪ್ರತಿ Instagram ಆಯ್ಕೆಯಲ್ಲೂ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — Instagram ನಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ',
+            hi: 'दोनों में कैप्शन और हैशटैग कॉपी हो जाएँगे — Instagram में पेस्ट कर दें',
+            en: 'Either way the caption + hashtags are copied — just paste in Instagram',
+            gu: 'બંનેમાં કૅપ્શન અને હૅશટૅગ કૉપી થશે — Instagram માં પેસ્ટ કરો',
+            kn: 'ಎರಡರಲ್ಲೂ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — Instagram ನಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ',
           })}
         </Text>
 
