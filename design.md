@@ -33,6 +33,11 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `iconInk` | `#6F3F1D` | Shared brown utility icon and inactive navigation tint |
 | `iconAccent` | `#AD571F` | Active navigation, saved controls and wordmark accent |
 | `gold` | `#A67C34` | Secondary accent, crest, section tags |
+| `darshan-from` | `#A65217` | Selected Option C floating pill gradient start |
+| `darshan-to` | `#7D350C` | Floating pill gradient end |
+| `darshan-border` | `#D9AB68` | Floating pill gold outline |
+| `darshan-ink` | `#FFF2D7` | Floating pill cream label |
+| `darshan-bead` | `#F1CC8C` | Decorative gold bead; carries no availability status |
 | `divider` | `rgba(138, 62, 11, 0.18)` | Borders, card outlines |
 | `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill — saffron tint (recently-added content) |
 | `newBadgeText` | `#8A3E0B` | "NEW" badge text — saffron-deep |
@@ -4559,3 +4564,65 @@ The devotional export reports settled geometry before artwork readiness, allowin
 **Interaction.** Exactly one sound source at a time through `audio/playbackArbiter.ts` (`'youtube'` kind): the player claims the session on mount, on the strip's play, on Retry, **and when the embed reports PLAYING after a pause** — a resume from YouTube's own ▶ must silence the bhajan / read-aloud that paused it (Nov 2026 fix; iOS mixes sessions, so a missed claim plays both). Another source claiming pauses the video (never unmounts it). Backgrounding, screen lock and leaving the reader (blur) pause it; it never auto-resumes. The ↗ hand-off opens the same video on YouTube — the one sanctioned non-store external link besides Daan/Rate/Instagram/mailto (RULEBOOK §11.16). The player may say it needs an internet connection (RULEBOOK §3 streaming exception).
 
 **Files.** `mobile/src/components/video/DockedYouTubePlayer.tsx`, `mobile/src/components/video/__tests__/DockedYouTubePlayer.test.tsx`, `mobile/src/audio/playbackArbiter.ts`, `mobile/src/data/video/videoMappings.ts`.
+
+
+## 92. Temple Darshan — Home floating door (14 November 2026)
+
+**Purpose:** the selected Option C adds a labelled floating दर्शन / Darshan pill
+on Home only. The existing five-tab navigation and sixteen launcher tiles remain.
+The pill isolates the changing audio subscription in a small leaf component, so playback ticks do not redraw Home. It uses the bundled painted Theerth icon, saffron-gradient background, gold
+border, 52pt minimum target, right inset18 and bottom16; with a current recorded
+track it rises to100pt to clear the app's audio mini-player. Home's trailing scroll
+space clears both overlays. No animated pulse, WebView, lookup or storage read is
+introduced on Home startup.
+
+**Selected floating-icon finish (15 November):** retain the approved Option C
+painted temple + label + decorative gold bead. The pill uses the `darshanFrom` →
+`darshanTo` diagonal gradient, `darshanBorder` outline, `darshanInk` label and
+shared `elevation.lifted` warm shadow on both platforms. The 32pt painted icon
+keeps its registry/decode contract. Padding is left10/right16/vertical9, gap7,
+radius30, z-index5; the text wraps and grows with Standard/Large and system text.
+The bead never indicates whether a broadcast is live. The button has one authored
+accessibility label in each app language; its artwork/bead are decorative.
+
+**Journey:** Home → native transparent-modal quick sheet (two favourite-first
+temples, close/backdrop/Android Back, View all) → DarshanList or DarshanPlayer.
+The quick sheet replaces itself when a destination is chosen so Back returns Home.
+The list searches actual temple names/cities in the selected script and supports
+favourites. Its player pushes a real TheerthDetail or the deity's existing readers
+within Home's stack, so Back retraces the journey. All three routes use literal
+on-demand loaders, outside background prefetch. Sheet content scrolls within85%
+height. Screen body gutters22, maximum width680, natural wrapping, script-safe
+fonts, shared Standard/Large factor and system text growth; source-language labels
+and full names remain visible. ReaderHeader/TextField/LanguageToggle are shared.
+
+**Availability contract:** the roster contains nine audited channel entries covering ten temple guides, with Mallikarjuna/Bhramaramba sharing Srisaila TV.
+Somnath and Kashi resolve their single current iframe video from dedicated official
+live pages after a user opens the player; all other channels offer their exact
+YouTube /live hand-off until reliable current-video discovery is available. Do not
+bundle dated broadcast IDs, infer current liveness from an embedding permission,
+or show live-now counts/badges or invented reminder times. A public official
+live page can still retain a recording; the UI says broadcast, never confirmed live.
+The lookup is cancellable with a12s timeout and fails closed on ambiguous/malformed
+embeds, off-domain redirects or source failure. YouTube's own errors get Retry and
+same-video hand-off. SVBC/Srisaila are labelled devotional TV. An external channel
+is explicitly labelled as such in the list, never disguised as an in-app stream.
+
+**Playback:** reuse DockedYouTubePlayer and its existing native WebView dependency,
+IFrame controls, arbiter and no-background/no-auto-resume rules. Broadcast mode has
+no meaningless0:00/0:00 counter or progress polling; source language is not invented.
+Lookup/background/blur cancels and unmounts the broadcast; returning requires a
+Watch tap. Reader verified recitations keep their existing mapping and cue rules.
+Favourites hydrate on first Darshan use only, disable edits until ready, validate
+IDs, serialize writes and expose read/write failure with retry.
+
+**Files:** `mobile/src/screens/Darshan{Quick,List,Player}Screen.tsx`,
+`mobile/src/components/darshan/DarshanFloatingButton.tsx`,
+`mobile/src/components/darshan/DarshanUI.tsx`,
+`mobile/src/data/darshan/channels.ts`, `mobile/src/video/darshan{Source,Favorites}.ts`.
+Native playback, visual fidelity in four scripts/Standard/Large/compact/system text,
+VoiceOver/TalkBack, interruptions and device performance remain required pending
+acceptance; passing mocked screen tests is not native proof.
+
+### Darshan link recovery — 15 November 2026
+Embed Retry re-resolves the official live page and may replace the video ID. The canonical channel-ID `/live` URL survives channel-handle changes. A labelled temple-website fallback opens the trusted publisher root if YouTube fails; external launch failures remain visible and retryable. YouTube-owned fullscreen/seek/volume/quality controls still require actual device verification.

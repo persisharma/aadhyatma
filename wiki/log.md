@@ -1534,3 +1534,9 @@ iPhone device test of #686: story landed directly in the story editor; WhatsApp 
 ## [2026-11-14] revert | Direct WhatsApp / Instagram hand-off reverted (#686, #688)
 
 Product decision after device testing: the share sheet did not meet expectations, so both #686 and #688 are reverted and the original share behaviour is back — one Share row (OS sheet, "WhatsApp, Messages, anywhere"), Instagram post and Instagram story / reel rows through the OS sheet (expo-sharing), no WhatsApp rows, no `directShare.ts`, no `withShareTargetApps` plugin. design.md §39, RULEBOOK §3 and [[subsystems/share]] are back to their pre-#686 text. The two entries above stay as history. Device findings worth keeping if this is retried: iPhone Instagram story via `instagram-stories://` landed in the story editor; the iOS `instagram://library?LocalIdentifier=` post route opened the wrong photo and saved a copy to Photos; WhatsApp has no iOS image API.
+
+## [2026-11-14] ingest | Floating Darshan journey, official live-page discovery, channel fallback and playback/favourites invariants → integrations/live-darshan. Native acceptance pending.
+
+## [2026-11-15] update | Selected Darshan floating icon
+
+Restored the feature onto current main without undoing the share-hand-off revert. Matched Option C’s painted temple, saffron gradient, gold border/bead and warm shadow, retaining audio clearance and four-language accessible labels. Native acceptance remains pending; see [[integrations/live-darshan]].

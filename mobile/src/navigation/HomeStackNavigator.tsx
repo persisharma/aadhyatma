@@ -114,6 +114,18 @@ export default function HomeStackNavigator() {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="DarshanQuick" getComponent={() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('@/screens/DarshanQuickScreen').default;
+      }} options={{ presentation: 'transparentModal', animation: 'slide_from_bottom', contentStyle: { backgroundColor: 'transparent' } }} />
+      <Stack.Screen name="DarshanList" getComponent={() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('@/screens/DarshanListScreen').default;
+      }} />
+      <Stack.Screen name="DarshanPlayer" getComponent={() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('@/screens/DarshanPlayerScreen').default;
+      }} />
       <Stack.Screen name="SanatanParichay" component={SanatanParichayScreen} />
       <Stack.Screen name="SanatanReader" component={SanatanReaderScreen} />
       <Stack.Screen name="Suvichar" component={SuvicharScreen} />
