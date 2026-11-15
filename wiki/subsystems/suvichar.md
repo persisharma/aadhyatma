@@ -66,3 +66,11 @@ Validation: five focused Node integration tests execute the production pool, con
 ## Parshuram preparation (6 November 2026)
 
 Eight original reflections VD-0085–VD-0092 and three separate standing masters are prepared. Family `parshuram` intentionally has no borrowed Vishnu scripture pool. Its own originals precede universal originals. Runtime activation is gated on all six public artwork objects through `parshuramPublication.json`; PR #628 supplies the verified publication record and runtime manifests. Parshuram excludes the general doha pool, while universal original reflections remain eligible. Native/export verification remains pending. `docs/content-parity/parshuram/README.md` records the publication command and evidence boundaries.
+
+## Front-facing Ram Lalla (11 November 2026)
+
+The merged #663 still contained the original PMO photograph after the user requested generated artwork, removal of Ayodhya, and a front-facing composition. The final 8 November generated card is now preserved under `assets/suvichar/portraits/`, with lossless/delivery hashes and original request history. `suvicharPhotoArt.ts` retains its API name but resolves generated artwork through `suvicharPortraitManifest.json`. The new `suvichar-portraits` collection registers the actual delivery with automatic R2 publication. Generated files outside this allowlist are not uploaded.
+
+`SuvicharPortraitImage` shares the reviewed text-free crop between the measured card, preset/deity and frame selectors, and cache-only entry miniature. Baked message/sender/wordmark remain outside the clip. Actual text stays editable. The label is श्री राम लला / Shri Ram Lalla, with no Ayodhya or old photo credit. The stable ID, favorites, Thursday mapping and Ram-specific content stay unchanged. All frames reuse their existing Rama paper/footer slices and one bounded cache entry for the new scene. Old photo rights/source bytes remain archived.
+
+Publication is pending until the new object’s public full SHA-256 is verified. Main-only GitHub Actions has configured R2 secrets (latest observed run 42968017094 executed its upload/verification step successfully); this executor has no direct R2 credentials. PR checks do not publish. Native iOS/Android, actual export/handoff and release-device ANR evidence remain pending.

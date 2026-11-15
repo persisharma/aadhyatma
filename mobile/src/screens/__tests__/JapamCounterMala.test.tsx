@@ -9,6 +9,8 @@ import JapamInfinity from '@/components/JapamInfinity';
 import JapamAudioPlayer from '@/components/JapamAudioPlayer';
 import mandalaMeasurements from '@/components/__tests__/fixtures/japamMandalaWidths.json';
 import { compactJapamReadingLines } from '@/components/japamReadingLayout';
+import { findJapamMantra } from '@/data/japam';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -278,6 +280,25 @@ describe('JapamCounter turning mala (design.md §35)', () => {
       tapSurface(tree).props.onPress();
     });
     expect(beadLabel(tree)).toContain('1 of 108');
+  });
+
+  // Nov 2026 device report: the enlarged सीता राम cut the ी loop above the
+  // shirorekha (35/49 = 1.40× leading). Every script line of every naam entry,
+  // at both reading sizes, keeps ≥1.5× — the house floor for Indic glyphs.
+  test.each(['radha-naam', 'jai-shri-ram', 'sita-ram-naam'].flatMap(id =>
+    (['hi', 'gu', 'kn'] as Lang[]).flatMap(lang => (['M', 'L'] as const).map(size => ({ id, lang, size })))))
+  ('$id naam line keeps room for top vowel signs in $lang / $size', async ({ id, lang, size }) => {
+    mockGetItem.mockImplementation((key: string) => Promise.resolve(key === '@vedansh/font-scale' ? size : null));
+    const tree = await renderJapam(id, lang);
+    const line = findJapamMantra(id)!.lines[0];
+    const shown = lang === 'gu' || lang === 'kn' ? transliterateDevanagari(line, lang) : line;
+    const big = tree.root.findAllByType(Text).filter((n) => [n.props.children].flat().join('') === shown
+      && (ReactNative.StyleSheet.flatten(n.props.style)?.fontSize ?? 0) >= 30);
+    expect(big).toHaveLength(1);
+    for (const node of big) {
+      const { fontSize, lineHeight } = ReactNative.StyleSheet.flatten(node.props.style);
+      expect(lineHeight / fontSize).toBeGreaterThanOrEqual(1.5);
+    }
   });
 
   test('a stotram shloka is chanted like a mantra (§35.1)', async () => {

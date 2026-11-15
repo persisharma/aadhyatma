@@ -234,6 +234,45 @@ export function toPincodeLocation(entry: PincodeEntry, source: LocationSource, p
   };
 }
 
+/** The self-describing half of a persisted `pin-` location: labels plus coordinate. */
+export type PincodePlaceRecord = {
+  labelHi: string;
+  labelEn: string;
+  latitude: number;
+  longitude: number;
+  elevation: number;
+};
+
+/** India bounding box — the same gate `scripts/build-pincodes.mjs` applies when generating. */
+const INDIA_BOUNDS = { latMin: 6.5, latMax: 37.6, lngMin: 68.0, lngMax: 97.5 };
+
+function isFiniteInRange(value: unknown, min: number, max: number): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
+}
+
+/**
+ * Structural validation of a stored pincode record, WITHOUT the table: both readers of a
+ * persisted `pin-` record — the Panchang location (`panchangPrefs`, on the launch path) and
+ * a birth profile (`birthProfiles`, read by every Jyotish surface) — must rebuild it from the
+ * record itself, because looking it up would load the lazy 605 KB table. Every field is
+ * range-checked; anything malformed is null and the caller treats it as corrupt.
+ */
+export function parsePincodePlaceRecord(record: {
+  labelHi?: unknown;
+  labelEn?: unknown;
+  latitude?: unknown;
+  longitude?: unknown;
+  elevation?: unknown;
+}): PincodePlaceRecord | null {
+  const { labelHi, labelEn, latitude, longitude, elevation } = record;
+  if (typeof labelHi !== 'string' || labelHi.length === 0) return null;
+  if (typeof labelEn !== 'string' || labelEn.length === 0) return null;
+  if (!isFiniteInRange(latitude, INDIA_BOUNDS.latMin, INDIA_BOUNDS.latMax)) return null;
+  if (!isFiniteInRange(longitude, INDIA_BOUNDS.lngMin, INDIA_BOUNDS.lngMax)) return null;
+  if (!isFiniteInRange(elevation, -500, 9000)) return null;
+  return { labelHi, labelEn, latitude, longitude, elevation };
+}
+
 // ── Place names ─────────────────────────────────────────────────────────────────
 
 export type PlaceKind = 'head' | 'sub' | 'branch';

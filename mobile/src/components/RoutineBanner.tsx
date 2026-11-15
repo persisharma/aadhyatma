@@ -20,16 +20,11 @@ import LotusMark from './LotusMark';
  * itself fires app-wide from RoutineCelebrationOverlay (mounted at the nav
  * root), so it plays on whatever screen completion happens — not just here.
  *
- * Two layouts via `variant`:
- * - `docked` (default) — a floating chip pinned just above the tab bar. Used on
- *   Daily Bhakti.
- * - `inline` — flows in the Home scroll between the Today strip and CATEGORIES,
- *   so it no longer overlays (and clips) the content beneath it.
+ * Home is its only surface: it flows in the Home scroll between the Today strip
+ * and CATEGORIES. (A docked, tab-bar-pinned layout existed for Daily Bhakti until
+ * Nov 2026, when that page dropped the banner.)
  */
-export default function RoutineBanner({
-  bannerRef,
-  variant = 'docked',
-}: { bannerRef?: React.Ref<View>; variant?: 'docked' | 'inline' } = {}) {
+export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<View> } = {}) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
   const { fontScale } = useWindowDimensions();
@@ -47,45 +42,24 @@ export default function RoutineBanner({
   const open = (screen: 'RoutineToday' | 'RoutineCreate') => () =>
     navigation.navigate('HomeTab', { screen });
 
-  // Docked: floating chip just above the tab bar. The tab bar already owns the
-  // bottom safe-area inset (height: 60 + insets.bottom), so adding it here too
-  // double-counted it and left a ~inset-sized gap below the chip. Its shadow
-  // lifts UPWARD (offset -4) to read as hovering off the bar.
-  // Inline: flows in the page, so no absolute positioning; its shadow drops
-  // DOWNWARD (offset +3), the way the other Home cards cast, so it reads as a
-  // card in the layout rather than a floating overlay.
-  const base =
-    variant === 'inline'
-      ? {
-          borderRadius: radii.lg,
-          minHeight: 57,
-          paddingHorizontal: spacing.lg,
-          paddingVertical: spacing.sm,
-          backgroundColor: colors.parchmentSoft,
-          shadowColor: colors.ink,
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          shadowOffset: { width: 0, height: 3 },
-          // Android ignores shadow*; give it the same soft ink lift via
-          // boxShadow (no integer `elevation`, which draws a boxy grey box).
-          ...androidBoxShadow(3, 8, 'rgba(26, 14, 3, 0.1)'),
-        }
-      : {
-          position: 'absolute' as const,
-          left: spacing.lg,
-          right: spacing.lg,
-          bottom: spacing.sm,
-          borderRadius: radii.lg,
-          paddingHorizontal: spacing.lg,
-          paddingVertical: spacing.sm,
-          backgroundColor: colors.parchmentSoft,
-          shadowColor: colors.ink,
-          shadowOpacity: 0.16,
-          shadowRadius: 12,
-          shadowOffset: { width: 0, height: -4 },
-          // Upward soft lift on Android too (no boxy integer `elevation`).
-          ...androidBoxShadow(-4, 12, 'rgba(26, 14, 3, 0.16)'),
-        };
+  // Flows in the page, so no absolute positioning; its shadow drops DOWNWARD
+  // (offset +3), the way the other Home cards cast, so it reads as a card in
+  // the layout rather than a floating overlay. All three states share
+  // minHeight 57 so hydration cannot move the grid below.
+  const base = {
+    borderRadius: radii.lg,
+    minHeight: 57,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    backgroundColor: colors.parchmentSoft,
+    shadowColor: colors.ink,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    // Android ignores shadow*; give it the same soft ink lift via boxShadow
+    // (no integer `elevation`, which draws a boxy grey box).
+    ...androidBoxShadow(3, 8, 'rgba(26, 14, 3, 0.1)'),
+  };
 
   const lineStyle = {
     flex: 1,
@@ -116,7 +90,7 @@ export default function RoutineBanner({
         <Disc colors={colors} radii={radii}>
           <StoryIcon name="practice" size={32} />
         </Disc>
-        <Text numberOfLines={variant === 'inline' && fontScale > 1.2 ? undefined : 1} style={lineStyle}>
+        <Text numberOfLines={fontScale > 1.2 ? undefined : 1} style={lineStyle}>
           {line}
         </Text>
         {chevron}
@@ -144,7 +118,7 @@ export default function RoutineBanner({
         <View style={styles.lotusSlot}>
           <LotusMark size={30} />
         </View>
-        <Text numberOfLines={variant === 'inline' && fontScale > 1.2 ? undefined : 1} style={lineStyle}>
+        <Text numberOfLines={fontScale > 1.2 ? undefined : 1} style={lineStyle}>
           {line}
         </Text>
         {chevron}
@@ -175,7 +149,7 @@ export default function RoutineBanner({
             {doneCount}/{total}
           </Text>
         </Disc>
-        <Text numberOfLines={variant === 'inline' && fontScale > 1.2 ? undefined : 1} style={lineStyle}>
+        <Text numberOfLines={fontScale > 1.2 ? undefined : 1} style={lineStyle}>
           {line}
         </Text>
         {chevron}

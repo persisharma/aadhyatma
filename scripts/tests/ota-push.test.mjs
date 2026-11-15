@@ -7,12 +7,15 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
-function run(platform, channel = 'production') {
+function run(platform, channel = 'production', { version = '1.5.6', extraEnv = {} } = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'ota-platform-'));
   try {
     mkdirSync(join(dir, 'mobile'));
     mkdirSync(join(dir, 'bin'));
     copyFileSync(join(root, 'push.sh'), join(dir, 'push.sh'));
+    // push.sh reads the runtime it is publishing to and how the Valmiki corpus travels to it.
+    copyFileSync(join(root, 'mobile/corpusDelivery.js'), join(dir, 'mobile/corpusDelivery.js'));
+    writeFileSync(join(dir, 'mobile/app.json'), JSON.stringify({ expo: { version } }));
     writeFileSync(join(dir, 'mobile/eas.json'), JSON.stringify({ build: {
       production: { channel: 'production', env: { META_TRACKING_ENABLED: 'true' } },
       preview: { channel: 'preview' },
@@ -22,6 +25,8 @@ function run(platform, channel = 'production') {
     writeFileSync(join(dir, 'bin/git'), '#!/bin/sh\nexit 0\n', { mode: 0o755 });
     const env = { ...process.env, PATH: `${join(dir, 'bin')}:${process.env.PATH}`, CAPTURE: capture, CHANNEL: channel };
     delete env.META_TRACKING_ENABLED;
+    delete env.VALMIKI_CORPUS_DELIVERY;
+    Object.assign(env, extraEnv);
     delete env.PLATFORM;
     if (platform !== undefined) env.PLATFORM = platform;
     const message = 'iOS release "quoted"; $(no-execution)';
@@ -58,3 +63,29 @@ for (const platform of ['', 'IOS', 'web', 'ios --platform android']) {
     assert.equal(published, undefined);
   });
 }
+
+// An OTA from the latest branch must not ask an older store build for the
+// Valmiki part files it does not embed (mobile/corpusDelivery.js).
+test('an older runtime is published with the Valmiki corpus in the JS bundle', () => {
+  for (const version of ['1.5.0', '1.5.6']) {
+    const { result, published } = run('all', 'production', { version });
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, new RegExp(`Valmiki corpus: in the JS bundle \\(runtime ${version.replaceAll('.', '\\.')} predates`));
+    assert.ok(published);
+  }
+});
+
+test('a runtime whose store build embeds the parts is published with asset files', () => {
+  const { result, published } = run('all', 'production', { version: '1.5.7' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Valmiki corpus: asset files \(runtime 1\.5\.7 embeds/);
+  assert.ok(published);
+});
+
+test('a mistyped delivery override stops before anything is published', () => {
+  const { result, published } = run('all', 'production', { extraEnv: { VALMIKI_CORPUS_DELIVERY: 'asset' } });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /VALMIKI_CORPUS_DELIVERY must be "assets" or "bundle"/);
+  assert.equal(published, undefined);
+});
+

@@ -67,6 +67,7 @@ jest.mock('expo-sharing', () => ({
 // one-entry roster. The multi-person behaviour is covered by
 // MultiProfileJyotish.test.tsx against the real store.
 const mockPerson = { id: 'p-test-1', ...mockProfile };
+const mockSaveProfile = jest.fn(() => Promise.resolve());
 
 jest.mock('@/panchang/useKundali', () => ({
   ...jest.requireActual('@/panchang/useKundali'),
@@ -79,7 +80,7 @@ jest.mock('@/panchang/useKundali', () => ({
     activeId: mockPerson.id,
     activePerson: mockPerson,
     canAddPerson: true,
-    saveProfile: jest.fn(),
+    saveProfile: mockSaveProfile,
     clearProfile: jest.fn(),
     reloadProfile: jest.fn(),
     selectPerson: jest.fn(),
@@ -135,6 +136,49 @@ test('city search stays inside a padded host and still filters, selects and dism
   act(() => result.props.onPress());
   expect(tree.root.findAllByType(Modal).some(node => node.props.visible && node.props.accessibilityViewIsModal)).toBe(false);
   expect(tree.root.findByProps({ testID: 'kundali-city-button' }).props.accessibilityLabel).toContain('Ujjain');
+});
+
+test('the birth-place sheet finds a town the city list never had, and saves it with its own coordinates', async () => {
+  // Reported Nov 2026: North Lakhimpur (Assam) was findable as the Panchang location
+  // but not as a Kundali birth place — this sheet searched the 394 bundled cities only.
+  mockSaveProfile.mockClear();
+  const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'town', name: 'Kundali', params: { editing: true } } as any} />);
+  act(() => tree.root.findByProps({ testID: 'kundali-city-button' }).props.onPress());
+  const input = tree.root.findAllByType(TextField).find(node => node.props.testID === 'kundali-city-search')!;
+  act(() => input.props.onChangeText('North Lakhimpur'));
+  const town = tree.root.findByProps({ accessibilityLabel: 'Select North Lakhimpur, Lakhimpur, Assam, pincode 787001 birth place' });
+  act(() => town.props.onPress());
+  expect(tree.root.findByProps({ testID: 'kundali-city-button' }).props.accessibilityLabel)
+    .toBe('Birth city, North Lakhimpur · 787001, Assam');
+
+  // Re-opening marks the town as selected, and its bare pincode row too (one pin- id).
+  act(() => tree.root.findByProps({ testID: 'kundali-city-button' }).props.onPress());
+  const reopened = tree.root.findAllByType(TextField).find(node => node.props.testID === 'kundali-city-search')!;
+  act(() => reopened.props.onChangeText('North Lakhimpur'));
+  expect(tree.root.findByProps({ accessibilityLabel: 'Select North Lakhimpur, Lakhimpur, Assam, pincode 787001 birth place' })
+    .props.accessibilityState).toEqual({ selected: true });
+  act(() => reopened.props.onChangeText('787001'));
+  const pincodeRow = tree.root.findAllByProps({ accessibilityRole: 'radio' })
+    .find(node => typeof node.props.accessibilityLabel === 'string' && node.props.accessibilityLabel.startsWith('Select pincode 787001, Lakhimpur'))!;
+  expect(pincodeRow.props.accessibilityState).toEqual({ selected: true });
+  act(() => tree.root.findByProps({ accessibilityLabel: 'Close city picker' }).props.onPress());
+
+  await act(async () => {
+    await tree.root.findByProps({ testID: 'kundali-generate-button' }).props.onPress();
+  });
+  expect(mockSaveProfile).toHaveBeenCalledTimes(1);
+  const saved = (mockSaveProfile.mock.calls[0] as unknown[])[0] as { cityId: string; place?: { latitude: number; longitude: number } };
+  expect(saved.cityId).toBe('pin-787001');
+  expect(saved.place?.latitude).toBeCloseTo(27.24, 1);
+  expect(saved.place?.longitude).toBeCloseTo(94.12, 1);
+});
+
+test('the birth-place sheet answers an unmatched name instead of showing an empty list', () => {
+  const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'town-miss', name: 'Kundali', params: { editing: true } } as any} />);
+  act(() => tree.root.findByProps({ testID: 'kundali-city-button' }).props.onPress());
+  const input = tree.root.findAllByType(TextField).find(node => node.props.testID === 'kundali-city-search')!;
+  act(() => input.props.onChangeText('N Lakhimpur'));
+  expect(textOf(tree)).toContain('No place found — check the spelling, try a nearby town, or type the pincode.');
 });
 
 function textOf(tree: TestRenderer.ReactTestRenderer): string {

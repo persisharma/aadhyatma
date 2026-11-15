@@ -8,13 +8,20 @@
  *
  * The contract that makes the family work: `scheduleReturnReminders` is called
  * on EVERY app open (cold start and foreground, by `<ReturnReminderScheduler>`),
- * and it always cancels the family first. So the queue only ever holds a ladder
- * counted from the most recent open, and a slot fires only if the app has not
- * been opened since it was armed.
+ * and the queue is always made to hold exactly the ladder counted from that
+ * open — slots from an older ladder are cancelled. So a slot fires only if the
+ * app has not been opened since it was armed.
+ *
+ * "Exactly the ladder" is why a second open on the same day does no native
+ * work: the ladder is dated in whole days, so the plan is identical and the
+ * queue already holds it (`familyArm` compares the plans; it is not a
+ * "recently armed" shortcut). The first open after midnight is a new plan and
+ * re-arms as before.
  */
 
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import type { Lang } from '@/data/gita/language';
 import {
   planReturnReminders,
@@ -61,12 +68,7 @@ async function ensureReturnChannel(): Promise<string | undefined> {
 
 /** Cancel every return reminder we own, leaving other notifications untouched. */
 export async function cancelAllReturnReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(RETURN_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await cancelNotificationFamily(RETURN_NOTIF_PREFIX);
 }
 
 /**
@@ -79,15 +81,13 @@ export async function scheduleReturnReminders(
   now: Date = new Date(),
   lang: Lang = 'hi'
 ): Promise<number> {
-  await cancelAllReturnReminders();
-
   const planned = planReturnReminders(now);
-  if (planned.length === 0) return 0;
+  // An empty plan still means "hold nothing": it cancels ours.
+  if (planned.length === 0) return armNotificationFamily(RETURN_NOTIF_PREFIX, []);
 
   const channelId = await ensureReturnChannel();
 
-  let scheduled = 0;
-  for (const p of planned) {
+  const slots: FamilySlot[] = planned.map((p) => {
     const { title, body } = formatReturnReminderContent(p, lang);
     const payload: ReturnNotificationPayload = {
       type: 'return-reminder',
@@ -95,26 +95,22 @@ export async function scheduleReturnReminders(
       weekday: p.weekday,
       absentDays: p.absentDays,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-          ...(channelId !== undefined ? { channelId } : {}),
-        } as Notifications.NotificationTriggerInput,
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return armNotificationFamily(RETURN_NOTIF_PREFIX, slots);
 }

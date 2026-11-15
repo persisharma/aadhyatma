@@ -2,7 +2,7 @@
 title: Reading artwork on R2
 type: integration
 sources: [mobile/assets/garud-puran/index.ts, scripts/verify-artwork-corrections.mjs, mobile/src/data/__tests__/artworkDelivery.jest.test.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/data/backgroundAsset.ts, mobile/src/data/backgroundAssetManifest.json, mobile/src/data/readerIllustrationAsset.ts, mobile/src/data/readerIllustrationManifest.json, mobile/src/data/readerIllustrationAliases.json, mobile/src/data/artworkAsset.ts, mobile/src/data/assetManifest.ts, mobile/src/data/backgrounds.ts, mobile/src/data/kathaBackgrounds.ts, mobile/src/utils/backgroundAssetCache.ts, mobile/src/components/CachedArtwork.tsx, mobile/src/components/BackgroundArtwork.tsx, mobile/src/components/BackgroundLayer.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ReadingBanner.tsx, mobile/src/components/readingBannerFrames.json, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, scripts/prepare-reading-backgrounds.mjs, scripts/prepare-reader-illustrations.mjs, scripts/upload-r2-assets.mjs, docs/content-parity/reader-illustrations-art-style.md, docs/content-parity/reader-illustration-style3-prompt.md]
-last_verified_date: 2026-11-06
+last_verified_date: 2026-11-11
 confidence: high
 status: current
 ---
@@ -97,9 +97,14 @@ Tests pin all 1,014 mappings and all four scripts; current native evidence is in
    behind unrelated slow downloads. Only misses enter the bounded queue and recheck disk before
    fetching. Lookup cancellation suppresses queued work and callbacks. Downloads deduplicate
    by content hash and extension, including across CDN URLs, with
-   concurrency two and an eight-second network timeout.
+   concurrency two. The transfer itself is `utils/resumableDownload.ts` (shared with
+   `assetCache`): an attempt is abandoned when **no byte arrives for eight seconds**
+   (`BACKGROUND_DOWNLOAD_STALL_MS`), not after eight seconds in total, and holds a slot for at
+   most two minutes (`BACKGROUND_DOWNLOAD_MAX_MS`). On Android an interrupted attempt keeps its
+   bytes in memory-tracked scratch and the next request sends `Range`; iOS restarts.
    Files live under Documents `reading-backgrounds/`; unique `.part` files are promoted only
-   after a successful, nonempty download. Releasing the last subscriber cancels queued/native work.
+   after a successful, nonempty download of the expected length. Releasing the last subscriber
+   cancels queued/native work, but a download that has already completed is still promoted.
    Completed valid files have no expiry, network revalidation or automatic eviction. A fresh
    app process reads the same file asynchronously; changing the CDN host does not invalidate it.
    Changed artwork receives a new manifest hash and downloads once under its new filename.
@@ -205,6 +210,23 @@ See [the setup and publication contract](../../docs/engineering/r2-auto-upload.m
   fresh 45-object public hash verification and final platform bundle membership.
 
 ## Gotchas
+
+- **The download limit is a stall limit, not a duration (11 Nov 2026).** The original eight-second
+  total made every plate over ~240 KB unreachable at 30 KB/s and re-spent the reader's data on
+  each visit (`scripts/perf-report.mts` models it per artwork set). Do not reintroduce a total
+  shorter than `BACKGROUND_DOWNLOAD_MAX_MS`.
+- **A resumed file is trusted only after it is checked.** The legacy Android downloader appends
+  whatever a ranged request returns, so a server (or a Worker in front of the bucket) that
+  ignores `Range` would append the whole file to the partial. `resumableDownload` requires the
+  resumed response to report the original total, to be HTTP 206, and the finished file to be
+  exactly that length; any failure discards the bytes. A failure that shows `Range` being
+  ignored (different total, a whole 2xx body, wrong final length) also disables resuming for the
+  session; an error status (5xx, 429, 404) does not — one flaky answer must not cost every later
+  download its kept bytes.
+  Whether `cdn.vedansh.app` honours `Range` could not be probed from the build sandbox — the code
+  is correct either way, but the resume saving only exists if it does.
+- **Resume state is memory-only by design.** A `.part` left by a killed process is swept before
+  the first download of the next process and is never treated as progress.
 
 - A download failure leaves the local illustration visible; revisit/refocus retries. The fallback
   is neutral and must not be labelled as a specific shrine or different deity.

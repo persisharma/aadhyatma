@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-11-05
+last_verified_date: 2026-11-13
 confidence: high
 status: current
 ---
@@ -15,8 +15,10 @@ bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHea
 July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
 same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
 component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`. Valmiki
-Ramayan is the large-corpus case: its 23,289 verified verse records stay split across seven
-kāṇḍa JSON modules, and the accessor requires/caches only the kāṇḍa the reader opens. The Home,
+Ramayan is the large-corpus case and the one exception (11 Nov 2026): its 23,289 verse records are
+**not in the JS bundle**. They ship as 73 bundled asset parts generated from the kāṇḍa masters,
+and `loadValmikiRamayanChapter()` reads and caches a kāṇḍa asynchronously; the reader screen is
+a loader wrapping the unchanged reader, with a loading and a retry state (design.md §53). The Home,
 Daily Bhakti, and search paths use the 28-row `daily-selection.json` projection so they do not
 parse the complete epic during startup; the platform bundle still carries every kāṇḍa offline.
 
@@ -51,7 +53,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 Readers call `useReaderPlayback(args)` (`_useAutoSlide.ts`) in place of `useReaderReadAloud(args)` —
 same args, returns `{ readAloud, autoSlide }`, and keeps the two hands-free modes mutually exclusive.
 Kids Stories and the comic call `useAutoSlide` directly with their own `pageChars`/`goToPage`.
-Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval; pace persists in
+Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval, at four paces
+(slow 1.6 · normal 1 · fast 0.6 · very fast 0.3 — Nov 2026; very fast is half of fast and the meter
+has four bars). Pace persists in
 the `autoSlideStore` module store (no provider — launch graph untouched), which also carries the
 3 s hand-off that keeps a slideshow playing across a chapter `navigation.replace`. Long pages scroll
 to the bottom in 70%-of-a-screen steps (each holding for its share of the page time by height)
@@ -235,6 +239,12 @@ measured popularity ranking, and every item remains ineligible for release.
 
 ## Gotchas
 
+- **Two answers to `./corpusSource`, chosen at bundle time.** `corpusSource.ts` reads the asset parts; `corpusSource.inbundle.ts` requires the masters. Metro picks by app version (`mobile/corpusDelivery.js`, threshold 1.5.7) so an OTA to an older store build keeps the corpus in the bundle. TypeScript and Jest always see `corpusSource.ts`; `valmikiBundleDelivery.jest.test.ts` loads every kāṇḍa through the in-bundle source and compares it byte for byte with the asset one. Keep the two files' exports identical, never import the in-bundle one by name, and put shared behaviour (validation, meaning fallback, caching) in `index.ts`, not in a source.
+- **The Valmiki masters must never be imported by app code (other than `corpusSource.inbundle.ts`), and the parts must be regenerated after any master edit.** `mobile/scripts/build-valmiki-assets.mjs` writes `assets/valmiki-ramayan/*.txt`, `parts.ts` and `sargaStarts.ts`; `valmikiAssets.test.ts` fails on an import of a master or on drift. One `import ch from './chapter-06.json'` puts 6.4 MB back into every OTA.
+- **The Valmiki reader mounts only with its kāṇḍa in memory.** `ValmikiRamayanReaderScreen` is a loader; `LoadedReader` is the reader. Do not merge them back: `currentIndex` is initialised from the opening verse, and a reader mounted before its verses exist would report verse 1 as the resume position.
+- **Auto-slide's hand-off is renewed across the Valmiki load.** The 3 s hand-off (`autoSlideStore.HANDOFF_MS`) is claimed by `useReaderPlayback`, which lives in `LoadedReader` and so mounts only after the kāṇḍa is in memory. `useAutoSlideCarriedAcrossLoad` (in `ValmikiRamayanReaderScreen.tsx`) notes a hand-off that is live when the screen opens on an unloaded kāṇḍa and calls `renewAutoSlideHandoff` in a layout effect when the text is ready — before the playback hook's passive effect claims it. Without it the slideshow stops silently at a kāṇḍa boundary whenever the load outlasts 3 s (found in the post-merge review, 11 Nov 2026). A lapsed hand-off is never revived; a failed load drops it. Any other reader that becomes asynchronous needs the same treatment.
+- **Tests read the real parts.** `jest/textAssetTransformer.js` turns a part's asset handle into its path and `jest.setup.js` replaces `partReader` with a file read, so `loadValmikiRamayanChapter` works in Jest. Load the kāṇḍa in `beforeAll` when a test needs the reader on its synchronous path.
+
 - **Auto-slide's `goToPage` must set the index itself where the pager tracks position via
   `onMomentumScrollEnd`** (Kids Stories, comic): a programmatic `scrollToIndex` never fires it on
   iOS, so the slideshow would stall on page 1. Readers tracking `onScroll`/viewability are fine.
@@ -318,3 +328,9 @@ Daily/weekday Suvichar cards rotate eligible originals followed by eligible doha
 
 Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
 
+
+## Gita verse picker — Proposal 06
+
+`GitaVerseJumpSheet` is mounted only while choosing. It reads chapter counts/titles from the manifest and accepts four numeral scripts. `GitaReaderScreen` stops playback, suppresses pager callbacks and suspends dwell until dismissal. Only Open loads the selected chapter and resolves the real verse number. Route replacement preserves the calling stack and mounts a new reader directly at the target, so no skipped page receives progress/coverage. Cancel does not write position; the original verse may still receive legitimate dwell credit accrued before opening. Existing transition timers are cancelled on unmount. No other reader or routine completion contract changes.
+
+Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.

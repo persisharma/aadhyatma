@@ -17,7 +17,7 @@ import { useJanmaPrefs, useJanmaTithiDetailSolve, useJanmaTithiPeople } from '@/
 import { selectPerson } from '@/panchang/birthProfileStore';
 import { tithiRuleLabel } from '@/panchang/pitruSmaran';
 import { useKulRecord } from '@/panchang/kulParamparaStore';
-import { getCityById } from '@/panchang/locations';
+import { birthCity } from '@/panchang/birthProfiles';
 import { fullDate, inDaysLabel, startOfLocalDay } from '@/panchang/pitruSmaranDisplay';
 import { VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
 import { useTheme } from '@/theme/ThemeContext';
@@ -100,7 +100,7 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
   const weekdayName = (d: Date): string =>
     contentByLang(lang, VARA_NAMES_HI[d.getDay()], VARA_NAMES_EN[d.getDay()]);
 
-  const city = person ? getCityById(person.cityId) : undefined;
+  const city = person ? birthCity(person) : undefined;
   const birthLine = person
     ? `${person.date} · ${person.time}${city ? ` · ${contentByLang(lang, city.nameHi, city.nameEn)}` : ''}`
     : '';

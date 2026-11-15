@@ -3,7 +3,14 @@
      a render that never reaches the provider's art step, or fails it, is the flat
      parchment card exactly as before. The root clips to the rounded parchment shape
      so the art keeps the card's corners (API 31+, the only versions the provider
-     shows art on); the art's 1dp inset leaves the gold hairline stroke visible. -->
+     shows art on); the art's 1dp inset leaves the gold hairline stroke visible.
+
+     Structure mirrors the iOS wide/large Shloka composition: a header row with the
+     eyebrow capsule and the ॐ mark, the verse, a gold rule, then the source. The
+     small cell (provider: width < 180 dp) drops the capsule, rule and source and
+     moves the mark to the footer, as iOS systemSmall does. RemoteViews cannot
+     inflate a plain View, so the rule is a 1dp ImageView whose colour the provider
+     sets per Heritage / Midnight Temple. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/vedansh_widget_background" android:clipToOutline="true">
@@ -12,14 +19,19 @@
     <LinearLayout android:id="@+id/widget_content"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:orientation="vertical" android:padding="16dp" android:gravity="center_vertical">
-        <TextView android:id="@+id/widget_kicker" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#6B2E05" android:textSize="10sp" android:textStyle="bold" android:maxLines="1" />
+        <LinearLayout android:id="@+id/widget_header"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:id="@+id/widget_kicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="आज का श्लोक" android:background="@drawable/vedansh_widget_pill" android:paddingLeft="7dp" android:paddingRight="7dp" android:paddingTop="3dp" android:paddingBottom="3dp" android:textColor="#6B2E05" android:textSize="10sp" android:textStyle="bold" android:maxLines="1" android:ellipsize="end" />
+            <TextView android:id="@+id/widget_brand_header" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginLeft="4dp" android:gravity="end" android:text="ॐ वेदांश़" android:textColor="#7E5A1E" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
+        </LinearLayout>
         <!-- The provider now feeds this the full verse and lets the maxLines it sets
              per cell size do the trimming, so the view must ellipsize rather than
              clip a wrapped line mid-word when a long shloka really does overrun. -->
         <TextView android:id="@+id/widget_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#1A0E03" android:textSize="15sp" android:lineSpacingExtra="3dp" android:fontFamily="serif" android:maxLines="3" android:ellipsize="end" />
-        <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:textColor="#4A3420" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
+        <ImageView android:id="@+id/widget_rule" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="6dp" android:background="#6B7E5A1E" android:importantForAccessibility="no" android:contentDescription="@null" />
+        <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:textColor="#4A3420" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
         <TextView android:id="@+id/widget_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone" android:textColor="#4A3420" android:textSize="11sp" android:maxLines="1" />
-        <TextView android:id="@+id/widget_brand" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="ॐ वेदांश़" android:textColor="#7E5A1E" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
+        <TextView android:id="@+id/widget_brand" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:visibility="gone" android:text="ॐ वेदांश़" android:textColor="#7E5A1E" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
     </LinearLayout>
 </FrameLayout>
-

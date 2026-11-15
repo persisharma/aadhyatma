@@ -7,6 +7,7 @@
  */
 
 import * as Notifications from 'expo-notifications';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planRoutineReminders,
   formatRoutineReminderContent,
@@ -22,12 +23,7 @@ export type RoutineNotificationPayload = {
 
 /** Cancel every routine reminder we own, leaving other notifications untouched. */
 export async function cancelAllRoutineReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(ROUTINE_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await cancelNotificationFamily(ROUTINE_NOTIF_PREFIX);
 }
 
 /**
@@ -39,37 +35,30 @@ export async function scheduleRoutineReminders(
   inputs: RoutineReminderInput[],
   now: Date = new Date()
 ): Promise<number> {
-  await cancelAllRoutineReminders();
-
   const { planned } = planRoutineReminders(inputs, now);
 
-  let scheduled = 0;
-  for (const p of planned) {
+  const slots: FamilySlot[] = planned.map((p) => {
     const { title, body } = formatRoutineReminderContent(p);
     const payload: RoutineNotificationPayload = {
       type: 'routine-reminder',
       routineId: p.routineId,
       dateKey: p.dateKey,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-        },
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+      },
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return armNotificationFamily(ROUTINE_NOTIF_PREFIX, slots);
 }

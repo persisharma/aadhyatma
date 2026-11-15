@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  InteractionManager,
   Keyboard,
   Modal,
   Pressable,
@@ -47,11 +48,26 @@ import {
   type KundaliChart,
   type KundaliResultTab,
 } from '@/panchang/kundali';
-import { CITIES, cityMatchesQuery, getCityById, type City } from '@/panchang/locations';
+import {
+  pincodeCityId,
+  toDevanagariDigits,
+  warmPincodeTable,
+  warmPlaceIndex,
+  type PincodeEntry,
+} from '@/panchang/pincodes';
+import {
+  buildLocationSearchRows,
+  labelIsPlace,
+  locationSearchRowKey,
+  placesSummary,
+} from '@/panchang/locationSearch';
 import {
   MAX_PEOPLE,
+  birthCity,
+  birthPlaceFromPincode,
   useKundali,
   validateBirthProfile,
+  type BirthPlace,
   type BirthProfile,
   type BirthProfileErrors,
 } from '@/panchang/useKundali';
@@ -472,11 +488,11 @@ export default function KundaliScreen({ navigation, route }: Props) {
       </SafeAreaView>
       <CityPicker
         visible={cityPickerVisible}
-        selectedCityId={draft.cityId}
+        selected={draft}
         lang={lang}
-        onSelect={(city) => {
+        onSelect={({ cityId, place }) => {
           Keyboard.dismiss();
-          setDraft((current) => ({ ...current, cityId: city.id }));
+          setDraft((current) => ({ ...current, cityId, place }));
           setErrors((current) => ({ ...current, cityId: undefined }));
           setCityPickerVisible(false);
         }}
@@ -503,7 +519,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
               lang={lang}
               chart={chart}
               profile={profile}
-              city={getCityById(profile.cityId)!}
+              city={birthCity(profile)!}
             />
           )}
         />
@@ -546,7 +562,7 @@ function BirthInput({
   radii: any;
   elevation: any;
 }) {
-  const city = getCityById(draft.cityId);
+  const city = birthCity(draft);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timeOpen, setTimeOpen] = useState(false);
   const timeKnownValid = TIME_PATTERN.test(draft.time);
@@ -869,7 +885,7 @@ function KundaliResult({
     }
     return [key, item];
   })) as typeof styles, [factor, lang]);
-  const city = getCityById(profile.cityId)!;
+  const city = birthCity(profile)!;
   const now = new Date();
   const currentDasha = getCurrentDasha(chart, now);
   // Both nested periods are running at once, so the card shows each one —
@@ -1439,26 +1455,63 @@ function SectionIntro({
   );
 }
 
+type BirthPlaceSelection = { cityId: string; place?: BirthPlace };
+
+const DEVANAGARI = /[\u0900-\u097F]/;
+
+/**
+ * The birth-place sheet. Rows come from `buildLocationSearchRows` — the SAME search as
+ * the Panchang location sheet — so a town, village or 6-digit pincode is findable here
+ * too, not just the bundled city list. A city row stores its id; a pincode or town row
+ * stores `pin-<pincode>` plus a self-describing `place` (`birthPlaceFromPincode`).
+ */
 function CityPicker({
   visible,
-  selectedCityId,
+  selected,
   lang,
   onSelect,
   onClose,
 }: {
   visible: boolean;
-  selectedCityId: string;
+  selected: BirthPlaceSelection;
   lang: Lang;
-  onSelect: (city: City) => void;
+  onSelect: (selection: BirthPlaceSelection) => void;
   onClose: () => void;
 }) {
   const { colors, typography, spacing, radii } = useTheme();
   const [query, setQuery] = useState('');
-  const filtered = useMemo(() => CITIES.filter((city) => cityMatchesQuery(city, query)), [query]);
+  const rows = useMemo(() => buildLocationSearchRows(query), [query]);
 
   useEffect(() => {
     if (visible) setQuery('');
   }, [visible]);
+
+  // Parse the pincode tables once the sheet is open, so the first pincode or town typed
+  // resolves instantly; they stay off the launch path either way (lazy requires).
+  useEffect(() => {
+    if (!visible) return;
+    const handle = InteractionManager.runAfterInteractions(() => {
+      warmPincodeTable();
+      warmPlaceIndex();
+    });
+    return () => handle.cancel();
+  }, [visible]);
+
+  const pickPincode = (entry: PincodeEntry, placeName?: string) => onSelect(birthPlaceFromPincode(entry, placeName));
+  const rowStyle = ({ pressed }: { pressed: boolean }) => [
+    styles.cityRow,
+    { borderBottomColor: colors.divider, paddingHorizontal: spacing.xxl },
+    pressed && { backgroundColor: colors.saffronTint },
+  ];
+  const messageStyle = {
+    color: colors.inkMuted,
+    fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily),
+    fontSize: 12,
+    lineHeight: 18,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: 12,
+  };
+  const check = <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>✓</Text>;
 
   return (
     <Modal
@@ -1497,32 +1550,125 @@ function CityPicker({
             <TextField
               variant="form"
               testID="kundali-city-search"
-              accessibilityLabel="Search birth cities"
+              accessibilityLabel="Search birth city, village or pincode"
               value={query}
               onChangeText={setQuery}
-              placeholder="Search Indian cities…"
+              placeholder={contentByLang(lang, 'शहर, गाँव या पिनकोड खोजें…', 'Search city, village or pincode…')}
               style={styles.modalSearch}
             />
           </View>
           {/* FlatList, not a mapped ScrollView: the list is ~390 rows once the
               Rajasthan tehsils are in, and mounting all of them stalled the sheet. */}
           <FlatList
-            data={filtered}
-            keyExtractor={(city) => city.id}
+            data={rows}
+            keyExtractor={locationSearchRowKey}
             keyboardShouldPersistTaps="handled"
-            renderItem={({ item: city }) => {
-              const selected = city.id === selectedCityId;
+            renderItem={({ item: row }) => {
+              if (row.kind === 'header') {
+                return (
+                  <Text
+                    style={[
+                      styles.groupHeader,
+                      {
+                        color: colors.inkMuted,
+                        fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily),
+                        paddingHorizontal: spacing.xxl,
+                      },
+                    ]}
+                  >
+                    {contentByLang(lang, row.hi, row.en)}
+                  </Text>
+                );
+              }
+              if (row.kind === 'pincode-missing') {
+                return (
+                  <Text style={messageStyle}>
+                    {meaningByLang(
+                      lang,
+                      `पिनकोड ${toDevanagariDigits(row.query)} नहीं मिला — कृपया जाँचें, या सूची से निकटतम शहर चुनें।`,
+                      `Pincode ${row.query} was not found — check the digits, or pick the nearest city from the list.`
+                    )}
+                  </Text>
+                );
+              }
+              if (row.kind === 'no-match') {
+                // The directory is Latin-only, so a Devanagari query that found no city
+                // is told exactly that rather than left looking at an empty sheet.
+                return (
+                  <Text style={messageStyle}>
+                    {DEVANAGARI.test(row.query)
+                      ? meaningByLang(
+                          lang,
+                          'कस्बों व गाँवों के नाम अंग्रेज़ी अक्षरों में खोजें (जैसे “Shahupuri”), या पिनकोड लिखें।',
+                          'Search towns and villages in English letters (e.g. “Shahupuri”), or type the pincode.'
+                        )
+                      : meaningByLang(
+                          lang,
+                          'यह स्थान नहीं मिला — वर्तनी जाँचें, निकट का कस्बा खोजें, या पिनकोड लिखें।',
+                          'No place found — check the spelling, try a nearby town, or type the pincode.'
+                        )}
+                  </Text>
+                );
+              }
+              if (row.kind === 'place') {
+                const { place } = row;
+                const { entry } = place;
+                const isSelected =
+                  selected.cityId === pincodeCityId(entry.pincode) && labelIsPlace(selected.place?.labelEn, place.name);
+                return (
+                  <Pressable
+                    onPress={() => pickPincode(entry, place.name)}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: isSelected }}
+                    accessibilityLabel={`Select ${place.name}, ${entry.districtEn}, ${entry.stateEn}, pincode ${entry.pincode} birth place`}
+                    style={rowStyle}
+                  >
+                    <View style={{ flex: 1 }}>
+                      {/* Latin in every language: the post-office directory has no
+                          Devanagari names, and guessing a spelling would be worse. */}
+                      <Text numberOfLines={1} style={{ color: colors.ink, fontFamily: typography.meaning.fontFamily, fontSize: 15 }}>
+                        {`${place.name} · ${entry.districtEn}`}
+                      </Text>
+                      <Text style={[styles.caption, { color: colors.inkMuted }]}>
+                        {`${entry.pincode} · ${entry.stateEn}`}
+                      </Text>
+                    </View>
+                    {isSelected && check}
+                  </Pressable>
+                );
+              }
+              if (row.kind === 'pincode') {
+                const { entry } = row;
+                const isSelected = selected.cityId === pincodeCityId(entry.pincode);
+                const served = placesSummary(entry.pincode);
+                const covers = served ? `${entry.districtEn} · ${served}` : entry.districtEn;
+                return (
+                  <Pressable
+                    onPress={() => pickPincode(entry)}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: isSelected }}
+                    accessibilityLabel={`Select pincode ${entry.pincode}, ${covers}, ${entry.stateEn} birth place`}
+                    style={rowStyle}
+                  >
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: colors.ink, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15 }}>
+                        {contentByLang(lang, `${toDevanagariDigits(entry.pincode)} · ${entry.stateHi}`, `${entry.pincode} · ${entry.stateEn}`)}
+                      </Text>
+                      <Text style={[styles.caption, { color: colors.inkMuted }]}>{covers}</Text>
+                    </View>
+                    {isSelected && check}
+                  </Pressable>
+                );
+              }
+              const { city } = row;
+              const isSelected = city.id === selected.cityId;
               return (
                 <Pressable
-                  onPress={() => onSelect(city)}
+                  onPress={() => onSelect({ cityId: city.id })}
                   accessibilityRole="radio"
-                  accessibilityState={{ selected }}
+                  accessibilityState={{ selected: isSelected }}
                   accessibilityLabel={`Select ${city.nameEn}${city.districtEn ? `, ${city.districtEn} district` : ''} birth city`}
-                  style={({ pressed }) => [
-                    styles.cityRow,
-                    { borderBottomColor: colors.divider, paddingHorizontal: spacing.xxl },
-                    pressed && { backgroundColor: colors.saffronTint },
-                  ]}
+                  style={rowStyle}
                 >
                   <View style={{ flex: 1 }}>
                     <Text
@@ -1539,7 +1685,7 @@ function CityPicker({
                       {city.districtEn ? `${city.nameEn} · ${city.districtEn}` : city.nameEn}
                     </Text>
                   </View>
-                  {selected && <Text style={{ color: colors.saffronDeep, fontSize: 16 }}>✓</Text>}
+                  {isSelected && check}
                 </Pressable>
               );
             }}
@@ -1633,5 +1779,6 @@ const styles = StyleSheet.create({
   modalHeader: { minHeight: 58, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: StyleSheet.hairlineWidth },
   modalSearch: { marginVertical: 12 },
   cityRow: { minHeight: 58, borderBottomWidth: StyleSheet.hairlineWidth, flexDirection: 'row', alignItems: 'center' },
+  groupHeader: { fontSize: 12, lineHeight: 18, letterSpacing: 0.4, paddingTop: 14, paddingBottom: 4, includeFontPadding: false },
 });
 

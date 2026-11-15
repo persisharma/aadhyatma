@@ -37,6 +37,12 @@ type Props = {
   onRecitationDurationChange?: (mantraId: string, durationMs: number) => void;
   /** Infinity supports tempo adjustment even without a bundled recording. */
   showSilentTempo?: boolean;
+  /** Changing this value pauses an active chant — the counter bumps it when a
+   *  japa sankalp reaches its target (design.md §35.2). The value on mount is ignored. */
+  stopToken?: number;
+  /** `rail`: the counter's icon-only control column — speedometer above ▶/❚❚,
+   *  no text (design.md §35). `row` (default): Play pill + tempo in one line. */
+  layout?: 'row' | 'rail';
 };
 
 const RATE_STEP = 0.1;
@@ -62,12 +68,15 @@ export default function JapamAudioPlayer({
   onRateChange,
   onRecitationDurationChange,
   showSilentTempo,
+  stopToken,
+  layout = 'row',
 }: Props) {
   const { colors, typography, radii } = useTheme();
   const source = useMemo(() => getJapamAudioSource(mantraId), [mantraId]);
 
   if (source == null) {
-    return <UnavailableNotice key={mantraId} lang={lang} rate={rate} onRateChange={showSilentTempo ? onRateChange : undefined} />;
+    return <UnavailableNotice key={mantraId} lang={lang} rate={rate} layout={layout}
+      onRateChange={showSilentTempo ? onRateChange : undefined} />;
   }
 
   return (
@@ -83,6 +92,8 @@ export default function JapamAudioPlayer({
       onRateChange={onRateChange}
       onRecitationDurationChange={onRecitationDurationChange}
       showSilentTempo={showSilentTempo}
+      stopToken={stopToken}
+      layout={layout}
       colors={colors}
       typography={typography}
       radii={radii}
@@ -108,6 +119,8 @@ function ActiveAudioPlayer({
   onRateChange,
   onRecitationDurationChange,
   showSilentTempo,
+  stopToken,
+  layout = 'row',
   colors,
   typography,
   radii,
@@ -278,6 +291,21 @@ function ActiveAudioPlayer({
     [player, clearCapTimer]
   );
 
+  // A changed `stopToken` ends the chant session (a japa sankalp reached its
+  // target). Ignored on mount, so remounting for a new mantra never pauses.
+  const stopTokenRef = useRef(stopToken);
+  useEffect(() => {
+    if (stopTokenRef.current === stopToken) return;
+    stopTokenRef.current = stopToken;
+    clearCapTimer();
+    try {
+      player.pause();
+    } catch {
+      /* player may already be released */
+    }
+    setChanting(false);
+  }, [stopToken, player, clearCapTimer]);
+
   const isPlaying = chanting;
 
   const onPlayingChangeRef = useRef(onPlayingChange);
@@ -322,6 +350,34 @@ function ActiveAudioPlayer({
       : lang === 'kn'
         ? fontFamilies.kannada
         : typography.cardLatin.fontFamily;
+
+  if (layout === 'rail') {
+    return (
+      <View style={styles.rail}>
+        <JapamTempoControl iconOnly value={rate} onChange={setRate} lang={lang} fontFamily={labelSubFont} />
+        <Pressable
+          testID="japam-play"
+          onPress={togglePlay}
+          accessibilityRole="button"
+          accessibilityLabel={a11yPlay}
+          accessibilityState={{ disabled: !status.isLoaded }}
+          disabled={!status.isLoaded}
+          hitSlop={4}
+          style={({ pressed }) => [
+            styles.railBtn,
+            {
+              backgroundColor: isPlaying ? colors.saffron : colors.parchmentSoft,
+              borderColor: isPlaying ? colors.saffronDeep : colors.cardActiveBorder,
+            },
+            pressed && { opacity: 0.85 },
+            !status.isLoaded && { opacity: 0.5 },
+          ]}
+        >
+          <AppIcon name={isPlaying ? 'pause' : 'play'} size={18} color={isPlaying ? colors.onPrimary : colors.saffronDeep} weight="fill" />
+        </Pressable>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrap}>
@@ -371,7 +427,7 @@ function ActiveAudioPlayer({
   );
 }
 
-function UnavailableNotice({ lang, rate = 1, onRateChange }: Pick<Props, 'lang' | 'rate' | 'onRateChange'>) {
+function UnavailableNotice({ lang, rate = 1, onRateChange, layout = 'row' }: Pick<Props, 'lang' | 'rate' | 'onRateChange' | 'layout'>) {
   const { colors, typography } = useTheme();
   const text = pick(lang, {
     hi: 'इस मंत्र की ध्वनि उपलब्ध नहीं है',
@@ -385,6 +441,25 @@ function UnavailableNotice({ lang, rate = 1, onRateChange }: Pick<Props, 'lang' 
       : lang === 'kn'
         ? fontFamilies.kannada
         : typography.swipeHint.fontFamily;
+  if (layout === 'rail') {
+    // No recording: the speedometer stays for silent Infinity; a dimmed ▶ says
+    // there is nothing to play instead of the notice text.
+    return (
+      <View style={styles.rail}>
+        {onRateChange ? <JapamTempoControl iconOnly value={rate} onChange={onRateChange} lang={lang} fontFamily={noticeFont} /> : null}
+        <View
+          testID="japam-play"
+          accessible
+          accessibilityRole="button"
+          accessibilityLabel="Audio not available"
+          accessibilityState={{ disabled: true }}
+          style={[styles.railBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, opacity: 0.45 }]}
+        >
+          <AppIcon name="play" size={18} color={colors.inkMuted} weight="fill" />
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={[styles.wrap, !onRateChange && styles.wrapCentered]}>
       <Text
@@ -416,6 +491,19 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   wrapCentered: {
+    justifyContent: 'center',
+  },
+  // The counter's control column: speedometer above ▶/❚❚, 8 apart.
+  rail: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  railBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1,
+    alignItems: 'center',
     justifyContent: 'center',
   },
   playBtn: {

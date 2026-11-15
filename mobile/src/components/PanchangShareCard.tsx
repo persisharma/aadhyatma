@@ -1,7 +1,7 @@
-import { formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
+import { isSameLocalDay } from '@/panchang/muhuratFormat';
 import FestiveCorners from './FestiveCorners';
 import FestivalMotif from './FestivalMotif';
-import { occasionRange } from '@/panchang/occasionTimingFormat';
+import { occasionRange, occasionRangeParts } from '@/panchang/occasionTimingFormat';
 import React from 'react';
 import { Image, StyleSheet, Text, View, type StyleProp, type TextStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -58,10 +58,11 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
   const ritual = model.occasionTimings?.find(i => i.windows.length > 0 || i.noteHi);
   const primary = ritual?.windows[0];
   const referenceDay = model.referenceDay ?? ritual?.date;
-  const datedClock = !!primary && !!referenceDay && (!isSameLocalDay(primary.start, referenceDay) || !isSameLocalDay(primary.end, referenceDay));
-  const clockText = primary && referenceDay ? (datedClock && !primary.event
-    ? `${formatEndInstant(primary.start, referenceDay, lang)}\n– ${formatEndInstant(primary.end, referenceDay, lang)}`
-    : occasionRange(primary, referenceDay, lang)) : null;
+  const displayed = primary && referenceDay ? occasionRangeParts(primary, referenceDay, lang) : null;
+  const datedClock = !!displayed && !!referenceDay && (!isSameLocalDay(displayed.start, referenceDay) || (!!displayed.end && !isSameLocalDay(displayed.end, referenceDay)));
+  const clockText = displayed && primary ? (datedClock && !primary.event && displayed.endText
+    ? `${displayed.startText}\n– ${displayed.endText}`
+    : occasionRange(primary, referenceDay!, lang)) : null;
   const partsHi = ritual?.nameHi.split(' · ') ?? [];
   const partsEn = ritual?.nameEn.split(' · ') ?? [];
   const en = lang === 'en';

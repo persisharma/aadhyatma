@@ -47,14 +47,14 @@ test('Suvichar projects canonical full poems and poet credits without changing e
 });
 
 test('named Ram and Hari dohas retain their deity scope across the full prepared catalogue', () => {
-  const hari = ['rama','ram-darbar','krishna','radha-krishna','vishnu','tirupati-balaji','khatu-shyam','sanwariya-seth','jagannath'];
+  const hari = ['rama','ram-lalla','ram-darbar','krishna','radha-krishna','vishnu','tirupati-balaji','khatu-shyam','sanwariya-seth','jagannath'];
   for (const deity of suvicharDeityCatalog) {
     const ids = suvicharDohasFor(deity.id).map(t => t.id);
-    assert.equal(ids.includes('DH-rahim-doha-sharan'), ['rama','ram-darbar'].includes(deity.id));
+    assert.equal(ids.includes('DH-rahim-doha-sharan'), ['rama','ram-lalla','ram-darbar'].includes(deity.id));
     assert.equal(ids.includes('DH-rahim-doha-ahankar'), hari.includes(deity.id));
     // Parshuram keeps only its own collection, so it takes none of the six general dohas.
     const general = deity.id === 'parshuram' ? 0 : 6;
-    assert.equal(ids.length, general + Number(hari.includes(deity.id)) + Number(['rama','ram-darbar'].includes(deity.id)));
+    assert.equal(ids.length, general + Number(hari.includes(deity.id)) + Number(['rama','ram-lalla','ram-darbar'].includes(deity.id)));
     assert.deepEqual(suvicharThoughtsFor(deity.id).filter(t => t.id.startsWith('DH-')).map(t => t.id), ids);
   }
 });

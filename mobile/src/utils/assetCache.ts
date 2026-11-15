@@ -14,7 +14,26 @@
  * lands at a new path and is fetched once on its own, while everything unchanged
  * keeps its existing local file — no blanket cache-bust, no stale bytes.
  */
+import { Platform } from 'react-native';
 import { Directory, File, Paths } from 'expo-file-system';
+import { downloadWithResume, sweepAbandonedScratch } from './resumableDownload';
+
+/**
+ * No byte for this long means the connection is dead. Audio runs to megabytes,
+ * so there is no ceiling on duration: a slow download is allowed to finish, and
+ * on Android an interrupted one continues from its stored bytes on the next
+ * request instead of starting over (see `resumableDownload`).
+ *
+ * Never stricter than the platform's own client was before this cache shared
+ * that transfer. Android's gave up after 10 s without a byte, so 15 s is more
+ * patient and the bytes are kept. iOS's waits 60 s, and iOS cannot resume:
+ * cutting it off sooner would throw away a whole download that was only
+ * waiting, so there the limit is the system's own.
+ */
+export function assetDownloadStallMs(os: string): number {
+  return os === 'ios' ? 60_000 : 15_000;
+}
+export const ASSET_DOWNLOAD_STALL_MS = assetDownloadStallMs(Platform.OS);
 
 export interface CachedAssetRequest {
   /** Content hash — the stable, unguessable filename stem. */
@@ -56,19 +75,27 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
   if (pending) return pending;
 
   const task = (async () => {
-    const part = new File(dir, `${key}.${ext}.part`);
     try {
       if (!dir.exists) dir.create({ intermediates: true });
-      // Clear a leftover from a prior interrupted attempt, else the native
-      // downloader rejects (DestinationAlreadyExists) and never retries.
-      if (part.exists) part.delete();
-      await File.downloadFileAsync(remoteUrl, part);
-      part.move(file); // atomic: the final file only ever exists complete
+      // Scratch left by a killed process (including the single `.part` older
+      // builds wrote) is never progress and is cleared once per process.
+      await sweepAbandonedScratch(`${dir.uri.replace(/\/+$/, '')}/`);
+      const scratch = new File(
+        await downloadWithResume({
+          key: file.uri,
+          url: remoteUrl,
+          scratchBase: file.uri,
+          stallMs: ASSET_DOWNLOAD_STALL_MS,
+        })
+      );
+      try {
+        scratch.move(file); // atomic: the final file only ever exists complete
+      } catch (err) {
+        // Leave nothing half-written that a later call would treat as a cache hit.
+        if (scratch.exists) scratch.delete();
+        throw err;
+      }
       return file.uri;
-    } catch (err) {
-      // Leave nothing half-written that a later call would treat as a cache hit.
-      if (part.exists) part.delete();
-      throw err;
     } finally {
       inFlight.delete(file.uri);
     }

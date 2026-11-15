@@ -37,7 +37,14 @@ Exclusivity is arbitrated by `src/audio/playbackArbiter.ts`, **not** by any cont
 
 A plain module singleton: `registerStopper(kind, stop)` returns an unregister callback suitable
 for a `useEffect`, and `claimPlayback(kind)` silences every *other* source. `PlaybackKind` is
-`'recorded' | 'tts' | 'japam'`.
+`'recorded' | 'tts' | 'japam' | 'youtube'`.
+
+**Gotcha — a source with its own controls must claim on *their* start too.** The docked YouTube
+embed keeps YouTube's in-video ▶ (`controls: true`), which never passes through the strip's
+`play()`. Until Nov 2026 its `onChangeState(PLAYING)` set state without claiming, so resuming from
+the embed played over the bhajan that had paused it. It now claims when PLAYING arrives while its
+`playingRef` says paused (design.md §91). Any future source with native/embedded controls needs
+the same hook.
 
 It is a module rather than a context field on purpose: routing exclusion through
 `AudioPlayerContext`'s value would force every screen test that stubs `useAudioPlayerContext` to
@@ -105,6 +112,8 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 - `docs/roadmap/prds/02-verse-audio.md` — the bundled-recitation plan read-aloud complements.
 
 ## Gotchas
+
+- **The app-wide player is created on first use, never at launch (Nov 2026 ANR fix).** `AudioPlayerProvider` holds no player until `playTrack`/`togglePlay`/`toggleLoop` call `ensurePlayer()`. On Android, expo-audio's constructor builds ExoPlayer on the main thread (the JS thread blocks on it via `runBlocking`), and `sendPlayerUpdate` emits status from `Dispatchers.Main`. That is the `JSTypeConverter` frame in Play's launch ANR clusters. `stop()`, `seekTo` and `setRate` never create a player, because the arbiter calls `stop()` whenever read-aloud or japam starts. The status listener is attached inside `ensurePlayer()`, synchronously before `replace()`, because a cached file can report loaded before an effect would subscribe. `ensureBackgroundAudioMode()` moved there too.
 
 - **Never substitute a voice across languages, and never let the engine do it for you.** This is
   the whole point of the per-language design: reading Gujarati with only a Hindi voice installed must

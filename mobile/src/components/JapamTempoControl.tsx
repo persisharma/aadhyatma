@@ -10,9 +10,10 @@ import AppIcon from './AppIcon';
 import RateStepper from './RateStepper';
 import { MIN_JAPA_RATE, MAX_JAPA_RATE } from './japamRecitationTiming';
 
-/** Infinity-only compact control. The existing stepper still owns rate changes. */
-export default function JapamTempoControl({ value, onChange, lang, fontFamily }: {
-  value: number; onChange: (rate: number) => void; lang: Lang; fontFamily: string;
+/** Compact speed control opening the existing stepper in a sheet. `iconOnly` is the
+ *  44 dp speedometer circle of the counter's control column (design.md §35). */
+export default function JapamTempoControl({ value, onChange, lang, fontFamily, iconOnly = false }: {
+  value: number; onChange: (rate: number) => void; lang: Lang; fontFamily: string; iconOnly?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const { colors, typography } = useTheme();
@@ -21,11 +22,16 @@ export default function JapamTempoControl({ value, onChange, lang, fontFamily }:
   return <View>
     <Pressable testID="japam-tempo-open" onPress={() => setOpen(true)} accessibilityRole="button"
       accessibilityLabel={`${label}, ${value.toFixed(1)}×`} accessibilityState={{ expanded: open }}
-      style={({ pressed }) => [styles.chip, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider,
+      hitSlop={iconOnly ? 4 : undefined}
+      style={({ pressed }) => [iconOnly ? styles.circle : styles.chip, {
+        backgroundColor: colors.parchmentSoft,
+        borderColor: iconOnly ? colors.cardActiveBorder : colors.divider,
         opacity: pressed ? .7 : 1 }]}>
-      <GaugeIcon size={18} color={colors.saffronDeep} />
-      <Text style={{ color: colors.ink, fontSize: 18 * factor, fontFamily: typography.pageCounter.fontFamily }}>{value.toFixed(1)}×</Text>
-      <View style={{ transform: [{ rotate: '90deg' }] }}><AppIcon name="next" size={12} color={colors.inkMuted} /></View>
+      <GaugeIcon size={iconOnly ? 20 : 18} color={colors.saffronDeep} />
+      {iconOnly ? null : <>
+        <Text style={{ color: colors.ink, fontSize: 18 * factor, fontFamily: typography.pageCounter.fontFamily }}>{value.toFixed(1)}×</Text>
+        <View style={{ transform: [{ rotate: '90deg' }] }}><AppIcon name="next" size={12} color={colors.inkMuted} /></View>
+      </>}
     </Pressable>
     <Modal visible={open} transparent animationType="fade" onRequestClose={() => setOpen(false)}>
       <Pressable style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]} onPress={() => setOpen(false)}
@@ -52,6 +58,7 @@ export default function JapamTempoControl({ value, onChange, lang, fontFamily }:
 const styles = StyleSheet.create({
   chip: { minHeight: 44, borderWidth: 1, borderRadius: 24, paddingHorizontal: 12,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 },
+  circle: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
   backdrop: { flex: 1, justifyContent: 'flex-end' },
   sheet: { padding: 20, paddingBottom: 28, borderWidth: 1, borderTopLeftRadius: 24, borderTopRightRadius: 24 },
   heading: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 16 },

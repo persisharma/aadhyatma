@@ -16,9 +16,8 @@ const TAB_BAR_BASE_HEIGHT = 60;
 
 /**
  * Persistent mini-player. Rendered ONCE at the app root (App.tsx) so it floats
- * over every tab/stack while a track is loaded. Docks just above the tab bar,
- * mirroring the RoutineBanner; tapping the body expands the now-playing
- * overlay.
+ * over every tab/stack while a track is loaded. Docks just above the tab bar;
+ * tapping the body expands the now-playing overlay.
  */
 export default function MiniPlayer() {
   const { colors, radii, spacing, typography } = useTheme();

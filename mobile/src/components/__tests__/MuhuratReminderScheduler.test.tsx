@@ -21,6 +21,7 @@ import { computePanchangForDate } from '@/panchang/engine';
 import { computeMuhuratDay } from '@/panchang/muhurat';
 import { computeAstaFlags, evaluateDay, getEventRule } from '@/panchang/eventMuhurat';
 import { __resetPanchangDayStore } from '@/panchang/panchangDayStore';
+import { resetNotificationFamiliesForTests } from '@/notifications/familyArm';
 
 const UJJAIN = {
   cityId: 'ujjain',
@@ -138,6 +139,9 @@ async function mount() {
 beforeEach(async () => {
   await AsyncStorage.clear();
   __resetPanchangDayStore();
+  // Each test is a fresh app process: nothing armed yet. Within one process an
+  // identical plan is deliberately not re-armed (`familyArm`).
+  resetNotificationFamiliesForTests();
   mockScheduled.length = 0;
   mockLocation = UJJAIN;
   mockPermission = 'granted';

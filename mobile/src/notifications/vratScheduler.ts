@@ -7,6 +7,7 @@
  */
 
 import * as Notifications from 'expo-notifications';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planVratReminders,
   formatVratReminderContent,
@@ -23,16 +24,11 @@ export type VratNotificationPayload = {
 
 /** Cancel every vrat reminder we own, leaving other notifications untouched. */
 export async function cancelAllVratReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(VRAT_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await cancelNotificationFamily(VRAT_NOTIF_PREFIX);
 }
 
 /**
- * Re-arm vrat reminders: cancel ours, then schedule the planned set (followed-
+ * Re-arm vrat reminders: replace ours with the planned set (followed-
  * first, within the rolling window, under the dedicated iOS cap). Idempotent and
  * safe to call on every app foreground. Returns the count actually scheduled.
  */
@@ -40,12 +36,9 @@ export async function scheduleVratReminders(
   inputs: VratReminderInput[],
   now: Date = new Date()
 ): Promise<number> {
-  await cancelAllVratReminders();
-
   const { planned } = planVratReminders(inputs, now);
 
-  let scheduled = 0;
-  for (const p of planned) {
+  const slots: FamilySlot[] = planned.map((p) => {
     const { title, body } = formatVratReminderContent(p);
     const payload: VratNotificationPayload = {
       type: 'vrat-reminder',
@@ -53,25 +46,21 @@ export async function scheduleVratReminders(
       occurrenceDateKey: p.occurrenceDateKey,
       kind: p.kind,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-        },
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+      },
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return armNotificationFamily(VRAT_NOTIF_PREFIX, slots);
 }

@@ -23,6 +23,7 @@ import {
   notificationIdentifierFor,
   parseStoredAlarms,
   repeatSummary,
+  dayLetters,
   repeatsDaily,
   snoozeIdentifierFor,
   sortAlarms,
@@ -340,41 +341,58 @@ import {
   assert.equal(once.length, 1);
 }
 
-// repeatSummary: canonical shapes in both languages.
+// repeatSummary: canonical shapes in every UI language (gu/kn used to fall to English).
 {
-  assert.equal(repeatSummary(undefined, false), 'Daily');
-  assert.equal(repeatSummary([0, 1, 2, 3, 4, 5, 6], false), 'Daily');
-  assert.equal(repeatSummary([], false), 'Once');
-  assert.equal(repeatSummary([1, 2, 3, 4, 5], false), 'Weekdays');
-  assert.equal(repeatSummary([0, 6], false), 'Weekends');
-  assert.equal(repeatSummary([0, 3], false), 'Sun, Wed');
-  assert.equal(repeatSummary(undefined, true), 'प्रतिदिन');
-  assert.equal(repeatSummary([], true), 'एक बार');
-  assert.equal(repeatSummary([1, 2, 3, 4, 5], true), 'सोम–शुक्र');
-  assert.equal(repeatSummary([0, 3], true), 'रवि, बुध');
+  assert.equal(repeatSummary(undefined, 'en'), 'Daily');
+  assert.equal(repeatSummary([0, 1, 2, 3, 4, 5, 6], 'en'), 'Daily');
+  assert.equal(repeatSummary([], 'en'), 'Once');
+  assert.equal(repeatSummary([1, 2, 3, 4, 5], 'en'), 'Weekdays');
+  assert.equal(repeatSummary([0, 6], 'en'), 'Weekends');
+  assert.equal(repeatSummary([0, 3], 'en'), 'Sun, Wed');
+  assert.equal(repeatSummary(undefined, 'hi'), 'प्रतिदिन');
+  assert.equal(repeatSummary([], 'hi'), 'एक बार');
+  assert.equal(repeatSummary([1, 2, 3, 4, 5], 'hi'), 'सोम–शुक्र');
+  assert.equal(repeatSummary([0, 3], 'hi'), 'रवि, बुध');
+  assert.equal(repeatSummary(undefined, 'gu'), 'દરરોજ');
+  assert.equal(repeatSummary([0, 3], 'gu'), 'રવિ, બુધ');
+  assert.equal(repeatSummary([], 'kn'), 'ಒಮ್ಮೆ');
+  assert.equal(repeatSummary([0, 3], 'kn'), 'ಭಾನು, ಬುಧ');
+  for (const lang of ['gu', 'kn'] as const) {
+    assert.ok(!/[A-Za-z]/.test(repeatSummary([1, 2, 3, 4, 5], lang)), `${lang} repeat summary must not be English`);
+  }
+}
+
+// dayLetters: one chip row per UI language.
+{
+  assert.deepEqual(dayLetters('en'), ['S', 'M', 'T', 'W', 'T', 'F', 'S']);
+  assert.equal(dayLetters('hi')[0], 'र');
+  assert.equal(dayLetters('gu')[1], 'સો');
+  assert.equal(dayLetters('kn')[0], 'ಭಾ');
 }
 
 // describeUntilFire: minute / hour / day granularity + sub-minute floor.
 {
   const now = new Date('2026-06-15T08:00:00').getTime();
   const at = (iso: string) => new Date(iso).getTime();
-  assert.equal(describeUntilFire(at('2026-06-15T08:25:00'), now, false), 'in 25 min');
+  assert.equal(describeUntilFire(at('2026-06-15T08:25:00'), now, 'en'), 'in 25 min');
   assert.equal(
-    describeUntilFire(at('2026-06-15T15:25:00'), now, false),
+    describeUntilFire(at('2026-06-15T15:25:00'), now, 'en'),
     'in 7 hr 25 min'
   );
   // Days out: minutes are dropped as noise.
   assert.equal(
-    describeUntilFire(at('2026-06-17T11:25:00'), now, false),
+    describeUntilFire(at('2026-06-17T11:25:00'), now, 'en'),
     'in 2 d 3 hr'
   );
   // Sub-minute gaps round up (never "in 0 min"); at-or-past floors to <1 min.
-  assert.equal(describeUntilFire(now + 10_000, now, false), 'in 1 min');
-  assert.equal(describeUntilFire(now - 5_000, now, false), 'in <1 min');
+  assert.equal(describeUntilFire(now + 10_000, now, 'en'), 'in 1 min');
+  assert.equal(describeUntilFire(now - 5_000, now, 'en'), 'in <1 min');
   assert.equal(
-    describeUntilFire(at('2026-06-15T15:25:00'), now, true),
+    describeUntilFire(at('2026-06-15T15:25:00'), now, 'hi'),
     '7 घं 25 मि में'
   );
+  assert.equal(describeUntilFire(at('2026-06-15T15:25:00'), now, 'gu'), '7 કલાક 25 મિનિટ પછી');
+  assert.equal(describeUntilFire(at('2026-06-15T08:25:00'), now, 'kn'), '25 ನಿಮಿಷ ನಂತರ');
 }
 
 // formatTimeLabel: always 24 h, zero-padded.

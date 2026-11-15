@@ -1,5 +1,6 @@
 import * as FileSystem from 'expo-file-system/legacy';
 import type { CachedAssetRequest } from './assetCache';
+import { downloadWithResume, forgetPartialDownload, sweepAbandonedScratch } from './resumableDownload';
 
 type Listener = (uri: string | null) => void;
 type Job = {
@@ -10,13 +11,23 @@ type Job = {
   abort?: () => void;
 };
 
-export const BACKGROUND_DOWNLOAD_TIMEOUT_MS = 8000;
+/**
+ * No byte for this long means the connection is dead: settle to the fallback
+ * and free the slot. It is a STALL limit, not a duration — the old 8 s total
+ * meant a 340 KB plate needed 42 KB/s to ever appear, and failed on every visit
+ * below that (see `resumableDownload`).
+ */
+export const BACKGROUND_DOWNLOAD_STALL_MS = 8000;
+/**
+ * A slot is still bounded. Two minutes carries the largest plate (~550 KB) down
+ * to ~5 KB/s; past it the attempt yields its slot and, on Android, the next
+ * visit continues from the bytes already stored.
+ */
+export const BACKGROUND_DOWNLOAD_MAX_MS = 120000;
 export const BACKGROUND_DOWNLOAD_CONCURRENCY = 2;
 const jobs = new Map<string, Job>();
 const queue: Job[] = [];
 let running = 0;
-let attempt = 0;
-
 /** Content identity survives CDN changes; it is also the persistent filename. */
 function cacheIdentity(request: CachedAssetRequest): string {
   return `${request.key}.${request.ext}`;
@@ -50,36 +61,30 @@ async function resolve(job: Job): Promise<string> {
   await FileSystem.makeDirectoryAsync(directory, { intermediates: true });
   if (job.cancelled) throw new Error('Background no longer visible');
 
-  // Unique temporary files prevent a cancelled attempt racing a new subscriber.
-  const temporary = `${destination}.${++attempt}.part`;
-  // A process-killed first attempt may have left this path behind. It is never
-  // treated as a hit and must not prevent a fresh download on the next launch.
-  await FileSystem.deleteAsync(temporary, { idempotent: true });
+  await sweepAbandonedScratch(directory);
   if (job.cancelled) throw new Error('Background no longer visible');
-  const download = FileSystem.createDownloadResumable(job.request.remoteUrl, temporary);
-  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  // One attempt per content identity at a time; an interrupted attempt keeps
+  // its bytes for the next one where the platform can resume.
+  const scratch = await downloadWithResume({
+    key: destination,
+    url: job.request.remoteUrl,
+    scratchBase: destination,
+    stallMs: BACKGROUND_DOWNLOAD_STALL_MS,
+    maxMs: BACKGROUND_DOWNLOAD_MAX_MS,
+    onAbortable: abort => { job.abort = abort; },
+    isCancelled: () => job.cancelled,
+  });
   let committed = false;
   try {
-    const interrupted = new Promise<never>((_, reject) => {
-      job.abort = () => reject(new Error('Background download cancelled'));
-      timer = setTimeout(job.abort, BACKGROUND_DOWNLOAD_TIMEOUT_MS);
-    });
-    const result = await Promise.race([download.downloadAsync(), interrupted]);
-    if (job.cancelled || !result || result.status !== 200) throw new Error('Background download failed');
-    const info = await FileSystem.getInfoAsync(temporary);
-    if (!info.exists || info.isDirectory || info.size === 0) throw new Error('Empty background');
-    if (job.cancelled) throw new Error('Background no longer visible');
-    // A complete download is promoted atomically; interrupted files are never hits.
-    await FileSystem.moveAsync({ from: temporary, to: destination });
+    // A complete download is promoted atomically; interrupted files are never
+    // hits. It is promoted even if its last viewer has just left: the bytes are
+    // paid for, and the next visit should find them rather than fetch again.
+    await FileSystem.moveAsync({ from: scratch, to: destination });
     committed = true;
     return destination;
   } finally {
-    if (timer) clearTimeout(timer);
-    job.abort = undefined;
-    if (!committed) {
-      await download.cancelAsync().catch(() => undefined);
-      await FileSystem.deleteAsync(temporary, { idempotent: true }).catch(() => undefined);
-    }
+    if (!committed) await FileSystem.deleteAsync(scratch, { idempotent: true }).catch(() => undefined);
   }
 }
 
@@ -155,5 +160,7 @@ export async function peekBackgroundAsset(request: CachedAssetRequest): Promise<
 /** A native decode failure must not poison the persistent cache on every visit. */
 export async function evictBackgroundAsset(request: CachedAssetRequest): Promise<void> {
   const path = cachePath(request);
-  if (path) await FileSystem.deleteAsync(path, { idempotent: true }).catch(() => undefined);
+  if (!path) return;
+  await forgetPartialDownload(path);
+  await FileSystem.deleteAsync(path, { idempotent: true }).catch(() => undefined);
 }

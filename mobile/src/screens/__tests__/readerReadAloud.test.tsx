@@ -92,7 +92,10 @@ import { getGaneshStotramChapter } from '@/data/ganesh-stotram';
 import { getDurgaStotramChapter } from '@/data/durga-stotram';
 import { getSaraswatiStotramChapter } from '@/data/saraswati-stotram';
 import { getVishnuSahasranamaChapter } from '@/data/vishnu-sahasranama';
-import { getValmikiRamayanChapter } from '@/data/valmiki-ramayan';
+import { loadValmikiRamayanChapter, type ValmikiRamayanChapter } from '@/data/valmiki-ramayan';
+// The published master: the kāṇḍa itself is loaded asynchronously, and this
+// table is built at module scope.
+import valmikiBalaKanda from '@/data/valmiki-ramayan/chapter-01.json';
 import ChalisaReaderScreen from '../ChalisaReaderScreen';
 import GitaReaderScreen from '../GitaReaderScreen';
 import GitaSaarReaderScreen from '../GitaSaarReaderScreen';
@@ -321,7 +324,7 @@ const READERS: readonly ReaderEntry[] = [
   {
     name: 'ValmikiRamayanReaderScreen (kāṇḍa 1)',
     ...screen(ValmikiRamayanReaderScreen, 'ValmikiRamayanReader', { chapter: 1, initialIndex: 0 }),
-    firstSpokenLine: firstLine(chapter1(getValmikiRamayanChapter).verses.map((v) => v.lines)),
+    firstSpokenLine: firstLine((valmikiBalaKanda as unknown as ValmikiRamayanChapter).verses.map((v) => v.lines)),
   },
 ];
 
@@ -357,6 +360,12 @@ function findByA11y(t: TestRenderer.ReactTestRenderer, label: string) {
     (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function'
   );
 }
+
+// The kāṇḍa is loaded, not required. Loading it once up front puts the reader
+// on its synchronous path (already in memory), which is the path under test here.
+beforeAll(async () => {
+  await loadValmikiRamayanChapter(1);
+});
 
 beforeEach(() => {
   speechMock.__calls.length = 0;

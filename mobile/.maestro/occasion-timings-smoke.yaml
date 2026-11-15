@@ -29,6 +29,19 @@ appId: com.prashantsharma.vedansh
     element: { id: occasion-timings-card }
     direction: UP
 - takeScreenshot: occasion-diwali-vrat-back
+# Proposal 08: reach the individual share from the retained dated catalog.
+# Native payload inspection (including Copy) is documented in the review checklist.
+- scrollUntilVisible:
+    element: { id: occasion-share }
+    direction: DOWN
+- tapOn: { id: occasion-share }
+- tapOn: "Card language: English"
+- scrollUntilVisible:
+    element: { text: "Send as text" }
+    direction: DOWN
+- assertVisible: "Send as text"
+- tapOn: "Cancel"
+- assertVisible: { id: occasion-share }
 - openLink: "vedansh://widget/panchang?date=2026-10-20"
 - scrollUntilVisible:
     element:

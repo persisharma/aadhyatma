@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Pressable, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { suvicharArtRequest, suvicharHeroFraction } from '@/data/suvichar';
+import { suvicharPhotoArt } from '@/data/suvicharPhotoArt';
 import type { SuvicharTemplate } from '@/data/suvicharTemplates';
+import SuvicharPortraitImage from './SuvicharPortraitImage';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
@@ -15,6 +17,7 @@ const TILE_WIDTH = 156;
 function PresetTile({ template, lang, selected, disabled, onSelect, compact, testID }: { template: SuvicharTemplate; lang: Lang; selected: boolean; disabled: boolean; onSelect: Props['onSelect']; compact?: boolean; testID: string }) {
   const { colors, spacing, radii, typography } = useTheme();
   const request = suvicharArtRequest(template.deity, template.frame);
+  const portrait = suvicharPhotoArt(template.deity);
   const [art, setArt] = useState<{ url: string; uri: string } | null>(null);
   useEffect(() => {
     if (!request) return;
@@ -27,7 +30,7 @@ function PresetTile({ template, lang, selected, disabled, onSelect, compact, tes
     accessibilityState={{ selected, disabled }} disabled={disabled} onPress={() => onSelect(template)}
     style={{ width: TILE_WIDTH, borderRadius: radii.md, borderWidth: 2, borderColor: selected ? colors.saffron : colors.divider, backgroundColor: colors.parchmentSoft, overflow: 'hidden' }}>
     <View style={{ height: TILE_WIDTH * 1.25 * suvicharHeroFraction(template.deity, template.frame), overflow: 'hidden', backgroundColor: colors.parchmentSoft }}>
-      {uri ? <Image accessible={false} source={{ uri }} style={{ width: TILE_WIDTH, height: TILE_WIDTH * 1.25 }} resizeMode="stretch" onError={() => setArt(null)} /> : null}
+      {uri ? portrait ? <SuvicharPortraitImage portrait={portrait} uri={uri} width={TILE_WIDTH} height={TILE_WIDTH * 1.25 * suvicharHeroFraction(template.deity, template.frame)} onError={() => setArt(null)} /> : <Image accessible={false} source={{ uri }} style={{ width: TILE_WIDTH, height: TILE_WIDTH * 1.25 }} resizeMode="stretch" onError={() => setArt(null)} /> : null}
     </View>
     <View style={{ padding: spacing.sm, gap: spacing.xs }}>
       <Text style={{ color: colors.ink, fontFamily: titleFontByLang(lang), fontSize: typography.readerTitle.fontSize, lineHeight: typography.readerTitle.fontSize * 1.65 }}>{title}</Text>

@@ -7,6 +7,8 @@ import type { Lang } from '@/data/gita/language';
 import { meaningToken, titleFontByLang } from '@/utils/langType';
 import { contentByLang, pick } from '@/utils/localize';
 import { suvicharArtRequest, suvicharDeities } from '@/data/suvichar';
+import { suvicharPhotoArt } from '@/data/suvicharPhotoArt';
+import SuvicharPortraitImage from './SuvicharPortraitImage';
 import { suvicharVaarFor } from '@/data/suvicharVaar';
 import { peekBackgroundAsset } from '@/utils/backgroundAssetCache';
 import AppIcon from './AppIcon';
@@ -24,6 +26,7 @@ export default function SuvicharEntryCard({ lang, onPress }: { lang: Lang; onPre
     : pick(lang, { hi: 'अपने नाम के साथ, परिवार और मित्रों को', en: 'With your name, to family and friends', gu: 'તમારા નામ સાથે, પરિવાર અને મિત્રોને', kn: 'ನಿಮ್ಮ ಹೆಸರಿನೊಂದಿಗೆ, ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರಿಗೆ' });
   // Cache only: Daily Bhakti never downloads a master for this decoration.
   const request = deity ? suvicharArtRequest(deity.id, 'mandir-jharokha') : null;
+  const portrait = deity ? suvicharPhotoArt(deity.id) : null;
   const [art, setArt] = useState<string | null>(null);
   useEffect(() => {
     let active = true;
@@ -39,7 +42,7 @@ export default function SuvicharEntryCard({ lang, onPress }: { lang: Lang; onPre
       ...androidBoxShadow(2, 8, 'rgba(138, 62, 11, 0.08)') }, pressed && { opacity: 0.85 }]}>
     <View accessible={false} importantForAccessibility="no-hide-descendants" style={{ width: 46, height: 60, borderRadius: 6, borderWidth: 1,
       borderColor: colors.gold, backgroundColor: colors.parchmentSoft, overflow: 'hidden', transform: [{ rotate: '-4deg' }] }}>
-      {art ? <Image testID="open-suvichar-art" source={{ uri: art }} resizeMode="cover" style={{ width: '100%', height: '100%' }} onError={() => setArt(null)} /> : <>
+      {art ? portrait ? <SuvicharPortraitImage testID="open-suvichar-art" portrait={portrait} uri={art} width={44} height={58} onError={() => setArt(null)} /> : <Image testID="open-suvichar-art" source={{ uri: art }} resizeMode="cover" style={{ width: '100%', height: '100%' }} onError={() => setArt(null)} /> : <>
         <View style={{ height: 32, backgroundColor: colors.cardThumbActiveTo, alignItems: 'center', justifyContent: 'center' }}>
           <Text allowFontScaling={false} style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 16, lineHeight: 24, color: colors.saffronDeep }}>ॐ</Text>
         </View>

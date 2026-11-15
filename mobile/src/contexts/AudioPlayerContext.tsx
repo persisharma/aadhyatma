@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { createAudioPlayer, type AudioStatus } from 'expo-audio';
+import { createAudioPlayer, type AudioPlayer, type AudioStatus } from 'expo-audio';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
@@ -67,8 +67,28 @@ type AudioPlayerContextValue = {
 const AudioPlayerContext = createContext<AudioPlayerContextValue | null>(null);
 
 export function AudioPlayerProvider({ children }: { children: React.ReactNode }) {
-  // One player for the whole session. Lazy init runs exactly once.
-  const [player] = useState(() => createAudioPlayer(null, { updateInterval: 500 }));
+  // One player for the whole session, created on FIRST USE, never at launch.
+  // On Android the native constructor builds ExoPlayer on the main thread (the
+  // JS thread blocks on it) and immediately emits a status event from main —
+  // the `JSTypeConverter` frame in Play's launch ANR clusters
+  // (docs/engineering/android-anr-audit-2026-11.md §6). Most sessions never
+  // play recorded audio, so they never pay for it.
+  const [player, setPlayer] = useState<AudioPlayer | null>(null);
+  const playerRef = useRef<AudioPlayer | null>(null);
+  const statusSubRef = useRef<{ remove: () => void } | null>(null);
+  const ensurePlayer = useCallback((): AudioPlayer => {
+    if (playerRef.current) return playerRef.current;
+    void ensureBackgroundAudioMode();
+    const created = createAudioPlayer(null, { updateInterval: 500 });
+    // Mirror native playback state into React. Subscribed HERE, synchronously,
+    // not in an effect: the caller replaces the source immediately, and a
+    // cached file can report loaded before an effect would have subscribed —
+    // a lost `isLoaded` leaves the loaded-gate armed and the track never starts.
+    statusSubRef.current = created.addListener('playbackStatusUpdate', (s) => setStatus(s));
+    playerRef.current = created;
+    setPlayer(created);
+    return created;
+  }, []);
   const [status, setStatus] = useState<AudioStatus | null>(null);
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
   const [rate, setRateState] = useState(1.0);
@@ -89,36 +109,29 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   // this, longer files that load slowly stay paused.
   const wantPlayRef = useRef(false);
 
-  useEffect(() => {
-    ensureBackgroundAudioMode();
-  }, []);
-
-  // Mirror native playback state into React.
-  useEffect(() => {
-    const sub = player.addListener('playbackStatusUpdate', (s) => setStatus(s));
-    return () => sub.remove();
-  }, [player]);
-
   // Start a newly-loaded track once the source is ready. Guarded by a ref so it
   // fires exactly once per playTrack and never fights a user pause.
   useEffect(() => {
     if (wantPlayRef.current && status?.isLoaded) {
       wantPlayRef.current = false;
       setIsBuffering(false);
-      player.play();
+      player?.play();
     }
   }, [status, player]);
 
   // Tear down the player when the app tree unmounts (app exit).
   useEffect(() => {
     return () => {
+      statusSubRef.current?.remove();
+      statusSubRef.current = null;
       try {
-        player.remove();
+        playerRef.current?.remove();
       } catch {
         /* already released */
       }
+      playerRef.current = null;
     };
-  }, [player]);
+  }, []);
 
   const playTrack = useCallback(
     (track: AudioTrack) => {
@@ -128,7 +141,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       setNowPlayingOpen(false);
       // Re-tapping the current track just resumes.
       if (track.id === currentTrack?.id) {
-        player.play();
+        ensurePlayer().play();
         return;
       }
       const request = audioRemoteRequest(track.id);
@@ -137,6 +150,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
         setCurrentTrack(track);
         return;
       }
+      const player = ensurePlayer();
       // Stop the outgoing track at once so it doesn't keep playing through the
       // new one's download/decrypt (which can take a beat on first use).
       try {
@@ -168,7 +182,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       // Defer play() to the loaded-gate effect — the source buffers first.
       wantPlayRef.current = true;
     },
-    [player, currentTrack?.id]
+    [ensurePlayer, currentTrack?.id]
   );
 
   // Warm a track's on-device cache before the user taps it (e.g. on press-in),
@@ -181,23 +195,20 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   }, []);
 
   const togglePlay = useCallback(() => {
-    if (status?.playing) player.pause();
-    else player.play();
-  }, [player, status?.playing]);
+    if (status?.playing) playerRef.current?.pause();
+    else ensurePlayer().play();
+  }, [ensurePlayer, status?.playing]);
 
-  const seekTo = useCallback(
-    (seconds: number) => {
-      player.seekTo(Math.max(0, seconds)).catch(() => undefined);
-    },
-    [player]
-  );
+  const seekTo = useCallback((seconds: number) => {
+    playerRef.current?.seekTo(Math.max(0, seconds)).catch(() => undefined);
+  }, []);
 
   const skipBy = useCallback(
     (seconds: number) => {
       const next = (status?.currentTime ?? 0) + seconds;
-      player.seekTo(Math.max(0, next)).catch(() => undefined);
+      playerRef.current?.seekTo(Math.max(0, next)).catch(() => undefined);
     },
-    [player, status?.currentTime]
+    [status?.currentTime]
   );
 
   /**
@@ -263,7 +274,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     finishedRef.current = true;
 
     // Repeat-one: the native loop flag already restarts this track.
-    if (player.loop) return;
+    if (player?.loop) return;
 
     // No wrap — at the end of the library playback simply stops, rather than
     // cycling the catalog indefinitely in the background.
@@ -275,33 +286,40 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     (next: number) => {
       const clamped = Math.min(MAX_RATE, Math.max(MIN_RATE, +next.toFixed(2)));
       setRateState(clamped);
+      // No player yet: playTrack applies the rate (rateRef) when one is made.
+      const player = playerRef.current;
+      if (!player) return;
       player.shouldCorrectPitch = true;
       player.setPlaybackRate(clamped, 'high');
     },
-    [player]
+    []
   );
 
   const toggleLoop = useCallback(() => {
+    const player = ensurePlayer();
     player.loop = !player.loop;
     // Nudge a status refresh so consumers re-render with the new loop flag.
     setStatus((s) => (s ? { ...s, loop: player.loop } : s));
-  }, [player]);
+  }, [ensurePlayer]);
 
   const stop = useCallback(() => {
     // Disarm a pending play so a still-buffering source can't start after Stop —
     // or after read-aloud / japam has claimed the session (the 'recorded' stopper).
     wantPlayRef.current = false;
     setIsBuffering(false);
+    // Never creates a player: the arbiter calls this whenever read-aloud or
+    // japam starts, including in sessions that never played recorded audio.
+    const player = playerRef.current;
     try {
-      player.pause();
-      player.seekTo(0).catch(() => undefined);
-      player.clearLockScreenControls();
+      player?.pause();
+      player?.seekTo(0).catch(() => undefined);
+      player?.clearLockScreenControls();
     } catch {
       /* player released */
     }
     setCurrentTrack(null);
     setNowPlayingOpen(false);
-  }, [player]);
+  }, []);
 
   const openNowPlaying = useCallback(() => setNowPlayingOpen(true), []);
   const closeNowPlaying = useCallback(() => setNowPlayingOpen(false), []);

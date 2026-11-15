@@ -100,7 +100,7 @@ test('every Android provider in the catalog is a real class, a registered receiv
 test('only the small verse cell reads the excerpt — wider cells read the full lines', () => {
   const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
   const verseView = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('MARK: - आज का पंचांग'));
-  assert.match(verseView, /family == \.systemSmall\s*\{\s*Text\(v\.excerpt/, 'iOS must gate v.excerpt behind systemSmall');
+  assert.match(verseView, /family == \.systemSmall\s*\{[\s\S]*?Text\(v\.excerpt/, 'iOS must gate v.excerpt behind systemSmall');
   assert.equal(verseView.match(/v\.excerpt/g)?.length, 1, 'iOS reads the excerpt in exactly one branch');
   assert.match(verseView, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)/, 'the wide iOS cell must flow the full lines');
 

@@ -15,10 +15,10 @@ const deityScope: Readonly<Record<string, readonly SuvicharDeity[]>> = {
   'kabir-doha-santosh': [],
   'kabir-doha-man': [],
   'kabir-doha-daya': [],
-  'rahim-doha-ahankar': ['rama', 'ram-darbar', 'krishna', 'radha-krishna', 'vishnu', 'tirupati-balaji', 'khatu-shyam', 'sanwariya-seth', 'jagannath'],
+  'rahim-doha-ahankar': ['rama', 'ram-lalla', 'ram-darbar', 'krishna', 'radha-krishna', 'vishnu', 'tirupati-balaji', 'khatu-shyam', 'sanwariya-seth', 'jagannath'],
   'rahim-doha-daan': [],
   'rahim-doha-santosh': [],
-  'rahim-doha-sharan': ['rama', 'ram-darbar'],
+  'rahim-doha-sharan': ['rama', 'ram-lalla', 'ram-darbar'],
 };
 
 // This module belongs to the Suvichar content graph, never the launch registry.

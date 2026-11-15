@@ -31,7 +31,7 @@ enable flag or code change. A manually selected **dry-run** never uploads.
 
 ## Publication contract
 
-`scripts/r2-collections.json` maps the ten current runtime manifests to bounded
+`scripts/r2-collections.json` maps the current runtime manifests to bounded
 source folders: Kids Stories, audio, reading backgrounds, reader illustrations,
 Suvichar, Daily Bhakti, Vidhi, festival heroes and both comic editions. The Vidhi
 collection also reuses reader-illustration sources. Ayodhya sources live in its
@@ -90,3 +90,7 @@ PASS: a dry run against the current repository resolves all ten collections.
 PENDING: a credentialed GitHub publication and live CDN proof, intentionally
 deferred until the user configures secrets. Language/size/native journeys are
 N/A for this script/workflow change; no app UI or runtime data is changed.
+
+### Ram Lalla generated portrait (11 November 2026)
+
+`suvichar-portraits` registers `mobile/src/data/suvicharPortraitManifest.json` against `mobile/assets/suvichar/portraits`. The lossless master remains reproducible but only the hash-pinned WebP is in the publication allowlist. Validate/publish the bounded collection with `--collection suvichar-portraits`. Verify the public full SHA-256 before merging the runtime change; automatic publication remains main-only. A successful PR source validation is not proof of upload.

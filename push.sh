@@ -46,6 +46,12 @@ echo "Channel: ${CHANNEL}"
 echo "Platform: ${PLATFORM}"
 echo "Meta tracking: ${META_TRACKING_ENABLED:-unset (disabled)}"
 echo "Message: ${MESSAGE}"
+# How the Valmiki corpus travels follows the runtime being published to
+# (mobile/corpusDelivery.js): a store build that predates the bundled part files
+# keeps the corpus in the JS bundle, so this OTA asks nothing of it that it lacks.
+# Assigned first so a failure here (a mistyped VALMIKI_CORPUS_DELIVERY) stops the publish.
+CORPUS_DELIVERY="$(node -p "require('./corpusDelivery').describeValmikiCorpusDelivery(require('./app.json').expo.version)")"
+echo "Valmiki corpus: ${CORPUS_DELIVERY}"
 
 exec npx eas-cli update \
   --channel "${CHANNEL}" \

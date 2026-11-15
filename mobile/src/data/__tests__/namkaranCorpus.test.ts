@@ -6,7 +6,8 @@ import test from 'node:test';
 import { NAMKARAN_CORPUS, NAMKARAN_SHARD_COUNT } from '../namkaran';
 import type { NameRecord, NamkaranShard } from '../namkaran/types';
 import { deities } from '../deities';
-import { CHARANA_TABLE } from '../../panchang/namkaranConvention';
+import { CHARANA_TABLE, NAMAKSHAR_SOURCE } from '../../panchang/namkaranConvention';
+import { NAMKARAN_RELEASED, namkaranDoorVisible } from '../../panchang/namkaranRelease';
 
 const DIR = join('src', 'data', 'namkaran');
 
@@ -174,4 +175,17 @@ test('the 12+12 coverage floor gates release eligibility', () => {
     gaps.length > 0,
     'every charana now meets the 12+12 floor — set NAMKARAN_CORPUS.releaseEligible to true'
   );
+});
+
+// RULEBOOK §18.5: "a release gate that prevents the feature from being exposed in a
+// production build". The gate literal must track both source flags, and while either
+// is open no production build may show a door into Namkaran.
+test('the Namkaran release gate tracks the convention and corpus flags', () => {
+  assert.equal(
+    NAMKARAN_RELEASED,
+    NAMAKSHAR_SOURCE.verified && NAMKARAN_CORPUS.releaseEligible,
+    'update panchang/namkaranRelease.ts NAMKARAN_RELEASED together with the source flags'
+  );
+  assert.equal(namkaranDoorVisible(true), true, 'development builds keep the doors for QA and Maestro');
+  assert.equal(namkaranDoorVisible(false), NAMKARAN_RELEASED, 'production builds show the doors only once released');
 });

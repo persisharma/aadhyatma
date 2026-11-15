@@ -1,4 +1,5 @@
 import { InteractionManager } from 'react-native';
+import { isConstrainedDevice } from '@/utils/devicePace';
 
 /**
  * Depth-staged background warm-up for lazy screens.
@@ -27,6 +28,15 @@ import { InteractionManager } from 'react-native';
  * A screen the user taps before its turn is not penalised: `lazyScreen` hands
  * out ONE shared promise per screen, so the tap and the warm-up resolve off the
  * same evaluation rather than racing two of them.
+ *
+ * ON A CONSTRAINED PHONE THE WALK STAYS ONE TAP AHEAD AND NO FURTHER. "Invisible"
+ * above is only true where a module evaluates in a few milliseconds. Where the
+ * launch bundle itself took the best part of a second (`utils/devicePace`), the
+ * same walk is ~120 further evaluations the user can feel, for screens most
+ * sessions never open, and a heap that holds all of them. There the walk warms
+ * what Home opens directly and then stops; `prioritise` wakes it for whatever
+ * the screen the user is now on can open. A first tap is still usually warm —
+ * the walk has simply stopped guessing two and three taps out.
  */
 export type PrefetchEntry = {
   /** Route name, for debugging and for the ordering test. */
@@ -86,6 +96,10 @@ const urgent = new Set<string>();
  */
 export function prioritise(labels: readonly string[]): void {
   for (const label of labels) urgent.add(label);
+  // On a constrained phone the walk stops after Home's own children and is
+  // woken here, by the user arriving somewhere. Elsewhere the first walk is
+  // still running (or has warmed everything) and this only reorders it.
+  if (started?.constrained) void walk();
 }
 
 /** Registered entries in the order they will be warmed. Exported for the test. */
@@ -100,6 +114,14 @@ export function prefetchOrder(): PrefetchEntry[] {
  * handled on an empty thread, short enough to finish depth 2 within a few
  * seconds of launch. */
 const GAP_MS = 60;
+
+/** The same gap where one evaluation is itself a felt stall: leave real room
+ * for a tap between two of them. */
+const CONSTRAINED_GAP_MS = 250;
+
+/** Home is depth 1; this is "what Home opens". Deeper screens wait to be asked
+ * for on a constrained phone. */
+const CONSTRAINED_MAX_DEPTH = 2;
 
 /**
  * Resolve once the UI has nothing better to do. Injectable so the test does not
@@ -116,21 +138,22 @@ export function idleTick(gapMs: number = GAP_MS): Promise<void> {
   });
 }
 
+/** The walk in flight, if any. */
 let walking: Promise<void> | null = null;
+/** Set by the first `startScreenPrefetch`; the walk's fixed terms. */
+let started: { yieldToUI: () => Promise<void>; constrained: boolean; first: Promise<void> } | null = null;
+/** Keyed by ENTRY: labels repeat across stacks, and each copy is its own
+ * loader that needs warming. */
+const done = new Set<PrefetchEntry>();
 
-/**
- * Start the background walk. Idempotent — the second call returns the first
- * walk's promise rather than starting a competing one.
- *
- * Call it once the first screen is on screen (`NavigationContainer`'s
- * `onReady`), never before: everything here is work the launch must not do.
- */
-export function startScreenPrefetch(
-  options: { yieldToUI?: () => Promise<void> } = {},
-): Promise<void> {
-  if (walking) return walking;
-  const yieldToUI = options.yieldToUI ?? (() => idleTick());
-  walking = (async () => {
+/** Warm everything currently worth warming, then stop. */
+function walk(): Promise<void> {
+  if (walking || !started) return walking ?? Promise.resolve();
+  const { yieldToUI, constrained } = started;
+  const worthWarming = (entry: PrefetchEntry) =>
+    !constrained || entry.depth <= CONSTRAINED_MAX_DEPTH || urgent.has(entry.label);
+  let running = true;
+  const pass = (async () => {
     // DRAIN the registry, do not snapshot it. Warming a lazily-loaded navigator
     // evaluates that module, and evaluating it runs its own `lazyScreen()`
     // calls — so the registry GROWS mid-walk. Iterating a snapshot taken at the
@@ -138,12 +161,17 @@ export function startScreenPrefetch(
     // screens, stayed cold no matter how long the app idled. Re-reading each
     // time means a nested stack's screens simply join the queue at their own
     // depth and get warmed like any other.
-    // Keyed by ENTRY: labels repeat across stacks, and each copy is its own
-    // loader that needs warming.
-    const done = new Set<PrefetchEntry>();
     for (;;) {
-      const next = prefetchOrder().find((entry) => !done.has(entry));
-      if (!next) break;
+      const next = prefetchOrder().find((entry) => !done.has(entry) && worthWarming(entry));
+      if (!next) {
+        // Given up in the SAME turn as the look that found nothing — not in a
+        // reaction to this promise, which runs later. A `prioritise()` landing
+        // in between would be handed this finished walk as if it were still
+        // running, and the screens it asked for would stay cold.
+        running = false;
+        walking = null;
+        return;
+      }
       done.add(next);
       await yieldToUI();
       try {
@@ -155,12 +183,36 @@ export function startScreenPrefetch(
       }
     }
   })();
-  return walking;
+  // A pass with nothing to warm has already finished by the time it returns.
+  if (running) walking = pass;
+  return pass;
+}
+
+/**
+ * Start the background walk. Idempotent — the second call returns the first
+ * walk's promise rather than starting a competing one.
+ *
+ * Call it once the first screen is on screen (`NavigationContainer`'s
+ * `onReady`), never before: everything here is work the launch must not do.
+ *
+ * `constrained` defaults to this launch's own measurement; see the header.
+ */
+export function startScreenPrefetch(
+  options: { yieldToUI?: () => Promise<void>; constrained?: boolean } = {},
+): Promise<void> {
+  if (started) return started.first;
+  const constrained = options.constrained ?? isConstrainedDevice();
+  const yieldToUI = options.yieldToUI ?? (() => idleTick(constrained ? CONSTRAINED_GAP_MS : GAP_MS));
+  started = { yieldToUI, constrained, first: Promise.resolve() };
+  started.first = walk();
+  return started.first;
 }
 
 /** Test seam — forget that a walk ran. */
 export function resetScreenPrefetchForTests(): void {
   walking = null;
+  started = null;
+  done.clear();
   registry.length = 0;
   urgent.clear();
 }
