@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { AppState } from 'react-native';
+import { AppState, Linking } from 'react-native';
 import type { VideoMapping } from '@/data/video/videoMappings';
 
 // ---- mocks ------------------------------------------------------------------
@@ -209,4 +209,34 @@ it('removes its AppState listener on unmount (no leak after teardown)', () => {
   });
   act(() => r.unmount());
   expect(remove).toHaveBeenCalled();
+});
+
+
+it('broadcasts accept display metadata without forging recitation verification and skip duration polling', () => {
+  jest.useFakeTimers();
+  const interval = jest.spyOn(global, 'setInterval');
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={{ videoId: 'AAAAAAAAAAA', titleHi: 'सोमनाथ', titleEn: 'Somnath', channel: 'Shree Somnath Trust' }} uiLang="en" broadcast onClose={() => {}} />); });
+  act(() => (mockRnyi.props?.onReady as () => void)());
+  expect(interval).not.toHaveBeenCalled();
+  expect(allText(tree)).toContain('Temple broadcast');
+  expect(allText(tree)).not.toContain('0:00');
+  act(() => tree.unmount());
+});
+
+
+it('wires pause, play, close, same-video external link and fresh-source retry', () => {
+  const close = jest.fn(), refresh = jest.fn();
+  const external = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" broadcast onClose={close} onRefreshSource={refresh} />); });
+  const tap = (label: string) => act(() => tree.root.findAll(n => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function')[0].props.onPress());
+  tap('Pause'); expect(mockRnyi.props?.play).toBe(false);
+  tap('Play'); expect(mockRnyi.props?.play).toBe(true);
+  tap('Open in YouTube'); expect(external).toHaveBeenCalledWith('https://www.youtube.com/watch?v=AETFvQonfV8');
+  tap('Close video'); expect(close).toHaveBeenCalledTimes(1);
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  const retry = tree.root.findAll(n => typeof n.props.onPress === 'function' && n.props.accessibilityRole === 'button')[0];
+  act(() => retry.props.onPress()); expect(refresh).toHaveBeenCalledTimes(1);
+  act(() => tree.unmount());
 });

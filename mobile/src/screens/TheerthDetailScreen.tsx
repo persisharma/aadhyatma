@@ -1,3 +1,5 @@
+import { darshanForTemple } from '@/data/darshan/channels';
+import { DarshanAction } from '@/components/darshan/DarshanUI';
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -121,6 +123,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
+          {darshanForTemple(temple.id) && <DarshanAction testID="temple-darshan" label={contentByLang(lang, 'मंदिर दर्शन देखें', 'Watch temple Darshan')} onPress={() => navigation.navigate('DarshanPlayer', { templeId: temple.id })} />}
+
           <View style={styles.hero}>
             <Text
               style={{

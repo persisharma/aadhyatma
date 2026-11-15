@@ -1,0 +1,33 @@
+# Native acceptance: Home floating entry -> quick sheet -> list -> temple guide.
+# Does not require a temple to be broadcasting at the instant the test runs.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-home" }
+- assertVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "home-darshan-floating" }
+- assertVisible: { id: "darshan-view-all" }
+- takeScreenshot: e2e-shots/darshan-quick
+- tapOn: { id: "darshan-close" }
+- assertVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "home-darshan-floating" }
+- tapOn: { id: "darshan-view-all" }
+- assertVisible: { id: "darshan-search" }
+- takeScreenshot: e2e-shots/darshan-list
+- tapOn: { id: "darshan-temple-somnath" }
+- extendedWaitUntil:
+    visible: { id: "darshan-youtube" }
+    timeout: 20000
+- scrollUntilVisible:
+    element: { id: "darshan-guide" }
+    centerElement: true
+- tapOn: { id: "darshan-guide" }
+- assertVisible: { id: "temple-darshan" }
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn: "Back"
+- assertVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "tab-panchang" }
+- assertNotVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "tab-home" }
+- assertVisible: { id: "home-darshan-floating" }

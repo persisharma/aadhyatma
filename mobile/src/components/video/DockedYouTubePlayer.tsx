@@ -13,7 +13,7 @@ import YoutubePlayer, { PLAYER_STATES, type YoutubeIframeRef } from 'react-nativ
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import AppIcon from '@/components/AppIcon';
-import { pick } from '@/utils/localize';
+import { contentByLang, pick } from '@/utils/localize';
 import type { Lang } from '@/data/gita/language';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { youtubeWatchUrl } from '@/video/videoId';
@@ -46,7 +46,9 @@ const LOAD_TIMEOUT_MS = 15000;
 type Phase = 'loading' | 'ready' | 'error';
 
 export type DockedYouTubePlayerProps = {
-  mapping: VideoMapping;
+  mapping: Pick<VideoMapping, 'videoId' | 'titleHi' | 'titleEn' | 'channel'> & Partial<Pick<VideoMapping, 'spokenLang'>>;
+  broadcast?: boolean;
+  onRefreshSource?: () => void;
   uiLang: Lang;
   /** Playback position (seconds) + total duration, for the reader's auto-scroll. Fires ~1×/sec while playing. */
   onProgress?: (currentSec: number, durationSec: number) => void;
@@ -66,6 +68,8 @@ function spokenLangLabel(lang: VideoMapping['spokenLang'], uiLang: Lang): string
 
 export default function DockedYouTubePlayer({
   mapping,
+  broadcast = false,
+  onRefreshSource,
   uiLang,
   onProgress,
   onClose,
@@ -83,7 +87,7 @@ export default function DockedYouTubePlayer({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 16:9, never below YouTube's 200px minimum embed viewport.
-  const playerHeight = Math.max(200, Math.round(width * (9 / 16)));
+  const playerHeight = Math.max(200, Math.round((broadcast ? Math.min(width - 44, 636) : width) * (9 / 16)));
 
   const clearLoadTimeout = useCallback(() => {
     if (timeoutRef.current) {
@@ -172,7 +176,7 @@ export default function DockedYouTubePlayer({
 
   // Report progress for the reader's auto-scroll while actually playing.
   useEffect(() => {
-    if (phase !== 'ready' || !playing) return undefined;
+    if (phase !== 'ready' || !playing || broadcast) return undefined;
     const id = setInterval(() => {
       const p = playerRef.current;
       if (!p) return;
@@ -187,9 +191,10 @@ export default function DockedYouTubePlayer({
         .catch(() => undefined);
     }, 1000);
     return () => clearInterval(id);
-  }, [phase, playing, onProgress]);
+  }, [phase, playing, onProgress, broadcast]);
 
   const retry = useCallback(() => {
+    if (onRefreshSource) { onRefreshSource(); return; }
     setPhase('loading');
     // Retry autoplays the remounted embed, so it claims the session like `play()`.
     claimPlayback('youtube');
@@ -197,13 +202,13 @@ export default function DockedYouTubePlayer({
     setPlaying(true);
     setReloadKey((k) => k + 1);
     armLoadTimeout();
-  }, [armLoadTimeout]);
+  }, [armLoadTimeout, onRefreshSource]);
 
   const openInYouTube = useCallback(() => {
     Linking.openURL(youtubeWatchUrl(mapping.videoId)).catch(() => undefined);
   }, [mapping.videoId]);
 
-  const title = uiLang === 'en' ? mapping.titleEn : mapping.titleHi;
+  const title = contentByLang(uiLang, mapping.titleHi, mapping.titleEn);
   const openLabel = pick(uiLang, {
     hi: 'YouTube में खोलें',
     en: 'Open in YouTube',
@@ -265,7 +270,7 @@ export default function DockedYouTubePlayer({
             <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color={colors.onPrimary} />
           </Pressable>
           <Text style={[styles.time, { color: colors.inkMuted }]} numberOfLines={1}>
-            {fmt(elapsed)} / {fmt(duration)}
+            {broadcast ? pick(uiLang, { hi: 'मंदिर का प्रसारण', en: 'Temple broadcast', gu: 'મંદિરનું પ્રસારણ', kn: 'ದೇವಾಲಯದ ಪ್ರಸಾರ' }) : `${fmt(elapsed)} / ${fmt(duration)}`}
           </Text>
           <View style={styles.stripSpacer} />
           <Pressable
@@ -295,7 +300,7 @@ export default function DockedYouTubePlayer({
             {title}
           </Text>
           <Text style={[styles.channel, { color: colors.inkMuted }]} numberOfLines={1}>
-            {mapping.channel} · {spokenLangLabel(mapping.spokenLang, uiLang)}
+            {mapping.channel}{mapping.spokenLang ? ` · ${spokenLangLabel(mapping.spokenLang, uiLang)}` : ''}
           </Text>
         </View>
       )}

@@ -1,4 +1,5 @@
 import AppIcon from '@/components/AppIcon';
+import DarshanFloatingButton from '@/components/darshan/DarshanFloatingButton';
 import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
 import {
@@ -346,7 +347,7 @@ export default function HomeScreen({ navigation }: Props) {
               maxWidth: contentWidth,
               alignSelf: 'center',
               paddingHorizontal: gridPadding,
-              paddingBottom: spacing.xxl * 3,
+              paddingBottom: spacing.xxl * 3 + 100,
             },
           ]}
           showsVerticalScrollIndicator={false}
@@ -595,6 +596,7 @@ export default function HomeScreen({ navigation }: Props) {
           )}
         </ScrollView>
         </TilePressProvider>
+        <DarshanFloatingButton onPress={() => navigation.navigate('DarshanQuick')} />
       </SafeAreaView>
     </View>
   );
