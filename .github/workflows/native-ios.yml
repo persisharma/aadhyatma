@@ -108,6 +108,24 @@ jobs:
       - name: Build, install and launch on iOS Simulator
         if: steps.compat.outputs.reuse != 'true' || steps.sdk.outcome != 'success'
         run: bash scripts/native-ios-smoke.sh
+      # Placed WidgetKit is the visual target; app launch/gallery is not.
+      - name: Attempt actual Home Screen WidgetKit screenshots
+        if: always() && env.SIMULATOR_UDID != ''
+        continue-on-error: true
+        run: |
+          ART="$GITHUB_WORKSPACE/native-output/widget-native-evidence"
+          mkdir -p "$ART"
+          set +e
+          node scripts/run-native-diagnostic.cjs --timeout-ms 240000 maestro --device "$SIMULATOR_UDID" test \
+            --config .maestro/config.yaml --format junit \
+            --test-output-dir "$ART" \
+            --output "$GITHUB_WORKSPACE/native-output/widget-placement.xml" \
+            .maestro/home-widgets-visual-capture.yaml \
+            > "$GITHUB_WORKSPACE/native-output/widget-placement.log" 2>&1
+          code=$?
+          find "$ART" -type f -name '*.png' -exec cp {} "$GITHUB_WORKSPACE/native-output/" \;
+          printf 'actual-widget-capture-exit=%s\n' "$code" >> "$GITHUB_WORKSPACE/native-output/widget-placement.log"
+          exit "$code"
       - name: Retain native build and launch evidence
         if: always()
         uses: actions/upload-artifact@v4

@@ -1,0 +1,18 @@
+# Best-effort true WidgetKit SpringBoard capture — not RN gallery art.
+# A failure is evidence the widget picker needs a different selector on this iOS.
+appId: com.prashantsharma.vedansh
+---
+- pressKey: Home
+- waitForAnimationToEnd
+- takeScreenshot: "widget-before-placement"
+- longPressOn:
+    id: "Home screen icons"
+- tapOn: "Edit"
+- tapOn: "Add Widget"
+- tapOn: "Search Widgets"
+- inputText: "Vedansh"
+- tapOn: "Vedansh"
+- takeScreenshot: "widget-picker-native"
+- tapOn: "Add Widget"
+- waitForAnimationToEnd
+- takeScreenshot: "widget-homescreen-native"
