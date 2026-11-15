@@ -1344,3 +1344,10 @@ Added a 28 s beat-cut reel (app's recorded Govind Bolo, full-bleed real screens,
 
 ## [2026-11-05] decision | Story-reel styles
 The user chose app painted art for illustrated stories and Tholu Bommalata puppets for unillustrated stories (vrat kathas). Pattachitra was dropped; narration-only audio is now the default. Recorded in [[runbooks/store-submission]].
+
+## [2026-11-15] ingest | Bhajan text shelf plumbing
+Added [[subsystems/bhajan-text]]: `bhajan` category placed in the Bhajan tab, door → deity-grouped list → aarti-shell reader, routes on Home + Audio stacks, search Path A, RULEBOOK §32, design.md §34.1. Catalog ships empty; backlog in docs/content-parity/bhajan-library.md.
+
+## [2026-11-15] gap | No verified bhajan text yet
+Lyrics hosts were blocked by the session network policy, so no bhajan cleared RULEBOOK §11.1. Next: allow the hosts, collate the TODO rows two-source, then add JSON + catalog + library entries.
+

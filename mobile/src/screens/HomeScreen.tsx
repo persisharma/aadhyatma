@@ -174,6 +174,8 @@ export default function HomeScreen({ navigation }: Props) {
     };
     const result: TileItem[] = [];
     for (const c of categories) {
+      // The bhajan shelf lives inside the Bhajan tab (design.md §34.1).
+      if (c.placement === 'bhajan-tab') continue;
       result.push({
         key: c.id,
         nameHi: c.nameHi,

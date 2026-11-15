@@ -107,6 +107,7 @@ const CATEGORY_TAGS: Record<ContentCategory, readonly string[]> = {
   kavacham: ['Kavacham'],
   ashtakam: ['Ashtakam'],
   suktam: ['Suktam', 'VedicChants'],
+  bhajan: ['Bhajan', 'Kirtan'],
 };
 
 /** The volume ceiling — always present, always behind the derived tags. */

@@ -11,6 +11,13 @@ export type CategoryMeta = {
    */
   shortNameEn?: string;
   status: 'active' | 'coming';
+  /**
+   * Where the category's listing lives. Default `'home'`: a Home launcher tile.
+   * `'bhajan-tab'`: the listing is the Bhajan tab's text shelf (design.md §34.1),
+   * so HomeScreen leaves it off the grid; every lookup-by-id consumer (deity
+   * detail, routine chips, share hashtags) still treats it as a category.
+   */
+  placement?: 'home' | 'bhajan-tab';
 };
 
 // Array order = Home launcher rank: usefulness + app USP first. Daily-recite
@@ -38,6 +45,9 @@ export const categories: readonly CategoryMeta[] = [
   { id: 'ashtakam', nameHi: 'अष्टकम्', nameEn: 'Ashtakam', status: 'active' },
   // Suktam — Vedic/Puranic hymns (सूक्त); active with Devi Suktam (Tantrokta).
   { id: 'suktam', nameHi: 'सूक्तम्', nameEn: 'Suktam', status: 'active' },
+  // Bhajan lyrics with meaning — reached from the Bhajan tab, never the Home
+  // grid (placement), so the grid stays 15 (5×3) + दान-पुण्य.
+  { id: 'bhajan', nameHi: 'भजन', nameEn: 'Bhajans', status: 'active', placement: 'bhajan-tab' },
   // NOTE: स्तुति (Stuti) is intentionally NOT a category. Its texts (Krishna
   // Stuti, Durga Stuti) are filed under `stotram` — स्तुति ≈ स्तोत्रम् to users,
   // and Ram Stuti already lived there. They still render via the multi-instance

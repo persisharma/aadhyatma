@@ -1,0 +1,43 @@
+# Bhajan Text Shelf Smoke Test (design.md §34.1, RULEBOOK §32)
+#
+# Path: Home → Bhajan tab → "Bhajan Lyrics" door → deity-grouped list →
+# fold/unfold the first group → open its first bhajan → reader shows a stanza
+# and the plain "Composed by" credit → Back → list → Back → Bhajan tab.
+#
+# The shelf's door is hidden until at least one verified bhajan is registered
+# (data/bhajan/ids.ts). Until then every step after the tab check is skipped by
+# the `when: visible` guard, and this flow only proves the tab still opens.
+# Once the first text ships, the guarded block runs unchanged.
+#
+# Selectors: the door's a11y label is "Bhajan Lyrics. <n> bhajans with meaning.
+# Tap to open." in every reading language; group headers carry
+# `bhajan-group-<groupId>`.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+
+- tapOn: { id: "tab-bhajan" }
+- waitForAnimationToEnd
+
+- runFlow:
+    when:
+      visible: { id: "bhajan-shelf-door" }
+    commands:
+      - tapOn: { id: "bhajan-shelf-door" }
+      - waitForAnimationToEnd
+      - assertVisible: { id: "bhajan-list" }
+      # First group header folds closed and open again.
+      - tapOn: { id: "bhajan-group-.*", index: 0 }
+      - waitForAnimationToEnd
+      - tapOn: { id: "bhajan-group-.*", index: 0 }
+      - waitForAnimationToEnd
+      # Open the first bhajan card (LibraryCard a11y label ends "Tap to open.").
+      - tapOn: { text: ".*with meaning.*Tap to open.*", index: 0 }
+      - waitForAnimationToEnd
+      - assertVisible: { id: "bhajan-attribution" }
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+      - assertVisible: { id: "bhajan-list" }
+      - tapOn: "Back"
+      - waitForAnimationToEnd
+      - assertVisible: { id: "bhajan-shelf-door" }

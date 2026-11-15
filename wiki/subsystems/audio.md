@@ -12,7 +12,7 @@ status: current
 The app makes sound three ways, and they are **mutually exclusive**:
 
 1. **Recorded audio** — the Bhajan tab's library, played by one app-wide `expo-audio` player
-   (`AudioPlayerContext`) with a root-overlay MiniPlayer + Now Playing surface. 13 catalog tracks,
+   (`AudioPlayerContext`) with a root-overlay MiniPlayer + Now Playing surface. 18 catalog tracks,
    **10 real recordings**. The recordings are **served from the R2 CDN, not bundled** and play
    **streaming-first**: on first play the player is handed the CDN url so it starts buffering
    immediately (like any music app — no wait for a full download), while the file downloads once in
