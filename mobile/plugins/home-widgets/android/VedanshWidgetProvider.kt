@@ -300,8 +300,8 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             val today = WidgetPayloadContract.currentDateKey(verses.getString("timeZone"))
             val days = verses.getJSONArray("days")
             val vd = (0 until days.length()).map { days.getJSONObject(it) }.firstOrNull { it.getString("dateKey") == today } ?: return null
-            // Tall cells get the verse line-by-line from `lines`; wide-but-short
-            // cells flow those same lines into the 3 lines they budget. Only a
+            // Tall and wide cells preserve the authored boundaries from `lines`.
+            // Individual padas can wrap within their available width. Only a
             // narrow cell falls back to the planner's excerpt, whose character cap
             // is sized for that square — handing it to the default 4x2 cell was
             // the "shloka cut with space still on the card" bug: an 88-character
@@ -314,7 +314,7 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
             val body = when {
                 tall -> padas.joinToString("\n")
                 narrow -> vd.getJSONObject("excerpt").getString(locale)
-                else -> padas.joinToString(" · ")
+                else -> padas.joinToString("\n")
             }
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_kicker, verseKicker(locale))
             views.setTextViewText(__APP_PACKAGE__.R.id.widget_title, body)

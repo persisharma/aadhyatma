@@ -94,7 +94,7 @@ export default function DailyBhaktiScreen() {
       ? `${verse.sourceId}:${verse.verseIndex}`
       : `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`;
   const verseLines = verse
-    ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
+    ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi, verse.labelHi)
     : [];
   const verseType = verseToken(lang, typography);
 
@@ -164,9 +164,8 @@ export default function DailyBhaktiScreen() {
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
-              // One charan per row when each fits; otherwise the stored lines flow
-              // together so a short fragment can use the previous row.
-              verse={verseLines.join(' ')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
+              // Preserve charan boundaries; long rows wrap and the paper grows.
+              verse={verseLines.join('\n')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
               meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
               verseStyle={{ ...verseType, lineHeight: lang === 'hi' ? devotionalReaderVerseLeading(verseType.fontSize) : verseType.lineHeight, color: colors.ink }}

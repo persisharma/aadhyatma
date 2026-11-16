@@ -104,6 +104,18 @@ appId: com.prashantsharma.vedansh
 # ── Step 4b: The card's own language toggle flips the reading in place ──
 - tapOn: { id: "lang-toggle-hi" }
 - waitForAnimationToEnd
+# Scripture body must retain the authored newline; 2.47 belongs only to the source.
+- scrollUntilVisible:
+    element: { id: "devotional-share-verse" }
+    direction: DOWN
+    centerElement: true
+- assertVisible:
+    id: "devotional-share-verse"
+    text: '(?s)कर्मण्येवाधिकारस्ते.*\nमा कर्मफलहेतुर्भूर्मा.*'
+- assertNotVisible:
+    id: "devotional-share-verse"
+    text: '.*2\.47.*'
+- takeScreenshot: e2e-shots/daily-bhakti-247-preserved-rows
 - assertNotVisible: "Meaning"
 - scrollUntilVisible:
     element: { id: "lang-toggle-en" }

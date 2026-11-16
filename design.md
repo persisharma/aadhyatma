@@ -3385,6 +3385,27 @@ because they are different concerns that happen to agree today.
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
 
+### Shloka rows and single source reference — 16 November 2026
+
+Daily Bhakti, the Gita/Gita Saar readers, shared numbered verse pages, both verse
+share-card styles and the widget gallery preserve authored recitation boundaries.
+`utils/versePresentation.ts` removes only a terminal danda-delimited number that
+exactly matches the visible source/verse label (ASCII, Devanagari, Gujarati and
+Kannada digits); it retains the closing danda, all words and original source data.
+Unlabelled or nonmatching numbers remain. `verseLinesByLang` accepts an optional
+reference label and applies this display policy before regional re-scripting.
+
+`DevotionalVerseBody` always draws explicit charan rows, even when a row wraps;
+the paper grows rather than joining the following charan onto the preceding row.
+There is no hidden native row-fit probe, 500ms timer or paragraph fallback.
+Medium/large WidgetKit and wide/tall Android cells join full payload rows with
+newlines; only small/narrow cells use the bounded excerpt. The payload planner
+removes repeated citations before localizing; its derived-cache revision changes
+so opening the app replaces older cached verse windows. Original identities,
+source attribution, deep links, art selection and canonical JSON are preserved.
+Native widget changes require new iOS/Android binaries. Actual four-language,
+compact/enlarged-text placement and share-export inspection remain device gates.
+
 ### Native small Panchang visual hierarchy — 11 November 2026
 
 The previous small Panchang was still a flat text stack even after the adaptive
@@ -3412,8 +3433,8 @@ The approved illustrated day/night style is preserved, but text controls image
 reservation. The native iOS Wide and Large widget uses SwiftUI `ViewThatFits(in:
 .vertical)` with complete, intrinsically measured lines before any clipping:
 full illustration strip (32% width), reduced strip (16%), and text-first (0%,
-parchment-backed to preserve contrast). Large prioritizes individual padas;
-Wide flows all supplied padas. The final fixed-height safety fallback alone
+parchment-backed to preserve contrast). Both Large and Wide preserve supplied pada
+line boundaries, including the final condensed fallback. The final fixed-height safety fallback alone
 limits visual lines and visibly offers a localized tap-to-read cue; VoiceOver
 retains the **complete** verse plus source, and the source/deep link never
 changes. Small continues to use the existing planner excerpt, with the full

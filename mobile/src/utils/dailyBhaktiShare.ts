@@ -24,7 +24,7 @@ export function devotionalVerseShareable(v: ShareableVerse): ShareableProse {
   for (const lang of ['hi', 'en', 'gu', 'kn'] as Lang[]) {
     const label = contentByLang(lang, v.verseLabelHi ?? '', v.verseLabelEn ?? '');
     const header = `${contentByLang(lang, v.sectionNameHi, v.sectionNameEn)} · ${label}`;
-    const lines = verseLinesByLang(lang, v.linesHi, v.linesEn), rows = devotionalCharanRows(lang, v.linesHi, lines);
+    const lines = verseLinesByLang(lang, v.linesHi, v.linesEn, v.verseLabelHi), rows = devotionalCharanRows(lang, v.linesHi, lines);
     const parts = paginateDevotional({ art: devotionalArtForVerse(v), header, lang,
       verse: lines.join('\n'), verseRows: rows.length > lines.length ? rows : undefined, meaning: [contentByLang(lang, v.meaningTitleHi ?? '', v.meaningTitleEn ?? ''),
         meaningByLang(lang, v.meaningHi ?? '', v.meaningEn ?? '', { gu: v.meaningGu, kn: v.meaningKn })].filter(Boolean).join('\n') });

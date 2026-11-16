@@ -83,9 +83,10 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
     lineHeight: meaningTok.lineHeight,
   } as const;
 
+  const displayedLines = verseLinesByLang(lang, verse.sanskrit, verse.transliteration, `${verse.chapter}.${verse.number}`);
   const a11yLabel = [
     `Verse ${verse.chapter}.${verse.number}`,
-    ...verse.sanskrit,
+    ...displayedLines,
     meaningLabel,
     meaning,
     commentaryLabel,
@@ -130,7 +131,7 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
         <ReadingArtwork source={showIllustration ? bg : undefined} />
 
         <View style={styles.verseBlock}>
-          {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map((line, idx) => {
+          {displayedLines.map((line, idx) => {
             const tok = verseToken(lang, typography);
             return (
               <Text

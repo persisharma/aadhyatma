@@ -68,7 +68,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   // The gallery is a medium-cell facsimile. The native iOS widget measures
   // actual glyphs with ViewThatFits; this conservative approximation similarly
   // gives text more width before shrinking it on a crowded verse.
-  const previewVerseLength = verse ? flowedVerse(verse.lines[lang]).length : 0;
+  const previewVerseLength = verse ? flowedVerse(verse.lines[lang], verse.source[lang]).length : 0;
   const previewVerseDense = previewVerseLength > 105;
   const previewVerseMedium = previewVerseLength > 64;
   const verseArtPadding = previewVerseDense ? spacing.md : previewVerseMedium ? 52 : 90;
@@ -93,9 +93,9 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
         <View style={styles.grid}>
           <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" verseArtPadding={verseArtPadding} colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The facsimile stands in for the recommended (wide) cell, which
-                renders the whole verse flowed across three lines — not the
+                renders the whole verse with authored line breaks — not the
                 small-cell excerpt (design.md §59). */}
-            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
+            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(verse.lines[lang], verse.source[lang]) : recovery}</Text>
             {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{verse.source[lang]}</Text> : null}
             {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>

@@ -334,3 +334,13 @@ Validation: five focused Node integration tests execute the production pool, con
 `GitaVerseJumpSheet` is mounted only while choosing. It reads chapter counts/titles from the manifest and accepts four numeral scripts. `GitaReaderScreen` stops playback, suppresses pager callbacks and suspends dwell until dismissal. Only Open loads the selected chapter and resolves the real verse number. Route replacement preserves the calling stack and mounts a new reader directly at the target, so no skipped page receives progress/coverage. Cancel does not write position; the original verse may still receive legitimate dwell credit accrued before opening. Existing transition timers are cancelled on unmount. No other reader or routine completion contract changes.
 
 Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.
+
+## Verse presentation parity — 16 November 2026
+
+`utils/versePresentation.ts` removes a closing numeric citation only if the visible
+label already supplies exactly that reference. `verseLinesByLang` takes an optional
+label for Gita/Gita Saar, numbered verse pages and share cards, before re-scripting.
+Daily Bhakti and devotional sharing use the same presentation. Canonical text,
+bookmarks, read-aloud source data and verse IDs remain unchanged. `DevotionalVerseBody`
+keeps charan rows at compact/large text sizes, allowing each row to wrap and the
+paper to grow; no layout event or timeout merges rows into a flowing paragraph.

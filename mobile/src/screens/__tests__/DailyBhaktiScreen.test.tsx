@@ -37,12 +37,14 @@ jest.mock('react-native-safe-area-context', () => ({
 
 // Pin the tab to a known verse (a reminder-tap deep link) so the rendered
 // background is deterministic instead of following a random pool pick.
+let mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 };
+beforeEach(() => { mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 }; });
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: jest.fn() }),
   useRoute: () => ({
     key: 'DailyBhaktiTab-test',
     name: 'DailyBhaktiTab',
-    params: { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 },
+    params: mockDailyParams,
   }),
 }));
 
@@ -67,8 +69,8 @@ test('Bhakti uses the same deity artwork, framed meaning and footer as export', 
   expect(tree!.root.findByType(DevotionalHero).props.art).toBe(art);
   expect(tree!.root.findByType(DevotionalFooter).props.art).toBe(art);
   expect(tree!.root.findByType(DevotionalVerseBody).props.meaning).toBe(verse.meaningHi);
-  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(verse.textHi.join(' '));
-  expect(tree!.root.findByType(DevotionalVerseBody).props.verseRows).toEqual(verse.textHi.map(l => l.trim()));
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(verse.textHi.map(l => l.replace(/।।1\.1।।$/, '।।')).join('\n'));
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verseRows).toEqual(verse.textHi.map(l => l.trim().replace(/।।1\.1।।$/, '।।')));
   expect(tree!.root.findByType(DevotionalVerseBody).props.verseStyle).toMatchObject({ fontSize: 23, lineHeight: 36 });
   expect(tree!.root.findAllByProps({ testID: 'devotional-meaning-frame' }).length).toBeGreaterThan(0);
   const strings = tree!.root.findAllByType(Text).map(n => n.props.children);
@@ -128,5 +130,19 @@ test('the real Bhakti share button opens illustrated with both card styles and c
   act(() => byLabel('Cancel').props.onPress());
   expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(before);
   expect(byLabel('Card style: Current card')).toBeUndefined();
+  act(() => tree!.unmount());
+});
+
+
+test.each(['hi', 'en', 'gu', 'kn'] as const)('BG 2.47 has separate rows and one reference in %s', lang => {
+  mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 2, verseIndex: 46 };
+  let tree: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+  const body = tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.children as string;
+  const source = tree!.root.findByProps({ testID: 'devotional-share-source' }).props.children as string;
+  expect(body.split('\n')).toHaveLength(2);
+  expect(body).not.toContain('2.47');
+  expect(source.match(/2\.47/g)).toHaveLength(1);
+  expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined();
   act(() => tree!.unmount());
 });

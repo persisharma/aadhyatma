@@ -1561,3 +1561,10 @@ Restored the feature onto current main without undoing the share-hand-off revert
 ## 2026-11-16 — A3 Santoshi Mata Chalisa
 
 Added the 42-unit Ganapati/Sharada-opening composition to the existing Chalisa reader, catalog, search, discovery and saved routes. Chosen Drik edition compared with Ved Puran; seven/sixteen-Friday variant recorded internally. Owner authorized the A2-style edition/checklist resolution for A3. Reuses Durga art; no release or new audio. Native verification pending; see `docs/evaluations/a3-santoshi-mata-chalisa/review.md`.
+
+## [2026-11-16] ingest | Preserve shloka rows and one visible reference
+
+Updated home-widgets and readers for the shared presentation-only matching-citation
+formatter, preserved native/app/share row boundaries and widget cache invalidation.
+Canonical scripture and stable identities are unchanged. Native visual acceptance
+and the open ornate-widget integration are explicitly separate gates.

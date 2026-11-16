@@ -33,7 +33,7 @@ export async function cachedWidgetPlan(
   });
   const { cityId, latitude, longitude, elevation } = input.location;
   const key = JSON.stringify([
-    'solar-heritage-v1', currentBuildFingerprint(), PANCHANG_DAY_CACHE_VERSION, pStart, vStart,
+    'solar-heritage-verse-rows-v2', currentBuildFingerprint(), PANCHANG_DAY_CACHE_VERSION, pStart, vStart,
     cityId, latitude, longitude, elevation, input.calendarSystem, input.deviceTimeZone, observances,
   ]);
   await awaitDerivedCacheReset();

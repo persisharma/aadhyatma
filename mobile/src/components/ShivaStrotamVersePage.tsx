@@ -42,7 +42,7 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width, topActio
     gu: 'ભાવાર્થ',
     kn: 'ಭಾವಾರ್ಥ',
   });
-  const verseLines = verseLinesByLang(lang, verse.sanskrit, verse.linesEn);
+  const verseLines = verseLinesByLang(lang, verse.sanskrit, verse.linesEn, `${verse.chapter}.${verse.number}`);
   const verseTok = verseToken(lang, typography);
   const isIntro = verse.number === 0;
   const pillText = isIntro
