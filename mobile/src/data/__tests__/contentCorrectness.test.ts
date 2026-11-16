@@ -1101,6 +1101,7 @@ for (const file of [
   'lakshmi-chalisa/lakshmi-chalisa.json',
   'surya-chalisa/surya-chalisa.json',
   'vaishno-devi-chalisa/vaishno-devi-chalisa.json',
+  'shani-chalisa/shani-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
@@ -1315,5 +1316,29 @@ console.log('All content correctness tests passed');
   assert.ok(verses[40].lines.join(' ').includes('शर्मा'));
   assert.ok(data.source.editionDecision.includes('Prashant'));
   assert.equal(data.source.referenceUrls.length, 4);
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
+
+// A1: complete chosen Drik edition, with the Vimal closing (not a composite).
+{
+  const data = readJson('shani-chalisa/shani-chalisa.json');
+  const entry = library.find(e => e.id === 'shani-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['shani']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 43);
+  assert.deepEqual(data.counts, { openingDohas: 2, chaupais: 40, closingDohas: 1, totalVerses: 43 });
+  const verses: { id: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 43);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(new Set(verses.map(v => v.id)).size, 43);
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '882ba37b12d70349b60dbaafa3d87b60e95ab22b3560619e6c86909e96ffd4e7');
+  assert.ok(verses[2].lines[0].includes('जयति जयति शनिदेव दयाला'));
+  assert.ok(verses[34].lines[1].includes('चाँजी'));
+  assert.ok(verses[42].lines[0].includes('विमल'));
+  assert.ok(!verses.some(v => v.lines.join(' ').includes('ललिता')));
+  assert.ok(data.source.editionDecision.includes('Prashant'));
+  assert.ok(data.source.referenceUrls.length >= 3);
   assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
 }
