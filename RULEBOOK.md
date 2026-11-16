@@ -727,7 +727,7 @@ sources and never label an archive/live-page embed as confirmed live. No stream
 fetch/WebView at launch, hidden audio, video download, background video, invented
 reminder schedule or unverified partnership claim. Test timeout/abort, blur/app-state,
 arbiter, favourites hydration/write ordering/failure, real guide/reader navigation,
-four-script/size layouts and source fallback. Native/ANR evidence is separate.
+four-script/size layouts and source fallback. The YouTube command-bridge patch must wait for `playerReady` and depend on both readiness and the latest `play` intent; sending Play before readiness loses autoplay, while an unconditional ready callback can revive paused video. Regression tests must use the installed library with only the native WebView mocked, including delayed-ready, pause-before-ready and remount/retry. Native/ANR evidence is separate.
 
 ### 11.17 Native image geometry is an enforced acceptance gate
 

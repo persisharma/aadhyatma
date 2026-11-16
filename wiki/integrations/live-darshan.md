@@ -37,3 +37,5 @@ so position ticks do not rerender Home. Unit/render tests do not prove native pl
 or ANR safety; native acceptance remains pending until device evidence exists.
 
 Embed Retry refreshes the source lookup, rather than recycling a broken ID. The canonical channel ID survives handle renames; the trusted publisher website root is a separate functional fallback when YouTube cannot open (15 November).
+
+The installed YouTube command-bridge patch waits for `playerReady` and re-runs on readiness with the latest play intent. Its previous `[play]`-only effect sent Play before the page global existed and did not retry at ready, leaving the broadcast cued until another tap. `YouTubeReadyPlayback.test.tsx` retains the real library and replaces only the native WebView; it covers broadcast/reader startup, background/blur/competing audio before readiness, duplicate ready and retry. Native playback remains a separate required check.

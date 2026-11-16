@@ -4582,6 +4582,8 @@ The devotional export reports settled geometry before artwork readiness, allowin
 3. Meta — video title and channel.
 4. Error card (load error or 15 s timeout) — title, body, **Retry**, and *↗ open in YouTube*.
 
+**Ready-before-play (16 November 2026).** The existing injected command bridge waits for the iframe’s `playerReady` event and replays the latest Play/Pause intent at readiness. Opening a resolved Darshan broadcast or tapping Play video starts playback without a second tap when YouTube permits autoplay. A pause caused by background, blur or another audio source during loading wins; readiness cannot restart it. Retry waits for the replacement iframe too. Publisher/platform autoplay restrictions retain the visible YouTube controls and fallback.
+
 **Interaction.** Exactly one sound source at a time through `audio/playbackArbiter.ts` (`'youtube'` kind): the player claims the session on mount, on the strip's play, on Retry, **and when the embed reports PLAYING after a pause** — a resume from YouTube's own ▶ must silence the bhajan / read-aloud that paused it (Nov 2026 fix; iOS mixes sessions, so a missed claim plays both). Another source claiming pauses the video (never unmounts it). Backgrounding, screen lock and leaving the reader (blur) pause it; it never auto-resumes. The ↗ hand-off opens the same video on YouTube — the one sanctioned non-store external link besides Daan/Rate/Instagram/mailto (RULEBOOK §11.16). The player may say it needs an internet connection (RULEBOOK §3 streaming exception).
 
 **Files.** `mobile/src/components/video/DockedYouTubePlayer.tsx`, `mobile/src/components/video/__tests__/DockedYouTubePlayer.test.tsx`, `mobile/src/audio/playbackArbiter.ts`, `mobile/src/data/video/videoMappings.ts`.
