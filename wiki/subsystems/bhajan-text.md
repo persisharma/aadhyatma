@@ -24,7 +24,7 @@ yet, so the Bhajan tab shows no door.
   `bhajanCatalog` `{ id, group }` row (`ids.ts`, launch-safe) → active `library` entry with
   `verseCount`. `bhajanLibrary.test.ts` (node:test, in `test:data`) checks the one-to-one mapping,
   two reference URLs, counts and routes for every shipped row.
-- **Groups.** `group` is a deity id or a region (`rajasthani`, `lok-geet`). The shelf orders deity
+- **Groups.** `group` is a deity id or a region (`rajasthani`, `lok-bhajan`; devotional only — secular folk songs were dropped from the backlog on 16 Nov 2026). The shelf orders deity
   groups by `deities.ts`, then regions (`groupBhajanShelf`). Group comes from the catalog row, not
   `deities[0]` — a Karma Bai bhajan can be tagged `krishna` and still shelve as Rajasthani.
 - **Routes.** `BhajanStackParamList` (`BhajanList`, `BhajanReader { bhajanId, initialIndex? }`) is

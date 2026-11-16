@@ -139,7 +139,7 @@ test('shelf entries are visible, active, catalogued bhajans only', () => {
 
 test('groups follow deities.ts order, then regions; empty and unknown groups drop', () => {
   const groupOf: Record<string, BhajanGroupId> = {
-    folk: 'lok-geet',
+    folk: 'lok-bhajan',
     shiv1: 'shiva',
     raj: 'rajasthani',
     krishna1: 'krishna',
@@ -147,10 +147,10 @@ test('groups follow deities.ts order, then regions; empty and unknown groups dro
   };
   const entries = ['folk', 'shiv1', 'raj', 'krishna1', 'shiv2', 'orphan'].map((id) => fixture(id, []));
   const groups = groupBhajanShelf(entries, (id) => groupOf[id]);
-  assert.deepEqual(groups.map((g) => g.id), ['krishna', 'shiva', 'rajasthani', 'lok-geet']);
+  assert.deepEqual(groups.map((g) => g.id), ['krishna', 'shiva', 'rajasthani', 'lok-bhajan']);
   assert.deepEqual(groups[1].entries.map((e) => e.id), ['shiv1', 'shiv2'], 'library order within a group');
   assert.equal(groups[0].nameHi, deities.find((d) => d.id === 'krishna')!.nameHi);
-  assert.equal(groups[3].nameEn, 'Folk Songs');
+  assert.equal(groups[3].nameEn, 'Folk Bhajans');
 });
 
 test('the shipped shelf groups every visible bhajan exactly once', () => {

@@ -1,7 +1,8 @@
 # Bhajan text library — acquisition manifest
 
 Research snapshot: **2026-11-15** · owner request: add a text-only bhajan shelf (with
-meaning) inside the Bhajan tab, plus famous Rajasthani bhajans and regional lok geet.
+meaning) inside the Bhajan tab, plus famous Rajasthani and other local/regional bhajans.
+Scope (owner, 2026-11-16): **devotional only** — local bhajans, not secular folk songs.
 
 ## Scope
 
@@ -25,7 +26,6 @@ Status legend:
   traditional/folk text before transcription.
 - **DUP** — already shipped elsewhere in the app; RULEBOOK §11.11 forbids a copy.
 - **AARTI** — an aarti, so it belongs in the Aarti category, not on the bhajan shelf.
-- **SECULAR** — a folk song with no devotional subject; needs a product decision.
 
 Blocked on 2026-11-15: this build environment's network policy rejects every lyrics
 host tried (kavitakosh.org, bhaktibharat.com, bhajansandhya.com, hi.wikisource.org,
@@ -89,7 +89,7 @@ padavalis), Hindi Wikisource, BhaktiBharat, Bhajan Sandhya.
 | `man-lago-mero-yaar-fakiri-mein` | मन लागो मेरो यार फकीरी में | निर्गुण · राजस्थानी/मालवी | Kabir | **TODO** |
 | `jhini-jhini-bini-chadariya` | झीनी झीनी बीनी चदरिया | निर्गुण | Kabir | **TODO** |
 
-## Regional lok geet (owner request)
+## Regional / local bhajans (owner request)
 
 | Proposed id | Title | Region | Subject | Status / note |
 |---|---|---|---|---|
@@ -99,11 +99,6 @@ padavalis), Hindi Wikisource, BhaktiBharat, Bhajan Sandhya.
 | `jay-jay-bhairavi` | जय जय भैरवि असुर भयाउनि | Maithili | Vidyapati (`durga`) | **TODO** |
 | `vaishnav-jan-to` | वैष्णव जन तो तेने कहिये | Gujarati | Narsinh Mehta | **TODO** |
 | `sundar-te-dhyan` | सुंदर ते ध्यान उभे विटेवरी | Marathi | Tukaram abhang (`vishnu`/Vitthal) | **TODO** |
-| `kesariya-balam` | केसरिया बालम पधारो म्हारे देस | Rajasthani (Maand) | welcome song | **SECULAR** |
-| `ghoomar` | म्हारी घूमर छे नखराळी ए माँ | Rajasthani | dance song | **SECULAR** |
-| `gorband` | गोरबन्द | Rajasthani | camel-ornament song | **SECULAR** |
-| `panihari` | पणिहारी | Rajasthani | water-bearer song | **SECULAR** |
-| — | बेडु पाको बारामासा | Kumaoni | attributed to B. L. Sah (20th c.) | **HOLD-©** |
 
 ## Collation rules for this shelf
 
@@ -116,4 +111,6 @@ padavalis), Hindi Wikisource, BhaktiBharat, Bhajan Sandhya.
    plain, and faithful to the line (§11.13). Rajasthani, Bhojpuri, Braj and Maithili
    lines also need a Hindi gloss in `meaningHi`.
 4. Group: a deity id from `deities.ts` when the bhajan addresses one; otherwise the
-   regional group (`rajasthani`, `lok-geet`). Do not add a deity id for a folk deity.
+   regional group (`rajasthani`, `lok-bhajan`). Do not add a deity id for a folk deity.
+5. Devotional only (RULEBOOK §32.5). Dropped on 2026-11-16 as secular folk songs, not
+   bhajans: Kesariya Balam, Ghoomar, Gorband, Panihari, Bedu Pako. Do not re-add them.

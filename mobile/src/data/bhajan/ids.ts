@@ -16,8 +16,12 @@ import type { Deity } from '../texts';
  * never rename or reuse one.
  */
 
-/** Groups that are not a deity: regional devotional traditions and lok geet. */
-export type BhajanRegion = 'rajasthani' | 'lok-geet';
+/**
+ * Groups that are not a deity: regional devotional traditions. Devotional only —
+ * a folk song with no devotional subject (Kesariya Balam, Ghoomar) never ships
+ * on this shelf (RULEBOOK §32.5).
+ */
+export type BhajanRegion = 'rajasthani' | 'lok-bhajan';
 
 /** Where a bhajan sits on the shelf: under the deity it addresses, or a region. */
 export type BhajanGroupId = Deity | BhajanRegion;
@@ -42,5 +46,5 @@ export function bhajanGroupOf(id: string): BhajanGroupId | undefined {
 /** Region groups follow every deity group on the shelf, in this order. */
 export const BHAJAN_REGIONS: readonly { id: BhajanRegion; nameHi: string; nameEn: string }[] = [
   { id: 'rajasthani', nameHi: 'राजस्थानी भजन', nameEn: 'Rajasthani Bhajans' },
-  { id: 'lok-geet', nameHi: 'लोकगीत', nameEn: 'Folk Songs' },
+  { id: 'lok-bhajan', nameHi: 'लोक भजन', nameEn: 'Folk Bhajans' },
 ];
