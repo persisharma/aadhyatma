@@ -224,6 +224,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} Shani Chalisa, Saturday worship in chaupai 39; see shani-chalisa/shani-chalisa.json.`,
   },
+  'santoshi-mata-chalisa': {
+    purposes: ['devotion'],
+    bestDays: [5],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} Drik Panchang Santoshi Mata Chalisa: devotion and Friday practice; see santoshi-mata-chalisa/santoshi-mata-chalisa.json.`,
+  },
   'surya-namaskar': {
     purposes: ['health', 'morning-practice'],
     bestDays: [0],
