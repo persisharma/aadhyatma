@@ -1544,3 +1544,10 @@ Restored the feature onto current main without undoing the share-hand-off revert
 - 2026-11-16: Diagnosed lost Darshan autoplay in the installed YouTube bridge patch; wait for player readiness and preserve latest pause intent. Six real-library/WebView-boundary regressions reproduce the old failure. Updated design §91, RULEBOOK Darshan contract and integration wiki; native evidence remains pending.
 
 - 2026-11-16: Expanded Darshan to visible stable channel embeds for all nine audited channels; kept dedicated-camera discovery, moved recovery/content into the app, enlarged the pinned player and preserved native fullscreen. Updated design §§91–92/RULEBOOK integration; real device fullscreen/playback and performance remain pending.
+
+
+## 2026-11-16 — A2 Vaishno Devi Chalisa
+- Added the complete maintainer-selected Sri Mandir edition (42 pages), original Hindi/English meanings and pronunciation romanization to the existing Chalisa reader.
+- Wired Durga/category listings, search, progress/bookmarks, discovery, existing artwork and generated count; stable IDs and older rows retained.
+- The missing 4a checklist was explicitly replaced by current repository rules and the Chalisa pattern with maintainer approval. Source variants stay in internal metadata; no bibliography UI.
+- See `docs/evaluations/a2-vaishno-devi-chalisa/review.md` for validation and pending native evidence. No merge/release or next work package.

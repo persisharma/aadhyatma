@@ -42,3 +42,6 @@ assert.equal(canonicalBookmarkId('sundarkand:5:7', 'sundarkand'), 'sundarkand:5:
 
 // Already-canonical aarti id is left alone.
 assert.equal(canonicalBookmarkId('om-jai-jagdish:5', 'om-jai-jagdish'), 'om-jai-jagdish:5');
+
+assert.equal(canonicalSourceId('vaishno-devi-chalisa'), 'vaishno-devi-chalisa');
+assert.equal(canonicalBookmarkId('vaishno-devi-chalisa::39', 'vaishno-devi-chalisa'), 'vaishno-devi-chalisa::39');
