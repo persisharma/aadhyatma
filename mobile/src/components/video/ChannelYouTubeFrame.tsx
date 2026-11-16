@@ -41,7 +41,9 @@ export default function ChannelYouTubeFrame({ channelId, height, play, onReady, 
       } catch { /* Ignore malformed/non-player bridge events. */ }
     }}
     onError={onError}
-    onHttpError={onError}
+    // Subresource HTTP errors (e.g. a thumbnail) are not playback failures.
+    // YouTube reports embed failures through onMessage; load stalls time out
+    // in the owning player. Native main-document/process failures remain fatal.
     onContentProcessDidTerminate={onError}
   />;
 }

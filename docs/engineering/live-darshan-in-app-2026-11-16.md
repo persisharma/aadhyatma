@@ -89,9 +89,9 @@ sharing, calendar, reminder or release work.
 
 - Before fix: 12 new in-app-source/content regressions fail against the previous
   screen. After fix: targeted source/player/routes/favourites/real-library tests pass.
-- Full component run before the unrelated upstream merge: 411 suites / 4,380 tests PASS. Final focused rerun includes
-  subsequent compact-layout/favourite-retry coverage: 7 suites / 78 tests PASS.
-- Final integrated full component run: in progress at this checkpoint.
+- Final integrated full component run on main `f708ee04`: 411 suites / 4,390 tests PASS.
+- Final focused source/player/routes/favourites rerun: 7 suites / 79 tests PASS,
+  including large-system-text wrapping and ignored non-fatal HTTP subresources.
 - TypeScript PASS. Focused production-file ESLint: 0 errors/warnings.
 - Widget51, engine842, data242 and Ask49 PASS using the package scripts' exact
   file lists with `node --import tsx --test` (tsx CLI IPC socket is restricted).

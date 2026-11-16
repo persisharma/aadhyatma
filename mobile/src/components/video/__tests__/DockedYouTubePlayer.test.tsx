@@ -259,3 +259,12 @@ it('retains the reader same-video handoff while broadcast error recovery stays i
   expect(browse).toHaveBeenCalled();
   act(() => tree.unmount());
 });
+
+it('allows broadcast labels to wrap so large system text keeps both controls reachable', () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="kn" broadcast onClose={() => {}} />); });
+  const label = tree.root.findAll(n => n.props.children === 'ದೇವಾಲಯದ ಪ್ರಸಾರ' && n.props.style)[0];
+  expect(label.props.numberOfLines).toBeUndefined();
+  expect(require('react-native').StyleSheet.flatten(label.props.style).flexShrink).toBe(1);
+  act(() => tree.unmount());
+});

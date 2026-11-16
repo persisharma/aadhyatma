@@ -286,7 +286,7 @@ export default function DockedYouTubePlayer({
           >
             <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color={colors.onPrimary} />
           </Pressable>
-          <Text style={[styles.time, { color: colors.inkMuted }]} numberOfLines={1}>
+          <Text style={[styles.time, broadcast && styles.broadcastTime, { color: colors.inkMuted }]} numberOfLines={broadcast ? undefined : 1}>
             {broadcast ? pick(uiLang, { hi: 'मंदिर का प्रसारण', en: 'Temple broadcast', gu: 'મંદિરનું પ્રસારણ', kn: 'ದೇವಾಲಯದ ಪ್ರಸಾರ' }) : `${fmt(elapsed)} / ${fmt(duration)}`}
           </Text>
           {broadcast && phase === 'loading' && <ActivityIndicator size="small" color={colors.saffron} />}
@@ -391,6 +391,7 @@ const styles = StyleSheet.create({
   strip: { flexDirection: 'row', alignItems: 'center', gap: 9, paddingHorizontal: 13, paddingVertical: 8, borderBottomWidth: StyleSheet.hairlineWidth },
   ppBtn: { width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
   time: { fontSize: 12, fontStyle: 'italic' },
+  broadcastTime: { flexShrink: 1, minWidth: 0 },
   stripSpacer: { flex: 1 },
   openBtn: { paddingHorizontal: 2 },
   openArrow: { fontSize: 16, fontWeight: '600' },

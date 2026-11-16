@@ -12,7 +12,8 @@ type NativeProps = {
   allowsInlineMediaPlayback: boolean;
   mediaPlaybackRequiresUserAction: boolean;
   onMessage: (e: { nativeEvent: { data: string } }) => void;
-  onHttpError: () => void;
+  onError: () => void;
+  onHttpError?: () => void;
   onContentProcessDidTerminate: () => void;
 };
 let mockProps: NativeProps;
@@ -82,7 +83,8 @@ it('reports actual player states, autoplay blocking, native and embed errors', (
   message('state', 0);
   expect(callbacks.onChangeState).toHaveBeenLastCalledWith(PLAYER_STATES.ENDED);
   message('error', 150);
-  act(() => mockProps.onHttpError());
+  expect(mockProps.onHttpError).toBeUndefined();
+  act(() => mockProps.onError());
   act(() => mockProps.onContentProcessDidTerminate());
   expect(callbacks.onError).toHaveBeenCalledTimes(3);
   expect(() => act(() => mockProps.onMessage({ nativeEvent: { data: 'malformed' } }))).not.toThrow();
