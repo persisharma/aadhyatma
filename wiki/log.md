@@ -1557,3 +1557,7 @@ Restored the feature onto current main without undoing the share-hand-off revert
 - Added `shani-chalisa` to the existing Chalisa reader, search, navigation, discovery and Shani artwork mapping; 43 stable units and original Hindi/English meanings, derived Gujarati/Kannada scripts.
 - Corrected the parity manifest’s Drik `/other/` candidate: it is a separate composition. Retained the complete main edition with Vimal closing; source differences and all-unit collation are recorded in `docs/evaluations/a1-shani-chalisa/`.
 - Current repository checklist + merged A2 pattern replace the absent historical checklist under maintainer authorization. No reader or release contract changed. Native and performance checks remain pending; draft PR required.
+
+## 2026-11-16 — A3 Santoshi Mata Chalisa
+
+Added the 42-unit Ganapati/Sharada-opening composition to the existing Chalisa reader, catalog, search, discovery and saved routes. Chosen Drik edition compared with Ved Puran; seven/sixteen-Friday variant recorded internally. Owner authorized the A2-style edition/checklist resolution for A3. Reuses Durga art; no release or new audio. Native verification pending; see `docs/evaluations/a3-santoshi-mata-chalisa/review.md`.
