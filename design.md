@@ -4632,8 +4632,7 @@ SVBC/Srisaila retain their devotional-TV labels.
 
 **Player page:** the 16:9 stage uses the full available screen width (maximum840,
 minimum240pt tall, or200pt on compact-height screens), followed by a compact48pt-target control strip. It stays visible above the scrolling temple content; publisher attribution sits beside the temple identity in that content so compact screens retain reading space.
-The header's48pt bookmark replaces the old full-width favourite button. The body
-has the actual temple name/location, language control, complete existing sourced
+The header's48pt bookmark replaces the old full-width favourite button. Beneath the video, a compact summary uses12pt top padding and4pt internal gaps: a wrapping row pairs the24pt temple title with the existing compact language pill;14pt location and12pt publisher follow. A TV feed retains its extra label. There is no separate centred language row or generic broadcast-timing sentence. The body uses16pt section gaps and has complete existing sourced
 significance, expandable origin story, full in-app temple guide, up to four actual
 active devotional readers (aarti/chalisa first, then stotram/ashtakam/kavach), and
 horizontal painted temple cards. Switching temples replaces this player route so

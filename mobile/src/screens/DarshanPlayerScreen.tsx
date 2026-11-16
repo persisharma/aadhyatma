@@ -122,19 +122,17 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
       </View>
     <ScrollView testID="darshan-content" style={{ flex: 1 }} contentContainerStyle={styles.scroll}>
       <View style={styles.body}>
-        <View style={styles.identity}>
-          <DarshanText testID="darshan-title" accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 28 * factor, lineHeight: 40 * factor }}>{title}</DarshanText>
-          <View style={styles.location}><AppIcon name="location" size={17} color={colors.saffronDeep} />
-            <DarshanText style={{ color: colors.inkMuted }}>{contentByLang(lang, temple.cityHi, temple.cityEn)} · {contentByLang(lang, temple.stateHi, temple.stateEn)}</DarshanText>
+        <View testID="darshan-summary" style={styles.summary}>
+          <View testID="darshan-title-row" style={styles.titleRow}>
+            <DarshanText testID="darshan-title" accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 24 * factor, lineHeight: 34 * factor, flexGrow: 1, flexShrink: 1, flexBasis: 180 }}>{title}</DarshanText>
+            <LanguageToggle compact />
           </View>
+          <View style={styles.location}><AppIcon name="location" size={14} color={colors.saffronDeep} />
+            <DarshanText style={{ color: colors.inkMuted, fontSize: 14 * factor, lineHeight: 22 * factor }}>{contentByLang(lang, temple.cityHi, temple.cityEn)} · {contentByLang(lang, temple.stateHi, temple.stateEn)}</DarshanText>
+          </View>
+          <DarshanText style={{ color: colors.inkMuted, fontSize: 12 * factor, lineHeight: 20 * factor }}>{channel.channel}</DarshanText>
+          {channel.kind === 'tv' && <DarshanText style={{ color: colors.inkMuted, fontSize: 12 * factor, lineHeight: 20 * factor }}>{pick(lang, { hi: 'मंदिर का भक्ति टीवी प्रसारण', en: 'Temple devotional TV', gu: 'મંદિરનું ભક્તિ ટીવી પ્રસારણ', kn: 'ದೇವಾಲಯದ ಭಕ್ತಿ ಟಿವಿ ಪ್ರಸಾರ' })}</DarshanText>}
         </View>
-        <View style={styles.attribution}>
-          <DarshanText style={{ color: colors.inkMuted, fontSize: 13 * factor, lineHeight: 21 * factor }}>{channel.channel}</DarshanText>
-          <DarshanText style={{ color: colors.inkMuted, fontSize: 13 * factor, lineHeight: 21 * factor }}>{channel.kind === 'tv'
-            ? pick(lang, { hi: 'मंदिर का भक्ति टीवी प्रसारण', en: 'Temple devotional TV', gu: 'મંદિરનું ભક્તિ ટીવી પ્રસારણ', kn: 'ದೇವಾಲಯದ ಭಕ್ತಿ ಟಿವಿ ಪ್ರಸಾರ' })
-            : pick(lang, { hi: 'प्रसारण का समय मंदिर के अनुसार', en: 'Broadcast times follow the temple', gu: 'પ્રસારણનો સમય મંદિર મુજબ', kn: 'ಪ್ರಸಾರದ ಸಮಯ ದೇವಾಲಯದ ಪ್ರಕಾರ' })}</DarshanText>
-        </View>
-        <LanguageToggle />
         {failed && <View style={{ gap: 8 }}><DarshanText accessibilityLiveRegion="polite">{pick(lang, { hi: 'पसंदीदा सहेज नहीं सके। फिर प्रयास करें।', en: 'Could not save favourites. Please retry.', gu: 'મનપસંદ સાચવી શકાયા નથી. ફરી પ્રયાસ કરો.', kn: 'ಮೆಚ್ಚಿನವುಗಳನ್ನು ಉಳಿಸಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' })}</DarshanText><DarshanAction testID="darshan-save-retry" label={pick(lang, { hi: 'फिर प्रयास करें', en: 'Retry saving', gu: 'ફરી પ્રયાસ કરો', kn: 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' })} onPress={() => { void retry(); }} /></View>}
         <View testID="darshan-about" style={[styles.about, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
           <DarshanText accessibilityRole="header" style={{ color: colors.saffronDeep, fontFamily: cardFontByLang(lang) }}>{pick(lang, { hi: 'इस तीर्थ का महत्व', en: 'Why this temple is sacred', gu: 'આ તીર્થનું મહત્વ', kn: 'ಈ ಕ್ಷೇತ್ರದ ಮಹತ್ವ' })}</DarshanText>
@@ -171,9 +169,9 @@ const styles = StyleSheet.create({
   scroll: { paddingBottom: 40, width: '100%', maxWidth: 840, alignSelf: 'center' },
   hero: { width: '100%', maxWidth: 840, alignSelf: 'center', borderBottomWidth: 1 },
   start: { minHeight: 240, alignItems: 'center', justifyContent: 'center', padding: 22, gap: 14 },
-  attribution: { gap: 2 },
-  body: { paddingHorizontal: 22, paddingTop: 22, gap: 22 },
-  identity: { gap: 4 },
+  body: { paddingHorizontal: 22, paddingTop: 12, gap: 16 },
+  summary: { gap: 4 },
+  titleRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 8 },
   location: { flexDirection: 'row', gap: 6, alignItems: 'center', flexWrap: 'wrap' },
   save: { minHeight: 48, minWidth: 48, alignItems: 'center', justifyContent: 'center', borderRadius: 24 },
   about: { borderWidth: 1, borderRadius: 22, padding: 18, gap: 14 },

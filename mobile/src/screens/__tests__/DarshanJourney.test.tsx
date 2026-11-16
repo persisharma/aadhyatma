@@ -280,7 +280,11 @@ it.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang =>
 ))('retains script, reading scale and a full-width pinned player (%s / %s)', async (lang, size) => {
   jest.spyOn(AsyncStorage, 'getItem').mockImplementation(async key => key === '@vedansh/font-scale' ? size : null);
   const tree = await render('player', lang, 'banke-bihari');
-  expect(tree.root.findByProps({ testID: 'darshan-title' }).props.style.fontSize).toBe(28 * fontScaleFactor(size));
+  expect(tree.root.findByProps({ testID: 'darshan-title' }).props.style.fontSize).toBe(24 * fontScaleFactor(size));
+  const summary = tree.root.findByProps({ testID: 'darshan-summary' });
+  expect(summary.findByType(require('@/components/LanguageToggle').default).props.compact).toBe(true);
+  expect(tree.root.findByProps({ testID: 'darshan-title-row' }).props.style.flexWrap).toBe('wrap');
+  expect(summary.findAllByType(require('@/components/darshan/DarshanUI').DarshanText).filter(n => n.props.testID === 'darshan-title')).toHaveLength(1);
   const hero = tree.root.findByProps({ testID: 'darshan-hero' });
   const body = tree.root.findByProps({ testID: 'darshan-content' });
   expect(hero.parent).toBe(body.parent); // player remains visible while content scrolls

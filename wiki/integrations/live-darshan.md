@@ -24,7 +24,7 @@ fallback. `channelEmbed.ts` constructs the stable source and app-identity HTML;
 are no dated IDs, channel HTML scraping, hidden resolver or progress polling.
 Waiting/offline/restricted sources remain an in-app Retry/Browse experience.
 
-The full-width player stays above scrollable temple content. One attribution,
+The full-width player stays above scrollable temple content. Its compact summary puts the title and compact language pill on one wrapping row, with location/publisher4pt apart,12pt top inset and16pt to content. It replaces the previous separate22pt-gap blocks. One attribution,
 header bookmark, actual sourced significance/story, guide, shipped devotional
 readers and painted temple switching replace duplicated publisher copy and exit
 buttons. Readers still open through `navigateToEntryStart`; switching temples

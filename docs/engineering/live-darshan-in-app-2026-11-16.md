@@ -111,3 +111,13 @@ Standard/Large/compact/system text, accessibility, release-mode responsiveness,
 
 No native dependency/version change, cloud release build, merge, store submission
 or OTA. No new artwork/CDN assets or content publication.
+
+## Spacing correction after preview review
+
+The previous body stacked the identity, attribution and full language pill with
+22pt gaps. These were spacing inherited by separate blocks, not a video requirement.
+The implemented summary now has12pt top padding,4pt internal gaps and a wrapping
+title/compact-language row. Location and publisher sit directly below; a TV label
+remains when appropriate. Section gaps are16pt. The generic timing sentence and
+standalone language row are removed. Tests cover the grouped summary in all four
+languages at Standard/Large; native layout remains pending.
