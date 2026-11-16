@@ -1,6 +1,6 @@
-/** Official sources reviewed 13 November 2026. No dated video is labelled live.
- * Resolve only dedicated official live pages. Channel-only entries deliberately
- * hand off to YouTube until a reliable current-video source is available. */
+/** Official sources reviewed 13–16 November 2026. Every channel opens its
+ * current-broadcast embed in app. Dedicated temple live-page discovery is
+ * preferred when available. No dated IDs, scraped channel HTML or live badges. */
 export type DarshanChannel = {
   templeId: string;
   relatedTempleIds?: readonly string[];

@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@/theme/ThemeContext";
 import { GitaLanguageProvider, type Lang } from "@/data/gita/language";
 import { FontScaleProvider } from "@/contexts/FontScaleContext";
+import { FONT_SCALES, fontScaleFactor, type FontScale } from '@/theme/fontScale';
 import LibraryCard from "@/components/LibraryCard";
 import DarshanQuickScreen from "../DarshanQuickScreen";
 import DarshanListScreen from "../DarshanListScreen";
@@ -183,31 +184,29 @@ it("resolves the current official player, saves favourites and opens the actual 
   ).toHaveLength(0);
   expect(tree.root.findByProps({ testID: "darshan-watch" })).toBeDefined();
 });
-it("a channel-only temple never fetches/silently replays an old video and offers the exact official channel", async () => {
-  const fetchMock = jest.spyOn(global, "fetch");
-  const open = jest.spyOn(Linking, "openURL").mockResolvedValue(true);
-  const tree = await render("player", "en", "khatu-shyam");
-  expect(fetchMock).not.toHaveBeenCalled();
-  expect(
-    tree.root.findAllByProps({ testID: "youtube-native-boundary" }),
-  ).toHaveLength(0);
-  press(tree, "darshan-youtube");
-  expect(open).toHaveBeenCalledWith(
-    "https://www.youtube.com/channel/UCT-3fEwrrxlwMrWgMvoqt-w/live",
-  );
-});
-it("network failure exposes retry and YouTube; dismissing during a pending lookup aborts it", async () => {
-  const fetchMock = jest
-    .spyOn(global, "fetch")
-    .mockRejectedValueOnce(new Error("offline"));
-  const tree = await render("player");
-  expect(tree.root.findByProps({ testID: "darshan-retry" })).toBeDefined();
+it.each(['omkareshwar', 'dwarkadhish', 'naina-devi', 'mallikarjuna', 'tirupati-balaji', 'khatu-shyam', 'banke-bihari'])(
+  'opens %s as a stable in-app channel player without outgoing links', async (templeId) => {
+    const fetchMock = jest.spyOn(global, 'fetch');
+    const external = jest.spyOn(Linking, 'openURL');
+    const tree = await render('player', 'en', templeId);
+    const channel = require('@/data/darshan/channels').darshanForTemple(templeId);
+    expect(tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.channelId).toBe(channel.channelId);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(tree.root.findAllByProps({ testID: 'darshan-youtube' })).toHaveLength(0);
+    expect(tree.root.findAllByProps({ testID: 'darshan-website' })).toHaveLength(0);
+    expect(external).not.toHaveBeenCalled();
+  },
+);
+it('failed official lookup falls back to the visible in-app channel, and blur cancels a retry', async () => {
+  const fetchMock = jest.spyOn(global, 'fetch').mockRejectedValueOnce(new Error('offline'));
+  const tree = await render('player');
+  expect(tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.channelId).toBe('UCT1egsvA08YcdMLiEu1DTRg');
   let signal: AbortSignal | undefined;
   fetchMock.mockImplementation((_url, options) => {
     signal = options?.signal as AbortSignal;
     return new Promise(() => {});
   });
-  press(tree, "darshan-retry");
+  act(() => tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.onRefreshSource());
   act(() => mockFocus.blur?.());
   expect(signal?.aborted).toBe(true);
 });
@@ -245,10 +244,7 @@ it("a broadcast lookup times out with retry instead of leaving a permanent spinn
   jest.spyOn(global, "fetch").mockImplementation(() => new Promise(() => {}));
   const tree = await render("player");
   act(() => jest.advanceTimersByTime(12000));
-  expect(tree.root.findByProps({ testID: "darshan-retry" })).toBeDefined();
-  expect(
-    tree.root.findAllByProps({ testID: "youtube-native-boundary" }),
-  ).toHaveLength(0);
+  expect(tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.channelId).toBe('UCT1egsvA08YcdMLiEu1DTRg');
 });
 
 
@@ -263,12 +259,42 @@ it('embed Retry discovers a replacement video instead of remounting the broken I
 });
 
 
-it('offers the temple website if the YouTube hand-off cannot open', async () => {
+it.each(['hi', 'en', 'gu', 'kn'] as Lang[])('shows sourced temple content, expandable story, real readings and in-app switching (%s)', async (lang) => {
   jest.spyOn(global, 'fetch').mockRejectedValue(new Error('source unavailable'));
-  const external = jest.spyOn(Linking, 'openURL').mockRejectedValueOnce(new Error('cannot open')).mockResolvedValue(true);
-  const tree = await render('player');
-  press(tree, 'darshan-youtube'); await flush();
-  expect(JSON.stringify(tree.toJSON())).toContain('Could not open the link');
-  press(tree, 'darshan-website'); await flush();
-  expect(external).toHaveBeenLastCalledWith('https://somnath.org/');
+  const tree = await render('player', lang);
+  const temple = require('@/data/theerth/temples').getTempleDetailById('somnath');
+  const localize = require('@/utils/localize');
+  expect(JSON.stringify(tree.toJSON())).toContain(localize.meaningByLang(lang, temple.significanceHi, temple.significanceEn));
+  expect(tree.root.findByProps({ testID: 'darshan-about' })).toBeDefined();
+  expect(tree.root.findAllByType(LibraryCard).length).toBeGreaterThanOrEqual(3);
+  press(tree, 'darshan-story');
+  expect(tree.root.findByProps({ testID: 'darshan-story-content' }).props.children).toBe(localize.meaningByLang(lang, temple.originStoryHi, temple.originStoryEn));
+  press(tree, 'darshan-story');
+  expect(tree.root.findAllByProps({ testID: 'darshan-story-content' })).toHaveLength(0);
+  press(tree, 'darshan-temple-omkareshwar');
+  expect(nav.replace).toHaveBeenCalledWith('DarshanPlayer', { templeId: 'omkareshwar' });
+});
+
+it.each((['hi', 'en', 'gu', 'kn'] as Lang[]).flatMap(lang =>
+  (Object.keys(FONT_SCALES) as FontScale[]).map(size => [lang, size] as const),
+))('retains script, reading scale and a full-width pinned player (%s / %s)', async (lang, size) => {
+  jest.spyOn(AsyncStorage, 'getItem').mockImplementation(async key => key === '@vedansh/font-scale' ? size : null);
+  const tree = await render('player', lang, 'banke-bihari');
+  expect(tree.root.findByProps({ testID: 'darshan-title' }).props.style.fontSize).toBe(28 * fontScaleFactor(size));
+  const hero = tree.root.findByProps({ testID: 'darshan-hero' });
+  const body = tree.root.findByProps({ testID: 'darshan-content' });
+  expect(hero.parent).toBe(body.parent); // player remains visible while content scrolls
+  expect(tree.root.findAllByProps({ testID: 'darshan-youtube' })).toHaveLength(0);
+});
+
+it('retries the failed favourite snapshot in app without toggling the saved choice again', async () => {
+  const write = jest.spyOn(AsyncStorage, 'setItem').mockRejectedValueOnce(new Error('storage unavailable'));
+  const tree = await render('player', 'en', 'banke-bihari');
+  press(tree, 'darshan-save');
+  await flush();
+  const failedSnapshot = write.mock.calls[write.mock.calls.length - 1];
+  press(tree, 'darshan-save-retry');
+  await flush();
+  expect(write.mock.calls[write.mock.calls.length - 1]).toEqual(failedSnapshot);
+  expect(tree.root.findAllByProps({ testID: 'darshan-save-retry' })).toHaveLength(0);
 });

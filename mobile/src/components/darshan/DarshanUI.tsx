@@ -98,19 +98,9 @@ export function DarshanCard({
         : temple.deity === "durga"
           ? storybookSources.durga
           : storybookSources.theerth;
-  const mode = channel.livePage
-    ? pick(lang, {
-        hi: "ऐप में प्रसारण देखें",
-        en: "Watch broadcast in app",
-        gu: "ઍપમાં પ્રસારણ જુઓ",
-        kn: "ಆ್ಯಪ್‌ನಲ್ಲಿ ಪ್ರಸಾರ ವೀಕ್ಷಿಸಿ",
-      })
-    : pick(lang, {
-        hi: "YouTube पर उपलब्धता देखें",
-        en: "Check availability on YouTube",
-        gu: "YouTube પર ઉપલબ્ધતા જુઓ",
-        kn: "YouTube ನಲ್ಲಿ ಲಭ್ಯತೆ ನೋಡಿ",
-      });
+  const mode = pick(lang, {
+    hi: 'दर्शन देखें', en: 'Watch Darshan', gu: 'દર્શન જુઓ', kn: 'ದರ್ಶನ ವೀಕ್ಷಿಸಿ',
+  });
   return (
     <Pressable
       testID={`darshan-temple-${temple.id}`}

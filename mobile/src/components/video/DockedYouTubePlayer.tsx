@@ -9,6 +9,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
+import ChannelYouTubeFrame from './ChannelYouTubeFrame';
 import YoutubePlayer, { PLAYER_STATES, type YoutubeIframeRef } from 'react-native-youtube-iframe';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
@@ -46,7 +47,10 @@ const LOAD_TIMEOUT_MS = 15000;
 type Phase = 'loading' | 'ready' | 'error';
 
 export type DockedYouTubePlayerProps = {
-  mapping: Pick<VideoMapping, 'videoId' | 'titleHi' | 'titleEn' | 'channel'> & Partial<Pick<VideoMapping, 'spokenLang'>>;
+  mapping: Pick<VideoMapping, 'titleHi' | 'titleEn' | 'channel'> & Partial<Pick<VideoMapping, 'spokenLang' | 'videoId'>>;
+  /** Stable current-broadcast source when a dedicated temple video is unavailable. */
+  channelId?: string;
+  onChooseBroadcast?: () => void;
   broadcast?: boolean;
   onRefreshSource?: () => void;
   uiLang: Lang;
@@ -68,6 +72,8 @@ function spokenLangLabel(lang: VideoMapping['spokenLang'], uiLang: Lang): string
 
 export default function DockedYouTubePlayer({
   mapping,
+  channelId,
+  onChooseBroadcast,
   broadcast = false,
   onRefreshSource,
   uiLang,
@@ -75,7 +81,7 @@ export default function DockedYouTubePlayer({
   onClose,
 }: DockedYouTubePlayerProps) {
   const { colors } = useTheme();
-  const { width } = useWindowDimensions();
+  const { width, height: viewportHeight } = useWindowDimensions();
   const playerRef = useRef<YoutubeIframeRef>(null);
   const [phase, setPhase] = useState<Phase>('loading');
   // The user tapped "Play video", so autoplay is the intended, gesture-initiated start.
@@ -87,7 +93,7 @@ export default function DockedYouTubePlayer({
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 16:9, never below YouTube's 200px minimum embed viewport.
-  const playerHeight = Math.max(200, Math.round((broadcast ? Math.min(width - 44, 636) : width) * (9 / 16)));
+  const playerHeight = Math.max(broadcast && viewportHeight >= 700 ? 240 : 200, Math.round((broadcast ? Math.min(width, 840) : width) * (9 / 16)));
 
   const clearLoadTimeout = useCallback(() => {
     if (timeoutRef.current) {
@@ -205,7 +211,7 @@ export default function DockedYouTubePlayer({
   }, [armLoadTimeout, onRefreshSource]);
 
   const openInYouTube = useCallback(() => {
-    Linking.openURL(youtubeWatchUrl(mapping.videoId)).catch(() => undefined);
+    if (mapping.videoId) Linking.openURL(youtubeWatchUrl(mapping.videoId)).catch(() => undefined);
   }, [mapping.videoId]);
 
   const title = contentByLang(uiLang, mapping.titleHi, mapping.titleEn);
@@ -218,7 +224,7 @@ export default function DockedYouTubePlayer({
 
   return (
     <View style={[styles.wrap, { backgroundColor: colors.surface, borderBottomColor: colors.border }]}>
-      <View style={[styles.stage, { height: playerHeight, backgroundColor: colors.videoStage }]}>
+      <View style={[styles.stage, { minHeight: playerHeight, height: broadcast && phase === 'error' ? undefined : playerHeight, backgroundColor: colors.videoStage }]}>
         {phase === 'error' ? (
           <ErrorCard
             colors={colors}
@@ -226,10 +232,20 @@ export default function DockedYouTubePlayer({
             onRetry={retry}
             onOpen={openInYouTube}
             openLabel={openLabel}
+            broadcast={broadcast}
+            onChooseBroadcast={onChooseBroadcast}
           />
         ) : (
           <>
-            <YoutubePlayer
+            {channelId ? <ChannelYouTubeFrame
+              key={`${channelId}:${reloadKey}`}
+              channelId={channelId}
+              height={playerHeight}
+              play={playing}
+              onReady={onReady}
+              onError={onError}
+              onChangeState={onChangeState}
+            /> : <YoutubePlayer
               key={reloadKey}
               ref={playerRef}
               height={playerHeight}
@@ -242,10 +258,11 @@ export default function DockedYouTubePlayer({
               initialPlayerParams={{ rel: false, controls: true }}
               webViewProps={{
                 allowsInlineMediaPlayback: true,
+                allowsFullscreenVideo: true,
                 mediaPlaybackRequiresUserAction: false,
               }}
-            />
-            {phase === 'loading' && (
+            />}
+            {phase === 'loading' && !broadcast && (
               <View style={styles.loadingOverlay} pointerEvents="none">
                 <ActivityIndicator color={colors.onPrimary} />
               </View>
@@ -265,15 +282,16 @@ export default function DockedYouTubePlayer({
                 : pick(uiLang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಪ್ಲೇ' })
             }
             hitSlop={8}
-            style={[styles.ppBtn, { backgroundColor: colors.saffron }]}
+            style={[styles.ppBtn, broadcast && styles.broadcastButton, { backgroundColor: colors.saffron }]}
           >
             <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color={colors.onPrimary} />
           </Pressable>
           <Text style={[styles.time, { color: colors.inkMuted }]} numberOfLines={1}>
             {broadcast ? pick(uiLang, { hi: 'मंदिर का प्रसारण', en: 'Temple broadcast', gu: 'મંદિરનું પ્રસારણ', kn: 'ದೇವಾಲಯದ ಪ್ರಸಾರ' }) : `${fmt(elapsed)} / ${fmt(duration)}`}
           </Text>
+          {broadcast && phase === 'loading' && <ActivityIndicator size="small" color={colors.saffron} />}
           <View style={styles.stripSpacer} />
-          <Pressable
+          {!broadcast && <Pressable
             onPress={openInYouTube}
             accessibilityRole="link"
             accessibilityLabel={openLabel}
@@ -281,20 +299,20 @@ export default function DockedYouTubePlayer({
             style={styles.openBtn}
           >
             <Text style={[styles.openArrow, { color: colors.ink }]}>↗</Text>
-          </Pressable>
+          </Pressable>}
           <Pressable
             onPress={onClose}
             accessibilityRole="button"
             accessibilityLabel={pick(uiLang, { hi: 'वीडियो बंद करें', en: 'Close video', gu: 'વિડિઓ બંધ કરો', kn: 'ವೀಡಿಯೊ ಮುಚ್ಚಿ' })}
             hitSlop={8}
-            style={styles.closeBtn}
+            style={[styles.closeBtn, broadcast && styles.broadcastButton]}
           >
             <AppIcon name="close" size={15} color={colors.inkMuted} />
           </Pressable>
         </View>
       )}
 
-      {phase !== 'error' && (
+      {phase !== 'error' && !broadcast && (
         <View style={styles.meta}>
           <Text style={[styles.title, { color: colors.ink }]} numberOfLines={1}>
             {title}
@@ -314,12 +332,16 @@ function ErrorCard({
   onRetry,
   onOpen,
   openLabel,
+  broadcast = false,
+  onChooseBroadcast,
 }: {
   colors: ReturnType<typeof useTheme>['colors'];
   uiLang: Lang;
   onRetry: () => void;
   onOpen: () => void;
   openLabel: string;
+  broadcast?: boolean;
+  onChooseBroadcast?: () => void;
 }) {
   return (
     <View style={[styles.errCard, { backgroundColor: colors.surface }]}>
@@ -332,7 +354,7 @@ function ErrorCard({
         })}
       </Text>
       <Text style={[styles.errBody, { color: colors.inkMuted }]}>
-        {pick(uiLang, {
+        {broadcast ? pick(uiLang, { hi: 'प्रसारण अभी नहीं चल सका। फिर प्रयास करें या दूसरे मंदिर के दर्शन देखें।', en: 'The broadcast could not start. Try again or choose another temple.', gu: 'પ્રસારણ શરૂ થઈ શક્યું નથી. ફરી પ્રયાસ કરો અથવા બીજું મંદિર પસંદ કરો.', kn: 'ಪ್ರಸಾರ ಪ್ರಾರಂಭವಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಮತ್ತೊಂದು ದೇವಾಲಯ ಆಯ್ಕೆಮಾಡಿ.' }) : pick(uiLang, {
           hi: 'आप ऑफ़लाइन हैं या वीडियो हटाया/निजी/प्रतिबंधित हो सकता है।',
           en: 'You’re offline, or the video was removed, made private, or can’t be embedded here.',
           gu: 'તમે ઑફલાઇન છો, અથવા વિડિઓ દૂર/ખાનગી/પ્રતિબંધિત હોઈ શકે છે.',
@@ -345,9 +367,12 @@ function ErrorCard({
           {pick(uiLang, { hi: 'पुनः प्रयास', en: 'Retry', gu: 'ફરી પ્રયાસ', kn: 'ಮರುಪ್ರಯತ್ನ' })}
         </Text>
       </Pressable>
-      <Pressable onPress={onOpen} accessibilityRole="link" style={styles.errOpen}>
+      {broadcast && onChooseBroadcast && <Pressable onPress={onChooseBroadcast} accessibilityRole="button" style={styles.errOpen}>
+        <Text style={[styles.errOpenText, { color: colors.saffronDeep }]}>{pick(uiLang, { hi: 'अन्य मंदिर देखें', en: 'Browse temples', gu: 'બીજાં મંદિરો જુઓ', kn: 'ಇತರ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ' })}</Text>
+      </Pressable>}
+      {!broadcast && <Pressable onPress={onOpen} accessibilityRole="link" style={styles.errOpen}>
         <Text style={[styles.errOpenText, { color: colors.saffronDeep }]}>↗ {openLabel}</Text>
-      </Pressable>
+      </Pressable>}
     </View>
   );
 }
@@ -370,6 +395,7 @@ const styles = StyleSheet.create({
   openBtn: { paddingHorizontal: 2 },
   openArrow: { fontSize: 16, fontWeight: '600' },
   closeBtn: { paddingLeft: 2 },
+  broadcastButton: { minWidth: 48, minHeight: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
   meta: { paddingHorizontal: 15, paddingTop: 8, paddingBottom: 10 },
   title: { fontSize: 16 },
   channel: { fontSize: 13, fontStyle: 'italic', marginTop: 2 },

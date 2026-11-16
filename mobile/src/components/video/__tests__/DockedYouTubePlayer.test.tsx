@@ -225,7 +225,7 @@ it('broadcasts accept display metadata without forging recitation verification a
 });
 
 
-it('wires pause, play, close, same-video external link and fresh-source retry', () => {
+it('wires broadcast pause, play, close and fresh-source retry without app-owned outgoing links', () => {
   const close = jest.fn(), refresh = jest.fn();
   const external = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
   let tree!: TestRenderer.ReactTestRenderer;
@@ -233,10 +233,29 @@ it('wires pause, play, close, same-video external link and fresh-source retry', 
   const tap = (label: string) => act(() => tree.root.findAll(n => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function')[0].props.onPress());
   tap('Pause'); expect(mockRnyi.props?.play).toBe(false);
   tap('Play'); expect(mockRnyi.props?.play).toBe(true);
-  tap('Open in YouTube'); expect(external).toHaveBeenCalledWith('https://www.youtube.com/watch?v=AETFvQonfV8');
+  expect(tree.root.findAll(n => n.props.accessibilityLabel === 'Open in YouTube')).toHaveLength(0);
+  expect(external).not.toHaveBeenCalled();
   tap('Close video'); expect(close).toHaveBeenCalledTimes(1);
   act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
   const retry = tree.root.findAll(n => typeof n.props.onPress === 'function' && n.props.accessibilityRole === 'button')[0];
   act(() => retry.props.onPress()); expect(refresh).toHaveBeenCalledTimes(1);
+  act(() => tree.unmount());
+});
+
+it('retains the reader same-video handoff while broadcast error recovery stays in app', () => {
+  const external = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+  const browse = jest.fn();
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />); });
+  act(() => tree.root.findAll(n => n.props.accessibilityLabel === 'Open in YouTube' && typeof n.props.onPress === 'function')[0].props.onPress());
+  expect(external).toHaveBeenCalledWith('https://www.youtube.com/watch?v=AETFvQonfV8');
+  act(() => tree.unmount());
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" broadcast onChooseBroadcast={browse} onClose={() => {}} />); });
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  expect(allText(tree)).not.toContain('Open in YouTube');
+  const button = tree.root.findAll(n => n.props.accessibilityRole === 'button' && typeof n.props.onPress === 'function').find(n => n.props.onPress === browse);
+  expect(button).toBeDefined();
+  act(() => button!.props.onPress());
+  expect(browse).toHaveBeenCalled();
   act(() => tree.unmount());
 });

@@ -4619,25 +4619,50 @@ height. Screen body gutters22, maximum width680, natural wrapping, script-safe
 fonts, shared Standard/Large factor and system text growth; source-language labels
 and full names remain visible. ReaderHeader/TextField/LanguageToggle are shared.
 
-**Availability contract:** the roster contains nine audited channel entries covering ten temple guides, with Mallikarjuna/Bhramaramba sharing Srisaila TV.
-Somnath and Kashi resolve their single current iframe video from dedicated official
-live pages after a user opens the player; all other channels offer their exact
-YouTube /live hand-off until reliable current-video discovery is available. Do not
-bundle dated broadcast IDs, infer current liveness from an embedding permission,
-or show live-now counts/badges or invented reminder times. A public official
-live page can still retain a recording; the UI says broadcast, never confirmed live.
-The lookup is cancellable with a12s timeout and fails closed on ambiguous/malformed
-embeds, off-domain redirects or source failure. YouTube's own errors get Retry and
-same-video hand-off. SVBC/Srisaila are labelled devotional TV. An external channel
-is explicitly labelled as such in the list, never disguised as an in-app stream.
+**Availability and sources (16 November 2026):** all nine audited channels now have
+an in-app current-channel YouTube embed (`/embed/live_stream?channel=...`). This
+uses the visible official player to select the broadcast; it never scrapes channel
+HTML, bundles a dated video ID or mounts a hidden resolver. Somnath/Kashi still
+prefer a unique iframe from their dedicated official live page, with a 12-second
+abort deadline, and fall back to their stable channel embed on lookup failure,
+timeout or missing/ambiguous ID. Retry refreshes discovery and remounts its source.
+A waiting/offline/restricted broadcast remains an in-app error/retry/browse journey;
+there is no fabricated live-now badge, schedule or automatic archive substitution.
+SVBC/Srisaila retain their devotional-TV labels.
 
-**Playback:** reuse DockedYouTubePlayer and its existing native WebView dependency,
-IFrame controls, arbiter and no-background/no-auto-resume rules. Broadcast mode has
-no meaningless0:00/0:00 counter or progress polling; source language is not invented.
-Lookup/background/blur cancels and unmounts the broadcast; returning requires a
-Watch tap. Reader verified recitations keep their existing mapping and cue rules.
-Favourites hydrate on first Darshan use only, disable edits until ready, validate
-IDs, serialize writes and expose read/write failure with retry.
+**Player page:** the 16:9 stage uses the full available screen width (maximum840,
+minimum240pt tall, or200pt on compact-height screens), followed by a compact48pt-target control strip. It stays visible above the scrolling temple content; publisher attribution sits beside the temple identity in that content so compact screens retain reading space.
+The header's48pt bookmark replaces the old full-width favourite button. The body
+has the actual temple name/location, language control, complete existing sourced
+significance, expandable origin story, full in-app temple guide, up to four actual
+active devotional readers (aarti/chalisa first, then stotram/ashtakam/kavach), and
+horizontal painted temple cards. Switching temples replaces this player route so
+Back retains the originating Home/list stack. Content grows and scrolls at all four
+languages, Standard/Large and system text sizes; no source/review disclosures or
+large defensive paragraphs dominate the page.
+
+**Stay-in-app playback:** the app-owned YouTube/website exit buttons, duplicate
+publisher heading and broadcast strip's external arrow are removed. Broadcast
+errors offer Retry and Browse temples, while the temple story/readings remain
+available below. YouTube's own standard branding and controls remain intact.
+Verified reader videos preserve their existing same-video external hand-off.
+
+**Native fullscreen:** the embedded fullscreen control presents the OS WebView's
+actual fullscreen video view, beyond this page's header, safe-area and tab layout;
+it is not an enlarged card or a new player in a modal. Both player paths explicitly
+allow fullscreen. Android WebView's existing native implementation hides system
+chrome, allows orientation changes and restores the previous orientation/view on
+exit. Channel-frame size changes retain the same memoised source and ready state,
+so leaving fullscreen does not remount/restart the stream. Actual iOS/Android
+fullscreen, rotation, Back/Done and continued playback remain device gates.
+
+**Lifecycle and compatibility:** reuse the existing WebView and playback arbiter;
+broadcasts do not poll progress. Channel HTML supplies the registered native app's
+HTTPS identity as baseURL/Referer and origin, following YouTube WebView guidance.
+Play is sent only after readiness using the latest intent; blocked autoplay exposes
+the Play control. Background/blur cancels lookups and removes playback, never
+silently auto-resuming. No native dependency, global orientation change, launch
+lookup, reminder schedule or preference migration is introduced.
 
 **Files:** `mobile/src/screens/Darshan{Quick,List,Player}Screen.tsx`,
 `mobile/src/components/darshan/DarshanFloatingButton.tsx`,
@@ -4647,5 +4672,5 @@ Native playback, visual fidelity in four scripts/Standard/Large/compact/system t
 VoiceOver/TalkBack, interruptions and device performance remain required pending
 acceptance; passing mocked screen tests is not native proof.
 
-### Darshan link recovery — 15 November 2026
-Embed Retry re-resolves the official live page and may replace the video ID. The canonical channel-ID `/live` URL survives channel-handle changes. A labelled temple-website fallback opens the trusted publisher root if YouTube fails; external launch failures remain visible and retryable. YouTube-owned fullscreen/seek/volume/quality controls still require actual device verification.
+### Darshan recovery — updated 16 November 2026
+Retry re-resolves a dedicated temple source or retries its stable in-app channel player. Unavailable broadcasts lead to Retry, another temple, the complete temple guide or shipped devotional readings. The previous external website/YouTube recovery CTAs are superseded by the in-app journey above. Actual fullscreen, seek, volume, quality and platform interruptions still require device verification.
