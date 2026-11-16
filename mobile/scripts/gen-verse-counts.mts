@@ -21,6 +21,7 @@ import { krishnaStotramTotal } from '../src/data/krishna-stotram';
 import { lakshmiChalisaCounts } from '../src/data/lakshmi-chalisa';
 import { suryaChalisaCounts } from '../src/data/surya-chalisa';
 import { shaniChalisaCounts } from '../src/data/shani-chalisa';
+import { santoshiMataChalisaCounts } from '../src/data/santoshi-mata-chalisa';
 import { vaishnoDeviChalisaCounts } from '../src/data/vaishno-devi-chalisa';
 import { ramChalisaCounts } from '../src/data/ram-chalisa';
 import { ramStutiTotal } from '../src/data/ram-stuti';
@@ -79,6 +80,7 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['suryaChalisaCounts', suryaChalisaCounts],
   ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts],
   ['shaniChalisaCounts', shaniChalisaCounts],
+  ['santoshiMataChalisaCounts', santoshiMataChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal],

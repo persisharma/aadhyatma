@@ -74,6 +74,7 @@ import {
 import { vaishnoDeviChalisaTitleEn, vaishnoDeviChalisaTitleHi, vaishnoDeviChalisaVerses, type VaishnoDeviChalisaVerse } from './vaishno-devi-chalisa';
 
 import { shaniChalisaTitleEn, shaniChalisaTitleHi, shaniChalisaVerses, type ShaniChalisaVerse } from './shani-chalisa';
+import { santoshiMataChalisaTitleEn, santoshiMataChalisaTitleHi, santoshiMataChalisaVerses, type SantoshiMataChalisaVerse } from './santoshi-mata-chalisa';
 
 export type ChalisaId =
   | 'hanuman-chalisa'
@@ -89,7 +90,8 @@ export type ChalisaId =
   | 'lakshmi-chalisa'
   | 'surya-chalisa'
   | 'vaishno-devi-chalisa'
-  | 'shani-chalisa';
+  | 'shani-chalisa'
+  | 'santoshi-mata-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
@@ -105,7 +107,8 @@ export type ChalisaVerse =
   | LakshmiChalisaVerse
   | SuryaChalisaVerse
   | VaishnoDeviChalisaVerse
-  | ShaniChalisaVerse;
+  | ShaniChalisaVerse
+  | SantoshiMataChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -198,6 +201,12 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: shaniChalisaTitleHi,
     titleEn: shaniChalisaTitleEn,
     verses: shaniChalisaVerses,
+  },
+  'santoshi-mata-chalisa': {
+    id: 'santoshi-mata-chalisa',
+    titleHi: santoshiMataChalisaTitleHi,
+    titleEn: santoshiMataChalisaTitleEn,
+    verses: santoshiMataChalisaVerses,
   },
 };
 

@@ -37,6 +37,7 @@ export const lakshmiChalisaCounts = {"openingDohas":2,"chaupais":39,"closingDoha
 export const suryaChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":1,"totalVerses":42} as const;
 export const vaishnoDeviChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":1,"totalVerses":42} as const;
 export const shaniChalisaCounts = {"openingDohas":2,"chaupais":40,"closingDohas":1,"totalVerses":43} as const;
+export const santoshiMataChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":1,"totalVerses":42} as const;
 export const lingashtakamTotal = 8 as const;
 export const madhurashtakamTotal = 8 as const;
 export const mahalakshmiAshtakamTotal = 8 as const;

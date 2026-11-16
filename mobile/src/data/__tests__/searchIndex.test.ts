@@ -310,3 +310,12 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   assert.ok(result.sections.some(r => r.entry.sourceId === 'shani-chalisa'));
   assert.ok(runSearch('जयति जयति शनिदेव दयाला', index).verses.some(r => r.entry.sourceId === 'shani-chalisa' && r.entry.verseIndex === 2));
 }
+
+// A3: section and all 42 original verse units are searchable.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'santoshi-mata-chalisa');
+  assert.equal(verses.length, 42);
+  const result = runSearch('santoshi mata chalisa', index);
+  assert.ok(result.sections.some(r => r.entry.sourceId === 'santoshi-mata-chalisa'));
+  assert.ok(runSearch('श्री गणपति पद नाय सिर', index).verses.some(r => r.entry.sourceId === 'santoshi-mata-chalisa' && r.entry.verseIndex === 0));
+}

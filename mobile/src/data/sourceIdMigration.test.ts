@@ -48,3 +48,6 @@ assert.equal(canonicalBookmarkId('vaishno-devi-chalisa::39', 'vaishno-devi-chali
 
 assert.equal(canonicalSourceId('shani-chalisa'), 'shani-chalisa');
 assert.equal(canonicalBookmarkId('shani-chalisa::42', 'shani-chalisa'), 'shani-chalisa::42');
+
+assert.equal(canonicalSourceId('santoshi-mata-chalisa'), 'santoshi-mata-chalisa');
+assert.equal(canonicalBookmarkId('santoshi-mata-chalisa::39', 'santoshi-mata-chalisa'), 'santoshi-mata-chalisa::39');
