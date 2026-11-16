@@ -31,6 +31,7 @@ import { sundarkandTotal } from '../sundarkand';
 import { valmikiRamayanTotal } from '../valmiki-ramayan';
 import { vishnuChalisaCounts } from '../vishnu-chalisa';
 import { vishnuSahasranamaTotal } from '../vishnu-sahasranama';
+import { shaniChalisaCounts } from '../shani-chalisa';
 import { vaishnoDeviChalisaCounts } from '../vaishno-devi-chalisa';
 import * as generated from '../verseCounts';
 import kabirDohe from '../doha/kabir-bhakti-dohe.json';
@@ -80,6 +81,7 @@ test('every generated verse count still matches its corpus', () => {
   ['kuberaStotramTotal', kuberaStotramTotal, generated.kuberaStotramTotal],
   ['lakshmiChalisaCounts', lakshmiChalisaCounts, generated.lakshmiChalisaCounts],
   ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts, generated.vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal, generated.lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal, generated.madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal, generated.mahalakshmiAshtakamTotal],
@@ -105,6 +107,7 @@ test('every generated verse count still matches its corpus', () => {
   ['suryaAshtakamTotal', suryaAshtakamTotal, generated.suryaAshtakamTotal],
   ['suryaChalisaCounts', suryaChalisaCounts, generated.suryaChalisaCounts],
   ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts, generated.vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],
@@ -176,6 +179,7 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['suryaAshtakamTotal', suryaAshtakamTotal, generated.suryaAshtakamTotal],
   ['suryaChalisaCounts', suryaChalisaCounts, generated.suryaChalisaCounts],
   ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts, generated.vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],

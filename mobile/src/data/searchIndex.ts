@@ -109,6 +109,7 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'lakshmi-chalisa',
   'surya-chalisa',
   'vaishno-devi-chalisa',
+  'shani-chalisa',
 ];
 
 const ASHTAKAM_IDS: readonly AshtakamId[] = ashtakamIds;

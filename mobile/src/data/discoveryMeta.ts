@@ -218,6 +218,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} Sri Mandir Vaishno Devi Chalisa: devotion and Tuesday/Friday practice; see vaishno-devi-chalisa/vaishno-devi-chalisa.json.`,
   },
+  'shani-chalisa': {
+    purposes: ['devotion'],
+    bestDays: [6],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} Shani Chalisa, Saturday worship in chaupai 39; see shani-chalisa/shani-chalisa.json.`,
+  },
   'surya-namaskar': {
     purposes: ['health', 'morning-practice'],
     bestDays: [0],

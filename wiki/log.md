@@ -1551,3 +1551,9 @@ Restored the feature onto current main without undoing the share-hand-off revert
 - Wired Durga/category listings, search, progress/bookmarks, discovery, existing artwork and generated count; stable IDs and older rows retained.
 - The missing 4a checklist was explicitly replaced by current repository rules and the Chalisa pattern with maintainer approval. Source variants stay in internal metadata; no bibliography UI.
 - See `docs/evaluations/a2-vaishno-devi-chalisa/review.md` for validation and pending native evidence. No merge/release or next work package.
+
+## [2026-11-16] ingest | A1 Shani Chalisa chosen-edition integration
+
+- Added `shani-chalisa` to the existing Chalisa reader, search, navigation, discovery and Shani artwork mapping; 43 stable units and original Hindi/English meanings, derived Gujarati/Kannada scripts.
+- Corrected the parity manifest’s Drik `/other/` candidate: it is a separate composition. Retained the complete main edition with Vimal closing; source differences and all-unit collation are recorded in `docs/evaluations/a1-shani-chalisa/`.
+- Current repository checklist + merged A2 pattern replace the absent historical checklist under maintainer authorization. No reader or release contract changed. Native and performance checks remain pending; draft PR required.
