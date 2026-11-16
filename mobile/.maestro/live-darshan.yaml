@@ -16,8 +16,16 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/darshan-list
 - tapOn: { id: "darshan-temple-somnath" }
 - extendedWaitUntil:
-    visible: { id: "darshan-youtube" }
+    visible: { id: "darshan-hero" }
     timeout: 20000
+- assertNotVisible: { id: "darshan-youtube" }
+- assertNotVisible: { id: "darshan-website" }
+- scrollUntilVisible:
+    element: { id: "darshan-story" }
+    centerElement: true
+- tapOn: { id: "darshan-story" }
+- assertVisible: { id: "darshan-story-content" }
+- tapOn: { id: "darshan-story" }
 - scrollUntilVisible:
     element: { id: "darshan-guide" }
     centerElement: true

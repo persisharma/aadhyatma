@@ -713,21 +713,33 @@ the same video, not a source citation. Record native four-script/Standard/Large,
 compact and system-text checks separately from automated tests. See the app-wide
 audit at `docs/reviews/2026-11-06-content-source-ui.md`.
 
-### Temple Darshan playback hand-off (design.md §92)
+### Temple Darshan in-app playback (design.md §92)
 
-The selected Home floating-Darshan journey may open the exact audited channel's
-YouTube `/live` URL when current in-app discovery is unavailable. The user-requested fallback may also open the roster publisher’s HTTPS website root through a labelled Visit temple website action if YouTube is unavailable; this is a playback/navigation fallback, not research-source UI. A resolved
-broadcast may open its own canonical watch URL from the existing player. This is
-a functional playback exception to §11.16, not an external research/source-control
-exception. Keep provenance URLs internal and the publisher name beside playback.
-Use the dedicated Darshan channel roster; do not forge a devotional `VideoMapping`
-`status: verified`, which means human-reviewed complete recitation. Only dedicated
-official live-page iframe IDs are candidates for the native player. Reject ambiguous
-sources and never label an archive/live-page embed as confirmed live. No stream
-fetch/WebView at launch, hidden audio, video download, background video, invented
-reminder schedule or unverified partnership claim. Test timeout/abort, blur/app-state,
-arbiter, favourites hydration/write ordering/failure, real guide/reader navigation,
-four-script/size layouts and source fallback. Native/ANR evidence is separate.
+The Home floating-Darshan journey uses the audited channel roster and the visible
+YouTube channel embed to select current broadcasts. Dedicated official live-page
+iframe discovery may choose a specific temple camera, falling back to its stable
+channel player on failure. Do not scrape YouTube HTML, bundle dated video IDs,
+extract media URLs, forge recitation `status: verified`, infer current liveness or
+silently substitute an archive. A channel may be waiting/offline or reject embeds.
+Keep its publisher attribution visible, standard YouTube controls/branding intact,
+and offer in-app Retry, temple switching, the real temple guide and shipped readers.
+No app-owned YouTube/website exit buttons or external arrow on the Darshan player;
+verified recitation readers retain their existing same-video host hand-off.
+
+Channel WebView HTML uses the registered native app identity as HTTPS baseURL,
+Referer and player origin. Keep native fullscreen enabled on both video/channel
+paths; fullscreen is the OS WebView video presentation, never a second player or
+an overlay that obscures YouTube controls. Exiting fullscreen/rotation must retain
+the source and position; verify tabs/header are hidden and Back/Done restores the
+same screen on actual iOS/Android. Never report flags or mocked tests as device proof.
+
+No stream fetch/WebView at launch, hidden/background audio, downloads, invented
+reminders or partnership claims. Ready-before-play must honour the latest pause
+intent through loading, blur, background, competing audio and retry. Preserve
+favourite hydration/write ordering/retry and stable IDs. Test source failures,
+all channel routes, expanded temple content, real guide/reader navigation,
+four-script/Standard/Large/compact/system-text and fullscreen/lifecycle behaviour.
+Native visual, playback and performance/ANR evidence remain separate required gates.
 
 ### 11.17 Native image geometry is an enforced acceptance gate
 

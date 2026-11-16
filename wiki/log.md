@@ -1541,6 +1541,10 @@ Product decision after device testing: the share sheet did not meet expectations
 
 Restored the feature onto current main without undoing the share-hand-off revert. Matched Option C’s painted temple, saffron gradient, gold border/bead and warm shadow, retaining audio clearance and four-language accessible labels. Native acceptance remains pending; see [[integrations/live-darshan]].
 
+- 2026-11-16: Diagnosed lost Darshan autoplay in the installed YouTube bridge patch; wait for player readiness and preserve latest pause intent. Six real-library/WebView-boundary regressions reproduce the old failure. Updated design §91, RULEBOOK Darshan contract and integration wiki; native evidence remains pending.
+
+- 2026-11-16: Expanded Darshan to visible stable channel embeds for all nine audited channels; kept dedicated-camera discovery, moved recovery/content into the app, enlarged the pinned player and preserved native fullscreen. Updated design §§91–92/RULEBOOK integration; real device fullscreen/playback and performance remain pending.
+
 
 ## 2026-11-16 — A2 Vaishno Devi Chalisa
 - Added the complete maintainer-selected Sri Mandir edition (42 pages), original Hindi/English meanings and pronunciation romanization to the existing Chalisa reader.

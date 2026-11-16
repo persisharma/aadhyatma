@@ -2,7 +2,7 @@
 title: Temple Darshan
 type: integration
 sources: [mobile/src/screens/HomeScreen.tsx, mobile/src/screens/DarshanQuickScreen.tsx, mobile/src/screens/DarshanListScreen.tsx, mobile/src/screens/DarshanPlayerScreen.tsx, mobile/src/data/darshan/channels.ts, mobile/src/video/darshanSource.ts, mobile/src/video/darshanFavorites.ts, design.md, RULEBOOK.md]
-last_verified_date: 2026-11-15
+last_verified_date: 2026-11-16
 confidence: medium
 status: current
 ---
@@ -16,24 +16,37 @@ does not signal live availability. Four authored accessibility labels preserve
 one announcement per button; Standard/Large labels can wrap.
 
 ## Details
-Nine official channel entries cover ten guides (Mallikarjuna/Bhramaramba share one feed and favourite) and were selected from the 13 November audit. Somnath/Kashi use
-current official live-page iframe discovery. The other seven hand off to YouTube
-until reliable current-video discovery exists. Public live-page embeds may be
-recordings: the product never infers current liveness. SVBC/Srisaila are TV feeds.
-The resolver has a12s abort deadline, rejects ambiguous IDs and off-domain redirects.
-The existing docked player handles YouTube controls/audio arbitration; broadcasts
-skip progress polling and have no invented spoken language. Background/blur cancel
-requests and remove the player; return requires another tap.
+Nine audited channels cover ten guides (Mallikarjuna/Bhramaramba share Srisaila TV).
+Every entry now opens a visible in-app channel embed; Somnath/Kashi prefer their
+unambiguous dedicated live-page camera with a cancellable12s lookup and channel
+fallback. `channelEmbed.ts` constructs the stable source and app-identity HTML;
+`ChannelYouTubeFrame` waits for readiness and uses the latest play intent. There
+are no dated IDs, channel HTML scraping, hidden resolver or progress polling.
+Waiting/offline/restricted sources remain an in-app Retry/Browse experience.
+
+The full-width player stays above scrollable temple content. Its compact summary puts the title and compact language pill on one wrapping row, with location/publisher4pt apart,12pt top inset and16pt to content. It replaces the previous separate22pt-gap blocks. One attribution,
+header bookmark, actual sourced significance/story, guide, shipped devotional
+readers and painted temple switching replace duplicated publisher copy and exit
+buttons. Readers still open through `navigateToEntryStart`; switching temples
+replaces the player route. New content comes from the existing temple/text corpus.
+
+Native fullscreen uses the existing WebView's video presentation, not a duplicate
+player/modal. Both source paths allow it; a channel-frame size change retains its
+memoised source. Actual fullscreen, rotation and Back/Done are native gates.
+Background/blur removes the player and cancels lookup; return requires Resume.
 
 ## Dependencies
-[[overview]], [[audio]], [[languages]], design.md §92.
+[[overview]], [[audio]], [[languages]], design.md §§91–92.
 
 ## Gotchas
-Do not paste yesterday's live IDs, scrape YouTube HTML, fabricate live counts,
-forge recitation verification or add a background WebView to Home. Favourites
-hydrate only on first use and serialize writes. The floating pill clears the
-recorded-audio mini-player; audio context is consumed only in its small leaf,
-so position ticks do not rerender Home. Unit/render tests do not prove native playback/layout
-or ANR safety; native acceptance remains pending until device evidence exists.
+Do not infer live-now from an embed or replay an archive as live. SVBC/Srisaila are
+TV feeds. Retain normal YouTube branding/controls. The channel HTML's baseURL and
+origin are the registered native app identity, per YouTube's current WebView
+Referer guidance. Never use an opaque-origin local HTML page without that identity.
 
-Embed Retry refreshes the source lookup, rather than recycling a broken ID. The canonical channel ID survives handle renames; the trusted publisher website root is a separate functional fallback when YouTube cannot open (15 November).
+Favourites hydrate lazily and serialize writes. No player is mounted on Home.
+The app-owned external Darshan CTAs and strip arrow are removed; reader hand-offs
+remain. Existing library-ready patch and real-library regressions remain required.
+The channel frame separately tests late-ready pause, blocked autoplay, errors,
+valid channel roster and native-fullscreen flags/source retention. Unit/browser
+checks do not prove native playback/layout, fullscreen or ANR safety.
