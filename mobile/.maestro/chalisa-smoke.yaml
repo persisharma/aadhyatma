@@ -1,6 +1,6 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 12 active sections render correctly.
+# Verifies the Chalisa category and its 13 active sections render correctly.
 # Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
 # Gayatri Chalisa, Ram Chalisa, Krishna Chalisa, Vishnu Chalisa,
 # Saraswati Chalisa, Shri Khatu Shyam Chalisa, Lakshmi Chalisa, Surya Chalisa.
@@ -21,7 +21,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 12 sections appear in CategoryList
+# Verify all 13 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
@@ -99,6 +99,35 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "कनक बदन कुण्डल मकर.*"
 - tapOn: "Back to home"
 - waitForAnimationToEnd
+# A2: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Vaishno Devi Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Vaishno Devi Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "गरुड़ वाहिनी वैष्णवी.*"
+- takeScreenshot: a2-vaishno-opening-hi
+- tapOn: "English"
+- assertVisible: "Garud vahini Vaishnavi.*"
+- takeScreenshot: a2-vaishno-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 41
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*कलयुग में महिमा तेरी.*"
+- takeScreenshot: a2-vaishno-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Vaishno Devi Chalisa\\..*Tap to open\\."
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.
 - scrollUntilVisible:
     element:

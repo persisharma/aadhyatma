@@ -292,3 +292,12 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   }
 }
 
+
+// A2: section and all 42 original verse units are searchable.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'vaishno-devi-chalisa');
+  assert.equal(verses.length, 42);
+  const result = runSearch('vaishno devi chalisa', index);
+  assert.ok(result.sections.some(r => r.entry.sourceId === 'vaishno-devi-chalisa'));
+  assert.ok(runSearch('गरुड़ वाहिनी वैष्णवी', index).verses.some(r => r.entry.sourceId === 'vaishno-devi-chalisa' && r.entry.verseIndex === 0));
+}

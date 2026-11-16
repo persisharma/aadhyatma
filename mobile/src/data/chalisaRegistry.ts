@@ -71,6 +71,8 @@ import {
   type SuryaChalisaVerse,
 } from './surya-chalisa';
 
+import { vaishnoDeviChalisaTitleEn, vaishnoDeviChalisaTitleHi, vaishnoDeviChalisaVerses, type VaishnoDeviChalisaVerse } from './vaishno-devi-chalisa';
+
 export type ChalisaId =
   | 'hanuman-chalisa'
   | 'shiv-chalisa'
@@ -83,7 +85,8 @@ export type ChalisaId =
   | 'saraswati-chalisa'
   | 'khatu-shyam-chalisa'
   | 'lakshmi-chalisa'
-  | 'surya-chalisa';
+  | 'surya-chalisa'
+  | 'vaishno-devi-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
@@ -97,7 +100,8 @@ export type ChalisaVerse =
   | SaraswatiChalisaVerse
   | KhatuShyamChalisaVerse
   | LakshmiChalisaVerse
-  | SuryaChalisaVerse;
+  | SuryaChalisaVerse
+  | VaishnoDeviChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -178,6 +182,12 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: suryaChalisaTitleHi,
     titleEn: suryaChalisaTitleEn,
     verses: suryaChalisaVerses,
+  },
+  'vaishno-devi-chalisa': {
+    id: 'vaishno-devi-chalisa',
+    titleHi: vaishnoDeviChalisaTitleHi,
+    titleEn: vaishnoDeviChalisaTitleEn,
+    verses: vaishnoDeviChalisaVerses,
   },
 };
 

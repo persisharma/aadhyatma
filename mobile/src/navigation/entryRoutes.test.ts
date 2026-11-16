@@ -513,3 +513,13 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   assert.deepEqual(formatLocation(progress), { hi: 'पाठ 12 · पृष्ठ 2', en: 'Reading 12 · Page 2' });
 }
 
+
+// A2: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'vaishno-devi-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 39 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 39 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::39`, sourceId, verseIndex: 39 })), target);
+}

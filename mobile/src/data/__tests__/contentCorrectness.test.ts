@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 /**
  * Content correctness validation tests.
  * Verifies all religious content against internet-verified canonical sources.
@@ -1099,6 +1100,7 @@ for (const file of [
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
   'lakshmi-chalisa/lakshmi-chalisa.json',
   'surya-chalisa/surya-chalisa.json',
+  'vaishno-devi-chalisa/vaishno-devi-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
@@ -1291,3 +1293,27 @@ for (const [source, id, thumb] of allThumbs) {
 // ─── Done ────────────────────────────────────────────────────────────────────
 
 console.log('All content correctness tests passed');
+
+// A2: maintainer-selected complete Sri Mandir edition; never a composite.
+{
+  const data = readJson('vaishno-devi-chalisa/vaishno-devi-chalisa.json');
+  const entry = library.find(e => e.id === 'vaishno-devi-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['durga']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 42);
+  assert.deepEqual(data.counts, { openingDohas: 1, chaupais: 40, closingDohas: 1, totalVerses: 42 });
+  const verses: { id: string; type: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 42);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(new Set(verses.map(v => v.id)).size, 42);
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '201a31b871b2f81d2dce2906c198010a75f9f6f4f244c68b1ab336d2292c51ce');
+  assert.ok(verses[8].lines.join(' ').includes('पोषण'));
+  assert.ok(verses[32].lines.join(' ').includes('बर्वत'));
+  assert.ok(verses[39].lines.join(' ').includes('आश्विन चैत्र'));
+  assert.ok(verses[40].lines.join(' ').includes('शर्मा'));
+  assert.ok(data.source.editionDecision.includes('Prashant'));
+  assert.equal(data.source.referenceUrls.length, 4);
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
