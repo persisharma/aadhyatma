@@ -319,3 +319,12 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   assert.ok(result.sections.some(r => r.entry.sourceId === 'santoshi-mata-chalisa'));
   assert.ok(runSearch('श्री गणपति पद नाय सिर', index).verses.some(r => r.entry.sourceId === 'santoshi-mata-chalisa' && r.entry.verseIndex === 0));
 }
+
+// A4: search includes the complete text, not just forty body stanzas.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'kali-chalisa');
+  assert.equal(verses.length, 57);
+  assert.ok(runSearch('kali chalisa', index).sections.some(r => r.entry.sourceId === 'kali-chalisa'));
+  assert.ok(runSearch('जय काली जगदम्ब जय', index).verses.some(r => r.entry.sourceId === 'kali-chalisa' && r.entry.verseIndex === 0));
+  assert.ok(runSearch('जय तारा जय दक्षिणा', index).verses.some(r => r.entry.sourceId === 'kali-chalisa' && r.entry.verseIndex === 56));
+}

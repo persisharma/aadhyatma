@@ -186,6 +186,35 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back to home"
 - waitForAnimationToEnd
 - assertVisible: "Santoshi Mata Chalisa\\..*Tap to open\\."
+# A4: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Kali Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Kali Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "जय काली जगदम्ब जय.*"
+- takeScreenshot: a4-kali-opening-hi
+- tapOn: "English"
+- assertVisible: "Jai Kali Jagadamb jai.*"
+- takeScreenshot: a4-kali-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 56
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*जय तारा, जय दक्षिणा.*"
+- takeScreenshot: a4-kali-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Kali Chalisa\\..*Tap to open\\."
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.
 - scrollUntilVisible:
     element:

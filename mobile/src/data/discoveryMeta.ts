@@ -230,6 +230,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} Drik Panchang Santoshi Mata Chalisa: devotion and Friday practice; see santoshi-mata-chalisa/santoshi-mata-chalisa.json.`,
   },
+  'kali-chalisa': {
+    purposes: ['devotion'],
+    bestDays: [],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} Kali Chalisa invocation and closing prayer for grace; see kali-chalisa/kali-chalisa.json. No calendar prescription added.`,
+  },
   'surya-namaskar': {
     purposes: ['health', 'morning-practice'],
     bestDays: [0],

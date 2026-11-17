@@ -720,6 +720,8 @@ type HanumanChalisaVerse = {
 
 **Santoshi Mata Chalisa (A3, 1.5.7 content):** the same reader renders the chosen Drik Panchang composition beginning श्री गणपति पद नाय सिर as one opening doha, 40 chaupais and one closing doha. Reuses the existing Durga background/banner and all reader controls. Hindi/English editorial meanings and ASCII recitation text are supplied; Gujarati/Kannada use the current script fallback. Edition variants stay in internal metadata. No artwork, recorded audio or reader interaction is added. See `docs/evaluations/a3-santoshi-mata-chalisa/review.md` for evidence and pending native checks.
 
+**Kali Chalisa (A4, 1.5.7 content):** the existing registry-served reader presents the complete chosen Drik composition beginning जय काली जगदम्ब जय: two opening dohas, 54 body couplets and one closing doha (57 pages). The catalog accurately labels 54 Chaupai + 3 Doha rather than assuming forty from the title. Reuses existing Kali background/first-page art and unchanged reader controls. Hindi/English editorial meanings and ASCII pronunciation are supplied; Gujarati/Kannada use the current script fallback. Source comparison is internal. Native acceptance remains tracked in `docs/evaluations/a4-kali-chalisa/review.md`.
+
 ### Gita (chapter-scoped, multi-layered, bilingual)
 
 Source: `BhagwadGita/chapters/chapter-NN-*.md` (published translation + commentary). Parsed by `scripts/parse-gita.mjs` into `mobile/src/data/gita/chapter-NN.json` and a top-level `chapters-manifest.json`. Parser output is committed — Metro bundles JSON statically, so generated data must live in the source tree. Re-running the parser should produce a byte-identical diff.
