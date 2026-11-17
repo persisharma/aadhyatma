@@ -212,16 +212,26 @@ test('a day with no resolvable window still gets both notices at the chosen time
 
 // ── copy ────────────────────────────────────────────────────────────────────
 
+// A muhurat window is an INDIAN clock time and the copy prints it as one
+// (`formatClock`, civilTime.ts). The window instants for the copy checks are
+// therefore built from an explicit IST offset, so the expected "06:07" is the
+// same on a runner in any time zone — CI runs this file in UTC, where a
+// `new Date(y, m, d, 6, 7)` window is 11:37 in India.
+const IST_AMRIT = {
+  windowStart: new Date('2026-08-17T06:07:00+05:30'),
+  windowEnd: new Date('2026-08-17T07:41:00+05:30'),
+};
+
 test('day-of copy carries the window; advance copy names the day', () => {
   const now = new Date(2026, 7, 14, 9, 0);
-  const { planned } = planMuhuratReminders([input()], now);
+  const { planned } = planMuhuratReminders([input(IST_AMRIT)], now);
   const dayOf = formatMuhuratReminderContent(planned.find((p) => p.kind === 'dayOf')!);
   const advance = formatMuhuratReminderContent(planned.find((p) => p.kind === 'advance')!);
 
   assert.equal(dayOf.title, 'मुहूर्त स्मरण');
   assert.ok(dayOf.body.includes('वाहन क्रय'), dayOf.body);
   assert.ok(dayOf.body.includes('अमृत'), dayOf.body);
-  assert.ok(dayOf.body.includes('06:07'), dayOf.body);
+  assert.ok(dayOf.body.includes('06:07 – 07:41'), dayOf.body);
   assert.ok(dayOf.body.includes('Vehicle Purchase'), dayOf.body);
 
   assert.ok(advance.body.startsWith('कल '), advance.body);
@@ -248,7 +258,7 @@ test('every notification body is authored Hindi-first with an English counterpar
 
 test('copy follows the reading language (BEH-04)', () => {
   const now = new Date(2026, 7, 14, 9, 0);
-  const { planned } = planMuhuratReminders([input()], now);
+  const { planned } = planMuhuratReminders([input(IST_AMRIT)], now);
   const dayOf = planned.find((p) => p.kind === 'dayOf')!;
   const advance = planned.find((p) => p.kind === 'advance')!;
 
