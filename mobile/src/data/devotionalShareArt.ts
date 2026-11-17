@@ -38,6 +38,10 @@ export function devotionalPlateArt(art: DevotionalArt) {
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'parshuram-stotram': 'parshuram',
+  'kanakadhara-stotram': 'lakshmi', 'shri-suktam': 'lakshmi',
+  'kalabhairav-ashtakam': 'shiva', 'hanuman-bahuk': 'hanuman',
+  'durga-devi-kavacham': 'durga', 'durga-argala-stotram': 'durga',
+  'durga-kilak-stotram': 'durga', 'durga-saptashati-chapter-1': 'durga',
   // Poet collections use the existing neutral master, with no invented deity portrait.
   'kabir-bhakti-dohe': 'prayer', 'rahim-bhakti-dohe': 'prayer',
   'gita-saar': 'krishna', 'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',

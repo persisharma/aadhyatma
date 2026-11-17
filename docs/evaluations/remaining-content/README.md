@@ -7,7 +7,7 @@ One PR explicitly requested by Prashant on 17 November 2026; this supersedes the
 | Item | Planned outcome / status |
 |---|---|
 | A6 Kubera Chalisa | #701 was merged externally as documentation only; exact-composition provenance remains unresolved, not active. |
-| B2 Kali Aarti | Excluded pending independent full witness and exact-composition rights evidence; see source-exclusions.md. |
+| B2 Kali Aarti | Full modern witnesses found; excluded pending exact-composition provenance/permission, with conflicting official credits. See a6-b2-provenance-followup.md. |
 | C1 Aditya Hridayam | Link into existing Valmiki 6.107, no duplicated corpus or migrated IDs. |
 | C2 Shri Suktam | Declared recension with phalashruti and explicit svara policy; integrated; data and reader validation recorded below. |
 | C3 Kanakadhara | Complete sourced edition, original meanings; integrated; data and reader validation recorded below. |

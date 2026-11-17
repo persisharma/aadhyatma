@@ -25,6 +25,7 @@ cases.push({kind:'vishnu',page:31},{kind:'vishnu',page:107},...['saptashati','ka
   for(const lang of ['hi','en','gu','kn'])for(const size of ['M','L'])for(const item of cases){
    const width=size==='L'?320:390, name=`${item.id||item.kind}-${lang}-${size}-${width}-${item.page}`;
    const tab=await browser.newPage({viewport:{width,height:844},deviceScaleFactor:1});
+   tab.setDefaultTimeout(8000);
    const errors=[];tab.on('pageerror',e=>errors.push(e.message));
    try{
     const params=new URLSearchParams({...item,lang,size,width,cdn:'1'});
@@ -44,6 +45,8 @@ cases.push({kind:'vishnu',page:31},{kind:'vishnu',page:107},...['saptashati','ka
    }catch(e){errors.push(e.message);await tab.screenshot({path:path.join(output,name+'-ERROR.png')}).catch(()=>{});}
    results.push({name,errors});await tab.close();
    fs.writeFileSync(path.join(output,'results.json'),JSON.stringify(results,null,2));
+   console.log(JSON.stringify(results[results.length-1]));
+   if(errors.length)throw new Error('Capture failed; inspect retained screenshot and results.json: '+name);
   }
  }finally{await browser.close();server.close();}
  const failures=results.filter(r=>r.errors.length);console.log(JSON.stringify({captures:results.length,failures},null,2));if(failures.length)process.exitCode=1;

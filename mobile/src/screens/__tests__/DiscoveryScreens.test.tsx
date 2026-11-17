@@ -103,7 +103,8 @@ test('Purpose list shows matching texts across deities', () => {
   );
   const text = textOf(tree);
   assert.ok(text.includes('श्रीरामरक्षास्तोत्रम्'));
-  assert.ok(text.includes('श्री दुर्गा कवच'));
+  assert.ok(text.includes('श्री देवी कवचम्'));
+  assert.ok(!text.includes('पूर्व चयन'));
 });
 
 test('Deity detail shows essay and groups texts by form', () => {
