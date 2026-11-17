@@ -27,9 +27,12 @@ export const impactAsync=async()=>{};
 export const trigger=()=>{};
 export const notificationAsync=async()=>{};
 export const useShare=()=>({busy:false,share:async()=>{window.alert('Native sharing requires device verification.');}});
+function PreviewPageCell({children,style,onLayout,onFocusCapture}:any) {
+ return <View onLayout={onLayout} onFocusCapture={onFocusCapture} style={[style,{height:'100%',minHeight:0}]}>{children}</View>;
+}
 export function useReaderPlayback() { return {
  readAloud:{visible:true,unavailable:false,isSpeaking:false,toggle:()=>{},stop:()=>{}},
- autoSlide:{visible:true,playing:false,speed:'normal',countdownMs:null,countdownKey:0,toggle:()=>{},stop:()=>{},cycleSpeed:()=>{},Cell:undefined},
+ autoSlide:{visible:true,playing:false,speed:'normal',countdownMs:null,countdownKey:0,toggle:()=>{},stop:()=>{},cycleSpeed:()=>{},Cell:PreviewPageCell},
 }; }
 export function LinearGradient({colors,style,children,...props}:any) {
  return <View {...props} style={[style,{backgroundImage:'linear-gradient(135deg, '+colors.join(', ')+')'}]}>{children}</View>;
