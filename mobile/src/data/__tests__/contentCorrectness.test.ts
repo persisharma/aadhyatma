@@ -1103,6 +1103,7 @@ for (const file of [
   'vaishno-devi-chalisa/vaishno-devi-chalisa.json',
   'shani-chalisa/shani-chalisa.json',
   'santoshi-mata-chalisa/santoshi-mata-chalisa.json',
+  'kali-chalisa/kali-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
@@ -1363,5 +1364,28 @@ console.log('All content correctness tests passed');
   assert.ok(data.source.variants.includes('सोलह शुक्र'));
   assert.ok(data.source.editionDecision.includes('Prashant'));
   assert.equal(data.source.referenceUrls.length, 2);
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
+
+// A4 preserves the entire requested Kali composition, including all 54 body couplets.
+{
+  const data = readJson('kali-chalisa/kali-chalisa.json');
+  const entry = library.find(e => e.id === 'kali-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['kali']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 57);
+  assert.deepEqual(data.counts, { openingDohas: 2, chaupais: 54, closingDohas: 1, totalVerses: 57 });
+  const verses: { id: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 57);
+  assert.equal(new Set(verses.map(v => v.id)).size, 57);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 54 }, (_, i) => i + 1));
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '36bc77cb73d3004083677b257d1e59c378cde39b418aa2d863554f170db6a6cc');
+  assert.ok(verses[0].lines[0].startsWith('जय काली जगदम्ब जय'));
+  assert.ok(verses[55].lines[0].startsWith('पाठ करै चालीसा जोई'));
+  assert.ok(verses[56].lines[0].startsWith('जय तारा, जय दक्षिणा'));
+  assert.equal(data.source.referenceUrls.length, 2);
+  assert.ok(data.source.variants.includes('सहस्त्राक्षि'));
   assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
 }
