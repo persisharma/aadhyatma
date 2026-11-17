@@ -37,7 +37,11 @@ cases.push({kind:'vishnu',page:31},{kind:'vishnu',page:107},...['saptashati','ka
     if(text.length<80)errors.push('Empty or missing production component');
     await tab.screenshot({path:path.join(output,name+'.png')});
     if(item.id){
-     await tab.evaluate(()=>{for(const e of document.querySelectorAll('*'))if(e.scrollHeight>e.clientHeight+20 && ['scroll','auto'].includes(getComputedStyle(e).overflowY))e.scrollTop=e.scrollHeight;});
+     metrics.scrollBefore = await tab.evaluate(()=>Array.from(document.querySelectorAll('*')).filter(e=>e.scrollHeight>e.clientHeight+20).map(e=>({tag:e.tagName,overflow:getComputedStyle(e).overflowY,height:e.clientHeight,content:e.scrollHeight,top:e.scrollTop,rect:JSON.parse(JSON.stringify(e.getBoundingClientRect()))})));
+     await tab.mouse.move(width/2,600); await tab.mouse.wheel(0,20000); await tab.waitForTimeout(700);
+     await tab.evaluate(()=>{for(const e of document.querySelectorAll('*'))if(e.scrollHeight>e.clientHeight+20 && ['scroll','auto'].includes(getComputedStyle(e).overflowY))e.scrollTo({top:e.scrollHeight,behavior:'instant'});});
+     await tab.waitForTimeout(700);
+     metrics.scrollAfter = await tab.evaluate(()=>Array.from(document.querySelectorAll('*')).filter(e=>e.scrollHeight>e.clientHeight+20).map(e=>({tag:e.tagName,overflow:getComputedStyle(e).overflowY,height:e.clientHeight,content:e.scrollHeight,top:e.scrollTop,rect:JSON.parse(JSON.stringify(e.getBoundingClientRect()))}))); 
      await tab.screenshot({path:path.join(output,name+'-bottom.png')});
     }
     fs.writeFileSync(path.join(output,name+'.txt'),text);
