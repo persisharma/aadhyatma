@@ -2,7 +2,7 @@
 
 ## Scope and acceptance
 
-Base: `414ed58365e300c317dada0f96c0994074c09730` (current main, A3 merged). Isolated `feat/kali-chalisa` worktree. Only A4, deity `kali`, category `chalisa`, addedInVersion 1.5.7. No new artwork, audio, reader interaction, merge, release, OTA or next task. No other implementation is active in this worktree.
+Base: `414ed58365e300c317dada0f96c0994074c09730` (implementation base, A3 merged). Isolated `feat/kali-chalisa` worktree. Only A4, deity `kali`, category `chalisa`, addedInVersion 1.5.7. No new artwork, audio, reader interaction, merge, release, OTA or next task. No other implementation is active in this worktree.
 
 Read current AGENTS, build checklist, applicable RULEBOOK/design, repository instruction rules and reader/language wiki. The old checklist in `competitor-analysis/2026-10-19/claude-code-plan.md` is unavailable; under the authorized A2/A3 approach, current policy and the merged Chalisa pattern replace it. The Library plan was read in full. No open Kali PR found before edits.
 
@@ -58,11 +58,31 @@ Implementation tested at local `83d5e241`; subsequent edits add only capture too
 - PASS lint: zero errors, 480 existing warnings. PASS `git diff --check` and instruction-entrypoint verifier.
 - `npm test` itself stops in the tsx launcher because Unix IPC socket creation is denied. All constituent suites were then executed independently with `node --import tsx --test` or the Jest CLI, preserving logs under `/workspace/scratch/60871f9ef02f/a4-*.log`. An initial overbroad copied alias test was corrected before the full data suite passed.
 - PASS build of `mobile/visual/kali-chalisa/build.mjs`: actual production reader and data bundled with explicit web adapters.
-- PENDING screenshots: local Chromium exits at `process_singleton_posix.cc` because `socket()` is denied; cloud browser could not reach the local preview. The reproducible capture script and A4 PR workflow are included, but were not executed successfully. No mockup is represented as an actual capture.
+- Initial local capture attempt was blocked by Chromium socket restrictions. GitHub subsequently captured the component successfully; see the dated evidence below.
 - PENDING Maestro/native, all languages/sizes/platforms, device artwork/cache/export/playback/lifecycle/ANR evidence.
 
-## Publication blocker and preservation
+## Main integration and published evidence — 17 November 2026
 
-Local branch `feat/kali-chalisa`, isolated worktree `/workspace/scratch/60871f9ef02f/vedansh-wt-a4`. Git push failed because no HTTPS credential is available. Connected GitHub publication was rejected by automatic approval review for `persisharma/aadhyatma`, saying repository/payload disclosure authorization could not be verified. The original user task and attached plan were reread and the denied blob creation was retried once; the reviewer rejected it again. No workaround or further publishing attempt was made. Branch lookup found no remote A4 branch or PR. The earlier tree-call outcome is unconfirmed (it was interrupted before returning); no commit or ref was created by this session.
+PR: https://github.com/persisharma/aadhyatma/pull/698 (draft). Published branch: `feat/kali-chalisa`.
 
-Required follow-up: obtain approval accepted by the publication reviewer for the A4 code, tests, docs and capture workflow to public `persisharma/aadhyatma`, then publish a draft PR; execute the component-capture workflow and inspect its output; complete native gates before readiness. No merge, release, OTA or next task was started. Dependency symlinks are untracked tooling only; task source, tests, docs and reproducible captures are committed. A format-patch artifact preserves the complete task for continuation.
+The user explicitly authorized public publication of the A4 code, tests, documentation and capture workflow. The earlier approval-review blocker is resolved; the initial checkpoint was `96bd9702188ffd17170bf1f1777235a5c30a2754`.
+
+Current main `a8f6046d57f44965f21774228905572a44472646` integrated cleanly, preserving A3's documentation/capture corrections. There were no textual conflicts; the earlier initial GitHub mergeable=false snapshot did not establish a conflict. GitHub reports the integrated PR mergeable. A4's HTML now explicitly declares UTF-8, matching A3. Integrated implementation/capture head: `b18261cf2ab431ca679e813ba4bfffe0ec247672`, tree `b50ac484908d881ecda91006c4e5b49084012b93`, exactly matching local `0f3b5312`. Subsequent evidence-only changes do not alter production code.
+
+After integration: typecheck PASS; actual reader suite 53/53 PASS; targeted content/search/count/source-ID/routes run 8/8 test entries PASS (several files use their own assertion harness); actual component build, instruction verifier and whitespace check PASS. Main's intervening change only touched A3 documentation and capture tooling, so the prior complete-suite evidence and its six reproduced baseline video failures remain applicable; full CI is additionally running on the published integration head.
+
+### Actual-component visuals
+
+The GitHub capture workflow succeeded on initial published head `96bd9702`: https://github.com/persisharma/aadhyatma/actions/runs/44077382072 . Artifact `a4-kali-actual-component-web-not-native` contains 24 PNG screenshots and corresponding text captures: hi/en/gu/kn × Standard at 390×844 and Large at 320×844 × zero-based pages 0/28/56. All 24 were visually reviewed as four six-image sheets. The selected first, middle and last verses and correct Kali illustration/background are visible; no encoding corruption was seen. These are production reader/VersePage imports rendered through web adapters, not a re-created design and not an installed native app.
+
+![Actual A4 reader through web adapters](actual-reader-web.jpg)
+
+The committed contact sheet shows Hindi/English opening and Gujarati/Kannada closing at Standard. Full capture output is retained in the Actions artifact. The explicit UTF-8 integration head triggers a repeat capture at https://github.com/persisharma/aadhyatma/actions/runs/44078017193 .
+
+**Unresolved visual limits:** compact 320px/Large English and Gujarati show crowding/overlap between the plus and Listen controls in the existing shared reader header's web rendering. Native parity is unverified; this is not asserted to be a native defect or silently counted as a pass. Long content extends below the viewport in several captures; these screenshots alone do not prove scroll reachability. Enlarged OS text, longest-page selection, every intervening page, saved journeys, gesture navigation, playback and actual share exports remain pending. No shared production header was modified in this A4 content task.
+
+### Native and delivery limits
+
+This Linux environment has no `adb`, `maestro` or `xcrun` executables. No emulator/device or native flow was executed. Native hi/en/gu/kn × Standard/Large, enlarged system text, Back/persistence/offline/lifecycle, export/playback and physical-device ANR evidence remain PENDING. A browser capture cannot clear these requirements. Keep PR draft; no merge, release, OTA or next item.
+
+U11 PASS for current-main integration and affected local checks; CI status is reported separately on the PR. U12 PASS for remotely preserved implementation and this evidence. Required task files are committed; the two untracked dependency symlinks are tooling only. No cleanup was performed.

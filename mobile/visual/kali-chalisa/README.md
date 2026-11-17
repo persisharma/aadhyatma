@@ -7,3 +7,5 @@ This imports the real `ChalisaReaderScreen`, registry, VersePage, theme/fonts, l
 Parameters: `lang=hi|en|gu|kn`, `size=M|L`, `width=320|390`, `page=0..56`. The page index is zero-based. Native flows and saved-state/export/playback tests remain required.
 
 Capture with `PLAYWRIGHT_MODULE=/path/to/playwright node mobile/visual/kali-chalisa/capture.cjs` from the repository root after building. The PR workflow uses Playwright 1.56.1 and captures opening/middle/closing pages in all four languages at 390px Standard and 320px Large. Capture tooling is not proof that captures have run.
+
+Completed captures and visual limitations are recorded in `docs/evaluations/a4-kali-chalisa/review.md`; the HTML explicitly declares UTF-8. Compact header crowding and native acceptance remain unresolved.
