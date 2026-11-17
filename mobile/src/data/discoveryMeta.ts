@@ -236,6 +236,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} Kali Chalisa invocation and closing prayer for grace; see kali-chalisa/kali-chalisa.json. No calendar prescription added.`,
   },
+  'radha-chalisa': {
+    purposes: ['devotion'],
+    bestDays: [],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} Radha Chalisa opening refuge and body 14 praise of devotion; see radha-chalisa/radha-chalisa.json. No weekday prescription added.`,
+  },
   'surya-namaskar': {
     purposes: ['health', 'morning-practice'],
     bestDays: [0],

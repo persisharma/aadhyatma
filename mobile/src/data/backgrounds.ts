@@ -122,6 +122,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'shani-chalisa': backgroundImages.deity_shani,
   'santoshi-mata-chalisa': backgroundImages.deity_durga_lion,
   'kali-chalisa': backgroundImages.deity_kali,
+  'radha-chalisa': backgroundImages.deity_radha_krishna,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,

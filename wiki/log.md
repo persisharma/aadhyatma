@@ -1573,3 +1573,7 @@ PR #698 integrates main a8f6046d cleanly, adds explicit UTF-8 to the browser pre
 ## [2026-11-17] ingest | Chalisa control clearance
 
 ReaderControlRow measures centred and trailing controls, stacking playback when touch clearance would be lost. All Chalisa entries share the fix; other reader families are recorded for separate adoption. Capture coverage now checks both 320/390 widths at Standard/Large in all four scripts.
+
+## [2026-11-17] ingest | A5 Radha Chalisa
+
+Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.

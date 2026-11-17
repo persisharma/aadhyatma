@@ -1389,3 +1389,26 @@ console.log('All content correctness tests passed');
   assert.ok(data.source.variants.includes('सहस्त्राक्षि'));
   assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
 }
+
+// A5 pins the complete Radha edition, including the separately preserved body 8-9.
+{
+  const data = readJson('radha-chalisa/radha-chalisa.json');
+  const entry = library.find(e => e.id === 'radha-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['radha']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 43);
+  assert.deepEqual(data.counts, { openingDohas: 2, chaupais: 40, closingDohas: 1, totalVerses: 43 });
+  const verses: { id: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 43);
+  assert.equal(new Set(verses.map(v => v.id)).size, 43);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '52fefe451670192d7aa7ae27dd4a480c29bdc2afed75bffde5e8c9e68daf5690');
+  assert.ok(verses[0].lines[0].startsWith('श्री राधे वृषभानुजा'));
+  assert.ok(verses[10].lines[0].startsWith('प्रेम स्वरूपिणि'));
+  assert.ok(verses[42].lines[0].startsWith('श्रीराधा सर्वेश्वरी'));
+  assert.equal(data.source.referenceUrls.length, 3);
+  assert.ok(data.source.variants.includes('धनश्याम'));
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}

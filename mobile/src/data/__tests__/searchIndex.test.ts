@@ -328,3 +328,11 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   assert.ok(runSearch('जय काली जगदम्ब जय', index).verses.some(r => r.entry.sourceId === 'kali-chalisa' && r.entry.verseIndex === 0));
   assert.ok(runSearch('जय तारा जय दक्षिणा', index).verses.some(r => r.entry.sourceId === 'kali-chalisa' && r.entry.verseIndex === 56));
 }
+
+// A5: both ends of the complete prayer are discoverable.
+{
+  assert.equal(index.verses.filter(v => v.sourceId === 'radha-chalisa').length, 43);
+  assert.ok(runSearch('radha chalisa', index).sections.some(r => r.entry.sourceId === 'radha-chalisa'));
+  assert.ok(runSearch('श्री राधे वृषभानुजा', index).verses.some(r => r.entry.sourceId === 'radha-chalisa' && r.entry.verseIndex === 0));
+  assert.ok(runSearch('रसिकेश्वर घनश्याम', index).verses.some(r => r.entry.sourceId === 'radha-chalisa' && r.entry.verseIndex === 42));
+}
