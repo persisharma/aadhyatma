@@ -1,0 +1,35 @@
+name: Remaining content visuals
+on:
+  pull_request:
+    paths:
+      - 'mobile/visual/remaining-content/**'
+      - '.github/workflows/remaining-content-visuals.yml'
+permissions:
+  contents: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+        working-directory: mobile
+      - run: npm install --no-package-lock
+        working-directory: mobile/visual/sanatan
+      - run: npm install --prefix /tmp/vedansh-visual-tools --no-package-lock playwright@1.56.1
+      - run: /tmp/vedansh-visual-tools/node_modules/.bin/playwright install --with-deps chromium
+      - run: node mobile/visual/remaining-content/build.mjs
+      - run: node mobile/visual/remaining-content/capture.cjs
+        env:
+          PLAYWRIGHT_MODULE: /tmp/vedansh-visual-tools/node_modules/playwright
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remaining-content-browser-evidence
+          path: mobile/visual/remaining-content/captures
+          retention-days: 30

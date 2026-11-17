@@ -42,8 +42,28 @@ export function CachedArtwork({source,style,imageStyle,resizeMode='cover',fallba
 
 // Only native services are adapted; AartiReaderScreen and its visual children are production imports.
 export const useAudioPlayerContext=()=>({playTrack:()=>{},openNowPlaying:()=>{}});
-export const useReadingProgress=()=>({setProgress:()=>{}});
+export const useReadingProgress=()=>({setProgress:()=>{},getProgress:()=>null});
 export const useReadDwell=()=>{};
 export const useRoutineSheet=()=>({openAddToRoutine:()=>alert('Routine persistence needs native verification.')});
 export const useBookmarks=()=>({bookmarks:[],addBookmark:()=>{},removeBookmark:()=>{},isBookmarked:()=>false});
 export const WebView=()=>null;
+
+export const useNewContent=()=>({isNew:()=>false});
+export const useReadCoverage=()=>({getSourceCoverage:()=>null});
+export const useProgressReset=()=>({ask:()=>{},sheet:null});
+export const useTodayKey=()=>params.get('date')||'2026-11-16';
+export const previewNavigation={
+ goBack:()=>history.back(), replace:(name:string,args:any)=>previewNavigation.navigate(name,args),
+ getState:()=>({routeNames:['VratKathaReader']}),
+ navigate:(name:string,args:any={})=>{
+  const kinds:any={StutiReader:'stuti',SuktamReader:'suktam',AshtakamReader:'ashtakam',KavachamReader:'kavacham',VishnuSahasranamaReader:'vishnu',SaptashatiCore:'saptashati',KathaLibrary:'katha'};
+  const kind=kinds[name];
+  (window as any).__lastNavigation={name,args};
+  if(!kind)return;
+  const next=new URLSearchParams(location.search);next.set('kind',kind);next.set('page',String(args.initialIndex||0));
+  for(const [key,value] of Object.entries(args))if(key.endsWith('Id'))next.set('id',String(value));
+  if(args.chapter)next.set('chapter',String(args.chapter));
+  location.search=next.toString();
+ }
+};
+export const useNavigation=()=>previewNavigation;
