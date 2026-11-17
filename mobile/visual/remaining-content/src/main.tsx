@@ -19,6 +19,6 @@ const id=p.get('id')||({stuti:'kanakadhara-stotram',suktam:'shri-suktam',ashtaka
 const Reader={stuti:StutiReaderScreen,suktam:SuktamReaderScreen,ashtakam:AshtakamReaderScreen,kavacham:KavachamReaderScreen,vishnu:VishnuSahasranamaReaderScreen,saptashati:SaptashatiCoreScreen,katha:KathaLibraryScreen}[kind];
 const route={key:'content-preview',params:{[kind+'Id']:id,chapter:Number(p.get('chapter')||3),initialIndex:Number(p.get('page')||0)}};
 createRoot(document.getElementById('root')!).render(<PreviewLanguage><ThemeProvider>
-<div style={{font:'11px sans-serif',padding:7,textAlign:'center',background:'#fff3d7'}}>PRODUCTION COMPONENTS · WEB ADAPTER · NOT NATIVE QA</div>
+<div style={{font:'11px sans-serif',padding:7,flexShrink:0,textAlign:'center',background:'#fff3d7'}}>PRODUCTION COMPONENTS · WEB ADAPTER · NOT NATIVE QA</div>
 {Reader ? <Reader navigation={previewNavigation} route={route}/> : <ScrollView><View style={{padding:20,gap:16}}>{kind==='weekday'?<DeityDayLinks/>:<ReadingLinks onOpen={id=>navigateReadingLink(previewNavigation,id)}/>}</View></ScrollView>}
 </ThemeProvider></PreviewLanguage>);

@@ -19,14 +19,12 @@ jobs:
           cache-dependency-path: mobile/package-lock.json
       - run: npm ci
         working-directory: mobile
-      - run: npm install --no-package-lock
-        working-directory: mobile/visual/sanatan
-      - run: npm install --prefix /tmp/vedansh-visual-tools --no-package-lock playwright@1.56.1
-      - run: /tmp/vedansh-visual-tools/node_modules/.bin/playwright install --with-deps chromium
+      - run: npm ci
+        working-directory: mobile/visual/remaining-content
+      - run: mobile/visual/remaining-content/node_modules/.bin/playwright install --with-deps chromium
       - run: node mobile/visual/remaining-content/build.mjs
       - run: node mobile/visual/remaining-content/capture.cjs
-        env:
-          PLAYWRIGHT_MODULE: /tmp/vedansh-visual-tools/node_modules/playwright
+        timeout-minutes: 12
       - uses: actions/upload-artifact@v4
         if: always()
         with:
