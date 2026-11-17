@@ -41,9 +41,10 @@ cases.push({kind:'vishnu',page:31},{kind:'vishnu',page:107},...['saptashati','ka
     if(item.id){
      metrics.scrollBefore = await tab.evaluate(()=>Array.from(document.querySelectorAll('*')).filter(e=>e.scrollHeight>e.clientHeight+20).map(e=>({tag:e.tagName,overflow:getComputedStyle(e).overflowY,height:e.clientHeight,content:e.scrollHeight,top:e.scrollTop,rect:JSON.parse(JSON.stringify(e.getBoundingClientRect()))})));
      await tab.mouse.move(width/2,600); await tab.mouse.wheel(0,20000); await tab.waitForTimeout(700);
-     await tab.evaluate(()=>{for(const e of document.querySelectorAll('*'))if(e.scrollHeight>e.clientHeight+20 && ['scroll','auto'].includes(getComputedStyle(e).overflowY))e.scrollTo({top:e.scrollHeight,behavior:'instant'});});
+     await tab.evaluate(()=>{for(const e of document.querySelectorAll('*'))if(e.scrollHeight>e.clientHeight+20 && ['scroll','auto'].includes(getComputedStyle(e).overflowY))e.scrollTop=e.scrollHeight;});
      await tab.waitForTimeout(700);
      metrics.scrollAfter = await tab.evaluate(()=>Array.from(document.querySelectorAll('*')).filter(e=>e.scrollHeight>e.clientHeight+20).map(e=>({tag:e.tagName,overflow:getComputedStyle(e).overflowY,height:e.clientHeight,content:e.scrollHeight,top:e.scrollTop,rect:JSON.parse(JSON.stringify(e.getBoundingClientRect()))}))); 
+     for(const s of metrics.scrollAfter){const r=s.rect;if(r.right>0 && r.left<width && s.height>100 && ['auto','scroll'].includes(s.overflow) && s.top<s.content-s.height-2)errors.push('Visible reader did not reach bottom');}
      await tab.screenshot({path:path.join(output,name+'-bottom.png')});
     }
     fs.writeFileSync(path.join(output,name+'.txt'),text);
