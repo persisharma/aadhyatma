@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Modal, Text } from 'react-native';
 import SadhanaCompletionOverlay from '@/components/SadhanaCompletionOverlay';
 
 const mockCommitDay = jest.fn();
@@ -95,6 +95,24 @@ describe('SadhanaCompletionOverlay', () => {
     expect(text).toContain('Sankalp day complete');
     expect(mockMarkDayCelebrated).toHaveBeenCalledWith('hanuman-41', 2);
     expect(mockNotificationAsync).toHaveBeenCalledWith('success');
+  });
+
+  it('Android Back dismisses the completion shower (UX-11)', () => {
+    mockCards = [
+      {
+        program: { id: 'hanuman-41' },
+        status: { kind: 'done-today', dayIndex: 2, totalDays: 41 },
+        allItemsDoneToday: false,
+        autoVia: 'read-to-end',
+      },
+    ];
+    const tree = renderOverlay();
+    expect(tree.root.findAllByType(Modal)).toHaveLength(1);
+    // The real context now remembers the day as celebrated (markDayCelebrated ran).
+    mockWasDayCelebrated.mockReturnValue(true);
+    act(() => tree.root.findByType(Modal).props.onRequestClose());
+    expect(tree.root.findAllByType(Modal)).toHaveLength(0);
+    mockWasDayCelebrated.mockReturnValue(false);
   });
 
   it('does not replay a daily completion shower after that sankalp day was celebrated', () => {

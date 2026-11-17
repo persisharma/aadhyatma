@@ -12,7 +12,7 @@ import type { KundaliGrahaCard } from '@/panchang/kundaliReportModel';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
 import KundaliArtwork, { type KundaliArtworkName } from './KundaliArtwork';
 import NorthIndianChart from './NorthIndianChart';
 
@@ -27,7 +27,7 @@ function useReadingUI() {
     name: (graha: Graha) => c(GRAHA_NAMES_HI[graha], GRAHA_NAMES_EN[graha]),
     sign: (index: number) => c(RASHI_NAMES_HI[index], `${RASHI_NAMES_EN[index]} · ${RASHI_NAMES_WESTERN[index]}`),
     body: { color: colors.inkSoft, fontFamily: lang === 'en' ? typography.meaningEnglish.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 14 * factor, lineHeight: 23 * factor },
-    title: { color: colors.ink, fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 21 * factor, lineHeight: 30 * factor },
+    title: { color: colors.ink, fontFamily: lang === 'en' ? fontFamilies.latinSemiBold : scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 21 * factor, lineHeight: titleLeading(21 * factor) },
     label: { color: colors.saffronDeep, fontFamily: lang === 'en' ? fontFamilies.interSemiBold : scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13 * factor, lineHeight: 21 * factor },
     card: { borderColor: colors.divider, backgroundColor: colors.parchmentSoft, borderRadius: radii.lg, borderWidth: 1 },
   };

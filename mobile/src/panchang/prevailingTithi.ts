@@ -1,4 +1,5 @@
 import type { PanchangData, PanchangElement, Paksha } from './types';
+import { isOnCivilDay } from './civilTime';
 import { TITHI_NAMES_HI, TITHI_NAMES_EN, LUNAR_MONTH_NAMES_HI, LUNAR_MONTH_NAMES_EN } from './names';
 
 export type PrevailingTithi = {
@@ -95,9 +96,7 @@ export function successorTithiToday(p: PanchangData): { nameHi: string; nameEn: 
   if (p.kshayaTithi) return null;
   const end = p.tithi.endTime;
   if (!end) return null;
-  if (end.getFullYear() !== p.date.getFullYear()
-    || end.getMonth() !== p.date.getMonth()
-    || end.getDate() !== p.date.getDate()) return null;
+  if (!isOnCivilDay(end, p.date)) return null;
   const successor = (p.tithi.index + 1) % 30;
   return { nameHi: TITHI_NAMES_HI[successor], nameEn: TITHI_NAMES_EN[successor] };
 }

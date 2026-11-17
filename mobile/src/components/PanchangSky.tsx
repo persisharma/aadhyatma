@@ -8,10 +8,12 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
+import { useLoopActive } from '@/utils/useLoopActive';
 import { useReducedMotion } from '@/utils/useReducedMotion';
 import { useMuhurat } from '@/panchang/useMuhurat';
 import { nextAuspiciousPeriod } from '@/panchang/muhurat';
-import { formatClock, formatEndInstant, formatRange, isSameLocalDay } from '@/panchang/muhuratFormat';
+import { formatClock, formatEndInstant, formatRange } from '@/panchang/muhuratFormat';
+import { civilDateOf, isOnCivilDay } from '@/panchang/civilTime';
 import { formatSpan } from '@/panchang/muhuratSpan';
 import { prevailingTithi } from '@/panchang/prevailingTithi';
 import { moonHorizonState } from '@/panchang/moonHorizon';
@@ -118,6 +120,7 @@ export default function PanchangSky({
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const reduceMotion = useReducedMotion();
+  const loopActive = useLoopActive(focused);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [zoneTop, setZoneTop] = useState(0);
   const { fontScale } = useWindowDimensions();
@@ -135,6 +138,8 @@ export default function PanchangSky({
       glow.setValue(0);
       return;
     }
+    // Paused while the screen is blurred or the app is backgrounded (PERF-05).
+    if (!loopActive) return;
     const loop = Animated.loop(
       Animated.sequence([
         Animated.timing(glow, { toValue: 1, duration: 3000, useNativeDriver: true }),
@@ -143,7 +148,7 @@ export default function PanchangSky({
     );
     loop.start();
     return () => loop.stop();
-  }, [glow, reduceMotion]);
+  }, [glow, reduceMotion, loopActive]);
 
   const onLayout = (e: LayoutChangeEvent) => {
     const { width, height } = e.nativeEvent.layout;
@@ -161,7 +166,7 @@ export default function PanchangSky({
   const moonState = moonHorizonState(moonHorizon, at);
   const showMoon = moonState === 'above' && moonTithiIndex !== 29;
   const riseLabel = moonHorizon?.nightRise && run
-    ? formatEndInstant(moonHorizon.nightRise, isSameLocalDay(moonHorizon.nightRise, date) ? run[0].start : date, lang)
+    ? formatEndInstant(moonHorizon.nightRise, isOnCivilDay(moonHorizon.nightRise, date) ? civilDateOf(run[0].start) : date, lang)
     : '—';
   const moonStatus = moonState === 'unavailable'
     ? contentByLang(lang, 'समय उपलब्ध नहीं', 'Time unavailable')

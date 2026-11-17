@@ -44,8 +44,8 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
 - assertNotVisible: "Sources & context"
 - assertNotVisible: "https?://.*"
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "33 koti devta"
 # Relaunch without clearing AsyncStorage: resume must restore the exact second page.
 - stopApp

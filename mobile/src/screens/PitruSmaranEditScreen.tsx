@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,6 +22,7 @@ import {
 } from '@/panchang/pitruSmaran';
 import { LUNAR_MONTH_NAMES_EN, LUNAR_MONTH_NAMES_HI, PAKSHA_NAMES_EN, PAKSHA_NAMES_HI } from '@/panchang/names';
 import { useTheme } from '@/theme/ThemeContext';
+import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -213,7 +214,7 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
             : contentByLang(lang, 'स्मरण जोड़ें', 'Add Smaran')}
           onBack={() => navigation.goBack()}
         />
-        <ScrollView
+        <KeyboardAwareScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -509,7 +510,7 @@ export default function PitruSmaranEditScreen({ navigation, route }: Props) {
               'If the tithi is unknown, the entry can be saved on Sarvapitri Amavasya'
             )}
           </Text>
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <CalendarDatePicker
           visible={datePickerVisible}
           value={parsedDate ? dateKey(parsedDate) : ''}

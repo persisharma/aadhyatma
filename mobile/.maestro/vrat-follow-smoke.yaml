@@ -77,7 +77,7 @@ appId: com.prashantsharma.vedansh
 # Follow and is bottom-anchored (where the dev LogBox also sits), so it's too
 # racy for Android e2e. Instead go back to the catalog and tap its pinned
 # "My Vrat" entry — same destination, deterministic on both platforms.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - tapOn: "My Vrat.*"
 - waitForAnimationToEnd

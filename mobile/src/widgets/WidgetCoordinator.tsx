@@ -27,7 +27,6 @@ export default function WidgetCoordinator() {
   const { entries, isLoading: countersLoading } = useJapamCounter();
   const lastRunAt = useRef(0);
   const generationRef = useRef(0);
-  const revision = JSON.stringify(activity);
   const lastUsedMantraId = Object.entries(entries).sort((a, b) => b[1].updatedAt - a[1].updatedAt)[0]?.[0];
   const resolvedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const deviceTimeZone = isValidIanaTimeZone(resolvedTimeZone) ? resolvedTimeZone : 'UTC';
@@ -101,7 +100,7 @@ export default function WidgetCoordinator() {
     schedule();
     const sub = AppState.addEventListener('change', (state) => { if (state === 'active') schedule(); });
     return () => { cancelled = true; if (timer) clearTimeout(timer); sub.remove(); };
-  }, [activity, activityLoading, calendarHydrated, calendarSystem, countersLoading, deviceTimeZone, lang, languageLoading, location, locationLoading, revision, lastUsedMantraId]);
+  }, [activity, activityLoading, calendarHydrated, calendarSystem, countersLoading, deviceTimeZone, lang, languageLoading, location, locationLoading, lastUsedMantraId]);
 
   return null;
 }

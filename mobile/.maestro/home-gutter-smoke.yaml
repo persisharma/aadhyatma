@@ -13,7 +13,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: home-after
 - tapOn: "Search verses, sections, and mantras"
 - assertVisible: "Search input"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { text: "Kundali\\..*Tap to open\\." }
     direction: DOWN
@@ -33,7 +33,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: lower-home-after
 - tapOn: { id: "home-kids-stories-card" }
 - assertVisible: { id: "kids-story-deity-krishna" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { text: ".*Today.s Panchang.*" }
     direction: UP

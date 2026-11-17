@@ -191,6 +191,48 @@ describe('scheduleJapamAlarms — orphaned snoozes and slot budget', () => {
   });
 });
 
+describe('scheduleJapamAlarms — re-arms in place (CRASH-03)', () => {
+  test('a still-wanted slot is replaced, never cancelled, and nothing is cancelled before scheduling', async () => {
+    mockGetPending.mockResolvedValue([
+      { identifier: 'japam-alarm:a1' },
+      { identifier: 'japam-alarm:gone' },
+      { identifier: 'japam-alarm:gone:d3' },
+      { identifier: 'japam-alarm:a1:snooze' },
+      { identifier: 'daily-verse:x' },
+    ]);
+    const order: string[] = [];
+    mockSchedule.mockImplementation(async (r: { identifier: string }) => {
+      order.push(`schedule:${r.identifier}`);
+      return 'ok';
+    });
+    mockCancel.mockImplementation(async (id: string) => {
+      order.push(`cancel:${id}`);
+    });
+
+    await scheduleJapamAlarms([alarm('a1')]);
+
+    expect(order[0]).toBe('schedule:japam-alarm:a1');
+    const cancelled = mockCancel.mock.calls.map((c) => c[0]).sort();
+    expect(cancelled).toEqual(['japam-alarm:gone', 'japam-alarm:gone:d3']);
+  });
+
+  test('a weekly alarm edited down cancels only the day it dropped', async () => {
+    mockGetPending.mockResolvedValue([
+      { identifier: 'japam-alarm:a1:d1' },
+      { identifier: 'japam-alarm:a1:d3' },
+    ]);
+    await scheduleJapamAlarms([alarm('a1', { repeatDays: [1] })]);
+    expect(mockCancel.mock.calls.map((c) => c[0])).toEqual(['japam-alarm:a1:d3']);
+  });
+
+  test('a failed schedule leaves the previous slot armed instead of cancelling it', async () => {
+    mockGetPending.mockResolvedValue([{ identifier: 'japam-alarm:a1' }]);
+    mockSchedule.mockRejectedValue(new Error('os busy'));
+    await scheduleJapamAlarms([alarm('a1')]);
+    expect(mockCancel).not.toHaveBeenCalled();
+  });
+});
+
 describe('cancelAllJapamAlarmNotifications', () => {
   test('cancels japam slots but spares in-flight snoozes and other prefixes', async () => {
     mockGetPending.mockResolvedValue([

@@ -16,6 +16,7 @@ import {
   type JapaSankalpUnit,
 } from '@/data/japam/sankalp';
 import { useUserActivity } from '@/contexts/UserActivityContext';
+import { setItemWithRetry } from '@/utils/persistWithRetry';
 
 const STORAGE_KEY = '@vedansh/japam-counter';
 /** Per-mantra japa sankalps (design.md §35.2), kept apart from the counter map so
@@ -118,13 +119,13 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
   const persist = useCallback((next: EntryMap) => {
     entriesRef.current = next;
     setEntries(next);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    void setItemWithRetry(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const persistSankalps = useCallback((next: SankalpMap) => {
     sankalpsRef.current = next;
     setSankalps(next);
-    AsyncStorage.setItem(SANKALP_STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    void setItemWithRetry(SANKALP_STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const getEntry = useCallback(

@@ -25,6 +25,7 @@
  * have settled, because before that the scope key is a placeholder.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { isOnCivilDay } from './civilTime';
 import { InteractionManager } from 'react-native';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated } from '@/panchang/usePanchang';
@@ -65,13 +66,6 @@ export type UseMuhuratResult = {
 
 const DAY_MS = 86_400_000;
 
-function isSameLocalDay(a: Date, b: Date): boolean {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
-}
 
 type Solved = {
   md: MuhuratDay;
@@ -163,7 +157,7 @@ export function useMuhurat(
   const { location, isLoading: locationLoading } = usePanchangLocation();
   const calendarHydrated = usePanchangCalendarHydrated();
   const dateMs = date.getTime();
-  const isToday = isSameLocalDay(date, new Date());
+  const isToday = isOnCivilDay(new Date(), date);
   const scope = scopeKeyFor(location, calendarSystem);
   const cacheKey = `${scope}|${dateKeyFor(date)}|${isToday ? 1 : 0}`;
   /**

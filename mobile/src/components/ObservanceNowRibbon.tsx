@@ -1,4 +1,5 @@
 import React from 'react';
+import { tonightTitle } from '@/panchang/preDawn';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -40,7 +41,7 @@ export default function ObservanceNowRibbon({
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const name = contentByLang(lang, rule.nameHi, rule.nameEn);
   const deity = contentByLang(lang, rule.deityHi, rule.deityEn);
-  const title = tonight ? contentByLang(lang, `${rule.nameHi} की रात्रि`, `${rule.nameEn} night`) : name;
+  const title = tonight ? contentByLang(lang, tonightTitle(rule).hi, tonightTitle(rule).en) : name;
   const meta = [
     deity,
     tonight

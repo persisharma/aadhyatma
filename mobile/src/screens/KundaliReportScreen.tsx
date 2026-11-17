@@ -14,6 +14,7 @@ import JyotishShareSheet from '@/components/JyotishShareSheet';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import NorthIndianChart from '@/components/NorthIndianChart';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -151,7 +152,7 @@ export default function KundaliReportScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             style={({ pressed }) => [
               styles.backButton,
               { borderColor: colors.divider, backgroundColor: colors.parchmentSoft },

@@ -11,7 +11,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { text: "Got it", optional: true }
 - tapOn: { text: "Not now|अभी नहीं", optional: true }
 - tapOn: { id: "tab-home" }
-- tapOn: { text: "Back", optional: true }
+- tapOn: { text: "Back|वापस|પાછા|ಹಿಂದೆ", optional: true }
 - scrollUntilVisible:
     element: { text: ".*Today.s Panchang.*" }
     direction: UP
@@ -37,13 +37,13 @@ appId: com.prashantsharma.vedansh
       - tapOn: "Add bookmark"
       - assertVisible: "Remove bookmark"
       - tapOn: "Remove bookmark"
-- tapOn: "Back.*"
+- tapOn: "Back.*|वापस|પાછા|ಹಿಂದೆ"
 - runFlow: _open-settings.yaml
 - assertVisible: "Reminders.*|Daily verse reminders.*"
 - assertVisible: "Japam alarms.*"
 - assertVisible: "Wishlist.*"
 - tapOn: { id: "tab-home" }
-- tapOn: { text: "Back", optional: true }
+- tapOn: { text: "Back|वापस|પાછા|ಹಿಂದೆ", optional: true }
 - scrollUntilVisible:
     element: { text: "By Deity\\..*Tap to open\\." }
     direction: DOWN
@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Shri Rama\\..*"
 - assertVisible: "Shri Krishna\\..*"
 - assertVisible: "Shri Vishnu\\..*"
-- tapOn: "Back.*"
+- tapOn: "Back.*|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "home-kids-stories-card" }
     direction: DOWN
@@ -61,13 +61,13 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "kids-story-deity-krishna" }
 - assertVisible: { id: "kids-story-deity-ganesha" }
 - assertVisible: { id: "kids-story-deity-hanuman" }
-- tapOn: "Back.*"
+- tapOn: "Back.*|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "tab-panchang" }
 - assertVisible: ".*Panchang.*|.*पंचांग.*"
 - tapOn: { id: "tab-bhajan" }
 - assertVisible: ".*Bhajans & Aartis.*"
 - tapOn: { id: "tab-home" }
-- tapOn: { text: "Back", optional: true }
+- tapOn: { text: "Back|वापस|પાછા|ಹಿಂದೆ", optional: true }
 - scrollUntilVisible:
     element: { text: "Search verses, sections, and mantras" }
     direction: UP
@@ -77,8 +77,8 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Open Hanuman Chalisa"
 - tapOn: "Open Hanuman Chalisa"
 - assertVisible: "Share verse"
-- tapOn: "Back.*"
-- tapOn: "Back"
+- tapOn: "Back.*|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { text: ".*Today.s Panchang.*" }
     direction: UP

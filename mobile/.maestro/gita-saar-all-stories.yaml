@@ -28,7 +28,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-true-prema
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-bhay-chinta }
     direction: DOWN
@@ -44,7 +44,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-bhay-chinta
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-shok }
     direction: DOWN
@@ -60,7 +60,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-shok
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-krodh }
     direction: DOWN
@@ -76,7 +76,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-krodh
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-karma }
     direction: DOWN
@@ -92,7 +92,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-karma
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-guna }
     direction: DOWN
@@ -108,7 +108,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-guna
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-man }
     direction: DOWN
@@ -124,7 +124,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-man
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-sanshay }
     direction: DOWN
@@ -140,7 +140,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-sanshay
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-sharanagati }
     direction: DOWN
@@ -156,7 +156,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-sharanagati
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-sthitaprajna }
     direction: DOWN
@@ -172,7 +172,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-sthitaprajna
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-kamna-santosh }
     direction: DOWN
@@ -188,7 +188,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-kamna-santosh
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-safalta }
     direction: DOWN
@@ -204,7 +204,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-safalta
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-atma }
     direction: DOWN
@@ -220,7 +220,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-atma
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-akela }
     direction: DOWN
@@ -236,7 +236,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-akela
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-daivi }
     direction: DOWN
@@ -252,7 +252,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-daivi
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-dhyan }
     direction: DOWN
@@ -268,4 +268,4 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-dhyan
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

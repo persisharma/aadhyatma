@@ -46,7 +46,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*0 of 108 on this mala.*"
 - tapOn: ".*Tap to count one bead.*"
 - assertVisible: ".*1 of 108 on this mala.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Mahamrityunjaya is a list mantra too (and what Shiva Stotram ch. 3's जप pill opens).
@@ -60,7 +60,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*0 of 108 on this mala.*"
 - tapOn: ".*Tap to count one bead.*"
 - assertVisible: ".*1 of 108 on this mala.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # The nine Navagraha beej mantras close the list (Kundali upay / Dasha open them too).
@@ -74,7 +74,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*0 of 108 on this mala.*"
 - tapOn: ".*Tap to count one bead.*"
 - assertVisible: ".*1 of 108 on this mala.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -106,7 +106,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*0 of 108 on this mala.*"
 
 # Back to the mantra list, then clean up (Expo Go termination resets the stack).
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - stopApp:
     appId: com.prashantsharma.vedansh

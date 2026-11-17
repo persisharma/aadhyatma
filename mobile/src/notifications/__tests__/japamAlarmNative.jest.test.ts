@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { scheduleNativeAlarmsForDay } from '@/notifications/japamAlarmNative';
 import {
@@ -35,6 +36,7 @@ jest.mock('@react-navigation/native', () => ({
 const mockRequire = requireOptionalNativeModule as jest.Mock;
 const scheduleAlarm = jest.fn();
 const cancelAll = jest.fn();
+const cancelAlarm = jest.fn();
 
 // iOS 26 is the AlarmKit path the native module binds on. Platform.OS defaults
 // to 'ios' under the RN preset; Platform.Version is a getter-only stub there
@@ -42,11 +44,13 @@ const cancelAll = jest.fn();
 (Platform as unknown as { OS: string }).OS = 'ios';
 Object.defineProperty(Platform, 'Version', { configurable: true, get: () => 26 });
 
-beforeEach(() => {
+beforeEach(async () => {
   jest.clearAllMocks();
+  await AsyncStorage.clear();
   scheduleAlarm.mockResolvedValue({ alarmId: 'x', fireAt: 0, exact: true });
   cancelAll.mockResolvedValue(undefined);
-  mockRequire.mockReturnValue({ scheduleAlarm, cancelAll });
+  cancelAlarm.mockResolvedValue(undefined);
+  mockRequire.mockReturnValue({ scheduleAlarm, cancelAll, cancelAlarm });
 });
 
 const alarm = (
@@ -153,5 +157,63 @@ describe('scheduleNativeAlarmsForDay — recurrence passthrough', () => {
       alarm('a1', 'om-namah-shivaya', { enabled: false }),
     ]);
     expect(scheduleAlarm).not.toHaveBeenCalled();
+  });
+});
+
+describe('scheduleNativeAlarmsForDay — re-arms in place (CRASH-03)', () => {
+  test('first run clears native state once; later runs never cancelAll', async () => {
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    expect(cancelAll).toHaveBeenCalledTimes(1);
+
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    expect(cancelAll).toHaveBeenCalledTimes(1);
+    expect(scheduleAlarm).toHaveBeenCalledTimes(3);
+    expect(cancelAlarm).not.toHaveBeenCalled();
+  });
+
+  test('cancels only the alarm that is no longer wanted, after the new schedule', async () => {
+    await scheduleNativeAlarmsForDay([
+      alarm('a1', 'om-namah-shivaya'),
+      alarm('a2', 'om-namah-shivaya'),
+    ]);
+    jest.clearAllMocks();
+    const order: string[] = [];
+    scheduleAlarm.mockImplementation(async (a: { alarmId: string }) => {
+      order.push(`schedule:${a.alarmId}`);
+    });
+    cancelAlarm.mockImplementation(async (id: string) => {
+      order.push(`cancel:${id}`);
+    });
+
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+
+    expect(order).toEqual(['schedule:japam-alarm:a1', 'cancel:japam-alarm:a2']);
+    expect(cancelAll).not.toHaveBeenCalled();
+  });
+
+  test('a disabled alarm is cancelled, and a cancel that fails is retried next run', async () => {
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    jest.clearAllMocks();
+    cancelAlarm.mockRejectedValueOnce(new Error('os busy'));
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya', { enabled: false })]);
+    expect(cancelAlarm).toHaveBeenCalledWith('japam-alarm:a1');
+
+    jest.clearAllMocks();
+    cancelAlarm.mockResolvedValue(undefined);
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya', { enabled: false })]);
+    expect(cancelAlarm).toHaveBeenCalledWith('japam-alarm:a1');
+  });
+
+  test('an AlarmKit skip plan leaves no stale :occN one-shots once the skip passes', async () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const skipping = alarm('a1', 'om-namah-shivaya', { skipNextDate: localDateKey(tomorrow) });
+    await scheduleNativeAlarmsForDay([skipping]);
+    jest.clearAllMocks();
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    const cancelled = cancelAlarm.mock.calls.map((c) => c[0]).sort();
+    expect(cancelled.length).toBe(ALARMKIT_SKIP_ONESHOT_COUNT - 1);
+    expect(cancelled.every((id) => id.startsWith('japam-alarm:a1:occ'))).toBe(true);
   });
 });

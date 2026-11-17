@@ -30,8 +30,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-basics
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-deity }
     direction: DOWN
@@ -57,8 +57,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-deity
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-thirty }
     direction: DOWN
@@ -84,8 +84,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-thirty
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-dikpal }
     direction: DOWN
@@ -111,8 +111,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-dikpal
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-graha }
     direction: DOWN
@@ -138,8 +138,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-graha
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-forms }
     direction: DOWN
@@ -165,8 +165,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-forms
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-symbols }
     direction: DOWN
@@ -192,8 +192,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-symbols
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-plants }
     direction: DOWN
@@ -219,8 +219,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-plants
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-temples }
     direction: DOWN
@@ -246,8 +246,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-temples
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-elements }
     direction: DOWN
@@ -273,8 +273,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-elements
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-time }
     direction: DOWN
@@ -300,8 +300,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-time
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-texts }
     direction: DOWN
@@ -327,8 +327,8 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-texts
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-collection-rishis }
     direction: DOWN
@@ -354,5 +354,5 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-rishis
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

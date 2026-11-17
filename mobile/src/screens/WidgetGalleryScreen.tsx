@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, AppState, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -9,8 +9,9 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
 import { radii, spacing } from '@/theme/spacing';
-import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
+import { widgetPayloadKey } from '@/utils/widgetPayloadKey';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
 import { WIDGET_TEXT_TOKENS, widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
 import { widgetBackgroundImages } from '@assets/widget-backgrounds';
@@ -39,10 +40,22 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   // previous hand-rolled Inter + letterSpacing split the Devanagari shirorekha.
   const eyebrowStyle = eyebrowTextStyle(lang, 11);
 
-  const refresh = useCallback(() => { readWidgetPayload().then(setPayloadState); }, []);
+  // The poll below decodes to a new object every time; only set state when the
+  // payload actually changed, so an idle gallery does not re-render every 5 s.
+  const lastPayloadKey = useRef('');
+  const refresh = useCallback(() => {
+    readWidgetPayload()
+      .then((next) => {
+        const key = widgetPayloadKey(next);
+        if (key === lastPayloadKey.current) return;
+        lastPayloadKey.current = key;
+        setPayloadState(next);
+      })
+      .catch(() => undefined);
+  }, []);
   useFocusEffect(useCallback(() => {
     refresh();
-    isWidgetPinSupported().then(setPinSupported);
+    isWidgetPinSupported().then(setPinSupported).catch(() => undefined);
     const interval = setInterval(refresh, 5_000);
     const sub = AppState.addEventListener('change', (state) => { if (state === 'active') refresh(); });
     return () => { clearInterval(interval); sub.remove(); };
@@ -106,7 +119,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
               <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.accent }}>
                 {day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}
               </Text>
-              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: 35, color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
+              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: titleLeading(25), color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
               {tithi.till ? <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{tithi.till[lang]}</Text> : null}
               {day.vrat ? <View style={{ borderLeftWidth: 3, borderLeftColor: panchangPalette.accent, borderRadius: 7, backgroundColor: appearance === 'night' ? '#24344A' : '#F1E3C6', paddingHorizontal: 7, paddingVertical: 5 }}>
                 <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{day.vrat[lang]}</Text>

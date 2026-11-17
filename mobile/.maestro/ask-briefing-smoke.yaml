@@ -69,15 +69,15 @@ appId: com.prashantsharma.vedansh
 #      original Search (its Vidhan door state) → Home. "Ask something else"
 #      PUSHES a fresh Search instance (the briefing sits between the two), so
 #      three Backs reach Home, not two.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "Today's Vidhan"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Open Today's Vidhan"
     timeout: 15000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: ".*Today.s Panchang.*"

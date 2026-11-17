@@ -82,7 +82,7 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible: { element: { text: ".*Renuka.*" }, direction: DOWN, timeout: 30000 }
 - scrollUntilVisible: { element: { text: ".*Shrinkhala.*" }, direction: DOWN, timeout: 30000 }
 - scrollUntilVisible: { element: { text: ".*Vishalakshi.*" }, direction: DOWN, timeout: 30000 }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Other Famous Temples: every one of the 10 gap-state + lokdevta shrines ──────
@@ -108,9 +108,9 @@ appId: com.prashantsharma.vedansh
     visible: ".*Sources.*"
     timeout: 15000
 - assertVisible: ".*Vetrimalai Murugan.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── By State: the 3 newly-covered states/UTs ───────────────────────────────────

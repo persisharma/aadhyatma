@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   FlatList,
   InteractionManager,
+  Linking,
   Modal,
   Pressable,
   StyleSheet,
@@ -143,6 +144,29 @@ export default function LocationPickerModal({ visible, onClose }: {
                   lang,
                   'स्थान की अनुमति नहीं मिली — नीचे अपना शहर या गाँव खोजें।',
                   'Location permission was denied — search for your town or village below.'
+                )}
+              </Text>
+            )}
+            {gpsStatus === 'denied' && (
+              <Pressable
+                onPress={() => { void Linking.openSettings().catch(() => undefined); }}
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, 'सेटिंग्स खोलें', 'Open Settings')}
+                hitSlop={10}
+                testID="location-open-settings"
+                style={({ pressed }) => [styles.settingsLink, pressed && { opacity: 0.7 }]}
+              >
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, lineHeight: 20, color: colors.saffronDeep }}>
+                  {contentByLang(lang, 'सेटिंग्स खोलें', 'Open Settings')}
+                </Text>
+              </Pressable>
+            )}
+            {gpsStatus === 'outside' && (
+              <Text testID="location-outside-india" style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                {meaningByLang(
+                  lang,
+                  'आपका स्थान भारत के बाहर है। पंचांग भारत के किसी स्थान के लिए बनता है — नीचे अपना शहर या गाँव खोजें।',
+                  'Your location is outside India. The Panchang is calculated for a place in India — search for your town or village below.'
                 )}
               </Text>
             )}
@@ -351,6 +375,7 @@ export default function LocationPickerModal({ visible, onClose }: {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  settingsLink: { alignSelf: 'flex-start', minHeight: 32, justifyContent: 'center' },
   safe: { flex: 1 },
   header: {
     flexDirection: 'row',

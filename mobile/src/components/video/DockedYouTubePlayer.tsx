@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   AppState,
   Linking,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -43,6 +44,11 @@ import type { VideoMapping } from '@/data/video/videoMappings';
  */
 
 const LOAD_TIMEOUT_MS = 15000;
+// Android only: the first WebView of a process starts Chromium on the main thread
+// (docs/engineering/android-anr-audit-2026-11.md §3), a multi-second stall on a
+// low-end phone. The stage paints its poster (dark stage + spinner) first and the
+// WebView mounts a beat later, so the sheet is on screen before the stall.
+const WEBVIEW_MOUNT_DELAY_MS = 150;
 
 type Phase = 'loading' | 'ready' | 'error';
 
@@ -91,6 +97,15 @@ export default function DockedYouTubePlayer({
   // Bump to force-remount the player on retry (the lib has no imperative reload).
   const [reloadKey, setReloadKey] = useState(0);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Poster first, WebView after the sheet has painted (Android; see WEBVIEW_MOUNT_DELAY_MS).
+  const [webViewMounted, setWebViewMounted] = useState(Platform.OS !== 'android');
+  useEffect(() => {
+    if (webViewMounted) return undefined;
+    const id = setTimeout(() => setWebViewMounted(true), WEBVIEW_MOUNT_DELAY_MS);
+    return () => clearTimeout(id);
+  }, [webViewMounted]);
+  // A failed "open in YouTube" says so, instead of doing nothing.
+  const [openFailed, setOpenFailed] = useState(false);
 
   // 16:9, never below YouTube's 200px minimum embed viewport.
   const playerHeight = Math.max(broadcast && viewportHeight >= 700 ? 240 : 200, Math.round((broadcast ? Math.min(width, 840) : width) * (9 / 16)));
@@ -211,7 +226,9 @@ export default function DockedYouTubePlayer({
   }, [armLoadTimeout, onRefreshSource]);
 
   const openInYouTube = useCallback(() => {
-    if (mapping.videoId) Linking.openURL(youtubeWatchUrl(mapping.videoId)).catch(() => undefined);
+    if (!mapping.videoId) return;
+    setOpenFailed(false);
+    Linking.openURL(youtubeWatchUrl(mapping.videoId)).catch(() => setOpenFailed(true));
   }, [mapping.videoId]);
 
   const title = contentByLang(uiLang, mapping.titleHi, mapping.titleEn);
@@ -237,7 +254,7 @@ export default function DockedYouTubePlayer({
           />
         ) : (
           <>
-            {channelId ? <ChannelYouTubeFrame
+            {!webViewMounted ? <View testID="youtube-poster" style={{ height: playerHeight }} /> : channelId ? <ChannelYouTubeFrame
               key={`${channelId}:${reloadKey}`}
               channelId={channelId}
               height={playerHeight}
@@ -262,7 +279,7 @@ export default function DockedYouTubePlayer({
                 mediaPlaybackRequiresUserAction: false,
               }}
             />}
-            {phase === 'loading' && !broadcast && (
+            {phase === 'loading' && (!broadcast || !webViewMounted) && (
               <View style={styles.loadingOverlay} pointerEvents="none">
                 <ActivityIndicator color={colors.onPrimary} />
               </View>
@@ -310,6 +327,17 @@ export default function DockedYouTubePlayer({
             <AppIcon name="close" size={15} color={colors.inkMuted} />
           </Pressable>
         </View>
+      )}
+
+      {openFailed && (
+        <Text testID="youtube-open-failed" accessibilityLiveRegion="polite" style={[styles.openFailed, { color: colors.inkMuted }]}>
+          {pick(uiLang, {
+            hi: 'YouTube नहीं खुल सका',
+            en: 'Couldn’t open YouTube',
+            gu: 'YouTube ખૂલી શક્યું નહીં',
+            kn: 'YouTube ತೆರೆಯಲಾಗಲಿಲ್ಲ',
+          })}
+        </Text>
       )}
 
       {phase !== 'error' && !broadcast && (
@@ -397,6 +425,7 @@ const styles = StyleSheet.create({
   openArrow: { fontSize: 16, fontWeight: '600' },
   closeBtn: { paddingLeft: 2 },
   broadcastButton: { minWidth: 48, minHeight: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
+  openFailed: { fontSize: 13, fontStyle: 'italic', textAlign: 'center', paddingHorizontal: 15, paddingVertical: 6 },
   meta: { paddingHorizontal: 15, paddingTop: 8, paddingBottom: 10 },
   title: { fontSize: 16 },
   channel: { fontSize: 13, fontStyle: 'italic', marginTop: 2 },

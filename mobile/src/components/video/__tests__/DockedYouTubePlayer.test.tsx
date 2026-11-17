@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { AppState, Linking } from 'react-native';
+import { AppState, Linking, Platform } from 'react-native';
 import type { VideoMapping } from '@/data/video/videoMappings';
 
 // ---- mocks ------------------------------------------------------------------
@@ -267,4 +267,46 @@ it('allows broadcast labels to wrap so large system text keeps both controls rea
   expect(label.props.numberOfLines).toBeUndefined();
   expect(require('react-native').StyleSheet.flatten(label.props.style).flexShrink).toBe(1);
   act(() => tree.unmount());
+});
+
+describe('ANR-03: poster first, WebView after the sheet has painted (Android)', () => {
+  afterEach(() => { jest.useRealTimers(); });
+
+  it('shows a poster first and mounts the player a beat later on Android', () => {
+    jest.useFakeTimers();
+    jest.replaceProperty(Platform, 'OS', 'android');
+    let r!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+    });
+    expect(mockRnyi.props).toBeUndefined();
+    expect(r.root.findAllByProps({ testID: 'youtube-poster' }).length).toBeGreaterThan(0);
+    act(() => { jest.advanceTimersByTime(200); });
+    expect(mockRnyi.props?.videoId).toBe(mapping.videoId);
+    expect(r.root.findAllByProps({ testID: 'youtube-poster' })).toHaveLength(0);
+    act(() => r.unmount());
+  });
+
+  it('mounts the player at once on iOS (the Chromium stall is Android-only)', () => {
+    jest.replaceProperty(Platform, 'OS', 'ios');
+    let r!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+    });
+    expect(mockRnyi.props?.videoId).toBe(mapping.videoId);
+    act(() => r.unmount());
+  });
+});
+
+it('UX-09: a failed "Open in YouTube" shows a brief message', async () => {
+  jest.spyOn(Linking, 'openURL').mockRejectedValue(new Error('no handler'));
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  expect(r.root.findAllByProps({ testID: 'youtube-open-failed' })).toHaveLength(0);
+  const open = r.root.find((n) => n.props.accessibilityLabel === 'Open in YouTube' && typeof n.props.onPress === 'function');
+  await act(async () => { open.props.onPress(); });
+  expect(allText(r)).toContain('Couldn’t open YouTube');
+  act(() => r.unmount());
 });

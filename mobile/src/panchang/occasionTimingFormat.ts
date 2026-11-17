@@ -1,7 +1,10 @@
-import { formatClock, formatEndInstant, formatShortDate, isSameLocalDay } from './muhuratFormat';
+import { formatClock, formatEndInstant, formatShortDate } from './muhuratFormat';
+import { civilDateOf, civilDayStart, civilFieldsOf, isOnCivilDay } from './civilTime';
 import type { OccasionTiming, OccasionWindow } from './occasionTimings';
 import type { Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+
+const civilYearOf = (instant: Date): number => civilFieldsOf(instant).year;
 
 const MINUTE_MS = 60_000;
 
@@ -37,9 +40,11 @@ export function occasionRange(w: OccasionWindow, date: Date, lang: Lang): string
  * The full range remains the screen-reader/share description. */
 export function compactOccasionRange(w: OccasionWindow, date: Date, lang: Lang) {
   const { start, end } = occasionDisplayEndpoints(w);
-  const dated = !isSameLocalDay(start, date) || (end !== undefined && !isSameLocalDay(end, date));
-  const year = start.getFullYear() !== date.getFullYear() || (end !== undefined && end.getFullYear() !== date.getFullYear());
-  const label = (d: Date) => `${formatShortDate(d, lang)}${year ? ` ${d.getFullYear()}` : ''}`;
+  // `start`/`end` are INSTANTS, `date` is the civil-date LABEL they sit under:
+  // read the instants on India's calendar, not the phone's.
+  const dated = !isOnCivilDay(start, date) || (end !== undefined && !isOnCivilDay(end, date));
+  const year = civilYearOf(start) !== date.getFullYear() || (end !== undefined && civilYearOf(end) !== date.getFullYear());
+  const label = (d: Date) => `${formatShortDate(civilDateOf(d), lang)}${year ? ` ${civilYearOf(d)}` : ''}`;
   return {
     start: formatClock(start), end: end ? formatClock(end) : undefined,
     startDate: dated ? label(start) : undefined,
@@ -53,8 +58,8 @@ export function occasionShareText(items: readonly OccasionTiming[], date: Date, 
     const { start, end } = occasionDisplayEndpoints(w);
     // A forwarded message must distinguish December from the following January.
     // Keep the image and all calculated instants unchanged.
-    if (includeDate && (start.getFullYear() !== date.getFullYear() || (end && end.getFullYear() !== date.getFullYear()))) {
-      const endpoint = (d: Date) => `${formatClock(d)}, ${formatShortDate(d, lang)} ${d.getFullYear()}`;
+    if (includeDate && (civilYearOf(start) !== date.getFullYear() || (end && civilYearOf(end) !== date.getFullYear()))) {
+      const endpoint = (d: Date) => `${formatClock(d)}, ${formatShortDate(civilDateOf(d), lang)} ${civilYearOf(d)}`;
       return end ? `${endpoint(start)} – ${endpoint(end)}` : endpoint(start);
     }
     return occasionRange(w, date, lang);
@@ -70,7 +75,7 @@ export function occasionShareText(items: readonly OccasionTiming[], date: Date, 
 /** Adjacent rites in a festival detail keep their own poster date. A parana
  * displayed on today's Panchang keeps today's date instead of yesterday's fast. */
 export function occasionCardReference(item: OccasionTiming, selected: Date): Date {
-  const lo = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate());
-  const hi = new Date(selected.getFullYear(), selected.getMonth(), selected.getDate() + 1);
+  const lo = civilDayStart(selected);
+  const hi = civilDayStart(new Date(selected.getFullYear(), selected.getMonth(), selected.getDate() + 1));
   return item.windows.some(w => w.start < hi && w.end >= lo) ? selected : item.date;
 }

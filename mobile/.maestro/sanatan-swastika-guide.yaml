@@ -54,7 +54,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - assertVisible: "Share"
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "Sacred symbols"
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "how to draw swastika"

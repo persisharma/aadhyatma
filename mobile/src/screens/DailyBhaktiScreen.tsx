@@ -74,11 +74,27 @@ export default function DailyBhaktiScreen() {
   // that verse — even if the screen was already mounted (e.g. the user had
   // browsed away with "next"). Looked up by identity, so it always matches the
   // notification regardless of pool-size drift.
+  //
+  // Keyed on the params OBJECT, not its primitives: tapping the same reminder
+  // again after browsing away carries identical sourceId/chapter/verseIndex, so a
+  // primitive dependency never re-ran, while every navigate() delivers a fresh
+  // params object. The functional update keeps a re-render with an unchanged
+  // verse a no-op.
+  const routeParams = route.params;
   useEffect(() => {
     if (sourceId == null || verseIndex == null) return;
     const found = findVerse(sourceId, verseIndex, chapter);
-    if (found) setVerse(found);
-  }, [sourceId, chapter, verseIndex]);
+    if (!found) return;
+    setVerse((prev) =>
+      prev &&
+      prev.sourceId === found.sourceId &&
+      prev.verseIndex === found.verseIndex &&
+      prev.chapter === found.chapter
+        ? prev
+        : found
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- routeParams is the re-run trigger; the rest are read from it
+  }, [routeParams]);
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());

@@ -11,7 +11,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
-import { pick } from '@/utils/localize';
+import { contentByLang, pick } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto, SUPPORT_EMAIL } from '@/data/help/content';
 import { buildAppShareMessage, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
@@ -167,7 +167,7 @@ export default function MoreScreen({ navigation }: Props) {
           .map((id) => {
             const def = getLensDefinition(id);
             if (!def) return id;
-            return lang === 'en' ? def.nameEn : def.nameHi;
+            return contentByLang(lang, def.nameHi, def.nameEn);
           })
           .slice(0, 2)
           .join(' · ') + (activeLensCount > 2 ? ` +${activeLensCount - 2}` : '');

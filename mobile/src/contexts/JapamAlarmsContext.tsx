@@ -171,7 +171,7 @@ export function JapamAlarmsProvider({ children }: { children: React.ReactNode })
               cur === exactStatus ? cur : exactStatus
             );
           }
-        );
+        ).catch(() => undefined); // a failed probe keeps the loaded statuses
         setForegroundTick((t) => t + 1);
       }
     });

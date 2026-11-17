@@ -24,7 +24,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: { id: occasion-detail-diwali-lakshmi }
 - waitForAnimationToEnd
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: occasion-timings-card }
     direction: UP

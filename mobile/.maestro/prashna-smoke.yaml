@@ -100,7 +100,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "kundali-generate-button" }
 - waitForAnimationToEnd
 - extendedWaitUntil: { visible: "Kundali result", timeout: 60000 }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Saved landing: the प्रश्न lead card sits above the door grid. Off-screen cards

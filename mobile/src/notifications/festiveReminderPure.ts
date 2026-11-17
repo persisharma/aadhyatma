@@ -95,7 +95,9 @@ export function planFestiveReminders(
   inputs: FestiveReminderInput[],
   now: Date,
   windowDays: number = FESTIVE_WINDOW_DAYS,
-  cap: number = FESTIVE_REMINDER_CAP
+  cap: number = FESTIVE_REMINDER_CAP,
+  /** `ruleId:dateKey` pairs already announced by a followed vrat's day-of notice. */
+  suppress: ReadonlySet<string> = new Set()
 ): { planned: PlannedFestiveNotification[]; truncated: number } {
   const windowEnd = startOfLocalDay(now);
   windowEnd.setDate(windowEnd.getDate() + windowDays);
@@ -118,6 +120,7 @@ export function planFestiveReminders(
       const identifier = `${FESTIVE_NOTIF_PREFIX}:${it.ruleId}:${occurrenceDateKey}`;
       // A rule can be handed the same date twice (two resolved years overlapping,
       // a re-resolve mid-scan); one notification per rule-occurrence.
+      if (suppress.has(`${it.ruleId}:${occurrenceDateKey}`)) continue;
       if (seen.has(identifier)) continue;
       seen.add(identifier);
 

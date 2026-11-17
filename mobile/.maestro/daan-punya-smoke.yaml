@@ -79,6 +79,6 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: { id: "daan-remove-dialog" }
 
 # ── Back out cleanly ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"

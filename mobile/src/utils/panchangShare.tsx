@@ -7,7 +7,7 @@ import { useShare, type ShareableCard } from '@/utils/shareVerse';
 import PanchangShareCard, { PANCHANG_SHARE_WIDTH } from '@/components/PanchangShareCard';
 import { buildPanchangShareModel } from '@/panchang/panchangShareModel';
 import { buildPanchangShareText } from '@/panchang/panchangShareText';
-import { isSameLocalDay } from '@/panchang/muhuratFormat';
+import { isOnCivilDay } from '@/panchang/civilTime';
 import { storyRailInset } from '@/utils/shareStoryLayout';
 import { resolveShareBrand, shareBrandTextLine } from '@/data/shareBrand';
 import { getShareBrand, hydrateShareBrand, useShareBrand } from '@/utils/shareBrandStore';
@@ -95,7 +95,7 @@ export function panchangShareable(input: ShareInput): ShareableCard {
         md: input.md,
         lang,
         cityLabel: contentByLang(lang, input.placeHi, input.placeEn),
-        isToday: isSameLocalDay(input.p.date, new Date()),
+        isToday: isOnCivilDay(new Date(), input.p.date),
       });
       // The sender's line closes the text like it signs the card; never the caption.
       const rituals = occasionShareText(input.occasionTimings ?? [], input.p.date, lang);

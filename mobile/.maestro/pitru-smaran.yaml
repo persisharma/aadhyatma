@@ -194,11 +194,11 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: "विधि विवरण पर वापस जाएँ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Re-entry serves the cached answers: every row is present again ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - tapOn: "^Smaran Father,.*$"
 - waitForAnimationToEnd
@@ -239,7 +239,7 @@ appId: com.prashantsharma.vedansh
     visible: "पंचांग से निकली तिथि — पुष्टि करें"
     timeout: 15000
 - assertVisible: "Choose the tithi myself"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 
 # Clean up — termination resets navigation for the next flow.
 - stopApp:

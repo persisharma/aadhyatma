@@ -43,7 +43,10 @@ jest.mock('@/utils/assetCache', () => ({
 }));
 
 import * as ExpoAudio from 'expo-audio';
-import { AudioPlayerProvider, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GitaLanguageProvider } from '@/data/gita/language';
+import { audioRemoteRequest } from '@assets/audio-library';
+import { AudioPlayerProvider, useAudioPlayerContext, useAudioPosition } from '@/contexts/AudioPlayerContext';
 import { registerStopper, __resetPlaybackArbiter } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 import { cachedFileUri } from '@/utils/assetCache';
@@ -54,6 +57,9 @@ const mockPlayer = (ExpoAudio as unknown as { __player: {
   play: jest.Mock;
   pause: jest.Mock;
   replace: jest.Mock;
+  seekTo: jest.Mock;
+  setPlaybackRate: jest.Mock;
+  setActiveForLockScreen: jest.Mock;
   loop: boolean;
   _emit: (evt: string, s: Partial<AudioStatus>) => void;
 } }).__player;
@@ -113,20 +119,30 @@ async function emitFinished(t: AudioTrack, extra: Partial<AudioStatus> = {}) {
   await emitStatus({ isLoaded: true, playing: false, currentTime: duration, duration, didJustFinish: true, ...extra });
 }
 
-beforeEach(() => {
+beforeEach(async () => {
+  await AsyncStorage.clear();
+  mockPlayer.seekTo.mockClear();
+  mockPlayer.setPlaybackRate.mockClear();
+  mockPlayer.setActiveForLockScreen.mockClear();
   mockPlayer.play.mockClear();
   mockPlayer.pause.mockClear();
   mockPlayer.replace.mockClear();
   mockPlayer.loop = false;
 });
 
-function mount() {
+// Every provider is unmounted after its test so its load-stall timer is cleared.
+const mounted: TestRenderer.ReactTestRenderer[] = [];
+afterEach(() => {
+  act(() => { mounted.splice(0).forEach((tree) => tree.unmount()); });
+});
+
+function mount(lang: 'hi' | 'en' | 'gu' | 'kn' = 'hi', children: React.ReactNode = <Capture />) {
   act(() => {
-    TestRenderer.create(
-      <AudioPlayerProvider>
-        <Capture />
-      </AudioPlayerProvider>
-    );
+    mounted.push(TestRenderer.create(
+      <GitaLanguageProvider initialLang={lang}>
+        <AudioPlayerProvider>{children}</AudioPlayerProvider>
+      </GitaLanguageProvider>
+    ));
   });
 }
 
@@ -342,5 +358,172 @@ describe('AudioPlayerContext lazy native player', () => {
     expect(mockPlayer.replace).toHaveBeenCalledTimes(1);
     await playTrack(AUDIO_TRACKS.find((t) => t.id !== track.id) ?? track);
     expect(create).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('AudioPlayerContext load failure (UX-01) and notices (UX-09)', () => {
+  afterEach(() => { jest.useRealTimers(); });
+
+  test('a track that never loads stops spinning, says so, and Retry reloads it', () => {
+    jest.useFakeTimers();
+    mount();
+    act(() => ctx.playTrack(track));
+    expect(ctx.isBuffering).toBe(true);
+    expect(ctx.playbackNotice).toBeNull();
+
+    act(() => { jest.advanceTimersByTime(15000); });
+    expect(ctx.isBuffering).toBe(false);
+    expect(ctx.playbackNotice).toBe('loadFailed');
+    expect(mockPlayer.play).not.toHaveBeenCalled();
+
+    mockPlayer.replace.mockClear();
+    act(() => ctx.retryPlayback());
+    expect(mockPlayer.replace).toHaveBeenCalledTimes(1); // reloaded, not a silent resume
+    expect(ctx.playbackNotice).toBeNull();
+    expect(ctx.isBuffering).toBe(true);
+  });
+
+  test('a source that loads late still starts and clears the message', () => {
+    jest.useFakeTimers();
+    mount();
+    act(() => ctx.playTrack(track));
+    act(() => { jest.advanceTimersByTime(15000); });
+    expect(ctx.playbackNotice).toBe('loadFailed');
+    act(() => mockPlayer._emit('playbackStatusUpdate', { isLoaded: true, playing: false, currentTime: 0, duration: 100, loop: false } as AudioStatus));
+    expect(mockPlayer.play).toHaveBeenCalledTimes(1);
+    expect(ctx.playbackNotice).toBeNull();
+  });
+
+  test('a prompt load never raises the message, and Stop cancels the timer', () => {
+    jest.useFakeTimers();
+    mount();
+    act(() => ctx.playTrack(track));
+    act(() => mockPlayer._emit('playbackStatusUpdate', { isLoaded: true, playing: true, currentTime: 0, duration: 100, loop: false } as AudioStatus));
+    act(() => { jest.advanceTimersByTime(60000); });
+    expect(ctx.playbackNotice).toBeNull();
+
+    act(() => ctx.playTrack(AUDIO_TRACKS[1]));
+    act(() => ctx.stop());
+    act(() => { jest.advanceTimersByTime(60000); });
+    expect(ctx.playbackNotice).toBeNull();
+  });
+
+  test('a track with no audio shows the no-audio notice instead of doing nothing', async () => {
+    (audioRemoteRequest as jest.Mock).mockReturnValueOnce(null);
+    mount();
+    await playTrack(track);
+    expect(ctx.currentTrack?.id).toBe(track.id);
+    expect(ctx.playbackNotice).toBe('noAudio');
+    expect(ctx.isBuffering).toBe(false);
+    expect(mockPlayer.replace).not.toHaveBeenCalled();
+  });
+});
+
+describe('AudioPlayerContext finished-track replay (BEH-12)', () => {
+  test('re-tapping a finished track restarts from 0 instead of playing from the end', async () => {
+    // The last track: nothing follows it, so playback simply stops at the end.
+    const last = AUDIO_TRACKS[AUDIO_TRACKS.length - 1];
+    mount();
+    await startPlaying(last);
+    await emitFinished(last, { didJustFinish: false });
+    mockPlayer.seekTo.mockClear();
+    mockPlayer.play.mockClear();
+    await playTrack(last);
+    expect(mockPlayer.seekTo).toHaveBeenCalledWith(0);
+    expect(mockPlayer.play).toHaveBeenCalledTimes(1);
+  });
+
+  test('the play button on a finished track restarts it too, and mid-track resume does not seek', async () => {
+    mount();
+    await startPlaying(AUDIO_TRACKS[AUDIO_TRACKS.length - 1]);
+    await emitFinished(AUDIO_TRACKS[AUDIO_TRACKS.length - 1]);
+    mockPlayer.seekTo.mockClear();
+    act(() => ctx.togglePlay());
+    expect(mockPlayer.seekTo).toHaveBeenCalledWith(0);
+
+    await emitStatus({ isLoaded: true, playing: false, currentTime: 30, duration: 100 });
+    mockPlayer.seekTo.mockClear();
+    act(() => ctx.togglePlay());
+    expect(mockPlayer.seekTo).not.toHaveBeenCalled();
+  });
+});
+
+describe('AudioPlayerContext persisted speed and repeat (BEH-12)', () => {
+  const flushStorage = async () => { await act(async () => { await tick(); await tick(); }); };
+
+  test('speed and repeat are saved when changed', async () => {
+    mount();
+    act(() => ctx.setRate(1.25));
+    act(() => ctx.toggleLoop());
+    await flushStorage();
+    expect(JSON.parse((await AsyncStorage.getItem('@vedansh/audio-prefs')) as string)).toEqual({ rate: 1.25, loop: true });
+  });
+
+  test('a relaunch restores them and applies them to the first player', async () => {
+    await AsyncStorage.setItem('@vedansh/audio-prefs', JSON.stringify({ rate: 1.5, loop: true }));
+    mount();
+    await flushStorage();
+    expect(ctx.rate).toBe(1.5);
+    expect(ctx.isLooping).toBe(true);
+    mockPlayer.loop = false;
+    await playTrack(track);
+    expect(mockPlayer.loop).toBe(true);
+    expect(mockPlayer.setPlaybackRate).toHaveBeenCalledWith(1.5, 'high');
+  });
+
+  test('corrupt or out-of-range saved prefs are ignored or clamped', async () => {
+    await AsyncStorage.setItem('@vedansh/audio-prefs', JSON.stringify({ rate: 9, loop: 'yes' }));
+    mount();
+    await flushStorage();
+    expect(ctx.rate).toBe(1.5);
+    expect(ctx.isLooping).toBe(false);
+    await AsyncStorage.setItem('@vedansh/audio-prefs', '{not json');
+    mount();
+    await flushStorage();
+    expect(ctx.rate).toBeGreaterThan(0);
+  });
+});
+
+describe('AudioPlayerContext lock-screen title (UX-10)', () => {
+  test.each([
+    ['hi', 'हरे राम'],
+    ['en', 'Hare Rama'],
+  ] as const)('uses the reading language (%s)', async (lang, expected) => {
+    mount(lang);
+    await playTrack(track);
+    expect(mockPlayer.setActiveForLockScreen).toHaveBeenCalledWith(true, expect.objectContaining({ title: expected }));
+  });
+
+  test('gu/kn re-script the Devanagari title like the track list does', async () => {
+    mount('gu');
+    await playTrack(track);
+    const title = mockPlayer.setActiveForLockScreen.mock.calls[0][1].title as string;
+    expect(title).not.toBe('Hare Rama');
+    expect(title).toMatch(/[઀-૿]/);
+  });
+});
+
+describe('AudioPlayerContext position isolation (PERF-02)', () => {
+  test('a position tick re-renders only position consumers, not action/track consumers', async () => {
+    let actionRenders = 0;
+    let positionRenders = 0;
+    let lastPosition = -1;
+    function ActionsOnly() { useAudioPlayerContext(); actionRenders++; return null; }
+    function Progress() { lastPosition = useAudioPosition(); positionRenders++; return null; }
+    mount('hi', <><Capture /><ActionsOnly /><Progress /></>);
+    await startPlaying(track);
+    const actionBefore = actionRenders;
+    const positionBefore = positionRenders;
+    const valueBefore = ctx;
+
+    await emitStatus({ isLoaded: true, playing: true, currentTime: 2, duration: 480 });
+    await emitStatus({ isLoaded: true, playing: true, currentTime: 2.5, duration: 480 });
+    await emitStatus({ isLoaded: true, playing: true, currentTime: 3, duration: 480 });
+
+    expect(lastPosition).toBe(3);
+    expect(positionRenders).toBeGreaterThan(positionBefore);
+    expect(actionRenders).toBe(actionBefore);
+    expect(ctx).toBe(valueBefore); // the memoized value kept its identity
+    expect('positionSec' in ctx).toBe(false);
   });
 });

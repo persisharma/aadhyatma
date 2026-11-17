@@ -8,7 +8,8 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { getDeityMeta } from '@/data/deities';
 import DeityIcon from '@/components/DeityIcon';
-import { SKIP_SECONDS, useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import { SKIP_SECONDS, useAudioPlayerContext, useAudioPosition } from '@/contexts/AudioPlayerContext';
+import { nowPlayingLabels, playbackNoticeText, retryLabel } from '@/components/audio/audioCopy';
 
 function fmt(sec: number): string {
   const s = Math.max(0, Math.floor(sec));
@@ -30,7 +31,7 @@ export default function NowPlayingScreen() {
     nowPlayingOpen,
     isPlaying,
     isBuffering,
-    positionSec,
+    playbackNotice,
     durationSec,
     isLooping,
     togglePlay,
@@ -40,7 +41,9 @@ export default function NowPlayingScreen() {
     skipToPrevious,
     toggleLoop,
     closeNowPlaying,
+    retryPlayback,
   } = useAudioPlayerContext();
+  const positionSec = useAudioPosition();
 
   const [barWidth, setBarWidth] = useState(0);
 
@@ -52,6 +55,7 @@ export default function NowPlayingScreen() {
   const subtitle = deity ? `${label} · ${deity.nameEn}` : label;
   const progress = durationSec > 0 ? Math.min(1, positionSec / durationSec) : 0;
 
+  const a11y = nowPlayingLabels(lang, SKIP_SECONDS);
   const headerLabel = pick(lang, { hi: 'अभी बज रहा है', en: 'Now Playing', gu: 'હમણાં વાગે છે', kn: 'ಈಗ ಪ್ಲೇ ಆಗುತ್ತಿದೆ' });
 
   return (
@@ -62,7 +66,7 @@ export default function NowPlayingScreen() {
           <Pressable
             onPress={closeNowPlaying}
             accessibilityRole="button"
-            accessibilityLabel="Minimize player"
+            accessibilityLabel={a11y.minimize}
             hitSlop={16}
             style={({ pressed }) => [
               styles.headerBtn,
@@ -114,7 +118,7 @@ export default function NowPlayingScreen() {
                 }
               }}
               accessibilityRole="adjustable"
-              accessibilityLabel="Seek"
+              accessibilityLabel={a11y.seek}
               style={styles.seekHit}
             >
               <View style={[styles.seekTrack, { backgroundColor: colors.divider }]}>
@@ -131,10 +135,34 @@ export default function NowPlayingScreen() {
             </View>
           </View>
 
+          {/* Why nothing is playing: no audio yet, or the load stalled (offline / CDN down). */}
+          {playbackNotice ? (
+            <View style={styles.notice} accessibilityLiveRegion="polite">
+              <Text style={[styles.noticeText, { color: colors.inkSoft, fontFamily: typography.cardLatin.fontFamily }]}>
+                {playbackNoticeText(lang, playbackNotice)}
+              </Text>
+              {playbackNotice === 'loadFailed' ? (
+                <Pressable
+                  testID="now-playing-retry"
+                  onPress={retryPlayback}
+                  accessibilityRole="button"
+                  accessibilityLabel={retryLabel(lang)}
+                  style={({ pressed }) => [
+                    styles.retryBtn,
+                    { backgroundColor: colors.saffron, borderColor: colors.saffronDeep, borderRadius: radii.pill },
+                    pressed && { opacity: 0.85 },
+                  ]}
+                >
+                  <Text style={[styles.retryText, { color: colors.onPrimary }]}>{retryLabel(lang)}</Text>
+                </Pressable>
+              ) : null}
+            </View>
+          ) : null}
+
           {/* Transport controls */}
           <View style={styles.controls}>
-            <ControlButton label={`−${SKIP_SECONDS}`} small onPress={() => skipBy(-SKIP_SECONDS)} color={colors.inkSoft} a11y="Rewind 15 seconds" />
-            <ControlButton icon="previous" onPress={skipToPrevious} color={colors.inkSoft} a11y="Previous track" />
+            <ControlButton label={`−${SKIP_SECONDS}`} small onPress={() => skipBy(-SKIP_SECONDS)} color={colors.inkSoft} a11y={a11y.rewind} />
+            <ControlButton icon="previous" onPress={skipToPrevious} color={colors.inkSoft} a11y={a11y.previous} />
             <Pressable
               onPress={togglePlay}
               disabled={isBuffering}
@@ -153,8 +181,8 @@ export default function NowPlayingScreen() {
                 <AppIcon name={isPlaying ? "pause" : "play"} size={32} color={colors.onPrimary} weight="fill" />
               )}
             </Pressable>
-            <ControlButton icon="skip" onPress={skipToNext} color={colors.inkSoft} a11y="Next track" />
-            <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y="Forward 15 seconds" />
+            <ControlButton icon="skip" onPress={skipToNext} color={colors.inkSoft} a11y={a11y.next} />
+            <ControlButton label={`+${SKIP_SECONDS}`} small onPress={() => skipBy(SKIP_SECONDS)} color={colors.inkSoft} a11y={a11y.forward} />
           </View>
 
           {/* Secondary row: loop (kept for mantra japa) */}
@@ -163,7 +191,7 @@ export default function NowPlayingScreen() {
               onPress={toggleLoop}
               accessibilityRole="button"
               accessibilityState={{ selected: isLooping }}
-              accessibilityLabel="Toggle loop"
+              accessibilityLabel={a11y.loop}
               hitSlop={8}
               style={({ pressed }) => [
                 styles.loopBtn,
@@ -231,6 +259,10 @@ const styles = StyleSheet.create({
   seekFill: { height: 4, borderRadius: 2 },
   timeRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   time: { fontSize: 15, includeFontPadding: false },
+  notice: { alignItems: 'center', marginTop: 20, gap: 10 },
+  noticeText: { fontSize: 14, textAlign: 'center', lineHeight: 21 },
+  retryBtn: { minHeight: 44, paddingHorizontal: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  retryText: { fontSize: 15, fontWeight: '700' },
   controls: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 28, paddingHorizontal: 4 },
   ctrl: { minWidth: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   ctrlGlyph: { fontSize: 22, includeFontPadding: false },

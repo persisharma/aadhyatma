@@ -237,3 +237,19 @@ const NOW = new Date(2026, 7, 7, 9, 0, 0, 0); // 7 Aug 2026, 09:00 local
     'same inputs must plan identically — no Date.now(), no randomness'
   );
 }
+
+// BEH-05: a date already announced by a followed vrat's day-of notice is skipped,
+// other dates of the same rule and other rules are untouched.
+{
+  const now = new Date(2026, 7, 1, 9, 0, 0, 0);
+  const a = new Date(2026, 7, 10);
+  const b = new Date(2026, 8, 20);
+  const inputs = [input('janmashtami', [a, b]), input('diwali', [a])];
+  const all = planFestiveReminders(inputs, now).planned;
+  assert.equal(all.length, 3);
+  const { planned } = planFestiveReminders(inputs, now, undefined, undefined, new Set(['janmashtami:2026-08-10']));
+  assert.deepEqual(
+    planned.map((p) => `${p.ruleId}:${p.occurrenceDateKey}`).sort(),
+    ['diwali:2026-08-10', 'janmashtami:2026-09-20']
+  );
+}

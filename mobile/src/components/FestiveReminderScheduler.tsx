@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useVratFollows } from '@/contexts/VratFollowContext';
+import { followedVratReminderInputs } from '@/notifications/followedVratInputs';
+import { dayOfCoveredKeys, planVratReminders } from '@/notifications/vratReminderPure';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getNextOccurrences, getRuleById } from '@/panchang/vratCatalog';
@@ -45,6 +48,7 @@ function startOfLocalDay(d: Date): Date {
 export default function FestiveReminderScheduler() {
   const { prefs, permissionStatus, isLoading } = useNotificationPreferences();
   const { lang } = useGitaLanguage();
+  const { follows, reminderDefault } = useVratFollows();
   const [calendarSystem] = usePanchangCalendarSystem();
   const [foregroundTick, setForegroundTick] = useState(0);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
@@ -100,7 +104,12 @@ export default function FestiveReminderScheduler() {
       }
 
       if (cancelled) return;
-      scheduleFestiveReminders(inputs, now, lang).catch(() => undefined);
+      // A followed vrat with a day-of notice already announces that festival; skip
+      // the festive duplicate for the dates the vrat plan actually holds.
+      const covered = dayOfCoveredKeys(
+        planVratReminders(followedVratReminderInputs(follows, reminderDefault, today, calendarSystem), now).planned
+      );
+      scheduleFestiveReminders(inputs, now, lang, covered).catch(() => undefined);
       // The Home chip uses this persisted, cooperative path too. A bare
       // pitruPakshaWindow() here used to block taps for two annual scans.
       void (async () => {
@@ -127,6 +136,8 @@ export default function FestiveReminderScheduler() {
     permissionStatus,
     lang,
     calendarSystem,
+    follows,
+    reminderDefault,
     foregroundTick,
   ]);
 

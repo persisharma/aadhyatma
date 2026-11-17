@@ -1,5 +1,6 @@
 import * as FileSystem from 'expo-file-system/legacy';
 import type { CachedAssetRequest } from './assetCache';
+import { verifyDownloadedAsset } from './assetIntegrity';
 import { downloadWithResume, forgetPartialDownload, sweepAbandonedScratch } from './resumableDownload';
 
 type Listener = (uri: string | null) => void;
@@ -80,6 +81,8 @@ async function resolve(job: Job): Promise<string> {
     // A complete download is promoted atomically; interrupted files are never
     // hits. It is promoted even if its last viewer has just left: the bytes are
     // paid for, and the next visit should find them rather than fetch again.
+    // Bytes that do not match the manifest key are never promoted (assetIntegrity).
+    await verifyDownloadedAsset(scratch, job.request.key);
     await FileSystem.moveAsync({ from: scratch, to: destination });
     committed = true;
     return destination;

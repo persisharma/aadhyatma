@@ -245,3 +245,24 @@ test('every notification body is authored Hindi-first with an English counterpar
     assert.match(body, /[A-Za-z]/, `body lacks the English counterpart: ${body}`);
   }
 });
+
+test('copy follows the reading language (BEH-04)', () => {
+  const now = new Date(2026, 7, 14, 9, 0);
+  const { planned } = planMuhuratReminders([input()], now);
+  const dayOf = planned.find((p) => p.kind === 'dayOf')!;
+  const advance = planned.find((p) => p.kind === 'advance')!;
+
+  const en = formatMuhuratReminderContent(dayOf, 'en');
+  assert.equal(en.title, 'Muhurat reminder');
+  assert.doesNotMatch(en.title + en.body, /[ऀ-ॿ]/);
+  assert.ok(en.body.includes('Vehicle Purchase') && en.body.includes('06:07'), en.body);
+  assert.ok(formatMuhuratReminderContent(advance, 'en').body.includes('tomorrow'));
+
+  for (const [lang, script] of [['gu', /[઀-૿]/], ['kn', /[ಀ-೿]/]] as const) {
+    for (const p of [dayOf, advance]) {
+      const { title, body } = formatMuhuratReminderContent(p, lang);
+      assert.match(title + body, script);
+      assert.doesNotMatch(title + body, /[ऀ-ॿ]/, `${lang}: ${body}`);
+    }
+  }
+});

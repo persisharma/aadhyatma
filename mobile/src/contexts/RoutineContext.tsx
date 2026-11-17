@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { toDateKey } from '@/contexts/UserActivityContext';
+import { useTodayKey } from '@/utils/useTodayKey';
 import type { Routine, RoutineItem, RoutineReminder, RoutineScheduleMode } from '@/data/routine/types';
 
 const ROUTINES_KEY = '@vedansh/routines';
@@ -50,13 +51,26 @@ type RoutineContextValue = {
 
 const RoutineContext = createContext<RoutineContextValue | null>(null);
 
+const NO_MARKS: Record<string, number> = {};
+
 function isRoutineArray(v: unknown): v is Routine[] {
   return Array.isArray(v) && v.every((r) => r && typeof r === 'object' && 'id' in r && 'items' in r);
 }
 
 export function RoutineProvider({ children }: { children: React.ReactNode }) {
   const [routines, setRoutines] = useState<Routine[]>([]);
-  const [doneMarks, setDoneMarks] = useState<Record<string, number>>({});
+  // The marks WITH the day they belong to. Completion is daily, and the date
+  // used to be checked only when this provider loaded from storage — so a
+  // process that survived midnight kept yesterday's items "done", and the first
+  // new mark then saved them again under today's date.
+  const [doneState, setDoneState] = useState<DoneState>(() => ({ date: toDateKey(new Date()), marks: NO_MARKS }));
+  // Changes at local midnight and when the app returns to the foreground.
+  const dayKey = useTodayKey();
+  const doneMarks = useMemo(
+    () => (doneState.date === toDateKey(new Date()) ? doneState.marks : NO_MARKS),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [doneState, dayKey]
+  );
   const [celebrated, setCelebrated] = useState<{ date: string; sig: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -83,13 +97,13 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
             // Completion is daily — discard yesterday's marks.
             if (parsed?.date === toDateKey(new Date())) {
               if (parsed.marks && typeof parsed.marks === 'object') {
-                setDoneMarks({ ...parsed.marks });
+                setDoneState({ date: parsed.date, marks: { ...parsed.marks } });
               } else if (Array.isArray(parsed.keys)) {
                 // Legacy `{ date, keys }` — migrate to timestamped marks. The
                 // original time is unknown, so 0 = "offered, time unknown".
                 const migrated: Record<string, number> = {};
                 for (const k of parsed.keys) migrated[k] = 0;
-                setDoneMarks(migrated);
+                setDoneState({ date: parsed.date, marks: migrated });
               }
             }
           } catch {
@@ -130,8 +144,8 @@ export function RoutineProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const persistDone = useCallback((next: Record<string, number>) => {
-    setDoneMarks(next);
     const payload: DoneState = { date: toDateKey(new Date()), marks: next };
+    setDoneState(payload);
     AsyncStorage.setItem(DONE_KEY, JSON.stringify(payload)).catch(() => undefined);
   }, []);
 

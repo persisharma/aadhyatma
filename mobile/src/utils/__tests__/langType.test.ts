@@ -1,4 +1,4 @@
-import { pillTextStyle } from '../langType';
+import { pillTextStyle, titleLeading } from '../langType';
 
 const PILL = { fontSize: 10, fontWeight: '600' as const, letterSpacing: 3 };
 
@@ -27,5 +27,14 @@ describe('pillTextStyle', () => {
     expect(pillTextStyle('kn', PILL).fontFamily).toBe('NotoSerifKannada_600SemiBold');
     expect(pillTextStyle('gu', PILL).letterSpacing).toBe(0);
     expect(pillTextStyle('kn', PILL).textTransform).toBe('none');
+  });
+});
+
+describe('titleLeading (UX-03)', () => {
+  test.each([14.5, 21, 22, 24, 25])('%s pt titles clear the Kannada 1.65x minimum', (size) => {
+    expect(titleLeading(size) / size).toBeGreaterThanOrEqual(1.65);
+  });
+  test('matches the listing-title token ratio', () => {
+    expect(titleLeading(17)).toBe(29);
   });
 });

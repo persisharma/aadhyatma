@@ -269,7 +269,7 @@ appId: com.prashantsharma.vedansh
 # Returning to Jyotish refreshes storage. Since design.md §51c the landing has
 # no page title and no date, so the guidance card's own provenance eyebrow is
 # the anchor: the reading leads, then the 2x2 door grid, then the practice card.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "From your full chart"

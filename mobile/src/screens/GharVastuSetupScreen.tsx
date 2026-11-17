@@ -18,7 +18,6 @@ import {
   Animated,
   PanResponder,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -37,6 +36,7 @@ import { getVastuRoomEntries, getVastuRoomEntry } from '@/data/vastu/roomGuidanc
 import type { VastuZone } from '@/data/vastu/types';
 import { DISHA_LABELS, DISHA_ORDER, type DishaDirection } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
+import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { elevation } from '@/theme/elevation';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -366,7 +366,7 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
         onBack={() => navigation.goBack()}
       />
       <View ref={overlayRef} collapsable={false} style={{ flex: 1 }}>
-        <ScrollView
+        <KeyboardAwareScrollView
           scrollEnabled={ghost == null}
           contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}
         >
@@ -762,7 +762,7 @@ export default function GharVastuSetupScreen({ navigation, route }: { navigation
               </View>
             </>
           ) : null}
-        </ScrollView>
+        </KeyboardAwareScrollView>
 
         {/* the ghost chip that follows the finger */}
         {ghost ? (

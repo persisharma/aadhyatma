@@ -1,4 +1,5 @@
 import { occasionGuidance } from '@/panchang/occasionTimings';
+import { useCivilToday } from '@/panchang/useCivilToday';
 import OccasionTimingsCard from '@/components/OccasionTimingsCard';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import StoryIcon from '@/components/StoryIcon';
@@ -23,7 +24,7 @@ import { getUpvasInfo } from '@/panchang/upvasContent';
 import { getBhogContent } from '@/panchang/bhogContent';
 import { getDaanOccasionForRule } from '@/data/daan';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
-import { formatClock, formatRange, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange, formatEndInstant, isSameCivilDay } from '@/panchang/muhuratFormat';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { getVidhiForFestival } from '@/data/vidhi';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -91,7 +92,9 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const [calendarSystem] = usePanchangCalendarSystem();
 
   const rule = getRuleById(route.params.ruleId);
-  const today = useMemo(() => startOfLocalDay(new Date()), []);
+  // India's current date, rolled over at midnight and on foreground — a `new Date()`
+  // read once at mount left "Today / Tomorrow" a day off after a night in the background.
+  const today = useCivilToday();
   const next = useMemo(
     () => (rule ? (route.params.dateMs !== undefined && Number.isFinite(route.params.dateMs) ? { rule, date: new Date(route.params.dateMs) } : getNextOccurrence(rule.id, today, calendarSystem)) : null),
     [rule, today, calendarSystem, route.params.dateMs]
@@ -410,7 +413,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                               <Text maxFontSizeMultiplier={1.25} style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
                                 {paranaDisplay.kind === 'window'
                                   ? `${contentByLang(lang, 'पारण', 'Parana')} · ${formatDate(paranaDisplay.date, lang)} · ${
-                                      isSameLocalDay(paranaDisplay.start, paranaDisplay.end)
+                                      isSameCivilDay(paranaDisplay.start, paranaDisplay.end)
                                         ? formatRange(paranaDisplay.start, paranaDisplay.end)
                                         : `${formatClock(paranaDisplay.start)} – ${formatEndInstant(paranaDisplay.end, paranaDisplay.date, lang)}`
                                     }`

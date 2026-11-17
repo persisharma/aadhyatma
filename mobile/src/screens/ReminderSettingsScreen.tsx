@@ -88,6 +88,53 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
     Linking.openSettings().catch(() => undefined);
   }, [canAskAgain, setDailyVerseEnabled]);
 
+  // Same two jobs as the daily-verse banner, but re-asking switches festival
+  // reminders on (not the daily verse).
+  const onFixFestivePermission = useCallback(() => {
+    if (canAskAgain) {
+      void setFestiveRemindersEnabled(true);
+      return;
+    }
+    Linking.openSettings().catch(() => undefined);
+  }, [canAskAgain, setFestiveRemindersEnabled]);
+
+  // The denied-permission banner: shared by every switch that needs the OS grant,
+  // so the reason sits next to the switch that bounced back.
+  const permissionBanner = (onPress: () => void) => (
+          <Pressable
+            onPress={onPress}
+            accessibilityRole="button"
+            accessibilityLabel={
+              canAskAgain
+                ? pick(lang, { hi: 'सूचना की अनुमति दें', en: 'Allow notifications', gu: 'સૂચનાની પરવાનગી આપો', kn: 'ಅಧಿಸೂಚನೆಗೆ ಅನುಮತಿ ನೀಡಿ' })
+                : pick(lang, { hi: 'सिस्टम सेटिंग्स खोलें', en: 'Open system settings', gu: 'સિસ્ટમ સેટિંગ્સ ખોલો', kn: 'ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ' })
+            }
+            style={({ pressed }) => [
+              styles.permissionBanner,
+              {
+                backgroundColor: colors.parchmentDeep,
+                borderColor: colors.divider,
+                borderRadius: radii.sm,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.permissionText,
+                {
+                  color: colors.inkSoft,
+                  fontFamily: typography.meaning.fontFamily,
+                },
+              ]}
+            >
+              {canAskAgain
+                ? pick(lang, { hi: 'सूचना अनुमति बंद है — अनुमति देने के लिए टैप करें।', en: 'Notifications are off. Tap to allow them.', gu: 'સૂચના પરવાનગી બંધ છે — પરવાનગી આપવા માટે ટૅપ કરો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಅನುಮತಿ ನೀಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })
+                : pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
+            </Text>
+          </Pressable>
+  );
+
   const updateAt = useCallback(
     async (index: number, time: TimeOfDay) => {
       const next = prefs.times.map((t, i) => (i === index ? time : t));
@@ -135,7 +182,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
             hitSlop={16}
             style={({ pressed }) => [
               styles.back,
@@ -230,38 +277,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               />
             </View>
 
-            {permissionStatus === 'denied' && (
-              <Pressable
-                onPress={onFixPermission}
-                accessibilityRole="button"
-                accessibilityLabel={
-                  canAskAgain ? 'Allow notifications' : 'Open system settings'
-                }
-                style={({ pressed }) => [
-                  styles.permissionBanner,
-                  {
-                    backgroundColor: colors.parchmentDeep,
-                    borderColor: colors.divider,
-                    borderRadius: radii.sm,
-                    opacity: pressed ? 0.85 : 1,
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.permissionText,
-                    {
-                      color: colors.inkSoft,
-                      fontFamily: typography.meaning.fontFamily,
-                    },
-                  ]}
-                >
-                  {canAskAgain
-                    ? pick(lang, { hi: 'सूचना अनुमति बंद है — अनुमति देने के लिए टैप करें।', en: 'Notifications are off. Tap to allow them.', gu: 'સૂચના પરવાનગી બંધ છે — પરવાનગી આપવા માટે ટૅપ કરો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಅನುಮತಿ ನೀಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })
-                    : pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
-                </Text>
-              </Pressable>
-            )}
+            {permissionStatus === 'denied' && permissionBanner(onFixPermission)}
           </View>
 
           {/* Times picker — supports multiple reminders */}
@@ -430,6 +446,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 accessibilityLabel={pick(lang, { hi: 'पर्व स्मरण चालू / बंद', en: 'Toggle festival reminders', gu: 'પર્વ સ્મરણ ચાલુ / બંધ', kn: 'ಪರ್ವ ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
               />
             </View>
+
+            {permissionStatus === 'denied' && permissionBanner(onFixFestivePermission)}
           </View>
         </ScrollView>
       </SafeAreaView>

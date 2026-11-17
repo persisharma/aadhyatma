@@ -282,7 +282,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Kumbha Moon · Aquarius. Learn more in grahas."
 
 # ------------------------------------------------- the landing follows along
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # No page title since design.md §51c — the switcher is the landing's first
 # control, which is exactly what this flow is about.

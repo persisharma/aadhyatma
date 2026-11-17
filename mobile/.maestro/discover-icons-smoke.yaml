@@ -88,7 +88,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "home-discover-home-widgets" }
 - assertVisible: { id: "widget-art-verse" }
 - takeScreenshot: widgets-route
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "Open Sadhak profile"
 - tapOn: { id: "tab-home" }
 - repeat:
@@ -114,7 +114,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "home-discover-pitru-smaran" }
 - assertVisible: "Add smaran"
 - takeScreenshot: pitru-route
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "Open Sadhak profile"
 - tapOn: { id: "tab-home" }
 - repeat:
@@ -145,5 +145,5 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 20000
 - assertVisible: "Ask something else"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "DISCOVER"

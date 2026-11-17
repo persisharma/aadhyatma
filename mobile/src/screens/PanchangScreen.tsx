@@ -1,4 +1,7 @@
 import OccasionSection from '@/components/OccasionSection';
+import { isPreDawn } from '@/panchang/preDawn';
+import { useCivilToday } from '@/panchang/useCivilToday';
+import { civilToday } from '@/panchang/civilTime';
 import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
@@ -176,10 +179,22 @@ export default function PanchangScreen({ route }: Props) {
   const panchangSegmentRef = useTourTarget('panchangSegment', undefined, isFocused);
   const rootNav = useNavigation<any>();
   const { followCount } = useVratFollows();
-  const todayKey = new Date().toDateString();
-  const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
-  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
-  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
+  // India's current date (`civilTime.ts`), kept current across midnight and
+  // app foregrounds.
+  const today = useCivilToday();
+  const [selectedDate, setSelectedDate] = useState(() => (route.params?.dateMs ? startOfLocalDay(new Date(route.params.dateMs)) : today));
+  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(today));
+  // When the day rolls over, a selection that was resting on "today" follows it
+  // (after a night in the background the screen used to keep yesterday selected).
+  // A date the reader browsed to on purpose is left alone.
+  const previousToday = useRef(today);
+  useEffect(() => {
+    const was = previousToday.current;
+    previousToday.current = today;
+    if (was.getTime() === today.getTime()) return;
+    setSelectedDate((current) => (current.getTime() === was.getTime() ? today : current));
+    setVisibleMonth((current) => (current.getTime() === startOfMonth(was).getTime() ? startOfMonth(today) : current));
+  }, [today]);
   const [calendarExpanded, setCalendarExpanded] = useState(false);
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
     route.params?.initialTab ?? 'calendar'
@@ -206,7 +221,7 @@ export default function PanchangScreen({ route }: Props) {
   // Before sunrise the Hindu day is still yesterday's, so a festival kept last
   // night is the one running — the ribbon above the Muhurat card carries it over.
   // Read once per render, not ticked: the screen re-renders on any selection.
-  const preDawnToday = p != null && selectedDate.getTime() === today.getTime() && Date.now() < p.sunrise.getTime();
+  const preDawnToday = selectedDate.getTime() === today.getTime() && isPreDawn(p?.sunrise);
   const carryOverDate = useMemo(() => addDays(selectedDate, -1), [selectedDate]);
   const carryOver = useObservancesForDate(preDawnToday ? carryOverDate : selectedDate, calendarSystem);
   const ribbonTonight = preDawnToday && carryOver.length > 0;
@@ -1882,7 +1897,7 @@ function CatalogLedgerBar({
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const today = startOfLocalDay(new Date());
+      const today = civilToday();
       const dates = entries
         .map((entry) => {
           try { return nextObservanceForEntry(entry, today); } catch { return null; }

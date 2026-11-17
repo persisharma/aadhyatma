@@ -31,6 +31,7 @@ import { KundaliExplorer } from '@/components/KundaliLearning';
 import KundaliArtwork from '@/components/KundaliArtwork';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
@@ -73,6 +74,7 @@ import {
 } from '@/panchang/useKundali';
 import PersonChips from '@/components/PersonChips';
 import { useTheme } from '@/theme/ThemeContext';
+import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -338,7 +340,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={12}
             style={({ pressed }) => [
               styles.backButton,
@@ -404,7 +406,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
             <ActivityIndicator color={colors.saffron} />
           </View>
         ) : (
-          <ScrollView
+          <KeyboardAwareScrollView
             ref={contentScrollRef}
             contentContainerStyle={[
               styles.scroll,
@@ -483,7 +485,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 elevation={elevation}
               />
             )}
-          </ScrollView>
+          </KeyboardAwareScrollView>
         )}
       </SafeAreaView>
       <CityPicker

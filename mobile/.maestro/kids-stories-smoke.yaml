@@ -138,5 +138,5 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: "story-page-safe" }
 - assertVisible: "16 / 16"
 - assertVisible: { id: "story-page-safe" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-krishna-janma" }

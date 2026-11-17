@@ -152,7 +152,7 @@ appId: com.prashantsharma.vedansh
     text: "Read aloud"
     optional: true
 
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 - stopApp

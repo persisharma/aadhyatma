@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useCivilToday } from '@/panchang/useCivilToday';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import CatalogBackground from '@/components/CatalogBackground';
@@ -31,10 +32,6 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'ObservanceList'>;
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुल', 'अग', 'सित', 'अक्टू', 'नवं', 'दिसं'];
 
-function startOfLocalDay(d: Date): Date {
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-}
-
 function shortDate(date: Date, lang: Lang): string {
   const months =
     lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
@@ -63,7 +60,9 @@ export default function ObservanceListScreen({ route, navigation }: Props) {
   const { toggleReminder, reminderSheet, reminderOnFor } = useVratReminderAction();
 
   const category = route.params.category;
-  const today = useMemo(() => startOfLocalDay(new Date()), []);
+  // India's current date, rolled over at midnight and on foreground — a `new Date()`
+  // read once at mount left "Today / Tomorrow" a day off after a night in the background.
+  const today = useCivilToday();
 
   const rows = useMemo(() => {
     // getRulesForCategory dedupes by id, so keys here are unique.

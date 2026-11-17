@@ -7,9 +7,19 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_KEY = '@vedansh/user-activity';
+
+/**
+ * Writes are coalesced to at most one in this window. The whole history (one
+ * entry per active day, never pruned) is serialized per write, and a mutation
+ * arrives on every japam bead — several a second — so writing each one put a
+ * growing `JSON.stringify` on the tap path. State still updates at once; the
+ * write is flushed when the app leaves the foreground.
+ */
+export const ACTIVITY_WRITE_DELAY_MS = 1000;
 
 export type DateKey = string; // 'YYYY-MM-DD'
 export type MonthKey = string; // 'YYYY-MM'
@@ -145,14 +155,39 @@ export function UserActivityProvider({ children }: { children: React.ReactNode }
       .finally(() => setIsLoading(false));
   }, []);
 
+  const pendingWrite = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /** Write the latest state now, if a write is pending. */
+  const flush = useCallback(() => {
+    if (pendingWrite.current === null) return;
+    clearTimeout(pendingWrite.current);
+    pendingWrite.current = null;
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(activityRef.current)).catch(() => undefined);
+  }, []);
+
   const persist = useCallback((next: ActivityMap) => {
     // Update the ref synchronously so back-to-back mutations in one tick (e.g.
     // logging beads then a round rollover) compose instead of clobbering each
     // other via a stale render snapshot.
     activityRef.current = next;
     setActivity(next);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
-  }, []);
+    // One write per window, carrying whatever the state is when it fires.
+    if (pendingWrite.current === null) {
+      pendingWrite.current = setTimeout(flush, ACTIVITY_WRITE_DELAY_MS);
+    }
+  }, [flush]);
+
+  // A pending write must not be lost with the app: flush when it leaves the
+  // foreground (JS timers do not run in the background) and on unmount.
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state !== 'active') flush();
+    });
+    return () => {
+      sub.remove();
+      flush();
+    };
+  }, [flush]);
 
   const mutateToday = useCallback(
     (mutate: (day: DailyEntry) => DailyEntry) => {

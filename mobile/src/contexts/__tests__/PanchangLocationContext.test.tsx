@@ -169,6 +169,35 @@ describe('PanchangLocationContext', () => {
     expect(mockWarm).toHaveBeenCalled();
   });
 
+  test('a GPS fix outside India is refused and the chosen place is kept', async () => {
+    // New Jersey. The snap had no distance limit, so this used to be stored as
+    // the nearest Indian pincode, thousands of km away, with no notice.
+    mockRequestPermissions.mockResolvedValue({ status: 'granted' });
+    mockLastKnown.mockResolvedValue({ coords: { latitude: 40.0583, longitude: -74.4057 } });
+    await mountAndHydrate();
+    const before = captured.location;
+    let result: string | undefined;
+    await act(async () => {
+      result = await captured.requestDeviceLocation();
+    });
+    await flush();
+    expect(result).toBe('outside');
+    expect(captured.gpsStatus).toBe('outside');
+    expect(captured.location).toEqual(before);
+    expect(mockStore[LOCATION_KEY]).toBeUndefined();
+  });
+
+  test('only a recent last-known fix is accepted', async () => {
+    mockRequestPermissions.mockResolvedValue({ status: 'granted' });
+    mockLastKnown.mockResolvedValue({ coords: { latitude: 25.36, longitude: 83.01 } });
+    await mountAndHydrate();
+    await act(async () => {
+      await captured.requestDeviceLocation();
+    });
+    // Without a max age the OS may return a fix from days ago in another city.
+    expect(mockLastKnown).toHaveBeenCalledWith({ maxAge: 60 * 60 * 1000 });
+  });
+
   test('a GPS fix keeps the bundled city when no pincode is closer', async () => {
     mockRequestPermissions.mockResolvedValue({ status: 'granted' });
     // A fix exactly on the bundled Srinagar entry. Under the first geocoder (1 of 207 J&K

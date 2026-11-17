@@ -42,7 +42,7 @@ import { getKathaContent } from '@/panchang/kathaContent';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanJourney'>;
 
@@ -206,7 +206,7 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
                 style={[styles.rowCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
               >
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: titleLeading(14.5), color: colors.ink }}>
                     {contentByLang(lang, shippedKatha.titleHi, shippedKatha.titleEn)}
                   </Text>
                   <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }}>
@@ -225,7 +225,7 @@ export default function DaanJourneyScreen({ navigation, route }: Props) {
                 style={[styles.rowCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }, elevation.card]}
               >
                 <View style={{ flex: 1 }}>
-                  <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 14.5, lineHeight: titleLeading(14.5), color: colors.ink }}>
                     {contentByLang(lang, daanKatha.titleHi, daanKatha.titleEn)}
                   </Text>
                   <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, marginTop: 2 }}>

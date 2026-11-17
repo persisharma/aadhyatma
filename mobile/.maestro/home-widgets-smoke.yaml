@@ -48,7 +48,7 @@ appId: com.prashantsharma.vedansh
           element: { text: "Add Vedansh panchang widget" }
           direction: DOWN
           timeout: 15000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 
 # iOS foregrounds a native "Open in Vedansh?" confirm sheet the first time a
 # custom-scheme URL is opened while the app is running; tap through it so the

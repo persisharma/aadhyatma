@@ -134,7 +134,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Play auto-chant"
 - assertVisible: ".*1 of 108 on this mala.*"
 
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Long mantras in Anant with a vow: the frame gives back the strip's
@@ -153,7 +153,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: japa-sankalp-8-gayatri-infinity
 - tapOn:
     id: "japam-style-mala"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 - tapOn: "Hare Krishna Mahamantra\\..*Tap to open\\."
@@ -170,7 +170,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: japa-sankalp-9-hare-krishna-infinity
 - tapOn:
     id: "japam-style-mala"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Naam japa: the enlarged सीता राम keeps its ी loop (≥1.5× leading) ──
@@ -184,5 +184,5 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: ".*0 of 108 on this mala.*"
 - takeScreenshot: japa-sankalp-10-sita-ram-naam
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd

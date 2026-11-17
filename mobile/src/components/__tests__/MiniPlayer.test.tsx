@@ -27,6 +27,7 @@ jest.mock('react-native-svg', () => {
 jest.mock('@/contexts/AudioPlayerContext', () => ({
   SKIP_SECONDS: 15,
   useAudioPlayerContext: jest.fn(),
+  useAudioPosition: () => 0,
 }));
 
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
@@ -101,5 +102,22 @@ describe('MiniPlayer', () => {
     expect(tree.root.findAllByType(ActivityIndicator).length).toBe(1);
     // the play/pause control is replaced by the spinner and disabled
     expect(tree.root.findAllByProps({ accessibilityLabel: 'Loading' }).length).toBeGreaterThan(0);
+  });
+
+  test('UX-01: a stalled load replaces the progress bar with a message and a retry control', () => {
+    const retryPlayback = jest.fn();
+    mockUse.mockReturnValue(baseState({ playbackNotice: 'loadFailed', retryPlayback }));
+    const tree = render();
+    expect(textOf(tree)).toContain('यह ट्रैक लोड नहीं हो सका');
+    expect(tree.root.findAllByProps({ accessibilityLabel: 'Play' })).toHaveLength(0);
+    act(() => tree.root.findByProps({ testID: 'mini-player-retry' }).props.onPress());
+    expect(retryPlayback).toHaveBeenCalledTimes(1);
+  });
+
+  test('UX-09: a track with no audio explains itself and offers no retry', () => {
+    mockUse.mockReturnValue(baseState({ playbackNotice: 'noAudio' }));
+    const tree = render();
+    expect(textOf(tree)).toContain('इस ट्रैक का ऑडियो अभी उपलब्ध नहीं है');
+    expect(tree.root.findAllByProps({ testID: 'mini-player-retry' })).toHaveLength(0);
   });
 });

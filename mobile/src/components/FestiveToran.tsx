@@ -5,6 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { titleScriptFont } from '@/utils/scriptFont';
+import { useLoopActive } from '@/utils/useLoopActive';
 import { useReducedMotion } from '@/utils/useReducedMotion';
 
 /**
@@ -73,6 +74,7 @@ export default function FestiveToran({ greetingHi, greetingEn }: Props) {
   const { colors, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const reduceMotion = useReducedMotion();
+  const loopActive = useLoopActive();
 
   const greeting = contentByLang(lang, greetingHi, greetingEn);
 
@@ -82,6 +84,8 @@ export default function FestiveToran({ greetingHi, greetingEn }: Props) {
       sway.setValue(0.5);
       return undefined;
     }
+    // Paused while the screen is blurred or the app is backgrounded (PERF-05).
+    if (!loopActive) return undefined;
     const loop = Animated.loop(
       Animated.sequence([
         Animated.timing(sway, {
@@ -100,7 +104,7 @@ export default function FestiveToran({ greetingHi, greetingEn }: Props) {
     );
     loop.start();
     return () => loop.stop();
-  }, [reduceMotion, sway]);
+  }, [reduceMotion, loopActive, sway]);
 
   const rotate = useMemo(
     () => sway.interpolate({ inputRange: [0, 1], outputRange: ['-0.7deg', '0.7deg'] }),
