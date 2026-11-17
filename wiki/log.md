@@ -1569,3 +1569,7 @@ Added `kali-chalisa` through the existing registry/reader with Kali art, search,
 ## [2026-11-17] ingest | A4 PR integration and actual-component captures
 
 PR #698 integrates main a8f6046d cleanly, adds explicit UTF-8 to the browser preview, and preserves actual-reader capture evidence. Native checks remain pending; compact web header crowding is documented in docs/evaluations/a4-kali-chalisa/review.md. No merge or release.
+
+## [2026-11-17] ingest | Chalisa control clearance
+
+ReaderControlRow measures centred and trailing controls, stacking playback when touch clearance would be lost. All Chalisa entries share the fix; other reader families are recorded for separate adoption. Capture coverage now checks both 320/390 widths at Standard/Large in all four scripts.

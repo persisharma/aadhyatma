@@ -86,3 +86,9 @@ The committed contact sheet shows Hindi/English opening and Gujarati/Kannada clo
 This Linux environment has no `adb`, `maestro` or `xcrun` executables. No emulator/device or native flow was executed. Native hi/en/gu/kn × Standard/Large, enlarged system text, Back/persistence/offline/lifecycle, export/playback and physical-device ANR evidence remain PENDING. A browser capture cannot clear these requirements. Keep PR draft; no merge, release, OTA or next item.
 
 U11 PASS for current-main integration and affected local checks; CI status is reported separately on the PR. U12 PASS for remotely preserved implementation and this evidence. Required task files are committed; the two untracked dependency symlinks are tooling only. No cleanup was performed.
+
+## Compact control correction
+
+`ReaderControlRow` replaces Chalisa's unreserved absolute Listen slot. It measures the language/routine group, playback control and available width, retains the centred layout when it fits with 24pt touch clearance, and otherwise puts the full labelled playback action on its own right-aligned row. It starts stacked until measured and remeasures after locale/text/width changes. The fix applies to every Chalisa through the shared reader; no content IDs or playback callbacks changed. Sibling reader families still use similar fixed slots; they were audited but not bulk-migrated in this A4 task.
+
+Typecheck PASS. Reader/control suites 55/55 PASS, including resize and longer-label measurements. Component build and syntax/whitespace checks PASS. The capture workflow now covers hi/en/gu/kn × widths 320/390 × Standard/Large × pages 0/28/56 = 48 captures, rejecting overlapping control boxes or an out-of-viewport trailing control. Final capture/CI outcomes are recorded in the PR description. Earlier contact-sheet evidence predates this header correction. Native system-text/gesture/persistence/playback/ANR checks remain pending.

@@ -25,6 +25,7 @@ import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReaderControlRow from '@/components/ReaderControlRow';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import VersePage from '@/components/VersePage';
@@ -240,15 +241,10 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <View style={styles.toggleRow}>
+        <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={chalisaId} />
-          {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
-              pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
-          <View style={styles.readAloudSlot}>
-            <ReadAloudButton control={readAloud} />
-          </View>
-        </View>
+        </ReaderControlRow>
 
         {/* The video CTA / auto-scroll pill lives on its OWN centred row, not in the
             toggle group: on 375–390 pt widths a third pill in the centred group grows
@@ -419,14 +415,6 @@ const styles = StyleSheet.create({
   counter: {
     includeFontPadding: false,
   },
-  toggleRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 18,
-    paddingTop: 6,
-    paddingBottom: 12,
-  },
   videoCtaRow: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -453,13 +441,6 @@ const styles = StyleSheet.create({
   videoCtaText: {
     fontSize: 13,
     fontWeight: '600',
-  },
-  readAloudSlot: {
-    position: 'absolute',
-    right: 16,
-    top: 6,
-    bottom: 12,
-    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

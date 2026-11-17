@@ -3244,6 +3244,8 @@ absolute`, `right: 16`, `top`/`bottom` matching the row's vertical padding, `jus
 center`); the Vrat Katha reader's shorter toggle row (6/6 rather than 6/12) is the only geometry
 that differs.
 
+**Chalisa compact controls.** `ReaderControlRow` measures the centred language/routine group, trailing Listen/Pause pill and available width. It preserves the centred group/right-aligned pill when both fit with a 16pt edge inset and 24pt touch clearance; otherwise the labelled playback control flows to a second right-aligned row. Measurement changes from resizing, locale and system text reflow the row without hiding labels or shrinking fonts. It starts stacked until measured. Other reader families retain their existing layout pending separate adoption/native verification.
+
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
 `com.android.settings.TTS_SETTINGS`; iOS gets the Settings path in words (no deep link exists to
