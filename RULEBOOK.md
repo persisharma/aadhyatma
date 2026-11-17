@@ -575,6 +575,8 @@ Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that u
 
 **Chalisa lengths are edition-specific.** The registry preserves the complete selected composition, not a fixed forty-body-unit limit. Kali Chalisa (`kali-chalisa`, A4) has 54 sourced body couplets plus three dohas (57 units); subtitles, generated counts, search and reader tests must agree with that payload. Never truncate a sourced work merely to fit its genre name.
 
+**Radha Chalisa (`radha-chalisa`, A5)** preserves the chosen complete 43-unit edition (2 opening dohas + 40 chaupais + 1 closing doha). Body 8 and 9 remain distinct; do not replace them with the shortened 39-unit transcription. The existing `radha` deity and Radha–Krishna art are used.
+
 ### 11.11 No duplicate content across sections
 A text must exist in exactly one location/category. Standalone Ashtak/Ashtakam texts (like Sankat Mochan Hanumanashtak) belong in the Ashtakam category — not duplicated in aarti or stotram. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
 

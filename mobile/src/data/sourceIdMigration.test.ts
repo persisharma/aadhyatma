@@ -53,3 +53,6 @@ assert.equal(canonicalSourceId('santoshi-mata-chalisa'), 'santoshi-mata-chalisa'
 assert.equal(canonicalSourceId('kali-chalisa'), 'kali-chalisa');
 assert.equal(canonicalBookmarkId('santoshi-mata-chalisa::39', 'santoshi-mata-chalisa'), 'santoshi-mata-chalisa::39');
 assert.equal(canonicalBookmarkId('kali-chalisa::39', 'kali-chalisa'), 'kali-chalisa::39');
+
+assert.equal(canonicalSourceId('radha-chalisa'), 'radha-chalisa');
+assert.equal(canonicalBookmarkId('radha-chalisa::42', 'radha-chalisa'), 'radha-chalisa::42');

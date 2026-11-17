@@ -34,6 +34,7 @@ import { vishnuSahasranamaTotal } from '../vishnu-sahasranama';
 import { shaniChalisaCounts } from '../shani-chalisa';
 import { santoshiMataChalisaCounts } from '../santoshi-mata-chalisa';
 import { kaliChalisaCounts } from '../kali-chalisa';
+import { radhaChalisaCounts } from '../radha-chalisa';
 import { vaishnoDeviChalisaCounts } from '../vaishno-devi-chalisa';
 import * as generated from '../verseCounts';
 import kabirDohe from '../doha/kabir-bhakti-dohe.json';
@@ -86,6 +87,7 @@ test('every generated verse count still matches its corpus', () => {
   ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
   ['santoshiMataChalisaCounts', santoshiMataChalisaCounts, generated.santoshiMataChalisaCounts],
   ['kaliChalisaCounts', kaliChalisaCounts, generated.kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts, generated.radhaChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal, generated.lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal, generated.madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal, generated.mahalakshmiAshtakamTotal],
@@ -114,6 +116,7 @@ test('every generated verse count still matches its corpus', () => {
   ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
   ['santoshiMataChalisaCounts', santoshiMataChalisaCounts, generated.santoshiMataChalisaCounts],
   ['kaliChalisaCounts', kaliChalisaCounts, generated.kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts, generated.radhaChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],
@@ -188,6 +191,7 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
   ['santoshiMataChalisaCounts', santoshiMataChalisaCounts, generated.santoshiMataChalisaCounts],
   ['kaliChalisaCounts', kaliChalisaCounts, generated.kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts, generated.radhaChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],

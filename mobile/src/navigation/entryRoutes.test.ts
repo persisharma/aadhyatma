@@ -552,3 +552,13 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 56 }), target);
   assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::56`, sourceId, verseIndex: 56 })), target);
 }
+
+// A5: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'radha-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 42 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 42 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::42`, sourceId, verseIndex: 42 })), target);
+}

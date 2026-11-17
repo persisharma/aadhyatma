@@ -215,6 +215,35 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back to home"
 - waitForAnimationToEnd
 - assertVisible: "Kali Chalisa\\..*Tap to open\\."
+# A5: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Radha Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Radha Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "श्री राधे वृषभानुजा.*"
+- takeScreenshot: a5-radha-opening-hi
+- tapOn: "English"
+- assertVisible: "Shri Radhe Vrishabhanuja.*"
+- takeScreenshot: a5-radha-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 42
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*श्रीराधा सर्वेश्वरी.*"
+- takeScreenshot: a5-radha-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Radha Chalisa\\..*Tap to open\\."
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.
 - scrollUntilVisible:
     element:
