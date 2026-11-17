@@ -129,6 +129,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'ram-aarti': backgroundImages.deity_rama_darbar,
   'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
+  'satyanarayan-aarti': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
   'jai-ganesh-deva': backgroundImages.deity_ganesha_modak,
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,

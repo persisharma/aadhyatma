@@ -161,3 +161,6 @@ The historical October hold above is retained as an audit record. Under Prashant
 ## A5 source update — 2026-11-17
 
 The historical October access note above is superseded for Radha Chalisa: the complete Drik, HinduNidhi and JaapDaily prayers were read on 16 November. Pavitra returned 403 and is not counted. Preserve the complete Drik edition and document variants rather than mixing readings. See `docs/evaluations/a5-radha-chalisa/review.md`.
+
+
+B1 Satyanarayan Aarti (17 Nov 2026) appends index 22 with nine pages from the complete dated 1930 edition. Puja instructions and ref now select this aarti; previous positions are preserved. Existing Vishnu artwork is reused. Source variants and native-pending acceptance: `docs/evaluations/b1-satyanarayan-aarti/review.md`.

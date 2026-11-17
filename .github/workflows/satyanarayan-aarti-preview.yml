@@ -1,0 +1,37 @@
+name: B1 Satyanarayan Aarti component preview
+on:
+  pull_request:
+    paths:
+      - 'mobile/src/data/aarti/**'
+      - 'mobile/visual/satyanarayan-aarti/**'
+      - '.github/workflows/satyanarayan-aarti-preview.yml'
+permissions:
+  contents: read
+jobs:
+  web-component-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+        working-directory: mobile
+      - run: npm ci
+        working-directory: mobile/visual/sanatan
+      - name: Install pinned browser capture tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/b1-preview" --no-save playwright@1.56.1
+          "$RUNNER_TEMP/b1-preview/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Build and capture actual reader through web adapters
+        run: |
+          node mobile/visual/satyanarayan-aarti/build.mjs
+          PLAYWRIGHT_MODULE="$RUNNER_TEMP/b1-preview/node_modules/playwright" node mobile/visual/satyanarayan-aarti/capture.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: b1-radha-actual-component-web-not-native
+          path: mobile/visual/satyanarayan-aarti/captures/
+          if-no-files-found: error

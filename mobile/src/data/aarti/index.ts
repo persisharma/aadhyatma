@@ -21,6 +21,8 @@ import jayAdhyaShakti from './jay-adhya-shakti.json';
 import shaniAarti from './shani-aarti.json';
 import dattatreyaAarti from './dattatreya-aarti.json';
 
+import satyanarayanAarti from './satyanarayan-aarti.json';
+
 import { aartiIdByIndex } from './ids';
 
 export { aartiIdByIndex, aartiIndexById, type AartiId } from './ids';
@@ -75,6 +77,7 @@ export const aartiCollection: readonly AartiData[] = [
   ekadashiMataAarti as AartiData,
   tulsiAarti as AartiData,
   shakambhariAarti as AartiData,
+  satyanarayanAarti as AartiData,
 ];
 
 export const aartiTitleHi = 'आरती संग्रह';

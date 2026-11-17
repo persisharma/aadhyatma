@@ -85,6 +85,11 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'any',
     source: `${SOURCE_BUNDLED} aarti/shakambhari-aarti.json.`,
   },
+  'satyanarayan-aarti': {
+    purposes: ['devotion'],
+    bestTime: 'any',
+    source: `${SOURCE_BUNDLED} aarti/satyanarayan-aarti.json; devotional praise, no exclusive weekday rule.`,
+  },
   'hanuman-chalisa': {
     purposes: ['protection', 'courage', 'obstacles', 'devotion'],
     bestDays: [2, 6],

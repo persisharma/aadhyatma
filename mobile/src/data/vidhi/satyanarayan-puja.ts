@@ -254,10 +254,10 @@ export const satyanarayanPuja: VidhiEntry = {
       titleHi: 'आरती',
       titleEn: 'Aarti',
       instructionHi:
-        'कपूर या घी के दीप से भगवान की आरती करें और परिवार सहित ॐ जय जगदीश हरे गाएँ।',
+        'कपूर या घी के दीप से भगवान की आरती करें और परिवार सहित श्री सत्यनारायणजी की आरती — जय लक्ष्मी रमणा — गाएँ।',
       instructionEn:
-        'Offer aarti with lit camphor or a ghee lamp and sing Om Jai Jagdish Hare with the family.',
-      ref: { kind: 'section', id: 'om-jai-jagdish' },
+        'Offer aarti with lit camphor or a ghee lamp and sing Shri Satyanarayan Aarti (Jai Lakshmi Ramana) with the family.',
+      ref: { kind: 'section', id: 'satyanarayan-aarti' },
     },
     {
       id: 'kshama-prasad',
@@ -294,6 +294,6 @@ export const satyanarayanPuja: VidhiEntry = {
     ],
     retrievedOn: '2026-08-19',
     notes:
-      'Every mantra was cross-checked verbatim against DrikPanchang’s Satyanarayana Puja Vidhi (shodashopachara) pages and at least one independent published karmakand reference each, via search-indexed page excerpts on 2026-08-12 (direct page fetches were blocked in the authoring environment — hence the pending canonical-edition check above). The step sequence and samagri follow DrikPanchang’s published vidhi/samagri pages. The sankalp step is instruction-only because its exact liturgical wording was not verbatim-verifiable (RULEBOOK §11.3 — never approximate). Step instructions are authored fresh (RULEBOOK §9). The katha and aarti steps reference shipped texts by id (satyanarayana-vrat-katha, om-jai-jagdish) — no liturgical text is duplicated (§11.11).',
+      'Every mantra was cross-checked verbatim against DrikPanchang’s Satyanarayana Puja Vidhi (shodashopachara) pages and at least one independent published karmakand reference each, via search-indexed page excerpts on 2026-08-12 (direct page fetches were blocked in the authoring environment — hence the pending canonical-edition check above). The step sequence and samagri follow DrikPanchang’s published vidhi/samagri pages. The sankalp step is instruction-only because its exact liturgical wording was not verbatim-verifiable (RULEBOOK §11.3 — never approximate). Step instructions are authored fresh (RULEBOOK §9). The katha and aarti steps reference shipped texts by id (satyanarayana-vrat-katha, satyanarayan-aarti) — no liturgical text is duplicated (§11.11).',
   },
 };

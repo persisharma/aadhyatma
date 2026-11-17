@@ -336,3 +336,11 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   assert.ok(runSearch('श्री राधे वृषभानुजा', index).verses.some(r => r.entry.sourceId === 'radha-chalisa' && r.entry.verseIndex === 0));
   assert.ok(runSearch('रसिकेश्वर घनश्याम', index).verses.some(r => r.entry.sourceId === 'radha-chalisa' && r.entry.verseIndex === 42));
 }
+
+// The new composition is searchable independently of generic Vishnu aartis.
+{
+ const index = getSearchIndex();
+ assert.equal(index.verses.filter(v => v.sourceId === 'satyanarayan-aarti').length, 9);
+ assert.ok(runSearch('satyanarayan aarti', index).sections.some(r => r.entry.sourceId === 'satyanarayan-aarti'));
+ assert.ok(runSearch('वैश्य मनोरथ पायो', index).verses.some(r => r.entry.sourceId === 'satyanarayan-aarti' && r.entry.verseIndex === 4));
+}

@@ -11,6 +11,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderControlRow from '@/components/ReaderControlRow';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import VersePage from '@/components/VersePage';
@@ -122,14 +123,10 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={aarti.verses.length} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+        <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={sourceId} />
-          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
-          <View style={styles.readAloudSlot}>
-            <ReadAloudButton control={readAloud} />
-          </View>
-        </View>
+        </ReaderControlRow>
 
         <View style={styles.listContainer}>
           <FlatList
