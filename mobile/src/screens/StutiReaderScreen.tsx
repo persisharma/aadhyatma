@@ -183,15 +183,15 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
-          <LanguageToggle />
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: width < 360 ? 6 : 18 }, width < 360 && styles.toggleRowNarrow]}>
+          <LanguageToggle compact={width < 360} />
           <AddToRoutineButton sourceId={stutiId} />
           {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
-          <View style={styles.japaSlot}>
+          <View style={[styles.japaSlot, width < 360 && styles.actionSlotNarrow]}>
             <StartJapaButton navigation={navigation} sourceId={stutiId} verseIndex={currentIndex} />
           </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
-          <View style={styles.readAloudSlot}>
+          <View style={[styles.readAloudSlot, width < 360 && styles.actionSlotNarrow]}>
             <ReadAloudButton control={readAloud} />
           </View>
         </View>
@@ -317,6 +317,8 @@ const styles = StyleSheet.create({
     bottom: 12,
     justifyContent: 'center',
   },
+  toggleRowNarrow: { flexWrap: 'wrap', paddingHorizontal: 16 },
+  actionSlotNarrow: { position: 'relative', left: 0, right: 0, top: 0, bottom: 0 },
   listContainer: {
     flex: 1,
   },
