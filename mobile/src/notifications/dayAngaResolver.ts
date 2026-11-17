@@ -11,7 +11,6 @@
  * Formatting is in `./dayAnga` (pure); this module owns the engine calls.
  */
 
-import { InteractionManager } from 'react-native';
 import { computeTithiAndMonth } from '@/panchang/engine';
 import { getObservancesForDate, isObservanceDataReady } from '@/panchang/festivalEngine';
 import type { ObservanceLocation } from '@/panchang/festivalEngine';
@@ -19,6 +18,7 @@ import type { CalendarSystem } from '@/panchang/types';
 import { pickTitleObservance, type DayAnga, type DayAngaMap } from './dayAnga';
 import { toDateKey } from './seed';
 import { ROLLING_WINDOW_DAYS } from './pure';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * One animation frame is ~16 ms; keep each synchronous burst under half of it so a
@@ -52,7 +52,7 @@ function yieldToEventLoop(): Promise<void> {
 
 function afterInteractions(): Promise<void> {
   return new Promise((resolve) => {
-    InteractionManager.runAfterInteractions(() => resolve());
+    runWhenIdle(() => resolve());
   });
 }
 

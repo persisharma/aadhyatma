@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import {
   useMuhuratFollows,
   dateFromFollowKey,
@@ -15,6 +15,7 @@ import { hydratePanchangDays } from '@/panchang/panchangDayCache';
 import { dateKeyFor, dayAt, dayStoreFor, scopeKeyFor, cachedDayInputsAsync } from '@/panchang/panchangDayStore';
 import { scheduleMuhuratReminders, cancelAllMuhuratReminders } from '@/notifications/muhuratScheduler';
 import type { MuhuratReminderInput } from '@/notifications/muhuratReminderPure';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Headless: keeps muhurat reminders (PRD-16 §6.7) armed. Renders nothing.
@@ -58,7 +59,7 @@ export default function MuhuratReminderScheduler() {
     let cancelled = false;
     // Behind InteractionManager: re-arming solves up to `cap` days of panchang
     // on a cold start, and that must never compete with Home's first frame.
-    const task = InteractionManager.runAfterInteractions(async () => {
+    const task = runWhenIdle(async () => {
       if (permissionStatus !== 'granted') {
         await cancelAllMuhuratReminders().catch(() => undefined);
         return;

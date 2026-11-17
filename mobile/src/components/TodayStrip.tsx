@@ -1,5 +1,5 @@
 import React from 'react';
-import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -37,6 +37,7 @@ import {
   knownPakshaWindow,
   persistSmaranSolves,
 } from '@/panchang/pitruSmaranSolves';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
@@ -145,7 +146,7 @@ export default function TodayStrip() {
   );
   React.useEffect(() => {
     let cancelled = false;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
     let handle: ReturnType<typeof setTimeout> | undefined;
     const year = today.getFullYear();
 
@@ -153,7 +154,7 @@ export default function TodayStrip() {
     // missing, and the fortnight's day table when today is inside it — waits for
     // an idle UI, yields while it solves, then persists whatever it had to solve.
     const solveWhenIdle = () => {
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         handle = setTimeout(async () => {
           if (cancelled) return;
           const cold = knownPakshaWindow(year) === null;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
-import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { useOptionalGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
 import { scriptTitleFont } from '@/utils/langType';
@@ -70,21 +70,18 @@ export default class StackLoadBoundary extends React.Component<
 // context read is guarded and falls back to fixed values.
 const SAFE_COLORS = { parchment: '#FBF5E6', ink: '#2B1D12', saffron: '#C8601A' };
 
+// Hooks may not sit inside try/catch (rules of hooks), so each read is one that
+// cannot throw: the language through its non-throwing accessor, the theme through
+// a context that always has a default value.
 function useSafeLang(): Lang {
-  try {
-    return useGitaLanguage().lang;
-  } catch {
-    return 'hi';
-  }
+  return useOptionalGitaLanguage()?.lang ?? 'hi';
 }
 
 function useSafeColors(): { parchment: string; ink: string; saffron: string } {
-  try {
-    const { colors } = useTheme();
-    return { parchment: colors.parchment, ink: colors.ink, saffron: colors.saffron };
-  } catch {
-    return SAFE_COLORS;
-  }
+  const colors = useTheme()?.colors;
+  return colors
+    ? { parchment: colors.parchment, ink: colors.ink, saffron: colors.saffron }
+    : SAFE_COLORS;
 }
 
 function StackLoadFallback({

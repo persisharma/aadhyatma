@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  InteractionManager,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -44,6 +43,7 @@ import {
   scriptBodyFont,
   scriptTitleFont,
 } from '@/utils/langType';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'Gochar'>;
 
@@ -105,7 +105,7 @@ export default function GocharScreen({ navigation }: Props) {
   useEffect(() => {
     if (!chart) return undefined;
     let cancelled = false;
-    const interaction = InteractionManager.runAfterInteractions(() => {
+    const interaction = runWhenIdle(() => {
       setTimeout(() => {
         if (cancelled) return;
         setSadeSati(computeSadeSati(chart, today));

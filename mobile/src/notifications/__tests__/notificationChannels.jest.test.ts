@@ -24,7 +24,7 @@ jest.mock('expo-notifications', () => ({
   setNotificationChannelAsync: jest.fn(),
   deleteNotificationChannelAsync: jest.fn(),
   SchedulableTriggerInputTypes: { DATE: 'date' },
-  AndroidImportance: { DEFAULT: 3 },
+  AndroidImportance: { DEFAULT: 3, HIGH: 4 },
 }));
 jest.mock('@react-native-async-storage/async-storage', () => ({
   __esModule: true,
@@ -61,6 +61,18 @@ describe('per-family channels', () => {
     const ids = FAMILIES.map((f) => FAMILY_CHANNEL_IDS[f]);
     expect(new Set(ids).size).toBe(FAMILIES.length);
     expect(ids).not.toContain(LEGACY_SHARED_CHANNEL_ID);
+  });
+
+  test('a new channel is as prominent as the fallback channel these reminders used', async () => {
+    // Until now the five families had no channel of their own and were posted on
+    // expo's fallback channel: IMPORTANCE_HIGH, vibrating, badged. Importance is
+    // pinned at creation, so a quieter channel here would silently turn every
+    // reminder from a heads-up banner into a tray-only notice.
+    for (const family of FAMILIES) await ensureFamilyChannel(family, 'hi');
+    expect(mockSetChannel).toHaveBeenCalledTimes(FAMILIES.length);
+    for (const [, options] of mockSetChannel.mock.calls) {
+      expect(options).toMatchObject({ importance: 4, enableVibrate: true, showBadge: true, sound: 'default' });
+    }
   });
 
   test('names and descriptions follow the reading language; a language change renames in place', async () => {

@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { InteractionManager } from 'react-native';
 import {
   getCachedObservancesForDate,
   getObservancesForDate,
@@ -27,6 +26,7 @@ import type {
   ResolvedFestival,
   ResolvedObservance,
 } from './types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 export type UsePanchangResult = {
   today: PanchangData;
@@ -189,7 +189,7 @@ export function useObservancesForDate(
       setObservances([]);
     }
     let handle: ReturnType<typeof setTimeout> | undefined;
-    const interaction = InteractionManager.runAfterInteractions(() => {
+    const interaction = runWhenIdle(() => {
       handle = setTimeout(() => {
         const result = getObservancesForDate(selected, calendarSystem, location, lenses);
         if (!cancelled) setObservances(result);

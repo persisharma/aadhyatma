@@ -7,7 +7,9 @@ test('startup coordinator keeps planner and Panchang graph behind a dynamic boun
   const source = fs.readFileSync(path.join(process.cwd(), 'src/widgets/WidgetCoordinator.tsx'), 'utf8');
   assert.doesNotMatch(source, /^import .*planPayload/m);
   assert.match(source, /await import\('\.\/planPayload'\)/);
-  assert.match(source, /InteractionManager\.runAfterInteractions/);
+  // Deferred behind the idle queue — through the one helper that wraps
+  // `InteractionManager` (`utils/runWhenIdle`, see `runWhenIdleOnly.test.ts`).
+  assert.match(source, /runWhenIdle\(/);
   assert.match(source, /generation !== generationRef\.current/);
   assert.match(source, /deviceTimeZone/);
 });

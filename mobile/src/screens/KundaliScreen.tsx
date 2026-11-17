@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
-  InteractionManager,
   Keyboard,
   Modal,
   Pressable,
@@ -78,6 +77,7 @@ import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'Kundali'>;
 
@@ -1492,7 +1492,7 @@ function CityPicker({
   // resolves instantly; they stay off the launch path either way (lazy requires).
   useEffect(() => {
     if (!visible) return;
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       warmPincodeTable();
       warmPlaceIndex();
     });

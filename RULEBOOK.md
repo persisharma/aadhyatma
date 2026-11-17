@@ -1300,6 +1300,8 @@ A vastu entry is **source-reviewed classical convention with its stated reason**
 
 ## 23. Observance day selection (vyapini) — which civil day a rule falls on
 
+> **Civil date and clock — India's, never the device's (Nov 2026).** A `Date` in the Panchang code is either a LABEL (`new Date(y, m, d)`, naming a civil date) or an INSTANT (sunrise, a tithi end, "now"). Never read an instant's `getDate()`/`getHours()`, truncate it with a `startOfLocalDay`, or pass it where a label is expected: use `civilDateOf`, `civilFieldsOf`, `isOnCivilDay`, `civilDayStart` and `formatClock` (`mobile/src/panchang/civilTime.ts`). "Today" is `civilToday()` / `useCivilToday()`. The engine's default `civilTimeZone` is India, not the device zone. `deviceTimeZone.test.ts` runs the engine, a live observance year, the Pitru fortnight and the formatters under five device zones and fails on any difference; a new matcher or formatter that reads instants joins its probe. A change here is an engine change: bump `PANCHANG_DAY_CACHE_VERSION` and `CACHE_VERSION` (§17).
+
 A lunar rule names a **tithi**, not a date. The civil day it lands on depends on which instant of that day the tithi must cover — the vyapini convention. `ObservanceRule.dayRule` (`panchang/types.ts`) declares it; the matcher lives in `festivalEngine.ts` and nowhere else.
 
 1. **`udaya` is the default and stays implicit.** A rule with no `dayRule` matches the tithi running at **sunrise** — correct for the large majority (Ekadashi, Amavasya, Navratri, most jayantis), and the convention the whole Panchang tab labels days by. Do not add `dayRule: 'udaya'` to a rule; absence *is* the declaration.

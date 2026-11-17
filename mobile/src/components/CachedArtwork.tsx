@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Image, InteractionManager, StyleSheet, View, type ImageResizeMode, type ImageStyle, type StyleProp, type ViewStyle } from 'react-native';
+import { Image, StyleSheet, View, type ImageResizeMode, type ImageStyle, type StyleProp, type ViewStyle } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import { bundledReadingFallback } from '@/data/backgroundAsset';
 import { artworkRequest, type ArtworkImage } from '@/data/artworkAsset';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
 import { ArtworkCaptureContext } from './ArtworkCaptureContext';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 // Some embedded/test surfaces expose navigation hooks without a navigator context.
 const OptionalNavigationContext = NavigationContext ?? React.createContext<undefined>(undefined);
@@ -59,7 +60,7 @@ export default function CachedArtwork({ source, style, resizeMode = 'cover', fal
     if (!request) return;
     let active = true;
     let unsubscribe: (() => void) | undefined;
-    let scheduled: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let scheduled: IdleTask | undefined;
     const stop = () => {
       active = false;
       scheduled?.cancel();
@@ -70,7 +71,7 @@ export default function CachedArtwork({ source, style, resizeMode = 'cover', fal
     const start = () => {
       if (scheduled || unsubscribe) return;
       active = true;
-      scheduled = InteractionManager.runAfterInteractions(() => {
+      scheduled = runWhenIdle(() => {
         scheduled = undefined;
         if (!active) return;
         unsubscribe = subscribeBackgroundAsset(request, local => {

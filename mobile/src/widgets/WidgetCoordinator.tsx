@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AppState, InteractionManager } from 'react-native';
+import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -9,6 +9,7 @@ import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { isValidIanaTimeZone, stableWidgetPayloadKey } from './contract';
 import { writeWidgetPayload } from './native';
 import { launchMarkOnce } from '@/utils/launchTrace';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const LAST_PLAN_KEY = '@vedansh/widget:last-plan-key-v1';
 const THROTTLE_MS = 30_000;
@@ -45,7 +46,7 @@ export default function WidgetCoordinator() {
       if (timer) clearTimeout(timer);
       const delay = Math.max(0, THROTTLE_MS - (Date.now() - lastRunAt.current));
       timer = setTimeout(() => {
-        InteractionManager.runAfterInteractions(async () => {
+        runWhenIdle(async () => {
           if (cancelled) return;
           inFlight = true;
           try {

@@ -16,9 +16,12 @@ const flush = () => act(async () => { await Promise.resolve(); await Promise.res
 
 let state: CachedAssetState;
 let plain: string | null = null;
-function Probe({ request, simple = false }: { request: CachedAssetRequest | null; simple?: boolean }) {
-  if (simple) plain = useCachedAsset(request);
-  else state = useCachedAssetState(request);
+function Probe({ request }: { request: CachedAssetRequest | null }) {
+  state = useCachedAssetState(request);
+  return null;
+}
+function SimpleProbe({ request }: { request: CachedAssetRequest | null }) {
+  plain = useCachedAsset(request);
   return null;
 }
 function mount(request: CachedAssetRequest | null) {
@@ -40,7 +43,7 @@ describe('useCachedAsset', () => {
 
   it('the plain hook still returns just the uri', async () => {
     mockResolve.mockResolvedValue('file:///a.webp');
-    act(() => { TestRenderer.create(<Probe request={req('a')} simple />); });
+    act(() => { TestRenderer.create(<SimpleProbe request={req('a')} />); });
     await flush();
     expect(plain).toBe('file:///a.webp');
   });

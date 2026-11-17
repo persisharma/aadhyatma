@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { syncPushToken } from '@/notifications/pushToken';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Headless: registers this install's device id on open, and attaches the Expo
@@ -62,7 +63,7 @@ export default function PushTokenRegistrar() {
 
   useEffect(() => {
     let cancelled = false;
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       if (cancelled) return;
       syncPushToken().catch(() => undefined);
     });

@@ -7,6 +7,13 @@
  * the user's settings) with its name and description in the reading language.
  * Festive, return, Pitru and Janma already own channels and are not touched here.
  *
+ * WHICH channel they shared: none of the five ever passed a `channelId`, so they
+ * were posted on expo-notifications' own fallback channel
+ * (`expo_notifications_fallback_notification_channel`, IMPORTANCE_HIGH, vibrate,
+ * badge — `BaseNotificationBuilder.kt`). The `default` channel created at boot
+ * was never used. The new channels therefore copy the FALLBACK's behaviour, not
+ * `default`'s: a reminder that arrived as a heads-up banner still does.
+ *
  * Migration rules:
  *   - Re-arming moves pending notifications: `armNotificationFamily` schedules
  *     every slot on the first arm of each process, and scheduling a pending
@@ -97,7 +104,12 @@ export async function ensureFamilyChannel(
     await Notifications.setNotificationChannelAsync(id, {
       name: contentByLang(lang, c.nameHi, c.nameEn),
       description: contentByLang(lang, c.descHi, c.descEn),
-      importance: Notifications.AndroidImportance.DEFAULT,
+      // Pinned at creation, so it must match what these reminders had until now
+      // (see the header): HIGH, vibrating, badged. The reader can lower it per
+      // family in system settings — which is the point of separate channels.
+      importance: Notifications.AndroidImportance.HIGH,
+      enableVibrate: true,
+      showBadge: true,
       sound: 'default',
       lightColor: '#B8621B',
     });

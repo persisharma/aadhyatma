@@ -196,11 +196,13 @@ async function readNativeArmed(): Promise<string[] | null> {
   }
 }
 
-async function writeNativeArmed(ids: Iterable<string>): Promise<void> {
+/** Resolves false when the record could not be written. */
+async function writeNativeArmed(ids: Iterable<string>): Promise<boolean> {
   try {
     await AsyncStorage.setItem(NATIVE_ARMED_KEY, JSON.stringify([...new Set(ids)]));
+    return true;
   } catch {
-    /* A missed write only makes the next reconcile treat the record as stale. */
+    return false;
   }
 }
 
@@ -259,7 +261,20 @@ export async function scheduleNativeAlarmsForDay(
     }
   }
   const desired = new Set(jobs.map((j) => j.alarmId));
-  await writeNativeArmed([...(previous ?? []), ...desired]);
+  const recorded = await writeNativeArmed([...(previous ?? []), ...desired]);
+  if (!recorded && previous !== null) {
+    // The record could not be extended (storage full or unavailable), so it would
+    // no longer list everything about to be armed — and an alarm missing from it
+    // could never be cancelled after the user deletes it. Fall back to the old
+    // behaviour for this pass: clear natively, and drop the record so the next
+    // pass clears too.
+    await AsyncStorage.removeItem(NATIVE_ARMED_KEY).catch(() => undefined);
+    try {
+      await mod.cancelAll();
+    } catch {
+      /* ignore */
+    }
+  }
 
   // Alarms with several jobs (AlarmKit skip) count once, as before.
   const scheduledAlarmIds = new Set<string>();

@@ -113,6 +113,9 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 
 ## Gotchas
 
+- **A track that never loads no longer spins forever (Nov 2026 audit, UX-01).** `AudioPlayerContext` arms a 15 s stall timer on tap; on expiry buffering clears and `playbackNotice` is `loadFailed` (message + Retry in the mini-player and Now Playing); a late load still plays and clears it. `noAudio` covers a track with no source. Position lives in `AudioPositionContext` (`useAudioPosition`), so action-only consumers do not re-render twice a second; speed and repeat persist under `@vedansh/audio-prefs`. Customer copy must pass `userFacingImplementationCopy.test.ts` (no "internet/offline" wording).
+- **Downloads are verified before they are trusted** (`assetIntegrity.ts`): every manifest key is `sha256(bytes)[0:16]` (all 11 manifests, checked against the live CDN), files up to 4 MiB are hashed natively with expo-crypto, larger ones only need to be non-empty. An empty cached file is no longer a hit.
+
 - **The app-wide player is created on first use, never at launch (Nov 2026 ANR fix).** `AudioPlayerProvider` holds no player until `playTrack`/`togglePlay`/`toggleLoop` call `ensurePlayer()`. On Android, expo-audio's constructor builds ExoPlayer on the main thread (the JS thread blocks on it via `runBlocking`), and `sendPlayerUpdate` emits status from `Dispatchers.Main`. That is the `JSTypeConverter` frame in Play's launch ANR clusters. `stop()`, `seekTo` and `setRate` never create a player, because the arbiter calls `stop()` whenever read-aloud or japam starts. The status listener is attached inside `ensurePlayer()`, synchronously before `replace()`, because a cached file can report loaded before an effect would subscribe. `ensureBackgroundAudioMode()` moved there too.
 
 - **Never substitute a voice across languages, and never let the engine do it for you.** This is

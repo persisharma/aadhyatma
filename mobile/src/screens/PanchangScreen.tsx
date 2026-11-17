@@ -18,7 +18,7 @@ import CelestialGlyph from '@/components/CelestialGlyph';
 import PanchangDaySurface from '@/components/PanchangDaySurface';
 import PanchangNextDayCard from '@/components/PanchangNextDayCard';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -109,6 +109,7 @@ import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
 import { birthCity } from '@/panchang/birthProfiles';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -253,7 +254,7 @@ export default function PanchangScreen({ route }: Props) {
   // so for most users this effect is a single read that changes no pixel.
   useEffect(() => {
     let cancelled = false;
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       void seedFromLocationOnce({
         cityId: location.cityId,
         isTehsil: getCityById(location.cityId)?.districtEn != null,

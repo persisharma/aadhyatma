@@ -1577,3 +1577,8 @@ ReaderControlRow measures centred and trailing controls, stacking playback when 
 ## [2026-11-17] ingest | A5 Radha Chalisa
 
 Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.
+
+## [2026-11-18] ingest | Mobile audit fixes (OTA set)
+
+Fixes from the 17 Nov 2026 mobile audit that need no native build: Panchang dates and clock times are India's on any device zone (`civilTime.ts`, cache versions bumped), "today" rolls over at midnight and on foreground, a root and per-tab error boundary, reminder copy in the reading language, an iOS pending-notification budget, per-family Android channels, in-place Japam alarm re-arm, audio load-failure notice, verified downloads, coalesced activity writes, a 250 km GPS snap limit, and a single `runWhenIdle` wrapper in front of `InteractionManager`. Subsystem gotchas updated in panchang, notifications, japam-alarms, audio and routine. Native and device checks are pending; see the PR.
+

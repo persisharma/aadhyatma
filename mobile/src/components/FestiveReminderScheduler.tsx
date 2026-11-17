@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { followedVratReminderInputs } from '@/notifications/followedVratInputs';
@@ -19,6 +19,7 @@ import {
   cancelAllPitruPakshaReminders,
   schedulePitruPakshaReminders,
 } from '@/notifications/pitruPakshaScheduler';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /** Occurrences resolved per rule. Annual festivals need one; the second covers an
  *  adhik-month year that can place the same rule twice inside the window. */
@@ -75,7 +76,7 @@ export default function FestiveReminderScheduler() {
       };
     }
 
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);

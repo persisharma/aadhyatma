@@ -6,8 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setItemWithRetry } from '@/utils/persistWithRetry';
 import * as Location from 'expo-location';
 import {
   DEFAULT_LOCATION,
@@ -31,6 +31,7 @@ import {
   peekPanchangPrefs,
 } from '@/panchang/panchangPrefs';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 // Location the whole panchang computes for. Any future location-sensitive feature
 // (e.g. Brahma-Muhurta reminders) must read this context, not its own geolocation.
@@ -90,7 +91,7 @@ function warmInBackground(location: PanchangLocation) {
   // Defer off the interaction path so the picker can dismiss and the new location's
   // sunrise/tithi can repaint first — the (now frame-budgeted, but still heavy)
   // observance scan must never compete with the city-switch transition.
-  InteractionManager.runAfterInteractions(() => {
+  runWhenIdle(() => {
     activeCalendarSystem()
       .then((system) => warmObservanceCache(location, system))
       .catch(() => undefined);
@@ -157,7 +158,7 @@ export function PanchangLocationProvider({
         // needs applying — and only a real choice needs its observance year warmed.
         if (stored.cityId === UJJAIN_CITY_ID) return;
         setLocation(stored);
-        InteractionManager.runAfterInteractions(() => {
+        runWhenIdle(() => {
           if (cancelled) return;
           warmTimer = setTimeout(() => {
             if (cancelled) return;
@@ -188,9 +189,9 @@ export function PanchangLocationProvider({
 
   const applyLocation = useCallback((next: PanchangLocation) => {
     setLocation(next);
-    AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(next)).catch(
-      () => undefined,
-    );
+    // One retry, then a visible notice: a swallowed failure showed the new place
+    // and silently went back to the old one on the next launch.
+    void setItemWithRetry(LOCATION_STORAGE_KEY, JSON.stringify(next));
     warmInBackground(next);
   }, []);
 

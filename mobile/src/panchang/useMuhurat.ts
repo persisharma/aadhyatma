@@ -26,7 +26,6 @@
  */
 import { useEffect, useMemo, useState } from 'react';
 import { isOnCivilDay } from './civilTime';
-import { InteractionManager } from 'react-native';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated } from '@/panchang/usePanchang';
 import { useMinuteTick } from '@/utils/useMinuteTick';
@@ -47,6 +46,7 @@ import {
   type KaalWindow,
   type MuhuratDay,
 } from './muhurat';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 export type UseMuhuratResult = {
   /** null while the (deferred) solve is in flight or the day is invalid. */
@@ -191,7 +191,7 @@ export function useMuhurat(
     if (!scopeSettled) return;
 
     let cancelled = false;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
     let handle: ReturnType<typeof setTimeout> | undefined;
     let release: (() => void) | undefined;
 
@@ -207,7 +207,7 @@ export function useMuhurat(
           return;
         }
         release = resolve;
-        interaction = InteractionManager.runAfterInteractions(() => {
+        interaction = runWhenIdle(() => {
           handle = setTimeout(() => {
             release = undefined;
             resolve();

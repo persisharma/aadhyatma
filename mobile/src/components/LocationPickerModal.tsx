@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  InteractionManager,
   Linking,
   Modal,
   Pressable,
@@ -34,6 +33,7 @@ import {
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const DEVANAGARI = /[\u0900-\u097F]/;
 
@@ -73,7 +73,7 @@ export default function LocationPickerModal({ visible, onClose }: {
   // name typed resolves instantly instead of paying for the load mid-keystroke.
   useEffect(() => {
     if (!visible) return;
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       warmPincodeTable();
       warmPlaceIndex();
     });

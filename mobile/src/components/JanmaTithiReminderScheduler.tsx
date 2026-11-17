@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { personLabel } from '@/components/PersonChips';
@@ -12,6 +12,7 @@ import {
   scheduleJanmaTithiReminders,
 } from '@/notifications/janmaTithiScheduler';
 import type { JanmaTithiReminderInput } from '@/notifications/janmaTithiReminderPure';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Headless जन्म तिथि reminder re-arm (PRD-29 §3.5). Only explicitly opted-in
@@ -46,7 +47,7 @@ export default function JanmaTithiReminderScheduler() {
       cancelAllJanmaTithiReminders().catch(() => undefined);
       return () => { cancelled = true; };
     }
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);

@@ -161,6 +161,27 @@ describe('scheduleNativeAlarmsForDay — recurrence passthrough', () => {
 });
 
 describe('scheduleNativeAlarmsForDay — re-arms in place (CRASH-03)', () => {
+  test('when the armed-id record cannot be written, it clears natively as it always did', async () => {
+    // The record is how a later run knows what to cancel. If it cannot be
+    // extended, an alarm armed now would be missing from it and could never be
+    // cancelled after the user deletes it — so this pass must not rely on it.
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    expect(cancelAll).toHaveBeenCalledTimes(1); // first run on this version
+
+    // Both record writes of this pass fail (before scheduling, and after).
+    (AsyncStorage.setItem as jest.Mock)
+      .mockRejectedValueOnce(new Error('disk full'))
+      .mockRejectedValueOnce(new Error('disk full'));
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya'), alarm('a2', 'gayatri')]);
+    expect(cancelAll).toHaveBeenCalledTimes(2);
+    expect(scheduleAlarm).toHaveBeenCalledTimes(3); // a1, then a1 + a2 after the clear
+
+    // The stale record is gone, so the next run starts clean again instead of
+    // trusting a list that omits a2.
+    await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
+    expect(cancelAll).toHaveBeenCalledTimes(3);
+  });
+
   test('first run clears native state once; later runs never cancelAll', async () => {
     await scheduleNativeAlarmsForDay([alarm('a1', 'om-namah-shivaya')]);
     expect(cancelAll).toHaveBeenCalledTimes(1);

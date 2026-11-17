@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  InteractionManager,
   Platform,
   Pressable,
   StyleSheet,
@@ -26,6 +25,7 @@ import {
   CARD_HEIGHT_EST,
   REMEASURE_POLL_MS,
 } from '@/components/tour/placement';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * In-context first-launch feature tour. Renders a translucent full-window
@@ -146,7 +146,7 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
         else raf = requestAnimationFrame(measure);
       });
     };
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       if (cancelled || !navigationRef.isReady()) return;
       navigationRef.dispatch(
         CommonActions.navigate({
