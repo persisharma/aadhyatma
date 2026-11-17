@@ -40,7 +40,7 @@ export function CachedArtwork({source,style,imageStyle,resizeMode='cover',fallba
  return source?.uri ? <Image source={source} style={[style,imageStyle]} resizeMode={resizeMode}/> : <View style={style}>{fallback}</View>;
 }
 
-// Only native services are adapted; ChalisaReaderScreen and its visual children are production imports.
+// Only native services are adapted; AartiReaderScreen and its visual children are production imports.
 export const useAudioPlayerContext=()=>({playTrack:()=>{},openNowPlaying:()=>{}});
 export const useReadingProgress=()=>({setProgress:()=>{}});
 export const useReadDwell=()=>{};

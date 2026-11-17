@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { aartiIndexById, getAarti } from '@/data/aarti';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
@@ -63,7 +64,7 @@ test('B1 retains the dated complete edition and every legacy aarti position', ()
  expect(data.verses[4].lines[0]).toContain('वैश्य');
  expect(data.verses[6].lines[0]).toContain('ग्वाल');
  expect(data.verses[7].lines[0]).toContain('सवायो');
- expect(require('node:crypto').createHash('sha256').update(data.verses.map(v=>v.lines.join('\n')).join('\n')).digest('hex')).toBe('dd4ec358a1623c5db622d348c60f97565386e1eafa12632a89da6a22e52beb1f');
+ expect(createHash('sha256').update(data.verses.map(v=>v.lines.join('\n')).join('\n')).digest('hex')).toBe('dd4ec358a1623c5db622d348c60f97565386e1eafa12632a89da6a22e52beb1f');
  expect(getSourceBackground('satyanarayan-aarti')).toBe(getSourceBackground('om-jai-jagdish'));
  const oldIds = ['om-jai-jagdish','hanuman-aarti','jai-ganesh-deva','om-jai-shiv-omkara','jai-ambe-gauri','aarti-kunj-bihari','saraswati-aarti','gayatri-aarti','khatu-shyam-aarti','om-jai-lakshmi-mata','jay-adhya-shakti','shani-aarti','dattatreya-aarti','om-jai-gange-mata','ambe-tu-hai-jagdambe-kali','kubera-aarti','santoshi-mata-aarti','ahoi-mata-aarti','vaishno-devi-aarti','ekadashi-mata-aarti','tulsi-aarti','shakambhari-aarti'];
  oldIds.forEach((id,index)=>expect(canonicalSourceId(`aarti-${index}`)).toBe(id));

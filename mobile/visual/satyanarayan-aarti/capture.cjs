@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
     for (const lang of ['hi', 'en', 'gu', 'kn']) {
       for (const width of [320, 390]) {
       for (const size of ['M', 'L']) {
-        for (const page of [0, 4, 8]) {
+        for (const page of [0, 2, 4, 8]) {
           const tab = await browser.newPage({ viewport: { width, height: 844 }, deviceScaleFactor: 1 });
           const errors = [];
           tab.on('pageerror', e => errors.push(e.message));
