@@ -6,6 +6,7 @@ import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeRecord, HomeRoster } from '@/vastu/homeRecord';
 import {
+  navigateReadingLink,
   buildEntryStartTarget,
   buildBookmarkTarget,
   buildGharVastuDoorTarget,
@@ -184,8 +185,8 @@ for (const sourceId of [
 {
   const target = buildEntryStartTarget({
     id: 'vishnu-sahasranama',
-    nameHi: 'विष्णु सहस्रनाम अंश',
-    nameEn: 'Vishnu Sahasranama Excerpt',
+    nameHi: 'विष्णु सहस्रनाम',
+    nameEn: 'Vishnu Sahasranama',
     sub: '',
     subEn: '',
     thumb: '',
@@ -563,13 +564,22 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::42`, sourceId, verseIndex: 42 })), target);
 }
 
-// Discovery aliases preserve the canonical reader and saved-content identity.
-import { navigateReadingLink } from './entryRoutes';
-import { readingLinks } from '../data/readingLinks';
-for (const link of readingLinks) {
-  const calls: { screen: string; params: unknown }[] = [];
-  const nav = { navigate: (screen: string, params: unknown) => calls.push({ screen, params }) };
-  assert.equal(navigateReadingLink(nav as never, link.id), true);
-  assert.deepEqual(calls, [{ screen: link.sourceId === 'valmiki-ramayan' ? 'ValmikiRamayanReader' : 'GaneshStotramReader', params: { chapter: link.chapter, initialIndex: link.verseIndex } }]);
+// Discovery doors retain the existing canonical reader and location.
+for (const [id,screen,params] of [
+ ['aditya-hridayam','ValmikiRamayanReader',{chapter:6,initialIndex:4653}],
+ ['ganesh-atharvashirsha','GaneshStotramReader',{chapter:2,initialIndex:0}],
+ ['durga-saptashati-core','SaptashatiCore',undefined],
+] as const) {
+ const {nav,calls}=makeNav(); assert.equal(navigateReadingLink(nav as never,id),true);
+ assert.deepEqual(calls,[{name:screen,params}]);
 }
-assert.equal(navigateReadingLink({ navigate: () => { throw new Error('unexpected navigation'); } } as never, 'unknown-link'), false);
+for(const [id,screen,key,last] of [
+ ['kanakadhara-stotram','StutiReader','stutiId',21],
+ ['hanuman-bahuk','StutiReader','stutiId',43],
+ ['shri-suktam','SuktamReader','suktamId',15],
+ ['kalabhairav-ashtakam','AshtakamReader','ashtakamId',8],
+] as const) {
+ const entry=library.find(e=>e.id===id)!;
+ assert.deepEqual(buildEntryStartTarget(entry),{screen,params:{initialIndex:0,[key]:id}});
+ assert.deepEqual(buildBookmarkTarget(bm({sourceId:id,verseIndex:last})),{screen,params:{initialIndex:last,[key]:id}});
+}

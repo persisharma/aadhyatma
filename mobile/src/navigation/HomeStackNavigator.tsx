@@ -90,6 +90,7 @@ const ValmikiRamayanReaderScreen = lazyScreen('ValmikiRamayanReader', 3, () => i
 const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/VidhiDetailScreen'));
 const VishnuSahasranamaChaptersScreen = lazyScreen('VishnuSahasranamaChapters', 3, () => import('@/screens/VishnuSahasranamaChaptersScreen'));
 const VishnuSahasranamaReaderScreen = lazyScreen('VishnuSahasranamaReader', 3, () => import('@/screens/VishnuSahasranamaReaderScreen'));
+const SaptashatiCoreScreen = lazyScreen('SaptashatiCore', 3, () => import('@/screens/SaptashatiCoreScreen'));
 const KathaLibraryScreen = lazyScreen('KathaLibrary', 3, () => import('@/screens/KathaLibraryScreen'));
 const VratKathaReaderScreen = lazyScreen('VratKathaReader', 3, () => import('@/screens/VratKathaReaderScreen'));
 
@@ -281,6 +282,7 @@ export default function HomeStackNavigator() {
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="SaptashatiCore" component={SaptashatiCoreScreen} />
       <Stack.Screen name="KathaLibrary" component={KathaLibraryScreen} />
       <Stack.Screen
         name="VratKathaReader"

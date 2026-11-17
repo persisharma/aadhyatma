@@ -29,7 +29,12 @@ export type StutiId =
   | 'durga-stuti-arjuna'
   | 'kubera-stotram'
   | 'navagraha-stotram'
-  | 'parshuram-stotram';
+  | 'parshuram-stotram'
+  | 'hanuman-bahuk'
+  | 'durga-argala-stotram'
+  | 'durga-kilak-stotram'
+  | 'durga-saptashati-chapter-1'
+  | 'kanakadhara-stotram';
 
 export type StutiPayload = {
   id: StutiId;
@@ -39,7 +44,7 @@ export type StutiPayload = {
   verses: readonly StutiVerse[];
 };
 
-const registry: Record<Exclude<StutiId, DohaId>, StutiPayload> = {
+const registry: Record<Exclude<StutiId, DohaId | 'durga-saptashati-chapter-1' | 'hanuman-bahuk' | 'durga-argala-stotram' | 'durga-kilak-stotram' | 'kanakadhara-stotram'>, StutiPayload> = {
   'parshuram-stotram': { id: 'parshuram-stotram', titleHi: parshuramStotram.titleHi, titleEn: parshuramStotram.titleEn, deity: parshuramStotram.deity, verses: parshuramStotram.verses },
   'krishna-stuti': {
     id: 'krishna-stuti',
@@ -78,11 +83,21 @@ export const stutiIds: readonly StutiId[] = [
   'navagraha-stotram',
   'parshuram-stotram',
   ...dohaIds,
+  'hanuman-bahuk',
+  'durga-argala-stotram',
+  'durga-kilak-stotram',
+  'kanakadhara-stotram',
+  'durga-saptashati-chapter-1',
 ];
 
 export function getStuti(id: string | undefined): StutiPayload {
+  if (id === 'durga-saptashati-chapter-1') return require('./durga-saptashati-chapter-1.json') as StutiPayload;
+  if (id === 'hanuman-bahuk') return require('./hanuman-bahuk.json') as StutiPayload;
+  if (id === 'durga-argala-stotram') return require('./durga-argala-stotram.json') as StutiPayload;
+  if (id === 'durga-kilak-stotram') return require('./durga-kilak-stotram.json') as StutiPayload;
+  if (id === 'kanakadhara-stotram') return require('./kanakadhara-stotram.json') as StutiPayload;
   if (isDohaId(id)) return getDoha(id);
-  if (id && id in registry) return registry[id as Exclude<StutiId, DohaId>];
+  if (id && id in registry) return registry[id as Exclude<StutiId, DohaId | 'durga-saptashati-chapter-1' | 'hanuman-bahuk' | 'durga-argala-stotram' | 'durga-kilak-stotram' | 'kanakadhara-stotram'>];
   return registry['krishna-stuti'];
 }
 

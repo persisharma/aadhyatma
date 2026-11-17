@@ -49,7 +49,7 @@ const cases = [
   },
   {
     id: 'vishnu-sahasranama',
-    expectedTotal: 79,
+    expectedTotal: 158,
     load: async () => {
       const mod = await import('./vishnu-sahasranama');
       return {

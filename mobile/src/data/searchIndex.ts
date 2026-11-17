@@ -14,6 +14,7 @@
 
 import { library, type LibraryEntry } from './texts';
 import { readingLinks } from './readingLinks';
+import { getKathaLibrary } from '../panchang/vratCatalog';
 import { deities } from './deities';
 import { getChalisa, type ChalisaId } from './chalisaRegistry';
 import { getAshtakam, ashtakamIds, type AshtakamId } from './ashtakam';
@@ -303,7 +304,13 @@ function buildSectionEntries(): readonly SearchSectionEntry[] {
   // Vidhi rows ride the section group (PRD-19 Phase 2B): a vidhi is a
   // procedure, not a text, so it contributes a single openable row (no verse
   // entries). SearchScreen routes vidhi sourceIds to VidhiDetail.
-  return [...library.map((entry) => sectionEntry(entry)), ...VIDHI_ENTRIES.map(vidhiSectionEntry),
+  return [...library.filter(entry => !entry.hidden).map((entry) => sectionEntry(entry)), ...VIDHI_ENTRIES.map(vidhiSectionEntry),
+    ...getKathaLibrary().map((katha): SearchSectionEntry => {
+      const fieldsNorm = [katha.titleHi, katha.titleEn, 'कथा', 'Katha story'].map(normalize);
+      return { type: 'section', id: `section:katha:${katha.id}`, sourceId: `katha:${katha.id}`,
+        displayHi: katha.titleHi, displayEn: katha.titleEn, subtitleHi: 'कथा संग्रह',
+        thumb: 'क', norm: fieldsNorm.join(' '), fieldsNorm };
+    }),
     ...readingLinks.map((link): SearchSectionEntry => {
       const fieldsNorm = [link.titleHi, link.titleEn, link.detailHi, link.detailEn].map(normalize);
       return { type: 'section', id: `section:${link.id}`, sourceId: link.id,

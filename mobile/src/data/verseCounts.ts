@@ -6,6 +6,14 @@
 // `src/data/__tests__/verseCounts.test.ts`, so a corpus edit that changes a
 // count fails the build until this file is regenerated.
 
+export const durgaDeviKavachamTotal = 56 as const;
+export const durgaSaptashatiChapterOneTotal = 104 as const;
+export const durgaKilakTotal = 14 as const;
+export const durgaArgalaTotal = 27 as const;
+export const hanumanBahukTotal = 44 as const;
+export const kalabhairavAshtakamTotal = 9 as const;
+export const shriSuktamTotal = 16 as const;
+export const kanakadharaStotramTotal = 22 as const;
 export const kabirBhaktiDoheTotal = 4 as const;
 export const rahimBhaktiDoheTotal = 4 as const;
 export const aartiVerseCounts = {"om-jai-jagdish":9,"hanuman-aarti":14,"jai-ganesh-deva":7,"om-jai-shiv-omkara":12,"jai-ambe-gauri":14,"aarti-kunj-bihari":6,"saraswati-aarti":8,"gayatri-aarti":12,"khatu-shyam-aarti":8,"om-jai-lakshmi-mata":8,"jay-adhya-shakti":21,"shani-aarti":5,"dattatreya-aarti":5,"om-jai-gange-mata":5,"ambe-tu-hai-jagdambe-kali":5,"kubera-aarti":8,"santoshi-mata-aarti":12,"ahoi-mata-aarti":8,"vaishno-devi-aarti":8,"ekadashi-mata-aarti":15,"tulsi-aarti":6,"shakambhari-aarti":5,"satyanarayan-aarti":9} as const;
@@ -65,4 +73,4 @@ export const sundarkandTotal = 354 as const;
 export const suryaAshtakamTotal = 8 as const;
 export const valmikiRamayanTotal = 23289 as const;
 export const vishnuChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":0,"totalVerses":41} as const;
-export const vishnuSahasranamaTotal = 79 as const;
+export const vishnuSahasranamaTotal = 158 as const;

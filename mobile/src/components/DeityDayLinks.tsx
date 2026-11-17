@@ -15,7 +15,7 @@ import { navigateToEntryStart } from '@/navigation/entryRoutes';
 
 export default function DeityDayLinks() {
   const todayKey = useTodayKey();
-  const day = new Date(todayKey).getDay();
+  const day = new Date(`${todayKey}T12:00:00`).getDay();
   const entries = React.useMemo(() => deityDayEntries(day), [day]);
   const deity = getDeityMeta(weekdayReadingDeities[day]);
   const { lang } = useGitaLanguage();

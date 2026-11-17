@@ -1,7 +1,7 @@
 {
   "chapter": 4,
-  "titleHi": "फलश्रुति",
-  "titleEn": "Phalashruti",
+  "titleHi": "फलश्रुति एवं समापन — चयन",
+  "titleEn": "Selected Phalashruti and Closing Prayers",
   "verseCount": 17,
   "verses": [
     {
@@ -10,14 +10,14 @@
       "number": 0,
       "sanskrit": [
         "॥ विष्णु सहस्रनाम ॥",
-        "फलश्रुति"
+        "फलश्रुति एवं समापन — चयन"
       ],
       "linesEn": [
         "Vishnu Sahasranama",
-        "Phalashruti (Fruits of Recitation)"
+        "Selected Phalashruti and Closing Prayers"
       ],
-      "meaningHi": "लाभ:\n\nफलश्रुति विष्णु सहस्रनाम का समापन भाग है — जिसमें सम्पूर्ण स्तोत्र के पाठ से प्राप्त होने वाले फलों का वर्णन है। इसके अनुसार जो मनुष्य नित्य सहस्रनाम का पाठ या श्रवण करता है, उसे इस लोक और परलोक में कोई अशुभ प्राप्त नहीं होता। सभी पाप नष्ट होते हैं, शत्रुओं पर विजय मिलती है, और अन्ततः मोक्ष प्राप्त होता है।\n\nकथा:\n\nभीष्म पितामह ने युधिष्ठिर को सहस्रनाम सुनाकर यह समापन भाग कहा। इस ऐप में यह फलश्रुति परम्परागत संदर्भ के लिए रखी गई है, जबकि मुख्य नामावली अभी नाम 1-287 तक ही उपलब्ध है।",
-      "meaningEn": "Benefits:\n\nThe Phalashruti is the concluding section of Vishnu Sahasranama — describing the fruits of reciting the complete stotram. According to it, the person who daily recites or listens to the Sahasranama shall never encounter any inauspiciousness in this world or the next. All sins are destroyed, victory over enemies is granted, and ultimately moksha is attained.\n\nStory:\n\nBhishma Pitamaha spoke this concluding section after reciting the Sahasranama to Yudhishthira. This app keeps the Phalashruti for traditional context, while the main name-list currently contains only names 1-287."
+      "meaningHi": "इस अध्याय में परम्परागत फलश्रुति और समापन-प्रार्थनाओं के चुने हुए पद हैं; यह सभी समापन-पदों का लगातार पूर्ण पाठ नहीं है। मुख्य अध्याय में 107 श्लोकों में सम्पूर्ण सहस्रनाम तथा उसके बाद रक्षा-प्रार्थना उपलब्ध है।\n\nफलश्रुति श्रद्धापूर्वक पाठ और श्रवण की महिमा बताती है। स्वास्थ्य, समृद्धि और निर्भयता सम्बन्धी पद भक्ति-परम्परा के आश्वासन हैं, किसी निश्चित सांसारिक परिणाम का वचन नहीं। अर्जुन, व्यास, पार्वती, शिव और ब्रह्मा से सम्बद्ध प्रार्थनाएँ अन्त में हैं।",
+      "meaningEn": "This chapter offers selected traditional verses on the fruits of recitation and selected closing prayers; it is not the complete continuous closing liturgy. The main chapter contains all thousand names in 107 verses, followed by a protection prayer.\n\nThe phalashruti praises attentive recitation and listening. Its language of health, prosperity and fearlessness expresses devotional assurance rather than a guaranteed worldly outcome. Prayers associated with Arjuna, Vyasa, Parvati, Shiva and Brahma follow."
     },
     {
       "id": "vs-4-1",
@@ -277,12 +277,14 @@
     }
   ],
   "source": {
-    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "baseText": "Vishnu Sahasranama: complete 107-verse thousand-name hymn, followed by the traditional protection stanza; accompanying invocation and closing selections are identified separately. Ancient Sanskrit with original Vedansh explanations for additions.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
-      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
-      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+      "https://www.drikpanchang.com/deities-namavali/gods/lord-vishnu/stotram/vishnu-sahasranama-stotram.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_dhyanam.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_phala.html"
     ],
-    "retrievedOn": "2026-05-30"
+    "retrievedOn": "2026-11-17"
   }
 }

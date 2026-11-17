@@ -685,7 +685,8 @@ assert.equal(libraryById.get('khatu-shyam-chalisa')?.sub, '40 चौपाई + 
 assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
 assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
 assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Excerpt/i);
-assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
+assert.doesNotMatch(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
+assert.match(libraryById.get('vishnu-sahasranama')?.subEn || '', /selected/i);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
 

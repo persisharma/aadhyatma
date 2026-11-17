@@ -1,3 +1,11 @@
+import durgaDeviKavacham from '../kavacham/durga-devi-kavacham.json';
+import durgaSaptashatiChapterOne from '../stuti/durga-saptashati-chapter-1.json';
+import durgaKilak from '../stuti/durga-kilak-stotram.json';
+import durgaArgala from '../stuti/durga-argala-stotram.json';
+import hanumanBahuk from '../stuti/hanuman-bahuk.json';
+import kanakadharaStotram from '../stuti/kanakadhara-stotram.json';
+import shriSuktam from '../suktam/shri-suktam.json';
+import kalabhairavAshtakam from '../ashtakam/kalabhairav-ashtakam.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../garud-puran';
 import { aartiIdByIndex, getAarti } from '../aarti';
 import assert from 'node:assert/strict';
@@ -57,6 +65,14 @@ test('every generated verse count still matches its corpus', () => {
   const pairs: readonly (readonly [string, unknown, unknown])[] = [
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
+  ['durgaArgalaTotal', durgaArgala.verses.length, generated.durgaArgalaTotal],
+  ['durgaKilakTotal', durgaKilak.verses.length, generated.durgaKilakTotal],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length, generated.durgaSaptashatiChapterOneTotal],
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length, generated.durgaDeviKavachamTotal],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length])), generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
@@ -135,8 +151,16 @@ test('every generated verse count still matches its corpus', () => {
 test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothing stale', () => {
   const exported = Object.keys(generated).sort();
   const expected = [
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
+  ['durgaArgalaTotal', durgaArgala.verses.length, generated.durgaArgalaTotal],
+  ['durgaKilakTotal', durgaKilak.verses.length, generated.durgaKilakTotal],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length, generated.durgaSaptashatiChapterOneTotal],
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length, generated.durgaDeviKavachamTotal],
   ['aartiVerseCounts', null, generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],

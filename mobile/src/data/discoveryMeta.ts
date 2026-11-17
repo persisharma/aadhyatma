@@ -117,12 +117,12 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     },
     source: `${SOURCE_BUNDLED} Rama Raksha Stotra source references in kavacham/rama-raksha-stotra.json.`,
   },
-  'durga-kavach': {
+  'durga-devi-kavacham': {
     purposes: ['protection', 'victory', 'courage'],
     bestDays: [2, 5],
     bestFestivals: ['navratri-start'],
     bestTime: 'sunrise',
-    source: `${SOURCE_BUNDLED} Durga Kavach source references in kavacham/durga-kavach.json.`,
+    source: `${SOURCE_BUNDLED} Durga Kavach source references in kavacham/durga-devi-kavacham.json.`,
   },
   'ganesha-kavacham': {
     purposes: ['protection', 'obstacles', 'auspicious-beginnings'],
@@ -131,6 +131,13 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     bestTime: 'sunrise',
     source: `${SOURCE_BUNDLED} Ganesha Kavacham source references in kavacham/ganesha-kavacham.json.`,
   },
+  'hanuman-bahuk': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/hanuman-bahuk.json; devotional reading, no guaranteed result.` },
+  'durga-argala-stotram': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-argala-stotram.json; devotional reading, no guaranteed result.` },
+  'durga-kilak-stotram': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-kilak-stotram.json; devotional reading, no guaranteed result.` },
+  'durga-saptashati-chapter-1': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-1.json; devotional reading, no guaranteed result.` },
+  'kanakadhara-stotram': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/kanakadhara-stotram.json; devotional reading, no guaranteed result.` },
+  'shri-suktam': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} suktam/shri-suktam.json; devotional reading, no guaranteed result.` },
+  'kalabhairav-ashtakam': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} ashtakam/kalabhairav-ashtakam.json; devotional reading, no guaranteed result.` },
   'ganesh-chalisa': {
     purposes: ['obstacles', 'auspicious-beginnings', 'prosperity'],
     bestDays: [3],

@@ -1,3 +1,4 @@
+import { getKathaLibrary } from '../../panchang/vratCatalog';
 import assert from 'node:assert/strict';
 
 import { deities } from '../deities';
@@ -64,7 +65,7 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
 {
   const activeCount = library.filter((e) => e.status === 'active' && !e.hidden)
     .length;
-  assert.equal(index.sections.length, library.length + VIDHI_ENTRIES.length + 3);
+  assert.equal(index.sections.length, library.filter(entry => !entry.hidden).length + VIDHI_ENTRIES.length + 4 + getKathaLibrary().length);
   assert.ok(activeCount > 0);
 }
 
@@ -224,7 +225,7 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   const res = runSearch('protection', index);
   const sectionIds = res.sections.map((h) => h.entry.sourceId);
   assert.ok(sectionIds.includes('rama-raksha-stotra'), 'protection should find Rama Raksha Stotra');
-  assert.ok(sectionIds.includes('durga-kavach'), 'protection should find Durga Kavach');
+  assert.ok(sectionIds.includes('durga-devi-kavacham'), 'protection should find Durga Kavach');
 }
 
 {

@@ -79,6 +79,14 @@ const FLAT_SOURCES: readonly FlatSource[] = [
   stuti('rahim-bhakti-dohe', verseCounts.rahimBhaktiDoheTotal),
 
   stuti('parshuram-stotram', verseCounts.parshuramStotramTotal),
+  kavacham('durga-devi-kavacham', verseCounts.durgaDeviKavachamTotal),
+  stuti('durga-saptashati-chapter-1', verseCounts.durgaSaptashatiChapterOneTotal),
+  stuti('kanakadhara-stotram', verseCounts.kanakadharaStotramTotal),
+  suktam('shri-suktam', verseCounts.shriSuktamTotal),
+  ashtakam('kalabhairav-ashtakam', verseCounts.kalabhairavAshtakamTotal),
+  stuti('hanuman-bahuk', verseCounts.hanumanBahukTotal),
+  stuti('durga-argala-stotram', verseCounts.durgaArgalaTotal),
+  stuti('durga-kilak-stotram', verseCounts.durgaKilakTotal),
 ];
 
 type LibraryLookup = {

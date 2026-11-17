@@ -131,3 +131,23 @@ describe.each(['kabir-bhakti-dohe', 'rahim-bhakti-dohe'])('%s in the shared read
   });
 });
 
+
+// New complete text: first and final units must survive language selection.
+describe.each(['kanakadhara-stotram', 'hanuman-bahuk', 'durga-argala-stotram', 'durga-kilak-stotram', 'durga-saptashati-chapter-1'])('%s', stutiId => {
+describe.each([0, -1])('new content unit %s', index => {
+  test.each(['hi', 'en', 'gu', 'kn'] as const)('renders complete content in %s', lang => {
+    const payload = getStuti(stutiId);
+    const position = index < 0 ? payload.verses.length - 1 : index;
+    let tree: TestRenderer.ReactTestRenderer;
+    act(() => { tree = createReader(<GitaLanguageProvider initialLang={lang}><ShareProvider>
+      <StutiReaderScreen navigation={navigation} route={{ ...route, params: { stutiId, initialIndex: position } }} />
+    </ShareProvider></GitaLanguageProvider>); });
+    const text = tree!.root.findAllByType(Text).map(node => node.props.children).flat(Infinity).join(' ');
+    const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+    expect(text).toContain(contentByLang(lang, payload.titleHi, payload.titleEn));
+    expect(text).toContain(contentByLang(lang, payload.verses[position].meaningHi, payload.verses[position].meaningEn));
+    for (const line of verseLinesByLang(lang, payload.verses[position].lines, payload.verses[position].linesEn)) expect(text).toContain(line);
+  });
+});
+
+});

@@ -1,5 +1,4 @@
 import ReadingLinks from '@/components/ReadingLinks';
-import { navigateReadingLink } from '@/navigation/entryRoutes';
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -19,7 +18,7 @@ import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useResumeSheetCoverage } from '@/components/useResumeSheetCoverage';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { navigateReadingLink, isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useTourTarget } from '@/components/tour/tourTargets';

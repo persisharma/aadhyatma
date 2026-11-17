@@ -1,26 +1,26 @@
 [
   {
     "chapter": 1,
-    "titleHi": "पूर्वपीठिका",
-    "titleEn": "Purva Pithika",
+    "titleHi": "पूर्वपीठिका — चयनित पाठ",
+    "titleEn": "Purva Pithika — Selected Invocation",
     "verseCount": 23
   },
   {
     "chapter": 2,
     "titleHi": "ध्यानम्",
     "titleEn": "Dhyanam",
-    "verseCount": 8
+    "verseCount": 9
   },
   {
     "chapter": 3,
-    "titleHi": "स्तोत्र मुख्य भाग (नाम 1-287)",
-    "titleEn": "Main Stotram (Names 1-287)",
-    "verseCount": 31
+    "titleHi": "मुख्य स्तोत्र — सम्पूर्ण 1000 नाम",
+    "titleEn": "Main Stotram — All 1000 Names",
+    "verseCount": 109
   },
   {
     "chapter": 4,
-    "titleHi": "फलश्रुति",
-    "titleEn": "Phalashruti",
+    "titleHi": "फलश्रुति एवं समापन — चयन",
+    "titleEn": "Selected Phalashruti and Closing Prayers",
     "verseCount": 17
   }
 ]

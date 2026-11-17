@@ -64,6 +64,14 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
+  'durga-devi-kavacham': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-1': backgroundImages.deity_durga_lion,
+  'durga-kilak-stotram': backgroundImages.deity_durga_lion,
+  'durga-argala-stotram': backgroundImages.deity_durga_lion,
+  'hanuman-bahuk': chalisaImages.hanuman_sea,
+  'kanakadhara-stotram': backgroundImages.deity_lakshmi,
+  'shri-suktam': backgroundImages.deity_lakshmi,
+  'kalabhairav-ashtakam': shivaStrotamImages.shiva,
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
   'garud-puran': garudPuranImages.cover,

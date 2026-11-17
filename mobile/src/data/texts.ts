@@ -10,6 +10,14 @@
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
 import {
+  durgaDeviKavachamTotal,
+  durgaSaptashatiChapterOneTotal,
+  durgaKilakTotal,
+  durgaArgalaTotal,
+  hanumanBahukTotal,
+  kalabhairavAshtakamTotal,
+  shriSuktamTotal,
+  kanakadharaStotramTotal,
   kabirBhaktiDoheTotal,
   rahimBhaktiDoheTotal,
   garudPuranTotal,
@@ -284,10 +292,10 @@ export const library: readonly LibraryEntry[] = [
   },
   {
     id: 'vishnu-sahasranama',
-    nameHi: 'विष्णु सहस्रनाम अंश',
-    nameEn: 'Vishnu Sahasranama Excerpt',
-    sub: `4 अनुभाग · ${vishnuSahasranamaTotal} चयनित पद`,
-    subEn: `4 sections · ${vishnuSahasranamaTotal} selected verses`,
+    nameHi: 'विष्णु सहस्रनाम',
+    nameEn: 'Vishnu Sahasranama',
+    sub: `पूर्ण सहस्रनाम · चयनित आरम्भ और समापन`,
+    subEn: `Complete thousand-name hymn · selected opening and closing`,
     thumb: 'वि',
     status: 'active',
     category: 'stotram',
@@ -1284,12 +1292,13 @@ export const library: readonly LibraryEntry[] = [
   },
   {
     id: 'durga-kavach',
-    nameHi: 'श्री दुर्गा कवच',
-    nameEn: 'Durga Kavach',
+    nameHi: 'दुर्गा कवच · पूर्व चयन',
+    nameEn: 'Durga Kavach · Previous Selection',
     sub: `${durgaKavachTotal} श्लोक · अर्थ सहित`,
     subEn: `${durgaKavachTotal} shlokas · with meaning`,
     thumb: 'दु',
     status: 'active',
+    hidden: true,
     category: 'kavacham',
     deities: ['durga'],
     verseCount: durgaKavachTotal,
@@ -1372,5 +1381,16 @@ export const library: readonly LibraryEntry[] = [
     deities: [],
     verseCount: rahimBhaktiDoheTotal,
   },
+
+  { id: 'kanakadhara-stotram', nameHi: 'कनकधारा स्तोत्रम्', nameEn: 'Kanakadhara Stotram', sub: '22 पाठांश · अर्थ सहित', subEn: '22 units · with meaning', thumb: 'क', status: 'active', category: 'stotram', deities: ['lakshmi'], verseCount: kanakadharaStotramTotal, addedInVersion: '1.5.7' },
+
+  { id: 'shri-suktam', nameHi: 'श्री सूक्तम्', nameEn: 'Shri Suktam', sub: '16 पाठांश · अर्थ सहित', subEn: '16 units · with meaning', thumb: 'श्री', status: 'active', category: 'suktam', deities: ['lakshmi'], verseCount: shriSuktamTotal, addedInVersion: '1.5.7' },
+
+  { id: 'kalabhairav-ashtakam', nameHi: 'कालभैरवाष्टकम्', nameEn: 'Kalabhairav Ashtakam', sub: '9 पाठांश · अर्थ सहित', subEn: '9 units · with meaning', thumb: 'क', status: 'active', category: 'ashtakam', deities: ['shiva'], verseCount: kalabhairavAshtakamTotal, addedInVersion: '1.5.7' },
+  { id: 'hanuman-bahuk', nameHi: 'श्री हनुमान बाहुक', nameEn: 'Hanuman Bahuk', sub: '44 पाठांश · अर्थ सहित', subEn: '44 units · with meaning', thumb: 'ह', status: 'active', category: 'stotram', deities: ['hanuman'], verseCount: hanumanBahukTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-argala-stotram', nameHi: 'अर्गला स्तोत्रम्', nameEn: 'Argala Stotram', sub: '27 पाठांश · अर्थ सहित', subEn: '27 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaArgalaTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-kilak-stotram', nameHi: 'कीलक स्तोत्रम्', nameEn: 'Kilak Stotram', sub: '14 पाठांश · अर्थ सहित', subEn: '14 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaKilakTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-1', nameHi: 'दुर्गा सप्तशती · प्रथम अध्याय', nameEn: 'Durga Saptashati · Chapter 1', sub: '104 पाठांश · अर्थ सहित', subEn: '104 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapterOneTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-devi-kavacham', nameHi: 'श्री देवी कवचम्', nameEn: 'Shri Devi Kavacham', sub: '56 पाठांश · अर्थ सहित', subEn: '56 units · with meaning', thumb: 'दु', status: 'active', category: 'kavacham', deities: ['durga'], verseCount: durgaDeviKavachamTotal, addedInVersion: '1.5.7' },
 ];
 

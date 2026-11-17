@@ -1,3 +1,11 @@
+import durgaDeviKavacham from '../src/data/kavacham/durga-devi-kavacham.json';
+import durgaSaptashatiChapterOne from '../src/data/stuti/durga-saptashati-chapter-1.json';
+import durgaKilak from '../src/data/stuti/durga-kilak-stotram.json';
+import durgaArgala from '../src/data/stuti/durga-argala-stotram.json';
+import hanumanBahuk from '../src/data/stuti/hanuman-bahuk.json';
+import kalabhairavAshtakam from '../src/data/ashtakam/kalabhairav-ashtakam.json';
+import shriSuktam from '../src/data/suktam/shri-suktam.json';
+import kanakadharaStotram from '../src/data/stuti/kanakadhara-stotram.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
 import kabirDohe from '../src/data/doha/kabir-bhakti-dohe.json';
 import rahimDohe from '../src/data/doha/rahim-bhakti-dohe.json';
@@ -51,6 +59,14 @@ import { vishnuSahasranamaTotal } from '../src/data/vishnu-sahasranama';
  * Run: npx tsx scripts/gen-verse-counts.mts
  */
 const VALUES: readonly (readonly [string, number | Record<string, number>])[] = [
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length],
+  ['durgaKilakTotal', durgaKilak.verses.length],
+  ['durgaArgalaTotal', durgaArgala.verses.length],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length],
+  ['shriSuktamTotal', shriSuktam.verses.length],
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length],
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length]))],
