@@ -1,0 +1,184 @@
+{
+  "titleHi": "श्री सत्यनारायणजी की आरती",
+  "titleEn": "Shri Satyanarayan Aarti",
+  "subtitleHi": "जय लक्ष्मी रमणा",
+  "subtitleEn": "Jai Lakshmi Ramana",
+  "deity": "vishnu",
+  "language": "hi-en",
+  "source": {
+    "baseText": "Complete selected edition: Marwadi Bhajan Sagar (1930), compiled by Raghunath Prasad Singhania, printed p.708, item 1056, Internet Archive leaf n730. Scan inspected directly on 2026-11-17. One refrain plus eight numbered couplets; source spacing and punctuation regularized, wording retained including v/b dialect spellings. Compared with Drik Panchang and HinduNidhi: both preserve the narrative sequence, but modern openings use Shri Jai or Swami Jai and modern closing signatures differ. We retain the dated scan consistently rather than blend readings. Repeated tek is represented once, with repetition explained. Meanings are original Vedansh editorial explanations; pronunciation-based ASCII follows the retained Hindi words. No modern commentary, recording, artwork or web design copied.",
+    "referenceUrls": [
+      "https://archive.org/details/in.ernet.dli.2015.540884/page/n730/mode/1up",
+      "https://www.drikpanchang.com/lyrics/aarti/lord-narayan/shree-satyanarayan-aarti.html",
+      "https://hindunidhi.com/satyanarayan-aarti-hindi/"
+    ],
+    "retrievedOn": "2026-11-17"
+  },
+  "counts": {
+    "totalVerses": 9
+  },
+  "verses": [
+    {
+      "id": "satyanarayan-aarti-01",
+      "type": "refrain",
+      "section": "body",
+      "number": 1,
+      "labelHi": "टेक",
+      "labelEn": "Refrain",
+      "lines": [
+        "जय लक्ष्मी रमणा श्री लक्ष्मी रमणा।",
+        "सत्यनारायण स्वामी, जन पातक हरणा॥"
+      ],
+      "linesEn": [
+        "Jai Lakshmi ramana Shri Lakshmi ramana.",
+        "Satyanarayan swami, jan patak harana."
+      ],
+      "meaningHi": "हे लक्ष्मी के प्रिय सत्यनारायण स्वामी, आपकी जय हो। भक्त आपको पापों का हरण करने वाला कहकर प्रणाम करते हैं। यह टेक प्रत्येक पद के बाद दोहराई जाती है।",
+      "meaningEn": "The worshippers hail Satyanarayan, beloved of Lakshmi, and bow to him as the remover of wrongdoing. This refrain is repeated after each stanza."
+    },
+    {
+      "id": "satyanarayan-aarti-02",
+      "type": "stanza",
+      "section": "body",
+      "number": 2,
+      "labelHi": "पद · १",
+      "labelEn": "Stanza · 1",
+      "lines": [
+        "रत्न जड़ित सिंहासन, अद्भुत छवि राजै।",
+        "नारद करत निराजन घण्टा ध्वनि वाजै॥"
+      ],
+      "linesEn": [
+        "Ratna jadit sinhasan, adbhut chhavi rajai.",
+        "Narad karat nirajan ghanta dhvani vajai."
+      ],
+      "meaningHi": "रत्नजड़ित सिंहासन पर प्रभु का अद्भुत रूप सुशोभित है। नारद उनकी आरती उतार रहे हैं और घंटों की ध्वनि गूँज रही है।",
+      "meaningEn": "The hymn pictures the Lord radiant on a throne set with jewels. Narada offers the lamp as bells resound."
+    },
+    {
+      "id": "satyanarayan-aarti-03",
+      "type": "stanza",
+      "section": "body",
+      "number": 3,
+      "labelHi": "पद · २",
+      "labelEn": "Stanza · 2",
+      "lines": [
+        "प्रगट भये कलि कारण द्विजकूं दरश दिया।",
+        "वुड्ढो वामन वनके कञ्चन महल किया॥"
+      ],
+      "linesEn": [
+        "Pragat bhaye kali karan dvijkoon darash diya.",
+        "Vuddho vaman vanke kanchan mahal kiya."
+      ],
+      "meaningHi": "इस पद में कलियुग में एक ब्राह्मण को मिले दर्शन का स्मरण है। प्रभु वृद्ध ब्राह्मण का रूप लेकर उसकी दशा बदलते हैं; स्वर्ण-महल उस समृद्धि का वर्णन है। यहाँ वामन का आशय ब्राह्मण से है।",
+      "meaningEn": "This stanza recalls a Brahmin receiving the Lord’s darshan in the Kali age. The Lord appears as an elderly Brahmin; the golden palace describes the change in the devotee’s fortune. Here vaman is a vernacular word for Brahmin."
+    },
+    {
+      "id": "satyanarayan-aarti-04",
+      "type": "stanza",
+      "section": "body",
+      "number": 4,
+      "labelHi": "पद · ३",
+      "labelEn": "Stanza · 3",
+      "lines": [
+        "दुर्वल भील कठारो जिनपर कृपा करी।",
+        "चन्द्रचूड़ एक राजा जिनकी विपति हरी॥"
+      ],
+      "linesEn": [
+        "Durval Bheel katharo jinpar kripa kari.",
+        "Chandrachood ek raja jinki vipati hari."
+      ],
+      "meaningHi": "आरती एक निर्धन भील लकड़हारे पर हुई कृपा और चन्द्रचूड़ नामक राजा की विपत्ति दूर होने का स्मरण करती है। यह नाम इसी पाठ के अनुसार है।",
+      "meaningEn": "The aarti recalls grace shown to a poor Bhil woodcutter and relief granted to a king named Chandrachud. The king’s name is retained as it occurs in this edition."
+    },
+    {
+      "id": "satyanarayan-aarti-05",
+      "type": "stanza",
+      "section": "body",
+      "number": 5,
+      "labelHi": "पद · ४",
+      "labelEn": "Stanza · 4",
+      "lines": [
+        "वैश्य मनोरथ पायो श्रद्धा तज दीनी।",
+        "सो फल भोग्यो प्रभुजी फेर स्तुति कीनी॥"
+      ],
+      "linesEn": [
+        "Vaishya manorath payo shraddha taj deeni.",
+        "So phal bhogyo Prabhuji pher stuti keeni."
+      ],
+      "meaningHi": "एक व्यापारी की इच्छा पूरी हुई, पर उसने श्रद्धा छोड़ दी। उसका परिणाम भोगने के बाद वह फिर प्रभु की स्तुति करने लगा। यह कथा श्रद्धा और कृतज्ञता बनाए रखने की याद दिलाती है।",
+      "meaningEn": "A merchant received what he desired but then abandoned his faith. After experiencing the consequences, he returned to praising the Lord. The episode invites reflection on faithfulness and gratitude."
+    },
+    {
+      "id": "satyanarayan-aarti-06",
+      "type": "stanza",
+      "section": "body",
+      "number": 6,
+      "labelHi": "पद · ५",
+      "labelEn": "Stanza · 5",
+      "lines": [
+        "भाव भक्तिके कारण छिन छिन रूप धरया।",
+        "श्रद्धा धारण कीनी जिनका काज सरया॥"
+      ],
+      "linesEn": [
+        "Bhav bhaktike karan chhin chhin roop dharaya.",
+        "Shraddha dharan keeni jinka kaj saraya."
+      ],
+      "meaningHi": "भक्तों के भाव और भक्ति के लिए प्रभु अनेक रूप धारण करते हैं। पद में श्रद्धा रखने वालों के कार्य सँवरने का भक्तिपूर्ण वर्णन है।",
+      "meaningEn": "In response to loving devotion, the Lord assumes different forms. The stanza celebrates the fulfilment experienced by those who hold to faith."
+    },
+    {
+      "id": "satyanarayan-aarti-07",
+      "type": "stanza",
+      "section": "body",
+      "number": 7,
+      "labelHi": "पद · ६",
+      "labelEn": "Stanza · 6",
+      "lines": [
+        "ग्वाल वाल सँग राजा वनमें भक्ति करी।",
+        "मनवांछित फल दीनों दीनदयालु हरी॥"
+      ],
+      "linesEn": [
+        "Gval val sang raja vanmein bhakti kari.",
+        "Manvanchhit phal deenon deendayalu Hari."
+      ],
+      "meaningHi": "राजा ने वन में ग्वाल-बालों के साथ भक्ति की। दीनों पर करुणा करने वाले हरि ने उसे मनचाहा फल दिया—ऐसा यह पद कहता है।",
+      "meaningEn": "The king worshipped in the forest with the cowherd children. The stanza says that Hari, compassionate towards the humble, granted his wish."
+    },
+    {
+      "id": "satyanarayan-aarti-08",
+      "type": "stanza",
+      "section": "body",
+      "number": 8,
+      "labelHi": "पद · ७",
+      "labelEn": "Stanza · 7",
+      "lines": [
+        "चढ़त प्रसाद सवायो कदली फल मेवा।",
+        "धूप दीप तुलसीसे राजी सतदेवा॥"
+      ],
+      "linesEn": [
+        "Chadhat prasad savayo kadali phal meva.",
+        "Dhoop deep tulsise raji Satdeva."
+      ],
+      "meaningHi": "सवाया अर्थात सवा माप का प्रसाद, केला और मेवा अर्पित करने का वर्णन है। धूप, दीप और तुलसी के अर्पण से सत्यदेव को प्रसन्न बताया गया है।",
+      "meaningEn": "The offerings named are prasad in a one-and-a-quarter measure, banana and dried fruits. Incense, a lamp and tulsi are described as pleasing to Satyadeva."
+    },
+    {
+      "id": "satyanarayan-aarti-09",
+      "type": "stanza",
+      "section": "body",
+      "number": 9,
+      "labelHi": "पद · ८",
+      "labelEn": "Stanza · 8",
+      "lines": [
+        "श्री सत्यनारायणजीकी जो आरती गावै।",
+        "भणत मनसुख सम्पत्ति मनवांछित पावै॥"
+      ],
+      "linesEn": [
+        "Shri Satyanarayanjiki jo aarti gavai.",
+        "Bhanat Mansukh sampatti manvanchhit pavai."
+      ],
+      "meaningHi": "समापन में आरती गाने वाले के लिए मनचाही सम्पत्ति पाने की भक्तिपूर्ण आशा व्यक्त की गई है। भणत मनसुख इस संस्करण की कवि-छाप है; यहाँ किसी निश्चित ऐतिहासिक लेखक की पहचान नहीं की गई है।",
+      "meaningEn": "The closing expresses a devotional hope that the singer may receive desired prosperity. Bhanat Mansukh is the signature in this edition; it is not used here to identify a particular historical author."
+    }
+  ]
+}

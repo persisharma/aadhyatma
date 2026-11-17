@@ -334,3 +334,6 @@ Validation: five focused Node integration tests execute the production pool, con
 `GitaVerseJumpSheet` is mounted only while choosing. It reads chapter counts/titles from the manifest and accepts four numeral scripts. `GitaReaderScreen` stops playback, suppresses pager callbacks and suspends dwell until dismissal. Only Open loads the selected chapter and resolves the real verse number. Route replacement preserves the calling stack and mounts a new reader directly at the target, so no skipped page receives progress/coverage. Cancel does not write position; the original verse may still receive legitimate dwell credit accrued before opening. Existing transition timers are cancelled on unmount. No other reader or routine completion contract changes.
 
 Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.
+
+
+B1 Satyanarayan Aarti (17 Nov 2026) appends index 22 with nine pages from the complete dated 1930 edition. Puja instructions and ref now select this aarti; previous positions are preserved. Existing Vishnu artwork is reused. Source variants and native-pending acceptance: `docs/evaluations/b1-satyanarayan-aarti/review.md`.

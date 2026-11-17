@@ -4685,3 +4685,6 @@ acceptance; passing mocked screen tests is not native proof.
 
 ### Darshan recovery — updated 16 November 2026
 Retry re-resolves a dedicated temple source or retries its stable in-app channel player. Unavailable broadcasts lead to Retry, another temple, the complete temple guide or shipped devotional readings. The previous external website/YouTube recovery CTAs are superseded by the in-app journey above. Actual fullscreen, seek, volume, quality and platform interruptions still require device verification.
+
+
+B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.

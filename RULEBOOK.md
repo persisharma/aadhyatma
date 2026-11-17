@@ -1744,3 +1744,6 @@ Share generation performance contract (8 November 2026): `TimelyTagsResolver` re
 The devotional export reports settled geometry before artwork readiness, allowing the existing short layout wait and separate artwork wait to function independently. Capture still waits for all decoded slices and final native layout. No timeout, text, image dimensions or visual frame is changed. See `docs/reviews/2026-11-08-share-performance.md`.
 
 **Reader control clearance.** Chalisa uses the measured `ReaderControlRow`: reserve actual control widths plus touch clearance, and move trailing playback to a second row if it cannot fit beside the centred language/routine group. Do not solve overlap with reduced fonts or hidden labels. Recheck locale, text-size and width changes.
+
+
+B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.

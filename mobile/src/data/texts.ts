@@ -834,6 +834,18 @@ export const library: readonly LibraryEntry[] = [
     verseCount: 5,
   },
   {
+    id: 'satyanarayan-aarti',
+    nameHi: 'श्री सत्यनारायणजी की आरती',
+    nameEn: 'Shri Satyanarayan Aarti',
+    sub: '9 पद · अर्थ सहित',
+    subEn: '9 verses · with meaning',
+    thumb: 'स',
+    status: 'active',
+    category: 'aarti',
+    deities: ['vishnu'],
+    verseCount: 9,
+  },
+  {
     // Rama's aarti reuses the existing Ram Stuti (श्रीरामचन्द्र कृपालु भजु मन) —
     // popularly sung as Ram's aarti. This entry lists it under the Aarti
     // category; routing (entryRoutes.ts) sends it to the RamStuti reader, so the
