@@ -2,7 +2,7 @@
 
 ## Scope and authorization
 
-Base 199e05b3c6613d41fe14708832515b022019a299 (A2 merged). Only `santoshi-mata-chalisa`, category `chalisa`, deity `durga`, addedInVersion 1.5.7. No new artwork/audio, release, merge or A4.
+Final base b748ff2e3b8887f0f9bcd6e87b848221d8e0db97 (A1 #693 and its UTF-8 preview correction #694 merged). Original base was 199e05b3 (A2). Only `santoshi-mata-chalisa`, category `chalisa`, deity `durga`, addedInVersion 1.5.7. No new artwork/audio, release, merge or A4.
 
 On 2026-11-16 the owner instructed “resolve as before” after the missing checklist and source variants were reported. Applied the A2 approach: current AGENTS/build checklist/RULEBOOK/design and the merged Chalisa pattern substitute for unavailable `competitor-analysis/2026-10-19/claude-code-plan.md` §4a. A single complete Drik edition is retained, with alternate readings documented. This is not a claim of a majority or a mixture of compositions.
 
@@ -50,4 +50,13 @@ Native matrix: hi/en/gu/kn × Standard/Large × iOS/Android all PENDING. This Li
 
 ## Executed validation
 
-Pending execution. Keep PR draft until required native checks pass.
+- PASS: TypeScript; widget tests 51/51; engine 842/842; data 242/242; Ask 49/49.
+- Reader shard 1: 136 suites/1,449 tests pass; six failures in YouTubeReadyPlayback. All six reproduce on unchanged 199e05b3. Neither that test nor its production player is changed by A3 or the subsequent A1 merges.
+- Reader shard 2: 137 suites/1,559 tests pass. Shard 3: 137 suites/1,405 tests pass. The real ChalisaReaderScreen suite, including A3's eight hi/en/gu/kn opening/closing/Back cases, passes.
+- PASS lint: 0 errors, 480 warnings. PASS git diff --check. These are not an all-green full-suite claim.
+- The npm test wrapper fails on the environment's blocked tsx CLI IPC socket. Executed every independent group with node --import tsx for tsx tests and normal Jest commands. An initial duplicated legacy-aarti assertion introduced while copying tests was corrected; all existing migration assertions are preserved and the data suite rerun passes.
+- The first test run overlapping a rebase was invalidated and discarded. Complete groups above were rerun after A1 conflict resolution on tree 9fdc4367fe8305fb23654e42a269cae1b02142be. The later main update changes only A1's preview encoding; A3 runtime/test files are unchanged by that rebase.
+- PASS actual-component web bundle build. PENDING visual inspection: system Chromium aborts with socket EPERM; the available desktop browser cannot reach the isolated preview server and blocks local-file navigation. The bundled Playwright browser is absent; installation returned an invalid ZIP. No screenshot was fabricated and no browser restriction was bypassed.
+- Added the existing A1 capture harness adapted to A3 (four languages, Standard/Large, pages 0/25/41) and UTF-8 HTML. Run it in a supported browser environment before actual-component visual acceptance. Native checks remain separate.
+
+Draft PR: https://github.com/persisharma/aadhyatma/pull/695 . Remote publication uses the authorized GitHub connector because local git has no push credentials. Published tree hashes are compared with local Git before moving the branch. Only dependency symlinks and regenerable preview output remain local; no task implementation is discarded. Keep PR draft until required native checks pass.
