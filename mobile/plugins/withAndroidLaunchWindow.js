@@ -1,4 +1,4 @@
-const { AndroidConfig, withAndroidColors, withAndroidStyles, withMainActivity } = require('@expo/config-plugins');
+const { AndroidConfig, withAndroidColors, withAndroidStyles, withMainActivity } = require('expo/config-plugins');
 const { mergeContents } = require('@expo/config-plugins/build/utils/generateCode');
 const { addImports } = require('@expo/config-plugins/build/android/codeMod');
 

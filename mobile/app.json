@@ -36,7 +36,9 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "blockedPermissions": [
-        "android.permission.ACTIVITY_RECOGNITION"
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
       ],
       "permissions": [
         "FOREGROUND_SERVICE",
@@ -116,7 +118,6 @@
           "isAndroidBackgroundLocationEnabled": false
         }
       ],
-      "expo-secure-store",
       [
         "expo-image-picker",
         {

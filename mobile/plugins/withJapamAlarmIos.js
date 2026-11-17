@@ -24,7 +24,7 @@
  *     avoid breaking code-signing with a guessed value.
  */
 
-const { withInfoPlist } = require('@expo/config-plugins');
+const { withInfoPlist } = require('expo/config-plugins');
 
 const KEY = 'NSAlarmKitUsageDescription';
 const DEFAULT_VALUE =
