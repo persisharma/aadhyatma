@@ -13,3 +13,5 @@ The SanskritDocuments page header incorrectly says Vairagya Sandipani, while its
 ## Review limits
 
 Source collation and schema checks do not replace specialist oral-recitation review. Native rendering, screen-reader pronunciation and font-size/device QA remain pending until executed. No recording has been copied or produced.
+
+Final all-44-unit editorial pass: no missing/duplicated whole chhands; every Devanagari unit matches the saved collated witness. Roman alignment corrected at3/12 (रुरो: ruro),8 (प्रकट: prakat, unlike the preserved प्रगट at31),39 (मरीच: Mareech). Meaning31 attaches speech/mind/body to service, not to the manner of suffering. These are editorial alignments, not changes to the sourced text.
