@@ -3,6 +3,8 @@ import StoryIcon from '@/components/StoryIcon';
 import CategoryIcon from '@/components/CategoryIcon';
 import { deities, deityIconKey } from '@/data/deities';
 import AppIcon from '@/components/AppIcon';
+import { navigateReadingLink } from '@/navigation/entryRoutes';
+import { getReadingLink } from '@/data/readingLinks';
 import React, {
   useCallback,
   useEffect,
@@ -183,6 +185,15 @@ export default function SearchScreen({ navigation, route }: Props) {
         commitRecent(query);
         Keyboard.dismiss();
         navigation.navigate('VidhiDetail', { vidhiId: sourceId });
+        return;
+      }
+      const link = getReadingLink(sourceId);
+      if (link || sourceId === 'katha-library') {
+        commitRecent(query);
+        Keyboard.dismiss();
+        if (link) {
+          navigateReadingLink(navigation, sourceId);
+        } else navigation.navigate('KathaLibrary');
         return;
       }
       const entry = library.find((e) => e.id === sourceId);

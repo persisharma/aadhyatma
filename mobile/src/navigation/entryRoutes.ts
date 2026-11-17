@@ -1,3 +1,4 @@
+import { getReadingLink } from '@/data/readingLinks';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { library, type LibraryEntry } from '@/data/texts';
 import type { RoutineItem } from '@/data/routine/types';
@@ -26,6 +27,15 @@ import type { HomeRoster } from '@/vastu/homeRecord';
 import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList>;
+
+/** Open the original chapter, retaining its canonical progress/bookmark identity. */
+export function navigateReadingLink(nav: Nav, id: string): boolean {
+  const link = getReadingLink(id);
+  if (!link) return false;
+  if (link.sourceId === 'valmiki-ramayan') nav.navigate('ValmikiRamayanReader', { chapter: link.chapter, initialIndex: link.verseIndex });
+  else nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
+  return true;
+}
 
 /**
  * Nested-navigation params for a screen inside the Panchang tab's stack.

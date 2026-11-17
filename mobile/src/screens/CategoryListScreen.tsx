@@ -1,3 +1,5 @@
+import ReadingLinks from '@/components/ReadingLinks';
+import { navigateReadingLink } from '@/navigation/entryRoutes';
 import React, { useMemo, useState } from 'react';
 import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -136,6 +138,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
+          {categoryId === 'stotram' && <ReadingLinks onOpen={(id) => navigateReadingLink(navigation, id)} />}
           {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
             const card = <LibraryCard entry={entry} onPress={onPress} />;

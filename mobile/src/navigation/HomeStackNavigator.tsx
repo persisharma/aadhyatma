@@ -90,6 +90,7 @@ const ValmikiRamayanReaderScreen = lazyScreen('ValmikiRamayanReader', 3, () => i
 const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/VidhiDetailScreen'));
 const VishnuSahasranamaChaptersScreen = lazyScreen('VishnuSahasranamaChapters', 3, () => import('@/screens/VishnuSahasranamaChaptersScreen'));
 const VishnuSahasranamaReaderScreen = lazyScreen('VishnuSahasranamaReader', 3, () => import('@/screens/VishnuSahasranamaReaderScreen'));
+const KathaLibraryScreen = lazyScreen('KathaLibrary', 3, () => import('@/screens/KathaLibraryScreen'));
 const VratKathaReaderScreen = lazyScreen('VratKathaReader', 3, () => import('@/screens/VratKathaReaderScreen'));
 
 // depth 4 — reached from a depth-3 screen
@@ -280,6 +281,7 @@ export default function HomeStackNavigator() {
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="KathaLibrary" component={KathaLibraryScreen} />
       <Stack.Screen
         name="VratKathaReader"
         component={VratKathaReaderScreen}

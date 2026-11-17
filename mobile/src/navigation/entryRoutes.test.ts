@@ -562,3 +562,14 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 42 }), target);
   assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::42`, sourceId, verseIndex: 42 })), target);
 }
+
+// Discovery aliases preserve the canonical reader and saved-content identity.
+import { navigateReadingLink } from './entryRoutes';
+import { readingLinks } from '../data/readingLinks';
+for (const link of readingLinks) {
+  const calls: { screen: string; params: unknown }[] = [];
+  const nav = { navigate: (screen: string, params: unknown) => calls.push({ screen, params }) };
+  assert.equal(navigateReadingLink(nav as never, link.id), true);
+  assert.deepEqual(calls, [{ screen: link.sourceId === 'valmiki-ramayan' ? 'ValmikiRamayanReader' : 'GaneshStotramReader', params: { chapter: link.chapter, initialIndex: link.verseIndex } }]);
+}
+assert.equal(navigateReadingLink({ navigate: () => { throw new Error('unexpected navigation'); } } as never, 'unknown-link'), false);
