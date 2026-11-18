@@ -1,29 +1,291 @@
 {
   "prefix": "sanatan-learning",
   "assets": {
-    "ganesha-attributes": {
-      "file": "mobile/assets/sanatan-learning/ganesha-attributes.webp",
-      "sha256": "87b29f57149388f2d9279636ea151065cc3a858be6019e876cd1aa8fbc85be27",
-      "hash": "87b29f57149388f2",
-      "width": 960,
-      "height": 640,
-      "ext": "webp",
-      "bytes": 205240,
-      "topicId": "deity",
-      "masterSha256": "3d71b7f0d41aa7dd7affb2f0ff81b1530ec1a1f158683358778c086485d34d63",
-      "publication": "pending"
-    },
-    "tulasi-objects": {
-      "file": "mobile/assets/sanatan-learning/tulasi-objects.webp",
-      "sha256": "39e984dc98664cb8bb2cd5deb673c57e43bab91d40c07ddbbfa5e6f83961a7cd",
-      "hash": "39e984dc98664cb8",
+    "dikpal-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/dikpal-en.webp",
+      "sha256": "a0771778aa46426916a2fc2e9973e88c097059cfd08950057b1eaf48782709be",
+      "hash": "a0771778aa464269",
       "width": 1200,
-      "height": 600,
+      "height": 800,
       "ext": "webp",
-      "bytes": 226204,
+      "bytes": 230324,
+      "topicId": "dikpal",
+      "lang": "en"
+    },
+    "dikpal-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/dikpal-hi.webp",
+      "sha256": "0f2802508c20126a1c424e34e8475ce7d326fd865986166c456cc4f8f30687c6",
+      "hash": "0f2802508c20126a",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 231726,
+      "topicId": "dikpal",
+      "lang": "hi"
+    },
+    "time-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/time-en.webp",
+      "sha256": "e46cef4d0102feedb705335fa116e639857492754d350611e8353faa54e819b3",
+      "hash": "e46cef4d0102feed",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 226952,
+      "topicId": "time",
+      "lang": "en"
+    },
+    "time-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/time-hi.webp",
+      "sha256": "b80dd34b2e9e8696b1beba443bc9c957098a86df970ab38cb72501fdd7fb3292",
+      "hash": "b80dd34b2e9e8696",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 222914,
+      "topicId": "time",
+      "lang": "hi"
+    },
+    "temples-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/temples-en.webp",
+      "sha256": "5691a39d69e05126f998c75367fca8aaa1e35984b63806b53c42d67b35400ff3",
+      "hash": "5691a39d69e05126",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 231496,
+      "topicId": "temples",
+      "lang": "en"
+    },
+    "temples-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/temples-hi.webp",
+      "sha256": "48074192fa26d5dd923307a627e9cb0917b740ab35feefa635223dfcf0c9bcb8",
+      "hash": "48074192fa26d5dd",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 233928,
+      "topicId": "temples",
+      "lang": "hi"
+    },
+    "deity-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/deity-en.webp",
+      "sha256": "d627d6b57623a7cfa99ef6dd849bd45c206ef4639b3c415872bab938c032948a",
+      "hash": "d627d6b57623a7cf",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 231864,
+      "topicId": "deity",
+      "lang": "en"
+    },
+    "deity-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/deity-hi.webp",
+      "sha256": "71eb3ec3b701233752306bc2bda693261f1b429e563dcd6242956cdd1ff91edc",
+      "hash": "71eb3ec3b7012337",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 228680,
+      "topicId": "deity",
+      "lang": "hi"
+    },
+    "plants-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/plants-en.webp",
+      "sha256": "aec95e33f657807392031683fb9370383e77c9efaa7e8fdb5dead7b43be3cdae",
+      "hash": "aec95e33f6578073",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 232814,
       "topicId": "plants",
-      "masterSha256": "cdebac1cffeb9c875400cb0c440875e48174d30f09f1d61e5f38bb2486f51a0a",
-      "publication": "pending"
+      "lang": "en"
+    },
+    "plants-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/plants-hi.webp",
+      "sha256": "934d1c099a6716a9940c244224cb7fff9f47df21dc30e0c04f1e8ed359855674",
+      "hash": "934d1c099a6716a9",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 222616,
+      "topicId": "plants",
+      "lang": "hi"
+    },
+    "basics-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/basics-en.webp",
+      "sha256": "546f63a93e5e84bf6dfa3c99836014daa6d99589280a18345042b6244762a4db",
+      "hash": "546f63a93e5e84bf",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 230240,
+      "topicId": "basics",
+      "lang": "en"
+    },
+    "basics-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/basics-hi.webp",
+      "sha256": "61c4d2c042392c3a72fd48b3895dc327fb121798756a5e9195bec818ec8527f9",
+      "hash": "61c4d2c042392c3a",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 234182,
+      "topicId": "basics",
+      "lang": "hi"
+    },
+    "thirty-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/thirty-en.webp",
+      "sha256": "e64aa4384bf891db4d71f35a70f4f35bdf66d4f034fa71fbcff9d78c824ad204",
+      "hash": "e64aa4384bf891db",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 225712,
+      "topicId": "thirty",
+      "lang": "en"
+    },
+    "thirty-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/thirty-hi.webp",
+      "sha256": "634e540129e2e255bee280e3faef46d6459638526fcabf924254133dc0d69c72",
+      "hash": "634e540129e2e255",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 234746,
+      "topicId": "thirty",
+      "lang": "hi"
+    },
+    "graha-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/graha-en.webp",
+      "sha256": "edc22cda1c4505868367e9554ebf38c2fbabdedc70e21a7bbb817e27ebfbdca0",
+      "hash": "edc22cda1c450586",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 231664,
+      "topicId": "graha",
+      "lang": "en"
+    },
+    "graha-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/graha-hi.webp",
+      "sha256": "bac7f7e8f6b6793d3f412dec0a6cde8740cbfb902974a3c2bba1bc16af7aa35e",
+      "hash": "bac7f7e8f6b6793d",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 233738,
+      "topicId": "graha",
+      "lang": "hi"
+    },
+    "symbols-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/symbols-en.webp",
+      "sha256": "9083bbaeabeb7507d957ed352e91ea83995db71bc1c3b2a8a6ab93a1f2d85b54",
+      "hash": "9083bbaeabeb7507",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 230350,
+      "topicId": "symbols",
+      "lang": "en"
+    },
+    "symbols-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/symbols-hi.webp",
+      "sha256": "75b42a6ffe115caa0ab12516219b579566dec94fe6e4b126d63cfcb381f24181",
+      "hash": "75b42a6ffe115caa",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 219834,
+      "topicId": "symbols",
+      "lang": "hi"
+    },
+    "forms-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/forms-en.webp",
+      "sha256": "fdb51f59142cdfc3406c910855f7b71e538f07eb1dfde30cd2ff636899f76499",
+      "hash": "fdb51f59142cdfc3",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 228808,
+      "topicId": "forms",
+      "lang": "en"
+    },
+    "forms-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/forms-hi.webp",
+      "sha256": "8535cf48f4a61a35be752c2cb44186361c33956d0e51042a5043870042f02166",
+      "hash": "8535cf48f4a61a35",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 227390,
+      "topicId": "forms",
+      "lang": "hi"
+    },
+    "elements-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/elements-en.webp",
+      "sha256": "5406418c9a897f6f71b22432a6c9b7226e7567cc561746d72fc866bd6e2f4cba",
+      "hash": "5406418c9a897f6f",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 230812,
+      "topicId": "elements",
+      "lang": "en"
+    },
+    "elements-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/elements-hi.webp",
+      "sha256": "718f4fd88a0a29ddd4f4dd66e314497d3539aa1189d2426c7c0b92efe325c9dd",
+      "hash": "718f4fd88a0a29dd",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 227342,
+      "topicId": "elements",
+      "lang": "hi"
+    },
+    "texts-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/texts-en.webp",
+      "sha256": "3a2846462e3848681bdc122af7837cbac777c6d2d62e5249279e3c35eff5e2ad",
+      "hash": "3a2846462e384868",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 233952,
+      "topicId": "texts",
+      "lang": "en"
+    },
+    "texts-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/texts-hi.webp",
+      "sha256": "8188f8923799cdae90d64aa50d6f1de13e58e447248f5f385d2ddf7b3c1dc18f",
+      "hash": "8188f8923799cdae",
+      "width": 1120,
+      "height": 747,
+      "ext": "webp",
+      "bytes": 232174,
+      "topicId": "texts",
+      "lang": "hi"
+    },
+    "rishis-en": {
+      "file": "mobile/assets/sanatan-learning/teaching/rishis-en.webp",
+      "sha256": "a03176c76b5e39794ba3934cfc0eb443ef5eadf8f90af799c5e1c2aefdae1f33",
+      "hash": "a03176c76b5e3979",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 234636,
+      "topicId": "rishis",
+      "lang": "en"
+    },
+    "rishis-hi": {
+      "file": "mobile/assets/sanatan-learning/teaching/rishis-hi.webp",
+      "sha256": "b0a600a88761ed6a7321f5ed9f64a23cff8a135283585bac336d27ac018aec5a",
+      "hash": "b0a600a88761ed6a",
+      "width": 1200,
+      "height": 800,
+      "ext": "webp",
+      "bytes": 226298,
+      "topicId": "rishis",
+      "lang": "hi"
     }
   }
 }

@@ -1,5 +1,19 @@
 # Sanatan Parichay — visual learning revision
 
+> **Update (18 Nov 2026) — painted teaching plates.** The in-lesson "चित्र से समझें"
+> page no longer uses react-native-svg schematics. Each of the 13 concepts now has a
+> single self-explanatory **painted plate** in the approved manuscript style, shipped
+> in Hindi and English (26 webp, ≤250 KB, prefix `sanatan-learning`, served from R2
+> and download-once cached). The reader picks by language: **hi+gu → Hindi plate,
+> en+kn → English plate** (`lessonArtLang`). The figure page shows the plate plus one
+> caption line (the lesson answer); page prose is kept in data for search/narration
+> but not re-rendered there. Source of truth: `artwork.json`; committed allowlist:
+> `mobile/src/data/sanatan-parichay/lessonArtManifest.json`; uploaded by
+> `.github/workflows/r2-upload.yml` on merge (collection `sanatan-learning`). NE
+> guardian reads "ईशान (शिव) / Ishana (Shiva)". The superseded SVG components
+> (`TenDirectionsDiagram`, `ConceptFigures`) were removed. The sections below
+> describe the earlier SVG-diagram revision and are retained for history.
+
 Base: `62d9b6d725e58b93c42cdb239468a647c155af1c` (8 November 2026).
 Approved direction: the section audit and the user's request for visual teaching,
 including a spatial ten-direction view and before/after review.

@@ -40,6 +40,12 @@ test('related reading actions use the same stack and exact verse indexes',()=>{
  openSanatanRelated(navigation,{label:['पाठ','Reading'],target:{kind:'reading',id:'tulsi-aarti'}});
  expect(navigation.push).toHaveBeenLastCalledWith('AartiReader',{aartiIndex:20,initialIndex:0});
 });
-test('unpublished paintings cannot trigger a request or become runtime references',()=>{
- expect(lessonArtSource('deity')).toBeNull();expect(lessonArtSource('plants')).toBeNull();expect(lessonArtSource('unknown')).toBeNull();
+test('every lesson has a teaching plate, chosen by language: hi+gu share Devanagari, en+kn share Roman',()=>{
+ for(const topic of getSanatanTopics()){
+  expect(lessonArtSource(topic.id,'hi')?.stem).toBe(`${topic.id}-hi`);
+  expect(lessonArtSource(topic.id,'gu')?.stem).toBe(`${topic.id}-hi`);
+  expect(lessonArtSource(topic.id,'en')?.stem).toBe(`${topic.id}-en`);
+  expect(lessonArtSource(topic.id,'kn')?.stem).toBe(`${topic.id}-en`);
+ }
+ expect(lessonArtSource('unknown','en')).toBeNull();
 });

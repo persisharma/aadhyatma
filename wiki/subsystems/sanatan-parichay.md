@@ -9,6 +9,13 @@ status: current
 
 ## Summary
 
+> **Gotcha / update (18 Nov 2026):** the figure page's visual is a **painted teaching
+> plate** (R2, prefix `sanatan-learning`), not an SVG schematic. 13 concepts × {hi,en}
+> = 26 webp; `lessonArtLang` maps hi+gu→hi plate, en+kn→en plate. `ExploreDiagram`
+> now renders `LessonArt` (CachedArtwork) + one caption line; `TenDirectionsDiagram`
+> and `ConceptFigures` were removed. Manifest `lessonArtManifest.json` is the R2
+> upload allowlist (`.github/workflows/r2-upload.yml`, dry-run on PRs).
+
 Thirteen approved editorial introductions form a question-led learning journey.
 Each has three Hindi/English paragraphs, a topic-specific visual explanation,
 one approved painted scene and internal review provenance. This is a native

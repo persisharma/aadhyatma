@@ -114,9 +114,9 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
             <ProseReadingCard heading={<Copy heading>{t(titles[index])}</Copy>}>
               {index === 0 && <Painting id={topic.id} />}
               {index === 0 && <LessonAnswer id={topic.id}/>}
-              {index === 1 && <ExploreDiagram topic={topic} onCollection={topicId => navigation.push('SanatanParichay', { topicId })} onRelated={openRelated}/>}
+              {index === 1 && <ExploreDiagram topic={topic}/>}
               {topic.kind === 'swastika' && index === 2 && <SwastikaGuide mode="drawing" />}
-              <ReadingBlocks body={topic.pages[index]}/>
+              {index !== 1 && <ReadingBlocks body={topic.pages[index]}/>}
               {index===0&&<LessonTerms id={topic.id}/>}
               {index===data.length-1&&<LessonTakeaway id={topic.id}/>}
             </ProseReadingCard>

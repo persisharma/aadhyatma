@@ -1,1 +1,109 @@
-{"prefix":"sanatan-learning","assets":{}}
+{
+  "prefix": "sanatan-learning",
+  "assets": {
+    "dikpal-en": {
+      "hash": "a0771778aa464269",
+      "ext": "webp"
+    },
+    "dikpal-hi": {
+      "hash": "0f2802508c20126a",
+      "ext": "webp"
+    },
+    "time-en": {
+      "hash": "e46cef4d0102feed",
+      "ext": "webp"
+    },
+    "time-hi": {
+      "hash": "b80dd34b2e9e8696",
+      "ext": "webp"
+    },
+    "temples-en": {
+      "hash": "5691a39d69e05126",
+      "ext": "webp"
+    },
+    "temples-hi": {
+      "hash": "48074192fa26d5dd",
+      "ext": "webp"
+    },
+    "deity-en": {
+      "hash": "d627d6b57623a7cf",
+      "ext": "webp"
+    },
+    "deity-hi": {
+      "hash": "71eb3ec3b7012337",
+      "ext": "webp"
+    },
+    "plants-en": {
+      "hash": "aec95e33f6578073",
+      "ext": "webp"
+    },
+    "plants-hi": {
+      "hash": "934d1c099a6716a9",
+      "ext": "webp"
+    },
+    "basics-en": {
+      "hash": "546f63a93e5e84bf",
+      "ext": "webp"
+    },
+    "basics-hi": {
+      "hash": "61c4d2c042392c3a",
+      "ext": "webp"
+    },
+    "thirty-en": {
+      "hash": "e64aa4384bf891db",
+      "ext": "webp"
+    },
+    "thirty-hi": {
+      "hash": "634e540129e2e255",
+      "ext": "webp"
+    },
+    "graha-en": {
+      "hash": "edc22cda1c450586",
+      "ext": "webp"
+    },
+    "graha-hi": {
+      "hash": "bac7f7e8f6b6793d",
+      "ext": "webp"
+    },
+    "symbols-en": {
+      "hash": "9083bbaeabeb7507",
+      "ext": "webp"
+    },
+    "symbols-hi": {
+      "hash": "75b42a6ffe115caa",
+      "ext": "webp"
+    },
+    "forms-en": {
+      "hash": "fdb51f59142cdfc3",
+      "ext": "webp"
+    },
+    "forms-hi": {
+      "hash": "8535cf48f4a61a35",
+      "ext": "webp"
+    },
+    "elements-en": {
+      "hash": "5406418c9a897f6f",
+      "ext": "webp"
+    },
+    "elements-hi": {
+      "hash": "718f4fd88a0a29dd",
+      "ext": "webp"
+    },
+    "texts-en": {
+      "hash": "3a2846462e384868",
+      "ext": "webp"
+    },
+    "texts-hi": {
+      "hash": "8188f8923799cdae",
+      "ext": "webp"
+    },
+    "rishis-en": {
+      "hash": "a03176c76b5e3979",
+      "ext": "webp"
+    },
+    "rishis-hi": {
+      "hash": "b0a600a88761ed6a",
+      "ext": "webp"
+    }
+  }
+}

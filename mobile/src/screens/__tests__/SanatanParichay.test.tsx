@@ -64,19 +64,12 @@ test('unknown reader IDs do not substitute another deity or start playback', asy
   expect(tree.root.findAllByType(FlatList)).toHaveLength(0);
   act(() => tree.unmount());
 });
-test('directions include the selected above/below source, and Dashavatara lists stay separate', async () => {
-  const tree = await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} onCollection={jest.fn()} />);
-  const above = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.testID === 'sanatan-direction-8')[0];
-  act(() => above.props.onPress());
-  expect(text(tree)).toContain('Above · Brahma');
+test('the figure page shows the painted teaching plate and its one-line caption', async () => {
+  const tree = await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} />);
+  expect(tree.root.findAll(node => node.props.testID === 'sanatan-explore-dikpal').length).toBeGreaterThan(0);
+  expect(tree.root.findAll(node => node.props.accessibilityRole === 'image').length).toBeGreaterThan(0);
+  expect(text(tree)).toContain('directions');
   act(() => tree.unmount());
-  const avatars = await render(<ExploreDiagram topic={getSanatanTopic('forms')!} onCollection={jest.fn()} />);
-  expect(text(avatars)).toContain('9. Krishna');
-  const jayadeva = avatars.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Jayadeva')[0];
-  act(() => jayadeva.props.onPress());
-  expect(text(avatars)).toContain('9. Buddha');
-  expect(text(avatars)).not.toContain('9. Krishna');
-  act(() => avatars.unmount());
 });
 
 test('finishing persists the final page and clears resume before returning', async () => {
@@ -179,16 +172,10 @@ test('drawing stages preserve four equal right-angle clockwise turns and add dot
   act(() => tree.unmount());
 });
 
-for (const lang of ['hi','en','gu','kn'] as const) for (const factor of [1,1.15]) {
- test(`${lang}/${factor}: all ten directions remain visible and above/below never alias south`,async()=>{
-  mockReadingFactor=factor;
-  const tree=await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} onCollection={jest.fn()}/>,lang);
-  for(let i=0;i<10;i++)expect(tree.root.findAll(n=>n.props.testID===`sanatan-direction-${i}`).length).toBeGreaterThan(0);
-  const tap=(i:number)=>tree.root.findAll(n=>n.props.testID===`sanatan-direction-${i}`)[0].props.onPress();
-  for(let i=0;i<50;i++){act(()=>tap(i%10));}
-  act(()=>tap(8));expect(text(tree)).toContain(contentByLang(lang,'ऊर्ध्व · ब्रह्मा','Above · Brahma'));
-  act(()=>tap(9));expect(text(tree)).toContain(contentByLang(lang,'अधो · विष्णु','Below · Vishnu'));
-  expect(tree.root.findAll(n=>n.props.testID==='sanatan-direction-4').length).toBeGreaterThan(0);
+for (const lang of ['hi','en','gu','kn'] as const) {
+ test(`${lang}: the figure page renders its painted plate and caption`,async()=>{
+  const tree=await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!}/>,lang);
+  expect(tree.root.findAll(n=>n.props.accessibilityRole==='image').length).toBeGreaterThan(0);
   act(()=>tree.unmount());
  });
 }

@@ -4404,21 +4404,26 @@ acceptance are tracked in `docs/content-parity/sanatan-parichay/swastika-guide.m
 ### Visual learning revision — 8 November 2026
 
 Retain the approved painted collection family, then lead each lesson with a short
-answer and native glossary. The exploration page puts its teaching diagram before
-prose; the final page adds one takeaway and related in-app readings. Definition
-heads and numbered instructions receive native hierarchy without shortening text.
+answer and native glossary. The final page adds one takeaway and related in-app
+readings. Definition heads and numbered instructions receive native hierarchy.
 Show the actual lesson title above the broader collection name.
 
-Directions use a tilted plane with eight numbered positions and a vertical
-Above/Below axis, plus ten scalable direction/guardian controls. Temple spaces,
-literary forms, Gargi's dialogue, the lamp analogy and the illustrative Panchang
-row each receive a specific teaching figure. Full alternate avatar lists stay
-separate. New four-arm Ganesha and Tulasi object paintings are R2-only supplemental
-art, pending upload and hash-verified activation. Search opens page-specific taught
-concepts. Related readers remain on the same stack to preserve Back and position.
-The UI uses bounded static diagrams, with no continuous 3D animation. Native
-fidelity, exports and device performance remain required pending acceptance; see
-`docs/content-parity/sanatan-parichay/visual-learning/README.md`.
+The exploration page (index 1) carries a single **painted teaching plate** — a
+self-explanatory devotional illustration in the approved painted-manuscript style,
+one per concept — under the "चित्र से समझें" heading, followed by one caption line
+(the lesson's answer). The plate replaces the earlier vector schematics; the figure
+page no longer repeats the paragraph prose (it is retained in data for search and
+narration). Each plate carries its own baked labels, so it ships in two languages:
+Hindi and English. The reader picks by language — **Hindi serves hi and gu, English
+serves en and kn** (`lessonArtLang`). The 26 plates (13 concepts × 2) are webp
+(≤250 KB, 1200 px), served from R2 (`cdn.vedansh.app`, prefix `sanatan-learning`)
+and download-once cached; the committed `lessonArtManifest.json` is the upload
+allowlist and the `.github/workflows/r2-upload.yml` run publishes on merge. Until a
+plate is on the CDN, `LessonArt` renders nothing (no empty frame). The NE guardian
+reads "ईशान (शिव) / Ishana (Shiva)". Full alternate avatar lists stay separate.
+Onward readings remain on the final page, on the same stack to preserve Back and
+position. Native fidelity, exports and device performance remain required pending
+acceptance; see `docs/content-parity/sanatan-parichay/visual-learning/README.md`.
 
 ## 88. भक्तिमय दोहे — selected Kabir and Rahim readings
 

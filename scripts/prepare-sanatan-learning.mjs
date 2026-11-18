@@ -12,9 +12,9 @@ for(const [stem,a] of Object.entries(sources.assets)){
  const data=readFileSync(path.join(root,a.file));bytes+=data.length;
  assert.equal(createHash('sha256').update(data).digest('hex'),a.sha256,`Changed artwork: ${stem}`);
  assert.ok(data.length<250000,`Image decode/download budget: ${stem}`);
- candidate.assets[stem]={hash:a.hash,ext:a.ext,width:a.width,height:a.height};
+ candidate.assets[stem]={hash:a.hash,ext:a.ext};
 }
-assert.ok(bytes<500000,'Combined artwork budget exceeded');
+assert.ok(bytes<8000000,'Combined artwork budget exceeded');
 if(process.argv.includes('--activate')){
  assert.ok(process.argv.includes('--cdn'),'Activation requires --cdn public byte verification');
 }

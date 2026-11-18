@@ -1,6 +1,6 @@
 import type {Pair} from './index';
 export const directions = [
-  ['उत्तर', 'North', 'कुबेर', 'Kubera'], ['ईशान', 'Northeast', 'ईशान', 'Ishana'],
+  ['उत्तर', 'North', 'कुबेर', 'Kubera'], ['ईशान', 'Northeast', 'ईशान (शिव)', 'Ishana (Shiva)'],
   ['पूर्व', 'East', 'इन्द्र', 'Indra'], ['आग्नेय', 'Southeast', 'अग्नि', 'Agni'],
   ['दक्षिण', 'South', 'यम', 'Yama'], ['नैऋत्य', 'Southwest', 'निरृति', 'Nirriti'],
   ['पश्चिम', 'West', 'वरुण', 'Varuna'], ['वायव्य', 'Northwest', 'वायु', 'Vayu'],
