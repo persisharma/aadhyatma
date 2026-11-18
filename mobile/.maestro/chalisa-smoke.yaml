@@ -1,6 +1,6 @@
 # Chalisa Category Smoke Test
 #
-# Verifies the Chalisa category and its 12 active sections render correctly.
+# Verifies the Chalisa category and its 15 active sections render correctly.
 # Sections: Hanuman Chalisa, Shiv Chalisa, Durga Chalisa, Ganesh Chalisa,
 # Gayatri Chalisa, Ram Chalisa, Krishna Chalisa, Vishnu Chalisa,
 # Saraswati Chalisa, Shri Khatu Shyam Chalisa, Lakshmi Chalisa, Surya Chalisa.
@@ -21,7 +21,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Chalisa\\..*Tap to open\\."
 - waitForAnimationToEnd
 
-# Verify all 12 sections appear in CategoryList
+# Verify all 15 sections appear in CategoryList
 - extendedWaitUntil:
     visible: "Hanuman Chalisa\\..*Tap to open\\."
     timeout: 15000
@@ -99,6 +99,151 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "कनक बदन कुण्डल मकर.*"
 - tapOn: "Back to home"
 - waitForAnimationToEnd
+# A2: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Vaishno Devi Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Vaishno Devi Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "गरुड़ वाहिनी वैष्णवी.*"
+- takeScreenshot: a2-vaishno-opening-hi
+- tapOn: "English"
+- assertVisible: "Garud vahini Vaishnavi.*"
+- takeScreenshot: a2-vaishno-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 41
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*कलयुग में महिमा तेरी.*"
+- takeScreenshot: a2-vaishno-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Vaishno Devi Chalisa\\..*Tap to open\\."
+# A1: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Shani Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Shani Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "जय गणेश गिरिजा सुवन.*"
+- takeScreenshot: a1-shani-opening-hi
+- tapOn: "English"
+- assertVisible: "Jai Ganesh Girija suvan.*"
+- takeScreenshot: a1-shani-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 42
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*पाठ शनिश्चर देव को.*"
+- takeScreenshot: a1-shani-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Shani Chalisa\\..*Tap to open\\."
+# A3: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Santoshi Mata Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Santoshi Mata Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "श्री गणपति पद नाय सिर.*"
+- takeScreenshot: a3-santoshi-opening-hi
+- tapOn: "English"
+- assertVisible: "Shri Ganpati pad naay sir.*"
+- takeScreenshot: a3-santoshi-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 41
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*सन्तोषी माँ के सदा.*"
+- takeScreenshot: a3-santoshi-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Santoshi Mata Chalisa\\..*Tap to open\\."
+# A4: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Kali Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Kali Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "जय काली जगदम्ब जय.*"
+- takeScreenshot: a4-kali-opening-hi
+- tapOn: "English"
+- assertVisible: "Jai Kali Jagadamb jai.*"
+- takeScreenshot: a4-kali-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 56
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*जय तारा, जय दक्षिणा.*"
+- takeScreenshot: a4-kali-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Kali Chalisa\\..*Tap to open\\."
+# A5: distinct payload, language toggle, closing stanza and Back route.
+- scrollUntilVisible:
+    element:
+      text: "Radha Chalisa\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Radha Chalisa\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- assertVisible: "श्री राधे वृषभानुजा.*"
+- takeScreenshot: a5-radha-opening-hi
+- tapOn: "English"
+- assertVisible: "Shri Radhe Vrishabhanuja.*"
+- takeScreenshot: a5-radha-opening-en
+- tapOn: "Hindi"
+- repeat:
+    times: 42
+    commands:
+      - swipe:
+          direction: LEFT
+          duration: 350
+      - waitForAnimationToEnd
+- assertVisible: ".*श्रीराधा सर्वेश्वरी.*"
+- takeScreenshot: a5-radha-closing-hi
+- tapOn: "Back to home"
+- waitForAnimationToEnd
+- assertVisible: "Radha Chalisa\\..*Tap to open\\."
 # Scroll back up so the reader opens from Hanuman Chalisa at the top.
 - scrollUntilVisible:
     element:

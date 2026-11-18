@@ -1,0 +1,783 @@
+{
+  "titleHi": "संतोषी माता चालीसा",
+  "titleEn": "Santoshi Mata Chalisa",
+  "subtitleHi": "श्री गणपति पद नाय सिर",
+  "subtitleEn": "Shri Ganpati pad naay sir",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Complete Drik Panchang edition, collated against the complete Ved Puran two-page PDF. Chosen-edition approach authorized by Prashant on 2026-11-16 (resolve as before). Prayer wording and punctuation are retained; couplets are split for reading. Romanization and Hindi/English meanings are original editorial work.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/santoshi-mata/santoshi-mata-chalisa.html?lang=hi",
+      "https://vedpuran.net/wp-content/uploads/2021/05/santoshi-maa-chalisa.pdf"
+    ],
+    "retrievedOn": "2026-11-16",
+    "editionDecision": "Prashant authorized resolving A3 as for A2 on 2026-11-16: choose one complete edition, document variants, and use current repository rules plus the merged Chalisa pattern in place of the missing historical checklist. Drik Panchang is retained as the chosen edition, without constructing a composite or claiming a majority.",
+    "variants": "Both sources share the Ganapati/Sharada opening and 40-chaupai sequence. Most importantly, body 34 has सात शुक्र in Drik versus सोलह शुक्र in Ved Puran. Other substantive differences include body 13 प्रगटी जन जानी versus प्रकट जग जानी, 16 भक्तन versus भक्त, 21 नित versus निज, 32 गोदी versus गोद, 38 जो कोई versus जो यह, and 39 नित/तुम्हारा versus निज/तुहारा. Drik spelling and grammar are preserved, including पुरनान, मनोकमना, व्याकुलयारी and निश वास. Body 25 has an obscure second half in both sources: the editorial gloss conveys only its clear separation/distress theme. This is not the different composition beginning बन्दौं सन्तोषी चरण.",
+    "access": "Drik full text read through web retrieval; direct host request returned HTTP 403. Ved Puran direct PDF HTTP 200, both pages read; extracted font/OCR artifacts were not used to repair the chosen text."
+  },
+  "counts": {
+    "openingDohas": 1,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 42
+  },
+  "verses": [
+    {
+      "id": "opening-doha",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "श्री गणपति पद नाय सिर, धरि हिय शारदा ध्यान।",
+        "सन्तोषी मां की करुँ, कीरति सकल बखान॥"
+      ],
+      "linesEn": [
+        "Shri Ganpati pad naay sir, dhari hiy Sharada dhyan.",
+        "Santoshi maan ki karun, kirati sakal bakhan."
+      ],
+      "meaningHi": "गणपति के चरणों में सिर झुकाकर और शारदा का ध्यान करके संतोषी माँ की कीर्ति कहने की प्रार्थना है। पाठ का आरम्भ विनय और स्मरण से होता है।",
+      "meaningEn": "The reciter bows at Ganapati's feet and remembers Sharada before praising Santoshi Maa. The opening frames the prayer with humility and remembrance."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय संतोषी मां जग जननी।",
+        "खल मति दुष्ट दैत्य दल हननी॥"
+      ],
+      "linesEn": [
+        "Jai Santoshi maan jag janani.",
+        "Khal mati dusht daitya dal hanani."
+      ],
+      "meaningHi": "संसार की जननी संतोषी माँ की जय कही गई है। दुष्ट बुद्धि और दैत्यदल का नाश करने वाली देवी का स्मरण इस स्तुति का आरम्भ करता है।",
+      "meaningEn": "The hymn hails Santoshi Maa as mother of the world and destroyer of wicked-minded demonic hosts. Her protecting power opens the praise."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "गणपति देव तुम्हारे ताता।",
+        "रिद्धि सिद्धि कहलावहं माता॥"
+      ],
+      "linesEn": [
+        "Ganpati dev tumhare tata.",
+        "Riddhi Siddhi kahlavahan mata."
+      ],
+      "meaningHi": "इस स्तुति में गणपति को माँ का पिता और रिद्धि-सिद्धि को उनकी माता कहा गया है। यह पाठ में वर्णित देवी के परिवार का परिचय है।",
+      "meaningEn": "This hymn names Ganapati as her father and Riddhi and Siddhi as her mothers. It introduces the family relationships expressed in this devotional composition."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "माता-पिता की रहौ दुलारी।",
+        "कीरति केहि विधि कहुं तुम्हारी॥"
+      ],
+      "linesEn": [
+        "Mata-pita ki rahau dulari.",
+        "Kirati kehi vidhi kahun tumhari."
+      ],
+      "meaningHi": "माँ को अपने माता-पिता की दुलारी कहकर भक्त पूछता है कि उनकी कीर्ति कैसे कही जाए। प्रशंसा में अपनी सीमित वाणी का विनम्र स्वीकार है।",
+      "meaningEn": "Calling her the beloved of her parents, the devotee wonders how to describe her glory. The praise acknowledges the limits of the reciter's words."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "क्रीट मुकुट सिर अनुपम भारी।",
+        "कानन कुण्डल को छवि न्यारी॥"
+      ],
+      "linesEn": [
+        "Kreet mukut sir anupam bhari.",
+        "Kanan kundal ko chhavi nyari."
+      ],
+      "meaningHi": "माँ के सिर पर अनुपम मुकुट और कानों में सुन्दर कुण्डलों का वर्णन है। पाठ करते समय यह उनके अलंकृत स्वरूप का ध्यान कराता है।",
+      "meaningEn": "The verse describes her splendid crown and distinctive earrings. It gives the reciter an adorned form to contemplate."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "सोहत अंग छटा छवि प्यारी।",
+        "सुन्दर चीर सुनहरी धारी॥"
+      ],
+      "linesEn": [
+        "Sohat ang chhata chhavi pyari.",
+        "Sundar cheer sunahari dhari."
+      ],
+      "meaningHi": "देवी के अंगों की सुन्दर छटा और सुनहरे वस्त्रों की स्तुति है। यह पिछले पद के स्वरूप-ध्यान को आगे बढ़ाता है।",
+      "meaningEn": "Her lovely radiance and golden garments are praised. This continues the hymn's contemplation of her appearance."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "आप चतुर्भुज सुघड़ विशाला।",
+        "धारण करहु गले वन माला॥"
+      ],
+      "linesEn": [
+        "Aap chaturbhuj sughad vishala.",
+        "Dharan karahu gale van mala."
+      ],
+      "meaningHi": "माँ के सुन्दर चार भुजाओं वाले स्वरूप और गले की वनमाला का वर्णन है। भक्त स्तुति में इन चिह्नों को स्मरण करता है।",
+      "meaningEn": "The hymn describes her graceful four-armed form and forest garland. These are the features recalled during its praise."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "निकट है गौ अमित दुलारी।",
+        "करहु मयूर आप असवारी॥"
+      ],
+      "linesEn": [
+        "Nikat hai gau amit dulari.",
+        "Karahu mayoor aap asavari."
+      ],
+      "meaningHi": "इस पाठ में देवी के पास प्रिय गाय और मयूर की सवारी का वर्णन है। ये इसी स्तुति के स्वरूप-वर्णन के अंग हैं।",
+      "meaningEn": "This composition describes a beloved cow beside the Goddess and a peacock as her mount. These belong to the form portrayed by this particular hymn."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "जानत सबही आप प्रभुताई।",
+        "सुर नर मुनि सब करहिं बड़ाई॥"
+      ],
+      "linesEn": [
+        "Janat sabahi aap prabhutai.",
+        "Sur nar muni sab karahin badai."
+      ],
+      "meaningHi": "देवता, मनुष्य और मुनि सभी देवी की प्रभुता जानते और बड़ाई करते हैं। स्तुति माँ के व्यापक आदर का स्मरण करती है।",
+      "meaningEn": "Gods, people and sages are said to know and praise her power. The verse evokes the wide reverence offered to her."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "तुम्हरे दरश करत क्षण माई।",
+        "दुख दरिद्र सब जाय नसाई॥"
+      ],
+      "linesEn": [
+        "Tumhare darash karat kshan maai.",
+        "Dukh daridra sab jaay nasai."
+      ],
+      "meaningHi": "माँ के दर्शन से दुख और दरिद्रता मिटने की भक्त की आस्था व्यक्त है। यह दर्शन की महिमा का भक्तिपूर्ण वर्णन है।",
+      "meaningEn": "The devotee expresses faith that a glimpse of the Mother dispels sorrow and poverty. It is devotional praise of her presence."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "वेद पुराण रहे यश गाई।",
+        "करहु भक्त की आप सहाई॥"
+      ],
+      "linesEn": [
+        "Ved puran rahe yash gaai.",
+        "Karahu bhakt ki aap sahai."
+      ],
+      "meaningHi": "वेद और पुराण माँ का यश गाते बताए गए हैं। भक्त उसी स्तुति के बीच देवी से सहायता की प्रार्थना करता है।",
+      "meaningEn": "The Vedas and Puranas are described as singing her glory. Within that praise, the devotee asks the Goddess for help."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "ब्रह्मा ढिंग सरस्वती कहाई।",
+        "लक्ष्मी रूप विष्णु ढिंग आई॥"
+      ],
+      "linesEn": [
+        "Brahma dhing Saraswati kahai.",
+        "Lakshmi roop Vishnu dhing aai."
+      ],
+      "meaningHi": "ब्रह्मा के पास सरस्वती और विष्णु के पास लक्ष्मी रूप में देवी का स्मरण है। स्तुति इन रूपों को एक ही माँ की महिमा से जोड़ती है।",
+      "meaningEn": "The Goddess is recalled as Saraswati beside Brahma and Lakshmi beside Vishnu. The hymn joins these forms in its praise of the Mother."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "शिव ढिंग गिरजा रूप बिराजी।",
+        "महिमा तीनों लोक में गाजी॥"
+      ],
+      "linesEn": [
+        "Shiv dhing Girja roop biraji.",
+        "Mahima teenon lok mein gaji."
+      ],
+      "meaningHi": "शिव के पास गिरजा रूप में विराजमान देवी की महिमा तीनों लोकों में गूँजती बताई गई है। यह देवी के रूपों की स्तुति का अगला पद है।",
+      "meaningEn": "She is praised as Girija beside Shiva, her glory resounding through the three worlds. This continues the hymn's praise of her forms."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "शक्ति रूप प्रगटी जन जानी।",
+        "रुद्र रूप भई मात भवानी॥"
+      ],
+      "linesEn": [
+        "Shakti roop pragati jan jani.",
+        "Rudra roop bhai maat Bhavani."
+      ],
+      "meaningHi": "माता भवानी के शक्ति और रुद्र रूप में प्रकट होने का वर्णन है। भक्त उनके प्रबल स्वरूप का स्मरण करता है।",
+      "meaningEn": "Mother Bhavani is described as manifesting in the forms of Shakti and Rudra. The reciter remembers her powerful manifestation."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "दुष्टदलन हित प्रगटी काली।",
+        "जगमग ज्योति प्रचंड निराली॥"
+      ],
+      "linesEn": [
+        "Dushtadalan hit pragati Kali.",
+        "Jagmag jyoti prachand nirali."
+      ],
+      "meaningHi": "दुष्टों के नाश के लिए प्रकट काली की प्रचंड ज्योति का वर्णन है। स्तुति देवी के रक्षक और उग्र रूप को स्मरण करती है।",
+      "meaningEn": "Kali appears to destroy evil, shining with fierce radiance. The hymn remembers the Goddess's formidable protecting form."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "चण्ड मुण्ड महिषासुर मारे।",
+        "शुम्भ निशुम्भ असुर हनि डारे॥"
+      ],
+      "linesEn": [
+        "Chand Mund Mahishasur maare.",
+        "Shumbh Nishumbh asur hani daare."
+      ],
+      "meaningHi": "चण्ड, मुण्ड, महिषासुर, शुम्भ और निशुम्भ का संहार करने वाली देवी की स्तुति है। इन विजय-स्मरणों से उनकी शक्ति का गुणगान होता है।",
+      "meaningEn": "The Goddess is praised for defeating Chanda, Munda, Mahishasura, Shumbha and Nishumbha. Recalling these victories celebrates her power."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "महिमा वेद पुरनान बरनी।",
+        "निज भक्तन के संकट हरनी॥"
+      ],
+      "linesEn": [
+        "Mahima ved puranan barani.",
+        "Nij bhaktan ke sankat harani."
+      ],
+      "meaningHi": "वेद-पुराणों में वर्णित देवी की महिमा और भक्तों के संकट हरने का स्मरण है। पाठ में यह सहायता की आशा को बल देता है।",
+      "meaningEn": "The hymn recalls her glory in sacred literature and her removal of devotees' troubles. In the prayer this supports the devotee's hope for help."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "रूप शारदा हंस मोहिनी।",
+        "निरंकार साकार दाहिनी॥"
+      ],
+      "linesEn": [
+        "Roop Sharada hans mohini.",
+        "Nirankar sakar dahini."
+      ],
+      "meaningHi": "शारदा के हंस-मोहिनी रूप का स्मरण करते हुए पद निराकार और साकार दोनों का उल्लेख करता है। भक्त माँ को इन रूपों में प्रणाम करता है।",
+      "meaningEn": "Recalling Sharada and the captivating swan imagery, the verse names both the formless and the embodied. The devotee reveres the Mother through these descriptions."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "प्रगटाई चहुंदिश निज माया।",
+        "कण कण में है तेज समाया॥"
+      ],
+      "linesEn": [
+        "Pragatai chahundish nij maya.",
+        "Kan kan mein hai tej samaya."
+      ],
+      "meaningHi": "माँ की माया चारों दिशाओं में और उनका तेज कण-कण में व्याप्त बताया गया है। यह पद उनकी सर्वव्यापकता का ध्यान कराता है।",
+      "meaningEn": "Her power is described as manifest in every direction, her radiance present in every particle. The verse invites contemplation of her pervading presence."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "पृथ्वी सूर्य चन्द्र अरु तारे।",
+        "तव इंगित क्रम बद्ध हैं सारे॥"
+      ],
+      "linesEn": [
+        "Prithvi soorya chandra aru taare.",
+        "Tav ingit kram baddh hain saare."
+      ],
+      "meaningHi": "पृथ्वी, सूर्य, चन्द्र और तारे देवी के संकेत पर क्रम में चलते बताए गए हैं। स्तुति जगत की व्यवस्था को माँ की शक्ति से जोड़ती है।",
+      "meaningEn": "Earth, sun, moon and stars are described as ordered by her indication. The hymn attributes the world's order to her power."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "पालन पोषण तुमहीं करता।",
+        "क्षण भंगुर में प्राण हरता॥"
+      ],
+      "linesEn": [
+        "Palan poshan tumahin karta.",
+        "Kshan bhangur mein pran harta."
+      ],
+      "meaningHi": "देवी को पालन-पोषण करने वाली और क्षण में प्राण हरने वाली शक्ति कहा गया है। स्तुति जीवन के पोषण और अन्त दोनों का स्मरण करती है।",
+      "meaningEn": "The Goddess is praised as the power that sustains life and can take it away in an instant. The verse contemplates both life's care and its ending."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "ब्रह्मा विष्णु तुम्हें नित ध्यावैं।",
+        "शेष महेश सदा मन लावे॥"
+      ],
+      "linesEn": [
+        "Brahma Vishnu tumhen nit dhyavain.",
+        "Shesh Mahesh sada man laave."
+      ],
+      "meaningHi": "ब्रह्मा, विष्णु, शेष और महेश देवी का निरन्तर ध्यान करते बताए गए हैं। भक्त उनके साथ माँ के स्मरण में जुड़ता है।",
+      "meaningEn": "Brahma, Vishnu, Shesha and Mahesha are described as continually remembering her. The reciter joins this act of remembrance."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "मनोकमना पूरण करनी।",
+        "पाप काटनी भव भय तरनी॥"
+      ],
+      "linesEn": [
+        "Manokamana pooran karani.",
+        "Paap katani bhav bhay tarani."
+      ],
+      "meaningHi": "माँ को इच्छाएँ पूर्ण करने वाली, पाप काटने वाली और संसार के भय से पार करने वाली कहा गया है। यह कृपा और आश्रय की स्तुति है।",
+      "meaningEn": "She is praised as fulfilling wishes, removing wrongdoing and carrying devotees beyond worldly fear. The verse expresses reliance on her grace."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "चित्त लगाय तुम्हें जो ध्याता।",
+        "सो नर सुख सम्पत्ति है पाता॥"
+      ],
+      "linesEn": [
+        "Chitt lagaay tumhen jo dhyata.",
+        "So nar sukh sampatti hai pata."
+      ],
+      "meaningHi": "एकाग्र चित्त से माँ का ध्यान करने वाले को सुख और सम्पत्ति मिलने की आस्था व्यक्त है। पद ध्यान में मन लगाने का महत्त्व बताता है।",
+      "meaningEn": "The hymn expresses faith that focused remembrance brings happiness and prosperity. It emphasizes attention in devotion."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "बन्ध्या नारि तुमहिं जो ध्यावैं।",
+        "पुत्र पुष्प लता सम वह पावैं॥"
+      ],
+      "linesEn": [
+        "Bandhya nari tumahin jo dhyavain.",
+        "Putra pushp lata sam vah pavain."
+      ],
+      "meaningHi": "सन्तान की कामना रखने वाली स्त्री की प्रार्थना को पुत्र-पुष्प की उपमा से व्यक्त किया गया है। यह स्तुति की भक्तिपूर्ण आशा है, चिकित्सा का आश्वासन नहीं।",
+      "meaningEn": "A woman's longing for a child is expressed through the image of a son as a flower on a vine. This is a devotional hope, not a medical assurance."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "पति वियोगी अति व्याकुलनारी।",
+        "तुम वियोग अति व्याकुलयारी॥"
+      ],
+      "linesEn": [
+        "Pati viyogi ati vyakulnari.",
+        "Tum viyog ati vyakulyari."
+      ],
+      "meaningHi": "पति से वियोग में व्याकुल स्त्री का दुख इस पद का स्पष्ट भाव है। भक्त उस व्याकुलता के साथ माँ को स्मरण करता है।",
+      "meaningEn": "The clear theme of this verse is a woman's distress at separation from her husband. The prayer brings that anguish into remembrance of the Mother."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "कन्या जो कोइ तुमको ध्यावै।",
+        "अपना मन वांछित वर पावै॥"
+      ],
+      "linesEn": [
+        "Kanya jo koi tumko dhyavai.",
+        "Apna man vanchhit var pavai."
+      ],
+      "meaningHi": "देवी का ध्यान करने वाली कन्या को मनचाहा वर मिलने की आस्था कही गई है। स्तुति में यह जीवनसाथी की कामना का प्रसंग है।",
+      "meaningEn": "The hymn voices faith that a young woman who remembers the Goddess finds the spouse she desires. It gives expression to that personal hope."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "शीलवान गुणवान हो मैया।",
+        "अपने जन की नाव खिवैया॥"
+      ],
+      "linesEn": [
+        "Sheelvan gunvan ho maiya.",
+        "Apne jan ki naav khivaiya."
+      ],
+      "meaningHi": "शील और गुण से युक्त माँ को भक्तों की नाव की खेवैया कहा गया है। नाव की उपमा जीवन में सहारे की प्रार्थना व्यक्त करती है।",
+      "meaningEn": "The virtuous Mother is praised as the boatwoman of her devotees. The boat image expresses their prayer for guidance and support."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "विधि पूर्वक व्रत जो कोई करहीं।",
+        "ताहि अमित सुख संपत्ति भरहीं॥"
+      ],
+      "linesEn": [
+        "Vidhi poorvak vrat jo koi karahin.",
+        "Tahi amit sukh sampatti bharahin."
+      ],
+      "meaningHi": "विधिपूर्वक व्रत रखने वाले को सुख-सम्पत्ति मिलने की आस्था है। स्तुति में यह श्रद्धा के साथ व्रत करने का स्मरण है।",
+      "meaningEn": "The hymn expresses faith that observance of the vrat brings happiness and prosperity. It recalls carrying out the observance with care."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "गुड़ और चना भोग तोहि भावै।",
+        "सेवा करै सो आनंद पावै॥"
+      ],
+      "linesEn": [
+        "Gud aur chana bhog tohi bhavai.",
+        "Seva karai so anand pavai."
+      ],
+      "meaningHi": "गुड़ और चने का भोग माँ को प्रिय बताया गया है। उनकी सेवा करने में भक्त को आनन्द मिलने की बात कही गई है।",
+      "meaningEn": "Jaggery and chickpeas are described as offerings dear to the Mother. The verse locates joy in serving her."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "श्रद्धा युक्त ध्यान जो धरहीं।",
+        "सो नर निश्चय भव सों तरहीं॥"
+      ],
+      "linesEn": [
+        "Shraddha yukt dhyan jo dharahin.",
+        "So nar nishchay bhav son tarahin."
+      ],
+      "meaningHi": "श्रद्धापूर्वक ध्यान करने वाला संसार से पार होता है, ऐसी भक्त की आस्था है। ध्यान में विश्वास और समर्पण पर बल है।",
+      "meaningEn": "The devotee trusts that faithful contemplation carries one across worldly existence. The verse stresses faith and dedication in remembrance."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "उद्यापन जो करहि तुम्हारा।",
+        "ताको सहज करहु निस्तारा॥"
+      ],
+      "linesEn": [
+        "Udyapan jo karahi tumhara.",
+        "Tako sahaj karahu nistara."
+      ],
+      "meaningHi": "उद्यापन करने वाले भक्त के निस्तार की प्रार्थना है। व्रत की समापन पूजा को माँ की कृपा से जोड़ा गया है।",
+      "meaningEn": "The hymn asks for deliverance for the devotee who performs the udyapan. The concluding worship of the vrat is linked with the Mother's grace."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "नारि सुहागिन व्रत जो करती।",
+        "सुख सम्पत्ति सों गोदी भरती॥"
+      ],
+      "linesEn": [
+        "Nari suhagin vrat jo karti.",
+        "Sukh sampatti son godi bharti."
+      ],
+      "meaningHi": "व्रत रखने वाली सुहागिन के घर-परिवार में सुख-सम्पत्ति की कामना व्यक्त है। गोद भरने की छवि मातृत्व और पारिवारिक पूर्णता की भक्तिपूर्ण आशा है।",
+      "meaningEn": "The verse expresses a married woman's hope for happiness and prosperity through the vrat. Its image of a filled lap evokes the devotional wish for motherhood and family fulfilment."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "जो सुमिरत जैसी मन भावा।",
+        "सो नर वैसो ही फल पावा॥"
+      ],
+      "linesEn": [
+        "Jo sumirat jaisi man bhava.",
+        "So nar vaiso hi phal pava."
+      ],
+      "meaningHi": "भक्त जिस मनोभाव से स्मरण करता है, उसी के अनुरूप फल पाने की आस्था कही गई है। स्मरण में अपने भाव का महत्त्व सामने आता है।",
+      "meaningEn": "The hymn says that the fruit of remembrance corresponds to the devotee's intention. It emphasizes the inner disposition brought to prayer."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "सात शुक्र जो व्रत मन धारे।",
+        "ताके पूर्ण मनोरथ सारे॥"
+      ],
+      "linesEn": [
+        "Saat shukra jo vrat man dhaare.",
+        "Taake poorn manorath saare."
+      ],
+      "meaningHi": "इस पद में सात शुक्रवार व्रत का संकल्प रखने वाले के मनोरथ पूरे होने की आस्था व्यक्त है। यह पाठ का कथन है, सभी व्रत-परम्पराओं के लिए एक नियम नहीं।",
+      "meaningEn": "This verse expresses faith in the fulfilment of wishes through a vow observed over seven Fridays. It is the hymn's statement, not a rule for every vrat tradition."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "सेवा करहि भक्ति युत जोई।",
+        "ताको दूर दरिद्र दुख होई॥"
+      ],
+      "linesEn": [
+        "Seva karahi bhakti yut joi.",
+        "Tako door daridra dukh hoi."
+      ],
+      "meaningHi": "भक्तिपूर्वक सेवा से दरिद्रता और दुख दूर होने की आशा व्यक्त है। पद सेवा में श्रद्धा को मुख्य रखता है।",
+      "meaningEn": "Devoted service is associated with relief from poverty and sorrow. The verse places dedication at the heart of service."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "जो जन शरण माता तेरी आवै।",
+        "ताके क्षण में काज बनावै॥"
+      ],
+      "linesEn": [
+        "Jo jan sharan mata teri aavai.",
+        "Taake kshan mein kaaj banavai."
+      ],
+      "meaningHi": "माँ की शरण में आने वाले के कार्य सँवरने की आस्था कही गई है। भक्त सहायता और आश्रय के लिए देवी की ओर मुड़ता है।",
+      "meaningEn": "The hymn expresses trust that the Mother helps those who seek her refuge. The devotee turns to her for shelter and assistance."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "जय जय जय अम्बे कल्यानी।",
+        "कृपा करौ मोरी महारानी॥"
+      ],
+      "linesEn": [
+        "Jai jai jai Ambe kalyani.",
+        "Kripa karau mori maharani."
+      ],
+      "meaningHi": "कल्याण करने वाली अम्बा की बार-बार जय कहकर कृपा माँगी गई है। यह स्तुति के बीच सीधी, आत्मीय प्रार्थना है।",
+      "meaningEn": "Repeated praise of benevolent Amba leads into a direct request for grace. The verse is an intimate appeal within the hymn."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "जो कोई पढ़ै मात चालीसा।",
+        "तापे करहिं कृपा जगदीशा॥"
+      ],
+      "linesEn": [
+        "Jo koi padhai maat chalisa.",
+        "Taape karahin kripa Jagdisha."
+      ],
+      "meaningHi": "माता की चालीसा पढ़ने वाले पर दिव्य कृपा होने की आस्था है। यह पद पाठ की भक्तिपूर्ण महिमा बताता है।",
+      "meaningEn": "The hymn expresses faith that reciting the Mother's Chalisa brings divine grace. It praises the devotional act of recitation."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "नित प्रति पाठ करै इक बारा।",
+        "सो नर रहै तुम्हारा प्यारा॥"
+      ],
+      "linesEn": [
+        "Nit prati paath karai ik bara.",
+        "So nar rahai tumhara pyara."
+      ],
+      "meaningHi": "प्रतिदिन एक बार पाठ करने वाला माँ का प्रिय रहता है, ऐसा कहा गया है। नियमित स्मरण को माँ से निकटता के रूप में देखा गया है।",
+      "meaningEn": "Daily recitation is described as keeping the devotee dear to the Mother. Regular remembrance is portrayed as closeness to her."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "नाम लेत ब्याधा सब भागे।",
+        "रोग दोष कबहूँ नहीं लागे॥"
+      ],
+      "linesEn": [
+        "Naam let byadha sab bhaage.",
+        "Rog dosh kabahoon nahin laage."
+      ],
+      "meaningHi": "नाम-स्मरण से व्याधि, रोग और दोष दूर होने की भक्तिपूर्ण आशा व्यक्त है। यह स्तुति की भाषा है, उपचार का विकल्प या रोगमुक्ति की गारंटी नहीं।",
+      "meaningEn": "Remembrance of her name is praised as dispelling affliction, illness and faults. This is devotional language, not a substitute for treatment or a guarantee of recovery."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "सन्तोषी माँ के सदा, बन्दहुँ पग निश वास।",
+        "पूर्ण मनोरथ हों सकल, मात हरौ भव त्रास॥"
+      ],
+      "linesEn": [
+        "Santoshi maan ke sada, bandahun pag nish vaas.",
+        "Poorn manorath hon sakal, maat harau bhav traas."
+      ],
+      "meaningHi": "माँ के चरणों में निरन्तर प्रणाम करके मनोरथों की पूर्ति और संसार के भय से मुक्ति माँगी गई है। समापन दोहा पूरे पाठ को विनयपूर्ण प्रार्थना में समेटता है।",
+      "meaningEn": "The closing bows continually at the Mother's feet, asking for fulfilment of hopes and freedom from worldly fear. It gathers the hymn into a humble prayer."
+    }
+  ]
+}

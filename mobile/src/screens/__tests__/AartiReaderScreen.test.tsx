@@ -182,7 +182,7 @@ test.each([
 });
 
 // All audited compositions, including main’s Shani edition, dispatch their first and last pages.
-test.each(["om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "shani-aarti", "kubera-aarti", "santoshi-mata-aarti", "ahoi-mata-aarti", "vaishno-devi-aarti", "ekadashi-mata-aarti", "tulsi-aarti", "shakambhari-aarti"] as const)('renders the sourced aarti %s in both languages', (id) => {
+test.each(["om-jai-gange-mata", "ambe-tu-hai-jagdambe-kali", "shani-aarti", "kubera-aarti", "santoshi-mata-aarti", "ahoi-mata-aarti", "vaishno-devi-aarti", "ekadashi-mata-aarti", "tulsi-aarti", "shakambhari-aarti", "satyanarayan-aarti"] as const)('renders the sourced aarti %s in both languages', (id) => {
   const index = getActualData.aartiIndexById[id];
   const aarti = getActualData.getAarti(index);
   for (const lang of ['hi', 'en'] as const) {

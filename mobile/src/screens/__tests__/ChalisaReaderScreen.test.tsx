@@ -233,3 +233,162 @@ test('opens Surya Chalisa by chalisaId with its own opening doha', () => {
   assert.ok(renderedText.includes('कनक बदन कुण्डल मकर'));
   assert.ok(!renderedText.includes(firstVerse.lines[0]));
 });
+
+// A2 exercises real registry dispatch and the selected language on opening/closing.
+for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+  for (const initialIndex of [0, 41]) {
+    test(`Vaishno Devi Chalisa renders ${lang} page ${initialIndex + 1}`, () => {
+      const payload = getChalisa('vaishno-devi-chalisa');
+      assert.equal(payload.id, 'vaishno-devi-chalisa');
+      assert.equal(payload.verses.length, 42);
+      let tree: TestRenderer.ReactTestRenderer | undefined;
+      act(() => {
+        tree = createReader(
+          <GitaLanguageProvider initialLang={lang}>
+            <ShareProvider>
+              <ChalisaReaderScreen navigation={navigation} route={{ ...route, params: { chalisaId: 'vaishno-devi-chalisa', initialIndex } }} />
+            </ShareProvider>
+          </GitaLanguageProvider>
+        );
+      });
+      const text = tree!.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
+      const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+      assert.ok(text.includes(contentByLang(lang, payload.titleHi, payload.titleEn)));
+      const verse = payload.verses[initialIndex];
+      assert.ok(text.includes(verseLinesByLang(lang, verse.lines, verse.linesEn)[0]));
+      assert.ok(!text.includes(firstVerse.lines[0]));
+      const back = tree!.root.findByProps({ accessibilityLabel: 'Back to home' });
+      const goBack = jest.spyOn(navigation, 'goBack');
+      act(() => back.props.onPress());
+      expect(goBack).toHaveBeenCalledTimes(1);
+      goBack.mockRestore();
+    });
+  }
+}
+
+// A1 exercises real registry dispatch and the selected language on opening/closing.
+for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+  for (const initialIndex of [0, 2, 42]) {
+    test(`Shani Chalisa renders ${lang} page ${initialIndex + 1}`, () => {
+      const payload = getChalisa('shani-chalisa');
+      assert.equal(payload.id, 'shani-chalisa');
+      assert.equal(payload.verses.length, 43);
+      let tree: TestRenderer.ReactTestRenderer | undefined;
+      act(() => {
+        tree = createReader(
+          <GitaLanguageProvider initialLang={lang}>
+            <ShareProvider>
+              <ChalisaReaderScreen navigation={navigation} route={{ ...route, params: { chalisaId: 'shani-chalisa', initialIndex } }} />
+            </ShareProvider>
+          </GitaLanguageProvider>
+        );
+      });
+      const text = tree!.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
+      const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+      assert.ok(text.includes(contentByLang(lang, payload.titleHi, payload.titleEn)));
+      const verse = payload.verses[initialIndex];
+      assert.ok(text.includes(verseLinesByLang(lang, verse.lines, verse.linesEn)[0]));
+      assert.ok(!text.includes(firstVerse.lines[0]));
+      const back = tree!.root.findByProps({ accessibilityLabel: 'Back to home' });
+      const goBack = jest.spyOn(navigation, 'goBack');
+      act(() => back.props.onPress());
+      expect(goBack).toHaveBeenCalledTimes(1);
+      goBack.mockRestore();
+    });
+  }
+}
+
+// A3 exercises real registry dispatch and the selected language on opening/closing.
+for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+  for (const initialIndex of [0, 41]) {
+    test(`Santoshi Mata Chalisa renders ${lang} page ${initialIndex + 1}`, () => {
+      const payload = getChalisa('santoshi-mata-chalisa');
+      assert.equal(payload.id, 'santoshi-mata-chalisa');
+      assert.equal(payload.verses.length, 42);
+      let tree: TestRenderer.ReactTestRenderer | undefined;
+      act(() => {
+        tree = createReader(
+          <GitaLanguageProvider initialLang={lang}>
+            <ShareProvider>
+              <ChalisaReaderScreen navigation={navigation} route={{ ...route, params: { chalisaId: 'santoshi-mata-chalisa', initialIndex } }} />
+            </ShareProvider>
+          </GitaLanguageProvider>
+        );
+      });
+      const text = tree!.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
+      const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+      assert.ok(text.includes(contentByLang(lang, payload.titleHi, payload.titleEn)));
+      const verse = payload.verses[initialIndex];
+      assert.ok(text.includes(verseLinesByLang(lang, verse.lines, verse.linesEn)[0]));
+      assert.ok(!text.includes(firstVerse.lines[0]));
+      const back = tree!.root.findByProps({ accessibilityLabel: 'Back to home' });
+      const goBack = jest.spyOn(navigation, 'goBack');
+      act(() => back.props.onPress());
+      expect(goBack).toHaveBeenCalledTimes(1);
+      goBack.mockRestore();
+    });
+  }
+}
+// A4 exercises real registry dispatch and the selected language on opening/closing.
+for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+  for (const initialIndex of [0, 1, 28, 55, 56]) {
+    test(`Kali Chalisa renders ${lang} page ${initialIndex + 1}`, () => {
+      const payload = getChalisa('kali-chalisa');
+      assert.equal(payload.id, 'kali-chalisa');
+      assert.equal(payload.verses.length, 57);
+      let tree: TestRenderer.ReactTestRenderer | undefined;
+      act(() => {
+        tree = createReader(
+          <GitaLanguageProvider initialLang={lang}>
+            <ShareProvider>
+              <ChalisaReaderScreen navigation={navigation} route={{ ...route, params: { chalisaId: 'kali-chalisa', initialIndex } }} />
+            </ShareProvider>
+          </GitaLanguageProvider>
+        );
+      });
+      const text = tree!.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
+      const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+      assert.ok(text.includes(contentByLang(lang, payload.titleHi, payload.titleEn)));
+      const verse = payload.verses[initialIndex];
+      assert.ok(text.includes(verseLinesByLang(lang, verse.lines, verse.linesEn)[0]));
+      assert.ok(!text.includes(firstVerse.lines[0]));
+      const back = tree!.root.findByProps({ accessibilityLabel: 'Back to home' });
+      const goBack = jest.spyOn(navigation, 'goBack');
+      act(() => back.props.onPress());
+      expect(goBack).toHaveBeenCalledTimes(1);
+      goBack.mockRestore();
+    });
+  }
+}
+
+// A5 exercises real registry dispatch and the selected language on opening/closing.
+for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+  for (const initialIndex of [0, 1, 10, 21, 41, 42]) {
+    test(`Radha Chalisa renders ${lang} page ${initialIndex + 1}`, () => {
+      const payload = getChalisa('radha-chalisa');
+      assert.equal(payload.id, 'radha-chalisa');
+      assert.equal(payload.verses.length, 43);
+      let tree: TestRenderer.ReactTestRenderer | undefined;
+      act(() => {
+        tree = createReader(
+          <GitaLanguageProvider initialLang={lang}>
+            <ShareProvider>
+              <ChalisaReaderScreen navigation={navigation} route={{ ...route, params: { chalisaId: 'radha-chalisa', initialIndex } }} />
+            </ShareProvider>
+          </GitaLanguageProvider>
+        );
+      });
+      const text = tree!.root.findAllByType(Text).map(n => n.props.children).flat(Infinity).join(' ');
+      const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+      assert.ok(text.includes(contentByLang(lang, payload.titleHi, payload.titleEn)));
+      const verse = payload.verses[initialIndex];
+      assert.ok(text.includes(verseLinesByLang(lang, verse.lines, verse.linesEn)[0]));
+      assert.ok(!text.includes(firstVerse.lines[0]));
+      const back = tree!.root.findByProps({ accessibilityLabel: 'Back to home' });
+      const goBack = jest.spyOn(navigation, 'goBack');
+      act(() => back.props.onPress());
+      expect(goBack).toHaveBeenCalledTimes(1);
+      goBack.mockRestore();
+    });
+  }
+}

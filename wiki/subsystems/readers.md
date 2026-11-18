@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-11-13
+last_verified_date: 2026-11-18
 confidence: high
 status: current
 ---
@@ -334,3 +334,13 @@ Validation: five focused Node integration tests execute the production pool, con
 `GitaVerseJumpSheet` is mounted only while choosing. It reads chapter counts/titles from the manifest and accepts four numeral scripts. `GitaReaderScreen` stops playback, suppresses pager callbacks and suspends dwell until dismissal. Only Open loads the selected chapter and resolves the real verse number. Route replacement preserves the calling stack and mounts a new reader directly at the target, so no skipped page receives progress/coverage. Cancel does not write position; the original verse may still receive legitimate dwell credit accrued before opening. Existing transition timers are cancelled on unmount. No other reader or routine completion contract changes.
 
 Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.
+
+
+B1 Satyanarayan Aarti (17 Nov 2026) appends index 22 with nine pages from the complete dated 1930 edition. Puja instructions and ref now select this aarti; previous positions are preserved. Existing Vishnu artwork is reused. Source variants and native-pending acceptance: `docs/evaluations/b1-satyanarayan-aarti/review.md`.
+
+
+## Complete Saptashati reading collection (PR #702)
+
+`SaptashatiCoreScreen` uses the existing collection route and LibraryCard/ReaderHeader surfaces. It opens three preliminary readings (full Devi Kavacham, Argala, Kilak) followed by all thirteen chapter-specific Stuti sources. `data/saptashatiCore.ts` declares counts totaling 700 traditional numbered units; these include speaker announcements and short salutation units, not only full metrical verses. Ritual procedure is not bundled. Each chapter is a separate stable source, so returning to the collection selects the next chapter; this does not introduce automatic cross-source chapter advance.
+
+`getStuti` requires each chapter payload lazily. Catalog/search, static generated counts, artwork/backgrounds, discovery and verse-to-japa are integrated. New Daily Bhakti entries append to `versePoolFlat.ts`, preserving prior pool offsets. Chapter 1's IDs remain unchanged, as do saved references to the hidden old mixed Durga Kavach selection. Full source collation, original Hindi/English meaning decisions and exact exclusions are recorded in `docs/evaluations/remaining-content/saptashati-completion-sources.md`. Gujarati/Kannada retain the existing script/fallback policy. Browser component evidence and automated tests are distinct from still-pending native lifecycle, sharing, accessibility and performance acceptance. This section describes the PR implementation, not a merged release.

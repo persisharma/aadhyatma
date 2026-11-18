@@ -1,0 +1,393 @@
+{
+  "id": "durga-saptashati-chapter-6",
+  "titleHi": "दुर्गा सप्तशती — षष्ठ अध्याय",
+  "titleEn": "Durga Saptashati — Chapter 6",
+  "deity": "durga",
+  "source": {
+    "baseText": "Devi Mahatmya (Durga Saptashati), Chapter 6; traditional numbered Sanskrit text units.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/sixth-chapter/durga-saptashati-sixth-chapter.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-18",
+    "notes": "Ancient Sanskrit only; original Hindi and English meanings. Drik base collated with Rampuri; see saptashati-completion-sources.md for variants and numbered-unit conventions. Romanization follows the existing reader convention; no copied modern translations."
+  },
+  "verses": [
+    {
+      "id": "durga-saptashati-chapter-6-1",
+      "number": 1,
+      "labelHi": "पाठ · १",
+      "labelEn": "Text unit · 1",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले।",
+      "meaningEn": "The sage said."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-2",
+      "number": 2,
+      "labelHi": "पाठ · २",
+      "labelEn": "Text unit · 2",
+      "lines": [
+        "इत्याकर्ण्य वचो देव्याः स दूतोऽमर्षपूरितः।",
+        "समाचष्ट समागम्य दैत्यराजाय विस्तरात्॥"
+      ],
+      "linesEn": [
+        "ityākarṇya vacho devyāḥ sa dūto'marṣapūritaḥ",
+        "samāchaṣṭa samāgamya daityarājāya vistarāt"
+      ],
+      "meaningHi": "देवी की बात सुनकर क्रोधित दूत ने लौटकर दैत्यराज को सब विस्तार से बताया।",
+      "meaningEn": "Angered by the Goddess’s words, the messenger returned and reported everything to the demon king."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-3",
+      "number": 3,
+      "labelHi": "पाठ · ३",
+      "labelEn": "Text unit · 3",
+      "lines": [
+        "तस्य दूतस्य तद्वाक्यमाकर्ण्यासुरराट् ततः।",
+        "सक्रोधः प्राह दैत्यानामधिपं धूम्रलोचनम्॥"
+      ],
+      "linesEn": [
+        "tasya dūtasya tadvākyamākarṇyāsurarāṭ tataḥ",
+        "sakrodhaḥ prāha daityānāmadhipaṃ dhūmralochanam"
+      ],
+      "meaningHi": "दूत का संदेश सुनकर असुरराज ने क्रोध से सेनापति धूम्रलोचन को आदेश दिया।",
+      "meaningEn": "Hearing the message, the demon king angrily addressed his commander Dhumralochana."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-4",
+      "number": 4,
+      "labelHi": "पाठ · ४",
+      "labelEn": "Text unit · 4",
+      "lines": [
+        "हे धूम्रलोचनाशु त्वं स्वसैन्यपरिवारितः।",
+        "तामानय बलाद् दुष्टां केशाकर्षणविह्वलाम्॥"
+      ],
+      "linesEn": [
+        "he dhūmralochanāśhu tvaṃ svasainyaparivāritaḥ",
+        "tāmānaya balād duṣṭāṃ keśhākarṣaṇavihvalām"
+      ],
+      "meaningHi": "हे धूम्रलोचन, अपनी सेना लेकर शीघ्र जाओ और उसे बालों से खींचते हुए बलपूर्वक ले आओ।",
+      "meaningEn": "Dhumralochana, go quickly with your army and bring her here by force, dragging her by the hair."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-5",
+      "number": 5,
+      "labelHi": "पाठ · ५",
+      "labelEn": "Text unit · 5",
+      "lines": [
+        "तत्परित्राणदः कश्चिद्यदि वोत्तिष्ठतेऽपरः।",
+        "स हन्तव्योऽमरो वापि यक्षो गन्धर्व एव वा॥"
+      ],
+      "linesEn": [
+        "tatparitrāṇadaḥ kaśhchidyadi vottiṣṭhate'paraḥ",
+        "sa hantavyo'maro vāpi yakṣho gandharva eva vā"
+      ],
+      "meaningHi": "उसकी रक्षा के लिए कोई भी आए—देवता, यक्ष या गन्धर्व—उसे मार डालना।",
+      "meaningEn": "Kill whoever comes to protect her, whether a god, a yaksha or a gandharva."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-6",
+      "number": 6,
+      "labelHi": "पाठ · ६",
+      "labelEn": "Text unit · 6",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले।",
+      "meaningEn": "The sage said."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-7",
+      "number": 7,
+      "labelHi": "पाठ · ७",
+      "labelEn": "Text unit · 7",
+      "lines": [
+        "तेनाज्ञप्तस्ततः शीघ्रं स दैत्यो धूम्रलोचनः।",
+        "वृतः षष्ट्या सहस्राणामसुराणां द्रुतं ययौ॥"
+      ],
+      "linesEn": [
+        "tenājñaptastataḥ śhīghraṃ sa daityo dhūmralochanaḥ",
+        "vṛitaḥ ṣaṣṭyā sahasrāṇāmasurāṇāṃ drutaṃ yayau"
+      ],
+      "meaningHi": "आदेश पाकर धूम्रलोचन साठ हजार असुरों के साथ तुरंत चल पड़ा।",
+      "meaningEn": "At this command, Dhumralochana immediately set out with sixty thousand demons."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-8",
+      "number": 8,
+      "labelHi": "पाठ · ८",
+      "labelEn": "Text unit · 8",
+      "lines": [
+        "स दृष्ट्वा तां ततो देवीं तुहिनाचलसंस्थिताम्।",
+        "जगादोच्चैः प्रयाहीति मूलं शुम्भनिशुम्भयोः॥"
+      ],
+      "linesEn": [
+        "sa dṛiṣṭvā tāṃ tato devīṃ tuhināchalasaṃsthitām",
+        "jagādochchaiḥ prayāhīti mūlaṃ śhumbhaniśhumbhayoḥ"
+      ],
+      "meaningHi": "हिमालय पर स्थित देवी को देखकर उसने ऊँचे स्वर में कहा कि शुम्भ और निशुम्भ के पास चलो।",
+      "meaningEn": "Seeing the Goddess on the Himalaya, he loudly ordered her to come to Shumbha and Nishumbha."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-9",
+      "number": 9,
+      "labelHi": "पाठ · ९",
+      "labelEn": "Text unit · 9",
+      "lines": [
+        "न चेत्प्रीत्याद्य भवती मद्भर्तारमुपैष्यति।",
+        "ततो बलान्नयाम्येष केशाकर्षणविह्वलाम्॥"
+      ],
+      "linesEn": [
+        "na chetprītyādya bhavatī madbhartāramupaiṣyati",
+        "tato balānnayāmyeṣa keśhākarṣaṇavihvalām"
+      ],
+      "meaningHi": "यदि तुम आज स्वेच्छा से मेरे स्वामी के पास नहीं चलतीं, तो मैं बालों से खींचकर तुम्हें बलपूर्वक ले जाऊँगा।",
+      "meaningEn": "If you do not willingly come to my master today, I will drag you there by the hair."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-10",
+      "number": 10,
+      "labelHi": "पाठ · १०",
+      "labelEn": "Text unit · 10",
+      "lines": [
+        "देव्युवाच॥"
+      ],
+      "linesEn": [
+        "devyuvācha"
+      ],
+      "meaningHi": "देवी बोलीं।",
+      "meaningEn": "The Goddess said."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-11",
+      "number": 11,
+      "labelHi": "पाठ · ११",
+      "labelEn": "Text unit · 11",
+      "lines": [
+        "दैत्येश्वरेण प्रहितो बलवान् बलसंवृतः।",
+        "बलान्नयसि मामेवं ततः किं ते करोम्यहम्॥"
+      ],
+      "linesEn": [
+        "daityeśhvareṇa prahito balavān balasaṃvṛitaḥ",
+        "balānnayasi māmevaṃ tataḥ kiṃ te karomyaham"
+      ],
+      "meaningHi": "तुम दैत्यराज के भेजे हुए बलवान योद्धा हो और सेना साथ लाए हो; यदि मुझे बल से ले जाओगे तो मैं तुम्हारा क्या कर सकती हूँ?",
+      "meaningEn": "You are a powerful warrior sent by the demon king, surrounded by troops. If you take me by force, what can I do against you?"
+    },
+    {
+      "id": "durga-saptashati-chapter-6-12",
+      "number": 12,
+      "labelHi": "पाठ · १२",
+      "labelEn": "Text unit · 12",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले।",
+      "meaningEn": "The sage said."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-13",
+      "number": 13,
+      "labelHi": "पाठ · १३",
+      "labelEn": "Text unit · 13",
+      "lines": [
+        "इत्युक्तः सोऽभ्यधावत्तामसुरो धूम्रलोचनः।",
+        "हुंकारेणैव तं भस्म सा चकाराम्बिका ततः॥"
+      ],
+      "linesEn": [
+        "ityuktaḥ so'bhyadhāvattāmasuro dhūmralochanaḥ",
+        "huṃkāreṇaiva taṃ bhasma sā chakārāmbikā tataḥ"
+      ],
+      "meaningHi": "यह सुनकर धूम्रलोचन देवी की ओर दौड़ा; अम्बिका ने केवल हुंकार से उसे भस्म कर दिया।",
+      "meaningEn": "Dhumralochana rushed at her; Ambika reduced him to ashes with a single fierce utterance of hum."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-14",
+      "number": 14,
+      "labelHi": "पाठ · १४",
+      "labelEn": "Text unit · 14",
+      "lines": [
+        "अथ क्रुद्धं महासैन्यमसुराणां तथाम्बिका।",
+        "ववर्ष सायकैस्तीक्ष्णैस्तथा शक्तिपरश्वधैः॥"
+      ],
+      "linesEn": [
+        "atha kruddhaṃ mahāsainyamasurāṇāṃ tathāmbikā",
+        "vavarṣa sāyakaistīkṣhṇaistathā śhaktiparaśhvadhaiḥ"
+      ],
+      "meaningHi": "तब अम्बिका ने असुरों की क्रोधित विशाल सेना पर तीखे बाणों, शक्तियों और फरसों की वर्षा की।",
+      "meaningEn": "Then Ambika showered the furious demon army with sharp arrows, spears and axes."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-15",
+      "number": 15,
+      "labelHi": "पाठ · १५",
+      "labelEn": "Text unit · 15",
+      "lines": [
+        "ततो धुतसटः कोपात्कृत्वा नादं सुभैरवम्।",
+        "पपातासुरसेनायां सिंहो देव्याः स्ववाहनः॥"
+      ],
+      "linesEn": [
+        "tato dhutasaṭaḥ kopātkṛitvā nādaṃ subhairavam",
+        "papātāsurasenāyāṃ siṃho devyāḥ svavāhanaḥ"
+      ],
+      "meaningHi": "देवी का सिंह अपनी अयाल हिलाता और भयानक गर्जना करता हुआ क्रोध से असुर सेना पर टूट पड़ा।",
+      "meaningEn": "The Goddess’s lion shook his mane, roared terribly and sprang upon the demon army in anger."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-16",
+      "number": 16,
+      "labelHi": "पाठ · १६",
+      "labelEn": "Text unit · 16",
+      "lines": [
+        "कांश्चित् करप्रहारेण दैत्यानास्येन चापरान्।",
+        "आक्रम्य चाधरेणान्यान् स जघान महासुरान्॥"
+      ],
+      "linesEn": [
+        "kāṃśhchit karaprahāreṇa daityānāsyena chāparān",
+        "ākramya chādhareṇānyān sa jaghāna mahāsurān"
+      ],
+      "meaningHi": "उसने कुछ असुरों को पंजों से, कुछ को मुँह से और दूसरों को दबोचकर तथा अधर से मार डाला।",
+      "meaningEn": "He killed some demons with his paws, others with his mouth, and others by pouncing upon them and crushing them with his lower jaw."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-17",
+      "number": 17,
+      "labelHi": "पाठ · १७",
+      "labelEn": "Text unit · 17",
+      "lines": [
+        "केषाञ्चित्पाटयामास नखैः कोष्ठानि केसरी।",
+        "तथा तलप्रहारेण शिरांसि कृतवान् पृथक्॥"
+      ],
+      "linesEn": [
+        "keṣāñchitpāṭayāmāsa nakhaiḥ koṣṭhāni kesarī",
+        "tathā talaprahāreṇa śhirāṃsi kṛitavān pṛithak"
+      ],
+      "meaningHi": "सिंह ने कुछ के पेट नखों से चीर दिए और कुछ के सिर पंजों के प्रहार से अलग कर दिए।",
+      "meaningEn": "The lion tore open some bellies with his claws and struck off other heads with his paws."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-18",
+      "number": 18,
+      "labelHi": "पाठ · १८",
+      "labelEn": "Text unit · 18",
+      "lines": [
+        "विच्छिन्नबाहुशिरसः कृतास्तेन तथापरे।",
+        "पपौ च रुधिरं कोष्ठादन्येषां धुतकेसरः॥"
+      ],
+      "linesEn": [
+        "vichchhinnabāhuśhirasaḥ kṛitāstena tathāpare",
+        "papau cha rudhiraṃ koṣṭhādanyeṣāṃ dhutakesaraḥ"
+      ],
+      "meaningHi": "उसने अन्य असुरों की भुजाएँ और सिर काट डाले तथा अयाल हिलाते हुए कुछ के पेट से रक्त पी लिया।",
+      "meaningEn": "He severed other demons’ arms and heads and, shaking his mane, drank blood from their torn bodies."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-19",
+      "number": 19,
+      "labelHi": "पाठ · १९",
+      "labelEn": "Text unit · 19",
+      "lines": [
+        "क्षणेन तद्बलं सर्वं क्षयं नीतं महात्मना।",
+        "तेन केसरिणा देव्या वाहनेनातिकोपिना॥"
+      ],
+      "linesEn": [
+        "kṣhaṇena tadbalaṃ sarvaṃ kṣhayaṃ nītaṃ mahātmanā",
+        "tena kesariṇā devyā vāhanenātikopinā"
+      ],
+      "meaningHi": "देवी के उस अत्यन्त क्रोधित, शक्तिशाली वाहन सिंह ने क्षणभर में पूरी सेना नष्ट कर दी।",
+      "meaningEn": "In a moment, the mighty lion who bore the Goddess destroyed that entire army in his fury."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-20",
+      "number": 20,
+      "labelHi": "पाठ · २०",
+      "labelEn": "Text unit · 20",
+      "lines": [
+        "श्रुत्वा तमसुरं देव्या निहतं धूम्रलोचनम्।",
+        "बलं च क्षयितं कृत्स्नं देवीकेसरिणा ततः॥"
+      ],
+      "linesEn": [
+        "śhrutvā tamasuraṃ devyā nihataṃ dhūmralochanam",
+        "balaṃ cha kṣhayitaṃ kṛitsnaṃ devīkesariṇā tataḥ"
+      ],
+      "meaningHi": "देवी द्वारा धूम्रलोचन के मारे जाने और उनके सिंह द्वारा सारी सेना नष्ट होने का समाचार सुनकर—",
+      "meaningEn": "Hearing that the Goddess had killed Dhumralochana and that her lion had destroyed the whole army—"
+    },
+    {
+      "id": "durga-saptashati-chapter-6-21",
+      "number": 21,
+      "labelHi": "पाठ · २१",
+      "labelEn": "Text unit · 21",
+      "lines": [
+        "चुकोप दैत्याधिपतिः शुम्भः प्रस्फुरिताधरः।",
+        "आज्ञापयामास च तौ चण्डमुण्डौ महासुरौ॥"
+      ],
+      "linesEn": [
+        "chukopa daityādhipatiḥ śhumbhaḥ prasphuritādharaḥ",
+        "ājñāpayāmāsa cha tau chaṇḍamuṇḍau mahāsurau"
+      ],
+      "meaningHi": "दैत्यराज शुम्भ क्रोध से काँपते होंठों के साथ चण्ड और मुण्ड नामक महासुरों को आदेश देने लगा।",
+      "meaningEn": "Shumbha’s lips trembled with anger, and he commanded the great demons Chanda and Munda."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-22",
+      "number": 22,
+      "labelHi": "पाठ · २२",
+      "labelEn": "Text unit · 22",
+      "lines": [
+        "हे चण्ड हे मुण्ड बलैर्बहुभिः परिवारितौ।",
+        "तत्र गच्छत गत्वा च सा समानीयतां लघु॥"
+      ],
+      "linesEn": [
+        "he chaṇḍa he muṇḍa balairbahubhiḥ parivāritau",
+        "tatra gachchhata gatvā cha sā samānīyatāṃ laghu"
+      ],
+      "meaningHi": "हे चण्ड और मुण्ड, बहुत-सी सेना लेकर वहाँ जाओ और उसे शीघ्र यहाँ ले आओ।",
+      "meaningEn": "Chanda and Munda, go there with a large force and bring her here quickly."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-23",
+      "number": 23,
+      "labelHi": "पाठ · २३",
+      "labelEn": "Text unit · 23",
+      "lines": [
+        "केशेष्वाकृष्य बद्ध्वा वा यदि वः संशयो युधि।",
+        "तदाशेषायुधैः सर्वैरसुरैर्विनिहन्यताम्॥"
+      ],
+      "linesEn": [
+        "keśheṣvākṛiṣya baddhvā vā yadi vaḥ saṃśhayo yudhi",
+        "tadāśheṣāyudhaiḥ sarvairasurairvinihanyatām"
+      ],
+      "meaningHi": "उसे बालों से खींच लाओ या बाँध लो; यदि युद्ध में सफलता संदिग्ध हो, तो सभी असुर अपने समस्त शस्त्रों से उसे मार डालें।",
+      "meaningEn": "Drag her by the hair or bind her. If victory in battle is uncertain, let all the demons strike her down with every weapon."
+    },
+    {
+      "id": "durga-saptashati-chapter-6-24",
+      "number": 24,
+      "labelHi": "पाठ · २४",
+      "labelEn": "Text unit · 24",
+      "lines": [
+        "तस्यां हतायां दुष्टायां सिंहे च विनिपातिते।",
+        "शीघ्रमागम्यतां बद्ध्वा गृहीत्वा तामथाम्बिकाम्॥"
+      ],
+      "linesEn": [
+        "tasyāṃ hatāyāṃ duṣṭāyāṃ siṃhe cha vinipātite",
+        "śhīghramāgamyatāṃ baddhvā gṛihītvā tāmathāmbikām"
+      ],
+      "meaningHi": "उस स्त्री और उसके सिंह को मारकर तुरंत लौट आना; अथवा उस अम्बिका को बाँधकर पकड़ लाना।",
+      "meaningEn": "After killing her and bringing down the lion, return at once; or capture Ambika and bring her bound."
+    }
+  ]
+}

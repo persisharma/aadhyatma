@@ -33,6 +33,11 @@ The source-of-truth visual reference is `design-preview.html` at the repo root. 
 | `iconInk` | `#6F3F1D` | Shared brown utility icon and inactive navigation tint |
 | `iconAccent` | `#AD571F` | Active navigation, saved controls and wordmark accent |
 | `gold` | `#A67C34` | Secondary accent, crest, section tags |
+| `darshan-from` | `#A65217` | Selected Option C floating pill gradient start |
+| `darshan-to` | `#7D350C` | Floating pill gradient end |
+| `darshan-border` | `#D9AB68` | Floating pill gold outline |
+| `darshan-ink` | `#FFF2D7` | Floating pill cream label |
+| `darshan-bead` | `#F1CC8C` | Decorative gold bead; carries no availability status |
 | `divider` | `rgba(138, 62, 11, 0.18)` | Borders, card outlines |
 | `newBadgeBg` | `rgba(184, 98, 27, 0.16)` | "NEW" badge fill — saffron tint (recently-added content) |
 | `newBadgeText` | `#8A3E0B` | "NEW" badge text — saffron-deep |
@@ -708,6 +713,16 @@ type HanumanChalisaVerse = {
 ```
 
 **Order for Hanuman Chalisa:** `opening_dohas[0..]` → `chaupais[0..39]` → `closing_doha`.
+
+**Vaishno Devi Chalisa (A2, 1.5.7 content):** the existing `ChalisaReaderScreen` renders the maintainer-selected Sri Mandir edition as opening doha → 40 chaupais → closing doha (42 pages). It uses the existing Durga background and opening illustration, the same language/size controls, bookmarks, shares, read-aloud and auto-slide. Hindi/English meanings are editorial; Gujarati/Kannada use the existing script-conversion fallback. No new reader surface, audio or artwork is introduced. Source comparisons remain internal. Native acceptance is tracked in `docs/evaluations/a2-vaishno-devi-chalisa/review.md`.
+
+**Shani Chalisa (A1, 1.5.7 content):** the same registry-served reader presents two opening dohas, forty chaupais and one closing doha (43 pages), preserving the complete chosen Drik main edition. Reuse existing Shani background and opening illustration; no new surface, deity, recording or artwork. Meanings are original Hindi/English prose; Gujarati/Kannada use the existing sister-script fallback. Edition/collation metadata stays internal. Native acceptance is tracked in `docs/evaluations/a1-shani-chalisa/review.md`.
+
+**Santoshi Mata Chalisa (A3, 1.5.7 content):** the same reader renders the chosen Drik Panchang composition beginning श्री गणपति पद नाय सिर as one opening doha, 40 chaupais and one closing doha. Reuses the existing Durga background/banner and all reader controls. Hindi/English editorial meanings and ASCII recitation text are supplied; Gujarati/Kannada use the current script fallback. Edition variants stay in internal metadata. No artwork, recorded audio or reader interaction is added. See `docs/evaluations/a3-santoshi-mata-chalisa/review.md` for evidence and pending native checks.
+
+**Kali Chalisa (A4, 1.5.7 content):** the existing registry-served reader presents the complete chosen Drik composition beginning जय काली जगदम्ब जय: two opening dohas, 54 body couplets and one closing doha (57 pages). The catalog accurately labels 54 Chaupai + 3 Doha rather than assuming forty from the title. Reuses existing Kali background/first-page art and unchanged reader controls. Hindi/English editorial meanings and ASCII pronunciation are supplied; Gujarati/Kannada use the current script fallback. Source comparison is internal. Native acceptance remains tracked in `docs/evaluations/a4-kali-chalisa/review.md`.
+
+**Radha Chalisa (A5, 1.5.7 content):** the existing registry-served reader presents two opening dohas, forty chaupais and one closing doha (43 pages), beginning श्री राधे वृषभानुजा. Reuses existing Radha–Krishna background/banner and A4’s responsive control row. Hindi/English meanings and ASCII recitation text are authored; Gujarati/Kannada use the existing Hindi-to-script fallback, not native translations. No new artwork, audio or interaction. Source variants remain internal. Native acceptance: `docs/evaluations/a5-radha-chalisa/review.md`.
 
 ### Gita (chapter-scoped, multi-layered, bilingual)
 
@@ -3231,6 +3246,8 @@ absolute`, `right: 16`, `top`/`bottom` matching the row's vertical padding, `jus
 center`); the Vrat Katha reader's shorter toggle row (6/6 rather than 6/12) is the only geometry
 that differs.
 
+**Chalisa compact controls.** `ReaderControlRow` measures the centred language/routine group, trailing Listen/Pause pill and available width. It preserves the centred group/right-aligned pill when both fit with a 16pt edge inset and 24pt touch clearance; otherwise the labelled playback control flows to a second right-aligned row. Measurement changes from resizing, locale and system text reflow the row without hiding labels or shrinking fonts. It starts stacked until measured. Other reader families retain their existing layout pending separate adoption/native verification.
+
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
 `com.android.settings.TTS_SETTINGS`; iOS gets the Settings path in words (no deep link exists to
@@ -3373,6 +3390,27 @@ because they are different concerns that happen to agree today.
 ---
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
+
+### Native small Panchang visual hierarchy — 11 November 2026
+
+The previous small Panchang was still a flat text stack even after the adaptive
+Shloka PR. The small native widget now uses the validated represented date +
+selected city as a ten-point saffron masthead, running Tithi as the readable
+hero, optional *real* vrat as a subtle saffron band, and a compact sunrise plus
+Vedansh footer separated by a gold rule. SwiftUI ViewThatFits selects a normal
+or compact composition from rendered geometry, preserving Gujarati/Kannada/
+Devanagari shaping without computing astronomical data in WidgetKit.
+There is no festival icon/image download; the pre-reviewed almanac Heritage/
+Midnight Temple background and safe tinted/recovery presentation remain.
+
+Medium and large illustrated Shloka text is vertically balanced for short
+verses; full long-verse variants still win before the bounded tap-to-read
+fallback. A restrained icon/divider treatment gives the source attribution
+a distinctive place without reducing verse text area. The in-app widget gallery
+now mirrors the small Panchang hierarchy as a clearly approximate preview;
+the actual OS widget is definitive. Delivery requires a new iOS binary.
+Acceptance: native compile, visual widget placement screenshot, all four
+languages and sizes, appearance/VoiceOver, long tithi and vrat names.
 
 ### Adaptive illustrated iOS Shloka layout — 10 November 2026
 
@@ -3857,6 +3895,8 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 **दान-कथा (`screens/DaanKathaScreen.tsx`).** The header carries the §39 share circle **on the right** (`Share katha`), leaving the read-aloud pill in the language row — the katha-reader placement (§39) → a one-scope prose share of the story, then `शिक्षा` + the teaching + the source line (§39.4). Carries the shared reader furnishings under the `ReaderHeader` so the story reads like every other katha reader (Sept 2026): a centred `LanguageToggle` row with the `ReadAloudButton` pinned right (`daan-katha-{sourceId}` session over the story prose, via `useReaderReadAloud` — the section's `paragraphs*` mapped to the adapter's prose `body*` shape), then the subtitle, the shared `Ornament` divider, and the story paragraphs at the shared `meaning` reading token (`meaningToken`, `ink` in English else `ink-soft`) via `commentaryByLang` — no longer the bespoke 14/25. Then the `शिक्षा` panel (`daan-katha-teaching`: `goldTint` on a 1pt **`gold`** border, `radii.lg`, `elevation.card`; a 12.5pt `saffronDeep` title-face label — the Devanagari label is never tracked — over the teaching at **16/26** `saffronDeep` title face), the rendered canonical source line (12/18 `inkMuted`), the ॥ ॐ ॥ endcap. **The story never dead-ends.** Under a `divider` rule comes the onward block: the `अगली कथा` label row with **five position dots** (active 14×6 `saffron`, rest 6×6 `dotRest`; a11y-hidden) over a 62pt row card (`daan-katha-next`: `gold` `॥` in a 40pt `goldTint` circle, the next teaching-katha's title 15.5/22 and subtitle 12/17, a `saffronDeep` chevron) that `navigation.replace`s to the next katha in registry order, wrapping from the last to the first (rendered only when more than one katha is verified); then the `इस भाव से` label over the FILLED 52pt `दान करें` pill (`daan-katha-donate`, `saffron`, 16pt `onPrimary`) → `DaanJourney {}` (the daily variant — a katha carries no occasion), and the QUIET `खाते में दर्ज करें` text door (`daan-katha-record`, 13.5 `saffronDeep`, 36pt min-height) → `DaanEntry {}`. Nothing follows the doors — see the copy rule below. No give/pay control — §2.7 holds here as on every daan surface.
 
 **Doors.** More hub → साधना group row `दान-पुण्य / Daan Punya` (`more-daan-punya`, NEW state for one release). **Home tab presence (PRD-26 v3):** a non-content launcher card `दान-पुण्य` (icon key `daan`, `shortNameEn: 'Giving'`, NEW badge, §18) closes the category grid full-width → `DaanPunya`; the duplicate full-width नित्य साधना category card was removed because the dedicated RoutineBanner above the grid already owns that Home door. A **DISCOVER spotlight** card (`key: 'daan-punya'`, `FeatureIcon name="daan-punya"`, NEW) → `DaanPunya`; and a **FOR TODAY** strip card (`for-today-daan`, §50) that appears on daan-covered observance days → `DaanJourney {occasionId}`. Observance Detail → `इस दिन का दान` — **always the last section** (`observance-daan-door`), rendered only when `getDaanOccasionForRule(ruleId)` matches (exact ids beat suffix families; uncovered days render nothing). **Purpose bridge:** `PurposeList` (the text-intent screen) renders a quiet `दा` educate door (`purpose-daan-door`) → `DaanPunya`, and ONLY for the two intents the app's own vocabulary shares with a seva — विद्या→`knowledge`, आरोग्य→`health` (`causeForPurpose`). `wealth`/`prosperity` are deliberately unbridged: pointing "give here" at a prosperity intent is the fruit-promise §2.2 bans; a source-shape test pins that this door opens the educate home and never the द्वार. All daan screens are registered on the More, Panchang AND Home stacks (PRD-19 multi-stack pattern) so every door pushes in place.
+
+**New-entry amount (Proposal 11).** The optional private INR field validates the entire input before recording. It accepts a leading ₹, outer whitespace, ASCII/Devanagari/Gujarati/Kannada digits, correctly grouped Indian or international commas and up to two decimal places (period separator). A valid nonblank value shows “Amount to record” with Indian grouping and two decimal places. Invalid input shows a localized inline alert on blur or Save; Save announces the correction, preserves all draft fields and stays on the form. Blank is optional; Gupt hides the amount and bypasses its validation while the existing sanitizer removes private details. Existing stored amounts are never reparsed. The amount input grows vertically for system text; feedback wraps at the reading text size. Save waits for ledger hydration. No payment, totals, new storage format or date change is introduced.
 
 **Register removal (Proposal 09).** The × control opens a record-specific parchment confirmation using the Saved Verses dialog idiom. It shows the category, original ISO civil date (matching the register without timezone conversion), and optional full note; amounts never appear. Gupt identity contains only the localized “Gupt daan” and date. The title, no-undo explanation, saffron “Remove entry” and quiet Cancel are localized in all four languages. Long text scrolls inside a height-bounded card; the actions stay outside that scroll, with 48dp minimum targets. Cancel, outside tap, Android Back, accessibility escape and route blur discard the pending selection without storage writes. Confirmation consumes the selected stable ID once. Pending state is session-only. Existing optimistic storage behavior is unchanged: no durable-deletion or recovery claim is shown. The original mockup's date is displayed in the register's ISO format for consistency.
 
@@ -4580,6 +4620,97 @@ The devotional export reports settled geometry before artwork readiness, allowin
 3. Meta — video title and channel.
 4. Error card (load error or 15 s timeout) — title, body, **Retry**, and *↗ open in YouTube*.
 
+**Ready-before-play (16 November 2026).** The existing injected command bridge waits for the iframe’s `playerReady` event and replays the latest Play/Pause intent at readiness. Opening a resolved Darshan broadcast or tapping Play video starts playback without a second tap when YouTube permits autoplay. A pause caused by background, blur or another audio source during loading wins; readiness cannot restart it. Retry waits for the replacement iframe too. Publisher/platform autoplay restrictions retain the visible YouTube controls and fallback.
+
 **Interaction.** Exactly one sound source at a time through `audio/playbackArbiter.ts` (`'youtube'` kind): the player claims the session on mount, on the strip's play, on Retry, **and when the embed reports PLAYING after a pause** — a resume from YouTube's own ▶ must silence the bhajan / read-aloud that paused it (Nov 2026 fix; iOS mixes sessions, so a missed claim plays both). Another source claiming pauses the video (never unmounts it). Backgrounding, screen lock and leaving the reader (blur) pause it; it never auto-resumes. The ↗ hand-off opens the same video on YouTube — the one sanctioned non-store external link besides Daan/Rate/Instagram/mailto (RULEBOOK §11.16). The player may say it needs an internet connection (RULEBOOK §3 streaming exception).
 
 **Files.** `mobile/src/components/video/DockedYouTubePlayer.tsx`, `mobile/src/components/video/__tests__/DockedYouTubePlayer.test.tsx`, `mobile/src/audio/playbackArbiter.ts`, `mobile/src/data/video/videoMappings.ts`.
+
+
+## 92. Temple Darshan — Home floating door (14 November 2026)
+
+**Purpose:** the selected Option C adds a labelled floating दर्शन / Darshan pill
+on Home only. The existing five-tab navigation and sixteen launcher tiles remain.
+The pill isolates the changing audio subscription in a small leaf component, so playback ticks do not redraw Home. It uses the bundled painted Theerth icon, saffron-gradient background, gold
+border, 52pt minimum target, right inset18 and bottom16; with a current recorded
+track it rises to100pt to clear the app's audio mini-player. Home's trailing scroll
+space clears both overlays. No animated pulse, WebView, lookup or storage read is
+introduced on Home startup.
+
+**Selected floating-icon finish (15 November):** retain the approved Option C
+painted temple + label + decorative gold bead. The pill uses the `darshanFrom` →
+`darshanTo` diagonal gradient, `darshanBorder` outline, `darshanInk` label and
+shared `elevation.lifted` warm shadow on both platforms. The 32pt painted icon
+keeps its registry/decode contract. Padding is left10/right16/vertical9, gap7,
+radius30, z-index5; the text wraps and grows with Standard/Large and system text.
+The bead never indicates whether a broadcast is live. The button has one authored
+accessibility label in each app language; its artwork/bead are decorative.
+
+**Journey:** Home → native transparent-modal quick sheet (two favourite-first
+temples, close/backdrop/Android Back, View all) → DarshanList or DarshanPlayer.
+The quick sheet replaces itself when a destination is chosen so Back returns Home.
+The list searches actual temple names/cities in the selected script and supports
+favourites. Its player pushes a real TheerthDetail or the deity's existing readers
+within Home's stack, so Back retraces the journey. All three routes use literal
+on-demand loaders, outside background prefetch. Sheet content scrolls within85%
+height. Screen body gutters22, maximum width680, natural wrapping, script-safe
+fonts, shared Standard/Large factor and system text growth; source-language labels
+and full names remain visible. ReaderHeader/TextField/LanguageToggle are shared.
+
+**Availability and sources (16 November 2026):** all nine audited channels now have
+an in-app current-channel YouTube embed (`/embed/live_stream?channel=...`). This
+uses the visible official player to select the broadcast; it never scrapes channel
+HTML, bundles a dated video ID or mounts a hidden resolver. Somnath/Kashi still
+prefer a unique iframe from their dedicated official live page, with a 12-second
+abort deadline, and fall back to their stable channel embed on lookup failure,
+timeout or missing/ambiguous ID. Retry refreshes discovery and remounts its source.
+A waiting/offline/restricted broadcast remains an in-app error/retry/browse journey;
+there is no fabricated live-now badge, schedule or automatic archive substitution.
+SVBC/Srisaila retain their devotional-TV labels.
+
+**Player page:** the 16:9 stage uses the full available screen width (maximum840,
+minimum240pt tall, or200pt on compact-height screens), followed by a compact48pt-target control strip. It stays visible above the scrolling temple content; publisher attribution sits beside the temple identity in that content so compact screens retain reading space.
+The header's48pt bookmark replaces the old full-width favourite button. Beneath the video, a compact summary uses12pt top padding and4pt internal gaps: a wrapping row pairs the24pt temple title with the existing compact language pill;14pt location and12pt publisher follow. A TV feed retains its extra label. There is no separate centred language row or generic broadcast-timing sentence. The body uses16pt section gaps and has complete existing sourced
+significance, expandable origin story, full in-app temple guide, up to four actual
+active devotional readers (aarti/chalisa first, then stotram/ashtakam/kavach), and
+horizontal painted temple cards. Switching temples replaces this player route so
+Back retains the originating Home/list stack. Content grows and scrolls at all four
+languages, Standard/Large and system text sizes; no source/review disclosures or
+large defensive paragraphs dominate the page.
+
+**Stay-in-app playback:** the app-owned YouTube/website exit buttons, duplicate
+publisher heading and broadcast strip's external arrow are removed. Broadcast
+errors offer Retry and Browse temples, while the temple story/readings remain
+available below. YouTube's own standard branding and controls remain intact.
+Verified reader videos preserve their existing same-video external hand-off.
+
+**Native fullscreen:** the embedded fullscreen control presents the OS WebView's
+actual fullscreen video view, beyond this page's header, safe-area and tab layout;
+it is not an enlarged card or a new player in a modal. Both player paths explicitly
+allow fullscreen. Android WebView's existing native implementation hides system
+chrome, allows orientation changes and restores the previous orientation/view on
+exit. Channel-frame size changes retain the same memoised source and ready state,
+so leaving fullscreen does not remount/restart the stream. Actual iOS/Android
+fullscreen, rotation, Back/Done and continued playback remain device gates.
+
+**Lifecycle and compatibility:** reuse the existing WebView and playback arbiter;
+broadcasts do not poll progress. Channel HTML supplies the registered native app's
+HTTPS identity as baseURL/Referer and origin, following YouTube WebView guidance.
+Play is sent only after readiness using the latest intent; blocked autoplay exposes
+the Play control. Background/blur cancels lookups and removes playback, never
+silently auto-resuming. No native dependency, global orientation change, launch
+lookup, reminder schedule or preference migration is introduced.
+
+**Files:** `mobile/src/screens/Darshan{Quick,List,Player}Screen.tsx`,
+`mobile/src/components/darshan/DarshanFloatingButton.tsx`,
+`mobile/src/components/darshan/DarshanUI.tsx`,
+`mobile/src/data/darshan/channels.ts`, `mobile/src/video/darshan{Source,Favorites}.ts`.
+Native playback, visual fidelity in four scripts/Standard/Large/compact/system text,
+VoiceOver/TalkBack, interruptions and device performance remain required pending
+acceptance; passing mocked screen tests is not native proof.
+
+### Darshan recovery — updated 16 November 2026
+Retry re-resolves a dedicated temple source or retries its stable in-app channel player. Unavailable broadcasts lead to Retry, another temple, the complete temple guide or shipped devotional readings. The previous external website/YouTube recovery CTAs are superseded by the in-app journey above. Actual fullscreen, seek, volume, quality and platform interruptions still require device verification.
+
+
+B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.

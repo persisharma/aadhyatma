@@ -1534,3 +1534,48 @@ iPhone device test of #686: story landed directly in the story editor; WhatsApp 
 ## [2026-11-14] revert | Direct WhatsApp / Instagram hand-off reverted (#686, #688)
 
 Product decision after device testing: the share sheet did not meet expectations, so both #686 and #688 are reverted and the original share behaviour is back — one Share row (OS sheet, "WhatsApp, Messages, anywhere"), Instagram post and Instagram story / reel rows through the OS sheet (expo-sharing), no WhatsApp rows, no `directShare.ts`, no `withShareTargetApps` plugin. design.md §39, RULEBOOK §3 and [[subsystems/share]] are back to their pre-#686 text. The two entries above stay as history. Device findings worth keeping if this is retried: iPhone Instagram story via `instagram-stories://` landed in the story editor; the iOS `instagram://library?LocalIdentifier=` post route opened the wrong photo and saved a copy to Photos; WhatsApp has no iOS image API.
+
+## [2026-11-14] ingest | Floating Darshan journey, official live-page discovery, channel fallback and playback/favourites invariants → integrations/live-darshan. Native acceptance pending.
+
+## [2026-11-15] update | Selected Darshan floating icon
+
+Restored the feature onto current main without undoing the share-hand-off revert. Matched Option C’s painted temple, saffron gradient, gold border/bead and warm shadow, retaining audio clearance and four-language accessible labels. Native acceptance remains pending; see [[integrations/live-darshan]].
+
+- 2026-11-16: Diagnosed lost Darshan autoplay in the installed YouTube bridge patch; wait for player readiness and preserve latest pause intent. Six real-library/WebView-boundary regressions reproduce the old failure. Updated design §91, RULEBOOK Darshan contract and integration wiki; native evidence remains pending.
+
+- 2026-11-16: Expanded Darshan to visible stable channel embeds for all nine audited channels; kept dedicated-camera discovery, moved recovery/content into the app, enlarged the pinned player and preserved native fullscreen. Updated design §§91–92/RULEBOOK integration; real device fullscreen/playback and performance remain pending.
+
+
+## 2026-11-16 — A2 Vaishno Devi Chalisa
+- Added the complete maintainer-selected Sri Mandir edition (42 pages), original Hindi/English meanings and pronunciation romanization to the existing Chalisa reader.
+- Wired Durga/category listings, search, progress/bookmarks, discovery, existing artwork and generated count; stable IDs and older rows retained.
+- The missing 4a checklist was explicitly replaced by current repository rules and the Chalisa pattern with maintainer approval. Source variants stay in internal metadata; no bibliography UI.
+- See `docs/evaluations/a2-vaishno-devi-chalisa/review.md` for validation and pending native evidence. No merge/release or next work package.
+
+## [2026-11-16] ingest | A1 Shani Chalisa chosen-edition integration
+
+- Added `shani-chalisa` to the existing Chalisa reader, search, navigation, discovery and Shani artwork mapping; 43 stable units and original Hindi/English meanings, derived Gujarati/Kannada scripts.
+- Corrected the parity manifest’s Drik `/other/` candidate: it is a separate composition. Retained the complete main edition with Vimal closing; source differences and all-unit collation are recorded in `docs/evaluations/a1-shani-chalisa/`.
+- Current repository checklist + merged A2 pattern replace the absent historical checklist under maintainer authorization. No reader or release contract changed. Native and performance checks remain pending; draft PR required.
+
+## 2026-11-16 — A3 Santoshi Mata Chalisa
+
+Added the 42-unit Ganapati/Sharada-opening composition to the existing Chalisa reader, catalog, search, discovery and saved routes. Chosen Drik edition compared with Ved Puran; seven/sixteen-Friday variant recorded internally. Owner authorized the A2-style edition/checklist resolution for A3. Reuses Durga art; no release or new audio. Native verification pending; see `docs/evaluations/a3-santoshi-mata-chalisa/review.md`.
+
+## [2026-11-16] ingest | A4 Kali Chalisa complete edition
+
+Added `kali-chalisa` through the existing registry/reader with Kali art, search, stable saved routes and generated counts. Full Drik text collated against Aaj Tak: 54 body couplets plus three dohas, not a forced forty; edition variants and acceptance limitations in `docs/evaluations/a4-kali-chalisa/review.md`. Current repository policy and established Chalisa pattern replace the unavailable historical checklist under the authorized approach. Native verification remains pending; no merge/build/release authorized.
+
+## [2026-11-17] ingest | A4 PR integration and actual-component captures
+
+PR #698 integrates main a8f6046d cleanly, adds explicit UTF-8 to the browser preview, and preserves actual-reader capture evidence. Native checks remain pending; compact web header crowding is documented in docs/evaluations/a4-kali-chalisa/review.md. No merge or release.
+
+## [2026-11-17] ingest | Chalisa control clearance
+
+ReaderControlRow measures centred and trailing controls, stacking playback when touch clearance would be lost. All Chalisa entries share the fix; other reader families are recorded for separate adoption. Capture coverage now checks both 320/390 widths at Standard/Large in all four scripts.
+
+## [2026-11-17] ingest | A5 Radha Chalisa
+
+Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.
+
+## [2026-11-18] ingest | PR #702 completes all thirteen Saptashati chapter sources (700 traditional numbered units), preserving existing IDs and append-only Daily Bhakti offsets; readers wiki records collection/lazy-loader integration and pending native acceptance.

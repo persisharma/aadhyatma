@@ -1,3 +1,23 @@
+import durgaSaptashatiChapter2 from '../src/data/stuti/durga-saptashati-chapter-2.json';
+import durgaSaptashatiChapter3 from '../src/data/stuti/durga-saptashati-chapter-3.json';
+import durgaSaptashatiChapter4 from '../src/data/stuti/durga-saptashati-chapter-4.json';
+import durgaSaptashatiChapter5 from '../src/data/stuti/durga-saptashati-chapter-5.json';
+import durgaSaptashatiChapter6 from '../src/data/stuti/durga-saptashati-chapter-6.json';
+import durgaSaptashatiChapter7 from '../src/data/stuti/durga-saptashati-chapter-7.json';
+import durgaSaptashatiChapter8 from '../src/data/stuti/durga-saptashati-chapter-8.json';
+import durgaSaptashatiChapter9 from '../src/data/stuti/durga-saptashati-chapter-9.json';
+import durgaSaptashatiChapter10 from '../src/data/stuti/durga-saptashati-chapter-10.json';
+import durgaSaptashatiChapter11 from '../src/data/stuti/durga-saptashati-chapter-11.json';
+import durgaSaptashatiChapter12 from '../src/data/stuti/durga-saptashati-chapter-12.json';
+import durgaSaptashatiChapter13 from '../src/data/stuti/durga-saptashati-chapter-13.json';
+import durgaDeviKavacham from '../src/data/kavacham/durga-devi-kavacham.json';
+import durgaSaptashatiChapterOne from '../src/data/stuti/durga-saptashati-chapter-1.json';
+import durgaKilak from '../src/data/stuti/durga-kilak-stotram.json';
+import durgaArgala from '../src/data/stuti/durga-argala-stotram.json';
+import hanumanBahuk from '../src/data/stuti/hanuman-bahuk.json';
+import kalabhairavAshtakam from '../src/data/ashtakam/kalabhairav-ashtakam.json';
+import shriSuktam from '../src/data/suktam/shri-suktam.json';
+import kanakadharaStotram from '../src/data/stuti/kanakadhara-stotram.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
 import kabirDohe from '../src/data/doha/kabir-bhakti-dohe.json';
 import rahimDohe from '../src/data/doha/rahim-bhakti-dohe.json';
@@ -20,6 +40,11 @@ import { krishnaChalisaCounts } from '../src/data/krishna-chalisa';
 import { krishnaStotramTotal } from '../src/data/krishna-stotram';
 import { lakshmiChalisaCounts } from '../src/data/lakshmi-chalisa';
 import { suryaChalisaCounts } from '../src/data/surya-chalisa';
+import { shaniChalisaCounts } from '../src/data/shani-chalisa';
+import { santoshiMataChalisaCounts } from '../src/data/santoshi-mata-chalisa';
+import { kaliChalisaCounts } from '../src/data/kali-chalisa';
+import { radhaChalisaCounts } from '../src/data/radha-chalisa';
+import { vaishnoDeviChalisaCounts } from '../src/data/vaishno-devi-chalisa';
 import { ramChalisaCounts } from '../src/data/ram-chalisa';
 import { ramStutiTotal } from '../src/data/ram-stuti';
 import { ramcharitmanasTotal } from '../src/data/ramcharitmanas';
@@ -46,6 +71,26 @@ import { vishnuSahasranamaTotal } from '../src/data/vishnu-sahasranama';
  * Run: npx tsx scripts/gen-verse-counts.mts
  */
 const VALUES: readonly (readonly [string, number | Record<string, number>])[] = [
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length],
+  ['durgaSaptashatiChapter2Total', durgaSaptashatiChapter2.verses.length],
+  ['durgaSaptashatiChapter3Total', durgaSaptashatiChapter3.verses.length],
+  ['durgaSaptashatiChapter4Total', durgaSaptashatiChapter4.verses.length],
+  ['durgaSaptashatiChapter5Total', durgaSaptashatiChapter5.verses.length],
+  ['durgaSaptashatiChapter6Total', durgaSaptashatiChapter6.verses.length],
+  ['durgaSaptashatiChapter7Total', durgaSaptashatiChapter7.verses.length],
+  ['durgaSaptashatiChapter8Total', durgaSaptashatiChapter8.verses.length],
+  ['durgaSaptashatiChapter9Total', durgaSaptashatiChapter9.verses.length],
+  ['durgaSaptashatiChapter10Total', durgaSaptashatiChapter10.verses.length],
+  ['durgaSaptashatiChapter11Total', durgaSaptashatiChapter11.verses.length],
+  ['durgaSaptashatiChapter12Total', durgaSaptashatiChapter12.verses.length],
+  ['durgaSaptashatiChapter13Total', durgaSaptashatiChapter13.verses.length],
+  ['durgaKilakTotal', durgaKilak.verses.length],
+  ['durgaArgalaTotal', durgaArgala.verses.length],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length],
+  ['shriSuktamTotal', shriSuktam.verses.length],
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length],
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length]))],
@@ -75,6 +120,11 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['kuberaStotramTotal', kuberaStotramTotal],
   ['lakshmiChalisaCounts', lakshmiChalisaCounts],
   ['suryaChalisaCounts', suryaChalisaCounts],
+  ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts],
+  ['santoshiMataChalisaCounts', santoshiMataChalisaCounts],
+  ['kaliChalisaCounts', kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal],

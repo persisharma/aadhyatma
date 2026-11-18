@@ -573,6 +573,10 @@ Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that u
 ### 11.10 Verse count sync is atomic
 `texts.ts` `verseCount` must always equal the JSON `verses.length`. The `sub` field count must match. `texts.ts` reads every count from the generated `mobile/src/data/verseCounts.ts` — never from a corpus module, because `texts.ts` is on the launch path and importing `xTotal` from `./x` evaluates whatever `./x` eagerly imports. After any content change that alters verse count: (a) update `chapters-manifest.json`, (b) regenerate the counts with `npx tsx scripts/gen-verse-counts.mts`, (c) update `chapteredTotals.test.ts` — atomically, in the same commit. `verseCounts.test.ts` fails if any generated count drifts from its corpus, and if `texts.ts` imports a corpus module directly. The aarti rows still spell `verseCount` and the `N पद` / `N verses` subtitle as literals, so `verseCounts.test.ts` also compares every aarti row with `aartiVerseCounts` (Nov 2026: Om Jai Shiv Omkara said 9 पद over a 12-entry टेक + 11 पद payload). Adding a text: add its count symbol to `scripts/gen-verse-counts.mts`, regenerate, and import it from `./verseCounts`. Origin: Every content fix in this audit caused cascading test failures from stale counts; the September 2026 launch-path audit found `texts.ts` pulling ~2 MB of scripture onto every cold start to read 46 integers.
 
+**Chalisa lengths are edition-specific.** The registry preserves the complete selected composition, not a fixed forty-body-unit limit. Kali Chalisa (`kali-chalisa`, A4) has 54 sourced body couplets plus three dohas (57 units); subtitles, generated counts, search and reader tests must agree with that payload. Never truncate a sourced work merely to fit its genre name.
+
+**Radha Chalisa (`radha-chalisa`, A5)** preserves the chosen complete 43-unit edition (2 opening dohas + 40 chaupais + 1 closing doha). Body 8 and 9 remain distinct; do not replace them with the shortened 39-unit transcription. The existing `radha` deity and Radha–Krishna art are used.
+
 ### 11.11 No duplicate content across sections
 A text must exist in exactly one location/category. Standalone Ashtak/Ashtakam texts (like Sankat Mochan Hanumanashtak) belong in the Ashtakam category — not duplicated in aarti or stotram. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
 
@@ -712,6 +716,34 @@ player strip's ↗ and beside Retry on the error card. It is a playback hand-off
 the same video, not a source citation. Record native four-script/Standard/Large,
 compact and system-text checks separately from automated tests. See the app-wide
 audit at `docs/reviews/2026-11-06-content-source-ui.md`.
+
+### Temple Darshan in-app playback (design.md §92)
+
+The Home floating-Darshan journey uses the audited channel roster and the visible
+YouTube channel embed to select current broadcasts. Dedicated official live-page
+iframe discovery may choose a specific temple camera, falling back to its stable
+channel player on failure. Do not scrape YouTube HTML, bundle dated video IDs,
+extract media URLs, forge recitation `status: verified`, infer current liveness or
+silently substitute an archive. A channel may be waiting/offline or reject embeds.
+Keep its publisher attribution visible, standard YouTube controls/branding intact,
+and offer in-app Retry, temple switching, the real temple guide and shipped readers.
+No app-owned YouTube/website exit buttons or external arrow on the Darshan player;
+verified recitation readers retain their existing same-video host hand-off.
+
+Channel WebView HTML uses the registered native app identity as HTTPS baseURL,
+Referer and player origin. Keep native fullscreen enabled on both video/channel
+paths; fullscreen is the OS WebView video presentation, never a second player or
+an overlay that obscures YouTube controls. Exiting fullscreen/rotation must retain
+the source and position; verify tabs/header are hidden and Back/Done restores the
+same screen on actual iOS/Android. Never report flags or mocked tests as device proof.
+
+No stream fetch/WebView at launch, hidden/background audio, downloads, invented
+reminders or partnership claims. Ready-before-play must honour the latest pause
+intent through loading, blur, background, competing audio and retry. Preserve
+favourite hydration/write ordering/retry and stable IDs. Test source failures,
+all channel routes, expanded temple content, real guide/reader navigation,
+four-script/Standard/Large/compact/system-text and fullscreen/lifecycle behaviour.
+Native visual, playback and performance/ANR evidence remain separate required gates.
 
 ### 11.17 Native image geometry is an enforced acceptance gate
 
@@ -1399,6 +1431,8 @@ A daan entry is **source-reviewed tradition with its stated reason** — never a
 2. **The app never touches money (Resolution A, links-only).** No payment collection, processing, confirmation, commission, suggested amounts, targets or progress bars — the hand-off is `Linking.openURL` to the organization's own official channel behind the honest interstitial, and the return-offer renders at most once. No UPI VPAs anywhere (web-only hand-off; open decision #4). **PRD-26/PRD-40 boundary:** the PRD-40 dakshina/donation rail is ON HOLD; the daan directory (`directory.ts`) must **never contain a Vedansh-owned recipient** — every row's `officialUrl` is the organization's own channel (its own domain, a government domain, or its own hosted donation page when `directPay`), never ours (§27.8, directory hygiene). If PRD-40 ever resumes, it owns dakshina-to-Vedansh / partner-temples on its own surfaces and is never merged into this directory.
 3. **Punya is not a number.** No totals, streaks, scores, leaderboards or comparisons anywhere — the ledger is a smaran register; `buildLedgerCsv` via the OS share sheet is the single aggregation surface. No helper that sums amounts may be added to `data/daan/ledger.ts`.
 4. **The gupt guarantee is two-sided.** `sanitizeLedgerEntry` strips note/amount/occasion from gupt entries before persistence AND `isDaanLedgerEntry` rejects unsanitized gupt rows on hydration; the CSV keeps gupt rows bare. Amounts never render outside the ledger and its export.
+**New ledger amount input.** New non-Gupt amounts use `data/daan/amount.ts` full-input validation, never partial `parseFloat` parsing. Reject malformed grouping, ambiguous punctuation, excessive precision and unsafe numeric representation without writing or navigating. Blank stays optional; Gupt stores no detail; historical payloads and CSV shape remain unchanged. Pin form → real provider → payload/CSV round-trip in regression tests.
+
 **Register deletion safeguard.** Removal requires confirmation of the selected stable ID. No amount in the confirmation; Gupt rows expose only localized Gupt label and original civil date, never category/note/tithi/occasion detail. Cancel, Android Back, outside dismissal and route blur must not write. Repeated confirmation consumes the ID once. Preserve storage schema, entry creation, month grouping, timestamps, tithi and CSV; confirmation is not Undo or a durable-write guarantee.
 5. **Verified-only accessors.** Every registry (`principles`, `occasions`, `kathas`, `directory`) exposes `status: 'verified'` rows only; drafts are indistinguishable from absence (the §20/§21/§22 pattern).
 6. **Source threshold.** A verified row needs ≥2 concordant references with a dated `verificationNote` — shipped verified in-repo content that itself carries the tradition counts as one (named by path), an external published domain as another. Contested enumerations (the daśa-dāna list is the recorded example) state the variance or stay draft.
@@ -1721,3 +1755,8 @@ Approved card-first share flow (8 November 2026): verse Share opens two labelled
 Share generation performance contract (8 November 2026): `TimelyTagsResolver` reads only `getCachedObservancesForDate`, applies the selected regional lenses, and subscribes to existing observance-store updates while mounted. A cache miss retains standard scripture/deity/weekday tags; it must never call the solving day hook, schedule a new year scan or wait for astronomy. Day, city, calendar and lens changes refresh the cached tags; closing unsubscribes. This applies to every card style through the shared provider. Devotional preview/capture identity strings are memoized across native height/paint updates. Artwork tile readiness advances a contiguous painted prefix instead of allocating/rescanning every tile per decode; committed shrink removes discarded tile indices so re-added tiles must paint again. Subject/width/frame changes remount the tile tracker. Full text, image geometry, source artwork, styles and fresh capture barriers remain unchanged. Regression tests cover cache misses outside bundled years, existing scan results, regional filters, day/city changes, unsubscribe, duplicate/reversed tile callbacks and shrink/regrow. Native image decode, actual exports, Android frame/memory profiling and ANR evidence remain separate pending checks.
 
 The devotional export reports settled geometry before artwork readiness, allowing the existing short layout wait and separate artwork wait to function independently. Capture still waits for all decoded slices and final native layout. No timeout, text, image dimensions or visual frame is changed. See `docs/reviews/2026-11-08-share-performance.md`.
+
+**Reader control clearance.** Chalisa uses the measured `ReaderControlRow`: reserve actual control widths plus touch clearance, and move trailing playback to a second row if it cannot fit beside the centred language/routine group. Do not solve overlap with reduced fonts or hidden labels. Recheck locale, text-size and width changes.
+
+
+B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.

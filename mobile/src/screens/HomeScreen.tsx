@@ -1,4 +1,5 @@
 import AppIcon from '@/components/AppIcon';
+import DarshanFloatingButton from '@/components/darshan/DarshanFloatingButton';
 import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
 import {
@@ -41,6 +42,7 @@ import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets
 // The illustrated card sits below the category grid. Load its art and copy in
 // a separate chunk so the Home launch graph stays within its byte budget.
 const SanatanHomeCard = React.lazy(() => import('@/components/SanatanHomeCard'));
+const DeityDayLinks = React.lazy(() => import('@/components/DeityDayLinks'));
 const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
@@ -119,6 +121,7 @@ export default function HomeScreen({ navigation }: Props) {
       onPress: () =>
         rootNav.navigate('VratTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
     };
+    const kathaTile: TileItem = { key: 'katha', nameHi: 'कथा संग्रह', nameEn: 'Katha Library', shortNameEn: 'Katha', status: 'active', icon: iconFor('granth'), onPress: () => navigation.navigate('KathaLibrary') };
     const deityTile: TileItem = {
       key: 'deity',
       nameHi: 'देवता',
@@ -189,6 +192,7 @@ export default function HomeScreen({ navigation }: Props) {
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
       });
       if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
+      if (c.id === 'granth') result.push(kathaTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
     // Fifteen launchers fill five 3-col rows; दान-पुण्य closes the grid as one
@@ -346,7 +350,7 @@ export default function HomeScreen({ navigation }: Props) {
               maxWidth: contentWidth,
               alignSelf: 'center',
               paddingHorizontal: gridPadding,
-              paddingBottom: spacing.xxl * 3,
+              paddingBottom: spacing.xxl * 3 + 100,
             },
           ]}
           showsVerticalScrollIndicator={false}
@@ -395,6 +399,7 @@ export default function HomeScreen({ navigation }: Props) {
           )}
 
           <TodayStrip />
+          <React.Suspense fallback={null}><DeityDayLinks /></React.Suspense>
 
           <TodayRecommendationsRow horizontalGutter={gridPadding} />
 
@@ -595,6 +600,7 @@ export default function HomeScreen({ navigation }: Props) {
           )}
         </ScrollView>
         </TilePressProvider>
+        <DarshanFloatingButton onPress={() => navigation.navigate('DarshanQuick')} />
       </SafeAreaView>
     </View>
   );

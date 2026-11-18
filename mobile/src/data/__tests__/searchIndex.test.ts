@@ -1,3 +1,4 @@
+import { getKathaLibrary } from '../../panchang/vratCatalog';
 import assert from 'node:assert/strict';
 
 import { deities } from '../deities';
@@ -64,7 +65,7 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
 {
   const activeCount = library.filter((e) => e.status === 'active' && !e.hidden)
     .length;
-  assert.equal(index.sections.length, library.length + VIDHI_ENTRIES.length);
+  assert.equal(index.sections.length, library.filter(entry => !entry.hidden).length + VIDHI_ENTRIES.length + 4 + getKathaLibrary().length);
   assert.ok(activeCount > 0);
 }
 
@@ -224,7 +225,7 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   const res = runSearch('protection', index);
   const sectionIds = res.sections.map((h) => h.entry.sourceId);
   assert.ok(sectionIds.includes('rama-raksha-stotra'), 'protection should find Rama Raksha Stotra');
-  assert.ok(sectionIds.includes('durga-kavach'), 'protection should find Durga Kavach');
+  assert.ok(sectionIds.includes('durga-devi-kavacham'), 'protection should find Durga Kavach');
 }
 
 {
@@ -292,3 +293,61 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   }
 }
 
+
+// A2: section and all 42 original verse units are searchable.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'vaishno-devi-chalisa');
+  assert.equal(verses.length, 42);
+  const result = runSearch('vaishno devi chalisa', index);
+  assert.ok(result.sections.some(r => r.entry.sourceId === 'vaishno-devi-chalisa'));
+  assert.ok(runSearch('गरुड़ वाहिनी वैष्णवी', index).verses.some(r => r.entry.sourceId === 'vaishno-devi-chalisa' && r.entry.verseIndex === 0));
+}
+
+// A1: section and all 43 original verse units are searchable.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'shani-chalisa');
+  assert.equal(verses.length, 43);
+  const result = runSearch('shani chalisa', index);
+  assert.ok(result.sections.some(r => r.entry.sourceId === 'shani-chalisa'));
+  assert.ok(runSearch('जयति जयति शनिदेव दयाला', index).verses.some(r => r.entry.sourceId === 'shani-chalisa' && r.entry.verseIndex === 2));
+}
+
+// A3: section and all 42 original verse units are searchable.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'santoshi-mata-chalisa');
+  assert.equal(verses.length, 42);
+  const result = runSearch('santoshi mata chalisa', index);
+  assert.ok(result.sections.some(r => r.entry.sourceId === 'santoshi-mata-chalisa'));
+  assert.ok(runSearch('श्री गणपति पद नाय सिर', index).verses.some(r => r.entry.sourceId === 'santoshi-mata-chalisa' && r.entry.verseIndex === 0));
+}
+
+// A4: search includes the complete text, not just forty body stanzas.
+{
+  const verses = index.verses.filter(v => v.sourceId === 'kali-chalisa');
+  assert.equal(verses.length, 57);
+  assert.ok(runSearch('kali chalisa', index).sections.some(r => r.entry.sourceId === 'kali-chalisa'));
+  assert.ok(runSearch('जय काली जगदम्ब जय', index).verses.some(r => r.entry.sourceId === 'kali-chalisa' && r.entry.verseIndex === 0));
+  assert.ok(runSearch('जय तारा जय दक्षिणा', index).verses.some(r => r.entry.sourceId === 'kali-chalisa' && r.entry.verseIndex === 56));
+}
+
+// A5: both ends of the complete prayer are discoverable.
+{
+  assert.equal(index.verses.filter(v => v.sourceId === 'radha-chalisa').length, 43);
+  assert.ok(runSearch('radha chalisa', index).sections.some(r => r.entry.sourceId === 'radha-chalisa'));
+  assert.ok(runSearch('श्री राधे वृषभानुजा', index).verses.some(r => r.entry.sourceId === 'radha-chalisa' && r.entry.verseIndex === 0));
+  assert.ok(runSearch('रसिकेश्वर घनश्याम', index).verses.some(r => r.entry.sourceId === 'radha-chalisa' && r.entry.verseIndex === 42));
+}
+
+// The new composition is searchable independently of generic Vishnu aartis.
+{
+ const index = getSearchIndex();
+ assert.equal(index.verses.filter(v => v.sourceId === 'satyanarayan-aarti').length, 9);
+ assert.ok(runSearch('satyanarayan aarti', index).sections.some(r => r.entry.sourceId === 'satyanarayan-aarti'));
+ assert.ok(runSearch('वैश्य मनोरथ पायो', index).verses.some(r => r.entry.sourceId === 'satyanarayan-aarti' && r.entry.verseIndex === 4));
+}
+
+// Canonical reading doors are title-searchable without duplicating verse corpora.
+for (const [query, id] of [['Aditya Hridayam', 'aditya-hridayam'], ['Ganesh Atharvashirsha', 'ganesh-atharvashirsha'], ['Katha Library', 'katha-library']]) {
+  assert.ok(runSearch(query, index).sections.some((hit) => hit.entry.sourceId === id));
+  assert.equal(index.verses.some((verse) => verse.sourceId === id), false);
+}

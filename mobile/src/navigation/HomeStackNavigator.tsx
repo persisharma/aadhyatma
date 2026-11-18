@@ -91,6 +91,8 @@ const ValmikiRamayanReaderScreen = lazyScreen('ValmikiRamayanReader', 3, () => i
 const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/VidhiDetailScreen'));
 const VishnuSahasranamaChaptersScreen = lazyScreen('VishnuSahasranamaChapters', 3, () => import('@/screens/VishnuSahasranamaChaptersScreen'));
 const VishnuSahasranamaReaderScreen = lazyScreen('VishnuSahasranamaReader', 3, () => import('@/screens/VishnuSahasranamaReaderScreen'));
+const SaptashatiCoreScreen = lazyScreen('SaptashatiCore', 3, () => import('@/screens/SaptashatiCoreScreen'));
+const KathaLibraryScreen = lazyScreen('KathaLibrary', 3, () => import('@/screens/KathaLibraryScreen'));
 const VratKathaReaderScreen = lazyScreen('VratKathaReader', 3, () => import('@/screens/VratKathaReaderScreen'));
 
 // depth 4 — reached from a depth-3 screen
@@ -115,6 +117,18 @@ export default function HomeStackNavigator() {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="DarshanQuick" getComponent={() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('@/screens/DarshanQuickScreen').default;
+      }} options={{ presentation: 'transparentModal', animation: 'slide_from_bottom', contentStyle: { backgroundColor: 'transparent' } }} />
+      <Stack.Screen name="DarshanList" getComponent={() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('@/screens/DarshanListScreen').default;
+      }} />
+      <Stack.Screen name="DarshanPlayer" getComponent={() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('@/screens/DarshanPlayerScreen').default;
+      }} />
       <Stack.Screen name="SanatanParichay" component={SanatanParichayScreen} />
       <Stack.Screen name="SanatanReader" component={SanatanReaderScreen} />
       <Stack.Screen name="GrahaReference" component={GrahaReferenceScreen} />
@@ -270,6 +284,8 @@ export default function HomeStackNavigator() {
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="SaptashatiCore" component={SaptashatiCoreScreen} />
+      <Stack.Screen name="KathaLibrary" component={KathaLibraryScreen} />
       <Stack.Screen
         name="VratKathaReader"
         component={VratKathaReaderScreen}

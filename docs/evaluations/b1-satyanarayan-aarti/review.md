@@ -1,0 +1,17 @@
+# B1 Satyanarayan Aarti — review and acceptance
+
+Base: current main 81f2b002fa6277050c70c0933d4dd7db68d96e1f after A5 #699 merged. Originally stacked on A5 head 61e7dd40; its squash commit has an identical patch/file set. Reparented the unchanged B1 tree onto main, with no conflicts or overwritten changes. PR #700 targets main. Do not merge.
+
+## Source decision
+Inspected the actual 1930 Marwadi Bhajan Sagar scan, printed p.708 / item 1056 / leaf n730, from the Digital Library of India record: https://archive.org/details/in.ernet.dli.2015.540884/page/n730/mode/1up . The record dates it to 1930 and states Copyright permitted. This dated traditional edition, rather than modern web commentary or recordings, is the text basis. One refrain plus all eight numbered couplets. Space/punctuation regularized; source words retained. Scan SHA256: b91ff83d20e298777311245f1dd194ab7bc3eeb9ad1ac48a5850b9e10c51e59c.
+
+Compared complete modern witnesses on 17 Nov 2026: Drik Panchang https://www.drikpanchang.com/lyrics/aarti/lord-narayan/shree-satyanarayan-aarti.html and HinduNidhi https://hindunidhi.com/satyanarayan-aarti-hindi/ . They corroborate all narrative episodes but differ in readings. The scan was discovered through Valkala; its modern meanings and transliteration were not copied.
+
+Conflicts resolved by keeping a single dated edition, not a word-by-word mashup: opening has श्री लक्ष्मी रमणा rather than the plan's श्री जय लक्ष्मीरमणा; old dialect spellings वुड्ढो वामन वनके, दुर्वल, ग्वाल वाल, सतदेवा remain. Closing uses भणत मनसुख rather than Drik's शिवानन्द or HinduNidhi's ऋद्धि-सिद्ध. No historical author is inferred from a signature alone. Source notes stay internal. The two modern witnesses are comparison sources, not claimed exact copies of the historical edition. Original Hindi/English explanations; checked ASCII pronunciation. Gujarati/Kannada retain the established Hindi re-scripting/fallback policy, not authored native translations.
+
+## Scope and acceptance
+Append aarti position 22; preserve 0–21 and migrations. Reuse AartiReader, Vishnu background/banner/share art, registry search and existing progress/bookmark behavior. Update Puja instructions and ref together; test Home/Panchang handoffs. Nine complete pages with narrative and offerings retained. No new artwork/audio/assets, release, OTA or merge. Daily Bhakti excludes aartis by current policy; do not insert into its pool.
+
+U1/U2: repository AGENTS, checklist, relevant RULEBOOK §11, design reader contracts and wiki reviewed. C1/C3/C4/C7 apply. C2/C5/C6/C10 not changed; C8 native speech remains regression-pending. U3/U4/U5/U6/U7/U9/U10.1: 48/48 focused reader/Vidhi/content tests pass; migration/search/route/count checks pass; CI typecheck passes; first 48-image browser capture workflow passes (44142500161), extended matrix adds longest meaning for 64 images; installed iOS/Android four scripts, Standard/Large, enlarged OS text, scroll/Back/persistence, offline, sharing, narration and low-end responsiveness remain PENDING. U8: sibling aarti/source registries inspected. U11/U12: remote checkpoint PR #700; instruction-policy CI passes; full CI still running at this checkpoint.
+
+The Aarti reader had the same absolute-positioned speech slot already fixed in Chalisa by A4. Reused ReaderControlRow here for measured control clearance; all aarti reader tests and the new capture matrix cover the shared change. Local Chromium cannot start because socket creation is restricted; capture workflow provides the browser matrix.

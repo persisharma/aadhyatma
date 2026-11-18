@@ -45,7 +45,8 @@ export type AshtakamId =
   | 'datta-ashtakam'
   | 'shani-ashtakam'
   | 'kalika-ashtakam'
-  | 'rudrashtakam';
+  | 'rudrashtakam'
+  | 'kalabhairav-ashtakam';
 
 export type AshtakamPayload = {
   id: AshtakamId;
@@ -55,7 +56,7 @@ export type AshtakamPayload = {
   verses: readonly AshtakamVerse[];
 };
 
-const registry: Record<AshtakamId, AshtakamPayload> = {
+const registry: Record<Exclude<AshtakamId, 'kalabhairav-ashtakam'>, AshtakamPayload> = {
   lingashtakam: {
     id: 'lingashtakam',
     titleHi: lingashtakam.titleHi,
@@ -171,10 +172,12 @@ export const ashtakamIds: readonly AshtakamId[] = [
   'shani-ashtakam',
   'kalika-ashtakam',
   'rudrashtakam',
+  'kalabhairav-ashtakam',
 ];
 
 export function getAshtakam(id: string | undefined): AshtakamPayload {
-  if (id && id in registry) return registry[id as AshtakamId];
+  if (id === 'kalabhairav-ashtakam') return require('./kalabhairav-ashtakam.json') as AshtakamPayload;
+  if (id && id in registry) return registry[id as Exclude<AshtakamId, 'kalabhairav-ashtakam'>];
   return registry.lingashtakam;
 }
 
