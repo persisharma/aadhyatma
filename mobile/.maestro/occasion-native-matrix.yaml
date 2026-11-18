@@ -16,6 +16,10 @@ appId: com.prashantsharma.vedansh
 - tapOn: 'Reading size,.*'
 - tapOn: '${READING_SIZE}'
 - tapOn: Done
+# The header Back button scrolls away with Settings; bring it back first.
+- scrollUntilVisible:
+    element: { id: settings-back }
+    direction: UP
 - tapOn: { id: settings-back }
 - tapOn: { id: tab-panchang }
 - tapOn: 'Location: .*'
@@ -29,6 +33,10 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: 'Language,.*'
 - tapOn: '${LANGUAGE_NAME}'
+# The header Back button scrolls away with Settings; bring it back first.
+- scrollUntilVisible:
+    element: { id: settings-back }
+    direction: UP
 - tapOn: { id: settings-back }
 - openLink: 'vedansh://widget/panchang?date=${OCCASION_DATE}'
 - scrollUntilVisible:
