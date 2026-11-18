@@ -1,0 +1,1021 @@
+{
+  "id": "durga-saptashati-chapter-8",
+  "titleHi": "दुर्गा सप्तशती — अष्टम अध्याय",
+  "titleEn": "Durga Saptashati — Chapter 8",
+  "deity": "durga",
+  "source": {
+    "baseText": "Complete chapter 8 of Devi Mahatmya / Durga Saptashati, Markandeya Purana: 63 traditional numbered text units, including speaker announcements and half-verses where present. Drik Panchang numbered reading collated in full against Baba Rampuri’s Sanskrit publication.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/eighth-chapter/durga-saptashati-eighth-chapter.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-18",
+    "notes": "Ancient Sanskrit only; original editorial Hindi/English meanings and checked reader-convention romanization. Drik base retained at recension differences except two documented orthographic corrections in chapters11/13 supported by Rampuri. See saptashati-chapters-8-13-sources.md for every substantive difference. Unnumbered dhyana, optional bija framing and colophon are outside this numbered chapter. Traditional promises are reported as devotional statements, not health or safety guarantees. No audio."
+  },
+  "verses": [
+    {
+      "id": "durga-saptashati-chapter-8-1",
+      "number": 1,
+      "labelHi": "पाठ · १",
+      "labelEn": "Text unit · 1",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले; वे रक्तबीज के युद्ध की कथा सुनाते हैं।",
+      "meaningEn": "The sage spoke, continuing the account of the battle with Raktabija."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-2",
+      "number": 2,
+      "labelHi": "पाठ · २",
+      "labelEn": "Text unit · 2",
+      "lines": [
+        "चण्डे च निहते दैत्ये मुण्डे च विनिपातिते।",
+        "बहुलेषु च सैन्येषु क्षयितेष्वसुरेश्वरः॥"
+      ],
+      "linesEn": [
+        "chaṇḍe cha nihate daitye muṇḍe cha vinipātite",
+        "bahuleṣu cha sainyeṣu kṣhayiteṣvasureśhvaraḥ"
+      ],
+      "meaningHi": "चण्ड और मुण्ड मारे जा चुके थे और अनेक असुर सेनाएँ नष्ट हो गई थीं।",
+      "meaningEn": "Chanda and Munda had been killed, and many of the asura forces had been destroyed."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-3",
+      "number": 3,
+      "labelHi": "पाठ · ३",
+      "labelEn": "Text unit · 3",
+      "lines": [
+        "ततः कोपपराधीनचेताः शुम्भः प्रतापवान्।",
+        "उद्योगं सर्वसैन्यानां दैत्यानामादिदेश ह॥"
+      ],
+      "linesEn": [
+        "tataḥ kopaparādhīnachetāḥ śhumbhaḥ pratāpavān",
+        "udyogaṃ sarvasainyānāṃ daityānāmādideśha ha"
+      ],
+      "meaningHi": "क्रोध में भरकर प्रतापी शुम्भ ने समस्त दैत्य सेनाओं को युद्ध के लिए जुटने का आदेश दिया।",
+      "meaningEn": "Overcome by anger, the powerful Shumbha ordered all the asura armies to mobilise."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-4",
+      "number": 4,
+      "labelHi": "पाठ · ४",
+      "labelEn": "Text unit · 4",
+      "lines": [
+        "अद्य सर्वबलैर्दैत्याः षडशीतिरुदायुधाः।",
+        "कम्बूनां चतुरशीतिर्निर्यान्तु स्वबलैर्वृताः॥"
+      ],
+      "linesEn": [
+        "adya sarvabalairdaityāḥ ṣaḍaśhītirudāyudhāḥ",
+        "kambūnāṃ chaturaśhītirniryāntu svabalairvṛitāḥ"
+      ],
+      "meaningHi": "उसने छियासी सशस्त्र दैत्य दलों और कम्बु वंश के चौरासी दलों को अपनी सेनाओं सहित निकलने को कहा।",
+      "meaningEn": "He ordered eighty-six armed asura divisions and eighty-four Kambu divisions to march with their forces."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-5",
+      "number": 5,
+      "labelHi": "पाठ · ५",
+      "labelEn": "Text unit · 5",
+      "lines": [
+        "कोटिवीर्याणि पञ्चाशदसुराणां कुलानि वै।",
+        "शतं कुलानि धौम्राणां निर्गच्छन्तु ममाज्ञया॥"
+      ],
+      "linesEn": [
+        "koṭivīryāṇi pañchāśhadasurāṇāṃ kulāni vai",
+        "śhataṃ kulāni dhaumrāṇāṃ nirgachchhantu mamājñayā"
+      ],
+      "meaningHi": "उसने कोटिवीर्य वंश के पचास और धौम्र वंश के सौ कुलों को भी निकलने की आज्ञा दी।",
+      "meaningEn": "He commanded fifty clans of the Kotiviryas and a hundred Dhaumra clans to set out."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-6",
+      "number": 6,
+      "labelHi": "पाठ · ६",
+      "labelEn": "Text unit · 6",
+      "lines": [
+        "कालका दौर्हृदा मौर्याः कालकेयास्तथासुराः।",
+        "युद्धाय सज्जा निर्यान्तु आज्ञया त्वरिता मम॥"
+      ],
+      "linesEn": [
+        "kālakā daurhṛidā mauryāḥ kālakeyāstathāsurāḥ",
+        "yuddhāya sajjā niryāntu ājñayā tvaritā mama"
+      ],
+      "meaningHi": "कालक, दौर्हृद, मौर्य और कालकेय असुरों को भी तुरंत युद्ध के लिए तैयार होकर चलने को कहा।",
+      "meaningEn": "The Kalakas, Daurhridas, Mauryas and Kalakeyas were likewise ordered to prepare for battle and march at once."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-7",
+      "number": 7,
+      "labelHi": "पाठ · ७",
+      "labelEn": "Text unit · 7",
+      "lines": [
+        "इत्याज्ञाप्यासुरपतिः शुम्भो भैरवशासनः।",
+        "निर्जगाम महासैन्यसहस्रैर्बहुभिर्वृतः॥"
+      ],
+      "linesEn": [
+        "ityājñāpyāsurapatiḥ śhumbho bhairavaśhāsanaḥ",
+        "nirjagāma mahāsainyasahasrairbahubhirvṛitaḥ"
+      ],
+      "meaningHi": "ऐसा कठोर आदेश देकर असुरराज शुम्भ हजारों विशाल सैन्य दलों से घिरा बाहर निकला।",
+      "meaningEn": "Having issued these fierce orders, Shumbha set out surrounded by many thousands of great military divisions."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-8",
+      "number": 8,
+      "labelHi": "पाठ · ८",
+      "labelEn": "Text unit · 8",
+      "lines": [
+        "आयान्तं चण्डिका दृष्ट्वा तत्सैन्यमतिभीषणम्।",
+        "ज्यास्वनैः पूरयामास धरणीगगनान्तरम्॥"
+      ],
+      "linesEn": [
+        "āyāntaṃ chaṇḍikā dṛiṣṭvā tatsainyamatibhīṣaṇam",
+        "jyāsvanaiḥ pūrayāmāsa dharaṇīgaganāntaram"
+      ],
+      "meaningHi": "उस भयंकर सेना को आता देखकर चण्डिका ने धनुष की टंकार से धरती और आकाश का अंतराल भर दिया।",
+      "meaningEn": "Seeing the terrifying army approach, Chandika filled the space between earth and sky with the twang of her bow."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-9",
+      "number": 9,
+      "labelHi": "पाठ · ९",
+      "labelEn": "Text unit · 9",
+      "lines": [
+        "ततः सिंहो महानादमतीव कृतवान् नृप।",
+        "घण्टास्वनेन तन्नादमम्बिका चोपबृंहयत्॥"
+      ],
+      "linesEn": [
+        "tataḥ siṃho mahānādamatīva kṛitavān nṛipa",
+        "ghaṇṭāsvanena tannādamambikā chopabṛiṃhayat"
+      ],
+      "meaningHi": "सिंह ने प्रचंड गर्जना की; अम्बिका ने अपनी घंटी की ध्वनि से उस गर्जना को और बढ़ाया।",
+      "meaningEn": "The lion roared mightily, and Ambika reinforced its roar with the ringing of her bell."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-10",
+      "number": 10,
+      "labelHi": "पाठ · १०",
+      "labelEn": "Text unit · 10",
+      "lines": [
+        "धनुर्ज्यासिंहघण्टानां नादापूरितदिङ्मुखा।",
+        "निनादैर्भीषणैः काली जिग्ये विस्तारितानना॥"
+      ],
+      "linesEn": [
+        "dhanurjyāsiṃhaghaṇṭānāṃ nādāpūritadiṅmukhā",
+        "ninādairbhīṣaṇaiḥ kālī jigye vistāritānanā"
+      ],
+      "meaningHi": "धनुष, सिंह और घंटी की ध्वनियों से दिशाएँ भर गईं; काली ने मुख फैलाकर अपनी भीषण गर्जना से सबको पीछे छोड़ दिया।",
+      "meaningEn": "Bowstring, lion and bell filled the directions with sound; Kali opened her mouth wide and surpassed them with her terrible cries."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-11",
+      "number": 11,
+      "labelHi": "पाठ · ११",
+      "labelEn": "Text unit · 11",
+      "lines": [
+        "तं निनादमुपश्रुत्य दैत्यसैन्यैश्चतुर्दिशम्।",
+        "देवी सिंहस्तथा काली सरोषैः परिवारिताः॥"
+      ],
+      "linesEn": [
+        "taṃ ninādamupaśhrutya daityasainyaiśhchaturdiśham",
+        "devī siṃhastathā kālī saroṣaiḥ parivāritāḥ"
+      ],
+      "meaningHi": "यह गर्जना सुनकर क्रोधित दैत्य सेनाओं ने देवी, सिंह और काली को चारों ओर से घेर लिया।",
+      "meaningEn": "Hearing that tumult, the angry asura armies surrounded the goddess, her lion and Kali on every side."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-12",
+      "number": 12,
+      "labelHi": "पाठ · १२",
+      "labelEn": "Text unit · 12",
+      "lines": [
+        "एतस्मिन्नन्तरे भूप विनाशाय सुरद्विषाम्।",
+        "भवायामरसिंहानामतिवीर्यबलान्विताः॥"
+      ],
+      "linesEn": [
+        "etasminnantare bhūpa vināśhāya suradviṣām",
+        "bhavāyāmarasiṃhānāmativīryabalānvitāḥ"
+      ],
+      "meaningHi": "तभी देवताओं के शत्रुओं का विनाश और श्रेष्ठ देवों का कल्याण करने के लिए अत्यंत बलशाली शक्तियाँ प्रकट होने लगीं।",
+      "meaningEn": "At that moment, powers of immense strength began to appear to destroy the gods’ enemies and secure the gods’ welfare."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-13",
+      "number": 13,
+      "labelHi": "पाठ · १३",
+      "labelEn": "Text unit · 13",
+      "lines": [
+        "ब्रह्मेशगुहविष्णूनां तथेन्द्रस्य च शक्तयः।",
+        "शरीरेभ्यो विनिष्क्रम्य तद्रूपैश्चण्डिकां ययुः॥"
+      ],
+      "linesEn": [
+        "brahmeśhaguhaviṣṇūnāṃ tathendrasya cha śhaktayaḥ",
+        "śharīrebhyo viniṣkramya tadrūpaiśhchaṇḍikāṃ yayuḥ"
+      ],
+      "meaningHi": "ब्रह्मा, शिव, स्कन्द, विष्णु और इन्द्र के शरीरों से उनकी शक्तियाँ उन्हीं के अनुरूप रूप लेकर चण्डिका के पास आईं।",
+      "meaningEn": "The powers of Brahma, Shiva, Skanda, Vishnu and Indra emerged from their bodies and came to Chandika in corresponding forms."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-14",
+      "number": 14,
+      "labelHi": "पाठ · १४",
+      "labelEn": "Text unit · 14",
+      "lines": [
+        "यस्य देवस्य यद्रूपं यथाभूषणवाहनम्।",
+        "तद्वदेव हि तच्छक्तिरसुरान् योद्धुमाययौ॥"
+      ],
+      "linesEn": [
+        "yasya devasya yadrūpaṃ yathābhūṣaṇavāhanam",
+        "tadvadeva hi tachchhaktirasurān yoddhumāyayau"
+      ],
+      "meaningHi": "हर शक्ति अपने देवता का रूप, आभूषण और वाहन धारण करके असुरों से युद्ध करने आई।",
+      "meaningEn": "Each power came to fight the asuras bearing the form, ornaments and vehicle of her corresponding deity."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-15",
+      "number": 15,
+      "labelHi": "पाठ · १५",
+      "labelEn": "Text unit · 15",
+      "lines": [
+        "हंसयुक्तविमानाग्रे साक्षसूत्रकमण्डलुः।",
+        "आयाता ब्रह्मणः शक्तिर्ब्रह्माणी साभिधीयते॥"
+      ],
+      "linesEn": [
+        "haṃsayuktavimānāgre sākṣhasūtrakamaṇḍaluḥ",
+        "āyātā brahmaṇaḥ śhaktirbrahmāṇī sābhidhīyate"
+      ],
+      "meaningHi": "हंसों से युक्त विमान में माला और कमण्डलु लिए ब्रह्मा की शक्ति आईं; वे ब्रह्माणी कहलाती हैं।",
+      "meaningEn": "Brahma’s power arrived in a swan-drawn aerial vehicle, carrying a rosary and water vessel; she is called Brahmani."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-16",
+      "number": 16,
+      "labelHi": "पाठ · १६",
+      "labelEn": "Text unit · 16",
+      "lines": [
+        "माहेश्वरी वृषारूढा त्रिशूलवरधारिणी।",
+        "महाहिवलया प्राप्ता चन्द्ररेखाविभूषणा॥"
+      ],
+      "linesEn": [
+        "māheśhvarī vṛiṣārūḍhā triśhūlavaradhāriṇī",
+        "mahāhivalayā prāptā chandrarekhāvibhūṣaṇā"
+      ],
+      "meaningHi": "माहेश्वरी बैल पर आरूढ़ थीं; वे त्रिशूल, बड़े सर्पों के कंगन और चंद्रकला से सुशोभित थीं।",
+      "meaningEn": "Maheshvari arrived riding a bull, bearing a trident, with great serpents as bracelets and the crescent moon as her ornament."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-17",
+      "number": 17,
+      "labelHi": "पाठ · १७",
+      "labelEn": "Text unit · 17",
+      "lines": [
+        "कौमारी शक्तिहस्ता च मयूरवरवाहना।",
+        "योद्धुमभ्याययौ दैत्यानम्बिका गुहरूपिणी॥"
+      ],
+      "linesEn": [
+        "kaumārī śhaktihastā cha mayūravaravāhanā",
+        "yoddhumabhyāyayau daityānambikā guharūpiṇī"
+      ],
+      "meaningHi": "स्कन्द के अनुरूप कौमारी हाथ में शक्ति लिए श्रेष्ठ मयूर पर सवार होकर दैत्यों से लड़ने आईं।",
+      "meaningEn": "Kaumari, corresponding to Skanda, rode a splendid peacock and carried a spear as she came to battle the asuras."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-18",
+      "number": 18,
+      "labelHi": "पाठ · १८",
+      "labelEn": "Text unit · 18",
+      "lines": [
+        "तथैव वैष्णवी शक्तिर्गरुडोपरि संस्थिता।",
+        "शङ्खचक्रगदाशार्ङ्गखड्गहस्ताभ्युपाययौ॥"
+      ],
+      "linesEn": [
+        "tathaiva vaiṣṇavī śhaktirgaruḍopari saṃsthitā",
+        "śhaṅkhachakragadāśhārṅgakhaḍgahastābhyupāyayau"
+      ],
+      "meaningHi": "वैष्णवी गरुड़ पर बैठीं; उनके हाथों में शंख, चक्र, गदा, शार्ङ्ग धनुष और तलवार थे।",
+      "meaningEn": "Vaishnavi arrived seated on Garuda, carrying conch, discus, mace, Sharnga bow and sword."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-19",
+      "number": 19,
+      "labelHi": "पाठ · १९",
+      "labelEn": "Text unit · 19",
+      "lines": [
+        "यज्ञवाराहमतुलं रूपं या बिभ्रतो हरेः।",
+        "शक्तिः साप्याययौ तत्र वाराहीं बिभ्रती तनुम्॥"
+      ],
+      "linesEn": [
+        "yajñavārāhamatulaṃ rūpaṃ yā bibhrato hareḥ",
+        "śhaktiḥ sāpyāyayau tatra vārāhīṃ bibhratī tanum"
+      ],
+      "meaningHi": "यज्ञवराह रूपधारी विष्णु की शक्ति वाराही भी वराह का रूप धारण कर वहाँ पहुँचीं।",
+      "meaningEn": "The power of Vishnu in his sacrificial boar form also arrived, as Varahi bearing the form of a boar."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-20",
+      "number": 20,
+      "labelHi": "पाठ · २०",
+      "labelEn": "Text unit · 20",
+      "lines": [
+        "नारसिंही नृसिंहस्य बिभ्रती सदृशं वपुः।",
+        "प्राप्ता तत्र सटाक्षेपक्षिप्तनक्षत्रसंहतिः॥"
+      ],
+      "linesEn": [
+        "nārasiṃhī nṛisiṃhasya bibhratī sadṛiśhaṃ vapuḥ",
+        "prāptā tatra saṭākṣhepakṣhiptanakṣhatrasaṃhatiḥ"
+      ],
+      "meaningHi": "नारसिंही नृसिंह के समान रूप लेकर आईं; उनके अयाल के झटकों से तारों के समूह बिखरते दिखे।",
+      "meaningEn": "Narasimhi arrived in a form resembling Narasimha, her tossing mane scattering the clusters of stars."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-21",
+      "number": 21,
+      "labelHi": "पाठ · २१",
+      "labelEn": "Text unit · 21",
+      "lines": [
+        "वज्रहस्ता तथैवैन्द्री गजराजोपरि स्थिता।",
+        "प्राप्ता सहस्रनयना यथा शक्रस्तथैव सा॥"
+      ],
+      "linesEn": [
+        "vajrahastā tathaivaindrī gajarājopari sthitā",
+        "prāptā sahasranayanā yathā śhakrastathaiva sā"
+      ],
+      "meaningHi": "इन्द्र के समान हजार नेत्रों वाली ऐन्द्री श्रेष्ठ हाथी पर बैठीं और हाथ में वज्र लेकर आईं।",
+      "meaningEn": "Aindri arrived with a thousand eyes like Indra, riding the great elephant and bearing the thunderbolt."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-22",
+      "number": 22,
+      "labelHi": "पाठ · २२",
+      "labelEn": "Text unit · 22",
+      "lines": [
+        "ततः परिवृतस्ताभिरीशानो देवशक्तिभिः।",
+        "हन्यन्तामसुराः शीघ्रं मम प्रीत्याऽऽह चण्डिकाम्॥"
+      ],
+      "linesEn": [
+        "tataḥ parivṛitastābhirīśhāno devaśhaktibhiḥ",
+        "hanyantāmasurāḥ śhīghraṃ mama prītyā''ha chaṇḍikām"
+      ],
+      "meaningHi": "इन देवशक्तियों से घिरे शिव ने चण्डिका से कहा कि उनकी प्रसन्नता के लिए असुर शीघ्र मारे जाएँ।",
+      "meaningEn": "Surrounded by these divine powers, Shiva asked Chandika that the asuras be swiftly slain for his satisfaction."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-23",
+      "number": 23,
+      "labelHi": "पाठ · २३",
+      "labelEn": "Text unit · 23",
+      "lines": [
+        "ततो देवीशरीरात्तु विनिष्क्रान्तातिभीषणा।",
+        "चण्डिकाशक्तिरत्युग्रा शिवाशतनिनादिनी॥"
+      ],
+      "linesEn": [
+        "tato devīśharīrāttu viniṣkrāntātibhīṣaṇā",
+        "chaṇḍikāśhaktiratyugrā śhivāśhataninādinī"
+      ],
+      "meaningHi": "तब देवी के शरीर से अत्यंत भयंकर चण्डिका-शक्ति निकलीं, जिनकी आवाज सौ गीदड़ियों जैसी थी।",
+      "meaningEn": "Then a fearsome power of Chandika emerged from the goddess’s body, crying like a hundred female jackals."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-24",
+      "number": 24,
+      "labelHi": "पाठ · २४",
+      "labelEn": "Text unit · 24",
+      "lines": [
+        "सा चाह धूम्रजटिलमीशानमपराजिता।",
+        "दूत त्वं गच्छ भगवन् पार्श्वं शुम्भनिशुम्भयोः॥"
+      ],
+      "linesEn": [
+        "sā chāha dhūmrajaṭilamīśhānamaparājitā",
+        "dūta tvaṃ gachchha bhagavan pārśhvaṃ śhumbhaniśhumbhayoḥ"
+      ],
+      "meaningHi": "अपराजिता ने धूम्रवर्ण जटाओं वाले शिव से कहा कि वे दूत बनकर शुम्भ और निशुम्भ के पास जाएँ।",
+      "meaningEn": "The invincible goddess asked Shiva, with his smoke-coloured matted hair, to go as her messenger to Shumbha and Nishumbha."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-25",
+      "number": 25,
+      "labelHi": "पाठ · २५",
+      "labelEn": "Text unit · 25",
+      "lines": [
+        "ब्रूहि शुम्भं निशुम्भं च दानवावतिगर्वितौ।",
+        "ये चान्ये दानवास्तत्र युद्धाय समुपस्थिताः॥"
+      ],
+      "linesEn": [
+        "brūhi śhumbhaṃ niśhumbhaṃ cha dānavāvatigarvitau",
+        "ye chānye dānavāstatra yuddhāya samupasthitāḥ"
+      ],
+      "meaningHi": "उन्होंने शिव से कहा कि दोनों अभिमानी दानवों और युद्ध के लिए एकत्र अन्य दानवों को उनका संदेश सुनाएँ।",
+      "meaningEn": "She told Shiva to deliver her message to the two arrogant asuras and to the others assembled for battle."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-26",
+      "number": 26,
+      "labelHi": "पाठ · २६",
+      "labelEn": "Text unit · 26",
+      "lines": [
+        "त्रैलोक्यमिन्द्रो लभतां देवाः सन्तु हविर्भुजः।",
+        "यूयं प्रयात पातालं यदि जीवितुमिच्छथ॥"
+      ],
+      "linesEn": [
+        "trailokyamindro labhatāṃ devāḥ santu havirbhujaḥ",
+        "yūyaṃ prayāta pātālaṃ yadi jīvitumichchhatha"
+      ],
+      "meaningHi": "इन्द्र को तीनों लोक लौटाओ, देवताओं को यज्ञभाग मिलने दो; जीवित रहना चाहते हो तो पाताल चले जाओ।",
+      "meaningEn": "Restore the three worlds to Indra and let the gods receive sacrificial offerings; go to the netherworld if you wish to live."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-27",
+      "number": 27,
+      "labelHi": "पाठ · २७",
+      "labelEn": "Text unit · 27",
+      "lines": [
+        "बलावलेपादथ चेद्भवन्तो युद्धकाङ्क्षिणः।",
+        "तदागच्छत तृप्यन्तु मच्छिवाः पिशितेन वः॥"
+      ],
+      "linesEn": [
+        "balāvalepādatha chedbhavanto yuddhakāṅkṣhiṇaḥ",
+        "tadāgachchhata tṛipyantu machchhivāḥ piśhitena vaḥ"
+      ],
+      "meaningHi": "यदि बल के घमंड में युद्ध चाहते हो तो आओ; मेरी गीदड़ियाँ तुम्हारे मांस से तृप्त होंगी।",
+      "meaningEn": "If pride in your strength makes you desire battle, come; my jackals shall be fed with your flesh."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-28",
+      "number": 28,
+      "labelHi": "पाठ · २८",
+      "labelEn": "Text unit · 28",
+      "lines": [
+        "यतो नियुक्तो दौत्येन तया देव्या शिवः स्वयम्।",
+        "शिवदूतीति लोकेऽस्मिंस्ततः सा ख्यातिमागता॥"
+      ],
+      "linesEn": [
+        "yato niyukto dautyena tayā devyā śhivaḥ svayam",
+        "śhivadūtīti loke'smiṃstataḥ sā khyātimāgatā"
+      ],
+      "meaningHi": "स्वयं शिव को दूत बनाने के कारण वह देवी संसार में शिवदूती नाम से प्रसिद्ध हुईं।",
+      "meaningEn": "Because she appointed Shiva himself as her messenger, the goddess became known in the world as Shivaduti."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-29",
+      "number": 29,
+      "labelHi": "पाठ · २९",
+      "labelEn": "Text unit · 29",
+      "lines": [
+        "तेऽपि श्रुत्वा वचो देव्याः शर्वाख्यातं महासुराः।",
+        "अमर्षापूरिता जग्मुर्यत्र कात्यायनी स्थिता॥"
+      ],
+      "linesEn": [
+        "te'pi śhrutvā vacho devyāḥ śharvākhyātaṃ mahāsurāḥ",
+        "amarṣāpūritā jagmuryatra kātyāyanī sthitā"
+      ],
+      "meaningHi": "शिव द्वारा सुनाया देवी का संदेश सुनकर असुर क्रोध से भर गए और कात्यायनी की ओर बढ़े।",
+      "meaningEn": "After hearing the goddess’s message from Shiva, the asuras were filled with resentment and advanced toward Katyayani."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-30",
+      "number": 30,
+      "labelHi": "पाठ · ३०",
+      "labelEn": "Text unit · 30",
+      "lines": [
+        "ततः प्रथममेवाग्रे शरशक्त्यृष्टिवृष्टिभिः।",
+        "ववर्षुरुद्धतामर्षास्तां देवीममरारयः॥"
+      ],
+      "linesEn": [
+        "tataḥ prathamamevāgre śharaśhaktyṛiṣṭivṛiṣṭibhiḥ",
+        "vavarṣuruddhatāmarṣāstāṃ devīmamarārayaḥ"
+      ],
+      "meaningHi": "देवशत्रुओं ने पहले ही आक्रमण में क्रोधपूर्वक देवी पर बाण, शक्ति और भालों की वर्षा कर दी।",
+      "meaningEn": "In their opening attack, the enemies of the gods angrily showered the goddess with arrows, spears and lances."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-31",
+      "number": 31,
+      "labelHi": "पाठ · ३१",
+      "labelEn": "Text unit · 31",
+      "lines": [
+        "सा च तान् प्रहितान् बाणाञ्छूलशक्तिपरश्वधान्।",
+        "चिच्छेद लीलयाऽऽध्मातधनुर्मुक्तैर्महेषुभिः॥"
+      ],
+      "linesEn": [
+        "sā cha tān prahitān bāṇāñchhūlaśhaktiparaśhvadhān",
+        "chichchheda līlayā''dhmātadhanurmuktairmaheṣubhiḥ"
+      ],
+      "meaningHi": "देवी ने सहज भाव से धनुष खींचकर छोड़े बड़े बाणों से उनके बाण, शूल, शक्ति और फरसे काट दिए।",
+      "meaningEn": "The goddess effortlessly cut apart their arrows, pikes, spears and axes with great arrows released from her drawn bow."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-32",
+      "number": 32,
+      "labelHi": "पाठ · ३२",
+      "labelEn": "Text unit · 32",
+      "lines": [
+        "तस्याग्रतस्तथा काली शूलपातविदारितान्।",
+        "खट्वाङ्गपोथितांश्चारीन् कुर्वती व्यचरत्तदा॥"
+      ],
+      "linesEn": [
+        "tasyāgratastathā kālī śhūlapātavidāritān",
+        "khaṭvāṅgapothitāṃśhchārīn kurvatī vyacharattadā"
+      ],
+      "meaningHi": "उनके आगे काली घूमती हुई शत्रुओं को शूल से बेध रही थीं और खट्वाङ्ग से प्रहार कर रही थीं।",
+      "meaningEn": "Ahead of her, Kali moved through the enemy, piercing them with her spear and striking them with her skull-topped staff."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-33",
+      "number": 33,
+      "labelHi": "पाठ · ३३",
+      "labelEn": "Text unit · 33",
+      "lines": [
+        "कमण्डलुजलाक्षेपहतवीर्यान् हतौजसः।",
+        "ब्रह्माणी चाकरोच्छत्रून् येन येन स्म धावति॥"
+      ],
+      "linesEn": [
+        "kamaṇḍalujalākṣhepahatavīryān hataujasaḥ",
+        "brahmāṇī chākarochchhatrūn yena yena sma dhāvati"
+      ],
+      "meaningHi": "ब्रह्माणी जिस ओर दौड़तीं, कमण्डलु का जल छिड़ककर वहाँ शत्रुओं का पराक्रम और तेज हर लेतीं।",
+      "meaningEn": "Wherever Brahmani advanced, water sprinkled from her vessel stripped the enemies of their vigour and strength."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-34",
+      "number": 34,
+      "labelHi": "पाठ · ३४",
+      "labelEn": "Text unit · 34",
+      "lines": [
+        "माहेश्वरी त्रिशूलेन तथा चक्रेण वैष्णवी।",
+        "दैत्याञ्जघान कौमारी तथा शक्त्यातिकोपना॥"
+      ],
+      "linesEn": [
+        "māheśhvarī triśhūlena tathā chakreṇa vaiṣṇavī",
+        "daityāñjaghāna kaumārī tathā śhaktyātikopanā"
+      ],
+      "meaningHi": "माहेश्वरी ने त्रिशूल, वैष्णवी ने चक्र और क्रोध से भरी कौमारी ने शक्ति से दैत्यों का संहार किया।",
+      "meaningEn": "Maheshvari slew asuras with her trident, Vaishnavi with her discus, and the wrathful Kaumari with her spear."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-35",
+      "number": 35,
+      "labelHi": "पाठ · ३५",
+      "labelEn": "Text unit · 35",
+      "lines": [
+        "ऐन्द्रीकुलिशपातेन शतशो दैत्यदानवाः।",
+        "पेतुर्विदारिताः पृथ्व्यां रुधिरौघप्रवर्षिणः॥"
+      ],
+      "linesEn": [
+        "aindrīkuliśhapātena śhataśho daityadānavāḥ",
+        "peturvidāritāḥ pṛithvyāṃ rudhiraughapravarṣiṇaḥ"
+      ],
+      "meaningHi": "ऐन्द्री के वज्र प्रहार से सैकड़ों दैत्य-दानव घायल होकर रक्त बहाते हुए धरती पर गिर पड़े।",
+      "meaningEn": "Struck by Aindri’s thunderbolt, hundreds of asuras fell to the earth, torn open and pouring blood."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-36",
+      "number": 36,
+      "labelHi": "पाठ · ३६",
+      "labelEn": "Text unit · 36",
+      "lines": [
+        "तुण्डप्रहारविध्वस्ता दंष्ट्राग्रक्षतवक्षसः।",
+        "वाराहमूर्त्या न्यपतंश्चक्रेण च विदारिताः॥"
+      ],
+      "linesEn": [
+        "tuṇḍaprahāravidhvastā daṃṣṭrāgrakṣhatavakṣhasaḥ",
+        "vārāhamūrtyā nyapataṃśhchakreṇa cha vidāritāḥ"
+      ],
+      "meaningHi": "वाराही के थूथन, दाँतों और चक्र के आघात से असुरों के वक्ष विदीर्ण हुए और वे गिर पड़े।",
+      "meaningEn": "Varahi’s snout, tusks and discus struck down the asuras, tearing their chests and bodies."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-37",
+      "number": 37,
+      "labelHi": "पाठ · ३७",
+      "labelEn": "Text unit · 37",
+      "lines": [
+        "नखैर्विदारितांश्चान्यान् भक्षयन्ती महासुरान्।",
+        "नारसिंही चचाराजौ नादापूर्णदिगम्बरा॥"
+      ],
+      "linesEn": [
+        "nakhairvidāritāṃśhchānyān bhakṣhayantī mahāsurān",
+        "nārasiṃhī chachārājau nādāpūrṇadigambarā"
+      ],
+      "meaningHi": "नारसिंही अन्य असुरों को नखों से चीरकर खाती हुई रणभूमि में घूमीं; उनके नाद से दिशाएँ भर गईं।",
+      "meaningEn": "Narasimhi ranged across the battlefield, tearing and devouring asuras with her claws, her roar filling the directions."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-38",
+      "number": 38,
+      "labelHi": "पाठ · ३८",
+      "labelEn": "Text unit · 38",
+      "lines": [
+        "चण्डाट्टहासैरसुराः शिवदूत्यभिदूषिताः।",
+        "पेतुः पृथिव्यां पतितांस्तांश्चखादाथ सा तदा॥"
+      ],
+      "linesEn": [
+        "chaṇḍāṭṭahāsairasurāḥ śhivadūtyabhidūṣitāḥ",
+        "petuḥ pṛithivyāṃ patitāṃstāṃśhchakhādātha sā tadā"
+      ],
+      "meaningHi": "शिवदूती के भयानक अट्टहास से आतंकित असुर धरती पर गिरे और उन्होंने उन्हें खा लिया।",
+      "meaningEn": "Terrified by Shivaduti’s fierce laughter, asuras fell to the ground, where she devoured them."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-39",
+      "number": 39,
+      "labelHi": "पाठ · ३९",
+      "labelEn": "Text unit · 39",
+      "lines": [
+        "इति मातृगणं क्रुद्धं मर्दयन्तं महासुरान्।",
+        "दृष्ट्वाभ्युपायैर्विविधैर्नेशुर्देवारिसैनिकाः॥"
+      ],
+      "linesEn": [
+        "iti mātṛigaṇaṃ kruddhaṃ mardayantaṃ mahāsurān",
+        "dṛiṣṭvābhyupāyairvividhairneśhurdevārisainikāḥ"
+      ],
+      "meaningHi": "क्रोधित मातृकाओं को अनेक उपायों से असुरों को कुचलते देखकर शत्रु सैनिक भागने लगे।",
+      "meaningEn": "Seeing the furious Mothers crush the asuras in many ways, the enemy soldiers fled."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-40",
+      "number": 40,
+      "labelHi": "पाठ · ४०",
+      "labelEn": "Text unit · 40",
+      "lines": [
+        "पलायनपरान् दृष्ट्वा दैत्यान् मातृगणार्दितान्।",
+        "योद्धुमभ्याययौ क्रुद्धो रक्तबीजो महासुरः॥"
+      ],
+      "linesEn": [
+        "palāyanaparān dṛiṣṭvā daityān mātṛigaṇārditān",
+        "yoddhumabhyāyayau kruddho raktabījo mahāsuraḥ"
+      ],
+      "meaningHi": "मातृकाओं से पीड़ित दैत्यों को भागते देखकर रक्तबीज क्रोध से युद्ध करने आया।",
+      "meaningEn": "Seeing the asuras flee under the Mothers’ assault, Raktabija angrily came forward to fight."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-41",
+      "number": 41,
+      "labelHi": "पाठ · ४१",
+      "labelEn": "Text unit · 41",
+      "lines": [
+        "रक्तबिन्दुर्यदा भूमौ पतत्यस्य शरीरतः।",
+        "समुत्पतति मेदिन्यां तत्प्रमाणस्तदासुरः॥"
+      ],
+      "linesEn": [
+        "raktabinduryadā bhūmau patatyasya śharīrataḥ",
+        "samutpatati medinyāṃ tatpramāṇastadāsuraḥ"
+      ],
+      "meaningHi": "उसके शरीर का रक्त-बिंदु धरती पर गिरते ही उसी आकार का एक और असुर उत्पन्न हो जाता था।",
+      "meaningEn": "Whenever a drop of his blood touched the earth, another asura of the same size arose there."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-42",
+      "number": 42,
+      "labelHi": "पाठ · ४२",
+      "labelEn": "Text unit · 42",
+      "lines": [
+        "युयुधे स गदापाणिरिन्द्रशक्त्या महासुरः।",
+        "ततश्चैन्द्री स्ववज्रेण रक्तबीजमताडयत्॥"
+      ],
+      "linesEn": [
+        "yuyudhe sa gadāpāṇirindraśhaktyā mahāsuraḥ",
+        "tataśhchaindrī svavajreṇa raktabījamatāḍayat"
+      ],
+      "meaningHi": "गदा लिए रक्तबीज ने इन्द्र की शक्ति से युद्ध किया; ऐन्द्री ने उसे अपने वज्र से मारा।",
+      "meaningEn": "Raktabija fought Indra’s power with his mace, and Aindri struck him with her thunderbolt."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-43",
+      "number": 43,
+      "labelHi": "पाठ · ४३",
+      "labelEn": "Text unit · 43",
+      "lines": [
+        "कुलिशेनाहतस्याशु बहु सुस्राव शोणितम्।",
+        "समुत्तस्थुस्ततो योधास्तद्रूपास्तत्पराक्रमाः॥"
+      ],
+      "linesEn": [
+        "kuliśhenāhatasyāśhu bahu susrāva śhoṇitam",
+        "samuttasthustato yodhāstadrūpāstatparākramāḥ"
+      ],
+      "meaningHi": "वज्र के घाव से बहुत रक्त बहा; उससे उसी रूप और पराक्रम वाले योद्धा उठ खड़े हुए।",
+      "meaningEn": "Much blood flowed from the thunderbolt wound, giving rise to warriors with his own form and prowess."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-44",
+      "number": 44,
+      "labelHi": "पाठ · ४४",
+      "labelEn": "Text unit · 44",
+      "lines": [
+        "यावन्तः पतितास्तस्य शरीराद्रक्तबिन्दवः।",
+        "तावन्तः पुरुषा जातास्तद्वीर्यबलविक्रमाः॥"
+      ],
+      "linesEn": [
+        "yāvantaḥ patitāstasya śharīrādraktabindavaḥ",
+        "tāvantaḥ puruṣā jātāstadvīryabalavikramāḥ"
+      ],
+      "meaningHi": "जितने रक्त-बिंदु उसके शरीर से गिरे, उतने ही उसके समान शक्ति और वीरता वाले पुरुष उत्पन्न हुए।",
+      "meaningEn": "For every drop shed from his body, a warrior appeared with strength and courage equal to his."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-45",
+      "number": 45,
+      "labelHi": "पाठ · ४५",
+      "labelEn": "Text unit · 45",
+      "lines": [
+        "ते चापि युयुधुस्तत्र पुरुषा रक्तसम्भवाः।",
+        "समं मातृभिरत्युग्रशस्त्रपातातिभीषणम्॥"
+      ],
+      "linesEn": [
+        "te chāpi yuyudhustatra puruṣā raktasambhavāḥ",
+        "samaṃ mātṛibhiratyugraśhastrapātātibhīṣaṇam"
+      ],
+      "meaningHi": "रक्त से उत्पन्न वे योद्धा भी मातृकाओं से भयानक अस्त्र-शस्त्रों के साथ युद्ध करने लगे।",
+      "meaningEn": "Those blood-born warriors also fought the Mothers in a terrifying exchange of fierce weapons."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-46",
+      "number": 46,
+      "labelHi": "पाठ · ४६",
+      "labelEn": "Text unit · 46",
+      "lines": [
+        "पुनश्च वज्रपातेन क्षतमस्य शिरो यदा।",
+        "ववाह रक्तं पुरुषास्ततो जाताः सहस्रशः॥"
+      ],
+      "linesEn": [
+        "punaśhcha vajrapātena kṣhatamasya śhiro yadā",
+        "vavāha raktaṃ puruṣāstato jātāḥ sahasraśhaḥ"
+      ],
+      "meaningHi": "जब वज्र से उसका सिर फिर घायल हुआ और रक्त बहा, उससे हजारों और पुरुष पैदा हुए।",
+      "meaningEn": "When another thunderbolt wounded his head, the flowing blood produced thousands more warriors."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-47",
+      "number": 47,
+      "labelHi": "पाठ · ४७",
+      "labelEn": "Text unit · 47",
+      "lines": [
+        "वैष्णवी समरे चैनं चक्रेणाभिजघान ह।",
+        "गदया ताडयामास ऐन्द्री तमसुरेश्वरम्॥"
+      ],
+      "linesEn": [
+        "vaiṣṇavī samare chainaṃ chakreṇābhijaghāna ha",
+        "gadayā tāḍayāmāsa aindrī tamasureśhvaram"
+      ],
+      "meaningHi": "वैष्णवी ने उसे चक्र से मारा और ऐन्द्री ने उस असुरराज पर गदा से प्रहार किया।",
+      "meaningEn": "Vaishnavi struck him with her discus, and Aindri hit the asura chief with her mace."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-48",
+      "number": 48,
+      "labelHi": "पाठ · ४८",
+      "labelEn": "Text unit · 48",
+      "lines": [
+        "वैष्णवीचक्रभिन्नस्य रुधिरस्रावसम्भवैः।",
+        "सहस्रशो जगद्व्याप्तं तत्प्रमाणैर्महासुरैः॥"
+      ],
+      "linesEn": [
+        "vaiṣṇavīchakrabhinnasya rudhirasrāvasambhavaiḥ",
+        "sahasraśho jagadvyāptaṃ tatpramāṇairmahāsuraiḥ"
+      ],
+      "meaningHi": "वैष्णवी के चक्र से निकले रक्त से उसके समान हजारों असुर बने और संसार भर गया।",
+      "meaningEn": "Blood from Vaishnavi’s discus wound produced thousands of asuras equal to him, filling the world."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-49",
+      "number": 49,
+      "labelHi": "पाठ · ४९",
+      "labelEn": "Text unit · 49",
+      "lines": [
+        "शक्त्या जघान कौमारी वाराही च तथासिना।",
+        "माहेश्वरी त्रिशूलेन रक्तबीजं महासुरम्॥"
+      ],
+      "linesEn": [
+        "śhaktyā jaghāna kaumārī vārāhī cha tathāsinā",
+        "māheśhvarī triśhūlena raktabījaṃ mahāsuram"
+      ],
+      "meaningHi": "कौमारी ने शक्ति, वाराही ने तलवार और माहेश्वरी ने त्रिशूल से रक्तबीज पर प्रहार किया।",
+      "meaningEn": "Kaumari struck Raktabija with her spear, Varahi with her sword, and Maheshvari with her trident."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-50",
+      "number": 50,
+      "labelHi": "पाठ · ५०",
+      "labelEn": "Text unit · 50",
+      "lines": [
+        "स चापि गदया दैत्यः सर्वा एवाहनत् पृथक्।",
+        "मातॄः कोपसमाविष्टो रक्तबीजो महासुरः॥"
+      ],
+      "linesEn": [
+        "sa chāpi gadayā daityaḥ sarvā evāhanat pṛithak",
+        "mātṝiḥ kopasamāviṣṭo raktabījo mahāsuraḥ"
+      ],
+      "meaningHi": "क्रोध से भरे रक्तबीज ने भी अपनी गदा से प्रत्येक मातृका को अलग-अलग मारा।",
+      "meaningEn": "Raktabija, filled with rage, struck each of the Mothers in turn with his mace."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-51",
+      "number": 51,
+      "labelHi": "पाठ · ५१",
+      "labelEn": "Text unit · 51",
+      "lines": [
+        "तस्याहतस्य बहुधा शक्तिशूलादिभिर्भुवि।",
+        "पपात यो वै रक्तौघस्तेनासञ्छतशोऽसुराः॥"
+      ],
+      "linesEn": [
+        "tasyāhatasya bahudhā śhaktiśhūlādibhirbhuvi",
+        "papāta yo vai raktaughastenāsañchhataśho'surāḥ"
+      ],
+      "meaningHi": "शक्ति और शूल आदि के अनेक घावों से जो रक्त धरती पर गिरा, उससे सैकड़ों असुर बने।",
+      "meaningEn": "Blood falling from his many spear and pike wounds gave rise to hundreds of asuras."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-52",
+      "number": 52,
+      "labelHi": "पाठ · ५२",
+      "labelEn": "Text unit · 52",
+      "lines": [
+        "तैश्चासुरासृक्सम्भूतैरसुरैः सकलं जगत्।",
+        "व्याप्तमासीत्ततो देवा भयमाजग्मुरुत्तमम्॥"
+      ],
+      "linesEn": [
+        "taiśhchāsurāsṛiksambhūtairasuraiḥ sakalaṃ jagat",
+        "vyāptamāsīttato devā bhayamājagmuruttamam"
+      ],
+      "meaningHi": "उसके रक्त से उत्पन्न असुरों ने सारे जगत को भर दिया; देवता अत्यंत भयभीत हो गए।",
+      "meaningEn": "The asuras born from his blood filled the whole world, and the gods became greatly afraid."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-53",
+      "number": 53,
+      "labelHi": "पाठ · ५३",
+      "labelEn": "Text unit · 53",
+      "lines": [
+        "तान् विषण्णान् सुरान् दृष्ट्वा चण्डिका प्राह सत्वरा।",
+        "उवाच कालीं चामुण्डे विस्तीर्णं वदनं कुरु॥"
+      ],
+      "linesEn": [
+        "tān viṣaṇṇān surān dṛiṣṭvā chaṇḍikā prāha satvarā",
+        "uvācha kālīṃ chāmuṇḍe vistīrṇaṃ vadanaṃ kuru"
+      ],
+      "meaningHi": "देवताओं की व्याकुलता देखकर चण्डिका ने तुरंत काली से कहा, हे चामुण्डे, अपना मुख विस्तृत करो।",
+      "meaningEn": "Seeing the gods’ distress, Chandika swiftly told Kali, addressed as Chamunda, to open her mouth wide."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-54",
+      "number": 54,
+      "labelHi": "पाठ · ५४",
+      "labelEn": "Text unit · 54",
+      "lines": [
+        "मच्छस्त्रपातसम्भूतान् रक्तबिन्दून्महासुरान्।",
+        "रक्तबिन्दोः प्रतीच्छ त्वं वक्त्रेणानेन वेगिना॥"
+      ],
+      "linesEn": [
+        "machchhastrapātasambhūtān raktabindūnmahāsurān",
+        "raktabindoḥ pratīchchha tvaṃ vaktreṇānena veginā"
+      ],
+      "meaningHi": "मेरे शस्त्रों से गिरने वाले रक्त-बिंदुओं और उनसे उत्पन्न असुरों को अपने तीव्र मुख से पकड़ लो।",
+      "meaningEn": "Catch in your swift-moving mouth the blood shed by my weapons and the asuras arising from its drops."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-55",
+      "number": 55,
+      "labelHi": "पाठ · ५५",
+      "labelEn": "Text unit · 55",
+      "lines": [
+        "भक्षयन्ती चर रणे तदुत्पन्नान्महासुरान्।",
+        "एवमेष क्षयं दैत्यः क्षीणरक्तो गमिष्यति॥"
+      ],
+      "linesEn": [
+        "bhakṣhayantī chara raṇe tadutpannānmahāsurān",
+        "evameṣa kṣhayaṃ daityaḥ kṣhīṇarakto gamiṣyati"
+      ],
+      "meaningHi": "उनसे उत्पन्न असुरों को खाती हुई युद्धभूमि में घूमो; रक्त क्षीण होने पर यह दैत्य नष्ट हो जाएगा।",
+      "meaningEn": "Move through the battle devouring the asuras born from it; drained of blood, this asura will perish."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-56",
+      "number": 56,
+      "labelHi": "पाठ · ५६",
+      "labelEn": "Text unit · 56",
+      "lines": [
+        "भक्ष्यमाणास्त्वया चोग्रा न चोत्पत्स्यन्ति चापरे।",
+        "इत्युक्त्वा तां ततो देवी शूलेनाभिजघान तम्॥"
+      ],
+      "linesEn": [
+        "bhakṣhyamāṇāstvayā chogrā na chotpatsyanti chāpare",
+        "ityuktvā tāṃ tato devī śhūlenābhijaghāna tam"
+      ],
+      "meaningHi": "तुम्हारे खा लेने से और असुर उत्पन्न नहीं होंगे। ऐसा कहकर देवी ने रक्तबीज को शूल से मारा।",
+      "meaningEn": "As you devour them, no further asuras will arise. Having said this, the goddess struck Raktabija with her spear."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-57",
+      "number": 57,
+      "labelHi": "पाठ · ५७",
+      "labelEn": "Text unit · 57",
+      "lines": [
+        "मुखेन काली जगृहे रक्तबीजस्य शोणितम्।",
+        "ततोऽसावाजघानाथ गदया तत्र चण्डिकाम्॥"
+      ],
+      "linesEn": [
+        "mukhena kālī jagṛihe raktabījasya śhoṇitam",
+        "tato'sāvājaghānātha gadayā tatra chaṇḍikām"
+      ],
+      "meaningHi": "काली ने उसके रक्त को मुख में पकड़ लिया; तब रक्तबीज ने चण्डिका पर गदा चलाई।",
+      "meaningEn": "Kali caught Raktabija’s blood in her mouth; he then struck Chandika with his mace."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-58",
+      "number": 58,
+      "labelHi": "पाठ · ५८",
+      "labelEn": "Text unit · 58",
+      "lines": [
+        "न चास्या वेदनां चक्रे गदापातोऽल्पिकामपि।",
+        "तस्याहतस्य देहात्तु बहु सुस्राव शोणितम्॥"
+      ],
+      "linesEn": [
+        "na chāsyā vedanāṃ chakre gadāpāto'lpikāmapi",
+        "tasyāhatasya dehāttu bahu susrāva śhoṇitam"
+      ],
+      "meaningHi": "गदा से देवी को तनिक भी पीड़ा नहीं हुई; घायल असुर के शरीर से बहुत रक्त बहता रहा।",
+      "meaningEn": "The mace caused the goddess not even the slightest pain, while blood poured from the wounded asura."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-59",
+      "number": 59,
+      "labelHi": "पाठ · ५९",
+      "labelEn": "Text unit · 59",
+      "lines": [
+        "यतस्ततस्तद्वक्त्रेण चामुण्डा सम्प्रतीच्छति।",
+        "मुखे समुद्गता येऽस्या रक्तपातान्महासुराः॥"
+      ],
+      "linesEn": [
+        "yatastatastadvaktreṇa chāmuṇḍā sampratīchchhati",
+        "mukhe samudgatā ye'syā raktapātānmahāsurāḥ"
+      ],
+      "meaningHi": "चामुण्डा हर ओर बहता रक्त अपने मुख में लेती रहीं; रक्त गिरने से उनके मुख में भी असुर उत्पन्न हुए।",
+      "meaningEn": "Chamunda caught the blood wherever it flowed; asuras even arose from the blood within her mouth."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-60",
+      "number": 60,
+      "labelHi": "पाठ · ६०",
+      "labelEn": "Text unit · 60",
+      "lines": [
+        "तांश्चखादाथ चामुण्डा पपौ तस्य च शोणितम्।",
+        "देवी शूलेन वज्रेण बाणैरसिभिर्ऋष्टिभिः॥"
+      ],
+      "linesEn": [
+        "tāṃśhchakhādātha chāmuṇḍā papau tasya cha śhoṇitam",
+        "devī śhūlena vajreṇa bāṇairasibhirṛiṣṭibhiḥ"
+      ],
+      "meaningHi": "चामुण्डा ने उन असुरों को खाया और रक्त पिया; देवी ने शूल, वज्र, बाण, तलवार और भालों से आक्रमण जारी रखा।",
+      "meaningEn": "Chamunda devoured those asuras and drank the blood, while the goddess continued striking with spear, thunderbolt, arrows, swords and lances."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-61",
+      "number": 61,
+      "labelHi": "पाठ · ६१",
+      "labelEn": "Text unit · 61",
+      "lines": [
+        "जघान रक्तबीजं तं चामुण्डापीतशोणितम्।",
+        "स पपात महीपृष्ठे शस्त्रसङ्घसमाहतः॥"
+      ],
+      "linesEn": [
+        "jaghāna raktabījaṃ taṃ chāmuṇḍāpītaśhoṇitam",
+        "sa papāta mahīpṛiṣṭhe śhastrasaṅghasamāhataḥ"
+      ],
+      "meaningHi": "चामुण्डा के रक्त पी लेने पर देवी ने रक्तबीज को मारा; अनेक शस्त्रों से आहत होकर वह धरती पर गिर पड़ा।",
+      "meaningEn": "The goddess struck Raktabija as Chamunda drank his blood; battered by many weapons, he fell to the earth."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-62",
+      "number": 62,
+      "labelHi": "पाठ · ६२",
+      "labelEn": "Text unit · 62",
+      "lines": [
+        "नीरक्तश्च महीपाल रक्तबीजो महासुरः।",
+        "ततस्ते हर्षमतुलमवापुस्त्रिदशा नृप॥"
+      ],
+      "linesEn": [
+        "nīraktaśhcha mahīpāla raktabījo mahāsuraḥ",
+        "tataste harṣamatulamavāpustridaśhā nṛipa"
+      ],
+      "meaningHi": "हे राजन्, रक्तहीन होकर रक्तबीज गिरा तो देवताओं को अतुल आनंद हुआ।",
+      "meaningEn": "O king, when Raktabija fell drained of blood, the gods rejoiced beyond measure."
+    },
+    {
+      "id": "durga-saptashati-chapter-8-63",
+      "number": 63,
+      "labelHi": "पाठ · ६३",
+      "labelEn": "Text unit · 63",
+      "lines": [
+        "तेषां मातृगणो जातो ननर्तासृङ्मदोद्धतः॥"
+      ],
+      "linesEn": [
+        "teṣāṃ mātṛigaṇo jāto nanartāsṛiṅmadoddhataḥ"
+      ],
+      "meaningHi": "देवताओं से प्रकट मातृकाएँ रक्तपान के उन्माद में नृत्य करने लगीं।",
+      "meaningEn": "The Mothers who had arisen from the gods danced, exhilarated by drinking the blood."
+    }
+  ]
+}

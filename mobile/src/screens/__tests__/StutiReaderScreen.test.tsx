@@ -133,7 +133,7 @@ describe.each(['kabir-bhakti-dohe', 'rahim-bhakti-dohe'])('%s in the shared read
 
 
 // New complete text: first and final units must survive language selection.
-describe.each(['kanakadhara-stotram', 'hanuman-bahuk', 'durga-argala-stotram', 'durga-kilak-stotram', 'durga-saptashati-chapter-1'])('%s', stutiId => {
+describe.each(['kanakadhara-stotram', 'hanuman-bahuk', 'durga-argala-stotram', 'durga-kilak-stotram', 'durga-saptashati-chapter-1', 'durga-saptashati-chapter-2', 'durga-saptashati-chapter-3', 'durga-saptashati-chapter-4', 'durga-saptashati-chapter-5', 'durga-saptashati-chapter-6', 'durga-saptashati-chapter-7', 'durga-saptashati-chapter-8', 'durga-saptashati-chapter-9', 'durga-saptashati-chapter-10', 'durga-saptashati-chapter-11', 'durga-saptashati-chapter-12', 'durga-saptashati-chapter-13'])('%s', stutiId => {
 describe.each([0, -1])('new content unit %s', index => {
   test.each(['hi', 'en', 'gu', 'kn'] as const)('renders complete content in %s', lang => {
     const payload = getStuti(stutiId);

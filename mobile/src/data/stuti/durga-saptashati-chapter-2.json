@@ -1,0 +1,1119 @@
+{
+  "id": "durga-saptashati-chapter-2",
+  "titleHi": "दुर्गा सप्तशती — द्वितीय अध्याय",
+  "titleEn": "Durga Saptashati — Chapter 2",
+  "deity": "durga",
+  "source": {
+    "baseText": "Devi Mahatmya (Durga Saptashati), Chapter 2; traditional numbered Sanskrit text units.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/second-chapter/durga-saptashati-second-chapter.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-18",
+    "notes": "Ancient Sanskrit only; original Hindi and English meanings. Drik base collated with Rampuri; see saptashati-completion-sources.md for variants and numbered-unit conventions. Romanization follows the existing reader convention; no copied modern translations."
+  },
+  "verses": [
+    {
+      "id": "durga-saptashati-chapter-2-1",
+      "number": 1,
+      "labelHi": "पाठ · १",
+      "labelEn": "Text unit · 1",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले।",
+      "meaningEn": "The sage said."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-2",
+      "number": 2,
+      "labelHi": "पाठ · २",
+      "labelEn": "Text unit · 2",
+      "lines": [
+        "देवासुरमभूद्युद्धं पूर्णमब्दशतं पुरा।",
+        "महिषेऽसुराणामधिपे देवानां च पुरन्दरे॥"
+      ],
+      "linesEn": [
+        "devāsuramabhūdyuddhaṃ pūrṇamabdaśhataṃ purā",
+        "mahiṣe'surāṇāmadhipe devānāṃ cha purandare"
+      ],
+      "meaningHi": "पूर्वकाल में देवताओं और असुरों का सौ वर्ष तक युद्ध हुआ; असुरों का स्वामी महिष और देवताओं का इन्द्र था।",
+      "meaningEn": "Long ago the gods and demons fought for a hundred years, with Mahisha leading the demons and Indra the gods."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-3",
+      "number": 3,
+      "labelHi": "पाठ · ३",
+      "labelEn": "Text unit · 3",
+      "lines": [
+        "तत्रासुरैर्महावीर्यैर्देवसैन्यं पराजितम्।",
+        "जित्वा च सकलान् देवानिन्द्रोऽभून्महिषासुरः॥"
+      ],
+      "linesEn": [
+        "tatrāsurairmahāvīryairdevasainyaṃ parājitam",
+        "jitvā cha sakalān devānindro'bhūnmahiṣāsuraḥ"
+      ],
+      "meaningHi": "पराक्रमी असुरों ने देवसेना को हरा दिया और सभी देवताओं को जीतकर महिषासुर इन्द्र के पद पर बैठ गया।",
+      "meaningEn": "The powerful demons defeated the divine army, and Mahishasura conquered all the gods and took Indra’s place."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-4",
+      "number": 4,
+      "labelHi": "पाठ · ४",
+      "labelEn": "Text unit · 4",
+      "lines": [
+        "ततः पराजिता देवाः पद्मयोनिं प्रजापतिम्।",
+        "पुरस्कृत्य गतास्तत्र यत्रेशगरुडध्वजौ॥"
+      ],
+      "linesEn": [
+        "tataḥ parājitā devāḥ padmayoniṃ prajāpatim",
+        "puraskṛitya gatāstatra yatreśhagaruḍadhvajau"
+      ],
+      "meaningHi": "पराजित देवता कमलयोनि प्रजापति ब्रह्मा को आगे करके शिव और विष्णु के पास गए।",
+      "meaningEn": "The defeated gods, led by lotus-born Brahma, went to Shiva and Vishnu."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-5",
+      "number": 5,
+      "labelHi": "पाठ · ५",
+      "labelEn": "Text unit · 5",
+      "lines": [
+        "यथावृत्तं तयोस्तद्वन्महिषासुरचेष्टितम्।",
+        "त्रिदशाः कथयामासुर्देवाभिभवविस्तरम्॥"
+      ],
+      "linesEn": [
+        "yathāvṛittaṃ tayostadvanmahiṣāsuracheṣṭitam",
+        "tridaśhāḥ kathayāmāsurdevābhibhavavistaram"
+      ],
+      "meaningHi": "उन्होंने महिषासुर के कर्म और देवताओं की पराजय का सारा वृत्तान्त दोनों को विस्तार से सुनाया।",
+      "meaningEn": "They told both deities in detail what Mahishasura had done and how the gods had been overthrown."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-6",
+      "number": 6,
+      "labelHi": "पाठ · ६",
+      "labelEn": "Text unit · 6",
+      "lines": [
+        "सूर्येन्द्राग्न्यनिलेन्दूनां यमस्य वरुणस्य च।",
+        "अन्येषां चाधिकारान् स स्वयमेवाधितिष्ठति॥"
+      ],
+      "linesEn": [
+        "sūryendrāgnyanilendūnāṃ yamasya varuṇasya cha",
+        "anyeṣāṃ chādhikārān sa svayamevādhitiṣṭhati"
+      ],
+      "meaningHi": "वह स्वयं सूर्य, इन्द्र, अग्नि, वायु, चन्द्रमा, यम, वरुण और अन्य देवताओं के अधिकार संभाल रहा है।",
+      "meaningEn": "He has seized the offices of the Sun, Indra, Fire, Wind, Moon, Yama, Varuna and the other gods."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-7",
+      "number": 7,
+      "labelHi": "पाठ · ७",
+      "labelEn": "Text unit · 7",
+      "lines": [
+        "स्वर्गान्निराकृताः सर्वे तेन देवगणा भुवि।",
+        "विचरन्ति यथा मर्त्या महिषेण दुरात्मना॥"
+      ],
+      "linesEn": [
+        "svargānnirākṛitāḥ sarve tena devagaṇā bhuvi",
+        "vicharanti yathā martyā mahiṣeṇa durātmanā"
+      ],
+      "meaningHi": "दुरात्मा महिष ने सभी देवताओं को स्वर्ग से निकाल दिया है; वे पृथ्वी पर मनुष्यों की तरह घूम रहे हैं।",
+      "meaningEn": "The wicked Mahisha has expelled all the gods from heaven, and they wander on earth like mortals."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-8",
+      "number": 8,
+      "labelHi": "पाठ · ८",
+      "labelEn": "Text unit · 8",
+      "lines": [
+        "एतद्वः कथितं सर्वममरारिविचेष्टितम्।",
+        "शरणं वः प्रपन्नाः स्मो वधस्तस्य विचिन्त्यताम्॥"
+      ],
+      "linesEn": [
+        "etadvaḥ kathitaṃ sarvamamarārivicheṣṭitam",
+        "śharaṇaṃ vaḥ prapannāḥ smo vadhastasya vichintyatām"
+      ],
+      "meaningHi": "हमने उस देवशत्रु का सब आचरण बता दिया; हम आपकी शरण आए हैं, उसके वध का उपाय सोचिए।",
+      "meaningEn": "We have told you all the deeds of that enemy of the gods. We seek your refuge; consider how he may be slain."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-9",
+      "number": 9,
+      "labelHi": "पाठ · ९",
+      "labelEn": "Text unit · 9",
+      "lines": [
+        "इत्थं निशम्य देवानां वचांसि मधुसूदनः।",
+        "चकार कोपं शम्भुश्च भ्रुकुटीकुटिलाननौ॥"
+      ],
+      "linesEn": [
+        "itthaṃ niśhamya devānāṃ vachāṃsi madhusūdanaḥ",
+        "chakāra kopaṃ śhambhuśhcha bhrukuṭīkuṭilānanau"
+      ],
+      "meaningHi": "देवताओं की बातें सुनकर मधुसूदन विष्णु और शम्भु क्रोधित हुए और उनके मुख भौंहें चढ़ने से विकराल हो गए।",
+      "meaningEn": "Hearing the gods’ words, Vishnu and Shiva grew angry, their faces tightening with furrowed brows."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-10",
+      "number": 10,
+      "labelHi": "पाठ · १०",
+      "labelEn": "Text unit · 10",
+      "lines": [
+        "ततोऽतिकोपपूर्णस्य चक्रिणो वदनात्ततः।",
+        "निश्चक्राम महत्तेजो ब्रह्मणः शङ्करस्य च॥"
+      ],
+      "linesEn": [
+        "tato'tikopapūrṇasya chakriṇo vadanāttataḥ",
+        "niśhchakrāma mahattejo brahmaṇaḥ śhaṅkarasya cha"
+      ],
+      "meaningHi": "अत्यन्त क्रुद्ध चक्रधारी विष्णु के मुख से महान तेज निकला; ब्रह्मा और शंकर से भी तेज प्रकट हुआ।",
+      "meaningEn": "A great radiance emerged from the enraged Vishnu’s face, and light also issued from Brahma and Shiva."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-11",
+      "number": 11,
+      "labelHi": "पाठ · ११",
+      "labelEn": "Text unit · 11",
+      "lines": [
+        "अन्येषां चैव देवानां शक्रादीनां शरीरतः।",
+        "निर्गतं सुमहत्तेजस्तच्चैक्यं समगच्छत॥"
+      ],
+      "linesEn": [
+        "anyeṣāṃ chaiva devānāṃ śhakrādīnāṃ śharīrataḥ",
+        "nirgataṃ sumahattejastachchaikyaṃ samagachchhata"
+      ],
+      "meaningHi": "इन्द्र आदि अन्य देवताओं के शरीरों से भी महान तेज निकला और सब एक हो गया।",
+      "meaningEn": "Great light emerged from the bodies of Indra and the other gods, and all the radiance united."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-12",
+      "number": 12,
+      "labelHi": "पाठ · १२",
+      "labelEn": "Text unit · 12",
+      "lines": [
+        "अतीव तेजसः कूटं ज्वलन्तमिव पर्वतम्।",
+        "ददृशुस्ते सुरास्तत्र ज्वालाव्याप्तदिगन्तरम्॥"
+      ],
+      "linesEn": [
+        "atīva tejasaḥ kūṭaṃ jvalantamiva parvatam",
+        "dadṛiśhuste surāstatra jvālāvyāptadigantaram"
+      ],
+      "meaningHi": "देवताओं ने उस तेज के पुंज को जलते पर्वत के समान देखा, जिसकी ज्वालाएँ सभी दिशाओं में फैल रही थीं।",
+      "meaningEn": "The gods saw the mass of light like a blazing mountain, its flames filling every direction."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-13",
+      "number": 13,
+      "labelHi": "पाठ · १३",
+      "labelEn": "Text unit · 13",
+      "lines": [
+        "अतुलं तत्र तत्तेजः सर्वदेवशरीरजम्।",
+        "एकस्थं तदभून्नारी व्याप्तलोकत्रयं त्विषा॥"
+      ],
+      "linesEn": [
+        "atulaṃ tatra tattejaḥ sarvadevaśharīrajam",
+        "ekasthaṃ tadabhūnnārī vyāptalokatrayaṃ tviṣā"
+      ],
+      "meaningHi": "सब देवताओं से निकला अतुलनीय तेज एक होकर स्त्रीरूप में प्रकट हुआ, जिसकी कान्ति तीनों लोकों में फैल गई।",
+      "meaningEn": "The incomparable radiance of all the gods became one woman, whose brilliance filled the three worlds."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-14",
+      "number": 14,
+      "labelHi": "पाठ · १४",
+      "labelEn": "Text unit · 14",
+      "lines": [
+        "यदभूच्छाम्भवं तेजस्तेनाजायत तन्मुखम्।",
+        "याम्येन चाभवन् केशा बाहवो विष्णुतेजसा॥"
+      ],
+      "linesEn": [
+        "yadabhūchchhāmbhavaṃ tejastenājāyata tanmukham",
+        "yāmyena chābhavan keśhā bāhavo viṣṇutejasā"
+      ],
+      "meaningHi": "शिव के तेज से उनका मुख, यम के तेज से केश और विष्णु के तेज से भुजाएँ बनीं।",
+      "meaningEn": "Her face arose from Shiva’s radiance, her hair from Yama’s, and her arms from Vishnu’s."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-15",
+      "number": 15,
+      "labelHi": "पाठ · १५",
+      "labelEn": "Text unit · 15",
+      "lines": [
+        "सौम्येन स्तनयोर्युग्मं मध्यं चैन्द्रेण चाभवत्।",
+        "वारुणेन च जङ्घोरू नितम्बस्तेजसा भुवः॥"
+      ],
+      "linesEn": [
+        "saumyena stanayoryugmaṃ madhyaṃ chaindreṇa chābhavat",
+        "vāruṇena cha jaṅghorū nitambastejasā bhuvaḥ"
+      ],
+      "meaningHi": "चन्द्रमा के तेज से स्तन, इन्द्र के तेज से मध्यभाग, वरुण के तेज से जंघाएँ और ऊरु तथा पृथ्वी के तेज से नितम्ब बने।",
+      "meaningEn": "The Moon’s light formed her breasts, Indra’s her waist, Varuna’s her legs and thighs, and Earth’s her hips."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-16",
+      "number": 16,
+      "labelHi": "पाठ · १६",
+      "labelEn": "Text unit · 16",
+      "lines": [
+        "ब्रह्मणस्तेजसा पादौ तदङ्गुल्योऽर्कतेजसा।",
+        "वसूनां च कराङ्गुल्यः कौबेरेण च नासिका॥"
+      ],
+      "linesEn": [
+        "brahmaṇastejasā pādau tadaṅgulyo'rkatejasā",
+        "vasūnāṃ cha karāṅgulyaḥ kaubereṇa cha nāsikā"
+      ],
+      "meaningHi": "ब्रह्मा के तेज से चरण, सूर्य के तेज से पैर की उँगलियाँ, वसुओं से हाथ की उँगलियाँ और कुबेर से नासिका बनी।",
+      "meaningEn": "Brahma’s radiance formed her feet, the Sun’s her toes, the Vasus’ her fingers, and Kubera’s her nose."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-17",
+      "number": 17,
+      "labelHi": "पाठ · १७",
+      "labelEn": "Text unit · 17",
+      "lines": [
+        "तस्यास्तु दन्ताः सम्भूताः प्राजापत्येन तेजसा।",
+        "नयनत्रितयं जज्ञे तथा पावकतेजसा॥"
+      ],
+      "linesEn": [
+        "tasyāstu dantāḥ sambhūtāḥ prājāpatyena tejasā",
+        "nayanatritayaṃ jajñe tathā pāvakatejasā"
+      ],
+      "meaningHi": "प्रजापति के तेज से दाँत और अग्नि के तेज से तीन नेत्र प्रकट हुए।",
+      "meaningEn": "Prajapati’s light formed her teeth, and Fire’s radiance formed her three eyes."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-18",
+      "number": 18,
+      "labelHi": "पाठ · १८",
+      "labelEn": "Text unit · 18",
+      "lines": [
+        "भ्रुवौ च सन्ध्ययोस्तेजः श्रवणावनिलस्य च।",
+        "अन्येषां चैव देवानां सम्भवस्तेजसां शिवा॥"
+      ],
+      "linesEn": [
+        "bhruvau cha sandhyayostejaḥ śhravaṇāvanilasya cha",
+        "anyeṣāṃ chaiva devānāṃ sambhavastejasāṃ śhivā"
+      ],
+      "meaningHi": "दोनों संध्याओं के तेज से भौंहें और वायु के तेज से कान बने; अन्य देवताओं के तेज से भी उस कल्याणमयी देवी का प्राकट्य हुआ।",
+      "meaningEn": "The two twilights formed her eyebrows and Wind her ears; the other gods’ radiance also contributed to the auspicious Goddess’s manifestation."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-19",
+      "number": 19,
+      "labelHi": "पाठ · १९",
+      "labelEn": "Text unit · 19",
+      "lines": [
+        "ततः समस्तदेवानां तेजोराशिसमुद्भवाम्।",
+        "तां विलोक्य मुदं प्रापुरमरा महिषार्दिताः॥"
+      ],
+      "linesEn": [
+        "tataḥ samastadevānāṃ tejorāśhisamudbhavām",
+        "tāṃ vilokya mudaṃ prāpuramarā mahiṣārditāḥ"
+      ],
+      "meaningHi": "सभी देवताओं के तेज से प्रकट उन्हें देखकर महिषासुर से पीड़ित देवता प्रसन्न हो गए।",
+      "meaningEn": "Seeing her arise from their united radiance, the gods afflicted by Mahisha rejoiced."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-20",
+      "number": 20,
+      "labelHi": "पाठ · २०",
+      "labelEn": "Text unit · 20",
+      "lines": [
+        "शूलं शूलाद्विनिष्कृष्य ददौ तस्यै पिनाकधृक्।",
+        "चक्रं च दत्तवान् कृष्णः समुत्पाद्य स्वचक्रतः॥"
+      ],
+      "linesEn": [
+        "śhūlaṃ śhūlādviniṣkṛiṣya dadau tasyai pinākadhṛik",
+        "chakraṃ cha dattavān kṛiṣṇaḥ samutpādya svachakrataḥ"
+      ],
+      "meaningHi": "शिव ने अपने त्रिशूल से त्रिशूल निकालकर दिया और विष्णु ने अपने चक्र से नया चक्र उत्पन्न करके उन्हें दिया।",
+      "meaningEn": "Shiva drew a trident from his own and gave it to her; Vishnu produced a disc from his own disc and offered it."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-21",
+      "number": 21,
+      "labelHi": "पाठ · २१",
+      "labelEn": "Text unit · 21",
+      "lines": [
+        "शङ्खं च वरुणः शक्तिं ददौ तस्यै हुताशनः।",
+        "मारुतो दत्तवांश्चापं बाणपूर्णे तथेषुधी॥"
+      ],
+      "linesEn": [
+        "śhaṅkhaṃ cha varuṇaḥ śhaktiṃ dadau tasyai hutāśhanaḥ",
+        "māruto dattavāṃśhchāpaṃ bāṇapūrṇe tatheṣudhī"
+      ],
+      "meaningHi": "वरुण ने शंख, अग्नि ने शक्ति और वायु ने धनुष तथा बाणों से भरे दो तरकश दिए।",
+      "meaningEn": "Varuna gave a conch, Fire a spear, and Wind a bow and two quivers filled with arrows."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-22",
+      "number": 22,
+      "labelHi": "पाठ · २२",
+      "labelEn": "Text unit · 22",
+      "lines": [
+        "वज्रमिन्द्रः समुत्पाद्य कुलिशादमराधिपः।",
+        "ददौ तस्यै सहस्राक्षो घण्टामैरावताद् गजात्॥"
+      ],
+      "linesEn": [
+        "vajramindraḥ samutpādya kuliśhādamarādhipaḥ",
+        "dadau tasyai sahasrākṣho ghaṇṭāmairāvatād gajāt"
+      ],
+      "meaningHi": "सहस्रनेत्र इन्द्र ने अपने वज्र से वज्र उत्पन्न कर दिया और ऐरावत हाथी से घंटा लेकर अर्पित किया।",
+      "meaningEn": "Thousand-eyed Indra produced a thunderbolt from his own and gave her a bell from the elephant Airavata."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-23",
+      "number": 23,
+      "labelHi": "पाठ · २३",
+      "labelEn": "Text unit · 23",
+      "lines": [
+        "कालदण्डाद्यमो दण्डं पाशं चाम्बुपतिर्ददौ।",
+        "प्रजापतिश्चाक्षमालां ददौ ब्रह्मा कमण्डलुम्॥"
+      ],
+      "linesEn": [
+        "kāladaṇḍādyamo daṇḍaṃ pāśhaṃ chāmbupatirdadau",
+        "prajāpatiśhchākṣhamālāṃ dadau brahmā kamaṇḍalum"
+      ],
+      "meaningHi": "यम ने कालदण्ड से दण्ड, वरुण ने पाश, प्रजापति ने जपमाला और ब्रह्मा ने कमण्डलु दिया।",
+      "meaningEn": "Yama gave a staff from his staff of death, Varuna a noose, Prajapati a rosary, and Brahma a water vessel."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-24",
+      "number": 24,
+      "labelHi": "पाठ · २४",
+      "labelEn": "Text unit · 24",
+      "lines": [
+        "समस्तरोमकूपेषु निजरश्मीन् दिवाकरः।",
+        "कालश्च दत्तवान् खड्गं तस्याश्चर्म च निर्मलम्॥"
+      ],
+      "linesEn": [
+        "samastaromakūpeṣu nijaraśhmīn divākaraḥ",
+        "kālaśhcha dattavān khaḍgaṃ tasyāśhcharma cha nirmalam"
+      ],
+      "meaningHi": "सूर्य ने देवी के सभी रोमकूपों में अपनी किरणें भरीं और काल ने तलवार तथा निर्मल ढाल दी।",
+      "meaningEn": "The Sun placed his rays in every pore of her body, and Time gave her a sword and a spotless shield."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-25",
+      "number": 25,
+      "labelHi": "पाठ · २५",
+      "labelEn": "Text unit · 25",
+      "lines": [
+        "क्षीरोदश्चामलं हारमजरे च तथाम्बरे।",
+        "चूडामणिं तथा दिव्यं कुण्डले कटकानि च॥"
+      ],
+      "linesEn": [
+        "kṣhīrodaśhchāmalaṃ hāramajare cha tathāmbare",
+        "chūḍāmaṇiṃ tathā divyaṃ kuṇḍale kaṭakāni cha"
+      ],
+      "meaningHi": "क्षीरसागर ने निर्मल हार, कभी पुराने न होने वाले वस्त्र, दिव्य चूड़ामणि, कुण्डल और कंगन दिए।",
+      "meaningEn": "The Ocean of Milk gave a pure necklace, garments that never age, a celestial crest jewel, earrings and bracelets."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-26",
+      "number": 26,
+      "labelHi": "पाठ · २६",
+      "labelEn": "Text unit · 26",
+      "lines": [
+        "अर्धचन्द्रं तथा शुभ्रं केयूरान् सर्वबाहुषु।",
+        "नूपुरौ विमलौ तद्वद् ग्रैवेयकमनुत्तमम्॥"
+      ],
+      "linesEn": [
+        "ardhachandraṃ tathā śhubhraṃ keyūrān sarvabāhuṣu",
+        "nūpurau vimalau tadvad graiveyakamanuttamam"
+      ],
+      "meaningHi": "उसने उज्ज्वल अर्धचन्द्र, सभी भुजाओं के लिए बाजूबन्द, निर्मल नूपुर और उत्तम कण्ठाभूषण भी दिए।",
+      "meaningEn": "It also gave a bright crescent, armlets for every arm, spotless anklets and an excellent neck ornament."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-27",
+      "number": 27,
+      "labelHi": "पाठ · २७",
+      "labelEn": "Text unit · 27",
+      "lines": [
+        "अङ्गुलीयकरत्नानि समस्तास्वङ्गुलीषु च।",
+        "विश्वकर्मा ददौ तस्यै परशुं चातिनिर्मलम्॥"
+      ],
+      "linesEn": [
+        "aṅgulīyakaratnāni samastāsvaṅgulīṣu cha",
+        "viśhvakarmā dadau tasyai paraśhuṃ chātinirmalam"
+      ],
+      "meaningHi": "सभी उँगलियों के लिए रत्नजटित अँगूठियाँ मिलीं; विश्वकर्मा ने अत्यन्त निर्मल फरसा दिया।",
+      "meaningEn": "Jeweled rings adorned every finger, and Vishvakarma gave her a flawless axe."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-28",
+      "number": 28,
+      "labelHi": "पाठ · २८",
+      "labelEn": "Text unit · 28",
+      "lines": [
+        "अस्त्राण्यनेकरूपाणि तथाभेद्यं च दंशनम्।",
+        "अम्लानपङ्कजां मालां शिरस्युरसि चापराम्॥"
+      ],
+      "linesEn": [
+        "astrāṇyanekarūpāṇi tathābhedyaṃ cha daṃśhanam",
+        "amlānapaṅkajāṃ mālāṃ śhirasyurasi chāparām"
+      ],
+      "meaningHi": "विश्वकर्मा ने अनेक अस्त्र और अभेद्य कवच दिए; फिर सिर और वक्ष के लिए कभी न मुरझाने वाली कमलमालाएँ—",
+      "meaningEn": "Vishvakarma gave weapons of many kinds and impenetrable armor; unfading lotus garlands for her head and breast—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-29",
+      "number": 29,
+      "labelHi": "पाठ · २९",
+      "labelEn": "Text unit · 29",
+      "lines": [
+        "अददज्जलधिस्तस्यै पङ्कजं चातिशोभनम्।",
+        "हिमवान् वाहनं सिंहं रत्नानि विविधानि च॥"
+      ],
+      "linesEn": [
+        "adadajjaladhistasyai paṅkajaṃ chātiśhobhanam",
+        "himavān vāhanaṃ siṃhaṃ ratnāni vividhāni cha"
+      ],
+      "meaningHi": "समुद्र ने अर्पित कीं और सुन्दर कमल भी दिया। हिमालय ने वाहन के लिए सिंह और विविध रत्न दिए।",
+      "meaningEn": "were offered by the ocean, along with a beautiful lotus. Himalaya gave a lion as her mount and jewels of many kinds."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-30",
+      "number": 30,
+      "labelHi": "पाठ · ३०",
+      "labelEn": "Text unit · 30",
+      "lines": [
+        "ददावशून्यं सुरया पानपात्रं धनाधिपः।",
+        "शेषश्च सर्वनागेशो महामणिविभूषितम्॥"
+      ],
+      "linesEn": [
+        "dadāvaśhūnyaṃ surayā pānapātraṃ dhanādhipaḥ",
+        "śheṣaśhcha sarvanāgeśho mahāmaṇivibhūṣitam"
+      ],
+      "meaningHi": "कुबेर ने मदिरा से सदा भरा रहने वाला पात्र दिया; सभी नागों के स्वामी शेष ने महामणियों से सुशोभित—",
+      "meaningEn": "Kubera gave a cup that remained filled with wine; Shesha, lord of the serpents, gave a necklace adorned with great gems—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-31",
+      "number": 31,
+      "labelHi": "पाठ · ३१",
+      "labelEn": "Text unit · 31",
+      "lines": [
+        "नागहारं ददौ तस्यै धत्ते यः पृथिवीमिमाम्।",
+        "अन्यैरपि सुरैर्देवी भूषणैरायुधैस्तथा॥"
+      ],
+      "linesEn": [
+        "nāgahāraṃ dadau tasyai dhatte yaḥ pṛithivīmimām",
+        "anyairapi surairdevī bhūṣaṇairāyudhaistathā"
+      ],
+      "meaningHi": "नागहार अर्पित किया, वे ही इस पृथ्वी को धारण करते हैं। अन्य देवताओं ने भी आभूषण और शस्त्रों से देवी का—",
+      "meaningEn": "a serpent necklace from the one who supports the earth. The other gods likewise honored the Goddess with ornaments and weapons—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-32",
+      "number": 32,
+      "labelHi": "पाठ · ३२",
+      "labelEn": "Text unit · 32",
+      "lines": [
+        "सम्मानिता ननादोच्चैः साट्टहासं मुहुर्मुहुः।",
+        "तस्या नादेन घोरेण कृत्स्नमापूरितं नभः॥"
+      ],
+      "linesEn": [
+        "sammānitā nanādochchaiḥ sāṭṭahāsaṃ muhurmuhuḥ",
+        "tasyā nādena ghoreṇa kṛitsnamāpūritaṃ nabhaḥ"
+      ],
+      "meaningHi": "सम्मान किया। देवी बार-बार जोर से हँसीं और गर्जना करने लगीं; उस भयंकर ध्वनि से सारा आकाश भर गया।",
+      "meaningEn": "and she repeatedly laughed aloud and roared. Her terrible voice filled the entire sky."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-33",
+      "number": 33,
+      "labelHi": "पाठ · ३३",
+      "labelEn": "Text unit · 33",
+      "lines": [
+        "अमायतातिमहता प्रतिशब्दो महानभूत्।",
+        "चुक्षुभुः सकला लोकाः समुद्राश्च चकम्पिरे॥"
+      ],
+      "linesEn": [
+        "amāyatātimahatā pratiśhabdo mahānabhūt",
+        "chukṣhubhuḥ sakalā lokāḥ samudrāśhcha chakampire"
+      ],
+      "meaningHi": "उस अपरिमित महान ध्वनि की भारी प्रतिध्वनि हुई; सभी लोक विचलित हुए और समुद्र काँप उठे।",
+      "meaningEn": "That immense sound raised a mighty echo; all worlds trembled and the oceans shook."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-34",
+      "number": 34,
+      "labelHi": "पाठ · ३४",
+      "labelEn": "Text unit · 34",
+      "lines": [
+        "चचाल वसुधा चेलुः सकलाश्च महीधराः।",
+        "जयेति देवाश्च मुदा तामूचुः सिंहवाहिनीम्॥"
+      ],
+      "linesEn": [
+        "chachāla vasudhā cheluḥ sakalāśhcha mahīdharāḥ",
+        "jayeti devāśhcha mudā tāmūchuḥ siṃhavāhinīm"
+      ],
+      "meaningHi": "पृथ्वी हिली, सभी पर्वत काँपे और देवताओं ने प्रसन्न होकर सिंहवाहिनी से कहा—जय हो।",
+      "meaningEn": "The earth moved and every mountain shook, while the delighted gods cried victory to the lion-riding Goddess."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-35",
+      "number": 35,
+      "labelHi": "पाठ · ३५",
+      "labelEn": "Text unit · 35",
+      "lines": [
+        "तुष्टुवुर्मुनयश्चैनां भक्तिनम्रात्ममूर्तयः।",
+        "दृष्ट्वा समस्तं संक्षुब्धं त्रैलोक्यममरारयः॥"
+      ],
+      "linesEn": [
+        "tuṣṭuvurmunayaśhchaināṃ bhaktinamrātmamūrtayaḥ",
+        "dṛiṣṭvā samastaṃ saṃkṣhubdhaṃ trailokyamamarārayaḥ"
+      ],
+      "meaningHi": "मुनियों ने भक्तिपूर्वक झुककर स्तुति की। तीनों लोकों में हलचल देखकर देवताओं के शत्रु—",
+      "meaningEn": "The sages bowed in devotion and praised her. Seeing all three worlds disturbed, the enemies of the gods—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-36",
+      "number": 36,
+      "labelHi": "पाठ · ३६",
+      "labelEn": "Text unit · 36",
+      "lines": [
+        "सन्नद्धाखिलसैन्यास्ते समुत्तस्थुरुदायुधाः।",
+        "आः किमेतदिति क्रोधादाभाष्य महिषासुरः॥"
+      ],
+      "linesEn": [
+        "sannaddhākhilasainyāste samuttasthurudāyudhāḥ",
+        "āḥ kimetaditi krodhādābhāṣya mahiṣāsuraḥ"
+      ],
+      "meaningHi": "अपनी सारी सेना सुसज्जित करके शस्त्र उठाए खड़े हुए। महिषासुर ने क्रोध से कहा, ‘यह क्या है?’",
+      "meaningEn": "armed their entire forces and rose with weapons raised. Mahishasura angrily exclaimed, “What is this?”"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-37",
+      "number": 37,
+      "labelHi": "पाठ · ३७",
+      "labelEn": "Text unit · 37",
+      "lines": [
+        "अभ्यधावत तं शब्दमशेषैरसुरैर्वृतः।",
+        "स ददर्श ततो देवीं व्याप्तलोकत्रयां त्विषा॥"
+      ],
+      "linesEn": [
+        "abhyadhāvata taṃ śhabdamaśheṣairasurairvṛitaḥ",
+        "sa dadarśha tato devīṃ vyāptalokatrayāṃ tviṣā"
+      ],
+      "meaningHi": "समस्त असुरों से घिरा वह ध्वनि की ओर दौड़ा और तीनों लोकों में प्रकाश फैलाती देवी को देखा।",
+      "meaningEn": "Surrounded by all the demons, he rushed toward the sound and saw the Goddess illuminating the three worlds."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-38",
+      "number": 38,
+      "labelHi": "पाठ · ३८",
+      "labelEn": "Text unit · 38",
+      "lines": [
+        "पादाक्रान्त्या नतभुवं किरीटोल्लिखिताम्बराम्।",
+        "क्षोभिताशेषपातालां धनुर्ज्यानिःस्वनेन ताम्॥"
+      ],
+      "linesEn": [
+        "pādākrāntyā natabhuvaṃ kirīṭollikhitāmbarām",
+        "kṣhobhitāśheṣapātālāṃ dhanurjyāniḥsvanena tām"
+      ],
+      "meaningHi": "उनके चरणों के भार से धरती झुकी थी, मुकुट आकाश छू रहा था और धनुष की प्रत्यंचा का नाद पाताल को हिला रहा था।",
+      "meaningEn": "The earth bent beneath her feet, her crown touched the sky, and the twang of her bowstring shook the netherworld."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-39",
+      "number": 39,
+      "labelHi": "पाठ · ३९",
+      "labelEn": "Text unit · 39",
+      "lines": [
+        "दिशो भुजसहस्रेण समन्ताद् व्याप्य संस्थिताम्।",
+        "ततः प्रववृते युद्धं तया देव्या सुरद्विषाम्॥"
+      ],
+      "linesEn": [
+        "diśho bhujasahasreṇa samantād vyāpya saṃsthitām",
+        "tataḥ pravavṛite yuddhaṃ tayā devyā suradviṣām"
+      ],
+      "meaningHi": "उनकी सहस्र भुजाएँ चारों ओर दिशाओं में फैली थीं; तब देवी और देवशत्रुओं के बीच युद्ध आरम्भ हुआ।",
+      "meaningEn": "Her thousand arms extended in every direction; then battle began between the Goddess and the enemies of the gods."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-40",
+      "number": 40,
+      "labelHi": "पाठ · ४०",
+      "labelEn": "Text unit · 40",
+      "lines": [
+        "शस्त्रास्त्रैर्बहुधा मुक्तैरादीपितदिगन्तरम्।",
+        "महिषासुरसेनानीश्चिक्षुराख्यो महासुरः॥"
+      ],
+      "linesEn": [
+        "śhastrāstrairbahudhā muktairādīpitadigantaram",
+        "mahiṣāsurasenānīśhchikṣhurākhyo mahāsuraḥ"
+      ],
+      "meaningHi": "अनेक प्रकार से छोड़े गए अस्त्र-शस्त्रों से दिशाएँ चमक उठीं। महिषासुर का सेनापति चिक्षुर—",
+      "meaningEn": "Weapons and missiles hurled in many ways lit up the horizons. Mahisha’s commander Chikshura—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-41",
+      "number": 41,
+      "labelHi": "पाठ · ४१",
+      "labelEn": "Text unit · 41",
+      "lines": [
+        "युयुधे चामरश्चान्यैश्चतुरङ्गबलान्वितः।",
+        "रथानामयुतैः षड्भिरुदग्राख्यो महासुरः॥"
+      ],
+      "linesEn": [
+        "yuyudhe chāmaraśhchānyaiśhchaturaṅgabalānvitaḥ",
+        "rathānāmayutaiḥ ṣaḍbhirudagrākhyo mahāsuraḥ"
+      ],
+      "meaningHi": "और चतुरंगिणी सेना सहित चामर युद्ध करने लगे। उदग्र नामक महासुर साठ हजार रथों के साथ—",
+      "meaningEn": "and Chamara, accompanied by his fourfold army, fought her. Udagra advanced with sixty thousand chariots—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-42",
+      "number": 42,
+      "labelHi": "पाठ · ४२",
+      "labelEn": "Text unit · 42",
+      "lines": [
+        "अयुध्यतायुतानां च सहस्रेण महाहनुः।",
+        "पञ्चाशद्भिश्च नियुतैरसिलोमा महासुरः॥"
+      ],
+      "linesEn": [
+        "ayudhyatāyutānāṃ cha sahasreṇa mahāhanuḥ",
+        "pañchāśhadbhiśhcha niyutairasilomā mahāsuraḥ"
+      ],
+      "meaningHi": "लड़ने लगा; महाहनु एक करोड़ रथों के साथ और असिलोमा पचास नियुत रथों के साथ आया।",
+      "meaningEn": "and joined the battle; Mahahanu came with ten million chariots, and Asiloma with fifty niyutas of chariots."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-43",
+      "number": 43,
+      "labelHi": "पाठ · ४३",
+      "labelEn": "Text unit · 43",
+      "lines": [
+        "अयुतानां शतैः षड्भिर्बाष्कलो युयुधे रणे।",
+        "गजवाजिसहस्रौघैरनेकैः परिवारितः॥"
+      ],
+      "linesEn": [
+        "ayutānāṃ śhataiḥ ṣaḍbhirbāṣkalo yuyudhe raṇe",
+        "gajavājisahasraughairanekaiḥ parivāritaḥ"
+      ],
+      "meaningHi": "बाष्कल साठ लाख रथों सहित लड़ा। बहुत-से हाथियों और घोड़ों के हजारों समूहों से घिरा—",
+      "meaningEn": "Bashkala fought with six million chariots. Surrounded by many thousands of elephants and horses—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-44",
+      "number": 44,
+      "labelHi": "पाठ · ४४",
+      "labelEn": "Text unit · 44",
+      "lines": [
+        "वृतो रथानां कोट्या च युद्धे तस्मिन्नयुध्यत।",
+        "बिडालाख्योऽयुतानां च पञ्चाशद्भिरथायुतैः॥"
+      ],
+      "linesEn": [
+        "vṛito rathānāṃ koṭyā cha yuddhe tasminnayudhyata",
+        "biḍālākhyo'yutānāṃ cha pañchāśhadbhirathāyutaiḥ"
+      ],
+      "meaningHi": "एक अन्य असुर एक करोड़ रथों के साथ युद्ध करने लगा; बिडाल पचास अयुत-अयुत रथों से घिरा—",
+      "meaningEn": "another demon fought with ten million chariots; Bidala, surrounded by fifty ayuta-ayutas of chariots—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-45",
+      "number": 45,
+      "labelHi": "पाठ · ४५",
+      "labelEn": "Text unit · 45",
+      "lines": [
+        "युयुधे संयुगे तत्र रथानां परिवारितः।",
+        "अन्ये च तत्रायुतशो रथनागहयैर्वृताः॥"
+      ],
+      "linesEn": [
+        "yuyudhe saṃyuge tatra rathānāṃ parivāritaḥ",
+        "anye cha tatrāyutaśho rathanāgahayairvṛitāḥ"
+      ],
+      "meaningHi": "उस संग्राम में लड़ा। अन्य असुर भी दस-दस हजार रथों, हाथियों और घोड़ों के साथ आए।",
+      "meaningEn": "joined the battle. Other demons also came with tens of thousands of chariots, elephants and horses."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-46",
+      "number": 46,
+      "labelHi": "पाठ · ४६",
+      "labelEn": "Text unit · 46",
+      "lines": [
+        "युयुधुः संयुगे देव्या सह तत्र महासुराः।",
+        "कोटिकोटिसहस्रैस्तु रथानां दन्तिनां तथा॥"
+      ],
+      "linesEn": [
+        "yuyudhuḥ saṃyuge devyā saha tatra mahāsurāḥ",
+        "koṭikoṭisahasraistu rathānāṃ dantināṃ tathā"
+      ],
+      "meaningHi": "वे महासुर देवी के साथ युद्ध कर रहे थे; महिषासुर असंख्य करोड़ों रथों, हाथियों—",
+      "meaningEn": "Those great demons fought the Goddess, while Mahishasura was surrounded by countless crores of chariots and elephants—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-47",
+      "number": 47,
+      "labelHi": "पाठ · ४७",
+      "labelEn": "Text unit · 47",
+      "lines": [
+        "हयानां च वृतो युद्धे तत्राभून्महिषासुरः।",
+        "तोमरैर्भिन्दिपालैश्च शक्तिभिर्मुसलैस्तथा॥"
+      ],
+      "linesEn": [
+        "hayānāṃ cha vṛito yuddhe tatrābhūnmahiṣāsuraḥ",
+        "tomarairbhindipālaiśhcha śhaktibhirmusalaistathā"
+      ],
+      "meaningHi": "और घोड़ों से घिरा रणक्षेत्र में उपस्थित था। असुरों ने तोमर, भिन्दिपाल, शक्ति और मूसल—",
+      "meaningEn": "and horses upon the battlefield. The demons used javelins, bhindipala missiles, spears and clubs—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-48",
+      "number": 48,
+      "labelHi": "पाठ · ४८",
+      "labelEn": "Text unit · 48",
+      "lines": [
+        "युयुधुः संयुगे देव्या खड्गैः परशुपट्टिशैः।",
+        "केचिच्च चिक्षिपुः शक्तीः केचित्पाशांस्तथापरे॥"
+      ],
+      "linesEn": [
+        "yuyudhuḥ saṃyuge devyā khaḍgaiḥ paraśhupaṭṭiśhaiḥ",
+        "kechichcha chikṣhipuḥ śhaktīḥ kechitpāśhāṃstathāpare"
+      ],
+      "meaningHi": "तथा तलवार, फरसा और पट्टिश से देवी से युद्ध किया। कुछ ने शक्तियाँ फेंकीं और कुछ ने पाश डाले।",
+      "meaningEn": "as well as swords, axes and halberds against her. Some hurled spears and others cast nooses."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-49",
+      "number": 49,
+      "labelHi": "पाठ · ४९",
+      "labelEn": "Text unit · 49",
+      "lines": [
+        "देवीं खड्गप्रहारैस्तु ते तां हन्तुं प्रचक्रमुः।",
+        "सापि देवी ततस्तानि शस्त्राण्यस्त्राणि चण्डिका॥"
+      ],
+      "linesEn": [
+        "devīṃ khaḍgaprahāraistu te tāṃ hantuṃ prachakramuḥ",
+        "sāpi devī tatastāni śhastrāṇyastrāṇi chaṇḍikā"
+      ],
+      "meaningHi": "वे तलवार के प्रहारों से देवी को मारने लगे; तब चण्डिका ने उनके उन अस्त्र-शस्त्रों को—",
+      "meaningEn": "They tried to slay her with sword strokes; then Chandika met their weapons and missiles—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-50",
+      "number": 50,
+      "labelHi": "पाठ · ५०",
+      "labelEn": "Text unit · 50",
+      "lines": [
+        "लीलयैव प्रचिच्छेद निजशस्त्रास्त्रवर्षिणी।",
+        "अनायस्तानना देवी स्तूयमाना सुरर्षिभिः॥"
+      ],
+      "linesEn": [
+        "līlayaiva prachichchheda nijaśhastrāstravarṣiṇī",
+        "anāyastānanā devī stūyamānā surarṣibhiḥ"
+      ],
+      "meaningHi": "अपने शस्त्रों की वर्षा करते हुए सहज ही काट दिया। देवर्षियों से स्तुत देवी का मुख श्रमरहित था।",
+      "meaningEn": "and effortlessly cut them apart with a shower of her own arms. Praised by divine sages, her face showed no strain."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-51",
+      "number": 51,
+      "labelHi": "पाठ · ५१",
+      "labelEn": "Text unit · 51",
+      "lines": [
+        "मुमोचासुरदेहेषु शस्त्राण्यस्त्राणि चेश्वरी।",
+        "सोऽपि क्रुद्धो धुतसटो देव्या वाहनकेशरी॥"
+      ],
+      "linesEn": [
+        "mumochāsuradeheṣu śhastrāṇyastrāṇi cheśhvarī",
+        "so'pi kruddho dhutasaṭo devyā vāhanakeśharī"
+      ],
+      "meaningHi": "ईश्वरी ने असुरों के शरीरों पर अस्त्र-शस्त्र छोड़े। उनका वाहन सिंह भी क्रोध से अयाल हिलाता हुआ—",
+      "meaningEn": "The sovereign Goddess struck the demons with weapons and missiles. Her lion, shaking his mane in anger—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-52",
+      "number": 52,
+      "labelHi": "पाठ · ५२",
+      "labelEn": "Text unit · 52",
+      "lines": [
+        "चचारासुरसैन्येषु वनेष्विव हुताशनः।",
+        "निःश्वासान् मुमुचे यांश्च युध्यमाना रणेऽम्बिका॥"
+      ],
+      "linesEn": [
+        "chachārāsurasainyeṣu vaneṣviva hutāśhanaḥ",
+        "niḥśhvāsān mumuche yāṃśhcha yudhyamānā raṇe'mbikā"
+      ],
+      "meaningHi": "वन में आग की तरह असुर सेना में घूमने लगा। युद्ध करते समय अम्बिका की निकली हुई श्वासें—",
+      "meaningEn": "moved through their ranks like fire through a forest. The breaths Ambika released as she fought—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-53",
+      "number": 53,
+      "labelHi": "पाठ · ५३",
+      "labelEn": "Text unit · 53",
+      "lines": [
+        "त एव सद्यः सम्भूता गणाः शतसहस्रशः।",
+        "युयुधुस्ते परशुभिर्भिन्दिपालासिपट्टिशैः॥"
+      ],
+      "linesEn": [
+        "ta eva sadyaḥ sambhūtā gaṇāḥ śhatasahasraśhaḥ",
+        "yuyudhuste paraśhubhirbhindipālāsipaṭṭiśhaiḥ"
+      ],
+      "meaningHi": "तुरंत लाखों गणों में बदल गईं; वे फरसों, भिन्दिपालों, तलवारों और पट्टिशों से लड़ने लगे।",
+      "meaningEn": "immediately became hundreds of thousands of attendants, who fought with axes, missiles, swords and halberds."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-54",
+      "number": 54,
+      "labelHi": "पाठ · ५४",
+      "labelEn": "Text unit · 54",
+      "lines": [
+        "नाशयन्तोऽसुरगणान् देवीशक्त्युपबृंहिताः।",
+        "अवादयन्त पटहान् गणाः शङ्खांस्तथापरे॥"
+      ],
+      "linesEn": [
+        "nāśhayanto'suragaṇān devīśhaktyupabṛiṃhitāḥ",
+        "avādayanta paṭahān gaṇāḥ śhaṅkhāṃstathāpare"
+      ],
+      "meaningHi": "देवी की शक्ति से बढ़े वे असुरों का संहार करने लगे; कुछ गण नगाड़े बजाते और कुछ शंख फूँकते थे।",
+      "meaningEn": "Empowered by the Goddess, they destroyed the demons; some attendants beat drums and others blew conches."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-55",
+      "number": 55,
+      "labelHi": "पाठ · ५५",
+      "labelEn": "Text unit · 55",
+      "lines": [
+        "मृदङ्गांश्च तथैवान्ये तस्मिन् युद्धमहोत्सवे।",
+        "ततो देवी त्रिशूलेन गदया शक्तिवृष्टिभिः॥"
+      ],
+      "linesEn": [
+        "mṛidaṅgāṃśhcha tathaivānye tasmin yuddhamahotsave",
+        "tato devī triśhūlena gadayā śhaktivṛiṣṭibhiḥ"
+      ],
+      "meaningHi": "कुछ उस युद्ध-महोत्सव में मृदंग बजा रहे थे। तब देवी त्रिशूल, गदा और शक्तियों की वर्षा से—",
+      "meaningEn": "Others played mridanga drums at that great battle-festival. Then the Goddess, with trident, mace and showers of spears—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-56",
+      "number": 56,
+      "labelHi": "पाठ · ५६",
+      "labelEn": "Text unit · 56",
+      "lines": [
+        "खड्गादिभिश्च शतशो निजघान महासुरान्।",
+        "पातयामास चैवान्यान् घण्टास्वनविमोहितान्॥"
+      ],
+      "linesEn": [
+        "khaḍgādibhiśhcha śhataśho nijaghāna mahāsurān",
+        "pātayāmāsa chaivānyān ghaṇṭāsvanavimohitān"
+      ],
+      "meaningHi": "और तलवार आदि से सैकड़ों महासुरों को मारने लगीं; घंटानाद से मोहित अन्य असुरों को भी गिरा दिया।",
+      "meaningEn": "and with swords and other weapons slew hundreds of demons, while others fell stunned by her bell’s sound."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-57",
+      "number": 57,
+      "labelHi": "पाठ · ५७",
+      "labelEn": "Text unit · 57",
+      "lines": [
+        "असुरान् भुवि पाशेन बद्ध्वा चान्यानकर्षयत्।",
+        "केचिद् द्विधा कृतास्तीक्ष्णैः खड्गपातैस्तथापरे॥"
+      ],
+      "linesEn": [
+        "asurān bhuvi pāśhena baddhvā chānyānakarṣayat",
+        "kechid dvidhā kṛitāstīkṣhṇaiḥ khaḍgapātaistathāpare"
+      ],
+      "meaningHi": "उन्होंने कुछ को पाश में बाँधकर खींचा; कुछ तीखे तलवार-प्रहारों से दो टुकड़े हुए और अन्य—",
+      "meaningEn": "She bound some in her noose and dragged them along; some were split by sharp sword strokes, while others—"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-58",
+      "number": 58,
+      "labelHi": "पाठ · ५८",
+      "labelEn": "Text unit · 58",
+      "lines": [
+        "विपोथिता निपातेन गदया भुवि शेरते।",
+        "वेमुश्च केचिद्रुधिरं मुसलेन भृशं हताः॥"
+      ],
+      "linesEn": [
+        "vipothitā nipātena gadayā bhuvi śherate",
+        "vemuśhcha kechidrudhiraṃ musalena bhṛiśhaṃ hatāḥ"
+      ],
+      "meaningHi": "गदा के प्रहार से कुचलकर भूमि पर पड़े थे। कुछ मूसल की चोट से बहुत रक्त उगल रहे थे।",
+      "meaningEn": "lay crushed upon the ground by her mace. Others, struck hard with a club, vomited blood."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-59",
+      "number": 59,
+      "labelHi": "पाठ · ५९",
+      "labelEn": "Text unit · 59",
+      "lines": [
+        "केचिन्निपतिता भूमौ भिन्नाः शूलेन वक्षसि।",
+        "निरन्तराः शरौघेण कृताः केचिद्रणाजिरे॥"
+      ],
+      "linesEn": [
+        "kechinnipatitā bhūmau bhinnāḥ śhūlena vakṣhasi",
+        "nirantarāḥ śharaugheṇa kṛitāḥ kechidraṇājire"
+      ],
+      "meaningHi": "कुछ शूल से वक्ष बेधे जाने पर गिरे; रणक्षेत्र में कुछ बाणों से इतने ढक गए कि बीच में स्थान न बचा।",
+      "meaningEn": "Some fell with their chests pierced by her spear; others were covered so densely with arrows that no space remained between them."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-60",
+      "number": 60,
+      "labelHi": "पाठ · ६०",
+      "labelEn": "Text unit · 60",
+      "lines": [
+        "श्येनानुकारिणः प्राणान् मुमुचुस्त्रिदशार्दनाः।",
+        "केषाञ्चिद् बाहवश्छिन्नाश्छिन्नग्रीवास्तथापरे॥"
+      ],
+      "linesEn": [
+        "śhyenānukāriṇaḥ prāṇān mumuchustridaśhārdanāḥ",
+        "keṣāñchid bāhavaśhchhinnāśhchhinnagrīvāstathāpare"
+      ],
+      "meaningHi": "वे देवताओं को सताने वाले, बाजों जैसे दिखते असुर प्राण छोड़ने लगे; कुछ की भुजाएँ और कुछ की गर्दनें कट गईं।",
+      "meaningEn": "Those hawk-like tormentors of the gods lost their lives; some had their arms severed and others their necks cut."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-61",
+      "number": 61,
+      "labelHi": "पाठ · ६१",
+      "labelEn": "Text unit · 61",
+      "lines": [
+        "शिरांसि पेतुरन्येषामन्ये मध्ये विदारिताः।",
+        "विच्छिन्नजङ्घास्त्वपरे पेतुरुर्व्यां महासुराः॥"
+      ],
+      "linesEn": [
+        "śhirāṃsi peturanyeṣāmanye madhye vidāritāḥ",
+        "vichchhinnajaṅghāstvapare petururvyāṃ mahāsurāḥ"
+      ],
+      "meaningHi": "कुछ के सिर गिरे, कुछ बीच से चिर गए और कुछ महासुरों की जंघाएँ कटने पर वे पृथ्वी पर गिर पड़े।",
+      "meaningEn": "Some heads fell, some bodies were split at the waist, and other great demons fell with their legs severed."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-62",
+      "number": 62,
+      "labelHi": "पाठ · ६२",
+      "labelEn": "Text unit · 62",
+      "lines": [
+        "एकबाह्वक्षिचरणाः केचिद्देव्या द्विधा कृताः।",
+        "छिन्नेऽपि चान्ये शिरसि पतिताः पुनरुत्थिताः॥"
+      ],
+      "linesEn": [
+        "ekabāhvakṣhicharaṇāḥ kechiddevyā dvidhā kṛitāḥ",
+        "chhinne'pi chānye śhirasi patitāḥ punarutthitāḥ"
+      ],
+      "meaningHi": "देवी द्वारा दो भाग किए गए कुछ असुर एक भुजा, एक आँख और एक पैर वाले रह गए; कुछ सिर कटने पर गिरकर फिर उठे।",
+      "meaningEn": "Some demons, split by the Goddess, were left with one arm, eye and leg; others fell after losing their heads and rose again."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-63",
+      "number": 63,
+      "labelHi": "पाठ · ६३",
+      "labelEn": "Text unit · 63",
+      "lines": [
+        "कबन्धा युयुधुर्देव्या गृहीतपरमायुधाः।",
+        "ननृतुश्चापरे तत्र युद्धे तूर्यलयाश्रिताः॥"
+      ],
+      "linesEn": [
+        "kabandhā yuyudhurdevyā gṛihītaparamāyudhāḥ",
+        "nanṛituśhchāpare tatra yuddhe tūryalayāśhritāḥ"
+      ],
+      "meaningHi": "सिरहीन धड़ बड़े शस्त्र लेकर देवी से लड़ते रहे; कुछ युद्ध के वाद्यों की ताल पर नाचने लगे।",
+      "meaningEn": "Headless trunks continued fighting her with great weapons, while others danced to the rhythm of the battle drums."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-64",
+      "number": 64,
+      "labelHi": "पाठ · ६४",
+      "labelEn": "Text unit · 64",
+      "lines": [
+        "कबन्धाश्छिन्नशिरसः खड्गशक्त्यृष्टिपाणयः।",
+        "तिष्ठ तिष्ठेति भाषन्तो देवीमन्ये महासुराः॥"
+      ],
+      "linesEn": [
+        "kabandhāśhchhinnaśhirasaḥ khaḍgaśhaktyṛiṣṭipāṇayaḥ",
+        "tiṣṭha tiṣṭheti bhāṣanto devīmanye mahāsurāḥ"
+      ],
+      "meaningHi": "कुछ सिरहीन महासुर तलवार, शक्ति और ऋष्टि हाथ में लेकर देवी से ‘ठहरो, ठहरो’ कहते रहे।",
+      "meaningEn": "Other headless demons, carrying swords, spears and lances, cried to the Goddess, “Stand, stand!”"
+    },
+    {
+      "id": "durga-saptashati-chapter-2-65",
+      "number": 65,
+      "labelHi": "पाठ · ६५",
+      "labelEn": "Text unit · 65",
+      "lines": [
+        "पातितै रथनागाश्वैरसुरैश्च वसुन्धरा।",
+        "अगम्या साभवत्तत्र यत्राभूत्स महारणः॥"
+      ],
+      "linesEn": [
+        "pātitai rathanāgāśhvairasuraiśhcha vasundharā",
+        "agamyā sābhavattatra yatrābhūtsa mahāraṇaḥ"
+      ],
+      "meaningHi": "उस महान युद्ध की भूमि गिरे रथों, हाथियों, घोड़ों और असुरों से अगम्य हो गई।",
+      "meaningEn": "The ground of that great battle became impassable with fallen chariots, elephants, horses and demons."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-66",
+      "number": 66,
+      "labelHi": "पाठ · ६६",
+      "labelEn": "Text unit · 66",
+      "lines": [
+        "शोणितौघा महानद्यः सद्यस्तत्र प्रसुस्रुवुः।",
+        "मध्ये चासुरसैन्यस्य वारणासुरवाजिनाम्॥"
+      ],
+      "linesEn": [
+        "śhoṇitaughā mahānadyaḥ sadyastatra prasusruvuḥ",
+        "madhye chāsurasainyasya vāraṇāsuravājinām"
+      ],
+      "meaningHi": "असुर सेना के बीच हाथियों, असुरों और घोड़ों के रक्त की बड़ी नदियाँ तुरंत बहने लगीं।",
+      "meaningEn": "Great rivers of blood from elephants, demons and horses immediately flowed through the army."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-67",
+      "number": 67,
+      "labelHi": "पाठ · ६७",
+      "labelEn": "Text unit · 67",
+      "lines": [
+        "क्षणेन तन्महासैन्यमसुराणां तथाम्बिका।",
+        "निन्ये क्षयं यथा वह्निस्तृणदारुमहाचयम्॥"
+      ],
+      "linesEn": [
+        "kṣhaṇena tanmahāsainyamasurāṇāṃ tathāmbikā",
+        "ninye kṣhayaṃ yathā vahnistṛiṇadārumahāchayam"
+      ],
+      "meaningHi": "अम्बिका ने उस विशाल असुर सेना को क्षणभर में ऐसे नष्ट कर दिया जैसे आग घास और लकड़ी के बड़े ढेर को जला देती है।",
+      "meaningEn": "Ambika destroyed the vast demon army in a moment, as fire consumes a great heap of grass and wood."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-68",
+      "number": 68,
+      "labelHi": "पाठ · ६८",
+      "labelEn": "Text unit · 68",
+      "lines": [
+        "स च सिंहो महानादमुत्सृजन्धुतकेसरः।",
+        "शरीरेभ्योऽमरारीणामसूनिव विचिन्वति॥"
+      ],
+      "linesEn": [
+        "sa cha siṃho mahānādamutsṛijandhutakesaraḥ",
+        "śharīrebhyo'marārīṇāmasūniva vichinvati"
+      ],
+      "meaningHi": "वह सिंह अयाल हिलाकर जोर से गर्जता हुआ मानो देवशत्रुओं के शरीरों से प्राण चुन रहा था।",
+      "meaningEn": "Shaking his mane and roaring mightily, the lion seemed to gather the life-breaths from the enemies’ bodies."
+    },
+    {
+      "id": "durga-saptashati-chapter-2-69",
+      "number": 69,
+      "labelHi": "पाठ · ६९",
+      "labelEn": "Text unit · 69",
+      "lines": [
+        "देव्या गणैश्च तैस्तत्र कृतं युद्धं महासुरैः।",
+        "यथैषां तुतुषुर्देवाः पुष्पवृष्टिमुचो दिवि॥"
+      ],
+      "linesEn": [
+        "devyā gaṇaiśhcha taistatra kṛitaṃ yuddhaṃ mahāsuraiḥ",
+        "yathaiṣāṃ tutuṣurdevāḥ puṣpavṛiṣṭimucho divi"
+      ],
+      "meaningHi": "देवी और उनके गणों ने महासुरों से ऐसा युद्ध किया कि आकाश में देवता प्रसन्न होकर पुष्पवर्षा करने लगे।",
+      "meaningEn": "The Goddess and her attendants fought the demons so magnificently that the delighted gods showered flowers from heaven."
+    }
+  ]
+}

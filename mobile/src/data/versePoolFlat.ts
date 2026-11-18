@@ -87,6 +87,18 @@ const FLAT_SOURCES: readonly FlatSource[] = [
   stuti('hanuman-bahuk', verseCounts.hanumanBahukTotal),
   stuti('durga-argala-stotram', verseCounts.durgaArgalaTotal),
   stuti('durga-kilak-stotram', verseCounts.durgaKilakTotal),
+  stuti('durga-saptashati-chapter-2', verseCounts.durgaSaptashatiChapter2Total),
+  stuti('durga-saptashati-chapter-3', verseCounts.durgaSaptashatiChapter3Total),
+  stuti('durga-saptashati-chapter-4', verseCounts.durgaSaptashatiChapter4Total),
+  stuti('durga-saptashati-chapter-5', verseCounts.durgaSaptashatiChapter5Total),
+  stuti('durga-saptashati-chapter-6', verseCounts.durgaSaptashatiChapter6Total),
+  stuti('durga-saptashati-chapter-7', verseCounts.durgaSaptashatiChapter7Total),
+  stuti('durga-saptashati-chapter-8', verseCounts.durgaSaptashatiChapter8Total),
+  stuti('durga-saptashati-chapter-9', verseCounts.durgaSaptashatiChapter9Total),
+  stuti('durga-saptashati-chapter-10', verseCounts.durgaSaptashatiChapter10Total),
+  stuti('durga-saptashati-chapter-11', verseCounts.durgaSaptashatiChapter11Total),
+  stuti('durga-saptashati-chapter-12', verseCounts.durgaSaptashatiChapter12Total),
+  stuti('durga-saptashati-chapter-13', verseCounts.durgaSaptashatiChapter13Total),
 ];
 
 type LibraryLookup = {

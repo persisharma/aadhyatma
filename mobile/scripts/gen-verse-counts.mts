@@ -1,3 +1,15 @@
+import durgaSaptashatiChapter2 from '../src/data/stuti/durga-saptashati-chapter-2.json';
+import durgaSaptashatiChapter3 from '../src/data/stuti/durga-saptashati-chapter-3.json';
+import durgaSaptashatiChapter4 from '../src/data/stuti/durga-saptashati-chapter-4.json';
+import durgaSaptashatiChapter5 from '../src/data/stuti/durga-saptashati-chapter-5.json';
+import durgaSaptashatiChapter6 from '../src/data/stuti/durga-saptashati-chapter-6.json';
+import durgaSaptashatiChapter7 from '../src/data/stuti/durga-saptashati-chapter-7.json';
+import durgaSaptashatiChapter8 from '../src/data/stuti/durga-saptashati-chapter-8.json';
+import durgaSaptashatiChapter9 from '../src/data/stuti/durga-saptashati-chapter-9.json';
+import durgaSaptashatiChapter10 from '../src/data/stuti/durga-saptashati-chapter-10.json';
+import durgaSaptashatiChapter11 from '../src/data/stuti/durga-saptashati-chapter-11.json';
+import durgaSaptashatiChapter12 from '../src/data/stuti/durga-saptashati-chapter-12.json';
+import durgaSaptashatiChapter13 from '../src/data/stuti/durga-saptashati-chapter-13.json';
 import durgaDeviKavacham from '../src/data/kavacham/durga-devi-kavacham.json';
 import durgaSaptashatiChapterOne from '../src/data/stuti/durga-saptashati-chapter-1.json';
 import durgaKilak from '../src/data/stuti/durga-kilak-stotram.json';
@@ -61,6 +73,18 @@ import { vishnuSahasranamaTotal } from '../src/data/vishnu-sahasranama';
 const VALUES: readonly (readonly [string, number | Record<string, number>])[] = [
   ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length],
   ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length],
+  ['durgaSaptashatiChapter2Total', durgaSaptashatiChapter2.verses.length],
+  ['durgaSaptashatiChapter3Total', durgaSaptashatiChapter3.verses.length],
+  ['durgaSaptashatiChapter4Total', durgaSaptashatiChapter4.verses.length],
+  ['durgaSaptashatiChapter5Total', durgaSaptashatiChapter5.verses.length],
+  ['durgaSaptashatiChapter6Total', durgaSaptashatiChapter6.verses.length],
+  ['durgaSaptashatiChapter7Total', durgaSaptashatiChapter7.verses.length],
+  ['durgaSaptashatiChapter8Total', durgaSaptashatiChapter8.verses.length],
+  ['durgaSaptashatiChapter9Total', durgaSaptashatiChapter9.verses.length],
+  ['durgaSaptashatiChapter10Total', durgaSaptashatiChapter10.verses.length],
+  ['durgaSaptashatiChapter11Total', durgaSaptashatiChapter11.verses.length],
+  ['durgaSaptashatiChapter12Total', durgaSaptashatiChapter12.verses.length],
+  ['durgaSaptashatiChapter13Total', durgaSaptashatiChapter13.verses.length],
   ['durgaKilakTotal', durgaKilak.verses.length],
   ['durgaArgalaTotal', durgaArgala.verses.length],
   ['hanumanBahukTotal', hanumanBahuk.verses.length],

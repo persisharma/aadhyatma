@@ -73,3 +73,35 @@ test('previous Durga selection remains loadable but is absent from discovery', (
  assert.ok(!index.sections.some(s=>s.sourceId==='durga-kavach'));
  assert.ok(!index.verses.some(s=>s.sourceId==='durga-kavach'));
 });
+
+test('all thirteen Saptashati chapters have 700 numbered units and complete discovery', () => {
+  const counts = [104,69,44,42,129,24,27,63,41,32,55,41,29];
+  const index = getSearchIndex();
+  let total = 0;
+  for (const [chapter, count] of counts.entries()) {
+    const id = `durga-saptashati-chapter-${chapter+1}`;
+    const payload = getStuti(id);
+    assert.equal(payload.id,id);
+    assert.equal(payload.verses.length,count);
+    assert.equal(library.find(entry=>entry.id===id)?.verseCount,count);
+    assert.ok(index.sections.some(entry=>entry.sourceId===id),id);
+    assert.equal(index.verses.filter(entry=>entry.sourceId===id).length,count,id);
+    payload.verses.forEach((verse,i)=>{
+      assert.equal(verse.id,`${id}-${i+1}`);
+      assert.equal(verse.number,i+1);
+      assert.ok(verse.lines.length>0);
+      assert.equal(verse.lines.length,verse.linesEn.length);
+      assert.ok(verse.meaningHi.trim().length>5 && verse.meaningEn.trim().length>10);
+      assert.ok(!/[\u0900-\u097f]/.test(verse.linesEn.join(' ')));
+      assert.ok(!/TODO|placeholder/i.test(verse.meaningEn));
+    });
+    total += count;
+  }
+  assert.equal(total,700);
+  // The threefold salutation is three traditional units, not three copies of a stanza.
+  const fifth=getStuti('durga-saptashati-chapter-5');
+  assert.ok(fifth.verses[13].lines.join(' ').includes('विष्णुमायेति'));
+  assert.deepEqual(fifth.verses[14].lines,['नमस्तस्यै॥']);
+  assert.deepEqual(fifth.verses[15].lines,['नमस्तस्यै नमो नमः॥']);
+  assert.ok(getStuti('durga-saptashati-chapter-13').verses[28].lines.join(' ').includes('सावर्णिर्भविता मनुः'));
+});

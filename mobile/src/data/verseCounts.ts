@@ -8,6 +8,18 @@
 
 export const durgaDeviKavachamTotal = 56 as const;
 export const durgaSaptashatiChapterOneTotal = 104 as const;
+export const durgaSaptashatiChapter2Total = 69 as const;
+export const durgaSaptashatiChapter3Total = 44 as const;
+export const durgaSaptashatiChapter4Total = 42 as const;
+export const durgaSaptashatiChapter5Total = 129 as const;
+export const durgaSaptashatiChapter6Total = 24 as const;
+export const durgaSaptashatiChapter7Total = 27 as const;
+export const durgaSaptashatiChapter8Total = 63 as const;
+export const durgaSaptashatiChapter9Total = 41 as const;
+export const durgaSaptashatiChapter10Total = 32 as const;
+export const durgaSaptashatiChapter11Total = 55 as const;
+export const durgaSaptashatiChapter12Total = 41 as const;
+export const durgaSaptashatiChapter13Total = 29 as const;
 export const durgaKilakTotal = 14 as const;
 export const durgaArgalaTotal = 27 as const;
 export const hanumanBahukTotal = 44 as const;

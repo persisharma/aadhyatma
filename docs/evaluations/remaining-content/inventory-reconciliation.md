@@ -15,7 +15,7 @@ This table covers every remaining non-audio item supplied in the execution plan.
 | E1 Katha library | Existing hub reachable from Home and global title search | Reuses shipped narratives/artwork; no new prose/category corpus. Weekday guide is not seven weekday stories. |
 | E2 Deity-day strip | Local weekday joins to available readings; explicit guide link | Deferred Home component; valid-category/deity tests. Full Home placement and native interaction remain pending. |
 | G1 Vishnu Sahasranama | Complete107-verse core plus intro/protection;158 total section units | Existing positions preserved. Opening/closing ancillary selections honestly labelled. Full source report and boundary tests. |
-| G2 Saptashati core | Kavach56, Argala27, Kilak14, Chapter1 104 units; collection door | Exact four-part scope, not13chapters. Old mixed18-unit selection loadable under original IDs but hidden from discovery. |
+| G2 Saptashati core | Kavach56, Argala27, Kilak14 and all 13 chapters /700 numbered units; collection door | Complete chapter text, not a ritual manual; see saptashati-completion-sources.md. Old mixed18-unit selection loadable under original IDs but hidden from discovery. |
 | G3 Sai | Research/product decision, no new deity | Official publication leads and data-model/art/rights requirements recorded. Reconsider with demand evidence and editorial ownership. |
 | G4 Marathi | Feasibility/surface inventory and implementation sequence | No false Hindi-as-Marathi activation. Native Marathi translation, deduplication and editorial capacity remain prerequisites to implementation. |
 

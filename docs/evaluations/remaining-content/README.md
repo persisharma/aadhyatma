@@ -17,7 +17,7 @@ One PR explicitly requested by Prashant on 17 November 2026; this supersedes the
 | E1 Katha discovery | Reuse existing KathaLibrary from Home and search; no duplicated stories. |
 | E2 Deity-day links | Reuse weekday metadata and Home styling; no eager katha payload on launch. |
 | G1 Vishnu Sahasranama | Complete 107-verse core + protection, 158 total units with selected ancillary sections; existing positions preserved. |
-| G2 Saptashati core | Full Kavach version replaces mixed legacy selection in browse, old saved refs preserved; Argala/Kilak integrated, all 104 chapter-1 units integrated. |
+| G2 Saptashati core | Full Kavach version replaces mixed legacy selection in browse, old saved refs preserved; Argala/Kilak and all 13 chapters (700 traditional units) integrated; see saptashati-completion-sources.md. |
 | G3 Sai | Evidence-based decision memo only, no new deity. |
 | G4 Marathi | Translation/surface feasibility memo only, no new language activation. |
 
@@ -35,7 +35,7 @@ C1 uses the existing 30-record Yuddha sarga 107, beginning at canonical index 46
 - TypeScript: passed. Targeted lint: no errors; repository-style warnings remain. `git diff --check`: passed.
 - Actual-component web preview build: passed; sources in `mobile/visual/remaining-content`. Local capture failed because Chromium socket creation is prohibited and the cloud browser cannot reach that local server. The expanded harness now runs in GitHub Actions with pinned dependencies; current capture artifacts/inspection and final CI status are linked in PR #702. Browser captures never establish native acceptance.
 - Native iOS/Android route/back, bookmark/routine restore, share/export, offline failures, accessibility, compact/large-font layout and performance: **PENDING**. Long Bahuk pages particularly require real-device review.
-- Eight new payloads contain 292 units; Vishnu gains 79 units (158 total across its four sections). All use lazy corpus loaders. Original meanings are newly written; source and variant decisions are in adjacent reports.
+- Twenty new payloads contain 888 units; Vishnu gains 79 units (158 total across its four sections). All use lazy corpus loaders. Original meanings are newly written; source and variant decisions are in adjacent reports.
 - The PR remains draft. A6/B2 are explicit source-blocked exclusions, detailed in `source-exclusions.md`; no audio, release, merge or native dependency change.
 
 ## Conflict resolution

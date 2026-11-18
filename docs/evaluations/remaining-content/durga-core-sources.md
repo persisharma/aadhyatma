@@ -1,5 +1,7 @@
 # G2 — Durga core reading collection
 
+Historical first checkpoint; the opening-only scope below is superseded by [all thirteen chapters](saptashati-completion-sources.md). The source comparison for these four unchanged payloads remains applicable.
+
 Reviewed 2026-11-17. Delivered as four independently readable payloads, not a claim to contain the complete700-unit/13-chapter Saptashati or every ritual preliminary:
 
 | Payload | Declared edition boundary | Units |

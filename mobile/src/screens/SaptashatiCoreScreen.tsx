@@ -22,8 +22,8 @@ export default function SaptashatiCoreScreen({ navigation }: NativeStackScreenPr
     <SafeAreaView edges={['top', 'left', 'right']} style={{ flex: 1 }}>
       <ReaderHeader title={contentByLang(lang, 'दुर्गा सप्तशती', 'Durga Saptashati')} onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={{ padding: spacing.xxl, gap: spacing.md, paddingBottom: 48 }}>
-        <Text accessibilityRole="header" style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 18, lineHeight: 29, color: colors.ink }}>{contentByLang(lang, 'आरम्भिक पाठ संग्रह', 'Opening reading collection')}</Text>
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15, lineHeight: 25, color: colors.inkMuted }}>{contentByLang(lang, 'कवच, अर्गला, कीलक और प्रथम अध्याय पढ़ें। यह पूरी १३ अध्यायों की सप्तशती या सम्पूर्ण अनुष्ठान-विधि नहीं है।', 'Read the Kavach, Argala, Kilak and Chapter 1. This collection does not contain all 13 chapters or a complete ritual procedure.')}</Text>
+        <Text accessibilityRole="header" style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 18, lineHeight: 29, color: colors.ink }}>{contentByLang(lang, 'सभी १३ अध्याय', 'All 13 chapters')}</Text>
+        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15, lineHeight: 25, color: colors.inkMuted }}>{contentByLang(lang, 'सभी १३ अध्यायों के ७०० पारम्परिक पाठांश, अर्थ सहित पढ़ें। कवच, अर्गला और कीलक भी साथ हैं। अनुष्ठान-विधि इस पाठ-संग्रह में शामिल नहीं है।', 'Read all 13 chapters with meanings: 700 traditionally numbered text units, plus Kavach, Argala and Kilak. Ritual instructions are not part of this reading collection.')}</Text>
         {saptashatiCoreIds.map(id => {
           const entry = library.find(item => item.id === id);
           return entry ? <LibraryCard key={id} entry={entry} onPress={() => navigateToEntryStart(navigation, entry)} /> : null;

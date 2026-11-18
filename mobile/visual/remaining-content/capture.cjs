@@ -9,7 +9,7 @@ const server=http.createServer((req,res)=>{
  if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}
  try{res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':'application/octet-stream');res.end(fs.readFileSync(file));}catch{res.writeHead(404).end();}
 });
-const texts=[['stuti','kanakadhara-stotram'],['stuti','hanuman-bahuk'],['suktam','shri-suktam'],['ashtakam','kalabhairav-ashtakam'],['kavacham','durga-devi-kavacham'],['stuti','durga-argala-stotram'],['stuti','durga-kilak-stotram'],['stuti','durga-saptashati-chapter-1']];
+const texts=[['stuti','kanakadhara-stotram'],['stuti','hanuman-bahuk'],['suktam','shri-suktam'],['ashtakam','kalabhairav-ashtakam'],['kavacham','durga-devi-kavacham'],['stuti','durga-argala-stotram'],['stuti','durga-kilak-stotram'],['stuti','durga-saptashati-chapter-1'],['stuti','durga-saptashati-chapter-2'],['stuti','durga-saptashati-chapter-3'],['stuti','durga-saptashati-chapter-4'],['stuti','durga-saptashati-chapter-5'],['stuti','durga-saptashati-chapter-6'],['stuti','durga-saptashati-chapter-7'],['stuti','durga-saptashati-chapter-8'],['stuti','durga-saptashati-chapter-9'],['stuti','durga-saptashati-chapter-10'],['stuti','durga-saptashati-chapter-11'],['stuti','durga-saptashati-chapter-12'],['stuti','durga-saptashati-chapter-13']];
 const cases=[];
 for(const [kind,id] of texts){
  const verses=JSON.parse(fs.readFileSync(path.join(__dirname,'../../src/data',kind,id+'.json'),'utf8')).verses;
@@ -38,7 +38,7 @@ cases.push({kind:'vishnu',page:31},{kind:'vishnu',page:107},...['saptashati','ka
     const metrics=await tab.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,images:Array.from(document.images).map(i=>({src:i.currentSrc,loaded:i.complete&&i.naturalWidth>0})),buttons:Array.from(document.querySelectorAll('[role="button"]')).map(e=>({label:e.getAttribute('aria-label')||e.textContent,rect:JSON.parse(JSON.stringify(e.getBoundingClientRect()))}))}));
     if(text.length<80)errors.push('Empty or missing production component');
     await tab.screenshot({path:path.join(output,name+'.png')});
-    if(item.id){
+    if(item.id || item.kind==='saptashati'){
      metrics.scrollBefore = await tab.evaluate(()=>Array.from(document.querySelectorAll('*')).filter(e=>e.scrollHeight>e.clientHeight+20).map(e=>({tag:e.tagName,overflow:getComputedStyle(e).overflowY,height:e.clientHeight,content:e.scrollHeight,top:e.scrollTop,rect:JSON.parse(JSON.stringify(e.getBoundingClientRect()))})));
      await tab.mouse.move(width/2,600); await tab.mouse.wheel(0,20000); await tab.waitForTimeout(700);
      await tab.evaluate(()=>{for(const e of document.querySelectorAll('*'))if(e.scrollHeight>e.clientHeight+20 && ['scroll','auto'].includes(getComputedStyle(e).overflowY))e.scrollTop=e.scrollHeight;});

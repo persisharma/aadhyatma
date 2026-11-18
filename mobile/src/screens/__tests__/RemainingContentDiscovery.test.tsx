@@ -29,7 +29,7 @@ test('katha hub opens its selected canonical story in the local Home stack',asyn
 });
 test('Saptashati collection opens the full versioned Kavach',async()=>{
  await mount(<SaptashatiCoreScreen navigation={mockNavigation as never} route={{name:'SaptashatiCore',key:'test'} as never}/>);
- const cards=tree.root.findAllByType(LibraryCard);expect(cards).toHaveLength(4);
+ const cards=tree.root.findAllByType(LibraryCard);expect(cards).toHaveLength(16);
  act(()=>cards.find(c=>c.props.entry.id==='durga-devi-kavacham')!.props.onPress());
  expect(mockNavigate).toHaveBeenCalledWith('KavachamReader',{kavachamId:'durga-devi-kavacham',initialIndex:0});
 });
@@ -39,4 +39,14 @@ test('weekday strip exposes a guide without claiming a complete weekday story',a
  expect(text).toContain('Shiva');expect(text).toContain('Weekday vrat guide');
  const guide=tree.root.findAll(n=>n.props.accessibilityRole==='button' && typeof n.props.onPress==='function').find(n=>n.findAllByType(Text).some(t=>JSON.stringify(t.props.children).includes('Weekday vrat guide')))!;
  act(()=>guide.props.onPress());expect(mockNavigate).toHaveBeenCalledWith('VratKathaReader',{kathaId:'weekday-vrat-katha'});
+});
+
+test('every Saptashati chapter opens its own reader and first saved position',async()=>{
+ await mount(<SaptashatiCoreScreen navigation={mockNavigation as never} route={{name:'SaptashatiCore',key:'test'} as never}/>);
+ const cards=tree.root.findAllByType(LibraryCard);
+ for(let chapter=1;chapter<=13;chapter++){
+  const stutiId=`durga-saptashati-chapter-${chapter}`;
+  act(()=>cards.find(c=>c.props.entry.id===stutiId)!.props.onPress());
+  expect(mockNavigate).toHaveBeenLastCalledWith('StutiReader',{stutiId,initialIndex:0});
+ }
 });
