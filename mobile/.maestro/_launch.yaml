@@ -10,10 +10,8 @@
 #   - This flow exits with the Vedansh Home screen rendered and Maestro able
 #     to read past the Expo dev-menu sheet (config.yaml sets
 #     snapshotKeyHonorModalViews: false).
-#   - The Today-strip + For Today assertions are the canary that confirms the
-#     bundle finished executing. Keep these above-the-fold: Home now has daily
-#     recommendation cards before Categories, so older category tiles such as
-#     "Good Habits" can sit below the first viewport.
+#   - The featured reading assertions are the canary that confirms the
+#     bundle finished executing. Keep these above-the-fold: the category directory starts below the featured readings.
 #   - Expo Go can leave a native dev-menu bottom sheet open after project load;
 #     the downward swipe dismisses it when present and is harmless on Home.
 #   - On first launch one onboarding surface may auto-appear over Home and
@@ -142,16 +140,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Maybe later"
     optional: true
-# The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
-# text is one merged accessibility label — "Today's Panchang. <weekday>,
-# <tithi>. … Tap to open." — exposed in English regardless of display language.
-# Maestro anchors selectors to an element's FULL text, so wildcard both ends.
+# The six featured readings stay above the fold even when the festival card changes.
 - extendedWaitUntil:
-    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
+    visible: { id: home-featured-gita-saar }
     timeout: 60000
-- extendedWaitUntil:
-    visible: "आज के लिए|FOR TODAY"
-    timeout: 60000
+- assertVisible: { id: home-featured-aarti }
 # Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
 # after the dismissal block above ran — seen on slow Android cold starts —
 # clear it now so it can't swallow the first in-flow tap. No-ops otherwise.

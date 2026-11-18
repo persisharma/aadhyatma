@@ -23,6 +23,8 @@ const SuvicharScreen = lazyScreen('Suvichar', 2, () => import('@/screens/Suvicha
 
 // depth 2 — opened directly from Home
 const BrowseByPurposeScreen = lazyScreen('BrowseByPurpose', 2, () => import('@/screens/BrowseByPurposeScreen'));
+const ReadingLibraryScreen = lazyScreen('ReadingLibrary', 2, () => import('@/screens/ReadingLibraryScreen'));
+const StotramPracticeScreen = lazyScreen('StotramPractice', 2, () => import('@/screens/StotramPracticeScreen'));
 const CategoryListScreen = lazyScreen('CategoryList', 2, () => import('@/screens/CategoryListScreen'));
 // दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
 // आरोग्य on PurposeList) pushes in place and Back retraces the journey.
@@ -138,6 +140,8 @@ export default function HomeStackNavigator() {
         component={SearchScreen}
         options={{ animation: 'fade' }}
       />
+      <Stack.Screen name="ReadingLibrary" component={ReadingLibraryScreen} />
+      <Stack.Screen name="StotramPractice" component={StotramPracticeScreen} />
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
       <Stack.Screen name="KidsStoryLibrary" component={KidsStoryLibraryScreen} />
       <Stack.Screen name="KidsStoryDeity" component={KidsStoryDeityScreen} />

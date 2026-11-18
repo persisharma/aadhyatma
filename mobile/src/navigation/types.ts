@@ -83,7 +83,9 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
    * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
    */
   Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
-  CategoryList: { categoryId: ContentCategory };
+  ReadingLibrary: { features?: boolean } | undefined;
+  StotramPractice: { sourceId: string };
+  CategoryList: { categoryId: ContentCategory; practice?: boolean };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
   DeityDetail: { deityId: Deity };

@@ -57,6 +57,31 @@ function inc(times: number) {
 }
 
 describe('JapamCounterContext (PR #40/#93 bead-count logic)', () => {
+  test('persists completed stotrams independently from mala beads', async () => {
+    const storage = jest.requireMock('@react-native-async-storage/async-storage');
+    const saved = new Map<string, string>();
+    storage.getItem.mockImplementation((key: string) => Promise.resolve(saved.get(key) ?? null));
+    storage.setItem.mockImplementation((key: string, value: string) => {
+      saved.set(key, value);
+      return Promise.resolve();
+    });
+    try {
+      await act(async () => { mount(); });
+      await act(async () => {
+        api.increment(MANTRA);
+        api.countRecitation('shiva-stotram');
+        api.countRecitation('shiva-stotram');
+      });
+      await act(async () => { mount(); });
+      expect(api.recitations['shiva-stotram'].count).toBe(2);
+      expect(api.getEntry(MANTRA).count).toBe(1);
+      expect(api.getEntry('shiva-stotram').count).toBe(0);
+    } finally {
+      storage.getItem.mockImplementation(() => Promise.resolve(null));
+      storage.setItem.mockImplementation(() => Promise.resolve());
+    }
+  });
+
   test('increment raises the bead count', () => {
     mount();
     inc(3);

@@ -5,6 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library, type LibraryEntry } from '@/data/texts';
 import { categories } from '@/data/categories';
@@ -39,7 +41,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
 
   const backgroundImage = useMemo(() => getCategoryBackground(categoryId), [categoryId]);
   const categoryMeta = categories.find((c) => c.id === categoryId);
-  const title = orderTitlesByLanguage(lang, categoryMeta?.nameHi ?? '', categoryMeta?.nameEn ?? '', {
+  const title = orderTitlesByLanguage(lang, route.params.practice ? 'जप' : categoryMeta?.nameHi ?? '', route.params.practice ? 'Japa' : categoryMeta?.nameEn ?? '', {
     devPrimary: 16,
     devSecondary: 12,
     latPrimary: 18,
@@ -48,6 +50,11 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
   const handlePress = (entry: LibraryEntry) => {
+    if(route.params.practice && categoryId==='stotram'){
+      markSeen(entry.id);
+      navigation.navigate('StotramPractice',{sourceId:entry.id});
+      return;
+    }
     if (isLoading) {
       markSeen(entry.id);
       navigateToEntryStart(navigation, entry);
@@ -133,11 +140,18 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           />
         </View>
 
-        <ScrollView
+        {route.params.practice && <View style={{flexDirection:'row',paddingHorizontal:spacing.xxl,gap:8,marginVertical:8}}>
+          {(['japam','stotram'] as const).map(id=><Pressable key={id} testID={'practice-tab-'+id} accessibilityRole="tab"
+            accessibilityState={{selected:categoryId===id}} onPress={()=>navigation.setParams({categoryId:id})}
+            style={{flex:1,minHeight:44,alignItems:'center',justifyContent:'center',backgroundColor:categoryId===id?colors.saffronDeep:colors.parchmentSoft,borderRadius:14}}>
+            <Text style={{fontFamily:titleFontByLang(lang),color:categoryId===id?colors.onPrimary:colors.ink}}>{id==='japam'?contentByLang(lang,'मंत्र','Mantra'):contentByLang(lang,'स्तोत्रम्','Stotram')}</Text>
+          </Pressable>)}
+        </View>}
+        <ScrollView key={categoryId}
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
-          {categoryId === 'stotram' && <ReadingLinks onOpen={(id) => navigateReadingLink(navigation, id)} />}
+          {categoryId === 'stotram' && <ReadingLinks onOpen={(id) => route.params.practice ? navigation.navigate('StotramPractice', {sourceId:id}) : navigateReadingLink(navigation, id)} />}
           {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
             const card = <LibraryCard entry={entry} onPress={onPress} />;
