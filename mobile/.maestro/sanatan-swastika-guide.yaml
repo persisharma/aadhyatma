@@ -12,11 +12,17 @@ appId: com.prashantsharma.vedansh
     element: { text: "Sacred symbols" }
     direction: DOWN
     timeout: 60000
+    # Centre it: a row found at the bottom edge sits under the tab bar,
+    # and the tap then lands on a tab instead (seen in CI on iOS).
+    centerElement: true
 - tapOn: "Sacred symbols"
 - scrollUntilVisible:
     element: { text: "Four arms, four aims of life" }
     direction: DOWN
     timeout: 60000
+    # Centre it: a row found at the bottom edge sits under the tab bar,
+    # and the tap then lands on a tab instead (seen in CI on iOS).
+    centerElement: true
 - tapOn: "Four arms, four aims of life"
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
@@ -55,6 +61,11 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 - assertVisible: "Share"
 - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+# The lesson list keeps its scroll position, so the title can be above view.
+- scrollUntilVisible:
+    element: { text: "Sacred symbols" }
+    direction: UP
+    timeout: 30000
 - assertVisible: "Sacred symbols"
 - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "how to draw swastika"

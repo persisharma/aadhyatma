@@ -4,9 +4,13 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-home" }
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
+# Returning from a deep Home stack can leave Home a few rows down with the gear
+# partly under the status bar, and the scroll-up swipes then do not move it (CI:
+# 57 of its 132 px showed for 22 s). The visible part is tappable, so accept it.
 - scrollUntilVisible:
     element: { id: "home-settings" }
     direction: UP
     centerElement: false
+    visibilityPercentage: 30
 - tapOn: { id: "home-settings" }
 - waitForAnimationToEnd
