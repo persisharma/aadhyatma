@@ -101,7 +101,7 @@ All thirteen chapters have lazy Stuti loaders, active catalog entries, static to
 
 ## Verification status
 
-- PASS: 153 reader/discovery tests, including first/final units in all four existing scripts and navigation to every chapter; TypeScript.
+- PASS: full local reader/component suite: 4,646 tests across 413 suites; full data/content/route/startup suite: 248 tests. Focused 153 reader/discovery tests, including first/final units in all four existing scripts and navigation to every chapter; TypeScript.
 - PASS: explicit 700-unit count, contiguous stable IDs, catalog counts, all units searchable, no empty meanings, Sanskrit/romanized line parity, final chapter conclusion and chapter 5 refrain boundaries.
 - Broader final-head CI and actual-component screenshots: recorded in the PR once completed; previous screenshots of the four-part collection are superseded for this scope.
 - PENDING: native iOS/Android lifecycle, Back/restore, sharing/export, offline/cache, accessibility/system scaling and low-memory performance. Local native tools are absent; fresh native builds were not authorized under RULEBOOK §0.3. No browser screenshot is native evidence. Keep draft.
