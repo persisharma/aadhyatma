@@ -199,7 +199,7 @@ describe('JanmaTithiDetailScreen', () => {
     expect(text).toContain('जन्म नक्षत्र');
     expect(text).toContain('सूर्योदय तिथि');
     // The dirghayu paath practice row points at the shipped section.
-    expect(byLabel(tree, 'Open Vishnu Sahasranama Excerpt')).toBeTruthy();
+    expect(byLabel(tree, 'Open Vishnu Sahasranama')).toBeTruthy();
   });
 
   test('a removed person renders the not-found state, never a crash', async () => {

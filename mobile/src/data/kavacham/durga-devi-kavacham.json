@@ -1,0 +1,914 @@
+{
+  "id": "durga-devi-kavacham",
+  "titleHi": "श्री देवी कवचम्",
+  "titleEn": "Shri Devi Kavacham",
+  "deity": "durga",
+  "source": {
+    "baseText": "Devyah Kavacham, complete 56-unit metrical recension including phalashruti, a preliminary text of the Durga Saptashati. Viniyoga and unnumbered invocation are not standalone units.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/patha-vidhi/devi-kavacham/durga-saptashati-devi-kavacham.html",
+      "https://sanskritdocuments.org/doc_devii/dkavach.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Versioned full56-unit corpus with new IDs. Original18-unit durga-kavach retained separately unchanged only for saved references; not a continuous complete recension. No old bookmarks are reinterpreted. See durga-core-sources.md. Ancient Sanskrit with original explanations for the complete edition."
+  },
+  "verses": [
+    {
+      "id": "durga-devi-kavacham-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "ॐ यद्गुह्यं परमं लोके सर्वरक्षाकरं नृणाम्।",
+        "यन्न कस्यचिदाख्यातं तन्मे ब्रूहि पितामह॥"
+      ],
+      "linesEn": [
+        "oṃ yadguhyaṃ paramaṃ loke sarvarakṣhākaraṃ nṛiṇām",
+        "yanna kasyachidākhyātaṃ tanme brūhi pitāmaha"
+      ],
+      "meaningHi": "मार्कण्डेय पूछते हैं: हे पितामह, संसार का वह परम गोपनीय उपदेश बताइए जो सब मनुष्यों की रक्षा करता है और जिसे आपने किसी से नहीं कहा। प्रश्न देवी के कवच की भूमिका बनाता है।",
+      "meaningEn": "Markandeya asks the grandsire to reveal the supreme secret that protects people and has not yet been disclosed. His question introduces the goddess’s protective hymn."
+    },
+    {
+      "id": "durga-devi-kavacham-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "अस्ति गुह्यतमं विप्र सर्वभूतोपकारकम्।",
+        "देव्यास्तु कवचं पुण्यं तच्छृणुष्व महामुने॥"
+      ],
+      "linesEn": [
+        "asti guhyatamaṃ vipra sarvabhūtopakārakam",
+        "devyāstu kavachaṃ puṇyaṃ tachchhṛiṇuṣva mahāmune"
+      ],
+      "meaningHi": "ब्रह्मा उत्तर देते हैं: हे महर्षि, देवी का पुण्यमय कवच अत्यन्त गोपनीय और सब प्राणियों का हित करने वाला है; उसे सुनिए। यह आश्वासन आगे की रक्षा-प्रार्थना का आधार है।",
+      "meaningEn": "Brahma answers that the goddess’s holy armour is a profound secret beneficial to all beings, and asks the sage to listen. This establishes the devotional setting for the prayer."
+    },
+    {
+      "id": "durga-devi-kavacham-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "प्रथमं शैलपुत्री च द्वितीयं ब्रह्मचारिणी।",
+        "तृतीयं चन्द्रघण्टेति कूष्माण्डेति चतुर्थकम्॥"
+      ],
+      "linesEn": [
+        "prathamaṃ śhailaputrī cha dvitīyaṃ brahmachāriṇī",
+        "tṛitīyaṃ chandraghaṇṭeti kūṣmāṇḍeti chaturthakam"
+      ],
+      "meaningHi": "पहली शैलपुत्री, दूसरी ब्रह्मचारिणी, तीसरी चन्द्रघण्टा और चौथी कूष्माण्डा हैं। देवी के नौ रूपों की परम्परागत सूची यहाँ आरम्भ होती है।",
+      "meaningEn": "The first is Shailaputri, the second Brahmacharini, the third Chandraghanta and the fourth Kushmanda. The traditional sequence of the nine Durgas begins here."
+    },
+    {
+      "id": "durga-devi-kavacham-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "पञ्चमं स्कन्दमातेति षष्ठं कात्यायनीति च।",
+        "सप्तमं कालरात्रीति महागौरीति चाष्टमम्॥"
+      ],
+      "linesEn": [
+        "pañchamaṃ skandamāteti ṣaṣṭhaṃ kātyāyanīti cha",
+        "saptamaṃ kālarātrīti mahāgaurīti chāṣṭamam"
+      ],
+      "meaningHi": "पाँचवीं स्कन्दमाता, छठी कात्यायनी, सातवीं कालरात्रि और आठवीं महागौरी हैं। नामों के माध्यम से देवी के मातृ, रक्षक और तेजस्वी रूप स्मरण किए जाते हैं।",
+      "meaningEn": "Fifth is Skandamata, sixth Katyayani, seventh Kalaratri and eighth Mahagauri. These names recall maternal, protective and luminous aspects of the goddess."
+    },
+    {
+      "id": "durga-devi-kavacham-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "नवमं सिद्धिदात्री च नवदुर्गाः प्रकीर्तिताः।",
+        "उक्तान्येतानि नामानि ब्रह्मणैव महात्मना॥"
+      ],
+      "linesEn": [
+        "navamaṃ siddhidātrī cha navadurgāḥ prakīrtitāḥ",
+        "uktānyetāni nāmāni brahmaṇaiva mahātmanā"
+      ],
+      "meaningHi": "नौवीं सिद्धिदात्री हैं। ये नवदुर्गा कही गई हैं और इनके नाम महात्मा ब्रह्मा ने बताए हैं। सूची देवी के विविध रूपों को एक ही आराधना में जोड़ती है।",
+      "meaningEn": "The ninth is Siddhidatri. These are the nine Durgas, whose names the great Brahma has declared. Their several forms are gathered within one act of devotion."
+    },
+    {
+      "id": "durga-devi-kavacham-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "अग्निना दह्यमानस्तु शत्रुमध्यगतो रणे।",
+        "विषमे दुर्गमे चैव भयार्ताः शरणं गताः॥"
+      ],
+      "linesEn": [
+        "agninā dahyamānastu śhatrumadhyagato raṇe",
+        "viṣame durgame chaiva bhayārtāḥ śharaṇaṃ gatāḥ"
+      ],
+      "meaningHi": "अग्नि में घिरे, युद्ध में शत्रुओं के बीच पड़े अथवा कठिन स्थान पर भयभीत लोग देवी की शरण लेते हैं। वाक्य का आश्वासन अगले पद में पूरा होता है।",
+      "meaningEn": "Those surrounded by fire, caught among enemies in battle or frightened in difficult places seek refuge in the goddess. The assurance belonging to this sentence continues next."
+    },
+    {
+      "id": "durga-devi-kavacham-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "न तेषां जायते किञ्चिदशुभं रणसंकटे।",
+        "नापदं तस्य पश्यामि शोकदुःखभयं न हि॥"
+      ],
+      "linesEn": [
+        "na teṣāṃ jāyate kiñchidaśhubhaṃ raṇasaṃkaṭe",
+        "nāpadaṃ tasya paśhyāmi śhokaduḥkhabhayaṃ na hi"
+      ],
+      "meaningHi": "ऐसे शरणागतों को युद्ध-संकट में अशुभ, आपत्ति, शोक, दुःख और भय न हो, ऐसा कवच का आश्वासन है। यह देवी की रक्षा में श्रद्धा व्यक्त करने वाली स्तुति है।",
+      "meaningEn": "The kavach assures those seeking refuge of freedom from misfortune, danger, grief and fear amid conflict. Its language expresses faith in the goddess’s protection."
+    },
+    {
+      "id": "durga-devi-kavacham-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Shloka · 8",
+      "lines": [
+        "यैस्तु भक्त्या स्मृता नूनं तेषां वृद्धिः प्रजायते।",
+        "ये त्वां स्मरन्ति देवेशि रक्षसे तान्न संशयः॥"
+      ],
+      "linesEn": [
+        "yaistu bhaktyā smṛitā nūnaṃ teṣāṃ vṛiddhiḥ prajāyate",
+        "ye tvāṃ smaranti deveśhi rakṣhase tānna saṃśhayaḥ"
+      ],
+      "meaningHi": "जो भक्ति से देवी को स्मरण करते हैं, उनके उत्कर्ष की प्रशंसा की गई है। हे देवेशि, आपका स्मरण करने वालों की आप रक्षा करती हैं—यह पाठ का विश्वास है।",
+      "meaningEn": "The text praises the flourishing of those who remember the goddess with devotion. It affirms its trust that she guards those who call her to mind."
+    },
+    {
+      "id": "durga-devi-kavacham-9",
+      "number": 9,
+      "labelHi": "श्लोक · ९",
+      "labelEn": "Shloka · 9",
+      "lines": [
+        "प्रेतसंस्था तु चामुण्डा वाराही महिषासना।",
+        "ऐन्द्री गजसमारूढा वैष्णवी गरुडासना॥"
+      ],
+      "linesEn": [
+        "pretasaṃsthā tu chāmuṇḍā vārāhī mahiṣāsanā",
+        "aindrī gajasamārūḍhā vaiṣṇavī garuḍāsanā"
+      ],
+      "meaningHi": "चामुण्डा प्रेत पर, वाराही महिष पर, ऐन्द्री हाथी पर और वैष्णवी गरुड़ पर विराजमान हैं। देवियों के वाहन उनके विशिष्ट रूप पहचानने का आधार बनते हैं।",
+      "meaningEn": "Chamunda stands upon a corpse, Varahi rides a buffalo, Aindri an elephant and Vaishnavi Garuda. Their vehicles identify the distinct sacred forms."
+    },
+    {
+      "id": "durga-devi-kavacham-10",
+      "number": 10,
+      "labelHi": "श्लोक · १०",
+      "labelEn": "Shloka · 10",
+      "lines": [
+        "माहेश्वरी वृषारूढा कौमारी शिखिवाहना।",
+        "लक्ष्मीः पद्मासना देवी पद्महस्ता हरिप्रिया॥"
+      ],
+      "linesEn": [
+        "māheśhvarī vṛiṣārūḍhā kaumārī śhikhivāhanā",
+        "lakṣhmīḥ padmāsanā devī padmahastā haripriyā"
+      ],
+      "meaningHi": "माहेश्वरी वृष पर और कौमारी मयूर पर हैं। हरिप्रिया लक्ष्मी कमलासन पर बैठी हैं और हाथ में कमल धारण करती हैं। रक्षक मातृरूपों में सौम्य श्री भी सम्मिलित हैं।",
+      "meaningEn": "Maheshvari rides a bull and Kaumari a peacock. Lakshmi, dear to Hari, sits upon a lotus and holds a lotus. Gentle Sri appears among these protecting mother forms."
+    },
+    {
+      "id": "durga-devi-kavacham-11",
+      "number": 11,
+      "labelHi": "श्लोक · ११",
+      "labelEn": "Shloka · 11",
+      "lines": [
+        "श्वेतरूपधरा देवी ईश्वरी वृषवाहना।",
+        "ब्राह्मी हंसासना देवी सर्वाभरणभूषिता॥"
+      ],
+      "linesEn": [
+        "śhvetarūpadharā devī īśhvarī vṛiṣavāhanā",
+        "brāhmī haṃsāsanā devī sarvābharaṇabhūṣitā"
+      ],
+      "meaningHi": "श्वेत रूप वाली ईश्वरी वृषवाहिनी हैं; ब्राह्मी हंस पर आरूढ़ और सभी आभूषणों से सुसज्जित हैं। कवच उनके ध्यानयोग्य स्वरूपों का वर्णन आगे बढ़ाता है।",
+      "meaningEn": "White-formed Ishvari rides a bull; Brahmi rides a swan and wears every ornament. The hymn continues describing the forms upon which the reciter may meditate."
+    },
+    {
+      "id": "durga-devi-kavacham-12",
+      "number": 12,
+      "labelHi": "श्लोक · १२",
+      "labelEn": "Shloka · 12",
+      "lines": [
+        "इत्येता मातरः सर्वाः सर्वयोगसमन्विताः।",
+        "नानाभरणशोभाढ्या नानारत्नोपशोभिताः॥"
+      ],
+      "linesEn": [
+        "ityetā mātaraḥ sarvāḥ sarvayogasamanvitāḥ",
+        "nānābharaṇaśhobhāḍhyā nānāratnopaśhobhitāḥ"
+      ],
+      "meaningHi": "ये सभी मातृदेवियाँ समस्त योगशक्तियों से युक्त हैं। अनेक आभूषणों और रत्नों से उनकी शोभा बढ़ती है। आगे उनका आयुधधारी रक्षक रूप वर्णित है।",
+      "meaningEn": "All these mother goddesses possess the powers of yoga and shine with many ornaments and gems. Their armed, protective appearance is described next."
+    },
+    {
+      "id": "durga-devi-kavacham-13",
+      "number": 13,
+      "labelHi": "श्लोक · १३",
+      "labelEn": "Verse · 13",
+      "lines": [
+        "दृश्यन्ते रथमारूढा देव्यः क्रोधसमाकुलाः।",
+        "शङ्खं चक्रं गदां शक्तिं हलं च मुसलायुधम्॥"
+      ],
+      "linesEn": [
+        "dṛiśhyante rathamārūḍhā devyaḥ krodhasamākulāḥ",
+        "śhaṅkhaṃ chakraṃ gadāṃ śhaktiṃ halaṃ cha musalāyudham"
+      ],
+      "meaningHi": "देवियाँ रथों पर आरूढ़, अधर्म के प्रति रोष से युक्त दिखाई देती हैं। उनके आयुधों में शंख, चक्र, गदा, शक्ति, हल और मुसल हैं। अगले पद में यह आयुध-वर्णन आगे बढ़ता है।",
+      "meaningEn": "The goddesses appear riding chariots, filled with wrath against hostile forces. Their equipment includes conch, discus, mace, spear, plough and pestle. The description of their weapons continues in the next verse."
+    },
+    {
+      "id": "durga-devi-kavacham-14",
+      "number": 14,
+      "labelHi": "श्लोक · १४",
+      "labelEn": "Verse · 14",
+      "lines": [
+        "खेटकं तोमरं चैव परशुं पाशमेव च।",
+        "कुन्तायुधं त्रिशूलं च शार्ङ्गमायुधमुत्तमम्॥"
+      ],
+      "linesEn": [
+        "kheṭakaṃ tomaraṃ chaiva paraśhuṃ pāśhameva cha",
+        "kuntāyudhaṃ triśhūlaṃ cha śhārṅgamāyudhamuttamam"
+      ],
+      "meaningHi": "ढाल, तोमर, परशु, पाश, कुन्त, त्रिशूल और श्रेष्ठ शार्ङ्ग धनुष भी उनके हाथों में हैं। अनेक आयुधों का बिम्ब रक्षा के विविध सामर्थ्यों को प्रकट करता है।",
+      "meaningEn": "They also bear shield, javelin, axe, noose, lance, trident and the excellent Sharnga bow. These many weapons depict the many forms of protective strength."
+    },
+    {
+      "id": "durga-devi-kavacham-15",
+      "number": 15,
+      "labelHi": "श्लोक · १५",
+      "labelEn": "Verse · 15",
+      "lines": [
+        "दैत्यानां देहनाशाय भक्तानामभयाय च।",
+        "धारयन्त्यायुधानीत्थं देवानां च हिताय वै॥"
+      ],
+      "linesEn": [
+        "daityānāṃ dehanāśhāya bhaktānāmabhayāya cha",
+        "dhārayantyāyudhānītthaṃ devānāṃ cha hitāya vai"
+      ],
+      "meaningHi": "देवियाँ दैत्यों का संहार, भक्तों को अभय और देवों का हित करने के लिए ये आयुध धारण करती हैं। कवच में उग्र रूप का उद्देश्य रक्षा और व्यवस्था की पुनःस्थापना बताया गया है।",
+      "meaningEn": "They carry these weapons to overthrow the demons, grant devotees freedom from fear and serve the gods’ welfare. The fierce imagery is directed toward protection and restoration of order."
+    },
+    {
+      "id": "durga-devi-kavacham-16",
+      "number": 16,
+      "labelHi": "श्लोक · १६",
+      "labelEn": "Verse · 16",
+      "lines": [
+        "नमस्तेऽस्तु महारौद्रे महाघोरपराक्रमे।",
+        "महाबले महोत्साहे महाभयविनाशिनि॥"
+      ],
+      "linesEn": [
+        "namaste'stu mahāraudre mahāghoraparākrame",
+        "mahābale mahotsāhe mahābhayavināśhini"
+      ],
+      "meaningHi": "अत्यन्त रौद्र रूप, प्रचण्ड पराक्रम, महान बल और उत्साह वाली, बड़े भय मिटाने वाली देवी को नमस्कार है। वर्णन अब सीधी शरण-प्रार्थना बन जाता है।",
+      "meaningEn": "Salutations to the fiercely powerful goddess, immense in valour, strength and resolve, who removes great fear. The description now turns into a direct prayer for refuge."
+    },
+    {
+      "id": "durga-devi-kavacham-17",
+      "number": 17,
+      "labelHi": "श्लोक · १७",
+      "labelEn": "Verse · 17",
+      "lines": [
+        "त्राहि मां देवि दुष्प्रेक्ष्ये शत्रूणां भयवर्धिनि।",
+        "प्राच्यां रक्षतु मामैन्द्री आग्नेय्यामग्निदेवता॥"
+      ],
+      "linesEn": [
+        "trāhi māṃ devi duṣprekṣhye śhatrūṇāṃ bhayavardhini",
+        "prāchyāṃ rakṣhatu māmaindrī āgneyyāmagnidevatā"
+      ],
+      "meaningHi": "हे प्रचण्ड तेज वाली देवी, शत्रुओं में भय जगाने वाली, मेरी रक्षा करें। पूर्व में ऐन्द्री और आग्नेय दिशा में अग्निदेवता मेरी रक्षा करें। यहाँ दिशाओं का कवच आरम्भ होता है।",
+      "meaningEn": "Protect me, goddess whose splendour is difficult to face and who inspires fear in enemies. May Aindri guard the east and the fire-deity the southeast. The invocation now forms a protective circle through the directions."
+    },
+    {
+      "id": "durga-devi-kavacham-18",
+      "number": 18,
+      "labelHi": "श्लोक · १८",
+      "labelEn": "Verse · 18",
+      "lines": [
+        "दक्षिणेऽवतु वाराही नैर्ऋत्यां खड्गधारिणी।",
+        "प्रतीच्यां वारुणी रक्षेद्वायव्यां मृगवाहिनी॥"
+      ],
+      "linesEn": [
+        "dakṣhiṇe'vatu vārāhī nairṛityāṃ khaḍgadhāriṇī",
+        "pratīchyāṃ vāruṇī rakṣhedvāyavyāṃ mṛigavāhinī"
+      ],
+      "meaningHi": "दक्षिण में वाराही, नैर्ऋत्य में खड्गधारिणी, पश्चिम में वारुणी और वायव्य में मृगवाहिनी रक्षा करें। हर दिशा को देवी के एक रूप की शरण में रखा जाता है।",
+      "meaningEn": "May Varahi guard the south, sword-bearing Devi the southwest, Varuni the west and the deer-riding goddess the northwest. Each direction is placed under a form of the goddess’s care."
+    },
+    {
+      "id": "durga-devi-kavacham-19",
+      "number": 19,
+      "labelHi": "श्लोक · १९",
+      "labelEn": "Verse · 19",
+      "lines": [
+        "उदीच्यां पातु कौमारी ऐशान्यां शूलधारिणी।",
+        "ऊर्ध्वं ब्रह्माणि मे रक्षेदधस्ताद्वैष्णवी तथा॥"
+      ],
+      "linesEn": [
+        "udīchyāṃ pātu kaumārī aiśhānyāṃ śhūladhāriṇī",
+        "ūrdhvaṃ brahmāṇi me rakṣhedadhastādvaiṣṇavī tathā"
+      ],
+      "meaningHi": "उत्तर में कौमारी, ईशान में शूलधारिणी, ऊपर ब्रह्माणी और नीचे वैष्णवी रक्षा करें। प्रार्थना पृथ्वी की दिशाओं से ऊपर और नीचे तक फैलती है।",
+      "meaningEn": "May Kaumari protect the north, trident-bearing Devi the northeast, Brahmani above and Vaishnavi below. The prayer extends beyond the horizontal directions to the whole surrounding space."
+    },
+    {
+      "id": "durga-devi-kavacham-20",
+      "number": 20,
+      "labelHi": "श्लोक · २०",
+      "labelEn": "Verse · 20",
+      "lines": [
+        "एवं दश दिशो रक्षेच्चामुण्डा शववाहना।",
+        "जया मे चाग्रतः पातु विजया पातु पृष्ठतः॥"
+      ],
+      "linesEn": [
+        "evaṃ daśha diśho rakṣhechchāmuṇḍā śhavavāhanā",
+        "jayā me chāgrataḥ pātu vijayā pātu pṛiṣṭhataḥ"
+      ],
+      "meaningHi": "शववाहिनी चामुण्डा इस प्रकार दसों दिशाओं की रक्षा करें; आगे जया और पीछे विजया रक्षा करें। मृत्यु पर अधिकार के उग्र बिम्ब के बीच भक्त अपने चारों ओर आश्रय माँगता है।",
+      "meaningEn": "May Chamunda, whose vehicle is a corpse, guard all ten directions; may Jaya protect in front and Vijaya behind. Within this fierce image of mastery over death, the devotee seeks shelter on every side."
+    },
+    {
+      "id": "durga-devi-kavacham-21",
+      "number": 21,
+      "labelHi": "श्लोक · २१",
+      "labelEn": "Verse · 21",
+      "lines": [
+        "अजिता वामपार्श्वे तु दक्षिणे चापराजिता।",
+        "शिखामुद्योतिनी रक्षेदुमा मूर्ध्नि व्यवस्थिता॥"
+      ],
+      "linesEn": [
+        "ajitā vāmapārśhve tu dakṣhiṇe chāparājitā",
+        "śhikhāmudyotinī rakṣhedumā mūrdhni vyavasthitā"
+      ],
+      "meaningHi": "बाएँ अजिता और दाएँ अपराजिता रक्षा करें। उद्योतिनी शिखा की तथा सिर पर स्थित उमा मस्तक की रक्षा करें। दिशाओं के बाद कवच शरीर के अङ्गों की ओर आता है।",
+      "meaningEn": "May Ajita guard the left and Aparajita the right; Udyotini the topknot, and Uma stationed upon the head protect the crown. The kavach moves from surrounding space to the parts of the body."
+    },
+    {
+      "id": "durga-devi-kavacham-22",
+      "number": 22,
+      "labelHi": "श्लोक · २२",
+      "labelEn": "Verse · 22",
+      "lines": [
+        "मालाधरी ललाटे च भ्रुवौ रक्षेद्यशस्विनी।",
+        "त्रिनेत्रा च भ्रुवोर्मध्ये यमघण्टा च नासिके॥"
+      ],
+      "linesEn": [
+        "mālādharī lalāṭe cha bhruvau rakṣhedyaśhasvinī",
+        "trinetrā cha bhruvormadhye yamaghaṇṭā cha nāsike"
+      ],
+      "meaningHi": "मालाधरी ललाट, यशस्विनी भौंहों, त्रिनेत्रा भ्रूमध्य और यमघण्टा नासिका की रक्षा करें। अङ्ग-अङ्ग का नाम लेकर की गई प्रार्थना ध्यान को सजग बनाती है।",
+      "meaningEn": "May Maladhari guard the forehead, Yashasvini the eyebrows, Trinetra the space between them and Yamaghanta the nose. Naming each part makes this prayer an attentive contemplation of the embodied person."
+    },
+    {
+      "id": "durga-devi-kavacham-23",
+      "number": 23,
+      "labelHi": "श्लोक · २३",
+      "labelEn": "Verse · 23",
+      "lines": [
+        "शङ्खिनी चक्षुषोर्मध्ये श्रोत्रयोर्द्वारवासिनी।",
+        "कपोलौ कालिका रक्षेत्कर्णमूले तु शाङ्करी॥"
+      ],
+      "linesEn": [
+        "śhaṅkhinī chakṣhuṣormadhye śhrotrayordvāravāsinī",
+        "kapolau kālikā rakṣhetkarṇamūle tu śhāṅkarī"
+      ],
+      "meaningHi": "शङ्खिनी नेत्रों के भीतर, द्वारवासिनी कानों, कालिका गालों और शाङ्करी कानों के मूल की रक्षा करें। देखने-सुनने के अङ्ग भी देवी के संरक्षण में स्मरण किए जाते हैं।",
+      "meaningEn": "May Shankhini guard within the eyes, Dvaravasini the ears, Kalika the cheeks and Shankari the roots of the ears. The organs of seeing and hearing are also remembered within the goddess’s protection."
+    },
+    {
+      "id": "durga-devi-kavacham-24",
+      "number": 24,
+      "labelHi": "श्लोक · २४",
+      "labelEn": "Verse · 24",
+      "lines": [
+        "नासिकायां सुगन्धा च उत्तरोष्ठे च चर्चिका।",
+        "अधरे चामृतकला जिह्वायां च सरस्वती॥"
+      ],
+      "linesEn": [
+        "nāsikāyāṃ sugandhā cha uttaroṣṭhe cha charchikā",
+        "adhare chāmṛitakalā jihvāyāṃ cha sarasvatī"
+      ],
+      "meaningHi": "सुगन्धा नाक, चर्चिका ऊपरी ओठ, अमृतकला निचले ओठ और सरस्वती जिह्वा की रक्षा करें। वाणी की अधिष्ठात्री सरस्वती का नाम जिह्वा के साथ आता है।",
+      "meaningEn": "May Sugandha protect the nose, Charchika the upper lip, Amritakala the lower lip and Sarasvati the tongue. Sarasvati’s association with speech gives particular meaning to this protection of the tongue."
+    },
+    {
+      "id": "durga-devi-kavacham-25",
+      "number": 25,
+      "labelHi": "श्लोक · २५",
+      "labelEn": "Verse · 25",
+      "lines": [
+        "दन्तान् रक्षतु कौमारी कण्ठदेशे तु चण्डिका।",
+        "घण्टिकां चित्रघण्टा च महामाया च तालुके॥"
+      ],
+      "linesEn": [
+        "dantān rakṣhatu kaumārī kaṇṭhadeśhe tu chaṇḍikā",
+        "ghaṇṭikāṃ chitraghaṇṭā cha mahāmāyā cha tāluke"
+      ],
+      "meaningHi": "कौमारी दाँतों, चण्डिका कण्ठ, चित्रघण्टा घण्टिका और महामाया तालु की रक्षा करें। कवच मुख के बाहरी और भीतरी अङ्गों को साथ स्मरण करता है।",
+      "meaningEn": "May Kaumari guard the teeth, Chandika the throat, Chitraghanta the uvula and Mahamaya the palate. The prayer embraces both the outer and inner parts of the mouth."
+    },
+    {
+      "id": "durga-devi-kavacham-26",
+      "number": 26,
+      "labelHi": "श्लोक · २६",
+      "labelEn": "Verse · 26",
+      "lines": [
+        "कामाक्षी चिबुकं रक्षेद्वाचं मे सर्वमङ्गला।",
+        "ग्रीवायां भद्रकाली च पृष्ठवंशे धनुर्धरी॥"
+      ],
+      "linesEn": [
+        "kāmākṣhī chibukaṃ rakṣhedvāchaṃ me sarvamaṅgalā",
+        "grīvāyāṃ bhadrakālī cha pṛiṣṭhavaṃśhe dhanurdharī"
+      ],
+      "meaningHi": "कामाक्षी ठोड़ी, सर्वमङ्गला वाणी, भद्रकाली गर्दन और धनुर्धरी मेरुदण्ड की रक्षा करें। शरीर के साथ उससे निकलने वाली वाणी के कल्याण की भी प्रार्थना है।",
+      "meaningEn": "May Kamakshi protect the chin, Sarvamangala my speech, Bhadrakali the neck and Dhanurdhari the spine. The prayer seeks care not only for the body but also for the speech that proceeds from it."
+    },
+    {
+      "id": "durga-devi-kavacham-27",
+      "number": 27,
+      "labelHi": "श्लोक · २७",
+      "labelEn": "Verse · 27",
+      "lines": [
+        "नीलग्रीवा बहिःकण्ठे नलिकां नलकूबरी।",
+        "स्कन्धयोः खड्गिनी रक्षेद्बाहू मे वज्रधारिणी॥"
+      ],
+      "linesEn": [
+        "nīlagrīvā bahiḥkaṇṭhe nalikāṃ nalakūbarī",
+        "skandhayoḥ khaḍginī rakṣhedbāhū me vajradhāriṇī"
+      ],
+      "meaningHi": "नीलग्रीवा बाहरी कण्ठ, नलकूबरी गले की नलिका, खड्गिनी कन्धों और वज्रधारिणी भुजाओं की रक्षा करें। रक्षा का ध्यान शरीर के आधार और कर्म करने वाले अङ्गों तक बढ़ता है।",
+      "meaningEn": "May Nilagriva guard the outer throat, Nalakubari its passage, Khadgini the shoulders and Vajradharini the arms. Protection now extends to the structures that support the body and carry out its actions."
+    },
+    {
+      "id": "durga-devi-kavacham-28",
+      "number": 28,
+      "labelHi": "श्लोक · २८",
+      "labelEn": "Verse · 28",
+      "lines": [
+        "हस्तयोर्दण्डिनी रक्षेदम्बिका चाङ्गुलीषु च।",
+        "नखाञ्छूलेश्वरी रक्षेत्कुक्षौ रक्षेत्कुलेश्वरी॥"
+      ],
+      "linesEn": [
+        "hastayordaṇḍinī rakṣhedambikā chāṅgulīṣu cha",
+        "nakhāñchhūleśhvarī rakṣhetkukṣhau rakṣhetkuleśhvarī"
+      ],
+      "meaningHi": "दण्डिनी हाथों, अम्बिका उँगलियों, शूलेश्वरी नखों और कुलेश्वरी कुक्षि की रक्षा करें। छोटे अङ्गों को भी नाम लेकर संरक्षण माँगना इस कवच की विशेषता है।",
+      "meaningEn": "May Dandini guard the hands, Ambika the fingers, Shuleshvari the nails and Kuleshvari the belly or flank. Even small parts are named individually in the kavach’s all-embracing request for care."
+    },
+    {
+      "id": "durga-devi-kavacham-29",
+      "number": 29,
+      "labelHi": "श्लोक · २९",
+      "labelEn": "Verse · 29",
+      "lines": [
+        "स्तनौ रक्षेन्महादेवी मनःशोकविनाशिनी।",
+        "हृदये ललिता देवी उदरे शूलधारिणी॥"
+      ],
+      "linesEn": [
+        "stanau rakṣhenmahādevī manaḥśhokavināśhinī",
+        "hṛidaye lalitā devī udare śhūladhāriṇī"
+      ],
+      "meaningHi": "महादेवी स्तनों, शोकविनाशिनी मन, ललिता हृदय और शूलधारिणी उदर की रक्षा करें। शारीरिक रक्षा के साथ मन के शोक से आश्रय माँगा गया है।",
+      "meaningEn": "May Mahadevi protect the breasts, Shokavinashini the mind, Lalita the heart and Shuladharini the abdomen. Alongside bodily care, the devotee seeks refuge from mental sorrow."
+    },
+    {
+      "id": "durga-devi-kavacham-30",
+      "number": 30,
+      "labelHi": "श्लोक · ३०",
+      "labelEn": "Verse · 30",
+      "lines": [
+        "नाभौ च कामिनी रक्षेद्गुह्यं गुह्येश्वरी तथा।",
+        "पूतना कामिका मेढ्रं गुदे महिषवाहिनी॥"
+      ],
+      "linesEn": [
+        "nābhau cha kāminī rakṣhedguhyaṃ guhyeśhvarī tathā",
+        "pūtanā kāmikā meḍhraṃ gude mahiṣavāhinī"
+      ],
+      "meaningHi": "कामिनी नाभि, गुह्येश्वरी गुप्त अङ्ग, पूतना और कामिका जननेन्द्रिय तथा महिषवाहिनी गुदा की रक्षा करें। शरीर के निजी अङ्ग भी इस समग्र संरक्षण-प्रार्थना में आदर से सम्मिलित हैं।",
+      "meaningEn": "May Kamini guard the navel, Guhyeshvari the private parts, Putana and Kamika the generative organ, and Mahishavahini the anus. Intimate parts of the body are included respectfully in this comprehensive prayer for protection."
+    },
+    {
+      "id": "durga-devi-kavacham-31",
+      "number": 31,
+      "labelHi": "श्लोक · ३१",
+      "labelEn": "Verse · 31",
+      "lines": [
+        "कट्यां भगवती रक्षेज्जानुनी विन्ध्यवासिनी।",
+        "जङ्घे महाबला रक्षेत्सर्वकामप्रदायिनी॥"
+      ],
+      "linesEn": [
+        "kaṭyāṃ bhagavatī rakṣhejjānunī vindhyavāsinī",
+        "jaṅghe mahābalā rakṣhetsarvakāmapradāyinī"
+      ],
+      "meaningHi": "भगवती कटि, विन्ध्यवासिनी दोनों घुटनों और सर्वकामप्रदायिनी महाबला जङ्घाओं की रक्षा करें। प्रार्थना शरीर के चलने और खड़े रहने वाले अङ्गों तक पहुँचती है।",
+      "meaningEn": "May Bhagavati protect the waist, Vindhyavasini both knees and mighty Mahabala, giver of desired good, the lower legs. The prayer reaches the limbs that enable standing and movement."
+    },
+    {
+      "id": "durga-devi-kavacham-32",
+      "number": 32,
+      "labelHi": "श्लोक · ३२",
+      "labelEn": "Verse · 32",
+      "lines": [
+        "गुल्फयोर्नारसिंही च पादपृष्ठे तु तैजसी।",
+        "पादाङ्गुलीषु श्री रक्षेत्पादाधस्तलवासिनी॥"
+      ],
+      "linesEn": [
+        "gulphayornārasiṃhī cha pādapṛiṣṭhe tu taijasī",
+        "pādāṅgulīṣu śhrī rakṣhetpādādhastalavāsinī"
+      ],
+      "meaningHi": "नारसिंही टखनों, तैजसी पाँव के ऊपरी भाग, श्री पाँव की उँगलियों और तलवासिनी तलवों की रक्षा करें। सिर से पाँव तक देवी के आश्रय का भाव पूर्ण होता है।",
+      "meaningEn": "May Narasimhi guard the ankles, Taijasi the tops of the feet, Sri the toes and Talavasini the soles. The movement from head to foot completes a bodily image of shelter in the goddess."
+    },
+    {
+      "id": "durga-devi-kavacham-33",
+      "number": 33,
+      "labelHi": "श्लोक · ३३",
+      "labelEn": "Verse · 33",
+      "lines": [
+        "नखान् दंष्ट्राकराली च केशांश्चैवोर्ध्वकेशिनी।",
+        "रोमकूपेषु कौबेरी त्वचं वागीश्वरी तथा॥"
+      ],
+      "linesEn": [
+        "nakhān daṃṣṭrākarālī cha keśhāṃśhchaivordhvakeśhinī",
+        "romakūpeṣu kauberī tvachaṃ vāgīśhvarī tathā"
+      ],
+      "meaningHi": "दंष्ट्राकराली नखों, ऊर्ध्वकेशिनी केशों, कौबेरी रोमकूपों और वागीश्वरी त्वचा की रक्षा करें। अब शरीर की बाहरी सीमा और सूक्ष्म विवरणों पर ध्यान आता है।",
+      "meaningEn": "May Damshtrakarali guard the nails, Urdhvakeshini the hair, Kauberi the pores and Vagishvari the skin. Attention turns to the body’s outer boundary and its smallest visible details."
+    },
+    {
+      "id": "durga-devi-kavacham-34",
+      "number": 34,
+      "labelHi": "श्लोक · ३४",
+      "labelEn": "Verse · 34",
+      "lines": [
+        "रक्तमज्जावसामांसान्यस्थिमेदांसि पार्वती।",
+        "अन्त्राणि कालरात्रिश्च पित्तं च मुकुटेश्वरी॥"
+      ],
+      "linesEn": [
+        "raktamajjāvasāmāṃsānyasthimedāṃsi pārvatī",
+        "antrāṇi kālarātriśhcha pittaṃ cha mukuṭeśhvarī"
+      ],
+      "meaningHi": "पार्वती रक्त, मज्जा, वसा, मांस, अस्थि और मेद की, कालरात्रि आँतों की तथा मुकुटेश्वरी पित्त की रक्षा करें। यह प्राचीन शरीर-वर्णन के शब्दों में भीतर तक संरक्षण माँगने की प्रार्थना है।",
+      "meaningEn": "May Parvati guard blood, marrow, fat, flesh, bones and adipose tissue; Kalaratri the intestines, and Mukuteshvari pitta. Using traditional bodily categories, the prayer asks for care throughout the interior of the body."
+    },
+    {
+      "id": "durga-devi-kavacham-35",
+      "number": 35,
+      "labelHi": "श्लोक · ३५",
+      "labelEn": "Verse · 35",
+      "lines": [
+        "पद्मावती पद्मकोशे कफे चूडामणिस्तथा।",
+        "ज्वालामुखी नखज्वालामभेद्या सर्वसन्धिषु॥"
+      ],
+      "linesEn": [
+        "padmāvatī padmakośhe kaphe chūḍāmaṇistathā",
+        "jvālāmukhī nakhajvālāmabhedyā sarvasandhiṣu"
+      ],
+      "meaningHi": "पद्मावती कमलकोश जैसे भीतरी अङ्ग, चूडामणि कफ, ज्वालामुखी नखों की प्रभा और अभेद्या सभी सन्धियों की रक्षा करें। कवच की काव्यात्मक शरीर-कल्पना यहाँ भी जारी रहती है।",
+      "meaningEn": "May Padmavati guard the lotus-like inner chamber, Chudamani kapha, Jvalamukhi the lustre of the nails and Abhedya every joint. The kavach continues its poetic, traditional description of the protected body."
+    },
+    {
+      "id": "durga-devi-kavacham-36",
+      "number": 36,
+      "labelHi": "श्लोक · ३६",
+      "labelEn": "Verse · 36",
+      "lines": [
+        "शुक्रं ब्रह्माणि मे रक्षेच्छायां छत्रेश्वरी तथा।",
+        "अहंकारं मनो बुद्धिं रक्षेन्मे धर्मधारिणी॥"
+      ],
+      "linesEn": [
+        "śhukraṃ brahmāṇi me rakṣhechchhāyāṃ chhatreśhvarī tathā",
+        "ahaṃkāraṃ mano buddhiṃ rakṣhenme dharmadhāriṇī"
+      ],
+      "meaningHi": "ब्रह्माणी प्रजनन-तत्त्व, छत्रेश्वरी छाया तथा धर्मधारिणी अहंकार, मन और बुद्धि की रक्षा करें। संरक्षण केवल देह का नहीं, पहचान और विचार के अन्तरंग क्षेत्र का भी है।",
+      "meaningEn": "May Brahmani protect the generative essence, Chhatreshvari the shadow and Dharmadharini ego, mind and intellect. Protection embraces inward identity and thought as well as the physical body."
+    },
+    {
+      "id": "durga-devi-kavacham-37",
+      "number": 37,
+      "labelHi": "श्लोक · ३७",
+      "labelEn": "Verse · 37",
+      "lines": [
+        "प्राणापानौ तथा व्यानमुदानं च समानकम्।",
+        "वज्रहस्ता च मे रक्षेत्प्राणं कल्याणशोभना॥"
+      ],
+      "linesEn": [
+        "prāṇāpānau tathā vyānamudānaṃ cha samānakam",
+        "vajrahastā cha me rakṣhetprāṇaṃ kalyāṇaśhobhanā"
+      ],
+      "meaningHi": "वज्रहस्ता प्राण, अपान, व्यान, उदान और समान की रक्षा करें; कल्याणशोभना जीवन की रक्षा करें। ये योगपरम्परा की पाँच प्राणवायु हैं, जिनसे जीवन-क्रियाओं का ध्यान किया जाता है।",
+      "meaningEn": "May Vajrahasta guard prana, apana, vyana, udana and samana; may Kalyanashobhana guard life itself. These five vital winds belong to the traditional yogic description of living activity."
+    },
+    {
+      "id": "durga-devi-kavacham-38",
+      "number": 38,
+      "labelHi": "श्लोक · ३८",
+      "labelEn": "Verse · 38",
+      "lines": [
+        "रसे रूपे च गन्धे च शब्दे स्पर्शे च योगिनी।",
+        "सत्त्वं रजस्तमश्चैव रक्षेन्नारायणी सदा॥"
+      ],
+      "linesEn": [
+        "rase rūpe cha gandhe cha śhabde sparśhe cha yoginī",
+        "sattvaṃ rajastamaśhchaiva rakṣhennārāyaṇī sadā"
+      ],
+      "meaningHi": "योगिनी रस, रूप, गन्ध, शब्द और स्पर्श में रक्षा करें; नारायणी सत्त्व, रज और तम की सदा रक्षा करें। इन्द्रियानुभव और प्रकृति के गुण भी देवी के आश्रय में रखे गए हैं।",
+      "meaningEn": "May Yogini guard taste, form, smell, sound and touch, and Narayani always guard sattva, rajas and tamas. Sensory experience and the qualities of nature are placed within the goddess’s shelter."
+    },
+    {
+      "id": "durga-devi-kavacham-39",
+      "number": 39,
+      "labelHi": "श्लोक · ३९",
+      "labelEn": "Verse · 39",
+      "lines": [
+        "आयू रक्षतु वाराही धर्मं रक्षतु वैष्णवी।",
+        "यशः कीर्तिं च लक्ष्मीं च धनं विद्यां च चक्रिणी॥"
+      ],
+      "linesEn": [
+        "āyū rakṣhatu vārāhī dharmaṃ rakṣhatu vaiṣṇavī",
+        "yaśhaḥ kīrtiṃ cha lakṣhmīṃ cha dhanaṃ vidyāṃ cha chakriṇī"
+      ],
+      "meaningHi": "वाराही आयु, वैष्णवी धर्म और चक्रिणी यश, कीर्ति, लक्ष्मी, धन तथा विद्या की रक्षा करें। शरीर से आगे जीवन के मूल्य और साधनों के कल्याण की प्रार्थना है।",
+      "meaningEn": "May Varahi guard longevity, Vaishnavi dharma, and Chakrini honour, reputation, prosperity, wealth and learning. Beyond the body, the prayer seeks care for life’s values and resources."
+    },
+    {
+      "id": "durga-devi-kavacham-40",
+      "number": 40,
+      "labelHi": "श्लोक · ४०",
+      "labelEn": "Verse · 40",
+      "lines": [
+        "गोत्रमिन्द्राणि मे रक्षेत्पशून्मे रक्ष चण्डिके।",
+        "पुत्रान् रक्षेन्महालक्ष्मीर्भार्यां रक्षतु भैरवी॥"
+      ],
+      "linesEn": [
+        "gotramindrāṇi me rakṣhetpaśhūnme rakṣha chaṇḍike",
+        "putrān rakṣhenmahālakṣhmīrbhāryāṃ rakṣhatu bhairavī"
+      ],
+      "meaningHi": "इन्द्राणी वंश, चण्डिका पशुधन, महालक्ष्मी पुत्रों और भैरवी पत्नी की रक्षा करें। प्राचीन गृहस्थ की भाषा में यह पद परिवार और आश्रित प्राणियों के मंगल की कामना करता है।",
+      "meaningEn": "May Indrani protect the lineage, Chandika the animals, Mahalakshmi the children and Bhairavi the wife. In the voice of an ancient householder, the verse asks for the welfare of family and dependent creatures."
+    },
+    {
+      "id": "durga-devi-kavacham-41",
+      "number": 41,
+      "labelHi": "श्लोक · ४१",
+      "labelEn": "Verse · 41",
+      "lines": [
+        "पन्थानं सुपथा रक्षेन्मार्गं क्षेमकरी तथा।",
+        "राजद्वारे महालक्ष्मीर्विजया सर्वतः स्थिता॥"
+      ],
+      "linesEn": [
+        "panthānaṃ supathā rakṣhenmārgaṃ kṣhemakarī tathā",
+        "rājadvāre mahālakṣhmīrvijayā sarvataḥ sthitā"
+      ],
+      "meaningHi": "सुपथा पथ की और क्षेमकरी यात्रा के मार्ग की रक्षा करें; राजद्वार पर महालक्ष्मी तथा सब ओर विजया रक्षा करें। निजी जीवन से बाहर यात्राओं और सार्वजनिक कार्यों में भी देवी का आश्रय माँगा जाता है।",
+      "meaningEn": "May Supatha guard the path, Kshemakari the journey, Mahalakshmi the royal doorway and Vijaya every side. The prayer extends into travel and public affairs beyond the home."
+    },
+    {
+      "id": "durga-devi-kavacham-42",
+      "number": 42,
+      "labelHi": "श्लोक · ४२",
+      "labelEn": "Verse · 42",
+      "lines": [
+        "रक्षाहीनं तु यत्स्थानं वर्जितं कवचेन तु।",
+        "तत्सर्वं रक्ष मे देवि जयन्ती पापनाशिनी॥"
+      ],
+      "linesEn": [
+        "rakṣhāhīnaṃ tu yatsthānaṃ varjitaṃ kavachena tu",
+        "tatsarvaṃ rakṣha me devi jayantī pāpanāśhinī"
+      ],
+      "meaningHi": "हे जयन्ती, पापनाशिनी देवी, कवच में जो स्थान अनकहा या अरक्षित रह गया हो, उसकी भी रक्षा करें। यह पद सूची की सीमा स्वीकार करके पूर्ण अनुग्रह की प्रार्थना करता है।",
+      "meaningEn": "Jayanti, goddess who removes sin, protect whatever place this kavach has left unnamed or unguarded. Acknowledging the limits of its list, the prayer asks for care beyond all enumeration."
+    },
+    {
+      "id": "durga-devi-kavacham-43",
+      "number": 43,
+      "labelHi": "फलश्रुति · ४३",
+      "labelEn": "Phalashruti · 43",
+      "lines": [
+        "पदमेकं न गच्छेत्तु यदीच्छेच्छुभमात्मनः।",
+        "कवचेनावृतो नित्यं यत्र यत्रैव गच्छति॥"
+      ],
+      "linesEn": [
+        "padamekaṃ na gachchhettu yadīchchhechchhubhamātmanaḥ",
+        "kavachenāvṛito nityaṃ yatra yatraiva gachchhati"
+      ],
+      "meaningHi": "पाठ कहता है कि अपना शुभ चाहने वाला कवच के स्मरण बिना एक कदम भी न चले; जहाँ जाए, इस आश्रय को साथ रखे। यह निरन्तर देवी-स्मरण पर बल देने वाली स्तुति-भाषा है।",
+      "meaningEn": "The text urges one seeking well-being not to take even a step without the kavach, carrying its shelter wherever one goes. This is devotional language emphasising continual remembrance of the goddess."
+    },
+    {
+      "id": "durga-devi-kavacham-44",
+      "number": 44,
+      "labelHi": "फलश्रुति · ४४",
+      "labelEn": "Phalashruti · 44",
+      "lines": [
+        "तत्र तत्रार्थलाभश्च विजयः सार्वकामिकः।",
+        "यं यं चिन्तयते कामं तं तं प्राप्नोति निश्चितम्।",
+        "परमैश्वर्यमतुलं प्राप्स्यते भूतले पुमान्॥"
+      ],
+      "linesEn": [
+        "tatra tatrārthalābhaśhcha vijayaḥ sārvakāmikaḥ",
+        "yaṃ yaṃ chintayate kāmaṃ taṃ taṃ prāpnoti niśhchitam",
+        "paramaiśhvaryamatulaṃ prāpsyate bhūtale pumān"
+      ],
+      "meaningHi": "फलश्रुति उस साधक के लिए अर्थलाभ, सर्वकामिक विजय, इच्छित वस्तु और अतुल ऐश्वर्य की प्रशंसा करती है। इसे कवच की महिमा बताने वाला पारम्परिक विश्वास समझें, प्रत्येक इच्छा पूरी होने का व्यावहारिक वचन नहीं।",
+      "meaningEn": "The phalashruti praises gain, victory, fulfilment of wishes and incomparable abundance for the practitioner. These are traditional expressions of the kavach’s glory, not a practical promise that every wish will be fulfilled."
+    },
+    {
+      "id": "durga-devi-kavacham-45",
+      "number": 45,
+      "labelHi": "फलश्रुति · ४५",
+      "labelEn": "Phalashruti · 45",
+      "lines": [
+        "निर्भयो जायते मर्त्यः सङ्ग्रामेष्वपराजितः।",
+        "त्रैलोक्ये तु भवेत्पूज्यः कवचेनावृतः पुमान्॥"
+      ],
+      "linesEn": [
+        "nirbhayo jāyate martyaḥ saṅgrāmeṣvaparājitaḥ",
+        "trailokye tu bhavetpūjyaḥ kavachenāvṛitaḥ pumān"
+      ],
+      "meaningHi": "कवच से आवृत व्यक्ति निर्भय, संग्राम में अपराजित और त्रिलोक में पूज्य कहा गया है। इस फलवर्णन का केन्द्र देवी के आश्रय से मिलने वाला साहस और सम्मान है।",
+      "meaningEn": "The person clothed in the kavach is described as fearless, unconquered in battle and honoured in three worlds. This praise centres upon courage and dignity found in the goddess’s shelter."
+    },
+    {
+      "id": "durga-devi-kavacham-46",
+      "number": 46,
+      "labelHi": "फलश्रुति · ४६",
+      "labelEn": "Phalashruti · 46",
+      "lines": [
+        "इदं तु देव्याः कवचं देवानामपि दुर्लभम्।",
+        "यः पठेत्प्रयतो नित्यं त्रिसन्ध्यं श्रद्धयान्वितः॥"
+      ],
+      "linesEn": [
+        "idaṃ tu devyāḥ kavachaṃ devānāmapi durlabham",
+        "yaḥ paṭhetprayato nityaṃ trisandhyaṃ śhraddhayānvitaḥ"
+      ],
+      "meaningHi": "देवी का यह कवच देवों के लिए भी दुर्लभ कहा गया है। जो श्रद्धापूर्वक, संयत होकर, प्रतिदिन तीनों सन्ध्याओं में पढ़ता है—उसके फल अगले पद में कहे जाते हैं। पाठ नियमितता और श्रद्धा का महत्त्व बताता है।",
+      "meaningEn": "This armour of the goddess is called rare even for the gods. The one who reads it attentively and faithfully at the three daily junctions of time is the subject of the next verse’s praise. Regularity and devotion are emphasised."
+    },
+    {
+      "id": "durga-devi-kavacham-47",
+      "number": 47,
+      "labelHi": "फलश्रुति · ४७",
+      "labelEn": "Phalashruti · 47",
+      "lines": [
+        "दैवी कला भवेत्तस्य त्रैलोक्येष्वपराजितः।",
+        "जीवेद्वर्षशतं साग्रमपमृत्युविवर्जितः॥"
+      ],
+      "linesEn": [
+        "daivī kalā bhavettasya trailokyeṣvaparājitaḥ",
+        "jīvedvarṣaśhataṃ sāgramapamṛityuvivarjitaḥ"
+      ],
+      "meaningHi": "फलश्रुति उस साधक में दैवी शक्ति, त्रिलोक में अजेयता और अकालमृत्यु से रहित सौ वर्ष से अधिक आयु का वर्णन करती है। ये परम्परागत आशीर्वचन हैं; निश्चित आयु का दावा नहीं।",
+      "meaningEn": "The phalashruti describes divine potency, unconquerability and a life exceeding a hundred years without untimely death. These are traditional blessings rather than a prediction of an individual’s lifespan."
+    },
+    {
+      "id": "durga-devi-kavacham-48",
+      "number": 48,
+      "labelHi": "फलश्रुति · ४८",
+      "labelEn": "Phalashruti · 48",
+      "lines": [
+        "नश्यन्ति व्याधयः सर्वे लूताविस्फोटकादयः।",
+        "स्थावरं जङ्गमं चैव कृत्रिमं चापि यद्विषम्॥"
+      ],
+      "linesEn": [
+        "naśhyanti vyādhayaḥ sarve lūtāvisphoṭakādayaḥ",
+        "sthāvaraṃ jaṅgamaṃ chaiva kṛitrimaṃ chāpi yadviṣam"
+      ],
+      "meaningHi": "रोग, लूता-विस्फोटक जैसे विकार तथा वनस्पति, जीव या कृत्रिम स्रोतों के विष का नाश कहा गया है। यह रक्षा-स्तुति की आस्था-भाषा है; विष या रोग में चिकित्सा की आवश्यकता बनी रहती है।",
+      "meaningEn": "The text speaks of the disappearance of disease, sores and poisons from plants, creatures or artificial sources. This belongs to devotional protection imagery; it does not remove the need for medical care in poisoning or illness."
+    },
+    {
+      "id": "durga-devi-kavacham-49",
+      "number": 49,
+      "labelHi": "फलश्रुति · ४९",
+      "labelEn": "Phalashruti · 49",
+      "lines": [
+        "अभिचाराणि सर्वाणि मन्त्रयन्त्राणि भूतले।",
+        "भूचराः खेचराश्चैव जलजाश्चोपदेशिकाः॥"
+      ],
+      "linesEn": [
+        "abhichārāṇi sarvāṇi mantrayantrāṇi bhūtale",
+        "bhūcharāḥ khecharāśhchaiva jalajāśhchopadeśhikāḥ"
+      ],
+      "meaningHi": "हानिकारक अभिचार, मन्त्र-यन्त्र और भूमि, आकाश या जल से जुड़ी विपत्तियों की सूची आगे आती है। इसका वाक्य अगले पदों में पूरा होता है: कवच के आश्रय में इनसे निर्भयता की स्तुति है।",
+      "meaningEn": "The list continues with hostile rites, mantras and devices, and threats associated with earth, sky and water. Its sentence is completed in the following verses, praising freedom from fear through the kavach’s shelter."
+    },
+    {
+      "id": "durga-devi-kavacham-50",
+      "number": 50,
+      "labelHi": "फलश्रुति · ५०",
+      "labelEn": "Phalashruti · 50",
+      "lines": [
+        "सहजा कुलजा माला डाकिनी शाकिनी तथा।",
+        "अन्तरिक्षचरा घोरा डाकिन्यश्च महाबलाः॥"
+      ],
+      "linesEn": [
+        "sahajā kulajā mālā ḍākinī śhākinī tathā",
+        "antarikṣhacharā ghorā ḍākinyaśhcha mahābalāḥ"
+      ],
+      "meaningHi": "जन्म या कुल से जुड़ी बाधाओं तथा माला, डाकिनी, शाकिनी और आकाशचारी उग्र शक्तियों का उल्लेख है। ये परम्परागत अदृश्य भय के नाम हैं; पाठ इन सबके ऊपर देवी की रक्षा का स्मरण करता है।",
+      "meaningEn": "Inborn or lineage-related afflictions, mala, dakini, shakini and formidable sky-roaming beings are named. These belong to the tradition’s vocabulary of unseen fears; the prayer remembers the goddess’s protection over them all."
+    },
+    {
+      "id": "durga-devi-kavacham-51",
+      "number": 51,
+      "labelHi": "फलश्रुति · ५१",
+      "labelEn": "Phalashruti · 51",
+      "lines": [
+        "ग्रहभूतपिशाचाश्च यक्षगन्धर्वराक्षसाः।",
+        "ब्रह्मराक्षसवेतालाः कूष्माण्डा भैरवादयः॥"
+      ],
+      "linesEn": [
+        "grahabhūtapiśhāchāśhcha yakṣhagandharvarākṣhasāḥ",
+        "brahmarākṣhasavetālāḥ kūṣmāṇḍā bhairavādayaḥ"
+      ],
+      "meaningHi": "ग्रह, भूत, पिशाच, यक्ष, गन्धर्व, राक्षस, ब्रह्मराक्षस, वेताल, कूष्माण्ड और भैरव आदि भी सूची में आते हैं। अगले पद का आश्वासन इन विविध भयकारी रूपों को समेटता है।",
+      "meaningEn": "Grahas, spirits, pishachas, yakshas, gandharvas, rakshasas, brahmarakshasas, vetalas, kushmandas and bhairava forms are included. The assurance in the next verse gathers these many feared presences together."
+    },
+    {
+      "id": "durga-devi-kavacham-52",
+      "number": 52,
+      "labelHi": "फलश्रुति · ५२",
+      "labelEn": "Phalashruti · 52",
+      "lines": [
+        "नश्यन्ति दर्शनात्तस्य कवचे हृदि संस्थिते।",
+        "मानोन्नतिर्भवेद्राज्ञस्तेजोवृद्धिकरं परम्॥"
+      ],
+      "linesEn": [
+        "naśhyanti darśhanāttasya kavache hṛidi saṃsthite",
+        "mānonnatirbhavedrājñastejovṛiddhikaraṃ param"
+      ],
+      "meaningHi": "जिसके हृदय में कवच स्थित है, उसके दर्शन से पहले कही बाधाएँ मिटती हैं, ऐसा पाठ कहता है। राजा के यहाँ मान और तेज की वृद्धि भी फलरूप बताई गई है। आशय देवी-स्मरण की महिमा का गुणगान है।",
+      "meaningEn": "When the kavach is established in the heart, the text says the previously listed obstacles vanish at that person’s sight. It also praises increased honour before rulers and greater radiance. This celebrates the power of devotional remembrance."
+    },
+    {
+      "id": "durga-devi-kavacham-53",
+      "number": 53,
+      "labelHi": "फलश्रुति · ५३",
+      "labelEn": "Phalashruti · 53",
+      "lines": [
+        "यशसा वर्धते सोऽपि कीर्तिमण्डितभूतले।",
+        "जपेत्सप्तशतीं चण्डीं कृत्वा तु कवचं पुरा॥"
+      ],
+      "linesEn": [
+        "yaśhasā vardhate so'pi kīrtimaṇḍitabhūtale",
+        "japetsaptaśhatīṃ chaṇḍīṃ kṛitvā tu kavachaṃ purā"
+      ],
+      "meaningHi": "उसकी कीर्ति पृथ्वी पर बढ़ती है, ऐसा फलवर्णन है। इसके बाद निर्देश है कि पहले कवच का पाठ कर चण्डी सप्तशती का जप करें। यह कवच का सप्तशती के पूर्वाङ्ग के रूप में स्थान बताता है।",
+      "meaningEn": "The practitioner’s renown is praised as spreading through the world. The verse then directs the reciter to take up the Chandi Saptashati after the kavach, establishing its place as a preparatory text."
+    },
+    {
+      "id": "durga-devi-kavacham-54",
+      "number": 54,
+      "labelHi": "फलश्रुति · ५४",
+      "labelEn": "Phalashruti · 54",
+      "lines": [
+        "यावद्भूमण्डलं धत्ते सशैलवनकाननम्।",
+        "तावत्तिष्ठति मेदिन्यां सन्ततिः पुत्रपौत्रिकी॥"
+      ],
+      "linesEn": [
+        "yāvadbhūmaṇḍalaṃ dhatte saśhailavanakānanam",
+        "tāvattiṣṭhati medinyāṃ santatiḥ putrapautrikī"
+      ],
+      "meaningHi": "पर्वतों और वनों सहित पृथ्वी के बने रहने तक पुत्र-पौत्रों की सन्तति बनी रहे, ऐसा दीर्घ वंश-कल्याण का फल कहा गया है। यह प्राचीन गृहस्थ की निरन्तरता और परिवार के मंगल की आकांक्षा है।",
+      "meaningEn": "The lineage of children and grandchildren is praised as enduring as long as the earth with its mountains and forests. This expresses the ancient householder’s aspiration for continuity and the family’s lasting welfare."
+    },
+    {
+      "id": "durga-devi-kavacham-55",
+      "number": 55,
+      "labelHi": "फलश्रुति · ५५",
+      "labelEn": "Phalashruti · 55",
+      "lines": [
+        "देहान्ते परमं स्थानं यत्सुरैरपि दुर्लभम्।",
+        "प्राप्नोति पुरुषो नित्यं महामायाप्रसादतः॥"
+      ],
+      "linesEn": [
+        "dehānte paramaṃ sthānaṃ yatsurairapi durlabham",
+        "prāpnoti puruṣo nityaṃ mahāmāyāprasādataḥ"
+      ],
+      "meaningHi": "देह के अन्त में महामाया की कृपा से वह परम स्थान मिलता है जो देवों के लिए भी दुर्लभ है। फलश्रुति अब सांसारिक रक्षा से आगे आध्यात्मिक परमगति की ओर जाती है।",
+      "meaningEn": "At the body’s end, through Mahamaya’s grace, the devotee is said to attain a supreme state rare even for the gods. The phalashruti turns from worldly protection toward ultimate spiritual fulfilment."
+    },
+    {
+      "id": "durga-devi-kavacham-56",
+      "number": 56,
+      "labelHi": "फलश्रुति · ५६",
+      "labelEn": "Phalashruti · 56",
+      "lines": [
+        "लभते परमं रूपं शिवेन सह मोदते॥ ॐ॥"
+      ],
+      "linesEn": [
+        "labhate paramaṃ rūpaṃ śhivena saha modate oṃ"
+      ],
+      "meaningHi": "वह परम स्वरूप प्राप्त कर शिव के साथ आनन्द करता है—इस मंगल-वाक्य और ॐ से कवच समाप्त होता है। देवी की कृपा को मुक्ति और दिव्य आनन्द के रूप में देखा गया है।",
+      "meaningEn": "Attaining the supreme form, the devotee rejoices with Shiva. This auspicious statement and Om close the kavach, presenting the goddess’s grace as liberation and divine joy."
+    }
+  ]
+}

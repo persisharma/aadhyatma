@@ -23,7 +23,7 @@ export type SuktamVerse = {
   meaningKn?: string;
 };
 
-export type SuktamId = 'devi-suktam' | 'purusha-suktam' | 'narayana-suktam';
+export type SuktamId = 'devi-suktam' | 'purusha-suktam' | 'narayana-suktam' | 'shri-suktam';
 
 export type SuktamPayload = {
   id: SuktamId;
@@ -33,7 +33,7 @@ export type SuktamPayload = {
   verses: readonly SuktamVerse[];
 };
 
-const registry: Record<SuktamId, SuktamPayload> = {
+const registry: Record<Exclude<SuktamId, 'shri-suktam'>, SuktamPayload> = {
   'devi-suktam': {
     id: 'devi-suktam',
     titleHi: deviSuktam.titleHi,
@@ -57,10 +57,11 @@ const registry: Record<SuktamId, SuktamPayload> = {
   },
 };
 
-export const suktamIds: readonly SuktamId[] = ['devi-suktam', 'purusha-suktam', 'narayana-suktam'];
+export const suktamIds: readonly SuktamId[] = ['devi-suktam', 'purusha-suktam', 'narayana-suktam', 'shri-suktam'];
 
 export function getSuktam(id: string | undefined): SuktamPayload {
-  if (id && id in registry) return registry[id as SuktamId];
+  if (id === 'shri-suktam') return require('./shri-suktam.json') as SuktamPayload;
+  if (id && id in registry) return registry[id as Exclude<SuktamId, 'shri-suktam'>];
   return registry['devi-suktam'];
 }
 

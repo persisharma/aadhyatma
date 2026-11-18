@@ -25,7 +25,8 @@ export type KavachamId =
   | 'rama-raksha-stotra'
   | 'ganesha-kavacham'
   | 'shiva-kavacham'
-  | 'durga-kavach';
+  | 'durga-kavach'
+  | 'durga-devi-kavacham';
 
 export type KavachamPayload = {
   id: KavachamId;
@@ -35,7 +36,7 @@ export type KavachamPayload = {
   verses: readonly KavachamVerse[];
 };
 
-const registry: Record<KavachamId, KavachamPayload> = {
+const registry: Record<Exclude<KavachamId, 'durga-devi-kavacham'>, KavachamPayload> = {
   'rama-raksha-stotra': {
     id: 'rama-raksha-stotra',
     titleHi: ramaRakshaStotra.titleHi,
@@ -59,8 +60,8 @@ const registry: Record<KavachamId, KavachamPayload> = {
   },
   'durga-kavach': {
     id: 'durga-kavach',
-    titleHi: durgaKavach.titleHi,
-    titleEn: durgaKavach.titleEn,
+    titleHi: 'दुर्गा कवच · पूर्व चयन',
+    titleEn: 'Durga Kavach · Previous Selection',
     deity: durgaKavach.deity,
     verses: durgaKavach.verses,
   },
@@ -71,10 +72,12 @@ export const kavachamIds: readonly KavachamId[] = [
   'ganesha-kavacham',
   'shiva-kavacham',
   'durga-kavach',
+  'durga-devi-kavacham',
 ];
 
 export function getKavacham(id: string | undefined): KavachamPayload {
-  if (id && id in registry) return registry[id as KavachamId];
+  if (id === 'durga-devi-kavacham') return require('./durga-devi-kavacham.json') as KavachamPayload;
+  if (id && id in registry) return registry[id as Exclude<KavachamId, 'durga-devi-kavacham'>];
   return registry['rama-raksha-stotra'];
 }
 

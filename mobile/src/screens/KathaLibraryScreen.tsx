@@ -1,3 +1,4 @@
+import { navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import React, { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -17,11 +18,11 @@ import TextField from '@/components/TextField';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { getKathaLibrary } from '@/panchang/vratCatalog';
-import type { PanchangStackParamList } from '@/navigation/types';
+import type { HomeStackParamList, PanchangStackParamList } from '@/navigation/types';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 
-type Props = NativeStackScreenProps<PanchangStackParamList, 'KathaLibrary'>;
+type Props = NativeStackScreenProps<PanchangStackParamList, 'KathaLibrary'> | NativeStackScreenProps<HomeStackParamList, 'KathaLibrary'>;
 
 export default function KathaLibraryScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
@@ -38,7 +39,7 @@ export default function KathaLibraryScreen({ navigation }: Props) {
   }, [library, query]);
 
   const openKatha = (kathaId: string) => {
-    rootNav.navigate('HomeTab', { screen: 'VratKathaReader', params: { kathaId } });
+    navigateToHomeStackTarget(rootNav, { screen: 'VratKathaReader', params: { kathaId } });
   };
 
   return (

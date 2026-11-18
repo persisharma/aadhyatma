@@ -1,0 +1,198 @@
+{
+  "id": "kalabhairav-ashtakam",
+  "titleHi": "कालभैरवाष्टकम्",
+  "titleEn": "Kalabhairav Ashtakam",
+  "deity": "shiva",
+  "source": {
+    "baseText": "Traditional Kalabhairavashtakam attributed to Shankaracharya: eight verses plus phalashruti, Shankara recension; Sanskrit Documents and Green Message compared throughout.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_shiva/kaalabhairava.html",
+      "https://greenmesg.org/stotras/shiva/kalabhairava_ashtakam.php",
+      "https://www.drikpanchang.com/lyrics/ashtakam/gods/lord-bhairava/kala-bhairava-ashtakam.html?lang=en"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Deity association is Shiva, explicitly in the form Kalabhairava, without a new deity ID. Preserve the Shankara-recension order and primary readings, including स्थितं (4), शेषपाश (5), मोक्षदं (6), and नरा ध्रुवम् in phalashruti. Green Message prints मोक्षणं in 6; Drik now prints a materially different Shivarahasya recension with reordered verses, नितान्तभक्तवत्सलं and a different closing. It is comparison evidence, not a source to splice into this edition. Only ancient Sanskrit words are transcribed; no publisher formatting, modern translation, images or romanization is reused. The recorded Complete Works printed scan was not consulted and is not claimed as checked."
+  },
+  "verses": [
+    {
+      "id": "kalabhairav-ashtakam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "देवराजसेव्यमानपावनांघ्रिपङ्कजं",
+        "व्यालयज्ञसूत्रमिन्दुशेखरं कृपाकरम्।",
+        "नारदादियोगिवृन्दवन्दितं दिगंबरं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "devarājasevyamānapāvanāṃghripaṅkajaṃ",
+        "vyālayajñasūtraminduśhekharaṃ kṛipākaram",
+        "nāradādiyogivṛindavanditaṃ digaṃbaraṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "देवराज जिनके पवित्र चरणकमलों की सेवा करते हैं, जो सर्प का यज्ञोपवीत और मस्तक पर चन्द्र धारण करते हैं, कृपामय हैं और नारद आदि योगियों से वन्दित हैं—काशी के अधिपति उन दिगम्बर कालभैरव को मैं भजता हूँ। आरम्भिक ध्यान शिव के भैरव स्वरूप की करुणा और महिमा को एक साथ रखता है।",
+      "meaningEn": "I worship Kalabhairava, lord of Kashi, whose holy lotus feet are served by the king of the gods. He wears a serpent as his sacred thread and the moon upon his head; compassionate and sky-clad, he is honoured by Narada and the yogis. The opening contemplation joins the majesty and compassion of this form of Shiva."
+    },
+    {
+      "id": "kalabhairav-ashtakam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "भानुकोटिभास्वरं भवाब्धितारकं परं",
+        "नीलकण्ठमीप्सितार्थदायकं त्रिलोचनम्।",
+        "कालकालमंबुजाक्षमक्षशूलमक्षरं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "bhānukoṭibhāsvaraṃ bhavābdhitārakaṃ paraṃ",
+        "nīlakaṇṭhamīpsitārthadāyakaṃ trilochanam",
+        "kālakālamaṃbujākṣhamakṣhaśhūlamakṣharaṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "करोड़ों सूर्यों जैसे तेजस्वी, संसार-सागर से पार कराने वाले, नीलकण्ठ, त्रिनेत्र, अभिलषित फल देने वाले, काल के भी काल, कमलनयन, शूलधारी और अविनाशी काशीपति कालभैरव को मैं भजता हूँ। स्तुति में यह ध्यान नश्वरता के बीच परम आश्रय की कामना व्यक्त करता है।",
+      "meaningEn": "I worship Kashi’s Kalabhairava, radiant as countless suns, supreme ferryman across worldly existence, blue-throated and three-eyed, granter of desired ends. He is death’s own death, lotus-eyed, bearing the shula and imperishable. In recitation this verse seeks a lasting refuge amid mortality."
+    },
+    {
+      "id": "kalabhairav-ashtakam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "शूलटंकपाशदण्डपाणिमादिकारणं",
+        "श्यामकायमादिदेवमक्षरं निरामयम्।",
+        "भीमविक्रमं प्रभुं विचित्रताण्डवप्रियं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "śhūlaṭaṃkapāśhadaṇḍapāṇimādikāraṇaṃ",
+        "śhyāmakāyamādidevamakṣharaṃ nirāmayam",
+        "bhīmavikramaṃ prabhuṃ vichitratāṇḍavapriyaṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "हाथों में शूल, टंक, पाश और दण्ड धारण करने वाले, आदि कारण, श्यामदेह, अविनाशी, निरामय, प्रचण्ड पराक्रमी और विविध ताण्डव के प्रेमी कालभैरव को मैं भजता हूँ। आयुधों और नृत्य के इस ध्यान में उनके रक्षक और प्रबल स्वरूप का स्मरण किया जाता है।",
+      "meaningEn": "I worship Kalabhairava, primordial cause and dark-bodied ancient Lord, imperishable and free of affliction. His hands bear the trident, axe, noose and staff; his prowess is formidable and he delights in varied tandava. The verse contemplates his powerful, protective form through weapons and dance."
+    },
+    {
+      "id": "kalabhairav-ashtakam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "भुक्तिमुक्तिदायकं प्रशस्तचारुविग्रहं",
+        "भक्तवत्सलं स्थितं समस्तलोकविग्रहम्।",
+        "विनिक्वणन्मनोज्ञहेमकिङ्किणीलसत्कटिं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "bhuktimuktidāyakaṃ praśhastachāruvigrahaṃ",
+        "bhaktavatsalaṃ sthitaṃ samastalokavigraham",
+        "vinikvaṇanmanojñahemakiṅkiṇīlasatkaṭiṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "भोग और मुक्ति देने वाले, प्रशंसित सुन्दर स्वरूप, भक्तवत्सल और समस्त लोकों को अपने रूप में धारण करने वाले कालभैरव को मैं भजता हूँ। उनकी कमर में मधुर ध्वनि करती स्वर्ण-किङ्किणियाँ चमकती हैं। यह ध्यान संसार में कल्याण और उससे मुक्ति, दोनों की प्रार्थना है।",
+      "meaningEn": "I worship Kalabhairava, giver of worldly enjoyment and liberation, beautiful in form and loving toward devotees, embodying the worlds. Golden bells sound pleasantly at his waist. This contemplation brings together the prayer for well-being within life and freedom beyond it."
+    },
+    {
+      "id": "kalabhairav-ashtakam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "धर्मसेतुपालकं त्वधर्ममार्गनाशकं",
+        "कर्मपाशमोचकं सुशर्मदायकं विभुम्।",
+        "स्वर्णवर्णशेषपाशशोभितांगमण्डलं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "dharmasetupālakaṃ tvadharmamārganāśhakaṃ",
+        "karmapāśhamochakaṃ suśharmadāyakaṃ vibhum",
+        "svarṇavarṇaśheṣapāśhaśhobhitāṃgamaṇḍalaṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "धर्म की मर्यादा की रक्षा, अधर्म के मार्ग का नाश, कर्म-बन्धन से मुक्ति और उत्तम सुख देने वाले विभु कालभैरव को मैं भजता हूँ। स्वर्णवर्ण सर्प-पाश से उनका शरीर शोभित है। पाठ में यह रूप धर्म और बन्धन-मुक्ति का स्मरण कराता है।",
+      "meaningEn": "I worship the all-pervading Kalabhairava, guardian of dharma’s bounds, destroyer of the path of wrongdoing, releaser from karma’s bonds and giver of deep well-being. Golden serpent coils adorn his form. The verse directs devotion toward righteousness and freedom from bondage."
+    },
+    {
+      "id": "kalabhairav-ashtakam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "रत्नपादुकाप्रभाभिरामपादयुग्मकं",
+        "नित्यमद्वितीयमिष्टदैवतं निरंजनम्।",
+        "मृत्युदर्पनाशनं करालदंष्ट्रमोक्षदं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "ratnapādukāprabhābhirāmapādayugmakaṃ",
+        "nityamadvitīyamiṣṭadaivataṃ niraṃjanam",
+        "mṛityudarpanāśhanaṃ karāladaṃṣṭramokṣhadaṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "रत्नमय पादुकाओं की प्रभा से सुन्दर चरणों वाले, नित्य, अद्वितीय, निर्मल इष्टदेव, मृत्यु का गर्व मिटाने वाले और विकराल दंष्ट्राओं सहित मोक्ष देने वाले कालभैरव को मैं भजता हूँ। यहाँ उग्र रूप का ध्यान भी भय के पार मुक्ति की प्रार्थना से जुड़ा है।",
+      "meaningEn": "I worship Kalabhairava, whose feet shine with jewelled sandals: eternal, without a second, stainless and cherished as one’s chosen deity. He destroys death’s pride and, with fearsome fangs, grants liberation. Even this fierce image is contemplated as a refuge beyond fear."
+    },
+    {
+      "id": "kalabhairav-ashtakam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "अट्टहासभिन्नपद्मजाण्डकोशसंततिं",
+        "दृष्टिपातनष्टपापजालमुग्रशासनम्।",
+        "अष्टसिद्धिदायकं कपालमालिकाधरं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "aṭṭahāsabhinnapadmajāṇḍakośhasaṃtatiṃ",
+        "dṛiṣṭipātanaṣṭapāpajālamugraśhāsanam",
+        "aṣṭasiddhidāyakaṃ kapālamālikādharaṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "जिनके अट्टहास से ब्रह्माण्ड के आवरण विदीर्ण होते हैं, जिनकी दृष्टि पाप-जाल नष्ट करती है, जिनका शासन उग्र है और जो अष्टसिद्धि देते तथा कपालमाला धारण करते हैं, उन कालभैरव को मैं भजता हूँ। स्तुति के इस विश्वव्यापी बिम्ब में उनके प्रचण्ड सामर्थ्य को प्रणाम किया जाता है।",
+      "meaningEn": "I worship Kalabhairava, whose resounding laughter splits the enclosures of Brahma’s cosmic egg and whose glance destroys the web of wrongdoing. His rule is formidable; he grants the eight siddhis and wears a garland of skulls. This cosmic image pays homage to his overwhelming power."
+    },
+    {
+      "id": "kalabhairav-ashtakam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "भूतसंघनायकं विशालकीर्तिदायकं",
+        "काशिवासलोकपुण्यपापशोधकं विभुम्।",
+        "नीतिमार्गकोविदं पुरातनं जगत्पतिं",
+        "काशिकापुराधिनाथकालभैरवं भजे॥"
+      ],
+      "linesEn": [
+        "bhūtasaṃghanāyakaṃ viśhālakīrtidāyakaṃ",
+        "kāśhivāsalokapuṇyapāpaśhodhakaṃ vibhum",
+        "nītimārgakovidaṃ purātanaṃ jagatpatiṃ",
+        "kāśhikāpurādhināthakālabhairavaṃ bhaje"
+      ],
+      "meaningHi": "भूतगणों के नायक, महान कीर्ति देने वाले, काशीवासियों के पुण्य-पाप का शोधन करने वाले, नीति-मार्ग के ज्ञाता, पुरातन जगत्पति कालभैरव को मैं भजता हूँ। अन्तिम स्तुति उन्हें काशी के अधिपति और धर्ममार्ग के मार्गदर्शक रूप में स्मरण करती है।",
+      "meaningEn": "I worship Kalabhairava, leader of the hosts of beings, giver of great renown, purifier of the merits and faults of Kashi’s inhabitants, master of right conduct and ancient Lord of the world. The final praise remembers him as Kashi’s guardian and guide in righteous living."
+    },
+    {
+      "id": "kalabhairav-ashtakam-9",
+      "number": 9,
+      "labelHi": "फलश्रुति · ९",
+      "labelEn": "Phalashruti · 9",
+      "lines": [
+        "कालभैरवाष्टकं पठंति ये मनोहरं",
+        "ज्ञानमुक्तिसाधनं विचित्रपुण्यवर्धनम्।",
+        "शोकमोहदैन्यलोभकोपतापनाशनं",
+        "प्रयान्ति कालभैरवांघ्रिसन्निधिं नरा ध्रुवम्॥"
+      ],
+      "linesEn": [
+        "kālabhairavāṣṭakaṃ paṭhaṃti ye manoharaṃ",
+        "jñānamuktisādhanaṃ vichitrapuṇyavardhanam",
+        "śhokamohadainyalobhakopatāpanāśhanaṃ",
+        "prayānti kālabhairavāṃghrisannidhiṃ narā dhruvam"
+      ],
+      "meaningHi": "फलश्रुति कहती है कि इस मनोहर अष्टक का पाठ ज्ञान और मुक्ति का साधन, पुण्यवर्धक तथा शोक, मोह, दीनता, लोभ, क्रोध और सन्ताप हरने वाला है; पाठ करने वाले कालभैरव के चरणों के सान्निध्य को प्राप्त होते हैं। यह भक्ति-परम्परा में स्तोत्र के पाठ-फल का कथन है, किसी निश्चित लौकिक या चिकित्सकीय परिणाम का आश्वासन नहीं।",
+      "meaningEn": "The phalashruti commends this hymn as a means toward knowledge and liberation, fostering merit and dispelling sorrow, delusion, distress, greed, anger and anguish. It says reciters reach the presence of Kalabhairava’s feet. These are the hymn’s devotional assurances, not a guarantee of a particular worldly or medical outcome."
+    }
+  ]
+}
