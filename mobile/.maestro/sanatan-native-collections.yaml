@@ -18,12 +18,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-basics
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-basics }
@@ -45,12 +47,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-deity
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-deity }
@@ -72,12 +76,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-thirty
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-thirty }
@@ -99,12 +105,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-dikpal
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal }
@@ -126,12 +134,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-graha
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-graha }
@@ -153,12 +163,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-forms
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-forms }
@@ -180,12 +192,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-symbols
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-symbols }
@@ -207,12 +221,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-plants
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-plants }
@@ -234,12 +250,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-temples
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-temples }
@@ -261,12 +279,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-elements
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-elements }
@@ -288,12 +308,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-time
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-time }
@@ -315,12 +337,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-texts
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-texts }
@@ -342,12 +366,14 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-start }
 - takeScreenshot: e2e-shots/sanatan-reader-rishis
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
     timeout: 60000
+    centerElement: true
 - tapOn: { id: sanatan-next }
 - scrollUntilVisible:
     element: { id: sanatan-explore-rishis }

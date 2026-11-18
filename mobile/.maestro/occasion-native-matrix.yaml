@@ -46,6 +46,13 @@ appId: com.prashantsharma.vedansh
     direction: UP
 - tapOn: { id: settings-back }
 - openLink: 'vedansh://widget/panchang?date=${OCCASION_DATE}'
+# iOS asks "Open in Vedansh?" before following the link (CI); accept it.
+- waitForAnimationToEnd:
+    timeout: 5000
+- runFlow:
+    when: { visible: 'Open' }
+    commands:
+      - tapOn: 'Open'
 - scrollUntilVisible:
     element: { text: '${EXPECTED_CLOCK}' }
     direction: DOWN
