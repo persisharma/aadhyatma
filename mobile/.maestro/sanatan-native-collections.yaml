@@ -12,7 +12,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-basics
-- tapOn: { id: sanatan-collection-basics }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-basics
 - takeScreenshot: e2e-shots/sanatan-overview-basics
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -41,7 +44,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-deity
-- tapOn: { id: sanatan-collection-deity }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-deity
 - takeScreenshot: e2e-shots/sanatan-overview-deity
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -70,7 +76,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-thirty
-- tapOn: { id: sanatan-collection-thirty }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-thirty
 - takeScreenshot: e2e-shots/sanatan-overview-thirty
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -99,7 +108,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-dikpal
-- tapOn: { id: sanatan-collection-dikpal }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-dikpal
 - takeScreenshot: e2e-shots/sanatan-overview-dikpal
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -128,7 +140,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-graha
-- tapOn: { id: sanatan-collection-graha }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-graha
 - takeScreenshot: e2e-shots/sanatan-overview-graha
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -157,7 +172,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-forms
-- tapOn: { id: sanatan-collection-forms }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-forms
 - takeScreenshot: e2e-shots/sanatan-overview-forms
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -186,7 +204,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-symbols
-- tapOn: { id: sanatan-collection-symbols }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-symbols
 - takeScreenshot: e2e-shots/sanatan-overview-symbols
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -215,7 +236,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-plants
-- tapOn: { id: sanatan-collection-plants }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-plants
 - takeScreenshot: e2e-shots/sanatan-overview-plants
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -244,7 +268,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-temples
-- tapOn: { id: sanatan-collection-temples }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-temples
 - takeScreenshot: e2e-shots/sanatan-overview-temples
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -273,7 +300,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-elements
-- tapOn: { id: sanatan-collection-elements }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-elements
 - takeScreenshot: e2e-shots/sanatan-overview-elements
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -302,7 +332,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-time
-- tapOn: { id: sanatan-collection-time }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-time
 - takeScreenshot: e2e-shots/sanatan-overview-time
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -331,7 +364,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-texts
-- tapOn: { id: sanatan-collection-texts }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-texts
 - takeScreenshot: e2e-shots/sanatan-overview-texts
 - scrollUntilVisible:
     element: { id: sanatan-start }
@@ -360,7 +396,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: e2e-shots/sanatan-row-rishis
-- tapOn: { id: sanatan-collection-rishis }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-rishis
 - takeScreenshot: e2e-shots/sanatan-overview-rishis
 - scrollUntilVisible:
     element: { id: sanatan-start }

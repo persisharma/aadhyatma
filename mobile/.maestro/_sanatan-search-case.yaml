@@ -1,6 +1,11 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _open-settings.yaml
+# Settings is a tab and keeps the previous case's scroll position; start from its top.
+- scrollUntilVisible:
+    element: { id: settings-back }
+    direction: UP
+    timeout: 30000
 - scrollUntilVisible:
     element: { text: "Language,.*" }
     direction: DOWN

@@ -37,7 +37,8 @@ jobs:
     env:
       NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
       SANATAN_MATRIX_SCOPE: ${{ matrix.scope }}
-    timeout-minutes: 75
+    # About 26 min of build and setup plus up to 50 min for the enlarged-text matrix.
+    timeout-minutes: 90
     defaults:
       run:
         working-directory: mobile

@@ -1,6 +1,13 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _open-settings.yaml
+# Settings is a tab, so it keeps the previous case's scroll position. When that
+# left Language above the screen, scrolling down never found it (CI, Android
+# enlarged, third case). Start from the top: the back button is its first item.
+- scrollUntilVisible:
+    element: { id: settings-back }
+    direction: UP
+    timeout: 30000
 - scrollUntilVisible:
     element: { text: "Language,.*" }
     direction: DOWN
@@ -25,7 +32,10 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- tapOn: { id: sanatan-collection-dikpal }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-collection-dikpal
 # Centre the button before tapping: at enlarged iOS text the scroll stopped with
 # Open lesson cut off at the bottom edge, and the tap at its centre missed (CI).
 - scrollUntilVisible:
