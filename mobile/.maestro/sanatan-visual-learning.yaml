@@ -20,21 +20,13 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - tapOn: { id: sanatan-next }
+# Figure page: the painted teaching plate (language-picked) replaces the old vector schematic.
 - scrollUntilVisible:
-    element: { text: "9 · Above — Brahma" }
+    element: { id: sanatan-explore-dikpal }
     direction: DOWN
     timeout: 60000
-- takeScreenshot: e2e-shots/sanatan-directions-vertical-axis
-- scrollUntilVisible:
-    element: { id: sanatan-direction-9 }
-    direction: DOWN
-    timeout: 60000
-- tapOn: { id: sanatan-direction-9 }
-- scrollUntilVisible:
-    element: { text: "Below · Vishnu" }
-    direction: DOWN
-    timeout: 60000
-- takeScreenshot: e2e-shots/sanatan-directions-below
+- assertVisible: { id: sanatan-explore-dikpal }
+- takeScreenshot: e2e-shots/sanatan-dikpal-plate
 - tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
