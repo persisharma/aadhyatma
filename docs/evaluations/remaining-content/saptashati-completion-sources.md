@@ -14,7 +14,7 @@ Unnumbered dhyana, nyasa, viniyoga, optional bija framing and prose colophons ar
 
 ## Source choices, chapters 2–7
 
-Drik is the base reading at the differences below, except the stated typography corrections. Removed its chapter 3 opening typo ऋषिररुवाच → ऋषिरुवाच (Rampuri); chapter 3.15 युद्ध्यमानौ → युध्यमानौ (Rampuri); chapter 7.20 split महासिं हं → महासिंहं (Rampuri). Removed publisher hyphens within Sanskrit words by joining only the affected adjacent lines in chapter 4. Removed optional closing ह्रीं ॐ from chapter 4.42. These changes do not add/remove numbered units.
+Drik is the base reading at the differences below, except the stated typography corrections. Removed its chapter 3 opening typo ऋषिररुवाच → ऋषिरुवाच (Rampuri); chapter 3.15 युद्ध्यमानौ → युध्यमानौ (Rampuri); chapter 7.20 split महासिं हं → महासिंहं (Rampuri). Removed publisher hyphens within Sanskrit words by joining only the affected adjacent lines in chapter 4. Removed optional closing ह्रीं ॐ from chapter 4.42. At chapter 5.113, removed the duplicated च in Drik’s भज त्वं च चञ्चलापाङ्गि: Rampuri’s भज त्वं चञ्चलापाङ्गि restores the eight-syllable pāda. These changes do not add/remove numbered units.
 
 At 7.20, महासिंहं is rendered as the great lion, not an unverified roar. The [Śabdakalpadruma dictionary entry](https://sa.wiktionary.org/wiki/महासिंह) explicitly defines it as the Goddess's lion mount and cites this exact line. This is a dictionary transcription, not inspection of a historical scan. At 2.42–44, retain the traditional large-number expressions niyuta and ayuta-ayuta where edition conventions are uncertain instead of inventing a conversion. The explicit 1,000 ayutas for Mahahanu and 600 ayutas for Bashkala are rendered as ten million and six million respectively.
 
