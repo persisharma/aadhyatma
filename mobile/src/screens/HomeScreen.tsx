@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
@@ -54,6 +54,9 @@ export default function HomeScreen({ navigation }: Props) {
   // Feature-tour spotlight anchors (design.md §47). Home tiles live in the
   // vertical scroll, so they reveal themselves (scroll into view) before measure.
   const homeScrollRef = React.useRef<ScrollView>(null);
+  // Reselecting the Home tab while Home is showing returns the page to the top
+  // (from a pushed screen the first tap still just pops back to Home).
+  useScrollToTop(homeScrollRef);
   // The routine banner now lives inline in the scroll (below the Today strip),
   // so it reveals itself into view before the tour measures its spotlight ring.
   const routineCardRef = useTourTarget('routineCard', (ref) => scrollNodeIntoView(homeScrollRef, ref));

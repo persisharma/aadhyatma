@@ -68,4 +68,11 @@ appId: com.prashantsharma.vedansh
     timeout: 30000
 - assertVisible: "Sacred symbols"
 - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+# The hub keeps its query and its scroll position; the search field sits above
+# the results that were scrolled to, so bring it back (CI, Android: the hub
+# showed the filtered results with the field out of view).
+- scrollUntilVisible:
+    element: { text: "how to draw swastika" }
+    direction: UP
+    timeout: 30000
 - assertVisible: "how to draw swastika"
