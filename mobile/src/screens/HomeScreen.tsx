@@ -1,5 +1,5 @@
 import AppIcon from '@/components/AppIcon';
-import DarshanFloatingButton from '@/components/darshan/DarshanFloatingButton';
+// import DarshanFloatingButton from '@/components/darshan/DarshanFloatingButton'; // hidden for 1.5.7 release
 import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
 import {
@@ -596,7 +596,8 @@ export default function HomeScreen({ navigation }: Props) {
           )}
         </ScrollView>
         </TilePressProvider>
-        <DarshanFloatingButton onPress={() => navigation.navigate('DarshanQuick')} />
+        {/* Darshan floating button hidden for the 1.5.7 store release; re-enable by restoring this render + the import. */}
+        {/* <DarshanFloatingButton onPress={() => navigation.navigate('DarshanQuick')} /> */}
       </SafeAreaView>
     </View>
   );

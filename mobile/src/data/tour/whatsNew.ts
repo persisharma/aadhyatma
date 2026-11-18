@@ -26,13 +26,22 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.6';
+export const APP_TOUR_VERSION = '1.5.7';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.7': {
+    version: '1.5.7',
+    items: [{
+      titleHi: 'नई चालीसा एवं आरती',
+      titleEn: 'New Chalisas & Aartis',
+      bodyHi: 'पुस्तकालय में कई नई चालीसा जुड़ीं — वैष्णो देवी, शनि, संतोषी माता, काली एवं राधा — तथा श्री सत्यनारायणजी की आरती एवं पूजा, व्याख्या और स्रोत सहित।',
+      bodyEn: 'Several new Chalisas join the library — Vaishno Devi, Shani, Santoshi Mata, Kali and Radha — along with the Shri Satyanarayan Aarti and Puja, with meanings and sources.',
+    }],
+  },
   '1.5.6': {
     version: '1.5.6',
     items: [{

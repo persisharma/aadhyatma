@@ -4603,6 +4603,8 @@ The devotional export reports settled geometry before artwork readiness, allowin
 
 ## 92. Temple Darshan — Home floating door (14 November 2026)
 
+**Status (18 November 2026):** the Home floating pill is temporarily hidden for the 1.5.7 store release — the `<DarshanFloatingButton>` render and its import in `HomeScreen.tsx` are commented out. The component and the DarshanQuick journey it opened are unchanged and still reachable from their other entry points; restore the commented render + import to bring the pill back.
+
 **Purpose:** the selected Option C adds a labelled floating दर्शन / Darshan pill
 on Home only. The existing five-tab navigation and sixteen launcher tiles remain.
 The pill isolates the changing audio subscription in a small leaf component, so playback ticks do not redraw Home. It uses the bundled painted Theerth icon, saffron-gradient background, gold
