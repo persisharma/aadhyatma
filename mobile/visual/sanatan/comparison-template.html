@@ -1,0 +1,61 @@
+<div id="sanatan-review" class="viz-dotted-background">
+  <div class="review-tools">
+    <label for="sanatan-review-topic">Lesson
+      <select id="sanatan-review-topic" aria-label="Choose a lesson"></select>
+    </label>
+    <div class="review-switch" role="tablist" aria-label="Before and after">
+      <button type="button" id="sanatan-review-before" role="tab" aria-selected="false" aria-controls="sanatan-review-screen">Before</button>
+      <button type="button" id="sanatan-review-after" role="tab" aria-selected="true" aria-controls="sanatan-review-screen">After</button>
+    </div>
+  </div>
+  <div id="sanatan-review-status" class="review-status" aria-live="polite">Component comparison · Native review pending</div>
+  <div class="reader-window">
+    <div class="reader-chrome">वेदांश · सनातन परिचय</div>
+    <div id="sanatan-review-screen" class="native-content" role="tabpanel" aria-labelledby="sanatan-review-after"></div>
+  </div>
+</div>
+<style>
+#sanatan-review{padding:12px 0 20px;--review-paper:#fbf4e5;--review-ink:#29180d;--review-saffron:#8b3f15;--review-line:#d9c49e;font-family:system-ui,sans-serif;color:var(--review-ink)}
+#sanatan-review .review-tools{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px;padding:0 0 8px;max-width:540px;margin:0 auto}
+#sanatan-review label{display:flex;flex-direction:column;gap:5px;font-size:13px;flex:1;min-width:180px}
+#sanatan-review select{font:inherit;font-size:16px;padding:10px 30px 10px 12px;min-height:44px;border:1px solid var(--review-line);border-radius:10px;background:var(--review-paper);color:var(--review-ink);max-width:100%;width:100%}
+#sanatan-review .review-switch{display:flex;gap:4px;padding:3px;background:var(--review-paper);border-radius:12px;border:1px solid var(--review-line)}
+#sanatan-review .review-switch button{font:inherit;min-height:40px;padding:8px 14px;border:0;border-radius:8px;background:transparent;color:var(--review-ink)}
+#sanatan-review .review-switch button[aria-selected=true]{background:var(--review-saffron);color:#fff8ee}
+#sanatan-review .review-status{max-width:540px;margin:0 auto 12px;font-size:12px;color:var(--review-ink);opacity:.8}
+#sanatan-review .reader-window{width:100%;max-width:390px;margin:0 auto;background:var(--review-paper);border:1px solid var(--review-line);border-radius:20px;overflow:hidden;box-sizing:border-box}
+#sanatan-review .reader-chrome{padding:18px 20px;border-bottom:1px solid var(--review-line);font-family:NotoSerifDevanagari_600SemiBold,serif;font-size:17px;color:var(--review-saffron)}
+#sanatan-review .native-content{min-width:0;background:var(--review-paper);overflow-wrap:anywhere}
+#sanatan-review .native-content *{box-sizing:border-box}
+#sanatan-review .native-content [role=button]{pointer-events:none}
+#sanatan-review .native-content img{max-width:100%}
+/* NATIVE_STYLES */
+</style>
+<script type="application/json" id="sanatan-review-data">REVIEW_DATA</script>
+<script>
+(()=>{
+  const root=document.getElementById('sanatan-review');
+  const dataset=JSON.parse(document.getElementById('sanatan-review-data').textContent);
+  const select=root.querySelector('#sanatan-review-topic');
+  const screen=root.querySelector('#sanatan-review-screen');
+  const status=root.querySelector('#sanatan-review-status');
+  const before=root.querySelector('#sanatan-review-before');
+  const after=root.querySelector('#sanatan-review-after');
+  let phase='after';
+  dataset.lessons.forEach(lesson=>{const option=document.createElement('option');option.value=lesson.id;option.textContent=lesson.label;select.append(option)});
+  select.value='dikpal';
+  function render(){
+    let content=dataset.data[select.value][phase];
+    Object.entries(dataset.assets).forEach(([key,uri])=>{content=content.split(key).join(uri)});
+    screen.innerHTML=content;
+    before.setAttribute('aria-selected',String(phase==='before'));
+    after.setAttribute('aria-selected',String(phase==='after'));
+    screen.setAttribute('aria-labelledby',phase==='before'?before.id:after.id);
+    status.textContent=(phase==='before'?'Before':'After')+' · '+((phase==='after'&&['deity','plants'].includes(select.value))?'Prepared artwork · R2 pending':'Component comparison · Native review pending');
+  }
+  select.addEventListener('change',render);
+  before.addEventListener('click',()=>{phase='before';render()});
+  after.addEventListener('click',()=>{phase='after';render()});
+  render();
+})();
+</script>

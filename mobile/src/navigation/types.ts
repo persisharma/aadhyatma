@@ -63,6 +63,7 @@ export type GharVastuStackParamList = {
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   SanatanParichay: { topicId?: string } | undefined;
   SanatanReader: { topicId: string; initialPage?: number };
+  GrahaReference: {focusGraha?:Graha}|undefined;
   Home: undefined;
   KathaLibrary: undefined;
   SaptashatiCore: undefined;

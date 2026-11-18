@@ -9,6 +9,13 @@ status: current
 
 ## Summary
 
+> **Gotcha / update (18 Nov 2026):** the figure page's visual is a **painted teaching
+> plate** (R2, prefix `sanatan-learning`), not an SVG schematic. 13 concepts × {hi,en}
+> = 26 webp; `lessonArtLang` maps hi+gu→hi plate, en+kn→en plate. `ExploreDiagram`
+> now renders `LessonArt` (CachedArtwork) + one caption line; `TenDirectionsDiagram`
+> and `ConceptFigures` were removed. Manifest `lessonArtManifest.json` is the R2
+> upload allowlist (`.github/workflows/r2-upload.yml`, dry-run on PRs).
+
 Thirteen approved editorial introductions form a question-led learning journey.
 Each has three Hindi/English paragraphs, a topic-specific visual explanation,
 one approved painted scene and internal review provenance. This is a native
@@ -23,7 +30,8 @@ up to three deterministic matching lessons. All routes live in the Home stack.
 
 The reader uses the shared header, progress, prose, read-aloud, auto-slide and
 share components. Diagrams keep selected-source variants separate. Share uses
-authored introductory paragraphs without bibliography or saved state.
+complete authored pages plus the lesson definitions, takeaway and visual rosters,
+without bibliography or saved state.
 The language helper derives Gujarati/Kannada script from Hindi prose.
 
 `@vedansh/sanatan-learning-v1` is independent of existing bookmarks/progress.
@@ -83,3 +91,17 @@ use shared script/reading tokens; narration and prose shares retain equivalent
 full drawing instructions. No universal stroke/finger/dot requirement is claimed.
 See `docs/content-parity/sanatan-parichay/swastika-guide.md` for source scope and
 pending native/editorial acceptance. This expansion is not a catalogue expansion.
+
+
+## Visual teaching — 8 November 2026
+
+All 13 introductions now have answers, terms, takeaways and real onward reading
+links. Search indexes taught terms/page headings and selects the matching page.
+The ten-direction schematic includes the vertical axis, with all ten readable
+native controls. Other diagrams distinguish temple spaces, literary forms,
+dialogue turns, elements and an illustrative Panchang row. New Ganesha/Tulasi
+teaching art is prepared but disabled until user upload and hash verification;
+`lessonArtManifest.json` is intentionally empty. Existing collection art remains.
+The publication script, source/export ledger and acceptance are in
+`docs/content-parity/sanatan-parichay/visual-learning/`. No catalogue expansion or
+full native Gujarati/Kannada translation is implied by this UI revision.
