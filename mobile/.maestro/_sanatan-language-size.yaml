@@ -36,15 +36,17 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-start }
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+# Large Gujarati and Kannada pages are long: reaching Next took 48 of 60 seconds
+# on CI, leaving too little for the centring swipes. Allow two minutes.
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
-    timeout: 60000
+    timeout: 120000
     centerElement: true
 - tapOn: { id: sanatan-next }
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal }
     direction: DOWN
-    timeout: 60000
+    timeout: 120000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
