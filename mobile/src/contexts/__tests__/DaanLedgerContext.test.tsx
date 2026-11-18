@@ -68,7 +68,7 @@ test('hydrates from the versioned payload and filters malformed rows', async () 
 
 test('addEntry persists the versioned shape with the new entry first', async () => {
   const { tree, value } = await renderWithProvider();
-  await act(async () => value().addEntry({ ...VALID_ENTRY, id: 'daan-2' }));
+  await act(async () => { await value().addEntry({ ...VALID_ENTRY, id: 'daan-2' }); });
   expect(value().entries.map((e) => e.id)).toEqual(['daan-2']);
   const [key, raw] = mockSetItem.mock.calls[0];
   expect(key).toBe(DAAN_LEDGER_STORAGE_KEY);
@@ -78,16 +78,16 @@ test('addEntry persists the versioned shape with the new entry first', async () 
 
 test('a gupt entry is stripped of note/amount/occasion before it touches disk', async () => {
   const { tree, value } = await renderWithProvider();
-  await act(async () =>
-    value().addEntry({
+  await act(async () => {
+    await value().addEntry({
       ...VALID_ENTRY,
       id: 'daan-3',
       gupt: true,
       note: 'secret detail',
       amountInr: 501,
       occasionId: 'makar-sankranti',
-    })
-  );
+    });
+  });
   const stored = JSON.parse(mockSetItem.mock.calls[0][1]);
   expect(stored.entries[0].gupt).toBe(true);
   expect(stored.entries[0].note).toBeUndefined();
@@ -102,8 +102,21 @@ test('removeEntry deletes and persists', async () => {
     Promise.resolve(JSON.stringify({ version: 1, entries: [VALID_ENTRY] }))
   );
   const { tree, value } = await renderWithProvider();
-  await act(async () => value().removeEntry(VALID_ENTRY.id));
+  await act(async () => { await value().removeEntry(VALID_ENTRY.id); });
   expect(value().entries).toEqual([]);
   expect(JSON.parse(mockSetItem.mock.calls[0][1]).entries).toEqual([]);
+  await act(async () => tree.unmount());
+});
+
+test('queued add/removal use the latest durable state, not a stale render', async () => {
+  mockGetItem.mockResolvedValue(JSON.stringify({ version: 1, entries: [VALID_ENTRY] }));
+  const { tree, value } = await renderWithProvider();
+  await act(async () => {
+    const add = value().addEntry({ ...VALID_ENTRY, id: 'new', amountInr: 500 });
+    const remove = value().removeEntry(VALID_ENTRY.id);
+    await Promise.all([add, remove]);
+  });
+  expect(value().entries.map(e => e.id)).toEqual(['new']);
+  expect(JSON.parse(mockSetItem.mock.calls.at(-1)![1]).entries.map((e: DaanLedgerEntry) => e.id)).toEqual(['new']);
   await act(async () => tree.unmount());
 });

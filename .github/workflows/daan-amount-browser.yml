@@ -1,7 +1,7 @@
 name: Daan amount browser verification
 on:
   push:
-    branches: [codex/daan-amount-validation]
+    branches: [codex/daan-amount-validation, codex/daan-audit-integration]
   workflow_dispatch:
 permissions:
   contents: read
