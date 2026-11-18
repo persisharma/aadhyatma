@@ -1,0 +1,273 @@
+{
+  "id": "shri-suktam",
+  "titleHi": "श्री सूक्तम्",
+  "titleEn": "Shri Suktam",
+  "deity": "lakshmi",
+  "source": {
+    "baseText": "Rigvedic khila Shri Suktam: fifteen-rik core followed by the यः शुचिः recitation conclusion (16 display units), collated in Drik Panchang and Green Message.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/stotram/maha-lakshmi/shree-suktam-with-lakshmi-suktam.html?lang=hi",
+      "https://greenmesg.org/stotras/lakshmi/sri_suktam.php"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Selected recension: 15 rks + one concluding recitation/phalashruti verse. The separate Lakshmi prayers appended after verse 16 on the source pages are not presented as part of this recension. Plain unaccented Devanagari; Vedic svara is not encoded and this is not a svara teaching edition. Verse 9 follows Drik ईश्वरीं, not Green Message ईश्वरींग्. Harih Om is an unnumbered opening frame on the sources and is not counted as a rik. Original editorial Hindi/English meanings and checked Sanskrit romanization; no modern translation or artwork is reused."
+  },
+  "verses": [
+    {
+      "id": "shri-suktam-1",
+      "number": 1,
+      "labelHi": "ऋचा · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "हिरण्यवर्णां हरिणीं सुवर्णरजतस्रजाम्।",
+        "चन्द्रां हिरण्मयीं लक्ष्मीं जातवेदो म आवह॥"
+      ],
+      "linesEn": [
+        "hiraṇyavarṇāṃ hariṇīṃ suvarṇarajatasrajām",
+        "chandrāṃ hiraṇmayīṃ lakṣhmīṃ jātavedo ma āvaha"
+      ],
+      "meaningHi": "हे जातवेदस् अग्नि, स्वर्ण जैसी कान्ति वाली, सोने-चाँदी की मालाओं से सुशोभित और चन्द्रमा जैसी उज्ज्वल लक्ष्मी को मेरे लिए बुलाइए। सूक्त का आरम्भ अग्नि के माध्यम से श्री के आवाहन से होता है; यहाँ समृद्धि को आदरपूर्वक आमन्त्रित किया जाता है।",
+      "meaningEn": "Jatavedas, bring Lakshmi here for me: golden in colour, radiant like the moon, adorned with gold and silver garlands. The hymn opens by asking Agni to invite Sri; its devotional setting is an invocation of prosperity, not a guarantee of material gain."
+    },
+    {
+      "id": "shri-suktam-2",
+      "number": 2,
+      "labelHi": "ऋचा · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "तां म आवह जातवेदो लक्ष्मीमनपगामिनीम्।",
+        "यस्यां हिरण्यं विन्देयं गामश्वं पुरुषानहम्॥"
+      ],
+      "linesEn": [
+        "tāṃ ma āvaha jātavedo lakṣhmīmanapagāminīm",
+        "yasyāṃ hiraṇyaṃ vindeyaṃ gāmaśhvaṃ puruṣānaham"
+      ],
+      "meaningHi": "हे जातवेदस्, ऐसी लक्ष्मी का आवाहन कीजिए जो मुझे छोड़कर न जाएँ और जिनके सान्निध्य में स्वर्ण, गौ, अश्व और मनुष्यों का सहयोग मिले। प्राचीन गृहस्थ जीवन के साधनों द्वारा यह प्रार्थना टिकाऊ समृद्धि और सहायक समुदाय की आकांक्षा व्यक्त करती है।",
+      "meaningEn": "Jatavedas, invite Lakshmi who does not depart, in whose presence I may obtain gold, cattle, horses and people to support the household. These are the hymn’s ancient measures of prosperity; the prayer seeks enduring well-being rather than a passing possession."
+    },
+    {
+      "id": "shri-suktam-3",
+      "number": 3,
+      "labelHi": "ऋचा · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "अश्वपूर्वां रथमध्यां हस्तिनादप्रबोधिनीम्।",
+        "श्रियं देवीमुपह्वये श्रीर्मा देवी जुषताम्॥"
+      ],
+      "linesEn": [
+        "aśhvapūrvāṃ rathamadhyāṃ hastinādaprabodhinīm",
+        "śhriyaṃ devīmupahvaye śhrīrmā devī juṣatām"
+      ],
+      "meaningHi": "अश्वों से अग्रसर, रथ के मध्य विराजमान और हाथियों के नाद से उद्घोषित देवी श्री को मैं बुलाता हूँ; वे मुझे स्वीकार करें। आवाहन में राजसी शोभा के इन बिम्बों से देवी की गरिमा और उनके अनुग्रह की प्रार्थना सामने आती है।",
+      "meaningEn": "I invoke the goddess Sri, heralded by horses, seated amid a chariot procession and announced by elephants. May she favour me. The royal imagery honours her splendour during invocation and expresses the worshipper’s wish to be accepted by her."
+    },
+    {
+      "id": "shri-suktam-4",
+      "number": 4,
+      "labelHi": "ऋचा · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "कां सोस्मितां हिरण्यप्राकारामार्द्रां ज्वलन्तीं तृप्तां तर्पयन्तीम्।",
+        "पद्मे स्थितां पद्मवर्णां तामिहोपह्वये श्रियम्॥"
+      ],
+      "linesEn": [
+        "kāṃ sosmitāṃ hiraṇyaprākārāmārdrāṃ jvalantīṃ tṛiptāṃ tarpayantīm",
+        "padme sthitāṃ padmavarṇāṃ tāmihopahvaye śhriyam"
+      ],
+      "meaningHi": "मुस्कान से शोभित, स्वर्णमय प्राकार वाली, आर्द्र, दीप्त, स्वयं तृप्त और दूसरों को तृप्त करने वाली, कमल पर स्थित कमलवर्णा श्री को मैं यहाँ बुलाता हूँ। ध्यान में देवी की दीप्ति के साथ उनकी पोषण देने वाली पूर्णता का स्मरण होता है।",
+      "meaningEn": "I invoke Sri, smiling, surrounded by golden ramparts, tender and radiant, fulfilled herself and fulfilling others, lotus-coloured and seated on a lotus. This contemplative invocation brings together her splendour and her nourishing fullness."
+    },
+    {
+      "id": "shri-suktam-5",
+      "number": 5,
+      "labelHi": "ऋचा · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "चन्द्रां प्रभासां यशसा ज्वलन्तीं श्रियं लोके देवजुष्टामुदाराम्।",
+        "तां पद्मिनीमीं शरणमहं प्रपद्येऽलक्ष्मीर्मे नश्यतां त्वां वृणे॥"
+      ],
+      "linesEn": [
+        "chandrāṃ prabhāsāṃ yaśhasā jvalantīṃ śhriyaṃ loke devajuṣṭāmudārām",
+        "tāṃ padminīmīṃ śharaṇamahaṃ prapadye'lakṣhmīrme naśhyatāṃ tvāṃ vṛiṇe"
+      ],
+      "meaningHi": "चन्द्रमा जैसी प्रभा, यश की दीप्ति, देवताओं का सम्मान और उदारता धारण करने वाली पद्मिनी श्री की मैं शरण लेता हूँ। मैं आपको चुनता हूँ; मेरी अलक्ष्मी दूर हो। आवाहन यहाँ शरणागति बनता है और अभाव से मुक्ति की प्रार्थना करता है।",
+      "meaningEn": "I take refuge in lotus-bearing Sri, moon-bright, radiant with renown, honoured by the gods and generous. I choose you; may adversity leave me. The invocation becomes an act of refuge and a prayer for release from deprivation."
+    },
+    {
+      "id": "shri-suktam-6",
+      "number": 6,
+      "labelHi": "ऋचा · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "आदित्यवर्णे तपसोऽधिजातो वनस्पतिस्तव वृक्षोऽथ बिल्वः।",
+        "तस्य फलानि तपसानुदन्तु मायान्तरायाश्च बाह्या अलक्ष्मीः॥"
+      ],
+      "linesEn": [
+        "ādityavarṇe tapaso'dhijāto vanaspatistava vṛikṣho'tha bilvaḥ",
+        "tasya phalāni tapasānudantu māyāntarāyāśhcha bāhyā alakṣhmīḥ"
+      ],
+      "meaningHi": "हे सूर्य जैसी कान्ति वाली देवी, तप से उत्पन्न बिल्व आपका वृक्ष है। उसके फल तप के बल से भीतर के विघ्न और बाहर की अलक्ष्मी दूर करें। इस ऋचा में बिल्व और तप का स्मरण करके बाधाओं से रक्षा माँगी जाती है; इसे वनस्पति से निश्चित लौकिक परिणाम का दावा न मानें।",
+      "meaningEn": "Sun-radiant goddess, the bilva tree arose from austerity and belongs to you. May its fruits, through that austerity, dispel inward obstacles and outward misfortune. The verse invokes bilva and disciplined devotion as sacred imagery, rather than promising a measurable effect from the plant."
+    },
+    {
+      "id": "shri-suktam-7",
+      "number": 7,
+      "labelHi": "ऋचा · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "उपैतु मां देवसखः कीर्तिश्च मणिना सह।",
+        "प्रादुर्भूतोऽस्मि राष्ट्रेऽस्मिन् कीर्तिमृद्धिं ददातु मे॥"
+      ],
+      "linesEn": [
+        "upaitu māṃ devasakhaḥ kīrtiśhcha maṇinā saha",
+        "prādurbhūto'smi rāṣṭre'smin kīrtimṛiddhiṃ dadātu me"
+      ],
+      "meaningHi": "देवसखा, कीर्ति और मणि मेरे पास आएँ। इस राष्ट्र में जन्मे मुझे कीर्ति और ऋद्धि प्राप्त हो। गृहस्थ के लिए समृद्धि केवल धन नहीं, समुदाय में प्रतिष्ठा और उन्नति भी है—इस ऋचा की प्रार्थना इन्हीं को साथ रखती है।",
+      "meaningEn": "May the friend of the gods, renown and the jewel come to me. Born in this realm, may I receive reputation and flourishing. Within the household prayer, prosperity includes standing and well-being in one’s community as well as possessions."
+    },
+    {
+      "id": "shri-suktam-8",
+      "number": 8,
+      "labelHi": "ऋचा · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "क्षुत्पिपासामलां ज्येष्ठामलक्ष्मीं नाशयाम्यहम्।",
+        "अभूतिमसमृद्धिं च सर्वां निर्णुद मे गृहात्॥"
+      ],
+      "linesEn": [
+        "kṣhutpipāsāmalāṃ jyeṣṭhāmalakṣhmīṃ nāśhayāmyaham",
+        "abhūtimasamṛiddhiṃ cha sarvāṃ nirṇuda me gṛihāt"
+      ],
+      "meaningHi": "भूख-प्यास और मलिनता से जुड़ी ज्येष्ठा अलक्ष्मी को मैं दूर करता हूँ; मेरे घर से अभाव और असमृद्धि निकाल दीजिए। यह गृहस्थ प्रार्थना अन्न, जल और जीवन-निर्वाह की मूल आवश्यकताओं को समृद्धि का आधार मानती है।",
+      "meaningEn": "I turn away Jyeshtha Alakshmi, associated here with hunger, thirst and impurity. Drive every form of want and unprosperity from my home. The household prayer places food, water and basic sustenance at the foundation of well-being."
+    },
+    {
+      "id": "shri-suktam-9",
+      "number": 9,
+      "labelHi": "ऋचा · ९",
+      "labelEn": "Verse · 9",
+      "lines": [
+        "गन्धद्वारां दुराधर्षां नित्यपुष्टां करीषिणीम्।",
+        "ईश्वरीं सर्वभूतानां तामिहोपह्वये श्रियम्॥"
+      ],
+      "linesEn": [
+        "gandhadvārāṃ durādharṣāṃ nityapuṣṭāṃ karīṣiṇīm",
+        "īśhvarīṃ sarvabhūtānāṃ tāmihopahvaye śhriyam"
+      ],
+      "meaningHi": "सुगन्ध से जानी जाने वाली, दुर्धर्ष, सदा पुष्ट, उपजाऊ धरती से सम्बद्ध और सभी प्राणियों की ईश्वरी श्री को मैं बुलाता हूँ। करीषिणी का कृषिजीवन से जुड़ा बिम्ब पोषण और जीविका का स्मरण कराता है; यह लक्ष्मी का पोषक स्वरूप है।",
+      "meaningEn": "I invoke Sri, known through fragrance, unassailable, ever flourishing, associated with fertile ground and sovereign of all beings. The agricultural image in karishini recalls nourishment and livelihood within this invocation of Lakshmi."
+    },
+    {
+      "id": "shri-suktam-10",
+      "number": 10,
+      "labelHi": "ऋचा · १०",
+      "labelEn": "Verse · 10",
+      "lines": [
+        "मनसः काममाकूतिं वाचः सत्यमशीमहि।",
+        "पशूनां रूपमन्नस्य मयि श्रीः श्रयतां यशः॥"
+      ],
+      "linesEn": [
+        "manasaḥ kāmamākūtiṃ vāchaḥ satyamaśhīmahi",
+        "paśhūnāṃ rūpamannasya mayi śhrīḥ śhrayatāṃ yaśhaḥ"
+      ],
+      "meaningHi": "मन की कामना और संकल्प, वाणी की सत्यता, पशुधन और अन्न की सम्पन्नता हमें मिले; श्री और यश मुझमें निवास करें। पाठ में इच्छा के साथ सत्यवचन का उल्लेख समृद्ध जीवन को आचरण और पोषण से जोड़ता है।",
+      "meaningEn": "May we attain the heart’s desire and purpose, truth in speech, thriving livestock and food. May Sri and renown dwell in me. The prayer places truthful speech beside material nourishment, linking prosperity with conduct as well as resources."
+    },
+    {
+      "id": "shri-suktam-11",
+      "number": 11,
+      "labelHi": "ऋचा · ११",
+      "labelEn": "Verse · 11",
+      "lines": [
+        "कर्दमेन प्रजाभूता मयि सम्भव कर्दम।",
+        "श्रियं वासय मे कुले मातरं पद्ममालिनीम्॥"
+      ],
+      "linesEn": [
+        "kardamena prajābhūtā mayi sambhava kardama",
+        "śhriyaṃ vāsaya me kule mātaraṃ padmamālinīm"
+      ],
+      "meaningHi": "हे कर्दम, जिनसे प्रजा का सम्बन्ध है, मेरे यहाँ उपस्थित हों और कमलमालिनी माता श्री को मेरे कुल में बसाएँ। परिवार में देवी के स्थायी निवास की यह विनती पोषण को पीढ़ियों के जीवन से जोड़ती है।",
+      "meaningEn": "Kardama, associated with the arising of progeny, be present with me and cause mother Sri, garlanded with lotuses, to dwell in my family. The invocation seeks her abiding presence across household life and generations."
+    },
+    {
+      "id": "shri-suktam-12",
+      "number": 12,
+      "labelHi": "ऋचा · १२",
+      "labelEn": "Verse · 12",
+      "lines": [
+        "आपः सृजन्तु स्निग्धानि चिक्लीत वस मे गृहे।",
+        "नि च देवीं मातरं श्रियं वासय मे कुले॥"
+      ],
+      "linesEn": [
+        "āpaḥ sṛijantu snigdhāni chiklīta vasa me gṛihe",
+        "ni cha devīṃ mātaraṃ śhriyaṃ vāsaya me kule"
+      ],
+      "meaningHi": "जल स्निग्धता उत्पन्न करे; हे चिक्लीत, मेरे घर में रहें और माता श्री को मेरे कुल में बसाएँ। जल और स्निग्धता के बिम्ब से यह ऋचा परिवार के पोषण और अनुकूल जीवन की प्रार्थना करती है।",
+      "meaningEn": "May the waters bring nourishment and moisture. Chiklita, dwell in my home and establish mother Sri in my family. Water and its sustaining quality frame this household prayer for a hospitable, flourishing life."
+    },
+    {
+      "id": "shri-suktam-13",
+      "number": 13,
+      "labelHi": "ऋचा · १३",
+      "labelEn": "Verse · 13",
+      "lines": [
+        "आर्द्रां पुष्करिणीं पुष्टिं पिङ्गलां पद्ममालिनीम्।",
+        "चन्द्रां हिरण्मयीं लक्ष्मीं जातवेदो म आवह॥"
+      ],
+      "linesEn": [
+        "ārdrāṃ puṣkariṇīṃ puṣṭiṃ piṅgalāṃ padmamālinīm",
+        "chandrāṃ hiraṇmayīṃ lakṣhmīṃ jātavedo ma āvaha"
+      ],
+      "meaningHi": "हे जातवेदस्, आर्द्र, कमल-सरोवर से सम्बद्ध, पुष्टिदायिनी, पिङ्गल कान्ति वाली, कमलमाला धारण करने वाली चन्द्रप्रभा स्वर्णमयी लक्ष्मी को मेरे लिए बुलाएँ। पुनरावाहन में उनकी शीतल दीप्ति और पोषण का ध्यान किया जाता है।",
+      "meaningEn": "Jatavedas, bring Lakshmi: tender, associated with the lotus pool, nourishing, tawny-golden, lotus-garlanded and luminous like the moon. This renewed invocation dwells on her gentle radiance and sustaining presence."
+    },
+    {
+      "id": "shri-suktam-14",
+      "number": 14,
+      "labelHi": "ऋचा · १४",
+      "labelEn": "Verse · 14",
+      "lines": [
+        "आर्द्रां यः करिणीं यष्टिं सुवर्णां हेममालिनीम्।",
+        "सूर्यां हिरण्मयीं लक्ष्मीं जातवेदो म आवह॥"
+      ],
+      "linesEn": [
+        "ārdrāṃ yaḥ kariṇīṃ yaṣṭiṃ suvarṇāṃ hemamālinīm",
+        "sūryāṃ hiraṇmayīṃ lakṣhmīṃ jātavedo ma āvaha"
+      ],
+      "meaningHi": "हे जातवेदस्, आर्द्र, सहारा देने वाली, सुवर्णवर्णा, हेममालिनी और सूर्य जैसी स्वर्णमय लक्ष्मी का आवाहन करें। पिछली ऋचा की चन्द्रप्रभा के साथ यहाँ सूर्य की दीप्ति का ध्यान होता है; पाठ में दोनों प्रकाश-बिम्ब देवी के वैभव को प्रकट करते हैं।",
+      "meaningEn": "Jatavedas, bring the tender, sustaining Lakshmi, golden and gold-garlanded, radiant like the sun. Following the previous verse’s moon imagery, this invocation contemplates her solar brilliance; both images praise her splendour."
+    },
+    {
+      "id": "shri-suktam-15",
+      "number": 15,
+      "labelHi": "ऋचा · १५",
+      "labelEn": "Verse · 15",
+      "lines": [
+        "तां म आवह जातवेदो लक्ष्मीमनपगामिनीम्।",
+        "यस्यां हिरण्यं प्रभूतं गावो दास्योऽश्वान् विन्देयं पुरुषानहम्॥"
+      ],
+      "linesEn": [
+        "tāṃ ma āvaha jātavedo lakṣhmīmanapagāminīm",
+        "yasyāṃ hiraṇyaṃ prabhūtaṃ gāvo dāsyo'śhvān vindeyaṃ puruṣānaham"
+      ],
+      "meaningHi": "हे जातवेदस्, न जाने वाली लक्ष्मी को मेरे लिए बुलाएँ, जिनके सान्निध्य में पर्याप्त स्वर्ण, गौ, सेवक-सेविकाएँ, अश्व और जनसमर्थन मिले। पन्द्रह ऋचाओं का अन्त स्थिर गृहस्थ-सम्पन्नता की प्रार्थना से होता है; वर्णित साधन प्राचीन सामाजिक सन्दर्भ के हैं।",
+      "meaningEn": "Jatavedas, invite Lakshmi who stays, through whose presence I may obtain abundant gold, cattle, attendants, horses and people. The fifteen riks close by seeking lasting household prosperity in the social vocabulary of the ancient hymn."
+    },
+    {
+      "id": "shri-suktam-16",
+      "number": 16,
+      "labelHi": "फलश्रुति · १६",
+      "labelEn": "Phalashruti · 16",
+      "lines": [
+        "यः शुचिः प्रयतो भूत्वा जुहुयादाज्यमन्वहम्।",
+        "सूक्तं पञ्चदशर्चं च श्रीकामः सततं जपेत्॥"
+      ],
+      "linesEn": [
+        "yaḥ śhuchiḥ prayato bhūtvā juhuyādājyamanvaham",
+        "sūktaṃ pañchadaśharchaṃ cha śhrīkāmaḥ satataṃ japet"
+      ],
+      "meaningHi": "श्री की इच्छा रखने वाला शुद्ध और संयत होकर नित्य घृत की आहुति दे तथा पन्द्रह ऋचाओं वाले सूक्त का नियमित जप करे—यह समापन-वचन की पारम्परिक पाठ-विधि है। यह वैदिक कर्मकाण्ड का सन्दर्भ बताता है; गृहस्थ अग्निकर्म योग्य मार्गदर्शन में ही करें।",
+      "meaningEn": "The closing prescription says that one who seeks Sri should be pure and attentive, offer ghee daily and regularly recite the hymn of fifteen riks. It describes the traditional ritual setting; any fire ritual should be learned with competent guidance, not inferred from an app verse alone."
+    }
+  ]
+}

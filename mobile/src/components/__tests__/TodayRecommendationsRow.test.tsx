@@ -23,8 +23,8 @@ const renderedFeatureCardProps: Array<{
 const entries = [
   {
     id: 'vishnu-sahasranama',
-    nameHi: 'विष्णु सहस्रनाम अंश',
-    nameEn: 'Vishnu Sahasranama Excerpt',
+    nameHi: 'विष्णु सहस्रनाम',
+    nameEn: 'Vishnu Sahasranama',
     sub: '4 sections',
     subEn: '4 sections',
     thumb: 'वि',
@@ -154,7 +154,7 @@ describe('TodayRecommendationsRow', () => {
     expect(renderedFeatureCardProps.every((props) => props.compact === true)).toBe(true);
     expect(renderedFeatureCardProps.map((props) => props.item.titleEn)).toEqual([
       'Gita Saar',
-      'Vishnu Sahasranama Excerpt',
+      'Vishnu Sahasranama',
       'Vishnu Chalisa',
     ]);
     expect(renderedFeatureCardProps.every((props) => props.item.descEn === 'Recommended for today')).toBe(true);
@@ -196,7 +196,7 @@ describe('TodayRecommendationsRow', () => {
       mountRow();
     });
     expect(renderedFeatureCardProps[0].item.key).toBe('gita-saar');
-    expect(renderedFeatureCardProps[1].item.titleEn).toBe('Vishnu Sahasranama Excerpt');
+    expect(renderedFeatureCardProps[1].item.titleEn).toBe('Vishnu Sahasranama');
   });
 
   test('enlarged text widens the recommendation without exceeding the phone gutter', () => {

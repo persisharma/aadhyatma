@@ -302,7 +302,7 @@ test('graha cards open one at a time into the narrative reading, upay and an on-
 
   // The paath opens the shipped library text.
   act(() => {
-    tree.root.findAll((node) => node.props.accessibilityLabel === 'Open Vishnu Sahasranama Excerpt practice' && typeof node.props.onPress === 'function')[0].props.onPress();
+    tree.root.findAll((node) => node.props.accessibilityLabel === 'Open Vishnu Sahasranama practice' && typeof node.props.onPress === 'function')[0].props.onPress();
   });
   assert.equal(mockNavigation.navigate.mock.calls.at(-1)?.[0], 'HomeTab');
   act(() => tree.unmount());

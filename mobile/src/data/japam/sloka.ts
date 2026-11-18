@@ -69,6 +69,23 @@ function stuti(id: string): () => Corpus {
  * (`slokaJapa.test.ts` keeps this list and the library in step).
  */
 const SOURCES: readonly SlokaSource[] = [
+  { sourceId: 'kanakadhara-stotram', deities: ['lakshmi'], unit: 'whole', corpus: stuti('kanakadhara-stotram') },
+  { sourceId: 'hanuman-bahuk', deities: ['hanuman'], unit: 'whole', corpus: stuti('hanuman-bahuk') },
+  { sourceId: 'durga-argala-stotram', deities: ['durga'], unit: 'whole', corpus: stuti('durga-argala-stotram') },
+  { sourceId: 'durga-kilak-stotram', deities: ['durga'], unit: 'whole', corpus: stuti('durga-kilak-stotram') },
+  { sourceId: 'durga-saptashati-chapter-1', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-1') },
+  { sourceId: 'durga-saptashati-chapter-2', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-2') },
+  { sourceId: 'durga-saptashati-chapter-3', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-3') },
+  { sourceId: 'durga-saptashati-chapter-4', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-4') },
+  { sourceId: 'durga-saptashati-chapter-5', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-5') },
+  { sourceId: 'durga-saptashati-chapter-6', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-6') },
+  { sourceId: 'durga-saptashati-chapter-7', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-7') },
+  { sourceId: 'durga-saptashati-chapter-8', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-8') },
+  { sourceId: 'durga-saptashati-chapter-9', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-9') },
+  { sourceId: 'durga-saptashati-chapter-10', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-10') },
+  { sourceId: 'durga-saptashati-chapter-11', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-11') },
+  { sourceId: 'durga-saptashati-chapter-12', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-12') },
+  { sourceId: 'durga-saptashati-chapter-13', deities: ['durga'], unit: 'whole', corpus: stuti('durga-saptashati-chapter-13') },
   // Listed only once its artwork is published, like its library entry.
   ...(parshuramPublished ? [{ sourceId: 'parshuram-stotram', deities: ['parshuram'] as Deity[], unit: 'whole' as const, corpus: stuti('parshuram-stotram') }] : []),
   {

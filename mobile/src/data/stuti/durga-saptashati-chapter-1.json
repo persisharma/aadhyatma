@@ -1,0 +1,1605 @@
+{
+  "id": "durga-saptashati-chapter-1",
+  "titleHi": "दुर्गा सप्तशती — प्रथम अध्याय",
+  "titleEn": "Durga Saptashati — Chapter 1",
+  "deity": "durga",
+  "source": {
+    "baseText": "Complete first chapter (Madhu-Kaitabha-vadha) of Devi Mahatmya / Durga Saptashati, Markandeya Purana.104 traditional counted units:14 speaker announcements,24 half-verses,66 full verses. This is chapter1, not the complete700-unit Saptashati. Preparatory viniyoga/dhyana/nyasa and optional bija refrains are outside these104 canonical units.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/first-chapter/durga-saptashati-first-chapter.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Drik main reading; compared end-to-end with Rampuri. Original Hindi/English explanations; ancient Sanskrit only. Corrected Drik typographical स्वधां->स्वधा and श्रृणु->शृणु by comparison. See durga-core-sources.md for variants. No audio or ritual-completeness claim."
+  },
+  "verses": [
+    {
+      "id": "durga-saptashati-chapter-1-1",
+      "number": 1,
+      "labelHi": "पाठ · १",
+      "labelEn": "Text unit · 1",
+      "lines": [
+        "मार्कण्डेय उवाच॥"
+      ],
+      "linesEn": [
+        "mārkaṇḍeya uvācha"
+      ],
+      "meaningHi": "मार्कण्डेय बोले। यह वक्ता-सूचक पद भी सप्तशती की पारम्परिक 104-मन्त्र गणना में गिना जाता है; इसके बाद सावर्णि मनु की कथा खुलती है।",
+      "meaningEn": "Markandeya spoke. This speaker announcement is included in the traditional count of 104 units for the chapter. The account of Savarni Manu begins next."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-2",
+      "number": 2,
+      "labelHi": "पाठ · २",
+      "labelEn": "Text unit · 2",
+      "lines": [
+        "सावर्णिः सूर्यतनयो यो मनुः कथ्यतेऽष्टमः।",
+        "निशामय तदुत्पत्तिं विस्तराद्गदतो मम॥"
+      ],
+      "linesEn": [
+        "sāvarṇiḥ sūryatanayo yo manuḥ kathyate'ṣṭamaḥ",
+        "niśhāmaya tadutpattiṃ vistarādgadato mama"
+      ],
+      "meaningHi": "सूर्यपुत्र सावर्णि को आठवाँ मनु कहा जाता है। उनकी उत्पत्ति का विस्तार मुझसे सुनो। कथा भविष्य के मनु के पूर्वजीवन की ओर ले जाती है।",
+      "meaningEn": "Listen as I explain in detail the origin of Savarni, the sun’s son, who is called the eighth Manu. The story turns toward the earlier life of this future ruler of an age."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-3",
+      "number": 3,
+      "labelHi": "पाठ · ३",
+      "labelEn": "Text unit · 3",
+      "lines": [
+        "महामायानुभावेन यथा मन्वन्तराधिपः।",
+        "स बभूव महाभागः सावर्णिस्तनयो रवेः॥"
+      ],
+      "linesEn": [
+        "mahāmāyānubhāvena yathā manvantarādhipaḥ",
+        "sa babhūva mahābhāgaḥ sāvarṇistanayo raveḥ"
+      ],
+      "meaningHi": "सूर्यपुत्र महाभाग सावर्णि महामाया के प्रभाव से मन्वन्तर के अधिपति कैसे बने, यह सुनाया जाएगा। आरम्भ से ही कथा देवी के अनुग्रह से जुड़ती है।",
+      "meaningEn": "The account will tell how the fortunate Savarni became lord of a manvantara through Mahamaya’s power. The story’s outcome is linked from the outset to the goddess’s grace."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-4",
+      "number": 4,
+      "labelHi": "पाठ · ४",
+      "labelEn": "Text unit · 4",
+      "lines": [
+        "स्वारोचिषेऽन्तरे पूर्वं चैत्रवंशसमुद्भवः।",
+        "सुरथो नाम राजाभूत्समस्ते क्षितिमण्डले॥"
+      ],
+      "linesEn": [
+        "svārochiṣe'ntare pūrvaṃ chaitravaṃśhasamudbhavaḥ",
+        "suratho nāma rājābhūtsamaste kṣhitimaṇḍale"
+      ],
+      "meaningHi": "पहले स्वारोचिष मन्वन्तर में चैत्रवंश में उत्पन्न सुरथ नाम के राजा पृथ्वी पर शासन करते थे। अब उनके जीवन की परिस्थिति बताई जाती है।",
+      "meaningEn": "In the earlier Svarochisha manvantara, a king named Suratha, born in the Chaitra lineage, ruled the earth. The narrative now introduces his circumstances."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-5",
+      "number": 5,
+      "labelHi": "पाठ · ५",
+      "labelEn": "Text unit · 5",
+      "lines": [
+        "तस्य पालयतः सम्यक् प्रजाः पुत्रानिवौरसान्।",
+        "बभूवुः शत्रवो भूपाः कोलाविध्वंसिनस्तदा॥"
+      ],
+      "linesEn": [
+        "tasya pālayataḥ samyak prajāḥ putrānivaurasān",
+        "babhūvuḥ śhatravo bhūpāḥ kolāvidhvaṃsinastadā"
+      ],
+      "meaningHi": "वे प्रजा को अपने पुत्रों की तरह अच्छी तरह पालते थे। उसी समय कोलाविध्वंसी नामक राजा उनके शत्रु बन गए। उचित शासन के बीच संकट प्रवेश करता है।",
+      "meaningEn": "He cared properly for his subjects as for his own children. At that time kings called the Kolavidhvamsins became his enemies. Conflict enters the life of this caring ruler."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-6",
+      "number": 6,
+      "labelHi": "पाठ · ६",
+      "labelEn": "Text unit · 6",
+      "lines": [
+        "तस्य तैरभवद्युद्धमतिप्रबलदण्डिनः।",
+        "न्यूनैरपि स तैर्युद्धे कोलाविध्वंसिभिर्जितः॥"
+      ],
+      "linesEn": [
+        "tasya tairabhavadyuddhamatiprabaladaṇḍinaḥ",
+        "nyūnairapi sa tairyuddhe kolāvidhvaṃsibhirjitaḥ"
+      ],
+      "meaningHi": "बलवान सेना वाले सुरथ का उनसे युद्ध हुआ। विरोधी संख्या में कम थे, फिर भी कोलाविध्वंसियों ने उन्हें हरा दिया। केवल बाहरी शक्ति विजय सुनिश्चित नहीं करती।",
+      "meaningEn": "Suratha, though commanding a powerful army, fought them and was defeated by the fewer Kolavidhvamsins. His outward strength did not prevent the reversal of fortune."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-7",
+      "number": 7,
+      "labelHi": "पाठ · ७",
+      "labelEn": "Text unit · 7",
+      "lines": [
+        "ततः स्वपुरमायातो निजदेशाधिपोऽभवत्।",
+        "आक्रान्तः स महाभागस्तैस्तदा प्रबलारिभिः॥"
+      ],
+      "linesEn": [
+        "tataḥ svapuramāyāto nijadeśhādhipo'bhavat",
+        "ākrāntaḥ sa mahābhāgastaistadā prabalāribhiḥ"
+      ],
+      "meaningHi": "वे अपनी नगरी लौटकर अपने सीमित देश के अधिपति रहे, पर प्रबल शत्रुओं का आक्रमण बना रहा। पराजय के बाद उनका अधिकार और संकुचित हुआ।",
+      "meaningEn": "He returned to his city and retained rule over his own territory, yet those powerful enemies continued to press him. His authority narrowed after the defeat."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-8",
+      "number": 8,
+      "labelHi": "पाठ · ८",
+      "labelEn": "Text unit · 8",
+      "lines": [
+        "अमात्यैर्बलिभिर्दुष्टैर्दुर्बलस्य दुरात्मभिः।",
+        "कोशो बलं चापहृतं तत्रापि स्वपुरे ततः॥"
+      ],
+      "linesEn": [
+        "amātyairbalibhirduṣṭairdurbalasya durātmabhiḥ",
+        "kośho balaṃ chāpahṛitaṃ tatrāpi svapure tataḥ"
+      ],
+      "meaningHi": "दुर्बल पड़े राजा का कोष और बल उनके अपने नगर में ही शक्तिशाली दुष्ट मन्त्रियों ने छीन लिया। बाहरी आक्रमण के साथ भीतर का विश्वासघात जुड़ गया।",
+      "meaningEn": "While he was weakened, powerful and corrupt ministers seized his treasury and forces even within his own city. Internal betrayal added to the external attack."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-9",
+      "number": 9,
+      "labelHi": "पाठ · ९",
+      "labelEn": "Text unit · 9",
+      "lines": [
+        "ततो मृगयाव्याजेन हृतस्वाम्यः स भूपतिः।",
+        "एकाकी हयमारुह्य जगाम गहनं वनम्॥"
+      ],
+      "linesEn": [
+        "tato mṛigayāvyājena hṛitasvāmyaḥ sa bhūpatiḥ",
+        "ekākī hayamāruhya jagāma gahanaṃ vanam"
+      ],
+      "meaningHi": "राज्याधिकार खो चुके राजा शिकार के बहाने अकेले घोड़े पर बैठकर घने वन चले गए। राजमहल से दूर उनकी खोज अब भीतर की ओर मुड़ेगी।",
+      "meaningEn": "Deprived of sovereignty, the king rode alone into a dense forest under the pretext of hunting. Away from the court, his search will turn toward understanding his own mind."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-10",
+      "number": 10,
+      "labelHi": "पाठ · १०",
+      "labelEn": "Text unit · 10",
+      "lines": [
+        "स तत्राश्रममद्राक्षीद्द्विजवर्यस्य मेधसः।",
+        "प्रशान्तश्वापदाकीर्णं मुनिशिष्योपशोभितम्॥"
+      ],
+      "linesEn": [
+        "sa tatrāśhramamadrākṣhīddvijavaryasya medhasaḥ",
+        "praśhāntaśhvāpadākīrṇaṃ muniśhiṣyopaśhobhitam"
+      ],
+      "meaningHi": "वहाँ उन्होंने श्रेष्ठ ऋषि मेधस का आश्रम देखा, जहाँ हिंसक पशु भी शान्त थे और शिष्य आश्रम की शोभा बढ़ाते थे। यह वातावरण उनके अशान्त मन से भिन्न है।",
+      "meaningEn": "There he saw the hermitage of the sage Medhas, graced by disciples and even wild animals at peace. Its quiet atmosphere contrasts with the king’s troubled mind."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-11",
+      "number": 11,
+      "labelHi": "पाठ · ११",
+      "labelEn": "Text unit · 11",
+      "lines": [
+        "तस्थौ कञ्चित्स कालं च मुनिना तेन सत्कृतः।",
+        "इतश्चेतश्च विचरंस्तस्मिन्मुनिवराश्रमे॥"
+      ],
+      "linesEn": [
+        "tasthau kañchitsa kālaṃ cha muninā tena satkṛitaḥ",
+        "itaśhchetaśhcha vicharaṃstasminmunivarāśhrame"
+      ],
+      "meaningHi": "ऋषि ने उनका आदर किया। वे कुछ समय आश्रम में रहे और इधर-उधर विचरते रहे। बाहरी आश्रय मिलने पर भी मन का बोझ अभी बना हुआ था।",
+      "meaningEn": "Welcomed respectfully by the sage, he stayed for a time and wandered through the hermitage. Although he had found outward shelter, his inner burden remained."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-12",
+      "number": 12,
+      "labelHi": "पाठ · १२",
+      "labelEn": "Text unit · 12",
+      "lines": [
+        "सोऽचिन्तयत्तदा तत्र ममत्वाकृष्टचेतनः।",
+        "मत्पूर्वैः पालितं पूर्वं मया हीनं पुरं हि तत्॥"
+      ],
+      "linesEn": [
+        "so'chintayattadā tatra mamatvākṛiṣṭachetanaḥ",
+        "matpūrvaiḥ pālitaṃ pūrvaṃ mayā hīnaṃ puraṃ hi tat"
+      ],
+      "meaningHi": "ममता से खिंचे मन में राजा सोचने लगे: मेरे पूर्वजों द्वारा पाली गई वह नगरी अब मुझसे रहित है। खोए हुए राज्य से उनका भावनात्मक सम्बन्ध नहीं टूटा था।",
+      "meaningEn": "Drawn by attachment, the king thought: that city once protected by my ancestors is now without me. Losing his kingdom had not ended his emotional bond with it."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-13",
+      "number": 13,
+      "labelHi": "पाठ · १३",
+      "labelEn": "Text unit · 13",
+      "lines": [
+        "मद्भृत्यैस्तैरसद्वृत्तैर्धर्मतः पाल्यते न वा।",
+        "न जाने स प्रधानो मे शूरहस्ती सदामदः॥"
+      ],
+      "linesEn": [
+        "madbhṛityaistairasadvṛittairdharmataḥ pālyate na vā",
+        "na jāne sa pradhāno me śhūrahastī sadāmadaḥ"
+      ],
+      "meaningHi": "क्या मेरे दुराचारी सेवक उस नगर को धर्मपूर्वक चला रहे हैं? और मेरा प्रमुख वीर, मदयुक्त हाथी—उसका क्या हुआ होगा? राजा की चिन्ता सत्ता से व्यक्तिगत सम्बन्धों तक जाती है।",
+      "meaningEn": "Are those ill-behaved servants governing the city rightly? And what has become of my foremost brave elephant, always in its proud vigour? His worry ranges from governance to beings he personally knew."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-14",
+      "number": 14,
+      "labelHi": "पाठ · १४",
+      "labelEn": "Text unit · 14",
+      "lines": [
+        "मम वैरिवशं यातः कान् भोगानुपलप्स्यते।",
+        "ये ममानुगता नित्यं प्रसादधनभोजनैः॥"
+      ],
+      "linesEn": [
+        "mama vairivaśhaṃ yātaḥ kān bhogānupalapsyate",
+        "ye mamānugatā nityaṃ prasādadhanabhojanaiḥ"
+      ],
+      "meaningHi": "शत्रुओं के अधीन मेरा हाथी कैसी सुविधा पाएगा? मेरे अनुग्रह, धन और भोजन से जो लोग सदा मेरे साथ थे—राजा अब उनके विषय में सोचते हैं। विचार अगले पद में पूरा होता है।",
+      "meaningEn": "What comforts will my elephant receive under my enemies? And those who followed me because of favour, wealth and food—his thought turns toward them and continues in the next verse."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-15",
+      "number": 15,
+      "labelHi": "पाठ · १५",
+      "labelEn": "Text unit · 15",
+      "lines": [
+        "अनुवृत्तिं ध्रुवं तेऽद्य कुर्वन्त्यन्यमहीभृताम्।",
+        "असम्यग्व्ययशीलैस्तैः कुर्वद्भिः सततं व्ययम्॥"
+      ],
+      "linesEn": [
+        "anuvṛittiṃ dhruvaṃ te'dya kurvantyanyamahībhṛitām",
+        "asamyagvyayaśhīlaistaiḥ kurvadbhiḥ satataṃ vyayam"
+      ],
+      "meaningHi": "वे अब निश्चय ही दूसरे राजाओं की सेवा करते होंगे। अनुचित खर्च करने वाले लोग लगातार धन नष्ट कर रहे होंगे। खोए राज्य की कल्पना राजा को चिन्तित रखती है।",
+      "meaningEn": "Surely they now serve other kings. Those accustomed to careless expenditure must be spending continually. Imagined events in his lost kingdom keep the king anxious."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-16",
+      "number": 16,
+      "labelHi": "पाठ · १६",
+      "labelEn": "Text unit · 16",
+      "lines": [
+        "सञ्चितः सोऽतिदुःखेन क्षयं कोशो गमिष्यति।",
+        "एतच्चान्यच्च सततं चिन्तयामास पार्थिवः॥"
+      ],
+      "linesEn": [
+        "sañchitaḥ so'tiduḥkhena kṣhayaṃ kośho gamiṣyati",
+        "etachchānyachcha satataṃ chintayāmāsa pārthivaḥ"
+      ],
+      "meaningHi": "बहुत कठिनाई से संचित कोष नष्ट हो जाएगा—राजा लगातार ऐसी और अन्य बातें सोचते रहे। कथा दिखाती है कि खोई वस्तु का विचार वर्तमान की शान्ति छीन सकता है।",
+      "meaningEn": "The treasury gathered with such difficulty will be exhausted, he thought. The king repeatedly worried about this and other matters, unable to rest despite his present safety."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-17",
+      "number": 17,
+      "labelHi": "पाठ · १७",
+      "labelEn": "Text unit · 17",
+      "lines": [
+        "तत्र विप्राश्रमाभ्याशे वैश्यमेकं ददर्श सः।",
+        "स पृष्टस्तेन कस्त्वं भो हेतुश्चागमनेऽत्र कः॥"
+      ],
+      "linesEn": [
+        "tatra viprāśhramābhyāśhe vaiśhyamekaṃ dadarśha saḥ",
+        "sa pṛiṣṭastena kastvaṃ bho hetuśhchāgamane'tra kaḥ"
+      ],
+      "meaningHi": "आश्रम के पास राजा ने एक वैश्य को देखा और पूछा: आप कौन हैं, और यहाँ आने का कारण क्या है? दूसरे दुःखी व्यक्ति से संवाद आरम्भ होता है।",
+      "meaningEn": "Near the hermitage the king saw a merchant and asked who he was and why he had come. A conversation begins between two people carrying loss."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-18",
+      "number": 18,
+      "labelHi": "पाठ · १८",
+      "labelEn": "Text unit · 18",
+      "lines": [
+        "सशोक इव कस्मात्त्वं दुर्मना इव लक्ष्यसे।",
+        "इत्याकर्ण्य वचस्तस्य भूपतेः प्रणयोदितम्॥"
+      ],
+      "linesEn": [
+        "saśhoka iva kasmāttvaṃ durmanā iva lakṣhyase",
+        "ityākarṇya vachastasya bhūpateḥ praṇayoditam"
+      ],
+      "meaningHi": "आप शोकपूर्ण और उदास क्यों दिखाई देते हैं? राजा के इस स्नेहभरे प्रश्न को सुनकर वैश्य उत्तर देने लगे। सहानुभूति उनकी कथा सामने लाती है।",
+      "meaningEn": "Why do you appear sorrowful and distressed? Hearing the king’s kindly question, the merchant prepared to reply. Sympathy opens the way for his story."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-19",
+      "number": 19,
+      "labelHi": "पाठ · १९",
+      "labelEn": "Text unit · 19",
+      "lines": [
+        "प्रत्युवाच स तं वैश्यः प्रश्रयावनतो नृपम्॥"
+      ],
+      "linesEn": [
+        "pratyuvācha sa taṃ vaiśhyaḥ praśhrayāvanato nṛipam"
+      ],
+      "meaningHi": "वैश्य ने विनय से झुककर राजा को उत्तर दिया। यह अर्धश्लोक वार्तालाप में उनके आदरपूर्ण भाव को दर्शाता है।",
+      "meaningEn": "Bowing respectfully, the merchant answered the king. This half-verse marks the considerate tone of their exchange."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-20",
+      "number": 20,
+      "labelHi": "पाठ · २०",
+      "labelEn": "Text unit · 20",
+      "lines": [
+        "वैश्य उवाच॥"
+      ],
+      "linesEn": [
+        "vaiśhya uvācha"
+      ],
+      "meaningHi": "वैश्य बोले। अब समाधि अपने घर से निकाले जाने का दुःख बताते हैं।",
+      "meaningEn": "The merchant spoke. Samadhi now explains the pain of being expelled from his home."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-21",
+      "number": 21,
+      "labelHi": "पाठ · २१",
+      "labelEn": "Text unit · 21",
+      "lines": [
+        "समाधिर्नाम वैश्योऽहमुत्पन्नो धनिनां कुले॥"
+      ],
+      "linesEn": [
+        "samādhirnāma vaiśhyo'hamutpanno dhanināṃ kule"
+      ],
+      "meaningHi": "मेरा नाम समाधि है; मैं धनवान परिवार में जन्मा वैश्य हूँ। यह परिचय बताता है कि सम्पन्नता भी सम्बन्धों की टूटन से नहीं बचा सकी।",
+      "meaningEn": "My name is Samadhi, a merchant born into a wealthy family. His introduction places his coming loss against a background of prosperity."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-22",
+      "number": 22,
+      "labelHi": "पाठ · २२",
+      "labelEn": "Text unit · 22",
+      "lines": [
+        "पुत्रदारैर्निरस्तश्च धनलोभादसाधुभिः।",
+        "विहीनश्च धनैर्दारैः पुत्रैरादाय मे धनम्॥"
+      ],
+      "linesEn": [
+        "putradārairnirastaśhcha dhanalobhādasādhubhiḥ",
+        "vihīnaśhcha dhanairdāraiḥ putrairādāya me dhanam"
+      ],
+      "meaningHi": "धन के लोभ में पड़े पत्नी और पुत्रों ने मुझे निकाल दिया। मेरा धन लेकर उन्होंने मुझे सम्पत्ति और परिवार दोनों से वंचित कर दिया। समाधि के दुःख का कारण निकट सम्बन्धों में विश्वासघात है।",
+      "meaningEn": "Driven by greed for wealth, my wife and sons cast me out. Taking my property, they deprived me of both resources and family. His distress comes from betrayal within his closest relationships."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-23",
+      "number": 23,
+      "labelHi": "पाठ · २३",
+      "labelEn": "Text unit · 23",
+      "lines": [
+        "वनमभ्यागतो दुःखी निरस्तश्चाप्तबन्धुभिः।",
+        "सोऽहं न वेद्मि पुत्राणां कुशलाकुशलात्मिकाम्॥"
+      ],
+      "linesEn": [
+        "vanamabhyāgato duḥkhī nirastaśhchāptabandhubhiḥ",
+        "so'haṃ na vedmi putrāṇāṃ kuśhalākuśhalātmikām"
+      ],
+      "meaningHi": "अपने माने जाने वाले बन्धुओं से भी त्यागा गया मैं दुःखी होकर वन आया हूँ। अब अपने पुत्रों की कुशल या अकुशल स्थिति नहीं जानता। दूरी होने पर भी उनकी चिन्ता बनी है।",
+      "meaningEn": "Rejected even by trusted relatives, I have come grieving into the forest. I do not know whether my sons are faring well or badly. Separation has not ended his concern for them."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-24",
+      "number": 24,
+      "labelHi": "पाठ · २४",
+      "labelEn": "Text unit · 24",
+      "lines": [
+        "प्रवृत्तिं स्वजनानां च दाराणां चात्र संस्थितः।",
+        "किं नु तेषां गृहे क्षेममक्षेमं किं नु साम्प्रतम्॥"
+      ],
+      "linesEn": [
+        "pravṛittiṃ svajanānāṃ cha dārāṇāṃ chātra saṃsthitaḥ",
+        "kiṃ nu teṣāṃ gṛihe kṣhemamakṣhemaṃ kiṃ nu sāmpratam"
+      ],
+      "meaningHi": "यहाँ रहकर पत्नी और स्वजनों का हाल नहीं जानता। उनके घर अभी कुशल है या संकट? समाधि का मन उसी परिवार की ओर लौटता है जिसने उन्हें त्याग दिया।",
+      "meaningEn": "Here I cannot learn how my wife and relatives are doing. Is their household safe, or has trouble come? His mind returns to the very family that rejected him."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-25",
+      "number": 25,
+      "labelHi": "पाठ · २५",
+      "labelEn": "Text unit · 25",
+      "lines": [
+        "कथं ते किं नु सद्वृत्ता दुर्वृत्ताः किं नु मे सुताः॥"
+      ],
+      "linesEn": [
+        "kathaṃ te kiṃ nu sadvṛittā durvṛittāḥ kiṃ nu me sutāḥ"
+      ],
+      "meaningHi": "मेरे पुत्र अब कैसे हैं—क्या वे अच्छे आचरण वाले हुए या अभी भी बुरे आचरण में हैं? यह प्रश्न उनके लिए समाधि के स्नेह और चिन्ता को एक साथ दिखाता है।",
+      "meaningEn": "How are my sons now? Have they come to good conduct, or do they continue to act badly? The question reveals both his affection and his worry."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-26",
+      "number": 26,
+      "labelHi": "पाठ · २६",
+      "labelEn": "Text unit · 26",
+      "lines": [
+        "राजोवाच॥"
+      ],
+      "linesEn": [
+        "rājovācha"
+      ],
+      "meaningHi": "राजा बोले। सुरथ उस प्रेम के कारण को पूछते हैं जो अपमान के बाद भी बना है।",
+      "meaningEn": "The king spoke. Suratha asks why affection remains even after such mistreatment."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-27",
+      "number": 27,
+      "labelHi": "पाठ · २७",
+      "labelEn": "Text unit · 27",
+      "lines": [
+        "यैर्निरस्तो भवाँल्लुब्धैः पुत्रदारादिभिर्धनैः॥"
+      ],
+      "linesEn": [
+        "yairnirasto bhavām̐llubdhaiḥ putradārādibhirdhanaiḥ"
+      ],
+      "meaningHi": "जिन लोभी पुत्र, पत्नी और अन्य लोगों ने आपको धन से वंचित कर निकाल दिया—राजा का प्रश्न अगले पद में पूरा होता है।",
+      "meaningEn": "Those greedy sons, wife and others drove you away and deprived you of wealth—the king’s question continues in the next unit."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-28",
+      "number": 28,
+      "labelHi": "पाठ · २८",
+      "labelEn": "Text unit · 28",
+      "lines": [
+        "तेषु किं भवतः स्नेहमनुबध्नाति मानसम्॥"
+      ],
+      "linesEn": [
+        "teṣu kiṃ bhavataḥ snehamanubadhnāti mānasam"
+      ],
+      "meaningHi": "उन्हीं के प्रति आपका मन प्रेम से क्यों बँधा रहता है? सुरथ का प्रश्न केवल समाधि का नहीं, अपने राज्य-मोह का भी प्रश्न है।",
+      "meaningEn": "Why does affection for those very people still bind your mind? The question also reflects Suratha’s own attachment to his lost kingdom."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-29",
+      "number": 29,
+      "labelHi": "पाठ · २९",
+      "labelEn": "Text unit · 29",
+      "lines": [
+        "वैश्य उवाच॥"
+      ],
+      "linesEn": [
+        "vaiśhya uvācha"
+      ],
+      "meaningHi": "वैश्य बोले। वे अपने अनुभव और समझ के बीच की दूरी स्वीकार करते हैं।",
+      "meaningEn": "The merchant spoke. He acknowledges the gap between what he understands and what he feels."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-30",
+      "number": 30,
+      "labelHi": "पाठ · ३०",
+      "labelEn": "Text unit · 30",
+      "lines": [
+        "एवमेतद्यथा प्राह भवानस्मद्गतं वचः॥"
+      ],
+      "linesEn": [
+        "evametadyathā prāha bhavānasmadgataṃ vachaḥ"
+      ],
+      "meaningHi": "आपने मेरे विषय में जो कहा, वह सही है। समाधि राजा के तर्क से सहमत हैं, पर उनका मन उसी तरह नहीं बदलता।",
+      "meaningEn": "What you have said about my situation is true. Samadhi accepts the king’s reasoning, yet his feelings do not follow it."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-31",
+      "number": 31,
+      "labelHi": "पाठ · ३१",
+      "labelEn": "Text unit · 31",
+      "lines": [
+        "किं करोमि न बध्नाति मम निष्ठुरतां मनः।",
+        "यैः सन्त्यज्य पितृस्नेहं धनलुब्धैर्निराकृतः॥"
+      ],
+      "linesEn": [
+        "kiṃ karomi na badhnāti mama niṣṭhuratāṃ manaḥ",
+        "yaiḥ santyajya pitṛisnehaṃ dhanalubdhairnirākṛitaḥ"
+      ],
+      "meaningHi": "क्या करूँ, मेरा मन कठोर नहीं हो पाता। धनलोभी लोगों ने पिता के प्रति स्नेह छोड़कर मुझे निकाल दिया—फिर भी मेरा प्रेम शेष है। विचार अगले पद में चलता है।",
+      "meaningEn": "What can I do? My mind will not become hard. Though greed led them to abandon affection for their father and reject me, my love remains. His explanation continues."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-32",
+      "number": 32,
+      "labelHi": "पाठ · ३२",
+      "labelEn": "Text unit · 32",
+      "lines": [
+        "पतिस्वजनहार्दं च हार्दि तेष्वेव मे मनः।",
+        "किमेतन्नाभिजानामि जानन्नपि महामते॥"
+      ],
+      "linesEn": [
+        "patisvajanahārdaṃ cha hārdi teṣveva me manaḥ",
+        "kimetannābhijānāmi jānannapi mahāmate"
+      ],
+      "meaningHi": "उन्होंने पति और स्वजन के प्रति अपनापन छोड़ा, पर मेरा मन उन्हीं से स्नेह करता है। हे बुद्धिमान, सब जानते हुए भी यह क्यों होता है, मैं समझ नहीं पाता। यही ज्ञान और मोह का मुख्य प्रश्न है।",
+      "meaningEn": "They abandoned affection for husband and kin, yet my mind remains attached to them. Wise one, even knowing what happened, I cannot understand this. The conflict between knowledge and attachment becomes explicit."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-33",
+      "number": 33,
+      "labelHi": "पाठ · ३३",
+      "labelEn": "Text unit · 33",
+      "lines": [
+        "यत्प्रेमप्रवणं चित्तं विगुणेष्वपि बन्धुषु।",
+        "तेषां कृते मे निःश्वासो दौर्मनस्यं च जायते॥"
+      ],
+      "linesEn": [
+        "yatpremapravaṇaṃ chittaṃ viguṇeṣvapi bandhuṣu",
+        "teṣāṃ kṛite me niḥśhvāso daurmanasyaṃ cha jāyate"
+      ],
+      "meaningHi": "दोषयुक्त बन्धुओं के प्रति भी मन प्रेम में झुकता है। उनके लिए आहें और उदासी उठती हैं। समाधि अपने अनुभव को छिपाए बिना सामने रखते हैं।",
+      "meaningEn": "My heart inclines toward these relatives even with their faults. Thoughts of them bring sighs and sadness. Samadhi describes his experience without concealing its contradiction."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-34",
+      "number": 34,
+      "labelHi": "पाठ · ३४",
+      "labelEn": "Text unit · 34",
+      "lines": [
+        "करोमि किं यन्न मनस्तेष्वप्रीतिषु निष्ठुरम्॥"
+      ],
+      "linesEn": [
+        "karomi kiṃ yanna manasteṣvaprītiṣu niṣṭhuram"
+      ],
+      "meaningHi": "मैं क्या करूँ कि मेरा मन उन स्नेहरहित लोगों के प्रति कठोर हो ही नहीं पाता? यह असहाय प्रश्न दोनों को ऋषि की शरण में ले जाएगा।",
+      "meaningEn": "What can I do when my mind cannot harden toward those who show me no affection? This helpless question will lead both men to the sage."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-35",
+      "number": 35,
+      "labelHi": "पाठ · ३५",
+      "labelEn": "Text unit · 35",
+      "lines": [
+        "मार्कण्डेय उवाच॥"
+      ],
+      "linesEn": [
+        "mārkaṇḍeya uvācha"
+      ],
+      "meaningHi": "मार्कण्डेय बोले। कथावाचक अब दोनों के ऋषि मेधस के पास जाने का वर्णन करते हैं।",
+      "meaningEn": "Markandeya spoke. The narrator describes the two men approaching the sage Medhas."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-36",
+      "number": 36,
+      "labelHi": "पाठ · ३६",
+      "labelEn": "Text unit · 36",
+      "lines": [
+        "ततस्तौ सहितौ विप्र तं मुनिं समुपस्थितौ॥"
+      ],
+      "linesEn": [
+        "tatastau sahitau vipra taṃ muniṃ samupasthitau"
+      ],
+      "meaningHi": "हे विप्र, तब वे दोनों साथ जाकर उस मुनि के सामने उपस्थित हुए। साझा दुःख उन्हें ज्ञान की साझा खोज तक ले आया।",
+      "meaningEn": "Then, O brahmana, the two approached the sage together. Their shared distress led them into a shared search for understanding."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-37",
+      "number": 37,
+      "labelHi": "पाठ · ३७",
+      "labelEn": "Text unit · 37",
+      "lines": [
+        "समाधिर्नाम वैश्योऽसौ स च पार्थिवसत्तमः।",
+        "कृत्वा तु तौ यथान्यायं यथार्हं तेन संविदम्॥"
+      ],
+      "linesEn": [
+        "samādhirnāma vaiśhyo'sau sa cha pārthivasattamaḥ",
+        "kṛitvā tu tau yathānyāyaṃ yathārhaṃ tena saṃvidam"
+      ],
+      "meaningHi": "समाधि नामक वैश्य और श्रेष्ठ राजा ने उचित रीति से मुनि का अभिवादन और संवाद किया। अगले पद में वे बैठकर अपनी बात रखते हैं।",
+      "meaningEn": "The merchant Samadhi and the noble king exchanged the proper respectful greetings with the sage. They then sat down to speak with him."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-38",
+      "number": 38,
+      "labelHi": "पाठ · ३८",
+      "labelEn": "Text unit · 38",
+      "lines": [
+        "उपविष्टौ कथाः काश्चिच्चक्रतुर्वैश्यपार्थिवौ॥"
+      ],
+      "linesEn": [
+        "upaviṣṭau kathāḥ kāśhchichchakraturvaiśhyapārthivau"
+      ],
+      "meaningHi": "बैठकर वैश्य और राजा ने कुछ बातचीत की। सामान्य संवाद के बाद उनका गम्भीर प्रश्न सामने आता है।",
+      "meaningEn": "Seated before him, the merchant and king conversed for a while. Their deeper question follows this initial exchange."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-39",
+      "number": 39,
+      "labelHi": "पाठ · ३९",
+      "labelEn": "Text unit · 39",
+      "lines": [
+        "राजोवाच॥"
+      ],
+      "linesEn": [
+        "rājovācha"
+      ],
+      "meaningHi": "राजा बोले। सुरथ अपने और समाधि, दोनों के मन की उलझन ऋषि के सामने रखते हैं।",
+      "meaningEn": "The king spoke. Suratha brings both his own difficulty and Samadhi’s before the sage."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-40",
+      "number": 40,
+      "labelHi": "पाठ · ४०",
+      "labelEn": "Text unit · 40",
+      "lines": [
+        "भगवंस्त्वामहं प्रष्टुमिच्छाम्येकं वदस्व तत्॥"
+      ],
+      "linesEn": [
+        "bhagavaṃstvāmahaṃ praṣṭumichchhāmyekaṃ vadasva tat"
+      ],
+      "meaningHi": "भगवन्, मैं आपसे एक बात पूछना चाहता हूँ; कृपा करके बताइए। राजा नम्रता से मार्गदर्शन माँगते हैं।",
+      "meaningEn": "Revered one, I wish to ask you something; please explain it to me. The king asks humbly for guidance."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-41",
+      "number": 41,
+      "labelHi": "पाठ · ४१",
+      "labelEn": "Text unit · 41",
+      "lines": [
+        "दुःखाय यन्मे मनसः स्वचित्तायत्ततां विना।",
+        "ममत्वं गतराज्यस्य राज्याङ्गेष्वखिलेष्वपि॥"
+      ],
+      "linesEn": [
+        "duḥkhāya yanme manasaḥ svachittāyattatāṃ vinā",
+        "mamatvaṃ gatarājyasya rājyāṅgeṣvakhileṣvapi"
+      ],
+      "meaningHi": "राज्य खो चुका हूँ, फिर भी राज्य के प्रत्येक अङ्ग से ममता मन को दुःख देती है। मेरा चित्त मेरे वश में नहीं है। सुरथ सत्ता की हानि से अधिक मन के बन्धन को पहचानते हैं।",
+      "meaningEn": "I have lost my kingdom, yet attachment to every part of it causes distress; my mind does not obey me. Suratha recognises an inward bondage beyond the outward loss of power."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-42",
+      "number": 42,
+      "labelHi": "पाठ · ४२",
+      "labelEn": "Text unit · 42",
+      "lines": [
+        "जानतोऽपि यथाज्ञस्य किमेतन्मुनिसत्तम।",
+        "अयं च निकृतः पुत्रैर्दारैर्भृत्यैस्तथोज्झितः॥"
+      ],
+      "linesEn": [
+        "jānato'pi yathājñasya kimetanmunisattama",
+        "ayaṃ cha nikṛitaḥ putrairdārairbhṛityaistathojjhitaḥ"
+      ],
+      "meaningHi": "हे मुनिश्रेष्ठ, जानते हुए भी अज्ञानी जैसी यह अवस्था क्यों है? यह वैश्य भी पुत्रों से ठगा और पत्नी-सेवकों से छोड़ा गया है। राजा दोनों अनुभवों को साथ रखते हैं।",
+      "meaningEn": "Best of sages, why do I remain like one who does not know, though I understand? This merchant too was deceived by his sons and abandoned by wife and servants. The king joins their experiences."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-43",
+      "number": 43,
+      "labelHi": "पाठ · ४३",
+      "labelEn": "Text unit · 43",
+      "lines": [
+        "स्वजनेन च सन्त्यक्तस्तेषु हार्दी तथाप्यति।",
+        "एवमेष तथाहं च द्वावप्यत्यन्तदुःखितौ॥"
+      ],
+      "linesEn": [
+        "svajanena cha santyaktasteṣu hārdī tathāpyati",
+        "evameṣa tathāhaṃ cha dvāvapyatyantaduḥkhitau"
+      ],
+      "meaningHi": "स्वजनों से त्यागे जाने पर भी इसका हृदय उन्हीं से बहुत प्रेम करता है। इस प्रकार यह और मैं दोनों अत्यन्त दुःखी हैं। तथ्य जानना अकेले भावनात्मक मुक्ति नहीं बन पाया।",
+      "meaningEn": "Rejected by his relatives, he still feels deep affection for them. Thus both he and I are intensely unhappy. Knowing the facts has not by itself freed their feelings."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-44",
+      "number": 44,
+      "labelHi": "पाठ · ४४",
+      "labelEn": "Text unit · 44",
+      "lines": [
+        "दृष्टदोषेऽपि विषये ममत्वाकृष्टमानसौ।",
+        "तत्किमेतन्महाभाग यन्मोहो ज्ञानिनोरपि॥"
+      ],
+      "linesEn": [
+        "dṛiṣṭadoṣe'pi viṣaye mamatvākṛiṣṭamānasau",
+        "tatkimetanmahābhāga yanmoho jñāninorapi"
+      ],
+      "meaningHi": "जिस वस्तु के दोष देख चुके हैं, उसी में ममता से हमारा मन खिंचता है। हे महाभाग, समझ रखने वाले हम दोनों में यह मोह क्यों है? यह अध्याय का केंद्रीय प्रश्न है।",
+      "meaningEn": "Our minds are drawn by attachment even to what we have seen to be flawed. Why, revered one, does delusion affect us despite our understanding? This is the chapter’s central question."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-45",
+      "number": 45,
+      "labelHi": "पाठ · ४५",
+      "labelEn": "Text unit · 45",
+      "lines": [
+        "ममास्य च भवत्येषा विवेकान्धस्य मूढता॥"
+      ],
+      "linesEn": [
+        "mamāsya cha bhavatyeṣā vivekāndhasya mūḍhatā"
+      ],
+      "meaningHi": "मुझमें और इसमें विवेक को ढक देने वाली यह मूढ़ता क्यों उत्पन्न होती है? राजा अब उत्तर सुनने को तैयार हैं।",
+      "meaningEn": "Why does this confusion arise in him and me, blinding our discrimination? The king is ready to hear the sage’s answer."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-46",
+      "number": 46,
+      "labelHi": "पाठ · ४६",
+      "labelEn": "Text unit · 46",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले। मेधस पहले जीवों के सामान्य ज्ञान और सहज आसक्ति का उदाहरण देते हैं।",
+      "meaningEn": "The sage spoke. Medhas begins with examples of ordinary awareness and instinctive attachment among living beings."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-47",
+      "number": 47,
+      "labelHi": "पाठ · ४७",
+      "labelEn": "Text unit · 47",
+      "lines": [
+        "ज्ञानमस्ति समस्तस्य जन्तोर्विषयगोचरे॥"
+      ],
+      "linesEn": [
+        "jñānamasti samastasya jantorviṣayagochare"
+      ],
+      "meaningHi": "हर जीव को अपने इन्द्रिय-विषयों का कुछ ज्ञान होता है। ऋषि यहाँ केवल मनुष्य को जानने वाला मानने की धारणा का विस्तार करते हैं।",
+      "meaningEn": "Every creature has awareness of the objects within its sensory reach. The sage broadens the discussion beyond human intelligence alone."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-48",
+      "number": 48,
+      "labelHi": "पाठ · ४८",
+      "labelEn": "Text unit · 48",
+      "lines": [
+        "विषयश्च महाभाग याति चैवं पृथक्पृथक्।",
+        "दिवान्धाः प्राणिनः केचिद्रात्रावन्धास्तथापरे॥"
+      ],
+      "linesEn": [
+        "viṣayaśhcha mahābhāga yāti chaivaṃ pṛithakpṛithak",
+        "divāndhāḥ prāṇinaḥ kechidrātrāvandhāstathāpare"
+      ],
+      "meaningHi": "हे महाभाग, इन्द्रियों की पहुँच अलग-अलग होती है। कुछ जीव दिन में नहीं देख पाते, कुछ रात में। जानने की क्षमता जीव के स्वभाव के अनुसार भिन्न है।",
+      "meaningEn": "The range of perception differs, noble one. Some creatures cannot see by day, others by night. Each kind of being has its own pattern of awareness."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-49",
+      "number": 49,
+      "labelHi": "पाठ · ४९",
+      "labelEn": "Text unit · 49",
+      "lines": [
+        "केचिद्दिवा तथा रात्रौ प्राणिनस्तुल्यदृष्टयः।",
+        "ज्ञानिनो मनुजाः सत्यं किं तु ते न हि केवलम्॥"
+      ],
+      "linesEn": [
+        "kechiddivā tathā rātrau prāṇinastulyadṛiṣṭayaḥ",
+        "jñānino manujāḥ satyaṃ kiṃ tu te na hi kevalam"
+      ],
+      "meaningHi": "कुछ जीव दिन-रात समान देखते हैं। मनुष्य ज्ञानवान् हैं, यह सत्य है, पर केवल वही ज्ञानवान् नहीं। ऋषि जीव-जगत में चेतना की निरन्तरता समझाते हैं।",
+      "meaningEn": "Some see equally by day and night. Humans have knowledge, certainly, but they are not alone in this. The sage points toward awareness throughout the living world."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-50",
+      "number": 50,
+      "labelHi": "पाठ · ५०",
+      "labelEn": "Text unit · 50",
+      "lines": [
+        "यतो हि ज्ञानिनः सर्वे पशुपक्षिमृगादयः।",
+        "ज्ञानं च तन्मनुष्याणां यत्तेषां मृगपक्षिणाम्॥"
+      ],
+      "linesEn": [
+        "yato hi jñāninaḥ sarve paśhupakṣhimṛigādayaḥ",
+        "jñānaṃ cha tanmanuṣyāṇāṃ yatteṣāṃ mṛigapakṣhiṇām"
+      ],
+      "meaningHi": "पशु, पक्षी और वनचर भी जानते हैं। जो सामान्य विषय-ज्ञान मनुष्य में है, वह इन जीवों में भी मिलता है। आगे दोनों की समानता और भिन्नता पर बात होती है।",
+      "meaningEn": "Animals, birds and wild creatures also know. The ordinary awareness found in humans is present in these beings too. The comparison continues in the next verse."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-51",
+      "number": 51,
+      "labelHi": "पाठ · ५१",
+      "labelEn": "Text unit · 51",
+      "lines": [
+        "मनुष्याणां च यत्तेषां तुल्यमन्यत्तथोभयोः।",
+        "ज्ञानेऽपि सति पश्यैतान् पतङ्गाञ्छावचञ्चुषु॥"
+      ],
+      "linesEn": [
+        "manuṣyāṇāṃ cha yatteṣāṃ tulyamanyattathobhayoḥ",
+        "jñāne'pi sati paśhyaitān pataṅgāñchhāvachañchuṣu"
+      ],
+      "meaningHi": "दोनों में कुछ ज्ञान समान और कुछ अलग है। ज्ञान होते हुए भी इन पक्षियों को देखो, जो अपने बच्चों की चोंचों में—अगला पद बताता है—दाना डालने में लगे हैं।",
+      "meaningEn": "Some knowledge is shared and some differs between them. Yet observe these birds, though aware, attending to their chicks’ beaks—the next verse completes the image of feeding."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-52",
+      "number": 52,
+      "labelHi": "पाठ · ५२",
+      "labelEn": "Text unit · 52",
+      "lines": [
+        "कणमोक्षादृतान्मोहात्पीड्यमानानपि क्षुधा।",
+        "मानुषा मनुजव्याघ्र साभिलाषाः सुतान् प्रति॥"
+      ],
+      "linesEn": [
+        "kaṇamokṣhādṛitānmohātpīḍyamānānapi kṣhudhā",
+        "mānuṣā manujavyāghra sābhilāṣāḥ sutān prati"
+      ],
+      "meaningHi": "स्वयं भूखे होने पर भी पक्षी स्नेहमोह से बच्चों को दाने देते हैं। हे नरश्रेष्ठ, मनुष्य भी पुत्रों के प्रति अपेक्षाएँ रखते हैं। ऋषि आसक्ति को व्यापक जीवन-अनुभव के रूप में रखते हैं।",
+      "meaningEn": "Even hungry themselves, the birds feed grains to their young through attachment. Humans too, best of men, cherish expectations regarding their children. The sage places attachment within a wider pattern of life."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-53",
+      "number": 53,
+      "labelHi": "पाठ · ५३",
+      "labelEn": "Text unit · 53",
+      "lines": [
+        "लोभात्प्रत्युपकाराय नन्वेतान्किं न पश्यसि।",
+        "तथापि ममतावर्त्ते मोहगर्ते निपातिताः॥"
+      ],
+      "linesEn": [
+        "lobhātpratyupakārāya nanvetānkiṃ na paśhyasi",
+        "tathāpi mamatāvartte mohagarte nipātitāḥ"
+      ],
+      "meaningHi": "क्या नहीं देखते कि मनुष्य भविष्य में प्रत्युपकार की इच्छा भी रखते हैं? फिर भी वे ममता के भँवर और मोह के गर्त में गिरते हैं। गणना और अपेक्षा होने पर भी आसक्ति का बन्धन बना रहता है।",
+      "meaningEn": "Do you not see that people may hope for care or benefit in return? Even so, they fall into the whirlpool of attachment and the pit of delusion. Calculation does not free them from that pull."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-54",
+      "number": 54,
+      "labelHi": "पाठ · ५४",
+      "labelEn": "Text unit · 54",
+      "lines": [
+        "महामायाप्रभावेण संसारस्थितिकारिणा।",
+        "तन्नात्र विस्मयः कार्यो योगनिद्रा जगत्पतेः॥"
+      ],
+      "linesEn": [
+        "mahāmāyāprabhāveṇa saṃsārasthitikāriṇā",
+        "tannātra vismayaḥ kāryo yoganidrā jagatpateḥ"
+      ],
+      "meaningHi": "संसार को बनाए रखने वाली महामाया के प्रभाव से यह होता है; इसलिए आश्चर्य न करो। वही जगत्पति की योगनिद्रा हैं। मनोवैज्ञानिक प्रश्न अब देवी के विश्वकार्य से जुड़ता है।",
+      "meaningEn": "This occurs through Mahamaya’s power, which sustains worldly existence; it is no cause for surprise. She is the world-lord’s yogic sleep. The question about attachment now opens into the goddess’s cosmic role."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-55",
+      "number": 55,
+      "labelHi": "पाठ · ५५",
+      "labelEn": "Text unit · 55",
+      "lines": [
+        "महामाया हरेश्चैषा तया सम्मोह्यते जगत्।",
+        "ज्ञानिनामपि चेतांसि देवी भगवती हि सा॥"
+      ],
+      "linesEn": [
+        "mahāmāyā hareśhchaiṣā tayā sammohyate jagat",
+        "jñānināmapi chetāṃsi devī bhagavatī hi sā"
+      ],
+      "meaningHi": "हरि की यही महामाया जगत को मोह में रखती हैं। वह भगवती ज्ञानियों के चित्त को भी—अगले पद में कहा गया है—अपनी ओर खींच सकती हैं। ज्ञान के अभिमान को यहाँ चुनौती मिलती है।",
+      "meaningEn": "This Mahamaya of Hari deludes the world. Even the minds of those who know can be drawn by her, as the next verse explains. Intellectual confidence alone does not place one beyond her power."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-56",
+      "number": 56,
+      "labelHi": "पाठ · ५६",
+      "labelEn": "Text unit · 56",
+      "lines": [
+        "बलादाकृष्य मोहाय महामाया प्रयच्छति।",
+        "तया विसृज्यते विश्वं जगदेतच्चराचरम्॥"
+      ],
+      "linesEn": [
+        "balādākṛiṣya mohāya mahāmāyā prayachchhati",
+        "tayā visṛijyate viśhvaṃ jagadetachcharācharam"
+      ],
+      "meaningHi": "महामाया ज्ञानियों के मन को भी खींचकर मोह में डाल सकती हैं। उन्हीं से यह चल-अचल जगत सृष्ट होता है। उनका प्रभाव व्यक्ति के मन और समस्त सृष्टि दोनों में है।",
+      "meaningEn": "Mahamaya can draw even knowing minds into delusion. Through her this universe of moving and unmoving beings comes forth. Her power is described in both individual experience and cosmic creation."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-57",
+      "number": 57,
+      "labelHi": "पाठ · ५७",
+      "labelEn": "Text unit · 57",
+      "lines": [
+        "सैषा प्रसन्ना वरदा नृणां भवति मुक्तये।",
+        "सा विद्या परमा मुक्तेर्हेतुभूता सनातनी॥"
+      ],
+      "linesEn": [
+        "saiṣā prasannā varadā nṛiṇāṃ bhavati muktaye",
+        "sā vidyā paramā mukterhetubhūtā sanātanī"
+      ],
+      "meaningHi": "प्रसन्न होने पर वही वरदायिनी मनुष्यों की मुक्ति का कारण बनती हैं। वही सनातन परम विद्या हैं। देवी केवल बन्धन की शक्ति नहीं, उससे मुक्त करने वाला ज्ञान भी हैं।",
+      "meaningEn": "When gracious, that same giver of blessings leads people toward liberation. She is the eternal, highest knowledge that brings freedom. The goddess is not only the power of bondage but also the knowledge that releases it."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-58",
+      "number": 58,
+      "labelHi": "पाठ · ५८",
+      "labelEn": "Text unit · 58",
+      "lines": [
+        "संसारबन्धहेतुश्च सैव सर्वेश्वरेश्वरी॥"
+      ],
+      "linesEn": [
+        "saṃsārabandhahetuśhcha saiva sarveśhvareśhvarī"
+      ],
+      "meaningHi": "संसार के बन्धन का कारण भी वही सर्वेश्वरों की ईश्वरी हैं। बन्धन और मुक्ति दोनों को एक दिव्य शक्ति के प्रसंग में समझाया गया है।",
+      "meaningEn": "She, the sovereign even of rulers, is also the cause of worldly bondage. Both binding and release are understood within the action of one divine power."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-59",
+      "number": 59,
+      "labelHi": "पाठ · ५९",
+      "labelEn": "Text unit · 59",
+      "lines": [
+        "राजोवाच॥"
+      ],
+      "linesEn": [
+        "rājovācha"
+      ],
+      "meaningHi": "राजा बोले। अब सुरथ महामाया का स्वरूप और प्राकट्य जानना चाहते हैं।",
+      "meaningEn": "The king spoke. Suratha now asks about Mahamaya’s nature and manifestation."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-60",
+      "number": 60,
+      "labelHi": "पाठ · ६०",
+      "labelEn": "Text unit · 60",
+      "lines": [
+        "भगवन् का हि सा देवी महामायेति यां भवान्॥"
+      ],
+      "linesEn": [
+        "bhagavan kā hi sā devī mahāmāyeti yāṃ bhavān"
+      ],
+      "meaningHi": "भगवन्, वह देवी कौन हैं जिन्हें आप महामाया कहते हैं? प्रश्न अगले पद में उनके जन्म और कार्य की ओर बढ़ता है।",
+      "meaningEn": "Revered one, who is this goddess whom you call Mahamaya? His question continues toward her origin and deeds."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-61",
+      "number": 61,
+      "labelHi": "पाठ · ६१",
+      "labelEn": "Text unit · 61",
+      "lines": [
+        "ब्रवीति कथमुत्पन्ना सा कर्मास्याश्च किं द्विज।",
+        "यत्प्रभावा च सा देवी यत्स्वरूपा यदुद्भवा॥"
+      ],
+      "linesEn": [
+        "bravīti kathamutpannā sā karmāsyāśhcha kiṃ dvija",
+        "yatprabhāvā cha sā devī yatsvarūpā yadudbhavā"
+      ],
+      "meaningHi": "हे द्विज, वे कैसे प्रकट हुईं, उनका कार्य क्या है, प्रभाव और स्वरूप क्या हैं, और उनका उद्गम क्या है? राजा देवी को कथा और तत्त्व, दोनों रूपों में समझना चाहते हैं।",
+      "meaningEn": "How did she appear, what does she do, what are her power and form, and what is her origin? The king seeks both a story of the goddess and an understanding of her nature."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-62",
+      "number": 62,
+      "labelHi": "पाठ · ६२",
+      "labelEn": "Text unit · 62",
+      "lines": [
+        "तत्सर्वं श्रोतुमिच्छामि त्वत्तो ब्रह्मविदां वर॥"
+      ],
+      "linesEn": [
+        "tatsarvaṃ śhrotumichchhāmi tvatto brahmavidāṃ vara"
+      ],
+      "meaningHi": "हे ब्रह्मज्ञों में श्रेष्ठ, यह सब मैं आपसे सुनना चाहता हूँ। श्रद्धापूर्ण जिज्ञासा अब देवी की पहली कथा का द्वार खोलती है।",
+      "meaningEn": "Foremost among knowers of Brahman, I wish to hear all this from you. His respectful inquiry opens the way to the first account of the goddess."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-63",
+      "number": 63,
+      "labelHi": "पाठ · ६३",
+      "labelEn": "Text unit · 63",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले। वे नित्य देवी और समय-समय पर उनके प्राकट्य का भेद स्पष्ट करते हैं।",
+      "meaningEn": "The sage spoke. He distinguishes the eternal goddess from her manifestations within time."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-64",
+      "number": 64,
+      "labelHi": "पाठ · ६४",
+      "labelEn": "Text unit · 64",
+      "lines": [
+        "नित्यैव सा जगन्मूर्तिस्तया सर्वमिदं ततम्॥"
+      ],
+      "linesEn": [
+        "nityaiva sā jaganmūrtistayā sarvamidaṃ tatam"
+      ],
+      "meaningHi": "वह नित्य हैं, जगत ही उनका रूप है और उनसे यह सब व्याप्त है। उनका प्रकट होना साधारण जन्म जैसा नहीं समझना चाहिए।",
+      "meaningEn": "She is eternal, the world is her form, and all this is pervaded by her. Her appearance is therefore not understood as an ordinary beginning of existence."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-65",
+      "number": 65,
+      "labelHi": "पाठ · ६५",
+      "labelEn": "Text unit · 65",
+      "lines": [
+        "तथापि तत्समुत्पत्तिर्बहुधा श्रूयतां मम।",
+        "देवानां कार्यसिद्ध्यर्थमाविर्भवति सा यदा॥"
+      ],
+      "linesEn": [
+        "tathāpi tatsamutpattirbahudhā śhrūyatāṃ mama",
+        "devānāṃ kāryasiddhyarthamāvirbhavati sā yadā"
+      ],
+      "meaningHi": "फिर भी उनके अनेक प्राकट्यों का वर्णन मुझसे सुनो। जब वे देवों का कार्य सिद्ध करने के लिए आविर्भूत होती हैं—वाक्य अगले पद में पूरा होता है।",
+      "meaningEn": "Nevertheless, hear of her manifestations in many forms. When she appears to accomplish the gods’ purpose, the world speaks of her in the way explained next."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-66",
+      "number": 66,
+      "labelHi": "पाठ · ६६",
+      "labelEn": "Text unit · 66",
+      "lines": [
+        "उत्पन्नेति तदा लोके सा नित्याप्यभिधीयते।",
+        "योगनिद्रां यदा विष्णुर्जगत्येकार्णवीकृते॥"
+      ],
+      "linesEn": [
+        "utpanneti tadā loke sā nityāpyabhidhīyate",
+        "yoganidrāṃ yadā viṣṇurjagatyekārṇavīkṛite"
+      ],
+      "meaningHi": "नित्य होते हुए भी उस समय लोग उन्हें उत्पन्न हुई कहते हैं। एक समय समस्त जगत एक समुद्र बन गया था और विष्णु योगनिद्रा में थे। अब मधु-कैटभ की कथा आरम्भ होती है।",
+      "meaningEn": "Though eternal, she is then described as having been born. Once, when the world had become a single ocean, Vishnu entered yogic sleep. The story of Madhu and Kaitabha now begins."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-67",
+      "number": 67,
+      "labelHi": "पाठ · ६७",
+      "labelEn": "Text unit · 67",
+      "lines": [
+        "आस्तीर्य शेषमभजत्कल्पान्ते भगवान्प्रभुः।",
+        "तदा द्वावसुरौ घोरौ विख्यातौ मधुकैटभौ॥"
+      ],
+      "linesEn": [
+        "āstīrya śheṣamabhajatkalpānte bhagavānprabhuḥ",
+        "tadā dvāvasurau ghorau vikhyātau madhukaiṭabhau"
+      ],
+      "meaningHi": "कल्प के अन्त में भगवान् शेष को शय्या बनाकर विश्राम कर रहे थे। तभी मधु और कैटभ नाम के दो भयंकर असुर प्रकट हुए। उनकी उत्पत्ति अगले पद में बताई जाती है।",
+      "meaningEn": "At the end of the kalpa, the Lord rested upon Shesha as his couch. Then two formidable asuras, known as Madhu and Kaitabha, arose. Their origin is described next."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-68",
+      "number": 68,
+      "labelHi": "पाठ · ६८",
+      "labelEn": "Text unit · 68",
+      "lines": [
+        "विष्णुकर्णमलोद्भूतौ हन्तुं ब्रह्माणमुद्यतौ।",
+        "स नाभिकमले विष्णोः स्थितो ब्रह्मा प्रजापतिः॥"
+      ],
+      "linesEn": [
+        "viṣṇukarṇamalodbhūtau hantuṃ brahmāṇamudyatau",
+        "sa nābhikamale viṣṇoḥ sthito brahmā prajāpatiḥ"
+      ],
+      "meaningHi": "विष्णु के कान के मल से उत्पन्न वे दोनों ब्रह्मा को मारने को तैयार हुए। प्रजापति ब्रह्मा विष्णु के नाभिकमल में स्थित थे। यह पुराणकथा सृष्टि पर आए संकट का दृश्य बनाती है।",
+      "meaningEn": "Born from the substance in Vishnu’s ears, the two prepared to kill Brahma, who sat upon the lotus from Vishnu’s navel. The Puranic scene presents a threat to the work of creation."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-69",
+      "number": 69,
+      "labelHi": "पाठ · ६९",
+      "labelEn": "Text unit · 69",
+      "lines": [
+        "दृष्ट्वा तावसुरौ चोग्रौ प्रसुप्तं च जनार्दनम्।",
+        "तुष्टाव योगनिद्रां तामेकाग्रहृदयस्थितः॥"
+      ],
+      "linesEn": [
+        "dṛiṣṭvā tāvasurau chograu prasuptaṃ cha janārdanam",
+        "tuṣṭāva yoganidrāṃ tāmekāgrahṛidayasthitaḥ"
+      ],
+      "meaningHi": "उग्र असुरों और सोए हुए जनार्दन को देखकर ब्रह्मा ने एकाग्र मन से योगनिद्रा देवी की स्तुति की। संकट में वे उसी शक्ति की ओर मुड़ते हैं जो विष्णु की निद्रा में उपस्थित है।",
+      "meaningEn": "Seeing the fierce asuras and sleeping Janardana, Brahma praised the goddess Yoganidra with a concentrated heart. He turned toward the power present in Vishnu’s sleep."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-70",
+      "number": 70,
+      "labelHi": "पाठ · ७०",
+      "labelEn": "Text unit · 70",
+      "lines": [
+        "विबोधनार्थाय हरेर्हरिनेत्रकृतालयाम्।",
+        "विश्वेश्वरीं जगद्धात्रीं स्थितिसंहारकारिणीम्॥"
+      ],
+      "linesEn": [
+        "vibodhanārthāya harerharinetrakṛitālayām",
+        "viśhveśhvarīṃ jagaddhātrīṃ sthitisaṃhārakāriṇīm"
+      ],
+      "meaningHi": "हरि को जगाने के लिए ब्रह्मा ने उनके नेत्रों में निवास करने वाली विश्वेश्वरी की स्तुति की। वे जगत की धात्री तथा स्थिति और संहार करने वाली हैं। जागरण की याचना विश्वव्यापी देवी को सम्बोधित है।",
+      "meaningEn": "To awaken Hari, Brahma praised her who dwelt in his eyes: sovereign of the universe, bearer of the world, sustaining and dissolving it. The plea for awakening is addressed to a cosmic power."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-71",
+      "number": 71,
+      "labelHi": "पाठ · ७१",
+      "labelEn": "Text unit · 71",
+      "lines": [
+        "निद्रां भगवतीं विष्णोरतुलां तेजसः प्रभुः॥"
+      ],
+      "linesEn": [
+        "nidrāṃ bhagavatīṃ viṣṇoratulāṃ tejasaḥ prabhuḥ"
+      ],
+      "meaningHi": "प्रभु ब्रह्मा ने विष्णु की उस भगवती निद्रा की वन्दना की, जिसका तेज अतुलनीय है। अब उनकी प्रत्यक्ष स्तुति आती है।",
+      "meaningEn": "Brahma praised Vishnu’s divine sleep, incomparable in radiance. His direct hymn follows."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-72",
+      "number": 72,
+      "labelHi": "पाठ · ७२",
+      "labelEn": "Text unit · 72",
+      "lines": [
+        "ब्रह्मोवाच॥"
+      ],
+      "linesEn": [
+        "brahmovācha"
+      ],
+      "meaningHi": "ब्रह्मा बोले। आगे देवी को यज्ञ, ज्ञान, सृष्टि और संरक्षण की शक्ति के रूप में सम्बोधित किया गया है।",
+      "meaningEn": "Brahma spoke. He addresses the goddess as the power of offering, knowledge, creation and protection."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-73",
+      "number": 73,
+      "labelHi": "पाठ · ७३",
+      "labelEn": "Text unit · 73",
+      "lines": [
+        "त्वं स्वाहा त्वं स्वधा त्वं हि वषट्कारः स्वरात्मिका॥"
+      ],
+      "linesEn": [
+        "tvaṃ svāhā tvaṃ svadhā tvaṃ hi vaṣaṭkāraḥ svarātmikā"
+      ],
+      "meaningHi": "आप स्वाहा, स्वधा और वषट्कार हैं; स्वर आपका स्वरूप हैं। देवों और पितरों को अर्पण तथा यज्ञ की पवित्र ध्वनि देवी की शक्ति के रूप में देखी गई है।",
+      "meaningEn": "You are Svaha, Svadha and the Vashat invocation; sacred tone is your nature. Offerings to gods and ancestors, and ritual sound itself, are contemplated as expressions of the goddess."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-74",
+      "number": 74,
+      "labelHi": "पाठ · ७४",
+      "labelEn": "Text unit · 74",
+      "lines": [
+        "सुधा त्वमक्षरे नित्ये त्रिधा मात्रात्मिका स्थिता।",
+        "अर्धमात्रास्थिता नित्या यानुच्चार्या विशेषतः॥"
+      ],
+      "linesEn": [
+        "sudhā tvamakṣhare nitye tridhā mātrātmikā sthitā",
+        "ardhamātrāsthitā nityā yānuchchāryā viśheṣataḥ"
+      ],
+      "meaningHi": "हे अक्षरा, नित्या, आप अमृत हैं और तीन मात्राओं में स्थित हैं। आप उस नित्य अर्धमात्रा में भी हैं जिसे अलग से उच्चारित नहीं किया जा सकता। ध्वनि और उससे परे सूक्ष्म मौन का ध्यान यहाँ जुड़ता है।",
+      "meaningEn": "Imperishable, eternal goddess, you are nectar and abide in the three measures of sacred sound. You also abide in the eternal half-measure that cannot be separately pronounced. Sound and the subtle stillness beyond articulation are contemplated together."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-75",
+      "number": 75,
+      "labelHi": "पाठ · ७५",
+      "labelEn": "Text unit · 75",
+      "lines": [
+        "त्वमेव सन्ध्या सावित्री त्वं देवि जननी परा।",
+        "त्वयैतद्धार्यते विश्वं त्वयैतत्सृज्यते जगत्॥"
+      ],
+      "linesEn": [
+        "tvameva sandhyā sāvitrī tvaṃ devi jananī parā",
+        "tvayaitaddhāryate viśhvaṃ tvayaitatsṛijyate jagat"
+      ],
+      "meaningHi": "आप सन्ध्या, सावित्री और परम जननी हैं। आप ही विश्व को धारण और सृष्ट करती हैं। समय के सन्धिबिन्दु, पवित्र मन्त्र और मातृत्व एक ही शक्ति की अभिव्यक्ति हैं।",
+      "meaningEn": "You are the junction of sacred times, Savitri and the supreme mother. You sustain and create the universe. Sacred time, sacred invocation and motherhood are gathered within one power."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-76",
+      "number": 76,
+      "labelHi": "पाठ · ७६",
+      "labelEn": "Text unit · 76",
+      "lines": [
+        "त्वयैतत्पाल्यते देवि त्वमत्स्यन्ते च सर्वदा।",
+        "विसृष्टौ सृष्टिरूपा त्वं स्थितिरूपा च पालने॥"
+      ],
+      "linesEn": [
+        "tvayaitatpālyate devi tvamatsyante cha sarvadā",
+        "visṛiṣṭau sṛiṣṭirūpā tvaṃ sthitirūpā cha pālane"
+      ],
+      "meaningHi": "हे देवी, आप जगत का पालन करती और अन्त में उसे समेट लेती हैं। सृजन में सृष्टिरूप और पालन में स्थितिरूप हैं। संसार की विभिन्न अवस्थाओं में वही शक्ति काम करती है।",
+      "meaningEn": "You protect the world and consume it at its end. In bringing it forth you are creation, and in preserving it you are continuance. The same power works through these different phases."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-77",
+      "number": 77,
+      "labelHi": "पाठ · ७७",
+      "labelEn": "Text unit · 77",
+      "lines": [
+        "तथा संहृतिरूपान्ते जगतोऽस्य जगन्मये।",
+        "महाविद्या महामाया महामेधा महास्मृतिः॥"
+      ],
+      "linesEn": [
+        "tathā saṃhṛitirūpānte jagato'sya jaganmaye",
+        "mahāvidyā mahāmāyā mahāmedhā mahāsmṛitiḥ"
+      ],
+      "meaningHi": "हे जगन्मयी, अन्त में आप संहाररूप हैं। आप महाविद्या, महामाया, महामेधा और महास्मृति हैं। जगत की गति के साथ ज्ञान, बुद्धि और स्मृति भी आपके रूप हैं।",
+      "meaningEn": "World-pervading goddess, at the end you are dissolution. You are great knowledge, great maya, great intelligence and great memory. The powers of understanding are yours alongside the movements of the cosmos."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-78",
+      "number": 78,
+      "labelHi": "पाठ · ७८",
+      "labelEn": "Text unit · 78",
+      "lines": [
+        "महामोहा च भवती महादेवी महासुरी।",
+        "प्रकृतिस्त्वं च सर्वस्य गुणत्रयविभाविनी॥"
+      ],
+      "linesEn": [
+        "mahāmohā cha bhavatī mahādevī mahāsurī",
+        "prakṛitistvaṃ cha sarvasya guṇatrayavibhāvinī"
+      ],
+      "meaningHi": "आप महामोह, महादेवी और महासुरी हैं; सबकी प्रकृति और तीन गुणों की अभिव्यक्ति करने वाली हैं। इस पाठ में उग्र और मोहकारी शक्ति भी देवी की विश्वव्याप्ति से बाहर नहीं है।",
+      "meaningEn": "You are great delusion, great goddess and Mahasuri; the nature of all and the one who manifests the three gunas. In this reading, fierce and bewildering power too belongs within her universal scope."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-79",
+      "number": 79,
+      "labelHi": "पाठ · ७९",
+      "labelEn": "Text unit · 79",
+      "lines": [
+        "कालरात्रिर्महारात्रिर्मोहरात्रिश्च दारुणा।",
+        "त्वं श्रीस्त्वमीश्वरी त्वं ह्रीस्त्वं बुद्धिर्बोधलक्षणा॥"
+      ],
+      "linesEn": [
+        "kālarātrirmahārātrirmoharātriśhcha dāruṇā",
+        "tvaṃ śhrīstvamīśhvarī tvaṃ hrīstvaṃ buddhirbodhalakṣhaṇā"
+      ],
+      "meaningHi": "आप कालरात्रि, महारात्रि और दारुण मोहरात्रि हैं; श्री, ईश्वरी, ह्री और बोधयुक्त बुद्धि भी हैं। अन्धकार और जागरूकता दोनों के मूल में वही देवी स्मरण की जाती हैं।",
+      "meaningEn": "You are the night of time, the great night and the dreadful night of delusion; you are Sri, sovereignty, modesty and awakening intelligence. Both darkness and the power to understand are traced to her."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-80",
+      "number": 80,
+      "labelHi": "पाठ · ८०",
+      "labelEn": "Text unit · 80",
+      "lines": [
+        "लज्जा पुष्टिस्तथा तुष्टिस्त्वं शान्तिः क्षान्तिरेव च।",
+        "खड्गिनी शूलिनी घोरा गदिनी चक्रिणी तथा॥"
+      ],
+      "linesEn": [
+        "lajjā puṣṭistathā tuṣṭistvaṃ śhāntiḥ kṣhāntireva cha",
+        "khaḍginī śhūlinī ghorā gadinī chakriṇī tathā"
+      ],
+      "meaningHi": "आप लज्जा, पुष्टि, तुष्टि, शान्ति और क्षमा हैं; खड्ग, शूल, गदा और चक्र धारण करने वाला उग्र रूप भी आपका है। सौम्य गुण और रक्षा की प्रचण्ड शक्ति साथ स्तुत हैं।",
+      "meaningEn": "You are modesty, nourishment, contentment, peace and patience. You also bear sword, trident, mace and discus in a formidable form. Gentle virtues and fierce protective strength are praised together."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-81",
+      "number": 81,
+      "labelHi": "पाठ · ८१",
+      "labelEn": "Text unit · 81",
+      "lines": [
+        "शङ्खिनी चापिनी बाणभुशुण्डीपरिघायुधा।",
+        "सौम्या सौम्यतराशेषसौम्येभ्यस्त्वतिसुन्दरी॥"
+      ],
+      "linesEn": [
+        "śhaṅkhinī chāpinī bāṇabhuśhuṇḍīparighāyudhā",
+        "saumyā saumyatarāśheṣasaumyebhyastvatisundarī"
+      ],
+      "meaningHi": "आप शंख, धनुष, बाण, भुशुण्डी और परिघ धारण करती हैं। फिर भी सौम्य हैं, समस्त सौम्य वस्तुओं से अधिक कोमल और अत्यन्त सुन्दर हैं। आयुधधारिणी देवी केवल उग्रता तक सीमित नहीं हैं।",
+      "meaningEn": "You bear conch, bow, arrows, bhushundi and iron club. Yet you are gentle, gentler than every gentle thing and supremely beautiful. The armed goddess is not confined to fierceness."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-82",
+      "number": 82,
+      "labelHi": "पाठ · ८२",
+      "labelEn": "Text unit · 82",
+      "lines": [
+        "परापराणां परमा त्वमेव परमेश्वरी।",
+        "यच्च किञ्चित्क्वचिद्वस्तु सदसद्वाखिलात्मिके॥"
+      ],
+      "linesEn": [
+        "parāparāṇāṃ paramā tvameva parameśhvarī",
+        "yachcha kiñchitkvachidvastu sadasadvākhilātmike"
+      ],
+      "meaningHi": "आप उच्च और निम्न सभी से परे परमेश्वरी हैं। हे सर्वात्मिका, कहीं भी जो कुछ सत् या असत् वस्तु है—उसका सम्बन्ध अगले पद में आपकी शक्ति से जोड़ा जाता है।",
+      "meaningEn": "You are supreme over higher and lower alike, the ultimate sovereign. Whatever exists anywhere, manifest or unmanifest, is addressed next as an expression of your power, O self of all."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-83",
+      "number": 83,
+      "labelHi": "पाठ · ८३",
+      "labelEn": "Text unit · 83",
+      "lines": [
+        "तस्य सर्वस्य या शक्तिः सा त्वं किं स्तूयसे तदा।",
+        "यया त्वया जगत्स्रष्टा जगत्पात्यत्ति यो जगत्॥"
+      ],
+      "linesEn": [
+        "tasya sarvasya yā śhaktiḥ sā tvaṃ kiṃ stūyase tadā",
+        "yayā tvayā jagatsraṣṭā jagatpātyatti yo jagat"
+      ],
+      "meaningHi": "उन सबकी शक्ति आप ही हैं; तब आपकी स्तुति कैसे हो? जो जगत का स्रष्टा, पालक और संहारक है, उसे भी आपने—अगला पद बताता है—निद्रा के अधीन किया है।",
+      "meaningEn": "You are the power of all of it; how then can you adequately be praised? Even the one who creates, protects and consumes the world has been brought by you into the state described next."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-84",
+      "number": 84,
+      "labelHi": "पाठ · ८४",
+      "labelEn": "Text unit · 84",
+      "lines": [
+        "सोऽपि निद्रावशं नीतः कस्त्वां स्तोतुमिहेश्वरः।",
+        "विष्णुः शरीरग्रहणमहमीशान एव च॥"
+      ],
+      "linesEn": [
+        "so'pi nidrāvaśhaṃ nītaḥ kastvāṃ stotumiheśhvaraḥ",
+        "viṣṇuḥ śharīragrahaṇamahamīśhāna eva cha"
+      ],
+      "meaningHi": "वह भी निद्रा के वश में है; फिर कौन आपकी पूर्ण स्तुति कर सकता है? विष्णु, मैं और ईशान भी शरीर धारण करने के लिए—वाक्य अगले पद में पूरा होता है—आपकी शक्ति पर निर्भर हैं।",
+      "meaningEn": "Even he is subject to sleep; who then can fully praise you? Vishnu, I and Ishana too depend upon your power in taking embodied forms, as the next verse completes the thought."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-85",
+      "number": 85,
+      "labelHi": "पाठ · ८५",
+      "labelEn": "Text unit · 85",
+      "lines": [
+        "कारितास्ते यतोऽतस्त्वां कः स्तोतुं शक्तिमान्भवेत्।",
+        "सा त्वमित्थं प्रभावैः स्वैरुदारैर्देवि संस्तुता॥"
+      ],
+      "linesEn": [
+        "kāritāste yato'tastvāṃ kaḥ stotuṃ śhaktimānbhavet",
+        "sā tvamitthaṃ prabhāvaiḥ svairudārairdevi saṃstutā"
+      ],
+      "meaningHi": "आप ही हमसे शरीर धारण कराती हैं, इसलिए कौन आपकी समुचित स्तुति कर सके? हे देवी, फिर भी आपके उदार प्रभावों का इस प्रकार गुणगान किया गया है। ब्रह्मा स्तुति की सीमा स्वीकारकर कृपा माँगते हैं।",
+      "meaningEn": "You cause us to assume forms, so who has the power to praise you sufficiently? Still, goddess, your generous powers have been honoured in this way. Brahma acknowledges the limits of praise while seeking grace."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-86",
+      "number": 86,
+      "labelHi": "पाठ · ८६",
+      "labelEn": "Text unit · 86",
+      "lines": [
+        "मोहयैतौ दुराधर्षावसुरौ मधुकैटभौ।",
+        "प्रबोधं च जगत्स्वामी नीयतामच्युतो लघु॥"
+      ],
+      "linesEn": [
+        "mohayaitau durādharṣāvasurau madhukaiṭabhau",
+        "prabodhaṃ cha jagatsvāmī nīyatāmachyuto laghu"
+      ],
+      "meaningHi": "इन दुर्जेय मधु-कैटभ असुरों को मोहित करें और जगत्स्वामी अच्युत को शीघ्र जगाएँ। अब ब्रह्मा की स्तुति स्पष्ट प्रार्थना बनती है।",
+      "meaningEn": "Confound these hard-to-subdue asuras, Madhu and Kaitabha, and quickly awaken Achyuta, lord of the world. Brahma’s praise becomes a direct plea."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-87",
+      "number": 87,
+      "labelHi": "पाठ · ८७",
+      "labelEn": "Text unit · 87",
+      "lines": [
+        "बोधश्च क्रियतामस्य हन्तुमेतौ महासुरौ॥"
+      ],
+      "linesEn": [
+        "bodhaśhcha kriyatāmasya hantumetau mahāsurau"
+      ],
+      "meaningHi": "उन्हें इन दोनों महाअसुरों का संहार करने की चेतना और प्रेरणा मिले। ब्रह्मा की प्रार्थना यहीं पूर्ण होती है।",
+      "meaningEn": "Awaken in him the resolve and awareness to overcome these two mighty asuras. Brahma’s request concludes here."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-88",
+      "number": 88,
+      "labelHi": "पाठ · ८८",
+      "labelEn": "Text unit · 88",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले। मेधस अब स्तुति के बाद योगनिद्रा देवी के प्राकट्य का वर्णन करते हैं।",
+      "meaningEn": "The sage spoke. Medhas now describes Yoganidra’s manifestation following the praise."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-89",
+      "number": 89,
+      "labelHi": "पाठ · ८९",
+      "labelEn": "Text unit · 89",
+      "lines": [
+        "एवं स्तुता तदा देवी तामसी तत्र वेधसा॥"
+      ],
+      "linesEn": [
+        "evaṃ stutā tadā devī tāmasī tatra vedhasā"
+      ],
+      "meaningHi": "ब्रह्मा द्वारा इस प्रकार स्तुत होने पर तामसी देवी—आगे उनके विष्णु से बाहर प्रकट होने का वर्णन है। यहाँ तामसी का सम्बन्ध निद्रा के कार्य से है।",
+      "meaningEn": "Thus praised by Brahma, the goddess associated with tamas begins the action described next. Here tamas is connected with her function as sleep."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-90",
+      "number": 90,
+      "labelHi": "पाठ · ९०",
+      "labelEn": "Text unit · 90",
+      "lines": [
+        "विष्णोः प्रबोधनार्थाय निहन्तुं मधुकैटभौ।",
+        "नेत्रास्यनासिकाबाहुहृदयेभ्यस्तथोरसः॥"
+      ],
+      "linesEn": [
+        "viṣṇoḥ prabodhanārthāya nihantuṃ madhukaiṭabhau",
+        "netrāsyanāsikābāhuhṛidayebhyastathorasaḥ"
+      ],
+      "meaningHi": "विष्णु को जगाने और मधु-कैटभ का संहार कराने के लिए देवी उनके नेत्र, मुख, नासिका, बाहु, हृदय और वक्ष से—अगले पद में—बाहर निकलती हैं।",
+      "meaningEn": "To awaken Vishnu so Madhu and Kaitabha could be defeated, the goddess emerges from his eyes, mouth, nose, arms, heart and chest. The action is completed in the next verse."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-91",
+      "number": 91,
+      "labelHi": "पाठ · ९१",
+      "labelEn": "Text unit · 91",
+      "lines": [
+        "निर्गम्य दर्शने तस्थौ ब्रह्मणोऽव्यक्तजन्मनः।",
+        "उत्तस्थौ च जगन्नाथस्तया मुक्तो जनार्दनः॥"
+      ],
+      "linesEn": [
+        "nirgamya darśhane tasthau brahmaṇo'vyaktajanmanaḥ",
+        "uttasthau cha jagannāthastayā mukto janārdanaḥ"
+      ],
+      "meaningHi": "बाहर निकलकर देवी अव्यक्त से उत्पन्न ब्रह्मा के सामने दिखाई दीं। उनसे मुक्त होकर जगन्नाथ जनार्दन उठ बैठे। देवी का प्राकट्य विष्णु का जागरण बनता है।",
+      "meaningEn": "Emerging, she stood visible before Brahma, whose origin is the unmanifest. Released from her sleep, Janardana, lord of the world, rose. Her manifestation brings Vishnu’s awakening."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-92",
+      "number": 92,
+      "labelHi": "पाठ · ९२",
+      "labelEn": "Text unit · 92",
+      "lines": [
+        "एकार्णवेऽहिशयनात्ततः स ददृशे च तौ।",
+        "मधुकैटभौ दुरात्मानावतिवीर्यपराक्रमौ॥"
+      ],
+      "linesEn": [
+        "ekārṇave'hiśhayanāttataḥ sa dadṛiśhe cha tau",
+        "madhukaiṭabhau durātmānāvativīryaparākramau"
+      ],
+      "meaningHi": "एकमात्र समुद्र में नागशय्या से उठकर उन्होंने अत्यन्त बलवान और पराक्रमी दुरात्मा मधु-कैटभ को देखा। अब युद्ध का प्रसंग सामने आता है।",
+      "meaningEn": "Rising from his serpent couch upon the single cosmic ocean, he saw the hostile Madhu and Kaitabha, immense in strength and valour. The narrative moves toward their battle."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-93",
+      "number": 93,
+      "labelHi": "पाठ · ९३",
+      "labelEn": "Text unit · 93",
+      "lines": [
+        "क्रोधरक्तेक्षणावत्तुं ब्रह्माणं जनितोद्यमौ।",
+        "समुत्थाय ततस्ताभ्यां युयुधे भगवान्हरिः॥"
+      ],
+      "linesEn": [
+        "krodharaktekṣhaṇāvattuṃ brahmāṇaṃ janitodyamau",
+        "samutthāya tatastābhyāṃ yuyudhe bhagavānhariḥ"
+      ],
+      "meaningHi": "उनकी आँखें क्रोध से लाल थीं और वे ब्रह्मा को निगलने को तत्पर थे। तब उठकर भगवान् हरि उनसे युद्ध करने लगे। सृष्टिकर्ता की रक्षा के लिए संघर्ष आरम्भ हुआ।",
+      "meaningEn": "Their eyes reddened with anger, the two were intent on devouring Brahma. Lord Hari rose and fought them, beginning the struggle to protect the creator."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-94",
+      "number": 94,
+      "labelHi": "पाठ · ९४",
+      "labelEn": "Text unit · 94",
+      "lines": [
+        "पञ्चवर्षसहस्राणि बाहुप्रहरणो विभुः।",
+        "तावप्यतिबलोन्मत्तौ महामायाविमोहितौ॥"
+      ],
+      "linesEn": [
+        "pañchavarṣasahasrāṇi bāhupraharaṇo vibhuḥ",
+        "tāvapyatibalonmattau mahāmāyāvimohitau"
+      ],
+      "meaningHi": "भगवान् ने बाहुओं को आयुध बनाकर पाँच हजार वर्ष युद्ध किया। अत्यधिक बल से मदमत्त दोनों असुर महामाया से मोहित थे। पुराणकथा की विशाल कालावधि संघर्ष की प्रचण्डता बताती है।",
+      "meaningEn": "Using his arms as weapons, the Lord fought for five thousand years. Intoxicated by their strength, the two asuras were deluded by Mahamaya. The immense Puranic timescale conveys the battle’s formidable intensity."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-95",
+      "number": 95,
+      "labelHi": "पाठ · ९५",
+      "labelEn": "Text unit · 95",
+      "lines": [
+        "उक्तवन्तौ वरोऽस्मत्तो व्रियतामिति केशवम्॥"
+      ],
+      "linesEn": [
+        "uktavantau varo'smatto vriyatāmiti keśhavam"
+      ],
+      "meaningHi": "दोनों ने केशव से कहा: हमसे कोई वर माँगो। बल के अहंकार और देवी के मोह में वे स्वयं वरदाता बन बैठे।",
+      "meaningEn": "They told Keshava to choose a boon from them. Through pride in their strength and the goddess’s delusion, they offered to become the givers."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-96",
+      "number": 96,
+      "labelHi": "पाठ · ९६",
+      "labelEn": "Text unit · 96",
+      "lines": [
+        "श्रीभगवानुवाच॥"
+      ],
+      "linesEn": [
+        "śhrībhagavānuvācha"
+      ],
+      "meaningHi": "श्रीभगवान् बोले। विष्णु उनके दिए अवसर को स्वीकार करते हैं।",
+      "meaningEn": "The blessed Lord spoke. Vishnu accepts the opportunity offered by the asuras."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-97",
+      "number": 97,
+      "labelHi": "पाठ · ९७",
+      "labelEn": "Text unit · 97",
+      "lines": [
+        "भवेतामद्य मे तुष्टौ मम वध्यावुभावपि॥"
+      ],
+      "linesEn": [
+        "bhavetāmadya me tuṣṭau mama vadhyāvubhāvapi"
+      ],
+      "meaningHi": "यदि आज तुम दोनों मुझ पर प्रसन्न हो, तो दोनों मेरे द्वारा वध किए जाने योग्य बनो। विष्णु का चुना वर उनके अभिमान को उलट देता है।",
+      "meaningEn": "If you are pleased with me today, let both of you be slain by me. Vishnu’s chosen boon turns their pride back upon them."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-98",
+      "number": 98,
+      "labelHi": "पाठ · ९८",
+      "labelEn": "Text unit · 98",
+      "lines": [
+        "किमन्येन वरेणात्र एतावद्धि वृतं मम॥"
+      ],
+      "linesEn": [
+        "kimanyena vareṇātra etāvaddhi vṛitaṃ mama"
+      ],
+      "meaningHi": "यहाँ किसी और वर की क्या आवश्यकता है? मैंने इतना ही माँगा है। भगवान् अपने चयन को स्पष्ट और सीमित रखते हैं।",
+      "meaningEn": "What need is there for any other boon? This alone is what I have chosen. The Lord makes his request unambiguous."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-99",
+      "number": 99,
+      "labelHi": "पाठ · ९९",
+      "labelEn": "Text unit · 99",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले। अब दोनों असुरों की प्रतिक्रिया और युद्ध का परिणाम आता है।",
+      "meaningEn": "The sage spoke. The asuras’ response and the outcome follow."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-100",
+      "number": 100,
+      "labelHi": "पाठ · १००",
+      "labelEn": "Text unit · 100",
+      "lines": [
+        "वञ्चिताभ्यामिति तदा सर्वमापोमयं जगत्॥"
+      ],
+      "linesEn": [
+        "vañchitābhyāmiti tadā sarvamāpomayaṃ jagat"
+      ],
+      "meaningHi": "इस प्रकार अपने ही वर से उलझे दोनों ने उस समय समस्त जगत को जलमय देखा। वे बचाव की शर्त खोजते हैं।",
+      "meaningEn": "Caught by their own offer, the two saw that the entire world was covered with water. They sought a condition that might spare them."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-101",
+      "number": 101,
+      "labelHi": "पाठ · १०१",
+      "labelEn": "Text unit · 101",
+      "lines": [
+        "विलोक्य ताभ्यां गदितो भगवान्कमलेक्षणः।",
+        "आवां जहि न यत्रोर्वी सलिलेन परिप्लुता॥"
+      ],
+      "linesEn": [
+        "vilokya tābhyāṃ gadito bhagavānkamalekṣhaṇaḥ",
+        "āvāṃ jahi na yatrorvī salilena pariplutā"
+      ],
+      "meaningHi": "जलमय जगत देखकर उन्होंने कमलनेत्र भगवान् से कहा: जहाँ पृथ्वी जल से डूबी न हो, वहीं हमें मारो। असुरों ने अपने वचन के भीतर बचने का मार्ग ढूँढ़ना चाहा।",
+      "meaningEn": "Seeing the world submerged, they told the lotus-eyed Lord: kill us where the earth is not flooded with water. They tried to find an escape within the terms of their promise."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-102",
+      "number": 102,
+      "labelHi": "पाठ · १०२",
+      "labelEn": "Text unit · 102",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि बोले। मेधस अब मधु-कैटभ के संहार का निष्कर्ष बताते हैं।",
+      "meaningEn": "The sage spoke. Medhas relates the conclusion of Madhu and Kaitabha’s defeat."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-103",
+      "number": 103,
+      "labelHi": "पाठ · १०३",
+      "labelEn": "Text unit · 103",
+      "lines": [
+        "तथेत्युक्त्वा भगवता शङ्खचक्रगदाभृता।",
+        "कृत्वा चक्रेण वै च्छिन्ने जघने शिरसी तयोः॥"
+      ],
+      "linesEn": [
+        "tathetyuktvā bhagavatā śhaṅkhachakragadābhṛitā",
+        "kṛitvā chakreṇa vai chchhinne jaghane śhirasī tayoḥ"
+      ],
+      "meaningHi": "शंख, चक्र और गदा धारण करने वाले भगवान् ने कहा: ऐसा ही हो। दोनों को अपनी जाँघों पर रखकर चक्र से उनके सिर काट दिए। इस प्रकार उनकी रखी शर्त के भीतर ही युद्ध समाप्त हुआ।",
+      "meaningEn": "The Lord bearing conch, discus and mace agreed. Placing them upon his thighs, he severed their heads with the discus. Thus the battle ended within the condition they had demanded."
+    },
+    {
+      "id": "durga-saptashati-chapter-1-104",
+      "number": 104,
+      "labelHi": "पाठ · १०४",
+      "labelEn": "Text unit · 104",
+      "lines": [
+        "एवमेषा समुत्पन्ना ब्रह्मणा संस्तुता स्वयम्।",
+        "प्रभावमस्या देव्यास्तु भूयः शृणु वदामि ते॥"
+      ],
+      "linesEn": [
+        "evameṣā samutpannā brahmaṇā saṃstutā svayam",
+        "prabhāvamasyā devyāstu bhūyaḥ śhṛiṇu vadāmi te"
+      ],
+      "meaningHi": "इस प्रकार ब्रह्मा की स्तुति से देवी प्रकट हुईं। अब उनका और प्रभाव सुनो, मैं बताता हूँ। प्रथम अध्याय समाप्त होकर अगले देवी-चरित्र की ओर संकेत करता है।",
+      "meaningEn": "Thus the goddess manifested after Brahma’s praise. Hear further of her power, the sage says, for I shall tell you more. The first chapter closes by opening toward the next account of her deeds."
+    }
+  ]
+}
