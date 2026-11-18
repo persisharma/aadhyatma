@@ -80,12 +80,12 @@
     },
     "deity-hi": {
       "file": "mobile/assets/sanatan-learning/teaching/deity-hi.webp",
-      "sha256": "71eb3ec3b701233752306bc2bda693261f1b429e563dcd6242956cdd1ff91edc",
-      "hash": "71eb3ec3b7012337",
+      "sha256": "d78f29296ecd1d650b01297f27fa0d7a0ccad38a728a656f9bc182bcd2ba96ae",
+      "hash": "d78f29296ecd1d65",
       "width": 1200,
       "height": 800,
       "ext": "webp",
-      "bytes": 228680,
+      "bytes": 229116,
       "topicId": "deity",
       "lang": "hi"
     },
@@ -168,12 +168,12 @@
     },
     "graha-hi": {
       "file": "mobile/assets/sanatan-learning/teaching/graha-hi.webp",
-      "sha256": "bac7f7e8f6b6793d3f412dec0a6cde8740cbfb902974a3c2bba1bc16af7aa35e",
-      "hash": "bac7f7e8f6b6793d",
+      "sha256": "d6f94b3d315fa7e465661a5c6089f81c35a329e62de9e0f5f9d065176c74a93c",
+      "hash": "d6f94b3d315fa7e4",
       "width": 1200,
       "height": 800,
       "ext": "webp",
-      "bytes": 233738,
+      "bytes": 228852,
       "topicId": "graha",
       "lang": "hi"
     },
