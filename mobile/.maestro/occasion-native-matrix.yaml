@@ -25,8 +25,15 @@ appId: com.prashantsharma.vedansh
 - tapOn: 'Location: .*'
 - tapOn: 'Search city, village or pincode'
 - inputText: Delh
-- hideKeyboard
-- tapOn: Delhi
+# No hideKeyboard: on iOS it flicks at screen centre, which on the iPhone SE is
+# the Delhi row, so it picked Delhi and closed the picker before the tap below
+# (CI). The results take taps with the keyboard up, and Delhi (the second row,
+# under its header) sits above the keyboard. The default city may already be
+# Delhi, whose row then reads "Delhi, selected".
+- tapOn: 'Delhi(, selected)?'
+- extendedWaitUntil:
+    notVisible: 'Search city, village or pincode'
+    timeout: 10000
 - runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: 'Language,.*' }

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -22,8 +23,10 @@ import {
   inflateRect,
   sameRect,
   measureSettled,
+  tourCardMaxHeight,
   CARD_HEIGHT_EST,
   REMEASURE_POLL_MS,
+  TOUR_HEADER_HEIGHT_EST,
 } from '@/components/tour/placement';
 import { runWhenIdle } from '@/utils/runWhenIdle';
 
@@ -53,6 +56,10 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
   const shouldShowFirstLaunchTour = gate && !suppressed;
   const [visible, setVisible] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
+  // Bottom edge (px from window top) of the step counter + Skip row, reported by
+  // its onLayout. The card is placed and capped below it so it can never cover
+  // Skip, whatever the type scale. Null until the first layout lands.
+  const [headerBottom, setHeaderBottom] = useState<number | null>(null);
   // Measured element rect for the current step, or null → ring the destination
   // tab instead (fallback while measuring / when the element isn't present).
   const [targetRect, setTargetRect] = useState<Rect | null>(null);
@@ -204,9 +211,15 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
     [targetRect, step, screen, insets.top, insets.bottom]
   );
   const ringRect = useMemo(() => inflateRect(baseRect, RING_PAD), [baseRect]);
+  // The card's band starts under the header row, not just under the status bar.
+  const cardBand = useMemo(
+    () => ({ top: headerBottom ?? insets.top + 6 + TOUR_HEADER_HEIGHT_EST, bottom: insets.bottom }),
+    [headerBottom, insets.top, insets.bottom]
+  );
+  const cardMaxHeight = tourCardMaxHeight(screen, cardBand);
   const placement = useMemo(
-    () => placeTourCard(baseRect, screen, { top: insets.top, bottom: insets.bottom }, CARD_HPAD, POINTER_W, cardHeight),
-    [baseRect, screen, insets.top, insets.bottom, cardHeight]
+    () => placeTourCard(baseRect, screen, cardBand, CARD_HPAD, POINTER_W, Math.min(cardHeight, cardMaxHeight)),
+    [baseRect, screen, cardBand, cardHeight, cardMaxHeight]
   );
 
   if (!visible || !step) return null;
@@ -242,7 +255,15 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
       />
 
       {/* Header: step counter + Skip, pinned to the top. */}
-      <View style={[styles.headerRow, { top: insets.top + 6 }]}>
+      <View
+        testID="tour-header"
+        onLayout={(e) => {
+          const { y, height } = e.nativeEvent.layout;
+          const bottom = Math.ceil(y + height);
+          if (bottom > 0) setHeaderBottom((prev) => (prev === bottom ? prev : bottom));
+        }}
+        style={[styles.headerRow, { top: insets.top + 6 }]}
+      >
         <Text style={[styles.stepCount, { color: colors.parchment, fontFamily: typography.cardLatin.fontFamily }]}>
           {stepIndex + 1} / {tourSteps.length}
         </Text>
@@ -263,6 +284,7 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
           onLayout reports the real height (arrow + card) so placement can decide
           the side by the card's true size, not a fixed guess. */}
       <View
+        testID="tour-card"
         pointerEvents="box-none"
         onLayout={(e) => {
           const h = Math.round(e.nativeEvent.layout.height);
@@ -270,6 +292,7 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
         }}
         style={[
           styles.cardWrap,
+          { maxHeight: cardMaxHeight },
           placement.top !== undefined ? { top: placement.top } : { bottom: placement.bottom },
         ]}
       >
@@ -297,12 +320,16 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
 
           <View style={[styles.rule, { backgroundColor: colors.divider }]} />
 
-          <Text style={[styles.bodyHi, { color: colors.ink, fontFamily: typography.meaning.fontFamily }]}>
-            {step.bodyHi}
-          </Text>
-          <Text style={[styles.bodyEn, { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily }]}>
-            {step.bodyEn}
-          </Text>
+          {/* The body gives way first when the card meets its cap: it scrolls,
+              while the titles, dots and Back/Next stay in view. */}
+          <ScrollView testID="tour-body" style={styles.body}>
+            <Text style={[styles.bodyHi, { color: colors.ink, fontFamily: typography.meaning.fontFamily }]}>
+              {step.bodyHi}
+            </Text>
+            <Text style={[styles.bodyEn, { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily }]}>
+              {step.bodyEn}
+            </Text>
+          </ScrollView>
 
           <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no">
             {tourSteps.map((s, i) => (
@@ -400,10 +427,12 @@ const styles = StyleSheet.create({
   },
   cardWrap: { position: 'absolute', left: 0, right: 0, paddingHorizontal: CARD_HPAD },
   card: {
+    flexShrink: 1,
     borderWidth: 1,
     padding: 18,
     ...elevation.overlay,
   },
+  body: { flexGrow: 0, flexShrink: 1 },
   titleHi: { fontSize: 20, includeFontPadding: false, textAlign: 'center' },
   titleEn: { fontSize: 13, marginTop: 2, fontStyle: 'italic', textAlign: 'center', includeFontPadding: false },
   rule: { height: 1, marginVertical: 12, opacity: 0.8 },

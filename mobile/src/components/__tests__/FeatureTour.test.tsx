@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { InteractionManager, Text } from 'react-native';
+import { Dimensions, InteractionManager, ScrollView, StyleSheet, Text } from 'react-native';
 import FeatureTour from '@/components/FeatureTour';
 import { tourSteps } from '@/data/tour/steps';
 
@@ -180,6 +180,33 @@ describe('FeatureTour', () => {
     expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
     // Overlay unmounts and stays gone even though shouldShowFirstLaunchTour is still true.
     expect(queryA11y(tree, 'Skip tour')).toBeUndefined();
+  });
+
+  test('keeps the card below the counter + Skip row, with the body scrolling when space runs out', () => {
+    // Regression (CI, enlarged iOS text): the tall card was placed up to the
+    // status bar, over Skip, so every Skip tap hit the card and the tour stayed.
+    const tree = mount();
+    const header = tree.root.find((n) => n.props?.testID === 'tour-header' && typeof n.props?.onLayout === 'function');
+    act(() => {
+      header.props.onLayout({ nativeEvent: { layout: { x: 0, y: 53, width: 390, height: 53 } } });
+    });
+    const card = () =>
+      tree.root.find((n) => n.props?.testID === 'tour-card' && typeof n.props?.onLayout === 'function');
+    const { height } = Dimensions.get('window');
+    const capped = height - 106 - 16;
+    // Report a card taller than the band; it is capped and placed inside the band.
+    act(() => {
+      card().props.onLayout({ nativeEvent: { layout: { x: 0, y: 0, width: 390, height: height } } });
+    });
+    const style = StyleSheet.flatten(card().props.style);
+    expect(style.maxHeight).toBe(capped);
+    const top = style.top ?? height - style.bottom - capped;
+    expect(top).toBeGreaterThanOrEqual(106);
+    // The bilingual body is the part that scrolls; Skip is still reachable.
+    const body = tree.root.find((n) => n.props?.testID === 'tour-body' && n.type === ScrollView);
+    expect(body.findAllByType(Text).map((t) => t.props.children)).toEqual([tourSteps[0].bodyHi, tourSteps[0].bodyEn]);
+    press(tree, 'Skip tour');
+    expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
   });
 
   test('renders nothing and drives no navigation when the gate is off', () => {
