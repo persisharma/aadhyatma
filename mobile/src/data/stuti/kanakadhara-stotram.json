@@ -1,0 +1,460 @@
+{
+  "id": "kanakadhara-stotram",
+  "titleHi": "कनकधारा स्तोत्रम्",
+  "titleEn": "Kanakadhara Stotram",
+  "deity": "lakshmi",
+  "source": {
+    "baseText": "Traditional Kanakadhara hymn attributed to Shankaracharya: Kanakadhara Mahalakshmi Temple Devanagari edition, 21 verses plus phalashruti, visually collated with Sanskrit Documents and Drik Panchang.",
+    "referenceUrls": [
+      "https://www.kanakadhara.org/wp-content/uploads/2020/06/KanakadharaStotram-Devnagari.jpg",
+      "https://www.kanakadhara.org/kanakadharastotram/",
+      "https://sanskritdocuments.org/doc_devii/kanaka.html",
+      "https://www.drikpanchang.com/lyrics/stotram/maha-lakshmi/kanakadhara-stotram.html?lang=en",
+      "https://greenmesg.org/stotras/lakshmi/kanakadhara_stotram.php"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Complete 22-unit temple recension: 21 hymn verses plus स्तुवन्ति ये phalashruti. Preserve temple order (आमीलिताक्ष third, विश्वामरेन्द्र seventh, इष्टा eighth, दद्याद् ninth) and देवी प्रसीद as 21. Sanskrit Documents publishes an 18-unit core plus additional verses; Drik has 21 inclusive of the phalashruti and omits देवी प्रसीद. These are recension differences, not reasons to truncate this edition. One recorded correction to the temple transcription: verse 11 third line reads शक्त्यै, supported by Sanskrit Documents, Green Message and Drik, instead of the image’s repeated श्रुत्यै. Temple spelling खलु यत्प्रभावान् (6), सुन्दरीति (10), जन्मभूत्यै (12), मान्ये (16), धवलतमांशुक (18), and अमूभिर् (22) retained. Line-ending punctuation and discretionary wrap hyphens are normalized only. Ancient verses are transcribed; no modern translation, publisher artwork/layout or romanization is copied. Hindi/English explanations are original editorial prose."
+  },
+  "verses": [
+    {
+      "id": "kanakadhara-stotram-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "अङ्गं हरेः पुलकभूषणमाश्रयन्ती",
+        "भृङ्गाङ्गनेव मुकुलाभरणं तमालम्।",
+        "अङ्गीकृताखिलविभूतिरपाङ्गलीला",
+        "माङ्गल्यदास्तु मम मङ्गलदेवतायाः॥"
+      ],
+      "linesEn": [
+        "aṅgaṃ hareḥ pulakabhūṣaṇamāśhrayantī",
+        "bhṛiṅgāṅganeva mukulābharaṇaṃ tamālam",
+        "aṅgīkṛitākhilavibhūtirapāṅgalīlā",
+        "māṅgalyadāstu mama maṅgaladevatāyāḥ"
+      ],
+      "meaningHi": "कलियों से सजे तमाल पर भ्रमरी की तरह हरि के पुलकित शरीर पर ठहरने वाली, समस्त ऐश्वर्य को समेटे मङ्गलदेवी लक्ष्मी की कटाक्ष-लीला मुझे मङ्गल दे। स्तुति का यह आरम्भ देवी की कृपादृष्टि को स्मरण करता है; भक्ति का केन्द्र उनका अनुग्रह है।",
+      "meaningEn": "May the playful sidelong glance of Lakshmi, goddess of auspiciousness, bring me good. It rests upon Hari’s thrilled form like a bee upon a bud-adorned tamala and contains all splendour. The hymn begins by contemplating her gracious glance as the focus of devotion."
+    },
+    {
+      "id": "kanakadhara-stotram-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "मुग्धा मुहुर्विदधती वदने मुरारेः",
+        "प्रेमत्रपाप्रणिहितानि गतागतानि।",
+        "माला दृशोर्मधुकरीव महोत्पले या",
+        "सा मे श्रियं दिशतु सागरसम्भवायाः॥"
+      ],
+      "linesEn": [
+        "mugdhā muhurvidadhatī vadane murāreḥ",
+        "prematrapāpraṇihitāni gatāgatāni",
+        "mālā dṛiśhormadhukarīva mahotpale yā",
+        "sā me śhriyaṃ diśhatu sāgarasambhavāyāḥ"
+      ],
+      "meaningHi": "प्रेम और लज्जा से मुरारि के मुख की ओर बार-बार जाकर लौटती समुद्रकन्या लक्ष्मी की दृष्टिमाला, बड़े कमल के आसपास भ्रमरी की गति जैसी है। वह मुझे श्री प्रदान करे। पाठ में इस कोमल बिम्ब से विष्णु और लक्ष्मी का स्नेह तथा कृपा की प्रार्थना व्यक्त होती है।",
+      "meaningEn": "May the ocean-born Lakshmi’s sequence of glances grant me Sri. Drawn to Murari’s face by affection and withdrawn in shyness, they move like a bee about a great lotus. This gentle image joins contemplation of the divine couple with a prayer for grace."
+    },
+    {
+      "id": "kanakadhara-stotram-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "आमीलिताक्षमधिगम्य मुदा मुकुन्दं",
+        "आनन्दकन्दमनिमेषमनङ्गतन्त्रम्।",
+        "आकेकरस्थितकनीनिकपक्ष्मनेत्रं",
+        "भूत्यै भवेन्मम भुजङ्गशयाङ्गनायाः॥"
+      ],
+      "linesEn": [
+        "āmīlitākṣhamadhigamya mudā mukundaṃ",
+        "ānandakandamanimeṣamanaṅgatantram",
+        "ākekarasthitakanīnikapakṣhmanetraṃ",
+        "bhūtyai bhavenmama bhujaṅgaśhayāṅganāyāḥ"
+      ],
+      "meaningHi": "आनन्द के मूल मुकुन्द के पास हर्ष से पहुँची, प्रेम में अनिमेष और तिरछे स्थित नयनों वाली शेषशायी की प्रिया लक्ष्मी की दृष्टि मेरे कल्याण का कारण हो। ध्यान का विषय उनका प्रेमपूर्ण नेत्रभाव है; उसी से भक्त अपने लिए अनुग्रह माँगता है।",
+      "meaningEn": "May the loving gaze of Lakshmi, consort of the serpent-reclining Lord, bring me well-being. Joyfully approaching Mukunda, the source of bliss, her eyes remain intent with love and glance from their corners. The devotee contemplates this intimate gaze and asks for its favour."
+    },
+    {
+      "id": "kanakadhara-stotram-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "बाह्वन्तरे मधुजितः श्रितकौस्तुभे या",
+        "हारावलीव हरिनीलमयी विभाति।",
+        "कामप्रदा भगवतोऽपि कटाक्षमाला",
+        "कल्याणमावहतु मे कमलालयायाः॥"
+      ],
+      "linesEn": [
+        "bāhvantare madhujitaḥ śhritakaustubhe yā",
+        "hārāvalīva harinīlamayī vibhāti",
+        "kāmapradā bhagavato'pi kaṭākṣhamālā",
+        "kalyāṇamāvahatu me kamalālayāyāḥ"
+      ],
+      "meaningHi": "मधुसूदन के कौस्तुभयुक्त वक्ष पर नीलम की हारावली जैसी चमकती, भगवान में भी प्रेम जगाने वाली कमलनिवासिनी की कटाक्षमाला मेरा कल्याण करे। लक्ष्मी-पूजन में यह श्लोक उनकी कृपादृष्टि की शोभा का ध्यान कराता है।",
+      "meaningEn": "May the lotus-dwelling goddess’s string of glances bring me welfare. It shines like a sapphire necklace upon Madhusudana’s Kaustubha-adorned chest and awakens love even in the Lord. In praise of Lakshmi, the verse contemplates the beauty of her favour."
+    },
+    {
+      "id": "kanakadhara-stotram-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "कालाम्बुदालिललितोरसि कैटभारेः",
+        "धाराधरे स्फुरति या तडिदङ्गनेव।",
+        "मातुस्समस्तजगतां महनीयमूर्तिः",
+        "भद्राणि मे दिशतु भार्गवनन्दनायाः॥"
+      ],
+      "linesEn": [
+        "kālāmbudālilalitorasi kaiṭabhāreḥ",
+        "dhārādhare sphurati yā taḍidaṅganeva",
+        "mātussamastajagatāṃ mahanīyamūrtiḥ",
+        "bhadrāṇi me diśhatu bhārgavanandanāyāḥ"
+      ],
+      "meaningHi": "कैतभ के शत्रु विष्णु का वक्ष गहरे मेघों जैसा है, और उस पर भार्गवकन्या लक्ष्मी बिजली की तरह चमकती हैं। समस्त जगत की माता का वह पूजनीय रूप मुझे शुभ दे। इस ध्यान में मेघ और विद्युत् का बिम्ब दिव्य युगल की शोभा को प्रकट करता है।",
+      "meaningEn": "May the revered form of Lakshmi, daughter of the Bhargava lineage and mother of the worlds, bring me auspicious things. She flashes like lightning upon Vishnu’s chest, dark and lovely as rainclouds. Cloud and lightning form the hymn’s image of the divine couple."
+    },
+    {
+      "id": "kanakadhara-stotram-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "प्राप्तं पदं प्रथमतः खलु यत्प्रभावान्",
+        "माङ्गल्यभाजि मधुमाथिनि मन्मथेन।",
+        "मय्यापतेत्तदिह मन्थरमीक्षणार्धं",
+        "मन्दालसं च मकरालयकन्यकायाः॥"
+      ],
+      "linesEn": [
+        "prāptaṃ padaṃ prathamataḥ khalu yatprabhāvān",
+        "māṅgalyabhāji madhumāthini manmathena",
+        "mayyāpatettadiha mantharamīkṣhaṇārdhaṃ",
+        "mandālasaṃ cha makarālayakanyakāyāḥ"
+      ],
+      "meaningHi": "जिस दृष्टि के प्रभाव से मन्मथ ने मङ्गलमय मधुसूदन में स्थान पाया, समुद्रकन्या का वही मन्द और कोमल अर्धकटाक्ष मुझ पर पड़े। स्तुति यहाँ देवी के प्रेममय प्रभाव का स्मरण करके उनकी सहज कृपा माँगती है।",
+      "meaningEn": "May that gentle half-glance of the ocean’s daughter fall upon me—the glance through whose power the god of love first found a place in auspicious Madhusudana. The verse remembers her loving influence and asks for a quiet measure of grace."
+    },
+    {
+      "id": "kanakadhara-stotram-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "विश्वामरेन्द्रपदविभ्रमदानदक्षं",
+        "आनन्दहेतुरधिकं मुरविद्विषोऽपि।",
+        "ईषन्निषीदतु मयि क्षणमीक्षणार्धम्",
+        "इन्दीवरोदरसहोदरमिन्दिरायाः॥"
+      ],
+      "linesEn": [
+        "viśhvāmarendrapadavibhramadānadakṣhaṃ",
+        "ānandaheturadhikaṃ muravidviṣo'pi",
+        "īṣanniṣīdatu mayi kṣhaṇamīkṣhaṇārdham",
+        "indīvarodarasahodaramindirāyāḥ"
+      ],
+      "meaningHi": "इन्द्रपद का वैभव देने में समर्थ, मुरारि को भी विशेष आनन्द देने वाला और नीलकमल के भीतर जैसा लक्ष्मी का अर्धकटाक्ष क्षणभर मुझ पर ठहरे। पाठ में भक्त बड़े वर की माँग के बजाय देवी की एक क्षणिक अनुकम्पा को पर्याप्त मानकर पुकारता है।",
+      "meaningEn": "May Indira’s half-glance rest upon me for just a moment: blue as the heart of a lotus, able to grant the splendour of Indra’s station and a source of joy even to Murari. The prayer centres on a brief touch of her favour rather than a demand upon her."
+    },
+    {
+      "id": "kanakadhara-stotram-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "इष्टा विशिष्टमतयोऽपि यया दयार्द्र",
+        "दृष्ट्या त्रिविष्टपपदं सुलभं लभन्ते।",
+        "दृष्टिः प्रहृष्टकमलोदरदीप्तिरिष्टां",
+        "पुष्टिं कृषीष्ट मम पुष्करविष्टरायाः॥"
+      ],
+      "linesEn": [
+        "iṣṭā viśhiṣṭamatayo'pi yayā dayārdra",
+        "dṛiṣṭyā triviṣṭapapadaṃ sulabhaṃ labhante",
+        "dṛiṣṭiḥ prahṛiṣṭakamalodaradīptiriṣṭāṃ",
+        "puṣṭiṃ kṛiṣīṣṭa mama puṣkaraviṣṭarāyāḥ"
+      ],
+      "meaningHi": "जिस करुणामयी दृष्टि से साधक स्वर्ग का पद भी सहज पाते हैं, कमलासना की विकसित कमल के भीतर जैसी दीप्त दृष्टि मुझे अभिलषित पोषण दे। स्तोत्र में यह देवी की दया और पुष्टिदायिनी शक्ति की प्रार्थना है; फल का कथन भक्ति की भाषा में है।",
+      "meaningEn": "May the compassionate glance of the lotus-seated goddess, bright as the heart of a blossoming lotus, grant the nourishment I seek. The hymn praises that glance as making even a heavenly station attainable. This is devotional praise of her compassion and sustaining power."
+    },
+    {
+      "id": "kanakadhara-stotram-9",
+      "number": 9,
+      "labelHi": "श्लोक · ९",
+      "labelEn": "Verse · 9",
+      "lines": [
+        "दद्याद्दयानुपवनो द्रविणाम्बुधारां",
+        "अस्मिन्नकिञ्चनविहङ्गशिशौ विषण्णे।",
+        "दुष्कर्मघर्ममपनीय चिराय दूरं",
+        "नारायणप्रणयिनीनयनाम्बुवाहः॥"
+      ],
+      "linesEn": [
+        "dadyāddayānupavano draviṇāmbudhārāṃ",
+        "asminnakiñchanavihaṅgaśhiśhau viṣaṇṇe",
+        "duṣkarmagharmamapanīya chirāya dūraṃ",
+        "nārāyaṇapraṇayinīnayanāmbuvāhaḥ"
+      ],
+      "meaningHi": "नारायण की प्रिया के नेत्ररूपी मेघ, दया की वायु से प्रेरित होकर, मुझ दीन और उदास पक्षिशिशु पर सम्पदा की वर्षा करें तथा दुष्कर्म की गर्मी दूर करें। यह करुणा की विनती है: भक्त अपनी असहायता स्वीकार करता है, किसी निश्चित धनलाभ का दावा नहीं करता।",
+      "meaningEn": "May the cloud of Narayana’s beloved’s eyes, stirred by compassion’s breeze, shower resources upon me, a distressed and destitute fledgling, and remove the heat of wrongdoing. The prayer acknowledges vulnerability and asks for mercy; it is not a promise of financial gain."
+    },
+    {
+      "id": "kanakadhara-stotram-10",
+      "number": 10,
+      "labelHi": "श्लोक · १०",
+      "labelEn": "Verse · 10",
+      "lines": [
+        "गीर्देवतेति गरुडध्वजसुन्दरीति",
+        "शाकम्भरीति शशिशेखरवल्लभेति।",
+        "सृष्टिस्थितिप्रलयकेलिषु संस्थितायै",
+        "तस्यै नमस्त्रिभुवनैकगुरोस्तरुण्यै॥"
+      ],
+      "linesEn": [
+        "gīrdevateti garuḍadhvajasundarīti",
+        "śhākambharīti śhaśhiśhekharavallabheti",
+        "sṛiṣṭisthitipralayakeliṣu saṃsthitāyai",
+        "tasyai namastribhuvanaikagurostaruṇyai"
+      ],
+      "meaningHi": "वाणी की देवी, गरुडध्वज विष्णु की सुन्दरी, शाकम्भरी और चन्द्रशेखर की प्रिया नामों से स्मरण की जाने वाली, सृष्टि-स्थिति-प्रलय की लीलाओं में स्थित देवी को प्रणाम है। इस श्लोक में स्तोत्र देवी के अनेक सम्बोधनों के माध्यम से उनके व्यापक दिव्य स्वरूप का वन्दन करता है।",
+      "meaningEn": "Salutations to the goddess invoked as the deity of speech, the beloved of the Garuda-bannered Lord, Shakambhari and the beloved of the moon-crested Lord. She abides in the play of creation, preservation and dissolution. The hymn uses these several names to honour her encompassing divine presence."
+    },
+    {
+      "id": "kanakadhara-stotram-11",
+      "number": 11,
+      "labelHi": "श्लोक · ११",
+      "labelEn": "Verse · 11",
+      "lines": [
+        "श्रुत्यै नमोऽस्तु शुभकर्मफलप्रसूत्यै",
+        "रत्यै नमोऽस्तु रमणीयगुणार्णवायै।",
+        "शक्त्यै नमोऽस्तु शतपत्रनिकेतनायै",
+        "पुष्ट्यै नमोऽस्तु पुरुषोत्तमवल्लभायै॥"
+      ],
+      "linesEn": [
+        "śhrutyai namo'stu śhubhakarmaphalaprasūtyai",
+        "ratyai namo'stu ramaṇīyaguṇārṇavāyai",
+        "śhaktyai namo'stu śhatapatraniketanāyai",
+        "puṣṭyai namo'stu puruṣottamavallabhāyai"
+      ],
+      "meaningHi": "शुभ कर्म का फल उत्पन्न करने वाली श्रुति, मनोहर गुणों की सागर रति, शतदल कमल में रहने वाली शक्ति और पुरुषोत्तम की प्रिया पुष्टि को प्रणाम है। नमस्कारों की यह माला देवी में ज्ञान, प्रेम, शक्ति और पोषण के रूपों का स्मरण कराती है।",
+      "meaningEn": "Salutations to her as Shruti, source of auspicious fruits of action; as Rati, an ocean of lovely qualities; as Shakti, dwelling in the hundred-petalled lotus; and as Pushti, beloved of Purushottama. This sequence of salutations remembers knowledge, love, power and nourishment in the goddess."
+    },
+    {
+      "id": "kanakadhara-stotram-12",
+      "number": 12,
+      "labelHi": "श्लोक · १२",
+      "labelEn": "Verse · 12",
+      "lines": [
+        "नमोऽस्तु नालीकनिभाननायै",
+        "नमोऽस्तु दुग्धोदधिजन्मभूत्यै।",
+        "नमोऽस्तु सोमामृतसोदरायै",
+        "नमोऽस्तु नारायणवल्लभायै॥"
+      ],
+      "linesEn": [
+        "namo'stu nālīkanibhānanāyai",
+        "namo'stu dugdhodadhijanmabhūtyai",
+        "namo'stu somāmṛitasodarāyai",
+        "namo'stu nārāyaṇavallabhāyai"
+      ],
+      "meaningHi": "कमल के समान मुख वाली, क्षीरसागर से उत्पन्न, चन्द्र और अमृत की सहोदरा तथा नारायण की प्रिया को प्रणाम है। यह वन्दना लक्ष्मी के समुद्रमन्थन-संबद्ध रूप और विष्णु से उनके सम्बन्ध का ध्यान कराती है।",
+      "meaningEn": "Salutations to her lotus-like face, to her birth from the ocean of milk, to the sister of the moon and nectar, and to Narayana’s beloved. These salutations recall Lakshmi’s ocean-born identity and her relationship with Vishnu."
+    },
+    {
+      "id": "kanakadhara-stotram-13",
+      "number": 13,
+      "labelHi": "श्लोक · १३",
+      "labelEn": "Verse · 13",
+      "lines": [
+        "नमोऽस्तु हेमाम्बुजपीठिकायै",
+        "नमोऽस्तु भूमण्डलनायिकायै।",
+        "नमोऽस्तु देवादिदयापरायै",
+        "नमोऽस्तु शार्ङ्गायुधवल्लभायै॥"
+      ],
+      "linesEn": [
+        "namo'stu hemāmbujapīṭhikāyai",
+        "namo'stu bhūmaṇḍalanāyikāyai",
+        "namo'stu devādidayāparāyai",
+        "namo'stu śhārṅgāyudhavallabhāyai"
+      ],
+      "meaningHi": "स्वर्णकमल के आसन वाली, भूमण्डल की नायिका, देवों आदि पर दयापरायण और शार्ङ्गधनुषधारी विष्णु की प्रिया को प्रणाम है। पूजा की इस नमस्कार-माला में ऐश्वर्य के साथ दया को भी देवी की विशेषता माना गया है।",
+      "meaningEn": "Salutations to her seated on a golden lotus, sovereign of the earth, compassionate toward the gods and others, beloved of the bearer of the Sharnga bow. In this sequence used for praise, compassion stands beside sovereignty as a quality of the goddess."
+    },
+    {
+      "id": "kanakadhara-stotram-14",
+      "number": 14,
+      "labelHi": "श्लोक · १४",
+      "labelEn": "Verse · 14",
+      "lines": [
+        "नमोऽस्तु देव्यै भृगुनन्दनायै",
+        "नमोऽस्तु विष्णोरुरसि स्थितायै।",
+        "नमोऽस्तु लक्ष्म्यै कमलालयायै",
+        "नमोऽस्तु दामोदरवल्लभायै॥"
+      ],
+      "linesEn": [
+        "namo'stu devyai bhṛigunandanāyai",
+        "namo'stu viṣṇorurasi sthitāyai",
+        "namo'stu lakṣhmyai kamalālayāyai",
+        "namo'stu dāmodaravallabhāyai"
+      ],
+      "meaningHi": "भृगु की आनन्ददायिनी पुत्री देवी, विष्णु के वक्ष पर स्थित, कमल में निवास करने वाली लक्ष्मी और दामोदर की प्रिया को प्रणाम है। यह श्लोक परिचित नामों और निवास-बिम्बों के माध्यम से लक्ष्मी का ध्यान स्थिर करता है।",
+      "meaningEn": "Salutations to the goddess who gladdens Bhrigu, who dwells upon Vishnu’s chest, to lotus-dwelling Lakshmi and to Damodara’s beloved. The familiar names and images of her abode help sustain the devotee’s contemplation."
+    },
+    {
+      "id": "kanakadhara-stotram-15",
+      "number": 15,
+      "labelHi": "श्लोक · १५",
+      "labelEn": "Verse · 15",
+      "lines": [
+        "नमोऽस्तु कान्त्यै कमलेक्षणायै",
+        "नमोऽस्तु भूत्यै भुवनप्रसूत्यै।",
+        "नमोऽस्तु देवादिभिरर्चितायै",
+        "नमोऽस्तु नन्दात्मजवल्लभायै॥"
+      ],
+      "linesEn": [
+        "namo'stu kāntyai kamalekṣhaṇāyai",
+        "namo'stu bhūtyai bhuvanaprasūtyai",
+        "namo'stu devādibhirarchitāyai",
+        "namo'stu nandātmajavallabhāyai"
+      ],
+      "meaningHi": "कमलनयना कान्ति, संसार को जन्म देने वाली भूति, देवों द्वारा पूजित और नन्दनन्दन की प्रिया को प्रणाम है। इस वन्दना में देवी की शोभा, जगत् के पोषण और भगवान से उनके सम्बन्ध का स्मरण जुड़ा है।",
+      "meaningEn": "Salutations to lotus-eyed radiance, to prosperity that gives rise to the world, to her worshipped by the gods and beloved of Nanda’s son. The praise joins her beauty and world-sustaining abundance with her relationship to the Lord."
+    },
+    {
+      "id": "kanakadhara-stotram-16",
+      "number": 16,
+      "labelHi": "श्लोक · १६",
+      "labelEn": "Verse · 16",
+      "lines": [
+        "सम्पत्कराणि सकलेन्द्रियनन्दनानि",
+        "साम्राज्यदानविभवानि सरोरुहाक्षि।",
+        "त्वद्वन्दनानि दुरिताहरणोद्यतानि",
+        "मामेव मातरनिशं कलयन्तु मान्ये॥"
+      ],
+      "linesEn": [
+        "sampatkarāṇi sakalendriyanandanāni",
+        "sāmrājyadānavibhavāni saroruhākṣhi",
+        "tvadvandanāni duritāharaṇodyatāni",
+        "māmeva mātaraniśhaṃ kalayantu mānye"
+      ],
+      "meaningHi": "हे कमलनयनी आदरणीया माता, आपके वन्दन सम्पदा देने वाले, इन्द्रियों को आनन्दित करने वाले, राज्य तक देने में समर्थ और दुरित हटाने वाले कहे गए हैं; वे मुझसे निरन्तर होते रहें। इस प्रार्थना का केन्द्र केवल फल नहीं, वन्दना में लगातार जुड़े रहने की इच्छा है।",
+      "meaningEn": "Lotus-eyed, revered Mother, homage to you is praised as enriching, delighting the senses, capable of conferring sovereignty and removing wrongdoing. May such salutations remain with me always. The prayer asks not only for their fruit but for enduring participation in worship."
+    },
+    {
+      "id": "kanakadhara-stotram-17",
+      "number": 17,
+      "labelHi": "श्लोक · १७",
+      "labelEn": "Verse · 17",
+      "lines": [
+        "यत्कटाक्षसमुपासनाविधिः",
+        "सेवकस्य सकलार्थसम्पदः।",
+        "सन्तनोति वचनाङ्गमानसैः",
+        "त्वां मुरारिहृदयेश्वरीं भजे॥"
+      ],
+      "linesEn": [
+        "yatkaṭākṣhasamupāsanāvidhiḥ",
+        "sevakasya sakalārthasampadaḥ",
+        "santanoti vachanāṅgamānasaiḥ",
+        "tvāṃ murārihṛidayeśhvarīṃ bhaje"
+      ],
+      "meaningHi": "हे मुरारि के हृदय की ईश्वरी, आपकी कृपादृष्टि की उपासना सेवक के हित और सम्पदा को बढ़ाती है; मैं वाणी, शरीर और मन से आपको भजता हूँ। पाठ में यह श्लोक समग्र समर्पण की अभिव्यक्ति है—भक्ति को बोलने, करने और सोचने से जोड़ता है।",
+      "meaningEn": "I worship you with speech, body and mind, sovereign of Murari’s heart, whose gracious glance is praised as nurturing every good for the worshipper. In recitation this is an expression of whole-person devotion, joining words, actions and thought."
+    },
+    {
+      "id": "kanakadhara-stotram-18",
+      "number": 18,
+      "labelHi": "श्लोक · १८",
+      "labelEn": "Verse · 18",
+      "lines": [
+        "सरसिजनिलये सरोजहस्ते",
+        "धवलतमांशुकगन्धमाल्यशोभे।",
+        "भगवति हरिवल्लभे मनोज्ञे",
+        "त्रिभुवनभूतिकरि प्रसीद मह्यम्॥"
+      ],
+      "linesEn": [
+        "sarasijanilaye sarojahaste",
+        "dhavalatamāṃśhukagandhamālyaśhobhe",
+        "bhagavati harivallabhe manojñe",
+        "tribhuvanabhūtikari prasīda mahyam"
+      ],
+      "meaningHi": "कमल में निवास करने वाली, हाथ में कमल धारण करने वाली, उज्ज्वल वस्त्र और सुगन्धित मालाओं से शोभित, हरिप्रिया, मनोहर और तीनों लोकों का कल्याण करने वाली भगवती, मुझ पर प्रसन्न हों। यह ध्यानरूप प्रार्थना देवी की सुन्दरता और लोकमङ्गल को एक साथ स्मरण करती है।",
+      "meaningEn": "Goddess dwelling in the lotus and holding a lotus, adorned with bright garments and fragrant garlands, lovely beloved of Hari who brings well-being to the three worlds, be gracious to me. This contemplative prayer remembers both her beauty and her care for the worlds."
+    },
+    {
+      "id": "kanakadhara-stotram-19",
+      "number": 19,
+      "labelHi": "श्लोक · १९",
+      "labelEn": "Verse · 19",
+      "lines": [
+        "दिग्घस्तिभिः कनककुम्भमुखावसृष्ट",
+        "स्वर्वाहिनीविमलचारुजलप्लुताङ्गीम्।",
+        "प्रातर्नमामि जगतां जननीमशेष",
+        "लोकाधिनाथगृहिणीममृताब्धिपुत्रीम्॥"
+      ],
+      "linesEn": [
+        "digghastibhiḥ kanakakumbhamukhāvasṛiṣṭa",
+        "svarvāhinīvimalachārujalaplutāṅgīm",
+        "prātarnamāmi jagatāṃ jananīmaśheṣa",
+        "lokādhināthagṛihiṇīmamṛitābdhiputrīm"
+      ],
+      "meaningHi": "दिशाओं के हाथियों द्वारा स्वर्णकलशों से बहाए गए निर्मल दिव्य जल से स्नात, जगत् की जननी, समस्त लोकों के स्वामी की गृहिणी और अमृतसागर की पुत्री को मैं प्रातः प्रणाम करता हूँ। यह प्रातःस्मरण गजलक्ष्मी के अभिषेक-बिम्ब का ध्यान कराता है।",
+      "meaningEn": "At dawn I bow to the mother of the worlds, consort of their Lord and daughter of the nectar ocean, bathed in pure celestial waters poured by the elephants of the directions from golden pitchers. This morning salutation contemplates the abhisheka image of Gajalakshmi."
+    },
+    {
+      "id": "kanakadhara-stotram-20",
+      "number": 20,
+      "labelHi": "श्लोक · २०",
+      "labelEn": "Verse · 20",
+      "lines": [
+        "कमले कमलाक्षवल्लभे त्वं",
+        "करुणापूरतरङ्गितैरपाङ्गैः।",
+        "अवलोकय मामकिञ्चनानां",
+        "प्रथमं पात्रमकृत्रिमं दयायाः॥"
+      ],
+      "linesEn": [
+        "kamale kamalākṣhavallabhe tvaṃ",
+        "karuṇāpūrataraṅgitairapāṅgaiḥ",
+        "avalokaya māmakiñchanānāṃ",
+        "prathamaṃ pātramakṛitrimaṃ dayāyāḥ"
+      ],
+      "meaningHi": "हे कमले, कमलनयन भगवान की प्रिया, करुणा की तरङ्गों से भरे कटाक्षों से मुझे देखें। दीनों में मैं आपकी निष्कपट दया का प्रथम पात्र हूँ। स्तुति का यह विनीत निवेदन अपनी असहायता स्वीकार करते हुए करुणा का आश्रय माँगता है।",
+      "meaningEn": "Kamala, beloved of the lotus-eyed Lord, look upon me with sidelong glances flowing with compassion. Among the destitute, I stand foremost in need of your unfeigned mercy. This humble appeal acknowledges need and seeks refuge in kindness."
+    },
+    {
+      "id": "kanakadhara-stotram-21",
+      "number": 21,
+      "labelHi": "श्लोक · २१",
+      "labelEn": "Verse · 21",
+      "lines": [
+        "देवि प्रसीद जगदीश्वरि लोकमातः",
+        "कल्याणगात्रि कमलेक्षणजीवनाथे।",
+        "दारिद्र्यभीतिहृदयं शरणागतं मां",
+        "आलोकय प्रतिदिनं सदयैरपाङ्गैः॥"
+      ],
+      "linesEn": [
+        "devi prasīda jagadīśhvari lokamātaḥ",
+        "kalyāṇagātri kamalekṣhaṇajīvanāthe",
+        "dāridryabhītihṛidayaṃ śharaṇāgataṃ māṃ",
+        "ālokaya pratidinaṃ sadayairapāṅgaiḥ"
+      ],
+      "meaningHi": "हे देवी, जगदीश्वरी, लोकमाता, मङ्गलमय रूप वाली और कमलनयन के जीवन की स्वामिनी, प्रसन्न हों। दरिद्रता के भय से व्याकुल, आपकी शरण आए मुझे प्रतिदिन दयाभरे कटाक्षों से देखें। यह अंतिम विनती जीवन के अभाव और भय में रोज़ के करुणामय आश्रय की है।",
+      "meaningEn": "Goddess, sovereign and mother of the world, auspicious in form and cherished by the lotus-eyed Lord, be gracious. Look daily with merciful glances upon me, who has taken refuge with a heart afraid of poverty. This final appeal seeks everyday compassion amid need and fear."
+    },
+    {
+      "id": "kanakadhara-stotram-22",
+      "number": 22,
+      "labelHi": "फलश्रुति · २२",
+      "labelEn": "Phalashruti · 22",
+      "lines": [
+        "स्तुवन्ति ये स्तुतिभिरमूभिरन्वहं",
+        "त्रयीमयीं त्रिभुवनमातरं रमाम्।",
+        "गुणाधिका गुरुतरभाग्यभागिनो",
+        "भवन्ति ते भुवि बुधभाविताशयाः॥"
+      ],
+      "linesEn": [
+        "stuvanti ye stutibhiramūbhiranvahaṃ",
+        "trayīmayīṃ tribhuvanamātaraṃ ramām",
+        "guṇādhikā gurutarabhāgyabhāgino",
+        "bhavanti te bhuvi budhabhāvitāśhayāḥ"
+      ],
+      "meaningHi": "फलश्रुति कहती है कि जो इन स्तुतियों से नित्य त्रयीस्वरूपा, तीनों लोकों की माता रमा का वन्दन करते हैं, वे गुणसम्पन्न, महान सौभाग्य के भागी और विवेक से संस्कारित चित्त वाले होते हैं। यह स्तोत्र की पारम्परिक पाठ-प्रशंसा है; इसे निश्चित धन या सफलता का वादा न मानें।",
+      "meaningEn": "The phalashruti praises daily worship of Rama, embodiment of the three Vedas and mother of the three worlds, through these verses. It describes reciters as rich in virtues, greatly fortunate and wise in disposition. This is the hymn’s traditional commendation of recitation, not a promise of guaranteed wealth or success."
+    }
+  ]
+}

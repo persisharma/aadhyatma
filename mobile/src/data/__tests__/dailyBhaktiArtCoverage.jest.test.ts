@@ -1,3 +1,8 @@
+import { library } from '../texts';
+import { ashtakamIds, getAshtakam } from '../ashtakam';
+import { suktamIds, getSuktam } from '../suktam';
+import { kavachamIds, getKavacham } from '../kavacham';
+import { stutiIds, getStuti } from '../stuti';
 import { getVersePool } from '../versePool';
 import { parshuramPublished } from '../parshuramAvailability';
 import { devotionalArtForVerse, isDevotionalSubjectArt } from '../devotionalShareArt';
@@ -36,13 +41,19 @@ it('gives every pooled named-subject its distinct portrait', () => {
 
 it('pools the flat ashtakam/suktam/kavach/stuti sources without the neutral fallback', () => {
   const pool = getVersePool();
-  // +8 non-naam japam mantras (7 Nov 2026); Sita Ram naam japa stays out of the pool.
-  expect(pool).toHaveLength(parshuramPublished ? 1699 : 1692);
-  // The flat sources that remain after chalisas and aartis left the rotation.
-  const flatSourceIds = new Set(["lingashtakam", "madhurashtakam", "achyutashtakam", "mahalakshmi-ashtakam", "surya-ashtakam", "radhashtakam", "subrahmanya-ashtakam", "gangashtakam", "bhavani-ashtakam", "narasimha-ashtakam", "datta-ashtakam", "shani-ashtakam", "kalika-ashtakam", "rudrashtakam", "devi-suktam", "purusha-suktam", "narayana-suktam", "rama-raksha-stotra", "ganesha-kavacham", "shiva-kavacham", "durga-kavach", "krishna-stuti", "durga-stuti-arjuna", "kubera-stotram", "navagraha-stotram", "parshuram-stotram"]);
-  const flat = pool.filter(v => flatSourceIds.has(v.sourceId));
-  expect(new Set(flat.map(v => v.sourceId)).size).toBe(parshuramPublished ? 26 : 25);
-  for (const verse of flat) expect(devotionalArtForVerse(verse)).not.toBe('prayer');
+  // Compare the owning registries, not yesterday's growing pool size.
+  const entries = [
+    ...ashtakamIds.map(id => ({id, count:getAshtakam(id).verses.length})),
+    ...suktamIds.map(id => ({id, count:getSuktam(id).verses.length})),
+    ...kavachamIds.map(id => ({id, count:getKavacham(id).verses.length})),
+    ...stutiIds.map(id => ({id, count:getStuti(id).verses.length})),
+  ].filter(({id}) => library.some(e => e.id===id && e.status==='active' && !e.hidden && !['kabir-bhakti-dohe','rahim-bhakti-dohe'].includes(id)));
+  for (const {id,count} of entries) {
+    const verses=pool.filter(v=>v.sourceId===id);
+    expect(verses).toHaveLength(count);
+    for(const verse of verses) expect(devotionalArtForVerse(verse)).not.toBe('prayer');
+  }
+  expect(pool.some(v=>v.sourceId==='durga-kavach')).toBe(false);
   for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe', 'unknown-source', 'matribhumi-vandana', 'sandhya-deepam']) {
     expect(devotionalArtForVerse({ sourceId, verseIndex: 0 })).toBe('prayer');
   }

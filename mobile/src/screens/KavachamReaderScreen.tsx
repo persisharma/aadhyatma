@@ -182,11 +182,11 @@ export default function KavachamReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: width < 360 ? 8 : 18 }]}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={kavachamId} />
-          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
-          <View style={styles.readAloudSlot}>
+          {/* Keep controls in flow on narrow screens to avoid overlapping routine/listen. */}
+          <View style={[styles.readAloudSlot, width < 360 && styles.readAloudSlotNarrow]}>
             <ReadAloudButton control={readAloud} />
           </View>
         </View>
@@ -310,6 +310,12 @@ const styles = StyleSheet.create({
     top: 6,
     bottom: 12,
     justifyContent: 'center',
+  },
+  readAloudSlotNarrow: {
+    position: 'relative',
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
   listContainer: {
     flex: 1,

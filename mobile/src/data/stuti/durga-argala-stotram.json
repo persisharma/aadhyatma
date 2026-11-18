@@ -1,0 +1,450 @@
+{
+  "id": "durga-argala-stotram",
+  "titleHi": "दुर्गा अर्गला स्तोत्रम्",
+  "titleEn": "Durga Argala Stotram",
+  "deity": "durga",
+  "source": {
+    "baseText": "Complete27-stanza recension. Drik has a different25-stanza ordering; it is not spliced into this edition. Optional preparatory dhyana/viniyoga is outside this numbered hymn.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_devii/argalaastotra.html",
+      "https://rampuri.com/durga-saptashati-text/",
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/patha-vidhi/argala-stotram/durga-saptashati-argala-stotram.html"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Ancient Sanskrit hymn; original Vedansh Hindi/English meanings and reader-convention Sanskrit romanization. Edition comparison in durga-core-sources.md."
+  },
+  "verses": [
+    {
+      "id": "durga-argala-stotram-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "ॐ जय त्वं देवि चामुण्डे जय भूतापहारिणि।",
+        "जय सर्वगते देवि कालरात्रि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "oṃ jaya tvaṃ devi chāmuṇḍe jaya bhūtāpahāriṇi",
+        "jaya sarvagate devi kālarātri namo'stu te"
+      ],
+      "meaningHi": "हे चामुण्डा, प्राणियों की पीड़ा और भयकारी शक्तियों को हरने वाली, आपकी जय हो। सर्वव्यापिनी कालरात्रि को नमस्कार है। मार्कण्डेय की स्तुति देवी के रक्षक और विश्वव्यापी रूप से आरम्भ होती है।",
+      "meaningEn": "Victory to Chamunda, who removes the suffering of beings and feared presences. Salutations to all-pervading Kalaratri. Markandeya’s praise begins with the goddess’s protecting and universal nature."
+    },
+    {
+      "id": "durga-argala-stotram-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "जयन्ती मङ्गला काली भद्रकाली कपालिनी।",
+        "दुर्गा शिवा क्षमा धात्री स्वाहा स्वधा नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "jayantī maṅgalā kālī bhadrakālī kapālinī",
+        "durgā śhivā kṣhamā dhātrī svāhā svadhā namo'stu te"
+      ],
+      "meaningHi": "जयन्ती, मङ्गला, काली, भद्रकाली, कपालिनी, दुर्गा, शिवा, क्षमा, धात्री, स्वाहा और स्वधा—इन सभी रूपों में देवी को नमस्कार है। विजय, मंगल, पोषण और देव-पितृ अर्पण की शक्तियाँ एक स्तुति में आती हैं।",
+      "meaningEn": "Salutations to the goddess as Jayanti, Mangala, Kali, Bhadrakali, Kapalini, Durga, Shiva, Kshama, Dhatri, Svaha and Svadha. Victory, auspiciousness, nourishment and offerings to gods and ancestors are gathered into her many names."
+    },
+    {
+      "id": "durga-argala-stotram-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "मधुकैटभविध्वंसि विधातृवरदे नमः।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "madhukaiṭabhavidhvaṃsi vidhātṛivarade namaḥ",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "मधु-कैटभ का विनाश कराने और ब्रह्मा को वर देने वाली देवी को नमस्कार है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Salutations to the goddess who brought about Madhu and Kaitabha’s destruction and granted Brahma his blessing. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "महिषासुरनिर्नाशि भक्तानां सुखदे नमः।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "mahiṣāsuranirnāśhi bhaktānāṃ sukhade namaḥ",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "महिषासुर का संहार और भक्तों को सुख देने वाली देवी को नमस्कार है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Salutations to the goddess who overthrew Mahishasura and brings happiness to devotees. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "धूम्रनेत्रवधे देवि धर्मकामार्थदायिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "dhūmranetravadhe devi dharmakāmārthadāyini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे धूम्रनेत्र का वध करने वाली देवी, धर्म, काम और अर्थ देने वाली माता। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess who slew Dhumranetra, mother who grants dharma, desired good and material support. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "रक्तबीजवधे देवि चण्डमुण्डविनाशिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "raktabījavadhe devi chaṇḍamuṇḍavināśhini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे रक्तबीज, चण्ड और मुण्ड का विनाश करने वाली देवी। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess who destroyed Raktabija, Chanda and Munda. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "निशुम्भशुम्भनिर्नाशि त्रैलोक्यशुभदे नमः।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "niśhumbhaśhumbhanirnāśhi trailokyaśhubhade namaḥ",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "निशुम्भ-शुम्भ का संहार और तीनों लोकों का शुभ करने वाली देवी को नमस्कार है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Salutations to the destroyer of Nishumbha and Shumbha, who brings welfare to the three worlds. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "वन्दिताङ्घ्रियुगे देवि सर्वसौभाग्यदायिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "vanditāṅghriyuge devi sarvasaubhāgyadāyini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे देवी, जिनके दोनों चरण वन्दित हैं और जो सब प्रकार का सौभाग्य देती हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess whose two feet are honoured and who grants every kind of auspicious fortune. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-9",
+      "number": 9,
+      "labelHi": "श्लोक · ९",
+      "labelEn": "Verse · 9",
+      "lines": [
+        "अचिन्त्यरूपचरिते सर्वशत्रुविनाशिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "achintyarūpacharite sarvaśhatruvināśhini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे अचिन्तनीय रूप और चरित वाली देवी, सब शत्रुओं का नाश करने वाली। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess whose form and deeds exceed thought, destroyer of hostile forces. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-10",
+      "number": 10,
+      "labelHi": "श्लोक · १०",
+      "labelEn": "Verse · 10",
+      "lines": [
+        "नतेभ्यः सर्वदा भक्त्या चापर्णे दुरितापहे।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "natebhyaḥ sarvadā bhaktyā chāparṇe duritāpahe",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे अपर्णा, भक्तिपूर्वक झुकने वालों का दुःख और दोष सदा हरने वाली। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Aparna, who continually removes distress and wrongdoing from those who bow with devotion. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-11",
+      "number": 11,
+      "labelHi": "श्लोक · ११",
+      "labelEn": "Verse · 11",
+      "lines": [
+        "स्तुवद्भ्यो भक्तिपूर्वं त्वां चण्डिके व्याधिनाशिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "stuvadbhyo bhaktipūrvaṃ tvāṃ chaṇḍike vyādhināśhini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे चण्डिका, भक्तिभाव से स्तुति करने वालों की व्याधि हरने वाली। यह उपचार का आश्वासन नहीं, आरोग्य की भक्तिपूर्ण प्रार्थना है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Chandika, invoked as remover of illness by those praising you with devotion. This is a prayer for well-being, not a medical guarantee. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-12",
+      "number": 12,
+      "labelHi": "श्लोक · १२",
+      "labelEn": "Verse · 12",
+      "lines": [
+        "चण्डिके सततं युद्धे जयन्ति पापनाशिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "chaṇḍike satataṃ yuddhe jayanti pāpanāśhini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे चण्डिका, युद्ध में सदा विजयशालिनी और पापनाशिनी। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Chandika, ever victorious in battle and remover of sin. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-13",
+      "number": 13,
+      "labelHi": "श्लोक · १३",
+      "labelEn": "Verse · 13",
+      "lines": [
+        "देहि सौभाग्यमारोग्यं देहि देवि परं सुखम्।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "dehi saubhāgyamārogyaṃ dehi devi paraṃ sukham",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे देवी, सौभाग्य, आरोग्य और उत्तम सुख प्रदान करें। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess, grant auspicious fortune, health and deep happiness. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-14",
+      "number": 14,
+      "labelHi": "श्लोक · १४",
+      "labelEn": "Verse · 14",
+      "lines": [
+        "विधेहि देवि कल्याणं विधेहि विपुलां श्रियम्।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "vidhehi devi kalyāṇaṃ vidhehi vipulāṃ śhriyam",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे देवी, कल्याण और प्रचुर श्री की व्यवस्था करें। श्री में समृद्धि के साथ शोभा और मंगल भी निहित हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess, establish welfare and abundant Sri, embracing prosperity, beauty and auspiciousness. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-15",
+      "number": 15,
+      "labelHi": "श्लोक · १५",
+      "labelEn": "Verse · 15",
+      "lines": [
+        "विधेहि द्विषतां नाशं विधेहि बलमुच्चकैः।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "vidhehi dviṣatāṃ nāśhaṃ vidhehi balamuchchakaiḥ",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "विरोधी शक्तियों का नाश और श्रेष्ठ बल प्रदान करें। यह आत्मरक्षा और धैर्य के लिए देवी का आश्रय है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Remove hostile forces and grant great strength. The prayer seeks the goddess’s shelter for protection and fortitude. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-16",
+      "number": 16,
+      "labelHi": "श्लोक · १६",
+      "labelEn": "Verse · 16",
+      "lines": [
+        "सुरासुरशिरोरत्ननिघृष्टचरणेऽम्बिके।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "surāsuraśhiroratnanighṛiṣṭacharaṇe'mbike",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे अम्बिका, देव और असुरों के झुकते मुकुटों के रत्न आपके चरणों से स्पर्श करते हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Ambika, the jewels in the bowed crowns of gods and asuras touch your feet. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-17",
+      "number": 17,
+      "labelHi": "श्लोक · १७",
+      "labelEn": "Verse · 17",
+      "lines": [
+        "विद्यावन्तं यशस्वन्तं लक्ष्मीवन्तञ्च मां कुरु।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "vidyāvantaṃ yaśhasvantaṃ lakṣhmīvantañcha māṃ kuru",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "मुझे विद्या, यश और श्री से सम्पन्न करें। भक्त जीवन के साधनों के साथ ज्ञान की भी याचना करता है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Make me rich in learning, honour and Sri. The devotee asks for knowledge alongside life’s other resources. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-18",
+      "number": 18,
+      "labelHi": "श्लोक · १८",
+      "labelEn": "Verse · 18",
+      "lines": [
+        "देवि प्रचण्डदोर्दण्डदैत्यदर्पनिषूदिनि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "devi prachaṇḍadordaṇḍadaityadarpaniṣūdini",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे देवी, प्रचण्ड भुजाओं वाले दैत्यों का अभिमान चूर करने वाली। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Goddess who crushes the arrogance of demons with formidable arms. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-19",
+      "number": 19,
+      "labelHi": "श्लोक · १९",
+      "labelEn": "Verse · 19",
+      "lines": [
+        "प्रचण्डदैत्यदर्पघ्ने चण्डिके प्रणताय मे।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "prachaṇḍadaityadarpaghne chaṇḍike praṇatāya me",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "प्रचण्ड दैत्यों का दर्प हरने वाली चण्डिका, मैं आपके सामने झुका हूँ। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Chandika, destroyer of the fierce demons’ pride, I bow before you. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-20",
+      "number": 20,
+      "labelHi": "श्लोक · २०",
+      "labelEn": "Verse · 20",
+      "lines": [
+        "चतुर्भुजे चतुर्वक्त्रसंस्तुते परमेश्वरि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "chaturbhuje chaturvaktrasaṃstute parameśhvari",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे चार भुजाओं वाली परमेश्वरी, चार मुख वाले ब्रह्मा आपकी स्तुति करते हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Four-armed supreme goddess, praised by four-faced Brahma. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-21",
+      "number": 21,
+      "labelHi": "श्लोक · २१",
+      "labelEn": "Verse · 21",
+      "lines": [
+        "कृष्णेन संस्तुते देवि शश्वद्भक्त्या सदाम्बिके।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "kṛiṣṇena saṃstute devi śhaśhvadbhaktyā sadāmbike",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे अम्बिका, कृष्ण निरन्तर भक्तिपूर्वक आपकी स्तुति करते हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Ambika, whom Krishna continually praises with devotion. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-22",
+      "number": 22,
+      "labelHi": "श्लोक · २२",
+      "labelEn": "Verse · 22",
+      "lines": [
+        "हिमाचलसुतानाथसंस्तुते परमेश्वरि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "himāchalasutānāthasaṃstute parameśhvari",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे परमेश्वरी, हिमालय की पुत्री के स्वामी शिव आपकी स्तुति करते हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Supreme goddess praised by Shiva, lord of the daughter of the Himalaya. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-23",
+      "number": 23,
+      "labelHi": "श्लोक · २३",
+      "labelEn": "Verse · 23",
+      "lines": [
+        "इन्द्राणीपतिसद्भावपूजिते परमेश्वरि।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "indrāṇīpatisadbhāvapūjite parameśhvari",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे परमेश्वरी, इन्द्राणी के पति इन्द्र सद्भाव से आपकी पूजा करते हैं। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Supreme goddess worshipped sincerely by Indra, Indrani’s husband. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-24",
+      "number": 24,
+      "labelHi": "श्लोक · २४",
+      "labelEn": "Verse · 24",
+      "lines": [
+        "देवि भक्तजनोद्दामदत्तानन्दोदयेऽम्बिके।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "devi bhaktajanoddāmadattānandodaye'mbike",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे अम्बिका, भक्तों को दिया गया अपार आनन्द आपके अनुग्रह से उदित होता है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Ambika, whose favour brings forth the abundant joy bestowed upon devotees. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-25",
+      "number": 25,
+      "labelHi": "श्लोक · २५",
+      "labelEn": "Verse · 25",
+      "lines": [
+        "भार्यां मनोरमां देहि मनोवृत्तानुसारिणीम्।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "bhāryāṃ manoramāṃ dehi manovṛittānusāriṇīm",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "मनोहर और मन से सामञ्जस्य रखने वाली पत्नी दें। यह पद प्राचीन पुरुष गृहस्थ की वाणी में सहचर्य माँगता है; आज भावार्थ परस्पर समझ और सहयोग का है। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Grant a beloved wife with a harmonious disposition. The verse speaks in an ancient male householder’s voice; its relational aspiration can be understood as mutual understanding and companionship. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-26",
+      "number": 26,
+      "labelHi": "श्लोक · २६",
+      "labelEn": "Verse · 26",
+      "lines": [
+        "तारिणि दुर्गसंसारसागरस्याचलोद्भवे।",
+        "रूपं देहि जयं देहि यशो देहि द्विषो जहि॥"
+      ],
+      "linesEn": [
+        "tāriṇi durgasaṃsārasāgarasyāchalodbhave",
+        "rūpaṃ dehi jayaṃ dehi yaśho dehi dviṣo jahi"
+      ],
+      "meaningHi": "हे पर्वतकन्या, कठिन संसार-सागर से पार उतारने वाली देवी। रूप, विजय और यश दें; शत्रुता का नाश करें। आवर्ती प्रार्थना में भक्त अपना कल्याण देवी को सौंपता है।",
+      "meaningEn": "Daughter of the mountain, goddess who carries beings across the difficult ocean of worldly existence. Grant beauty, victory and honour; destroy hostility. Through this recurring appeal the devotee entrusts well-being to the goddess."
+    },
+    {
+      "id": "durga-argala-stotram-27",
+      "number": 27,
+      "labelHi": "श्लोक · २७",
+      "labelEn": "Verse · 27",
+      "lines": [
+        "इदं स्तोत्रं पठित्वा तु महास्तोत्रं पठेन्नरः।",
+        "सप्तशतीं समाराध्य वरमाप्नोति दुर्लभम्॥"
+      ],
+      "linesEn": [
+        "idaṃ stotraṃ paṭhitvā tu mahāstotraṃ paṭhennaraḥ",
+        "saptaśhatīṃ samārādhya varamāpnoti durlabham"
+      ],
+      "meaningHi": "इस स्तोत्र के बाद महास्तोत्र अर्थात् सप्तशती का पाठ करने को कहा गया है; आराधना से दुर्लभ वर की प्राप्ति का गुणगान है। यह अर्गला को सप्तशती के पूर्वाङ्ग के रूप में स्थापित करने वाला समापन है।",
+      "meaningEn": "The text directs the reciter to follow this hymn with the great Saptashati, praising the rare blessing gained through worship. This conclusion places Argala among the preparatory texts of the Saptashati."
+    }
+  ]
+}

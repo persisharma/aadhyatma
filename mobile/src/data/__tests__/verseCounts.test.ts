@@ -1,3 +1,23 @@
+import durgaSaptashatiChapter2 from '../stuti/durga-saptashati-chapter-2.json';
+import durgaSaptashatiChapter3 from '../stuti/durga-saptashati-chapter-3.json';
+import durgaSaptashatiChapter4 from '../stuti/durga-saptashati-chapter-4.json';
+import durgaSaptashatiChapter5 from '../stuti/durga-saptashati-chapter-5.json';
+import durgaSaptashatiChapter6 from '../stuti/durga-saptashati-chapter-6.json';
+import durgaSaptashatiChapter7 from '../stuti/durga-saptashati-chapter-7.json';
+import durgaSaptashatiChapter8 from '../stuti/durga-saptashati-chapter-8.json';
+import durgaSaptashatiChapter9 from '../stuti/durga-saptashati-chapter-9.json';
+import durgaSaptashatiChapter10 from '../stuti/durga-saptashati-chapter-10.json';
+import durgaSaptashatiChapter11 from '../stuti/durga-saptashati-chapter-11.json';
+import durgaSaptashatiChapter12 from '../stuti/durga-saptashati-chapter-12.json';
+import durgaSaptashatiChapter13 from '../stuti/durga-saptashati-chapter-13.json';
+import durgaDeviKavacham from '../kavacham/durga-devi-kavacham.json';
+import durgaSaptashatiChapterOne from '../stuti/durga-saptashati-chapter-1.json';
+import durgaKilak from '../stuti/durga-kilak-stotram.json';
+import durgaArgala from '../stuti/durga-argala-stotram.json';
+import hanumanBahuk from '../stuti/hanuman-bahuk.json';
+import kanakadharaStotram from '../stuti/kanakadhara-stotram.json';
+import shriSuktam from '../suktam/shri-suktam.json';
+import kalabhairavAshtakam from '../ashtakam/kalabhairav-ashtakam.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../garud-puran';
 import { aartiIdByIndex, getAarti } from '../aarti';
 import assert from 'node:assert/strict';
@@ -57,6 +77,26 @@ test('every generated verse count still matches its corpus', () => {
   const pairs: readonly (readonly [string, unknown, unknown])[] = [
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
+  ['durgaArgalaTotal', durgaArgala.verses.length, generated.durgaArgalaTotal],
+  ['durgaKilakTotal', durgaKilak.verses.length, generated.durgaKilakTotal],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length, generated.durgaSaptashatiChapterOneTotal],
+  ['durgaSaptashatiChapter2Total', durgaSaptashatiChapter2.verses.length, generated.durgaSaptashatiChapter2Total],
+  ['durgaSaptashatiChapter3Total', durgaSaptashatiChapter3.verses.length, generated.durgaSaptashatiChapter3Total],
+  ['durgaSaptashatiChapter4Total', durgaSaptashatiChapter4.verses.length, generated.durgaSaptashatiChapter4Total],
+  ['durgaSaptashatiChapter5Total', durgaSaptashatiChapter5.verses.length, generated.durgaSaptashatiChapter5Total],
+  ['durgaSaptashatiChapter6Total', durgaSaptashatiChapter6.verses.length, generated.durgaSaptashatiChapter6Total],
+  ['durgaSaptashatiChapter7Total', durgaSaptashatiChapter7.verses.length, generated.durgaSaptashatiChapter7Total],
+  ['durgaSaptashatiChapter8Total', durgaSaptashatiChapter8.verses.length, generated.durgaSaptashatiChapter8Total],
+  ['durgaSaptashatiChapter9Total', durgaSaptashatiChapter9.verses.length, generated.durgaSaptashatiChapter9Total],
+  ['durgaSaptashatiChapter10Total', durgaSaptashatiChapter10.verses.length, generated.durgaSaptashatiChapter10Total],
+  ['durgaSaptashatiChapter11Total', durgaSaptashatiChapter11.verses.length, generated.durgaSaptashatiChapter11Total],
+  ['durgaSaptashatiChapter12Total', durgaSaptashatiChapter12.verses.length, generated.durgaSaptashatiChapter12Total],
+  ['durgaSaptashatiChapter13Total', durgaSaptashatiChapter13.verses.length, generated.durgaSaptashatiChapter13Total],
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length, generated.durgaDeviKavachamTotal],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length])), generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
@@ -135,8 +175,28 @@ test('every generated verse count still matches its corpus', () => {
 test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothing stale', () => {
   const exported = Object.keys(generated).sort();
   const expected = [
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
+  ['durgaArgalaTotal', durgaArgala.verses.length, generated.durgaArgalaTotal],
+  ['durgaKilakTotal', durgaKilak.verses.length, generated.durgaKilakTotal],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length, generated.durgaSaptashatiChapterOneTotal],
+  ['durgaSaptashatiChapter2Total', durgaSaptashatiChapter2.verses.length, generated.durgaSaptashatiChapter2Total],
+  ['durgaSaptashatiChapter3Total', durgaSaptashatiChapter3.verses.length, generated.durgaSaptashatiChapter3Total],
+  ['durgaSaptashatiChapter4Total', durgaSaptashatiChapter4.verses.length, generated.durgaSaptashatiChapter4Total],
+  ['durgaSaptashatiChapter5Total', durgaSaptashatiChapter5.verses.length, generated.durgaSaptashatiChapter5Total],
+  ['durgaSaptashatiChapter6Total', durgaSaptashatiChapter6.verses.length, generated.durgaSaptashatiChapter6Total],
+  ['durgaSaptashatiChapter7Total', durgaSaptashatiChapter7.verses.length, generated.durgaSaptashatiChapter7Total],
+  ['durgaSaptashatiChapter8Total', durgaSaptashatiChapter8.verses.length, generated.durgaSaptashatiChapter8Total],
+  ['durgaSaptashatiChapter9Total', durgaSaptashatiChapter9.verses.length, generated.durgaSaptashatiChapter9Total],
+  ['durgaSaptashatiChapter10Total', durgaSaptashatiChapter10.verses.length, generated.durgaSaptashatiChapter10Total],
+  ['durgaSaptashatiChapter11Total', durgaSaptashatiChapter11.verses.length, generated.durgaSaptashatiChapter11Total],
+  ['durgaSaptashatiChapter12Total', durgaSaptashatiChapter12.verses.length, generated.durgaSaptashatiChapter12Total],
+  ['durgaSaptashatiChapter13Total', durgaSaptashatiChapter13.verses.length, generated.durgaSaptashatiChapter13Total],
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length, generated.durgaDeviKavachamTotal],
   ['aartiVerseCounts', null, generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],

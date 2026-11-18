@@ -1,0 +1,242 @@
+{
+  "id": "durga-kilak-stotram",
+  "titleHi": "दुर्गा कीलक स्तोत्रम्",
+  "titleEn": "Durga Kilak Stotram",
+  "deity": "durga",
+  "source": {
+    "baseText": "Complete14-stanza Drik/Rampuri recension. SanskritDocuments has a different16-stanza recension with extra15–16, not part of the chosen complete14. Optional viniyoga is outside the numbered hymn.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/patha-vidhi/keelakam/durga-saptashati-keelakam.html",
+      "https://rampuri.com/durga-saptashati-text/",
+      "https://sanskritdocuments.org/doc_devii/kiilakastotra.html"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Ancient Sanskrit hymn; original Vedansh Hindi/English meanings and reader-convention Sanskrit romanization. Edition comparison in durga-core-sources.md."
+  },
+  "verses": [
+    {
+      "id": "durga-kilak-stotram-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "ॐ विशुद्धज्ञानदेहाय त्रिवेदीदिव्यचक्षुषे।",
+        "श्रेयःप्राप्तिनिमित्ताय नमः सोमार्धधारिणे॥"
+      ],
+      "linesEn": [
+        "oṃ viśhuddhajñānadehāya trivedīdivyachakṣhuṣe",
+        "śhreyaḥprāptinimittāya namaḥ somārdhadhāriṇe"
+      ],
+      "meaningHi": "शुद्ध ज्ञानस्वरूप, तीन वेदों की दिव्य दृष्टि वाले, परम कल्याण के हेतु और अर्धचन्द्रधारी शिव को नमस्कार है। देवी-पाठ का यह पूर्वाङ्ग शिव-वन्दना से आरम्भ होता है।",
+      "meaningEn": "Salutations to Shiva, whose form is pure knowledge, whose divine vision is the three Vedas, who leads toward highest good and bears the crescent moon. This preparatory hymn opens with reverence to Shiva."
+    },
+    {
+      "id": "durga-kilak-stotram-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "सर्वमेतद्विजानीयान्मन्त्राणामभिकीलकम्।",
+        "सोऽपि क्षेममवाप्नोति सततं जाप्यतत्परः॥"
+      ],
+      "linesEn": [
+        "sarvametadvijānīyānmantrāṇāmabhikīlakam",
+        "so'pi kṣhemamavāpnoti satataṃ jāpyatatparaḥ"
+      ],
+      "meaningHi": "इस पूरे उपदेश को मन्त्रों का कीलक—उनसे जुड़ा बन्धन अथवा उसकी समझ—जानना चाहिए। निरन्तर जप में तत्पर व्यक्ति के कुशल की प्रशंसा है। कीलक का बिम्ब ध्यान और उचित समझ की आवश्यकता बताता है।",
+      "meaningEn": "Understand this teaching as the kilaka, the fastening connected with the mantras. The text praises the well-being of one devoted to regular recitation. Its image of a fastening points to the importance of attention and understanding."
+    },
+    {
+      "id": "durga-kilak-stotram-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "सिद्ध्यन्त्युच्चाटनादीनि वस्तूनि सकलान्यपि।",
+        "एतेन स्तुवतां देवी स्तोत्रमात्रेण सिद्ध्यति॥"
+      ],
+      "linesEn": [
+        "siddhyantyuchchāṭanādīni vastūni sakalānyapi",
+        "etena stuvatāṃ devī stotramātreṇa siddhyati"
+      ],
+      "meaningHi": "स्तोत्र देवी की स्तुति से उच्चाटन आदि उद्देश्यों की सिद्धि का वर्णन करता है। ये परम्परागत तान्त्रिक शब्द हैं; यहाँ उनका उल्लेख पाठ के अर्थ के लिए है, किसी को हानि पहुँचाने की विधि के रूप में नहीं।",
+      "meaningEn": "The hymn speaks of accomplishing aims such as expelling hostile influences through praise of the goddess. These are terms from its traditional ritual setting; the verse is presented for understanding, not as instructions to harm anyone."
+    },
+    {
+      "id": "durga-kilak-stotram-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "न मन्त्रो नौषधं तत्र न किञ्चिदपि विद्यते।",
+        "विना जाप्येन सिद्ध्येत सर्वमुच्चाटनादिकम्॥"
+      ],
+      "linesEn": [
+        "na mantro nauṣadhaṃ tatra na kiñchidapi vidyate",
+        "vinā jāpyena siddhyeta sarvamuchchāṭanādikam"
+      ],
+      "meaningHi": "इस स्तुति की महिमा में कहा गया है कि अलग मन्त्र, औषधि या अन्य साधन के बिना भी बताए उद्देश्य सिद्ध होते हैं। प्रसंग जप और स्तोत्र की अनुष्ठानिक शक्ति का है, रोगों की चिकित्सा का निषेध नहीं।",
+      "meaningEn": "In praise of this hymn, the text says its ritual aims need no separate mantra, herb or other instrument. This concerns the asserted power of devotional recitation, not the rejection of medical treatment."
+    },
+    {
+      "id": "durga-kilak-stotram-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "समग्राण्यपि सिद्ध्यन्ति लोकशङ्कामिमां हरः।",
+        "कृत्वा निमन्त्रयामास सर्वमेवमिदं शुभम्॥"
+      ],
+      "linesEn": [
+        "samagrāṇyapi siddhyanti lokaśhaṅkāmimāṃ haraḥ",
+        "kṛitvā nimantrayāmāsa sarvamevamidaṃ śhubham"
+      ],
+      "meaningHi": "सब कार्य इससे सिद्ध हो सकते हैं—लोगों की इस शंका को ध्यान में रखकर शिव ने इस शुभ पाठ का विधान किया, ऐसा कहा गया है। आगे उसके गोपन और संयम का कारण आता है।",
+      "meaningEn": "The text relates that Shiva considered people’s question about whether all such aims could be fulfilled and established this auspicious recitation. The account then turns to concealment and restraint surrounding its use."
+    },
+    {
+      "id": "durga-kilak-stotram-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "स्तोत्रं वै चण्डिकायास्तु तच्च गुप्तं चकार सः।",
+        "समाप्तिर्न च पुण्यस्य तां यथावन्नियन्त्रणाम्॥"
+      ],
+      "linesEn": [
+        "stotraṃ vai chaṇḍikāyāstu tachcha guptaṃ chakāra saḥ",
+        "samāptirna cha puṇyasya tāṃ yathāvanniyantraṇām"
+      ],
+      "meaningHi": "शिव ने चण्डिका के स्तोत्र को गुप्त तथा नियन्त्रित रखा, जबकि उसके पुण्य की सीमा नहीं बताई गई। कीलक की कथा पाठ को श्रद्धा, अनुशासन और उचित समझ के साथ ग्रहण करने पर बल देती है।",
+      "meaningEn": "Shiva is said to have kept Chandika’s hymn concealed and regulated, while its merit remains inexhaustible. The kilaka narrative places the recitation within reverence, discipline and proper understanding."
+    },
+    {
+      "id": "durga-kilak-stotram-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "सोऽपि क्षेममवाप्नोति सर्वमेवं न संशयः।",
+        "कृष्णायां वा चतुर्दश्यामष्टम्यां वा समाहितः॥"
+      ],
+      "linesEn": [
+        "so'pi kṣhemamavāpnoti sarvamevaṃ na saṃśhayaḥ",
+        "kṛiṣṇāyāṃ vā chaturdaśhyāmaṣṭamyāṃ vā samāhitaḥ"
+      ],
+      "meaningHi": "एकाग्र होकर कृष्णपक्ष की चतुर्दशी अथवा अष्टमी में साधना करने वाले के कुशल का आश्वासन है। यह वाक्य अगले पद के देने और स्वीकारने के विधान से जुड़ा है।",
+      "meaningEn": "The text assures well-being to one who is collected in practice on the fourteenth or eighth lunar day of the dark fortnight. The sentence continues into the next verse’s language of offering and receiving."
+    },
+    {
+      "id": "durga-kilak-stotram-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "ददाति प्रतिगृह्णाति नान्यथैषा प्रसीदति।",
+        "इत्थंरूपेण कीलेन महादेवेन कीलितम्॥"
+      ],
+      "linesEn": [
+        "dadāti pratigṛihṇāti nānyathaiṣā prasīdati",
+        "itthaṃrūpeṇa kīlena mahādevena kīlitam"
+      ],
+      "meaningHi": "साधक अर्पण करता और पुनः स्वीकार करता है; इसी प्रकार देवी प्रसन्न होती हैं, ऐसा पाठ कहता है। महादेव द्वारा रखा यह कीलक समर्पण के अनुशासन का बिम्ब है; किसी विस्तृत अनुष्ठान का निर्देश यहाँ नहीं दिया जा रहा।",
+      "meaningEn": "The practitioner gives and receives back; the text connects the goddess’s favour with this act. The fastening set by Mahadeva evokes a discipline of dedication. This verse alone is not a complete set of ritual instructions."
+    },
+    {
+      "id": "durga-kilak-stotram-9",
+      "number": 9,
+      "labelHi": "श्लोक · ९",
+      "labelEn": "Verse · 9",
+      "lines": [
+        "यो निष्कीलां विधायैनां नित्यं जपति संस्फुटम्।",
+        "स सिद्धः स गणः सोऽपि गन्धर्वो जायते नरः॥"
+      ],
+      "linesEn": [
+        "yo niṣkīlāṃ vidhāyaināṃ nityaṃ japati saṃsphuṭam",
+        "sa siddhaḥ sa gaṇaḥ so'pi gandharvo jāyate naraḥ"
+      ],
+      "meaningHi": "कीलक का बन्धन खोलकर स्पष्ट और नियमित जप करने वाले को सिद्ध, गण अथवा गन्धर्व जैसी उच्च अवस्था मिलने की स्तुति है। यहाँ समझकर किए पाठ की आध्यात्मिक महिमा कही गई है।",
+      "meaningEn": "One who releases the fastening and recites clearly and regularly is praised as attaining the stature of a siddha, divine attendant or gandharva. The verse celebrates the spiritual worth of recitation undertaken with understanding."
+    },
+    {
+      "id": "durga-kilak-stotram-10",
+      "number": 10,
+      "labelHi": "श्लोक · १०",
+      "labelEn": "Verse · 10",
+      "lines": [
+        "न चैवाप्यटतस्तस्य भयं क्वापीह जायते।",
+        "नापमृत्युवशं याति मृतो मोक्षमवाप्नुयात्॥"
+      ],
+      "linesEn": [
+        "na chaivāpyaṭatastasya bhayaṃ kvāpīha jāyate",
+        "nāpamṛityuvaśhaṃ yāti mṛito mokṣhamavāpnuyāt"
+      ],
+      "meaningHi": "उसके विचरण में भय न हो, अकालमृत्यु न हो और मृत्यु के बाद मुक्ति मिले—ऐसा फलवर्णन है। इसे भक्ति का आश्वासन समझें, सुरक्षा या आयु की निश्चित भविष्यवाणी नहीं।",
+      "meaningEn": "The reciter is blessed with freedom from fear while travelling, protection from untimely death and liberation after death. These are devotional assurances rather than definite predictions of safety or lifespan."
+    },
+    {
+      "id": "durga-kilak-stotram-11",
+      "number": 11,
+      "labelHi": "श्लोक · ११",
+      "labelEn": "Verse · 11",
+      "lines": [
+        "ज्ञात्वा प्रारभ्य कुर्वीत न कुर्वाणो विनश्यति।",
+        "ततो ज्ञात्वैव सम्पन्नमिदं प्रारभ्यते बुधैः॥"
+      ],
+      "linesEn": [
+        "jñātvā prārabhya kurvīta na kurvāṇo vinaśhyati",
+        "tato jñātvaiva sampannamidaṃ prārabhyate budhaiḥ"
+      ],
+      "meaningHi": "समझकर आरम्भ करें और साधना निभाएँ; उपेक्षा को पाठ कठोर भाषा में हानिकर कहता है। इसीलिए बुद्धिमान पूरी विधि समझकर आरम्भ करते हैं। पद का उद्देश्य श्रद्धा और जिम्मेदारी पर बल देना है।",
+      "meaningEn": "Begin with understanding and carry the practice through; neglect is described in stern language as harmful. The wise therefore begin after learning what is required. The emphasis is on reverence and responsibility."
+    },
+    {
+      "id": "durga-kilak-stotram-12",
+      "number": 12,
+      "labelHi": "श्लोक · १२",
+      "labelEn": "Verse · 12",
+      "lines": [
+        "सौभाग्यादि च यत्किञ्चिद् दृश्यते ललनाजने।",
+        "तत्सर्वं तत्प्रसादेन तेन जाप्यमिदं शुभम्॥"
+      ],
+      "linesEn": [
+        "saubhāgyādi cha yatkiñchid dṛiśhyate lalanājane",
+        "tatsarvaṃ tatprasādena tena jāpyamidaṃ śhubham"
+      ],
+      "meaningHi": "स्त्रियों में दिखाई देने वाला सौभाग्य आदि देवी की कृपा से है, ऐसा स्तोत्र कहता है; इसलिए इस शुभ पाठ के जप की प्रशंसा करता है। यह उसकी पारम्परिक मंगल-कल्पना का वर्णन है।",
+      "meaningEn": "The hymn attributes the auspicious fortune seen in women to the goddess’s favour and therefore commends this recitation. The statement reflects the text’s traditional imagery of blessing and well-being."
+    },
+    {
+      "id": "durga-kilak-stotram-13",
+      "number": 13,
+      "labelHi": "श्लोक · १३",
+      "labelEn": "Verse · 13",
+      "lines": [
+        "शनैस्तु जप्यमानेऽस्मिन् स्तोत्रे सम्पत्तिरुच्चकैः।",
+        "भवत्येव समग्रापि ततः प्रारभ्यमेव तत्॥"
+      ],
+      "linesEn": [
+        "śhanaistu japyamāne'smin stotre sampattiruchchakaiḥ",
+        "bhavatyeva samagrāpi tataḥ prārabhyameva tat"
+      ],
+      "meaningHi": "धीरे जपे जाने पर भी इस स्तोत्र से महान और पूर्ण सम्पदा होती है, ऐसा कहा गया है; अतः पाठ आरम्भ करने को प्रेरित किया गया है। यहाँ उच्चकैः को सम्पदा की प्रचुरता से समझा गया है, ध्वनि की अनिवार्य ऊँचाई से नहीं।",
+      "meaningEn": "Even when recited quietly or slowly, the hymn is praised as bringing abundant fulfilment, and the listener is urged to begin. Here the height described is the abundance of prosperity, not a compulsory volume for chanting."
+    },
+    {
+      "id": "durga-kilak-stotram-14",
+      "number": 14,
+      "labelHi": "श्लोक · १४",
+      "labelEn": "Verse · 14",
+      "lines": [
+        "ऐश्वर्यं यत्प्रसादेन सौभाग्यारोग्यसम्पदः।",
+        "शत्रुहानिः परो मोक्षः स्तूयते सा न किं जनैः॥"
+      ],
+      "linesEn": [
+        "aiśhvaryaṃ yatprasādena saubhāgyārogyasampadaḥ",
+        "śhatruhāniḥ paro mokṣhaḥ stūyate sā na kiṃ janaiḥ"
+      ],
+      "meaningHi": "जिसकी कृपा से ऐश्वर्य, सौभाग्य, आरोग्य, सम्पदा, विरोधियों से मुक्ति और परम मोक्ष कहे गए हैं, लोग उस देवी की स्तुति क्यों न करें? यह प्रश्न स्तोत्र को कृतज्ञ भक्ति के भाव में पूर्ण करता है।",
+      "meaningEn": "Why should people not praise the goddess whose favour is celebrated as abundance, good fortune, health, release from hostility and highest liberation? This question closes the hymn in a spirit of grateful devotion."
+    }
+  ]
+}

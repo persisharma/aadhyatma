@@ -28,8 +28,8 @@ export type VishnuSahasranamaChapterSummary = {
   verseCount: number;
 };
 
-export const vishnuSahasranamaTitleHi = 'विष्णु सहस्रनाम अंश';
-export const vishnuSahasranamaTitleEn = 'Vishnu Sahasranama Excerpt';
+export const vishnuSahasranamaTitleHi = 'विष्णु सहस्रनाम';
+export const vishnuSahasranamaTitleEn = 'Vishnu Sahasranama';
 
 export const vishnuSahasranamaChaptersManifest: readonly VishnuSahasranamaChapterSummary[] =
   manifest as VishnuSahasranamaChapterSummary[];
