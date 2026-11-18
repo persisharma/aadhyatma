@@ -1,0 +1,50 @@
+[
+  {
+    "lang": "hi",
+    "size": "M",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "lang": "hi",
+    "size": "L",
+    "width": 320,
+    "errors": []
+  },
+  {
+    "lang": "en",
+    "size": "M",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "lang": "en",
+    "size": "L",
+    "width": 320,
+    "errors": []
+  },
+  {
+    "lang": "gu",
+    "size": "M",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "lang": "gu",
+    "size": "L",
+    "width": 320,
+    "errors": []
+  },
+  {
+    "lang": "kn",
+    "size": "M",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "lang": "kn",
+    "size": "L",
+    "width": 320,
+    "errors": []
+  }
+]
