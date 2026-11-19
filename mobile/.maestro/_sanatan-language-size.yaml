@@ -25,10 +25,12 @@ appId: com.prashantsharma.vedansh
 - runFlow: _sanatan-home-entry.yaml
 - takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
+# Enlarged iOS text (CI): the row first appeared after 42-57 of 60 s, and in
+# English the centring swipe used up the rest. Allow two minutes.
 - scrollUntilVisible:
     element: { id: sanatan-collection-dikpal }
     direction: DOWN
-    timeout: 60000
+    timeout: 120000
     visibilityPercentage: 50
     centerElement: true
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
