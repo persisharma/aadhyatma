@@ -61,7 +61,7 @@ padavalis), Hindi Wikisource, BhaktiBharat, Bhajan Sandhya.
 | `jai-jai-ganpati-jayati-ganesh` | जय जय गणपति जयति गणेश | `ganesha` | unknown | **HOLD-ID** |
 | — | श्री गणेश अथर्वशीर्ष | `ganesha` | — | **DUP** — shipped in `ganesh-stotram/chapter-02.json` |
 | `payo-ji-maine-ram-ratan-dhan` | पायो जी मैंने राम रतन धन पायो | `rama` | Meerabai | **TODO** |
-| `raghupati-raghav-rajaram` | रघुपति राघव राजाराम | `rama` | traditional Ram-dhun | **TODO** — ship the traditional dhun, not a later political variant, and note which one |
+| `raghupati-raghav-rajaram` | रघुपति राघव राजाराम | `rama` | traditional Ram-dhun (often credited to Lakshmanacharya; unconfirmed) | **TODO** — owner decision 2026-11-19: ship the **original Ram-dhun**, not the Gandhi/Paluskar version. Identity anchor to verify: the Ram-only verses (e.g. `सुंदर विग्रह मेघश्याम, गंगा तुलसी शालिग्राम`). Exclude the later lines `ईश्वर अल्लाह तेरो नाम, सबको सन्मति दे भगवान`. Attribution: credit Lakshmanacharya only if both sources name him; otherwise `पारम्परिक / Traditional`. Record the excluded variant in `source.notes`. |
 | `thumak-chalat-ramchandra` | ठुमक चलत रामचन्द्र | `rama` | Tulsidas, *Gitavali* | **TODO** |
 | — | इतनी शक्ति हमें देना दाता | other | film *Ankush* (1986) | **HOLD-©** — exclude |
 | `chhup-chhup-aaye-shyam` | छुप छुप आये श्याम ले के ग्वाल बाल | `krishna` | unknown | **HOLD-ID** |
