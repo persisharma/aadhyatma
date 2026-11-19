@@ -24,8 +24,13 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: { id: reading-link-durga-saptashati-core }
 - extendedWaitUntil:
-    visible: { id: saptashati-chapter-list-heading }
+    visible: { id: saptashati-collection-scope }
     timeout: 15000
+- assertVisible: { id: saptashati-reading-durga-devi-kavacham }
+- scrollUntilVisible:
+    element: { id: saptashati-reading-durga-saptashati-chapter-1 }
+    direction: DOWN
+- takeScreenshot: e2e-shots/saptashati-chapter-list
 - tapOn: Back
 - assertVisible: { id: practice-tab-stotram }
 - scrollUntilVisible:

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, type AccessibilityValue, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
@@ -38,7 +38,9 @@ export const UPCOMING_CARD_WIDTH = 155;
 export const UPCOMING_ART_WIDTH = UPCOMING_CARD_WIDTH - 2 - 12;
 export const UPCOMING_ART_HEIGHT = 72;
 
-type Props = {
+type ReadingActions = Pick<PressableProps, 'onLongPress' | 'accessibilityActions' | 'onAccessibilityAction'>;
+
+type Props = ReadingActions & {
   testID?: string;
   title: string;
   eyebrow?: string;
@@ -52,19 +54,22 @@ type Props = {
   actionCount?: 1 | 2;
   /** Read fraction 0–1 where the section tracks progress; omitted otherwise. */
   progress?: number;
+  footer?: React.ReactNode;
+  accessibilityValue?: AccessibilityValue;
   thumbnail: React.ReactNode;
   onPress: () => void;
   /** Defaults to `eyebrow. title. meta. Tap to open.` (the Maestro selector shape). */
   accessibilityLabel?: string;
 };
 
-export default function ListingCard({ testID, title, eyebrow, description, meta, progress, thumbnail, onPress, accessibilityLabel, secondary, variant = 'standard', language, action, showChevron = true, actionCount = 1 }: Props) {
+export default function ListingCard({ testID, title, eyebrow, description, meta, progress, thumbnail, onPress, accessibilityLabel, accessibilityValue, footer, onLongPress, accessibilityActions, onAccessibilityAction, secondary, variant = 'standard', language, action, showChevron = true, actionCount = 1 }: Props) {
   const { colors, radii, typography } = useTheme();
   const { lang: readingLang } = useGitaLanguage();
   const lang = language ?? readingLang;
   const upcoming = variant === 'upcoming';
   const observance = variant === 'observance';
   const special = upcoming || observance;
+  const readingAction = !special && !!action;
   const latin = isLatinLang(lang);
   const bodyFont = meaningToken(lang, typography).fontFamily;
   const body = latin ? typography.listingBodyLatin : typography.listingBody;
@@ -77,10 +82,11 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
 
   return (
     <ListingCardFrame testID={testID} onPress={onPress} accessibilityLabel={label}
-      accessibilityValue={read === undefined ? undefined : { min: 0, max: 100, now: Math.round(read * 100) }}
+      accessibilityValue={accessibilityValue ?? (read === undefined ? undefined : { min: 0, max: 100, now: Math.round(read * 100) })}
+      onLongPress={onLongPress} accessibilityActions={accessibilityActions} onAccessibilityAction={onAccessibilityAction}
       action={action} tone={special ? 'catalog' : 'reading'}
-      style={special ? (upcoming ? styles.upcomingCard : [styles.observanceCard, actionCount === 2 && { minHeight: 104 }]) : styles.card}
-      contentStyle={special ? (upcoming ? styles.upcomingContent : styles.observanceContent) : undefined}>
+      style={special ? (upcoming ? styles.upcomingCard : [styles.observanceCard, actionCount === 2 && { minHeight: 104 }]) : [styles.card, readingAction && styles.cardWithAction]}
+      contentStyle={special ? (upcoming ? styles.upcomingContent : styles.observanceContent) : readingAction ? styles.readingContent : undefined}>
       <View testID={testID ? `${testID}-thumb` : undefined} style={[special ? (upcoming ? styles.upcomingThumb : styles.observanceThumb) : styles.thumb, { borderRadius: radii.sm, backgroundColor: colors.parchmentSoft }]}>
         {thumbnail}
       </View>
@@ -99,6 +105,7 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
           </Text>
         ) : null}
         {typeof meta === 'string' ? <Text style={{ color: colors.inkMuted, fontFamily: bodyFont, ...body }}>{meta}</Text> : meta}
+        {footer}
         {read === undefined ? null : (
           <View testID={testID ? `${testID}-progress` : undefined} style={[styles.track, { backgroundColor: colors.saffronTint }]}>
             <View style={[styles.fill, { width: `${read * 100}%`, backgroundColor: colors.saffron }]} />
@@ -112,12 +119,12 @@ export default function ListingCard({ testID, title, eyebrow, description, meta,
 
 /** Shared painted listing surface, also used by Vrat's scene cards. The
  * action is a sibling of the open target, so saving never opens the detail. */
-export function ListingCardFrame({ children, action, onPress, accessibilityLabel, accessibilityValue, testID, style, contentStyle, tone = 'reading' }: {
+export function ListingCardFrame({ children, action, onPress, accessibilityLabel, accessibilityValue, testID, style, contentStyle, tone = 'reading', ...readingActions }: ReadingActions & {
   children: React.ReactNode;
   action?: React.ReactNode;
   onPress?: () => void;
   accessibilityLabel?: string;
-  accessibilityValue?: { min: number; max: number; now: number };
+  accessibilityValue?: AccessibilityValue;
   testID?: string;
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
@@ -134,12 +141,12 @@ export function ListingCardFrame({ children, action, onPress, accessibilityLabel
   if (action) {
     return <View style={[frame, depth, style]}>
       {painting}
-      <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel} accessibilityValue={accessibilityValue}
+      <Pressable {...readingActions} testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel} accessibilityValue={accessibilityValue}
         style={({ pressed }) => [contentStyle, pressed && { opacity: 0.86 }]}>{children}</Pressable>
       {action}
     </View>;
   }
-  return <Pressable testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
+  return <Pressable {...readingActions} testID={testID} onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
     accessibilityValue={accessibilityValue}
     style={({ pressed }) => [frame, depth, style, contentStyle, pressed && { opacity: 0.86 }]}>
     {painting}{children}
@@ -209,6 +216,8 @@ export function ListingThumbImage({ source, focusX = 0.5 }: { source: Background
   );
 }
 
+const readingContent: ViewStyle = { padding: 14, flexDirection: 'row', alignItems: 'center', gap: 14 };
+
 const styles = StyleSheet.create({
   observanceCard: { marginBottom: 6, minHeight: 92 },
   upcomingCard: { width: UPCOMING_CARD_WIDTH, flexShrink: 0 },
@@ -220,14 +229,13 @@ const styles = StyleSheet.create({
   observanceChevron: { position: 'absolute', bottom: 5, right: 16, fontSize: 20 },
   card: {
     position: 'relative',
-    padding: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
+    ...readingContent,
     overflow: 'hidden',
     borderWidth: 1,
     ...elevation.lifted,
   },
+  cardWithAction: { flexDirection: 'column', padding: 0, gap: 0, alignItems: 'stretch' },
+  readingContent,
   thumb: {
     width: LISTING_THUMB_WIDTH,
     minHeight: LISTING_THUMB_MIN_HEIGHT,

@@ -2140,7 +2140,7 @@ A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of 
 
 **Reading from Japmala.** The Stotram tab uses the Library's reader, chapter list and saved-reading routes. A saved hymn on the Home banner opens its reading and resumes a saved verse where available.
 
-**Durga Saptashati (दुर्गा सप्तशती).** The full collection opens directly to the preparatory readings and all 13 chapters from Library, Search, and Japmala.
+**Durga Saptashati (दुर्गा सप्तशती).** The collection opens directly from Library, Search, and Japmala. The chapter page uses the standard ListingCard (§82) with separate preparatory readings and chapter groups, a language toggle, passage counts and the existing Durga artwork. Each row retains its routine action on the thumbnail and its reading progress. Stotram catalog shortcuts use the same regular ListCard (§8) as neighboring library entries.
 
 ### `LibraryEntry` (the registry row)
 
