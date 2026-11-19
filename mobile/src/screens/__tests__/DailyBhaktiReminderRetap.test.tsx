@@ -3,6 +3,7 @@ import TestRenderer, { act } from 'react-test-renderer';
 import { View as mockView } from 'react-native';
 import { DevotionalVerseBody } from '@/components/DevotionalFrame';
 import { findVerse } from '@/data/versePool';
+import { verseLinesByLang } from '@/utils/localize';
 
 // BEH-13: tapping the SAME daily-verse reminder twice must show that verse again
 // after the user has browsed to another one. React Navigation hands the tab a
@@ -58,18 +59,21 @@ test('a second tap on the same reminder restores its verse after browsing away',
   let tree: TestRenderer.ReactTestRenderer;
   act(() => { tree = TestRenderer.create(element()); });
   const shown = () => tree!.root.findByType(DevotionalVerseBody).props.verse as string;
-  expect(shown()).toBe(pinned.textHi.join(' '));
+  // What the screen shows for this verse: one row per line, with the trailing
+  // verse number dropped (#697), from the same helper the screen uses.
+  const pinnedText = verseLinesByLang('hi', pinned.textHi, pinned.textEn.length > 0 ? pinned.textEn : pinned.textHi, pinned.labelHi).join('\n');
+  expect(shown()).toBe(pinnedText);
 
   // Browse away with "next" until a different verse is showing.
   const next = tree!.root.find((n) => n.props.testID === 'daily-bhakti-next' && !!n.props.onPress);
-  for (let i = 0; i < 40 && shown() === pinned.textHi.join(' '); i += 1) {
+  for (let i = 0; i < 40 && shown() === pinnedText; i += 1) {
     act(() => next.props.onPress());
   }
-  expect(shown()).not.toBe(pinned.textHi.join(' '));
+  expect(shown()).not.toBe(pinnedText);
 
   // The same notification tapped again: identical values, new params object.
   mockParams = { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 };
   act(() => { tree!.update(element()); });
-  expect(shown()).toBe(pinned.textHi.join(' '));
+  expect(shown()).toBe(pinnedText);
   act(() => tree!.unmount());
 });

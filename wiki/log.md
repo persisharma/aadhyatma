@@ -1594,3 +1594,12 @@ Fixes from the 17 Nov 2026 mobile audit that need no native build: Panchang date
 ## [2026-11-18] ingest | Mobile audit fixes (store-build set)
 
 Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages aligned to the SDK 54 expected versions (expo-doctor 18/18), the four patched packages pinned exactly, unused `expo-secure-store` removed (it added a Face ID usage string), storage permissions blocked on Android, `expo-clipboard` added behind a probe so OTAs to older binaries keep the React Native API, the Japam alarm receiver guarded so a failed post cannot end the repeating alarm, config plugins importing `expo/config-plugins`, and a prebuild introspection test. Runbook gotchas added for the Android release gate and the Meta SDK bump. Not built or run on a device.
+
+## [2026-11-19] ingest | Shared reader counter jump, Sanatan Parichay rebuild, Home notes
+
+`subsystems/readers` gains the page counter + picker contract (`ReaderPageCounter`, `PageJumpSheet`, `useReaderJump`, the screen-scanning guard). `subsystems/sanatan-parichay` records the rebuild on `ListingCard` / `PagerNavBar` / `ImageZoomViewer`, the removed overview route, the text legend, and the 33-devata lesson leading with koti = kinds. Home changes of the same branch (Japmala banner artwork margin and outlined controls, single-language banner cards, the restored shuffled "और जानें" carousel) are in design.md §18/§32 only.
+
+## [2026-11-19] gap | No wiki page for the Home screen
+
+Home's structure lives only in design.md §18, and that section still describes the pre-November layout (Today recommendations row, DISCOVER label, 16-tile grid) apart from the paragraphs updated on 19 Nov. A `subsystems/home` page, written after §18 is brought up to date, would stop the next change from starting at a stale description.
+

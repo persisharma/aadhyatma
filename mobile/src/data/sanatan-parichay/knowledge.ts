@@ -40,3 +40,24 @@ export function knowledgeText(id:string,page:number):Pair|null {
  if(id==='forms'){const a=join(avatarNames),b=join(jayadevaNames);return ['बलराम–कृष्ण चयन: '+a[0]+'\n\nजयदेव का चयन: '+b[0],'Balarama–Krishna selection: '+a[1]+'\n\nJayadeva selection: '+b[1]];}
  return null;
 }
+
+/** One native-text key under a teaching plate: the names painted on it, as scalable text. */
+export type LegendRow={name:Pair;detail?:Pair};
+export type LegendSection={heading?:Pair;layout:'grid'|'list';rows:readonly LegendRow[]};
+const names=(rows:readonly Pair[]):LegendRow[]=>rows.map(name=>({name}));
+/**
+ * The plate's roster as text, from the same rows narration and sharing read
+ * (`knowledgeText`). `grid` rows are a name with a short partner; `list` rows
+ * carry a sentence. Lessons without an authored roster have no legend.
+ */
+export function getSanatanLegend(id:string):readonly LegendSection[]{
+ if(id==='dikpal')return [{layout:'grid',rows:directions.map(d=>({name:[d[0],d[1]],detail:[d[2],d[3]]}))}];
+ if(id==='thirty')return [{layout:'list',rows:groups.map(g=>({name:[g[0],g[1]],detail:[g[2],g[3]]}))}];
+ if(id==='graha')return [{layout:'list',rows:grahas.map((g,i)=>({name:g,detail:grahaDescriptions[i]}))}];
+ if(id==='forms')return [
+  {heading:['बलराम–कृष्ण चयन','Balarama–Krishna selection'],layout:'grid',rows:names(avatarNames)},
+  {heading:['जयदेव का चयन','Jayadeva selection'],layout:'grid',rows:names(jayadevaNames)},
+ ];
+ if(id==='elements')return [{layout:'grid',rows:names(elementNames)}];
+ return [];
+}

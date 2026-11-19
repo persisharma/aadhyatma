@@ -14,7 +14,7 @@ function fixture(t) {
   const names = [];
   for (const language of ['Hindi', 'English', 'Gujarati', 'Kannada']) {
     for (const size of ['Standard', 'Large']) {
-      for (const surface of ['home-frame-', 'hub-', 'collection-', '', 'diagram-']) {
+      for (const surface of ['home-frame-', 'hub-', '', 'diagram-', 'legend-']) {
         const name = `sanatan-${surface}${language}-${size}-android-standard.png`;
         fs.writeFileSync(path.join(captures, name), `capture:${name}`);
         names.push(name);

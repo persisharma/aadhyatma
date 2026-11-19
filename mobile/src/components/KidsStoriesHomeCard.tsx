@@ -32,9 +32,7 @@ export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: 
   return (
     <HomeBannerCard
       testID="home-kids-stories-card"
-      titleHi="बच्चों की चित्र-कथाएँ"
-      titleEn="Stories for Kids"
-      localizedTitle={title}
+      title={title}
       action={action}
       accessibilityLabel={`${title}. ${action}.`}
       onPress={onPress}
@@ -48,5 +46,5 @@ export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: 
 }
 
 const styles = StyleSheet.create({
-  cover: { width: 100, height: 100, borderRadius: 12 },
+  cover: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
 });

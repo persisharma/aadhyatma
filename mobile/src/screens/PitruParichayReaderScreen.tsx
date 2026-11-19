@@ -21,7 +21,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
 } from 'react-native';
@@ -33,6 +32,7 @@ import KathaSectionPage from '@/components/KathaSectionPage';
 import LanguageToggle from '@/components/LanguageToggle';
 import NextChapterCard from '@/components/NextChapterCard';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import AutoSlideButton from '@/components/AutoSlideButton';
@@ -41,6 +41,7 @@ import { getPitruLessons } from '@/data/pitru';
 import type { MoreStackParamList } from '@/navigation/types';
 import type { KathaContentSection } from '@/panchang/types';
 import { useReaderPlayback } from '@/screens/_useAutoSlide';
+import { useReaderJump } from '@/screens/_useReaderJump';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang } from '@/utils/localize';
 import BackgroundLayer from '@/components/BackgroundLayer';
@@ -60,7 +61,7 @@ function isTransition(item: ReaderItem): item is TransitionItem {
 }
 
 export default function PitruParichayReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { width } = useWindowDimensions();
   const background = getPitruReadingBackground();
@@ -103,6 +104,7 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
     currentIndex: Math.min(currentIndex, Math.max(0, total - 1)),
     listRef,
   });
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
 
   const getItemLayout = useCallback(
     (_: unknown, index: number) => ({ length: width, offset: width * index, index }),
@@ -139,12 +141,13 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
           onBack={() => navigation.goBack()}
           right={
             total > 0 ? (
-              <Text
+              <ReaderPageCounter
                 testID="pitru-parichay-counter"
-                style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}
-              >
-                {shown} / {total}
-              </Text>
+                current={shown}
+                total={total}
+                titles={sections.map((s) => contentByLang(lang, s.titleHi, s.titleEn))}
+                {...jump}
+              />
             ) : null
           }
           sideWidth={80}
@@ -234,7 +237,6 @@ export default function PitruParichayReaderScreen({ navigation, route }: Props) 
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
   autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },

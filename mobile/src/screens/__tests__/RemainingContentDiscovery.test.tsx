@@ -14,7 +14,7 @@ import ListingCard from '@/components/ListingCard';
 import ListCard, { CardTitles } from '@/components/ListCard';
 const mockNavigate=jest.fn();
 const mockNavigation={navigate:mockNavigate,goBack:jest.fn(),getState:()=>({routeNames:['VratKathaReader']})};
-jest.mock('@react-navigation/native',()=>({useNavigation:()=>mockNavigation}));
+jest.mock('@react-navigation/native',()=>({useNavigation:()=>mockNavigation,useIsFocused:()=>true}));
 jest.mock('@/utils/useTodayKey',()=>({useTodayKey:()=> '2026-11-16'}));
 jest.mock('expo-haptics',()=>({ImpactFeedbackStyle:{Light:'Light'},impactAsync:jest.fn()}));
 jest.mock('@react-native-async-storage/async-storage',()=>({getItem:jest.fn(async()=>null),setItem:jest.fn(async()=>{})}));

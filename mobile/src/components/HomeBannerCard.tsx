@@ -7,11 +7,13 @@ import { titleFontByLang } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import AppIcon from '@/components/AppIcon';
 
+/** Side of the square picture; the card is as tall as it (more only when the text needs it). */
+export const HOME_BANNER_ART = 84;
+
 type Props = {
   testID: string;
-  titleHi: string;
-  titleEn: string;
-  localizedTitle?: string;
+  /** Already localized: the reading language only (RULEBOOK §3, one language per card). */
+  title: string;
   action: string;
   accessibilityLabel: string;
   artwork: React.ReactNode;
@@ -21,29 +23,27 @@ type Props = {
 };
 
 /** Shared illustrated Home entry: keep neighbouring banners in one visual family. */
-export default function HomeBannerCard({ testID, titleHi, titleEn, localizedTitle, action,
+export default function HomeBannerCard({ testID, title, action,
   accessibilityLabel, artwork, onPress, onPressIn, onPressOut }: Props) {
   const { colors, radii, elevation } = useTheme();
   const { lang } = useGitaLanguage();
-  const titles = orderTitlesByLanguage(lang, titleHi, titleEn, {
+  // Only the primary line's type is used: the second-language line was dropped.
+  const face = orderTitlesByLanguage(lang, title, title, {
     devPrimary: 18, devSecondary: 12, latPrimary: 21, latSecondary: 12,
-  });
+  }).primary;
   return <Pressable testID={testID} accessibilityRole="button" accessibilityLabel={accessibilityLabel}
     onPress={onPress} onPressIn={onPressIn} onPressOut={onPressOut}
     style={({ pressed }) => [styles.card, { borderRadius: radii.lg, borderColor: colors.cardActiveBorder,
       backgroundColor: colors.cardActiveFrom }, elevation.card, pressed && styles.pressed]}>
     <LinearGradient colors={[colors.cardActiveFrom, colors.cardActiveTo]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
       pointerEvents="none" style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]} />
-    <View style={styles.artwork} accessible={false}>{artwork}</View>
+    {/* Edge to edge on the left and the full height of the card; it fills this slot. */}
+    <View style={[styles.artwork, { borderTopLeftRadius: radii.lg - 1, borderBottomLeftRadius: radii.lg - 1 }]} accessible={false}>{artwork}</View>
     <View style={styles.content}>
-      <Text style={{ color: colors.ink, fontFamily: titles.primary.fontFamily, fontSize: titles.primary.fontSize,
-        fontStyle: titles.primary.fontStyle, letterSpacing: titles.primary.letterSpacing,
-        lineHeight: titles.primary.script === 'latin' ? 28 : 31 }}>
-        {localizedTitle ?? titles.primary.text}
-      </Text>
-      <Text style={{ color: colors.inkMuted, fontFamily: titles.secondary.fontFamily, fontSize: titles.secondary.fontSize,
-        fontStyle: titles.secondary.fontStyle, lineHeight: titles.secondary.script === 'latin' ? 18 : 22 }}>
-        {titles.secondary.text}
+      <Text style={{ color: colors.ink, fontFamily: face.fontFamily, fontSize: face.fontSize,
+        fontStyle: face.fontStyle, letterSpacing: face.letterSpacing,
+        lineHeight: face.script === 'latin' ? 28 : 31 }}>
+        {title}
       </Text>
       <View style={styles.actionRow}>
         <Text style={{ flexShrink: 1, color: colors.saffronDeep, fontFamily: titleFontByLang(lang), fontSize: 14, lineHeight: 24 }}>
@@ -56,9 +56,9 @@ export default function HomeBannerCard({ testID, titleHi, titleEn, localizedTitl
 }
 
 const styles = StyleSheet.create({
-  card: { minHeight: 138, borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 15 },
+  card: { borderWidth: 1, flexDirection: 'row', alignItems: 'stretch', gap: 14 },
   pressed: { opacity: 0.88 },
-  artwork: { width: 100, height: 100, flexShrink: 0, justifyContent: 'center' },
-  content: { flex: 1, minWidth: 0, alignSelf: 'stretch', justifyContent: 'center', gap: 6 },
+  artwork: { width: HOME_BANNER_ART, minHeight: HOME_BANNER_ART, flexShrink: 0, overflow: 'hidden' },
+  content: { flex: 1, minWidth: 0, paddingVertical: 8, paddingRight: 12, justifyContent: 'center', gap: 2 },
   actionRow: { marginTop: 2, flexDirection: 'row', alignItems: 'center', gap: 5 },
 });

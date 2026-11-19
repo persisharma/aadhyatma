@@ -38,9 +38,9 @@ not newly authored translations.
 
 ## Integration and performance review
 
-Home → Sanatan Parichay → Sacred symbols → three existing reader pages.
-Collection page doors, search (including drawing queries), resume and bookmarks
-keep existing IDs. Page two uses the shared ExploreDiagram switch; page three
+Home → Sanatan Parichay → the Swastika card → three existing reader pages (the
+intermediate collection page was removed on 19 November 2026). Search (including
+drawing queries), resume and bookmarks keep existing IDs. Page two uses the shared ExploreDiagram switch; page three
 mounts SwastikaGuide. The three figures use exact vectors with text equivalents.
 Read-aloud and page/whole shares read the authored complete prose; they do not
 claim to export the new SVG figures. Reader paging, Back and store are unchanged.

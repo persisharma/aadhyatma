@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-11-18
+last_verified_date: 2026-11-19
 confidence: high
 status: current
 ---
@@ -178,6 +178,21 @@ all nine requested aartis: eight additions plus Shani reused from main. Ganga an
 the eight other additions contribute 72 pages. Jay Adhya Shakti stays at index 10,
 Shani at 11 and Dattatreya at 12; this PR appends nine IDs at positions 13–21.
 Native/test evidence is kept in the integration review linked by the audit.
+
+**Page counter and jump (19 Nov 2026, design.md §94, RULEBOOK §3 "Reader page counter").**
+The `n / total` in every reader's `ReaderHeader` is the shared `ReaderPageCounter`,
+a button that opens `PageJumpSheet` (the Gita verse sheet without the chapter
+field). FlatList readers spread `useReaderJump({ listRef, offset, setCurrentIndex,
+readAloud, autoSlide })` (`screens/_useReaderJump.ts`) onto it: opening stops both
+hands-free modes, and the jump sets the index and calls `scrollToIndex` without
+animation, adding the reader's `offset` where a previous-chapter card is prepended.
+Sanatan, Kids Stories and the comic call their own page function from `onJump`;
+the Gita passes `onPress` and keeps its chapter + verse sheet. The jump stays
+inside the open chapter everywhere except the Gita. The accessibility label is the
+literal counter ("3 / 12") and the action is the hint, because about 630 Maestro
+assertions read the counter text. `components/__tests__/ReaderPageCounter.test.tsx`
+carries a guard that scans every screen: any file styling its own
+`typography.pageCounter`, or a `*ReaderScreen.tsx` without `<ReaderPageCounter`, fails.
 
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's

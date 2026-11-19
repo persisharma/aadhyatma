@@ -3,6 +3,7 @@ import { FlatList, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
@@ -65,9 +66,8 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   return (
     <SafeAreaView testID="kids-story-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={storyText(story.title, lang)} onBack={() => navigation.goBack()} sideWidth={60} right={
-        <Text testID="story-progress" style={{ color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic', includeFontPadding: false, minWidth: 48, textAlign: 'right' }}>
-          {index + 1} / {story.pages.length}
-        </Text>
+        <ReaderPageCounter testID="story-progress" current={index + 1} total={story.pages.length} titles={story.pages.map(page => storyText(page.title, lang))}
+          onOpen={autoSlide.stop} onJump={page => goToPage(page - 1)} />
       } />
       <ReadingProgressBar current={index + 1} total={story.pages.length} />
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 6, paddingBottom: 12 }}>
