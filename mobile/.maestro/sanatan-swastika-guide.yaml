@@ -8,53 +8,57 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: sanatan-search }
 - inputText: "how to draw swastika"
 - pressKey: Enter
-- scrollUntilVisible:
-    element: { text: "Sacred symbols" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-symbols" }
 - tapOn: "Sacred symbols"
-- scrollUntilVisible:
-    element: { text: "Four arms, four aims of life" }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-page-2" }
 - tapOn: "Four arms, four aims of life"
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
-    element: { text: "Moksha · Spiritual liberation" }
+    element: { id: sanatan-plate-symbols, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
+- assertVisible: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]"
 - takeScreenshot: e2e-shots/sanatan-swastika-four-aims
-- scrollUntilVisible:
-    element: { id: sanatan-next }
-    direction: DOWN
-    timeout: 60000
-- tapOn: { id: sanatan-next }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-next" }
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "3\\s*/\\s*3"
 - scrollUntilVisible:
-    element: { id: swastika-stage-0 }
+    element: { id: swastika-stage-0, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-swastika-cross
 - scrollUntilVisible:
-    element: { id: swastika-stage-1 }
+    element: { id: swastika-stage-1, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-swastika-four-bends
 - scrollUntilVisible:
-    element: { id: swastika-stage-2 }
+    element: { id: swastika-stage-2, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-swastika-optional-dots
 - scrollUntilVisible:
-    element: { text: "This guide does not prescribe.*" }
+    element: { text: "This guide does not prescribe.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - scrollUntilVisible:
-    element: { text: "Share" }
+    element: { text: "Share", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - assertVisible: "Share"
 - tapOn: Back
-- assertVisible: "Sacred symbols"
+- scrollUntilVisible:
+    element: { text: "Sacred symbols" }
+    direction: UP
+    timeout: 60000
 - tapOn: Back
-- assertVisible: "how to draw swastika"
+- scrollUntilVisible:
+    element: { id: sanatan-search, text: "how to draw swastika" }
+    direction: UP
+    timeout: 60000

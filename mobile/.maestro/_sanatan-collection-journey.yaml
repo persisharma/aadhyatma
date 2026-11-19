@@ -1,0 +1,24 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-${TOPIC}" }
+- takeScreenshot: e2e-shots/sanatan-row-${TOPIC}
+- tapOn: { id: "sanatan-collection-${TOPIC}", retryTapIfNoChange: true }
+- takeScreenshot: e2e-shots/sanatan-overview-${TOPIC}
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-start" }
+- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
+- takeScreenshot: e2e-shots/sanatan-reader-${TOPIC}
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-next" }
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- scrollUntilVisible:
+    element: { id: "sanatan-explore-${TOPIC}" }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-explore-${TOPIC}
+- tapOn: Back
+- tapOn: Back

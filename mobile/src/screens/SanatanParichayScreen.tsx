@@ -51,7 +51,7 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
         <ToolAction icon="saved" label={t(learning.saved.includes(topic.id) ? ['सहेजा हुआ हटाएँ','Remove saved lesson'] : ['बाद के लिए सहेजें','Save for later'])}
           selected={learning.saved.includes(topic.id)} onPress={() => void learning.toggleSaved(topic.id).catch(failed)} />
         <ListingSectionHeader>{t(['इस पाठ में','In this lesson'])}</ListingSectionHeader>
-        {getSanatanPageTitles(topic).map((name, i) => <ListingCardFrame key={i} onPress={() => read(topic.id, i)} accessibilityLabel={t(name)}
+        {getSanatanPageTitles(topic).map((name, i) => <ListingCardFrame key={i} testID={`sanatan-page-${i + 1}`} onPress={() => read(topic.id, i)} accessibilityLabel={t(name)}
           contentStyle={{ minHeight: 56, flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 12 }}>
           <View style={{ minWidth: 32, minHeight: 32, paddingHorizontal: 6, justifyContent: 'center', alignItems: 'center', borderRadius: 16, backgroundColor: colors.saffronTint }}><Text style={listingText}>{String(i + 1)}</Text></View>
           <Text style={{ ...listingText, flex: 1, minWidth: 0 }}>{t(name)}</Text><AppIcon name="next" size={18} color={colors.saffronDeep} />
@@ -77,6 +77,10 @@ export default function SanatanParichayScreen({ route, navigation }: Props) {
           </View>
         </ListingCardFrame>}
         {learning.error && <Action label={t(['सहेजी प्रगति फिर लोड करें','Retry loading progress'])} onPress={() => void learning.hydrate().catch(failed)} />}
+        {!savedOnly && (!query.trim() || ['संस्कार','Sanskar','Good Habits','સંસ્કાર','ಸಂಸ್ಕಾರ'].some(label=>label.toLowerCase().includes(query.trim().toLowerCase()))) &&
+          <ListingCardFrame testID="sanatan-sanskar" accessibilityLabel={t(['संस्कार','Sanskar'])} onPress={()=>navigation.navigate('CategoryList',{categoryId:'sanskar'})} contentStyle={{padding:14,gap:4}}>
+            <Copy heading>{t(['संस्कार','Sanskar'])}</Copy><Copy>{t(['प्रभाती श्लोक, भोजन मंत्र और दैनिक प्रार्थनाएँ','Morning slokas, meal prayers and daily observances'])}</Copy>
+          </ListingCardFrame>}
         {!query && !savedOnly && <>
           <CollectionCard topic={getSanatanTopic('symbols')!} variant="feature" onPress={() => open('symbols')} testID="sanatan-featured" />
           <ListingSectionHeader>{t(['कभी सोचा है?','Have you wondered?'])}</ListingSectionHeader>

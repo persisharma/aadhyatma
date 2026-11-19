@@ -12,7 +12,7 @@ export default function LessonArt({topicId,accessibilityLabel}:{topicId:string;a
  const {lang}=useGitaLanguage();
  const source=lessonArtSource(topicId,lang);
  if(!source)return null;
- return <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel}
+ return <View testID={`sanatan-plate-${topicId}`} accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel}
    style={{width:'100%',aspectRatio:1.5,overflow:'hidden',borderRadius:16}}>
   <CachedArtwork source={source} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%'}} resizeMode="cover"/>
  </View>;
