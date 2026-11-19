@@ -1,12 +1,31 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _open-settings.yaml
+# Settings retains its scroll offset. Return to its first row before searching
+# downward, even if iOS still exposes a partially clipped language row.
 - scrollUntilVisible:
-    element: { text: "Language,.*", above: { id: tab-home } }
+    element: { id: settings-back }
+    direction: UP
+    speed: 65
+    timeout: 90000
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
     direction: DOWN
-    timeout: 60000
-- tapOn: "Language,.*"
-- tapOn: "${READING_LANGUAGE}"
+    speed: 20
+    centerElement: true
+    timeout: 90000
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    direction: UP
+    speed: 15
+    centerElement: true
+    timeout: 20000
+- runFlow:
+    when: { notVisible: { text: "Language, ${READING_LANGUAGE}" } }
+    commands:
+      - tapOn: "Language,.*"
+      - tapOn: "${READING_LANGUAGE}"
+- assertVisible: "Language, ${READING_LANGUAGE}"
 - scrollUntilVisible:
     element: { text: "Reading size,.*", above: { id: tab-home } }
     direction: DOWN
