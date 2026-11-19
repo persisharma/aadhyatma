@@ -41,6 +41,8 @@ jest.mock('expo-linear-gradient', () => ({
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
   useNavigation: () => ({ navigate: mockNavigate }),
+  // FocusedLightStatusBar gates on focus; screens render outside a navigator here.
+  useIsFocused: () => true,
 }));
 jest.mock('@/contexts/AudioPlayerContext', () => ({
   useAudioPlayerContext: () => ({

@@ -35,9 +35,9 @@ appId: com.prashantsharma.vedansh
       - tapOn: { text: ".*with meaning.*Tap to open.*", index: 0 }
       - waitForAnimationToEnd
       - assertVisible: { id: "bhajan-attribution" }
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
       - assertVisible: { id: "bhajan-list" }
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
       - assertVisible: { id: "bhajan-shelf-door" }

@@ -12,6 +12,9 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
+import ReaderControlRow from '@/components/ReaderControlRow';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import VersePage from '@/components/VersePage';
@@ -103,6 +106,8 @@ export default function BhajanReaderScreen({ navigation, route }: Props) {
     });
   }, [width, verses.length]);
 
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
+
   // Re-render visible pages when the language flips, a bookmark toggles, or a
   // share is in flight — the in-page header actions depend on all three.
   const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
@@ -118,23 +123,15 @@ export default function BhajanReaderScreen({ navigation, route }: Props) {
         <ReaderHeader
           title={topTitle}
           onBack={() => navigation.goBack()}
-          right={
-            <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
-              {currentIndex + 1} / {verses.length}
-            </Text>
-          }
+          right={<ReaderPageCounter current={currentIndex + 1} total={verses.length} {...jump} />}
         />
 
         <ReadingProgressBar current={currentIndex + 1} total={verses.length} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+        <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={sourceId} />
-          {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
-          <View style={styles.readAloudSlot}>
-            <ReadAloudButton control={readAloud} />
-          </View>
-        </View>
+        </ReaderControlRow>
 
         <View style={styles.listContainer}>
           <FlatList
@@ -235,9 +232,6 @@ export default function BhajanReaderScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
-  toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
-  readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   attribution: { marginTop: 16, paddingTop: 12, borderTopWidth: StyleSheet.hairlineWidth, gap: 4 },
