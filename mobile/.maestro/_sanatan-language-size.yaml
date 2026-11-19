@@ -29,14 +29,19 @@ appId: com.prashantsharma.vedansh
 - assertVisible: { id: sanatan-next }
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
+# The figure area (plate, caption, legend) and a legend can be taller than a phone
+# screen, and iOS reports a partly hidden element's full frame, so waiting for all
+# of it never ends. Wait for part of it; assert the content itself separately.
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
     direction: DOWN
+    visibilityPercentage: 20
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 # The ten painted names are also native text under the plate, at the chosen size.
 - scrollUntilVisible:
     element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
     direction: DOWN
+    visibilityPercentage: 20
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-legend-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

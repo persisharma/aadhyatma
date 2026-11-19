@@ -15,9 +15,13 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: image-viewer-close }
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 # Figure page: the painted teaching plate (language-picked) replaces the old vector schematic.
+# The figure area (plate, caption, legend) and a legend can be taller than a phone
+# screen, and iOS reports a partly hidden element's full frame, so waiting for all
+# of it never ends. Wait for part of it; assert the content itself separately.
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
     direction: DOWN
+    visibilityPercentage: 20
     timeout: 60000
 - assertVisible: { id: sanatan-explore-dikpal }
 - takeScreenshot: e2e-shots/sanatan-dikpal-plate
@@ -30,9 +34,16 @@ appId: com.prashantsharma.vedansh
 - scrollUntilVisible:
     element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
     direction: DOWN
+    visibilityPercentage: 20
     timeout: 60000
-- assertVisible: "North · Kubera"
-- assertVisible: "Below · Vishnu"
+- scrollUntilVisible:
+    element: { text: "North · Kubera", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 30000
+- scrollUntilVisible:
+    element: { text: "Below · Vishnu", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 30000
 - takeScreenshot: e2e-shots/sanatan-dikpal-legend
 - tapOn: Back
 - scrollUntilVisible:
