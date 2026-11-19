@@ -1,0 +1,29 @@
+appId: com.prashantsharma.vedansh
+---
+- scrollUntilVisible:
+    element: { id: "sanatan-collection-${TOPIC}", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+    visibilityPercentage: 100
+- takeScreenshot: e2e-shots/sanatan-row-${TOPIC}
+- tapOn: { id: "sanatan-collection-${TOPIC}", retryTapIfNoChange: true }
+- takeScreenshot: e2e-shots/sanatan-overview-${TOPIC}
+- scrollUntilVisible:
+    element: { id: sanatan-start, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
+- takeScreenshot: e2e-shots/sanatan-reader-${TOPIC}
+- scrollUntilVisible:
+    element: { id: sanatan-next, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+    centerElement: true
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- scrollUntilVisible:
+    element: { id: "sanatan-explore-${TOPIC}" }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-explore-${TOPIC}
+- tapOn: Back
+- tapOn: Back

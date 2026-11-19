@@ -109,7 +109,9 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
         showsHorizontalScrollIndicator={false} getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
         onMomentumScrollEnd={event => changed(Math.round(event.nativeEvent.contentOffset.x / width))}
         onScrollToIndexFailed={() => listRef.current?.scrollToOffset({ offset: width * pageRef.current, animated: false })}
-        renderItem={({ index }) => <View style={{ width, flex: 1 }}>
+        renderItem={({ index }) => <View style={{ width, flex: 1 }}
+          accessibilityElementsHidden={index !== page}
+          importantForAccessibility={index === page ? 'auto' : 'no-hide-descendants'}>
           <AutoSlideScrollView contentContainerStyle={{ padding: 22, paddingBottom: 40, gap: 16 }}>
             <ProseReadingCard heading={<Copy heading>{t(titles[index])}</Copy>}>
               {index === 0 && <Painting id={topic.id} />}
@@ -127,7 +129,7 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
             </View>
             {index===data.length-1&&<LessonRelated id={topic.id} onOpen={openRelated}/>}
             {index > 0 && <Action label={t(['पिछला पृष्ठ','Previous page'])} onPress={() => go(index - 1)} />}
-            <PrimaryAction testID="sanatan-next" label={t(index === data.length-1 ? ['परिचय पूरा हुआ','Finish introduction'] : ['अगला पृष्ठ','Next page'])}
+            <PrimaryAction testID={index === page ? "sanatan-next" : undefined} label={t(index === data.length-1 ? ['परिचय पूरा हुआ','Finish introduction'] : ['अगला पृष्ठ','Next page'])}
               onPress={() => { if (index < data.length-1) go(index + 1); else { readAloud.stop(); autoSlide.stop(); void learning.readPage(topic.id, index, true).then(() => navigation.goBack()).catch(failed); } }} />
           </AutoSlideScrollView>
         </View>} />

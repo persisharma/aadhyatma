@@ -20,15 +20,17 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Four arms, four aims of life"
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
-    element: { text: "Moksha · Spiritual liberation" }
+    element: { id: sanatan-plate-symbols }
     direction: DOWN
     timeout: 60000
+- assertVisible: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]"
 - takeScreenshot: e2e-shots/sanatan-swastika-four-aims
 - scrollUntilVisible:
-    element: { id: sanatan-next }
+    element: { id: sanatan-next, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
-- tapOn: { id: sanatan-next }
+    centerElement: true
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "3\\s*/\\s*3"
 - scrollUntilVisible:
     element: { id: swastika-stage-0 }

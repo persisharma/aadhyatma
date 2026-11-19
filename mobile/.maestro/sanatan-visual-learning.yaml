@@ -9,17 +9,18 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-collection-dikpal }
     direction: DOWN
     timeout: 60000
-- tapOn: { id: sanatan-collection-dikpal }
+- tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
-- tapOn: { id: sanatan-start }
+- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
 - scrollUntilVisible:
-    element: { id: sanatan-next }
+    element: { id: sanatan-next, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
-- tapOn: { id: sanatan-next }
+    centerElement: true
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 # Figure page: the painted teaching plate (language-picked) replaces the old vector schematic.
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal }
@@ -40,7 +41,7 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-collection-rishis }
     direction: DOWN
     timeout: 60000
-- tapOn: { id: sanatan-collection-rishis }
+- tapOn: { id: sanatan-collection-rishis, retryTapIfNoChange: true }
 - scrollUntilVisible:
     element: { text: "Maitreyi’s distinct question" }
     direction: DOWN

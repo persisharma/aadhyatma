@@ -140,11 +140,11 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Maybe later"
     optional: true
-# The six featured readings stay above the fold even when the festival card changes.
+# A shared boot check must also work when system text pushes the grid below the fold.
+# The standard-size first-viewport contract is checked in home-featured-readings.
 - extendedWaitUntil:
-    visible: { id: home-featured-gita-saar }
+    visible: { id: home-settings }
     timeout: 60000
-- assertVisible: { id: home-featured-aarti }
 # Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
 # after the dismissal block above ran — seen on slow Android cold starts —
 # clear it now so it can't swallow the first in-flow tap. No-ops otherwise.

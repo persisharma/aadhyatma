@@ -22,22 +22,22 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-collection-dikpal }
     direction: DOWN
     timeout: 60000
-    visibilityPercentage: 50
-    centerElement: true
+    visibilityPercentage: 100
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- tapOn: { id: sanatan-collection-dikpal }
+- tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
 - scrollUntilVisible:
     element: { id: sanatan-start }
     direction: DOWN
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- tapOn: { id: sanatan-start }
+- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - scrollUntilVisible:
-    element: { id: sanatan-next }
+    element: { id: sanatan-next, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
-- tapOn: { id: sanatan-next }
+    centerElement: true
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal }
