@@ -29,16 +29,12 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-start, retryTapIfNoChange: true }
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-# Next is the last control. At large Kannada type this lesson spans many screens.
-- scrollUntilVisible:
-    element: { id: sanatan-next }
-    direction: DOWN
-    speed: 65
-    timeout: 120000
-- swipe: { direction: UP }
-- waitForAnimationToEnd
-- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
-- assertVisible: "2\\s*/\\s*3"
+# Capture the adjacent lesson page using the reader's native horizontal pager.
+# The collections journey separately exercises the Next button on every topic.
+- swipe: { start: "88%,60%", end: "12%,60%", duration: 350 }
+- extendedWaitUntil:
+    visible: "2\\s*/\\s*3"
+    timeout: 15000
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
     direction: DOWN
