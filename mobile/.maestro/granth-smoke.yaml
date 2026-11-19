@@ -21,6 +21,26 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - scrollUntilVisible:
     element:
+      text: "Śrīmad Bhāgavatam\\..*Tap to open\\."
+    direction: DOWN
+    timeout: 15000
+- tapOn: "Śrīmad Bhāgavatam\\..*Tap to open\\."
+- tapOn:
+    text: "Start over from the beginning"
+    optional: true
+- tapOn: "English"
+- extendedWaitUntil:
+    visible: "Canto 10 · Chapter 9\\. Yaśodā and Dāmodara\\. 3 verses\\. Tap to open\\."
+    timeout: 15000
+- tapOn: "Canto 10 · Chapter 9\\. Yaśodā and Dāmodara\\. 3 verses\\. Tap to open\\."
+- tapOn: { id: gita-jump-trigger }
+- tapOn: { id: gita-jump-verse-18 }
+- tapOn: { id: gita-jump-open }
+- assertVisible: "Shloka · 10\\.9\\.18"
+- tapOn: "Back to chapters"
+- tapOn: "Back"
+- scrollUntilVisible:
+    element:
       text: "Gita Saar\\..*Tap to open\\."
     direction: DOWN
     timeout: 15000

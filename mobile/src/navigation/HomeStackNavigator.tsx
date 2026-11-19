@@ -56,6 +56,8 @@ const GaneshStotramChaptersScreen = lazyScreen('GaneshStotramChapters', 3, () =>
 const GaneshStotramReaderScreen = lazyScreen('GaneshStotramReader', 3, () => import('@/screens/GaneshStotramReaderScreen'));
 const GitaChaptersIndexScreen = lazyScreen('GitaChapters', 3, () => import('@/screens/GitaChaptersIndexScreen'));
 const GitaReaderScreen = lazyScreen('GitaReader', 3, () => import('@/screens/GitaReaderScreen'));
+const BhagavatamChaptersScreen = lazyScreen('BhagavatamChapters', 3, () => import('@/screens/BhagavatamChaptersScreen'));
+const BhagavatamReaderScreen = lazyScreen('BhagavatamReader', 4, () => import('@/screens/GitaReaderScreen'));
 const GarudPuranChaptersScreen = lazyScreen('GarudPuranChapters', 3, () => import('@/screens/GarudPuranChaptersScreen'));
 const GarudPuranReaderScreen = lazyScreen('GarudPuranReader', 4, () => import('@/screens/GarudPuranReaderScreen'));
 const GitaSaarThemesScreen = lazyScreen('GitaSaarChapters', 3, () => import('@/screens/GitaSaarThemesScreen'));
@@ -186,6 +188,8 @@ export default function HomeStackNavigator() {
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen name="GitaChapters" component={GitaChaptersIndexScreen} />
+      <Stack.Screen name="BhagavatamChapters" component={BhagavatamChaptersScreen} />
+      <Stack.Screen name="BhagavatamReader" component={BhagavatamReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen
         name="GitaReader"
         component={GitaReaderScreen}

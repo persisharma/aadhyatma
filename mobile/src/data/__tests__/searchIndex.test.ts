@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 
 import { deities } from '../deities';
 import { library } from '../texts';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest, getBhagavatamChapter } from '../bhagavatam';
+import { findVerse } from '../versePool';
+import { buildEntryStartTarget, buildProgressTarget } from '../../navigation/entryRoutes';
 import { readingLinks } from '../readingLinks';
 import { VIDHI_ENTRIES } from '../vidhi';
 import {
@@ -14,6 +17,26 @@ import {
 
 _resetSearchIndexForTest();
 const index = getSearchIndex();
+
+{
+  const entry = library.find(row => row.id === BHAGAVATAM_ID)!;
+  assert.equal(entry.verseCount, 18);
+  assert.equal(bhagavatamChaptersManifest.length, 6);
+  const rows = index.verses.filter(row => row.sourceId === BHAGAVATAM_ID);
+  assert.equal(rows.length, 18);
+  assert.equal(new Set(rows.map(row => row.labelEn)).size, 18);
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'BhagavatamChapters', params: {} });
+  for (const reading of bhagavatamChaptersManifest) {
+    getBhagavatamChapter(reading.chapter).verses.forEach((verse, verseIndex) => {
+      assert.equal(findVerse(BHAGAVATAM_ID, verseIndex, reading.chapter)?.labelEn, `Shloka ${verse.scriptureRef}`);
+      assert.equal(verse.sanskrit.length, verse.transliteration.length);
+      assert.ok(verse.meaningHi && verse.meaningEn && verse.commentaryHi[0] && verse.commentaryEn[0]);
+    });
+  }
+  const match = runSearch('4.8.55', index).verses.find(hit => hit.entry.sourceId === BHAGAVATAM_ID)?.entry;
+  assert.ok(match);
+  assert.deepEqual(buildProgressTarget(match), { screen: 'BhagavatamReader', params: { chapter: 4, initialIndex: 1 } });
+}
 
 // Poet titles and exact doha wording remain discoverable with the correct page.
 for (const [query, sourceId, verseIndex] of [

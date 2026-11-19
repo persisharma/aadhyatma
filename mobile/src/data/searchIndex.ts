@@ -38,6 +38,7 @@ import {
   type GitaVerse,
 } from './gita';
 import { getGarudPuranChapter, garudPuranChaptersManifest } from './garud-puran';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest, getBhagavatamChapter } from './bhagavatam';
 import { getGitaSaarChapter, gitaSaarChaptersManifest, type GitaSaarVerse } from './gita-saar';
 import {
   getSundarkandChapter,
@@ -424,8 +425,13 @@ function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator
     return;
   }
 
-  if (entry.id === 'bhagavad-gita') {
-    yield* pushChapteredGita(verses, entry);
+  if (entry.id === 'bhagavad-gita' || entry.id === BHAGAVATAM_ID) {
+    const isBhagavatam = entry.id === BHAGAVATAM_ID;
+    yield* pushChapteredGita(
+      verses, entry,
+      isBhagavatam ? bhagavatamChaptersManifest : gitaChaptersManifest,
+      isBhagavatam ? getBhagavatamChapter : getGitaChapter,
+    );
     return;
   }
 
@@ -671,10 +677,16 @@ function pushSuktamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   });
 }
 
-function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
-  for (const ch of gitaChaptersManifest) {
-    const chapter = getGitaChapter(ch.chapter);
+function* pushChapteredGita(
+  out: SearchVerseEntry[],
+  entry: LibraryEntry,
+  manifest: typeof gitaChaptersManifest,
+  getChapter: typeof getGitaChapter,
+) {
+  for (const ch of manifest) {
+    const chapter = getChapter(ch.chapter);
     chapter.verses.forEach((v: GitaVerse, idx) => {
+      const reference = v.scriptureRef ?? `${ch.chapter}.${v.number}`;
       out.push(
         makeVerseEntry({
           sourceId: entry.id,
@@ -682,8 +694,8 @@ function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
           sectionNameEn: entry.nameEn,
           chapter: ch.chapter,
           verseIndex: idx,
-          labelHi: `श्लोक ${ch.chapter}.${v.number}`,
-          labelEn: `Verse ${ch.chapter}.${v.number}`,
+          labelHi: `श्लोक ${reference}`,
+          labelEn: `Verse ${reference}`,
           linesHi: v.sanskrit,
           linesEn: v.transliteration,
           meaningHi: v.meaningHi,

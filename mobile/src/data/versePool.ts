@@ -1,5 +1,6 @@
 import { library } from './texts';
 import { getGitaChapter, gitaChaptersManifest } from './gita';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest, getBhagavatamChapter } from './bhagavatam';
 import { getSundarkandChapter, sundarkandChaptersManifest } from './sundarkand';
 import { getShivaStrotamChapter, shivaStrotamChaptersManifest } from './shiva-strotam';
 import { getDurgaStotramChapter, durgaStotramChaptersManifest } from './durga-stotram';
@@ -113,21 +114,23 @@ const isActive = (id: string) => entryById.get(id)?.status === 'active' && !entr
 const nameHi = (id: string, fallback?: string) => entryById.get(id)?.nameHi ?? fallback ?? id;
 const nameEn = (id: string, fallback?: string) => entryById.get(id)?.nameEn ?? fallback ?? id;
 
-function gitaVerse(chapterNumber: number, verseIndex: number): UniformVerse | null {
-  const verse = getGitaChapter(chapterNumber).verses[verseIndex];
+function commentaryVerse(chapterNumber: number, verseIndex: number, sourceId: string = GITA_ID): UniformVerse | null {
+  const getChapter = sourceId === BHAGAVATAM_ID ? getBhagavatamChapter : getGitaChapter;
+  const verse = getChapter(chapterNumber).verses[verseIndex];
   if (!verse) return null;
+  const reference = verse.scriptureRef ?? `${chapterNumber}.${verse.number}`;
   return {
-    sourceId: GITA_ID,
-    sourceNameHi: nameHi(GITA_ID),
-    sourceNameEn: nameEn(GITA_ID),
+    sourceId,
+    sourceNameHi: nameHi(sourceId),
+    sourceNameEn: nameEn(sourceId),
     chapter: chapterNumber,
     verseIndex,
     textHi: verse.sanskrit,
     textEn: verse.transliteration,
     meaningHi: verse.meaningHi,
     meaningEn: verse.meaningEn,
-    labelHi: `श्लोक ${chapterNumber}.${verse.number}`,
-    labelEn: `Shloka ${chapterNumber}.${verse.number}`,
+    labelHi: `श्लोक ${reference}`,
+    labelEn: `Shloka ${reference}`,
   };
 }
 
@@ -182,9 +185,9 @@ function buildPoolSegments(): PoolSegment[] {
         sourceId: GITA_ID,
         length: chapter.verseCount,
         lastPositions: [{ chapter: chapter.chapter, verseIndex: chapter.verseCount - 1 }],
-        getAt: (offset) => gitaVerse(chapter.chapter, offset),
+        getAt: (offset) => commentaryVerse(chapter.chapter, offset),
         find: (verseIndex, requestedChapter) =>
-          requestedChapter === chapter.chapter ? gitaVerse(chapter.chapter, verseIndex) : null,
+          requestedChapter === chapter.chapter ? commentaryVerse(chapter.chapter, verseIndex) : null,
       });
     }
   }
@@ -334,6 +337,19 @@ function buildPoolSegments(): PoolSegment[] {
   segments.push(
     ...(require('./versePoolFlat') as typeof import('./versePoolFlat')).flatPoolSegments({ isActive, nameHi, nameEn })
   );
+
+  if (isActive(BHAGAVATAM_ID)) {
+    for (const reading of bhagavatamChaptersManifest) {
+      const getAt = (index: number) => commentaryVerse(reading.chapter, index, BHAGAVATAM_ID);
+      segments.push({
+        sourceId: BHAGAVATAM_ID,
+        length: reading.verseCount,
+        lastPositions: [{ chapter: reading.chapter, verseIndex: reading.verseCount - 1 }],
+        getAt,
+        find: (verseIndex, chapter) => chapter === reading.chapter ? getAt(verseIndex) : null,
+      });
+    }
+  }
 
   return segments;
 }
