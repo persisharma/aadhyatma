@@ -1017,12 +1017,14 @@ When building new components, pull tokens from the theme — never hard-code a h
    - Gap: **10dp** between tiles, **16dp** side padding (`spacing.lg`, through `homeLayout.ts`); tile width = `(contentWidth − 32 − (columns − 1) × 10) / columns`, snapped down to the physical pixel below (`(ceil(w × pixelRatio) − 1) / pixelRatio`). An exact-fit row wrapped its last tile on fractional-dp Android widths (density 2.625/2.75), because Yoga's float32 line-break saw a ~3e-5dp overflow; the snap leaves under one pixel of slack per tile. The same gutter aligns Search, Today, Routine, the kids-story card and both carousels. At 402dp, content gains 16dp of total width compared with the previous 24dp-per-side inset. Artwork sizes and vertical spacing remain.
    - Tap → CategoryList for that category (तीर्थ opens the Theerth browse surface, §26; व्रत opens the vrat catalog; कुंडली opens Jyotish; देवता opens the Deity Index; उद्देश्य opens Browse by Purpose; दान-पुण्य opens the giving home, §72)
    - Tile spec: the **launcher variant**, Section 19
-8. Section label "STORIES FOR KIDS" + one illustrated, deity-neutral card → the children’s story catalog (§76). It uses the active catalog gradient, border and shadow, a bundled open-book illustration, active-language-first title with a supporting second-language line, a localized deity list and action, and Home’s first-tap controller.
-9. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pitru Smaran, Guided Pujas/पूजा विधि, Pilgrimage, Home-Screen Widgets — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
+8. Section heading "कथाएँ और परंपराएँ · Stories and traditions" + two illustrated `HomeBannerCard`s (Kids Stories, Sanatan Parichay). **One language per card (19 November 2026):** the second-language line was removed and the card shortened from 138 to 108 dp, with an 84 dp artwork slot (`HOME_BANNER_ART`). The Kids Stories card is one illustrated, deity-neutral card → the children’s story catalog (§76). It uses the active catalog gradient, border and shadow, a bundled open-book illustration, a title in the reading language only, a localized action, and Home’s first-tap controller.
+9. Section heading "और जानें · Explore more" + **Feature Spotlight carousel** (§32) — restored 19 November 2026 with ten cards, Temple Darshan among them, after the November Home redesign had briefly replaced it with two fixed tiles — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pitru Smaran, Guided Pujas/पूजा विधि, Pilgrimage, Home-Screen Widgets — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
 10. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
 11. **Search** is an inline, minimum-48dp row below the brand lockup, with the shared 24dp search glyph and a localized prompt. Opens the existing Search screen and retains `Search verses, sections, and mantras` as its accessible label. It scrolls with the content and never overlays category artwork.
 
-**Home Japmala banner.** The bundled Hanuman panorama spans the entire interior of the 18 dp rounded frame. The frame clips the art and carries its border. The foreground owns the control insets so the artwork reaches every edge at compact widths and when enlarged text makes the banner taller. The practice picker, count and open control remain separate touch targets.
+**Home Japmala banner.** The bundled Hanuman panorama spans the entire interior of the 18 dp rounded frame. The frame clips the art and carries its border. The foreground owns the control insets so the artwork reaches every edge at compact widths and when enlarged text makes the banner taller. **One door, no counting on Home (19 November 2026).** The banner exists so the Japmala section can be found; the owner asked that it stop being a place to count. The whole banner is a single button (`home-japa-choose`, label "जपमाला खोलें · <practice>") that opens the Japmala section — the practice picker, `CategoryList` with `practice: true`, on the Mantras tab or on Hymns when the last practice was a stotram. The last practice's name and its count stay on the banner as read-only status, and the round saffron mark on the right is a drawn chevron, not a second button. The earlier separate picker, tap-to-count and start controls are gone, which also settles the earlier complaint that it was unclear how much of the banner could be tapped: all of it, for one thing.
+
+**Edges (19 November 2026).** The artwork file no longer carries its own cream margin (6 px on top, 3 px on the other sides at 1110 × 303); that margin showed as an uneven second edge inside the frame's border. The asset is now the painting alone (1102 × 292), so the frame's border is the only edge. Test: `components/__tests__/JapmalaBanner.test.tsx`.
 
 **First-tap recovery (all Home cards).** Every tappable Home card opens on the **first** tap, not the second. iOS can cancel a child `Pressable`'s `onPress` when it lives inside a `ScrollView` even when the finger never actually drags, so a naive `onPress` intermittently no-ops the first touch. A single shared controller (`contexts/TilePressContext.tsx`, `useTilePressController` + `TilePressProvider`) remembers the action on `onPressIn`, arms a one-tick fallback on `onPressOut`, and fires it unless a real `onPress` already ran or a scroll drag intervened. `activateTile` only consumes a pending action that belongs to the current gesture: a *dragged* pending (a scroll whose press was cancelled) is never reused, so an accessibility tap — which invokes `onPress` with no preceding `onPressIn` — always runs the tapped card's own action rather than a stale one left behind by an earlier scroll. It is shared (context) across the **whole** Home surface — the category grid (§19), the Today strip (§48), the For-Today row (§50), the routine banner (§30), and the DISCOVER carousel (§32) — because a card lives inside the outer vertical scroll, so a vertical page-drag started on a card must suppress *that card's* fallback; a per-component copy could not see the outer scroll and would navigate on a plain scroll. Each enclosing `ScrollView` (the outer vertical one and every inner horizontal row) wires `onScrollBeginDrag` to the controller's `markTileDrag`, so a swipe is always a scroll and never a tap. Introduced for the grid in July 2026 (#219) and extended to the Today/Discover cards immediately after; the routine banner (§30) was the last plain-`onPress` holdout and was wired in Aug 2026 (it intermittently no-opped its first tap on Home). Pinned by `contexts/__tests__/TilePressContext.test.tsx` and `components/__tests__/RoutineBanner.test.tsx`.
 
@@ -1362,6 +1364,8 @@ type IndiaMapProps = {
 ---
 
 ## 32. Home Feature Spotlight (DISCOVER carousel)
+
+**Status (19 November 2026).** The carousel sits under the Home heading **"और जानें · Explore more"**. The November Home redesign had replaced it with two fixed tiles (Temple Darshan, Guided pujas); the owner asked for the earlier behaviour back: many options, in a new order on every app open. It now carries **ten** cards — Temple Darshan (`DarshanQuick`), Guided pujas, Daily Practice, Daily Verse, Daan Punya, Sankalp, Pitru Smaran, Ask Vedansh, Sacred Journeys and Home-Screen Widgets — with the per-open shuffle described below. The launch-era hard-coded `NEW` flags were not restored. Test: `screens/__tests__/HomeCategoryGrid.test.ts` ("Home और जानें row") pins the card list and the once-per-open shuffle; `utils/__tests__/shuffleBySeed.test.ts` pins the shuffle itself.
 
 **Purpose.** Raise awareness of the app's distinct sections — not just the catalog categories, but the *cross-cutting surfaces* a first-time user easily misses (Daily Practice, the Daily Verse tab, Sankalp, Pitru Smaran, Guided Pujas (पूजा विधि → the §62 Vidhi Catalog, pushed on the Home stack), the Pilgrimage map, Home-Screen Widgets — the Panchang card was retired in favour of the Today strip, §48). A single horizontal carousel of feature cards sits **below the CATEGORIES grid** (§18) — it originally led the page, but the prime slot now belongs to today-relevant content (§48). One flexible card shell carries every section so any content fits.
 
@@ -4431,8 +4435,9 @@ reader (below).
 so Back returns to the hub with its query and filters). A search hit opens the
 page that matched, as global Search does; the resume card opens the stored page.
 
-**Reader (`SanatanReaderScreen`).** Shared `ReaderHeader` with the page counter in
-`typography.pageCounter` (italic, `inkMuted`, "2 / 3"), `ReadingProgressBar`, then
+**Reader (`SanatanReaderScreen`).** Shared `ReaderHeader` with the shared
+`ReaderPageCounter` ("2 / 3"; tapping it opens the page picker with each page's
+name, §94), `ReadingProgressBar`, then
 one centred wrapping row: `LanguageToggle`, read-aloud, auto-slide. Horizontally
 paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
 pill (the collection name; "चित्र से समझें" on the figure page) and, on the gutter,
@@ -4817,3 +4822,47 @@ Files: `mobile/src/components/{ImageZoomViewer,ZoomableArtwork}.tsx`,
 `mobile/src/utils/imageZoom.ts` (pure geometry). Tests:
 `components/__tests__/ImageZoomViewer.test.tsx`, `utils/__tests__/imageZoom.test.ts`.
 Pinch, drag and double-tap are verified on a device or simulator, not by Jest.
+
+---
+
+## 94. Reader page counter and page picker (`ReaderPageCounter`, `PageJumpSheet`) — 19 November 2026
+
+**Purpose.** The `n / total` counter in a reader's top bar is a button in every
+paged reader, not only in the Gita. Tapping it opens a picker, so a reader can go
+straight to any page instead of swiping through the ones between.
+
+**Counter (`ReaderPageCounter`).** Rendered in `ReaderHeader`'s `right` slot. The
+counter text keeps its type (`typography.pageCounter`, italic, `inkMuted`) and is
+followed by the 12 dp `caretDown` in `saffronDeep`; the target is at least
+48 × 60 dp and dims to 0.7 while pressed. With a single page, or no jump handler,
+it is plain text. The accessibility **label is the counter text** ("3 / 12") and
+the action is the **hint** ("पृष्ठ पर जाएँ / Go to page"): the Maestro flows assert
+the counter literally in every reader, and a label that replaced it would hide it
+from them on iOS.
+
+**Picker (`PageJumpSheet`).** The Gita verse sheet without the chapter field, and
+the same geometry: a centred card (radius 22, `parchmentHighlight`, `modalBackdrop`
+behind it), heading "पृष्ठ पर जाएँ", a number field that accepts numerals in all
+four reading scripts, a grid of 48 dp page cells with the page on screen
+preselected and scrolled into view, the filled action "पृष्ठ N खोलें" and Cancel.
+A number outside `1…total` disables the action and shows one line of guidance.
+Backdrop, Cancel, the system back gesture and the accessibility escape all close
+it without moving the reader. A reader whose pages have names passes `titles` and
+gets one named row per page instead of the number field and grid (Sanatan
+Parichay: "1 · कोटि यानी प्रकार, करोड़ नहीं").
+
+**Wiring.** FlatList readers spread `useReaderJump({ listRef, offset, setCurrentIndex,
+readAloud, autoSlide })` onto the counter: opening the picker stops read-aloud and
+auto-slide, and the jump sets the index and moves the pager without animation
+(`offset` is 1 where a previous-chapter card is prepended). Readers with their own
+page function call it from `onJump`. The Gita reader passes `onPress` and keeps its
+chapter + verse sheet. The jump is within the open chapter; choosing another
+chapter from the picker exists only in the Gita.
+
+**Files.** `mobile/src/components/{ReaderPageCounter,PageJumpSheet}.tsx`,
+`mobile/src/screens/_useReaderJump.ts`. **Tests.**
+`components/__tests__/ReaderPageCounter.test.tsx` (button contract, picker, four
+languages, the hook, and a guard that fails when any screen draws its own counter
+or a reader screen lacks the shared one), `screens/__tests__/gitaVerseJump.test.tsx`,
+`screens/__tests__/SanatanParichay.test.tsx`.
+

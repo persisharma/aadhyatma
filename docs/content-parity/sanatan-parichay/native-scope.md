@@ -7,10 +7,13 @@ Research background is draft PR #605. Native implementation is draft PR #622.
 
 ## Delivered scope
 
-One Home door opens a question-led hub with search, saved lessons, exact-page
-resume, a Swastika feature, “Ever wondered?” directions/33-devata cards, collection
-filters and 13 introductions. A collection opens a three-part reader: introduction,
-visual explanation, context and variations. Back preserves the hub query/filter.
+One Home door opens a hub on the shared listing frame: search, a saved-only
+filter, exact-page resume, collection filter chips and 13 introductions as
+`ListingCard` rows. A card opens the three-part reader directly (introduction,
+visual explanation, context and variations); the collection overview screen, the
+Swastika feature card and the “Ever wondered?” pair were removed on 19 November
+2026. Back preserves the hub query/filter. The reader's counter opens a page
+picker, and its pictures open the shared zoom viewer.
 Global Search can open an exact lesson. Unknown IDs show an unavailable state.
 
 The 13 collections cover foundations; Ganesha as a divine form; thirty-three

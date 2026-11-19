@@ -21,14 +21,24 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Save for later"
 - assertVisible: "Remove saved lesson"
 - assertVisible: "Share"
-- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+# The lesson opens with what "koti" means; it must not wait for the last page.
+- assertVisible: "Koti means kinds, not crore"
+# The counter is a button, as in the Gita reader: it opens the page picker, which
+# names each page. Jump to the last page, then step back to the figure page.
+- tapOn: { id: sanatan-page-counter }
+- assertVisible: "Go to page"
+- assertVisible: "Page 1[.] Koti means kinds, not crore"
+- tapOn: { id: page-jump-page-3 }
+- tapOn: { id: page-jump-open }
+- assertVisible: "3\\s*/\\s*3"
+- tapOn: { id: pager-previous }
 - assertVisible: "2\\s*/\\s*3"
 # The illustrated lesson now explains the 33 deities on its teaching plate.
 - scrollUntilVisible:
     element: { id: sanatan-plate-thirty, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
-- assertVisible: "In this Upanishadic dialogue, 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]"
+- assertVisible: "Koti here means “kinds”, not “crore”: 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]"
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
 # The plate opens in the shared picture viewer; the buttons zoom without a gesture.
 - tapOn: { id: sanatan-plate-thirty }
