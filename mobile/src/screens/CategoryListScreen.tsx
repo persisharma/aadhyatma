@@ -52,11 +52,6 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
   const handlePress = (entry: LibraryEntry) => {
-    if(route.params.practice && categoryId==='stotram'){
-      markSeen(entry.id);
-      navigation.navigate('StotramPractice',{sourceId:entry.id});
-      return;
-    }
     if (isLoading) {
       markSeen(entry.id);
       navigateToEntryStart(navigation, entry);
@@ -153,7 +148,9 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
-          {categoryId === 'stotram' && <ReadingLinks onOpen={(id) => route.params.practice ? navigation.navigate('StotramPractice', {sourceId:id}) : navigateReadingLink(navigation, id)} />}
+          {categoryId === 'stotram' && (
+            <ReadingLinks onOpen={(id) => navigateReadingLink(navigation, id)} />
+          )}
           {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
             const card = <LibraryCard entry={entry} onPress={onPress} />;

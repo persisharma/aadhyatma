@@ -2153,7 +2153,11 @@ A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of 
 
 > **Supersedes §10's two-module framing.** §10 documents the original Chalisa + Gita content shapes and remains authoritative for those shapes and for the per-module-type discipline ("shapes stay separate"). The catalog has since grown to ~40 entries across 7 categories; this section documents the registry and shape *families* that grew out of §10's pattern.
 
-**Aditya Hridayam (आदित्य हृदयम्).** Library → Hymns opens this Surya stotram directly in the shared verse reader. Its standard Library card shows the Surya icon and the 31-verse count. Verse labels, reading progress, bookmarks and shloka japa use the hymn's own identity. Japmala → Stotram offers its existing full-recitation counter, and its Open reading action opens this same hymn.
+**Aditya Hridayam (आदित्य हृदयम्).** Library → Hymns opens this Surya stotram directly in the shared verse reader. Its standard Library card shows the Surya icon and the 31-verse count. Verse labels, reading progress, bookmarks and shloka japa use the hymn's own identity.
+
+**Reading from Japmala.** The Stotram tab uses the Library's reader, chapter list and saved-reading routes. A saved hymn on the Home banner opens its reading and resumes a saved verse where available.
+
+**Durga Saptashati (दुर्गा सप्तशती).** The collection opens directly from Library, Search, and Japmala. The chapter page uses the standard ListingCard (§82) with separate preparatory readings and chapter groups, a language toggle, passage counts and the existing Durga artwork. Each row retains its routine action on the thumbnail and its reading progress. Stotram catalog shortcuts use the same regular ListCard (§8) as neighboring library entries.
 
 ### `LibraryEntry` (the registry row)
 

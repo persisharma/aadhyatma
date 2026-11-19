@@ -4,9 +4,12 @@ import Svg, { Defs, LinearGradient as SvgGradient, Path, Stop, Text as SvgText }
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
+import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { findJapamMantra, JAPAM_BEADS_PER_ROUND } from '@/data/japam';
 import { getPracticeHymn } from '@/data/practiceHymn';
+import { library } from '@/data/texts';
+import { navigateReadingLink, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 import { contentByLang, pick } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
@@ -26,6 +29,7 @@ export default function JapmalaBanner({
   const press = useTilePress();
   const { fontScale } = useWindowDimensions();
   const { entries, recitations, getEntry, increment, countRecitation, isLoading } = useJapamCounter();
+  const { getProgress } = useReadingProgress();
   const fmt = React.useMemo(() => new Intl.NumberFormat(numerals[lang]), [lang]);
   const mantraId = React.useMemo(
     () =>
@@ -69,10 +73,20 @@ export default function JapmalaBanner({
     if (hymn) countRecitation(hymn.id);
     else increment(mantraId);
   };
-  const open = () =>
-    hymn
-      ? navigation.navigate('StotramPractice', { sourceId: hymn.id })
-      : navigation.navigate('JapamCounter', { mantraId });
+  const open = () => {
+    if (!hymn) {
+      navigation.navigate('JapamCounter', { mantraId });
+      return;
+    }
+    if (navigateReadingLink(navigation, hymn.id)) return;
+    const saved = getProgress(hymn.id);
+    if (saved && navigateToProgress(navigation, saved)) return;
+    const entry = library.find((item) => item.id === hymn.id);
+    if (entry) navigateToEntryStart(navigation, entry);
+  };
+  const openLabel = hymn
+    ? pick(lang, { hi: 'पाठ खोलें', en: 'Open reading', gu: 'પાઠ ખોલો', kn: 'ಪಾಠ ತೆರೆಯಿರಿ' })
+    : pick(lang, { hi: 'जप खोलें', en: 'Open practice', gu: 'જપ ખોલો', kn: 'ಜಪ ತೆರೆಯಿರಿ' });
   return (
     <View testID="home-japa-banner" style={styles.banner}>
       <Image
@@ -170,9 +184,7 @@ export default function JapmalaBanner({
         onPress={open}
         accessibilityRole="button"
         testID="home-japa-start"
-        accessibilityLabel={
-          pick(lang, { hi: 'जप खोलें', en: 'Open practice', gu: 'જપ ખોલો', kn: 'ಜಪ ತೆರೆಯಿರಿ' }) + ' · ' + title
-        }
+        accessibilityLabel={openLabel + ' · ' + title}
         style={styles.play}
       >
         <Text style={{ color: '#fff5d9', fontSize: 19 }}>▶</Text>
