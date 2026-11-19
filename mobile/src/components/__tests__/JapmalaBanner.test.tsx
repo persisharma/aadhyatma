@@ -31,7 +31,26 @@ test('Japmala artwork fills the rounded frame independently of control spacing',
   });
   expect(image.props.accessible).toBe(false);
 
-  const openControl = frame.findAllByProps({ testID: 'home-japa-start' })[0];
-  expect(StyleSheet.flatten(openControl.props.style)).toMatchObject({ marginRight: 12 });
+  act(() => tree.unmount());
+});
+
+test('the banner is one door to the Japmala section and counts nothing on Home', () => {
+  const navigate = jest.fn();
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(<JapmalaBanner navigation={{ navigate } as never} />);
+  });
+  // One target for the whole banner: no separate count or start control remains.
+  const buttons = tree.root.findAll(node => typeof node.type === 'string' && node.props.accessibilityRole === 'button');
+  expect(buttons).toHaveLength(1);
+  for (const gone of ['home-japa-count', 'home-japa-start']) {
+    expect(tree.root.findAll(node => node.props.testID === gone)).toHaveLength(0);
+  }
+  const door = tree.root.findAll(node => node.props.testID === 'home-japa-choose' && typeof node.props.onPress === 'function')[0];
+  expect(door.props.accessibilityLabel).toBe('जपमाला खोलें · सीता राम');
+  expect(StyleSheet.flatten(door.props.style({ pressed: false }))).toMatchObject({ flex: 1, minHeight: 98 });
+  act(() => door.props.onPress());
+  expect(navigate).toHaveBeenCalledTimes(1);
+  expect(navigate).toHaveBeenCalledWith('CategoryList', { categoryId: 'japam', practice: true });
   act(() => tree.unmount());
 });

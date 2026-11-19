@@ -16,6 +16,9 @@ import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
+import FeatureIcon from '@/components/FeatureIcon';
+import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
+import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import HomeWordmark from '@/components/HomeWordmark';
 import { homeLayout } from '@/utils/homeLayout';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -192,6 +195,115 @@ export default function HomeScreen({ navigation }: Props) {
   const { contentWidth, gridWidth, gridPadding, gridGap, tileWidth, launcherHeight, largeText } =
     homeLayout(width - insets.left - insets.right, fontScale);
 
+  // "और जानें": wide cards that peek the next one. Width is the viewport minus
+  // the side gutter and a sliver of the following card; snap by card + gap.
+  const featureGap = spacing.md;
+  const featureWidth = Math.min(320, contentWidth - gridPadding - 56);
+  const featureSnap = featureWidth + featureGap;
+
+  // One card per surface worth knowing about. Every card always renders
+  // (awareness is coverage); only the order changes.
+  const spotlights: (FeatureSpotlight & { onPress: () => void })[] = [
+    {
+      key: 'darshan',
+      titleHi: 'मंदिर दर्शन', titleEn: 'Temple Darshan',
+      descHi: 'प्रमुख मंदिरों के सीधे दर्शन, घर बैठे।',
+      descEn: 'Live darshan from major temples, wherever you are.',
+      ctaHi: 'दर्शन करें', ctaEn: 'Watch',
+      icon: <CategoryIcon iconKey="theerth" size={32} />,
+      onPress: () => navigation.navigate('DarshanQuick'),
+    },
+    {
+      key: 'puja-vidhi',
+      titleHi: 'पूजा विधि', titleEn: 'Guided pujas',
+      descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
+      descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
+      ctaHi: 'विधि देखें', ctaEn: 'Open',
+      icon: <FeatureIcon name="puja-vidhi" />,
+      onPress: () => navigation.navigate('VidhiCatalog'),
+    },
+    {
+      key: 'routine',
+      titleHi: 'नित्य साधना', titleEn: 'Daily Practice',
+      descHi: 'अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।',
+      descEn: 'Pick your daily rituals and keep the streak alive.',
+      ctaHi: 'शुरू करें', ctaEn: 'Begin',
+      icon: <FeatureIcon name="routine" />,
+      onPress: () => navigation.navigate('RoutineToday'),
+    },
+    {
+      key: 'daily-bhakti',
+      titleHi: 'दैनिक भक्ति', titleEn: 'Daily Verse',
+      descHi: 'हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।',
+      descEn: 'A fresh shloka to reflect on every single day.',
+      ctaHi: 'पढ़ें', ctaEn: 'Read',
+      icon: <FeatureIcon name="daily-bhakti" />,
+      onPress: () => rootNav.navigate('DailyBhaktiTab'),
+    },
+    {
+      key: 'daan-punya',
+      titleHi: 'दान-पुण्य', titleEn: 'Daan Punya',
+      descHi: 'जप · व्रत · दान — पहले महत्व, फिर देना। कभी भी।',
+      descEn: 'Japa · vrat · daan — understand first, then give. Any day.',
+      ctaHi: 'खोलें', ctaEn: 'Open',
+      icon: <FeatureIcon name="daan-punya" />,
+      onPress: () => navigation.navigate('DaanPunya'),
+    },
+    {
+      key: 'sankalp',
+      titleHi: 'संकल्प', titleEn: 'Sadhana Programs',
+      descHi: '४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें।',
+      descEn: 'Take a prebuilt vow, like the 41-day Hanuman Chalisa.',
+      ctaHi: 'संकल्प लें', ctaEn: 'Begin',
+      icon: <FeatureIcon name="sankalp" />,
+      onPress: () => navigation.navigate('SadhanaPrograms'),
+    },
+    {
+      key: 'pitru-smaran',
+      titleHi: 'पितृ स्मरण', titleEn: 'Pitru Smaran',
+      descHi: 'एक बार तिथि जोड़ें—हर वर्ष श्राद्ध की सही तारीख़ जानें।',
+      descEn: 'Save a tithi once and know its shraddha date every year.',
+      ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
+      icon: <FeatureIcon name="pitru-smaran" />,
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
+    },
+    {
+      key: 'jijnasa',
+      titleHi: 'जिज्ञासा · आज का विधान', titleEn: 'Ask Vedansh',
+      descHi: 'आज की तिथि, व्रत, भोग, मुहूर्त—एक प्रश्न में उत्तर।',
+      descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
+      ctaHi: 'पूछें', ctaEn: 'Ask',
+      icon: <FeatureIcon name="jijnasa" />,
+      onPress: () => navigation.navigate('TodayVidhan'),
+    },
+    {
+      key: 'theerth',
+      titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
+      descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
+      descEn: 'Explore sacred temples and dhams across Bharat.',
+      ctaHi: 'खोजें', ctaEn: 'Explore',
+      icon: <FeatureIcon name="theerth" />,
+      onPress: () => navigation.navigate('TheerthMap', {}),
+    },
+    {
+      // Opens the in-app Widget Gallery, which carries the platform's own
+      // add-widget steps; it never promises a system widget-picker jump.
+      key: 'home-widgets',
+      titleHi: 'होम-स्क्रीन विजेट', titleEn: 'Home-Screen Widgets',
+      descHi: 'आज का श्लोक, पंचांग और जप—होम स्क्रीन पर।',
+      descEn: "Today's verse, Panchang, and japa on your home screen.",
+      ctaHi: 'देखें', ctaEn: 'View',
+      icon: <FeatureIcon name="home-widgets" />,
+      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
+    },
+  ];
+
+  // The order is shuffled once per app open so a different card leads each
+  // visit. The seed is captured at mount, so the order is fresh on every open
+  // yet stable across re-renders while the reader is on Home (utils/shuffleBySeed).
+  const shuffleSeed = React.useMemo(() => Date.now(), []);
+  const orderedSpotlights = shuffleBySeed(spotlights, shuffleSeed);
+
   const heading = (title: string, all = false) => <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginTop:14,marginBottom:6}}>
     <Text accessibilityRole="header" style={{fontFamily:titleFontByLang(lang),fontSize:15,color:colors.inkSoft}}>{title}</Text>
     {all && <Pressable testID="home-all-features" accessibilityRole="button" style={{minHeight:44,justifyContent:'center'}} onPress={()=>navigation.navigate('ReadingLibrary',{features:true})}>
@@ -300,14 +412,14 @@ export default function HomeScreen({ navigation }: Props) {
 
           {heading(pick(lang,{hi:'कथाएँ और परंपराएँ',en:'Stories and traditions',gu:'કથાઓ અને પરંપરાઓ',kn:'ಕಥೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳು'}))}
           <View style={{ gap: 12, marginBottom: 12 }}>
-            <React.Suspense fallback={<View style={{ height: 138 }} />}>
+            <React.Suspense fallback={<View style={{ height: 108 }} />}>
               <KidsStoriesHomeCard
                 onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
                 onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
                 onPressOut={finishTilePress}
               />
             </React.Suspense>
-            <React.Suspense fallback={<View style={{ height: 138 }} />}>
+            <React.Suspense fallback={<View style={{ height: 108 }} />}>
               <SanatanHomeCard
                 onPress={() => activateTile(() => navigation.navigate('SanatanParichay'))}
                 onPressIn={() => beginTilePress(() => navigation.navigate('SanatanParichay'))}
@@ -317,10 +429,33 @@ export default function HomeScreen({ navigation }: Props) {
           </View>
 
           {heading(pick(lang,{hi:'और जानें',en:'Explore more',gu:'વધુ જાણો',kn:'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ'}))}
-          <View style={{flexDirection:'row',gap:gridGap}}>
-            <View style={{flex:1}}><CategoryCard variant="launcher" nameHi="मंदिर दर्शन" nameEn="Temple Darshan" status="active" icon={<CategoryIcon iconKey="theerth" size={52}/>} onPress={()=>navigation.navigate('DarshanQuick')}/></View>
-            <View style={{flex:1}}><CategoryCard variant="launcher" nameHi="पूजा विधि" nameEn="Guided pujas" status="active" icon={<CategoryIcon iconKey="vrat" size={52}/>} onPress={()=>navigation.navigate('VidhiCatalog')}/></View>
-          </View>
+          <ScrollView
+            testID="home-discover-carousel"
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            decelerationRate="fast"
+            snapToInterval={featureSnap}
+            snapToAlignment="start"
+            // Full-bleed: cancel the page gutter so the next card peeks, then
+            // re-pad the content so the first card lines up with the page.
+            style={{ marginHorizontal: -gridPadding }}
+            // The vertical padding widens the touch band so an arced horizontal
+            // flick scrolls the row instead of opening a card.
+            contentContainerStyle={{ paddingHorizontal: gridPadding, gap: featureGap, paddingVertical: 10 }}
+            onScrollBeginDrag={markTileDrag}
+          >
+            {orderedSpotlights.map(({ onPress, ...item }) => (
+              <FeatureCard
+                key={item.key}
+                testID={`home-discover-${item.key}`}
+                item={item}
+                width={featureWidth}
+                onPress={() => activateTile(onPress)}
+                onPressIn={() => beginTilePress(onPress)}
+                onPressOut={finishTilePress}
+              />
+            ))}
+          </ScrollView>
 
           <Text
             style={[
