@@ -43,6 +43,10 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-plate-thirty, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
+- scrollUntilVisible:
+    element: { text: "Koti here means “kinds”, not “crore”: 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]" }
+    direction: DOWN
+    timeout: 30000
 - assertVisible: "Koti here means “kinds”, not “crore”: 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]"
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
 # The plate opens in the shared picture viewer; the buttons zoom without a gesture.

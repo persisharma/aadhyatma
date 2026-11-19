@@ -1,4 +1,6 @@
 # Native hierarchies can include rows under the fixed header or bottom tabs.
+# A row can be taller than the space between the header and the tab bar at
+# large text, so wait for half of it, not all of it.
 # Find the row from below, then settle it clear of the top edge as well.
 appId: com.prashantsharma.vedansh
 ---
@@ -7,10 +9,12 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     speed: 15
     centerElement: true
+    visibilityPercentage: 50
     timeout: 90000
 - scrollUntilVisible:
     element: { id: "${ROW_ID}" }
     direction: UP
     speed: 15
     centerElement: true
+    visibilityPercentage: 50
     timeout: 25000
