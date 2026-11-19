@@ -32,7 +32,6 @@ appId: com.prashantsharma.vedansh
     element: { text: 'Aditya Hridayam\..*Tap to open\.' }
     direction: DOWN
 - tapOn: 'Aditya Hridayam\..*Tap to open\.'
-- tapOn: "Open reading.*|पाठ खोलें.*|પાઠ ખોલો.*|ಪಾಠ ತೆರೆಯಿರಿ.*"
 - extendedWaitUntil:
     visible: "Aditya Hridayam|आदित्य हृदयम्|આદિત્ય હૃદયમ્|ಆದಿತ್ಯ ಹೃದಯಮ್"
     timeout: 15000

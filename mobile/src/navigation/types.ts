@@ -84,7 +84,6 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
    */
   Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
   ReadingLibrary: { features?: boolean } | undefined;
-  StotramPractice: { sourceId: string };
   CategoryList: { categoryId: ContentCategory; practice?: boolean };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;

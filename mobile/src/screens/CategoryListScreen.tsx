@@ -20,7 +20,7 @@ import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useResumeSheetCoverage } from '@/components/useResumeSheetCoverage';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { navigateReadingLink, navigateStotramPractice, isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { navigateReadingLink, isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useTourTarget } from '@/components/tour/tourTargets';
@@ -50,11 +50,6 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const items = library.filter((e) => e.category === categoryId && !e.hidden);
 
   const handlePress = (entry: LibraryEntry) => {
-    if(route.params.practice && categoryId==='stotram'){
-      markSeen(entry.id);
-      navigateStotramPractice(navigation, entry.id);
-      return;
-    }
     if (isLoading) {
       markSeen(entry.id);
       navigateToEntryStart(navigation, entry);
@@ -152,10 +147,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           showsVerticalScrollIndicator={false}
         >
           {categoryId === 'stotram' && (
-            <ReadingLinks onOpen={(id) => {
-              if (route.params.practice) navigateStotramPractice(navigation, id);
-              else navigateReadingLink(navigation, id);
-            }} />
+            <ReadingLinks onOpen={(id) => navigateReadingLink(navigation, id)} />
           )}
           {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;

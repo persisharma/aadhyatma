@@ -2,10 +2,21 @@ import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import JapmalaBanner from '@/components/home/JapmalaBanner';
+import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 
 let mockRecitations: Record<string, { count: number; updatedAt: number }> = {};
 
-afterEach(() => { mockRecitations = {}; });
+let mockProgress: ReadingProgress | undefined;
+afterEach(() => {
+  mockRecitations = {};
+  mockProgress = undefined;
+});
+
+jest.mock('@/contexts/ReadingProgressContext', () => ({
+  useReadingProgress: () => ({
+    getProgress: (sourceId: string) => sourceId === mockProgress?.sourceId ? mockProgress : undefined,
+  }),
+}));
 
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
 jest.mock('@/contexts/JapamCounterContext', () => ({
@@ -40,8 +51,13 @@ test('Japmala artwork fills the rounded frame independently of control spacing',
   act(() => tree.unmount());
 });
 
-test('a saved Saptashati practice opens its chapter list directly and retains its count', () => {
-  mockRecitations = { 'durga-saptashati-core': { count: 3, updatedAt: 1 } };
+test.each([
+  ['durga-saptashati-core', undefined, ['SaptashatiCore']],
+  ['aditya-hridayam', undefined, ['StutiReader', { initialIndex: 0, stutiId: 'aditya-hridayam' }]],
+  ['aditya-hridayam', 5, ['StutiReader', { initialIndex: 5, stutiId: 'aditya-hridayam' }]],
+] as const)('the saved %s banner opens the reading at %s and keeps its count', (sourceId, verseIndex, expected) => {
+  mockRecitations = { [sourceId]: { count: 3, updatedAt: 1 } };
+  if (verseIndex !== undefined) mockProgress = { sourceId, verseIndex, updatedAt: 1 };
   const navigate = jest.fn();
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
@@ -52,6 +68,6 @@ test('a saved Saptashati practice opens its chapter list directly and retains it
   const openControl = tree.root.findAllByProps({ testID: 'home-japa-start' })[0];
   expect(count.props.accessibilityValue.text).toBe('३ पाठ');
   act(() => openControl.props.onPress());
-  expect(navigate.mock.calls).toEqual([['SaptashatiCore']]);
+  expect(navigate.mock.calls).toEqual([expected]);
   act(() => tree.unmount());
 });
