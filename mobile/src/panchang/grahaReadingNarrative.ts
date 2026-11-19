@@ -92,6 +92,23 @@ function ruledHousesLabel(houses: readonly number[], hi: boolean): string {
  * chart-specific facts the core cannot know. Returns null for grahas with no
  * narrative table or an out-of-range house.
  */
+/**
+ * The hand-written core cell for a placement, without the modifier clauses —
+ * its lead is "where it sits" then "what that means here". The Mahadasha guide
+ * quotes it when it answers what the period means for that house. Same table
+ * and bucket rule as `composeNarrative`, so the two can never disagree.
+ */
+export function narrativeCell(
+  graha: Graha,
+  house: number,
+  dignity: Dignity,
+  relation: Maitri | null
+): NarrativeCell | null {
+  const table = NARRATIVE_TABLES[graha];
+  if (!table || house < 1 || house > 12) return null;
+  return table[house - 1][dignityBucket(dignity, relation)];
+}
+
 export function composeNarrative(input: NarrativeInput): GrahaNarrative | null {
   const table = NARRATIVE_TABLES[input.graha];
   const modifiers = MODIFIER_TABLES[input.graha];

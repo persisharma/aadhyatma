@@ -23,7 +23,6 @@ import {
   validateBirthProfile,
 } from '@/panchang/useKundali';
 import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
-import { GRAHA_UPAY } from '@/panchang/grahaReadingContent';
 
 const mockNavigation = {
   goBack: jest.fn(),
@@ -230,55 +229,30 @@ test('Kundali result leads with plain-language insights and exposes all expert t
     screen: 'JapamCounter',
     params: { mantraId: GRAHA_BEEJ_JAPA_ID[mahaLord] },
   });
-  // What to do in this Mahadasha: the lord's GRAHA_UPAY row, with its paath.
-  const mahaUpay = GRAHA_UPAY[mahaLord];
-  assert.ok(tree.root.findByProps({ testID: 'dasha-practice' }));
-  assert.ok(text.includes('What to do in this Mahadasha'));
-  assert.ok(text.includes(`${GRAHA_NAMES_EN[mahaLord]} Mahadasha · Upay`));
-  for (const line of [mahaUpay.vaarEn, mahaUpay.daanEn, mahaUpay.sevaEn, `${mahaUpay.mantraEn} — 108 times (one mala)`]) {
-    assert.ok(text.includes(line), line);
-  }
-  assert.ok(text.includes('not a fix or a guarantee'));
-  const currentPanel = tree.root.findByProps({ testID: 'dasha-practice-upay' });
-  // The counter pill sits above the card, so the panel offers the paath alone.
-  assert.equal(currentPanel.findAll((node) => String(node.props.accessibilityLabel ?? '').startsWith('Chant ')).length, 0);
+  // The running Mahadasha's guide door (design.md §51e) replaces any inline upay.
+  assert.equal(tree.root.findAllByProps({ testID: 'dasha-practice' }).length, 0);
+  const door = tree.root.findByProps({ testID: 'dasha-guide-door' });
+  assert.equal(door.props.accessibilityLabel, `Understand the ${GRAHA_NAMES_EN[mahaLord]} Mahadasha: what it means, what to do, and why`);
+  assert.ok(text.includes('Understand this Mahadasha'));
   mockNavigation.navigate.mockClear();
-  act(() => {
-    currentPanel.findAll((node) => String(node.props.accessibilityLabel ?? '').startsWith('Open ') && typeof node.props.onPress === 'function')[0].props.onPress();
-  });
-  expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', expect.objectContaining({ screen: expect.any(String) }));
-  // Each Mahadasha still ahead keeps its upay behind its own toggle. The running one
-  // does not repeat it, and a period that has ended offers no action.
-  assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-practice-${mahaLord}` }).length, 0);
+  act(() => door.props.onPress());
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('DashaGuide', { lord: mahaLord });
+  // The running and every upcoming Mahadasha open their guide from the
+  // timeline; a period that has ended offers no action.
   const rightNow = Date.now();
   const endedPeriods = mockChart.vimshottari.filter((period) => period.end.getTime() <= rightNow);
-  const aheadPeriods = mockChart.vimshottari.filter((period) => period.start.getTime() > rightNow);
-  assert.ok(endedPeriods.length > 0 && aheadPeriods.length > 0, 'fixture has both ended and upcoming Mahadashas');
+  const openPeriods = mockChart.vimshottari.filter((period) => period.end.getTime() > rightNow);
+  assert.ok(endedPeriods.length > 0 && openPeriods.length > 1, 'fixture has ended, running and upcoming Mahadashas');
   for (const period of endedPeriods) {
-    assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-practice-${period.lord}` }).length, 0, `${period.lord} has ended`);
+    assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-guide-${period.lord}` }).length, 0, `${period.lord} has ended`);
   }
-  for (const period of aheadPeriods) {
-    assert.ok(tree.root.findByProps({ testID: `dasha-timeline-practice-${period.lord}` }), `${period.lord} is ahead`);
+  for (const period of openPeriods) {
+    assert.ok(tree.root.findByProps({ testID: `dasha-timeline-guide-${period.lord}` }), `${period.lord} is running or ahead`);
   }
-  const otherLord = aheadPeriods[0].lord;
-  const toggle = () => tree.root.findByProps({ testID: `dasha-timeline-practice-${otherLord}` });
-  assert.equal(toggle().props.accessibilityState.expanded, false);
-  assert.equal(toggle().props.accessibilityLabel, `Show what to do in the ${GRAHA_NAMES_EN[otherLord]} Mahadasha`);
-  assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-upay-${otherLord}` }).length, 0);
-  act(() => toggle().props.onPress());
-  assert.equal(toggle().props.accessibilityState.expanded, true);
-  const rowPanel = tree.root.findByProps({ testID: `dasha-timeline-upay-${otherLord}` });
-  assert.ok(textOf(tree).includes(GRAHA_UPAY[otherLord].sevaEn));
+  const nextLord = openPeriods.find((period) => period.lord !== mahaLord)!.lord;
   mockNavigation.navigate.mockClear();
-  act(() => {
-    rowPanel.findAll((node) => String(node.props.accessibilityLabel ?? '').startsWith('Chant ') && typeof node.props.onPress === 'function')[0].props.onPress();
-  });
-  expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', {
-    screen: 'JapamCounter',
-    params: { mantraId: GRAHA_BEEJ_JAPA_ID[otherLord] },
-  });
-  act(() => toggle().props.onPress());
-  assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-upay-${otherLord}` }).length, 0);
+  act(() => tree.root.findByProps({ testID: `dasha-timeline-guide-${nextLord}` }).props.onPress());
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('DashaGuide', { lord: nextLord });
   // PRD-20 Phase 4: the period reading sits above the timeline, structural only.
   assert.ok(text.includes('Reading this period'));
   assert.ok(text.includes('Tradition links'));
