@@ -22,7 +22,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-basics
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -54,7 +57,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-deity
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -86,7 +92,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-thirty
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -118,7 +127,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-dikpal
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -150,7 +162,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-graha
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -182,7 +197,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-forms
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -214,7 +232,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-symbols
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -246,7 +267,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-plants
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -278,7 +302,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-temples
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -310,7 +337,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-elements
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -342,7 +372,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-time
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -374,7 +407,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-texts
 - scrollUntilVisible:
     element: { id: sanatan-next }
@@ -406,7 +442,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
     centerElement: true
-- tapOn: { id: sanatan-start }
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: e2e-shots/sanatan-reader-rishis
 - scrollUntilVisible:
     element: { id: sanatan-next }

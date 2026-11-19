@@ -44,7 +44,12 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
     centerElement: true
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- tapOn: { id: sanatan-start }
+# Kannada Large (CI): centring left Open lesson at y 62-163, under the header, and
+# the centre tap missed; the subflow taps lower and retries.
+- runFlow:
+    file: _sanatan-open-row.yaml
+    env:
+      ROW_ID: sanatan-start
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 # Large Gujarati and Kannada pages are long: reaching Next took 48 of 60 seconds
 # on CI, leaving too little for the centring swipes. Allow two minutes.

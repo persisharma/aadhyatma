@@ -1,9 +1,11 @@
-# Open a Sanatan collection row that a centring scroll has just brought into view.
-# Env: ROW_ID, the row's testID.
-# Guards two iOS CI misses where the tap COMPLETED but the list stayed open:
+# Open a Sanatan collection row, or the topic's Open lesson button, that a
+# centring scroll has just brought into view.
+# Env: ROW_ID, the row's or button's testID.
+# Guards iOS CI misses where the tap COMPLETED but the screen did not change:
 # - a tap that lands while the list is still coasting is taken by the ScrollView;
-# - Maestro's centring is one-sided, so a tall enlarged-text row can stop with its
-#   centre under the header (y 110 of a 495pt row). Tapping 75% down stays below it.
+# - Maestro's centring is one-sided, so a tall enlarged-text row or button can stop
+#   just under the header (a 495pt row centred at y 110; Open lesson at y 62-163 in
+#   Kannada Large). Tapping 75% down stays below the header.
 appId: com.prashantsharma.vedansh
 ---
 - waitForAnimationToEnd:
@@ -13,8 +15,8 @@ appId: com.prashantsharma.vedansh
     point: "50%,75%"
 - waitForAnimationToEnd:
     timeout: 3000
-# The opened topic replaces the list in the native stack, so the row is only
-# still visible when the tap was lost.
+# The opened topic or reader replaces the previous screen in the native stack, so
+# the row or button is only still visible when the tap was lost.
 - runFlow:
     when:
       visible:
