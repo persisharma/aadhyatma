@@ -45,7 +45,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 30000
 - takeScreenshot: e2e-shots/sanatan-dikpal-legend
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-search, above: { id: tab-home } }
     direction: UP
@@ -61,7 +61,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "3\\s*/\\s*3"
 - assertVisible: "Maitreyi’s distinct question"
 - takeScreenshot: e2e-shots/sanatan-search-maitreyi-exact-page
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-search, text: Maitreyi }
     direction: UP

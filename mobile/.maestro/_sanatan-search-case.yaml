@@ -33,7 +33,8 @@ appId: com.prashantsharma.vedansh
       text: "कोई परिचय नहीं मिला। दूसरा शब्द आज़माएँ।|No introductions found. Try another word.|કોઈ પરિચય નહીં મિલા। દૂસરા શબ્દ આજ઼માએઁ।|ಕೋಈ ಪರಿಚಯ ನಹೀಂ ಮಿಲಾ। ದೂಸರಾ ಶಬ್ದ ಆಜ಼ಮಾಏಁ।"
     direction: DOWN
     timeout: 15000
-- tapOn: Back
+# The back button is labelled in the reading language (#703).
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - runFlow: _sanatan-home-entry.yaml
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: sanatan-search }

@@ -20,4 +20,4 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 20
     timeout: 60000
 - takeScreenshot: e2e-shots/sanatan-explore-${TOPIC}
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

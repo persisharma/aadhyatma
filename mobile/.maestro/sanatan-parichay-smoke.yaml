@@ -56,7 +56,7 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: { id: image-viewer }
 - assertNotVisible: "Sources & context"
 - assertNotVisible: "https?://.*"
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-search, text: "33 koti devta" }
     direction: UP
