@@ -1598,3 +1598,7 @@ Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages 
 ## [2026-11-12] ingest | Dasha tab — what to do in a Mahadasha
 
 Added `panchang/dashaPractice.ts` (`buildDashaPractice`: the period lord's `GRAHA_UPAY` row, adults only, `dasha` basis) and extracted `components/GrahaUpayPanel.tsx` from the report's graha cards so the Dasha tab and the report share one upay treatment. The Dasha tab gains a `dasha-practice` card under the unchanged beej pill and a collapsed upay toggle per non-running timeline row. No new prescriptive content was authored. Updated [[panchang]], design.md §51/§78, RULEBOOK §14.3.5/§14.4. Maestro steps authored, native run and visual QA pending.
+
+## [2026-11-19] ingest | Mahadasha guide (step-by-step, from the Dasha tab)
+
+Replaced the Dasha tab's inline upay card and expanding timeline rows with a guide per running/upcoming Mahadasha: `panchang/dashaGuide.ts` (`buildDashaGuide`, pure, adults only, ended periods null), `panchang/dashaGuideContent.ts` (draft explanatory copy), `screens/DashaGuideScreen.tsx` (index + five steps, painted art, night panels, Back-to-index on a step). Daan opens the Daan-Punya home; Prashna opens only for a primary-bhava purpose at its min age. Updated [[panchang]], design.md §51/§51e, RULEBOOK §14.3.5/§14.4. Native Maestro run, four-language/Large visual QA and editorial review of the new copy are pending.

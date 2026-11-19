@@ -246,16 +246,42 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: "dasha-beej-japa"
 - assertVisible: "Chant Guru Beej Mantra on the mala, for the Jupiter Mahadasha"
-# What to do in this Mahadasha: the lord's upay row (day, daan, seva, mantra,
-# paath) sits under the pill for an adult subject.
+# The running Mahadasha's guide (design.md §51e): index, steps, Back to the
+# index, then Back to the Dasha tab.
 - scrollUntilVisible:
     element:
-      id: "dasha-practice-upay"
+      id: "dasha-guide-door"
     direction: DOWN
     timeout: 15000
-- assertVisible: "What to do in this Mahadasha"
-- assertVisible: "Jupiter Mahadasha · Upay"
+- tapOn:
+    id: "dasha-guide-door"
+- assertVisible:
+    id: "dasha-guide-index-view"
+- assertVisible: "In this guide · 5 steps"
+- tapOn:
+    id: "dasha-guide-start"
+- assertVisible: "Step 1 of 5"
+- tapOn:
+    id: "dasha-guide-next"
+- tapOn:
+    id: "dasha-guide-next"
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 4 of 5"
+- scrollUntilVisible:
+    element:
+      id: "dasha-guide-chant"
+    direction: DOWN
+    timeout: 15000
 - assertVisible: ".*not a fix or a guarantee.*"
+# Back on a step returns to the index; Back on the index leaves the guide.
+- tapOn:
+    id: "dasha-guide-back"
+- assertVisible:
+    id: "dasha-guide-index-view"
+- tapOn:
+    id: "dasha-guide-back"
+- assertVisible: "Vimshottari Dasha"
 # Each "Now" level is named; anchor on a concrete row in the full Mahadasha
 # timeline because the two section captions can scroll past as one block.
 - scrollUntilVisible:
@@ -264,21 +290,20 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
 - assertVisible: "Mercury Mahadasha"
-# An upcoming Mahadasha's upay opens from its own timeline row (ended periods
-# and the running one carry no toggle).
+# An upcoming Mahadasha opens its own guide from the timeline (ended periods
+# carry no link).
 - scrollUntilVisible:
     element:
-      id: "dasha-timeline-practice-mercury"
+      id: "dasha-timeline-guide-mercury"
     direction: DOWN
     timeout: 15000
 - tapOn:
-    id: "dasha-timeline-practice-mercury"
-- scrollUntilVisible:
-    element:
-      id: "dasha-timeline-upay-mercury"
-    direction: DOWN
-    timeout: 15000
-- tapOn: "Hide what to do in the Mercury Mahadasha"
+    id: "dasha-timeline-guide-mercury"
+- assertVisible: "Mercury Mahadasha"
+- assertVisible: "Upcoming period"
+- tapOn:
+    id: "dasha-guide-back"
+- assertVisible: "Vimshottari Dasha"
 
 # Kundali sharing is explicit because the card contains personal birth details.
 - tapOn: "Share your Kundali"
