@@ -1,6 +1,6 @@
 appId: com.prashantsharma.vedansh
 ---
-- runFlow: _sanatan-case-settings.yaml
+- runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Language,.*", above: { id: tab-home } }
     direction: DOWN

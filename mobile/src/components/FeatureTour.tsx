@@ -3,6 +3,7 @@ import {
   InteractionManager,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   useWindowDimensions,
@@ -48,7 +49,10 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
   const { colors, typography, radii } = useTheme();
   const { shouldShowFirstLaunchTour: gate, markTourCompleted } = useTour();
   const insets = useSafeAreaInsets();
-  const { width: screenW, height: screenH } = useWindowDimensions();
+  const { width: screenW, height: screenH, fontScale } = useWindowDimensions();
+  const largeType = fontScale >= 1.5;
+  const [headerHeight, setHeaderHeight] = useState(44);
+  const CardBody = largeType ? ScrollView : View;
 
   const shouldShowFirstLaunchTour = gate && !suppressed;
   const [visible, setVisible] = useState(false);
@@ -242,7 +246,10 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
       />
 
       {/* Header: step counter + Skip, pinned to the top. */}
-      <View style={[styles.headerRow, { top: insets.top + 6 }]}>
+      <View
+        style={[styles.headerRow, { top: insets.top + 6 }]}
+        onLayout={(event) => setHeaderHeight(Math.ceil(event.nativeEvent.layout.height))}
+      >
         <Text style={[styles.stepCount, { color: colors.parchment, fontFamily: typography.cardLatin.fontFamily }]}>
           {stepIndex + 1} / {tourSteps.length}
         </Text>
@@ -270,10 +277,12 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
         }}
         style={[
           styles.cardWrap,
-          placement.top !== undefined ? { top: placement.top } : { bottom: placement.bottom },
+          largeType
+            ? { top: insets.top + headerHeight + 14, bottom: insets.bottom + 12 }
+            : placement.top !== undefined ? { top: placement.top } : { bottom: placement.bottom },
         ]}
       >
-        {placement.arrow === 'up' && (
+        {!largeType && placement.arrow === 'up' && (
           <View style={styles.pointerRow} accessibilityElementsHidden importantForAccessibility="no">
             <View style={[styles.pointerUp, { marginLeft: placement.arrowLeft, borderBottomColor: colors.parchmentSoft }]} />
           </View>
@@ -282,36 +291,39 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
         <View
           style={[
             styles.card,
+            largeType && styles.largeCard,
             { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
           ]}
         >
-          <Text
-            accessibilityRole="header"
-            style={[styles.titleHi, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
-          >
-            {step.titleHi}
-          </Text>
-          <Text style={[styles.titleEn, { color: colors.inkMuted, fontFamily: typography.subtitle.fontFamily }]}>
-            {step.titleEn}
-          </Text>
+          <CardBody key={step.id} style={largeType ? styles.largeCardBody : undefined}>
+            <Text
+              accessibilityRole="header"
+              style={[styles.titleHi, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]}
+            >
+              {step.titleHi}
+            </Text>
+            <Text style={[styles.titleEn, { color: colors.inkMuted, fontFamily: typography.subtitle.fontFamily }]}>
+              {step.titleEn}
+            </Text>
 
-          <View style={[styles.rule, { backgroundColor: colors.divider }]} />
+            <View style={[styles.rule, { backgroundColor: colors.divider }]} />
 
-          <Text style={[styles.bodyHi, { color: colors.ink, fontFamily: typography.meaning.fontFamily }]}>
-            {step.bodyHi}
-          </Text>
-          <Text style={[styles.bodyEn, { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily }]}>
-            {step.bodyEn}
-          </Text>
+            <Text style={[styles.bodyHi, { color: colors.ink, fontFamily: typography.meaning.fontFamily }]}>
+              {step.bodyHi}
+            </Text>
+            <Text style={[styles.bodyEn, { color: colors.inkSoft, fontFamily: typography.meaning.fontFamily }]}>
+              {step.bodyEn}
+            </Text>
 
-          <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no">
-            {tourSteps.map((s, i) => (
-              <View
-                key={s.id}
-                style={[styles.dot, { backgroundColor: i === stepIndex ? colors.saffron : colors.dotRest }]}
-              />
-            ))}
-          </View>
+            <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no">
+              {tourSteps.map((s, i) => (
+                <View
+                  key={s.id}
+                  style={[styles.dot, { backgroundColor: i === stepIndex ? colors.saffron : colors.dotRest }]}
+                />
+              ))}
+            </View>
+          </CardBody>
 
           <View style={styles.controls}>
             <Pressable
@@ -346,7 +358,7 @@ export default function FeatureTour({suppressed=false}:{suppressed?:boolean}) {
           </View>
         </View>
 
-        {placement.arrow === 'down' && (
+        {!largeType && placement.arrow === 'down' && (
           <View style={styles.pointerRow} accessibilityElementsHidden importantForAccessibility="no">
             <View style={[styles.pointerDown, { marginLeft: placement.arrowLeft, borderTopColor: colors.parchmentSoft }]} />
           </View>
@@ -389,7 +401,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   stepCount: { fontSize: 13, letterSpacing: 1.6, textTransform: 'uppercase', includeFontPadding: false },
-  skipBtn: { paddingHorizontal: 8, paddingVertical: 6 },
+  skipBtn: { minHeight: 44, minWidth: 44, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 8, paddingVertical: 6 },
   skipLabel: { fontSize: 13, letterSpacing: 1.6, textTransform: 'uppercase', includeFontPadding: false },
   ring: {
     position: 'absolute',
@@ -399,6 +411,8 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   cardWrap: { position: 'absolute', left: 0, right: 0, paddingHorizontal: CARD_HPAD },
+  largeCard: { flex: 1 },
+  largeCardBody: { flex: 1 },
   card: {
     borderWidth: 1,
     padding: 18,

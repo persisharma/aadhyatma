@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { InteractionManager, Text } from 'react-native';
+import { Dimensions, InteractionManager, ScrollView, Text } from 'react-native';
 import FeatureTour from '@/components/FeatureTour';
 import { tourSteps } from '@/data/tour/steps';
 
@@ -132,6 +132,24 @@ describe('FeatureTour', () => {
     expect(first.payload.name).toBe(tourSteps[0].navigateTo.name); // HomeTab
     expect(allText(tree)).toContain(`1 / ${tourSteps.length}`);
     expect(queryA11y(tree, 'Skip tour')).toBeDefined();
+  });
+
+  test('at accessibility text sizes the copy scrolls independently of Skip and Next', () => {
+    const screen = { ...Dimensions.get('window'), fontScale: 2 };
+    const size = jest.spyOn(Dimensions, 'get').mockReturnValue(screen);
+    try {
+      const tree = mount();
+      const body = tree.root.findByType(ScrollView);
+      expect(body.findAllByType(Text).some((node) => node.props.children === tourSteps[0].bodyHi)).toBe(true);
+      expect(body.findAll((node) => ['Skip tour', 'Next step'].includes(node.props.accessibilityLabel))).toHaveLength(0);
+      press(tree, 'Next step');
+      expect(allText(tree)).toContain(`2 / ${tourSteps.length}`);
+      press(tree, 'Skip tour');
+      expect(mockMarkTourCompleted).toHaveBeenCalledTimes(1);
+      act(() => tree.unmount());
+    } finally {
+      size.mockRestore();
+    }
   });
 
   test('Next advances the step and drives navigation to the next surface', () => {

@@ -40,7 +40,10 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: "https?://.*"
 - tapOn: Back
 - tapOn: Back
-- assertVisible: "33 koti devta"
+- scrollUntilVisible:
+    element: { id: sanatan-search, text: "33 koti devta" }
+    direction: UP
+    timeout: 60000
 # Relaunch without clearing AsyncStorage: resume must restore the exact second page.
 - stopApp
 - launchApp:
