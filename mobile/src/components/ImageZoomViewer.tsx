@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Modal, PanResponder, Pressable, StyleSheet, Text, View, type GestureResponderEvent } from 'react-native';
+import { Animated, Modal, PanResponder, Pressable, StatusBar, StyleSheet, Text, View, type GestureResponderEvent } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -158,6 +158,8 @@ export default function ImageZoomViewer({ visible, onClose, source, aspectRatio 
   return (
     <Modal visible={visible} animationType="fade" onRequestClose={onClose} statusBarTranslucent supportedOrientations={['portrait']}>
       <View testID="image-viewer" style={[styles.root, { backgroundColor: colors.skyNightTop, paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+        {/* Light clock and battery on the night stage; restored when the viewer closes. */}
+        <StatusBar barStyle="light-content" />
         <View style={styles.bar}>
           {round('image-viewer-close', 'close', t('चित्र बन्द करें', 'Close picture'), onClose)}
           <Text accessibilityRole="header" maxFontSizeMultiplier={1.25} style={[styles.title, {

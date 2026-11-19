@@ -244,11 +244,11 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Chaptered readers auto-advance across subsection boundaries.** A reader whose text has more than one subsection (`<section>ChaptersManifest.length > 1`) must let the user cross chapter/kāṇḍa boundaries **by swiping** — it must never dead-end on the last page of a subsection. Match `GitaReaderScreen.tsx` / `ShivaStrotamReaderScreen.tsx`: inject a `NextChapterCard` after the last verse (unless it is the last chapter) and a `PrevChapterCard` before the first verse (unless it is the first chapter) into the `FlatList` `data`; detect those `__type: 'transition' | 'prev-transition'` items in `onViewableItemsChanged` and `navigation.replace(<thisRoute>, { chapter })` (the prev case lands on the previous chapter's last verse via `initialIndex`). The prepended prev card shifts indices by one, so carry an `offset` through `initialScrollIndex`, `handleScroll`, and the viewable-index math. `mobile/src/screens/__tests__/readerAutoAdvance.test.tsx` enforces this for every multi-chapter reader — add a new chaptered reader to its table when you create one. (Origin: Durga / Ganesh / Saraswati / Vishnu Sahasranama readers rendered only `chapter.verses`, so swiping past a chapter's last verse dead-ended instead of advancing to the next subsection.)
 - **Top-bar title rule.** Reader screens, counter screens, and chapter index screens must **swap** the title to the active reading language — never render both stacked. Use `contentByLang(lang, titleHi, titleEn)` (gu/kn re-script `titleHi`); pick the font with `titleFontByLang(lang)`. Do **not** hand-write `lang === 'hi' ? titleHi : titleEn` — that silently shows English for gu/kn. Listing screens (Home, CategoryList, DeityList) still show **both** languages, but the active reading language now decides **order and focus**: the primary language leads in the prominent slot (top line on cards, first on the `·`-joined top bar) with the larger/heavier font, and the other language follows as a supporting line. This is computed by the shared `orderTitlesByLanguage()` helper (`mobile/src/utils/titleByLanguage.ts`) so category names and catalog/deity titles flip together everywhere; do not re-derive the order inline or hardcode Devanagari-first. Default `'hi'` preserves the historic Devanagari-first layout. (`design.md` §9, §15)
 - **List thumbnails are painted art.** A card or row thumbnail shows the Storybook painting for what it represents — `DeityIcon` for its deity, `CategoryIcon` for its category, `StoryIcon` for a feature — never a Devanagari letter or initials in a tile. The single-akshara `thumb` data stays only as `DeityIcon`'s text fallback. A subject with no painting yet goes into a brief under `docs/icon-briefs/` (style reference, shared prompt, acceptance checks) and its screen is listed in `LETTER_TILE_EXCEPTIONS` in `components/__tests__/paintedThumbs.test.ts` until the art lands; that test fails on any other letter tile. Letters that are the content itself (Namkaran syllables and name-index initials), the 108 count and dates are not icons and stay. Muhurat occasions and Vastu doors now have paintings and need no screen-level exception. Namkaran browse doors, Daan links, custom Kuldevta, Panchang reading doors and Kundali overview reuse the shared registries. (Origin: Oct 2026 — Sankalp, Puja Vidhi and Routine › Add still drew letter tiles after the rest of the app moved to painted art.)
-- **Listing cards — every section listing renders `ListingCard`.** A screen that lists the units of one section (comic episodes, Garud Puran readings, a kids-story shelf, any future illustrated list) renders `mobile/src/components/ListingCard.tsx`, with `ListingSectionHeader` for groups and `ListingScope` for the one centred line that says what the list is. A hand-rolled card (`LinearGradient` + a local text stack) is a hard reject. (Origin: Oct 2026 — three listings had grown three cards with three gutters, three thumbnail shapes, three meta formats, a missing language toggle and a 13 pt description carrying the 34 pt reading line height.) The contract (`design.md` §82):
+- **Listing cards — every section listing renders `ListingCard`.** A screen that lists the units of one section (comic episodes, Garud Puran readings, a kids-story shelf, the Sanatan Parichay hub, any future illustrated list) renders `mobile/src/components/ListingCard.tsx`, with `ListingSectionHeader` for groups and `ListingScope` for the one centred line that says what the list is. A hand-rolled card (`LinearGradient` + a local text stack) is a hard reject. (Origin: Oct 2026 — three listings had grown three cards with three gutters, three thumbnail shapes, three meta formats, a missing language toggle and a 13 pt description carrying the 34 pt reading line height.) The contract (`design.md` §82):
   1. **One language per card.** The title is the reading language only (`contentByLang` / `storyText`); the toggle above the list switches language. No second-language subtitle on section listings — it doubled card height. (Home, CategoryList and DeityList keep the bilingual pairing above.)
   2. **Same frame everywhere.** `LanguageToggle` on every listing (see "Language toggle"), `spacing.readingGutter` sides, `spacing.md` between cards, plain parchment behind the list.
   3. **One key image per unit, filling the thumb.** The thumb is 92 wide and stretches to the card's height (minimum 115 = 4:5); art is cover-cropped, never letterboxed (`KidsStoryArt fill`, `ComicArt fill`, `ListingThumbImage` with a focal point for wide paintings). Each unit shows the scene its title names, curated per unit (comic: `data/comicBooks/episodeCovers.ts`) — never its first panel or an arbitrary crop. One image reused across units is a content gap to close with new art, not a pattern.
-  4. **Eyebrow is the sequence only** — `प्रसंग N` / `पाठ N` / `दिन N`. No kind, age or form-name tags on the card (a form name may stay in the accessibility label).
+  4. **Eyebrow is the sequence only** — `प्रसंग N` / `पाठ N` / `दिन N` / `परिचय N`. No kind, age or form-name tags on the card (a form name may stay in the accessibility label).
   5. **Description is optional and one line**: at most 32 characters in every language, a phrase without a full stop, written to fit — never left to `numberOfLines` truncation. Introductions say so in this line (परिचय / “Meet …”).
   6. **Meta is the unit count only** — `N पृष्ठ` / `N pages` (a comic panel is a page). Facts true of the whole list (age, total, scope disclaimer) go once in `ListingScope`. Read progress is a bar, shown only where the section tracks progress.
   7. **Sizes come from `typography.listing*`.** Never spread a reading token (`meaningToken`) and override only `fontSize`: the 34 pt reading line height comes along with it. Indic listing/catalog lines reserve at least 1.65× leading inside their own Text bounds (bundled Kannada hhea extent is 1.62em). Today uses `catalogTitle/catalogMeta/catalogBody` without tight local overrides; calendar captions and date/countdown metadata use those shared tokens. Keep native system text scaling enabled and let cards grow. `CatalogTypography.test.tsx` guards rendered styles against the actual bundled TTF vertical metrics as well as the shared-token floor; include category subtitles and day-note/ledger siblings. Native glyph inspection is still required.
@@ -759,8 +759,12 @@ painting, even when the source file and aspect-ratio metadata are correct.
   `width: '100%', height: '100%'`. Fixed/derived numeric image width **and**
   height are also valid. Do not size a card from source pixels or use bare
   aspectRatio/absoluteFill on a native Image.
-- **Reuse the frame.** Sanatan Home, hub, collection, reader, diagrams and Search
-  use `FramedPainting`; the full scene stays 3:2 and thumbnails stay 81×54.
+- **Reuse the frame.** Sanatan Home, the reader's opening painting and Search use
+  `FramedPainting`; the full scene stays 3:2 and the Search thumbnail stays 81×54.
+  The hub lists lessons in the shared 92×115 listing thumb through
+  `ListingThumbImage` (an explicit cover rect with a per-painting focal point),
+  and the picture viewer (`ImageZoomViewer`) gives its frame the fitted width and
+  height with the image at explicit 100%.
   Audit sibling callers when fixing an image sizing issue. Cropping/resizing the
   master, hiding text or reducing font size does not fix an unconstrained image.
 - **Keep the regression in CI.** `nativeImageGeometryPolicy.test.ts` scans
@@ -1627,16 +1631,18 @@ Hindi/English prose pages, a topic-specific visual explanation and internal revi
 collection or a ritual manual. Keep unreviewed research seeds out of app discovery.
 See `docs/content-parity/sanatan-parichay/native-scope.md` and design.md §87.
 
-Use one lazy Home door and Home-stack hub/collection/reader routes; no new tab.
+Use one lazy Home door and Home-stack hub/reader routes; no new tab. There is no
+collection overview screen: a hub card opens the reader directly.
 Global Search resolves known IDs. Preserve the hub query/filter on Back. Unknown
 IDs must show an unavailable state, never a substitute deity. The selected
 Kamika Agama direction list and the two Dashavatara lists retain their own source
 context; do not merge their variants into one canonical roster.
 
 Research references never become a public screen, footer, button or share appendix (§11.16).
-Use the approved uniform 3:2 painted scene family for all thirteen collection
-thumbnails and banners, shared script/font tokens and the existing prose, audio,
-auto-slide and branded share components. Keep research links out of UI (§11.16).
+Use the approved uniform 3:2 painted scene family for all thirteen lessons — the
+full scene in the reader, cover-cropped to the shared 4:5 listing thumb in the hub —
+with shared script/font tokens and the existing prose, audio, auto-slide and
+branded share components. Keep research links out of UI (§11.16).
 The versioned learning store hydrates before serialized writes; storage failures
 cannot discard prior saved items. Opening records resume only, forward turns
 record pages left, and Finish clears resume after recording the final page.
@@ -1663,6 +1669,30 @@ requires verified public bytes before manifest activation; a pending asset makes
 no request and leaves no empty frame. Prepared art and component previews do not
 establish native visual/ANR acceptance. Follow the evidence and upload contract in
 `docs/content-parity/sanatan-parichay/visual-learning/README.md`.
+
+**Shared-component contract (19 November 2026).** Sanatan Parichay is built from
+the app's shared listing and reader pieces, not a kit of its own (design.md §87,
+§93). Do not reintroduce a private card, a headline or feature block above the
+list, text Save/Share links, or Previous/Next buttons at the end of a page.
+
+- The hub is a §3 "Listing cards" screen: `ListingCard` rows (eyebrow `परिचय N`,
+  title = lesson title, description = collection name within the 32-character
+  budget, meta = page count, progress bar), `ListingScope`, `ListingSectionHeader`.
+  It is in the listing guard list in `components/__tests__/ListingCard.test.tsx`.
+- Turning pages never depends on scrolling to the end of a page: `PagerNavBar` is
+  fixed under the pages. Its last-page action is the explicit Finish that records
+  the final page and clears resume; forward turns still record the page left.
+- Save and share are the shared `BookmarkButton` and `ShareButton` at the top of
+  every page.
+- Every painting in the reader opens the shared picture viewer, and zoom has
+  button controls as well as gestures. A plate's painted names are repeated as
+  native text (`getSanatanLegend`) wherever the lesson has an authored roster, from
+  the same rows narration and sharing read — never a second, hand-typed copy.
+- Backing tests: `screens/__tests__/SanatanParichay.test.tsx` (card contract in four
+  languages and both sizes, direct open, matched search page, single pager pair,
+  legend, viewer), `components/__tests__/ImageZoomViewer.test.tsx`,
+  `utils/__tests__/imageZoom.test.ts`. Native acceptance uses `.maestro/sanatan-*.yaml`;
+  pinch, drag and double-tap are checked on a device or simulator.
 
 ## 33. Selected devotional dohas — Kabir and Rahim
 

@@ -4154,7 +4154,7 @@ The approved final set matches the saved Style 3 template and is recorded in `do
 
 ## 82. Content listing card (`ListingCard`)
 
-**Purpose.** The one card for screens that list the units of a single section — Ramayana comic episodes (§76.1), Garud Puran readings (§81) and kids-story shelves (§76). Until October 2026 each of these grew its own card: three gutters, three thumbnail shapes, three meta formats, a second-language subtitle that doubled card height, no language toggle on the story shelf, and a 13 pt description carrying the 34 pt reading line height. RULEBOOK §3 "Listing cards" makes this component mandatory for such listings.
+**Purpose.** The one card for screens that list the units of a single section — Ramayana comic episodes (§76.1), Garud Puran readings (§81), kids-story shelves (§76) and the Sanatan Parichay hub (§87; eyebrow `परिचय N`, description = the collection name). Until October 2026 each of these grew its own card: three gutters, three thumbnail shapes, three meta formats, a second-language subtitle that doubled card height, no language toggle on the story shelf, and a 13 pt description carrying the 34 pt reading line height. RULEBOOK §3 "Listing cards" makes this component mandatory for such listings.
 
 **Calendar variants.** Vrat reuses this component rather than maintaining a parallel card. Its `catalog` frame tone uses cream `catalogSurface → parchmentSoft`, `catalogBorder`, radius `md` and `elevation.card`; default `reading` tone retains the standard reading contract below. `observance` uses a compact square illustration, optional second-language caption and date/countdown metadata; `upcoming` uses a wide scene and a narrower vertical card. These variants preserve full calendar titles and a separate sibling save target. Standard story/comic/reading geometry, copy limits, progress and title behavior below stay unchanged.
 
@@ -4184,7 +4184,7 @@ The approved final set matches the saved Style 3 template and is recorded in `do
 - Chevron `›` 26 `saffron`.
 - Accessibility: `button`, label `"<eyebrow>. <title>. <meta>. Tap to open."` by default (Maestro selects on this shape); a caller may pass its own (the Durga shelf keeps the form name).
 
-Files: `mobile/src/components/ListingCard.tsx` (card, `ListingSectionHeader`, `ListingScope`, `ListingThumbImage`), `mobile/src/utils/coverRect.ts`, `mobile/src/data/comicBooks/episodeCovers.ts`, `garudPuranThumbFocus` in `mobile/assets/garud-puran/index.ts`. Tests: `components/__tests__/ListingCard.test.tsx` (including the guard that every listing screen renders this card), `utils/__tests__/coverRect.test.ts`, `components/__tests__/ComicArt.test.tsx`, `screens/__tests__/{KidsStoryCatalogScreen,ComicReaderScreen,GarudPuranChaptersScreen}.test.tsx`, `data/__tests__/kidsStories.test.ts`.
+Files: `mobile/src/components/ListingCard.tsx` (card, `ListingSectionHeader`, `ListingScope`, `ListingThumbImage`), `mobile/src/utils/coverRect.ts`, `mobile/src/data/comicBooks/episodeCovers.ts`, `garudPuranThumbFocus` in `mobile/assets/garud-puran/index.ts`. Tests: `components/__tests__/ListingCard.test.tsx` (including the guard that every listing screen renders this card), `utils/__tests__/coverRect.test.ts`, `components/__tests__/ComicArt.test.tsx`, `screens/__tests__/{KidsStoryCatalogScreen,ComicReaderScreen,GarudPuranChaptersScreen,SanatanParichay}.test.tsx`, `data/__tests__/kidsStories.test.ts`.
 
 ## 83. "A fresh update is ready" prompt (`UpdateReadyModal`)
 
@@ -4403,24 +4403,72 @@ unchanged. `docs/reviews/2026-11-05-screen-clipping.md` records regression and v
 
 Approved Site: `appgprj_6ae948c65bdc81918c94293b69719cba`, reference
 `e4a01fe0fac7b9637fa71e536d76612fa0c39c1c`. Home has one landscape painting card.
-The hub leads with the question-led heading, search, an optional resume card, the
-Swastika feature and two “Ever wondered?” cards. Saved and collection filters lead
-to thirteen collection rows; use the same painting for a collection's thumbnail,
-overview and reader opening. Keep the full 3:2 crop. Do not reintroduce isolated
-gold glyphs, emoji or another icon style among these paintings.
+Do not reintroduce isolated gold glyphs, emoji or another icon style among these
+paintings. The structure below is the **shared-component redesign of 19 November
+2026** (audit canvas: "Sanatan Parichay Design Audit"); it replaces the earlier
+bespoke hub, collection overview and end-of-page buttons, which made the section
+read as a different app.
 
-Collection overview: title, full painting, question, authored introduction,
-Open lesson, save and three page doors. The primary action is not wrapped in a second repeated-title panel. Page doors use listing tokens and intrinsically growing text, not prose-size paragraphs. Reader: shared
-ReaderHeader and 1-based progress, language/audio/auto-slide, horizontally paged
-prose with vertical scrolling, first-page painting, second-page source-specific
-schematic, context on the last page, save/share and previous/next/Finish.
-Research provenance never appears as a screen, action, footer or share appendix (§11.16). Resume is one tappable listing card with a context label, wrapping title and separate page counter; no nested button card.
+**Hub (`SanatanParichayScreen`) — the §82 listing frame.** `ReaderHeader
+variant="index"`; its right slot is the shared `BookmarkButton` used as the
+saved-only filter (labelled "Saved introductions" / "Show all introductions").
+`LanguageToggle` row, then one scroll: `ListingScope` ("13 परिचय · चित्रों के साथ
+सरल उत्तर"), the search `TextField` (48pt, search glyph inside the field), one
+horizontally scrolling row of filter chips (44pt floor, `listingScope` text capped
+at 1.25× system scale, `saffronTint` when selected, English accessibility labels),
+an optional "जहाँ छोड़ा था" group holding the resume card, then the lessons under
+`ListingSectionHeader` groups. Every lesson — and the resume card — is a
+`ListingCard`: eyebrow `परिचय N` (its place in the published order), title = the
+lesson title, one-line description = the collection name (≤32 characters), meta =
+`3 पृष्ठ`, a progress bar once a page has been read. Thumbnails are the approved
+3:2 paintings cover-cropped into the shared 92×115 thumb with `ListingThumbImage`
+and a per-painting `sanatanThumbFocus`. No headline, feature card or "Ever
+wondered?" pair above the list; Sanskar is a "यह भी देखें" `LinkRow` after it.
+The lesson's question does not fit the card's one-line budget, so it lives in the
+reader (below).
 
-Use theme colours, script-aware text, ProseParagraph and ProseReadingCard. All
-interactive controls have at least a 48pt height. Content scrolls rather than being
-ellipsized. Diagram facts have equivalent text controls/captions. On narrow screens
-the playback controls wrap below the language toggle. The exact compass and
-Swastika geometry remain SVG; the paintings provide the approved rich imagery.
+**No collection overview.** A card opens `SanatanReader` directly (`navigate`,
+so Back returns to the hub with its query and filters). A search hit opens the
+page that matched, as global Search does; the resume card opens the stored page.
+
+**Reader (`SanatanReaderScreen`).** Shared `ReaderHeader` with the page counter in
+`typography.pageCounter` (italic, `inkMuted`, "2 / 3"), `ReadingProgressBar`, then
+one centred wrapping row: `LanguageToggle`, read-aloud, auto-slide. Horizontally
+paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
+pill (the collection name; "चित्र से समझें" on the figure page) and, on the gutter,
+the shared round `BookmarkButton` and `ShareButton` — then the page heading (one
+step above the reading size). Page 1: the collection painting (opens the picture
+viewer, §93), "सरल उत्तर" as a small ruled label over a quiet `parchmentSoft` card
+that leads with the lesson's question, the authored prose, then the glossary.
+Page 2: the teaching plate. Last page: context, the takeaway card and onward
+`LinkRow`s. In-page section heads use `ListingSectionHeader`; defined words use the
+title face at reading size in `saffronDeep`. No left-stripe notes.
+
+**Pager bar (`PagerNavBar`).** Fixed under the pages, above the safe area: a 1px
+`divider` rule, then round previous / next buttons (44pt circle in a 48pt target,
+`parchmentSoft` + `divider`, the ReaderHeader back-button class) flanking the
+readers' pager dots (6×6 `dotRest`, current 18×6 `saffronDeep`). Previous is
+disabled on the first page. On the last page next becomes a filled `saffronDeep`
+check labelled "Finish introduction": it records the final page, clears resume and
+returns. Swiping still turns pages. There are no Previous / Next / Save / Share
+buttons at the end of a page.
+
+Research provenance never appears as a screen, action, footer or share appendix
+(§11.16).
+
+Use theme colours, script-aware text, ProseParagraph and ProseReadingCard. Touch
+targets are at least 48pt (filter chips share the 44pt chip class of §33). Content
+scrolls rather than being ellipsized. Diagram facts have equivalent text
+captions and, where authored, a text legend. On narrow screens the playback
+controls wrap below the language toggle. The Swastika geometry remains SVG; the
+paintings provide the approved rich imagery.
+
+Files: `mobile/src/screens/{SanatanParichayScreen,SanatanReaderScreen}.tsx`,
+`mobile/src/components/{PagerNavBar,ZoomableArtwork,ImageZoomViewer}.tsx`,
+`mobile/src/components/sanatan/{Primitives,LessonPanels,LessonArt,ExploreDiagram,SwastikaGuide}.tsx`,
+`mobile/src/data/sanatan-parichay/{artwork,knowledge}.ts`. Tests:
+`screens/__tests__/SanatanParichay.test.tsx`, `components/__tests__/{ImageZoomViewer,ListingCard,sanatanArtworkFrame}.test.tsx`,
+`utils/__tests__/imageZoom.test.ts`; flows `.maestro/sanatan-*.yaml`.
 
 Assets are the existing approved 960×640 WebP exports (3,043,518 bytes total),
 locally bundled like the Jyotish landing paintings. Only one image belongs to the
@@ -4433,7 +4481,7 @@ matrix in `docs/content-parity/sanatan-parichay/native-verification.md`.
 
 The existing `symbols` lesson keeps its three stable pages: auspicious meaning,
 four purusharthas and other interpretations, then household clockwise drawing.
-Page two's SVG has four readable aim captions; positions do not assert a universal
+Page two's plate and captions name the four aims; positions do not assert a universal
 arm-to-aim mapping. Page three places `SwastikaGuide` before the full instructions:
 three vertically stacked, intrinsically growing panels show the central cross,
 four clockwise right-angle extensions, then optional dots. Each 160pt-high SVG
@@ -4454,8 +4502,19 @@ Show the actual lesson title above the broader collection name.
 
 The exploration page (index 1) carries a single **painted teaching plate** — a
 self-explanatory devotional illustration in the approved painted-manuscript style,
-one per concept — under the "चित्र से समझें" heading, followed by one caption line
-(the lesson's answer). The plate replaces the earlier vector schematics; the figure
+one per concept — under the "चित्र से समझें" pill and the page heading. The plate
+runs edge to edge through the reading gutter (no card around it, no corner
+radius), is one button with a "बड़ा करें" chip and opens the picture viewer (§93),
+because its painted labels are below the 10pt floor at page width. One centred
+caption line follows (`ListingScope`, the lesson's answer), then — where the lesson
+has an authored roster — a **native text legend** (`LessonLegend`,
+`getSanatanLegend`): the ten directions and guardians, the 33-devata groups, the
+nine grahas, the two Dashavatara selections (kept as two separate lists) and the
+five elements. Names with a short partner sit in two columns (one column under
+360pt width or above 1.3× system text); rows with a sentence stack like the
+glossary. The legend reads the same rows narration and sharing already use, so the
+three never disagree. Lessons without an authored roster show the plate and
+caption only. The plate replaces the earlier vector schematics; the figure
 page no longer repeats the paragraph prose (it is retained in data for search and
 narration). Each plate carries its own baked labels, so it ships in two languages:
 Hindi and English. The reader picks by language — **Hindi serves hi and gu, English
@@ -4516,8 +4575,8 @@ No source website opens from a content surface. Research records remain intact.
 
 Kids’ final share card uses the cover, takeaway and app link; auto-slide counts
 only visible narrative/takeaway text. Public output checks cover all four scripts.
-The Sanatan outline and resume card use listing typography, grow with system
-text, and retain reachable actions. Filter targets are at least 48pt. Device
+The Sanatan hub and resume card are the shared `ListingCard` (§82, §87), grow with
+system text, and retain reachable actions. Filter chips share the 44pt chip class. Device
 visual acceptance remains required; structural/component tests do not establish it.
 
 Guard: `scripts/content-source-ui-policy.cjs` through
@@ -4718,3 +4777,43 @@ Retry re-resolves a dedicated temple source or retries its stable in-app channel
 
 
 B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.
+
+## 93. Picture viewer (`ImageZoomViewer`) — tap a picture to read it (19 November 2026)
+
+**Purpose.** The app's one full-screen picture viewer. Until this section no
+picture in the app could be opened or enlarged; the Sanatan teaching plates carry
+painted labels that are about 7pt at page width. Any surface whose picture holds
+detail worth reading wraps it in `ZoomableArtwork` instead of growing its own
+viewer.
+
+**Trigger (`ZoomableArtwork`).** Wraps the picture as the page already frames it
+and makes the whole frame one button ("चित्र बड़ा करके देखें" + the caption). A chip
+sits at the bottom-right: `dayGlassActive` fill, 1px `divider`, `iconInk` glyph
+(`AppIcon fullscreen`) — a 36pt circle, or a labelled pill ("बड़ा करें",
+`listingEyebrow`) when the picture's detail is the lesson. `onOpen` lets the page
+stop hands-free page turning first. The viewer is mounted only while open.
+
+**Viewer.** A full-screen `Modal` (fade; Android Back closes) on `skyNightTop`,
+padded by the safe-area insets.
+
+- Top bar: close (44pt `nightGlass` circle with `nightGlassBorder`, 48pt target),
+  the title centred in the script title face at `readerTitle` size in `nightInk`,
+  and the zoom readout ("1×", "1.75×") in `pageCounter` italic, `nightInkSoft`.
+- Stage: the picture at its fitted (`contain`) size; a View owns width and height
+  and the image fills it at explicit 100% (RULEBOOK §11.17).
+- Footer: the caption (`listingScope`, `nightInkSoft`, centred), then − and +
+  buttons (same glass circles, `AppIcon minus` / `plus`) around the hint
+  "चुटकी या दो बार टैप से बड़ा करें" (`listingBody`, `nightInkMuted`).
+
+**Interaction.** Pinch zooms about the fingers, one finger drags a zoomed picture,
+double-tap toggles 1× ↔ 2.5× about the tap, and the buttons step 1× → 1.75× → 2.5×
+→ 3×, so zoom never depends on a gesture. Scale is clamped to 1×–3× (the plates are
+1200px wide) and a picture edge is never dragged past the viewport edge. Button
+and double-tap changes animate (180ms) unless Reduce Motion is on. Every opening
+starts at 1×. Gestures use `PanResponder` + `Animated` — no extra native module,
+and they work inside a `Modal` on both platforms.
+
+Files: `mobile/src/components/{ImageZoomViewer,ZoomableArtwork}.tsx`,
+`mobile/src/utils/imageZoom.ts` (pure geometry). Tests:
+`components/__tests__/ImageZoomViewer.test.tsx`, `utils/__tests__/imageZoom.test.ts`.
+Pinch, drag and double-tap are verified on a device or simulator, not by Jest.

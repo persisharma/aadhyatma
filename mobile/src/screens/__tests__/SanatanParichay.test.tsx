@@ -51,7 +51,7 @@ test('question search opens the exact lesson and keeps the query on Back', async
   act(() => tree.root.findByType(TextInput).props.onChangeText('33 koti devta'));
   expect(tree.root.findAllByType(ListingCard).map(node => node.props.testID).filter(id => String(id).startsWith('sanatan-collection-'))).toEqual(['sanatan-collection-thirty']);
   const target = byId(tree, 'sanatan-collection-thirty');
-  expect(target.props.accessibilityLabel).toBe('Thirty-three devata. The reckoning of thirty-three. 3 pages. Tap to open.');
+  expect(target.props.accessibilityLabel).toBe('Introduction 3. The reckoning of thirty-three. 3 pages. Tap to open.');
   act(() => target.props.onPress());
   // No overview screen in between: a card opens the lesson's first page.
   expect(navigation.navigate).toHaveBeenCalledWith('SanatanReader', { topicId: 'thirty', initialPage: 0 });
@@ -119,8 +119,12 @@ for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
       expect(tree.root.findAllByType(ListingCard).filter(node => String(node.props.testID).startsWith('sanatan-collection-'))).toHaveLength(getSanatanTopics().length);
       for (const topic of getSanatanTopics()) {
         const row = tree.root.findAllByType(ListingCard).find(node => node.props.testID === `sanatan-collection-${topic.id}`)!;
-        expect(row.props.eyebrow).toBe(contentByLang(lang, ...topic.name));
+        // RULEBOOK §3: the eyebrow is the sequence; the one-line description stays within 32 characters.
+        expect(row.props.eyebrow).toBe(`${contentByLang(lang, 'परिचय', 'Introduction')} ${getSanatanTopics().indexOf(topic) + 1}`);
         expect(row.props.title).toBe(contentByLang(lang, ...topic.title));
+        expect(row.props.description).toBe(contentByLang(lang, ...topic.name));
+        expect([...row.props.description].length).toBeLessThanOrEqual(32);
+        expect(row.props.description).not.toMatch(/[.।]$/);
         expect(row.props.meta).toBe(`3 ${contentByLang(lang, 'पृष्ठ', 'pages')}`);
         act(() => row.props.onPress());
         expect(navigation.navigate).toHaveBeenLastCalledWith('SanatanReader', { topicId: topic.id, initialPage: 0 });
@@ -204,6 +208,14 @@ for (const lang of ['hi','en','gu','kn'] as const) {
   act(()=>tree.unmount());
  });
 }
+
+test('a hub search opens the page that matched, not always the first', async () => {
+  const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
+  act(() => tree.root.findByType(TextInput).props.onChangeText('Maitreyi'));
+  act(() => byId(tree, 'sanatan-collection-rishis').props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('SanatanReader', { topicId: 'rishis', initialPage: 2 });
+  act(() => tree.unmount());
+});
 
 test('the fixed pager bar turns pages, and the first page has nothing before it', async () => {
   const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}

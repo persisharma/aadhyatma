@@ -23,20 +23,10 @@ appId: com.prashantsharma.vedansh
     env: { ROW_ID: "sanatan-collection-dikpal" }
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-start" }
-- takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-# Next is the last control. At large Kannada type this lesson spans many screens.
-- scrollUntilVisible:
-    element: { id: sanatan-next }
-    direction: DOWN
-    speed: 65
-    timeout: 120000
-- swipe: { direction: UP }
-- waitForAnimationToEnd
+# The pager bar stays on screen at every language and size; no scrolling to reach Next.
+- assertVisible: { id: sanatan-next }
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
@@ -44,3 +34,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+# The ten painted names are also native text under the plate, at the chosen size.
+- scrollUntilVisible:
+    element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-legend-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

@@ -10,6 +10,7 @@ import AppIcon from './AppIcon';
  *
  * Same control class as the ReaderHeader back button: a 44pt circle in a 48pt
  * target. On the last page the next button becomes the filled "finish" action.
+ * The bar has no fill of its own: it sits on the reader's paper, under a rule.
  */
 export default function PagerNavBar({ page, total, onPrevious, onNext, previousLabel, nextLabel, finishLabel, pageLabel, nextTestID }: {
   /** 0-based current page. */
@@ -29,7 +30,7 @@ export default function PagerNavBar({ page, total, onPrevious, onNext, previousL
   const first = page <= 0;
   const last = page >= total - 1;
   return (
-    <View testID="pager-nav-bar" style={[styles.bar, { paddingHorizontal: spacing.readingGutter, borderTopColor: colors.divider, backgroundColor: colors.parchment }]}>
+    <View testID="pager-nav-bar" style={[styles.bar, { paddingHorizontal: spacing.readingGutter, borderTopColor: colors.divider }]}>
       <Pressable testID="pager-previous" onPress={onPrevious} disabled={first} accessibilityRole="button"
         accessibilityLabel={previousLabel} accessibilityState={{ disabled: first }}
         style={({ pressed }) => [styles.target, first && { opacity: 0.4 }, pressed && { opacity: 0.7 }]}>

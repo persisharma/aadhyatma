@@ -6,7 +6,7 @@ import type { HomeStackParamList } from '@/navigation/types';
 import { useGitaLanguage } from '@/data/gita/language';
 import { scriptTitleFont, titleFontByLang } from '@/utils/langType';
 import { useTheme } from '@/theme/ThemeContext';
-import { getSanatanTopic, getSanatanTopics, searchSanatanTopics, type SanatanTopic } from '@/data/sanatan-parichay';
+import { getSanatanTopic, getSanatanTopics, searchSanatanMatches, type SanatanTopic } from '@/data/sanatan-parichay';
 import { sanatanArtwork, sanatanThumbFocus } from '@/data/sanatan-parichay/artwork';
 import { useSanatanLearning } from '@/data/sanatan-parichay/store';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -43,16 +43,23 @@ export default function SanatanParichayScreen({ navigation }: Props) {
   const read = (id: string, initialPage = 0) => navigation.navigate('SanatanReader', { topicId: id, initialPage });
   const failed = () => Alert.alert(t(['सहेजा नहीं जा सका', 'Could not save']), t(['फिर प्रयास करें।','Please try again.']));
   const search = query.trim();
-  const topics = (search ? searchSanatanTopics(query) : getSanatanTopics()).filter(x => (!savedOnly || learning.saved.includes(x.id)) && (!group || x.group[1] === group));
+  // A search hit opens the page that matched (a taught term or page heading), as global Search does.
+  const matches = searchSanatanMatches(query).filter(({ topic: x }) => (!savedOnly || learning.saved.includes(x.id)) && (!group || x.group[1] === group));
+  const topics = matches.map(match => match.topic);
   const resume = learning.resume && getSanatanTopic(learning.resume.id);
   const thumb = (id: string) => <ListingThumbImage source={sanatanArtwork[id]} focusX={sanatanThumbFocus[id]} />;
   const pages = (count: number) => `${count} ${t(['पृष्ठ', count === 1 ? 'page' : 'pages'])}`;
-  const card = (topic: SanatanTopic) => {
-    const done = learning.read[topic.id]?.length ?? 0;
-    return <ListingCard key={topic.id} testID={`sanatan-collection-${topic.id}`}
-      eyebrow={t(topic.name)} title={t(topic.title)} meta={pages(topic.pages.length)}
+  // The shared card contract (RULEBOOK §3): eyebrow = the sequence, one-line description
+  // (the collection, ≤32 characters), meta = the unit count, progress as a bar.
+  const card = (topic: SanatanTopic, resumeAt?: number) => {
+    const done = resumeAt === undefined ? learning.read[topic.id]?.length ?? 0 : resumeAt + 1;
+    const page = resumeAt ?? matches.find(match => match.topic === topic)?.page ?? 0;
+    return <ListingCard key={topic.id} testID={resumeAt === undefined ? `sanatan-collection-${topic.id}` : 'sanatan-resume'}
+      eyebrow={`${t(['परिचय', 'Introduction'])} ${getSanatanTopics().indexOf(topic) + 1}`}
+      title={t(topic.title)} description={t(topic.name)} meta={pages(topic.pages.length)}
       progress={done ? done / topic.pages.length : undefined}
-      thumbnail={thumb(topic.id)} onPress={() => read(topic.id)} />;
+      accessibilityLabel={resumeAt === undefined ? undefined : `${t(['जहाँ छोड़ा था','Continue reading'])}. ${t(topic.title)}. ${resumeAt + 1}/${topic.pages.length}`}
+      thumbnail={thumb(topic.id)} onPress={() => read(topic.id, page)} />;
   };
   return <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
     <ReaderHeader title={t(['सनातन परिचय', 'Sanatan Parichay'])} onBack={() => navigation.goBack()} variant="index" sideWidth={60}
@@ -86,16 +93,14 @@ export default function SanatanParichayScreen({ navigation }: Props) {
           </Pressable>;
         })}
       </ScrollView>
-      {resume && learning.resume && <ListingCard testID="sanatan-resume"
-        eyebrow={t(['जहाँ छोड़ा था','Continue reading'])} title={t(resume.title)}
-        meta={`${t(['पृष्ठ','Page'])} ${learning.resume.page + 1} / ${resume.pages.length}`}
-        progress={(learning.resume.page + 1) / resume.pages.length}
-        accessibilityLabel={`${t(['जहाँ छोड़ा था','Continue reading'])}. ${t(resume.title)}. ${learning.resume.page + 1}/${resume.pages.length}`}
-        thumbnail={thumb(resume.id)} onPress={() => read(resume.id, learning.resume!.page)} />}
+      {resume && learning.resume && <View style={{ gap: spacing.md }}>
+        <ListingSectionHeader>{t(['जहाँ छोड़ा था','Continue reading'])}</ListingSectionHeader>
+        {card(resume, learning.resume.page)}
+      </View>}
       {learning.error && <Action label={t(['सहेजी प्रगति फिर लोड करें','Retry loading progress'])} onPress={() => void learning.hydrate().catch(failed)} />}
       {[...new Set(topics.map(x => x.group[1]))].map(key => <View key={key} style={{ gap: spacing.md }}>
         <ListingSectionHeader>{t(topics.find(x => x.group[1] === key)!.group)}</ListingSectionHeader>
-        {topics.filter(x => x.group[1] === key).map(card)}
+        {topics.filter(x => x.group[1] === key).map(topic => card(topic))}
       </View>)}
       {!topics.length && <Copy>{t(['कोई परिचय नहीं मिला। दूसरा शब्द आज़माएँ।','No introductions found. Try another word.'])}</Copy>}
       {!savedOnly && (!search || SANSKAR_LABELS.some(label => label.toLowerCase().includes(search.toLowerCase()))) && <View style={{ gap: spacing.md }}>

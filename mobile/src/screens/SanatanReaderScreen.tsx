@@ -105,13 +105,16 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
   };
   return <View style={{ flex: 1, backgroundColor: colors.parchment }}>
     <BackgroundLayer source={readingParchment} />
-    <SafeAreaView style={{ flex: 1 }}>
+    {/* The tab bar below owns the bottom inset, as in the other readers. */}
+    <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={t(topic.title)} onBack={() => navigation.goBack()} sideWidth={60}
         right={<Text testID="sanatan-page-counter" style={{ color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }}>{page + 1} / {data.length}</Text>} />
       <ReadingProgressBar current={page + 1} total={data.length} />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: spacing.readingGutter, paddingVertical: 8 }}>
         <LanguageToggle />
-        <ReadAloudButton control={readAloud} /><AutoSlideButton control={autoSlide} floating={false} />
+        <ReadAloudButton control={readAloud} />
+        {/* The pill pins itself to flex-start; the wrapper lets the row centre it. */}
+        <View><AutoSlideButton control={autoSlide} floating={false} /></View>
       </View>
       <FlatList ref={listRef} data={data} keyExtractor={item => item.id} horizontal pagingEnabled style={{ flex: 1 }}
         initialScrollIndex={initialPage} extraData={lang} CellRendererComponent={autoSlide.Cell}

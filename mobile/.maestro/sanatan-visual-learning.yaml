@@ -9,13 +9,10 @@ appId: com.prashantsharma.vedansh
     file: _sanatan-reveal-row.yaml
     env: { ROW_ID: "sanatan-collection-dikpal" }
 - tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-start" }
-- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-next" }
+# The opening painting opens in the shared picture viewer.
+- tapOn: { id: sanatan-painting-dikpal }
+- assertVisible: { id: image-viewer }
+- tapOn: { id: image-viewer-close }
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 # Figure page: the painted teaching plate (language-picked) replaces the old vector schematic.
 - scrollUntilVisible:
@@ -24,7 +21,19 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 - assertVisible: { id: sanatan-explore-dikpal }
 - takeScreenshot: e2e-shots/sanatan-dikpal-plate
-- tapOn: Back
+- tapOn: { id: sanatan-plate-dikpal }
+- assertVisible: { id: image-viewer }
+- tapOn: { id: image-viewer-zoom-in }
+- assertVisible: "Zoom 1.75×"
+- takeScreenshot: e2e-shots/sanatan-dikpal-viewer
+- tapOn: { id: image-viewer-close }
+- scrollUntilVisible:
+    element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- assertVisible: "North · Kubera"
+- assertVisible: "Below · Vishnu"
+- takeScreenshot: e2e-shots/sanatan-dikpal-legend
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-search, above: { id: tab-home } }
@@ -36,14 +45,11 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     file: _sanatan-reveal-row.yaml
     env: { ROW_ID: "sanatan-collection-rishis" }
+# The search hit opens the page that matched: Maitreyi is taught on page 3.
 - tapOn: { id: sanatan-collection-rishis, retryTapIfNoChange: true }
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-page-3" }
-- tapOn: "Maitreyi’s distinct question"
 - assertVisible: "3\\s*/\\s*3"
+- assertVisible: "Maitreyi’s distinct question"
 - takeScreenshot: e2e-shots/sanatan-search-maitreyi-exact-page
-- tapOn: Back
 - tapOn: Back
 - scrollUntilVisible:
     element: { id: sanatan-search, text: Maitreyi }
