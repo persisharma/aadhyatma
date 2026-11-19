@@ -17,12 +17,17 @@ appId: com.prashantsharma.vedansh
 # The card opens the lesson directly; save and share sit at the top of the page.
 - tapOn: { id: sanatan-collection-thirty, retryTapIfNoChange: true }
 - assertVisible: "1\\s*/\\s*3"
-- assertVisible: "Who are the thirty-three devata[?]"
 - tapOn: "Save for later"
 - assertVisible: "Remove saved lesson"
 - assertVisible: "Share"
 # The lesson opens with what "koti" means; it must not wait for the last page.
 - assertVisible: "Koti means kinds, not crore"
+# The question leads the answer card under the painting; on a short screen it
+# is below the fold.
+- scrollUntilVisible:
+    element: { text: "Who are the thirty-three devata[?]" }
+    direction: DOWN
+    timeout: 30000
 # The counter is a button, as in the Gita reader: it opens the page picker, which
 # names each page. Jump to the last page, then step back to the figure page.
 - tapOn: { id: sanatan-page-counter }

@@ -73,7 +73,9 @@ export default function SanatanParichayScreen({ navigation }: Props) {
       </ListingScope>
       <View style={styles.search}>
         <TextField variant="search" testID="sanatan-search" accessibilityLabel={t(['परिचय खोजें','Search introductions'])}
-          placeholder={t(['स्वस्तिक, दिक्पाल, 33 देवता…','Swastika, Dikpal, 33 deities…'])}
+          // Short enough for one line at the largest text sizes: a wrapped hint is
+          // clipped, and the field then scrolls itself instead of the page (Android).
+          placeholder={t(['स्वस्तिक, दिक्पाल…','Swastika, Dikpal…'])}
           placeholderTextColor={colors.inkMuted} value={query} onChangeText={setQuery}
           autoCorrect={false} autoCapitalize="none" returnKeyType="search" onSubmitEditing={() => Keyboard.dismiss()}
           style={{ height: undefined, minHeight: 48, paddingVertical: 10, paddingLeft: 44, color: colors.ink, fontFamily: titleFontByLang(lang), lineHeight: 24 }} />
