@@ -22,7 +22,10 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 # Open Japam category
-- assertVisible: { id: home-japa-choose }
+- scrollUntilVisible:
+    element: { id: home-japa-choose }
+    direction: DOWN
+    centerElement: true
 - tapOn: { id: home-japa-choose }
 - waitForAnimationToEnd
 

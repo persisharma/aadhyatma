@@ -50,8 +50,12 @@ appId: com.prashantsharma.vedansh
     arguments:
       RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
 - extendedWaitUntil:
-    visible: { id: home-japa-choose }
+    visible: { id: home-settings }
     timeout: 90000
+- scrollUntilVisible:
+    element: { id: home-japa-choose }
+    direction: DOWN
+    centerElement: true
 - tapOn: { id: home-japa-choose }
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"

@@ -1,14 +1,14 @@
 appId: com.prashantsharma.vedansh
 ---
-- runFlow: _open-settings.yaml
+- runFlow: _sanatan-case-settings.yaml
 - scrollUntilVisible:
-    element: { text: "Language,.*" }
+    element: { text: "Language,.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
 - scrollUntilVisible:
-    element: { text: "Reading size,.*" }
+    element: { text: "Reading size,.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - tapOn: "Reading size,.*"
@@ -18,29 +18,24 @@ appId: com.prashantsharma.vedansh
 - runFlow: _sanatan-home-entry.yaml
 - takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
-- scrollUntilVisible:
-    element: { id: sanatan-collection-dikpal }
-    direction: DOWN
-    timeout: 60000
-    visibilityPercentage: 100
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-dikpal" }
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
-- scrollUntilVisible:
-    element: { id: sanatan-start }
-    direction: DOWN
-    timeout: 60000
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-start" }
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-start, retryTapIfNoChange: true }
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- scrollUntilVisible:
-    element: { id: sanatan-next, above: { id: tab-home } }
-    direction: DOWN
-    timeout: 60000
-    centerElement: true
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-next" }
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
-    element: { id: sanatan-explore-dikpal }
+    element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

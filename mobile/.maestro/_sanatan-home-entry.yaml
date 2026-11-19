@@ -1,10 +1,7 @@
 appId: com.prashantsharma.vedansh
 ---
-- scrollUntilVisible:
-    element: { id: home-sanatan-card }
-    direction: DOWN
-    timeout: 60000
-    visibilityPercentage: 100
-    centerElement: true
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "home-sanatan-card" }
 - waitForAnimationToEnd
 - assertVisible: { id: home-sanatan-card }
