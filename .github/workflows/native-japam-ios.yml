@@ -19,6 +19,8 @@ on:
       - 'mobile/src/contexts/JapamCounterContext.tsx'
       - 'mobile/src/screens/JapamCounterScreen.tsx'
       - 'mobile/.maestro/japam-sankalp-smoke.yaml'
+      - 'mobile/.maestro/_launch.yaml'
+      - 'mobile/.maestro/_finish-first-run-setup.yaml'
       - 'mobile/src/navigation/TabNavigator.tsx'
       - '.github/workflows/native-japam-ios.yml'
 
