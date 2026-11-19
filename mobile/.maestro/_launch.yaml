@@ -62,29 +62,7 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Don't Allow"
     optional: true
-# Quiet companion setup precedes ATT and the tour; never opt into notifications in boot.
-- tapOn:
-    text: "Setup language continue"
-    optional: true
-- tapOn:
-    text: "Setup city continue"
-    optional: true
-# First-run widgets now start on city Continue, with no separate Add CTA.
-# iPhone instructions stay inside onboarding; Android launcher confirmations are
-# optional across hosts. Dismiss both requests so unrelated smoke flows stay clean.
-- tapOn:
-    text: "Setup widgets continue"
-    optional: true
-- tapOn:
-    text: "Cancel|CANCEL|रद्द करें"
-    optional: true
-- waitForAnimationToEnd
-- tapOn:
-    text: "Cancel|CANCEL|रद्द करें"
-    optional: true
-- tapOn:
-    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
-    optional: true
+- runFlow: _finish-first-run-setup.yaml
 - waitForAnimationToEnd
 - tapOn:
     text: "Ask App Not to Track"
@@ -140,6 +118,10 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Maybe later"
     optional: true
+# A native prompt can delay the setup sheet until after the initial pass.
+- runFlow:
+    when: { visible: "Setup language continue|Setup city continue|Setup widgets continue|Enable reminders" }
+    file: _finish-first-run-setup.yaml
 # A shared boot check must also work when system text pushes the grid below the fold.
 # The standard-size first-viewport contract is checked in home-featured-readings.
 - extendedWaitUntil:
