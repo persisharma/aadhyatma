@@ -12,8 +12,11 @@ appId: com.prashantsharma.vedansh
     timeout: 60000
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
-- extendedWaitUntil:
-    visible: { text: "Language, ${READING_LANGUAGE}" }
+# The scroll can stop with Language as a sliver above the tab bar; the new
+# script's taller rows then push it below the fold (CI, Android, Gujarati).
+- scrollUntilVisible:
+    element: { text: "Language, ${READING_LANGUAGE}" }
+    direction: DOWN
     timeout: 15000
 - tapOn: { id: tab-home }
 - runFlow: _sanatan-home-entry.yaml
