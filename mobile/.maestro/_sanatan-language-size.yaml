@@ -25,6 +25,21 @@ appId: com.prashantsharma.vedansh
     commands:
       - tapOn: "Language,.*"
       - tapOn: "${READING_LANGUAGE}"
+# Changing script reflows the settings above this row. In particular, the
+# Gujarati-to-Kannada transition can move it several screens below the viewport.
+- runFlow:
+    when: { notVisible: { text: "Language, ${READING_LANGUAGE}" } }
+    commands:
+      - scrollUntilVisible:
+          element: { id: settings-back }
+          direction: UP
+          speed: 65
+          timeout: 90000
+      - scrollUntilVisible:
+          element: { text: "Language, ${READING_LANGUAGE}" }
+          direction: DOWN
+          speed: 35
+          timeout: 90000
 - assertVisible: "Language, ${READING_LANGUAGE}"
 - scrollUntilVisible:
     element: { text: "Reading size,.*", above: { id: tab-home } }
