@@ -283,3 +283,20 @@ test('saved and group filters narrow the hub, and resume opens the stored page',
   expect(navigation.navigate).toHaveBeenLastCalledWith('CategoryList', { categoryId: 'sanskar' });
   act(() => tree.unmount());
 });
+
+test('the page counter opens a named page picker and jumps straight to the chosen page', async () => {
+  const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
+    route={{ key: 'jump', name: 'SanatanReader', params: { topicId: 'thirty', initialPage: 0 } }} />);
+  const counter = byId(tree, 'sanatan-page-counter');
+  expect(counter.props).toMatchObject({ accessibilityRole: 'button', accessibilityLabel: '1 / 3', accessibilityHint: 'Go to page' });
+  act(() => counter.props.onPress());
+  // Each page is offered by name, and the "kinds, not crore" page leads the lesson.
+  expect(byId(tree, 'page-jump-page-1').props.accessibilityLabel).toBe('Page 1. Koti means kinds, not crore');
+  expect(byId(tree, 'page-jump-page-3').props.accessibilityLabel).toBe('Page 3. Beyond the count');
+  act(() => byId(tree, 'page-jump-page-3').props.onPress());
+  await act(async () => byId(tree, 'page-jump-open').props.onPress());
+  expect(byId(tree, 'sanatan-page-counter').props.accessibilityLabel).toBe('3 / 3');
+  expect(byId(tree, 'sanatan-next').props.accessibilityLabel).toBe('Finish introduction');
+  expect(tree.root.findAll(node => node.props.testID === 'page-jump-sheet')).toHaveLength(0);
+  act(() => tree.unmount());
+});

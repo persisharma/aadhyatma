@@ -19,6 +19,8 @@ import { getChalisa, type ChalisaVerse } from '@/data/chalisaRegistry';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
@@ -48,7 +50,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
 const DOT_COUNT = 5;
 
 export default function ChalisaReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -90,6 +92,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     setProgress({
@@ -193,19 +197,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           backAccessibilityLabel="Back to home"
           right={
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {total}
-              </Text>
+              <ReaderPageCounter current={currentIndex + 1} total={total} {...jump} />
               {audioTrack && (
                 <Pressable
                   onPress={() => {
@@ -411,9 +403,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  counter: {
-    includeFontPadding: false,
   },
   videoCtaRow: {
     flexDirection: 'row',

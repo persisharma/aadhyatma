@@ -14,7 +14,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   type ViewToken,
@@ -46,6 +45,8 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang, pick } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import AppIcon from '@/components/AppIcon';
 import ProseParagraph from '@/components/ProseParagraph';
 import { meaningToken } from '@/utils/langType';
@@ -161,6 +162,13 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
     verseCount,
     currentIndex,
     listRef,
+  });
+  const jump = useReaderJump({
+    listRef,
+    offset,
+    setCurrentIndex,
+    readAloud,
+    autoSlide,
   });
 
   useEffect(() => {
@@ -330,19 +338,16 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
             onBack={() => navigation.goBack()}
             sideWidth={48}
             right={
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {verseCount}
-              </Text>
+              <ReaderPageCounter
+                current={currentIndex + 1}
+                total={verseCount}
+                {...jump}
+                onOpen={() => {
+                  // As every other page move here: a reflection may hold the keyboard.
+                  Keyboard.dismiss();
+                  jump.onOpen();
+                }}
+              />
             }
           />
 
@@ -681,11 +686,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 48,
-    textAlign: 'right',
   },
   toggleRow: {
     flexDirection: 'row',

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
-  Pressable,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
@@ -30,8 +29,8 @@ import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang, pick } from '@/utils/localize';
-import AppIcon from '@/components/AppIcon';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import GitaVerseJumpSheet, { JUMP_LABEL } from '@/components/GitaVerseJumpSheet';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
@@ -270,28 +269,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           title={topTitle}
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
-          // Keep the original counter text; the surrounding target opens the picker.
+          // The shared counter opens Gita's own chapter + verse picker.
           sideWidth={60}
           right={
-            <Pressable testID="gita-jump-trigger" accessibilityRole="button"
-              accessibilityLabel={pick(lang, JUMP_LABEL)}
-              accessibilityValue={{ text: `${chapter.chapter}.${currentIndex + 1}` }}
-              onPress={openJump} style={styles.counterTarget}>
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
-            <AppIcon name="caretDown" size={12} color={colors.saffronDeep} />
-            </Pressable>
+            <ReaderPageCounter testID="gita-jump-trigger" current={currentIndex + 1} total={verseCount} onPress={openJump}
+              accessibilityLabel={pick(lang, JUMP_LABEL)} accessibilityValueText={`${chapter.chapter}.${currentIndex + 1}`} />
           }
         />
 
@@ -434,12 +416,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  counterTarget: { minHeight: 48, minWidth: 60, flexDirection: 'row', alignItems: 'center', gap: 4 },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 48,
-    textAlign: 'right',
   },
   toggleRow: {
     flexDirection: 'row',

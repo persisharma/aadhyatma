@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, FlatList, Text, View, useWindowDimensions } from 'react-native';
+import { Alert, FlatList, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { HomeStackParamList } from '@/navigation/types';
@@ -21,6 +21,7 @@ import { readingParchment } from '@/data/backgroundAsset';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import PagerNavBar from '@/components/PagerNavBar';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ZoomableArtwork from '@/components/ZoomableArtwork';
 import { sanatanArtwork } from '@/data/sanatan-parichay/artwork';
 import { Action, Copy, PagePill, Painting, useSanatanText } from '@/components/sanatan/Primitives';
@@ -50,7 +51,7 @@ export default function SanatanReaderScreen(props: Props) {
 function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopic; initialPage: number }) {
   const t = useSanatanText();
   const { lang } = useGitaLanguage();
-  const { colors, spacing, typography } = useTheme();
+  const { colors, spacing } = useTheme();
   const { width } = useWindowDimensions();
   const learning = useSanatanLearning();
   const [page, setPage] = useState(initialPage);
@@ -108,7 +109,8 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
     {/* The tab bar below owns the bottom inset, as in the other readers. */}
     <SafeAreaView style={{ flex: 1 }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={t(topic.title)} onBack={() => navigation.goBack()} sideWidth={60}
-        right={<Text testID="sanatan-page-counter" style={{ color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }}>{page + 1} / {data.length}</Text>} />
+        right={<ReaderPageCounter testID="sanatan-page-counter" current={page + 1} total={data.length} titles={titles.map(title => t(title))}
+          onOpen={() => { readAloud.stop(); autoSlide.stop(); }} onJump={next => go(next - 1)} />} />
       <ReadingProgressBar current={page + 1} total={data.length} />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: spacing.readingGutter, paddingVertical: 8 }}>
         <LanguageToggle />
