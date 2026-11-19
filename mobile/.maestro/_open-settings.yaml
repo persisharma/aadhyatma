@@ -1,16 +1,20 @@
-# Reselect Home to pop its stack, then return to the header in the same session.
+# From another screen, reselect Home to pop its stack. On fresh Home the
+# settings button is already reachable without any navigation or gestures.
 appId: com.prashantsharma.vedansh
 ---
-- tapOn: { id: tab-home }
-- waitForAnimationToEnd
-- tapOn: { id: tab-home }
-- waitForAnimationToEnd
-- scrollUntilVisible:
-    element: { id: home-settings }
-    direction: UP
-    timeout: 90000
-# A partially exposed gear can sit behind the iOS safe area.
-- swipe: { direction: DOWN }
-- waitForAnimationToEnd
+- runFlow:
+    when: { notVisible: { id: home-settings } }
+    commands:
+      - tapOn: { id: tab-home }
+      - waitForAnimationToEnd
+      - tapOn: { id: tab-home }
+      - waitForAnimationToEnd
+      - scrollUntilVisible:
+          element: { id: home-settings }
+          direction: UP
+          timeout: 90000
+      # Finish the scroll in the margin, clear of the interactive Home cards.
+      - swipe: { start: "2%,32%", end: "2%,75%", duration: 350 }
+      - waitForAnimationToEnd
 - tapOn: { id: home-settings, retryTapIfNoChange: true }
 - waitForAnimationToEnd
