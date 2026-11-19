@@ -20,6 +20,10 @@ appId: com.prashantsharma.vedansh
     element: { id: sanatan-plate-symbols, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
+- scrollUntilVisible:
+    element: { text: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]" }
+    direction: DOWN
+    timeout: 30000
 - assertVisible: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]"
 - takeScreenshot: e2e-shots/sanatan-swastika-four-aims
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }

@@ -18,6 +18,9 @@ appId: com.prashantsharma.vedansh
 - runFlow: _sanatan-home-entry.yaml
 - takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
+# At large text the screen centre is on the search field, which swallows the
+# scroll gesture; start the first drag low, over the cards.
+- swipe: { start: "50%,88%", end: "50%,62%", duration: 400 }
 - runFlow:
     file: _sanatan-reveal-row.yaml
     env: { ROW_ID: "sanatan-collection-dikpal" }
