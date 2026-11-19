@@ -35,7 +35,14 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     speed: 65
     timeout: 120000
-- swipe: { direction: UP }
+# iOS (CI, 3493a300): after a plain swipe Next could still sit half below the
+# lesson's scroll view (scroll at 94-98%), so the tap at its centre landed outside
+# the scroll view and the page stayed 1/3. Centre it first, as before #707.
+- scrollUntilVisible:
+    element: { id: sanatan-next }
+    direction: DOWN
+    timeout: 60000
+    centerElement: true
 - waitForAnimationToEnd
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
