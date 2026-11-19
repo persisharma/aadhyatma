@@ -31,7 +31,7 @@ const {
   withDangerousMod,
   withMainApplication,
   AndroidConfig,
-} = require('@expo/config-plugins');
+} = require('expo/config-plugins');
 
 const KOTLIN_PACKAGE_SUBDIR = 'japamalarm';
 

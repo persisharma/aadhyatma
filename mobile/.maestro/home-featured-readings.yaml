@@ -1,0 +1,46 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- assertVisible: { id: home-featured-gita-saar }
+- assertVisible: { id: home-featured-bhagavad-gita }
+- assertVisible: { id: home-featured-sundarkand }
+- assertVisible: { id: home-featured-valmiki-ramayan }
+- assertVisible: { id: home-featured-hanuman-chalisa }
+- assertVisible: { id: home-featured-aarti }
+- tapOn: { id: home-featured-gita-saar }
+- extendedWaitUntil: { visible: { id: gita-saar-featured }, timeout: 30000 }
+- tapOn: { id: tab-home }
+- scrollUntilVisible:
+    element: { id: home-japa-banner }
+    direction: DOWN
+    visibilityPercentage: 100
+- assertVisible: { id: home-japa-count }
+- assertVisible: { id: home-japa-start }
+- takeScreenshot: e2e-shots/home-japmala-banner
+- tapOn: { id: home-japa-choose }
+- tapOn: { id: practice-tab-stotram }
+- scrollUntilVisible:
+    element: { text: 'Aditya Hridayam\..*Tap to open\.' }
+    direction: DOWN
+- tapOn: 'Aditya Hridayam\..*Tap to open\.'
+- tapOn: "Open reading.*|पाठ खोलें.*|પાઠ ખોલો.*|ಪಾಠ ತೆರೆಯಿರಿ.*"
+- extendedWaitUntil:
+    visible: "Aditya Hridayam|आदित्य हृदयम्|આદિત્ય હૃદયમ્|ಆದಿತ್ಯ ಹೃದಯಮ್"
+    timeout: 15000
+- tapOn: { id: tab-home }
+- scrollUntilVisible: { element: { text: "Library[.].*" }, centerElement: true }
+- tapOn: "Library[.].*"
+- assertVisible: { id: reading-library-search }
+- scrollUntilVisible:
+    element: { text: 'Hymns\..*Tap to open\.' }
+    direction: DOWN
+- tapOn: 'Hymns\..*Tap to open\.'
+- scrollUntilVisible:
+    element: { text: 'Aditya Hridayam\..*Tap to open\.' }
+    direction: DOWN
+- tapOn: 'Aditya Hridayam\..*Tap to open\.'
+- extendedWaitUntil:
+    visible: "Aditya Hridayam|आदित्य हृदयम्|આદિત્ય હૃદયમ્|ಆದಿತ್ಯ ಹೃದಯಮ್"
+    timeout: 15000
+- tapOn: Back
+- assertVisible: 'Aditya Hridayam\..*Tap to open\.'

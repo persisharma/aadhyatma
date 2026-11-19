@@ -259,8 +259,8 @@ assert.ok(
   'katha step refs the shipped satyanarayana-vrat-katha'
 );
 assert.ok(
-  satyanarayan.steps.some((step) => step.ref?.kind === 'section' && step.ref.id === 'om-jai-jagdish'),
-  'aarti step refs the shipped om-jai-jagdish (Vishnu aarti)'
+  satyanarayan.steps.some((step) => step.ref?.kind === 'section' && step.ref.id === 'satyanarayan-aarti'),
+  'aarti step refs the shipped satyanarayan-aarti (Vishnu aarti)'
 );
 // The sankalp step is deliberately instruction-only (§11.3 — its exact wording
 // was not verbatim-verifiable; never approximate liturgical text).

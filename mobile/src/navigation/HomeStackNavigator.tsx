@@ -16,12 +16,15 @@ import type { HomeStackParamList } from './types';
  */
 
 const SanatanParichayScreen = lazyScreen('SanatanParichay', 2, () => import('@/screens/SanatanParichayScreen'));
+const GrahaReferenceScreen = lazyScreen('SanatanGrahaReference', 4, () => import('@/screens/GrahaReferenceScreen'));
 const SanatanReaderScreen = lazyScreen('SanatanReader', 3, () => import('@/screens/SanatanReaderScreen'));
 
 const SuvicharScreen = lazyScreen('Suvichar', 2, () => import('@/screens/SuvicharScreen'));
 
 // depth 2 — opened directly from Home
 const BrowseByPurposeScreen = lazyScreen('BrowseByPurpose', 2, () => import('@/screens/BrowseByPurposeScreen'));
+const ReadingLibraryScreen = lazyScreen('ReadingLibrary', 2, () => import('@/screens/ReadingLibraryScreen'));
+const StotramPracticeScreen = lazyScreen('StotramPractice', 2, () => import('@/screens/StotramPracticeScreen'));
 const CategoryListScreen = lazyScreen('CategoryList', 2, () => import('@/screens/CategoryListScreen'));
 // दान-पुण्य (PRD-26) — registered here too so the §5.1 purpose door (विद्या /
 // आरोग्य on PurposeList) pushes in place and Back retraces the journey.
@@ -90,6 +93,8 @@ const ValmikiRamayanReaderScreen = lazyScreen('ValmikiRamayanReader', 3, () => i
 const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/VidhiDetailScreen'));
 const VishnuSahasranamaChaptersScreen = lazyScreen('VishnuSahasranamaChapters', 3, () => import('@/screens/VishnuSahasranamaChaptersScreen'));
 const VishnuSahasranamaReaderScreen = lazyScreen('VishnuSahasranamaReader', 3, () => import('@/screens/VishnuSahasranamaReaderScreen'));
+const SaptashatiCoreScreen = lazyScreen('SaptashatiCore', 3, () => import('@/screens/SaptashatiCoreScreen'));
+const KathaLibraryScreen = lazyScreen('KathaLibrary', 3, () => import('@/screens/KathaLibraryScreen'));
 const VratKathaReaderScreen = lazyScreen('VratKathaReader', 3, () => import('@/screens/VratKathaReaderScreen'));
 
 // depth 4 — reached from a depth-3 screen
@@ -128,12 +133,15 @@ export default function HomeStackNavigator() {
       }} />
       <Stack.Screen name="SanatanParichay" component={SanatanParichayScreen} />
       <Stack.Screen name="SanatanReader" component={SanatanReaderScreen} />
+      <Stack.Screen name="GrahaReference" component={GrahaReferenceScreen} />
       <Stack.Screen name="Suvichar" component={SuvicharScreen} />
       <Stack.Screen
         name="Search"
         component={SearchScreen}
         options={{ animation: 'fade' }}
       />
+      <Stack.Screen name="ReadingLibrary" component={ReadingLibraryScreen} />
+      <Stack.Screen name="StotramPractice" component={StotramPracticeScreen} />
       <Stack.Screen name="CategoryList" component={CategoryListScreen} />
       <Stack.Screen name="KidsStoryLibrary" component={KidsStoryLibraryScreen} />
       <Stack.Screen name="KidsStoryDeity" component={KidsStoryDeityScreen} />
@@ -280,6 +288,8 @@ export default function HomeStackNavigator() {
         component={JapamCounterScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
+      <Stack.Screen name="SaptashatiCore" component={SaptashatiCoreScreen} />
+      <Stack.Screen name="KathaLibrary" component={KathaLibraryScreen} />
       <Stack.Screen
         name="VratKathaReader"
         component={VratKathaReaderScreen}

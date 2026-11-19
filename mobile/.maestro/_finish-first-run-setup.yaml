@@ -1,0 +1,38 @@
+# Follow the native setup sheet through its actual transitions. Home remains
+# in the accessibility tree behind the sheet and cannot certify dismissal.
+appId: com.prashantsharma.vedansh
+---
+- runFlow:
+    when: { visible: "Setup language continue" }
+    commands:
+      - tapOn: { text: "Setup language continue", retryTapIfNoChange: true }
+      - extendedWaitUntil:
+          visible: "Setup city continue"
+          timeout: 30000
+- runFlow:
+    when: { visible: "Setup city continue" }
+    commands:
+      - tapOn: { text: "Setup city continue", retryTapIfNoChange: true }
+      - extendedWaitUntil:
+          visible: "Setup widgets continue|Enable reminders|Cancel|CANCEL|रद्द करें"
+          timeout: 45000
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - tapOn: { text: "Cancel|CANCEL|रद्द करें", optional: true }
+      - waitForAnimationToEnd
+      - tapOn: { text: "Cancel|CANCEL|रद्द करें", optional: true }
+- runFlow:
+    when: { visible: "Setup widgets continue" }
+    commands:
+      - tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", retryTapIfNoChange: true }
+      - extendedWaitUntil:
+          visible: "Enable reminders"
+          timeout: 30000
+- runFlow:
+    when: { visible: "Enable reminders" }
+    commands:
+      - tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", retryTapIfNoChange: true }
+      - extendedWaitUntil:
+          notVisible: "Enable reminders"
+          timeout: 30000

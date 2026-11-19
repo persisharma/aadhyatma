@@ -720,6 +720,10 @@ type HanumanChalisaVerse = {
 
 **Santoshi Mata Chalisa (A3, 1.5.7 content):** the same reader renders the chosen Drik Panchang composition beginning श्री गणपति पद नाय सिर as one opening doha, 40 chaupais and one closing doha. Reuses the existing Durga background/banner and all reader controls. Hindi/English editorial meanings and ASCII recitation text are supplied; Gujarati/Kannada use the current script fallback. Edition variants stay in internal metadata. No artwork, recorded audio or reader interaction is added. See `docs/evaluations/a3-santoshi-mata-chalisa/review.md` for evidence and pending native checks.
 
+**Kali Chalisa (A4, 1.5.7 content):** the existing registry-served reader presents the complete chosen Drik composition beginning जय काली जगदम्ब जय: two opening dohas, 54 body couplets and one closing doha (57 pages). The catalog accurately labels 54 Chaupai + 3 Doha rather than assuming forty from the title. Reuses existing Kali background/first-page art and unchanged reader controls. Hindi/English editorial meanings and ASCII pronunciation are supplied; Gujarati/Kannada use the current script fallback. Source comparison is internal. Native acceptance remains tracked in `docs/evaluations/a4-kali-chalisa/review.md`.
+
+**Radha Chalisa (A5, 1.5.7 content):** the existing registry-served reader presents two opening dohas, forty chaupais and one closing doha (43 pages), beginning श्री राधे वृषभानुजा. Reuses existing Radha–Krishna background/banner and A4’s responsive control row. Hindi/English meanings and ASCII recitation text are authored; Gujarati/Kannada use the existing Hindi-to-script fallback, not native translations. No new artwork, audio or interaction. Source variants remain internal. Native acceptance: `docs/evaluations/a5-radha-chalisa/review.md`.
+
 ### Gita (chapter-scoped, multi-layered, bilingual)
 
 Source: `BhagwadGita/chapters/chapter-NN-*.md` (published translation + commentary). Parsed by `scripts/parse-gita.mjs` into `mobile/src/data/gita/chapter-NN.json` and a top-level `chapters-manifest.json`. Parser output is committed — Metro bundles JSON statically, so generated data must live in the source tree. Re-running the parser should produce a byte-identical diff.
@@ -1017,6 +1021,8 @@ When building new components, pull tokens from the theme — never hard-code a h
 9. Section label "DISCOVER" + **Feature Spotlight carousel** (§32) — a full-bleed horizontal row of `FeatureCard`s surfacing the app's cross-cutting sections (Daily Practice, Daily Verse, Sankalp, Pitru Smaran, Guided Pujas/पूजा विधि, Pilgrimage, Home-Screen Widgets — the Panchang card was retired when the Today strip took over that surface). Moved *below* the grid: the prime slot now belongs to today-relevant content; the carousel keeps its per-open shuffle one swipe down.
 10. Footer mantra (Section 7 — token `footerMantra`, 18 @ 55% opacity) at the end of the scroll
 11. **Search** is an inline, minimum-48dp row below the brand lockup, with the shared 24dp search glyph and a localized prompt. Opens the existing Search screen and retains `Search verses, sections, and mantras` as its accessible label. It scrolls with the content and never overlays category artwork.
+
+**Home Japmala banner.** The bundled Hanuman panorama spans the entire interior of the 18 dp rounded frame. The frame clips the art and carries its border. The foreground owns the control insets so the artwork reaches every edge at compact widths and when enlarged text makes the banner taller. The practice picker, count and open control remain separate touch targets.
 
 **First-tap recovery (all Home cards).** Every tappable Home card opens on the **first** tap, not the second. iOS can cancel a child `Pressable`'s `onPress` when it lives inside a `ScrollView` even when the finger never actually drags, so a naive `onPress` intermittently no-ops the first touch. A single shared controller (`contexts/TilePressContext.tsx`, `useTilePressController` + `TilePressProvider`) remembers the action on `onPressIn`, arms a one-tick fallback on `onPressOut`, and fires it unless a real `onPress` already ran or a scroll drag intervened. `activateTile` only consumes a pending action that belongs to the current gesture: a *dragged* pending (a scroll whose press was cancelled) is never reused, so an accessibility tap — which invokes `onPress` with no preceding `onPressIn` — always runs the tapped card's own action rather than a stale one left behind by an earlier scroll. It is shared (context) across the **whole** Home surface — the category grid (§19), the Today strip (§48), the For-Today row (§50), the routine banner (§30), and the DISCOVER carousel (§32) — because a card lives inside the outer vertical scroll, so a vertical page-drag started on a card must suppress *that card's* fallback; a per-component copy could not see the outer scroll and would navigate on a plain scroll. Each enclosing `ScrollView` (the outer vertical one and every inner horizontal row) wires `onScrollBeginDrag` to the controller's `markTileDrag`, so a swipe is always a scroll and never a tap. Introduced for the grid in July 2026 (#219) and extended to the Today/Discover cards immediately after; the routine banner (§30) was the last plain-`onPress` holdout and was wired in Aug 2026 (it intermittently no-opped its first tap on Home). Pinned by `contexts/__tests__/TilePressContext.test.tsx` and `components/__tests__/RoutineBanner.test.tsx`.
 
@@ -2130,6 +2136,8 @@ A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of 
 
 > **Supersedes §10's two-module framing.** §10 documents the original Chalisa + Gita content shapes and remains authoritative for those shapes and for the per-module-type discipline ("shapes stay separate"). The catalog has since grown to ~40 entries across 7 categories; this section documents the registry and shape *families* that grew out of §10's pattern.
 
+**Aditya Hridayam (आदित्य हृदयम्).** Library → Hymns opens this Surya stotram directly in the shared verse reader. Its standard Library card shows the Surya icon and the 31-verse count. Verse labels, reading progress, bookmarks and shloka japa use the hymn's own identity. Japmala → Stotram offers its existing full-recitation counter, and its Open reading action opens this same hymn.
+
 ### `LibraryEntry` (the registry row)
 
 ```ts
@@ -3242,6 +3250,8 @@ absolute`, `right: 16`, `top`/`bottom` matching the row's vertical padding, `jus
 center`); the Vrat Katha reader's shorter toggle row (6/6 rather than 6/12) is the only geometry
 that differs.
 
+**Chalisa compact controls.** `ReaderControlRow` measures the centred language/routine group, trailing Listen/Pause pill and available width. It preserves the centred group/right-aligned pill when both fit with a 16pt edge inset and 24pt touch clearance; otherwise the labelled playback control flows to a second right-aligned row. Measurement changes from resizing, locale and system text reflow the row without hiding labels or shrinking fonts. It starts stacked until measured. Other reader families retain their existing layout pending separate adoption/native verification.
+
 **The muted state is deliberate.** Hiding the control when no voice exists would leave the user
 with no way to learn why read-aloud never appears. Pressing it explains, and on Android offers
 `com.android.settings.TTS_SETTINGS`; iOS gets the Settings path in words (no deep link exists to
@@ -3911,6 +3921,8 @@ The **sticky action bar** (`daan-home-actions`) is absolutely positioned at the 
 
 **Doors.** More hub → साधना group row `दान-पुण्य / Daan Punya` (`more-daan-punya`, NEW state for one release). **Home tab presence (PRD-26 v3):** a non-content launcher card `दान-पुण्य` (icon key `daan`, `shortNameEn: 'Giving'`, NEW badge, §18) closes the category grid full-width → `DaanPunya`; the duplicate full-width नित्य साधना category card was removed because the dedicated RoutineBanner above the grid already owns that Home door. A **DISCOVER spotlight** card (`key: 'daan-punya'`, `FeatureIcon name="daan-punya"`, NEW) → `DaanPunya`; and a **FOR TODAY** strip card (`for-today-daan`, §50) that appears on daan-covered observance days → `DaanJourney {occasionId}`. Observance Detail → `इस दिन का दान` — **always the last section** (`observance-daan-door`), rendered only when `getDaanOccasionForRule(ruleId)` matches (exact ids beat suffix families; uncovered days render nothing). **Purpose bridge:** `PurposeList` (the text-intent screen) renders a quiet `दा` educate door (`purpose-daan-door`) → `DaanPunya`, and ONLY for the two intents the app's own vocabulary shares with a seva — विद्या→`knowledge`, आरोग्य→`health` (`causeForPurpose`). `wealth`/`prosperity` are deliberately unbridged: pointing "give here" at a prosperity intent is the fruit-promise §2.2 bans; a source-shape test pins that this door opens the educate home and never the द्वार. All daan screens are registered on the More, Panchang AND Home stacks (PRD-19 multi-stack pattern) so every door pushes in place.
 
+**New-entry amount (Proposal 11).** The optional private INR field validates the entire input before recording. It accepts a leading ₹, outer whitespace, ASCII/Devanagari/Gujarati/Kannada digits, correctly grouped Indian or international commas and up to two decimal places (period separator). A valid nonblank value shows “Amount to record” with Indian grouping and two decimal places. Invalid input shows a localized inline alert on blur or Save; Save announces the correction, preserves all draft fields and stays on the form. Blank is optional; Gupt hides the amount and bypasses its validation while the existing sanitizer removes private details. Existing stored amounts are never reparsed. The amount input grows vertically for system text; feedback wraps at the reading text size. Save waits for ledger hydration. No payment, totals, new storage format or date change is introduced.
+
 **Register removal (Proposal 09).** The × control opens a record-specific parchment confirmation using the Saved Verses dialog idiom. It shows the category, original ISO civil date (matching the register without timezone conversion), and optional full note; amounts never appear. Gupt identity contains only the localized “Gupt daan” and date. The title, no-undo explanation, saffron “Remove entry” and quiet Cancel are localized in all four languages. Long text scrolls inside a height-bounded card; the actions stay outside that scroll, with 48dp minimum targets. Cancel, outside tap, Android Back, accessibility escape and route blur discard the pending selection without storage writes. Confirmation consumes the selected stable ID once. Pending state is session-only. Existing optimistic storage behavior is unchanged: no durable-deletion or recovery claim is shown. The original mockup's date is displayed in the register's ISO format for consistency.
 
 **Copy rule — the §1 house rule, and where it started.** The feature shipped with a muted stance line closing almost every screen — *"यहाँ रुक जाना भी पूर्ण है"*, *"मात्रा नहीं, भाव मापदण्ड है। यहाँ कोई अंक, कोई लक्ष्य, कोई तुलना नहीं"*, *"यह सूची जान-बूझकर छोटी रखी गई है"*, *"यही प्राथमिक मार्ग है"*, a screen narrating its own section order. They restated the product's stance to a reader who never asked, and read as filler under the very buttons they sat beneath, so they are **gone from every daan surface**. What stays is a line that carries a **fact the user acts on**: what else may be recorded in the register, that the giving happens on the organization's own website (or its own donation page, for a `directPay` row), and that the app neither transacts nor represents these places (§6.1 — kept once per screen, never twice). The stance itself is enforced where it belongs: in the data (no totals, the gupt guarantee, the copy-guard test's banned vocabulary), not in a caption. The teaching register stays fully intact in the **content** — the verse meanings, the cause mahatva, the kathas' शिक्षा — which is what the reader came for.
@@ -4454,6 +4466,30 @@ order, finger or dots are not presented as universal ritual requirements.
 Gujarati/Kannada retain Hindi re-scripting. Internal source review and native
 acceptance are tracked in `docs/content-parity/sanatan-parichay/swastika-guide.md`.
 
+### Visual learning revision — 8 November 2026
+
+Retain the approved painted collection family, then lead each lesson with a short
+answer and native glossary. The final page adds one takeaway and related in-app
+readings. Definition heads and numbered instructions receive native hierarchy.
+Show the actual lesson title above the broader collection name.
+
+The exploration page (index 1) carries a single **painted teaching plate** — a
+self-explanatory devotional illustration in the approved painted-manuscript style,
+one per concept — under the "चित्र से समझें" heading, followed by one caption line
+(the lesson's answer). The plate replaces the earlier vector schematics; the figure
+page no longer repeats the paragraph prose (it is retained in data for search and
+narration). Each plate carries its own baked labels, so it ships in two languages:
+Hindi and English. The reader picks by language — **Hindi serves hi and gu, English
+serves en and kn** (`lessonArtLang`). The 26 plates (13 concepts × 2) are webp
+(≤250 KB, 1200 px), served from R2 (`cdn.vedansh.app`, prefix `sanatan-learning`)
+and download-once cached; the committed `lessonArtManifest.json` is the upload
+allowlist and the `.github/workflows/r2-upload.yml` run publishes on merge. Until a
+plate is on the CDN, `LessonArt` renders nothing (no empty frame). The NE guardian
+reads "ईशान (शिव) / Ishana (Shiva)". Full alternate avatar lists stay separate.
+Onward readings remain on the final page, on the same stack to preserve Back and
+position. Native fidelity, exports and device performance remain required pending
+acceptance; see `docs/content-parity/sanatan-parichay/visual-learning/README.md`.
+
 ## 88. भक्तिमय दोहे — selected Kabir and Rahim readings
 
 Two Granth cards, `kabir-bhakti-dohe` and `rahim-bhakti-dohe`, each open four complete selected couplets in the existing flat `StutiReaderScreen`/`VersePage` shell. This is reader reuse, not a Stotram classification: the library category is Granth, the titles name the poet, and subtitles explicitly say चयनित / selected. Preserve original Hindi couplets, pronunciation-based ASCII romanization and editorial Hindi/English meanings. Gujarati/Kannada follow the shared re-scripting policy, not an authored-translation claim.
@@ -4700,3 +4736,6 @@ acceptance; passing mocked screen tests is not native proof.
 
 ### Darshan recovery — updated 16 November 2026
 Retry re-resolves a dedicated temple source or retries its stable in-app channel player. Unavailable broadcasts lead to Retry, another temple, the complete temple guide or shipped devotional readings. The previous external website/YouTube recovery CTAs are superseded by the in-app journey above. Actual fullscreen, seek, volume, quality and platform interruptions still require device verification.
+
+
+B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.

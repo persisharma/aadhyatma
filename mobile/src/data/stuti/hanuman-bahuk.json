@@ -1,0 +1,906 @@
+{
+  "id": "hanuman-bahuk",
+  "titleHi": "श्री हनुमान बाहुक",
+  "titleEn": "Hanuman Bahuk",
+  "deity": "hanuman",
+  "source": {
+    "baseText": "Goswami Tulsidas, Hanuman Bahuk: complete44 chhands; Drik spacing with Gita Press print collation and documented corrections.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/hanuman-bahuk/shri-hanuman-bahuk.html?lang=hi",
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/hanumAnabAhuka.html",
+      "https://archive.org/details/HanumanBahukGitapress"
+    ],
+    "retrievedOn": "2026-11-17",
+    "notes": "Public-domain original poem; no modern commentary, recording or scanned artwork reused. Original concise Hindi/English explanations; hand-curated Hindi/Awadhi pronunciation in ASCII. Illness imagery is the poet’s devotional experience, not a medical claim or a judgment about the causes of another person’s illness. Gujarati/Kannada use existing script conversion, not claimed native translations."
+  },
+  "verses": [
+    {
+      "id": "hanuman-bahuk-1",
+      "number": 1,
+      "labelHi": "छंद · १",
+      "labelEn": "Chhand · 1",
+      "lines": [
+        "सिंधु तरन, सिय-सोच हरन, रबि बाल बरन तनु।",
+        "भुज बिसाल, मूरति कराल कालहु को काल जनु॥",
+        "गहन-दहन-निरदहन लंक निःसंक, बंक-भुव।",
+        "जातुधान-बलवान, मान-मद-दवन पवनसुव॥",
+        "कह तुलसिदास सेवत सुलभ, सेवक हित सन्तत निकट।",
+        "गुन गनत, नमत, सुमिरत जपत, समन सकल-संकट-बिकट॥"
+      ],
+      "linesEn": [
+        "Sindhu taran, Siya-soch haran, rabi baal baran tanu.",
+        "Bhuj bisaal, moorati karaal kaalahu ko kaal janu.",
+        "Gahan-dahan-niradahan Lank nihsank, bank-bhuv.",
+        "Jaatudhaan-balavaan, maan-mad-davan Pavanasuv.",
+        "Kah Tulasidaas sevat sulabh, sevak hit santat nikat.",
+        "Gun ganat, namat, sumirat japat, saman sakal-sankat-bikat."
+      ],
+      "meaningHi": "समुद्र पार कर सीता का शोक मिटाने वाले पवनपुत्र का रूप प्रातःसूर्य सा तेजस्वी है। उन्होंने लंका और राक्षसों का अभिमान नष्ट किया; तुलसी उनके स्मरण, सेवा और गुणगान में संकटों से आश्रय पाते हैं।",
+      "meaningEn": "The wind-god’s son crossed the sea and relieved Sita’s sorrow, radiant as the rising sun. Having humbled Lanka’s powerful demons, he remains close to his devotees; Tulsi seeks refuge from distress in his service, praise and remembrance."
+    },
+    {
+      "id": "hanuman-bahuk-2",
+      "number": 2,
+      "labelHi": "छंद · २",
+      "labelEn": "Chhand · 2",
+      "lines": [
+        "स्वर्न-सैल-संकास कोटि-रवि, तरुन तेज घन।",
+        "उर बिसाल भुजदंड, चंड नख बज्र बज्रतन॥",
+        "पिंग नयन, भृकुटी कराल, रसना दसनानन।",
+        "कपिस केस करकस लंगूर, खल-दल-बल-भानन॥",
+        "कह तुलसिदास बस जासु उर, मारुतसुत मूरति विकट।",
+        "संताप पाप तेहि पुरुष पहि, सपनेहुँ नहिं आवत निकट॥"
+      ],
+      "linesEn": [
+        "Svarn-sail-sankaas koti-ravi, tarun tej ghan.",
+        "Ur bisaal bhujdand, chand nakh bajra bajratan.",
+        "Ping nayan, bhrikuti karaal, rasanaa dasanaanan.",
+        "Kapis kes karakas langoor, khal-dal-bal-bhaanan.",
+        "Kah Tulasidaas bas jaasu ur, Maarutasut moorati vikat.",
+        "Santaap paap tehi purush pahi, sapanehun nahin aavat nikat."
+      ],
+      "meaningHi": "हनुमान स्वर्णपर्वत जैसे उज्ज्वल, विशाल वक्ष और वज्र जैसे बल वाले हैं। उनके प्रचंड रूप को हृदय में बसाने वाला भक्त पाप और दुःख से निर्भय होने की कामना करता है।",
+      "meaningEn": "Hanuman shines like a golden mountain, with a broad chest and thunderbolt strength. The poet describes his fierce eyes, teeth and tail, and celebrates the freedom from fear sought by keeping that form in the heart."
+    },
+    {
+      "id": "hanuman-bahuk-3",
+      "number": 3,
+      "labelHi": "छंद · ३",
+      "labelEn": "Chhand · 3",
+      "lines": [
+        "पञ्चमुख-छःमुख भृगु मुख्य भट असुर सुर, सर्व सरि समर समरत्थ सूरो।",
+        "बांकुरो बीर बिरुदैत बिरुदावली, बेद बंदी बदत पैजपूरो॥",
+        "जासु गुनगाथ रघुनाथ कह जासुबल, बिपुल जल भरित जग जलधि झूरो।",
+        "दुवन दल दमन को कौन तुलसीस है, पवन को पूत रजपूत रुरो॥"
+      ],
+      "linesEn": [
+        "Panchamukh-chhahmukh Bhrigu mukhya bhat asur sur, sarv sari samar samaratth sooro.",
+        "Baankuro beer birudait birudaavalee, bed bandee badat paijapooro.",
+        "Jaasu gunagaath Raghunaath kah jaasubal, bipul jal bharit jag jaladhi jhooro.",
+        "Duvan dal daman ko kaun Tulasees hai, Pavan ko poot rajapoot ruro."
+      ],
+      "meaningHi": "शिव, कार्तिकेय, परशुराम और सभी वीरों के बीच हनुमान प्रतिज्ञा निभाने वाले योद्धा हैं। राम स्वयं उनका गुणगान करते हैं; तुलसी के लिए पवनपुत्र जैसा दुष्टों के दल को जीतने वाला दूसरा आश्रय नहीं।",
+      "meaningEn": "Among gods and warriors, Hanuman is praised as a hero who keeps his word. Rama himself recounts his qualities; for Tulsi, no champion equals the wind-god’s son in overcoming hostile forces and the ocean of worldly fear."
+    },
+    {
+      "id": "hanuman-bahuk-4",
+      "number": 4,
+      "labelHi": "छंद · ४",
+      "labelEn": "Chhand · 4",
+      "lines": [
+        "भानुसों पढ़न हनुमान गए भानुमन, अनुमानि सिसु केलि कियो फेर फारसो।",
+        "पाछिले पगनि गम गगन मगन मन, क्रम को न भ्रम कपि बालक बिहार सो॥",
+        "कौतुक बिलोकि लोकपाल हरिहर विधि, लोचननि चकाचौंधी चित्तनि खबार सो।",
+        "बल कैंधो बीर रस धीरज कै, साहस कै, तुलसी सरीर धरे सबनिको सार सो॥"
+      ],
+      "linesEn": [
+        "Bhaanuson parhan Hanumaan gae bhaanuman, anumaani sisu keli kiyo pher phaaraso.",
+        "Paachhile pagani gam gagan magan man, kram ko na bhram kapi baalak bihaar so.",
+        "Kautuk biloki lokapaal Harihar Bidhi, lochanani chakaachaundhee chittani khabaar so.",
+        "Bal kaindho beer ras dheeraj kai, saahas kai, Tulasee sareer dhare sabaniko saar so."
+      ],
+      "meaningHi": "बाल हनुमान सूर्य से पढ़ते हुए आकाश में उनके साथ चलते हैं, फिर भी पाठ का क्रम नहीं भूलते। देवता यह कौतुक देखकर चकित हैं कि मानो बल, वीरता, धैर्य और साहस एक ही शरीर में आ गए हों।",
+      "meaningEn": "The young Hanuman studies with the moving sun, travelling through the sky without losing the lesson’s sequence. Watching in amazement, the gods see strength, courage, patience and resolve embodied in one child."
+    },
+    {
+      "id": "hanuman-bahuk-5",
+      "number": 5,
+      "labelHi": "छंद · ५",
+      "labelEn": "Chhand · 5",
+      "lines": [
+        "भारत में पारथ के रथकेतु कपिराज, गाज्यो सुनि कुरुराज दल हल बल भो।",
+        "कह्यो द्रोन भीषम समीर सुत महाबीर, बीर-रस-बारि-निधि जाको बल जल भो॥",
+        "बानर सुभाय बाल केलि भूमि भानु लागि, फलँग फलाँग हूतें घाटि नभ तल भो।",
+        "नाई-नाई-माथ जोरि-जोरि हाथ जोधा जो हैं, हनुमान देखे जगजीवन को फल भो॥"
+      ],
+      "linesEn": [
+        "Bhaarat men Paarath ke rathketu Kapiraaj, gaajyo suni Kururaaj dal hal bal bho.",
+        "Kahyo Dron Bheesham Sameer sut Mahaabeer, beer-ras-baari-nidhi jaako bal jal bho.",
+        "Baanar subhaay baal keli bhoomi bhaanu laagi, phalang phalaang hooten ghaati nabh tal bho.",
+        "Naai-naai-maath jori-jori haath jodhaa jo hain, Hanumaan dekhe jagajeevan ko phal bho."
+      ],
+      "meaningHi": "अर्जुन के रथध्वज पर हनुमान की गर्जना से कौरव सेना घबरा उठती है; द्रोण और भीष्म उनके बल का वर्णन करते हैं। सूर्य तक की उनकी बाललीला और उनका दर्शन योद्धाओं को विस्मित कर देता है।",
+      "meaningEn": "Hanuman’s roar from Arjuna’s chariot banner unsettles the Kaurava army, while Drona and Bhishma acknowledge his strength. His childhood leap toward the sun and his presence inspire the warriors to bow in wonder."
+    },
+    {
+      "id": "hanuman-bahuk-6",
+      "number": 6,
+      "labelHi": "छंद · ६",
+      "labelEn": "Chhand · 6",
+      "lines": [
+        "गो-पद पयोधि करि, होलिका ज्यों लाई लंक, निपट निःसंक पर पुर गल बल भो।",
+        "द्रोन सो पहार लियो ख्याल ही उखारि कर, कंदुक ज्यों कपि खेल बेल कैसो फल भो॥",
+        "संकट समाज असमंजस भो राम राज, काज जुग पूगनि को करतल पल भो।",
+        "साहसी समत्थ तुलसी को नाथ जा की बाँह, लोक पाल पालन को फिर थिर थल भो॥"
+      ],
+      "linesEn": [
+        "Go-pad payodhi kari, Holikaa jyon laai Lank, nipat nihsank par pur gal bal bho.",
+        "Dron so pahaar liyo khyaal hee ukhaari kar, kanduk jyon kapi khel bel kaiso phal bho.",
+        "Sankat samaaj asamanjas bho Raam raaj, kaaj jug poogani ko karatal pal bho.",
+        "Saahasee samatth Tulasee ko naath jaa kee baanh, lok paal paalan ko phir thir thal bho."
+      ],
+      "meaningHi": "हनुमान के लिए समुद्र छोटा हो गया, लंका जलाना और पर्वत उठाना खेल समान हुआ। राम के कार्य में संकट आने पर उन्होंने कठिन काम पल में किया; तुलसी उन्हें देवताओं का भी सहारा मानते हैं।",
+      "meaningEn": "The sea becomes a small crossing for Hanuman, and burning Lanka or lifting a mountain seems effortless. When Rama’s cause faces danger, he accomplishes what would otherwise take ages; Tulsi sees even the guardians of the worlds sheltered by his strength."
+    },
+    {
+      "id": "hanuman-bahuk-7",
+      "number": 7,
+      "labelHi": "छंद · ७",
+      "labelEn": "Chhand · 7",
+      "lines": [
+        "कमठ की पीठि जाके गोडनि की गाढ़ें मानो, नाप के भाजन भरि जल निधि जल भो।",
+        "जातुधान दावन परावन को दुर्ग भयो, महा मीन बास तिमि तोमनि को थल भो॥",
+        "कुम्भकरन रावन पयोद नाद ईधन को, तुलसी प्रताप जाको प्रबल अनल भो।",
+        "भीषम कहत मेरे अनुमान हनुमान, सारिखो त्रिकाल न त्रिलोक महाबल भो॥"
+      ],
+      "linesEn": [
+        "Kamath kee peethi jaake godani kee gaarhen maano, naap ke bhaajan bhari jal nidhi jal bho.",
+        "Jaatudhaan daavan paraavan ko durg bhayo, mahaa meen baas timi tomani ko thal bho.",
+        "Kumbhakaran Raavan payod naad eedhan ko, Tulasee prataap jaako prabal anal bho.",
+        "Bheesham kahat mere anumaan Hanumaan, saarikho trikaal na trilok mahaabal bho."
+      ],
+      "meaningHi": "उनके चरणों का भार और पराक्रम समुद्र, विशाल मछलियों और राक्षसों के दुर्ग तक को हिला देते हैं। रावण, कुंभकर्ण और मेघनाद उनके तेज के सामने ईंधन जैसे हैं; भीष्म उन्हें तीनों लोकों का अनुपम बलवान कहते हैं।",
+      "meaningEn": "His stride and power shake the ocean and the refuges of demons. Ravana, Kumbhakarna and Meghanada are likened to fuel before his blazing force; Bhishma calls him unequalled in strength across the three worlds and times."
+    },
+    {
+      "id": "hanuman-bahuk-8",
+      "number": 8,
+      "labelHi": "छंद · ८",
+      "labelEn": "Chhand · 8",
+      "lines": [
+        "दूत राम राय को सपूत पूत पौनको तू, अंजनी को नन्दन प्रताप भूरि भानु सो।",
+        "सीय-सोच-समन, दुरित दोष दमन, सरन आये अवन लखन प्रिय प्राण सो॥",
+        "दसमुख दुसह दरिद्र दरिबे को भयो, प्रकट तिलोक ओक तुलसी निधान सो।",
+        "ज्ञान गुनवान बलवान सेवा सावधान, साहेब सुजान उर आनु हनुमान सो॥"
+      ],
+      "linesEn": [
+        "Doot Raam Raay ko sapoot poot Paunako too, Anjanee ko nandan prataap bhoori bhaanu so.",
+        "Seeya-soch-saman, durit dosh daman, saran aaye avan Lakhan priya praan so.",
+        "Dasamukh dusah daridr daribe ko bhayo, prakat tilok ok Tulasee nidhaan so.",
+        "Gyaan gunavaan balavaan sevaa saavadhaan, saaheb sujaan ur aanu Hanumaan so."
+      ],
+      "meaningHi": "रामदूत, अंजनीनंदन हनुमान सीता का दुःख हरते और शरणागत की रक्षा करते हैं। ज्ञान, गुण, बल और सजग सेवा से युक्त इस करुणामय स्वामी को तुलसी हृदय में धारण करने का आग्रह करते हैं।",
+      "meaningEn": "Rama’s messenger, Anjani’s son, comforts Sita and shelters those who turn to him. Wise, capable and attentive in service, he is dear to Lakshmana; Tulsi urges the heart to hold this discerning protector close."
+    },
+    {
+      "id": "hanuman-bahuk-9",
+      "number": 9,
+      "labelHi": "छंद · ९",
+      "labelEn": "Chhand · 9",
+      "lines": [
+        "दवन दुवन दल भुवन बिदित बल, बेद जस गावत बिबुध बंदी छोर को।",
+        "पाप ताप तिमिर तुहिन विघटन पटु, सेवक सरोरुह सुखद भानु भोर को॥",
+        "लोक परलोक तें बिसोक सपने न सोक, तुलसी के हिये है भरोसो एक ओर को।",
+        "राम को दुलारो दास बामदेव को निवास, नाम कलि कामतरु केसरी किसोर को॥"
+      ],
+      "linesEn": [
+        "Davan duvan dal bhuvan bidit bal, bed jas gaavat bibudh bandee chhor ko.",
+        "Paap taap timir tuhin vighatan patu, sevak saroruh sukhad bhaanu bhor ko.",
+        "Lok paralok ten bisok sapane na sok, Tulasee ke hiye hai bharoso ek or ko.",
+        "Raam ko dulaaro daas Baamadev ko nivaas, naam kali kaamataru Kesaree kisor ko."
+      ],
+      "meaningHi": "देवताओं को बंधन से छुड़ाने वाले हनुमान भक्त के लिए सुबह के सूर्य जैसे सुखद हैं। तुलसी का भरोसा उन्हीं पर है; राम के प्रिय सेवक और शिवरूप केसरीनंदन का नाम उन्हें कलियुग में आशा देता है।",
+      "meaningEn": "Hanuman frees the gods and brings light to the devotee like the morning sun opening a lotus. Tulsi places his trust in Rama’s beloved servant, understood here as a form of Shiva, whose name offers hope in the difficult age of Kali."
+    },
+    {
+      "id": "hanuman-bahuk-10",
+      "number": 10,
+      "labelHi": "छंद · १०",
+      "labelEn": "Chhand · 10",
+      "lines": [
+        "महाबल सीम महा भीम महाबान इत, महाबीर बिदित बरायो रघुबीर को।",
+        "कुलिस कठोर तनु जोर परै रोर रन, करुना कलित मन धारमिक धीर को॥",
+        "दुर्जन को कालसो कराल पाल सज्जन को, सुमिरे हरन हार तुलसी की पीर को।",
+        "सीय-सुख-दायक दुलारो रघुनायक को, सेवक सहायक है साहसी समीर को॥"
+      ],
+      "linesEn": [
+        "Mahaabal seem mahaa bheem mahaabaan it, Mahaabeer bidit baraayo Raghubeer ko.",
+        "Kulis kathor tanu jor parai ror ran, karunaa kalit man dhaaramik dheer ko.",
+        "Durjan ko kaalaso karaal paal sajjan ko, sumire haran haar Tulasee kee peer ko.",
+        "Seeya-sukh-daayak dulaaro Raghunaayak ko, sevak sahaayak hai saahasee Sameer ko."
+      ],
+      "meaningHi": "वज्र जैसे शरीर और प्रचंड वीरता के भीतर हनुमान का मन करुणा, धर्म और धैर्य से भरा है। वे दुष्टों के लिए भयावह, सज्जनों के पालक, सीता को सुख देने वाले और राम के प्रिय सहायक हैं।",
+      "meaningEn": "Within his thunderbolt body and fierce courage, Hanuman holds compassion, righteousness and patience. Terrible to wrongdoers yet protective of the good, he comforts Sita, serves Rama and supports the devotee who remembers him."
+    },
+    {
+      "id": "hanuman-bahuk-11",
+      "number": 11,
+      "labelHi": "छंद · ११",
+      "labelEn": "Chhand · 11",
+      "lines": [
+        "रचिबे को बिधि जैसे, पालिबे को हरि हर, मीच मारिबे को, ज्याईबे को सुधापान भो।",
+        "धरिबे को धरनि, तरनि तम दलिबे को, सोखिबे कृसानु पोषिबे को हिम भानु भो॥",
+        "खल दुःख दोषिबे को, जन परितोषिबे को, माँगिबो मलीनता को मोदक सुदान भो।",
+        "आरत की आरति निवारिबे को तिहुँ पुर, तुलसी को साहेब हठीलो हनुमान भो॥"
+      ],
+      "linesEn": [
+        "Rachibe ko Bidhi jaise, paalibe ko Hari Har, meech maaribe ko, jyaaibe ko sudhaapaan bho.",
+        "Dharibe ko dharani, tarani tam dalibe ko, sokhibe krisaanu poshibe ko him bhaanu bho.",
+        "Khal dukh doshibe ko, jan paritoshibe ko, maangibo maleenataa ko modak sudaan bho.",
+        "Aarat kee aarati nivaaribe ko tihun pur, Tulasee ko saaheb hatheelo Hanumaan bho."
+      ],
+      "meaningHi": "तुलसी हनुमान की सहायता को सृष्टि, पालन, विनाश, अमृत, धरती, सूर्य, अग्नि और चंद्रमा की शक्तियों से समझाते हैं। वे दुखियों का दुःख मिटाने और सेवकों को संतोष देने वाले दृढ़ संकल्पी स्वामी हैं।",
+      "meaningEn": "Tulsi compares Hanuman’s help to the powers of creation, preservation and destruction, and to nectar, earth, sun, fire and moon. He praises a steadfast master who relieves distress, restrains harmful forces and brings contentment to those he serves."
+    },
+    {
+      "id": "hanuman-bahuk-12",
+      "number": 12,
+      "labelHi": "छंद · १२",
+      "labelEn": "Chhand · 12",
+      "lines": [
+        "सेवक स्योकाई जानि जानकीस मानै कानि, सानुकूल सूलपानि नवै नाथ नाँक को।",
+        "देवी देव दानव दयावने ह्वै जोरैं हाथ, बापुरे बराक कहा और राजा राँक को॥",
+        "जागत सोवत बैठे बागत बिनोद मोद, ताके जो अनर्थ सो समर्थ एक आँक को।",
+        "सब दिन रुरो परै पूरो जहाँ तहाँ ताहि, जाके है भरोसो हिये हनुमान हाँक को॥"
+      ],
+      "linesEn": [
+        "Sevak syokaai jaani Jaanakees maanai kaani, saanukool Soolapaani navai naath naank ko.",
+        "Devee dev daanav dayaavane hvai jorain haath, baapure baraak kahaa aur raajaa raank ko.",
+        "Jaagat sovat baithe baagat binod mod, taake jo anarth so samarth ek aank ko.",
+        "Sab din ruro parai pooro jahaan tahaan taahi, jaake hai bharoso hiye Hanumaan haank ko."
+      ],
+      "meaningHi": "हनुमान की सेवा से राम, शिव और देवताओं की कृपा मिलने का विश्वास प्रकट होता है। जागते, सोते और जीवन के हर काम में भक्त उनकी पुकार को सुरक्षा और शुभता का आधार मानता है।",
+      "meaningEn": "The verse expresses faith that serving Hanuman draws the goodwill of Rama, Shiva and the gods. Awake or asleep, at rest or in activity, the devotee trusts his call as a source of protection and a favourable path through life."
+    },
+    {
+      "id": "hanuman-bahuk-13",
+      "number": 13,
+      "labelHi": "छंद · १३",
+      "labelEn": "Chhand · 13",
+      "lines": [
+        "सानुग सगौरि सानुकूल सूलपानि ताहि, लोकपाल सकल लखन राम जानकी।",
+        "लोक परलोक को बिसोक सो तिलोक ताहि, तुलसी तमाइ कहा काहू बीर आनकी॥",
+        "केसरी किसोर बन्दीछोर के नेवाजे सब, कीरति बिमल कपि करुनानिधान की।",
+        "बालक ज्यों पालि हैं कृपालु मुनि सिद्धता को, जाके हिये हुलसति हाँक हनुमान की॥"
+      ],
+      "linesEn": [
+        "Saanug sagauri saanukool Soolapaani taahi, lokapaal sakal Lakhan Raam Jaanakee.",
+        "Lok paralok ko bisok so tilok taahi, Tulasee tamaai kahaa kaahoo beer aanakee.",
+        "Kesaree kisor bandeechhor ke nevaaje sab, keerati bimal kapi karunaanidhaan kee.",
+        "Baalak jyon paali hain kripaalu muni siddhataa ko, jaake hiye hulasati haank Hanumaan kee."
+      ],
+      "meaningHi": "हनुमान का स्मरण करने वाले पर शिव-पार्वती, राम-लक्ष्मण-सीता और लोकपाल अनुकूल होते हैं। तुलसी कहते हैं कि ऐसे भक्त को दूसरे आश्रय की लालसा क्यों हो, जब सिद्ध और मुनि भी उसे बालक जैसा स्नेह देते हैं।",
+      "meaningEn": "For the person who joyfully calls on Hanuman, the poet envisions the favour of Shiva and Parvati, Rama’s family and the world’s guardians. Tulsi asks why such a devotee would seek another protector, cherished even by sages as a child."
+    },
+    {
+      "id": "hanuman-bahuk-14",
+      "number": 14,
+      "labelHi": "छंद · १४",
+      "labelEn": "Chhand · 14",
+      "lines": [
+        "करुनानिधान बलबुद्धि के निधान हौ, मोद महिमानिधान गुनज्ञान के निधान हौ।",
+        "बाम देव रुप भूप राम के सनेही, नाम, लेत देत अर्थ धर्म काम निरबान हौ॥",
+        "आपने प्रभाव सीतानाथ के सुभाव सील, लोक बेद बिधि के बिदुष हनुमान हौ।",
+        "मन की बचन की करम की तिहूँ प्रकार, तुलसी तिहारो तुम साहेब सुजान हौ॥"
+      ],
+      "linesEn": [
+        "Karunaanidhaan balabuddhi ke nidhaan hau, mod mahimaanidhaan gunagyaan ke nidhaan hau.",
+        "Baam Dev roop bhoop Raam ke sanehee, naam, let det arth dharm kaam nirabaan hau.",
+        "Aapane prabhaav Seetaanaath ke subhaav seel, lok bed bidhi ke bidush Hanumaan hau.",
+        "Man kee bachan kee karam kee tihun prakaar, Tulasee tihaaro tum saaheb sujaan hau."
+      ],
+      "meaningHi": "हनुमान करुणा, बल, बुद्धि, आनंद और ज्ञान के भंडार हैं; वे शिवरूप और राम के स्नेही हैं। तुलसी मन, वचन और कर्म से अपने को उनका सेवक मानकर धर्म, जीवन के उद्देश्यों और मुक्ति की दिशा में उनका सहारा लेते हैं।",
+      "meaningEn": "Hanuman is praised as a treasury of compassion, strength, wisdom and joy, a form of Shiva and a companion of Rama. Tulsi offers thought, speech and action to this discerning master, seeking guidance toward life’s worthy aims and liberation."
+    },
+    {
+      "id": "hanuman-bahuk-15",
+      "number": 15,
+      "labelHi": "छंद · १५",
+      "labelEn": "Chhand · 15",
+      "lines": [
+        "मन को अगम तन सुगम किये कपीस, काज महाराज के समाज साज साजे हैं।",
+        "देवबंदी छोर रनरोर केसरी किसोर, जुग जुग जग तेरे बिरद बिराजे हैं॥",
+        "बीर बरजोर घटि जोर तुलसी की ओर, सुनि सकुचाने साधु खल गन गाजे हैं।",
+        "बिगरी सँवार अंजनी कुमार कीजे मोहिं, जैसे होत आये हनुमान के निवाजे हैं॥"
+      ],
+      "linesEn": [
+        "Man ko agam tan sugam kiye Kapees, kaaj Mahaaraaj ke samaaj saaj saaje hain.",
+        "Devabandee chhor ranaror Kesaree kisor, jug jug jag tere birad biraaje hain.",
+        "Beer barajor ghati jor Tulasee kee or, suni sakuchaane saadhu khal gan gaaje hain.",
+        "Bigaree sanvaar Anjanee Kumaar keeje mohin, jaise hot aaye Hanumaan ke nivaaje hain."
+      ],
+      "meaningHi": "राम के लिए जो कार्य मन को भी कठिन लगता था, हनुमान ने उसे संभव किया। तुलसी अपनी बिगड़ी दशा पर व्याकुल होकर पूछते हैं कि उनके लिए यह बल क्यों घटा दिखता है, और पहले की तरह कृपा की प्रार्थना करते हैं।",
+      "meaningEn": "Hanuman made even seemingly impossible tasks possible for Rama. Troubled by his own condition, Tulsi asks why that strength appears diminished in his case, and begs Anjani’s son to restore his fortunes as he has done for other devotees."
+    },
+    {
+      "id": "hanuman-bahuk-16",
+      "number": 16,
+      "labelHi": "छंद · १६",
+      "labelEn": "Chhand · 16",
+      "lines": [
+        "जान सिरोमनि हो हनुमान, सदा जन के मन बास तिहारो।",
+        "ढारो बिगारो मैं काको कहा, केहि कारन खीझत हौं तो तिहारो॥",
+        "साहेब सेवक नाते ते हातो, कियो सो तहां तुलसी को न चारो।",
+        "दोष सुनाये तैं आगेहुँ को, होशियार ह्वैं हों मन तो हिय हारो॥"
+      ],
+      "linesEn": [
+        "Jaan siromani ho Hanumaan, sadaa jan ke man baas tihaaro.",
+        "Dhaaro bigaaro main kaako kahaa, kehi kaaran kheejhat haun to tihaaro.",
+        "Saaheb sevak naate te haato, kiyo so tahaan Tulasee ko na chaaro.",
+        "Dosh sunaaye tain aagehun ko, hoshiyaar hvain hon man to hiya haaro."
+      ],
+      "meaningHi": "तुलसी अपने स्वामी से पूछते हैं कि उनसे कौन-सी भूल हुई जिसके कारण वे अप्रसन्न हैं। यदि दोष है तो बताने की प्रार्थना करते हैं, ताकि आगे सावधान रह सकें; वे अपने सेवक-संबंध को छोड़ना नहीं चाहते।",
+      "meaningEn": "Tulsi asks his master what harm or fault has caused displeasure. Even while feeling cast aside, he asks to be told his mistake so that he can act more carefully; his appeal rests on the bond between servant and protector."
+    },
+    {
+      "id": "hanuman-bahuk-17",
+      "number": 17,
+      "labelHi": "छंद · १७",
+      "labelEn": "Chhand · 17",
+      "lines": [
+        "तेरे थपै उथपै न महेस, थपै थिर को कपि जे उर घाले।",
+        "तेरे निबाजे गरीब निबाज, बिराजत बैरिन के उर साले॥",
+        "संकट सोच सबै तुलसी, लिये नाम फटै मकरी के से जाले।",
+        "बूढ भये बलि मेरिहिं बार, कि हारि परे बहुतै नत पाले॥"
+      ],
+      "linesEn": [
+        "Tere thapai uthapai na Mahes, thapai thir ko kapi je ur ghaale.",
+        "Tere nibaaje gareeb nibaaj, biraajat bairin ke ur saale.",
+        "Sankat soch sabai Tulasee, liye naam phatai makaree ke se jaale.",
+        "Boorh bhaye bali merihin baar, ki haari pare bahutai nat paale."
+      ],
+      "meaningHi": "हनुमान जिसे स्थापित करें उसे कोई डिगा नहीं सकता, और उनका नाम संकटों को जाले की तरह तोड़ देता है। तुलसी आत्मीय उलाहने में पूछते हैं कि क्या उनकी बारी में स्वामी थक गए हैं।",
+      "meaningEn": "No one can displace those whom Hanuman establishes, and his name tears through troubles like a web. With the intimacy of a grieving devotee, Tulsi asks whether his protector has grown tired just when his own turn for help has come."
+    },
+    {
+      "id": "hanuman-bahuk-18",
+      "number": 18,
+      "labelHi": "छंद · १८",
+      "labelEn": "Chhand · 18",
+      "lines": [
+        "सिंधु तरे बड़े बीर दले खल, जारे हैं लंक से बंक मवासे।",
+        "तैं रनि केहरि केहरि के, बिदले अरि कुंजर छैल छवासे॥",
+        "तोसो समत्थ सुसाहेब सेई सहै, तुलसी दुख दोष दवा से।",
+        "बानरबाज ! बढ़े खल खेचर, लीजत क्यों न लपेटि लवासे॥"
+      ],
+      "linesEn": [
+        "Sindhu tare bare beer dale khal, jaare hain Lank se bank mavaase.",
+        "Tain rani kehari kehari ke, bidale ari kunjar chhail chhavaase.",
+        "Toso samatth susaaheb sei sahai, Tulasee dukh dosh davaa se.",
+        "Baanarabaaj! barhe khal khechar, leejat kyon na lapeti lavaase."
+      ],
+      "meaningHi": "समुद्र पार करने और लंका के वीरों को जीतने वाले हनुमान के रहते तुलसी का दुःख बना है। वे बाज और पक्षियों की उपमा देकर प्रार्थना करते हैं कि स्वामी इन बढ़ते संकटों को समेट लें।",
+      "meaningEn": "Though Hanuman crossed the ocean and overcame Lanka’s warriors, Tulsi still suffers while serving him. Comparing the protector to a hawk and troubles to lesser birds, he asks him to gather up and dispel these mounting afflictions."
+    },
+    {
+      "id": "hanuman-bahuk-19",
+      "number": 19,
+      "labelHi": "छंद · १९",
+      "labelEn": "Chhand · 19",
+      "lines": [
+        "अच्छ विमर्दन कानन भानि, दसानन आनन भा न निहारो।",
+        "बारिदनाद अकंपन कुंभकरन से, कुञ्जर केहरि वारो॥",
+        "राम प्रताप हुतासन, कच्छ, विपच्छ, समीर समीर दुलारो।",
+        "पाप ते साप ते ताप तिहूँ तें, सदा तुलसी कह सो रखवारो॥"
+      ],
+      "linesEn": [
+        "Achchh vimardan kaanan bhaani Dasaanan aanan bhaa na nihaaro.",
+        "Baaridanaad Akampan Kumbhakaran se, kunjar kehari vaaro.",
+        "Raam prataap hutaasan, kachchh, vipachchh, Sameer Sameer dulaaro.",
+        "Paap te saap te taap tihun ten, sadaa Tulasee kah so rakhavaaro."
+      ],
+      "meaningHi": "अक्षयकुमार का वध, वाटिका का विनाश और महान राक्षसों से युद्ध हनुमान की वीरता बताते हैं। राम का प्रताप अग्नि और पवनपुत्र उसके लिए वायु समान हैं; तुलसी उनसे पाप, शाप और संताप में रक्षा माँगते हैं।",
+      "meaningEn": "Hanuman’s deeds against Akshaya and Lanka’s warriors reveal his courage. Rama’s power is likened to fire and the wind-god’s son to the breeze that feeds it; Tulsi seeks protection from wrongdoing, curses and suffering."
+    },
+    {
+      "id": "hanuman-bahuk-20",
+      "number": 20,
+      "labelHi": "छंद · २०",
+      "labelEn": "Chhand · 20",
+      "lines": [
+        "जानत जहान हनुमान को निवाज्यो जन, मन अनुमानि बलि बोल न बिसारिये।",
+        "सेवा जोग तुलसी कबहुँ कहा चूक परी, साहेब सुभाव कपि साहिबी संभारिये॥",
+        "अपराधी जानि कीजै सासति सहस भान्ति, मोदक मरै जो ताहि माहुर न मारिये।",
+        "साहसी समीर के दुलारे रघुबीर जू के, बाँह पीर महाबीर बेगि ही निवारिये॥"
+      ],
+      "linesEn": [
+        "Jaanat jahaan Hanumaan ko nivaajyo jan, man anumaani bali bol na bisaariye.",
+        "Sevaa jog Tulasee kabahun kahaa chook paree, saaheb subhaav kapi saahibee sambhaariye.",
+        "Aparaadhee jaani keejai saasati sahas bhaanti, modak marai jo taahi maahur na maariye.",
+        "Saahasee Sameer ke dulaare Raghubeer joo ke, baanh peer Mahaabeer begi hee nivaariye."
+      ],
+      "meaningHi": "संसार हनुमान की कृपा को जानता है; तुलसी उनसे अपना करुणामय स्वभाव याद करने को कहते हैं। अपनी भूल स्वीकारने को तैयार होकर भी वे कठोर दंड के स्थान पर दया और बाँह की पीड़ा से राहत माँगते हैं।",
+      "meaningEn": "The world knows Hanuman’s generosity, and Tulsi appeals to that gracious nature. Willing to acknowledge faults, he nevertheless begs for mercy rather than crushing punishment, asking the mighty servant of Rama to relieve his aching arm."
+    },
+    {
+      "id": "hanuman-bahuk-21",
+      "number": 21,
+      "labelHi": "छंद · २१",
+      "labelEn": "Chhand · 21",
+      "lines": [
+        "बालक बिलोकि, बलि बारें तें आपनो कियो, दीनबन्धु दया कीन्हीं निरुपाधि न्यारिये।",
+        "रावरो भरोसो तुलसी के, रावरोई बल, आस रावरीयै दास रावरो विचारिये॥",
+        "बड़ो बिकराल कलि काको न बिहाल कियो, माथे पगु बलि को निहारि सो निबारिये।",
+        "केसरी किसोर रनरोर बरजोर बीर, बाँह पीर राहु मातु ज्यौं पछारि मारिये॥"
+      ],
+      "linesEn": [
+        "Baalak biloki, bali baaren ten aapano kiyo, deenabandhu dayaa keenheen nirupaadhi nyaariye.",
+        "Raavaro bharoso Tulasee ke, raavaroi bal, aas raavareeyai daas raavaro vichaariye.",
+        "Baro bikaraal kali kaako na bihaal kiyo, maathe pagu bali ko nihaari so nibaariye.",
+        "Kesaree kisor ranaror barajor beer, baanh peer Raahu maatu jyaun pachhaari maariye."
+      ],
+      "meaningHi": "तुलसी कहते हैं कि हनुमान ने बचपन से बिना शर्त उन्हें अपनाया है। कलियुग के कष्ट से दबे इस सेवक की बाँह की पीड़ा को सिंहिका की तरह परास्त करने की विनती करते हैं।",
+      "meaningEn": "Tulsi recalls being accepted since childhood without conditions. Relying on Hanuman alone while pressed by the troubles of Kali’s age, he asks him to strike down the pain in his arm as he once overcame Simhika."
+    },
+    {
+      "id": "hanuman-bahuk-22",
+      "number": 22,
+      "labelHi": "छंद · २२",
+      "labelEn": "Chhand · 22",
+      "lines": [
+        "उथपे थपनथिर थपे उथपनहार, केसरी कुमार बल आपनो संबारिये।",
+        "राम के गुलामनि को काम तरु रामदूत, मोसे दीन दूबरे को तकिया तिहारिये॥",
+        "साहेब समर्थ तो सों तुलसी के माथे पर, सोऊ अपराध बिनु बीर, बाँधि मारिये।",
+        "पोखरी बिसाल बाँहु, बलि, बारिचर पीर, मकरी ज्यों पकरि के बदन बिदारिये॥"
+      ],
+      "linesEn": [
+        "Uthape thapanathir thape uthapanahaar, Kesaree Kumaar bal aapano sambaariye.",
+        "Raam ke gulaamani ko kaam taru Raamadoot, mose deen doobare ko takiyaa tihaariye.",
+        "Saaheb samarth to son Tulasee ke maathe par, sou aparaadh binu beer, baandhi maariye.",
+        "Pokharee bisaal baanhu, bali, baarichar peer, makaree jyon pakari ke badan bidaariye."
+      ],
+      "meaningHi": "उजड़े को बसाने और अन्याय का बल तोड़ने वाले हनुमान निर्बल के सहारे हैं। तुलसी अपनी बाँह को सरोवर और पीड़ा को उसमें बसे मकर जैसा मानकर उसे निकाल देने की प्रार्थना करते हैं।",
+      "meaningEn": "Hanuman restores the displaced and breaks oppressive power, becoming support for the weak. Tulsi pictures his arm as a lake and the pain as a creature within it, asking his protector to seize and remove that torment."
+    },
+    {
+      "id": "hanuman-bahuk-23",
+      "number": 23,
+      "labelHi": "छंद · २३",
+      "labelEn": "Chhand · 23",
+      "lines": [
+        "राम को सनेह, राम साहस लखन सिय, राम की भगति, सोच संकट निवारिये।",
+        "मुद मरकट रोग बारिनिधि हेरि हारे, जीव जामवंत को भरोसो तेरो भारिये॥",
+        "कूदिये कृपाल तुलसी सुप्रेम पब्बयतें, सुथल सुबेल भालू बैठि कै विचारिये।",
+        "महाबीर बाँकुरे बराकी बाँह पीर क्यों न, लंकिनी ज्यों लात घात ही मरोरि मारिये॥"
+      ],
+      "linesEn": [
+        "Raam ko saneh, Raam saahas Lakhan Siya, Raam kee bhagati, soch sankat nivaariye.",
+        "Mud marakat rog baarinidhi heri haare, jeev Jaamavant ko bharoso tero bhaariye.",
+        "Koodiye kripaal Tulasee suprem pabbayaten, suthal Subel bhaaloo baithi kai vichaariye.",
+        "Mahaabeer baankure baraakee baanh peer kyon na, Lankinee jyon laat ghaat hee marori maariye."
+      ],
+      "meaningHi": "रामभक्ति और राम-लक्ष्मण-सीता के सहारे से तुलसी संकट पार करना चाहते हैं। आनंद को वानरों और जीवन को जामवंत की उपमा देकर वे हनुमान से पीड़ा रूपी लंकिनी को परास्त करने की विनती करते हैं।",
+      "meaningEn": "Tulsi seeks to cross distress through devotion to Rama and the support of Rama, Lakshmana and Sita. In an extended Ramayana image, joy is a company of vanaras and life is Jambavan awaiting Hanuman, who is asked to defeat pain like Lankini."
+    },
+    {
+      "id": "hanuman-bahuk-24",
+      "number": 24,
+      "labelHi": "छंद · २४",
+      "labelEn": "Chhand · 24",
+      "lines": [
+        "लोक परलोकहुँ तिलोक न विलोकियत, तोसे समरथ चष चारिहूँ निहारिये।",
+        "कर्म, काल, लोकपाल, अग जग जीवजाल, नाथ हाथ सब निज महिमा बिचारिये॥",
+        "खास दास रावरो, निवास तेरो तासु उर, तुलसी सो, देव दुखी देखिअत भारिये।",
+        "बात तरुमूल बाँहूसूल कपिकच्छु बेलि, उपजी सकेलि कपि केलि ही उखारिये॥"
+      ],
+      "linesEn": [
+        "Lok paralokahun tilok na vilokiyat, tose samarath chash chaarihun nihaariye.",
+        "Karm, kaal, lokapaal, ag jag jeevajaal, naath haath sab nij mahimaa bichaariye.",
+        "Khaas daas raavaro, nivaas tero taasu ur, Tulasee so, dev dukhee dekhiat bhaariye.",
+        "Baat tarumool baanhusool kapikachchhu beli, upajee sakeli kapi keli hee ukhaariye."
+      ],
+      "meaningHi": "तुलसी किसी लोक में हनुमान के समान समर्थ आश्रय नहीं देखते। वे अपनी बाँह की पीड़ा को जड़ पकड़ती लता की उपमा देते हुए कहते हैं कि स्वामी उसे सहज ही उखाड़ दें।",
+      "meaningEn": "Tulsi finds no protector as capable as Hanuman in this world or beyond. Since time, action and living beings lie within divine power, he asks that the pain spreading like a rooted creeper in his arm be playfully uprooted."
+    },
+    {
+      "id": "hanuman-bahuk-25",
+      "number": 25,
+      "labelHi": "छंद · २५",
+      "labelEn": "Chhand · 25",
+      "lines": [
+        "करम कराल कंस भूमिपाल के भरोसे, बकी बक भगिनी काहू तें कहा डरैगी।",
+        "बड़ी बिकराल बाल घातिनी न जात कहि, बाँहू बल बालक छबीले छोटे छरैगी॥",
+        "आई है बनाई बेष आप ही बिचारि देख, पाप जाय सब को गुनी के पाले परैगी।",
+        "पूतना पिसाचिनी ज्यौं कपि कान्ह तुलसी की, बाँह पीर महाबीर तेरे मारे मरैगी॥"
+      ],
+      "linesEn": [
+        "Karam karaal Kans bhoomipaal ke bharose, Bakee Bak bhaginee kaahoo ten kahaa daraigee.",
+        "Baree bikaraal baal ghaatinee na jaat kahi, baanhoo bal baalak chhabeele chhote chharaigee.",
+        "Aai hai banaai besh aap hee bichaari dekh, paap jaay sab ko gunee ke paale paraigee.",
+        "Pootanaa pisaachinee jyaun kapi Kaanh Tulasee kee, baanh peer Mahaabeer tere maare maraigee."
+      ],
+      "meaningHi": "कंस और पूतना की कथा की उपमा में तुलसी अपनी पीड़ा को छल से आए संकट के रूप में देखते हैं। हनुमान को बालकृष्ण जैसा रक्षक मानकर उससे छुटकारे की प्रार्थना करते हैं।",
+      "meaningEn": "Using the story of Kamsa and Putana, Tulsi imagines his pain as a deceptive threat arriving in disguise. He addresses Hanuman as a protector like the child Krishna and asks him to overcome the affliction."
+    },
+    {
+      "id": "hanuman-bahuk-26",
+      "number": 26,
+      "labelHi": "छंद · २६",
+      "labelEn": "Chhand · 26",
+      "lines": [
+        "भाल की कि काल की कि रोष की त्रिदोष की है, बेदन बिषम पाप ताप छल छाँह की।",
+        "करमन कूट की कि जन्त्र मन्त्र बूट की, पराहि जाहि पापिनी मलीन मन माँह की॥",
+        "पैहहि सजाय, नत कहत बजाय तोहि, बाबरी न होहि बानि जानि कपि नाँह की।",
+        "आन हनुमान की दुहाई बलवान की, सपथ महाबीर की जो रहै पीर बाँह की॥"
+      ],
+      "linesEn": [
+        "Bhaal kee ki kaal kee ki rosh kee tridosh kee hai, bedan bisham paap taap chhal chhaan kee.",
+        "Karaman koot kee ki jantr mantr boot kee, paraahi jaahi paapinee maleen man maanh kee.",
+        "Paihahi sajaay, nat kahat bajaay tohi, baabaree na hohi baani jaani kapi naanh kee.",
+        "Aan Hanumaan kee duhaai balavaan kee, sapath Mahaabeer kee jo rahai peer baanh kee."
+      ],
+      "meaningHi": "तुलसी पीड़ा के कारण को लेकर भाग्य, समय, क्रोध, दोष और अपने कर्मों पर प्रश्न करते हैं। वे हनुमान की दुहाई देकर इस कष्ट को जाने को कहते हैं; यह पीड़ित भक्त की प्रार्थना है।",
+      "meaningEn": "Tulsi wonders whether fate, time, anger, bodily imbalance or his own actions underlie the pain. Calling on Hanuman’s protection, he addresses the affliction and commands it to leave; the verse voices a sufferer’s devotional plea."
+    },
+    {
+      "id": "hanuman-bahuk-27",
+      "number": 27,
+      "labelHi": "छंद · २७",
+      "labelEn": "Chhand · 27",
+      "lines": [
+        "सिंहिका सँहारि बल सुरसा सुधारि छल, लंकिनी पछारि मारि बाटिका उजारी है।",
+        "लंक परजारि मकरी बिदारि बार बार, जातुधान धारि धूरि धानी करि डारी है॥",
+        "तोरि जमकातरि मंदोदरी कठोरि आनी, रावन की रानी मेघनाद महतारी है।",
+        "भीर बाँह पीर की निपट राखी महाबीर, कौन के सकोच तुलसी के सोच भारी है॥"
+      ],
+      "linesEn": [
+        "Sinhikaa sanhaari bal Surasaa sudhaari chhal, Lankinee pachhaari maari baatikaa ujaaree hai.",
+        "Lank parajaari makaree bidaari baar baar, jaatudhaan dhaari dhoori dhaanee kari daaree hai.",
+        "Tori jamakaatari Mandodaree kathori aanee, Raavan kee raanee Meghanaad mahataaree hai.",
+        "Bheer baanh peer kee nipat raakhee Mahaabeer, kaun ke sakoch Tulasee ke soch bhaaree hai."
+      ],
+      "meaningHi": "सिंहिका, सुरसा, लंकिनी और लंका के संकटों पर हनुमान की विजय याद की जाती है। तुलसी व्याकुल होकर पूछते हैं कि इतने पराक्रमी स्वामी ने उनकी बाँह की पीड़ा को क्यों छोड़ रखा है।",
+      "meaningEn": "The poet recalls Hanuman overcoming Simhika, Surasa, Lankini and the dangers of Lanka. In anguish, Tulsi asks why a master of such courage has left this single fear—the pain in his arm—unresolved."
+    },
+    {
+      "id": "hanuman-bahuk-28",
+      "number": 28,
+      "labelHi": "छंद · २८",
+      "labelEn": "Chhand · 28",
+      "lines": [
+        "तेरो बालकेलि बीर सुनि सहमत धीर, भूलत सरीर सुधि सक्र रवि राहु की।",
+        "तेरी बाँह बसत बिसोक लोक पाल सब, तेरो नाम लेत रहैं आरति न काहु की॥",
+        "साम दान भेद विधि बेदहू लबेद सिधि, हाथ कपिनाथ ही के चोटी चोर साहु की।",
+        "आलस अनख परिहास कै सिखावन है, एते दिन रही पीर तुलसी के बाहु की॥"
+      ],
+      "linesEn": [
+        "Tero baalakeli beer suni sahamat dheer, bhoolat sareer sudhi Sakra Ravi Raahu kee.",
+        "Teree baanh basat bisok lok paal sab, tero naam let rahain aarati na kaahu kee.",
+        "Saam daan bhed vidhi bedahoo labed sidhi, haath Kapinaath hee ke chotee chor saahu kee.",
+        "Aalas anakh parihaas kai sikhaavan hai, ete din rahee peer Tulasee ke baahu kee."
+      ],
+      "meaningHi": "हनुमान की बाललीला से देवता भी चकित और भयभीत होते हैं; उनका नाम दुखियों को आश्रय देता है। तुलसी पूछते हैं कि उनकी लंबी पीड़ा कोई अप्रसन्नता, परिहास या शिक्षा तो नहीं।",
+      "meaningEn": "Even the gods marvel at Hanuman’s childhood feats, and his name shelters those in distress. Tulsi asks whether the long delay in relief is displeasure, playful testing or a lesson, revealing both faith and bewilderment."
+    },
+    {
+      "id": "hanuman-bahuk-29",
+      "number": 29,
+      "labelHi": "छंद · २९",
+      "labelEn": "Chhand · 29",
+      "lines": [
+        "टूकनि को घर घर डोलत कँगाल बोलि, बाल ज्यों कृपाल नत पाल पालि पोसो है।",
+        "कीन्ही है सँभार सार अँजनी कुमार बीर, आपनो बिसारि हैं न मेरेहू भरोसो है॥",
+        "इतनो परेखो सब भान्ति समरथ आजु, कपिराज सांची कहौं को तिलोक तोसो है।",
+        "सासति सहत दास कीजे पेखि परिहास, चीरी को मरन खेल बालकनि कोसो है॥"
+      ],
+      "linesEn": [
+        "Tookani ko ghar ghar dolat kangaal boli, baal jyon kripaal nat paal paali poso hai.",
+        "Keenhee hai sambhaar saar Anjanee Kumaar beer, aapano bisaari hain na merehoo bharoso hai.",
+        "Itano parekho sab bhaanti samarath aaju, Kapiraaj saanchee kahaun ko tilok toso hai.",
+        "Saasati sahat daas keeje pekhi parihaas, cheeree ko maran khel baalakani koso hai."
+      ],
+      "meaningHi": "भोजन के टुकड़ों के लिए भटकते तुलसी को हनुमान ने बालक जैसा पाला। उसी पुराने भरोसे से वे कहते हैं कि सेवक की असहनीय दशा स्वामी के लिए मात्र खेल न बन जाए।",
+      "meaningEn": "Tulsi remembers wandering for scraps and being cared for like a child. Trusting that earlier kindness, he asks his mighty protector not to treat the servant’s unbearable suffering as a spectacle or a child’s game."
+    },
+    {
+      "id": "hanuman-bahuk-30",
+      "number": 30,
+      "labelHi": "छंद · ३०",
+      "labelEn": "Chhand · 30",
+      "lines": [
+        "आपने ही पाप तें त्रिताप तें कि साप तें, बढ़ी है बाँह बेदन कही न सहि जाति है।",
+        "औषध अनेक जन्त्र मन्त्र टोटकादि किये, बादि भये देवता मनाये अधीकाति है॥",
+        "करतार, भरतार, हरतार, कर्म काल, को है जगजाल जो न मानत इताति है।",
+        "चेरो तेरो तुलसी तू मेरो कह्यो राम दूत, ढील तेरी बीर मोहि पीर तें पिराति है॥"
+      ],
+      "linesEn": [
+        "Aapane hee paap ten tritaap ten ki saap ten, barhee hai baanh bedan kahee na sahi jaati hai.",
+        "Aushadh anek jantr mantr totakaadi kiye, baadi bhaye devataa manaaye adheekaati hai.",
+        "Karataar, bharataar, harataar, karm kaal, ko hai jagajaal jo na maanat itaati hai.",
+        "Chero tero Tulasee too mero kahyo Raam doot, dheel teree beer mohi peer ten piraati hai."
+      ],
+      "meaningHi": "कवि कहता है कि अनेक उपायों के बाद भी बाँह का दुःख बढ़ता गया। वह अपने को रामदूत का सेवक कहकर पुकारता है और स्वीकारता है कि सहायता में विलंब उसे पीड़ा से भी अधिक व्याकुल कर रहा है।",
+      "meaningEn": "The poet says his arm’s pain has grown despite many attempted remedies. Calling himself the servant of Rama’s messenger, he confesses that the delay in help troubles him even more than the suffering itself."
+    },
+    {
+      "id": "hanuman-bahuk-31",
+      "number": 31,
+      "labelHi": "छंद · ३१",
+      "labelEn": "Chhand · 31",
+      "lines": [
+        "दूत राम राय को, सपूत पूत वाय को, समत्थ हाथ पाय को सहाय असहाय को।",
+        "बाँकी बिरदावली बिदित बेद गाइयत, रावन सो भट भयो मुठिका के धाय को॥",
+        "एते बडे साहेब समर्थ को निवाजो आज, सीदत सुसेवक बचन मन काय को।",
+        "थोरी बाँह पीर की बड़ी गलानि तुलसी को, कौन पाप कोप, लोप प्रगट प्रभाय को॥"
+      ],
+      "linesEn": [
+        "Doot Raam Raay ko, sapoot poot Vaay ko, samatth haath paay ko sahaay asahaay ko.",
+        "Baankee birudaavalee bidit bed gaaiyat, Raavan so bhat bhayo muthikaa ke dhaay ko.",
+        "Ete bare saaheb samarth ko nivaajo aaj, seedat susevak bachan man kaay ko.",
+        "Thoree baanh peer kee baree galaani Tulasee ko, kaun paap kop, lop pragat prabhaay ko."
+      ],
+      "meaningHi": "रामदूत हनुमान असहाय के सहायक और रावण जैसे योद्धा को भी परास्त करने वाले हैं। तुलसी पूछते हैं कि मन, वचन और शरीर से सेवा करने वाला कृपापात्र आज भी दुःखी क्यों है।",
+      "meaningEn": "Rama’s messenger supports the helpless and can strike down a warrior as mighty as Ravana. Tulsi wonders why a favoured servant devoted in speech, mind and body still suffers."
+    },
+    {
+      "id": "hanuman-bahuk-32",
+      "number": 32,
+      "labelHi": "छंद · ३२",
+      "labelEn": "Chhand · 32",
+      "lines": [
+        "देवी देव दनुज मनुज मुनि सिद्ध नाग, छोटे बड़े जीव जेते चेतन अचेत हैं।",
+        "पूतना पिसाची जातुधानी जातुधान बाम, राम दूत की रजाई माथे मानि लेत हैं॥",
+        "घोर जन्त्र मन्त्र कूट कपट कुरोग जोग, हनुमान आन सुनि छाड़त निकेत हैं।",
+        "क्रोध कीजे कर्म को प्रबोध कीजे तुलसी को, सोध कीजे तिनको जो दोष दुख देत हैं॥"
+      ],
+      "linesEn": [
+        "Devee dev danuj manuj muni siddh naag, chhote bare jeev jete chetan achet hain.",
+        "Pootanaa pisaachee jaatudhaanee jaatudhaan baam, Raam doot kee rajaai maathe maani let hain.",
+        "Ghor jantr mantr koot kapat kurog jog, Hanumaan aan suni chhaarat niket hain.",
+        "Krodh keeje karm ko prabodh keeje Tulasee ko, sodh keeje tinako jo dosh dukh det hain."
+      ],
+      "meaningHi": "देव, मनुष्य और भयावह शक्तियाँ भी रामदूत की आज्ञा मानती हैं। तुलसी अपने बुरे कर्मों का दमन, अपने लिए समझ और दुःख देने वाले कारणों का सुधार माँगते हैं।",
+      "meaningEn": "Gods, humans and frightening powers alike are pictured as subject to Rama’s messenger. Tulsi asks him to restrain harmful actions, awaken understanding in the devotee and set right the causes that bring suffering."
+    },
+    {
+      "id": "hanuman-bahuk-33",
+      "number": 33,
+      "labelHi": "छंद · ३३",
+      "labelEn": "Chhand · 33",
+      "lines": [
+        "तेरे बल बानर जिताये रन रावन सों, तेरे घाले जातुधान भये घर घर के।",
+        "तेरे बल राम राज किये सब सुर काज, सकल समाज साज साजे रघुबर के॥",
+        "तेरो गुनगान सुनि गीरबान पुलकत, सजल बिलोचन बिरंचि हरिहर के।",
+        "तुलसी के माथे पर हाथ फेरो कीस नाथ, देखिये न दास दुखी तोसो कनिगर के॥"
+      ],
+      "linesEn": [
+        "Tere bal baanar jitaaye ran Raavan son, tere ghaale jaatudhaan bhaye ghar ghar ke.",
+        "Tere bal Raam raaj kiye sab sur kaaj, sakal samaaj saaj saaje Raghubar ke.",
+        "Tero gunagaan suni geerabaan pulakat, sajal bilochan Biranchi Harihar ke.",
+        "Tulasee ke maathe par haath phero Kees naath, dekhiye na daas dukhee toso kanigar ke."
+      ],
+      "meaningHi": "हनुमान के बल से वानरों ने विजय पाई और राम का कार्य पूरा हुआ; उनका गुणगान देवताओं को भावविभोर करता है। तुलसी अपने माथे पर स्नेहभरा हाथ रखने और सेवक का दुःख देखने की विनती करते हैं।",
+      "meaningEn": "By Hanuman’s strength the vanaras prevailed and Rama’s work was accomplished; praise of him moves the gods. Tulsi asks for a reassuring hand upon his head and for his compassionate master to attend to the servant’s distress."
+    },
+    {
+      "id": "hanuman-bahuk-34",
+      "number": 34,
+      "labelHi": "छंद · ३४",
+      "labelEn": "Chhand · 34",
+      "lines": [
+        "पालो तेरे टूक को परेहू चूक मूकिये न, कूर कौड़ी दूको हौं आपनी ओर हेरिये।",
+        "भोरानाथ भोरे ही सरोष होत थोरे दोष, पोषि तोषि थापि आपनो न अव डेरिये॥",
+        "अँबु तू हौं अंबुचर, अँबु तू हौं डिंभ सो न, बूझिये बिलंब अवलंब मेरे तेरिये।",
+        "बालक बिकल जानि पाहि प्रेम पहिचानि, तुलसी की बाँह पर लामी लूम फेरिये॥"
+      ],
+      "linesEn": [
+        "Paalo tere took ko parehoo chook mookiye na, koor kauree dooko haun aapanee or heriye.",
+        "Bhoraanaath bhore hee sarosh hot thore dosh, poshi toshi thaapi aapano na av deriye.",
+        "Ambu too haun ambuchar, ambu too haun dimbh so na, boojhiye bilamb avalamb mere teriye.",
+        "Baalak bikal jaani paahi prem pahichaani, Tulasee kee baanh par laamee loom pheriye."
+      ],
+      "meaningHi": "तुलसी अपनी भूलों के बावजूद पुराने पालन और प्रेम को याद दिलाते हैं। जल-मछली और माँ-बच्चे के संबंध जैसी निकटता से वे हनुमान से अपनी व्याकुलता शांत करने की प्रार्थना करते हैं।",
+      "meaningEn": "Despite his faults, Tulsi appeals to the care and affection he has already received. Through images of water and fish, mother and child, he expresses dependence and asks Hanuman to soothe his agitation with a protective touch."
+    },
+    {
+      "id": "hanuman-bahuk-35",
+      "number": 35,
+      "labelHi": "छंद · ३५",
+      "labelEn": "Chhand · 35",
+      "lines": [
+        "घेरि लियो रोगनि, कुजोगनि, कुलोगनि ज्यौं, बासर जलद घन घटा धुकि धाई है।",
+        "बरसत बारि पीर जारिये जवासे जस, रोष बिनु दोष धूम मूल मलिनाई है॥",
+        "करुनानिधान हनुमान महा बलवान, हेरि हँसि हाँकि फूंकि फौंजै ते उड़ाई है।",
+        "खाये हुतो तुलसी कुरोग राढ़ राकसनि, केसरी किसोर राखे बीर बरिआई है॥"
+      ],
+      "linesEn": [
+        "Gheri liyo rogani, kujogani, kulogani jyaun, baasar jalad ghan ghataa dhuki dhaai hai.",
+        "Barasat baari peer jaariye javaase jas, rosh binu dosh dhoom mool malinaai hai.",
+        "Karunaanidhaan Hanumaan mahaa balavaan, heri hansi haanki phoonki phaunjai te uraai hai.",
+        "Khaaye huto Tulasee kurog raarh raakasani, Kesaree kisor raakhe beer bariaai hai."
+      ],
+      "meaningHi": "रोग और विपत्तियाँ कवि को घने बादलों की तरह घेरती हैं। वे हनुमान की करुणा और शक्ति से इस दल के छँट जाने तथा कष्ट से रक्षा की आशा व्यक्त करते हैं।",
+      "meaningEn": "Illness and adversity gather around the poet like dense storm clouds. He imagines Hanuman’s compassionate glance and strength scattering this hostile company, expressing hope of protection amid overwhelming distress."
+    },
+    {
+      "id": "hanuman-bahuk-36",
+      "number": 36,
+      "labelHi": "छंद · ३६",
+      "labelEn": "Chhand · 36",
+      "lines": [
+        "राम गुलाम तु ही हनुमान, गोसाँई सुसाँई सदा अनुकूलो।",
+        "पाल्यो हौं बाल ज्यों आखर दू, पितु मातु सों मंगल मोद समूलो॥",
+        "बाँह की बेदन बाँहपगार, पुकारत आरत आनँद भूलो।",
+        "श्री रघुबीर निवारिये पीर, रहौं दरबार परो लटि लूलो॥"
+      ],
+      "linesEn": [
+        "Raam gulaam tu hee Hanumaan, Gosaain susaain sadaa anukoolo.",
+        "Paalyo haun baal jyon aakhar doo, pitu maatu son mangal mod samoolo.",
+        "Baanh kee bedan baanhapagaar, pukaarat aarat aanand bhoolo.",
+        "Shree Raghubeer nivaariye peer, rahaun darabaar paro lati loolo."
+      ],
+      "meaningHi": "हनुमान को रामभक्तों के सदा अनुकूल स्वामी कहकर तुलसी रामनाम के दो अक्षरों का मातृ-पितृवत आश्रय याद करते हैं। पीड़ा में आनंद भूल जाने पर भी वे राम के द्वार पर बने रहने की विनती करते हैं।",
+      "meaningEn": "Calling Hanuman a master ever favourable to Rama’s servants, Tulsi remembers the two syllables of Rama’s name as parental care. Pain has obscured his joy, yet he asks to remain at Rama’s door even in weakness."
+    },
+    {
+      "id": "hanuman-bahuk-37",
+      "number": 37,
+      "labelHi": "छंद · ३७",
+      "labelEn": "Chhand · 37",
+      "lines": [
+        "काल की करालता करम कठिनाई कीधौं, पाप के प्रभाव की सुभाय बाय बावरे।",
+        "बेदन कुभाँति सो सही न जाति राति दिन, सोई बाँह गही जो गही समीर डाबरे॥",
+        "लायो तरु तुलसी तिहारो सो निहारि बारि, सींचिये मलीन भो तयो है तिहुँ तावरे।",
+        "भूतनि की आपनी पराये की कृपा निधान, जानियत सबही की रीति राम रावरे॥"
+      ],
+      "linesEn": [
+        "Kaal kee karaalataa karam kathinaai keedhaun, paap ke prabhaav kee subhaay baay baavare.",
+        "Bedan kubhaanti so sahee na jaati raati din, soi baanh gahee jo gahee Sameer daabare.",
+        "Laayo taru Tulasee tihaaro so nihaari baari, seenchiye maleen bho tayo hai tihun taavare.",
+        "Bhootani kee aapanee paraaye kee kripaa nidhaan, jaaniyat sabahee kee reeti Raam raavare."
+      ],
+      "meaningHi": "असहनीय पीड़ा में कवि कारण समझ नहीं पाता और उस हाथ का सहारा चाहता है जिसने पहले उसे अपनाया था। अपने को लगाए हुए सूखते वृक्ष जैसा मानकर वह कृपा के जल से फिर सींचे जाने की प्रार्थना करता है।",
+      "meaningEn": "Unable to understand relentless pain, the poet reaches for the hand that once accepted him. Like a planted tree now withering under heat, he asks to be watered again with compassion, trusting that Rama knows every hidden cause."
+    },
+    {
+      "id": "hanuman-bahuk-38",
+      "number": 38,
+      "labelHi": "छंद · ३८",
+      "labelEn": "Chhand · 38",
+      "lines": [
+        "पाँय पीर पेट पीर बाँह पीर मुंह पीर, जर जर सकल सरीर पीरमई है।",
+        "देव भूत पितर करम खल काल ग्रह, मोहि पर दवरि दमानक सी दई है॥",
+        "हौं तो बिनु मोल के बिकानो बलि बारे हीतें, ओट राम नाम की ललाट लिखि लई है।",
+        "कुँभज के किंकर बिकल बूड़े गोखुरनि, हाय राम राय ऐसी हाल कहूँ भई है॥"
+      ],
+      "linesEn": [
+        "Paany peer pet peer baanh peer munh peer, jar jar sakal sareer peeramai hai.",
+        "Dev bhoot pitar karam khal kaal grah, mohi par davari damaanak see dai hai.",
+        "Haun to binu mol ke bikaano bali baare heeten, ot Raam naam kee lalaat likhi lai hai.",
+        "Kumbhaj ke kinkar bikal boore gokhurani, haay Raam Raay aisee haal kahoon bhai hai."
+      ],
+      "meaningHi": "पैर, पेट, बाँह और मुख की पीड़ा से कवि का पूरा शरीर व्याकुल है। बचपन से रामनाम का आश्रय लेने वाला तुलसी अपनी दशा को छोटे जल में डूबते अगस्त्य के सेवक जैसी विसंगति बताकर पुकारता है।",
+      "meaningEn": "Pain in feet, stomach, arm and mouth leaves the poet’s whole body distressed. Having trusted Rama’s name since childhood, Tulsi cries out at the seeming contradiction: the servant of the ocean-drinking Agastya struggling in a hoofprint of water."
+    },
+    {
+      "id": "hanuman-bahuk-39",
+      "number": 39,
+      "labelHi": "छंद · ३९",
+      "labelEn": "Chhand · 39",
+      "lines": [
+        "बाहुक सुबाहु नीच लीचर मरीच मिलि, मुँह पीर केतुजा कुरोग जातुधान है।",
+        "राम नाम जप जाग कियो चहों सानुराग, काल कैसे दूत भूत कहा मेरे मान है॥",
+        "सुमिरे सहाय राम लखन आखर दौऊ, जिनके समूह साके जागत जहान है।",
+        "तुलसी सँभारि ताडका सँहारि भारि भट, बेधे बरगद से बनाई बानवान है॥"
+      ],
+      "linesEn": [
+        "Baahuk Subaahu neech leechar Mareech mili, munh peer Ketujaa kurog jaatudhaan hai.",
+        "Raam naam jap jaag kiyo chahon saanuraag, kaal kaise doot bhoot kahaa mere maan hai.",
+        "Sumire sahaay Raam Lakhan aakhar dou, jinake samooh saake jaagat jahaan hai.",
+        "Tulasee sambhaari Taadakaa sanhaari bhaari bhat, bedhe baragad se banaai baanavaan hai."
+      ],
+      "meaningHi": "कवि रोगों को रामकथा के राक्षसों की उपमा देता है और प्रेम से रामनाम-जप करना चाहता है। राम और लक्ष्मण का स्मरण उसे आशा देता है कि जैसे ताड़का आदि पर विजय हुई, वैसे यह संकट भी दूर हो।",
+      "meaningEn": "The poet compares ailments to demons from Rama’s story and longs to repeat Rama’s name with love. Remembering Rama and Lakshmana gives him hope that this ordeal, too, can be overcome as those adversaries were."
+    },
+    {
+      "id": "hanuman-bahuk-40",
+      "number": 40,
+      "labelHi": "छंद · ४०",
+      "labelEn": "Chhand · 40",
+      "lines": [
+        "बालपने सूधे मन राम सनमुख भयो, राम नाम लेत माँगि खात टूक टाक हौं।",
+        "परयो लोक रीति में पुनीत प्रीति राम राय, मोह बस बैठो तोरि तरकि तराक हौं॥",
+        "खोटे खोटे आचरन आचरत अपनायो, अंजनी कुमार सोध्यो रामपानि पाक हौं।",
+        "तुलसी गुसाँई भयो भोंडे दिन भूलि गयो, ताको फल पावत निदान परिपाक हौं॥"
+      ],
+      "linesEn": [
+        "Baalapane soodhe man Raam sanamukh bhayo, Raam naam let maangi khaat took taak haun.",
+        "Parayo lok reeti men puneet preeti Raam Raay, moh bas baitho tori taraki taraak haun.",
+        "Khote khote aacharan aacharat apanaayo, Anjanee Kumaar sodhyo Raamapaani paak haun.",
+        "Tulasee Gusaain bhayo bhonde din bhooli gayo, taako phal paavat nidaan paripaak haun."
+      ],
+      "meaningHi": "तुलसी अपनी आरंभिक सरल भक्ति, फिर संसार में उलझने और हनुमान की कृपा से सँभलने को याद करते हैं। सम्मान पाकर पुराने कठिन दिन भूलने की आत्मालोचना करते हुए वे अपने वर्तमान दुःख को उससे जोड़ते हैं।",
+      "meaningEn": "Tulsi recalls simple childhood devotion, later worldly entanglement, and restoration through Hanuman’s care. He examines how recognition led him to forget former hardship, interpreting his present suffering through that personal reckoning."
+    },
+    {
+      "id": "hanuman-bahuk-41",
+      "number": 41,
+      "labelHi": "छंद · ४१",
+      "labelEn": "Chhand · 41",
+      "lines": [
+        "असन बसन हीन बिषम बिषाद लीन, देखि दीन दूबरो करै न हाय हाय को।",
+        "तुलसी अनाथ सो सनाथ रघुनाथ कियो, दियो फल सील सिंधु आपने सुभाय को॥",
+        "नीच यहि बीच पति पाइ भरुहाइगो, बिहाइ प्रभु भजन बचन मन काय को।",
+        "ता तें तनु पेषियत घोर बरतोर मिस, फूटि फूटि निकसत लोन राम राय को॥"
+      ],
+      "linesEn": [
+        "Asan basan heen bisham bishaad leen, dekhi deen doobaro karai na haay haay ko.",
+        "Tulasee anaath so sanaath Raghunaath kiyo, diyo phal seel sindhu aapane subhaay ko.",
+        "Neech yahi beech pati paai bharuhaaigo, bihaai Prabhu bhajan bachan man kaay ko.",
+        "Taa ten tanu peshiyat ghor barator mis, phooti phooti nikasat lon Raam Raay ko."
+      ],
+      "meaningHi": "निर्धन और निराश तुलसी को राम ने आश्रय दिया, पर प्रतिष्ठा मिलने पर भजन छूट गया—कवि ऐसा आत्मस्वीकार करते हैं। शरीर के कष्ट को वे कृतज्ञता और सेवा से दूर होने की याद के रूप में देखते हैं।",
+      "meaningEn": "Rama sheltered Tulsi when he lacked food, clothing and hope; the poet admits that status later distracted him from devotion. He interprets bodily suffering as a reminder of neglected gratitude and service, speaking of his own experience rather than judging others."
+    },
+    {
+      "id": "hanuman-bahuk-42",
+      "number": 42,
+      "labelHi": "छंद · ४२",
+      "labelEn": "Chhand · 42",
+      "lines": [
+        "जीओ जग जानकीजीवन को कहाइ जन, मरिबे को बारानसी बारि सुरसरि को।",
+        "तुलसी के दोहूँ हाथ मोदक हैं ऐसे ठाँऊ, जाके जिये मुये सोच करिहैं न लरि को॥",
+        "मोको झूँटो साँचो लोग राम कौ कहत सब, मेरे मन मान है न हर को न हरि को।",
+        "भारी पीर दुसह सरीर तें बिहाल होत, सोऊ रघुबीर बिनु सकै दूर करि को॥"
+      ],
+      "linesEn": [
+        "Jeeo jag Jaanakeejeevan ko kahaai jan, maribe ko Baaraanasee baari Surasari ko.",
+        "Tulasee ke dohoon haath modak hain aise thaaun, jaake jiye muye soch karihain na lari ko.",
+        "Moko jhoonto saancho log Raam kau kahat sab, mere man maan hai na Har ko na Hari ko.",
+        "Bhaaree peer dusah sareer ten bihaal hot, sou Raghubeer binu sakai door kari ko."
+      ],
+      "meaningHi": "राम का सेवक कहलाकर जीना और काशी में गंगातट का आश्रय पाना कवि को दोनों ओर सौभाग्य लगता है। फिर भी असहनीय शरीर-पीड़ा में वह राम को ही अपना अंतिम सहारा पुकारता है।",
+      "meaningEn": "Living as Rama’s servant and finding refuge by the Ganga in Kashi seem blessings on both sides of life to the poet. Yet amid unbearable physical pain, he turns to Rama as the one in whom his deepest trust rests."
+    },
+    {
+      "id": "hanuman-bahuk-43",
+      "number": 43,
+      "labelHi": "छंद · ४३",
+      "labelEn": "Chhand · 43",
+      "lines": [
+        "सीतापति साहेब सहाय हनुमान नित, हित उपदेश को महेस मानो गुरु कै।",
+        "मानस बचन काय सरन तिहारे पाँय, तुम्हरे भरोसे सुर मैं न जाने सुर कै॥",
+        "ब्याधि भूत जनित उपाधि काहु खल की, समाधि की जै तुलसी को जानि जन फुर कै।",
+        "कपिनाथ रघुनाथ भोलानाथ भूतनाथ, रोग सिंधु क्यों न डारियत गाय खुर कै॥"
+      ],
+      "linesEn": [
+        "Seetaapati saaheb sahaay Hanumaan nit, hit upadesh ko Mahes maano guru kai.",
+        "Maanas bachan kaay saran tihaare paany, tumhare bharose sur main na jaane sur kai.",
+        "Byaadhi bhoot janit upaadhi kaahu khal kee, samaadhi kee jai Tulasee ko jaani jan phur kai.",
+        "Kapinaath Raghunaath Bholaanaath Bhootanaath, rog sindhu kyon na daariyat gaay khur kai."
+      ],
+      "meaningHi": "राम स्वामी, हनुमान सहायक और शिव हितकारी गुरु हैं—तुलसी इसी संबंध में मन, वचन और शरीर समर्पित करते हैं। वे रोग रूपी विशाल समुद्र को छोटा कर देने और सच्चे सेवक को शांति देने की प्रार्थना करते हैं।",
+      "meaningEn": "Rama is master, Hanuman helper and Shiva a benevolent guide; within this relationship Tulsi offers mind, speech and body. He asks that the vast ocean of illness become a small crossing and that a sincere servant find peace."
+    },
+    {
+      "id": "hanuman-bahuk-44",
+      "number": 44,
+      "labelHi": "छंद · ४४",
+      "labelEn": "Chhand · 44",
+      "lines": [
+        "कहों हनुमान सों सुजान राम राय सों, कृपानिधान संकर सों सावधान सुनिये।",
+        "हरष विषाद राग रोष गुन दोष मई, बिरची बिरञ्ची सब देखियत दुनिये॥",
+        "माया जीव काल के करम के सुभाय के, करैया राम बेद कहें साँची मन गुनिये।",
+        "तुम्ह तें कहा न होय हा हा सो बुझैये मोहिं, हौं हूँ रहों मौन ही बयो सो जानि लुनिये॥"
+      ],
+      "linesEn": [
+        "Kahon Hanumaan son sujaan Raam Raay son, kripaanidhaan Sankar son saavadhaan suniye.",
+        "Harash vishaad raag rosh gun dosh mai, birachee Biranchi sab dekhiyat duniye.",
+        "Maayaa jeev kaal ke karam ke subhaay ke, karaiyaa Raam bed kahen saanchee man guniye.",
+        "Tumh ten kahaa na hoy haa haa so bujhaiye mohin, haun hoon rahon maun hee bayo so jaani luniye."
+      ],
+      "meaningHi": "तुलसी हनुमान, राम और शिव से अपनी विनती सुनने को कहते हैं। सुख-दुःख और कर्मों से भरे जगत में राम की प्रभुता स्वीकारकर वे समझ और धैर्य माँगते हैं, ताकि जो बोया उसका फल जानकर शांत रह सकें।",
+      "meaningEn": "Tulsi asks Hanuman, Rama and Shiva to hear him. Acknowledging divine sovereignty in a world of joy, sorrow and action, he seeks understanding and patience, so that he may grow quiet while facing the consequences of what he has sown."
+    }
+  ]
+}

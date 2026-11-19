@@ -57,6 +57,8 @@ iPhone Store ID `6766086529`. These external settings can drift; reverify at rel
 
 ## Gotchas
 
+- **Meta SDK bump checklist (Nov 2026 audit, UPG-11).** The SDK is pinned at 18.0.0 and the iOS module calls an internal API (`_FeatureManager.disableFeature`) that a bump can remove. On any bump: (1) confirm that symbol still exists, or replace it, before building; (2) re-check that auto-logging and codeless events stay off on both platforms; (3) re-run the release-build verification in this page on a device, including the ATT prompt on iOS and install attribution in Events Manager; (4) re-confirm the Play Data Safety and App Privacy answers still match what the SDK sends.
+
 - App Review rejected 1.5.0 (72) under 2.1 on 12 October 2026: no ATT prompt found
   on iPadOS 27.0.1. Two code causes: one silent `undetermined` result was never
   re-asked until an app-state change (and Meta activated anyway), and the JS gate

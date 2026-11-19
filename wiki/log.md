@@ -1568,3 +1568,25 @@ Updated home-widgets and readers for the shared presentation-only matching-citat
 formatter, preserved native/app/share row boundaries and widget cache invalidation.
 Canonical scripture and stable identities are unchanged. Native visual acceptance
 and the open ornate-widget integration are explicitly separate gates.
+
+## [2026-11-16] ingest | A4 Kali Chalisa complete edition
+
+Added `kali-chalisa` through the existing registry/reader with Kali art, search, stable saved routes and generated counts. Full Drik text collated against Aaj Tak: 54 body couplets plus three dohas, not a forced forty; edition variants and acceptance limitations in `docs/evaluations/a4-kali-chalisa/review.md`. Current repository policy and established Chalisa pattern replace the unavailable historical checklist under the authorized approach. Native verification remains pending; no merge/build/release authorized.
+
+## [2026-11-17] ingest | A4 PR integration and actual-component captures
+
+PR #698 integrates main a8f6046d cleanly, adds explicit UTF-8 to the browser preview, and preserves actual-reader capture evidence. Native checks remain pending; compact web header crowding is documented in docs/evaluations/a4-kali-chalisa/review.md. No merge or release.
+
+## [2026-11-17] ingest | Chalisa control clearance
+
+ReaderControlRow measures centred and trailing controls, stacking playback when touch clearance would be lost. All Chalisa entries share the fix; other reader families are recorded for separate adoption. Capture coverage now checks both 320/390 widths at Standard/Large in all four scripts.
+
+## [2026-11-17] ingest | A5 Radha Chalisa
+
+Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.
+
+## [2026-11-18] ingest | PR #702 completes all thirteen Saptashati chapter sources (700 traditional numbered units), preserving existing IDs and append-only Daily Bhakti offsets; readers wiki records collection/lazy-loader integration and pending native acceptance.
+
+## [2026-11-18] ingest | Mobile audit fixes (store-build set)
+
+Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages aligned to the SDK 54 expected versions (expo-doctor 18/18), the four patched packages pinned exactly, unused `expo-secure-store` removed (it added a Face ID usage string), storage permissions blocked on Android, `expo-clipboard` added behind a probe so OTAs to older binaries keep the React Native API, the Japam alarm receiver guarded so a failed post cannot end the repeating alarm, config plugins importing `expo/config-plugins`, and a prebuild introspection test. Runbook gotchas added for the Android release gate and the Meta SDK bump. Not built or run on a device.

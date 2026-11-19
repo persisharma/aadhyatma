@@ -23,7 +23,7 @@ assert.equal(canonicalSourceId('aarti-19'), 'ekadashi-mata-aarti');
 assert.equal(canonicalSourceId('aarti-20'), 'tulsi-aarti');
 assert.equal(canonicalSourceId('aarti-21'), 'shakambhari-aarti');
 // Out-of-range index falls through unchanged so the consumer can decide.
-assert.equal(canonicalSourceId('aarti-22'), 'aarti-22');
+assert.equal(canonicalSourceId('aarti-23'), 'aarti-23');
 assert.equal(canonicalSourceId('aarti-x'), 'aarti-x');
 // Already canonical, leave alone.
 assert.equal(canonicalSourceId('om-jai-jagdish'), 'om-jai-jagdish');
@@ -50,4 +50,12 @@ assert.equal(canonicalSourceId('shani-chalisa'), 'shani-chalisa');
 assert.equal(canonicalBookmarkId('shani-chalisa::42', 'shani-chalisa'), 'shani-chalisa::42');
 
 assert.equal(canonicalSourceId('santoshi-mata-chalisa'), 'santoshi-mata-chalisa');
+assert.equal(canonicalSourceId('kali-chalisa'), 'kali-chalisa');
 assert.equal(canonicalBookmarkId('santoshi-mata-chalisa::39', 'santoshi-mata-chalisa'), 'santoshi-mata-chalisa::39');
+assert.equal(canonicalBookmarkId('kali-chalisa::39', 'kali-chalisa'), 'kali-chalisa::39');
+
+assert.equal(canonicalSourceId('radha-chalisa'), 'radha-chalisa');
+assert.equal(canonicalBookmarkId('radha-chalisa::42', 'radha-chalisa'), 'radha-chalisa::42');
+
+assert.equal(canonicalSourceId('aarti-22'), 'satyanarayan-aarti');
+assert.equal(canonicalBookmarkId('aarti:22:8', 'satyanarayan-aarti'), 'satyanarayan-aarti:8');

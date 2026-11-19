@@ -6,6 +6,8 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 
 type Props = {
+  testID?: string;
+  accessibilityLabel?: string;
   nameHi: string;
   nameEn: string;
   status: 'active' | 'coming';
@@ -35,6 +37,8 @@ type Props = {
 };
 
 function CategoryCard({
+  testID,
+  accessibilityLabel,
   nameHi,
   nameEn,
   status,
@@ -143,12 +147,13 @@ function CategoryCard({
 
     return (
       <Pressable
+        testID={testID}
         onPress={onPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         style={({ pressed }) => [styles.launcher, pressed && styles.cardPressed]}
         accessibilityRole="button"
-        accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
+        accessibilityLabel={accessibilityLabel ?? `${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
       >
         <View
           style={[
@@ -218,6 +223,7 @@ function CategoryCard({
   if (isActive) {
     return (
       <Pressable
+        testID={testID}
         onPress={onPress}
         style={({ pressed }) => [
           styles.card,
@@ -230,7 +236,7 @@ function CategoryCard({
           pressed && styles.cardPressed,
         ]}
         accessibilityRole="button"
-        accessibilityLabel={`${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
+        accessibilityLabel={accessibilityLabel ?? `${nameEn}.${hasNew ? ' New.' : ''} Tap to open.`}
       >
         <LinearGradient
           colors={[colors.cardActiveFrom, colors.cardActiveTo]}

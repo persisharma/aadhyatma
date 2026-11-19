@@ -1,0 +1,16 @@
+# Native hierarchies can include rows under the fixed header or bottom tabs.
+# Find the row from below, then settle it clear of the top edge as well.
+appId: com.prashantsharma.vedansh
+---
+- scrollUntilVisible:
+    element: { id: "${ROW_ID}" }
+    direction: DOWN
+    speed: 15
+    centerElement: true
+    timeout: 90000
+- scrollUntilVisible:
+    element: { id: "${ROW_ID}" }
+    direction: UP
+    speed: 15
+    centerElement: true
+    timeout: 25000

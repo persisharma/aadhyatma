@@ -527,3 +527,15 @@ test('source/sourceUrl fields never render on any vidhi screen (review-only data
     }
   }
 }, 30_000);
+
+test.each([false, true])('Satyanarayan aarti handoff selects dedicated reader (Home=%s)', async (home) => {
+  if (home) mockNavigation.getState.mockReturnValue({ routeNames: [...HOME_STACK_ROUTES, 'AartiReader'] });
+  const initialStep = satyanarayanPuja.steps.findIndex(step => step.id === 'aarti');
+  const r = render(<VidhiConductScreen navigation={nav} route={{ key: 'b1', name: 'VidhiConduct', params: { vidhiId: 'satyanarayan-puja', initialStep } } as never} />);
+  await settle();
+  expect(texts(r)).toContain('जय लक्ष्मी रमणा');
+  expect(texts(r)).not.toContain('ॐ जय जगदीश हरे');
+  act(() => r.root.findByProps({ testID: 'vidhi-handoff-aarti' }).props.onPress());
+  if (home) expect(mockNavigation.navigate).toHaveBeenCalledWith('AartiReader', { aartiIndex: 22 });
+  else expect(mockNavigation.navigate).toHaveBeenCalledWith('HomeTab', { screen: 'AartiReader', params: { aartiIndex: 22 } });
+});

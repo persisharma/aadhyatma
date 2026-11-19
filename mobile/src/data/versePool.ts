@@ -109,7 +109,7 @@ export type PoolSegment = {
 };
 
 const entryById = new Map(library.map((entry) => [entry.id, entry]));
-const isActive = (id: string) => entryById.get(id)?.status === 'active';
+const isActive = (id: string) => entryById.get(id)?.status === 'active' && !entryById.get(id)?.hidden;
 const nameHi = (id: string, fallback?: string) => entryById.get(id)?.nameHi ?? fallback ?? id;
 const nameEn = (id: string, fallback?: string) => entryById.get(id)?.nameEn ?? fallback ?? id;
 

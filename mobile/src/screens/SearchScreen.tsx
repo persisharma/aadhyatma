@@ -3,6 +3,7 @@ import StoryIcon from '@/components/StoryIcon';
 import CategoryIcon from '@/components/CategoryIcon';
 import { deities, deityIconKey } from '@/data/deities';
 import AppIcon from '@/components/AppIcon';
+import { getReadingLink } from '@/data/readingLinks';
 import React, {
   useCallback,
   useEffect,
@@ -42,7 +43,7 @@ import { useNewContent } from '@/contexts/NewContentContext';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang, pick } from '@/utils/localize';
 import { pillTextStyle } from '@/utils/langType';
-import { buildProgressTarget, navigateToEntryStart } from '@/navigation/entryRoutes';
+import { navigateReadingLink, buildProgressTarget, navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useAsk } from '@/ask/useAsk';
 import { navigateAskTarget } from '@/ask/actions';
@@ -183,6 +184,21 @@ export default function SearchScreen({ navigation, route }: Props) {
         commitRecent(query);
         Keyboard.dismiss();
         navigation.navigate('VidhiDetail', { vidhiId: sourceId });
+        return;
+      }
+      if (sourceId.startsWith('katha:')) {
+        commitRecent(query);
+        Keyboard.dismiss();
+        navigation.navigate('VratKathaReader', { kathaId: sourceId.slice(6) });
+        return;
+      }
+      const link = getReadingLink(sourceId);
+      if (link || sourceId === 'katha-library') {
+        commitRecent(query);
+        Keyboard.dismiss();
+        if (link) {
+          navigateReadingLink(navigation, sourceId);
+        } else navigation.navigate('KathaLibrary');
         return;
       }
       const entry = library.find((e) => e.id === sourceId);
@@ -381,7 +397,7 @@ export default function SearchScreen({ navigation, route }: Props) {
             radii={radii}
             lang={lang}
             header={<>{askHeader}<React.Suspense fallback={null}><SanatanSearchResults query={query}
-              onOpen={topicId => navigation.navigate('SanatanReader', { topicId, initialPage: 0 })} /></React.Suspense></>}
+              onOpen={(topicId, initialPage) => navigation.navigate('SanatanReader', { topicId, initialPage })} /></React.Suspense></>}
             empty={
               askHeader ? null : index ? (
                 <ZeroState colors={colors} typography={typography} lang={lang} />

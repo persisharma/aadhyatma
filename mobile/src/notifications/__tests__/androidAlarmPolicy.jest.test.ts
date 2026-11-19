@@ -29,6 +29,26 @@ describe('Android Japam alarm permission policy', () => {
     expect(receiver).toContain('AudioAttributes.USAGE_ALARM');
   });
 
+  test('a notification that cannot be posted never ends the repeating alarm', () => {
+    // The receiver runs in the background with nobody to report to. An exception
+    // while creating the channel or posting (a revoked permission, a sound that
+    // will not resolve) used to crash the process there and skip the re-arm, so
+    // the alarm stopped repeating until the app was next opened.
+    const receiver = fs.readFileSync(
+      path.join(mobileRoot, 'plugins/native-android/JapamAlarmReceiver.kt'),
+      'utf8'
+    );
+    const onReceive = receiver.slice(receiver.indexOf('override fun onReceive'));
+    const post = onReceive.indexOf('postAlarmNotification(context');
+    const rearm = onReceive.indexOf('rescheduleNextOccurrence(context');
+    expect(post).toBeGreaterThan(-1);
+    expect(rearm).toBeGreaterThan(post);
+    // The post sits inside a try whose catch swallows the failure; the re-arm
+    // comes after that block, so it runs either way.
+    const guarded = onReceive.slice(0, rearm);
+    expect(guarded).toMatch(/try \{\s*postAlarmNotification\(context[^}]*\} catch \(\w+: Throwable\)/);
+  });
+
   test('provides the user-controlled exact-alarm settings flow', () => {
     const moduleSource = fs.readFileSync(
       path.join(mobileRoot, 'plugins/native-android/JapamAlarmModule.kt'),

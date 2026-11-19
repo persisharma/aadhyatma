@@ -6,9 +6,30 @@
 // `src/data/__tests__/verseCounts.test.ts`, so a corpus edit that changes a
 // count fails the build until this file is regenerated.
 
+export const durgaDeviKavachamTotal = 56 as const;
+export const durgaSaptashatiChapterOneTotal = 104 as const;
+export const durgaSaptashatiChapter2Total = 69 as const;
+export const durgaSaptashatiChapter3Total = 44 as const;
+export const durgaSaptashatiChapter4Total = 42 as const;
+export const durgaSaptashatiChapter5Total = 129 as const;
+export const durgaSaptashatiChapter6Total = 24 as const;
+export const durgaSaptashatiChapter7Total = 27 as const;
+export const durgaSaptashatiChapter8Total = 63 as const;
+export const durgaSaptashatiChapter9Total = 41 as const;
+export const durgaSaptashatiChapter10Total = 32 as const;
+export const durgaSaptashatiChapter11Total = 55 as const;
+export const durgaSaptashatiChapter12Total = 41 as const;
+export const durgaSaptashatiChapter13Total = 29 as const;
+export const durgaKilakTotal = 14 as const;
+export const durgaArgalaTotal = 27 as const;
+export const hanumanBahukTotal = 44 as const;
+export const kalabhairavAshtakamTotal = 9 as const;
+export const shriSuktamTotal = 16 as const;
+export const kanakadharaStotramTotal = 22 as const;
+export const adityaHridayamTotal = 31 as const;
 export const kabirBhaktiDoheTotal = 4 as const;
 export const rahimBhaktiDoheTotal = 4 as const;
-export const aartiVerseCounts = {"om-jai-jagdish":9,"hanuman-aarti":14,"jai-ganesh-deva":7,"om-jai-shiv-omkara":12,"jai-ambe-gauri":14,"aarti-kunj-bihari":6,"saraswati-aarti":8,"gayatri-aarti":12,"khatu-shyam-aarti":8,"om-jai-lakshmi-mata":8,"jay-adhya-shakti":21,"shani-aarti":5,"dattatreya-aarti":5,"om-jai-gange-mata":5,"ambe-tu-hai-jagdambe-kali":5,"kubera-aarti":8,"santoshi-mata-aarti":12,"ahoi-mata-aarti":8,"vaishno-devi-aarti":8,"ekadashi-mata-aarti":15,"tulsi-aarti":6,"shakambhari-aarti":5} as const;
+export const aartiVerseCounts = {"om-jai-jagdish":9,"hanuman-aarti":14,"jai-ganesh-deva":7,"om-jai-shiv-omkara":12,"jai-ambe-gauri":14,"aarti-kunj-bihari":6,"saraswati-aarti":8,"gayatri-aarti":12,"khatu-shyam-aarti":8,"om-jai-lakshmi-mata":8,"jay-adhya-shakti":21,"shani-aarti":5,"dattatreya-aarti":5,"om-jai-gange-mata":5,"ambe-tu-hai-jagdambe-kali":5,"kubera-aarti":8,"santoshi-mata-aarti":12,"ahoi-mata-aarti":8,"vaishno-devi-aarti":8,"ekadashi-mata-aarti":15,"tulsi-aarti":6,"shakambhari-aarti":5,"satyanarayan-aarti":9} as const;
 export const achyutashtakamTotal = 8 as const;
 export const bajrangBaanTotal = 20 as const;
 export const bhavaniAshtakamTotal = 8 as const;
@@ -38,6 +59,8 @@ export const suryaChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas"
 export const vaishnoDeviChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":1,"totalVerses":42} as const;
 export const shaniChalisaCounts = {"openingDohas":2,"chaupais":40,"closingDohas":1,"totalVerses":43} as const;
 export const santoshiMataChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":1,"totalVerses":42} as const;
+export const kaliChalisaCounts = {"openingDohas":2,"chaupais":54,"closingDohas":1,"totalVerses":57} as const;
+export const radhaChalisaCounts = {"openingDohas":2,"chaupais":40,"closingDohas":1,"totalVerses":43} as const;
 export const lingashtakamTotal = 8 as const;
 export const madhurashtakamTotal = 8 as const;
 export const mahalakshmiAshtakamTotal = 8 as const;
@@ -63,4 +86,4 @@ export const sundarkandTotal = 354 as const;
 export const suryaAshtakamTotal = 8 as const;
 export const valmikiRamayanTotal = 23289 as const;
 export const vishnuChalisaCounts = {"openingDohas":1,"chaupais":40,"closingDohas":0,"totalVerses":41} as const;
-export const vishnuSahasranamaTotal = 79 as const;
+export const vishnuSahasranamaTotal = 158 as const;

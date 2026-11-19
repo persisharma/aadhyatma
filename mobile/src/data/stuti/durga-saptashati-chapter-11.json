@@ -1,0 +1,925 @@
+{
+  "id": "durga-saptashati-chapter-11",
+  "titleHi": "दुर्गा सप्तशती — एकादश अध्याय",
+  "titleEn": "Durga Saptashati — Chapter 11",
+  "deity": "durga",
+  "source": {
+    "baseText": "Complete chapter 11 of Devi Mahatmya / Durga Saptashati, Markandeya Purana: 55 traditional numbered text units, including speaker announcements and half-verses where present. Drik Panchang numbered reading collated in full against Baba Rampuri’s Sanskrit publication.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/eleventh-chapter/durga-saptashati-eleventh-chapter.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-18",
+    "notes": "Ancient Sanskrit only; original editorial Hindi/English meanings and checked reader-convention romanization. Drik base retained at recension differences except two documented orthographic corrections in chapters11/13 supported by Rampuri. See saptashati-chapters-8-13-sources.md for every substantive difference. Unnumbered dhyana, optional bija framing and colophon are outside this numbered chapter. Traditional promises are reported as devotional statements, not health or safety guarantees. No audio."
+  },
+  "verses": [
+    {
+      "id": "durga-saptashati-chapter-11-1",
+      "number": 1,
+      "labelHi": "पाठ · १",
+      "labelEn": "Text unit · 1",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि ने देवताओं द्वारा की गई स्तुति सुनाई।",
+      "meaningEn": "The sage recounted the praise offered by the gods."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-2",
+      "number": 2,
+      "labelHi": "पाठ · २",
+      "labelEn": "Text unit · 2",
+      "lines": [
+        "देव्या हते तत्र महासुरेन्द्रे",
+        "सेन्द्राः सुरा वह्निपुरोगमास्ताम्।",
+        "कात्यायनीं तुष्टुवुरिष्टलाभाद्",
+        "विकाशिवक्त्राब्जविकाशिताशाः॥"
+      ],
+      "linesEn": [
+        "devyā hate tatra mahāsurendre",
+        "sendrāḥ surā vahnipurogamāstām",
+        "kātyāyanīṃ tuṣṭuvuriṣṭalābhād",
+        "vikāśhivaktrābjavikāśhitāśhāḥ"
+      ],
+      "meaningHi": "महासुरराज के वध से इच्छित फल पाकर अग्नि को आगे किए इन्द्र सहित देवताओं ने कात्यायनी की स्तुति की; उनके मुख और दिशाएँ प्रसन्नता से खिल उठे।",
+      "meaningEn": "Having gained their desired victory, the gods with Indra, led by Agni, praised Katyayani, their radiant faces brightening the directions."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-3",
+      "number": 3,
+      "labelHi": "पाठ · ३",
+      "labelEn": "Text unit · 3",
+      "lines": [
+        "देवि प्रपन्नार्तिहरे प्रसीद",
+        "प्रसीद मातर्जगतोऽखिलस्य।",
+        "प्रसीद विश्वेश्वरि पाहि विश्वं",
+        "त्वमीश्वरी देवि चराचरस्य॥"
+      ],
+      "linesEn": [
+        "devi prapannārtihare prasīda",
+        "prasīda mātarjagato'khilasya",
+        "prasīda viśhveśhvari pāhi viśhvaṃ",
+        "tvamīśhvarī devi charācharasya"
+      ],
+      "meaningHi": "शरणागतों का दुःख हरने वाली देवी, समस्त जगत की माता, प्रसन्न हों। चर-अचर की स्वामिनी, विश्व की रक्षा करें।",
+      "meaningEn": "Be gracious, goddess who removes the distress of those seeking refuge, mother of the entire world. As ruler of all that moves and is still, protect the universe."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-4",
+      "number": 4,
+      "labelHi": "पाठ · ४",
+      "labelEn": "Text unit · 4",
+      "lines": [
+        "आधारभूता जगतस्त्वमेका",
+        "महीस्वरूपेण यतः स्थितासि।",
+        "अपां स्वरूपस्थितया त्वयैतदाप्यायते कृत्स्नमलङ्घ्यवीर्ये॥"
+      ],
+      "linesEn": [
+        "ādhārabhūtā jagatastvamekā",
+        "mahīsvarūpeṇa yataḥ sthitāsi",
+        "apāṃ svarūpasthitayā tvayaitadāpyāyate kṛitsnamalaṅghyavīrye"
+      ],
+      "meaningHi": "पृथ्वी रूप में आप ही जगत का आधार हैं; जल रूप में आप पूरे विश्व को तृप्त करती हैं। आपकी शक्ति का अतिक्रमण नहीं हो सकता।",
+      "meaningEn": "As the earth, you alone support the world; as water, you nourish it completely. Your power cannot be overcome."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-5",
+      "number": 5,
+      "labelHi": "पाठ · ५",
+      "labelEn": "Text unit · 5",
+      "lines": [
+        "त्वं वैष्णवी शक्तिरनन्तवीर्या",
+        "विश्वस्य बीजं परमासि माया।",
+        "सम्मोहितं देवि समस्तमेतत्",
+        "त्वं वै प्रसन्ना भुवि मुक्तिहेतुः॥"
+      ],
+      "linesEn": [
+        "tvaṃ vaiṣṇavī śhaktiranantavīryā",
+        "viśhvasya bījaṃ paramāsi māyā",
+        "sammohitaṃ devi samastametat",
+        "tvaṃ vai prasannā bhuvi muktihetuḥ"
+      ],
+      "meaningHi": "आप अनंत वीर्य वाली वैष्णवी शक्ति और जगत की मूल माया हैं। आपसे संसार मोहित होता है और प्रसन्न होने पर आप ही मुक्ति का कारण बनती हैं।",
+      "meaningEn": "You are Vishnu’s boundless power and the primal maya from which the world springs. You enchant the universe and, when gracious, become the cause of liberation."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-6",
+      "number": 6,
+      "labelHi": "पाठ · ६",
+      "labelEn": "Text unit · 6",
+      "lines": [
+        "विद्याः समस्तास्तव देवि भेदाः",
+        "स्त्रियः समस्ताः सकला जगत्सु।",
+        "त्वयैकया पूरितमम्बयैतत्",
+        "का ते स्तुतिः स्तव्यपरा परोक्तिः॥"
+      ],
+      "linesEn": [
+        "vidyāḥ samastāstava devi bhedāḥ",
+        "striyaḥ samastāḥ sakalā jagatsu",
+        "tvayaikayā pūritamambayaitat",
+        "kā te stutiḥ stavyaparā paroktiḥ"
+      ],
+      "meaningHi": "सभी विद्याएँ आपके रूप हैं और संसार की सभी स्त्रियाँ आपकी अभिव्यक्तियाँ हैं। आप ही सबमें व्याप्त हैं; कौन-सी स्तुति आपकी पूर्ण महिमा कह सकती है?",
+      "meaningEn": "All forms of knowledge and all women in the worlds are manifestations of you. You alone pervade everything; what praise could adequately express your greatness?"
+    },
+    {
+      "id": "durga-saptashati-chapter-11-7",
+      "number": 7,
+      "labelHi": "पाठ · ७",
+      "labelEn": "Text unit · 7",
+      "lines": [
+        "सर्वभूता यदा देवी स्वर्गमुक्तिप्रदायिनी।",
+        "त्वं स्तुता स्तुतये का वा भवन्तु परमोक्तयः॥"
+      ],
+      "linesEn": [
+        "sarvabhūtā yadā devī svargamuktipradāyinī",
+        "tvaṃ stutā stutaye kā vā bhavantu paramoktayaḥ"
+      ],
+      "meaningHi": "जब आप सभी प्राणियों में विद्यमान और स्वर्ग तथा मुक्ति देने वाली हैं, तब आपकी स्तुति के लिए कौन-से शब्द पर्याप्त हो सकते हैं?",
+      "meaningEn": "Since you are present as all beings and grant heaven and liberation, what words could be sufficient to praise you?"
+    },
+    {
+      "id": "durga-saptashati-chapter-11-8",
+      "number": 8,
+      "labelHi": "पाठ · ८",
+      "labelEn": "Text unit · 8",
+      "lines": [
+        "सर्वस्य बुद्धिरूपेण जनस्य हृदि संस्थिते।",
+        "स्वर्गापवर्गदे देवि नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "sarvasya buddhirūpeṇa janasya hṛidi saṃsthite",
+        "svargāpavargade devi nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "सबके हृदय में बुद्धि रूप से स्थित, स्वर्ग और मोक्ष देने वाली नारायणी देवी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani, who dwells as understanding in every heart and grants heaven and liberation."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-9",
+      "number": 9,
+      "labelHi": "पाठ · ९",
+      "labelEn": "Text unit · 9",
+      "lines": [
+        "कलाकाष्ठादिरूपेण परिणामप्रदायिनि।",
+        "विश्वस्योपरतौ शक्ते नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "kalākāṣṭhādirūpeṇa pariṇāmapradāyini",
+        "viśhvasyoparatau śhakte nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "कला, काष्ठा आदि समय के भागों के रूप में परिवर्तन लाने वाली तथा विश्व के लय की शक्ति नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani, who brings change through the divisions of time and is the power behind the universe’s dissolution."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-10",
+      "number": 10,
+      "labelHi": "पाठ · १०",
+      "labelEn": "Text unit · 10",
+      "lines": [
+        "सर्वमङ्गलमङ्गल्ये शिवे सर्वार्थसाधिके।",
+        "शरण्ये त्र्यम्बके गौरि नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "sarvamaṅgalamaṅgalye śhive sarvārthasādhike",
+        "śharaṇye tryambake gauri nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "सभी मंगलों में मंगलमयी, कल्याणस्वरूपा, सब उद्देश्यों को सिद्ध करने वाली, शरणदायिनी, त्रिनेत्रा गौरी नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani, auspicious among all auspicious things, benevolent fulfiller of every aim, giver of refuge, three-eyed Gauri."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-11",
+      "number": 11,
+      "labelHi": "पाठ · ११",
+      "labelEn": "Text unit · 11",
+      "lines": [
+        "सृष्टिस्थितिविनाशानां शक्तिभूते सनातनि।",
+        "गुणाश्रये गुणमये नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "sṛiṣṭisthitivināśhānāṃ śhaktibhūte sanātani",
+        "guṇāśhraye guṇamaye nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "सृष्टि, पालन और विनाश की सनातन शक्ति, गुणों का आधार और गुणमयी नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to eternal Narayani, the power of creation, preservation and dissolution, the foundation and embodiment of the qualities of nature."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-12",
+      "number": 12,
+      "labelHi": "पाठ · १२",
+      "labelEn": "Text unit · 12",
+      "lines": [
+        "शरणागतदीनार्तपरित्राणपरायणे।",
+        "सर्वस्यार्तिहरे देवि नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "śharaṇāgatadīnārtaparitrāṇaparāyaṇe",
+        "sarvasyārtihare devi nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "शरणागत, दीन और पीड़ितों की रक्षा में तत्पर, सबका दुःख हरने वाली नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani, devoted to protecting the helpless and distressed who seek refuge, remover of everyone’s suffering."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-13",
+      "number": 13,
+      "labelHi": "पाठ · १३",
+      "labelEn": "Text unit · 13",
+      "lines": [
+        "हंसयुक्तविमानस्थे ब्रह्माणीरूपधारिणि।",
+        "कौशाम्भःक्षरिके देवि नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "haṃsayuktavimānasthe brahmāṇīrūpadhāriṇi",
+        "kauśhāmbhaḥkṣharike devi nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "हंसयुक्त विमान में ब्रह्माणी रूप से स्थित और पवित्र जल छिड़कने वाली नारायणी देवी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani in the form of Brahmani, seated in a swan-drawn vehicle and sprinkling sacred water."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-14",
+      "number": 14,
+      "labelHi": "पाठ · १४",
+      "labelEn": "Text unit · 14",
+      "lines": [
+        "त्रिशूलचन्द्राहिधरे महावृषभवाहिनि।",
+        "माहेश्वरीस्वरूपेण नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "triśhūlachandrāhidhare mahāvṛiṣabhavāhini",
+        "māheśhvarīsvarūpeṇa nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "त्रिशूल, चंद्रमा और सर्प धारण करने वाली, महान बैल पर सवार माहेश्वरी रूपिणी नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani as Maheshvari, bearing trident, moon and serpent and riding the great bull."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-15",
+      "number": 15,
+      "labelHi": "पाठ · १५",
+      "labelEn": "Text unit · 15",
+      "lines": [
+        "मयूरकुक्कुटवृते महाशक्तिधरेऽनघे।",
+        "कौमारीरूपसंस्थाने नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "mayūrakukkuṭavṛite mahāśhaktidhare'naghe",
+        "kaumārīrūpasaṃsthāne nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "मयूर और कुक्कुट से युक्त, बड़ी शक्ति धारण करने वाली निष्पाप कौमारी रूपिणी नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to stainless Narayani as Kaumari, accompanied by peacock and cock and bearing the mighty spear."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-16",
+      "number": 16,
+      "labelHi": "पाठ · १६",
+      "labelEn": "Text unit · 16",
+      "lines": [
+        "शङ्खचक्रगदाशार्ङ्गगृहीतपरमायुधे।",
+        "प्रसीद वैष्णवीरूपे नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "śhaṅkhachakragadāśhārṅgagṛihītaparamāyudhe",
+        "prasīda vaiṣṇavīrūpe nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "शंख, चक्र, गदा और शार्ङ्ग जैसे श्रेष्ठ आयुध धारण करने वाली वैष्णवी रूपिणी नारायणी प्रसन्न हों; आपको नमस्कार है।",
+      "meaningEn": "Be gracious, Narayani in Vaishnavi’s form, holding the splendid conch, discus, mace and Sharnga bow. Salutations to you."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-17",
+      "number": 17,
+      "labelHi": "पाठ · १७",
+      "labelEn": "Text unit · 17",
+      "lines": [
+        "गृहीतोग्रमहाचक्रे दंष्ट्रोद्धृतवसुन्धरे।",
+        "वराहरूपिणि शिवे नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "gṛihītogramahāchakre daṃṣṭroddhṛitavasundhare",
+        "varāharūpiṇi śhive nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "महाचक्र धारण करने वाली, दाँतों पर पृथ्वी उठाने वाली मंगलमयी वराहरूपा नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to auspicious Narayani in boar form, bearing the great discus and lifting the earth upon her tusks."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-18",
+      "number": 18,
+      "labelHi": "पाठ · १८",
+      "labelEn": "Text unit · 18",
+      "lines": [
+        "नृसिंहरूपेणोग्रेण हन्तुं दैत्यान् कृतोद्यमे।",
+        "त्रैलोक्यत्राणसहिते नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "nṛisiṃharūpeṇogreṇa hantuṃ daityān kṛitodyame",
+        "trailokyatrāṇasahite nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "दैत्यों को नष्ट करने के लिए उग्र नृसिंह रूप धारण करने वाली, तीनों लोकों की रक्षा में तत्पर नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani, who takes the fierce Narasimha form to destroy the asuras and protect the three worlds."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-19",
+      "number": 19,
+      "labelHi": "पाठ · १९",
+      "labelEn": "Text unit · 19",
+      "lines": [
+        "किरीटिनि महावज्रे सहस्रनयनोज्ज्वले।",
+        "वृत्रप्राणहरे चैन्द्रि नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "kirīṭini mahāvajre sahasranayanojjvale",
+        "vṛitraprāṇahare chaindri nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "मुकुट और महावज्र से युक्त, हजार नेत्रों से प्रकाशमान, वृत्र का प्राण हरने वाली ऐन्द्री नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani as Aindri, crowned and bearing the great thunderbolt, radiant with a thousand eyes, destroyer of Vritra."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-20",
+      "number": 20,
+      "labelHi": "पाठ · २०",
+      "labelEn": "Text unit · 20",
+      "lines": [
+        "शिवदूतीस्वरूपेण हतदैत्यमहाबले।",
+        "घोररूपे महारावे नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "śhivadūtīsvarūpeṇa hatadaityamahābale",
+        "ghorarūpe mahārāve nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "शिवदूती रूप से दैत्यों की विशाल सेना नष्ट करने वाली, भयानक रूप और महानाद वाली नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani as Shivaduti, destroyer of the mighty asura army, terrible in form and thunderous in voice."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-21",
+      "number": 21,
+      "labelHi": "पाठ · २१",
+      "labelEn": "Text unit · 21",
+      "lines": [
+        "दंष्ट्राकरालवदने शिरोमालाविभूषणे।",
+        "चामुण्डे मुण्डमथने नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "daṃṣṭrākarālavadane śhiromālāvibhūṣaṇe",
+        "chāmuṇḍe muṇḍamathane nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "दाँतों से विकराल मुख वाली, मस्तकों की माला धारण करने वाली, मुण्ड का संहार करने वाली चामुण्डा नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani as Chamunda, whose mouth is fearsome with tusks, who wears a garland of heads and destroys Munda."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-22",
+      "number": 22,
+      "labelHi": "पाठ · २२",
+      "labelEn": "Text unit · 22",
+      "lines": [
+        "लक्ष्मि लज्जे महाविद्ये श्रद्धे पुष्टिस्वधे ध्रुवे।",
+        "महारात्रि महाऽविद्ये नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "lakṣhmi lajje mahāvidye śhraddhe puṣṭisvadhe dhruve",
+        "mahārātri mahā'vidye nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "लक्ष्मी, लज्जा, महाविद्या, श्रद्धा, पुष्टि, स्वधा, अचल आधार, महारात्रि और महान अविद्या रूपिणी नारायणी को नमस्कार है।",
+      "meaningEn": "Salutations to Narayani as prosperity, modesty, great knowledge, faith, nourishment, the ancestral offering, the steadfast foundation, the great night and the great veiling ignorance."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-23",
+      "number": 23,
+      "labelHi": "पाठ · २३",
+      "labelEn": "Text unit · 23",
+      "lines": [
+        "मेधे सरस्वति वरे भूति बाभ्रवि तामसि।",
+        "नियते त्वं प्रसीदेशे नारायणि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "medhe sarasvati vare bhūti bābhravi tāmasi",
+        "niyate tvaṃ prasīdeśhe nārāyaṇi namo'stu te"
+      ],
+      "meaningHi": "बुद्धि, सरस्वती, श्रेष्ठता, समृद्धि, बाभ्रवी, तामसी और नियति रूपिणी ईश्वरी नारायणी प्रसन्न हों; आपको नमस्कार है।",
+      "meaningEn": "Be gracious, sovereign Narayani, addressed as intelligence, Sarasvati, excellence, prosperity, Babhravi, the dark power and destiny. Salutations to you."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-24",
+      "number": 24,
+      "labelHi": "पाठ · २४",
+      "labelEn": "Text unit · 24",
+      "lines": [
+        "सर्वस्वरूपे सर्वेशे सर्वशक्तिसमन्विते।",
+        "भयेभ्यस्त्राहि नो देवि दुर्गे देवि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "sarvasvarūpe sarveśhe sarvaśhaktisamanvite",
+        "bhayebhyastrāhi no devi durge devi namo'stu te"
+      ],
+      "meaningHi": "सभी रूपों में विद्यमान, सबकी स्वामिनी और सभी शक्तियों से युक्त दुर्गा, हमें भय से बचाएँ; आपको नमस्कार है।",
+      "meaningEn": "Durga, present in every form, ruler of all and endowed with every power, protect us from fear. Salutations to you."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-25",
+      "number": 25,
+      "labelHi": "पाठ · २५",
+      "labelEn": "Text unit · 25",
+      "lines": [
+        "एतत्ते वदनं सौम्यं लोचनत्रयभूषितम्।",
+        "पातु नः सर्वभीतिभ्यः कात्यायनि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "etatte vadanaṃ saumyaṃ lochanatrayabhūṣitam",
+        "pātu naḥ sarvabhītibhyaḥ kātyāyani namo'stu te"
+      ],
+      "meaningHi": "तीन नेत्रों से सुशोभित आपका सौम्य मुख हमें सभी भयों से बचाए; हे कात्यायनी, आपको नमस्कार है।",
+      "meaningEn": "May your gentle face, adorned with three eyes, protect us from every fear. Salutations to you, Katyayani."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-26",
+      "number": 26,
+      "labelHi": "पाठ · २६",
+      "labelEn": "Text unit · 26",
+      "lines": [
+        "ज्वालाकरालमत्युग्रमशेषासुरसूदनम्।",
+        "त्रिशूलं पातु नो भीतेर्भद्रकालि नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "jvālākarālamatyugramaśheṣāsurasūdanam",
+        "triśhūlaṃ pātu no bhīterbhadrakāli namo'stu te"
+      ],
+      "meaningHi": "ज्वालाओं से विकराल और सभी असुरों का नाश करने वाला आपका त्रिशूल हमें भय से बचाए; भद्रकाली को नमस्कार है।",
+      "meaningEn": "May your blazing, terrible trident, destroyer of all asuras, protect us from fear. Salutations to Bhadrakali."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-27",
+      "number": 27,
+      "labelHi": "पाठ · २७",
+      "labelEn": "Text unit · 27",
+      "lines": [
+        "हिनस्ति दैत्यतेजांसि स्वनेनापूर्य या जगत्।",
+        "सा घण्टा पातु नो देवि पापेभ्यो नः सुतानिव॥"
+      ],
+      "linesEn": [
+        "hinasti daityatejāṃsi svanenāpūrya yā jagat",
+        "sā ghaṇṭā pātu no devi pāpebhyo naḥ sutāniva"
+      ],
+      "meaningHi": "जिस घंटी का नाद जगत को भरकर दैत्यों का तेज हरता है, वह हमें पापों से वैसे बचाए जैसे माता अपने बच्चों को बचाती है।",
+      "meaningEn": "May the bell whose sound fills the world and destroys the asuras’ strength protect us from evil as a mother protects her children."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-28",
+      "number": 28,
+      "labelHi": "पाठ · २८",
+      "labelEn": "Text unit · 28",
+      "lines": [
+        "असुरासृग्वसापङ्कचर्चितस्ते करोज्ज्वलः।",
+        "शुभाय खड्गो भवतु चण्डिके त्वां नता वयम्॥"
+      ],
+      "linesEn": [
+        "asurāsṛigvasāpaṅkacharchitaste karojjvalaḥ",
+        "śhubhāya khaḍgo bhavatu chaṇḍike tvāṃ natā vayam"
+      ],
+      "meaningHi": "असुरों के रक्त और चर्बी से सनी, आपके हाथ में चमकती तलवार हमारा कल्याण करे; चण्डिके, हम आपको प्रणाम करते हैं।",
+      "meaningEn": "May your sword, shining in your hand and smeared with the asuras’ blood and fat, bring us welfare. Chandika, we bow to you."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-29",
+      "number": 29,
+      "labelHi": "पाठ · २९",
+      "labelEn": "Text unit · 29",
+      "lines": [
+        "रोगानशेषानपहंसि तुष्टा",
+        "रुष्टा तु कामान् सकलानभीष्टान्।",
+        "त्वामाश्रितानां न विपन्नराणां",
+        "त्वामाश्रिता ह्याश्रयतां प्रयान्ति॥"
+      ],
+      "linesEn": [
+        "rogānaśheṣānapahaṃsi tuṣṭā",
+        "ruṣṭā tu kāmān sakalānabhīṣṭān",
+        "tvāmāśhritānāṃ na vipannarāṇāṃ",
+        "tvāmāśhritā hyāśhrayatāṃ prayānti"
+      ],
+      "meaningHi": "स्तुति कहती है: प्रसन्न होने पर आप रोग हरती हैं, अप्रसन्न होने पर इच्छित फल नष्ट करती हैं। आपका आश्रय लेने वाले विपत्ति से पार होकर दूसरों का सहारा बनते हैं।",
+      "meaningEn": "The hymn praises you as removing illness when gracious and thwarting cherished aims when displeased. Those who seek your refuge overcome adversity and become a refuge for others."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-30",
+      "number": 30,
+      "labelHi": "पाठ · ३०",
+      "labelEn": "Text unit · 30",
+      "lines": [
+        "एतत्कृतं यत्कदनं त्वयाद्य",
+        "धर्मद्विषां देवि महासुराणाम्।",
+        "रूपैरनेकैर्बहुधाऽऽत्ममूर्तिं",
+        "कृत्वाम्बिके तत्प्रकरोति कान्या॥"
+      ],
+      "linesEn": [
+        "etatkṛitaṃ yatkadanaṃ tvayādya",
+        "dharmadviṣāṃ devi mahāsurāṇām",
+        "rūpairanekairbahudhā''tmamūrtiṃ",
+        "kṛitvāmbike tatprakaroti kānyā"
+      ],
+      "meaningHi": "धर्मविरोधी महासुरों का आज आपने जो संहार किया, उसके लिए आपने अनेक रूप धारण किए। हे अम्बिके, आपके अतिरिक्त ऐसा कौन कर सकता है?",
+      "meaningEn": "Today you destroyed the mighty enemies of righteousness by manifesting yourself in many forms. Ambika, who else could accomplish this?"
+    },
+    {
+      "id": "durga-saptashati-chapter-11-31",
+      "number": 31,
+      "labelHi": "पाठ · ३१",
+      "labelEn": "Text unit · 31",
+      "lines": [
+        "विद्यासु शास्त्रेषु विवेकदीपेष्वाद्येषु वाक्येषु च का त्वदन्या।",
+        "ममत्वगर्तेऽतिमहान्धकारे",
+        "विभ्रामयत्येतदतीव विश्वम्॥"
+      ],
+      "linesEn": [
+        "vidyāsu śhāstreṣu vivekadīpeṣvādyeṣu vākyeṣu cha kā tvadanyā",
+        "mamatvagarte'timahāndhakāre",
+        "vibhrāmayatyetadatīva viśhvam"
+      ],
+      "meaningHi": "ज्ञान, शास्त्र और विवेक जगाने वाले प्राचीन वचन होते हुए भी, आपके अतिरिक्त कौन जगत को ममता के गहरे अंधकारमय गर्त में भटकाता है?",
+      "meaningEn": "Despite knowledge, scriptures and ancient teachings that illuminate discernment, who but you causes the world to wander in the deep darkness of possessive attachment?"
+    },
+    {
+      "id": "durga-saptashati-chapter-11-32",
+      "number": 32,
+      "labelHi": "पाठ · ३२",
+      "labelEn": "Text unit · 32",
+      "lines": [
+        "रक्षांसि यत्रोग्रविषाश्च नागा",
+        "यत्रारयो दस्युबलानि यत्र।",
+        "दावानलो यत्र तथाब्धिमध्ये",
+        "तत्र स्थिता त्वं परिपासि विश्वम्॥"
+      ],
+      "linesEn": [
+        "rakṣhāṃsi yatrograviṣāśhcha nāgā",
+        "yatrārayo dasyubalāni yatra",
+        "dāvānalo yatra tathābdhimadhye",
+        "tatra sthitā tvaṃ paripāsi viśhvam"
+      ],
+      "meaningHi": "जहाँ राक्षस, विषैले सर्प, शत्रु, डाकुओं के दल, जंगल की आग या समुद्र का संकट हो, वहाँ आप उपस्थित होकर विश्व की रक्षा करती हैं।",
+      "meaningEn": "Where there are demons, venomous serpents, enemies, bands of robbers, forest fire or danger at sea, you are present to protect the world."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-33",
+      "number": 33,
+      "labelHi": "पाठ · ३३",
+      "labelEn": "Text unit · 33",
+      "lines": [
+        "विश्वेश्वरि त्वं परिपासि विश्वं",
+        "विश्वात्मिका धारयसीति विश्वम्।",
+        "विश्वेशवन्द्या भवती भवन्ति",
+        "विश्वाश्रया ये त्वयि भक्तिनम्राः॥"
+      ],
+      "linesEn": [
+        "viśhveśhvari tvaṃ paripāsi viśhvaṃ",
+        "viśhvātmikā dhārayasīti viśhvam",
+        "viśhveśhavandyā bhavatī bhavanti",
+        "viśhvāśhrayā ye tvayi bhaktinamrāḥ"
+      ],
+      "meaningHi": "विश्वेश्वरी, आप विश्व की रक्षा और धारण करती हैं क्योंकि आप उसकी आत्मा हैं। विश्व के स्वामी आपको प्रणाम करते हैं; आपके भक्त दूसरों का आश्रय बनते हैं।",
+      "meaningEn": "Sovereign of the universe, you protect and sustain it as its very self. Its rulers bow to you, and those humbly devoted to you become a support for the world."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-34",
+      "number": 34,
+      "labelHi": "पाठ · ३४",
+      "labelEn": "Text unit · 34",
+      "lines": [
+        "देवि प्रसीद परिपालय नोऽरिभीतेर्नित्यं यथासुरवधादधुनैव सद्यः।",
+        "पापानि सर्वजगतां प्रशमं नयाशु",
+        "उत्पातपाकजनितांश्च महोपसर्गान्॥"
+      ],
+      "linesEn": [
+        "devi prasīda paripālaya no'ribhīternityaṃ yathāsuravadhādadhunaiva sadyaḥ",
+        "pāpāni sarvajagatāṃ praśhamaṃ nayāśhu",
+        "utpātapākajanitāṃśhcha mahopasargān"
+      ],
+      "meaningHi": "देवी, जैसे अभी असुरों को मारकर बचाया, वैसे सदा शत्रु-भय से रक्षा करें। संसार के पाप और उत्पातों से निकले बड़े संकट शीघ्र शांत करें।",
+      "meaningEn": "Goddess, protect us always from enemies as you have just done by slaying the asuras. Quickly quell the world’s evils and the great afflictions arising from calamities."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-35",
+      "number": 35,
+      "labelHi": "पाठ · ३५",
+      "labelEn": "Text unit · 35",
+      "lines": [
+        "प्रणतानां प्रसीद त्वं देवि विश्वार्तिहारिणि।",
+        "त्रैलोक्यवासिनामीड्ये लोकानां वरदा भव॥"
+      ],
+      "linesEn": [
+        "praṇatānāṃ prasīda tvaṃ devi viśhvārtihāriṇi",
+        "trailokyavāsināmīḍye lokānāṃ varadā bhava"
+      ],
+      "meaningHi": "विश्व का दुःख हरने वाली, तीनों लोकों में पूजनीय देवी, प्रणाम करने वालों पर प्रसन्न हों और लोकों को वर दें।",
+      "meaningEn": "Goddess who removes the world’s distress and is praised throughout the three worlds, be gracious to those who bow and bestow blessings on all."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-36",
+      "number": 36,
+      "labelHi": "पाठ · ३६",
+      "labelEn": "Text unit · 36",
+      "lines": [
+        "देव्युवाच॥"
+      ],
+      "linesEn": [
+        "devyuvācha"
+      ],
+      "meaningHi": "देवी बोलीं।",
+      "meaningEn": "The goddess spoke."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-37",
+      "number": 37,
+      "labelHi": "पाठ · ३७",
+      "labelEn": "Text unit · 37",
+      "lines": [
+        "वरदाहं सुरगणा वरं यन्मनसेच्छथ।",
+        "तं वृणुध्वं प्रयच्छामि जगतामुपकारकम्॥"
+      ],
+      "linesEn": [
+        "varadāhaṃ suragaṇā varaṃ yanmanasechchhatha",
+        "taṃ vṛiṇudhvaṃ prayachchhāmi jagatāmupakārakam"
+      ],
+      "meaningHi": "हे देवगण, मैं वर देने को तैयार हूँ। अपने मन का ऐसा वर चुनो जो जगत का उपकार करे; मैं उसे दूँगी।",
+      "meaningEn": "Gods, I am ready to grant a boon. Choose what your hearts desire for the benefit of the worlds, and I will give it."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-38",
+      "number": 38,
+      "labelHi": "पाठ · ३८",
+      "labelEn": "Text unit · 38",
+      "lines": [
+        "देवा ऊचुः॥"
+      ],
+      "linesEn": [
+        "devā ūchuḥ"
+      ],
+      "meaningHi": "देवताओं ने उत्तर दिया।",
+      "meaningEn": "The gods replied."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-39",
+      "number": 39,
+      "labelHi": "पाठ · ३९",
+      "labelEn": "Text unit · 39",
+      "lines": [
+        "सर्वाबाधाप्रशमनं त्रैलोक्यस्याखिलेश्वरि।",
+        "एवमेव त्वया कार्यमस्मद्वैरिविनाशनम्॥"
+      ],
+      "linesEn": [
+        "sarvābādhāpraśhamanaṃ trailokyasyākhileśhvari",
+        "evameva tvayā kāryamasmadvairivināśhanam"
+      ],
+      "meaningHi": "समस्त जगत की स्वामिनी, आप इसी प्रकार तीनों लोकों की बाधाएँ शांत करें और हमारे शत्रुओं का नाश करें।",
+      "meaningEn": "Sovereign of all, continue in this way to quell the troubles of the three worlds and destroy our enemies."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-40",
+      "number": 40,
+      "labelHi": "पाठ · ४०",
+      "labelEn": "Text unit · 40",
+      "lines": [
+        "देव्युवाच॥"
+      ],
+      "linesEn": [
+        "devyuvācha"
+      ],
+      "meaningHi": "देवी ने अपने भावी रूपों का वर्णन किया।",
+      "meaningEn": "The goddess described her future manifestations."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-41",
+      "number": 41,
+      "labelHi": "पाठ · ४१",
+      "labelEn": "Text unit · 41",
+      "lines": [
+        "वैवस्वतेऽन्तरे प्राप्ते अष्टाविंशतिमे युगे।",
+        "शुम्भो निशुम्भश्चैवान्यावुत्पत्स्येते महासुरौ॥"
+      ],
+      "linesEn": [
+        "vaivasvate'ntare prāpte aṣṭāviṃśhatime yuge",
+        "śhumbho niśhumbhaśhchaivānyāvutpatsyete mahāsurau"
+      ],
+      "meaningHi": "वैवस्वत मन्वन्तर के अट्ठाईसवें युग में शुम्भ और निशुम्भ नाम के दो और महासुर उत्पन्न होंगे।",
+      "meaningEn": "In the twenty-eighth age of the Vaivasvata manvantara, two further great asuras named Shumbha and Nishumbha will arise."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-42",
+      "number": 42,
+      "labelHi": "पाठ · ४२",
+      "labelEn": "Text unit · 42",
+      "lines": [
+        "नन्दगोपगृहे जाता यशोदागर्भसम्भवा।",
+        "ततस्तौ नाशयिष्यामि विन्ध्याचलनिवासिनी॥"
+      ],
+      "linesEn": [
+        "nandagopagṛihe jātā yaśhodāgarbhasambhavā",
+        "tatastau nāśhayiṣyāmi vindhyāchalanivāsinī"
+      ],
+      "meaningHi": "मैं नन्दगोप के घर यशोदा के गर्भ से जन्म लेकर विन्ध्याचल में निवास करूँगी और उन दोनों का नाश करूँगी।",
+      "meaningEn": "Born from Yashoda in Nandagopa’s household, I will dwell in the Vindhya mountains and destroy those two."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-43",
+      "number": 43,
+      "labelHi": "पाठ · ४३",
+      "labelEn": "Text unit · 43",
+      "lines": [
+        "पुनरप्यतिरौद्रेण रूपेण पृथिवीतले।",
+        "अवतीर्य हनिष्यामि वैप्रचित्तांस्तु दानवान्॥"
+      ],
+      "linesEn": [
+        "punarapyatiraudreṇa rūpeṇa pṛithivītale",
+        "avatīrya haniṣyāmi vaiprachittāṃstu dānavān"
+      ],
+      "meaningHi": "फिर अत्यंत उग्र रूप में पृथ्वी पर अवतीर्ण होकर विप्रचित्ति के वंशज दानवों को मारूँगी।",
+      "meaningEn": "Again I will descend to earth in a fiercely terrifying form and kill the asuras descended from Viprachitti."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-44",
+      "number": 44,
+      "labelHi": "पाठ · ४४",
+      "labelEn": "Text unit · 44",
+      "lines": [
+        "भक्षयन्त्याश्च तानुग्रान् वैप्रचित्तान्महासुरान्।",
+        "रक्ता दन्ता भविष्यन्ति दाडिमीकुसुमोपमाः॥"
+      ],
+      "linesEn": [
+        "bhakṣhayantyāśhcha tānugrān vaiprachittānmahāsurān",
+        "raktā dantā bhaviṣyanti dāḍimīkusumopamāḥ"
+      ],
+      "meaningHi": "उन उग्र दानवों को खाते समय मेरे दाँत अनार के फूल जैसे लाल हो जाएँगे।",
+      "meaningEn": "As I devour those fierce asuras, my teeth will become red like pomegranate blossoms."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-45",
+      "number": 45,
+      "labelHi": "पाठ · ४५",
+      "labelEn": "Text unit · 45",
+      "lines": [
+        "ततो मां देवताः स्वर्गे मर्त्यलोके च मानवाः।",
+        "स्तुवन्तो व्याहरिष्यन्ति सततं रक्तदन्तिकाम्॥"
+      ],
+      "linesEn": [
+        "tato māṃ devatāḥ svarge martyaloke cha mānavāḥ",
+        "stuvanto vyāhariṣyanti satataṃ raktadantikām"
+      ],
+      "meaningHi": "तब स्वर्ग के देवता और पृथ्वी के मनुष्य मेरी स्तुति करते हुए मुझे रक्तदन्तिका कहेंगे।",
+      "meaningEn": "Then the gods in heaven and people on earth will praise me continually as Raktadantika, the red-toothed goddess."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-46",
+      "number": 46,
+      "labelHi": "पाठ · ४६",
+      "labelEn": "Text unit · 46",
+      "lines": [
+        "भूयश्च शतवार्षिक्यामनावृष्ट्यामनम्भसि।",
+        "मुनिभिः संस्तुता भूमौ सम्भविष्याम्ययोनिजा॥"
+      ],
+      "linesEn": [
+        "bhūyaśhcha śhatavārṣikyāmanāvṛiṣṭyāmanambhasi",
+        "munibhiḥ saṃstutā bhūmau sambhaviṣyāmyayonijā"
+      ],
+      "meaningHi": "सौ वर्षों की वर्षाहीनता से जल न रहने पर मुनियों की स्तुति से मैं बिना गर्भ-जन्म के पृथ्वी पर प्रकट होऊँगी।",
+      "meaningEn": "When a hundred years without rain have left the earth waterless, the sages’ praise will call forth my manifestation without birth from a womb."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-47",
+      "number": 47,
+      "labelHi": "पाठ · ४७",
+      "labelEn": "Text unit · 47",
+      "lines": [
+        "ततः शतेन नेत्राणां निरीक्षिष्यामि यन्मुनीन्।",
+        "कीर्तयिष्यन्ति मनुजाः शताक्षीमिति मां ततः॥"
+      ],
+      "linesEn": [
+        "tataḥ śhatena netrāṇāṃ nirīkṣhiṣyāmi yanmunīn",
+        "kīrtayiṣyanti manujāḥ śhatākṣhīmiti māṃ tataḥ"
+      ],
+      "meaningHi": "मैं सौ नेत्रों से मुनियों को देखूँगी; इसलिए मनुष्य मुझे शताक्षी नाम से पुकारेंगे।",
+      "meaningEn": "I will look upon the sages with a hundred eyes; therefore people will call me Shatakshi, the hundred-eyed one."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-48",
+      "number": 48,
+      "labelHi": "पाठ · ४८",
+      "labelEn": "Text unit · 48",
+      "lines": [
+        "ततोऽहमखिलं लोकमात्मदेहसमुद्भवैः।",
+        "भरिष्यामि सुराः शाकैरावृष्टेः प्राणधारकैः॥"
+      ],
+      "linesEn": [
+        "tato'hamakhilaṃ lokamātmadehasamudbhavaiḥ",
+        "bhariṣyāmi surāḥ śhākairāvṛiṣṭeḥ prāṇadhārakaiḥ"
+      ],
+      "meaningHi": "वर्षा लौटने तक अपने शरीर से उत्पन्न जीवनदायी शाकों से मैं समस्त संसार का पोषण करूँगी।",
+      "meaningEn": "Until the rains return, I will nourish the entire world with life-sustaining vegetation arising from my own body."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-49",
+      "number": 49,
+      "labelHi": "पाठ · ४९",
+      "labelEn": "Text unit · 49",
+      "lines": [
+        "शाकम्भरीति विख्यातिं तदा यास्याम्यहं भुवि।",
+        "तत्रैव च वधिष्यामि दुर्गमाख्यं महासुरम्॥"
+      ],
+      "linesEn": [
+        "śhākambharīti vikhyātiṃ tadā yāsyāmyahaṃ bhuvi",
+        "tatraiva cha vadhiṣyāmi durgamākhyaṃ mahāsuram"
+      ],
+      "meaningHi": "तब पृथ्वी पर शाकम्भरी नाम से प्रसिद्ध होऊँगी और वहीं दुर्गम नामक महासुर का वध करूँगी।",
+      "meaningEn": "Then I will be known on earth as Shakambhari, and there I will also slay the great asura Durgama."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-50",
+      "number": 50,
+      "labelHi": "पाठ · ५०",
+      "labelEn": "Text unit · 50",
+      "lines": [
+        "दुर्गा देवीति विख्यातं तन्मे नाम भविष्यति।",
+        "पुनश्चाहं यदा भीमं रूपं कृत्वा हिमाचले॥"
+      ],
+      "linesEn": [
+        "durgā devīti vikhyātaṃ tanme nāma bhaviṣyati",
+        "punaśhchāhaṃ yadā bhīmaṃ rūpaṃ kṛitvā himāchale"
+      ],
+      "meaningHi": "इससे मेरा नाम दुर्गा देवी प्रसिद्ध होगा। फिर हिमालय में मैं एक भयानक रूप धारण करूँगी।",
+      "meaningEn": "Thus my name Durga Devi will become renowned. Later I will take a fearsome form in the Himalaya."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-51",
+      "number": 51,
+      "labelHi": "पाठ · ५१",
+      "labelEn": "Text unit · 51",
+      "lines": [
+        "रक्षांसि भक्षयिष्यामि मुनीनां त्राणकारणात्।",
+        "तदा मां मुनयः सर्वे स्तोष्यन्त्यानम्रमूर्तयः॥"
+      ],
+      "linesEn": [
+        "rakṣhāṃsi bhakṣhayiṣyāmi munīnāṃ trāṇakāraṇāt",
+        "tadā māṃ munayaḥ sarve stoṣyantyānamramūrtayaḥ"
+      ],
+      "meaningHi": "मुनियों की रक्षा के लिए मैं राक्षसों को खाऊँगी; तब सभी मुनि झुककर मेरी स्तुति करेंगे।",
+      "meaningEn": "I will devour the demons to protect the sages, and all the sages will bow and praise me."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-52",
+      "number": 52,
+      "labelHi": "पाठ · ५२",
+      "labelEn": "Text unit · 52",
+      "lines": [
+        "भीमा देवीति विख्यातं तन्मे नाम भविष्यति।",
+        "यदारुणाख्यस्त्रैलोक्ये महाबाधां करिष्यति॥"
+      ],
+      "linesEn": [
+        "bhīmā devīti vikhyātaṃ tanme nāma bhaviṣyati",
+        "yadāruṇākhyastrailokye mahābādhāṃ kariṣyati"
+      ],
+      "meaningHi": "तब मेरा नाम भीमा देवी होगा। जब अरुण नामक असुर तीनों लोकों में भारी संकट उत्पन्न करेगा—",
+      "meaningEn": "Then I will be known as Bhima Devi. When the asura named Aruna causes great distress throughout the three worlds—"
+    },
+    {
+      "id": "durga-saptashati-chapter-11-53",
+      "number": 53,
+      "labelHi": "पाठ · ५३",
+      "labelEn": "Text unit · 53",
+      "lines": [
+        "तदाहं भ्रामरं रूपं कृत्वाऽसङ्ख्येयषट्पदम्।",
+        "त्रैलोक्यस्य हितार्थाय वधिष्यामि महासुरम्॥"
+      ],
+      "linesEn": [
+        "tadāhaṃ bhrāmaraṃ rūpaṃ kṛitvā'saṅkhyeyaṣaṭpadam",
+        "trailokyasya hitārthāya vadhiṣyāmi mahāsuram"
+      ],
+      "meaningHi": "तब असंख्य भ्रमरों का रूप लेकर मैं तीनों लोकों के हित के लिए उस महासुर का वध करूँगी।",
+      "meaningEn": "Then I will take a form consisting of countless bees and slay that great asura for the welfare of the three worlds."
+    },
+    {
+      "id": "durga-saptashati-chapter-11-54",
+      "number": 54,
+      "labelHi": "पाठ · ५४",
+      "labelEn": "Text unit · 54",
+      "lines": [
+        "भ्रामरीति च मां लोकास्तदा स्तोष्यन्ति सर्वतः।",
+        "इत्थं यदा यदा बाधा दानवोत्था भविष्यति॥"
+      ],
+      "linesEn": [
+        "bhrāmarīti cha māṃ lokāstadā stoṣyanti sarvataḥ",
+        "itthaṃ yadā yadā bādhā dānavotthā bhaviṣyati"
+      ],
+      "meaningHi": "तब लोग सर्वत्र भ्रामरी कहकर मेरी स्तुति करेंगे। इसी प्रकार जब-जब दानवों से संकट उत्पन्न होगा—",
+      "meaningEn": "Then people everywhere will praise me as Bhramari. In this way, whenever affliction arises from asuras—"
+    },
+    {
+      "id": "durga-saptashati-chapter-11-55",
+      "number": 55,
+      "labelHi": "पाठ · ५५",
+      "labelEn": "Text unit · 55",
+      "lines": [
+        "तदा तदावतीर्याहं करिष्याम्यरिसंक्षयम्॥"
+      ],
+      "linesEn": [
+        "tadā tadāvatīryāhaṃ kariṣyāmyarisaṃkṣhayam"
+      ],
+      "meaningHi": "तब-तब मैं अवतीर्ण होकर शत्रुओं का विनाश करूँगी।",
+      "meaningEn": "I will manifest whenever needed and bring about the destruction of those enemies."
+    }
+  ]
+}

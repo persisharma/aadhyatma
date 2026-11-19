@@ -1,0 +1,1054 @@
+{
+  "titleHi": "काली चालीसा",
+  "titleEn": "Kali Chalisa",
+  "subtitleHi": "जय काली जगदम्ब जय",
+  "subtitleEn": "Jai Kali Jagadamb jai",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Complete Drik Panchang Kali Chalisa, collated in full against Aaj Tak as a second confirmation. Retains the requested Jai Kali Jagadamb composition and Drik wording; no Mahakali composition is mixed in. Hindi/English meanings and pronunciation-based ASCII romanization are editorial.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/kali-mata/kali-mata-chalisa.html",
+      "https://www.aajtak.in/religion/chalisa/maa-kali-chalisa-2688359"
+    ],
+    "retrievedOn": "2026-11-16",
+    "editionDecision": "Following the authorized chosen-edition approach used for A2/A3: preserve one complete Drik publication and document variants, without claiming manuscript consensus. Both full publications contain 54 body couplets, not the 40 stated in the generic Drik introduction. Two opening dohas and one closing doha make 57 reader units.",
+    "variants": "Aaj Tak has सहस्त्राक्षि versus Drik सहस्राक्षि in body 15; तिनमहं versus तिनमहँ in body 23; दु:ख versus दुःख in 32/49; and anusvara instead of chandrabindu in जहाँ/कहूँ/कहँ/माँ/हुँकारी/कतहुँ in 37–39,42–43,46–47,53. Closing quotes/spacing around भक्त also differ. Other units agree in wording and sequence. Retain Drik spellings including हला, दाक्षाणायिनी, महातमा, अग जग, तब, भुजामल and किंकण; do not silently repair obscure readings. General glosses avoid speculative word-level etymologies.",
+    "access": "Drik full prayer read through web retrieval; direct HTTP 403. Aaj Tak full prayer read via web and direct HTTP 200. Manifest Pavitra URL and /shree-kali-chalisa returned HTTP 403 and are not counted as read sources.",
+    "notes": "Traditional devotional prayer only; no copied modern publisher translations. Benefits are expressed as beliefs within the hymn. Fifty-two Shakti Peethas and eighteen arms describe this text, not universal iconographic or geographical counts."
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 54,
+    "closingDohas": 1,
+    "totalVerses": 57
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "जय काली जगदम्ब जय, हरनि ओघ अघ पुंज।",
+        "वास करहु निज दास के, निशदिन हृदय निकुंज॥"
+      ],
+      "linesEn": [
+        "Jai Kali Jagadamb jai, harani ogh agh punj.",
+        "Vaas karahu nij daas ke, nishdin hriday nikunj."
+      ],
+      "meaningHi": "जगत की माता काली से पापों के समूह हरने और भक्त के हृदय में दिन-रात बसने की प्रार्थना है। आरम्भ में मन को देवी का निवास माना गया है।",
+      "meaningEn": "The opening asks Kali, mother of the world, to remove accumulated wrongs and dwell in the devotee's heart day and night. The heart is offered as her resting place."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "जयति कपाली कालिका, कंकाली सुख दानि।",
+        "कृपा करहु वरदायिनी, निज सेवक अनुमानि॥"
+      ],
+      "linesEn": [
+        "Jayati Kapali Kalika, Kankali sukh daani.",
+        "Kripa karahu varadayini, nij sevak anumaani."
+      ],
+      "meaningHi": "कपाली, कालिका और कंकाली नामों से सुख देने वाली देवी की स्तुति है। उपासक अपना सेवकत्व स्वीकार कर वरदायिनी माँ की कृपा माँगता है।",
+      "meaningEn": "Hailing the joy-giving goddess as Kapali, Kalika and Kankali, the worshipper asks the giver of blessings to recognise and care for her servant."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय जय जय काली कंकाली।",
+        "जय कपालिनी, जयति कराली॥"
+      ],
+      "linesEn": [
+        "Jai jai jai Kali Kankali.",
+        "Jai Kapalini, jayati Karali."
+      ],
+      "meaningHi": "काली, कंकाली, कपालिनी और कराली की बार-बार जय कही गई है। नाम-स्मरण से देवी के उग्र रूप के प्रति भी भक्ति व्यक्त होती है।",
+      "meaningEn": "Repeated praise of Kali, Kankali, Kapalini and Karali begins the body of the hymn. Devotion embraces her fierce names as well as her maternal presence."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "शंकर प्रिया, अपर्णा, अम्बा।",
+        "जय कपर्दिनी, जय जगदम्बा॥"
+      ],
+      "linesEn": [
+        "Shankar priya, Aparna, Amba.",
+        "Jai Kapardini, jai Jagadamba."
+      ],
+      "meaningHi": "शंकर की प्रिया, अपर्णा, अम्बा, कपर्दिनी और जगदम्बा नामों का स्मरण है। स्तुति में अनेक नामों के माध्यम से एक ही माँ को प्रणाम किया जाता है।",
+      "meaningEn": "The prayer greets Shiva's beloved as Aparna, Amba, Kapardini and Jagadamba. These names gather several aspects of the mother into one act of praise."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "आर्या, हला, अम्बिका, माया।",
+        "कात्यायनी उमा जगजाया॥"
+      ],
+      "linesEn": [
+        "Arya, Hala, Ambika, Maya.",
+        "Katyayani Uma Jagjaya."
+      ],
+      "meaningHi": "आर्या, हला, अम्बिका, माया, कात्यायनी, उमा और जगजाया नाम लिए गए हैं। इस नामावली में अलग-अलग उपाधियाँ देवी के स्मरण का आधार हैं।",
+      "meaningEn": "Arya, Hala, Ambika, Maya, Katyayani, Uma and Jagjaya are invoked. The sequence uses names and epithets as a way to remember the goddess."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "गिरिजा गौरी दुर्गा चण्डी।",
+        "दाक्षाणायिनी शाम्भवी प्रचंडी॥"
+      ],
+      "linesEn": [
+        "Girija Gauri Durga Chandi.",
+        "Dakshanayini Shambhavi prachandi."
+      ],
+      "meaningHi": "गिरिजा, गौरी, दुर्गा, चण्डी और शाम्भवी आदि नामों में देवी के सौम्य और प्रचण्ड रूप साथ आते हैं। भक्त दोनों रूपों को आदर देता है।",
+      "meaningEn": "Girija, Gauri, Durga, Chandi, Dakshanayini and Shambhavi are praised together. Gentle and formidable aspects receive the same reverence."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "पार्वती मंगला भवानी।",
+        "विश्वकारिणी सती मृडानी॥"
+      ],
+      "linesEn": [
+        "Parvati Mangala Bhavani.",
+        "Vishvakarini Sati Mridani."
+      ],
+      "meaningHi": "पार्वती, मंगला, भवानी, विश्वकारिणी, सती और मृडानी नामों से माँ का स्मरण है। संसार से उनके सम्बन्ध और मंगलमय स्वरूप की स्तुति की जाती है।",
+      "meaningEn": "Parvati, Mangala, Bhavani, Vishvakarini, Sati and Mridani are remembered. Their invocation celebrates the mother's auspicious presence and relation to the world."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "सर्वमंगला शैल नन्दिनी।",
+        "हेमवती तुम जगत वन्दिनी॥"
+      ],
+      "linesEn": [
+        "Sarvamangala Shail Nandini.",
+        "Hemavati tum jagat vandini."
+      ],
+      "meaningHi": "देवी को सर्वमंगला, पर्वत की पुत्री और हेमवती कहा गया है। जगत द्वारा वन्दित माँ को प्रणाम करने का भाव है।",
+      "meaningEn": "The goddess is praised as wholly auspicious, the mountain's daughter and Hemavati. The worshipper joins the world in bowing to her."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "ब्रह्मचारिणी कालरात्रि जय।",
+        "महारात्रि जय मोहरात्रि जय॥"
+      ],
+      "linesEn": [
+        "Brahmacharini Kalaratri jai.",
+        "Maharatri jai Moharatri jai."
+      ],
+      "meaningHi": "ब्रह्मचारिणी, कालरात्रि, महारात्रि और मोहरात्रि की जय कही गई है। तप और गहन रात्रि से जुड़े नाम देवी के व्यापक स्वरूप का स्मरण कराते हैं।",
+      "meaningEn": "Brahmacharini, Kalaratri, Maharatri and Moharatri are hailed. Names associated with austerity and profound night broaden the hymn's contemplation of the goddess."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "तुम त्रिमूर्ति रोहिणी कालिका।",
+        "कूष्माण्डा कार्तिका चण्डिका॥"
+      ],
+      "linesEn": [
+        "Tum Trimurti Rohini Kalika.",
+        "Kushmanda Kartika Chandika."
+      ],
+      "meaningHi": "त्रिमूर्ति, रोहिणी, कालिका, कूष्माण्डा, कार्तिका और चण्डिका नामों में देवी को पुकारा गया है। नामों की यह शृंखला उपासना में उनके विविध रूप सामने रखती है।",
+      "meaningEn": "The goddess is addressed as Trimurti, Rohini, Kalika, Kushmanda, Kartika and Chandika. The recitation holds these varied forms together in worship."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "तारा भुवनेश्वरी अनन्या।",
+        "तुम्हीं छिन्नमस्ता शुचिधन्या॥"
+      ],
+      "linesEn": [
+        "Tara Bhuvaneshvari ananya.",
+        "Tumhin Chhinnamasta shuchidhanya."
+      ],
+      "meaningHi": "देवी को तारा, अनुपम भुवनेश्वरी और पवित्र छिन्नमस्ता कहा गया है। यह स्तुति अलग नामों में उसी शक्ति का ध्यान करती है।",
+      "meaningEn": "Tara, incomparable Bhuvaneshvari and pure Chhinnamasta are invoked as forms of the same goddess. Their names guide the hymn's contemplation of divine power."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "धूमावती षोडशी माता।",
+        "बगला मातंगी विख्याता॥"
+      ],
+      "linesEn": [
+        "Dhumavati Shodashi mata.",
+        "Bagla Matangi vikhyata."
+      ],
+      "meaningHi": "धूमावती, षोडशी, बगला और मातंगी के प्रसिद्ध नाम लिए गए हैं। माँ के इन रूपों का स्मरण नामावली की भक्ति को आगे बढ़ाता है।",
+      "meaningEn": "The well-known names Dhumavati, Shodashi, Bagla and Matangi continue the invocation. Each is remembered as a form of the mother."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "तुम भैरवी मातु तुम कमला।",
+        "रक्तदन्तिका कीरति अमला॥"
+      ],
+      "linesEn": [
+        "Tum Bhairavi matu tum Kamala.",
+        "Raktadantika kirati amala."
+      ],
+      "meaningHi": "माँ को भैरवी, कमला और रक्तदन्तिका कहा गया है तथा उनकी कीर्ति को निर्मल माना गया है। उग्र और कोमल नाम एक ही स्तुति में आते हैं।",
+      "meaningEn": "The mother is Bhairavi, Kamala and Raktadantika, whose glory is praised as pure. Fierce and gentle names belong within the same devotion."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "शाकम्भरी कौशिकी भीमा।",
+        "महातमा अग जग की सीमा॥"
+      ],
+      "linesEn": [
+        "Shakambhari Kaushiki Bhima.",
+        "Mahatama ag jag ki seema."
+      ],
+      "meaningHi": "शाकम्भरी, कौशिकी और भीमा के नामों से माँ की महिमा कही गई है। दूसरी पंक्ति उन्हें चर-अचर जगत से व्यापक सम्बन्ध रखने वाली शक्ति के रूप में स्मरण करती है।",
+      "meaningEn": "Shakambhari, Kaushiki and Bhima are praised. The second line places her greatness in relation to the whole moving and unmoving world, without reducing the old wording to a technical definition."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "चन्द्रघण्टिका तुम सावित्री।",
+        "ब्रह्मवादिनी मां गायत्री॥"
+      ],
+      "linesEn": [
+        "Chandraghantika tum Savitri.",
+        "Brahmavadini maan Gayatri."
+      ],
+      "meaningHi": "चन्द्रघण्टिका, सावित्री और ब्रह्मवादिनी गायत्री के रूपों में माँ का ध्यान है। यह नाम-स्मरण दिव्य ज्ञान और वाणी से जुड़े रूपों को भी सम्मान देता है।",
+      "meaningEn": "The mother is remembered as Chandraghantika, Savitri and Brahmavadini Gayatri. This praise also honours forms associated with sacred knowledge and utterance."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "रूद्राणी तुम कृष्ण पिंगला।",
+        "अग्निज्वाला तुम सर्वमंगला॥"
+      ],
+      "linesEn": [
+        "Rudrani tum Krishna Pingala.",
+        "Agnijvala tum Sarvamangala."
+      ],
+      "meaningHi": "रुद्राणी, कृष्ण पिंगला, अग्निज्वाला और सर्वमंगला नामों से स्तुति है। तेजस्विता और मंगल का भाव इन नामों में साथ आता है।",
+      "meaningEn": "Rudrani, Krishna Pingala, Agnijvala and Sarvamangala are invoked. Fiery power and auspiciousness are praised together."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "मेघस्वना तपस्विनि योगिनी।",
+        "सहस्राक्षि तुम अगजग भोगिनी॥"
+      ],
+      "linesEn": [
+        "Meghasvana tapasvini Yogini.",
+        "Sahasrakshi tum agjag bhogini."
+      ],
+      "meaningHi": "मेघ जैसी ध्वनि वाली तपस्विनी योगिनी और सहस्राक्षी के रूप में देवी का स्मरण है। स्तुति उनके चर-अचर जगत में व्यापक अनुभव और दृष्टि को प्रणाम करती है।",
+      "meaningEn": "The hymn remembers the thunder-voiced ascetic Yogini and thousand-eyed goddess. It praises her encompassing vision and presence throughout the moving and unmoving world."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "जलोदरी सरस्वती डाकिनी।",
+        "त्रिदशेश्वरी अजेय लाकिनी॥"
+      ],
+      "linesEn": [
+        "Jalodari Sarasvati Dakini.",
+        "Tridasheshvari ajeya Lakini."
+      ],
+      "meaningHi": "जलोदरी, सरस्वती, डाकिनी और अजेय लाकिनी नाम लिए गए हैं। त्रिदशेश्वरी कहकर देवी को देवताओं की अधीश्वरी के रूप में प्रणाम है।",
+      "meaningEn": "Jalodari, Sarasvati, Dakini and unconquerable Lakini are invoked. Calling her Tridasheshvari honours her as sovereign over the gods."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "पुष्टि तुष्टि धृति स्मृति शिव दूती।",
+        "कामाक्षी लज्जा आहूती॥"
+      ],
+      "linesEn": [
+        "Pushti Tushti Dhriti Smriti Shiv duti.",
+        "Kamakshi Lajja Ahuti."
+      ],
+      "meaningHi": "पुष्टि, तुष्टि, धृति और स्मृति जैसे नाम पोषण, सन्तोष, धैर्य और स्मरण की ओर संकेत करते हैं। शिवदूती, कामाक्षी, लज्जा और आहूती के साथ यह स्तुति जीवन में देवी के गुणों को याद करती है।",
+      "meaningEn": "Names such as Pushti, Tushti, Dhriti and Smriti evoke nourishment, contentment, steadiness and remembrance. With Shiva's messenger, Kamakshi, Lajja and Ahuti, they bring divine qualities into the prayer."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "महोदरी कामाक्षि हारिणी।",
+        "विनायकी श्रुति महा शाकिनी॥"
+      ],
+      "linesEn": [
+        "Mahodari Kamakshi Harini.",
+        "Vinayaki Shruti Maha Shakini."
+      ],
+      "meaningHi": "महोदरी, कामाक्षि, हारिणी, विनायकी, श्रुति और महा शाकिनी नामों का उच्चारण है। यह नाममाला देवी के अनेक रूपों के प्रति श्रद्धा व्यक्त करती है।",
+      "meaningEn": "Mahodari, Kamakshi, Harini, Vinayaki, Shruti and Maha Shakini continue the garland of names. The verse expresses reverence without prescribing a separate ritual for each form."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "अजा कर्ममोही ब्रह्माणी।",
+        "धात्री वाराही शर्वाणी॥"
+      ],
+      "linesEn": [
+        "Aja Karmamohi Brahmani.",
+        "Dhatri Varahi Sharvani."
+      ],
+      "meaningHi": "अजा, कर्ममोही, ब्रह्माणी, धात्री, वाराही और शर्वाणी के रूपों में देवी को प्रणाम है। धात्री का स्मरण माँ के धारण और पालन करने वाले भाव को सामने लाता है।",
+      "meaningEn": "Aja, Karmamohi, Brahmani, Dhatri, Varahi and Sharvani are invoked. Remembering her as Dhatri draws attention to the mother's sustaining presence."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "स्कन्द मातु तुम सिंह वाहिनी।",
+        "मातु सुभद्रा रहहु दाहिनी॥"
+      ],
+      "linesEn": [
+        "Skand matu tum sinh vahini.",
+        "Matu Subhadra rahahu dahini."
+      ],
+      "meaningHi": "माँ को स्कन्दमाता और सिंहवाहिनी कहकर पुकारा गया है। सुभद्रा से अनुकूल और सहायक बने रहने की विनती है।",
+      "meaningEn": "The mother is hailed as Skanda's mother and the lion-rider. Addressing her as Subhadra, the devotee asks her to remain favourable and supportive."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "नाम रूप गुण अमित तुम्हारे।",
+        "शेष शारदा बरणत हारे॥"
+      ],
+      "linesEn": [
+        "Naam roop gun amit tumhare.",
+        "Shesh Sharada baranat hare."
+      ],
+      "meaningHi": "देवी के नाम, रूप और गुण असीम कहे गए हैं; शेष और शारदा भी उनका पूरा वर्णन नहीं कर पाते। यह विनय स्तुति की अपनी सीमा स्वीकार करती है।",
+      "meaningEn": "Her names, forms and qualities are boundless; even Shesha and Sharada cannot exhaust their description. The verse acknowledges the limits of praise."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "तनु छवि श्यामवर्ण तव माता।",
+        "नाम कालिका जग विख्याता॥"
+      ],
+      "linesEn": [
+        "Tanu chhavi shyamvarn tav mata.",
+        "Naam Kalika jag vikhyata."
+      ],
+      "meaningHi": "माँ के श्यामवर्ण रूप और जगत में प्रसिद्ध कालिका नाम का वर्णन है। यहाँ नामावली से ध्यान उनके दृश्य स्वरूप की ओर आता है।",
+      "meaningEn": "The mother is described as dark-hued and renowned throughout the world as Kalika. The hymn turns from her names to contemplation of her appearance."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "अष्टादश तब भुजा मनोहर।",
+        "तिनमहँ अस्त्र विराजत सुन्दर॥"
+      ],
+      "linesEn": [
+        "Ashtadash tab bhuja manohar.",
+        "Tinmahan astra virajat sundar."
+      ],
+      "meaningHi": "इस पाठ में देवी की अठारह मनोहर भुजाओं में सुशोभित अस्त्रों का ध्यान है। यह वर्णन इसी स्तुति के स्वरूप का है, हर काली प्रतिमा का नियम नहीं।",
+      "meaningEn": "This hymn visualises eighteen graceful arms bearing weapons. It describes the form contemplated here, not a rule that every image of Kali must follow."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "शंख चक्र अरू गदा सुहावन।",
+        "परिघ भुशण्डी घण्टा पावन॥"
+      ],
+      "linesEn": [
+        "Shankh chakra aru gada suhavan.",
+        "Parigh bhushundi ghanta paavan."
+      ],
+      "meaningHi": "शंख, चक्र, गदा, परिघ, भुशुण्डी और घण्टा देवी के आयुधों में गिनाए गए हैं। उनका स्मरण देवी की सामर्थ्य और पवित्र उपस्थिति की स्तुति है।",
+      "meaningEn": "Conch, discus, mace, parigha, bhushundi and bell are named among her implements. Their invocation praises her power and sacred presence."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "शूल बज्र धनुबाण उठाए।",
+        "निशिचर कुल सब मारि गिराए॥"
+      ],
+      "linesEn": [
+        "Shool bajra dhanubaan uthae.",
+        "Nishichar kul sab maari girae."
+      ],
+      "meaningHi": "शूल, वज्र और धनुष-बाण धारण करके देवी राक्षसों का नाश करती हैं। युद्ध का यह काव्यचित्र उनकी रक्षा करने वाली शक्ति की स्तुति करता है।",
+      "meaningEn": "Bearing spear, thunderbolt, bow and arrows, the goddess defeats demonic hosts. The battle image celebrates her protecting power."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "शुंभ निशुंभ दैत्य संहारे।",
+        "रक्तबीज के प्राण निकारे॥"
+      ],
+      "linesEn": [
+        "Shumbh Nishumbh daitya sanhare.",
+        "Raktabeej ke praan nikare."
+      ],
+      "meaningHi": "शुम्भ, निशुम्भ और रक्तबीज के संहार का स्मरण है। भक्त देवी की दैत्य-विजय को उनकी रक्षक महिमा के रूप में गाता है।",
+      "meaningEn": "The defeat of Shumbha, Nishumbha and Raktabija is recalled. The devotee celebrates these victories as manifestations of her protective greatness."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "चौंसठ योगिनी नाचत संगा।",
+        "मद्यपान कीन्हैउ रण गंगा॥"
+      ],
+      "linesEn": [
+        "Chaunsath Yogini naachat sanga.",
+        "Madyapaan kinhaiu ran Ganga."
+      ],
+      "meaningHi": "रण के उग्र दृश्य में चौंसठ योगिनियों का नृत्य और मद्यपान का उल्लेख है। यह स्तुति का काव्यात्मक युद्ध-वर्णन है, पाठक को किसी आचरण का निर्देश नहीं।",
+      "meaningEn": "Sixty-four yoginis dance in the fierce battle scene, which also mentions drinking wine. This is poetic battle imagery, not an instruction to the reader."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "कटि किंकिणी मधुर नूपुर धुनि।",
+        "दैत्यवंश कांपत जेहि सुनि-सुनि॥"
+      ],
+      "linesEn": [
+        "Kati kinkini madhur nupur dhuni.",
+        "Daityavansh kaanpat jehi suni-suni."
+      ],
+      "meaningHi": "कमर की किंकिणी और नूपुरों की मधुर ध्वनि सुनकर दैत्य काँपते हैं। सौन्दर्य और पराक्रम का यह मेल देवी की प्रभावशाली उपस्थिति दिखाता है।",
+      "meaningEn": "Her waist bells and anklets sound sweetly, yet their sound makes demonic hosts tremble. Beauty and might meet in this portrayal of her presence."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "कर खप्पर त्रिशूल भयकारी।",
+        "अहै सदा सन्तन सुखकारी॥"
+      ],
+      "linesEn": [
+        "Kar khappar trishool bhayakari.",
+        "Ahai sada santan sukhakari."
+      ],
+      "meaningHi": "हाथ में खप्पर और त्रिशूल वाला रूप भयकारी है, किन्तु सन्तों के लिए सुखकारी कहा गया है। भक्त उग्रता में भी आश्रय देखता है।",
+      "meaningEn": "The skull-bowl and trident make her appearance fearsome, yet she brings comfort to the saintly. The worshipper finds refuge even in her fierce form."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "शव आरूढ़ नृत्य तुम साजा।",
+        "बजत मृदंग भेरी के बाजा॥"
+      ],
+      "linesEn": [
+        "Shav aroodh nritya tum saaja.",
+        "Bajat mridang bheri ke baaja."
+      ],
+      "meaningHi": "शव पर आरूढ़ देवी का नृत्य और मृदंग-भेरी की ध्वनि चित्रित है। यह देवी के उग्र ध्यानरूप का वर्णन है।",
+      "meaningEn": "The goddess dances mounted on a corpse while mridanga and bheri drums sound. The verse presents a fierce contemplative image of the deity."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "रक्त पान अरिदल को कीन्हा।",
+        "प्राण तजेउ जो तुम्हिं न चीन्हा॥"
+      ],
+      "linesEn": [
+        "Rakt paan aridal ko kinha.",
+        "Praan tajeu jo tumhin na chinha."
+      ],
+      "meaningHi": "शत्रुदल के रक्तपान और नाश का उग्र काव्यचित्र है। युद्ध-प्रसंग में यह देवी की अजेयता कहता है, सामान्य असहमति के लिए दण्ड का निर्देश नहीं।",
+      "meaningEn": "The battle poem describes drinking the enemy host's blood and the fall of those who failed to recognise her. It expresses invincibility in that scene, not a command to punish ordinary disagreement."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "लपलपाति जिव्हा तव माता।",
+        "भक्तन सुख दुष्टन दुःख दाता॥"
+      ],
+      "linesEn": [
+        "Laplapati jivha tav mata.",
+        "Bhaktan sukh dushtan dukh daata."
+      ],
+      "meaningHi": "माँ की लपलपाती जिह्वा का वर्णन है। स्तुति उन्हें भक्तों को सुख और दुष्टों को दुःख देने वाली रक्षक शक्ति मानती है।",
+      "meaningEn": "Her flickering tongue is described. The hymn presents her as a protective power bringing comfort to devotees and distress to the wicked."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "लसत भाल सेंदुर को टीको।",
+        "बिखरे केश रूप अति नीको॥"
+      ],
+      "linesEn": [
+        "Lasat bhaal sendur ko tiko.",
+        "Bikhare kesh roop ati niko."
+      ],
+      "meaningHi": "माथे का सिन्दूर-तिलक और खुले केश देवी के सुन्दर रूप के अंग हैं। ध्यान में उग्रता के साथ सौन्दर्य भी देखा जाता है।",
+      "meaningEn": "Vermilion shines on her forehead and loose hair frames her beautiful form. The contemplation sees beauty alongside fierceness."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "मुंडमाल गल अतिशय सोहत।",
+        "भुजामल किंकण मनमोहन॥"
+      ],
+      "linesEn": [
+        "Mundmaal gal atishay sohat.",
+        "Bhujamal kinkan manmohan."
+      ],
+      "meaningHi": "गले की मुण्डमाला और भुजामाल-किंकण से सजे रूप की स्तुति है। पाठ के उग्र आभूषणों को देवी के ध्यानचित्र के रूप में स्मरण किया गया है।",
+      "meaningEn": "The hymn praises her garland of heads and the adornments named bhujamal and kinkan. These fierce ornaments belong to its devotional visualisation."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "प्रलय नृत्य तुम करहु भवानी।",
+        "जगदम्बा कहि वेद बखानी॥"
+      ],
+      "linesEn": [
+        "Pralay nritya tum karahu Bhavani.",
+        "Jagadamba kahi Ved bakhani."
+      ],
+      "meaningHi": "भवानी के प्रलय-नृत्य और जगदम्बा रूप की स्तुति है। पाठ कहता है कि वेद उनकी महिमा गाते हैं; यहाँ किसी विशिष्ट वैदिक मन्त्र का उद्धरण नहीं दिया गया है।",
+      "meaningEn": "Bhavani's dance of dissolution is praised, and the hymn says the Vedas celebrate her as mother of the world. It does not cite a particular Vedic verse here."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "तुम मशान वासिनी कराला।",
+        "भजत तुरत काटहु भवजाला॥"
+      ],
+      "linesEn": [
+        "Tum mashaan vasini Karala.",
+        "Bhajat turat kaatahu bhavjaala."
+      ],
+      "meaningHi": "श्मशानवासिनी कराला से संसार-बन्धन काटने की प्रार्थना है। मृत्यु से जुड़े रूप में भी भक्त मुक्ति का आश्रय देखता है।",
+      "meaningEn": "Karala, dwelling in the cremation ground, is asked to cut worldly bondage. Even in an image associated with death, the devotee seeks liberation."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "बावन शक्ति पीठ तव सुन्दर।",
+        "जहाँ बिराजत विविध रूप धर॥"
+      ],
+      "linesEn": [
+        "Baavan Shakti Peeth tav sundar.",
+        "Jahan birajat vividh roop dhar."
+      ],
+      "meaningHi": "इस पाठ में बावन शक्तिपीठों पर देवी के विविध रूपों में विराजने का वर्णन है। यह संख्या इस स्तुति की परम्परा का कथन है, सभी पीठ-सूचियों की एकमत गणना नहीं।",
+      "meaningEn": "This hymn speaks of fifty-two Shakti Peethas where she dwells in varied forms. That count belongs to this text's tradition, rather than a claim that every sacred-site list agrees."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "विन्धवासिनी कहूँ बड़ाई।",
+        "कहँ कालिका रूप सुहाई॥"
+      ],
+      "linesEn": [
+        "Vindhavasini kahun badai.",
+        "Kahan Kalika roop suhai."
+      ],
+      "meaningHi": "कहीं विन्धवासिनी और कहीं कालिका के रूप की महिमा कही गई है। भिन्न स्थानों और नामों में एक माँ का स्मरण होता है।",
+      "meaningEn": "In one place she is praised as Vindhavasini, elsewhere in the beautiful form of Kalika. Different names and places become ways of remembering the same mother."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "शाकम्भरी बनी कहँ ज्वाला।",
+        "महिषासुर मर्दिनी कराला॥"
+      ],
+      "linesEn": [
+        "Shakambhari bani kahan Jvala.",
+        "Mahishasur Mardini Karala."
+      ],
+      "meaningHi": "शाकम्भरी, ज्वाला और महिषासुरमर्दिनी के रूप गिनाए गए हैं। स्तुति देवी के पोषक और दैत्य-संहारक दोनों भावों को प्रणाम करती है।",
+      "meaningEn": "Shakambhari, Jvala and the fierce slayer of Mahishasura are invoked. The prayer honours both nourishing and demon-defeating forms."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "कामाख्या तव नाम मनोहर।",
+        "पुजवहिं मनोकामना द्रुततर॥"
+      ],
+      "linesEn": [
+        "Kamakhya tav naam manohar.",
+        "Pujavahin manokamana drutatar."
+      ],
+      "meaningHi": "कामाख्या नाम की महिमा कहते हुए मनोकामना पूरी होने का भक्तिभाव व्यक्त है। यह स्तुति की आशा है, फल मिलने की निश्चित समय-सीमा नहीं।",
+      "meaningEn": "The beautiful name Kamakhya is praised with a devotional hope of wishes being fulfilled swiftly. It is the hymn's expression of faith, not a guaranteed timetable."
+    },
+    {
+      "id": "chaupai-41",
+      "type": "chaupai",
+      "section": "body",
+      "number": 41,
+      "labelHi": "चौपाई · ४१",
+      "labelEn": "Chaupai · 41",
+      "lines": [
+        "चंड मुंड वध छिन महं करेउ।",
+        "देवन के उर आनन्द भरेउ॥"
+      ],
+      "linesEn": [
+        "Chand Mund vadh chhin mahan kareu.",
+        "Devan ke ur anand bhareu."
+      ],
+      "meaningHi": "चण्ड और मुण्ड के शीघ्र वध से देवताओं के हृदय में आनन्द भरने का वर्णन है। यह दैत्य-विजय की स्मृति में देवी की स्तुति है।",
+      "meaningEn": "The swift defeat of Chanda and Munda fills the gods' hearts with joy. The verse praises the goddess through remembrance of that victory."
+    },
+    {
+      "id": "chaupai-42",
+      "type": "chaupai",
+      "section": "body",
+      "number": 42,
+      "labelHi": "चौपाई · ४२",
+      "labelEn": "Chaupai · 42",
+      "lines": [
+        "सर्व व्यापिनी तुम माँ तारा।",
+        "अरिदल दलन लेहु अवतारा॥"
+      ],
+      "linesEn": [
+        "Sarv vyapini tum maan Tara.",
+        "Aridal dalan lehu avatara."
+      ],
+      "meaningHi": "माँ तारा को सर्वव्यापिनी कहकर शत्रुदल के दमन के लिए अवतार लेने वाली माना गया है। रक्षा की याचना इस स्तुति का भाव है।",
+      "meaningEn": "Mother Tara is called all-pervading and is praised for taking form to defeat hostile forces. The verse expresses a devotional appeal for protection."
+    },
+    {
+      "id": "chaupai-43",
+      "type": "chaupai",
+      "section": "body",
+      "number": 43,
+      "labelHi": "चौपाई · ४३",
+      "labelEn": "Chaupai · 43",
+      "lines": [
+        "खलबल मचत सुनत हुँकारी।",
+        "अगजग व्यापक देह तुम्हारी॥"
+      ],
+      "linesEn": [
+        "Khalbal machat sunat hunkari.",
+        "Agjag vyapak deh tumhari."
+      ],
+      "meaningHi": "देवी की हुंकार से खलबली मचती है और उनका स्वरूप चर-अचर जगत में व्यापक कहा गया है। इससे उनकी विराट शक्ति का ध्यान कराया गया है।",
+      "meaningEn": "Her mighty cry causes commotion, and her form pervades the moving and unmoving world. The verse invites contemplation of her vast power."
+    },
+    {
+      "id": "chaupai-44",
+      "type": "chaupai",
+      "section": "body",
+      "number": 44,
+      "labelHi": "चौपाई · ४४",
+      "labelEn": "Chaupai · 44",
+      "lines": [
+        "तुम विराट रूपा गुणखानी।",
+        "विश्व स्वरूपा तुम महारानी॥"
+      ],
+      "linesEn": [
+        "Tum virat roopa gunkhani.",
+        "Vishv svarupa tum Maharani."
+      ],
+      "meaningHi": "देवी को विराट रूप, गुणों की खान और विश्वस्वरूप महारानी कहा गया है। भक्त उन्हें किसी एक सीमित रूप तक नहीं बाँधता।",
+      "meaningEn": "She is the vast form, treasure of qualities and sovereign whose form is the universe. The praise does not confine her to one limited appearance."
+    },
+    {
+      "id": "chaupai-45",
+      "type": "chaupai",
+      "section": "body",
+      "number": 45,
+      "labelHi": "चौपाई · ४५",
+      "labelEn": "Chaupai · 45",
+      "lines": [
+        "उत्पत्ति स्थिति लय तुम्हरे कारण।",
+        "करहु दास के दोष निवारण॥"
+      ],
+      "linesEn": [
+        "Utpatti sthiti lay tumhare kaaran.",
+        "Karahu daas ke dosh nivaaran."
+      ],
+      "meaningHi": "उत्पत्ति, स्थिति और लय को देवी से सम्बन्धित मानकर अपने दोष दूर करने की प्रार्थना है। विश्व की महिमा से स्तुति फिर व्यक्तिगत विनय की ओर मुड़ती है।",
+      "meaningEn": "Creation, continuance and dissolution are attributed to her, followed by a plea to remove the servant's faults. Cosmic praise turns back to personal humility."
+    },
+    {
+      "id": "chaupai-46",
+      "type": "chaupai",
+      "section": "body",
+      "number": 46,
+      "labelHi": "चौपाई · ४६",
+      "labelEn": "Chaupai · 46",
+      "lines": [
+        "माँ उर वास करहू तुम अंबा।",
+        "सदा दीन जन की अवलंबा॥"
+      ],
+      "linesEn": [
+        "Maan ur vaas karahu tum Amba.",
+        "Sada deen jan ki avalamba."
+      ],
+      "meaningHi": "दीन जनों की सहारा अम्बा से हृदय में निवास करने की विनती है। बाहरी स्तुति के साथ भीतर माँ का स्मरण बनाए रखने का भाव जुड़ता है।",
+      "meaningEn": "Amba, support of the vulnerable, is asked to dwell in the heart. Outward praise becomes a wish to keep remembrance alive within."
+    },
+    {
+      "id": "chaupai-47",
+      "type": "chaupai",
+      "section": "body",
+      "number": 47,
+      "labelHi": "चौपाई · ४७",
+      "labelEn": "Chaupai · 47",
+      "lines": [
+        "तुम्हारो ध्यान धरै जो कोई।",
+        "ता कहँ भीति कतहुँ नहिं होई॥"
+      ],
+      "linesEn": [
+        "Tumharo dhyan dharai jo koi.",
+        "Ta kahan bhiti katahun nahin hoi."
+      ],
+      "meaningHi": "पाठ देवी के ध्यान को भय से मुक्ति का आश्रय कहता है। इसे भक्ति से मिलने वाले साहस की अभिव्यक्ति समझें, हर संकट से सुरक्षा की गारंटी नहीं।",
+      "meaningEn": "The hymn presents meditation on the goddess as a refuge from fear. It expresses courage through devotion, rather than guaranteeing protection from every danger."
+    },
+    {
+      "id": "chaupai-48",
+      "type": "chaupai",
+      "section": "body",
+      "number": 48,
+      "labelHi": "चौपाई · ४८",
+      "labelEn": "Chaupai · 48",
+      "lines": [
+        "विश्वरूप तुम आदि भवानी।",
+        "महिमा वेद पुराण बखानी॥"
+      ],
+      "linesEn": [
+        "Vishvaroop tum aadi Bhavani.",
+        "Mahima Ved Puran bakhani."
+      ],
+      "meaningHi": "आदि भवानी को विश्वरूप कहा गया है और उनकी महिमा वेद-पुराणों में गाए जाने का स्मरण है। यह स्तुति देवी की व्यापकता को प्रणाम करती है।",
+      "meaningEn": "Primordial Bhavani is praised as the universal form whose glory is celebrated in Vedas and Puranas. The verse bows to her encompassing presence."
+    },
+    {
+      "id": "chaupai-49",
+      "type": "chaupai",
+      "section": "body",
+      "number": 49,
+      "labelHi": "चौपाई · ४९",
+      "labelEn": "Chaupai · 49",
+      "lines": [
+        "अति अपार तव नाम प्रभावा।",
+        "जपत न रहन रंच दुःख दावा॥"
+      ],
+      "linesEn": [
+        "Ati apaar tav naam prabhava.",
+        "Japat na rahan ranch dukh daava."
+      ],
+      "meaningHi": "देवी के नाम के अपार प्रभाव का वर्णन है और जप से दुःख की आग शान्त होने का भक्तिभाव है। यह नाम-स्मरण में आश्रय लेने की प्रेरणा है।",
+      "meaningEn": "Her name is praised as immeasurably powerful, with recitation pictured as quenching sorrow's fire. The devotional image encourages refuge in remembrance."
+    },
+    {
+      "id": "chaupai-50",
+      "type": "chaupai",
+      "section": "body",
+      "number": 50,
+      "labelHi": "चौपाई · ५०",
+      "labelEn": "Chaupai · 50",
+      "lines": [
+        "महाकालिका जय कल्याणी।",
+        "जयति सदा सेवक सुखदानी॥"
+      ],
+      "linesEn": [
+        "Mahakalika jai Kalyani.",
+        "Jayati sada sevak sukhadani."
+      ],
+      "meaningHi": "कल्याणी महाकालिका की जय है, जिन्हें सदा सेवकों को सुख देने वाली कहा गया है। उपासक कृतज्ञता और आश्रय का भाव व्यक्त करता है।",
+      "meaningEn": "Auspicious Mahakalika is hailed as the constant giver of comfort to her servants. The worshipper expresses gratitude and reliance."
+    },
+    {
+      "id": "chaupai-51",
+      "type": "chaupai",
+      "section": "body",
+      "number": 51,
+      "labelHi": "चौपाई · ५१",
+      "labelEn": "Chaupai · 51",
+      "lines": [
+        "तुम अनन्त औदार्य विभूषण।",
+        "कीजिए कृपा क्षमिये सब दूषण॥"
+      ],
+      "linesEn": [
+        "Tum anant audarya vibhushan.",
+        "Kijiye kripa kshamiye sab dushan."
+      ],
+      "meaningHi": "अनन्त उदारता से सुशोभित देवी से कृपा और अपने दोषों की क्षमा माँगी गई है। यह विनय आत्मस्वीकार का भाव रखती है।",
+      "meaningEn": "The goddess, adorned with boundless generosity, is asked for grace and forgiveness of faults. The plea joins humility with honest self-recognition."
+    },
+    {
+      "id": "chaupai-52",
+      "type": "chaupai",
+      "section": "body",
+      "number": 52,
+      "labelHi": "चौपाई · ५२",
+      "labelEn": "Chaupai · 52",
+      "lines": [
+        "दास जानि निज दया दिखावहु।",
+        "सुत अनुमानित सहित अपनावहु॥"
+      ],
+      "linesEn": [
+        "Daas jaani nij daya dikhavahu.",
+        "Sut anumanit sahit apnavahu."
+      ],
+      "meaningHi": "देवी से अपना दास मानकर दया करने और पुत्र की तरह अपनाने की प्रार्थना है। सेवक और सन्तान दोनों सम्बन्धों में निकटता खोजी गई है।",
+      "meaningEn": "The reciter asks to be shown mercy as her servant and welcomed as her child. Both relationships express closeness and trust."
+    },
+    {
+      "id": "chaupai-53",
+      "type": "chaupai",
+      "section": "body",
+      "number": 53,
+      "labelHi": "चौपाई · ५३",
+      "labelEn": "Chaupai · 53",
+      "lines": [
+        "जननी तुम सेवक प्रति पाली।",
+        "करहु कृपा सब विधि माँ काली॥"
+      ],
+      "linesEn": [
+        "Janani tum sevak prati paali.",
+        "Karahu kripa sab vidhi maan Kali."
+      ],
+      "meaningHi": "जननी काली को सेवकों की पालक कहकर हर प्रकार की कृपा की याचना है। समापन के निकट मातृ-आश्रय का भाव प्रबल होता है।",
+      "meaningEn": "Kali is addressed as the mother who cares for her servants and is asked for grace in every way. Maternal refuge comes to the fore near the close."
+    },
+    {
+      "id": "chaupai-54",
+      "type": "chaupai",
+      "section": "body",
+      "number": 54,
+      "labelHi": "चौपाई · ५४",
+      "labelEn": "Chaupai · 54",
+      "lines": [
+        "पाठ करै चालीसा जोई।",
+        "तापर कृपा तुम्हारी होई॥"
+      ],
+      "linesEn": [
+        "Paath karai Chalisa joi.",
+        "Taapar kripa tumhari hoi."
+      ],
+      "meaningHi": "जो यह चालीसा पढ़े उस पर देवी की कृपा हो, यही पाठ का फलश्रुति-भाव है। यह श्रद्धापूर्ण प्रार्थना है, सुनिश्चित सांसारिक परिणाम का दावा नहीं।",
+      "meaningEn": "The hymn closes its body with the hope that whoever recites it receives her grace. This is a devotional benediction, not a promise of guaranteed worldly results."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "समापन दोहा · १",
+      "labelEn": "Closing Doha · 1",
+      "lines": [
+        "जय तारा, जय दक्षिणा, कलावती सुखमूल।",
+        "शरणागत 'भक्त' है, रहहु सदा अनुकूल॥"
+      ],
+      "linesEn": [
+        "Jai Tara, jai Dakshina, Kalavati sukhmool.",
+        "Sharanagat Bhakt hai, rahahu sada anukool."
+      ],
+      "meaningHi": "तारा, दक्षिणा और सुख की मूल कलावती की जय कहकर शरणागत भक्त अनुकूल कृपा की प्रार्थना करता है। अन्तिम दोहा समर्पण के साथ पाठ पूरा करता है।",
+      "meaningEn": "Hailing Tara, Dakshina and Kalavati as a source of comfort, the surrendered devotee asks for continuing favour. The closing doha completes the prayer in trust."
+    }
+  ]
+}

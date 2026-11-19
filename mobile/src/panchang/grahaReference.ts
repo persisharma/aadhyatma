@@ -56,7 +56,7 @@ export const GRAHA_REFERENCE: Readonly<Record<Graha, GrahaReferenceEntry>> = {
   },
   venus: {
     natureHi: 'शुक्र प्रेम, सौंदर्य और कला का कारक है — संबंध, सुख और सृजन की ओर झुकाव। परम्परा इसे दैत्यों का गुरु कहती है।',
-    natureEn: 'Venus stands for love, beauty and art — the pull toward relationship, comfort and creation. Tradition calls it the preceptor of a second lineage of sages.',
+    natureEn: 'Venus stands for love, beauty and art — the pull toward relationship, comfort and creation. Tradition calls it the preceptor of the daityas.',
     signifiesHi: 'प्रेम · सौंदर्य · कला · साझेदारी',
     signifiesEn: 'love · beauty · art · partnership',
   },

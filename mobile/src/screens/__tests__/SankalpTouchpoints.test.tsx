@@ -113,11 +113,9 @@ describe('sankalp catalog touchpoints', () => {
     expect(navigate).toHaveBeenCalledWith('SadhanaPrograms');
   });
 
-  it('Home DISCOVER spotlight registers the sankalp card', () => {
-    // Source-level pin: HomeScreen mounts a large provider tree, so assert the
-    // spotlight registration directly rather than mounting the whole screen.
-    const src = fs.readFileSync(path.resolve(__dirname, '..', 'HomeScreen.tsx'), 'utf8');
-    expect(src).toMatch(/key: 'sankalp'/);
+  it('All features opens the sankalp catalog', () => {
+    const src = fs.readFileSync(path.resolve(__dirname, '..', 'ReadingLibraryScreen.tsx'), 'utf8');
+    expect(src).toContain('Practice programs');
     expect(src).toMatch(/navigate\('SadhanaPrograms'\)/);
   });
 });

@@ -3,6 +3,12 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+const trees: TestRenderer.ReactTestRenderer[] = [];
+function createReader(element: React.ReactElement) {
+  const tree = TestRenderer.create(element); trees.push(tree); return tree;
+}
+afterEach(() => { act(() => { for (const tree of trees.splice(0)) tree.unmount(); }); });
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -63,7 +69,7 @@ test('renders the first Vishnu Sahasranama verse without throwing', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <VishnuSahasranamaReaderScreen navigation={navigation} route={route} />
@@ -79,4 +85,17 @@ test('renders the first Vishnu Sahasranama verse without throwing', () => {
     .join(' ');
 
   assert.ok(renderedText.includes(firstVerse.sanskrit[0]));
+});
+
+describe.each([31,107,108])('full Vishnu unit %s', position => {
+ test.each(['hi','en','gu','kn'] as const)('renders the restored page in %s', lang => {
+  const payload=getActualData.getVishnuSahasranamaChapter(3);
+  let tree: TestRenderer.ReactTestRenderer;
+  act(()=>{tree=createReader(<GitaLanguageProvider initialLang={lang}><ShareProvider>
+   <VishnuSahasranamaReaderScreen navigation={navigation} route={{...route,params:{chapter:3,initialIndex:position}}}/>
+  </ShareProvider></GitaLanguageProvider>);});
+  const text=tree!.root.findAllByType(Text).map(node=>node.props.children).flat(Infinity).join(' ');
+  const { contentByLang }=jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+  expect(text).toContain(contentByLang(lang,payload.verses[position].meaningHi,payload.verses[position].meaningEn));
+ });
 });

@@ -95,11 +95,11 @@ describe('cross-tab navigation targets', () => {
     expect(entryRoutes.match(/initial: false \};/g)).toHaveLength(3);
   });
 
-  test('the Home widgets spotlight routes through moreTabTarget', () => {
+  test('the All features widget shortcut preserves the More stack', () => {
     // The regression that motivated this file: a cold tap on the DISCOVER
     // widgets card made WidgetGallery the More stack's initial route, stranding
     // the user with a dead back button and no route to the hub.
-    const home = fs.readFileSync(path.join(SRC, 'screens', 'HomeScreen.tsx'), 'utf8');
-    expect(home).toContain("rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery'))");
+    const home = fs.readFileSync(path.join(SRC, 'screens', 'ReadingLibraryScreen.tsx'), 'utf8');
+    expect(home).toContain("tabs.navigate('MoreTab', moreTabTarget('WidgetGallery'))");
   });
 });

@@ -2,10 +2,9 @@ appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
 - scrollUntilVisible:
-    element:
-      text: "JapMala. Tap to open."
+    element: { id: home-japa-choose }
     direction: DOWN
-- tapOn: "JapMala. Tap to open."
+- tapOn: { id: home-japa-choose }
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - extendedWaitUntil:
     visible:
@@ -51,9 +50,13 @@ appId: com.prashantsharma.vedansh
     arguments:
       RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
 - extendedWaitUntil:
-    visible: "JapMala. Tap to open."
+    visible: { id: home-settings }
     timeout: 90000
-- tapOn: "JapMala. Tap to open."
+- scrollUntilVisible:
+    element: { id: home-japa-choose }
+    direction: DOWN
+    centerElement: true
+- tapOn: { id: home-japa-choose }
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - tapOn: "Back"
