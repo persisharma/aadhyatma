@@ -65,6 +65,8 @@ import { CornersOutIcon } from 'phosphor-react-native/src/icons/CornersOut';
 import { CornersInIcon } from 'phosphor-react-native/src/icons/CornersIn';
 import { CaretUpIcon } from 'phosphor-react-native/src/icons/CaretUp';
 import { CaretDownIcon } from 'phosphor-react-native/src/icons/CaretDown';
+import { PlusIcon } from 'phosphor-react-native/src/icons/Plus';
+import { MinusIcon } from 'phosphor-react-native/src/icons/Minus';
 
 // Direct imports keep the full icon catalogue out of the launch bundle.
 const icons = {
@@ -133,6 +135,8 @@ const icons = {
   exitFullscreen: CornersInIcon,
   caretUp: CaretUpIcon,
   caretDown: CaretDownIcon,
+  plus: PlusIcon,
+  minus: MinusIcon,
 } as const;
 
 export type AppIconName = keyof typeof icons;

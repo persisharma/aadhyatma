@@ -116,7 +116,7 @@ test('every story cover fills a listing thumb without showing its reviewed blank
 // RULEBOOK §3 "Listing cards": the section listings may not grow their own card
 // again. A new illustrated listing joins this list and renders ListingCard.
 test('every content listing screen renders the shared ListingCard and no private card', () => {
-  const screens = ['ComicChaptersScreen.tsx', 'GarudPuranChaptersScreen.tsx', 'KidsStoryDeityScreen.tsx'];
+  const screens = ['ComicChaptersScreen.tsx', 'GarudPuranChaptersScreen.tsx', 'KidsStoryDeityScreen.tsx', 'SanatanParichayScreen.tsx'];
   for (const file of screens) {
     const source = fs.readFileSync(path.join(__dirname, '../../screens', file), 'utf8');
     expect(source).toContain("from '@/components/ListingCard'");
