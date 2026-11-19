@@ -13,6 +13,7 @@
 - [`docs/content-parity/other-content-existing-deities.md`](../docs/content-parity/other-content-existing-deities.md) — full non-Chalisa/Aarti parity benchmark and acquisition waves for the existing deity taxonomy.
 
 ## Subsystems
+- [[subsystems/sanatan-parichay]] — question-led introductory learning, uniform painted collections, source credits and serialized progress.
 - [[readers]] — per-text paged `FlatList` reader screens; chapter auto-advance contract.
 - [[kids-stories]] — lazy four-deity library, nineteen readings including Durga/Navaratri, 143 reviewed illustrations, four-language causal review, reviewed frames, multi-card sharing and hashed R2 delivery; native/editorial/CDN evidence remains explicit.
 - [[routine]] — Daily Routine (नित्य साधना): daily/weekday schedules, vaar deity suggestions, derived completion, per-routine reminders, home banner + celebration.
@@ -33,6 +34,7 @@
 - [[daan-punya]] — the education-led giving layer: verse spine + five teaching-kathas, occasion/vaar coverage over real solver rule ids, the private no-totals ledger (gupt-daan structural guarantee), and a verified directory available from both the giving home and the journey's terminal actions.
 
 ## Concepts
+- [[concepts/karaoke]] — shared whole-word native-opacity highlight progression, host-owned configurable reading clock, Infinity first and future स्वतः integration contract.
 - [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
 - [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 
@@ -40,6 +42,7 @@
 _(none yet — add per-model pages as they warrant)_
 
 ## Integrations
+- [[integrations/live-darshan]] — Home floating door, native quick sheet and official-broadcast resolution with honest channel fallbacks.
 - [[integrations/meta-app-events]] — build-gated Android/iOS Meta activation measurement, ATT/privacy guards, native release requirements and verification limits.
 - [[integrations/reading-artwork]] — distinct reading backgrounds and Krishna-style reader illustrations, R2 manifests, immediate offline visuals, shared lifetime cache and bounded downloads.
 
@@ -53,3 +56,5 @@ _(none yet — add per-model pages as they warrant)_
 - [[subsystems/suvichar]] — personalized devotional wishes, sender persistence, weekday (शुभ मंगलवार) cards, 84 original daily/deity/humility reflections (including Khatu Shyam Hare Ka Sahara) plus 621 preserved referenced meanings, deity-scoped search and 54 published masters across 18 painted deities.
 
 - [[subsystems/explore-sheet]] — Immersive Story launch sheet, sixteen destinations, cadence, persisted visit ledger and artwork provenance.
+
+- [[subsystems/engagement-prompts]] — rating → social-follow action prompts, confirmations, launch guards and independent campaign resets.

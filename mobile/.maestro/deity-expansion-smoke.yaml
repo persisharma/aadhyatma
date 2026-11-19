@@ -134,7 +134,7 @@ appId: com.prashantsharma.vedansh
 # then the deity index (DeityList's back is "Back").
 - tapOn: "Back to home"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Step 5: Navagraha → Navagraha Stotram opens in StutiReader ──

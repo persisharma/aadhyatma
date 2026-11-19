@@ -1,0 +1,99 @@
+{
+  "family": "kundli-style-painted-scenes-v9",
+  "aspectRatio": 1.5,
+  "approvedPrototype": "appgprj_6ae948c65bdc81918c94293b69719cba",
+  "approvedSource": "e4a01fe0fac7b9637fa71e536d76612fa0c39c1c",
+  "assets": {
+    "basics": {
+      "path": "mobile/assets/sanatan-parichay/basics.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 235176,
+      "sha256": "ced53a314347a26511ee93b014c21e5e4d8964b4deb83e5a91cca12e56ec1485"
+    },
+    "deity": {
+      "path": "mobile/assets/sanatan-parichay/deity.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 180110,
+      "sha256": "9383853f7a239731b384e8b0545b3f48b15ee418945e7c59b4052c671ed359cd"
+    },
+    "thirty": {
+      "path": "mobile/assets/sanatan-parichay/thirty.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 200800,
+      "sha256": "1215bb09fc2e9f9b8b0cf97350489855512b22e4e3c57782e33b3adbdbfec787"
+    },
+    "dikpal": {
+      "path": "mobile/assets/sanatan-parichay/dikpal.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 258088,
+      "sha256": "fc7baa107c6c84f502d9cf15b9b3b7be5150fc232df1100381d64ed764b17827"
+    },
+    "graha": {
+      "path": "mobile/assets/sanatan-parichay/graha.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 250452,
+      "sha256": "d699cc885c03b098d07dbde12f3cff4944359101b84846fcd31e54840e86f572"
+    },
+    "symbols": {
+      "path": "mobile/assets/sanatan-parichay/symbols.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 230886,
+      "sha256": "5eee96c83a96bfbd33bf3f65a437862802b0edcfa9593e79164c16f12a6fa7c0"
+    },
+    "forms": {
+      "path": "mobile/assets/sanatan-parichay/forms.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 236814,
+      "sha256": "55524b7695508b77a65b8ebd95855bfbe0e94985bac9f4a6a315bfeaf52cfb30"
+    },
+    "plants": {
+      "path": "mobile/assets/sanatan-parichay/plants.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 239922,
+      "sha256": "c19664a244402fb57778473ca592cef140f7e38c880dcbe6ae4d7a3996590876"
+    },
+    "elements": {
+      "path": "mobile/assets/sanatan-parichay/elements.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 233494,
+      "sha256": "65c26b5779aec81e0765ac810ed903c799010382a07e92e96356124211fd912f"
+    },
+    "time": {
+      "path": "mobile/assets/sanatan-parichay/time.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 248442,
+      "sha256": "6f127319978c6f93868b6871f93884d57f37d27f7f9c83f6b96bab80f2e33a54"
+    },
+    "texts": {
+      "path": "mobile/assets/sanatan-parichay/texts.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 240204,
+      "sha256": "3ce343c8649a6b44cb8f71637af1665b5c7de2cf631f438c19b7cfe39a4d1db8"
+    },
+    "temples": {
+      "path": "mobile/assets/sanatan-parichay/temples.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 224924,
+      "sha256": "5a7e86ac642563aea2bb219b393ad6fd069d839f92a7312c17d01fc742a51b57"
+    },
+    "rishis": {
+      "path": "mobile/assets/sanatan-parichay/rishis.webp",
+      "width": 960,
+      "height": 640,
+      "bytes": 264206,
+      "sha256": "70cfaf1f95ed9c181577e308eb9be17fb3ea93a05abab004ed14fcbd51a8f115"
+    }
+  }
+}

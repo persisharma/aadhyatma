@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/assets/widget-backgrounds, mobile/scripts/build-widget-backgrounds.mts, mobile/src/data/versePool.ts, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/src/components/DailyBhaktiNudge.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-11-02
+last_verified_date: 2026-11-16
 confidence: high
 status: current
 ---
@@ -24,13 +24,55 @@ The schema is `WidgetPayloadV1` in `widgets/contract.ts`:
 - every localized field carries `hi`, `en`, `gu`, and `kn` so native consumers never transliterate.
 - Japam stores true total beads/rounds, a japa-only streak, the last-used mantra, and its snapshot date.
 
-Content and size are independent. Each content type is its own widget kind — `VedanshVerseWidget`, `VedanshPanchangWidget`, `VedanshJapamWidget` on iOS; `VedanshVerseWidgetProvider` and `VedanshPanchangWidgetProvider` on Android — so the OS gallery lists them separately and the user picks the size. `widgets/catalog.ts` declares content → native kind, offered sizes, and recommended size once; the gallery renders from it and `catalog.test.ts` fails when the Swift `supportedFamilies`, the Kotlin providers, the `withHomeWidgets.js` receivers, or their `appwidget-provider`/layout resources drift from it. Every kind renders every size it advertises: the verse reads the full `lines` array on every cell except the small square (large gives each pada its own line, wide flows them as one ` · `-joined paragraph over three lines), and the Panchang goes from a tithi glance to labelled sunrise/Rahu Kaal/Abhijit rows.
+Content and size are independent. Each content type is its own widget kind — `VedanshVerseWidget`, `VedanshPanchangWidget`, `VedanshJapamWidget` on iOS; `VedanshVerseWidgetProvider` and `VedanshPanchangWidgetProvider` on Android — so the OS gallery lists them separately and the user picks the size. `widgets/catalog.ts` declares content → native kind, offered sizes, and recommended size once; the gallery renders from it and `catalog.test.ts` fails when the Swift `supportedFamilies`, the Kotlin providers, the `withHomeWidgets.js` receivers, or their `appwidget-provider`/layout resources drift from it. Every kind renders every size it advertises: the verse reads the full `lines` array on every cell except the small square (wide and large both preserve each supplied pada boundary with newlines), and the Panchang goes from a tithi glance to labelled sunrise/Rahu Kaal/Abhijit rows.
 
 Android stores the complete document as one synchronously committed SharedPreferences string, updates both `AppWidgetProvider`s, and supports per-kind launcher pin requests (`requestPinWidget(content)`). iOS writes a temporary file into the shared App Group, replaces/moves it atomically, and reloads WidgetKit timelines. The Expo config plugins generate the Android receiver/package wiring and an iOS 16 widget extension with an explicit host target dependency, Embed App Extensions phase, App Group entitlements, and bundled Indic/Latin fonts.
 
 Deep links are exact and shared by warm/cold starts: verse links carry source/chapter/index, Panchang links carry the represented civil date, and Japam links carry a known mantra id or fall back to the Japam library. `App.tsx` resolves a cold initial widget URL alongside the font gate; `widgetStartTarget` maps the parsed kind-based `WidgetDeepLinkTarget` to a shared `StartTarget` (`navigation/startTarget.ts`), which becomes the `NavigationContainer`'s `initialState`, so the target screen is the first one committed and Home never mounts as an intermediate screen. A Panchang landing also awaits `preloadPanchangStack()` first, so the cold path evaluates that lazy chunk off the render path and a chunk failure lands on Home rather than a stuck screen (see [[notifications]]). **The Panchang and Japam widget links used to be passed as the tab's `initialParams` instead, which React Navigation re-consumed on every return to that tab — each time pushing another `PanchangHome` (a full engine solve) until the tap appeared to land nowhere and the app froze (Sept 2026); see [[notifications]] for the rule.** The notification tap that launched the app is read in the same race and yields the same target shape for every notification family (see [[notifications]]); a widget URL wins and never waits on that read. Warm links still dispatch through the shared handler after navigation is ready. The in-app Widget Gallery provides previews, recovery text, platform instructions, and Android pin actions; it does not claim to prove launcher rendering. The Daily Bhakti setup strip (design.md §23) also offers the **verse + Panchang pair** once the daily reminder is set up: Android pins `verse`, queues `panchang` and requests it when the launcher's pin dialog closes (fallback: the gallery), iOS opens a how-to sheet with both facsimiles and the WidgetKit steps; a user whose verse flow already ran (`widgetAddedAt` without `panchangAddedAt`) gets a Panchang-only ask. It is gated on `hasWidgetHost()` in `widgets/native.ts`, which is false in Expo Go and in any binary without the extension, so an OTA never offers a widget the build cannot render.
 
 Every home-screen cell (not Lock Screen) draws a faded sketch plate behind its text. There is one pre-cropped JPEG per (content, size), generated by `scripts/build-widget-backgrounds.mts` from `assets/backgrounds/` into `assets/widget-backgrounds/`, tone-mapped as a sepia duotone from `parchmentSoft` (paper) down to the darkest background the widget text tokens still read on at 4.75:1. The text tokens are `WIDGET_TEXT_TOKENS` in `catalog.ts`, deeper than the app's `inkMuted`/`saffronDeep`/`gold`. The plate sizes in `catalog.ts` `WIDGET_BACKGROUND_DIMENSIONS` double as the iOS pixel budget. The art is optional on both platforms: iOS `WidgetArt.image` returns nil (plain parchment) outside `systemSmall/Medium/Large`, outside `.fullColor` rendering, for recovery cards, or for a missing/undecodable/over-budget file. Android's `widget_art` ImageView is GONE in XML and shown only by `applyArt` on API 31+.
+
+## Adaptive illustrated iOS verse layout (10 November 2026)
+## Visual rebalancing — small iOS Panchang (11 November 2026)
+
+The small Panchang's SwiftUI branch has a dedicated adaptive composition:
+date/city masthead, running Tithi hero, optional verified-vrat saffron band,
+and sunrise + Vedansh footer separated by a gold hairline. It uses only
+existing validated payload fields and the bundled Heritage/Midnight Temple
+plate, so there are no network calls, newly loaded artwork, schema changes or
+freshness-policy changes. The in-app Widget Gallery now approximates the
+same small composition. Wide/large Shloka compositions are vertically centred
+when there is enough room, with a decorative source separator. Real WidgetKit
+placement, fonts/size/appearance and accessibility remain device-only gates;
+the best-effort SpringBoard screenshot flow is non-gating because system-UI
+automation can fail across simulator releases. Any screenshots it produces
+must be identified as native simulator evidence, not as a production build.
+
+
+The SwiftUI medium and large Shloka families measure full content via
+`ViewThatFits(in: .vertical)` before selecting an art/text composition:
+32% art strip, 16% art strip, or 0% with a parchment contrast wash.
+A bounded last resort explicitly cues a full-verse tap; the complete
+localized verse and source remain in VoiceOver and the original deep link.
+Small keeps its validated 88-character excerpt. No schema migration, new
+asset download, engine computation or new widget kind is introduced.
+The RN widget gallery approximates this progression for a wide preview;
+actual iOS rendering is authoritative. Android's current RemoteViews
+implementation is unaffected. The iOS layout needs a new store/TestFlight
+binary; OTA alone cannot ship it. Multisource tests sample real Daily Bhakti
+Gita, Sahasranama, stotra, Ramcharitmanas and Sundarkand entries in all four
+languages. Native per-size typography/art/VoiceOver acceptance remains
+pending until a device run with screenshots is recorded.
+
+## Verse line boundaries and duplicate citations (16 November 2026)
+
+`versePresentation.ts` strips a closing numbered citation only when it matches the
+visible source label, retaining punctuation and canonical data. The deferred
+planner applies it before four-script localization and uses a new derived-cache
+revision. Swift's `flowedVerse`, Kotlin wide/tall cells and the gallery preserve
+newlines; small excerpts remain bounded. Rebase the open Ornate Heritage redesign
+(#681) without restoring its old middle-dot joining. Native placement remains a
+separate acceptance gate from payload/source tests.
 
 ## Dependencies
 
@@ -43,6 +85,8 @@ Every home-screen cell (not Lock Screen) draws a faded sketch plate behind its t
 [[e2e-verification]]
 
 ## Gotchas
+
+- **`AppWidgetManager.getInstance()` can be null.** Devices without `FEATURE_APP_WIDGETS` have no widget service. `VedanshWidgetModule` is a legacy `@ReactMethod` module, where a throw is not a promise rejection, so every method settles its promise (pin support/request resolve `false`) and `updateAll` returns early. `androidWidgetNullSafety.jest.test.ts` pins this.
 
 - Native decoders fail closed on missing, corrupt, newer-schema, wrong-time-zone, incomplete-localization, or expired documents. Never partially render a decoded payload.
 - **The app cannot know whether a widget is placed.** Neither bridge exposes `getAppWidgetIds` / `WidgetCenter.getCurrentConfigurations`, and an Android pin request resolving `true` only means the launcher showed its dialog. Anything that offers a widget (the Daily Bhakti strip) must therefore end its ask on a completed add *flow*, not on placement; real detection needs a native bridge change and a store build.
@@ -78,3 +122,10 @@ Native compilation, signed device timelines, four-language/size visual and acces
 ## First-run widget setup (5 November 2026)
 
 `OnboardingSetupSheet` starts widgets from language Continue. Android saves city as its resume point before the existing process-owned pair pin flow; iPhone persists a `widgets` substep and embeds the shared `WidgetHowToBody` in the same Modal. Continue records instruction completion, Not now records widget dismissal, and both lead to city without changing reminder preferences. No iOS placement API exists; flow records remain bookkeeping only. Missing hosts and failed/unsupported Android pinning continue onboarding. The later launch offer retains its day/priority policy and the gallery remains available. Source tests and native evidence must be reported separately.
+
+
+## Android composition parity (13 November 2026)
+
+The solar change (2 Nov) gave Android the palettes and plates but none of the iOS composition, so placed Android widgets looked like the old design. The verse layout now has a header row (eyebrow capsule `vedansh_widget_pill[_night]` + `widget_brand_header`), a 1 dp gold `widget_rule` above the source, and a footer mark only on the small cell. The Panchang layout has a rule for the small cell's divided sunrise row, and large gets separate sunrise / Rahu Kaal / Abhijit lines under a 32 sp tithi. The rule is an `ImageView` (RemoteViews rejects a bare `View`). Every toggled view is set explicitly on every render path, and recovery clears the capsule and rule, because launchers reapply RemoteViews onto the previous tree. The Kotlin was compiled against Robolectric's `android-all` 12 jar with a stub `R`; no Gradle/AAPT build or launcher run was done. This needs a new Android binary. Pins: `appearance.test.ts`.
+
+- **Gotcha:** native widget work needs a store build on **each** platform. iOS 1.5.6 (build 76) shipped the 2 Nov design. `app.json`'s Android `versionCode` stayed at 15 (1.5.5, bumped 27 Oct, before #595 merged). Check which binary a device runs before treating a missing native design as a code bug.

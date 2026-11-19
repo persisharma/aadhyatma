@@ -13,7 +13,7 @@ import {
   buildProgressTarget,
 } from '../../navigation/entryRoutes';
 
-// Bhajan text shelf (design.md §34.1, RULEBOOK §32). The registry invariants
+// Bhajan text shelf (design.md §34.1, RULEBOOK §34). The registry invariants
 // hold for whatever is shipped — today an empty catalog, so they also prove
 // nothing unverified slipped in. Run: npx tsx src/data/__tests__/bhajanLibrary.test.ts
 

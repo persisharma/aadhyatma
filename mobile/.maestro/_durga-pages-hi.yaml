@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "पारंपरिक नवदुर्गा क्रम पर आधारित नवरात्रि का संक्षिप्त परिचय। परिवारों और क्षेत्रों के रीति-रिवाज अलग होते हैं। यह पूजा-विधि या उपवास निर्देश नहीं है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-nv03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shailaputri" }
     centerElement: true
@@ -118,7 +118,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "शिवपुराण 2.3.6–7 से पार्वती का संबंधित प्रसंग, फिर शैलपुत्री के प्रथम-दिन रूप का पारंपरिक परिचय। इन अध्यायों में यह नवदुर्गा नाम स्वयं नहीं है। बच्चों के लिए मौलिक रूपांतरण; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-sp04-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-brahmacharini" }
     centerElement: true
@@ -226,7 +226,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "शिवपुराण 2.3.21–29 का पार्वती संबंधी प्रसंग, ब्रह्मचारिणी के दूसरे-दिन रूप से जुड़ा। बच्चों के लिए कठोर उपवास और अग्नि-परीक्षा का प्रसंग छोड़ा गया है; यह साधना निर्देश नहीं है। सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-br07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-chandraghanta" }
     centerElement: true
@@ -306,7 +306,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-cg05-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-kushmanda" }
     centerElement: true
@@ -358,7 +358,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-ku03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-skandamata" }
     centerElement: true
@@ -438,7 +438,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-sk05-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-mahishasura" }
     centerElement: true
@@ -616,7 +616,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "देवी माहात्म्य 2–4 का बच्चों के लिए मौलिक सरल रूपांतरण। युद्ध और मृत्यु का वर्णन बिना भयावह विवरण के है। नवदुर्गा परंपरा में यह विजय कात्यायनी से जुड़ी है। चित्रों में आठ भुजाएँ पारंपरिक कलात्मक रूप हैं; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-dm12-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-kalaratri" }
     centerElement: true
@@ -654,7 +654,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-kr02-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-mahagauri" }
     centerElement: true
@@ -762,7 +762,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "शिव पुराण की संबंधित कथा का बच्चों के लिए मौलिक सरल रूपांतरण, फिर नवदुर्गा रूप से उसका संबंध। अध्याय में इस नवदुर्गा रूप का नाम नहीं है। सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-mg07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-siddhidatri" }
     centerElement: true
@@ -814,7 +814,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "नवदुर्गा की भक्ति-परंपरा से संक्षिप्त परिचय; यह अलग पुराण-कथा नहीं है। पारंपरिक उत्पत्ति-वर्णन का स्रोत बताया गया है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-si03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-raktabeej" }
     centerElement: true
@@ -922,7 +922,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "देवी माहात्म्य 7.27 और 8 का बच्चों के लिए रूपांतरण। यहाँ काली का नाम चामुंडा है; उन्हें कालरात्रि नहीं कहा गया है। रक्त और युद्ध का संक्षिप्त वर्णन है; चित्र भयावह नहीं हैं। सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-rb07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shumbha-nishumbha" }
     centerElement: true
@@ -1128,7 +1128,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "देवी माहात्म्य 5–10 का बच्चों के लिए मौलिक रूपांतरण। युद्ध-मृत्यु का भयावह विवरण नहीं है। अलग रक्तबीज पुस्तक उस प्रसंग को विस्तार से बताती है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-sn14-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-suratha-samadhi" }
     centerElement: true
@@ -1236,7 +1236,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "देवी माहात्म्य 1 और 13 का बच्चों के लिए मौलिक रूपांतरण। कठोर उपवास और अपने रक्त की भेंट का विवरण हटाया है। उनकी उपासना तीन वर्ष चलती है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-su07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shakambhari" }
     centerElement: true
@@ -1358,6 +1358,6 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "देवी भागवत 7.28 का बच्चों के लिए मौलिक रूपांतरण। सूखे का कारण पुराण के वर्णन के अनुसार है, वैज्ञानिक व्याख्या नहीं। युद्ध-मृत्यु का भयावह विवरण नहीं है; सीख संपादकीय है।"
 - takeScreenshot: durga-hi-${DURGA_SIZE}-sa08-ending
-- tapOn: "Back"
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

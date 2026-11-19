@@ -60,14 +60,14 @@ test('philosophy is a content search, not an answer', () => {
   assert.equal(askQuestion('karma kya hai', ctx).kind, 'none');
 });
 
-test('answers carry working, actions and the verified-only provenance where content-backed', () => {
+test('answers carry working and actions without internal verification badges', () => {
   const r = askQuestion('गणेश जी को क्या चढ़ाएँ', ctx);
   assert.equal(r.kind, 'answer');
   if (r.kind !== 'answer') return;
   assert.equal(r.answer.intentId, 'bhog.offer');
   assert.ok(r.answer.working.length > 0);
   assert.ok(r.answer.actions.length > 0);
-  assert.ok(r.answer.provenance);
+  assert.equal(r.answer.provenance, undefined);
   assert.ok(r.answer.lines.some((l) => l.tone === 'avoid'), 'the निषेध half is present');
 });
 

@@ -1,0 +1,1356 @@
+{
+  "platform": "React Native Web production-component preview; NOT native capture/device acceptance",
+  "cells": [
+    {
+      "query": "art=ahoi&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=dattatreya&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=durga&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=ekadashi&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=ganesha&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=ganga&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=gayatri&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=hanuman&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=kali&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=kartikeya&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=khatu-shyam&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=krishna&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=kubera&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=lakshmi&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=narasimha&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=navagraha&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=prayer&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=radha&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=rama&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=santoshi&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=saraswati&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=shakambhari&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=shani&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=shiva&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=surya&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=tulsi&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=vaishno&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=vishnu&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=mahakaal&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "art=parshuram&lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "lang=hi",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "lang=hi&size=M&width=288&reader=1",
+      "height": 451.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 420.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 420.34375,
+        "right": 200,
+        "bottom": 443.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=hi&size=M&width=358&reader=1",
+      "height": 484.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 446.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 446.25,
+        "right": 248.59375,
+        "bottom": 475.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=hi&size=L&width=288&reader=1",
+      "height": 517.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 486.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 486.34375,
+        "right": 200,
+        "bottom": 509.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=hi&size=L&width=358&reader=1",
+      "height": 543.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 505.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 505.25,
+        "right": 248.59375,
+        "bottom": 534.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=en",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "lang=en&size=M&width=288&reader=1",
+      "height": 505.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 474.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 474.34375,
+        "right": 200,
+        "bottom": 497.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=en&size=M&width=358&reader=1",
+      "height": 514.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 476.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 476.25,
+        "right": 248.59375,
+        "bottom": 505.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=en&size=L&width=288&reader=1",
+      "height": 569.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 538.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 538.34375,
+        "right": 200,
+        "bottom": 561.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=en&size=L&width=358&reader=1",
+      "height": 571.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 533.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 533.25,
+        "right": 248.59375,
+        "bottom": 562.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=gu",
+      "height": 728,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 670,
+        "width": 210,
+        "height": 44,
+        "top": 670,
+        "right": 375,
+        "bottom": 714,
+        "left": 165
+      }
+    },
+    {
+      "query": "lang=gu&size=M&width=288&reader=1",
+      "height": 491.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 460.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 460.34375,
+        "right": 200,
+        "bottom": 483.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=gu&size=M&width=358&reader=1",
+      "height": 524.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 486.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 486.25,
+        "right": 248.59375,
+        "bottom": 515.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=gu&size=L&width=288&reader=1",
+      "height": 568.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 537.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 537.34375,
+        "right": 200,
+        "bottom": 560.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=gu&size=L&width=358&reader=1",
+      "height": 551.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 513.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 513.25,
+        "right": 248.59375,
+        "bottom": 542.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=kn",
+      "height": 730,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 16,
+        "y": 22,
+        "width": 122,
+        "height": 66,
+        "top": 22,
+        "right": 138,
+        "bottom": 88,
+        "left": 16
+      },
+      "footerBounds": {
+        "x": 165,
+        "y": 672,
+        "width": 210,
+        "height": 44,
+        "top": 672,
+        "right": 375,
+        "bottom": 716,
+        "left": 165
+      }
+    },
+    {
+      "query": "lang=kn&size=M&width=288&reader=1",
+      "height": 603.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 572.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 572.34375,
+        "right": 200,
+        "bottom": 595.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=kn&size=M&width=358&reader=1",
+      "height": 558.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 520.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 520.25,
+        "right": 248.59375,
+        "bottom": 549.40625,
+        "left": 109.375
+      }
+    },
+    {
+      "query": "lang=kn&size=L&width=288&reader=1",
+      "height": 652.28125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 8.53125,
+        "y": 11.71875,
+        "width": 65.0625,
+        "height": 35.1875,
+        "top": 11.71875,
+        "right": 73.59375,
+        "bottom": 46.90625,
+        "left": 8.53125
+      },
+      "footerBounds": {
+        "x": 88,
+        "y": 621.34375,
+        "width": 112,
+        "height": 23.453125,
+        "top": 621.34375,
+        "right": 200,
+        "bottom": 644.796875,
+        "left": 88
+      }
+    },
+    {
+      "query": "lang=kn&size=L&width=358&reader=1",
+      "height": 680.703125,
+      "overflow": false,
+      "headerLogos": 1,
+      "footerSuffix": ".app",
+      "headerBounds": {
+        "x": 10.59375,
+        "y": 14.578125,
+        "width": 80.875,
+        "height": 43.75,
+        "top": 14.578125,
+        "right": 91.46875,
+        "bottom": 58.328125,
+        "left": 10.59375
+      },
+      "footerBounds": {
+        "x": 109.375,
+        "y": 642.25,
+        "width": 139.21875,
+        "height": 29.15625,
+        "top": 642.25,
+        "right": 248.59375,
+        "bottom": 671.40625,
+        "left": 109.375
+      }
+    }
+  ],
+  "errors": []
+}

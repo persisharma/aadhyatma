@@ -18,6 +18,8 @@
  */
 
 import { ROLLING_WINDOW_DAYS } from './pure';
+import type { Lang } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { ADVANCE_HOUR } from './vratReminderPure';
 import { formatRange } from '@/panchang/muhuratFormat';
 
@@ -209,20 +211,27 @@ export function planMuhuratReminders(
 }
 
 /**
- * Hindi-led notification copy. The day-of body carries the WINDOW, because the
+ * Notification copy in the reading language (Hindi keeps its Hindi-plus-English
+ * pairing; en is English only; gu/kn re-script the Hindi). The day-of body carries the WINDOW, because the
  * window is the whole point of a muhurat — the vrat family's day-of copy names
  * only the day.
  */
-export function formatMuhuratReminderContent(p: PlannedMuhuratNotification): {
+export function formatMuhuratReminderContent(
+  p: PlannedMuhuratNotification,
+  lang: Lang = 'hi'
+): {
   title: string;
   body: string;
 } {
-  const title = 'मुहूर्त स्मरण';
+  const title = contentByLang(lang, 'मुहूर्त स्मरण', 'Muhurat reminder');
   if (p.kind === 'dayOf') {
     const hi = p.windowLabelHi ? `आज ${p.nameHi} — ${p.windowLabelHi}` : `आज ${p.nameHi} का मुहूर्त`;
     const en = p.windowLabelEn ? `${p.nameEn} today — ${p.windowLabelEn}` : `${p.nameEn} today`;
-    return { title, body: `${hi} · ${en}` };
+    return { title, body: lang === 'hi' ? `${hi} · ${en}` : contentByLang(lang, hi, en) };
   }
-  const when = p.advanceDays === 1 ? 'कल' : `${p.advanceDays} दिन में`;
-  return { title, body: `${when} ${p.nameHi} का मुहूर्त · ${p.nameEn}` };
+  const whenHi = p.advanceDays === 1 ? 'कल' : `${p.advanceDays} दिन में`;
+  const hi = `${whenHi} ${p.nameHi} का मुहूर्त`;
+  if (lang === 'hi') return { title, body: `${hi} · ${p.nameEn}` };
+  const whenEn = p.advanceDays === 1 ? 'tomorrow' : `in ${p.advanceDays} days`;
+  return { title, body: contentByLang(lang, hi, `${p.nameEn} ${whenEn}`) };
 }

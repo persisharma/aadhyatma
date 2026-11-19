@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   planVratReminders,
   formatVratReminderContent,
+  dayOfCoveredKeys,
   VRAT_NOTIF_PREFIX,
   type VratReminderInput,
 } from '../vratReminderPure';
@@ -134,4 +135,31 @@ function input(over: Partial<VratReminderInput>): VratReminderInput {
   assert.equal(formatVratReminderContent(ekadashi).title, 'व्रत स्मरण');
   assert.equal(ekadashi.titleHi, undefined, 'no override leaks onto other inputs');
   assert.equal(visarjanDay.identifier, `${VRAT_NOTIF_PREFIX}:ganesh-chaturthi:dayOf:2026-09-18`);
+}
+
+// BEH-04: copy follows the reading language; hi keeps the legacy Hindi + English pairing.
+{
+  const now = new Date(2026, 6, 1, 9, 0, 0, 0);
+  const { planned } = planVratReminders([input({ ruleId: 'ekadashi', nameHi: 'एकादशी', nameEn: 'Ekadashi', nextDate: new Date(2026, 6, 6) })], now);
+  const day = planned.find((p) => p.kind === 'dayOf')!;
+  const adv = planned.find((p) => p.kind === 'advance')!;
+  assert.deepEqual(formatVratReminderContent(day, 'en'), { title: 'Vrat reminder', body: 'Ekadashi today' });
+  assert.deepEqual(formatVratReminderContent(adv, 'en'), { title: 'Vrat reminder', body: 'Ekadashi tomorrow' });
+  assert.equal(formatVratReminderContent(day, 'hi').body, 'आज एकादशी है · Ekadashi today');
+  for (const [lang, script] of [['gu', /[઀-૿]/], ['kn', /[ಀ-೿]/]] as const) {
+    for (const p of [day, adv]) {
+      const { title, body } = formatVratReminderContent(p, lang);
+      assert.match(title + body, script);
+      assert.doesNotMatch(title + body, /[ऀ-ॿA-Za-z]/, `${lang}: ${title} / ${body}`);
+    }
+  }
+  const visarjan = { ...day, titleHi: 'विसर्जन स्मरण' };
+  assert.equal(formatVratReminderContent(visarjan, 'en').title, 'Visarjan reminder');
+}
+
+// BEH-05: dayOfCoveredKeys lists only the day-of notices a plan holds.
+{
+  const now = new Date(2026, 6, 1, 9, 0, 0, 0);
+  const { planned } = planVratReminders([input({ ruleId: 'janmashtami', nextDate: new Date(2026, 6, 6) })], now);
+  assert.deepEqual([...dayOfCoveredKeys(planned)], ['janmashtami:2026-07-06']);
 }

@@ -26,7 +26,7 @@ export default function CatalogCategoryTile({ title, subtitle, artwork, lang, ac
       <CatalogCategoryArtwork name={artwork} />
       <View style={styles.meta}>
         <Text style={{ ...typography.cardHindi, fontSize: 15, fontFamily: scriptTitleFont(lang, typography.cardHindi.fontFamily), color: colors.catalogAccent }}>{title}</Text>
-        <Text style={{ ...typography.catalogMeta, fontSize: lang === 'en' ? 11 : 12, lineHeight: 18, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkSoft }}>{subtitle}</Text>
+        <Text style={{ ...typography.catalogMeta, fontSize: lang === 'en' ? 11 : 12, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkSoft }}>{subtitle}</Text>
       </View>
       <AppIcon name="next" size={16} color={colors.inkMuted} />
     </ListingCardFrame>

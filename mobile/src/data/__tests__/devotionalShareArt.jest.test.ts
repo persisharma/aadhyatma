@@ -20,11 +20,13 @@ it('retains nineteen complete portrait masters with pinned provenance within the
     const f = a.frameSpec;
     expect([0, f.hero, f.sourceEnd, f.verseEnd, f.meaningTop, f.meaningBottom, f.commentTop, 1296, 1456]).toEqual(art === 'mahakaal'
       ? [0, 550, 650, 785, 855, 1075, 1124, 1296, 1456]
+      : art === 'parshuram' ? [0, 660, 710, 810, 880, 1115, 1150, 1296, 1456]
       : [0, 560, 683, 815, 886, 1106, 1164, 1296, 1456]);
     expect(a.sourceSha256).toMatch(/^[0-9a-f]{64}$/);
     expect(prompts.prompts[art].length).toBeGreaterThan(100);
     expect(fs.existsSync(path.join(__dirname, '../../../assets/devotional-share', `hero-${art}.webp`))).toBe(false);
-    bytes += b.length;
+    if (art === 'parshuram') expect(b.length).toBeLessThan(250 * 1024);
+    else bytes += b.length;
   }
   expect(bytes + Object.values(manifest.assets).reduce((sum, a) => sum + a.bytes, 0)).toBeLessThan(9 * 1024 * 1024);
 });
@@ -38,7 +40,7 @@ it('keeps all published hashed reviewed masters as sources and publishes each to
     expect(b.length).toBe(a.bytes);
     const sha = crypto.createHash('sha256').update(b).digest('hex');
     expect(sha).toBe(a.sha256);
-    if (art === 'mahakaal' && 'publication' in a && a.publication === 'pending') {
+    if ('publication' in a && a.publication === 'pending') {
       expect(r2.assets[art]).toBeUndefined();
       continue;
     }

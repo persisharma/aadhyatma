@@ -150,6 +150,14 @@ async function reachReminder() {
   await pressLabel('Setup language continue');
   await pressLabel('Setup city continue');
 }
+// Android setup now offers widgets before reminders. Decline that launcher
+// request to exercise the later-day retry independently of the setup offer.
+async function reachReminderAfterDecliningWidget() {
+  mockPin.mockResolvedValueOnce(false);
+  await reachReminder();
+  expect(mockPin.mock.calls).toEqual([['verse']]);
+  mockPin.mockClear();
+}
 async function finishTour() {
   expect(tour.shouldShowFirstLaunchTour).toBe(true);
   await act(async () => { await tour.markTourCompleted(); });
@@ -269,7 +277,7 @@ test('iOS hands off to tour only after the actual setup modal dismissal callback
 
 test('later-day widget offer pins the second widget after foreground even when the host unmounts', async () => {
   await boot();
-  await reachReminder();
+  await reachReminderAfterDecliningWidget();
   await pressLabel('Enable reminders');
   await finishTour();
   jest.setSystemTime(TODAY + DAY);
@@ -292,7 +300,7 @@ test('later-day widget offer pins the second widget after foreground even when t
 
 test('unsupported Android pinning opens the widget gallery without stamping an add', async () => {
   await boot();
-  await reachReminder();
+  await reachReminderAfterDecliningWidget();
   await pressLabel('Enable reminders');
   await finishTour();
   jest.setSystemTime(TODAY + DAY);
@@ -391,7 +399,7 @@ test('turning daily reminders off through Settings prevents a later launch invit
 
 test('an existing verse flow offers only Panchang, and dismissing it suppresses future widget offers', async () => {
   await boot();
-  await reachReminder();
+  await reachReminderAfterDecliningWidget();
   await pressLabel('Enable reminders');
   await finishTour();
   // The public shared store is also what the Home strip writes after a verse flow.

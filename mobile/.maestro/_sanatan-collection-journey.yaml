@@ -1,0 +1,23 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-${TOPIC}" }
+- takeScreenshot: e2e-shots/sanatan-row-${TOPIC}
+# A card opens the lesson itself; there is no overview screen in between.
+- tapOn: { id: "sanatan-collection-${TOPIC}", retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
+- takeScreenshot: e2e-shots/sanatan-reader-${TOPIC}
+# The pager bar is fixed at the bottom: no scrolling to reach Next.
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- assertVisible: "2\\s*/\\s*3"
+# The figure area (plate, caption, legend) and a legend can be taller than a phone
+# screen, and iOS reports a partly hidden element's full frame, so waiting for all
+# of it never ends. Wait for part of it; assert the content itself separately.
+- scrollUntilVisible:
+    element: { id: "sanatan-explore-${TOPIC}" }
+    direction: DOWN
+    visibilityPercentage: 20
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-explore-${TOPIC}
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

@@ -12,6 +12,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { contentByLang, pick } from '@/utils/localize';
 import { cardFontByLang, isLatinLang } from '@/utils/langType';
 import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
@@ -152,13 +153,14 @@ function TopBar({
   colors: ThemeBits['colors'];
   typography: ThemeBits['typography'];
 }) {
+  const { lang } = useGitaLanguage();
   return (
     <>
       <View style={styles.topBar}>
         <Pressable
           onPress={onBack}
           accessibilityRole="button"
-          accessibilityLabel="Back"
+          accessibilityLabel={backLabel(lang)}
           hitSlop={16}
           style={({ pressed }) => [
             styles.backBtn,

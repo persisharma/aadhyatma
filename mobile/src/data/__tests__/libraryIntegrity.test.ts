@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 
 import { categories } from '../categories';
-import { deities } from '../deities';
+import { deityCatalog as deities } from '../deities';
 import { japamMantras } from '../japam';
 import { library } from '../texts';
 import { navigateToEntryStart } from '../../navigation/entryRoutes';

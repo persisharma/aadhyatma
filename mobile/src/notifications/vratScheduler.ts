@@ -6,7 +6,12 @@
  * the thin expo-notifications glue around it — mirroring `scheduler.ts`.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planVratReminders,
   formatVratReminderContent,
@@ -23,55 +28,47 @@ export type VratNotificationPayload = {
 
 /** Cancel every vrat reminder we own, leaving other notifications untouched. */
 export async function cancelAllVratReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(VRAT_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await settleAfter('vrat', cancelNotificationFamily(VRAT_NOTIF_PREFIX));
 }
 
 /**
- * Re-arm vrat reminders: cancel ours, then schedule the planned set (followed-
+ * Re-arm vrat reminders: replace ours with the planned set (followed-
  * first, within the rolling window, under the dedicated iOS cap). Idempotent and
  * safe to call on every app foreground. Returns the count actually scheduled.
  */
 export async function scheduleVratReminders(
   inputs: VratReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  await cancelAllVratReminders();
+  const { planned } = planVratReminders(inputs, now, familyCap(Platform.OS, 'vrat'));
 
-  const { planned } = planVratReminders(inputs, now);
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('vrat', lang) : undefined;
 
-  let scheduled = 0;
-  for (const p of planned) {
-    const { title, body } = formatVratReminderContent(p);
+  const slots: FamilySlot[] = planned.map((p) => {
+    const { title, body } = formatVratReminderContent(p, lang);
     const payload: VratNotificationPayload = {
       type: 'vrat-reminder',
       ruleId: p.ruleId,
       occurrenceDateKey: p.occurrenceDateKey,
       kind: p.kind,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-        },
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return settleAfter('vrat', armNotificationFamily(VRAT_NOTIF_PREFIX, slots));
 }

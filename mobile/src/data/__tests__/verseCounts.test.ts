@@ -1,3 +1,24 @@
+import durgaSaptashatiChapter2 from '../stuti/durga-saptashati-chapter-2.json';
+import durgaSaptashatiChapter3 from '../stuti/durga-saptashati-chapter-3.json';
+import durgaSaptashatiChapter4 from '../stuti/durga-saptashati-chapter-4.json';
+import durgaSaptashatiChapter5 from '../stuti/durga-saptashati-chapter-5.json';
+import durgaSaptashatiChapter6 from '../stuti/durga-saptashati-chapter-6.json';
+import durgaSaptashatiChapter7 from '../stuti/durga-saptashati-chapter-7.json';
+import durgaSaptashatiChapter8 from '../stuti/durga-saptashati-chapter-8.json';
+import durgaSaptashatiChapter9 from '../stuti/durga-saptashati-chapter-9.json';
+import durgaSaptashatiChapter10 from '../stuti/durga-saptashati-chapter-10.json';
+import durgaSaptashatiChapter11 from '../stuti/durga-saptashati-chapter-11.json';
+import durgaSaptashatiChapter12 from '../stuti/durga-saptashati-chapter-12.json';
+import durgaSaptashatiChapter13 from '../stuti/durga-saptashati-chapter-13.json';
+import durgaDeviKavacham from '../kavacham/durga-devi-kavacham.json';
+import durgaSaptashatiChapterOne from '../stuti/durga-saptashati-chapter-1.json';
+import durgaKilak from '../stuti/durga-kilak-stotram.json';
+import durgaArgala from '../stuti/durga-argala-stotram.json';
+import hanumanBahuk from '../stuti/hanuman-bahuk.json';
+import adityaHridayam from '../stuti/aditya-hridayam.json';
+import kanakadharaStotram from '../stuti/kanakadhara-stotram.json';
+import shriSuktam from '../suktam/shri-suktam.json';
+import kalabhairavAshtakam from '../ashtakam/kalabhairav-ashtakam.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../garud-puran';
 import { aartiIdByIndex, getAarti } from '../aarti';
 import assert from 'node:assert/strict';
@@ -25,13 +46,21 @@ import { saraswatiChalisaCounts } from '../saraswati-chalisa';
 import { saraswatiStotramTotal } from '../saraswati-stotram';
 import { shivChalisaCounts } from '../shiv-chalisa';
 import { shivaStrotamTotal } from '../shiva-strotam';
-import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal } from '../stuti';
+import { durgaStutiArjunaTotal, krishnaStutiTotal, kuberaStotramTotal, navagrahaStotramTotal, parshuramStotramTotal } from '../stuti';
 import { deviSuktamTotal, narayanaSuktamTotal, purushaSuktamTotal } from '../suktam';
 import { sundarkandTotal } from '../sundarkand';
 import { valmikiRamayanTotal } from '../valmiki-ramayan';
 import { vishnuChalisaCounts } from '../vishnu-chalisa';
 import { vishnuSahasranamaTotal } from '../vishnu-sahasranama';
+import { shaniChalisaCounts } from '../shani-chalisa';
+import { santoshiMataChalisaCounts } from '../santoshi-mata-chalisa';
+import { kaliChalisaCounts } from '../kali-chalisa';
+import { radhaChalisaCounts } from '../radha-chalisa';
+import { vaishnoDeviChalisaCounts } from '../vaishno-devi-chalisa';
 import * as generated from '../verseCounts';
+import kabirDohe from '../doha/kabir-bhakti-dohe.json';
+import rahimDohe from '../doha/rahim-bhakti-dohe.json';
+
 
 /**
  * `texts.ts` renders every library row's verse count from `verseCounts.ts`, a
@@ -47,6 +76,29 @@ import * as generated from '../verseCounts';
  */
 test('every generated verse count still matches its corpus', () => {
   const pairs: readonly (readonly [string, unknown, unknown])[] = [
+  ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
+  ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['adityaHridayamTotal', adityaHridayam.verses.length, generated.adityaHridayamTotal],
+  ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
+  ['durgaArgalaTotal', durgaArgala.verses.length, generated.durgaArgalaTotal],
+  ['durgaKilakTotal', durgaKilak.verses.length, generated.durgaKilakTotal],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length, generated.durgaSaptashatiChapterOneTotal],
+  ['durgaSaptashatiChapter2Total', durgaSaptashatiChapter2.verses.length, generated.durgaSaptashatiChapter2Total],
+  ['durgaSaptashatiChapter3Total', durgaSaptashatiChapter3.verses.length, generated.durgaSaptashatiChapter3Total],
+  ['durgaSaptashatiChapter4Total', durgaSaptashatiChapter4.verses.length, generated.durgaSaptashatiChapter4Total],
+  ['durgaSaptashatiChapter5Total', durgaSaptashatiChapter5.verses.length, generated.durgaSaptashatiChapter5Total],
+  ['durgaSaptashatiChapter6Total', durgaSaptashatiChapter6.verses.length, generated.durgaSaptashatiChapter6Total],
+  ['durgaSaptashatiChapter7Total', durgaSaptashatiChapter7.verses.length, generated.durgaSaptashatiChapter7Total],
+  ['durgaSaptashatiChapter8Total', durgaSaptashatiChapter8.verses.length, generated.durgaSaptashatiChapter8Total],
+  ['durgaSaptashatiChapter9Total', durgaSaptashatiChapter9.verses.length, generated.durgaSaptashatiChapter9Total],
+  ['durgaSaptashatiChapter10Total', durgaSaptashatiChapter10.verses.length, generated.durgaSaptashatiChapter10Total],
+  ['durgaSaptashatiChapter11Total', durgaSaptashatiChapter11.verses.length, generated.durgaSaptashatiChapter11Total],
+  ['durgaSaptashatiChapter12Total', durgaSaptashatiChapter12.verses.length, generated.durgaSaptashatiChapter12Total],
+  ['durgaSaptashatiChapter13Total', durgaSaptashatiChapter13.verses.length, generated.durgaSaptashatiChapter13Total],
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length, generated.durgaDeviKavachamTotal],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length])), generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
@@ -73,12 +125,18 @@ test('every generated verse count still matches its corpus', () => {
   ['krishnaStutiTotal', krishnaStutiTotal, generated.krishnaStutiTotal],
   ['kuberaStotramTotal', kuberaStotramTotal, generated.kuberaStotramTotal],
   ['lakshmiChalisaCounts', lakshmiChalisaCounts, generated.lakshmiChalisaCounts],
+  ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts, generated.vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
+  ['santoshiMataChalisaCounts', santoshiMataChalisaCounts, generated.santoshiMataChalisaCounts],
+  ['kaliChalisaCounts', kaliChalisaCounts, generated.kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts, generated.radhaChalisaCounts],
   ['lingashtakamTotal', lingashtakamTotal, generated.lingashtakamTotal],
   ['madhurashtakamTotal', madhurashtakamTotal, generated.madhurashtakamTotal],
   ['mahalakshmiAshtakamTotal', mahalakshmiAshtakamTotal, generated.mahalakshmiAshtakamTotal],
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal, generated.narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal, generated.narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal, generated.navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal, generated.parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal, generated.purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal, generated.radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts, generated.ramChalisaCounts],
@@ -96,6 +154,11 @@ test('every generated verse count still matches its corpus', () => {
   ['sundarkandTotal', sundarkandTotal, generated.sundarkandTotal],
   ['suryaAshtakamTotal', suryaAshtakamTotal, generated.suryaAshtakamTotal],
   ['suryaChalisaCounts', suryaChalisaCounts, generated.suryaChalisaCounts],
+  ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts, generated.vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
+  ['santoshiMataChalisaCounts', santoshiMataChalisaCounts, generated.santoshiMataChalisaCounts],
+  ['kaliChalisaCounts', kaliChalisaCounts, generated.kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts, generated.radhaChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],
@@ -114,6 +177,29 @@ test('every generated verse count still matches its corpus', () => {
 test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothing stale', () => {
   const exported = Object.keys(generated).sort();
   const expected = [
+  ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['adityaHridayamTotal', adityaHridayam.verses.length, generated.adityaHridayamTotal],
+  ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
+  ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
+  ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
+  ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
+  ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
+  ['durgaArgalaTotal', durgaArgala.verses.length, generated.durgaArgalaTotal],
+  ['durgaKilakTotal', durgaKilak.verses.length, generated.durgaKilakTotal],
+  ['durgaSaptashatiChapterOneTotal', durgaSaptashatiChapterOne.verses.length, generated.durgaSaptashatiChapterOneTotal],
+  ['durgaSaptashatiChapter2Total', durgaSaptashatiChapter2.verses.length, generated.durgaSaptashatiChapter2Total],
+  ['durgaSaptashatiChapter3Total', durgaSaptashatiChapter3.verses.length, generated.durgaSaptashatiChapter3Total],
+  ['durgaSaptashatiChapter4Total', durgaSaptashatiChapter4.verses.length, generated.durgaSaptashatiChapter4Total],
+  ['durgaSaptashatiChapter5Total', durgaSaptashatiChapter5.verses.length, generated.durgaSaptashatiChapter5Total],
+  ['durgaSaptashatiChapter6Total', durgaSaptashatiChapter6.verses.length, generated.durgaSaptashatiChapter6Total],
+  ['durgaSaptashatiChapter7Total', durgaSaptashatiChapter7.verses.length, generated.durgaSaptashatiChapter7Total],
+  ['durgaSaptashatiChapter8Total', durgaSaptashatiChapter8.verses.length, generated.durgaSaptashatiChapter8Total],
+  ['durgaSaptashatiChapter9Total', durgaSaptashatiChapter9.verses.length, generated.durgaSaptashatiChapter9Total],
+  ['durgaSaptashatiChapter10Total', durgaSaptashatiChapter10.verses.length, generated.durgaSaptashatiChapter10Total],
+  ['durgaSaptashatiChapter11Total', durgaSaptashatiChapter11.verses.length, generated.durgaSaptashatiChapter11Total],
+  ['durgaSaptashatiChapter12Total', durgaSaptashatiChapter12.verses.length, generated.durgaSaptashatiChapter12Total],
+  ['durgaSaptashatiChapter13Total', durgaSaptashatiChapter13.verses.length, generated.durgaSaptashatiChapter13Total],
+  ['durgaDeviKavachamTotal', durgaDeviKavacham.verses.length, generated.durgaDeviKavachamTotal],
   ['aartiVerseCounts', null, generated.aartiVerseCounts],
   ['achyutashtakamTotal', achyutashtakamTotal, generated.achyutashtakamTotal],
   ['bajrangBaanTotal', bajrangBaanTotal, generated.bajrangBaanTotal],
@@ -146,6 +232,7 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['narasimhaAshtakamTotal', narasimhaAshtakamTotal, generated.narasimhaAshtakamTotal],
   ['narayanaSuktamTotal', narayanaSuktamTotal, generated.narayanaSuktamTotal],
   ['navagrahaStotramTotal', navagrahaStotramTotal, generated.navagrahaStotramTotal],
+  ['parshuramStotramTotal', parshuramStotramTotal, generated.parshuramStotramTotal],
   ['purushaSuktamTotal', purushaSuktamTotal, generated.purushaSuktamTotal],
   ['radhashtakamTotal', radhashtakamTotal, generated.radhashtakamTotal],
   ['ramChalisaCounts', ramChalisaCounts, generated.ramChalisaCounts],
@@ -163,6 +250,11 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['sundarkandTotal', sundarkandTotal, generated.sundarkandTotal],
   ['suryaAshtakamTotal', suryaAshtakamTotal, generated.suryaAshtakamTotal],
   ['suryaChalisaCounts', suryaChalisaCounts, generated.suryaChalisaCounts],
+  ['vaishnoDeviChalisaCounts', vaishnoDeviChalisaCounts, generated.vaishnoDeviChalisaCounts],
+  ['shaniChalisaCounts', shaniChalisaCounts, generated.shaniChalisaCounts],
+  ['santoshiMataChalisaCounts', santoshiMataChalisaCounts, generated.santoshiMataChalisaCounts],
+  ['kaliChalisaCounts', kaliChalisaCounts, generated.kaliChalisaCounts],
+  ['radhaChalisaCounts', radhaChalisaCounts, generated.radhaChalisaCounts],
   ['valmikiRamayanTotal', valmikiRamayanTotal, generated.valmikiRamayanTotal],
   ['vishnuChalisaCounts', vishnuChalisaCounts, generated.vishnuChalisaCounts],
   ['vishnuSahasranamaTotal', vishnuSahasranamaTotal, generated.vishnuSahasranamaTotal],
@@ -203,4 +295,21 @@ test('texts.ts takes its verse counts from verseCounts.ts, never from a corpus',
     `texts.ts imports corpus module(s) ${offenders.join(', ')} — that puts the corpus on the launch path. ` +
       'Add the count to scripts/gen-verse-counts.mts, regenerate, and import it from ./verseCounts.'
   );
+});
+
+
+/**
+ * The aarti rows in `texts.ts` still spell their counts as literals (`verseCount`
+ * and the `N पद` / `N verses` subtitle). Om Jai Shiv Omkara shipped "9 पद" over a
+ * 12-entry payload (टेक + 11 पद) because nothing compared them (RULEBOOK §11.10).
+ */
+test('every aarti row states the count its payload actually has', async () => {
+  const { library } = await import('../texts');
+  for (const [id, count] of Object.entries(generated.aartiVerseCounts)) {
+    const row = library.find((entry) => entry.id === id);
+    assert.ok(row, `${id}: aarti payload has no library row`);
+    assert.equal(row.verseCount, count, `${id}: verseCount must equal the payload's ${count} entries`);
+    assert.match(row.sub, new RegExp(`^${count} पद(?:\\s|$)`), `${id}: Hindi subtitle must say ${count} पद`);
+    assert.match(row.subEn ?? '', new RegExp(`^${count} verses\\b`), `${id}: English subtitle must say ${count} verses`);
+  }
 });

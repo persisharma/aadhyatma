@@ -20,8 +20,9 @@ export function companionTagline(lang: Lang): string {
   });
 }
 
-export function WordmarkArtwork({ kind, width, tintColor }: {
+export function WordmarkArtwork({ kind, width, tintColor, onLoad, onError }: {
   kind: 'hi' | 'en'; width: number; tintColor?: string;
+  onLoad?: () => void; onError?: () => void;
 }) {
   const capture = useContext(ArtworkCaptureContext);
   const painted = useRef(false);
@@ -35,7 +36,8 @@ export function WordmarkArtwork({ kind, width, tintColor }: {
   const finish = () => { painted.current = true; release.current?.(); };
   const metrics = manifest.names[kind];
   return <Image testID={`vedansh-wordmark-${kind}`} source={marks[kind]} accessible={false}
-    accessibilityIgnoresInvertColors resizeMode="contain" onLoad={finish} onError={finish}
+    accessibilityIgnoresInvertColors resizeMode="contain"
+    onLoad={() => { finish(); onLoad?.(); }} onError={() => { finish(); onError?.(); }}
     // RN supplies the bundled PNG's intrinsic height before applying this style.
     // Width + aspectRatio alone leaves that height in place (391dp for Hindi),
     // inflating centered rows and clipping the lettering at the share sky edge.

@@ -1,3 +1,4 @@
+import { verseLinesForDisplay } from '@/utils/versePresentation';
 import { widgetVerseSubject } from './heritage';
 import appConfig from '../../app.json';
 import { getVerseAtPoolIndex, getVersePoolSize } from '@/data/versePool';
@@ -134,11 +135,12 @@ export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () 
     const verseKey = shiftDateKey(verseStartKey, offset);
     const verse = getVerseAtPoolIndex(verseIndexForDateKey(verseKey, poolSize));
     if (!verse) throw new Error('Daily verse pool is empty');
+    const hi = [...verseLinesForDisplay(verse.textHi, verse.labelHi)];
+    const en = [...verseLinesForDisplay(verse.textEn, verse.labelEn)];
     const lines: Record<Lang, string[]> = {
-      hi: verse.textHi,
-      en: verse.textEn,
-      gu: verse.textHi.map((line) => transliterateDevanagari(line, 'gu')),
-      kn: verse.textHi.map((line) => transliterateDevanagari(line, 'kn')),
+      hi, en,
+      gu: hi.map((line) => transliterateDevanagari(line, 'gu')),
+      kn: hi.map((line) => transliterateDevanagari(line, 'kn')),
     };
     const source = sourceLabel(verse.sourceNameHi, verse.sourceNameEn, verse.labelHi, verse.labelEn);
     const excerpt = Object.fromEntries((['hi', 'en', 'gu', 'kn'] as Lang[]).map((lang) => [lang, twoLineExcerpt(lines[lang])])) as Record<Lang, string>;

@@ -2,7 +2,7 @@ diff --git a/node_modules/react-native-youtube-iframe/lib/commonjs/YoutubeIframe
 index 0be2dad..c7374b0 100644
 --- a/node_modules/react-native-youtube-iframe/lib/commonjs/YoutubeIframe.js
 +++ b/node_modules/react-native-youtube-iframe/lib/commonjs/YoutubeIframe.js
-@@ -104,12 +104,14 @@ const YoutubeIframe = (props, ref) => {
+@@ -104,12 +104,17 @@ const YoutubeIframe = (props, ref) => {
      }
    }), []);
    (0, _react.useEffect)(() => {
@@ -17,9 +17,12 @@ index 0be2dad..c7374b0 100644
 +    // postMessage command bridge does not reach the page reliably, so the `play`
 +    // prop silently failed to pause/resume (the video kept playing); injectJavaScript
 +    // is the same path seekTo/initial-load use and works. `player` is a page global.
-+    if (!webViewRef.current) return;
++    // The iframe creates `player` asynchronously. Wait for its ready event and
++    // re-run with the latest play intent; an early Play otherwise gets lost,
++    // while a pause during loading must survive readiness.
++    if (!playerReady || !webViewRef.current) return;
 +    webViewRef.current.injectJavaScript(play ? _PlayerScripts.PLAYER_FUNCTIONS.playVideo : _PlayerScripts.PLAYER_FUNCTIONS.pauseVideo);
-+  }, [play]);
++  }, [play, playerReady]);
    (0, _react.useEffect)(() => {
      if (mute) {
        sendPostMessage('muteVideo', {});

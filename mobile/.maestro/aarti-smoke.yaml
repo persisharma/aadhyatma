@@ -61,7 +61,7 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "ॐ जय लक्ष्मी माता.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # Ram's aarti reuses the Ram Stuti content (opens the RamStuti reader), listed
 # here under the Aarti category. NEW badge absorbed by `.*`.
@@ -86,7 +86,8 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "ॐ जय श्री श्याम हरे.*"
-- tapOn: "Back"
+- takeScreenshot: e2e-shots/aarti-complete-reader-header
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # Jay Adhya Shakti (addedInVersion 1.5.2, NEW badge absorbed by `.*`). Open it
 # to prove the appended index 10 dispatches its own payload.
@@ -126,7 +127,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Maano mandap laal gulaal.*"
 - tapOn: "Hindi"
 - takeScreenshot: e2e-shots/jay-adhya-shakti-complete-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # Shani Dev Aarti is appended at index 11. Verify its own five-stanza payload.
 - scrollUntilVisible:
@@ -142,7 +143,7 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "जय जय श्री शनिदेव भक्तन हितकारी.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # Dattatreya Aarti is Marathi and appended at index 12.
 - scrollUntilVisible:
@@ -158,7 +159,7 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - assertVisible: "त्रिगुणात्मक त्रैमूर्ति दत्त हा जाणा.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Open Om Jai Jagdish Hare reader

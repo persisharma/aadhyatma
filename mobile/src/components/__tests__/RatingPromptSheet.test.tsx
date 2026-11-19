@@ -6,7 +6,9 @@
 
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Linking, Modal, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppState, Linking, Modal, ScrollView, StyleSheet, Text } from 'react-native';
+import { lightColors } from '@/theme/colors';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { GitaLanguageProvider } from '@/data/gita/language';
@@ -17,6 +19,8 @@ import {
   useRatingPrompt,
 } from '@/contexts/RatingPromptContext';
 import { reportRatingAsk, useRatingAsk } from '@/contexts/ratingAsk';
+import { ENGAGEMENT_PROMPTS } from '@/data/engagementPrompts';
+import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import * as ratingPrompt from '@/data/ratingPrompt';
 import {
   MIN_ACTIVE_DAYS,
@@ -178,12 +182,15 @@ function savedState() {
   return parseRatingPromptState(mockStore.get(RATING_PROMPT_STORAGE_KEY) ?? null);
 }
 
+const originalCampaigns = { ...ENGAGEMENT_PROMPTS };
 let openURL: jest.SpiedFunction<typeof Linking.openURL>;
 
 beforeEach(() => {
   jest.useFakeTimers();
   requestAsk = null;
   mockStore.clear();
+  // Single-page fixture; real configured Facebook hand-off is covered below.
+  ENGAGEMENT_PROMPTS.facebookUrl = null;
   mockAppOpens = 1;
   mockOptInShowing = false;
   mockActiveDays = 0;
@@ -200,6 +207,7 @@ beforeEach(() => {
 afterEach(() => {
   act(() => { mounted.splice(0).forEach((tree) => tree.unmount()); });
   openURL.mockRestore();
+  Object.assign(ENGAGEMENT_PROMPTS, originalCampaigns);
   jest.useRealTimers();
 });
 
@@ -336,12 +344,15 @@ describe('moment-triggered ask', () => {
     expect(modalVisible(tree)).toBe(true);
   });
 
-  test('never re-opens for a user who already rated', async () => {
+  test('shows social instead of rating after a legacy store hand-off', async () => {
     mockStore.set(
       RATING_PROMPT_STORAGE_KEY,
       JSON.stringify({ askCount: 1, lastAskedAt: 1, outcome: 'rated', storeHandoffCount: 2 })
     );
-    expect(modalVisible(await renderAndSettle())).toBe(false);
+    const tree = await renderAndSettle();
+    expect(modalVisible(tree)).toBe(true);
+    expect(allText(tree)).toContain('Stay connected with Vedansh');
+    expect(pressablesByLabel(tree, 'Rate 5 stars')).toHaveLength(0);
   });
 
   test('stays shut within 30 days of a 1–3★ tap', async () => {
@@ -373,7 +384,7 @@ describe('stars and buttons', () => {
     expect(openURL).toHaveBeenCalledTimes(1);
     expect(openURL.mock.calls[0][0]).toMatch(/apps\.apple\.com|play\.google\.com/);
     expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('pending');
+    expect(savedState().outcome).toBe('rated');
   });
 
   test.each([1, 2, 3])('%i★ stays on the card, thanks the user and keeps the store link', async (stars) => {
@@ -390,7 +401,7 @@ describe('stars and buttons', () => {
     expect(saved.lowRatedAt).not.toBeNull();
   });
 
-  test('the low-star store link hands off and preserves the month pause', async () => {
+  test('the low-star store link hands off and advances to social too', async () => {
     const tree = await renderAndSettle();
     await tapStars(tree, 2);
     await act(async () => {
@@ -400,7 +411,7 @@ describe('stars and buttons', () => {
     expect(openURL).toHaveBeenCalledTimes(1);
     expect(openURL.mock.calls[0][0]).toMatch(/apps\.apple\.com|play\.google\.com/);
     expect(modalVisible(tree)).toBe(false);
-    expect(savedState().outcome).toBe('pending');
+    expect(savedState().outcome).toBe('rated');
   });
 
   test('without a feedback inbox, the thank-you step has no email button', async () => {
@@ -540,7 +551,7 @@ describe('stars and buttons', () => {
     expect(openURL.mock.calls[1][0]).not.toContain('write-review');
     // Still counted as rated — we did our part; nagging after a hand-off is the
     // behaviour this feature exists to avoid.
-    expect(savedState().outcome).toBe('pending');
+    expect(savedState().outcome).toBe('rated');
   });
 });
 
@@ -590,5 +601,160 @@ describe('presentation', () => {
     expect(echo.length).toBeGreaterThan(0);
     expect(echo[0].props.accessibilityElementsHidden).toBe(true);
     expect(echo[0].props.importantForAccessibility).toBe('no');
+  });
+});
+
+
+describe('post-review social prompt', () => {
+  function reviewed() {
+    mockStore.set(RATING_PROMPT_STORAGE_KEY, JSON.stringify(ratingPrompt.afterRated(ratingPrompt.RATING_PROMPT_DEFAULTS, Date.now())));
+  }
+  test.each(['bookmark-saved', 'content-shared', 'routine-complete', 'verse-shared', 'prose-shared', 'mala-complete'] as const)(
+    '%s uses the same action bridge for social following', async (trigger) => {
+      reviewed();
+      const tree = await renderAndSettle(trigger);
+      expect(modalVisible(tree)).toBe(true);
+      expect(allText(tree)).toContain('Stay connected with Vedansh');
+      expect(pressablesByLabel(tree, 'Rate 5 stars')).toHaveLength(0);
+      expect(savedState().social.askCount).toBe(1);
+    });
+  test('store return and cold launch alone do not open the first follow prompt', async () => {
+    reviewed(); mockAppOpens = 10; mockActiveDays = 10;
+    const tree = await renderHydrated();
+    await fireMoment('app-engaged');
+    expect(modalVisible(tree)).toBe(false);
+    await fireMoment();
+    expect(modalVisible(tree)).toBe(true);
+  });
+  test('the configured Facebook button opens the exact owner link and keeps follow confirmation independent', async () => {
+    ENGAGEMENT_PROMPTS.facebookUrl = originalCampaigns.facebookUrl;
+    reviewed();
+    const tree = await renderAndSettle();
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Instagram')).toHaveLength(1);
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Facebook')).toHaveLength(1);
+    await act(async () => { pressableByLabel(tree, 'Follow Vedansh on Facebook').props.onPress(); });
+    expect(openURL).toHaveBeenLastCalledWith('https://www.facebook.com/share/18wwA4vHG4/?mibextid=wwXIfr');
+    expect(savedState().social.confirmed.facebook).not.toBe(true);
+    expect(modalVisible(tree)).toBe(true);
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Instagram').props.onPress(); });
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Instagram')).toHaveLength(0);
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Facebook')).toHaveLength(1);
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Facebook').props.onPress(); });
+    expect(savedState().social.confirmed).toEqual({ instagram: true, facebook: true });
+    expect(modalVisible(tree)).toBe(false);
+  });
+  test('opening each page never silently confirms a follow; both confirmations persist', async () => {
+    ENGAGEMENT_PROMPTS.facebookUrl = 'https://www.facebook.com/test-vedansh-page';
+    reviewed(); const tree = await renderAndSettle();
+    await act(async () => { pressableByLabel(tree, 'Follow Vedansh on Instagram').props.onPress(); });
+    expect(openURL).toHaveBeenLastCalledWith(ENGAGEMENT_PROMPTS.instagramUrl);
+    expect(savedState().social.confirmed.instagram).not.toBe(true);
+    expect(modalVisible(tree)).toBe(true);
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Instagram').props.onPress(); });
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Instagram')).toHaveLength(0);
+    expect(pressablesByLabel(tree, 'Follow Vedansh on Facebook')).toHaveLength(1);
+    await act(async () => { pressableByLabel(tree, 'Follow Vedansh on Facebook').props.onPress(); });
+    expect(openURL).toHaveBeenLastCalledWith(ENGAGEMENT_PROMPTS.facebookUrl);
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Facebook').props.onPress(); });
+    expect(modalVisible(tree)).toBe(false);
+    expect(savedState().social.confirmed).toEqual({ instagram: true, facebook: true });
+    act(() => tree.unmount()); mounted.splice(mounted.indexOf(tree), 1);
+    const reloaded = await renderAndSettle();
+    expect(modalVisible(reloaded)).toBe(false);
+  });
+  test('failed social handoff stays unconfirmed, shows retry copy, and can retry', async () => {
+    reviewed(); const tree = await renderAndSettle();
+    openURL.mockRejectedValueOnce(new Error('offline'));
+    await act(async () => { pressableByLabel(tree, 'Follow Vedansh on Instagram').props.onPress(); });
+    expect(allText(tree)).toContain('Could not open the page');
+    expect(savedState().social.confirmed.instagram).not.toBe(true);
+    await act(async () => { pressableByLabel(tree, 'Follow Vedansh on Instagram').props.onPress(); });
+    expect(allText(tree)).not.toContain('Could not open the page');
+  });
+  test('a social reset re-arms once on reload and leaves existing review data intact', async () => {
+    reviewed(); const tree = await renderAndSettle();
+    await act(async () => { pressableByLabel(tree, 'I already follow Vedansh on Instagram').props.onPress(); });
+    act(() => tree.unmount()); mounted.splice(mounted.indexOf(tree), 1);
+    ENGAGEMENT_PROMPTS.socialCampaignId = 'next-campaign';
+    const reloaded = await renderHydrated();
+    await fireMoment('app-engaged'); expect(modalVisible(reloaded)).toBe(false);
+    await fireMoment(); expect(modalVisible(reloaded)).toBe(true);
+    expect(savedState().social.campaignId).toBe('next-campaign');
+    expect(savedState().storeHandoffCount).toBe(1);
+    await act(async () => { pressableByLabel(reloaded, 'I already follow Vedansh on Instagram').props.onPress(); });
+    await fireMoment(); expect(modalVisible(reloaded)).toBe(false);
+  });
+  test('dismissal does not reopen immediately; the next action can ask again', async () => {
+    reviewed(); const tree = await renderAndSettle();
+    await act(async () => { pressableByLabel(tree, 'Maybe later').props.onPress(); });
+    await fireMoment('app-engaged'); expect(modalVisible(tree)).toBe(false);
+    await fireMoment(); expect(modalVisible(tree)).toBe(true);
+    expect(savedState().social.askCount).toBe(2);
+  });
+  test('social cannot stack on another surface that opens during the settle delay', async () => {
+    reviewed(); const tree = await renderHydrated();
+    act(() => requestAsk?.('verse-shared'));
+    mockOptInShowing = true;
+    act(() => tree.update(tree_()));
+    await act(async () => { jest.advanceTimersByTime(RATING_PROMPT_DELAY_MS); });
+    expect(modalVisible(tree)).toBe(false);
+    expect(savedState().social.askCount).toBe(0);
+  });
+  test('social does not open in the background', async () => {
+    reviewed(); const tree = await renderHydrated();
+    const previous = AppState.currentState;
+    AppState.currentState = 'background';
+    try { await fireMoment(); expect(modalVisible(tree)).toBe(false); }
+    finally { AppState.currentState = previous; }
+  });
+  test('unread stored preferences never get replaced with new prompt defaults', async () => {
+    reviewed(); const before = mockStore.get(RATING_PROMPT_STORAGE_KEY);
+    const implementation = jest.mocked(AsyncStorage.getItem).getMockImplementation()!;
+    jest.mocked(AsyncStorage.getItem).mockImplementation((key) => key === RATING_PROMPT_STORAGE_KEY
+      ? Promise.reject(new Error('storage unavailable')) : implementation(key));
+    try {
+      const tree = await renderAndSettle();
+      expect(modalVisible(tree)).toBe(false);
+      expect(mockStore.get(RATING_PROMPT_STORAGE_KEY)).toBe(before);
+    } finally { jest.mocked(AsyncStorage.getItem).mockImplementation(implementation); }
+  });
+  test('both failed store URLs keep review eligible and do not unlock social', async () => {
+    openURL.mockRejectedValue(new Error('No handler'));
+    const tree = await renderAndSettle(); await tapStars(tree, 5);
+    expect(savedState().storeHandoffCount).toBe(0);
+    expect(savedState().outcome).toBe('pending');
+    await fireMoment();
+    expect(allText(tree)).toContain('Enjoying Vedansh?');
+    expect(allText(tree)).not.toContain('Stay connected with Vedansh');
+  });
+  test('each follow link reads as the filled primary action; "Already following" stays a plain text link', async () => {
+    ENGAGEMENT_PROMPTS.facebookUrl = 'https://www.facebook.com/test-vedansh-page';
+    reviewed();
+    const tree = await renderAndSettle();
+    for (const name of ['Instagram', 'Facebook']) {
+      const follow = StyleSheet.flatten(pressableByLabel(tree, `Follow Vedansh on ${name}`).props.style({ pressed: false }));
+      expect(follow.backgroundColor).toBe(lightColors.saffron);
+      expect(follow.minHeight).toBeGreaterThanOrEqual(48);
+      const already = StyleSheet.flatten(pressableByLabel(tree, `I already follow Vedansh on ${name}`).props.style);
+      expect(already.backgroundColor).toBeUndefined();
+    }
+  });
+  test.each(['hi', 'en', 'gu', 'kn'] as const)('social controls and scrolling remain available in %s at both reading sizes', async (lang) => {
+    ENGAGEMENT_PROMPTS.facebookUrl = 'https://www.facebook.com/test-vedansh-page';
+    for (const size of ['M', 'L']) {
+      reviewed(); mockStore.set('@vedansh/font-scale', size);
+      let tree!: TestRenderer.ReactTestRenderer;
+      await act(async () => { tree = TestRenderer.create(<FontScaleProvider><ThemeProvider>
+        <GitaLanguageProvider initialLang={lang}><RatingPromptProvider><MomentProbe /><RatingPromptSheet /></RatingPromptProvider></GitaLanguageProvider>
+      </ThemeProvider></FontScaleProvider>); });
+      mounted.push(tree); await fireMoment();
+      expect(modalVisible(tree)).toBe(true);
+      expect(pressablesByLabel(tree, 'Follow Vedansh on Instagram')).toHaveLength(1);
+      expect(pressablesByLabel(tree, 'Follow Vedansh on Facebook')).toHaveLength(1);
+      expect(pressablesByLabel(tree, 'Maybe later')).toHaveLength(1);
+      expect(tree.root.findByType(ScrollView)).toBeTruthy();
+      expect(tree.root.findAllByType(Text).every((node) => node.props.numberOfLines === undefined)).toBe(true);
+      act(() => tree.unmount()); mounted.splice(mounted.indexOf(tree), 1);
+    }
   });
 });

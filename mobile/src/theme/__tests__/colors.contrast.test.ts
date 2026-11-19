@@ -145,3 +145,21 @@ describe('approved catalog surfaces', () => {
     expect(contrastRatio(lightColors.onPrimary, lightColors.catalogAccent)).toBeGreaterThanOrEqual(4.5);
   });
 });
+
+
+describe('borderless Japam contrast on the warm page', () => {
+  function blendHex(foreground: string, background: string, alpha: number): string {
+    const channel = (hex: string, i: number) => parseInt(hex.slice(i, i + 2), 16);
+    return '#' + [1, 3, 5].map(i => Math.round(channel(foreground, i) * alpha + channel(background, i) * (1 - alpha)).toString(16).padStart(2, '0')).join('');
+  }
+  for (const surface of ['parchment', 'parchmentSoft', 'parchmentDeep', 'parchmentGradientEnd'] as const) {
+    test(`numbers, rings and path keep contrast on ${surface}`, () => {
+      const page = blendHex(lightColors.gold, lightColors[surface], 0.14);
+      expect(contrastRatio(lightColors.inkSoft, page)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(lightColors.inkMuted, page)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(lightColors.saffronDeep, page)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(blendHex(lightColors.inkSoft, page, 0.9), page)).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(lightColors.saffronDeep, blendHex(lightColors.gold, page, 0.25))).toBeGreaterThanOrEqual(3);
+    });
+  }
+});

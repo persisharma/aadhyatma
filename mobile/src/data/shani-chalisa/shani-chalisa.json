@@ -1,0 +1,802 @@
+{
+  "titleHi": "शनि चालीसा",
+  "titleEn": "Shani Chalisa",
+  "subtitleHi": "जयति जयति शनिदेव दयाला",
+  "subtitleEn": "Jayati jayati Shanidev dayaala",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Complete Drik Panchang main Shani Chalisa edition (not its /other/ composition). Traditional prayer transcribed without combining recensions; only line wrapping is normalized. Original editorial Hindi/English meanings and pronunciation-based ASCII romanization.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/lord-shani/shani-dev-chalisa.html?lang=hi",
+      "https://hindunidhi.com/shanidev-chalisa-hindi/",
+      "https://www.hinduapp.in/library/chalisa/shani-chalisa",
+      "https://sanskritdocuments.org/doc_z_otherlang_hindi/shani40.html"
+    ],
+    "retrievedOn": "2026-11-16",
+    "editionDecision": "On 2026-11-16 Prashant authorized resolving A1 blockers as for A2. Editorial choice: retain the complete Drik main edition, including its Vimal closing, rather than claim consensus or synthesize a majority text. HinduApp corroborates the Vimal closing but independent manuscript lineage is not established.",
+    "variants": "HinduNidhi closes with भक्त rather than विमल. SanskritDocuments has encoding corruption around विमल and adds a separate Lalita closing doha, which is not imported. Drik /other/ is a different composition and is excluded. Drik spellings including चाँजी (33), दिग्ज (27), नशि बलि (37), कृष्णों (6) and its Ram Sundar body signature (40) are retained. See docs/evaluations/a1-shani-chalisa/review.md for collation. No historical authorship is inferred from signatures."
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 43
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "जय गणेश गिरिजा सुवन, मंगल करण कृपाल।",
+        "दीनन के दुःख दूर करि, कीजै नाथ निहाल॥"
+      ],
+      "linesEn": [
+        "Jai Ganesh Girija suvan, mangal karan kripal.",
+        "Deenan ke dukh door kari, keejai nath nihaal."
+      ],
+      "meaningHi": "गिरिजा के पुत्र, मंगल करने वाले कृपालु गणेश से दीनों के दुःख दूर करके उन्हें प्रसन्न करने की प्रार्थना है। पाठ का आरम्भ अपने दुःख को विनम्र भाव से रखकर होता है।",
+      "meaningEn": "The invocation asks compassionate Ganesha, Girija's son and bringer of auspiciousness, to remove the suffering of the distressed and bless them. The recitation opens by placing one's distress before the divine with humility."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "जय जय श्री शनिदेव प्रभु, सुनहु विनय महाराज।",
+        "करहु कृपा हे रवि तनय, राखहु जन की लाज॥"
+      ],
+      "linesEn": [
+        "Jai jai Shri Shanidev prabhu, sunahu vinay maharaj.",
+        "Karahu kripa he Ravi tanay, raakhahu jan ki laaj."
+      ],
+      "meaningHi": "सूर्यपुत्र शनिदेव की जय कहते हुए भक्त अपनी विनती सुनने, कृपा करने और उसकी लाज रखने की प्रार्थना करता है। यह दोहा स्तुति को व्यक्तिगत प्रार्थना का रूप देता है।",
+      "meaningEn": "The devotee praises Shani, son of the Sun, and asks him to hear this plea, show compassion and protect the devotee's dignity. This opening turns praise into a personal request for grace."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जयति जयति शनिदेव दयाला।",
+        "करत सदा भक्तन प्रतिपाला॥"
+      ],
+      "linesEn": [
+        "Jayati jayati Shanidev dayaala.",
+        "Karat sada bhaktan pratipaala."
+      ],
+      "meaningHi": "दयालु शनिदेव की जय है; वे अपने भक्तों का सदा पालन करते हैं। यह पहली चौपाई कठिन दशाओं के वर्णन से पहले करुणा का स्मरण कराती है।",
+      "meaningEn": "Praise to compassionate Shani, who continually cares for his devotees. Before recounting hardship, the first chaupai establishes compassion as the hymn's opening theme."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "चारि भुजा, तनु श्याम विराजै।",
+        "माथे रतन मुकुट छवि छाजै॥"
+      ],
+      "linesEn": [
+        "Chaari bhuja, tanu shyaam viraajai.",
+        "Maathe ratan mukut chhavi chhaajai."
+      ],
+      "meaningHi": "शनिदेव का श्याम शरीर और चार भुजाएँ सुशोभित हैं; मस्तक पर रत्नों का मुकुट शोभा देता है। रूप-वर्णन पाठ करने वाले को आराध्य का ध्यान करने में सहायता देता है।",
+      "meaningEn": "Shani is depicted with a dark form and four arms, his head adorned by a jewelled crown. This description gives the reciter a form on which to focus in devotion."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "परम विशाल मनोहर भाला।",
+        "टेढ़ी दृष्टि भृकुटि विकराला॥"
+      ],
+      "linesEn": [
+        "Param vishaal manohar bhaala.",
+        "Tedhi drishti bhrikuti vikaraala."
+      ],
+      "meaningHi": "उनका ललाट विशाल और मनोहर है; तिरछी दृष्टि और भौंहें उग्र रूप प्रकट करती हैं। सौम्य ललाट और उग्र दृष्टि का साथ-साथ स्मरण इस रूप की गम्भीरता व्यक्त करता है।",
+      "meaningEn": "His broad forehead is beautiful, while his sidelong gaze and brows convey a formidable presence. The beautiful forehead and formidable gaze together convey the solemn character of this form."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "कुण्डल श्रवण चमाचम चमके।",
+        "हिये माल मुक्तन मणि दमके॥"
+      ],
+      "linesEn": [
+        "Kundal shravan chamaacham chamke.",
+        "Hiye maal muktan mani damke."
+      ],
+      "meaningHi": "कानों में कुण्डल चमकते हैं और वक्ष पर मोतियों तथा मणियों की माला दमकती है। यह अलंकार-वर्णन आरम्भिक ध्यान का ही भाग है।",
+      "meaningEn": "Earrings gleam at his ears, and a necklace of pearls and gems shines upon his chest. The ornaments continue the opening contemplation of Shani's appearance."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "कर में गदा त्रिशूल कुठारा।",
+        "पल बिच करैं अरिहिं संहारा॥"
+      ],
+      "linesEn": [
+        "Kar mein gada trishool kuthaara.",
+        "Pal bich karain arihin sanhaara."
+      ],
+      "meaningHi": "हाथों में गदा, त्रिशूल और कुठार हैं; स्तुति उन्हें क्षण भर में शत्रुओं का संहार करने वाला कहती है। आयुधों का स्मरण भक्त की रक्षा की प्रार्थना के साथ जुड़ता है।",
+      "meaningEn": "He holds a mace, trident and axe; the hymn praises his power to destroy adversaries in a moment. Recalling these weapons accompanies the devotee's appeal for protection."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "पिंगल, कृष्णों, छाया, नन्दन।",
+        "यम, कोणस्थ, रौद्र, दुःख भंजन॥"
+      ],
+      "linesEn": [
+        "Pingal, krishnon, chhaaya, nandan.",
+        "Yam, konasth, raudra, dukh bhanjan."
+      ],
+      "meaningHi": "इस पद में पिंगल, कृष्ण, छायानन्दन, यम, कोणस्थ, रौद्र और दुःखभंजन जैसे नामों से शनिदेव का स्मरण किया गया है। नामों का यह क्रम रूप-वर्णन से नाम-स्मरण की ओर ले जाता है।",
+      "meaningEn": "This verse recalls Shani through names including Pingal, Krishna, Chhaya's son, Yam, Konasth, Raudra and remover of suffering. This sequence moves the recitation from visual description to remembrance through names."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "सौरी, मन्द, शनि, दशनामा।",
+        "भानु पुत्र पूजहिं सब कामा॥"
+      ],
+      "linesEn": [
+        "Sauri, mand, shani, dashnaama.",
+        "Bhanu putra poojahin sab kaama."
+      ],
+      "meaningHi": "सौरी, मन्द और शनि नामों के साथ नाम-स्मरण आगे बढ़ता है; सूर्यपुत्र की उपासना अपनी कामनाओं के लिए की जाती है। यह पद पिछले नामों के क्रम को पूरा करते हुए उपासना का भाव व्यक्त करता है।",
+      "meaningEn": "The list continues with Sauri, Mand and Shani; the Sun's son is worshipped by those seeking their wishes' fulfilment. It completes the preceding sequence of names and expresses the act of worship."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "जा पर प्रभु प्रसन्न है जाहीं।",
+        "रंकहुं राव करैं क्षण माहीं॥"
+      ],
+      "linesEn": [
+        "Ja par prabhu prasann hai jaaheen.",
+        "Rankahun raav karain kshan maaheen."
+      ],
+      "meaningHi": "स्तुति के अनुसार जिस पर प्रभु प्रसन्न हों, उस निर्धन को भी क्षण भर में राजा बना सकते हैं। यह अतिशयोक्तिपूर्ण स्तुति संकट में आशा रखने का भाव व्यक्त करती है।",
+      "meaningEn": "The hymn says that Shani's favour can raise even a destitute person to kingship in a moment. This expansive praise expresses hope amid difficult circumstances."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "पर्वतहू तृण होई निहारत।",
+        "तृणहू को पर्वत करि डारत॥"
+      ],
+      "linesEn": [
+        "Parvatahu trin hoi nihaarat.",
+        "Trinahu ko parvat kari daarat."
+      ],
+      "meaningHi": "उनकी दृष्टि की शक्ति को ऐसा बताया गया है कि पर्वत तिनके जैसा और तिनका पर्वत जैसा हो सकता है। पर्वत और तिनके का रूपक स्थिति के बड़े उलटफेर को दिखाता है।",
+      "meaningEn": "His glance is praised as having the power to make a mountain like a blade of grass, or a blade of grass like a mountain. The contrast between mountain and grass conveys a dramatic reversal of circumstances."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "राज मिलत वन रामहिं दीन्हो।",
+        "कैकेइहुं की मति हरि लीन्हो॥"
+      ],
+      "linesEn": [
+        "Raaj milat van Ramahin deenho.",
+        "Kaikeihun ki mati hari leenho."
+      ],
+      "meaningHi": "चालीसा राम को राज्य के स्थान पर वनवास मिलने और कैकेयी की बुद्धि बदलने की घटना को शनि के प्रभाव से जोड़ती है। यह प्रसंग राज्याभिषेक की आशा से वनवास तक भाग्य के उलटने का उदाहरण है।",
+      "meaningEn": "The chalisa links Rama's exile instead of coronation, and the change in Kaikeyi's judgment, to Shani's influence. Within the hymn, the contrast between coronation and exile illustrates a reversal of fortune."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "बनहूं में मृग कपट दिखाई।",
+        "मातु जानकी गयी चुराई॥"
+      ],
+      "linesEn": [
+        "Banahoon mein mrig kapat dikhaai.",
+        "Maatu Janaki gayi churaai."
+      ],
+      "meaningHi": "वन में कपटपूर्ण मृग दिखाई देने और जानकी के हरण का प्रसंग इस स्तुति में स्मरण किया गया है। रामकथा के इस दुःखद मोड़ का स्मरण कठिन परीक्षा के वर्णन को आगे बढ़ाता है।",
+      "meaningEn": "The hymn recalls the deceptive deer in the forest and the abduction of Janaki. This painful turn in Rama's story continues the hymn's account of trials."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "लखनहिं शक्ति विकल करिडारा।",
+        "मचिगा दल में हाहाकारा॥"
+      ],
+      "linesEn": [
+        "Lakhanahin shakti vikal karidaara.",
+        "Machiga dal mein haahaakaara."
+      ],
+      "meaningHi": "लक्ष्मण के शक्ति से व्याकुल होने और सेना में हाहाकार मचने का वर्णन है। इससे संकट का असर केवल व्यक्ति नहीं, उसके साथियों पर भी दिखाया जाता है।",
+      "meaningEn": "This verse recalls Lakshmana being struck down by the shakti weapon and the army's distress. The scene presents distress extending beyond one person to their companions."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "रावण की गति मति बौराई।",
+        "रामचन्द्र सों बैर बढ़ाई॥"
+      ],
+      "linesEn": [
+        "Ravan ki gati mati bauraai.",
+        "Ramchandra son bair badhaai."
+      ],
+      "meaningHi": "चालीसा रावण की बुद्धि भ्रमित होने और रामचन्द्र से उसका वैर बढ़ने का वर्णन करती है। यह प्रसंग वैर और भ्रम के साथ जुड़ी विपत्ति का चित्र है।",
+      "meaningEn": "The chalisa describes Ravana's judgment becoming confused and his hostility towards Ramachandra increasing. This episode portrays adversity accompanying hostility and confusion."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "दियो कीट करि कंचन लंका।",
+        "बजि बजरंग बीर की डंका॥"
+      ],
+      "linesEn": [
+        "Diyo keet kari kanchan Lanka.",
+        "Baji Bajrang beer ki danka."
+      ],
+      "meaningHi": "स्वर्णमयी लंका की दुर्दशा और वीर बजरंग की कीर्ति गूँजने का वर्णन है। यहाँ कथा विपत्ति से वीरता की कीर्ति की ओर मुड़ती है।",
+      "meaningEn": "The verse recalls the devastation of golden Lanka and the resounding fame of brave Bajrang. Here the narrative turns from devastation to the renown of courage."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "नृप विक्रम पर तुहि पगु धारा।",
+        "चित्र मयूर निगलि गै हारा॥"
+      ],
+      "linesEn": [
+        "Nrip Vikram par tuhi pagu dhaara.",
+        "Chitra mayoor nigali gai haara."
+      ],
+      "meaningHi": "राजा विक्रम पर शनि का प्रभाव पड़ने की कथा में चित्र के मोर द्वारा हार निगलने का प्रसंग आता है। यह अद्भुत घटना विक्रम की परीक्षा-कथा का आरम्भ बनती है।",
+      "meaningEn": "In the hymn's account of King Vikram's trial under Shani, a painted peacock swallows a necklace. This extraordinary event begins the account of Vikram's ordeal."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "हार नौलाखा लाग्यो चोरी।",
+        "हाथ पैर डरवायो तोरी॥"
+      ],
+      "linesEn": [
+        "Haar naulaakha laagyo chori.",
+        "Haath pair darvaayo tori."
+      ],
+      "meaningHi": "राजा पर नौ लाख के हार की चोरी का आरोप लगा और उनके हाथ-पैर तुड़वाए जाने का वर्णन है। पद उस कथा में आरोप और दण्ड की कठोरता का स्मरण कराता है।",
+      "meaningEn": "The account says the king was accused of stealing the costly necklace and had his hands and feet broken. In that narrative, the verse recalls the severity of accusation and punishment."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "भारी दशा निकृष्ट दिखायो।",
+        "तेलिहिं घर कोल्हू चलवायो॥"
+      ],
+      "linesEn": [
+        "Bhaari dasha nikrisht dikhaayo.",
+        "Telihin ghar kolhu chalvaayo."
+      ],
+      "meaningHi": "कठिन दशा में राजा को तेली के घर कोल्हू चलाना पड़ा, ऐसा कथा में बताया गया है। राजा का श्रमिक बनना पहले बताए ऊँच-नीच के रूपक को कथा में दिखाता है।",
+      "meaningEn": "The narrative describes the king's severe hardship, working an oil press in an oil seller's home. The king becoming a labourer gives narrative form to the earlier imagery of changing fortune."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "विनय राग दीपक महँ कीन्हों।",
+        "तब प्रसन्न प्रभु है सुख दीन्हों॥"
+      ],
+      "linesEn": [
+        "Vinay raag Deepak mahan keenhon.",
+        "Tab prasann prabhu hai sukh deenhon."
+      ],
+      "meaningHi": "दीपक राग में की गई विनती से प्रभु प्रसन्न हुए और सुख प्रदान किया, ऐसा पद कहता है। परीक्षा की इस कथा में विनती के बाद राहत का मोड़ आता है।",
+      "meaningEn": "The verse says that a plea sung in Raag Deepak pleased the Lord, who then granted relief and happiness. This is the turning point from hardship to relief through supplication in the narrative."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "हरिश्चन्द्र नृप नारि बिकानी।",
+        "आपहुँ भरे डोम घर पानी॥"
+      ],
+      "linesEn": [
+        "Harishchandra nrip naari bikaani.",
+        "Aapahun bhare dom ghar paani."
+      ],
+      "meaningHi": "राजा हरिश्चन्द्र की पत्नी बिकने और स्वयं उनके डोम के घर पानी भरने की कठिन परीक्षा का स्मरण है। राजकीय प्रतिष्ठा से कठिन सेवा तक का परिवर्तन इस परीक्षा का मुख्य भाव है।",
+      "meaningEn": "The hymn recalls Harishchandra's ordeal: his wife was sold, and he himself carried water in a Dom's household. The central contrast is the passage from royal standing to arduous service."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "तैसे नल पर दशा सिरानी।",
+        "भूँजी-मीन कूद गयी पानी॥"
+      ],
+      "linesEn": [
+        "Taise Nal par dasha siraani.",
+        "Bhoonji meen kood gayi paani."
+      ],
+      "meaningHi": "इसी प्रकार नल की दशा का वर्णन है, जब भुनी हुई मछली भी पानी में कूद गई। मछली का यह असाधारण प्रसंग नल की कठिन परीक्षा का संकेत है।",
+      "meaningEn": "It recalls a similar ordeal of Nala, in which even a roasted fish sprang back into the water. The extraordinary fish episode signals the severity of Nala's trial."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "श्री शंकरहि गहयो जब जाई।",
+        "पार्वती को सती कराई॥"
+      ],
+      "linesEn": [
+        "Shri Shankarahi gahayo jab jaai.",
+        "Parvati ko sati karaai."
+      ],
+      "meaningHi": "यह पद शंकर पर शनि का प्रभाव पड़ने और पार्वती के सती होने के प्रसंग को चालीसा की कथा के रूप में प्रस्तुत करता है। यहाँ देवताओं से जुड़े प्रसंग भी विपत्ति के क्रम में स्मरण किए जाते हैं।",
+      "meaningEn": "This verse presents the hymn's account of Shani's influence upon Shankara and Parvati's immolation as Sati. Here the sequence of trials also recalls episodes involving deities."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "तनिक विलोकत ही करि रीसा।",
+        "नभ उड़ि गयो गौरिसुत सीसा॥"
+      ],
+      "linesEn": [
+        "Tanik vilokat hi kari reesa.",
+        "Nabh udi gayo Gaurisut seesa."
+      ],
+      "meaningHi": "चालीसा की कथा के अनुसार शनिदेव की एक दृष्टि से गौरीपुत्र का सिर आकाश में उड़ गया। इस प्रसंग में दृष्टि की प्रबलता को अत्यन्त तीव्र कथा-चित्र से व्यक्त किया गया है।",
+      "meaningEn": "According to the chalisa's narrative, a glance from Shani caused the head of Gauri's son to fly into the sky. The potency of the gaze is expressed through a stark narrative image."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "पाण्डव पर भै दशा तुम्हारी।",
+        "बची द्रोपदी होति उघारी॥"
+      ],
+      "linesEn": [
+        "Pandav par bhai dasha tumhaari.",
+        "Bachi Dropadi hoti ughaari."
+      ],
+      "meaningHi": "पाण्डवों पर कठिन दशा आने और द्रौपदी के चीरहरण से बचने का प्रसंग स्मरण किया गया है। संकट के साथ बचाव का स्मरण इस पद का विशेष भाव है।",
+      "meaningEn": "The verse recalls the Pandavas' difficult period and Draupadi being saved from disrobing. The distinctive emphasis here is rescue amid danger."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "कौरव के भी गति मति मारयो।",
+        "युद्ध महाभारत करि डारयो॥"
+      ],
+      "linesEn": [
+        "Kaurav ke bhi gati mati maaryo.",
+        "Yuddh Mahabharat kari daaryo."
+      ],
+      "meaningHi": "कौरवों की बुद्धि और गति बिगड़ने तथा महाभारत युद्ध होने को भी स्तुति शनि के प्रभाव से जोड़ती है। इससे व्यक्तिगत परीक्षा का वर्णन व्यापक युद्ध तक पहुँचता है।",
+      "meaningEn": "The hymn also links the Kauravas' impaired judgment and the Mahabharata war to Shani's influence. The account broadens from individual trials to a widespread war."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "रवि कहं मुख महं धरि तत्काला।",
+        "लेकर कूदि परयो पाताला॥"
+      ],
+      "linesEn": [
+        "Ravi kahan mukh mahan dhari tatkaala.",
+        "Lekar koodi parayo paataala."
+      ],
+      "meaningHi": "इस पद की कथा में सूर्य को तत्काल मुख में रखकर पाताल में कूदने का वर्णन है। सूर्य के छिप जाने का चित्र कथा में असाधारण संकट दिखाता है।",
+      "meaningEn": "The narrative in this verse describes taking the Sun into the mouth and leaping into the netherworld. The image of the hidden Sun presents an extraordinary crisis within the narrative."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "शेष देव-लखि विनती लाई।",
+        "रवि को मुख ते दियो छुड़ाई॥"
+      ],
+      "linesEn": [
+        "Shesh dev lakhi vinati laai.",
+        "Ravi ko mukh te diyo chhudaai."
+      ],
+      "meaningHi": "आगे देवों की विनती और सूर्य को मुख से मुक्त करने का वर्णन आता है। विनती और मुक्ति इस प्रसंग को राहत की ओर ले जाते हैं।",
+      "meaningEn": "The account continues with a plea from the divine beings and the release of the Sun from the mouth. Supplication and release bring this episode towards relief."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "वाहन प्रभु के सात सुजाना।",
+        "हय दिग्ज गर्दभ मृग स्वाना॥"
+      ],
+      "linesEn": [
+        "Vaahan prabhu ke saat sujaana.",
+        "Hay digj gardabh mrig swaana."
+      ],
+      "meaningHi": "सात वाहनों का उल्लेख आरम्भ होता है: घोड़ा, हाथी, गधा, मृग और कुत्ता। यहाँ कथा से वाहनों के प्रतीकात्मक वर्णन की ओर परिवर्तन होता है।",
+      "meaningEn": "The list of seven mounts begins with the horse, elephant, donkey, deer and dog. The hymn now shifts from narratives to the symbolic account of mounts."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "जम्बुक सिंह आदि नख धारी।",
+        "सो फल ज्योतिष कहत पुकारी॥"
+      ],
+      "linesEn": [
+        "Jambuk sinh aadi nakh dhaari.",
+        "So phal jyotish kahat pukaari."
+      ],
+      "meaningHi": "सियार और सिंह के साथ वाहन-सूची पूरी होती है; पद इनके फलों को ज्योतिष-परम्परा से जोड़ता है। इन कथनों को व्यक्तिगत भविष्यवाणी के बजाय स्तुति की पारम्परिक भाषा में समझा जाता है।",
+      "meaningEn": "The jackal and lion complete the list; the verse associates the mounts' effects with astrological tradition. These statements belong to the hymn's traditional imagery rather than an individual prediction."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "गज वाहन लक्ष्मी गृह आवैं।",
+        "हय ते सुख सम्पत्ति उपजावै॥"
+      ],
+      "linesEn": [
+        "Gaj vaahan Lakshmi grih aavain.",
+        "Hay te sukh sampatti upjaavai."
+      ],
+      "meaningHi": "पद में हाथी के वाहन को घर में लक्ष्मी और घोड़े को सुख-सम्पत्ति के आगमन से जोड़ा गया है। यह शुभता का वर्णन करते हुए भक्त की मंगल-कामना व्यक्त करता है।",
+      "meaningEn": "Within this traditional symbolism, the elephant mount is associated with prosperity entering the home, and the horse with happiness and wealth. The auspicious imagery expresses the devotee’s wish for well-being."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "गर्दभ हानि करै बहु काजा।",
+        "सिंह सिद्धकर राज समाजा॥"
+      ],
+      "linesEn": [
+        "Gardabh haani karai bahu kaaja.",
+        "Sinh siddhakar raaj samaaja."
+      ],
+      "meaningHi": "गधे के वाहन को कार्यों में हानि और सिंह को राज-समाज में सिद्धि से जोड़ा गया है। विभिन्न वाहनों के साथ अलग फल बताना इस भाग की रचना-पद्धति है।",
+      "meaningEn": "The donkey mount is associated with setbacks in undertakings, while the lion is associated with success in royal society. Contrasting the effects associated with different mounts structures this part of the hymn."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "जम्बुक बुद्धि नष्ट कर डारै।",
+        "मृग दे कष्ट प्राण संहारै॥"
+      ],
+      "linesEn": [
+        "Jambuk buddhi nasht kar daarai.",
+        "Mrig de kasht praan sanhaarai."
+      ],
+      "meaningHi": "सियार को बुद्धि की हानि तथा मृग को कष्ट और प्राण-संकट से जोड़ा गया है; ये पद की पारम्परिक मान्यताएँ हैं। इन संकटों का स्मरण भक्त के आश्रय और रक्षा माँगने के भाव को प्रकट करता है।",
+      "meaningEn": "The verse's traditional associations link the jackal with impaired judgment and the deer with suffering and danger to life. Recalling these dangers expresses the devotee’s appeal for refuge and protection."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "जब आवहिं प्रभु स्वान सवारी।",
+        "चोरी आदि होय डर भारी॥"
+      ],
+      "linesEn": [
+        "Jab aavahin prabhu swaan savaari.",
+        "Chori aadi hoy dar bhaari."
+      ],
+      "meaningHi": "कुत्ते की सवारी के आगमन को चोरी आदि के बड़े भय से जोड़ा गया है। यह वाहन-फलों के क्रम का अन्तिम पद है।",
+      "meaningEn": "The hymn associates the dog mount with a strong fear of theft and similar troubles. This closes the sequence describing the mounts' traditional associations."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "तैसहि चारि चरण यह नामा।",
+        "स्वर्ण लौह चाँजी अरु तामा॥"
+      ],
+      "linesEn": [
+        "Taisahi chaari charan yah naama.",
+        "Swarn lauh chaanji aru taama."
+      ],
+      "meaningHi": "पद चार धातु-संबद्ध चरणों का उल्लेख करता है, जिनमें स्वर्ण, लौह और ताम्र हैं। यह प्रतीकात्मक वर्णन अगले पदों में बताए जाने वाले अलग-अलग फलों की भूमिका बनाता है।",
+      "meaningEn": "The verse names four metal-associated feet, including gold, iron and copper. This symbolic description introduces the contrasting effects described in the following verses."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "लौह चरण पर जब प्रभु आवैं।",
+        "धन जन सम्पत्ति नष्ट करावै॥"
+      ],
+      "linesEn": [
+        "Lauh charan par jab prabhu aavain.",
+        "Dhan jan sampatti nasht karaavai."
+      ],
+      "meaningHi": "लौह चरणों से आगमन को धन, जन और सम्पत्ति की हानि से जोड़ा गया है। यहाँ कठोर दशा का वर्णन आश्रय माँगने की प्रार्थना के भीतर है।",
+      "meaningEn": "In the hymn's traditional imagery, arrival with iron feet is associated with loss of wealth, people and possessions. This description of hardship occurs within a prayer seeking refuge."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "समता ताम्र रजत शुभकारी।",
+        "स्वर्ण सर्वसुख मंगल कारी॥"
+      ],
+      "linesEn": [
+        "Samta taamra rajat shubhkaari.",
+        "Swarn sarvasukh mangal kaari."
+      ],
+      "meaningHi": "ताम्र को समता, रजत को शुभता और स्वर्ण को सुख तथा मंगल से जोड़ा गया है। इससे पिछले पद की हानि के विपरीत शुभता और समता का वर्णन आता है।",
+      "meaningEn": "Copper is associated with an even condition, silver with auspiciousness, and gold with happiness and good fortune. It contrasts the preceding verse's adversity with balance and auspiciousness."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "जो यह शनि चरित्र नित गावै।",
+        "कबहुं न दशा निकृष्ट सतावै॥"
+      ],
+      "linesEn": [
+        "Jo yah Shani charitra nit gaavai.",
+        "Kabahun na dasha nikrisht sataavai."
+      ],
+      "meaningHi": "पद में नित्य शनि-चरित्र गाने वाले को कठिन दशा से रक्षा मिलने की भक्तिपरक आशा व्यक्त है। नियमित स्मरण का महत्त्व यहाँ भक्ति और आश्वासन के रूप में व्यक्त है।",
+      "meaningEn": "The verse expresses the devotional hope that regularly singing Shani's story protects the devotee from severe adversity. Regular remembrance is valued here as an expression of devotion and reassurance."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "अदभुत नाथ दिखावैं लीला।",
+        "करैं शत्रु के नशि बलि ढीला॥"
+      ],
+      "linesEn": [
+        "Adbhut nath dikhaavain leela.",
+        "Karain shatru ke nashi bali dheela."
+      ],
+      "meaningHi": "प्रभु की अद्भुत लीला और शत्रु का बल कम करने की शक्ति की स्तुति की गई है। यह पद कठिनाई के सामने भक्त के आश्रय-भाव को प्रकट करता है।",
+      "meaningEn": "The Lord is praised for wondrous deeds and the power to weaken an adversary's strength. This praise expresses the devotee's wish for refuge when facing adversity."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "जो पण्डित सुयोग्य बुलवाई।",
+        "विधिवत शनि ग्रह शान्ति कराई॥"
+      ],
+      "linesEn": [
+        "Jo pandit suyogya bulvaai.",
+        "Vidhivat Shani grah shaanti karaai."
+      ],
+      "meaningHi": "योग्य पण्डित को बुलाकर विधिपूर्वक शनि ग्रह की शान्ति कराने का उल्लेख है। योग्य मार्गदर्शन और विधिपूर्वक उपासना का महत्त्व इस पद में सामने आता है।",
+      "meaningEn": "The verse refers to inviting a qualified priest to conduct the traditional Shani pacification rite. The verse gives importance to qualified guidance and the proper conduct of worship."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "पीपल जल शनि दिवस चढ़ावत।",
+        "दीप दान दै बहु सुख पावत॥"
+      ],
+      "linesEn": [
+        "Peepal jal Shani divas chadhaavat.",
+        "Deep daan dai bahu sukh paavat."
+      ],
+      "meaningHi": "शनिवार को पीपल में जल चढ़ाने और दीपदान करने से सुख मिलने की भक्तिपरक मान्यता व्यक्त है। दान और अर्पण का स्मरण इस भाग में उपासना के ठोस कर्मों को स्थान देता है।",
+      "meaningEn": "The verse expresses the devotional belief that offering water to the peepal tree and lamps on Saturday brings happiness. Remembering offerings and giving places concrete acts of worship within this part of the hymn."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "कहत राम सुन्दर प्रभु दासा।",
+        "शनि सुमिरत सुख होत प्रकाशा॥"
+      ],
+      "linesEn": [
+        "Kahat Ram Sundar prabhu daasa.",
+        "Shani sumirat sukh hot prakaasha."
+      ],
+      "meaningHi": "राम सुन्दर स्वयं को प्रभु का दास कहते हैं और शनि-स्मरण में सुख का प्रकाश बताते हैं। नाम-स्मरण और दास्य-भाव के साथ चालीसा का मुख्य भाग समाप्त होता है।",
+      "meaningEn": "Ram Sundar calls himself the Lord's servant and describes happiness dawning through remembrance of Shani. The body of the chalisa ends in remembrance and the posture of devoted service."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "पाठ शनिश्चर देव को, कीन्हों विमल तैयार।",
+        "करत पाठ चालीस दिन, हो भवसागर पार॥"
+      ],
+      "linesEn": [
+        "Paath Shanishchar dev ko, keenhon Vimal taiyaar.",
+        "Karat paath chaalees din, ho bhavsaagar paar."
+      ],
+      "meaningHi": "समापन में विमल नाम से इस पाठ की तैयारी का उल्लेख है और चालीस दिन पाठ द्वारा भवसागर पार करने की भक्तिपरक कामना है। भवसागर का रूपक जीवन के बन्धनों से मुक्ति की कामना को व्यक्त करता है।",
+      "meaningEn": "The closing names Vimal in connection with preparing this recitation and expresses the devotional hope of crossing worldly existence through forty days of recitation. The ocean of worldly existence is an image of the longing for liberation."
+    }
+  ]
+}

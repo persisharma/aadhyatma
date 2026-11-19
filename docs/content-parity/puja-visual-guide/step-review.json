@@ -360,9 +360,9 @@
       "stepNumber": 15,
       "titleHi": "आरती",
       "titleEn": "Aarti",
-      "instructionHi": "कपूर या घी के दीप से भगवान की आरती करें और परिवार सहित ॐ जय जगदीश हरे गाएँ।",
-      "instructionEn": "Offer aarti with lit camphor or a ghee lamp and sing Om Jai Jagdish Hare with the family.",
-      "instructionSha256": "60895cc47d96e9d9d55750bb61ea3e3b839e5f29eaa6b0681ca3800088d89d85",
+      "instructionHi": "कपूर या घी के दीप से भगवान की आरती करें और परिवार सहित श्री सत्यनारायणजी की आरती — जय लक्ष्मी रमणा — गाएँ।",
+      "instructionEn": "Offer aarti with lit camphor or a ghee lamp and sing Shri Satyanarayan Aarti (Jai Lakshmi Ramana) with the family.",
+      "instructionSha256": "2c719910e93a58333baa14184e68075824fe4bccddd2c19bf9313cfba3836081",
       "visual": "aarti-neutral",
       "visualSequence": [
         "aarti-neutral"
@@ -377,7 +377,7 @@
         "aarti-neutral": "4792f1ad501033e216d2805e8790eeed030c4fda35c07161b259fefa11e12277"
       },
       "sourceFile": "mobile/src/data/vidhi/satyanarayan-puja.ts",
-      "review": "Compared actual saved artwork with the complete bilingual authored instruction; relevant action/material/focus confirmed. No human liturgical certification."
+      "review": "B1 re-reviewed 2026-11-17: inspected the unchanged saved aarti-neutral artwork against the complete revised bilingual instruction. The ghee lamp and plate remain appropriate for the dedicated Satyanarayan Aarti; the named hymn, singing family and camphor alternative remain textual. No human liturgical certification."
     },
     {
       "vidhiId": "satyanarayan-puja",

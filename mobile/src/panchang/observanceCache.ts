@@ -47,7 +47,12 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //     Vaishnava rows; Janmashtami Smarta (Nishita + Rohini) plus a Vaishnava row;
 //     annual rules no longer stop at their first match in a civil year (Pausha
 //     Putrada 30 Dec 2025 and Saphala 26 Dec 2024 had vanished). MOVES shipped dates.
-const CACHE_VERSION = 10;
+// v11: chandrodaya uses geometric Moon centre, matching published Drik clocks.
+// v12: occasion-specific Ganga/Rishi/Purnima/Krishna date corrections; discard
+//      old city scans while retaining follows and all other user preferences.
+// v13: a civil date and a sankranti day are India's (IST), not the device zone's
+//      (`civilTime.ts`). City scans made on a phone outside India were a day off.
+const CACHE_VERSION = 13;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

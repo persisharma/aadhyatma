@@ -20,7 +20,7 @@ let mockPrefs: any = {
 };
 jest.mock('@/components/QuietCompanionSheet', () => {
   const React = require('react');
-  return (p: any) => React.createElement('QuietSheet', p, p.children);
+  return function MockQuietSheet(p: any) { return React.createElement('QuietSheet', p, p.children); };
 });
 jest.mock('@/components/widgetNudgeStore', () => ({
   loadNudgeRecord: () => Promise.resolve(),

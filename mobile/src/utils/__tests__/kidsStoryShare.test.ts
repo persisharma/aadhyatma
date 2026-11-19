@@ -7,7 +7,7 @@ import { MAX_SHARE_PAGES, bodyHeightFor, bodyWidthFor, paginateProse, pictureCar
 /**
  * The kids-story share (design.md §76): one 9:16 picture card per scene — the complete
  * art at the body's full width when the caption allows, the reader's caption box below —
- * then a closing card with the cover, takeaway, source note and the app link. Nothing
+ * then a closing card with the cover, takeaway and the app link. Nothing
  * authored is dropped and every card fits its body.
  */
 
@@ -16,7 +16,7 @@ const fullWidthHeight = (art: string) => bodyWidthFor('picture') * 1.25 * kidsSt
 
 for (const story of kidsStories) {
   for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
-    test(`${story.id}/${lang}: every scene, full narration, dialogue, takeaway and provenance survives ordered parts`, () => {
+    test(`${story.id}/${lang}: every scene, full narration, dialogue, takeaway survives ordered parts without research notes`, () => {
       const share = kidsStoryShareable(story, story.pages.length - 1);
       expect(share.layout).toBe('picture');
       const parts = share.scopes.filter(s => s.id.startsWith('part-')).map(s => s.prepared![lang]);
@@ -24,7 +24,7 @@ for (const story of kidsStories) {
       const cards = parts.flatMap(p => p.pages);
       expect(cards.flatMap(p => p.illustration ? [p.illustration.art] : [])).toEqual([...story.pages.map(p => p.art), story.coverArt]);
       const narration = cards.flatMap(p => p.blocks).flatMap(b => b.kind === 'link' ? [] : [b.speaker ? `${b.speaker}: ${b.text}` : b.text]).join(' ');
-      const expected = [...story.pages.flatMap(p => [p.text[lang], ...(p.dialogue ? [`${p.dialogue.speaker[lang]}: ${p.dialogue.text[lang]}`] : [])]), story.takeaway[lang], story.sourceNote[lang]].join(' ');
+      const expected = [...story.pages.flatMap(p => [p.text[lang], ...(p.dialogue ? [`${p.dialogue.speaker[lang]}: ${p.dialogue.text[lang]}`] : [])]), story.takeaway[lang]].join(' ');
       expect(normalize(narration)).toBe(normalize(expected));
       // Dialogue keeps its speaker as a quote block, drawn in the reader's tinted box.
       expect(cards.flatMap(p => p.blocks).filter(b => b.kind === 'quote' && b.speaker).length).toBe(story.pages.filter(p => p.dialogue).length);
@@ -46,12 +46,12 @@ for (const story of kidsStories) {
         return Math.abs(h - fullWidthHeight(p.illustration!.art)) < 0.001 || Math.abs(h - (budget - pictureCardMetrics.illustrationGap - p.usedDp)) < 0.001;
       })).toBe(true);
 
-      // The closing card: cover, takeaway, source note, then the app link (printed; the message carries it too).
+      // The closing card: cover, takeaway, then the app link (printed; the message carries it too).
       const last = cards[cards.length - 1];
       expect(last.illustration?.art).toBe(story.coverArt);
       expect(last.illustration!.heightDp).toBeGreaterThanOrEqual(pictureCardMetrics.coverMinHeight);
       expect(last.blocks[last.blocks.length - 1]).toMatchObject({ kind: 'link', url: SMART_LINK });
-      expect(normalize(last.blocks.map(b => b.text).join(' '))).toContain(normalize(story.sourceNote[lang]));
+      expect(normalize(last.blocks.map(b => b.text).join(' '))).not.toContain(normalize(story.sourceNote[lang]));
 
       const current = share.scopes[share.scopes.length - 1].prepared![lang];
       expect(current.pages[0].illustration?.art).toBe(story.pages[story.pages.length - 1].art);

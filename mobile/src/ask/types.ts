@@ -95,7 +95,7 @@ export type AskAnswer = {
   working: string[];
   /** Plain-language basis of the answer, shown collapsed under "गणना देखें". */
   basis?: Localized[];
-  /** Content-backed answers only: what was verified, when. Never a URL. */
+  /** User-relevant contextual basis only; never verification badges, dates, publisher details or PRD identifiers (§11.16). */
   provenance?: Localized;
   /** Family-variance / tradition note carried verbatim from the registry. */
   note?: Localized;

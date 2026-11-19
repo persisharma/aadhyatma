@@ -1,0 +1,20 @@
+diff --git a/node_modules/expo-splash-screen/android/src/main/java/expo/modules/splashscreen/SplashScreenManager.kt b/node_modules/expo-splash-screen/android/src/main/java/expo/modules/splashscreen/SplashScreenManager.kt
+index 4a9cb0a..038ffae 100644
+--- a/node_modules/expo-splash-screen/android/src/main/java/expo/modules/splashscreen/SplashScreenManager.kt
++++ b/node_modules/expo-splash-screen/android/src/main/java/expo/modules/splashscreen/SplashScreenManager.kt
+@@ -31,6 +31,15 @@ object SplashScreenManager {
+       return
+     }
+ 
++    // Vedansh: on Android 12/12L (API 31-32) registering an exit-animation listener makes the
++    // platform transfer the SplashScreenView into the app process, and that transfer can crash
++    // inside the framework (NPE in SurfaceControl.checkNotReleased via
++    // ActivityThread.syncTransferSplashscreenViewTransaction, Play Vitals Nov 2026). Without a
++    // listener the system dismisses its own splash; the cream LaunchCover underneath is identical.
++    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.S || Build.VERSION.SDK_INT == Build.VERSION_CODES.S_V2) {
++      return
++    }
++
+     val duration = options.duration
+ 
+     splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->

@@ -1,0 +1,987 @@
+[
+  {
+    "id": "mesha-sankranti",
+    "nameEn": "Mesha Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "vrishabha-sankranti",
+    "nameEn": "Vrishabha Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "mithuna-sankranti",
+    "nameEn": "Mithuna Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "karka-sankranti",
+    "nameEn": "Karka Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "simha-sankranti",
+    "nameEn": "Simha Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "kanya-sankranti",
+    "nameEn": "Kanya Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "tula-sankranti",
+    "nameEn": "Tula Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "vrishchika-sankranti",
+    "nameEn": "Vrishchika Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "dhanu-sankranti",
+    "nameEn": "Dhanu Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "makar-sankranti",
+    "nameEn": "Makar Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "kumbha-sankranti",
+    "nameEn": "Kumbha Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "meena-sankranti",
+    "nameEn": "Meena Sankranti",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "vishwakarma-puja",
+    "nameEn": "Vishwakarma Puja",
+    "deityEn": "Bhagwan Vishwakarma"
+  },
+  {
+    "id": "sakat-chauth",
+    "nameEn": "Sakat Chauth",
+    "deityEn": "Shri Ganesh"
+  },
+  {
+    "id": "vasant-panchami",
+    "nameEn": "Vasant Panchami",
+    "deityEn": "Maa Saraswati"
+  },
+  {
+    "id": "ratha-saptami",
+    "nameEn": "Ratha Saptami",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "maha-shivaratri",
+    "nameEn": "Maha Shivaratri",
+    "deityEn": "Lord Shiva"
+  },
+  {
+    "id": "holi",
+    "nameEn": "Holi",
+    "deityEn": "Shri Krishna"
+  },
+  {
+    "id": "rang-panchami",
+    "nameEn": "Rang Panchami",
+    "deityEn": "Shri Krishna and Radha Rani"
+  },
+  {
+    "id": "shitala-saptami",
+    "nameEn": "Shitala Saptami",
+    "deityEn": "Shitala Mata"
+  },
+  {
+    "id": "shitala-ashtami",
+    "nameEn": "Shitala Ashtami (Basoda)",
+    "deityEn": "Shitala Mata"
+  },
+  {
+    "id": "dasha-mata-vrat",
+    "nameEn": "Dasha Mata Vrat",
+    "deityEn": "Dasha Mata"
+  },
+  {
+    "id": "chaitra-navratri-start",
+    "nameEn": "Chaitra Navratri Begins",
+    "deityEn": "Maa Durga"
+  },
+  {
+    "id": "gangaur",
+    "nameEn": "Gangaur",
+    "deityEn": "Isar Ji and Gauri Mata"
+  },
+  {
+    "id": "chaiti-chhath",
+    "nameEn": "Chaiti Chhath",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "ram-navami",
+    "nameEn": "Ram Navami",
+    "deityEn": "Shri Ram"
+  },
+  {
+    "id": "mahavir-jayanti",
+    "nameEn": "Mahavir Jayanti",
+    "deityEn": "Bhagwan Mahavir"
+  },
+  {
+    "id": "hanuman-jayanti",
+    "nameEn": "Hanuman Jayanti",
+    "deityEn": "Hanuman Ji"
+  },
+  {
+    "id": "chitra-pournami",
+    "nameEn": "Chitra Pournami",
+    "deityEn": "Bhagwan Chitragupta"
+  },
+  {
+    "id": "akshaya-tritiya",
+    "nameEn": "Akshaya Tritiya",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "parashurama-jayanti",
+    "nameEn": "Parashurama Jayanti",
+    "deityEn": "Lord Parashurama"
+  },
+  {
+    "id": "ganga-saptami",
+    "nameEn": "Ganga Saptami",
+    "deityEn": "Maa Ganga"
+  },
+  {
+    "id": "sita-navami",
+    "nameEn": "Sita Navami",
+    "deityEn": "Maa Sita"
+  },
+  {
+    "id": "narasimha-jayanti",
+    "nameEn": "Narasimha Jayanti",
+    "deityEn": "Lord Narasimha"
+  },
+  {
+    "id": "buddha-purnima",
+    "nameEn": "Buddha Purnima",
+    "deityEn": "Lord Buddha"
+  },
+  {
+    "id": "narada-jayanti",
+    "nameEn": "Narada Jayanti",
+    "deityEn": "Devarshi Narada"
+  },
+  {
+    "id": "shani-jayanti",
+    "nameEn": "Shani Jayanti",
+    "deityEn": "Shani Deva"
+  },
+  {
+    "id": "ganga-dussehra",
+    "nameEn": "Ganga Dussehra",
+    "deityEn": "Maa Ganga"
+  },
+  {
+    "id": "asha-dashami",
+    "nameEn": "Asha Dashami",
+    "deityEn": "Maa Parvati"
+  },
+  {
+    "id": "guru-purnima",
+    "nameEn": "Guru Purnima",
+    "deityEn": "Guru Parampara"
+  },
+  {
+    "id": "hariyali-teej",
+    "nameEn": "Hariyali Teej",
+    "deityEn": "Maa Parvati"
+  },
+  {
+    "id": "madhushravani",
+    "nameEn": "Madhushravani",
+    "deityEn": "Shiva–Parvati and Vishahara"
+  },
+  {
+    "id": "nag-panchami",
+    "nameEn": "Nag Panchami",
+    "deityEn": "Naga Devata"
+  },
+  {
+    "id": "raksha-bandhan",
+    "nameEn": "Raksha Bandhan",
+    "deityEn": "Traditional observance"
+  },
+  {
+    "id": "avani-avittam",
+    "nameEn": "Avani Avittam (Upakarma)",
+    "deityEn": "Veda Parampara"
+  },
+  {
+    "id": "kajari-teej",
+    "nameEn": "Kajari Teej",
+    "deityEn": "Maa Parvati"
+  },
+  {
+    "id": "bahula-chaturthi",
+    "nameEn": "Bahula Chaturthi",
+    "deityEn": "Gau Mata and Shri Krishna"
+  },
+  {
+    "id": "bhadwa-chauth",
+    "nameEn": "Bhadwa Chauth (Chauth Mata Vrat)",
+    "deityEn": "Chauth Mata and Vinayak Ji"
+  },
+  {
+    "id": "janmashtami",
+    "nameEn": "Janmashtami",
+    "deityEn": "Shri Krishna"
+  },
+  {
+    "id": "janmashtami-vaishnava",
+    "nameEn": "Janmashtami (Vaishnava)",
+    "deityEn": "Shri Krishna"
+  },
+  {
+    "id": "goga-navami",
+    "nameEn": "Goga Navami",
+    "deityEn": "Gogaji (Jaharveer)"
+  },
+  {
+    "id": "bachh-baras",
+    "nameEn": "Bachh Baras",
+    "deityEn": "Gau Mata"
+  },
+  {
+    "id": "ramdev-jayanti",
+    "nameEn": "Ramdev Jayanti",
+    "deityEn": "Baba Ramdevji"
+  },
+  {
+    "id": "hartalika-teej",
+    "nameEn": "Hartalika Teej",
+    "deityEn": "Maa Parvati"
+  },
+  {
+    "id": "ganesh-chaturthi",
+    "nameEn": "Ganesh Chaturthi",
+    "deityEn": "Shri Ganesh"
+  },
+  {
+    "id": "rishi-panchami",
+    "nameEn": "Rishi Panchami",
+    "deityEn": "Rishi Parampara"
+  },
+  {
+    "id": "durva-ashtami",
+    "nameEn": "Durva Ashtami",
+    "deityEn": "Shri Ganesh"
+  },
+  {
+    "id": "radha-ashtami",
+    "nameEn": "Radha Ashtami",
+    "deityEn": "Radha Rani"
+  },
+  {
+    "id": "teja-dashami",
+    "nameEn": "Teja Dashami",
+    "deityEn": "Veer Tejaji"
+  },
+  {
+    "id": "anant-chaturdashi",
+    "nameEn": "Anant Chaturdashi",
+    "deityEn": "Lord Vishnu"
+  },
+  {
+    "id": "navratri-start",
+    "nameEn": "Navratri Begins",
+    "deityEn": "Maa Durga"
+  },
+  {
+    "id": "maha-navami",
+    "nameEn": "Maha Navami",
+    "deityEn": "Maa Siddhidatri"
+  },
+  {
+    "id": "dussehra",
+    "nameEn": "Dussehra",
+    "deityEn": "Shri Ram"
+  },
+  {
+    "id": "sharad-purnima",
+    "nameEn": "Sharad Purnima",
+    "deityEn": "Chandra Deva"
+  },
+  {
+    "id": "kojagara-puja",
+    "nameEn": "Kojagara Puja",
+    "deityEn": "Maa Lakshmi"
+  },
+  {
+    "id": "karwa-chauth",
+    "nameEn": "Karwa Chauth",
+    "deityEn": "Maa Gauri"
+  },
+  {
+    "id": "ahoi-ashtami",
+    "nameEn": "Ahoi Ashtami",
+    "deityEn": "Ahoi Mata"
+  },
+  {
+    "id": "dhanteras",
+    "nameEn": "Dhanteras",
+    "deityEn": "Dhanvantari Deva"
+  },
+  {
+    "id": "hanuman-jayanti-kartik",
+    "nameEn": "Hanuman Jayanti (Kartik)",
+    "deityEn": "Hanuman Ji"
+  },
+  {
+    "id": "diwali",
+    "nameEn": "Diwali",
+    "deityEn": "Maa Lakshmi"
+  },
+  {
+    "id": "govardhan-puja",
+    "nameEn": "Govardhan Puja",
+    "deityEn": "Shri Krishna"
+  },
+  {
+    "id": "bhai-dooj",
+    "nameEn": "Bhai Dooj",
+    "deityEn": "Traditional observance"
+  },
+  {
+    "id": "chitragupta-puja",
+    "nameEn": "Chitragupta Puja",
+    "deityEn": "Bhagwan Chitragupta"
+  },
+  {
+    "id": "chhath-puja",
+    "nameEn": "Chhath Puja",
+    "deityEn": "Surya Deva"
+  },
+  {
+    "id": "sama-chakeva",
+    "nameEn": "Sama Chakeva",
+    "deityEn": "Folk tradition"
+  },
+  {
+    "id": "dev-uthani-ekadashi",
+    "nameEn": "Dev Uthani Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "tulasi-vivah",
+    "nameEn": "Tulasi Vivah",
+    "deityEn": "Tulasi Mata"
+  },
+  {
+    "id": "gopashtami",
+    "nameEn": "Gopashtami",
+    "deityEn": "Shri Krishna and Gau Mata"
+  },
+  {
+    "id": "akshaya-navami",
+    "nameEn": "Akshaya Navami",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "kartik-purnima",
+    "nameEn": "Kartik Purnima",
+    "deityEn": "Lord Shiva and Shri Vishnu"
+  },
+  {
+    "id": "vivah-panchami",
+    "nameEn": "Vivah Panchami",
+    "deityEn": "Sita Ram"
+  },
+  {
+    "id": "champa-shashthi",
+    "nameEn": "Champa Shashthi",
+    "deityEn": "Khandoba and Lord Kartikeya"
+  },
+  {
+    "id": "gita-jayanti",
+    "nameEn": "Gita Jayanti",
+    "deityEn": "Shri Krishna"
+  },
+  {
+    "id": "dattatreya-jayanti",
+    "nameEn": "Dattatreya Jayanti",
+    "deityEn": "Lord Dattatreya"
+  },
+  {
+    "id": "matsya-jayanti",
+    "nameEn": "Matsya Jayanti",
+    "deityEn": "Lord Matsya"
+  },
+  {
+    "id": "varaha-jayanti",
+    "nameEn": "Varaha Jayanti",
+    "deityEn": "Lord Varaha"
+  },
+  {
+    "id": "vamana-jayanti",
+    "nameEn": "Vamana Jayanti",
+    "deityEn": "Lord Vamana"
+  },
+  {
+    "id": "kalki-jayanti",
+    "nameEn": "Kalki Jayanti",
+    "deityEn": "Lord Kalki"
+  },
+  {
+    "id": "hayagriva-jayanti",
+    "nameEn": "Hayagriva Jayanti",
+    "deityEn": "Lord Hayagriva"
+  },
+  {
+    "id": "hal-shashthi",
+    "nameEn": "Hal Shashthi",
+    "deityEn": "Lord Balarama"
+  },
+  {
+    "id": "surdas-jayanti",
+    "nameEn": "Surdas Jayanti",
+    "deityEn": "Sant Surdas"
+  },
+  {
+    "id": "shankaracharya-jayanti",
+    "nameEn": "Adi Shankaracharya Jayanti",
+    "deityEn": "Adi Shankaracharya"
+  },
+  {
+    "id": "tulsidas-jayanti",
+    "nameEn": "Tulsidas Jayanti",
+    "deityEn": "Goswami Tulsidas"
+  },
+  {
+    "id": "valmiki-jayanti",
+    "nameEn": "Valmiki Jayanti",
+    "deityEn": "Maharishi Valmiki"
+  },
+  {
+    "id": "vallabhacharya-jayanti",
+    "nameEn": "Vallabhacharya Jayanti",
+    "deityEn": "Shri Vallabhacharya"
+  },
+  {
+    "id": "kabir-jayanti",
+    "nameEn": "Kabir Jayanti",
+    "deityEn": "Sant Kabir"
+  },
+  {
+    "id": "baglamukhi-jayanti",
+    "nameEn": "Baglamukhi Jayanti",
+    "deityEn": "Maa Baglamukhi"
+  },
+  {
+    "id": "dhumavati-jayanti",
+    "nameEn": "Dhumavati Jayanti",
+    "deityEn": "Maa Dhumavati"
+  },
+  {
+    "id": "mahesh-navami",
+    "nameEn": "Mahesh Navami",
+    "deityEn": "Bhagwan Mahesh"
+  },
+  {
+    "id": "annapurna-jayanti",
+    "nameEn": "Annapurna Jayanti",
+    "deityEn": "Maa Annapurna"
+  },
+  {
+    "id": "narmada-jayanti",
+    "nameEn": "Narmada Jayanti",
+    "deityEn": "Maa Narmada"
+  },
+  {
+    "id": "janaki-jayanti",
+    "nameEn": "Janaki Jayanti",
+    "deityEn": "Mata Sita"
+  },
+  {
+    "id": "phulera-dooj",
+    "nameEn": "Phulera Dooj",
+    "deityEn": "Shri Radha-Krishna"
+  },
+  {
+    "id": "narak-chaturdashi",
+    "nameEn": "Narak Chaturdashi",
+    "deityEn": "Shri Krishna and Yamaraja"
+  },
+  {
+    "id": "kaal-bhairav-jayanti",
+    "nameEn": "Kaal Bhairav Jayanti",
+    "deityEn": "Kala Bhairava"
+  },
+  {
+    "id": "mauni-amavasya",
+    "nameEn": "Mauni Amavasya",
+    "deityEn": "Sacred snan"
+  },
+  {
+    "id": "ganesh-jayanti",
+    "nameEn": "Ganesh Jayanti",
+    "deityEn": "Shri Ganesh"
+  },
+  {
+    "id": "bhishma-ashtami",
+    "nameEn": "Bhishma Ashtami",
+    "deityEn": "Pitamah Bhishma"
+  },
+  {
+    "id": "magha-purnima",
+    "nameEn": "Magha Purnima",
+    "deityEn": "Sacred snan"
+  },
+  {
+    "id": "ashadha-gupt-navratri",
+    "nameEn": "Ashadha Gupt Navratri Begins",
+    "deityEn": "The ten Mahavidyas"
+  },
+  {
+    "id": "magha-gupt-navratri",
+    "nameEn": "Magha Gupt Navratri Begins",
+    "deityEn": "The ten Mahavidyas"
+  },
+  {
+    "id": "karthigai-deepam",
+    "nameEn": "Karthigai Deepam",
+    "deityEn": "Lord Shiva and Murugan"
+  },
+  {
+    "id": "thai-pusam",
+    "nameEn": "Thai Pusam",
+    "deityEn": "Lord Murugan"
+  },
+  {
+    "id": "panguni-uthiram",
+    "nameEn": "Panguni Uthiram",
+    "deityEn": "Lord Murugan and Shiva–Parvati"
+  },
+  {
+    "id": "vaikasi-visakam",
+    "nameEn": "Vaikasi Visakam",
+    "deityEn": "Lord Murugan"
+  },
+  {
+    "id": "karkidaka-vavu",
+    "nameEn": "Karkidaka Vavu",
+    "deityEn": "Pitru Tarpana"
+  },
+  {
+    "id": "kamada-ekadashi",
+    "nameEn": "Kamada Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "varuthini-ekadashi",
+    "nameEn": "Varuthini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "mohini-ekadashi",
+    "nameEn": "Mohini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "apara-ekadashi",
+    "nameEn": "Apara Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "nirjala-ekadashi",
+    "nameEn": "Nirjala Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "yogini-ekadashi",
+    "nameEn": "Yogini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "devshayani-ekadashi",
+    "nameEn": "Devshayani Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "kamika-ekadashi",
+    "nameEn": "Kamika Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "putrada-ekadashi",
+    "nameEn": "Putrada Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "aja-ekadashi",
+    "nameEn": "Aja Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "parivartini-ekadashi",
+    "nameEn": "Parivartini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "indira-ekadashi",
+    "nameEn": "Indira Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "papankusha-ekadashi",
+    "nameEn": "Papankusha Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "rama-ekadashi",
+    "nameEn": "Rama Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "utpanna-ekadashi",
+    "nameEn": "Utpanna Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "mokshada-ekadashi",
+    "nameEn": "Mokshada Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "saphala-ekadashi",
+    "nameEn": "Saphala Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "shattila-ekadashi",
+    "nameEn": "Shattila Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "jaya-ekadashi",
+    "nameEn": "Jaya Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vijaya-ekadashi",
+    "nameEn": "Vijaya Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "amalaki-ekadashi",
+    "nameEn": "Amalaki Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "papmochani-ekadashi",
+    "nameEn": "Papmochani Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-kamada-ekadashi",
+    "nameEn": "Vaishnava Kamada Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-varuthini-ekadashi",
+    "nameEn": "Vaishnava Varuthini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-mohini-ekadashi",
+    "nameEn": "Vaishnava Mohini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-apara-ekadashi",
+    "nameEn": "Vaishnava Apara Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-nirjala-ekadashi",
+    "nameEn": "Vaishnava Nirjala Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-yogini-ekadashi",
+    "nameEn": "Vaishnava Yogini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-devshayani-ekadashi",
+    "nameEn": "Vaishnava Devshayani Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-kamika-ekadashi",
+    "nameEn": "Vaishnava Kamika Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-putrada-ekadashi",
+    "nameEn": "Vaishnava Putrada Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-aja-ekadashi",
+    "nameEn": "Vaishnava Aja Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-parivartini-ekadashi",
+    "nameEn": "Vaishnava Parivartini Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-indira-ekadashi",
+    "nameEn": "Vaishnava Indira Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-papankusha-ekadashi",
+    "nameEn": "Vaishnava Papankusha Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-rama-ekadashi",
+    "nameEn": "Vaishnava Rama Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-dev-uthani-ekadashi",
+    "nameEn": "Vaishnava Dev Uthani Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-utpanna-ekadashi",
+    "nameEn": "Vaishnava Utpanna Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-mokshada-ekadashi",
+    "nameEn": "Vaishnava Mokshada Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-saphala-ekadashi",
+    "nameEn": "Vaishnava Saphala Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-shattila-ekadashi",
+    "nameEn": "Vaishnava Shattila Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-jaya-ekadashi",
+    "nameEn": "Vaishnava Jaya Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-vijaya-ekadashi",
+    "nameEn": "Vaishnava Vijaya Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-amalaki-ekadashi",
+    "nameEn": "Vaishnava Amalaki Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "vaishnava-papmochani-ekadashi",
+    "nameEn": "Vaishnava Papmochani Ekadashi",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "sankashti-chaturthi-vrat",
+    "nameEn": "Sankashti Chaturthi Vrat",
+    "deityEn": "Shri Ganesh"
+  },
+  {
+    "id": "vinayaka-chaturthi-vrat",
+    "nameEn": "Shukla Chaturthi Vrat",
+    "deityEn": "Shri Ganesh"
+  },
+  {
+    "id": "pradosh-vrat-shukla",
+    "nameEn": "Shukla Pradosh Vrat",
+    "deityEn": "Lord Shiva"
+  },
+  {
+    "id": "pradosh-vrat-krishna",
+    "nameEn": "Krishna Pradosh Vrat",
+    "deityEn": "Lord Shiva"
+  },
+  {
+    "id": "dwadashi-vrat-shukla",
+    "nameEn": "Shukla Dwadashi Vrat",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "dwadashi-vrat-krishna",
+    "nameEn": "Krishna Dwadashi Vrat",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "masik-shivaratri",
+    "nameEn": "Masik Shivaratri",
+    "deityEn": "Lord Shiva"
+  },
+  {
+    "id": "purnima-vrat",
+    "nameEn": "Purnima Vrat",
+    "deityEn": "Shri Vishnu"
+  },
+  {
+    "id": "shree-satyanarayan-vrat",
+    "nameEn": "Shree Satyanarayan Vrat",
+    "deityEn": "Shree Satyanarayan"
+  },
+  {
+    "id": "amavasya-vrat",
+    "nameEn": "Amavasya Vrat",
+    "deityEn": "Pitru Tarpana"
+  },
+  {
+    "id": "darsha-amavasya",
+    "nameEn": "Darsha Amavasya",
+    "deityEn": "Pitru Tarpana"
+  },
+  {
+    "id": "somvati-amavasya",
+    "nameEn": "Somvati Amavasya",
+    "deityEn": "Pitru Tarpana and Shiva"
+  },
+  {
+    "id": "skanda-sashti",
+    "nameEn": "Skanda Sashti",
+    "deityEn": "Lord Kartikeya"
+  },
+  {
+    "id": "masik-durgashtami",
+    "nameEn": "Masik Durgashtami",
+    "deityEn": "Maa Durga"
+  },
+  {
+    "id": "masik-kalashtami",
+    "nameEn": "Masik Kalashtami",
+    "deityEn": "Kala Bhairava"
+  },
+  {
+    "id": "masik-krishna-janmashtami",
+    "nameEn": "Masik Krishna Janmashtami",
+    "deityEn": "Shri Krishna"
+  },
+  {
+    "id": "sawan-somwar-vrat",
+    "nameEn": "Sawan Somwar Vrat",
+    "deityEn": "Lord Shiva"
+  },
+  {
+    "id": "mangala-gauri-vrat",
+    "nameEn": "Mangala Gauri Vrat",
+    "deityEn": "Maa Gauri"
+  },
+  {
+    "id": "varalakshmi-vrat",
+    "nameEn": "Varalakshmi Vrat",
+    "deityEn": "Maa Lakshmi"
+  },
+  {
+    "id": "vat-savitri-vrat",
+    "nameEn": "Vat Savitri Vrat",
+    "deityEn": "Maa Savitri"
+  },
+  {
+    "id": "jivitputrika-vrat",
+    "nameEn": "Jivitputrika Vrat",
+    "deityEn": "Jivitputrika Mata"
+  },
+  {
+    "id": "mahalakshmi-vrat",
+    "nameEn": "Mahalakshmi Vrat",
+    "deityEn": "Maa Lakshmi"
+  },
+  {
+    "id": "mahadwadashi",
+    "nameEn": "Mahadwadashi",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "karthigai-vrat",
+    "nameEn": "Karthigai Vrat",
+    "deityEn": "Lord Kartikeya"
+  },
+  {
+    "id": "shraddha-dates",
+    "nameEn": "Shraddha Dates",
+    "deityEn": "Traditional observance"
+  },
+  {
+    "id": "rohini-vrat",
+    "nameEn": "Rohini Vrat",
+    "deityEn": "Jain vrat tradition"
+  },
+  {
+    "id": "chandra-darshan",
+    "nameEn": "Chandra Darshan",
+    "deityEn": "Traditional observance"
+  },
+  {
+    "id": "ishti-anvadhan",
+    "nameEn": "Ishti and Anvadhan",
+    "deityEn": "Traditional observance"
+  },
+  {
+    "id": "iskcon-ekadashi",
+    "nameEn": "ISKCON Ekadashi",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "purushottam-maas",
+    "nameEn": "Purushottam Maas",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "chaturmasa",
+    "nameEn": "Chaturmasa",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "navagraha-weekday-fasts",
+    "nameEn": "Navagraha Weekdays Fasting",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "deity-weekday-fasts",
+    "nameEn": "Deities Weekdays Fasting",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "dashavatara-vrat",
+    "nameEn": "Dashavatara Vrat",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "jayaparvati-vrat",
+    "nameEn": "Jayaparvati Vrat",
+    "deityEn": "Vrat observance"
+  },
+  {
+    "id": "ashoka-ashtami",
+    "nameEn": "Ashoka Ashtami",
+    "deityEn": "Vrat observance"
+  }
+]

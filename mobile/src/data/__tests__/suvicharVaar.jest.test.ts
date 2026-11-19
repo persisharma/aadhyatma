@@ -25,7 +25,8 @@ it('links every catalog deity to at least one day', () => {
   const linked = new Set(suvicharVaar.flatMap(v => v.deities));
   expect(suvicharDeityCatalog.filter(d => !linked.has(d.id)).map(d => d.id)).toEqual([]);
   expect(suvicharVaarFor(on(28))!.deities).toEqual(['ganesha', 'saraswati', 'krishna', 'radha-krishna', 'sanwariya-seth', 'khatu-shyam']);
-  expect(suvicharVaarFor(on(29))!.deities).toEqual(['vishnu', 'tirupati-balaji', 'jagannath', 'rama', 'ram-darbar']);
+  // Parshuram joins Thursday once its masters are published.
+  expect(suvicharVaarFor(on(29))!.deities).toEqual(['vishnu', 'tirupati-balaji', 'jagannath', 'rama', 'ram-lalla', 'ram-darbar', 'parshuram']);
 });
 
 it('lists only catalog deities and leaves out any whose masters are not yet published', () => {

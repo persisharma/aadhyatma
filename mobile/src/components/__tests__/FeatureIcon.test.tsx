@@ -14,8 +14,8 @@ it('reuses More artwork for shared Discover subjects', () => {
   expect(featureIconSources.routine).toBe(storybookSources.practice);
 });
 
-it('covers every Discover feature with centered, untinted decorative artwork', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '../../screens/HomeScreen.tsx'), 'utf8');
+it('covers every feature in the directory with centered, untinted decorative artwork', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '../../screens/ReadingLibraryScreen.tsx'), 'utf8');
   const wiredNames = [...source.matchAll(/<FeatureIcon name="([^"]+)"/g)].map((m) => m[1]);
   expect(wiredNames.sort()).toEqual(Object.keys(featureIconSources).sort());
   expect(wiredNames).toHaveLength(9);

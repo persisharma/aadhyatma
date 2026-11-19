@@ -1,3 +1,4 @@
+import type { OccasionTiming } from './occasionTimings';
 // The पूर्ण पंचांग share card's text (design.md §33a): one day, every detail
 // the day panel shows, shaped into the short strings a 540×675 card can hold.
 // Pure over the day's solved panchang + muhurat; no engine call, so it can run
@@ -30,6 +31,9 @@ export type ShareChoghadiya = { name: string; start: string; auspicious: boolean
 export type ShareVaas = { value: string; line: string; valueWarn: boolean; lineWarn: boolean };
 
 export type PanchangShareModel = {
+  /** One primary ritual in the full 4:5 card; complete timings also in text. */
+  occasionTimings?: readonly OccasionTiming[];
+  referenceDay?: Date;
   /** "बेंगलुरु" — every time on the card depends on it. A pincode label can run
    * to "३९६२१० · दादरा और नगर हवेली और दमन और दीव", so it has the chip to itself. */
   place: string;
@@ -133,6 +137,7 @@ export function buildPanchangShareModel(input: {
   placeEn: string;
   calendarSystem: CalendarSystem;
   lang: Lang;
+  occasionTimings?: readonly OccasionTiming[];
 }): PanchangShareModel {
   const { p, md, observances, lang } = input;
   const day = p.date;
@@ -157,6 +162,8 @@ export function buildPanchangShareModel(input: {
   const agniNext = v.agni.until && v.agni.next ? { at: formatEndInstant(v.agni.until, day, lang), place: AGNI_VAAS_LABELS[v.agni.next] } : null;
 
   return {
+    occasionTimings: input.occasionTimings,
+    referenceDay: input.p.date,
     place: name(lang, input.placeHi, input.placeEn),
     date: name(
       lang,

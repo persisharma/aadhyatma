@@ -24,4 +24,5 @@ export const deityArtwork = {
   shani: 'shani',
   kali: 'kali',
   navagraha: 'navagraha',
+  parashu: 'parashu',
 } as const satisfies Record<DeityIconKey, StoryIconName>;

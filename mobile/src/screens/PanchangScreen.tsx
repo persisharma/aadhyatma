@@ -1,3 +1,9 @@
+import OccasionSection from '@/components/OccasionSection';
+import { isPreDawn } from '@/panchang/preDawn';
+import { useCivilToday } from '@/panchang/useCivilToday';
+import { civilToday } from '@/panchang/civilTime';
+import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
+import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
 import CatalogCategoryTile from '@/components/CatalogCategoryTile';
 import ObservancePreviewCard from '@/components/ObservancePreviewCard';
@@ -12,7 +18,7 @@ import CelestialGlyph from '@/components/CelestialGlyph';
 import PanchangDaySurface from '@/components/PanchangDaySurface';
 import PanchangNextDayCard from '@/components/PanchangNextDayCard';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -42,6 +48,7 @@ import { formatClock, formatEndInstant } from '@/panchang/muhuratFormat';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { buildCalendarMonth, calendarWeeks, dateKey } from '@/panchang/calendarGrid';
 import { getEventRule } from '@/panchang/eventMuhurat';
+import { namkaranDoorVisible } from '@/panchang/namkaranRelease';
 import {
   PAKSHA_NAMES_EN,
   PAKSHA_NAMES_HI,
@@ -53,13 +60,16 @@ import {
   usePanchangMonthObservances,
 } from '@/panchang/usePanchang';
 import { useShubhYoga } from '@/panchang/useShubhYoga';
-import type { CalendarSystem, PanchangElement, ResolvedObservance } from '@/panchang/types';
+import type { CalendarSystem, PanchangComputationOptions, PanchangData, PanchangElement, ResolvedObservance } from '@/panchang/types';
 import { getKathaContent } from '@/panchang/kathaContent';
 import { getUpcomingObservances, searchObservances } from '@/panchang/festivalEngine';
 import { getLensDefinition, serializeLenses, type ObservanceLens } from '@/panchang/lenses';
 import { useLenses } from '@/panchang/useLenses';
 import { seedFromLocationOnce } from '@/panchang/lensStore';
-import { successorTithiToday } from '@/panchang/prevailingTithi';
+import { passedMonthBoundary, prevailingLunarMonth, prevailingTithi, successorTithiToday } from '@/panchang/prevailingTithi';
+import { computeTithiAndMonthSteps, locationKey } from '@/panchang/engine';
+import { runInBackground } from '@/panchang/backgroundWork';
+import { useMinuteTick } from '@/utils/useMinuteTick';
 import { observanceDayNote, type ObservanceDaySolve } from '@/panchang/observanceDayNote';
 import { sankashtiOccurrenceName } from '@/panchang/sankashtiNames';
 import { getCategoryCounts, getKathaCount, getLensAdditions, getNextOccurrence, type BrowseCategory } from '@/panchang/vratCatalog';
@@ -97,7 +107,9 @@ import {
 } from '@/panchang/useKundali';
 import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
+import { birthCity } from '@/panchang/birthProfiles';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -168,14 +180,27 @@ export default function PanchangScreen({ route }: Props) {
   const panchangSegmentRef = useTourTarget('panchangSegment', undefined, isFocused);
   const rootNav = useNavigation<any>();
   const { followCount } = useVratFollows();
-  const todayKey = new Date().toDateString();
-  const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
-  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
-  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
+  // India's current date (`civilTime.ts`), kept current across midnight and
+  // app foregrounds.
+  const today = useCivilToday();
+  const [selectedDate, setSelectedDate] = useState(() => (route.params?.dateMs ? startOfLocalDay(new Date(route.params.dateMs)) : today));
+  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(today));
+  // When the day rolls over, a selection that was resting on "today" follows it
+  // (after a night in the background the screen used to keep yesterday selected).
+  // A date the reader browsed to on purpose is left alone.
+  const previousToday = useRef(today);
+  useEffect(() => {
+    const was = previousToday.current;
+    previousToday.current = today;
+    if (was.getTime() === today.getTime()) return;
+    setSelectedDate((current) => (current.getTime() === was.getTime() ? today : current));
+    setVisibleMonth((current) => (current.getTime() === startOfMonth(was).getTime() ? startOfMonth(today) : current));
+  }, [today]);
   const [calendarExpanded, setCalendarExpanded] = useState(false);
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
     route.params?.initialTab ?? 'calendar'
   );
+  const scrollRef = useRef<ScrollView>(null);
   const [catalogQuery, setCatalogQuery] = useState('');
   const calendarSwipeStart = useRef<{ x: number; y: number } | null>(null);
   const [calendarSystem, setCalendarSystem] = usePanchangCalendarSystem();
@@ -197,7 +222,7 @@ export default function PanchangScreen({ route }: Props) {
   // Before sunrise the Hindu day is still yesterday's, so a festival kept last
   // night is the one running — the ribbon above the Muhurat card carries it over.
   // Read once per render, not ticked: the screen re-renders on any selection.
-  const preDawnToday = p != null && selectedDate.getTime() === today.getTime() && Date.now() < p.sunrise.getTime();
+  const preDawnToday = selectedDate.getTime() === today.getTime() && isPreDawn(p?.sunrise);
   const carryOverDate = useMemo(() => addDays(selectedDate, -1), [selectedDate]);
   const carryOver = useObservancesForDate(preDawnToday ? carryOverDate : selectedDate, calendarSystem);
   const ribbonTonight = preDawnToday && carryOver.length > 0;
@@ -206,11 +231,12 @@ export default function PanchangScreen({ route }: Props) {
   // 2,500-line screen does not re-render every minute for it.
   const { muhurat: shareMd } = useMuhurat(selectedDate, calendarSystem, { live: false });
   const { share: sharePanchang, busy: shareBusy } = usePanchangShare();
-  const shareUnavailable = shareBusy || !p || !shareMd;
+  const occasion = useOccasionTimings(isFocused && panchangTab !== 'jyotish' ? selectedDate : null, calendarSystem);
+  const shareUnavailable = shareBusy || !p || !shareMd || occasion.loading || occasion.error;
   const shareDay = useCallback(() => {
-    if (!p || !shareMd) return;
-    void sharePanchang({ p, md: shareMd, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
-  }, [p, shareMd, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
+    if (!p || !shareMd || occasion.loading || occasion.error) return;
+    void sharePanchang({ p, md: shareMd, occasionTimings: occasion.items, observances, placeHi: location.labelHi, placeEn: location.labelEn, calendarSystem, lang });
+  }, [p, shareMd, occasion.items, occasion.loading, occasion.error, sharePanchang, observances, location.labelHi, location.labelEn, calendarSystem, lang]);
   // The Panchang sky header (design.md §33) starts under the status bar, so it
   // needs the inset.
   const insets = useSafeAreaInsets();
@@ -228,7 +254,7 @@ export default function PanchangScreen({ route }: Props) {
   // so for most users this effect is a single read that changes no pixel.
   useEffect(() => {
     let cancelled = false;
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       void seedFromLocationOnce({
         cityId: location.cityId,
         isTehsil: getCityById(location.cityId)?.districtEn != null,
@@ -242,20 +268,6 @@ export default function PanchangScreen({ route }: Props) {
       handle.cancel();
     };
   }, [location.cityId, location.labelEn]);
-  // The day's full identity (vara · masa paksha · Vikram Samvat) for the date
-  // button's a11y label — the explicit label would otherwise hide the visible
-  // line from screen readers, so it must carry at least what the sky shows.
-  const dayIdentityEn = p
-    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
-    : null;
-  // The sky's shorter visible line names the day's tithi in place of the संवत्
-  // (vara · masa paksha tithi); the full identity stays in the a11y label.
-  const daySkyLineHi = p
-    ? `${p.vara.nameHi} · ${p.lunarMonth.nameHi}${p.lunarMonth.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[p.tithi.paksha]} ${p.tithi.nameHi}`
-    : null;
-  const daySkyLineEn = p
-    ? `${p.vara.nameEn} · ${p.lunarMonth.nameEn}${p.lunarMonth.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[p.tithi.paksha]} ${p.tithi.nameEn}`
-    : null;
   // PRD-27: the day's शुभ योग windows — store-backed (no private cache), []
   // while the solve is in flight and on days with none, so the card below
   // renders zero chrome for the absent case.
@@ -304,12 +316,19 @@ export default function PanchangScreen({ route }: Props) {
   }, [route.params?.initialTab]);
 
   useEffect(() => {
-    if (route.params?.dateMs == null || !Number.isFinite(route.params.dateMs)) return;
-    const represented = startOfLocalDay(new Date(route.params.dateMs));
+    const entry = panchangDatedEntry(route.params);
+    if (!entry) return;
+    const represented = entry.date;
     setSelectedDate(represented);
     setVisibleMonth(startOfMonth(represented));
-    setPanchangTab('calendar');
-  }, [route.params?.dateMs]);
+    setPanchangTab(entry.mode);
+    if (entry.mode === 'catalog') {
+      setCatalogQuery('');
+      scrollRef.current?.scrollTo({ y: 0, animated: false });
+    }
+    // A new navigation request for the same day must also reveal the cards,
+    // even when Vrat was left with a search query or another local mode.
+  }, [route.params]);
 
   useFocusEffect(
     useCallback(() => {
@@ -374,7 +393,9 @@ export default function PanchangScreen({ route }: Props) {
   };
   const openVidhiCatalog = () => rootNav.navigate('VidhiCatalog');
 
-  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId });
+  const openObservanceDetail = (ruleId: string) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: selectedDate.getTime() });
+  const openVratOccasions = () => rootNav.navigate('VratTab', vratOccasionTarget(selectedDate));
+  const openOccasionDetail = (ruleId: string, date: Date) => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: date.getTime() });
   const openCategory = (category: BrowseCategory) => rootNav.navigate('ObservanceList', { category });
   const openKathaLibrary = () => rootNav.navigate('KathaLibrary');
   const openMyVrat = () => rootNav.navigate('MyVrat');
@@ -555,6 +576,7 @@ export default function PanchangScreen({ route }: Props) {
         : <CatalogBackground />}
       <SafeAreaView style={styles.safe} edges={panchangTab === 'calendar' ? ['left', 'right'] : ['top', 'left', 'right']}>
         <ScrollView
+          ref={scrollRef}
           contentContainerStyle={[styles.scroll, { paddingHorizontal: 14 }, panchangTab === 'calendar' && { paddingTop: 0 }]}
           showsVerticalScrollIndicator={false}
         >
@@ -610,27 +632,17 @@ export default function PanchangScreen({ route }: Props) {
                     >
                       <Text style={{ color: ink.ink, fontSize: 22 }}>‹</Text>
                     </Pressable>
-                    <Pressable
-                      testID="panchang-selected-date"
+                    <SkyDateButton
+                      selectedDate={selectedDate}
+                      p={p}
+                      live={isSelectedToday && isFocused}
+                      calendarSystem={calendarSystem}
+                      location={location}
                       onPress={() => setCalendarExpanded((expanded) => !expanded)}
-                      accessibilityRole="button"
-                      accessibilityLabel={dayIdentityEn ? `${formatFullDate(selectedDate, 'en')}. ${dayIdentityEn}` : formatFullDate(selectedDate, 'en')}
-                      style={({ pressed }) => [styles.skyDateBlock, pressed && { opacity: 0.7 }]}
-                    >
-                      <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 20, color: ink.ink, textAlign: 'center' }}>
-                        {formatFullDate(selectedDate, lang)}
-                      </Text>
-                      {/* The day's identity (vara · masa paksha tithi) — a space
-                          while the day solves so the row height is stable. */}
-                      <Text
-                        numberOfLines={1}
-                        adjustsFontSizeToFit
-                        minimumFontScale={0.75}
-                        style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, color: ink.inkSoft, marginTop: 1, textAlign: 'center' }}
-                      >
-                        {daySkyLineHi && daySkyLineEn ? contentByLang(lang, daySkyLineHi, daySkyLineEn) : ' '}
-                      </Text>
-                    </Pressable>
+                      lang={lang}
+                      ink={ink}
+                      typography={typography}
+                    />
                     <Pressable
                       onPress={() => shiftSelectedDate(1)}
                       accessibilityRole="button"
@@ -798,10 +810,12 @@ export default function PanchangScreen({ route }: Props) {
                 tonight={ribbonTonight}
                 sunrise={p.sunrise}
                 tithiIndex={p.tithi.index}
-                onOpen={openObservanceDetail}
+                onOpen={ruleId => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: (ribbonTonight ? carryOverDate : selectedDate).getTime() })}
               />
             </View>
           )}
+
+          <OccasionSection presentation="summary" onOpenVrat={openVratOccasions} items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
           {/* Daily Muhurat — Choghadiya / Rahu Kaal card (PRD-14). Promoted
               to lead the day panel, above the anga grid: "is now auspicious?" is
@@ -907,7 +921,7 @@ export default function PanchangScreen({ route }: Props) {
             </Pressable>
           )}
 
-          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={openObservanceDetail} />
+          <PanchangNextDayCard items={nextObservances} lang={lang} isToday={isSelectedToday} onOpen={ruleId => rootNav.navigate('ObservanceDetail', { ruleId, dateMs: nextDate.getTime() })} />
           {/* Preserve existing regional and private reminder entry points while
               the owner considers their placement. */}
           {observances.length === 0 && lensAvailableCount > 0 && (
@@ -924,6 +938,8 @@ export default function PanchangScreen({ route }: Props) {
               calendarSystem={calendarSystem}
               query={catalogQuery}
               onChangeQuery={setCatalogQuery}
+              occasionCards={<OccasionSection presentation="illustrated" items={occasion.items} date={selectedDate} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} onOpenVrat={openVratOccasions} onOpenDetail={openOccasionDetail} />}
+              replacesTodayCards={isSelectedToday && occasion.items.length > 0}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -1034,7 +1050,7 @@ function JyotishLanding({
     () => (chart ? computePersonalGuidance(chart, today) : null),
     [chart, today]
   );
-  const city = profile ? getCityById(profile.cityId) : null;
+  const city = profile ? birthCity(profile) : null;
 
   const sectionLabel = (hi: string, en: string) => (
     <Text
@@ -1170,17 +1186,19 @@ function JyotishLanding({
             accessibilityLabel="Open Guna Milan"
             lang={lang}
           />
-          <JyotishToolTile
-            titleHi="नामकरण"
-            titleEn="Namkaran"
-            bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
-            bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
-            badge="NEW"
-            glyph="ना"
-            onPress={onOpenNamkaran}
-            accessibilityLabel="Open Namkaran"
-            lang={lang}
-          />
+          {namkaranDoorVisible() && (
+            <JyotishToolTile
+              titleHi="नामकरण"
+              titleEn="Namkaran"
+              bodyHi="नवजात के नामाक्षर, जन्म-चन्द्र या नक्षत्र से।"
+              bodyEn="A newborn's namakshar, from the birth Moon or a nakshatra."
+              badge="NEW"
+              glyph="ना"
+              onPress={onOpenNamkaran}
+              accessibilityLabel="Open Namkaran"
+              lang={lang}
+            />
+          )}
         </View>
       </View>
     );
@@ -1374,6 +1392,90 @@ function JyotishLanding({
     onOpenKundali={onOpenKundali} onOpenRashifal={onOpenRashifal}
     onOpenGunaMilan={onOpenGunaMilan} onOpenNamkaran={onOpenNamkaran}
     onOpenNavagraha={onOpenNavagraha} />;
+}
+
+/**
+ * The sky's date block: full date over the day's identity line
+ * (vara · masa paksha tithi). On today the line follows the clock — the tithi
+ * through `prevailingTithi` and the masa through `prevailingLunarMonth` — so an
+ * Amavasya that ended at noon reads शुक्ल प्रतिपदा by evening, as the Muhurat
+ * card's kicker already does. Other days keep the sunrise (udaya) identity.
+ * The minute tick lives here, gated on `live` (today and focused), so the
+ * screen itself never re-renders per minute. Render does no engine solve:
+ * tomorrow's month is needed only after an Amavasya/Purnima end (~2 evenings a
+ * month) and is resolved time-sliced in the background; until it lands the
+ * sunrise month holds.
+ */
+function SkyDateButton({ selectedDate, p, live, calendarSystem, location, onPress, lang, ink, typography }: {
+  selectedDate: Date;
+  p: PanchangData | null;
+  live: boolean;
+  calendarSystem: CalendarSystem;
+  location: NonNullable<PanchangComputationOptions['location']>;
+  onPress: () => void;
+  lang: Lang;
+  ink: SkyInk;
+  typography: any;
+}) {
+  useMinuteTick(live);
+  const at = new Date();
+  const tithi = p ? (live ? prevailingTithi(p, at) : p.tithi) : null;
+  const nextKey = live && p && passedMonthBoundary(p, at)
+    ? `${p.date.getTime()}|${calendarSystem}|${locationKey(location)}`
+    : null;
+  const [nextMonth, setNextMonth] = useState<{ key: string; value: { lunarMonth: number; isAdhik: boolean } } | null>(null);
+  useEffect(() => {
+    if (!nextKey || !p) return undefined;
+    let cancelled = false;
+    runInBackground(computeTithiAndMonthSteps(addDays(p.date, 1), { calendarSystem, location }), () => cancelled)
+      .then((value) => {
+        if (!cancelled && value) setNextMonth({ key: nextKey, value });
+      })
+      .catch(() => {}); // the sunrise month holds
+    return () => {
+      cancelled = true;
+    };
+    // `nextKey` already encodes the day, system and location the solve reads.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextKey]);
+  const month = p
+    ? (live ? prevailingLunarMonth(p, at, nextMonth && nextMonth.key === nextKey ? nextMonth.value : null) : p.lunarMonth)
+    : null;
+  // The full identity (vara · masa paksha · Vikram Samvat) for the a11y label —
+  // the explicit label hides the visible line from screen readers, so it must
+  // carry at least what the sky shows.
+  const identityEn = p && tithi && month
+    ? `${p.vara.nameEn} · ${month.nameEn}${month.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[tithi.paksha]} Paksha · Vikram Samvat ${p.vikramSamvat}`
+    : null;
+  // The visible line names the tithi in place of the संवत्.
+  const lineHi = p && tithi && month
+    ? `${p.vara.nameHi} · ${month.nameHi}${month.isAdhik ? ' (अधिक)' : ''} ${PAKSHA_NAMES_HI[tithi.paksha]} ${tithi.nameHi}`
+    : null;
+  const lineEn = p && tithi && month
+    ? `${p.vara.nameEn} · ${month.nameEn}${month.isAdhik ? ' (Adhik)' : ''} ${PAKSHA_NAMES_EN[tithi.paksha]} ${tithi.nameEn}`
+    : null;
+  return (
+    <Pressable
+      testID="panchang-selected-date"
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={identityEn ? `${formatFullDate(selectedDate, 'en')}. ${identityEn}` : formatFullDate(selectedDate, 'en')}
+      style={({ pressed }) => [styles.skyDateBlock, pressed && { opacity: 0.7 }]}
+    >
+      <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85} style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 20, color: ink.ink, textAlign: 'center' }}>
+        {formatFullDate(selectedDate, lang)}
+      </Text>
+      {/* A space while the day solves so the row height is stable. */}
+      <Text
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.75}
+        style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 11.5, color: ink.inkSoft, marginTop: 1, textAlign: 'center' }}
+      >
+        {lineHi && lineEn ? contentByLang(lang, lineHi, lineEn) : ' '}
+      </Text>
+    </Pressable>
+  );
 }
 
 function CalendarSystemToggle({ value, onChange, lang, colors, radii, typography, sky, bare }: {
@@ -1645,13 +1747,13 @@ function ObservanceCard({ item, daySolve, lang, colors, typography, radii, eleva
           <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>
             {contentByLang(lang, titleHi, titleEn)}
           </Text>
-          <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>
+          <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.inkMuted, marginTop: 4 }}>
             {meaningByLang(lang, item.rule.shortDescriptionHi, item.rule.shortDescriptionEn)}
           </Text>
         </>
       )}
       {dayNote && (
-        <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.saffronDeep, marginTop: 6 }}>
+        <Text style={{ ...typography.catalogMeta, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), color: colors.saffronDeep, marginTop: 6 }}>
           {contentByLang(lang, dayNote.hi, dayNote.en)}
         </Text>
       )}
@@ -1753,7 +1855,7 @@ function CatalogLedgerCell({
     >
       <AppIcon name={glyph === "★" ? "star" : glyph === "॥" ? "remembrance" : "regional"} size={18} color={colors.iconInk} weight="regular" />
       <Text
-        style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 14, lineHeight: 22, color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
+        style={{ ...typography.listingScope, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), color: colors.ink, marginTop: 3, textAlign: 'center', alignSelf: 'stretch' }}
       >
         {label}
       </Text>
@@ -1796,7 +1898,7 @@ function CatalogLedgerBar({
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const today = startOfLocalDay(new Date());
+      const today = civilToday();
       const dates = entries
         .map((entry) => {
           try { return nextObservanceForEntry(entry, today); } catch { return null; }
@@ -2015,7 +2117,7 @@ function CatalogLanding({
   colors, typography, radii, elevation,
   onOpenDetail, onOpenCategory, onOpenKathaLibrary, onOpenVidhiCatalog, onOpenMyVrat, followCount,
   onOpenPitruSmaran, onOpenLenses, lenses, lensAvailableCount,
-  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi,
+  todaySolve, onOpenLink, onOpenKatha, onOpenVidhi, occasionCards, replacesTodayCards,
 }: {
   lang: Lang;
   today: Date;
@@ -2036,6 +2138,8 @@ function CatalogLanding({
   lenses: ReadonlySet<ObservanceLens>;
   lensAvailableCount: number;
   followCount: number;
+  occasionCards: React.ReactNode;
+  replacesTodayCards: boolean;
   // Today's solve for the day note, or null when the calendar is on another day.
   todaySolve: ObservanceDaySolve | null;
   onOpenLink: (sectionId: string) => void;
@@ -2098,7 +2202,8 @@ function CatalogLanding({
         <>
           {/* Same occurrence names, day notes and reading actions as the calendar;
               the catalog opts into an illustrated, expandable introduction. */}
-          {todayItems.length > 0 && (
+          {occasionCards}
+          {!replacesTodayCards && todayItems.length > 0 && (
             <View testID="catalog-today" style={{ marginBottom: 0 }}>
               <View style={styles.todayHead}>
                 <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15, color: colors.ink }}>

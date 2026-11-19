@@ -8,7 +8,12 @@
  * from ever touching each other's slots.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planMuhuratReminders,
   formatMuhuratReminderContent,
@@ -27,31 +32,26 @@ export type MuhuratNotificationPayload = {
 
 /** Cancel every muhurat reminder we own, leaving other notifications untouched. */
 export async function cancelAllMuhuratReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(MUHURAT_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await settleAfter('muhurat', cancelNotificationFamily(MUHURAT_NOTIF_PREFIX));
 }
 
 /**
- * Re-arm muhurat reminders: cancel ours, then schedule the planned set
+ * Re-arm muhurat reminders: replace ours with the planned set
  * (soonest-first, within the rolling window, under the dedicated cap).
  * Idempotent and safe to call on every foreground, follow change, location
  * change, or calendar-system change. Returns the count actually scheduled.
  */
 export async function scheduleMuhuratReminders(
   inputs: MuhuratReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  await cancelAllMuhuratReminders();
+  const { planned } = planMuhuratReminders(inputs, now, familyCap(Platform.OS, 'muhurat'));
 
-  const { planned } = planMuhuratReminders(inputs, now);
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('muhurat', lang) : undefined;
 
-  let scheduled = 0;
-  for (const p of planned) {
-    const { title, body } = formatMuhuratReminderContent(p);
+  const slots: FamilySlot[] = planned.map((p) => {
+    const { title, body } = formatMuhuratReminderContent(p, lang);
     const payload: MuhuratNotificationPayload = {
       type: 'muhurat-reminder',
       occasionId: p.occasionId,
@@ -63,25 +63,22 @@ export async function scheduleMuhuratReminders(
       ).getTime(),
       kind: p.kind,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-        },
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return settleAfter('muhurat', armNotificationFamily(MUHURAT_NOTIF_PREFIX, slots));
 }

@@ -12,6 +12,9 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+// Native WebView is supplied by the installed app; keep the real docked player in this contract.
+jest.mock('react-native-webview', () => ({ WebView: 'WebView' }));
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -20,6 +23,7 @@ jest.mock('expo-haptics', () => ({
 // Only PitruKathaScreen reaches for the root navigator (useNavigation); every other
 // reader takes navigation via props. None of the providers use it, so a stub is safe.
 jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: () => undefined,
   useNavigation: () => ({ navigate: () => undefined, goBack: () => undefined }),
 }));
 
@@ -88,7 +92,10 @@ import { getGaneshStotramChapter } from '@/data/ganesh-stotram';
 import { getDurgaStotramChapter } from '@/data/durga-stotram';
 import { getSaraswatiStotramChapter } from '@/data/saraswati-stotram';
 import { getVishnuSahasranamaChapter } from '@/data/vishnu-sahasranama';
-import { getValmikiRamayanChapter } from '@/data/valmiki-ramayan';
+import { loadValmikiRamayanChapter, type ValmikiRamayanChapter } from '@/data/valmiki-ramayan';
+// The published master: the kāṇḍa itself is loaded asynchronously, and this
+// table is built at module scope.
+import valmikiBalaKanda from '@/data/valmiki-ramayan/chapter-01.json';
 import ChalisaReaderScreen from '../ChalisaReaderScreen';
 import GitaReaderScreen from '../GitaReaderScreen';
 import GitaSaarReaderScreen from '../GitaSaarReaderScreen';
@@ -114,10 +121,12 @@ import VishnuSahasranamaReaderScreen from '../VishnuSahasranamaReaderScreen';
 import ValmikiRamayanReaderScreen from '../ValmikiRamayanReaderScreen';
 import DaanKathaScreen from '../DaanKathaScreen';
 import PitruKathaScreen from '../PitruKathaScreen';
+import { VOICE_PROBE_DELAY_MS } from '../_useReaderReadAloud';
 
 const speechMock = Speech as unknown as {
   __calls: { text: string; options: Record<string, unknown> }[];
   speak: jest.Mock;
+  getAvailableVoicesAsync: jest.Mock;
 };
 
 /** Only the three methods the readers call; typed loosely on purpose. */
@@ -315,7 +324,7 @@ const READERS: readonly ReaderEntry[] = [
   {
     name: 'ValmikiRamayanReaderScreen (kāṇḍa 1)',
     ...screen(ValmikiRamayanReaderScreen, 'ValmikiRamayanReader', { chapter: 1, initialIndex: 0 }),
-    firstSpokenLine: firstLine(chapter1(getValmikiRamayanChapter).verses.map((v) => v.lines)),
+    firstSpokenLine: firstLine((valmikiBalaKanda as unknown as ValmikiRamayanChapter).verses.map((v) => v.lines)),
   },
 ];
 
@@ -351,6 +360,12 @@ function findByA11y(t: TestRenderer.ReactTestRenderer, label: string) {
     (n) => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function'
   );
 }
+
+// The kāṇḍa is loaded, not required. Loading it once up front puts the reader
+// on its synchronous path (already in memory), which is the path under test here.
+beforeAll(async () => {
+  await loadValmikiRamayanChapter(1);
+});
 
 beforeEach(() => {
   speechMock.__calls.length = 0;
@@ -495,6 +510,45 @@ describe.each(SCROLL_KATHAS)('$name', ({ element, firstSpokenLine }) => {
     const expected = prepareForSpeech(firstSpokenLine, 'hi').slice(0, 40);
     expect(expected.length).toBeGreaterThan(0);
     expect(speechMock.__calls[0].text).toContain(expected);
+  });
+});
+
+describe('voice probe timing', () => {
+  // The provider never probes at app start (ANR audit); opening a read-aloud
+  // reader is what asks for it, once the screen's interactions settle.
+  it('probes installed voices once a reader opens, after the transition delay', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    jest.useFakeTimers();
+    try {
+      await mount(READERS[0]);
+      act(() => jest.advanceTimersByTime(VOICE_PROBE_DELAY_MS - 1));
+      expect(speechMock.getAvailableVoicesAsync).not.toHaveBeenCalled();
+      await act(async () => {
+        jest.advanceTimersByTime(1);
+        await Promise.resolve();
+      });
+      expect(speechMock.getAvailableVoicesAsync).toHaveBeenCalledTimes(1);
+    } finally {
+      if (tree) {
+        act(() => tree!.unmount());
+        tree = null;
+      }
+      jest.useRealTimers();
+    }
+  });
+
+  it('cancels the pending probe when the reader closes first', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    jest.useFakeTimers();
+    try {
+      await mount(READERS[0]);
+      act(() => tree!.unmount());
+      tree = null;
+      act(() => jest.advanceTimersByTime(VOICE_PROBE_DELAY_MS * 2));
+      expect(speechMock.getAvailableVoicesAsync).not.toHaveBeenCalled();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 });
 

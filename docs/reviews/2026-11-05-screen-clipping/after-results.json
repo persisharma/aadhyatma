@@ -1,0 +1,4278 @@
+{
+  "baseline": null,
+  "scope": "Production-component browser rendering with documented native adapters; browser text magnification is not OS accessibility verification",
+  "results": [
+    {
+      "id": "header-hi-M-320-1",
+      "view": "header",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19.5,
+          "right": 246,
+          "bottom": 44.5,
+          "width": 172,
+          "height": 25,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-M-320-1",
+      "view": "city",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-M-320-1",
+      "view": "audio",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-M-320-1.6",
+      "view": "header",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 88,
+          "width": 172,
+          "height": 80,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-M-320-1.6",
+      "view": "city",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-M-320-1.6",
+      "view": "audio",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-L-320-1",
+      "view": "header",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19.5,
+          "right": 246,
+          "bottom": 44.5,
+          "width": 172,
+          "height": 25,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-L-320-1",
+      "view": "city",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-L-320-1",
+      "view": "audio",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-L-320-1.6",
+      "view": "header",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 88,
+          "width": 172,
+          "height": 80,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-L-320-1.6",
+      "view": "city",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-L-320-1.6",
+      "view": "audio",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-M-320-1",
+      "view": "header",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 22,
+          "right": 246,
+          "bottom": 42,
+          "width": 172,
+          "height": 20,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-M-320-1",
+      "view": "city",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-M-320-1",
+      "view": "audio",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-M-320-1.6",
+      "view": "header",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 70,
+          "width": 172,
+          "height": 62,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-M-320-1.6",
+      "view": "city",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 227.96875,
+          "right": 296,
+          "bottom": 275.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-M-320-1.6",
+      "view": "audio",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-L-320-1",
+      "view": "header",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 22,
+          "right": 246,
+          "bottom": 42,
+          "width": 172,
+          "height": 20,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-L-320-1",
+      "view": "city",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-L-320-1",
+      "view": "audio",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-L-320-1.6",
+      "view": "header",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 70,
+          "width": 172,
+          "height": 62,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-L-320-1.6",
+      "view": "city",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 227.96875,
+          "right": 296,
+          "bottom": 275.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-L-320-1.6",
+      "view": "audio",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-M-320-1",
+      "view": "header",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 20.5,
+          "right": 246,
+          "bottom": 43.5,
+          "width": 172,
+          "height": 23,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-M-320-1",
+      "view": "city",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-M-320-1",
+      "view": "audio",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-M-320-1.6",
+      "view": "header",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 84,
+          "width": 172,
+          "height": 76,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-M-320-1.6",
+      "view": "city",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-M-320-1.6",
+      "view": "audio",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-L-320-1",
+      "view": "header",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 20.5,
+          "right": 246,
+          "bottom": 43.5,
+          "width": 172,
+          "height": 23,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-L-320-1",
+      "view": "city",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-L-320-1",
+      "view": "audio",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-L-320-1.6",
+      "view": "header",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 84,
+          "width": 172,
+          "height": 76,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-L-320-1.6",
+      "view": "city",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-L-320-1.6",
+      "view": "audio",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-M-320-1",
+      "view": "header",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19,
+          "right": 246,
+          "bottom": 45,
+          "width": 172,
+          "height": 26,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-M-320-1",
+      "view": "city",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-M-320-1",
+      "view": "audio",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-M-320-1.6",
+      "view": "header",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 90,
+          "width": 172,
+          "height": 82,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-M-320-1.6",
+      "view": "city",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-M-320-1.6",
+      "view": "audio",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-L-320-1",
+      "view": "header",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19,
+          "right": 246,
+          "bottom": 45,
+          "width": 172,
+          "height": 26,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-L-320-1",
+      "view": "city",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-L-320-1",
+      "view": "audio",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 589,
+          "right": 182,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-L-320-1.6",
+      "view": "header",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 246,
+          "bottom": 90,
+          "width": 172,
+          "height": 82,
+          "scrollWidth": 172,
+          "clientWidth": 172
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-L-320-1.6",
+      "view": "city",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 194.96875,
+          "right": 296,
+          "bottom": 242.96875,
+          "width": 272,
+          "height": 48,
+          "scrollWidth": 270,
+          "clientWidth": 270
+        },
+        "parent": {
+          "x": 0,
+          "y": 124.96875,
+          "right": 320,
+          "bottom": 568,
+          "width": 320,
+          "height": 443.03125,
+          "scrollWidth": 320,
+          "clientWidth": 320
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-L-320-1.6",
+      "view": "audio",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 320,
+      "height": 568,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 138,
+          "y": 700,
+          "right": 182,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": true,
+        "loopAfterScroll": {
+          "x": 138,
+          "y": 500,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-M-360-1",
+      "view": "header",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19.5,
+          "right": 286,
+          "bottom": 44.5,
+          "width": 212,
+          "height": 25,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-M-360-1",
+      "view": "city",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-M-360-1",
+      "view": "audio",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-M-360-1.6",
+      "view": "header",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 12,
+          "right": 286,
+          "bottom": 52,
+          "width": 212,
+          "height": 40,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-M-360-1.6",
+      "view": "city",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-M-360-1.6",
+      "view": "audio",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 635,
+          "right": 202,
+          "bottom": 679,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 635,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-L-360-1",
+      "view": "header",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19.5,
+          "right": 286,
+          "bottom": 44.5,
+          "width": 212,
+          "height": 25,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-L-360-1",
+      "view": "city",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-L-360-1",
+      "view": "audio",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-L-360-1.6",
+      "view": "header",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 12,
+          "right": 286,
+          "bottom": 52,
+          "width": 212,
+          "height": 40,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-L-360-1.6",
+      "view": "city",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-L-360-1.6",
+      "view": "audio",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 635,
+          "right": 202,
+          "bottom": 679,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 635,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-M-360-1",
+      "view": "header",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 22,
+          "right": 286,
+          "bottom": 42,
+          "width": 212,
+          "height": 20,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-M-360-1",
+      "view": "city",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-M-360-1",
+      "view": "audio",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-M-360-1.6",
+      "view": "header",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 16.5,
+          "right": 286,
+          "bottom": 47.5,
+          "width": 212,
+          "height": 31,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-M-360-1.6",
+      "view": "city",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-M-360-1.6",
+      "view": "audio",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 700,
+          "right": 202,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-L-360-1",
+      "view": "header",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 22,
+          "right": 286,
+          "bottom": 42,
+          "width": 212,
+          "height": 20,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-L-360-1",
+      "view": "city",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-L-360-1",
+      "view": "audio",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-L-360-1.6",
+      "view": "header",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 16.5,
+          "right": 286,
+          "bottom": 47.5,
+          "width": 212,
+          "height": 31,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-L-360-1.6",
+      "view": "city",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-L-360-1.6",
+      "view": "audio",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 700,
+          "right": 202,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-M-360-1",
+      "view": "header",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 20.5,
+          "right": 286,
+          "bottom": 43.5,
+          "width": 212,
+          "height": 23,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-M-360-1",
+      "view": "city",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-M-360-1",
+      "view": "audio",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-M-360-1.6",
+      "view": "header",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 13,
+          "right": 286,
+          "bottom": 51,
+          "width": 212,
+          "height": 38,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-M-360-1.6",
+      "view": "city",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-M-360-1.6",
+      "view": "audio",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 700,
+          "right": 202,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-L-360-1",
+      "view": "header",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 20.5,
+          "right": 286,
+          "bottom": 43.5,
+          "width": 212,
+          "height": 23,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-L-360-1",
+      "view": "city",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-L-360-1",
+      "view": "audio",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-L-360-1.6",
+      "view": "header",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 13,
+          "right": 286,
+          "bottom": 51,
+          "width": 212,
+          "height": 38,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-L-360-1.6",
+      "view": "city",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-L-360-1.6",
+      "view": "audio",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 700,
+          "right": 202,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-M-360-1",
+      "view": "header",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19,
+          "right": 286,
+          "bottom": 45,
+          "width": 212,
+          "height": 26,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-M-360-1",
+      "view": "city",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-M-360-1",
+      "view": "audio",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-M-360-1.6",
+      "view": "header",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 286,
+          "bottom": 90,
+          "width": 212,
+          "height": 82,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-M-360-1.6",
+      "view": "city",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-M-360-1.6",
+      "view": "audio",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 700,
+          "right": 202,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-L-360-1",
+      "view": "header",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19,
+          "right": 286,
+          "bottom": 45,
+          "width": 212,
+          "height": 26,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-L-360-1",
+      "view": "city",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-L-360-1",
+      "view": "audio",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 589,
+          "right": 202,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-L-360-1.6",
+      "view": "header",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 8,
+          "right": 286,
+          "bottom": 90,
+          "width": 212,
+          "height": 82,
+          "scrollWidth": 212,
+          "clientWidth": 212
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-L-360-1.6",
+      "view": "city",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 246,
+          "right": 336,
+          "bottom": 294,
+          "width": 312,
+          "height": 48,
+          "scrollWidth": 310,
+          "clientWidth": 310
+        },
+        "parent": {
+          "x": 0,
+          "y": 176,
+          "right": 360,
+          "bottom": 800,
+          "width": 360,
+          "height": 624,
+          "scrollWidth": 360,
+          "clientWidth": 360
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-L-360-1.6",
+      "view": "audio",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 360,
+      "height": 800,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 158,
+          "y": 700,
+          "right": 202,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 158,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-M-390-1",
+      "view": "header",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19.5,
+          "right": 316,
+          "bottom": 44.5,
+          "width": 242,
+          "height": 25,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-M-390-1",
+      "view": "city",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-M-390-1",
+      "view": "audio",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-M-390-1.6",
+      "view": "header",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 12,
+          "right": 316,
+          "bottom": 52,
+          "width": 242,
+          "height": 40,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-M-390-1.6",
+      "view": "city",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-M-390-1.6",
+      "view": "audio",
+      "lang": "hi",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 635,
+          "right": 217,
+          "bottom": 679,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 635,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-L-390-1",
+      "view": "header",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19.5,
+          "right": 316,
+          "bottom": 44.5,
+          "width": 242,
+          "height": 25,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-L-390-1",
+      "view": "city",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-L-390-1",
+      "view": "audio",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-hi-L-390-1.6",
+      "view": "header",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 12,
+          "right": 316,
+          "bottom": 52,
+          "width": 242,
+          "height": 40,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-hi-L-390-1.6",
+      "view": "city",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-hi-L-390-1.6",
+      "view": "audio",
+      "lang": "hi",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 635,
+          "right": 217,
+          "bottom": 679,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 635,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-M-390-1",
+      "view": "header",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 22,
+          "right": 316,
+          "bottom": 42,
+          "width": 242,
+          "height": 20,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-M-390-1",
+      "view": "city",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-M-390-1",
+      "view": "audio",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-M-390-1.6",
+      "view": "header",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 16.5,
+          "right": 316,
+          "bottom": 47.5,
+          "width": 242,
+          "height": 31,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-M-390-1.6",
+      "view": "city",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-M-390-1.6",
+      "view": "audio",
+      "lang": "en",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 700,
+          "right": 217,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-L-390-1",
+      "view": "header",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 22,
+          "right": 316,
+          "bottom": 42,
+          "width": 242,
+          "height": 20,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-L-390-1",
+      "view": "city",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-L-390-1",
+      "view": "audio",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-en-L-390-1.6",
+      "view": "header",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 16.5,
+          "right": 316,
+          "bottom": 47.5,
+          "width": 242,
+          "height": 31,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-en-L-390-1.6",
+      "view": "city",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-en-L-390-1.6",
+      "view": "audio",
+      "lang": "en",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 700,
+          "right": 217,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-M-390-1",
+      "view": "header",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 20.5,
+          "right": 316,
+          "bottom": 43.5,
+          "width": 242,
+          "height": 23,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-M-390-1",
+      "view": "city",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-M-390-1",
+      "view": "audio",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-M-390-1.6",
+      "view": "header",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 13,
+          "right": 316,
+          "bottom": 51,
+          "width": 242,
+          "height": 38,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-M-390-1.6",
+      "view": "city",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-M-390-1.6",
+      "view": "audio",
+      "lang": "gu",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 635,
+          "right": 217,
+          "bottom": 679,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 635,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-L-390-1",
+      "view": "header",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 20.5,
+          "right": 316,
+          "bottom": 43.5,
+          "width": 242,
+          "height": 23,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-L-390-1",
+      "view": "city",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-L-390-1",
+      "view": "audio",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-gu-L-390-1.6",
+      "view": "header",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 13,
+          "right": 316,
+          "bottom": 51,
+          "width": 242,
+          "height": 38,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-gu-L-390-1.6",
+      "view": "city",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-gu-L-390-1.6",
+      "view": "audio",
+      "lang": "gu",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 635,
+          "right": 217,
+          "bottom": 679,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 635,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-M-390-1",
+      "view": "header",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19,
+          "right": 316,
+          "bottom": 45,
+          "width": 242,
+          "height": 26,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-M-390-1",
+      "view": "city",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-M-390-1",
+      "view": "audio",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-M-390-1.6",
+      "view": "header",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 11.5,
+          "right": 316,
+          "bottom": 52.5,
+          "width": 242,
+          "height": 41,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-M-390-1.6",
+      "view": "city",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-M-390-1.6",
+      "view": "audio",
+      "lang": "kn",
+      "size": "M",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 700,
+          "right": 217,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-L-390-1",
+      "view": "header",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 19,
+          "right": 316,
+          "bottom": 45,
+          "width": 242,
+          "height": 26,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-L-390-1",
+      "view": "city",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-L-390-1",
+      "view": "audio",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 589,
+          "right": 217,
+          "bottom": 633,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 589,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    },
+    {
+      "id": "header-kn-L-390-1.6",
+      "view": "header",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "title": {
+          "x": 74,
+          "y": 11.5,
+          "right": 316,
+          "bottom": 52.5,
+          "width": 242,
+          "height": 41,
+          "scrollWidth": 242,
+          "clientWidth": 242
+        },
+        "truncated": false,
+        "textOverflow": "clip"
+      },
+      "errors": []
+    },
+    {
+      "id": "city-kn-L-390-1.6",
+      "view": "city",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "input": {
+          "x": 24,
+          "y": 255.6875,
+          "right": 366,
+          "bottom": 303.6875,
+          "width": 342,
+          "height": 48,
+          "scrollWidth": 340,
+          "clientWidth": 340
+        },
+        "parent": {
+          "x": 0,
+          "y": 185.6875,
+          "right": 390,
+          "bottom": 844,
+          "width": 390,
+          "height": 658.3125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        "rightOverflow": 0
+      },
+      "errors": []
+    },
+    {
+      "id": "audio-kn-L-390-1.6",
+      "view": "audio",
+      "lang": "kn",
+      "size": "L",
+      "magnification": 1.6,
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "measure": {
+        "loop": {
+          "x": 173,
+          "y": 700,
+          "right": 217,
+          "bottom": 744,
+          "width": 44,
+          "height": 44,
+          "scrollWidth": 42,
+          "clientWidth": 42
+        },
+        "below": false,
+        "loopAfterScroll": {
+          "x": 173,
+          "y": 700,
+          "width": 44,
+          "height": 44
+        }
+      },
+      "errors": []
+    }
+  ]
+}

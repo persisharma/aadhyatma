@@ -14,7 +14,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   type ViewToken,
@@ -46,11 +45,13 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang, pick } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import AppIcon from '@/components/AppIcon';
 import ProseParagraph from '@/components/ProseParagraph';
 import { meaningToken } from '@/utils/langType';
 import { useGitaSaarLearning } from '@/data/gita-saar/learningStore';
-import { getValmikiRamayanChapter } from '@/data/valmiki-ramayan';
+import { valmikiSargaStartIndex } from '@/data/valmiki-ramayan';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -161,6 +162,13 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
     verseCount,
     currentIndex,
     listRef,
+  });
+  const jump = useReaderJump({
+    listRef,
+    offset,
+    setCurrentIndex,
+    readAloud,
+    autoSlide,
   });
 
   useEffect(() => {
@@ -330,19 +338,16 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
             onBack={() => navigation.goBack()}
             sideWidth={48}
             right={
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {verseCount}
-              </Text>
+              <ReaderPageCounter
+                current={currentIndex + 1}
+                total={verseCount}
+                {...jump}
+                onOpen={() => {
+                  // As every other page move here: a reflection may hold the keyboard.
+                  Keyboard.dismiss();
+                  jump.onOpen();
+                }}
+              />
             }
           />
 
@@ -476,9 +481,9 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                       });
                     }}
                     onOpenRamayanRef={(kanda, sarga) => {
-                      const initialIndex = getValmikiRamayanChapter(kanda).verses.findIndex(
-                        (candidate) => candidate.reference.startsWith(`${kanda}.${sarga}.`)
-                      );
+                      // The same first-verse-of-the-sarga the loaded kāṇḍa gave,
+                      // from the generated table: no kāṇḍa is read to follow a link.
+                      const initialIndex = valmikiSargaStartIndex(kanda, sarga);
                       if (initialIndex < 0) return;
                       autoSlide.stop();
                       readAloud.stop();
@@ -515,6 +520,7 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                             share(
                               {
                                 sourceId: SOURCE_ID,
+                                verseIndex: verseIdx,
                                 sectionNameHi: `${gitaSaarTitleHi} · ${chapter.titleHi}`,
                                 sectionNameEn: `${gitaSaarTitleEn} · ${chapter.titleEn}`,
                                 verseLabelHi: `श्लोक ${item.gitaChapter}.${item.gitaVerse}`,
@@ -680,11 +686,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 48,
-    textAlign: 'right',
   },
   toggleRow: {
     flexDirection: 'row',

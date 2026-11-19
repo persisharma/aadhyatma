@@ -20,7 +20,6 @@ import {
   afterDismissed,
   afterLowRating,
   afterRated,
-  afterStoreFollowupAction,
   feedbackEmail,
   feedbackMailto,
   isEligibleForRatingPrompt,
@@ -31,6 +30,7 @@ import {
   type RatingAskTrigger,
   type RatingPromptState,
 } from '@/data/ratingPrompt';
+import { ENGAGEMENT_PROMPTS, isEligibleForSocialPrompt, socialPageUrl, type SocialPlatform } from '@/data/engagementPrompts';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useTour } from '@/contexts/TourContext';
@@ -47,7 +47,7 @@ import { RatingAskContext, subscribeRatingAsks } from '@/contexts/ratingAsk';
  *    (routine celebration done, a mala completed, a verse shared) calls
  *    `requestAsk(trigger)`. The request is honoured on its persisted response-specific time/action cadence,
  *    including first-visit shares/saves, and never on top of another
- *    first-run/post-update surface. Opening records the ask; the next response selects its repeat rule. Two positive store hand-offs stop automatic asks.
+ *    first-run/post-update surface. Opening records the ask; the next response selects its repeat rule. A successful store hand-off advances automatic asks to social following.
  *  - Manual — the "Rate the App" row in More (§37) calls `open()`, which
  *    bypasses the gate and does NOT spend an ask slot. A user who goes looking
  *    for it has already opted in.
@@ -62,6 +62,10 @@ type RatingPromptContextValue = {
   /** Is the sheet on screen right now? */
   visible: boolean;
   state: RatingPromptState;
+  promptKind: 'rating' | 'social';
+  socialLinkError: boolean;
+  follow: (platform: SocialPlatform) => Promise<void>;
+  confirmFollowing: (platform: SocialPlatform) => void;
   /** Open the sheet from a user action (More row) — ignores the gate. */
   open: () => void;
   /**
@@ -69,8 +73,8 @@ type RatingPromptContextValue = {
    * permanent opt-out on the sheet (design.md §54, RULEBOOK §6.2).
    */
   dismiss: () => void;
-  /** A 4–5★ tap, or the low-star step's store link: hand off to the store and update the required follow-up. */
-  rate: (stars?: number) => void;
+  /** A store link: on successful dispatch, advance automatic asking to social following. */
+  rate: (stars?: number) => Promise<void>;
   /** A 1–3★ tap: the card stays up on its thank-you step and stays away for 30 days after. */
   recordLowRating: () => void;
   /** "Write to us": close and open a pre-filled email. Offered only when `feedbackEmail()` is set. */
@@ -124,8 +128,13 @@ export function RatingPromptProvider({
   const [state, setState] = useState<RatingPromptState>(RATING_PROMPT_DEFAULTS);
   const [hydrated, setHydrated] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [promptKind, setPromptKind] = useState<'rating' | 'social'>('rating');
+  const kindRef = useRef<'rating' | 'social'>('rating');
+  const [socialLinkError, setSocialLinkError] = useState(false);
+  const handoffRef = useRef(false);
+  const writesRef = useRef(Promise.resolve());
   const [clockTick, setClockTick] = useState(0);
-    /** Mirror of the latest state so button handlers never write from a stale closure. */
+  /** Mirror of the latest state so button handlers never write from a stale closure. */
   const stateRef = useRef<RatingPromptState>(RATING_PROMPT_DEFAULTS);
 
   useEffect(() => {
@@ -136,11 +145,11 @@ export function RatingPromptProvider({
         const loaded = parseRatingPromptState(raw);
         stateRef.current = loaded;
         setState(loaded);
+        setHydrated(true);
       })
-      .catch(() => undefined)
-      .finally(() => {
-        if (!cancelled) setHydrated(true);
-      });
+      // An unread record may contain a decline or completed campaign. Stay quiet
+      // for this session rather than overwrite it with fresh defaults.
+      .catch(() => undefined);
     return () => {
       cancelled = true;
     };
@@ -149,9 +158,10 @@ export function RatingPromptProvider({
   const persist = useCallback((next: RatingPromptState) => {
     stateRef.current = next;
     setState(next);
-    AsyncStorage.setItem(RATING_PROMPT_STORAGE_KEY, JSON.stringify(next)).catch(
-      () => undefined,
-    );
+    const raw = JSON.stringify(next);
+    // Serialize the tiny record's writes so a slow earlier write cannot undo a confirmation.
+    writesRef.current = writesRef.current.then(() =>
+      AsyncStorage.setItem(RATING_PROMPT_STORAGE_KEY, raw)).catch(() => undefined);
   }, []);
 
   const { activeDays } = lifetimeTotals();
@@ -204,37 +214,46 @@ export function RatingPromptProvider({
       // ambush this design exists to avoid.
       if (!readyRef.current) return;
 
-      if (trigger !== 'app-engaged') {
-        const next = afterStoreFollowupAction(stateRef.current, Date.now());
-        if (next !== stateRef.current) persist(next);
-      }
-
-      const eligible = isEligibleForRatingPrompt({
+      if (handoffRef.current) return;
+      const social = stateRef.current.storeHandoffCount > 0 && stateRef.current.outcome !== 'declined';
+      const eligible = social ? isEligibleForSocialPrompt(stateRef.current.social, true,
+        trigger !== 'app-engaged', Date.now()) : isEligibleForRatingPrompt({
         trigger,
         state: stateRef.current,
         ...engagementRef.current,
         now: Date.now(),
         blockedBySurface: blockedRef.current,
       });
-      if (!eligible || isBrandLaunchVisible() || isExploreSurfaceOpen()) return;
+      if (!eligible || blockedRef.current || isBrandLaunchVisible() || isExploreSurfaceOpen()) return;
 
       pendingRef.current = setTimeout(() => {
         pendingRef.current = null;
         // A first-run surface may have claimed the screen during the delay.
-        if (!readyRef.current || visibleRef.current || blockedRef.current || isBrandLaunchVisible() || isExploreSurfaceOpen()) return;
+        if (handoffRef.current || !readyRef.current || visibleRef.current || blockedRef.current || isBrandLaunchVisible() || isExploreSurfaceOpen()) return;
         if (AppState.currentState === 'background' || AppState.currentState === 'inactive') return;
         if (isRatingInteractionActive()) return;
         // Manual rating/feedback may have changed the persisted outcome during the delay.
-        if (!isEligibleForRatingPrompt({
+        const currentSocial = stateRef.current.storeHandoffCount > 0 && stateRef.current.outcome !== 'declined';
+        if (currentSocial !== social) return;
+        if (!(social ? isEligibleForSocialPrompt(stateRef.current.social, true,
+          trigger !== 'app-engaged', Date.now()) : isEligibleForRatingPrompt({
           state: stateRef.current,
           ...engagementRef.current,
           trigger,
           now: Date.now(),
           blockedBySurface: blockedRef.current,
-        })) return;
-        const repeat = stateRef.current.lastAskedAt !== null || stateRef.current.respondedAt !== null;
+        }))) return;
+        const repeat = social || stateRef.current.campaignId !== 'initial' ||
+          stateRef.current.lastAskedAt !== null || stateRef.current.respondedAt !== null;
         if (!claimRatingAsk(repeat)) return;
-        persist(afterAsked(stateRef.current, Date.now(), trigger));
+        const current = stateRef.current;
+        persist(social ? { ...current, social: { ...current.social,
+          askCount: current.social.askCount + 1, lastAskedAt: Date.now() } }
+          : afterAsked(current, Date.now(), trigger));
+        kindRef.current = social ? 'social' : 'rating';
+        setPromptKind(kindRef.current);
+        setSocialLinkError(false);
+        visibleRef.current = true;
         setVisible(true);
       }, RATING_PROMPT_DELAY_MS);
     },
@@ -248,7 +267,9 @@ export function RatingPromptProvider({
       requestAsk('app-engaged');
     }
     if (!hydrated || visible || blockedBySurface) return;
-    const deadline = timeBasedRatingAskAt(state);
+    const deadline = state.storeHandoffCount > 0
+      ? state.social.lastAskedAt === null || !ENGAGEMENT_PROMPTS.socialEnabled ? null : state.social.lastAskedAt + 2 * 86400000
+      : timeBasedRatingAskAt(state);
     if (deadline === null || deadline <= Date.now()) return;
     // Bound waits below the platform timeout maximum, including the 30-day rest.
     const timer = setTimeout(() => setClockTick((n) => n + 1), Math.min(deadline - Date.now(), 86400000));
@@ -264,29 +285,67 @@ export function RatingPromptProvider({
   }, [requestAsk]);
 
   const open = useCallback(() => {
+    if (!readyRef.current || handoffRef.current) return;
     if (pendingRef.current) clearTimeout(pendingRef.current);
     pendingRef.current = null;
+    kindRef.current = 'rating';
+    setPromptKind('rating');
+    visibleRef.current = true;
     setVisible(true);
   }, []);
 
   const dismiss = useCallback(() => {
+    visibleRef.current = false;
     setVisible(false);
+    if (kindRef.current === 'social') {
+      persist({ ...stateRef.current, social: { ...stateRef.current.social, lastAskedAt: Date.now() } });
+      return;
+    }
     // Closing the thank-you step must preserve its 30-day pause.
     if (stateRef.current.response !== 'low' && stateRef.current.response !== 'store') {
       persist(afterDismissed(stateRef.current, Date.now()));
     }
   }, [persist]);
 
-  const rate = useCallback((stars = 5) => {
+  const rate = useCallback(async (stars = 5) => {
+    if (!readyRef.current || handoffRef.current || !visibleRef.current) return;
+    handoffRef.current = true;
+    visibleRef.current = false;
     setVisible(false);
-    persist(afterRated(stateRef.current, Date.now(), stars));
-    // The review deep link is the preferred target; if the OS refuses it (older
-    // iOS, no App Store app, web) fall back to the plain listing, then give up
-    // silently — a failed hand-off must never surface an error to a user who
-    // just tried to do us a favour.
-    Linking.openURL(storeReviewUrl(Platform.OS)).catch(() => {
-      Linking.openURL(storeListingUrl(Platform.OS)).catch(() => undefined);
-    });
+    // A failed URL attempt must not advance to social or reopen immediately.
+    if (stateRef.current.response !== 'low') persist(afterDismissed(stateRef.current, Date.now()));
+    try {
+      try { await Linking.openURL(storeReviewUrl(Platform.OS)); }
+      catch { await Linking.openURL(storeListingUrl(Platform.OS)); }
+      if (readyRef.current) persist(afterRated(stateRef.current, Date.now(), stars));
+    } catch {
+      // Both routes failed: keep the review eligible on its normal retry cadence.
+    } finally {
+      handoffRef.current = false;
+    }
+  }, [persist]);
+
+  const follow = useCallback(async (platform: SocialPlatform) => {
+    const url = socialPageUrl(platform);
+    if (!url || handoffRef.current || !visibleRef.current || kindRef.current !== 'social') return;
+    handoffRef.current = true;
+    setSocialLinkError(false);
+    try { await Linking.openURL(url); }
+    catch { if (readyRef.current && visibleRef.current) setSocialLinkError(true); }
+    finally { handoffRef.current = false; }
+  }, []);
+
+  const confirmFollowing = useCallback((platform: SocialPlatform) => {
+    if (!readyRef.current || !visibleRef.current || kindRef.current !== 'social' || !socialPageUrl(platform)) return;
+    const current = stateRef.current;
+    persist({ ...current, social: { ...current.social,
+      confirmed: { ...current.social.confirmed, [platform]: true } } });
+    // Keep the other platform visible; only explicit confirmations end the campaign.
+    const platforms: SocialPlatform[] = ['instagram', 'facebook'];
+    if (platforms.every((p) => !socialPageUrl(p) || stateRef.current.social.confirmed[p])) {
+      visibleRef.current = false;
+      setVisible(false);
+    }
   }, [persist]);
 
   const recordLowRating = useCallback(() => {
@@ -294,6 +353,7 @@ export function RatingPromptProvider({
   }, [persist]);
 
   const writeToUs = useCallback((stars: number) => {
+    visibleRef.current = false;
     setVisible(false);
     const email = feedbackEmail();
     if (!email) return;
@@ -307,6 +367,10 @@ export function RatingPromptProvider({
     () => ({
       visible,
       state,
+      promptKind,
+      socialLinkError,
+      follow,
+      confirmFollowing,
       open,
       dismiss,
       rate,
@@ -317,6 +381,10 @@ export function RatingPromptProvider({
     [
       visible,
       state,
+      promptKind,
+      socialLinkError,
+      follow,
+      confirmFollowing,
       open,
       dismiss,
       rate,

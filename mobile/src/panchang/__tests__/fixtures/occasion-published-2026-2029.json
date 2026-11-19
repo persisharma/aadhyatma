@@ -1,0 +1,293 @@
+{
+  "location": "New Delhi, India",
+  "retrievedAt": "2026-11-06",
+  "note": "Published date fixtures restored from the completed source review; not solver snapshots. Partial 2029 monthly Krishna coverage excludes source pages returned for foreign cities.",
+  "cases": [
+    {
+      "id": "purnima-vrat",
+      "year": 2026,
+      "dates": [
+        "2026-01-03",
+        "2026-02-01",
+        "2026-03-03",
+        "2026-04-01",
+        "2026-05-01",
+        "2026-05-30",
+        "2026-06-29",
+        "2026-07-29",
+        "2026-08-27",
+        "2026-09-26",
+        "2026-10-25",
+        "2026-11-24",
+        "2026-12-23"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/vrats/purnimasidates.html?year=2026"
+    },
+    {
+      "id": "purnima-vrat",
+      "year": 2027,
+      "dates": [
+        "2027-01-22",
+        "2027-02-20",
+        "2027-03-22",
+        "2027-04-20",
+        "2027-05-20",
+        "2027-06-18",
+        "2027-07-18",
+        "2027-08-16",
+        "2027-09-15",
+        "2027-10-15",
+        "2027-11-13",
+        "2027-12-13"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/vrats/purnimasidates.html?year=2027"
+    },
+    {
+      "id": "purnima-vrat",
+      "year": 2028,
+      "dates": [
+        "2028-01-11",
+        "2028-02-10",
+        "2028-03-10",
+        "2028-04-09",
+        "2028-05-08",
+        "2028-06-06",
+        "2028-07-06",
+        "2028-08-04",
+        "2028-09-03",
+        "2028-10-03",
+        "2028-11-01",
+        "2028-12-01",
+        "2028-12-31"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/vrats/purnimasidates.html?year=2028"
+    },
+    {
+      "id": "purnima-vrat",
+      "year": 2029,
+      "dates": [
+        "2029-01-30",
+        "2029-02-28",
+        "2029-03-29",
+        "2029-04-28",
+        "2029-05-27",
+        "2029-06-25",
+        "2029-07-25",
+        "2029-08-23",
+        "2029-09-22",
+        "2029-10-21",
+        "2029-11-20",
+        "2029-12-20"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/vrats/purnimasidates.html?year=2029"
+    },
+    {
+      "id": "masik-krishna-janmashtami",
+      "year": 2026,
+      "dates": [
+        "2026-01-10",
+        "2026-02-09",
+        "2026-03-11",
+        "2026-04-09",
+        "2026-05-09",
+        "2026-06-08",
+        "2026-07-07",
+        "2026-08-05",
+        "2026-09-04",
+        "2026-10-03",
+        "2026-11-01",
+        "2026-12-01",
+        "2026-12-30"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/vrats/krishna-janmashtami-dates.html?year=2026"
+    },
+    {
+      "id": "masik-krishna-janmashtami",
+      "year": 2027,
+      "dates": [
+        "2027-01-29",
+        "2027-02-27",
+        "2027-03-29",
+        "2027-04-28",
+        "2027-05-28",
+        "2027-06-26",
+        "2027-07-26",
+        "2027-08-25",
+        "2027-09-23",
+        "2027-10-22",
+        "2027-11-20",
+        "2027-12-20"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/vrats/krishna-janmashtami-dates.html?year=2027"
+    },
+    {
+      "id": "masik-krishna-janmashtami",
+      "year": 2028,
+      "dates": [
+        "2028-01-18",
+        "2028-02-17",
+        "2028-03-17",
+        "2028-04-16",
+        "2028-05-16",
+        "2028-06-14",
+        "2028-07-14",
+        "2028-08-13",
+        "2028-09-11",
+        "2028-10-11",
+        "2028-11-09",
+        "2028-12-08"
+      ],
+      "complete": true,
+      "source": [
+        "https://www.drikpanchang.com/festivals/month/festivals-january.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-february.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-march.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-april.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-may.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-june.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-july.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-august.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-september.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-october.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-november.html?year=2028",
+        "https://www.drikpanchang.com/festivals/month/festivals-december.html?year=2028"
+      ]
+    },
+    {
+      "id": "masik-krishna-janmashtami",
+      "year": 2029,
+      "dates": [
+        "2029-03-07",
+        "2029-06-03",
+        "2029-08-02",
+        "2029-09-01",
+        "2029-09-30",
+        "2029-10-30",
+        "2029-11-28"
+      ],
+      "complete": false,
+      "source": [
+        "https://www.drikpanchang.com/festivals/month/festivals-march.html?year=2029",
+        "https://www.drikpanchang.com/festivals/month/festivals-june.html?year=2029",
+        "https://www.drikpanchang.com/festivals/month/festivals-august.html?year=2029",
+        "https://www.drikpanchang.com/festivals/month/festivals-september.html?year=2029",
+        "https://www.drikpanchang.com/festivals/month/festivals-october.html?year=2029",
+        "https://www.drikpanchang.com/festivals/month/festivals-november.html?year=2029"
+      ]
+    },
+    {
+      "id": "ganga-dussehra",
+      "year": 2026,
+      "dates": [
+        "2026-05-25"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2026"
+    },
+    {
+      "id": "ganga-dussehra",
+      "year": 2027,
+      "dates": [
+        "2027-06-13"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2027"
+    },
+    {
+      "id": "ganga-dussehra",
+      "year": 2028,
+      "dates": [
+        "2028-06-02"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2028"
+    },
+    {
+      "id": "ganga-dussehra",
+      "year": 2029,
+      "dates": [
+        "2029-06-21"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2029"
+    },
+    {
+      "id": "rishi-panchami",
+      "year": 2026,
+      "dates": [
+        "2026-09-15"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2026"
+    },
+    {
+      "id": "rishi-panchami",
+      "year": 2027,
+      "dates": [
+        "2027-09-04"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2027"
+    },
+    {
+      "id": "rishi-panchami",
+      "year": 2028,
+      "dates": [
+        "2028-08-24"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2028"
+    },
+    {
+      "id": "rishi-panchami",
+      "year": 2029,
+      "dates": [
+        "2029-09-12"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/calendars/hindu/hinducalendar.html?year=2029"
+    },
+    {
+      "id": "janmashtami",
+      "year": 2026,
+      "dates": [
+        "2026-09-04"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2026"
+    },
+    {
+      "id": "janmashtami",
+      "year": 2027,
+      "dates": [
+        "2027-08-25"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2027"
+    },
+    {
+      "id": "janmashtami",
+      "year": 2028,
+      "dates": [
+        "2028-08-13"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2028"
+    },
+    {
+      "id": "janmashtami",
+      "year": 2029,
+      "dates": [
+        "2029-09-01"
+      ],
+      "complete": true,
+      "source": "https://www.drikpanchang.com/dashavatara/lord-krishna/krishna-janmashtami-date-time.html?year=2029"
+    }
+  ]
+}

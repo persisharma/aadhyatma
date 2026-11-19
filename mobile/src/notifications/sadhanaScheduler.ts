@@ -6,11 +6,17 @@
  * expo-notifications glue around it — mirroring `vratScheduler.ts`.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap, familyWindowDays } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
+import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planSadhanaReminders,
   formatSadhanaReminderContent,
   SADHANA_NOTIF_PREFIX,
+  SADHANA_WINDOW_DAYS,
   type SadhanaReminderInput,
 } from './sadhanaReminderPure';
 
@@ -22,54 +28,51 @@ export type SadhanaNotificationPayload = {
 
 /** Cancel every sadhana reminder we own, leaving other notifications untouched. */
 export async function cancelAllSadhanaReminders(): Promise<void> {
-  const pending = await Notifications.getAllScheduledNotificationsAsync();
-  await Promise.all(
-    pending
-      .filter((n) => n.identifier.startsWith(SADHANA_NOTIF_PREFIX))
-      .map((n) => Notifications.cancelScheduledNotificationAsync(n.identifier))
-  );
+  await settleAfter('sadhana', cancelNotificationFamily(SADHANA_NOTIF_PREFIX));
 }
 
 /**
- * Re-arm sadhana reminders: cancel ours, then schedule the planned set.
+ * Re-arm sadhana reminders: replace ours with the planned set.
  * Idempotent and safe to call on every app foreground. Returns the count
  * actually scheduled.
  */
 export async function scheduleSadhanaReminders(
   inputs: SadhanaReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  await cancelAllSadhanaReminders();
+  const { planned } = planSadhanaReminders(
+    inputs,
+    now,
+    familyWindowDays(Platform.OS, 'sadhana', SADHANA_WINDOW_DAYS),
+    familyCap(Platform.OS, 'sadhana')
+  );
 
-  const { planned } = planSadhanaReminders(inputs, now);
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('sadhana', lang) : undefined;
 
-  let scheduled = 0;
-  for (const p of planned) {
-    const { title, body } = formatSadhanaReminderContent(p);
+  const slots: FamilySlot[] = planned.map((p) => {
+    const { title, body } = formatSadhanaReminderContent(p, lang);
     const payload: SadhanaNotificationPayload = {
       type: 'sadhana-reminder',
       programId: p.programId,
       dateKey: p.dateKey,
     };
-    try {
-      await Notifications.scheduleNotificationAsync({
-        identifier: p.identifier,
-        content: {
-          title,
-          body,
-          data: payload as unknown as Record<string, unknown>,
-          sound: 'default',
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.DATE,
-          date: p.fireDate,
-        },
-      });
-      scheduled += 1;
-    } catch {
-      // Per-slot scheduling failure is non-fatal.
-    }
-  }
+    return {
+      identifier: p.identifier,
+      content: {
+        title,
+        body,
+        data: payload as unknown as Record<string, unknown>,
+        sound: 'default',
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: p.fireDate,
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
+    };
+  });
 
-  return scheduled;
+  // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
+  return settleAfter('sadhana', armNotificationFamily(SADHANA_NOTIF_PREFIX, slots));
 }

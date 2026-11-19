@@ -2,7 +2,7 @@
   "chapter": 2,
   "titleHi": "ध्यानम्",
   "titleEn": "Dhyanam",
-  "verseCount": 8,
+  "verseCount": 9,
   "verses": [
     {
       "id": "vs-2-0",
@@ -16,8 +16,8 @@
         "Vishnu Sahasranama",
         "Dhyanam (Meditation)"
       ],
-      "meaningHi": "लाभ:\n\nध्यानम् भाग में विष्णु के दिव्य स्वरूप का ध्यान किया जाता है। इसके पाठ से मन एकाग्र होता है, विष्णु के स्वरूप का साक्षात् दर्शन ध्यान में होता है, और सहस्रनाम पाठ की गहराई बढ़ती है। यह भाग ध्यान-साधना का अंग है — जो मुख्य स्तोत्र पाठ से पहले मन को तैयार करता है।\n\nकथा:\n\nइन ध्यान-श्लोकों में विष्णु को क्षीरसागर (दूध के सागर) में शेषनाग पर विराजमान दिखाया गया है। क्षीरसागर वैकुण्ठ से पहले विष्णु का निवास है — जहाँ वे शेषनाग पर शयन करते हैं और लक्ष्मी उनके चरण दबाती हैं। समुद्र मंथन भी इसी सागर में हुआ था।",
-      "meaningEn": "Benefits:\n\nThe Dhyanam section involves meditation upon Vishnu's divine form. Its recitation concentrates the mind, enables direct visualization of Vishnu's form in meditation, and deepens the Sahasranama recitation. This section is part of meditative practice — preparing the mind before the main stotram recitation.\n\nStory:\n\nThese meditation verses describe Vishnu reclining on Shesha Naga in the Milky Ocean (Kshirasagara). The Milky Ocean is Vishnu's abode before Vaikuntha — where he reclines on the serpent Shesha while Lakshmi presses his feet. The churning of the ocean (Samudra Manthan) also took place in this very ocean."
+      "meaningHi": "इन ध्यान-पदों में विष्णु के क्षीरसागरवासी, विश्वरूप, शान्त तथा कृष्णरूप का स्मरण होता है। सात ध्यान-श्लोकों के साथ वासुदेव का नमस्कार-मन्त्र रखा गया है। ध्यान पाठक को मुख्य स्तोत्र के लिए मन स्थिर करने का अवसर देता है।\n\nकमल, शंख, चक्र, कौस्तुभ और श्रीवत्स जैसे चिह्न विष्णु के सौन्दर्य और संरक्षण का बोध कराते हैं। अंतिम ध्यान में रुक्मिणी और सत्यभामा के साथ कृष्ण का आश्रय लिया जाता है।",
+      "meaningEn": "These meditation verses contemplate Vishnu at the milk-ocean, as the universe, in peaceful form and as Krishna. Seven meditation stanzas accompany the salutation to Vasudeva. They offer a way to settle attention before the main hymn.\n\nLotus, conch, discus, Kaustubha and Srivatsa evoke beauty and protection. The final meditation takes refuge in Krishna together with Rukmini and Satyabhama."
     },
     {
       "id": "vs-2-1",
@@ -141,15 +141,36 @@
       ],
       "meaningHi": "शंख और चक्र सहित, मुकुट और कुण्डल सहित, पीले वस्त्र सहित, कमल जैसे नेत्रों वाले, वक्षस्थल पर हार और कौस्तुभ मणि की शोभा सहित, चतुर्भुज विष्णु को मैं शिर झुकाकर प्रणाम करता हूँ।\n\nयह ध्यान का अन्तिम श्लोक है — विष्णु की सम्पूर्ण मूर्ति का वर्णन। शंख (पाञ्चजन्य), चक्र (सुदर्शन), मुकुट (किरीट), कुण्डल, पीताम्बर, कमलनयन, हार, और कौस्तुभ — ये विष्णु के आठ प्रमुख चिह्न हैं।",
       "meaningEn": "I bow my head to the four-armed Vishnu — with conch and discus, wearing a crown and earrings, clad in yellow garments, with lotus-like eyes, chest adorned with a garland and the splendor of the Kaustubha gem.\n\nThis is the final dhyana verse — a complete description of Vishnu's iconic form. Conch (Panchajanya), discus (Sudarshana), crown (Kirita), earrings, yellow garment, lotus eyes, garland, and Kaustubha — these are Vishnu's eight primary insignia."
+    },
+    {
+      "id": "vs-2-8",
+      "chapter": 2,
+      "number": 8,
+      "sanskrit": [
+        "छायायां पारिजातस्य हेमसिंहासनोपरि",
+        "आसीनमम्बुदश्याममायताक्षमलंकृतम्।",
+        "चन्द्राननं चतुर्बाहुं श्रीवत्साङ्कितवक्षसं",
+        "रुक्मिणीसत्यभामाभ्यां सहितं कृष्णमाश्रये॥"
+      ],
+      "linesEn": [
+        "chhāyāyāṃ pārijātasya hemasiṃhāsanopari",
+        "āsīnamambudaśhyāmamāyatākṣhamalaṃkṛitam",
+        "chandrānanaṃ chaturbāhuṃ śhrīvatsāṅkitavakṣhasaṃ",
+        "rukmiṇīsatyabhāmābhyāṃ sahitaṃ kṛiṣṇamāśhraye"
+      ],
+      "meaningHi": "पारिजात की छाया में स्वर्ण-सिंहासन पर बैठे, मेघश्याम, विशाल नेत्रों और अलंकारों से शोभित कृष्ण का मैं आश्रय लेता हूँ। उनका मुख चन्द्रमा जैसा, चार भुजाएँ और वक्ष पर श्रीवत्स है; रुक्मिणी और सत्यभामा उनके साथ हैं। यह ध्यान कृष्ण के सौम्य राजसी रूप में मन टिकाता है।",
+      "meaningEn": "I take refuge in Krishna seated on a golden throne beneath the parijata tree: cloud-dark, wide-eyed and adorned, moon-faced and four-armed, with Srivatsa on his chest. Rukmini and Satyabhama accompany him. This meditation settles attention upon Krishna’s gracious, regal presence."
     }
   ],
   "source": {
-    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "baseText": "Vishnu Sahasranama: complete 107-verse thousand-name hymn, followed by the traditional protection stanza; accompanying invocation and closing selections are identified separately. Ancient Sanskrit with original Vedansh explanations for additions.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
-      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
-      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+      "https://www.drikpanchang.com/deities-namavali/gods/lord-vishnu/stotram/vishnu-sahasranama-stotram.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_dhyanam.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_phala.html"
     ],
-    "retrievedOn": "2026-05-30"
+    "retrievedOn": "2026-11-17"
   }
 }

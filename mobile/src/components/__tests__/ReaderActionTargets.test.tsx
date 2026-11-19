@@ -17,9 +17,9 @@ function render(element: React.ReactElement) {
 
 describe('reader action targets', () => {
   test.each([
-    ['bookmark', <BookmarkButton isBookmarked={false} onToggle={() => undefined} />, 34],
-    ['share', <ShareButton onPress={() => undefined} />, 34],
-    ['back', <ReaderHeader title="Chalisa" onBack={() => undefined} sideWidth={44} />, 44],
+    ['bookmark', <BookmarkButton key="bookmark" isBookmarked={false} onToggle={() => undefined} />, 34],
+    ['share', <ShareButton key="share" onPress={() => undefined} />, 34],
+    ['back', <ReaderHeader key="back" title="Chalisa" onBack={() => undefined} sideWidth={44} />, 44],
   ])('%s has an actual minimum target while retaining its visible circle', (_, element, circleSize) => {
     const tree = render(element as React.ReactElement);
     const action = tree.root.findAll(node => node.props.accessibilityRole === 'button')[0];

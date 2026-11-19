@@ -1,14 +1,19 @@
+import ReadingLinks from '@/components/ReadingLinks';
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
+import { contentByLang } from '@/utils/localize';
+import { titleFontByLang } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library, type LibraryEntry } from '@/data/texts';
 import { categories } from '@/data/categories';
 import { getCategoryBackground } from '@/data/backgrounds';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import FocusedLightStatusBar from '@/components/FocusedLightStatusBar';
 import LibraryCard from '@/components/LibraryCard';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
@@ -17,7 +22,7 @@ import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useResumeSheetCoverage } from '@/components/useResumeSheetCoverage';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { navigateReadingLink, isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useTourTarget } from '@/components/tour/tourTargets';
@@ -38,7 +43,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
 
   const backgroundImage = useMemo(() => getCategoryBackground(categoryId), [categoryId]);
   const categoryMeta = categories.find((c) => c.id === categoryId);
-  const title = orderTitlesByLanguage(lang, categoryMeta?.nameHi ?? '', categoryMeta?.nameEn ?? '', {
+  const title = orderTitlesByLanguage(lang, route.params.practice ? 'जप' : categoryMeta?.nameHi ?? '', route.params.practice ? 'Japa' : categoryMeta?.nameEn ?? '', {
     devPrimary: 16,
     devSecondary: 12,
     latPrimary: 18,
@@ -70,7 +75,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
+      <FocusedLightStatusBar />
       <BackgroundLayer source={backgroundImage} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         {/* Top bar */}
@@ -78,7 +83,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.backBtn,
@@ -132,10 +137,20 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           />
         </View>
 
-        <ScrollView
+        {route.params.practice && <View style={{flexDirection:'row',paddingHorizontal:spacing.xxl,gap:8,marginVertical:8}}>
+          {(['japam','stotram'] as const).map(id=><Pressable key={id} testID={'practice-tab-'+id} accessibilityRole="tab"
+            accessibilityState={{selected:categoryId===id}} onPress={()=>navigation.setParams({categoryId:id})}
+            style={{flex:1,minHeight:44,alignItems:'center',justifyContent:'center',backgroundColor:categoryId===id?colors.saffronDeep:colors.parchmentSoft,borderRadius:14}}>
+            <Text style={{fontFamily:titleFontByLang(lang),color:categoryId===id?colors.onPrimary:colors.ink}}>{id==='japam'?contentByLang(lang,'मंत्र','Mantra'):contentByLang(lang,'स्तोत्रम्','Stotram')}</Text>
+          </Pressable>)}
+        </View>}
+        <ScrollView key={categoryId}
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
+          {categoryId === 'stotram' && (
+            <ReadingLinks onOpen={(id) => navigateReadingLink(navigation, id)} />
+          )}
           {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
             const card = <LibraryCard entry={entry} onPress={onPress} />;

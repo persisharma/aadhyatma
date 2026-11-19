@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { matchesLunarTithiRuleOnDate, resolveObservancesForYear } from '../festivalEngine';
+import { isObservanceDataReady, matchesLunarTithiRuleOnDate, resolveObservancesForYear, resolveObservancesForYearLive } from '../festivalEngine';
 import { getRuleById } from '../vratCatalog';
 
 // CI guard for the "Janmashtami one lunar month early" class of bug. The full cross-check
@@ -13,8 +13,23 @@ import { getRuleById } from '../vratCatalog';
 // for years (Sept 2026 audit) — a day off is a wrong date, not a rounding error.
 const iso = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+// The published references below start in 2023, a year before the baked table
+// (2024–2035). The app fills such a year from a background scan (see
+// `uncoveredYear.test.ts`), so here it is read straight from the live scan — the
+// same rules, resolved once per year.
+const liveYears = new Map<number, ReturnType<typeof resolveObservancesForYearLive>>();
+function yearObservances(year: number) {
+  if (isObservanceDataReady(year, 'purnimant')) return resolveObservancesForYear(year, 'purnimant');
+  let live = liveYears.get(year);
+  if (!live) {
+    live = resolveObservancesForYearLive(year, 'purnimant');
+    liveYears.set(year, live);
+  }
+  return live;
+}
+
 function engineDate(id: string, year: number): string | null {
-  const o = resolveObservancesForYear(year, 'purnimant').find((x) => x.rule.id === id);
+  const o = yearObservances(year).find((x) => x.rule.id === id);
   return o ? iso(o.date) : null;
 }
 const dayDiff = (a: string, b: string) => Math.abs((new Date(a).getTime() - new Date(b).getTime()) / 86400000);
@@ -102,7 +117,7 @@ const MONTHLY_PUBLISHED_2026: Record<string, string[]> = {
   'masik-shivaratri': ['03-17', '04-15', '05-15', '09-09', '11-07', '12-07'],
   'pradosh-vrat-shukla': ['01-30', '04-28'],
   'masik-kalashtami': ['01-10', '02-09', '03-11', '04-10', '05-09', '06-08', '07-07', '08-05', '09-04', '10-03', '11-01', '12-01', '12-30'],
-  'purnima-vrat': ['01-02', '02-01', '03-02', '05-01', '07-28', '08-27', '09-26', '11-24', '12-23'],
+  'purnima-vrat': ['01-03', '02-01', '03-03', '05-01', '07-29', '08-27', '09-26', '11-24', '12-23'],
   'shree-satyanarayan-vrat': ['02-01', '03-03', '04-01', '05-01', '05-30', '06-29', '08-27', '11-24', '12-23'],
   'skanda-sashti': ['02-22', '04-22', '05-21', '06-19', '07-19', '08-17', '09-16', '10-16'],
   'masik-durgashtami': ['01-26', '02-24', '03-26', '04-24', '05-23', '06-22', '07-21', '08-20', '09-19', '10-19', '11-17', '12-17'],
@@ -144,7 +159,7 @@ const JANMASHTAMI_PUBLISHED: Record<number, { smarta: string; vaishnava: string 
   2026: { smarta: '2026-09-04', vaishnava: null },
   2027: { smarta: '2027-08-25', vaishnava: null },
   2028: { smarta: '2028-08-13', vaishnava: null },
-  2029: { smarta: '2029-08-31', vaishnava: '2029-09-01' },
+  2029: { smarta: '2029-09-01', vaishnava: null },
 };
 // Ekadashi — Dharmasindhu (Drik's Smarta + "Vaishnava <name> Ekadashi"). Covers
 // every pattern: Dashami at arunodaya (Vijaya 2024), Ekadashi on two sunrises →
@@ -236,7 +251,7 @@ const SANKASHTI_2025 = [
 ];
 
 function engineDates(id: string, year: number): string[] {
-  return resolveObservancesForYear(year, 'purnimant')
+  return yearObservances(year)
     .filter((x) => x.rule.id === id)
     .map((x) => iso(x.date));
 }

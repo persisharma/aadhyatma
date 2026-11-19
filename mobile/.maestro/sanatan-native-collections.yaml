@@ -1,0 +1,46 @@
+# Capture every approved painting in actual native collection/reader context.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: basics }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: deity }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: thirty }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: dikpal }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: graha }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: forms }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: symbols }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: plants }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: temples }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: elements }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: time }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: texts }
+- runFlow:
+    file: _sanatan-collection-journey.yaml
+    env: { TOPIC: rishis }

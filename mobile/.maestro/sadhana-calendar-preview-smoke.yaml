@@ -94,7 +94,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/vedansh-sankalp-preview
 
 # ── Cleanup — Back to the (active) detail, then set the sankalp aside ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Set this sankalp aside"

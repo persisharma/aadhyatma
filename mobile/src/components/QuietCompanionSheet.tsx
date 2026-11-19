@@ -13,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { useFontScale } from '@/contexts/FontScaleContext';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { readerIllustrationAsset } from '@/data/readerIllustrationAsset';
@@ -93,7 +94,7 @@ export default function QuietCompanionSheet({
                   {onBack && (
                     <Pressable
                       onPress={onBack}
-                      accessibilityLabel="Back"
+                      accessibilityLabel={backLabel(lang)}
                       accessibilityRole="button"
                       disabled={busy}
                       style={styles.back}

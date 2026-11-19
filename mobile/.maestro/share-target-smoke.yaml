@@ -50,25 +50,28 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share verse"
 - waitForAnimationToEnd
 
-# The picker — all three destinations plus the per-verse hashtag preview. The
-# preview exposes "Hashtags: #…", and Hanuman Chalisa must contribute its own text
-# and deity tags rather than a generic block.
+# Styles and languages are above the measured preview. Destinations scroll below it.
+- assertVisible: "Card style: Current card"
+- tapOn: "Card style: Daily Bhakti card"
+- tapOn: "Change card style"
+- tapOn: "Card style: Current card"
+- assertVisible: { id: current-card-preview }
+- tapOn: "Card language: English"
+- scrollUntilVisible:
+    element: { text: "Share as Instagram story or reel" }
+    direction: DOWN
 - assertVisible: "Share on Instagram"
 - assertVisible: "Share as Instagram story or reel"
-# The destination rows expose the crop trade-off through their accessibility
-# hints; output dimensions are covered by shareVerseTarget.test.tsx.
-- assertVisible: "Cancel"
+- scrollUntilVisible:
+    element: { text: ".*Hashtags: .*#HanumanChalisa.*" }
+    direction: DOWN
 - assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
 - assertVisible: ".*Hashtags: .*#JaiHanuman.*"
-
-# §39.8: the plain-text row and the card-language chips. Switching the card to
-# English must keep the sheet open with the same verse's tags (they follow the card
-# language, and Hanuman Chalisa's text tag exists in every language).
+- scrollUntilVisible:
+    element: { text: "Send as text" }
+    direction: DOWN
 - assertVisible: "Send as text"
-- assertVisible: "Card language: English"
-- tapOn: "Card language: English"
-- assertVisible: "Share on Instagram"
-- assertVisible: ".*Hashtags: .*#HanumanChalisa.*"
+- assertVisible: "Cancel"
 
 # Cancel closes the picker and leaves the reader intact — no native sheet opened.
 - tapOn: "Cancel"

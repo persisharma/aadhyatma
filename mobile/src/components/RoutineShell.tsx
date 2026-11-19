@@ -62,11 +62,16 @@ export function RoutineButton({
   onPress,
   variant = 'solid',
   disabled,
+  accessibilityLabel,
+  testID,
 }: {
   label: string;
   onPress: () => void;
   variant?: 'solid' | 'ghost';
   disabled?: boolean;
+  /** Stable English label for screen readers/e2e when `label` is in an Indic script. */
+  accessibilityLabel?: string;
+  testID?: string;
 }) {
   const { colors, spacing, radii, typography } = useTheme();
   const { lang } = useGitaLanguage();
@@ -76,6 +81,9 @@ export function RoutineButton({
       onPress={onPress}
       disabled={disabled}
       accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={disabled ? { disabled: true } : undefined}
+      testID={testID}
       style={{
         backgroundColor: ghost ? 'transparent' : colors.saffron,
         borderWidth: ghost ? 1 : 0,

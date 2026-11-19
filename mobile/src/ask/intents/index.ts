@@ -347,7 +347,6 @@ const vratHow: AskIntent = {
       headline: L(rule.nameHi, rule.nameEn),
       lines,
       working: [`rule ${rule.id} → upvasId ${u.id} (status: verified)`],
-      provenance: L('स्रोत-सत्यापित उपवास विधि (PRD-09/P4)', 'Source-verified fasting guidance (PRD-09/P4)'),
       actions: [observanceAction(rule.id, L('पूरा विवरण', 'Full details'))],
       confidence: 'exact',
     };
@@ -386,7 +385,6 @@ const vratFood: AskIntent = {
       lines,
       working: [`${rule ? `rule ${rule.id} → ` : 'default → '}bhogId ${b.id} (status: verified)`],
       note: L(b.traditionNoteHi, b.traditionNoteEn),
-      provenance: L('स्रोत-सत्यापित (PRD-23)', 'Source-verified (PRD-23)'),
       actions: rule ? [observanceAction(rule.id, L('व्रत विवरण', 'Details'))] : [{ label: L('व्रत सूची', 'Vrat catalog'), target: { tab: 'panchang', screen: 'ObservanceList', params: { category: 'upavas' } } }],
       confidence: entry ? 'exact' : 'likely',
     };
@@ -410,7 +408,7 @@ const kathaFind: AskIntent = {
       tag: L('कथा', 'Katha'),
       headline: L(k.titleHi, k.titleEn),
       sub: L(rule.nameHi, rule.nameEn),
-      lines: [{ label: L('स्रोत', 'Source'), value: L(k.sourceNoteHi, k.sourceNoteEn) }],
+      lines: [{ label: L('पाठ', 'Reading'), value: L(`${k.sections.length} खण्ड`, `${k.sections.length} sections`) }],
       working: [`rule ${rule.id} → kathaId ${k.id}`],
       actions: [{ label: L('कथा पढ़ें', 'Read katha'), target: { tab: 'home', screen: 'VratKathaReader', params: { kathaId: k.id } } }],
       confidence: 'exact',
@@ -501,7 +499,6 @@ const bhogOffer: AskIntent = {
       lines,
       working: [`${via} → bhogId ${b.id} (status: verified)`],
       note: L(b.traditionNoteHi, b.traditionNoteEn),
-      provenance: L('स्रोत-सत्यापित भोग (PRD-23)', 'Source-verified offerings (PRD-23)'),
       actions: [
         ...(b.observanceIds[0] ? [observanceAction(b.observanceIds[0], L('व्रत/पर्व विवरण', 'Observance'))] : []),
         ...(b.vidhiIds[0] ? [{ label: L('पूजा विधि', 'Puja vidhi'), target: { tab: 'home', screen: 'VidhiDetail', params: { vidhiId: b.vidhiIds[0] } } } as AskAction] : []),
@@ -536,7 +533,6 @@ const bhogAvoid: AskIntent = {
       lines: avoidRows.map((i) => ({ label: L('न चढ़ाएँ', 'Do not offer'), value: L(i.textHi, i.textEn), tone: 'avoid' as const })),
       working: [`${via} → bhogId ${b.id}.doNotOffer (status: verified)`],
       note: L(b.traditionNoteHi, b.traditionNoteEn),
-      provenance: L('स्रोत-सत्यापित (PRD-23)', 'Source-verified (PRD-23)'),
       actions: [...(b.observanceIds[0] ? [observanceAction(b.observanceIds[0], L('क्या चढ़ाएँ', 'What to offer'))] : [])],
       confidence: 'exact',
     };

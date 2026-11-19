@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  InteractionManager,
+  Linking,
   Modal,
   Pressable,
   StyleSheet,
@@ -14,55 +14,28 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
-import { CITIES, cityMatchesQuery, type City } from '@/panchang/locations';
+import type { City } from '@/panchang/locations';
 import {
-  isPincodeQuery,
-  isPlaceQuery,
-  lookupPincode,
   pincodeCityId,
-  placesForPincode,
-  searchPlaces,
   toDevanagariDigits,
   warmPincodeTable,
   warmPlaceIndex,
   type PincodeEntry,
   type PlaceMatch,
 } from '@/panchang/pincodes';
+import {
+  buildLocationSearchRows,
+  labelIsPlace,
+  locationSearchRowKey,
+  placesSummary,
+  type LocationSearchRow,
+} from '@/panchang/locationSearch';
 import { captionFont } from '@/utils/scriptFont';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
-
-type Row =
-  | { kind: 'header'; id: string; hi: string; en: string }
-  | { kind: 'city'; city: City }
-  | { kind: 'pincode'; entry: PincodeEntry }
-  | { kind: 'pincode-missing'; query: string }
-  | { kind: 'place'; place: PlaceMatch }
-  | { kind: 'no-match'; query: string };
-
-/** A town office within this distance of a same-named listed city IS that city. */
-const SAME_PLACE_KM = 25;
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const DEVANAGARI = /[\u0900-\u097F]/;
-
-function sameNamedCityNearby(place: PlaceMatch, cities: City[]): boolean {
-  const name = place.name.toLowerCase();
-  return cities.some((city) => {
-    if (city.nameEn.toLowerCase() !== name) return false;
-    const cosLat = Math.cos((city.latitude * Math.PI) / 180);
-    const dLat = city.latitude - place.entry.latitude;
-    const dLng = (city.longitude - place.entry.longitude) * cosLat;
-    return Math.sqrt(dLat * dLat + dLng * dLng) * 111.2 <= SAME_PLACE_KM;
-  });
-}
-
-/** "Kolhapur RS, Shahupuri +11" — what a bare pincode actually covers. */
-function placesSummary(pincode: string): string {
-  const places = placesForPincode(pincode);
-  if (places.length === 0) return '';
-  const shown = places.slice(0, 3).join(', ');
-  return places.length > 3 ? `${shown} +${places.length - 3}` : shown;
-}
 
 /**
  * City/village/pincode/GPS picker for the panchang reference location.
@@ -83,6 +56,9 @@ function placesSummary(pincode: string): string {
  * Devanagari place names (see `pincodes.ts`), and nobody scrolls 165k rows. They surface
  * only when the query is a pincode or a place name, which is also what keeps their 2.5 MB
  * off the launch path — they load when this sheet opens, not when the app starts.
+ *
+ * The rows come from `buildLocationSearchRows` (`panchang/locationSearch.ts`), shared with
+ * the Kundali birth-place sheet so both pickers always find the same places.
  */
 export default function LocationPickerModal({ visible, onClose }: {
   visible: boolean;
@@ -97,48 +73,14 @@ export default function LocationPickerModal({ visible, onClose }: {
   // name typed resolves instantly instead of paying for the load mid-keystroke.
   useEffect(() => {
     if (!visible) return;
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       warmPincodeTable();
       warmPlaceIndex();
     });
     return () => handle.cancel();
   }, [visible]);
 
-  const rows = useMemo<Row[]>(() => {
-    const trimmed = query.trim();
-    if (isPincodeQuery(trimmed)) {
-      const entry = lookupPincode(trimmed);
-      return entry
-        ? [
-            { kind: 'header', id: 'h-pincode', hi: 'पिनकोड', en: 'Pincode' },
-            { kind: 'pincode', entry },
-          ]
-        : [{ kind: 'pincode-missing', query: trimmed }];
-    }
-    const matches = CITIES.filter((city) => cityMatchesQuery(city, query));
-    const cities = matches.filter((city) => !city.districtEn);
-    const tehsils = matches.filter((city) => city.districtEn);
-    // A town office that is a listed city (Pokaran S.O beside the Pokaran tehsil) would
-    // only repeat it in Latin; the bilingual city row is the better answer.
-    const places = isPlaceQuery(trimmed)
-      ? searchPlaces(trimmed).filter((place) => !sameNamedCityNearby(place, matches))
-      : [];
-    const out: Row[] = [];
-    if (cities.length > 0) {
-      out.push({ kind: 'header', id: 'h-cities', hi: 'प्रमुख शहर', en: 'Major cities' });
-      out.push(...cities.map((city) => ({ kind: 'city' as const, city })));
-    }
-    if (tehsils.length > 0) {
-      out.push({ kind: 'header', id: 'h-tehsils', hi: 'राजस्थान · तहसील', en: 'Rajasthan · tehsils' });
-      out.push(...tehsils.map((city) => ({ kind: 'city' as const, city })));
-    }
-    if (places.length > 0) {
-      out.push({ kind: 'header', id: 'h-places', hi: 'कस्बे व गाँव', en: 'Towns & villages' });
-      out.push(...places.map((place) => ({ kind: 'place' as const, place })));
-    }
-    if (out.length === 0 && trimmed.length > 0) out.push({ kind: 'no-match', query: trimmed });
-    return out;
-  }, [query]);
+  const rows = useMemo<LocationSearchRow[]>(() => buildLocationSearchRows(query), [query]);
 
   const onUseMyLocation = async () => {
     const result = await requestDeviceLocation();
@@ -205,6 +147,29 @@ export default function LocationPickerModal({ visible, onClose }: {
                 )}
               </Text>
             )}
+            {gpsStatus === 'denied' && (
+              <Pressable
+                onPress={() => { void Linking.openSettings().catch(() => undefined); }}
+                accessibilityRole="button"
+                accessibilityLabel={contentByLang(lang, 'सेटिंग्स खोलें', 'Open Settings')}
+                hitSlop={10}
+                testID="location-open-settings"
+                style={({ pressed }) => [styles.settingsLink, pressed && { opacity: 0.7 }]}
+              >
+                <Text style={{ fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, lineHeight: 20, color: colors.saffronDeep }}>
+                  {contentByLang(lang, 'सेटिंग्स खोलें', 'Open Settings')}
+                </Text>
+              </Pressable>
+            )}
+            {gpsStatus === 'outside' && (
+              <Text testID="location-outside-india" style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
+                {meaningByLang(
+                  lang,
+                  'आपका स्थान भारत के बाहर है। पंचांग भारत के किसी स्थान के लिए बनता है — नीचे अपना शहर या गाँव खोजें।',
+                  'Your location is outside India. The Panchang is calculated for a place in India — search for your town or village below.'
+                )}
+              </Text>
+            )}
             {gpsStatus === 'error' && (
               <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 12, lineHeight: 18, color: colors.inkMuted }}>
                 {meaningByLang(
@@ -242,14 +207,7 @@ export default function LocationPickerModal({ visible, onClose }: {
 
           <FlatList
             data={rows}
-            keyExtractor={(row) => {
-              if (row.kind === 'header') return row.id;
-              if (row.kind === 'pincode') return `pin-${row.entry.pincode}`;
-              if (row.kind === 'pincode-missing') return `missing-${row.query}`;
-              if (row.kind === 'place') return `place-${row.place.entry.pincode}-${row.place.name}`;
-              if (row.kind === 'no-match') return `no-match-${row.query}`;
-              return row.city.id;
-            }}
+            keyExtractor={locationSearchRowKey}
             contentContainerStyle={{ paddingHorizontal: spacing.xxl, paddingVertical: spacing.lg }}
             keyboardShouldPersistTaps="handled"
             renderItem={({ item: row }) => {
@@ -288,7 +246,7 @@ export default function LocationPickerModal({ visible, onClose }: {
                 const { place } = row;
                 const { entry } = place;
                 const selected =
-                  location.cityId === pincodeCityId(entry.pincode) && location.labelEn.startsWith(`${place.name} · `);
+                  location.cityId === pincodeCityId(entry.pincode) && labelIsPlace(location.labelEn, place.name);
                 // Title line is Latin in every language (the directory has no Devanagari
                 // names); the caption carries the Hindi — pincode digits and state.
                 const title = `${place.name} · ${entry.districtEn}`;
@@ -417,6 +375,7 @@ export default function LocationPickerModal({ visible, onClose }: {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  settingsLink: { alignSelf: 'flex-start', minHeight: 32, justifyContent: 'center' },
   safe: { flex: 1 },
   header: {
     flexDirection: 'row',

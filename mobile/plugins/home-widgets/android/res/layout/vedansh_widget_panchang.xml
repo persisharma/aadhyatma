@@ -18,6 +18,10 @@
              under the headline it qualifies, above the vrat line. -->
         <TextView android:id="@+id/widget_till" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textColor="#4A3420" android:textSize="11sp" android:textStyle="bold" android:maxLines="1" />
         <TextView android:id="@+id/widget_subtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3dp" android:textColor="#4A3420" android:textSize="12sp" android:fontFamily="serif" android:maxLines="2" />
+        <!-- The small cell's divided sunrise row (iOS systemSmall `Divider`). A 1dp
+             ImageView because RemoteViews cannot inflate a plain View; the provider
+             shows it on the compact cell only and colours it per appearance. -->
+        <ImageView android:id="@+id/widget_rule" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="5dp" android:visibility="gone" android:background="#807E5A1E" android:importantForAccessibility="no" android:contentDescription="@null" />
         <TextView android:id="@+id/widget_meta" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:textColor="#4A3420" android:textSize="11sp" android:textStyle="bold" android:maxLines="3" />
         <TextView android:id="@+id/widget_brand" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="ॐ वेदांश़" android:textColor="#7E5A1E" android:textSize="10sp" android:textStyle="bold" android:fontFamily="serif" android:maxLines="1" />
     </LinearLayout>

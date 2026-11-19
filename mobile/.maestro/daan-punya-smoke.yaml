@@ -62,12 +62,41 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "New daan"
 - tapOn: { id: "daan-cat-anna" }
+- scrollUntilVisible:
+    element: { id: "daan-entry-amount" }
+    direction: DOWN
+- tapOn: { id: "daan-entry-amount" }
+- inputText: "1,00"
+- hideKeyboard
+- scrollUntilVisible:
+    element: { id: "daan-entry-save" }
+    direction: DOWN
+- tapOn: { id: "daan-entry-save" }
+- assertVisible: { id: "daan-amount-error" }
+- assertVisible: { id: "daan-entry-screen" }
+- tapOn: { id: "daan-entry-amount" }
+- eraseText
+- inputText: "1,000.50"
+- hideKeyboard
+- assertVisible: { id: "daan-amount-preview" }
+- takeScreenshot: daan-amount-preview
 - tapOn: { id: "daan-entry-save" }
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya register"
 - assertVisible: "Anna"
 
+# ── Confirmation keeps the record until explicitly removed ──
+- tapOn: { id: "daan-entry-remove-.*", index: 0 }
+- assertVisible: { id: "daan-remove-dialog" }
+- takeScreenshot: daan-remove-confirmation
+- tapOn: { id: "daan-remove-cancel" }
+- assertNotVisible: { id: "daan-remove-dialog" }
+- assertVisible: "Anna"
+- tapOn: { id: "daan-entry-remove-.*", index: 0 }
+- tapOn: { id: "daan-remove-confirm" }
+- assertNotVisible: { id: "daan-remove-dialog" }
+
 # ── Back out cleanly ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"

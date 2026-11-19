@@ -15,6 +15,7 @@ export const practiceDeityStems: Readonly<Record<Deity, string>> = {
   parvati: 'deity-parvati-bhavani', narasimha: 'deity-narasimha-prahlad',
   dattatreya: 'deity-dattatreya', shani: 'deity-shani', kali: 'deity-kali',
   navagraha: 'deity-navagraha-icons',
+  parshuram: 'deity-parshuram',
 };
 
 export function practiceArtwork(item: RoutineItem) {

@@ -8,9 +8,20 @@ import React, {
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { JAPAM_BEADS_PER_ROUND } from '@/data/japam';
+import {
+  addSankalpJapa,
+  parseJapaSankalps,
+  takeJapaSankalp,
+  type JapaSankalp,
+  type JapaSankalpUnit,
+} from '@/data/japam/sankalp';
 import { useUserActivity } from '@/contexts/UserActivityContext';
+import { setItemWithRetry } from '@/utils/persistWithRetry';
 
 const STORAGE_KEY = '@vedansh/japam-counter';
+/** Per-mantra japa sankalps (design.md §35.2), kept apart from the counter map so
+ *  the widget's last-used ordering and the upgrader signal stay unchanged. */
+export const SANKALP_STORAGE_KEY = '@vedansh/japam-sankalp';
 
 export type JapamCounterEntry = {
   count: number;
@@ -19,10 +30,16 @@ export type JapamCounterEntry = {
 };
 
 type EntryMap = Record<string, JapamCounterEntry>;
+export type RecitationMap = Record<string, { count: number; updatedAt: number }>;
+const RECITATION_KEY = "@vedansh/stotram-recitations";
+
+type SankalpMap = Record<string, JapaSankalp>;
 
 type JapamCounterContextValue = {
   isLoading: boolean;
   entries: Readonly<EntryMap>;
+  recitations: Readonly<RecitationMap>;
+  countRecitation: (sourceId: string) => void;
   getEntry: (mantraId: string) => JapamCounterEntry;
   /** Adds `beads` (default 1) to the count, rolling over to new rounds at
    *  JAPAM_BEADS_PER_ROUND. Safe to call several times in one synchronous tick
@@ -30,8 +47,14 @@ type JapamCounterContextValue = {
   increment: (mantraId: string, beads?: number) => JapamCounterEntry;
   /** Resets only the current bead count (not round count). */
   resetBeads: (mantraId: string) => void;
-  /** Clears the entire entry — beads and rounds. */
+  /** Clears the entire entry — beads and rounds. A sankalp is kept. */
   clear: (mantraId: string) => void;
+  sankalps: Readonly<SankalpMap>;
+  getSankalp: (mantraId: string) => JapaSankalp | null;
+  /** Takes a sankalp, or retargets the active one (keeping its progress). Null for an invalid amount. */
+  takeSankalp: (mantraId: string, unit: JapaSankalpUnit, amount: number) => JapaSankalp | null;
+  /** Sets the sankalp aside (or clears a completed one). The bead counter is untouched. */
+  releaseSankalp: (mantraId: string) => void;
 };
 
 const EMPTY: JapamCounterEntry = { count: 0, rounds: 0, updatedAt: 0 };
@@ -39,14 +62,24 @@ const EMPTY: JapamCounterEntry = { count: 0, rounds: 0, updatedAt: 0 };
 const JapamCounterContext = createContext<JapamCounterContextValue>({
   isLoading: true,
   entries: {},
+  recitations: {},
+  countRecitation: () => {},
   getEntry: () => EMPTY,
   increment: () => EMPTY,
   resetBeads: () => {},
   clear: () => {},
+  sankalps: {},
+  getSankalp: () => null,
+  takeSankalp: () => null,
+  releaseSankalp: () => {},
 });
 
 export function JapamCounterProvider({ children }: { children: React.ReactNode }) {
   const [entries, setEntries] = useState<EntryMap>({});
+  const [sankalps, setSankalps] = useState<SankalpMap>({});
+  const [recitations, setRecitations] = useState<RecitationMap>({});
+  const recitationRef = useRef<RecitationMap>({});
+  const writeQueue = useRef(Promise.resolve());
   const [isLoading, setIsLoading] = useState(true);
   const { logJapaBead, logJapaRound } = useUserActivity();
 
@@ -56,9 +89,14 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
   // snapshot. Kept in sync on render too, for the async-load path.
   const entriesRef = useRef<EntryMap>({});
   entriesRef.current = entries;
+  const sankalpsRef = useRef<SankalpMap>({});
+  sankalpsRef.current = sankalps;
+  // Sankalp progress is only credited once the stored vows are known; a bead
+  // arriving earlier must never be applied to an empty map and then overwritten.
+  const sankalpsHydratedRef = useRef(false);
 
   useEffect(() => {
-    AsyncStorage.getItem(STORAGE_KEY)
+    const counts = AsyncStorage.getItem(STORAGE_KEY)
       .then((raw) => {
         if (raw) {
           try {
@@ -69,14 +107,54 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
           }
         }
       })
+      .catch(() => undefined);
+    const vows = AsyncStorage.getItem(SANKALP_STORAGE_KEY)
+      .then((raw) => {
+        if (!raw) return;
+        try {
+          const parsed = parseJapaSankalps(JSON.parse(raw));
+          sankalpsRef.current = parsed;
+          setSankalps(parsed);
+        } catch {
+          /* corrupted JSON — no sankalps */
+        }
+      })
       .catch(() => undefined)
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        sankalpsHydratedRef.current = true;
+      });
+    const hymns = AsyncStorage.getItem(RECITATION_KEY).then(raw => {
+      if (!raw) return;
+      const saved: RecitationMap = {};
+      for (const [id, value] of Object.entries(JSON.parse(raw) ?? {})) {
+        const row = value as RecitationMap[string] | null;
+        if (row && Number.isSafeInteger(row.count) && row.count > 0 && Number.isFinite(row.updatedAt)) saved[id] = row;
+      }
+      recitationRef.current = saved;
+      setRecitations(saved);
+    }).catch(() => undefined);
+    Promise.all([counts, vows, hymns]).finally(() => setIsLoading(false));
   }, []);
+
+  const countRecitation = useCallback((sourceId: string) => {
+    if (isLoading) return;
+    const current = recitationRef.current;
+    const next = {...current, [sourceId]: {count: (current[sourceId]?.count ?? 0) + 1, updatedAt: Date.now()}};
+    recitationRef.current = next;
+    setRecitations(next);
+    writeQueue.current = writeQueue.current.then(() => AsyncStorage.setItem(RECITATION_KEY, JSON.stringify(next))).catch(() => undefined);
+  }, [isLoading]);
 
   const persist = useCallback((next: EntryMap) => {
     entriesRef.current = next;
     setEntries(next);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    void setItemWithRetry(STORAGE_KEY, JSON.stringify(next));
+  }, []);
+
+  const persistSankalps = useCallback((next: SankalpMap) => {
+    sankalpsRef.current = next;
+    setSankalps(next);
+    void setItemWithRetry(SANKALP_STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const getEntry = useCallback(
@@ -96,11 +174,15 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
         updatedAt: Date.now(),
       };
       persist({ ...entriesRef.current, [mantraId]: updated });
+      const vow = sankalpsHydratedRef.current ? sankalpsRef.current[mantraId] : undefined;
+      if (vow && vow.completedAt === undefined) {
+        persistSankalps({ ...sankalpsRef.current, [mantraId]: addSankalpJapa(vow, n, updated.updatedAt) });
+      }
       logJapaBead(mantraId, n);
       if (completedRounds > 0) logJapaRound(mantraId, completedRounds);
       return updated;
     },
-    [persist, logJapaBead, logJapaRound]
+    [persist, persistSankalps, logJapaBead, logJapaRound]
   );
 
   const resetBeads = useCallback(
@@ -125,8 +207,48 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
     [persist]
   );
 
+  const getSankalp = useCallback(
+    (mantraId: string) => sankalps[mantraId] ?? null,
+    [sankalps]
+  );
+
+  const takeSankalp = useCallback(
+    (mantraId: string, unit: JapaSankalpUnit, amount: number): JapaSankalp | null => {
+      if (!sankalpsHydratedRef.current) return null;
+      const next = takeJapaSankalp(sankalpsRef.current[mantraId], unit, amount, Date.now());
+      if (next) persistSankalps({ ...sankalpsRef.current, [mantraId]: next });
+      return next;
+    },
+    [persistSankalps]
+  );
+
+  const releaseSankalp = useCallback(
+    (mantraId: string) => {
+      if (!(mantraId in sankalpsRef.current)) return;
+      const next = { ...sankalpsRef.current };
+      delete next[mantraId];
+      persistSankalps(next);
+    },
+    [persistSankalps]
+  );
+
   return (
-    <JapamCounterContext.Provider value={{ isLoading, entries, getEntry, increment, resetBeads, clear }}>
+    <JapamCounterContext.Provider
+      value={{
+        isLoading,
+        entries,
+        recitations,
+        countRecitation,
+        getEntry,
+        increment,
+        resetBeads,
+        clear,
+        sankalps,
+        getSankalp,
+        takeSankalp,
+        releaseSankalp,
+      }}
+    >
       {children}
     </JapamCounterContext.Provider>
   );

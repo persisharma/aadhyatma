@@ -29,7 +29,7 @@ jest.mock('expo-haptics', () => ({
   notificationAsync: jest.fn(),
   impactAsync: jest.fn(),
   NotificationFeedbackType: { Success: 'success' },
-  ImpactFeedbackStyle: { Light: 'light' },
+  ImpactFeedbackStyle: { Light: 'light', Medium: 'medium' },
 }));
 jest.mock('expo-linear-gradient', () => {
   const r = require('react');

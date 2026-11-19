@@ -138,7 +138,7 @@ export default function PitruKathaScreen({ navigation, route }: Props) {
             </View>
 
             <ProseParagraph style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 17, color: colors.inkMuted, textAlign: 'center', marginTop: spacing.md }}>
-              {contentByLang(lang, `स्रोत: ${katha.canonHi}`, `Source: ${katha.canonEn}`)}
+              {contentByLang(lang, katha.canonHi, katha.canonEn)}
             </ProseParagraph>
 
             {katha.ref && (

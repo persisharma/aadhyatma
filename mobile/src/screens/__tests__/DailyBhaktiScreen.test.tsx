@@ -37,18 +37,17 @@ jest.mock('react-native-safe-area-context', () => ({
 
 // Pin the tab to a known verse (a reminder-tap deep link) so the rendered
 // background is deterministic instead of following a random pool pick.
+let mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 };
+beforeEach(() => { mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 }; });
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: jest.fn() }),
   useRoute: () => ({
     key: 'DailyBhaktiTab-test',
     name: 'DailyBhaktiTab',
-    params: { sourceId: 'bhagavad-gita', chapter: 1, verseIndex: 0 },
+    params: mockDailyParams,
   }),
 }));
 
-// The docked banner drags in the routine store + navigation stack — out of
-// scope for this suite.
-jest.mock('@/components/RoutineBanner', () => () => null);
 // The setup strip needs the notification provider; it has its own suite.
 jest.mock('@/components/DailyBhaktiNudge', () => () => null);
 
@@ -70,13 +69,19 @@ test('Bhakti uses the same deity artwork, framed meaning and footer as export', 
   expect(tree!.root.findByType(DevotionalHero).props.art).toBe(art);
   expect(tree!.root.findByType(DevotionalFooter).props.art).toBe(art);
   expect(tree!.root.findByType(DevotionalVerseBody).props.meaning).toBe(verse.meaningHi);
-  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(verse.textHi.join(' '));
-  expect(tree!.root.findByType(DevotionalVerseBody).props.verseRows).toEqual(verse.textHi.map(l => l.trim()));
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(verse.textHi.map(l => l.replace(/।।1\.1।।$/, '।।')).join('\n'));
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verseRows).toEqual(verse.textHi.map(l => l.trim().replace(/।।1\.1।।$/, '।।')));
   expect(tree!.root.findByType(DevotionalVerseBody).props.verseStyle).toMatchObject({ fontSize: 23, lineHeight: 36 });
   expect(tree!.root.findAllByProps({ testID: 'devotional-meaning-frame' }).length).toBeGreaterThan(0);
   const strings = tree!.root.findAllByType(Text).map(n => n.props.children);
   expect(strings).not.toContain('Daily Verse');
   expect(strings).not.toContain('दैनिक भक्ति');
+  // The नित्य साधना routine banner lives on Home only (Nov 2026); this page
+  // must not dock it over the verse card.
+  const flat = tree!.root.findAllByType(Text).map(n => [n.props.children].flat().join(''));
+  expect(flat.some(t => t.includes('नित्य साधना') || t.includes('साधना पूर्ण'))).toBe(false);
+  expect(tree!.root.findAll(n => typeof n.props.accessibilityLabel === 'string'
+    && /साधना/.test(n.props.accessibilityLabel)).length).toBe(0);
   act(() => tree!.unmount());
 });
 
@@ -107,5 +112,37 @@ test('the language toggle re-languages the verse card in place', () => {
   expect(toggle('en').props.accessibilityState).toEqual({ selected: true });
   expect(texts()).toContain('Meaning');
   expect(texts()).not.toContain('अर्थ');
+  act(() => tree!.unmount());
+});
+
+test('the real Bhakti share button opens illustrated with both card styles and can cancel back to the same verse', async () => {
+  let tree: TestRenderer.ReactTestRenderer;
+  await act(async () => { tree = TestRenderer.create(<GitaLanguageProvider initialLang="hi"><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+  const byLabel = (label: string) => tree.root.findAll(n => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function')[0];
+  const before = tree!.root.findByType(DevotionalVerseBody).props.verse;
+  await act(async () => { byLabel('Share verse').props.onPress(); });
+  expect(byLabel('Card style: Daily Bhakti card').props.accessibilityState.checked).toBe(true);
+  act(() => byLabel('Card style: Current card').props.onPress());
+  expect(byLabel('Change card style')).toBeDefined();
+  expect(byLabel('Share to other apps')).toBeDefined();
+  act(() => byLabel('Change card style').props.onPress());
+  expect(byLabel('Card style: Current card')).toBeDefined();
+  act(() => byLabel('Cancel').props.onPress());
+  expect(tree!.root.findByType(DevotionalVerseBody).props.verse).toBe(before);
+  expect(byLabel('Card style: Current card')).toBeUndefined();
+  act(() => tree!.unmount());
+});
+
+
+test.each(['hi', 'en', 'gu', 'kn'] as const)('BG 2.47 has separate rows and one reference in %s', lang => {
+  mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 2, verseIndex: 46 };
+  let tree: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+  const body = tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.children as string;
+  const source = tree!.root.findByProps({ testID: 'devotional-share-source' }).props.children as string;
+  expect(body.split('\n')).toHaveLength(2);
+  expect(body).not.toContain('2.47');
+  expect(source.match(/2\.47/g)).toHaveLength(1);
+  expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined();
   act(() => tree!.unmount());
 });

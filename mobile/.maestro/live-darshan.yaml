@@ -1,0 +1,41 @@
+# Native acceptance: Home floating entry -> quick sheet -> list -> temple guide.
+# Does not require a temple to be broadcasting at the instant the test runs.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-home" }
+- assertVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "home-darshan-floating" }
+- assertVisible: { id: "darshan-view-all" }
+- takeScreenshot: e2e-shots/darshan-quick
+- tapOn: { id: "darshan-close" }
+- assertVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "home-darshan-floating" }
+- tapOn: { id: "darshan-view-all" }
+- assertVisible: { id: "darshan-search" }
+- takeScreenshot: e2e-shots/darshan-list
+- tapOn: { id: "darshan-temple-somnath" }
+- extendedWaitUntil:
+    visible: { id: "darshan-hero" }
+    timeout: 20000
+- assertNotVisible: { id: "darshan-youtube" }
+- assertNotVisible: { id: "darshan-website" }
+- scrollUntilVisible:
+    element: { id: "darshan-story" }
+    centerElement: true
+- tapOn: { id: "darshan-story" }
+- assertVisible: { id: "darshan-story-content" }
+- tapOn: { id: "darshan-story" }
+- scrollUntilVisible:
+    element: { id: "darshan-guide" }
+    centerElement: true
+- tapOn: { id: "darshan-guide" }
+- assertVisible: { id: "temple-darshan" }
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- assertVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "tab-panchang" }
+- assertNotVisible: { id: "home-darshan-floating" }
+- tapOn: { id: "tab-home" }
+- assertVisible: { id: "home-darshan-floating" }

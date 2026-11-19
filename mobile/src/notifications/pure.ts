@@ -74,11 +74,15 @@ export function computeFireDates(
  * IOS_PENDING_CAP — this ensures all configured times get fair, equal coverage
  * instead of nearest-wins truncation.
  */
-export function computeFireDatesMulti(times: TimeOfDay[], now: Date): Date[] {
+export function computeFireDatesMulti(
+  times: TimeOfDay[],
+  now: Date,
+  cap: number = IOS_PENDING_CAP
+): Date[] {
   if (times.length === 0) return [];
   const daysPerTime = Math.min(
     ROLLING_WINDOW_DAYS,
-    Math.floor(IOS_PENDING_CAP / times.length)
+    Math.floor(cap / times.length)
   );
   const seen = new Set<number>();
   const merged: Date[] = [];

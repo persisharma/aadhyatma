@@ -19,6 +19,7 @@
  */
 
 import { NativeModules, Platform, Linking } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requireOptionalNativeModule } from 'expo-modules-core';
 import { CommonActions } from '@react-navigation/native';
 import { findJapamMantra } from '@/data/japam';
@@ -176,21 +177,53 @@ export async function getIosAlarmAuthorizationStatus(): Promise<
   }
 }
 
-/** Schedule every enabled alarm. Cancels all native-managed slots first so
- *  the on-device state matches the input list exactly. */
+/** AsyncStorage key: the native alarm ids this app has armed (a JSON string
+ *  array). The native modules expose no "list", so this record is how a
+ *  reconcile knows which slots are no longer wanted. It is always a superset of
+ *  what is armed: ids are added BEFORE they are scheduled. */
+const NATIVE_ARMED_KEY = '@vedansh/japam-alarms/native-armed';
+
+/** The recorded ids, or null when there is no usable record (first run on this
+ *  version, or storage unreadable) — the caller then clears natively once. */
+async function readNativeArmed(): Promise<string[] | null> {
+  try {
+    const raw = await AsyncStorage.getItem(NATIVE_ARMED_KEY);
+    if (raw === null) return null;
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((x): x is string => typeof x === 'string') : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Resolves false when the record could not be written. */
+async function writeNativeArmed(ids: Iterable<string>): Promise<boolean> {
+  try {
+    await AsyncStorage.setItem(NATIVE_ARMED_KEY, JSON.stringify([...new Set(ids)]));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Arm every enabled alarm in place. Each `scheduleAlarm` replaces the slot
+ *  registered under the same id (Android: FLAG_UPDATE_CURRENT + the persisted
+ *  list the boot receiver restores from; iOS: cancel-then-schedule per id), so
+ *  nothing is cancelled up front: an alarm that is still wanted is never
+ *  absent from the OS, and only slots the list no longer wants are cancelled,
+ *  afterwards. A process kill part-way leaves the old slots armed (and the
+ *  boot receiver's persisted list intact) instead of an empty schedule.
+ *  Without a record of what was armed (first run on this version) the native
+ *  state is cleared once, as it always was. */
 export async function scheduleNativeAlarmsForDay(
   alarms: JapamAlarm[]
 ): Promise<number> {
   const androidMod = getAndroidModule();
   const mod = androidMod ?? getIosModule();
   if (!mod) return 0;
-  try {
-    await mod.cancelAll();
-  } catch {
-    /* ignore */
-  }
-  let scheduled = 0;
+
   const now = new Date();
+  const jobs: NativeScheduleArgs[] = [];
   for (const alarm of alarms) {
     if (!alarm.enabled) continue;
     const base = {
@@ -198,40 +231,73 @@ export async function scheduleNativeAlarmsForDay(
       label: alarm.label ?? null,
       sound: getJapamAlarmSoundName(alarm.mantraId),
     };
-    try {
-      // AlarmKit owns its recurrence, so a pending skip-next has to be armed
-      // as discrete fixed fires (a week of cover — renewal needs an app
-      // foreground). Android's re-arm happens per-fire in Kotlin from a
-      // JS-computed fireAt that already lands after the skip, so it takes
-      // the plain path below.
-      if (androidMod === null && isSkipPending(alarm, now)) {
-        const id = notificationIdentifierFor(alarm.id);
-        for (const { suffix, fireAt } of skipOneshotPlan(
-          alarm,
-          ALARMKIT_SKIP_ONESHOT_COUNT,
-          now
-        )) {
-          await mod.scheduleAlarm({
-            ...base,
-            alarmId: `${id}${suffix}`,
-            fireAt,
-            fixed: true,
-          });
-        }
-      } else {
-        await mod.scheduleAlarm({
-          ...base,
-          alarmId: notificationIdentifierFor(alarm.id),
-          fireAt: nextAlarmFireTimestamp(alarm, now),
-          repeatDays: alarm.repeatDays ?? null,
-          fixed: isOnceAlarm(alarm),
-        });
+    // AlarmKit owns its recurrence, so a pending skip-next has to be armed
+    // as discrete fixed fires (a week of cover — renewal needs an app
+    // foreground). Android's re-arm happens per-fire in Kotlin from a
+    // JS-computed fireAt that already lands after the skip, so it takes
+    // the plain path below.
+    if (androidMod === null && isSkipPending(alarm, now)) {
+      const id = notificationIdentifierFor(alarm.id);
+      for (const { suffix, fireAt } of skipOneshotPlan(alarm, ALARMKIT_SKIP_ONESHOT_COUNT, now)) {
+        jobs.push({ ...base, alarmId: `${id}${suffix}`, fireAt, fixed: true });
       }
-      scheduled += 1;
+    } else {
+      jobs.push({
+        ...base,
+        alarmId: notificationIdentifierFor(alarm.id),
+        fireAt: nextAlarmFireTimestamp(alarm, now),
+        repeatDays: alarm.repeatDays ?? null,
+        fixed: isOnceAlarm(alarm),
+      });
+    }
+  }
+
+  const previous = await readNativeArmed();
+  if (previous === null) {
+    try {
+      await mod.cancelAll();
+    } catch {
+      /* ignore */
+    }
+  }
+  const desired = new Set(jobs.map((j) => j.alarmId));
+  const recorded = await writeNativeArmed([...(previous ?? []), ...desired]);
+  if (!recorded && previous !== null) {
+    // The record could not be extended (storage full or unavailable), so it would
+    // no longer list everything about to be armed — and an alarm missing from it
+    // could never be cancelled after the user deletes it. Fall back to the old
+    // behaviour for this pass: clear natively, and drop the record so the next
+    // pass clears too.
+    await AsyncStorage.removeItem(NATIVE_ARMED_KEY).catch(() => undefined);
+    try {
+      await mod.cancelAll();
+    } catch {
+      /* ignore */
+    }
+  }
+
+  // Alarms with several jobs (AlarmKit skip) count once, as before.
+  const scheduledAlarmIds = new Set<string>();
+  for (const job of jobs) {
+    try {
+      await mod.scheduleAlarm(job);
+      scheduledAlarmIds.add(job.alarmId.split(':occ')[0] ?? job.alarmId);
     } catch {
       /* per-alarm failure non-fatal */
     }
   }
+  const scheduled = scheduledAlarmIds.size;
+
+  const leftover: string[] = [];
+  for (const id of previous ?? []) {
+    if (desired.has(id)) continue;
+    try {
+      await mod.cancelAlarm(id);
+    } catch {
+      leftover.push(id);
+    }
+  }
+  await writeNativeArmed([...desired, ...leftover]);
   return scheduled;
 }
 
@@ -240,6 +306,7 @@ export async function cancelAllNativeAlarms(): Promise<void> {
   if (!mod) return;
   try {
     await mod.cancelAll();
+    await writeNativeArmed([]);
   } catch {
     /* ignore */
   }

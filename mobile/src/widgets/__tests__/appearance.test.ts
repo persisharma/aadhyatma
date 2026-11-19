@@ -108,3 +108,47 @@ test('native transitions cover solar instants for both kinds and retain tithi/mi
   const keep=fs.readFileSync(path.join(root,'plugins/home-widgets/android/res/raw/vedansh_widget_keep.xml'),'utf8');
   assert.ok(keep.includes('@drawable/vedansh_widget_bg_heritage_*'));
 });
+
+// The Heritage/Midnight composition on iOS has an eyebrow capsule beside the ॐ
+// mark, a gold rule above the verse source, and a divided sunrise row on the small
+// Panchang. Android shipped only the palette and plates, so the same widget read as
+// a different, older design (Nov 2026). Pin the Android half of that composition and
+// the reset paths a reapplied RemoteViews needs, or a recovery card keeps a capsule.
+test('Android widgets carry the iOS Heritage/Midnight composition, not just its palette', () => {
+  const android = (file: string) => fs.readFileSync(path.join(root, 'plugins/home-widgets/android', file), 'utf8');
+  const kotlin = android('VedanshWidgetProvider.kt');
+  const verse = android('res/layout/vedansh_widget_verse.xml');
+  const panchang = android('res/layout/vedansh_widget_panchang.xml');
+
+  // Layout: capsule + header mark + rule on the verse, a rule on the Panchang.
+  // RemoteViews cannot inflate a bare <View>, so the rule must be an ImageView.
+  assert.match(verse, /android:id="@\+id\/widget_kicker"[^>]*android:background="@drawable\/vedansh_widget_pill"/);
+  assert.match(verse, /android:id="@\+id\/widget_brand_header"/);
+  for (const xml of [verse, panchang]) {
+    assert.match(xml, /<ImageView android:id="@\+id\/widget_rule"[^>]*android:layout_height="1dp"/);
+    assert.doesNotMatch(xml, /<View\b/, 'RemoteViews rejects a plain View');
+  }
+  assert.match(android('res/drawable/vedansh_widget_pill.xml'), /#1A6B2E05/);
+  assert.match(android('res/drawable/vedansh_widget_pill_night.xml'), /#1AEBC784/);
+
+  // Appearance: the capsule follows day/night and is cleared (0) when not wanted.
+  assert.match(kotlin, /"setBackgroundResource",\s*if \(!pill\) 0 else if \(night\) __APP_PACKAGE__\.R\.drawable\.vedansh_widget_pill_night else __APP_PACKAGE__\.R\.drawable\.vedansh_widget_pill\)/);
+  assert.match(kotlin, /val pill = surface == Surface\.VERSE && width >= 180/);
+  assert.match(kotlin, /setInt\(__APP_PACKAGE__\.R\.id\.widget_rule, "setBackgroundColor"/);
+
+  // Recovery resets everything a richer render may have left behind.
+  const recovery = kotlin.slice(kotlin.indexOf('private fun recovery'), kotlin.indexOf('private fun boundaryIntent'));
+  assert.match(recovery, /setViewVisibility\(__APP_PACKAGE__\.R\.id\.widget_rule, View\.GONE\)/);
+  assert.match(recovery, /setViewVisibility\(__APP_PACKAGE__\.R\.id\.widget_brand_header, View\.GONE\)/);
+  assert.match(recovery, /applyAppearance\(views, surface, false\)/, 'recovery must clear the capsule');
+
+  // Small verse: no capsule/rule, footer mark; wide/large: header mark and rule.
+  const renderVerse = kotlin.slice(kotlin.indexOf('private fun renderVerse'), kotlin.indexOf('/** Each surface owns'));
+  assert.match(renderVerse, /widget_brand_header, if \(narrow\) View\.GONE else View\.VISIBLE/);
+  assert.match(renderVerse, /widget_rule, if \(narrow\) View\.GONE else View\.VISIBLE/);
+
+  // Panchang: divided sunrise on small, a row per window on large.
+  const renderPanchang = kotlin.slice(kotlin.indexOf('private fun renderPanchang'), kotlin.indexOf('private fun renderVerse'));
+  assert.match(renderPanchang, /widget_rule, if \(compact\) View\.VISIBLE else View\.GONE/);
+  assert.match(renderPanchang, /tall -> listOfNotNull\(sunrise, rahuKaal, abhijit\)\.joinToString\("\\n"\)/);
+});

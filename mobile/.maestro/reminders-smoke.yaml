@@ -101,7 +101,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Toggle festival reminders"
 
 # ── Step 7: Back to More (round-trip) ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "More"
 

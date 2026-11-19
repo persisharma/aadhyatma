@@ -1,0 +1,60 @@
+# Run against this branch's installed native app/Metro. Does not prove visual QA by parsing.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- tapOn: { id: sanatan-search }
+- inputText: "how to draw swastika"
+- pressKey: Enter
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-symbols" }
+- tapOn: { id: sanatan-collection-symbols, retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- assertVisible: "2\\s*/\\s*3"
+- assertVisible: "Four arms, four aims of life"
+- scrollUntilVisible:
+    element: { id: sanatan-plate-symbols, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- scrollUntilVisible:
+    element: { text: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]" }
+    direction: DOWN
+    timeout: 30000
+- assertVisible: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]"
+- takeScreenshot: e2e-shots/sanatan-swastika-four-aims
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- assertVisible: "3\\s*/\\s*3"
+- scrollUntilVisible:
+    element: { id: swastika-stage-0, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-cross
+- scrollUntilVisible:
+    element: { id: swastika-stage-1, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-four-bends
+- scrollUntilVisible:
+    element: { id: swastika-stage-2, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- takeScreenshot: e2e-shots/sanatan-swastika-optional-dots
+- scrollUntilVisible:
+    element: { text: "This guide does not prescribe.*", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+# Share is one of the two round buttons at the top of the page.
+- scrollUntilVisible:
+    element: { text: "Share", above: { id: tab-home } }
+    direction: UP
+    timeout: 60000
+- assertVisible: "Share"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- scrollUntilVisible:
+    element: { id: sanatan-search, text: "how to draw swastika" }
+    direction: UP
+    timeout: 60000

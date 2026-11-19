@@ -1,0 +1,50 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Language,.*"
+- tapOn: "${READING_LANGUAGE}"
+- scrollUntilVisible:
+    element: { text: "Reading size,.*", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- tapOn: "Reading size,.*"
+- tapOn: "${READING_SIZE}"
+- tapOn: "हो गया|Done|થઈ ગયું|ಮುಗಿಯಿತು"
+- tapOn: { id: tab-home }
+- runFlow: _sanatan-home-entry.yaml
+- takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: home-sanatan-card }
+# At large text the screen centre is on the search field, which swallows the
+# scroll gesture; start the first drag low, over the cards.
+- swipe: { start: "50%,88%", end: "50%,62%", duration: 400 }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-dikpal" }
+- takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
+- takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+# The pager bar stays on screen at every language and size; no scrolling to reach Next.
+- assertVisible: { id: sanatan-next }
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- assertVisible: "2\\s*/\\s*3"
+# The figure area (plate, caption, legend) and a legend can be taller than a phone
+# screen, and iOS reports a partly hidden element's full frame, so waiting for all
+# of it never ends. Wait for part of it; assert the content itself separately.
+- scrollUntilVisible:
+    element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    visibilityPercentage: 20
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+# The ten painted names are also native text under the plate, at the chosen size.
+- scrollUntilVisible:
+    element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    visibilityPercentage: 20
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-legend-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

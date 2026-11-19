@@ -3,6 +3,7 @@ import { FlatList, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import KidsStoryArt from '@/components/KidsStoryArt';
@@ -33,12 +34,12 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   useEffect(() => {
     if (story) pager.current?.scrollToIndex({ index: storyPageIndex(story, route.params.pageId), animated: false });
   }, [story, route.params.pageId]);
-  // Paced on the caption the page shows; the last page adds the takeaway and source.
+  // Pace only the visible caption and final takeaway.
   const pageChars = useCallback((pageIndex: number) => {
     const page = story?.pages[pageIndex];
     if (!story || !page) return 0;
     const parts = [page.title, page.text, page.dialogue?.speaker, page.dialogue?.text];
-    if (pageIndex === story.pages.length - 1) parts.push(story.takeaway, story.sourceNote);
+    if (pageIndex === story.pages.length - 1) parts.push(story.takeaway);
     return parts.reduce((n, part) => n + (part ? storyText(part, lang).length : 0), 0);
   }, [story, lang]);
   // Programmatic scrolls never fire onMomentumScrollEnd on iOS, so set the index too.
@@ -65,9 +66,8 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
   return (
     <SafeAreaView testID="kids-story-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={storyText(story.title, lang)} onBack={() => navigation.goBack()} sideWidth={60} right={
-        <Text testID="story-progress" style={{ color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic', includeFontPadding: false, minWidth: 48, textAlign: 'right' }}>
-          {index + 1} / {story.pages.length}
-        </Text>
+        <ReaderPageCounter testID="story-progress" current={index + 1} total={story.pages.length} titles={story.pages.map(page => storyText(page.title, lang))}
+          onOpen={autoSlide.stop} onJump={page => goToPage(page - 1)} />
       } />
       <ReadingProgressBar current={index + 1} total={story.pages.length} />
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingTop: 6, paddingBottom: 12 }}>
@@ -126,7 +126,6 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
             {isLast && <View style={{ padding: spacing.lg, gap: spacing.sm }}>
               <Text style={{ fontFamily: titleFontByLang(lang), fontSize: 22, color: colors.saffronDeep }}>{pick(lang, { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ' })}</Text>
               <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{storyText(story.takeaway, lang)}</Text>
-              <Text style={{ ...meaningToken(lang, typography), color: colors.inkSoft }}>{storyText(story.sourceNote, lang)}</Text>
             </View>}
           </AutoSlideScrollView>
       );

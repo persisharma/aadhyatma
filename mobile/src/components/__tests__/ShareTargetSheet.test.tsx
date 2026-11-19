@@ -237,3 +237,45 @@ describe('ShareTargetSheet · series (design.md §39.5)', () => {
     expect(byLabel(picture, 'Share to other apps')).toBeDefined();
   });
 });
+
+
+test.each(['hi', 'en', 'gu', 'kn'] as const)('offers accessible reflowing style choices in %s and disables them while busy', async lang => {
+  const onCardStyle = jest.fn();
+  const tree = await renderSheet({ lang, cardStyle: 'current', onCardStyle });
+  const current = byLabel(tree, 'Card style: Current card');
+  const bhakti = byLabel(tree, 'Card style: Daily Bhakti card');
+  expect(current.props.accessibilityState.checked).toBe(true);
+  expect(bhakti.props.accessibilityState.checked).toBe(false);
+  expect(bhakti.props.accessibilityRole).toBe('button');
+  act(() => bhakti.props.onPress());
+  expect(onCardStyle).toHaveBeenCalledWith('daily-bhakti');
+  act(() => tree.unmount());
+  const locked = await renderSheet({ lang, cardStyle: 'daily-bhakti', onCardStyle, busy: true });
+  expect(byLabel(locked, 'Card style: Current card').props.disabled).toBe(true);
+  expect(byLabel(locked, 'Card style: Daily Bhakti card').props.disabled).toBe(true);
+  act(() => locked.unmount());
+});
+
+test('other card and prose pickers do not receive scripture style options', async () => {
+  const tree = await renderSheet();
+  expect(byLabel(tree, 'Card style: Daily Bhakti card')).toBeUndefined();
+  act(() => tree.unmount());
+});
+
+
+test('one card tap opens destinations; change card returns without sharing or an extra Continue step', async () => {
+  const choose = jest.fn(); const send = jest.fn();
+  const tree = await renderSheet({ cardStyle: 'current', onCardStyle: choose, onShareSystem: send,
+    renderStylePreview: style => <></> });
+  expect(byLabel(tree, 'Share to other apps')).toBeUndefined();
+  expect(byLabel(tree, 'Send as text')).toBeUndefined();
+  act(() => byLabel(tree, 'Card style: Daily Bhakti card').props.onPress());
+  expect(choose).toHaveBeenCalledWith('daily-bhakti');
+  expect(byLabel(tree, 'Share to other apps')).toBeDefined();
+  expect(byLabel(tree, 'Card style: Current card')).toBeUndefined();
+  expect(send).not.toHaveBeenCalled();
+  act(() => byLabel(tree, 'Change card style').props.onPress());
+  expect(byLabel(tree, 'Card style: Current card')).toBeDefined();
+  expect(byLabel(tree, 'Share to other apps')).toBeUndefined();
+  act(() => tree.unmount());
+});

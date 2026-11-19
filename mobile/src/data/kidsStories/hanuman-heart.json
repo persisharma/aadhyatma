@@ -1,0 +1,178 @@
+{
+  "id": "hanuman-heart",
+  "deityId": "hanuman",
+  "ageMin": 6,
+  "kind": "story",
+  "coverArt": "hh07",
+  "title": {
+    "hi": "हनुमान जी के हृदय में सीताराम",
+    "en": "Sita and Rama in Hanuman’s Heart",
+    "gu": "હનુમાનજીના હૃદયમાં સીતારામ",
+    "kn": "ಹನುಮಂತನ ಹೃದಯದಲ್ಲಿ ಸೀತಾರಾಮ"
+  },
+  "description": {
+    "hi": "मोती से अनमोल भक्ति",
+    "en": "Love beyond precious pearls",
+    "gu": "મોતીથી અમૂલ્ય ભક્તિ",
+    "kn": "ಮುತ್ತಿಗಿಂತ ಅಮೂಲ್ಯ ಭಕ್ತಿ"
+  },
+  "source": {
+    "baseText": "Traditional devotional tale, following Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation/pearl-necklace episode; compared with Abstracts from Ramayana, Sadguru Sri Nannagaru, printed pp. 160–161.",
+    "retrievedOn": "2026-11-05",
+    "referenceUrls": [
+      "https://www.dlshq.org/religions/sri-hanuman/",
+      "https://www.srinannagaru.com/books/RamayanaBySadguruNannagaru.pdf"
+    ],
+    "notes": "Original four-language child retelling of a popular devotional tradition, not a quotation or a claimed passage of Valmiki Ramayana. Sivananda supplies the selected sequence: coronation, Sita’s gift, pearl inspection, Sita’s questions, Rama and Sita within Hanuman’s heart, Rama’s embrace. Nannagaru independently corroborates the gift, inspection and heart reveal; his question is worded differently. Do not substitute Vibhishana or an unnamed challenger for Sita. The physical chest-opening image is represented gently as divine radiance with no wound or blood. No invented dialogue, hostility, restoration scene or added boon. Takeaway is editorial."
+  },
+  "sourceNote": {
+    "hi": "लोकप्रचलित भक्तिकथा का बच्चों के लिए मौलिक पुनर्कथन। आधार: स्वामी शिवानंद की “श्री हनुमान”; तुलना: श्री नान्नागारु की रामायण वार्ताएँ, पृ. 160–161। हृदय-दर्शन को दिव्य प्रकाश में कोमल रूप से दिखाया गया है। सीख संपादकीय है।",
+    "en": "An original child retelling of a traditional devotional tale, following Swami Sivananda’s “Sri Hanuman” and compared with Sri Nannagaru’s Ramayana talks, pp. 160–161. The heart revelation is pictured gently as divine light. The takeaway is editorial.",
+    "gu": "લોકપ્રચલિત ભક્તિકથાનું બાળકો માટે મૌલિક પુનર્કથન. આધાર: સ્વામી શિવાનંદની “શ્રી હનુમાન”; સરખામણી: શ્રી નાન્નાગારુની રામાયણ વાર્તાઓ, પૃ. 160–161. હૃદયદર્શનને દિવ્ય પ્રકાશમાં કોમળ રીતે દર્શાવ્યું છે. શીખ સંપાદકીય છે.",
+    "kn": "ಜನಪ್ರಿಯ ಭಕ್ತಿಕಥೆಯ ಮಕ್ಕಳಿಗಾಗಿನ ಸ್ವತಂತ್ರ ಮರುಕಥನ. ಆಧಾರ: ಸ್ವಾಮಿ ಶಿವಾನಂದರ “ಶ್ರೀ ಹನುಮಾನ್”; ಹೋಲಿಕೆ: ಶ್ರೀ ನನ್ನಗಾರು ಅವರ ರಾಮಾಯಣ ಪ್ರವಚನಗಳು, ಪು. 160–161. ಹೃದಯದ ದರ್ಶನವನ್ನು ದಿವ್ಯ ಬೆಳಕಾಗಿ ಮೃದುವಾಗಿ ಚಿತ್ರಿಸಲಾಗಿದೆ. ಪಾಠವು ಸಂಪಾದಕೀಯವಾಗಿದೆ."
+  },
+  "takeaway": {
+    "hi": "हनुमान जी के लिए प्रेम और सेवा सबसे अनमोल थे। हम भी अपने प्रियजनों का मान रखें और सच्चे मन से सहायता करें।",
+    "en": "Hanuman treasured love and service. We too can honour those we love and help them with a sincere heart.",
+    "gu": "હનુમાનજી માટે પ્રેમ અને સેવા સૌથી અમૂલ્ય હતાં. આપણે પણ પ્રિયજનોનો આદર કરીએ અને સાચા મનથી મદદ કરીએ.",
+    "kn": "ಹನುಮಂತನಿಗೆ ಪ್ರೀತಿ ಮತ್ತು ಸೇವೆಯೇ ಅಮೂಲ್ಯವಾಗಿದ್ದವು. ನಾವೂ ನಮ್ಮ ಪ್ರೀತಿಪಾತ್ರರನ್ನು ಗೌರವಿಸಿ ಪ್ರಾಮಾಣಿಕ ಮನಸ್ಸಿನಿಂದ ನೆರವಾಗೋಣ."
+  },
+  "pages": [
+    {
+      "id": "ayodhya-court",
+      "art": "hh01",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; selected source sequence; adaptation notes in story.source.",
+      "title": {
+        "hi": "अयोध्या की राजसभा",
+        "en": "In Ayodhya’s court",
+        "gu": "અયોધ્યાની રાજસભા",
+        "kn": "ಅಯೋಧ್ಯೆಯ ರಾಜಸಭೆ"
+      },
+      "text": {
+        "hi": "श्रीराम और माता सीता अयोध्या लौट आए थे। राज्याभिषेक के बाद राजसभा में सब प्रसन्न थे। श्रीराम के भक्त हनुमान जी भी वहाँ थे। उन्हें प्रभु की सेवा सबसे प्रिय थी।",
+        "en": "Rama and Sita had returned to Ayodhya. The court was celebrating Rama’s coronation. Hanuman, their devoted helper, was there too. Serving Rama was his greatest joy.",
+        "gu": "શ્રીરામ અને માતા સીતા અયોધ્યા પાછાં ફર્યાં હતાં. રાજ્યાભિષેક પછી રાજસભામાં સૌ આનંદિત હતાં. શ્રીરામના ભક્ત હનુમાનજી પણ ત્યાં હતા. તેમને પ્રભુની સેવા સૌથી પ્રિય હતી.",
+        "kn": "ಶ್ರೀರಾಮ ಮತ್ತು ಸೀತಾಮಾತೆ ಅಯೋಧ್ಯೆಗೆ ಮರಳಿದ್ದರು. ಶ್ರೀರಾಮನ ಪಟ್ಟಾಭಿಷೇಕದ ನಂತರ ರಾಜಸಭೆಯಲ್ಲಿ ಎಲ್ಲರೂ ಸಂತೋಷದಲ್ಲಿದ್ದರು. ಅವರ ಭಕ್ತ ಹನುಮಂತನೂ ಅಲ್ಲಿದ್ದನು. ರಾಮನ ಸೇವೆಯೇ ಅವನಿಗೆ ಅತ್ಯಂತ ಪ್ರಿಯವಾಗಿತ್ತು."
+      }
+    },
+    {
+      "id": "sitas-gift",
+      "art": "hh02",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; Sadguru Sri Nannagaru, Abstracts from Ramayana, printed p. 161 (heart-reveal comparison).",
+      "title": {
+        "hi": "सीता माता का उपहार",
+        "en": "Sita’s gift",
+        "gu": "સીતા માતાની ભેટ",
+        "kn": "ಸೀತಾಮಾತೆಯ ಉಡುಗೊರೆ"
+      },
+      "text": {
+        "hi": "माता सीता ने हनुमान जी को सुंदर मोतियों का हार दिया। हनुमान जी ने आदर से वह उपहार स्वीकार किया। फिर उनका ध्यान हार के चमकते मोतियों पर गया।",
+        "en": "Sita gave Hanuman a beautiful pearl necklace. He accepted her gift respectfully. Then he began to look closely at its shining pearls.",
+        "gu": "માતા સીતાએ હનુમાનજીને સુંદર મોતીનો હાર આપ્યો. હનુમાનજીએ આદરથી તે ભેટ સ્વીકારી. પછી તેમનું ધ્યાન હારનાં ચમકતાં મોતી પર ગયું.",
+        "kn": "ಸೀತಾಮಾತೆ ಹನುಮಂತನಿಗೆ ಸುಂದರವಾದ ಮುತ್ತಿನ ಹಾರವನ್ನು ಕೊಟ್ಟಳು. ಅವನು ಗೌರವದಿಂದ ಉಡುಗೊರೆಯನ್ನು ಸ್ವೀಕರಿಸಿದನು. ಬಳಿಕ ಹೊಳೆಯುವ ಮುತ್ತುಗಳನ್ನು ಗಮನವಿಟ್ಟು ನೋಡತೊಡಗಿದನು."
+      }
+    },
+    {
+      "id": "inside-the-pearls",
+      "art": "hh03",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; Sadguru Sri Nannagaru, Abstracts from Ramayana, printed p. 161 (heart-reveal comparison).",
+      "title": {
+        "hi": "मोतियों में क्या है?",
+        "en": "Inside the pearls",
+        "gu": "મોતીમાં શું છે?",
+        "kn": "ಮುತ್ತುಗಳ ಒಳಗೆ ಏನಿದೆ?"
+      },
+      "text": {
+        "hi": "हनुमान जी एक-एक मोती को दाँत से खोलकर उसके भीतर देखने लगे। उन्हें भीतर कुछ खोजना था। टूटा हार देखकर सभा के लोग चकित रह गए।",
+        "en": "Hanuman began opening the pearls with his teeth and examining them. He was searching for something inside. The people in the court were puzzled by the broken necklace.",
+        "gu": "હનુમાનજી એક-એક મોતીને દાંતથી ખોલીને તેની અંદર જોવા લાગ્યા. તેઓ અંદર કંઈક શોધતા હતા. તૂટેલો હાર જોઈને સભાના લોકો આશ્ચર્યમાં પડી ગયા.",
+        "kn": "ಹನುಮಂತನು ಒಂದೊಂದೇ ಮುತ್ತನ್ನು ಹಲ್ಲಿನಿಂದ ತೆರೆದು ಒಳಗೆ ನೋಡತೊಡಗಿದನು. ಅವನು ಏನನ್ನೋ ಹುಡುಕುತ್ತಿದ್ದನು. ಮುರಿದ ಹಾರವನ್ನು ಕಂಡು ಸಭೆಯ ಜನರು ಆಶ್ಚರ್ಯಪಟ್ಟರು."
+      }
+    },
+    {
+      "id": "sita-asks",
+      "art": "hh04",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; Sadguru Sri Nannagaru, Abstracts from Ramayana, printed p. 161 (heart-reveal comparison).",
+      "title": {
+        "hi": "सीता माता ने पूछा",
+        "en": "Sita asks why",
+        "gu": "સીતા માતાએ પૂછ્યું",
+        "kn": "ಸೀತಾಮಾತೆಯ ಪ್ರಶ್ನೆ"
+      },
+      "text": {
+        "hi": "सीता माता भी हैरान थीं। उन्होंने हनुमान जी से पूछा कि वे मोतियों को क्यों तोड़ रहे हैं। अब सब उनका उत्तर सुनना चाहते थे।",
+        "en": "Sita was surprised too. She asked Hanuman why he was breaking the pearls. Everyone waited to hear his answer.",
+        "gu": "સીતા માતાને પણ નવાઈ લાગી. તેમણે હનુમાનજીને પૂછ્યું કે તેઓ મોતી શા માટે તોડી રહ્યા છે. હવે સૌ તેમનો જવાબ સાંભળવા માંગતા હતા.",
+        "kn": "ಸೀತಾಮಾತೆಗೂ ಅಚ್ಚರಿಯಾಯಿತು. ಮುತ್ತುಗಳನ್ನು ಏಕೆ ಒಡೆಯುತ್ತಿದ್ದಾನೆಂದು ಅವಳು ಹನುಮಂತನನ್ನು ಕೇಳಿದಳು. ಅವನ ಉತ್ತರವನ್ನು ಕೇಳಲು ಎಲ್ಲರೂ ಕಾಯುತ್ತಿದ್ದರು."
+      }
+    },
+    {
+      "id": "searching-for-rama",
+      "art": "hh05",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; Sadguru Sri Nannagaru, Abstracts from Ramayana, printed p. 161 (heart-reveal comparison).",
+      "title": {
+        "hi": "श्रीराम की खोज",
+        "en": "Searching for Rama",
+        "gu": "શ્રીરામની શોધ",
+        "kn": "ಶ್ರೀರಾಮನಿಗಾಗಿ ಹುಡುಕಾಟ"
+      },
+      "text": {
+        "hi": "हनुमान जी ने विनम्रता से समझाया कि वे मोतियों के भीतर श्रीराम को खोज रहे थे। सीता माता का उपहार उनके लिए आदरणीय था, पर श्रीराम के बिना चमकते मोती भी उन्हें नहीं भाते थे।",
+        "en": "Hanuman explained that he was looking for Rama within the pearls. He honoured Sita’s gift, yet even precious jewels held little joy for him without his beloved Rama.",
+        "gu": "હનુમાનજીએ નમ્રતાથી સમજાવ્યું કે તેઓ મોતીની અંદર શ્રીરામને શોધતા હતા. સીતા માતાની ભેટ તેમને આદરણીય હતી, પણ શ્રીરામ વિના ચમકતાં મોતી પણ તેમને ગમતાં ન હતાં.",
+        "kn": "ಮುತ್ತುಗಳ ಒಳಗೆ ಶ್ರೀರಾಮನನ್ನು ಹುಡುಕುತ್ತಿದ್ದೇನೆಂದು ಹನುಮಂತನು ವಿನಯದಿಂದ ವಿವರಿಸಿದನು. ಸೀತಾಮಾತೆಯ ಉಡುಗೊರೆಗೆ ಅವನು ಗೌರವ ಕೊಟ್ಟನು. ಆದರೆ ಪ್ರಿಯ ರಾಮನಿಲ್ಲದೆ ಅಮೂಲ್ಯ ಮುತ್ತುಗಳೂ ಅವನಿಗೆ ಸಂತೋಷ ಕೊಡಲಿಲ್ಲ."
+      }
+    },
+    {
+      "id": "within-your-heart",
+      "art": "hh06",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; Sadguru Sri Nannagaru, Abstracts from Ramayana, printed p. 161 (heart-reveal comparison).",
+      "title": {
+        "hi": "क्या वे तुम्हारे भीतर हैं?",
+        "en": "Does Rama live within you?",
+        "gu": "શું તેઓ તમારી અંદર છે?",
+        "kn": "ರಾಮನು ನಿನ್ನೊಳಗೆ ಇರುವನೇ?"
+      },
+      "text": {
+        "hi": "सीता माता ने फिर पूछा कि क्या श्रीराम हनुमान जी के अपने भीतर भी बसे हैं। यह प्रश्न सुनकर हनुमान जी ने अपने हृदय की ओर हाथ बढ़ाए।",
+        "en": "Sita then asked whether Rama lived within Hanuman himself. Hanuman brought his hands towards his heart, ready to show the answer.",
+        "gu": "સીતા માતાએ પછી પૂછ્યું કે શું શ્રીરામ હનુમાનજીની પોતાની અંદર પણ વસે છે. આ પ્રશ્ન સાંભળીને હનુમાનજીએ પોતાના હૃદય તરફ હાથ લંબાવ્યા.",
+        "kn": "ಹಾಗಾದರೆ ರಾಮನು ಹನುಮಂತನ ಒಳಗೂ ನೆಲೆಸಿರುವನೇ ಎಂದು ಸೀತಾಮಾತೆ ಕೇಳಿದಳು. ಉತ್ತರವನ್ನು ತೋರಿಸಲು ಹನುಮಂತನು ತನ್ನ ಕೈಗಳನ್ನು ಹೃದಯದ ಕಡೆಗೆ ತಂದನು."
+      }
+    },
+    {
+      "id": "sitaram-in-his-heart",
+      "art": "hh07",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; Sadguru Sri Nannagaru, Abstracts from Ramayana, printed p. 161 (heart-reveal comparison).",
+      "title": {
+        "hi": "हृदय में सीताराम",
+        "en": "Sita and Rama in his heart",
+        "gu": "હૃદયમાં સીતારામ",
+        "kn": "ಹೃದಯದಲ್ಲಿ ಸೀತಾರಾಮ"
+      },
+      "text": {
+        "hi": "भक्तिकथा में हनुमान जी अपना वक्ष खोलकर हृदय का दर्शन कराते हैं। सबको उनके भीतर श्रीराम और माता सीता की दिव्य छवि दिखाई देती है। सारी सभा उनकी भक्ति देखकर विस्मित रह जाती है।",
+        "en": "In the devotional tale, Hanuman opens his chest to reveal his heart. There, everyone sees the divine forms of Rama and Sita together. The court marvels at his devotion.",
+        "gu": "ભક્તિકથામાં હનુમાનજી પોતાનું વક્ષ ખોલીને હૃદયનું દર્શન કરાવે છે. સૌને તેમની અંદર શ્રીરામ અને માતા સીતાની દિવ્ય છબી દેખાય છે. આખી સભા તેમની ભક્તિ જોઈને વિસ્મિત થઈ જાય છે.",
+        "kn": "ಭಕ್ತಿಕಥೆಯಲ್ಲಿ ಹನುಮಂತನು ತನ್ನ ಎದೆಯನ್ನು ತೆರೆದು ಹೃದಯದ ದರ್ಶನ ನೀಡುತ್ತಾನೆ. ಅಲ್ಲಿ ಶ್ರೀರಾಮ ಮತ್ತು ಸೀತಾಮಾತೆಯ ದಿವ್ಯ ರೂಪಗಳು ಒಟ್ಟಿಗೆ ಕಾಣುತ್ತವೆ. ಅವನ ಭಕ್ತಿಯನ್ನು ಕಂಡು ಇಡೀ ಸಭೆ ಬೆರಗಾಗುತ್ತದೆ."
+      }
+    },
+    {
+      "id": "ramas-embrace",
+      "art": "hh08",
+      "source": "Swami Sivananda, Essence of Ramayana, “Sri Hanuman”, coronation and pearl-necklace episode; selected source sequence; adaptation notes in story.source.",
+      "title": {
+        "hi": "श्रीराम का आलिंगन",
+        "en": "Rama’s embrace",
+        "gu": "શ્રીરામનું આલિંગન",
+        "kn": "ಶ್ರೀರಾಮನ ಆಲಿಂಗನ"
+      },
+      "text": {
+        "hi": "हनुमान जी का प्रेम देखकर श्रीराम आनंदित हो उठे। वे सिंहासन से उतरकर आए, हनुमान जी को गले लगाया और आशीर्वाद दिया। हनुमान जी को अपने प्रिय प्रभु का स्नेह मिला।",
+        "en": "Rama was filled with joy. He stepped down from his throne, embraced Hanuman and blessed him. Hanuman received the affection of the Lord he loved.",
+        "gu": "હનુમાનજીનો પ્રેમ જોઈને શ્રીરામ આનંદિત થઈ ઊઠ્યા. તેઓ સિંહાસન પરથી ઊતરી આવ્યા, હનુમાનજીને ગળે મળ્યા અને આશીર્વાદ આપ્યા. હનુમાનજીને પોતાના પ્રિય પ્રભુનો સ્નેહ મળ્યો.",
+        "kn": "ಹನುಮಂತನ ಪ್ರೀತಿಯನ್ನು ಕಂಡು ಶ್ರೀರಾಮನು ಸಂತೋಷಗೊಂಡನು. ಸಿಂಹಾಸನದಿಂದ ಇಳಿದು ಬಂದು ಹನುಮಂತನನ್ನು ಅಪ್ಪಿಕೊಂಡು ಆಶೀರ್ವದಿಸಿದನು. ಹನುಮಂತನಿಗೆ ತನ್ನ ಪ್ರಿಯ ಪ್ರಭುವಿನ ಪ್ರೀತಿ ದೊರೆಯಿತು."
+      }
+    }
+  ]
+}

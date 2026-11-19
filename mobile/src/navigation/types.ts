@@ -72,7 +72,15 @@ export type BhajanStackParamList = {
 };
 
 export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & BhajanStackParamList & {
+  SanatanParichay: undefined;
+  SanatanReader: { topicId: string; initialPage?: number };
+  GrahaReference: {focusGraha?:Graha}|undefined;
   Home: undefined;
+  KathaLibrary: undefined;
+  SaptashatiCore: undefined;
+  DarshanQuick: undefined;
+  DarshanList: undefined;
+  DarshanPlayer: { templeId: string };
   Suvichar: { exploreDraft?: { name:string; deity:'ram-darbar' } } | undefined;
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
@@ -86,7 +94,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & Bhaj
    * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
    */
   Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
-  CategoryList: { categoryId: ContentCategory };
+  ReadingLibrary: { features?: boolean } | undefined;
+  CategoryList: { categoryId: ContentCategory; practice?: boolean };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
   DeityDetail: { deityId: Deity };
@@ -216,7 +225,7 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
       }
     | undefined;
   ObservanceList: { category: 'vrat' | 'festival' | 'upavas' };
-  ObservanceDetail: { ruleId: string };
+  ObservanceDetail: { ruleId: string; dateMs?: number };
   KathaLibrary: undefined;
   MyVrat: undefined;
   // Daily Muhurat detail (Choghadiya / Rahu Kaal / Abhijit) — PRD-14

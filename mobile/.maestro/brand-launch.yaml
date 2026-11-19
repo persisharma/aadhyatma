@@ -1,4 +1,4 @@
-# Native reveal trims the first 1000ms: normal visible playback is 2350ms.
+# Particle reveal disabled (Nov 2026 ANR review); re-enable restores the 2350ms playback checks.
 # Installed native evidence still required: this file is not a visual verdict.
 appId: com.prashantsharma.vedansh
 ---
@@ -20,21 +20,17 @@ appId: com.prashantsharma.vedansh
 - launchApp:
     arguments:
       RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
-- extendedWaitUntil:
-    visible:
-      id: brand-launch-reveal
-    timeout: 5000
-- takeScreenshot: e2e-shots/brand-cold-particles
-- extendedWaitUntil:
-    notVisible:
-      id: brand-launch-reveal
-    timeout: 4000
+# Particle reveal is disabled (BRAND_LAUNCH_REVEAL_ENABLED, Nov 2026 ANR review):
+# a cold start goes straight to Home and never mounts the particle WebView.
 - extendedWaitUntil:
     visible:
       id: vedansh-wordmark-hi
     timeout: 30000
 - assertNotVisible:
+    id: brand-launch-reveal
+- assertNotVisible:
     id: brand-particle-webview
+- takeScreenshot: e2e-shots/brand-cold-home-no-reveal
 
 # Warm returns must keep Home visible, with no replay.
 - pressKey: Home

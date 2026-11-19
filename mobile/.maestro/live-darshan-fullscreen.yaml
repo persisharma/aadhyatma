@@ -1,0 +1,29 @@
+# Native device acceptance; requires network and an available official stream.
+# Execute on the tested native binary; these selectors are not device-verified yet.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-home" }
+- tapOn: { id: "home-darshan-floating" }
+- tapOn: { id: "darshan-view-all" }
+- scrollUntilVisible:
+    element: { id: "darshan-temple-omkareshwar" }
+- tapOn: { id: "darshan-temple-omkareshwar" }
+- extendedWaitUntil:
+    visible: { id: "darshan-channel-webview" }
+    timeout: 30000
+- tapOn: { id: "darshan-channel-webview" }
+- tapOn: "Full screen.*|Enter full screen.*|Enter fullscreen.*"
+- assertNotVisible: { id: "tab-home" }
+- takeScreenshot: e2e-shots/darshan-native-fullscreen
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - back
+- runFlow:
+    when: { platform: iOS }
+    commands:
+      - tapOn: "Done|Exit full screen.*|Exit fullscreen.*"
+- assertVisible: { id: "darshan-hero" }
+- assertVisible: { id: "tab-home" }
+- takeScreenshot: e2e-shots/darshan-after-fullscreen

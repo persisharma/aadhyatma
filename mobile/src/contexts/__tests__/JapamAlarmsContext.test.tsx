@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
@@ -313,5 +313,39 @@ describe('JapamAlarmsContext — repeat days, skip-next, one-time housekeeping',
     await flush();
 
     expect(captured.alarms[0].skipNextDate).toBe(localDateKey(tomorrow));
+  });
+});
+
+describe('foreground status re-probe (CRASH-06)', () => {
+  test('a failing exact-alarm probe leaves the loaded state in place and raises no unhandled rejection', async () => {
+    // The japamAlarmNative mock has no getNativeAlarmCapability, so on Android
+    // readExactAlarmStatus() rejects — the shape of a native probe that throws.
+    let onChange: ((s: string) => void) | undefined;
+    const spy = jest
+      .spyOn(AppState, 'addEventListener')
+      .mockImplementation(((_: string, cb: (s: string) => void) => {
+        onChange = cb;
+        return { remove: jest.fn() };
+      }) as never);
+    const unhandled: unknown[] = [];
+    const onUnhandled = (reason: unknown) => unhandled.push(reason);
+    process.on('unhandledRejection', onUnhandled);
+    (Platform as { OS: string }).OS = 'android';
+    try {
+      await mountAndHydrate();
+      const before = captured.permissionStatus;
+      await act(async () => {
+        onChange?.('background');
+        onChange?.('active');
+        await new Promise((r) => setImmediate(r));
+      });
+      await new Promise((r) => setImmediate(r));
+      expect(unhandled).toEqual([]);
+      expect(captured.permissionStatus).toBe(before);
+    } finally {
+      process.off('unhandledRejection', onUnhandled);
+      (Platform as { OS: string }).OS = 'ios';
+      spy.mockRestore();
+    }
   });
 });

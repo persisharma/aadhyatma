@@ -1,5 +1,5 @@
 import { getVersePool } from '@/data/versePool';
-import { devotionalArtForVerse, devotionalSourceArt } from '@/data/devotionalShareArt';
+import { devotionalArtForVerse, devotionalSourceArt, devotionalSubjectArt } from '@/data/devotionalShareArt';
 import { dailyBhaktiShareable } from '../dailyBhaktiShare';
 import { devotionalBodyHeight, devotionalCardGeometry, devotionalTextHeight, paginateDevotional } from '../devotionalShareLayout';
 import { contentByLang, meaningByLang, verseLinesByLang } from '../localize';
@@ -14,7 +14,7 @@ it('preserves every Daily Bhakti verse and meaning in all four languages in one 
     for (const lang of langs) {
       const { pages, header: label } = prepared[lang];
       const header = `${contentByLang(lang, v.sourceNameHi, v.sourceNameEn)} · ${label}`;
-      expect(pages.map(p => p.devotional!.verse).join('')).toBe(verseLinesByLang(lang, v.textHi, v.textEn).join('\n'));
+      expect(pages.map(p => p.devotional!.verse).join('')).toBe(verseLinesByLang(lang, v.textHi, v.textEn, v.labelHi).join('\n'));
       expect(pages.map(p => p.devotional!.meaning).join('')).toBe(meaningByLang(lang, v.meaningHi, v.meaningEn));
       expect(pages).toHaveLength(1);
       for (const { devotional: p } of pages) {
@@ -34,7 +34,11 @@ it('gives a stored chaupai couplet one charan per row on the share card', () => 
   expect(dailyBhaktiShareable(gita).scopes[0].prepared!.hi.pages[0].devotional!.verseRows).toBeUndefined();
 });
 it('maps deity families and per-verse exceptions conservatively', () => {
-  expect(new Set(Object.values(devotionalSourceArt)).size).toBe(29);
+  // Compare identities, not yesterday's count: an added subject cannot mask a missing one.
+  expect([...new Set(Object.values(devotionalSourceArt))].sort()).toEqual([
+    'krishna', 'shiva', 'durga', 'saraswati', 'ganesha', 'vishnu', 'hanuman', 'rama', 'surya', 'prayer',
+    ...Object.keys(devotionalSubjectArt),
+  ].sort());
   expect(devotionalArtForVerse({ sourceId: 'unknown', verseIndex: 0 })).toBe('prayer');
   expect(devotionalArtForVerse({ sourceId: 'gayatri-mantra', verseIndex: 0 })).toBe('surya');
   expect(devotionalArtForVerse({ sourceId: 'vidyarambha-prarthana', verseIndex: 1 })).toBe('ganesha');
@@ -54,7 +58,7 @@ it('rejoins exact text slices and signals missing selected pages', () => {
   for (const lang of langs) {
     const { pages, header } = dailyBhaktiShareable(v).scopes[0].prepared![lang];
     const text = buildProseShareText({ header, pages, indices: pages.map((_, i) => i), lang });
-    expect(text).toContain(verseLinesByLang(lang, v.textHi, v.textEn).join('\n'));
+    expect(text).toContain(verseLinesByLang(lang, v.textHi, v.textEn, v.labelHi).join('\n'));
     expect(text).toContain(meaningByLang(lang, v.meaningHi, v.meaningEn));
     if (pages.length > 1 && pages[0].devotional!.meaning) expect(buildProseShareText({ header, pages, indices: [0], lang })).toContain(pages[0].devotional!.meaning + '…');
   }

@@ -3,6 +3,12 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+const trees: TestRenderer.ReactTestRenderer[] = [];
+function createReader(element: React.ReactElement) {
+  const tree = TestRenderer.create(element); trees.push(tree); return tree;
+}
+afterEach(() => { act(() => { for (const tree of trees.splice(0)) tree.unmount(); }); });
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   impactAsync: jest.fn(() => Promise.resolve()),
@@ -66,7 +72,7 @@ test('renders the first Rama Raksha Stotra verse without throwing', () => {
   let tree: TestRenderer.ReactTestRenderer | undefined;
 
   act(() => {
-    tree = TestRenderer.create(
+    tree = createReader(
       <GitaLanguageProvider initialLang="hi">
         <ShareProvider>
           <KavachamReaderScreen navigation={navigation} route={route} />
@@ -83,4 +89,21 @@ test('renders the first Rama Raksha Stotra verse without throwing', () => {
 
   assert.ok(renderedText.includes(kavacham.titleHi));
   assert.ok(renderedText.includes(firstVerse.lines[0]));
+});
+
+// New complete text: first and final units must survive language selection.
+describe.each([0, -1])('new content unit %s', index => {
+  test.each(['hi', 'en', 'gu', 'kn'] as const)('renders complete content in %s', lang => {
+    const payload = getKavacham('durga-devi-kavacham');
+    const position = index < 0 ? payload.verses.length - 1 : index;
+    let tree: TestRenderer.ReactTestRenderer;
+    act(() => { tree = createReader(<GitaLanguageProvider initialLang={lang}><ShareProvider>
+      <KavachamReaderScreen navigation={navigation} route={{ ...route, params: { kavachamId: 'durga-devi-kavacham', initialIndex: position } }} />
+    </ShareProvider></GitaLanguageProvider>); });
+    const text = tree!.root.findAllByType(Text).map(node => node.props.children).flat(Infinity).join(' ');
+    const { contentByLang, verseLinesByLang } = jest.requireActual<typeof import('@/utils/localize')>('@/utils/localize');
+    expect(text).toContain(contentByLang(lang, payload.titleHi, payload.titleEn));
+    expect(text).toContain(contentByLang(lang, payload.verses[position].meaningHi, payload.verses[position].meaningEn));
+    for (const line of verseLinesByLang(lang, payload.verses[position].lines, payload.verses[position].linesEn)) expect(text).toContain(line);
+  });
 });

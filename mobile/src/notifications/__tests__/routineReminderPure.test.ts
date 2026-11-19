@@ -128,3 +128,20 @@ test('deterministic for a fixed now — no clock reads', () => {
     b.planned.map((p) => p.fireDate.getTime())
   );
 });
+
+test('content follows the reading language (BEH-04)', () => {
+  const p = planRoutineReminders([input()], NOW, 1).planned[0];
+  const en = formatRoutineReminderContent(p, 'en');
+  assert.equal(en.title, 'Daily practice reminder');
+  assert.equal(en.body, "Shani Sadhana · Today's practice");
+  const gu = formatRoutineReminderContent(p, 'gu');
+  assert.match(gu.title + gu.body, /[઀-૿]/);
+  assert.doesNotMatch(gu.title + gu.body, /[ऀ-ॿ]/);
+  const kn = formatRoutineReminderContent(p, 'kn');
+  assert.match(kn.title + kn.body, /[ಀ-೿]/);
+  assert.doesNotMatch(kn.title + kn.body, /[ऀ-ॿ]/);
+  // A blank Devanagari name falls back to the English one in every language.
+  const enOnly = planRoutineReminders([input({ nameHi: '' })], NOW, 1).planned[0];
+  assert.equal(formatRoutineReminderContent(enOnly, 'gu').body.startsWith('Shani Sadhana'), true);
+  assert.equal(formatRoutineReminderContent(enOnly, 'en').body.startsWith('Shani Sadhana'), true);
+});

@@ -51,7 +51,8 @@ const VERIFIED_PARICHAY = PITRU_LESSON_ENTRIES.filter((l) => l.kind === 'paricha
 
 /** The reader's `n / m` counter as one string (its JSX children are split). */
 function counter(tree: TestRenderer.ReactTestRenderer): string {
-  const node = tree.root.findAll((n) => n.props.testID === 'pitru-parichay-counter' && n.type === Text)[0];
+  // The testID sits on the shared ReaderPageCounter; the text is the Text inside it.
+  const node = tree.root.findAll((n) => n.props.testID === 'pitru-parichay-counter')[0].findAllByType(Text)[0];
   return ([] as unknown[]).concat(node.props.children).join('');
 }
 
@@ -391,7 +392,8 @@ describe('PitruKathaScreen', () => {
     const text = allText(tree);
     expect(text).toContain('मन्दाकिनी');
     expect(byTestId(tree, 'pitru-katha-teaching')).toBeDefined();
-    expect(text).toContain('स्रोत: वाल्मीकि रामायण');
+    expect(text).toContain('वाल्मीकि रामायण');
+    expect(text).not.toContain('स्रोत:');
     pressByLabel(tree, 'Open valmiki reader for rama-jalanjali');
     expect(mockRootNavigate).toHaveBeenCalledWith('HomeTab', {
       screen: 'ValmikiRamayanReader',

@@ -7,7 +7,7 @@ Scope (owner, 2026-11-16): **devotional only** — local bhajans, not secular fo
 ## Scope
 
 This manifest lists the bhajans to acquire for the भजन संग्रह shelf (design.md §34.1,
-RULEBOOK §32). A third-party bhajan listing (vedpath.org, shared as screenshots on
+RULEBOOK §34). A third-party bhajan listing (vedpath.org, shared as screenshots on
 2026-11-05) was used **only to define the parity set**. It is **not** an approved
 source for base text, romanization, meanings or grouping copy. Every text below must
 still clear RULEBOOK §11.1–§11.6 (two independent published sources, verbatim lines,
@@ -112,5 +112,5 @@ padavalis), Hindi Wikisource, BhaktiBharat, Bhajan Sandhya.
    lines also need a Hindi gloss in `meaningHi`.
 4. Group: a deity id from `deities.ts` when the bhajan addresses one; otherwise the
    regional group (`rajasthani`, `lok-bhajan`). Do not add a deity id for a folk deity.
-5. Devotional only (RULEBOOK §32.5). Dropped on 2026-11-16 as secular folk songs, not
+5. Devotional only (RULEBOOK §34.5). Dropped on 2026-11-16 as secular folk songs, not
    bhajans: Kesariya Balam, Ghoomar, Gorband, Panihari, Bedu Pako. Do not re-add them.

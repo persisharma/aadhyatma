@@ -7,7 +7,7 @@ import { writeFileSync } from 'node:fs';
 import { resolveObservancesForYearLive } from '../src/panchang/festivalEngine';
 import type { CalendarSystem } from '../src/panchang/types';
 
-const YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031];
+const YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
 const SYSTEMS: CalendarSystem[] = ['purnimant', 'amanta'];
 
 function iso(d: Date): string {

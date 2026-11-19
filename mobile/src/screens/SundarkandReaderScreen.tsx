@@ -4,7 +4,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   type ViewToken,
@@ -22,6 +21,8 @@ import {
 } from '@/data/sundarkand';
 import { useGitaLanguage } from '@/data/gita/language';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -67,7 +68,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'SundarkandReader'>;
 const DOT_COUNT = 5;
 
 export default function SundarkandReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -128,6 +129,8 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, offset, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -230,19 +233,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
           right={
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <ReaderPageCounter current={currentIndex + 1} total={verseCount} {...jump} />
           }
         />
 
@@ -316,6 +307,7 @@ export default function SundarkandReaderScreen({ navigation, route }: Props) {
                           share(
                             {
                               sourceId: 'sundarkand',
+                              verseIndex: verseIdx,
                               stanza: item.stanza,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
@@ -381,11 +373,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 56,
-    textAlign: 'right',
   },
   toggleRow: {
     paddingVertical: 6,

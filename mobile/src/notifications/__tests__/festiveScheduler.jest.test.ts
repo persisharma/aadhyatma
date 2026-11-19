@@ -1,4 +1,5 @@
 import * as Notifications from 'expo-notifications';
+import { resetNotificationFamiliesForTests } from '@/notifications/familyArm';
 import {
   cancelAllFestiveReminders,
   scheduleFestiveReminders,
@@ -30,6 +31,8 @@ const mockSchedule = Notifications.scheduleNotificationAsync as jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  // Each test models a fresh app process: nothing armed yet.
+  resetNotificationFamiliesForTests();
   mockGetPending.mockResolvedValue([]);
   mockCancel.mockResolvedValue(undefined);
   mockSchedule.mockResolvedValue('ok');

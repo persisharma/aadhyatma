@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   ScrollView,
-  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
@@ -17,6 +16,7 @@ import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { buildListingShare } from '@/utils/listingShare';
 import BackgroundLayer from '@/components/BackgroundLayer';
+import FocusedLightStatusBar from '@/components/FocusedLightStatusBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import GitaChapterCard from '@/components/GitaChapterCard';
 import GranthProgressScope from '@/components/GranthProgressScope';
@@ -45,7 +45,7 @@ export default function GitaChaptersIndexScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
-      <StatusBar barStyle="light-content" />
+      <FocusedLightStatusBar />
       <BackgroundLayer source={getSourceBackground('bhagavad-gita')} />
 
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right', 'bottom']}>

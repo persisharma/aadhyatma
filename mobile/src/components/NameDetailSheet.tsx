@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Clipboard, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { copyToClipboard } from '@/utils/clipboard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import type { NameRecord } from '@/data/namkaran/types';
@@ -59,7 +60,7 @@ export default function NameDetailSheet({
               </Pressable>
             ) : null}
             <View style={styles.actions}>
-              <Pressable onPress={() => { Clipboard.setString(name.hi); setCopied(true); }} accessibilityRole="button" accessibilityLabel={`Copy ${name.latin} name`} style={[styles.secondary, { flex: 1, borderColor: colors.divider, borderRadius: radii.pill }]}>
+              <Pressable onPress={() => { copyToClipboard(name.hi); setCopied(true); }} accessibilityRole="button" accessibilityLabel={`Copy ${name.latin} name`} style={[styles.secondary, { flex: 1, borderColor: colors.divider, borderRadius: radii.pill }]}>
                 <Text style={[styles.actionText, { color: colors.saffronDeep }]}>{contentByLang(lang, copied ? 'नाम कॉपी हो गया' : 'नाम कॉपी करें', copied ? 'Name copied' : 'Copy name')}</Text>
               </Pressable>
               <Pressable onPress={onToggle} accessibilityRole="button" accessibilityState={{ selected: shortlisted }} accessibilityLabel={`${shortlisted ? 'Remove' : 'Add'} ${name.latin} ${shortlisted ? 'from' : 'to'} shortlist`} style={[styles.primary, { flex: 1, backgroundColor: colors.saffronDeep, borderRadius: radii.pill }]}>

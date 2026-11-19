@@ -149,9 +149,9 @@ appId: com.prashantsharma.vedansh
 # These screens set headerShown:false with a custom "Back" chevron; the iOS
 # edge-swipe (`- back`) does not pop them, so tap the chevron by its a11y label
 # (same pattern as namkaran/pitru/vidhi flows).
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Month-view overlay: results → View on calendar → ringed days chip ──────

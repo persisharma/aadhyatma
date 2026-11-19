@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
   scheduleReturnReminders,
   cancelAllReturnReminders,
 } from '@/notifications/returnScheduler';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Headless: keeps the return-reminder ladder (वापसी स्मरण, design.md §38) armed
@@ -52,7 +53,7 @@ export default function ReturnReminderScheduler() {
 
     // Behind InteractionManager so a cold start's first frames are never
     // charged for the cancel + five schedules.
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       if (cancelled) return;
       scheduleReturnReminders(new Date(), lang).catch(() => undefined);
     });

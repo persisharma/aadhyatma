@@ -8,7 +8,7 @@ import type { Deity } from '../texts';
  * bhajan payload into the static launch graph (`launchGraph.test.ts`).
  *
  * A row is added here only after its JSON clears RULEBOOK §11.1–§11.6 (two
- * independent published sources, verbatim lines, complete text) and §32. The
+ * independent published sources, verbatim lines, complete text) and RULEBOOK §34. The
  * acquisition backlog — including rows on copyright or identity hold — lives in
  * `docs/content-parity/bhajan-library.md`, never here.
  *
@@ -19,7 +19,7 @@ import type { Deity } from '../texts';
 /**
  * Groups that are not a deity: regional devotional traditions. Devotional only —
  * a folk song with no devotional subject (Kesariya Balam, Ghoomar) never ships
- * on this shelf (RULEBOOK §32.5).
+ * on this shelf (RULEBOOK §34.5).
  */
 export type BhajanRegion = 'rajasthani' | 'lok-bhajan';
 

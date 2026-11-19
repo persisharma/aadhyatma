@@ -6,8 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { InteractionManager } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setItemWithRetry } from '@/utils/persistWithRetry';
 import * as Location from 'expo-location';
 import {
   DEFAULT_LOCATION,
@@ -16,7 +16,7 @@ import {
 } from '@/panchang/locations';
 import {
   lookupPincode,
-  snapToNearestLocation,
+  snapToNearestLocationInRange,
   toPincodeLocation,
 } from '@/panchang/pincodes';
 import {
@@ -31,6 +31,7 @@ import {
   peekPanchangPrefs,
 } from '@/panchang/panchangPrefs';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 // Location the whole panchang computes for. Any future location-sensitive feature
 // (e.g. Brahma-Muhurta reminders) must read this context, not its own geolocation.
@@ -44,7 +45,8 @@ import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
 // That is what lets Home's Today strip compose from cache on its FIRST render
 // instead of after two more round trips.
 
-export type GpsStatus = 'idle' | 'locating' | 'denied' | 'error';
+// `outside`: the phone is too far from any place the app knows — i.e. abroad.
+export type GpsStatus = 'idle' | 'locating' | 'denied' | 'error' | 'outside';
 
 type PanchangLocationContextValue = {
   location: PanchangLocation;
@@ -56,7 +58,7 @@ type PanchangLocationContextValue = {
    * `place` is the post-office name the user picked it by, kept in the English label.
    */
   selectPincode: (pincode: string, place?: string) => boolean;
-  requestDeviceLocation: () => Promise<'granted' | 'denied' | 'error'>;
+  requestDeviceLocation: () => Promise<'granted' | 'denied' | 'error' | 'outside'>;
   resolveDeviceLocation: () => Promise<PanchangLocation | null>;
   commitLocation: (next: PanchangLocation) => void;
 };
@@ -89,20 +91,26 @@ function warmInBackground(location: PanchangLocation) {
   // Defer off the interaction path so the picker can dismiss and the new location's
   // sunrise/tithi can repaint first — the (now frame-budgeted, but still heavy)
   // observance scan must never compete with the city-switch transition.
-  InteractionManager.runAfterInteractions(() => {
+  runWhenIdle(() => {
     activeCalendarSystem()
       .then((system) => warmObservanceCache(location, system))
       .catch(() => undefined);
   });
 }
 
+/** How old a cached OS fix may be before a fresh one is requested instead. */
+export const LAST_KNOWN_MAX_AGE_MS = 60 * 60 * 1000;
+
 async function getDevicePosition(): Promise<{
   latitude: number;
   longitude: number;
 } | null> {
-  const lastKnown = await Location.getLastKnownPositionAsync().catch(
-    () => null,
-  );
+  // Only a RECENT last-known fix is trusted. With no age limit the OS could hand
+  // back a fix from days ago in another city, and the Panchang would be computed
+  // for a place the reader has left.
+  const lastKnown = await Location.getLastKnownPositionAsync({
+    maxAge: LAST_KNOWN_MAX_AGE_MS,
+  }).catch(() => null);
   if (lastKnown) return lastKnown.coords;
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
@@ -150,7 +158,7 @@ export function PanchangLocationProvider({
         // needs applying — and only a real choice needs its observance year warmed.
         if (stored.cityId === UJJAIN_CITY_ID) return;
         setLocation(stored);
-        InteractionManager.runAfterInteractions(() => {
+        runWhenIdle(() => {
           if (cancelled) return;
           warmTimer = setTimeout(() => {
             if (cancelled) return;
@@ -181,9 +189,9 @@ export function PanchangLocationProvider({
 
   const applyLocation = useCallback((next: PanchangLocation) => {
     setLocation(next);
-    AsyncStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(next)).catch(
-      () => undefined,
-    );
+    // One retry, then a visible notice: a swallowed failure showed the new place
+    // and silently went back to the old one on the next launch.
+    void setItemWithRetry(LOCATION_STORAGE_KEY, JSON.stringify(next));
     warmInBackground(next);
   }, []);
 
@@ -218,12 +226,12 @@ export function PanchangLocationProvider({
     if (status !== 'granted') return null;
     const coords = await getDevicePosition();
     return coords
-      ? snapToNearestLocation(coords.latitude, coords.longitude)
+      ? snapToNearestLocationInRange(coords.latitude, coords.longitude)
       : null;
   }, []);
 
   const requestDeviceLocation = useCallback(async (): Promise<
-    'granted' | 'denied' | 'error'
+    'granted' | 'denied' | 'error' | 'outside'
   > => {
     setGpsStatus('locating');
     try {
@@ -241,7 +249,15 @@ export function PanchangLocationProvider({
       // bundled city list only if the table fails to load. Before the pincode tier this
       // was `nearestCity`, which outside Rajasthan could be 100 km+ away — a Kolhapur fix
       // landed on Panaji, 135 km off, and computed Goa's sunrise.
-      applyLocation(snapToNearestLocation(coords.latitude, coords.longitude));
+      // …and only when that place is near the fix. A phone abroad used to be
+      // stored as the nearest Indian pincode, hundreds or thousands of km away,
+      // with no notice; now the chosen place is kept and the sheet says why.
+      const snapped = snapToNearestLocationInRange(coords.latitude, coords.longitude);
+      if (!snapped) {
+        setGpsStatus('outside');
+        return 'outside';
+      }
+      applyLocation(snapped);
       setGpsStatus('idle');
       return 'granted';
     } catch {

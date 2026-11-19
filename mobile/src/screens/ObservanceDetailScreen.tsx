@@ -1,3 +1,7 @@
+import { occasionGuidance } from '@/panchang/occasionTimings';
+import { useCivilToday } from '@/panchang/useCivilToday';
+import OccasionTimingsCard from '@/components/OccasionTimingsCard';
+import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import StoryIcon from '@/components/StoryIcon';
 import AppIcon from '@/components/AppIcon';
 import ReaderHeader from '@/components/ReaderHeader';
@@ -20,7 +24,7 @@ import { getUpvasInfo } from '@/panchang/upvasContent';
 import { getBhogContent } from '@/panchang/bhogContent';
 import { getDaanOccasionForRule } from '@/data/daan';
 import { useUpvasParana } from '@/panchang/useUpvasParana';
-import { formatClock, formatRange, formatEndInstant, isSameLocalDay } from '@/panchang/muhuratFormat';
+import { formatClock, formatRange, formatEndInstant, isSameCivilDay } from '@/panchang/muhuratFormat';
 import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { getVidhiForFestival } from '@/data/vidhi';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -88,10 +92,12 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const [calendarSystem] = usePanchangCalendarSystem();
 
   const rule = getRuleById(route.params.ruleId);
-  const today = useMemo(() => startOfLocalDay(new Date()), []);
+  // India's current date, rolled over at midnight and on foreground — a `new Date()`
+  // read once at mount left "Today / Tomorrow" a day off after a night in the background.
+  const today = useCivilToday();
   const next = useMemo(
-    () => (rule ? getNextOccurrence(rule.id, today, calendarSystem) : null),
-    [rule, today, calendarSystem]
+    () => (rule ? (route.params.dateMs !== undefined && Number.isFinite(route.params.dateMs) ? { rule, date: new Date(route.params.dateMs) } : getNextOccurrence(rule.id, today, calendarSystem)) : null),
+    [rule, today, calendarSystem, route.params.dateMs]
   );
   const katha = rule?.kathaId ? getKathaContent(rule.kathaId) : null;
   const vidhi = rule ? getVidhiForFestival(rule.id) : null;
@@ -109,6 +115,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
   const { location } = usePanchangLocation();
   // The derived parana date/time line (null for text-only kinds, while the
   // solve is in flight, or on an honest derivation miss — text renders alone).
+  const occasion = useOccasionTimings(next?.date ?? null, calendarSystem, rule?.id);
   const paranaDisplay = useUpvasParana(upvas?.parana ?? null, next?.date ?? null);
 
   const { isFollowing } = useVratFollows();
@@ -206,6 +213,8 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                 ? `${contentByLang(lang, 'अगला', 'Next')} · ${formatDate(next.date, lang)} · ${relativeLabel(next.date, today, lang)}`
                 : null}
             />
+
+            <OccasionTimingsCard items={occasion.items.length ? occasion.items : rule && !occasion.loading && !occasion.error ? [occasionGuidance(rule, next?.date ?? today)] : []} dated={!!next} date={next?.date ?? today} place={location.labelHi} placeEn={location.labelEn} error={occasion.error} onRetry={occasion.retry} />
 
             {/* Actions (P2: Follow + Read Katha; Remind arrives in P3) */}
             <View style={styles.actionRow}>
@@ -396,7 +405,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                           <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 20, color: colors.inkSoft }}>
                             {meaningByLang(lang, upvas.parana.textHi, upvas.parana.textEn)}
                           </Text>
-                          {paranaDisplay && (
+                          {paranaDisplay && rule.dayRule !== 'ekadashi' && rule.dayRule !== 'ekadashi-vaishnava' && (
                             <View
                               testID="observance-upvas-parana-computed"
                               style={[styles.upvasComputed, { backgroundColor: colors.goldTint, borderRadius: radii.md }]}
@@ -404,7 +413,7 @@ export default function ObservanceDetailScreen({ route, navigation }: Props) {
                               <Text maxFontSizeMultiplier={1.25} style={{ fontFamily: fontFamilies.interSemiBold, fontSize: 12, color: colors.saffronDeep }}>
                                 {paranaDisplay.kind === 'window'
                                   ? `${contentByLang(lang, 'पारण', 'Parana')} · ${formatDate(paranaDisplay.date, lang)} · ${
-                                      isSameLocalDay(paranaDisplay.start, paranaDisplay.end)
+                                      isSameCivilDay(paranaDisplay.start, paranaDisplay.end)
                                         ? formatRange(paranaDisplay.start, paranaDisplay.end)
                                         : `${formatClock(paranaDisplay.start)} – ${formatEndInstant(paranaDisplay.end, paranaDisplay.date, lang)}`
                                     }`

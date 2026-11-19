@@ -104,3 +104,55 @@ test('two Home consumers share a cold solve and cancelling one does not cancel t
   expect(map.size).toBe(1);
   expect(solve).toHaveBeenCalledTimes(1);
 });
+
+describe('foreground lane', () => {
+  function* units(name: string, count: number, events: string[], cost: () => void) {
+    for (let i = 0; i < count; i++) {
+      events.push(name);
+      cost();
+      yield;
+    }
+    return name;
+  }
+
+  test('a foreground job runs ahead of queued background work, in a 12 ms slice', async () => {
+    let elapsed = 0;
+    jest.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    const events: string[] = [];
+    const cost = () => { elapsed += 3; };
+    const bg = runInBackground(units('bg', 6, events, cost));
+    const fg = runInBackground(units('fg', 6, events, cost), undefined, 'foreground');
+    setTimeout(() => events.push('tap'), 0);
+    expect(await Promise.all([fg, bg])).toEqual(['fg', 'bg']);
+    // First tick: foreground only, 4 units (12 ms at 3 ms each). A tap queued
+    // meanwhile still lands before the next slice.
+    expect(events.slice(0, 5)).toEqual(['fg', 'fg', 'fg', 'fg', 'tap']);
+    // Background resumes only once the foreground lane is empty.
+    expect(events.indexOf('bg')).toBeGreaterThan(events.lastIndexOf('fg'));
+  });
+
+  test('background-only work keeps its 4 ms round-robin slice', async () => {
+    let elapsed = 0;
+    jest.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    const events: string[] = [];
+    const cost = () => { elapsed += 3; };
+    const a = runInBackground(units('a', 3, events, cost));
+    const b = runInBackground(units('b', 3, events, cost));
+    setTimeout(() => events.push('tap'), 0);
+    await Promise.all([a, b]);
+    expect(events.slice(0, 3)).toEqual(['a', 'b', 'tap']);
+  });
+
+  test('cancelling a foreground job releases the lane to background work', async () => {
+    let elapsed = 0;
+    jest.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    const events: string[] = [];
+    let cancelled = false;
+    const fg = runInBackground(units('fg', 100, events, () => { elapsed += 3; }), () => cancelled, 'foreground');
+    const bg = runInBackground(units('bg', 2, events, () => { elapsed += 3; }));
+    setTimeout(() => { cancelled = true; }, 0);
+    expect(await fg).toBeUndefined();
+    expect(await bg).toBe('bg');
+    expect(events.filter((e) => e === 'fg').length).toBeLessThan(100);
+  });
+});

@@ -118,6 +118,13 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Pitru Smaran.*1 entries"
     timeout: 15000
+# On a day with an observance the illustrated occasion cards (#647) sit above
+# the ledger, so the row can be below the fold: bring it on screen before the
+# tap, or the tap lands under the tab bar and nothing opens.
+- scrollUntilVisible:
+    element:
+      text: "Pitru Smaran.*1 entries"
+    centerElement: true
 - tapOn: "Pitru Smaran.*1 entries"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -187,11 +194,11 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: "विधि विवरण पर वापस जाएँ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Re-entry serves the cached answers: every row is present again ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - tapOn: "^Smaran Father,.*$"
 - waitForAnimationToEnd
@@ -232,7 +239,7 @@ appId: com.prashantsharma.vedansh
     visible: "पंचांग से निकली तिथि — पुष्टि करें"
     timeout: 15000
 - assertVisible: "Choose the tithi myself"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 
 # Clean up — termination resets navigation for the next flow.
 - stopApp:

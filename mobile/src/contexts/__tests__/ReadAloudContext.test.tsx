@@ -107,8 +107,13 @@ async function mount(lang: 'hi' | 'en' | 'gu' | 'kn' = 'hi') {
       </GitaLanguageProvider>
     );
   });
-  // Let the voice probe and prefs hydration settle.
+  // Let prefs hydration settle, then do what an opening reader does: ask for the
+  // voice probe (it never runs at mount — see the 'probe timing' tests).
   await act(async () => {
+    await Promise.resolve();
+  });
+  await act(async () => {
+    ctx.ensureVoices();
     await Promise.resolve();
   });
   return tree!;
@@ -129,6 +134,49 @@ afterEach(() => {
     tree = null;
   }
   jest.useRealTimers();
+});
+
+describe('probe timing', () => {
+  // The provider wraps the whole app; on Android the probe's native callback calls
+  // the TTS engine on the main thread, so it must never run at app start.
+  it('does not probe voices when the provider mounts', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    await act(async () => {
+      tree = TestRenderer.create(
+        <GitaLanguageProvider initialLang="hi">
+          <ReadAloudPrefsProvider>
+            <ReadAloudProvider>
+              <Capture />
+            </ReadAloudProvider>
+          </ReadAloudPrefsProvider>
+        </GitaLanguageProvider>
+      );
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(speechMock.getAvailableVoicesAsync).not.toHaveBeenCalled();
+    expect(ctx.availability).toBe('unknown');
+    // 'unknown' keeps the control pressable until a reader asks.
+    expect(ctx.available).toBe(true);
+  });
+
+  it('probes once on first need, and again only on an explicit refresh', async () => {
+    speechMock.getAvailableVoicesAsync.mockClear();
+    await mount();
+    expect(speechMock.getAvailableVoicesAsync).toHaveBeenCalledTimes(1);
+    expect(ctx.availability).toBe('ready');
+    await act(async () => {
+      ctx.ensureVoices();
+      await Promise.resolve();
+    });
+    expect(speechMock.getAvailableVoicesAsync).toHaveBeenCalledTimes(1);
+    await act(async () => {
+      ctx.refreshVoices();
+      await Promise.resolve();
+    });
+    expect(speechMock.getAvailableVoicesAsync).toHaveBeenCalledTimes(2);
+  });
 });
 
 describe('voice probe', () => {

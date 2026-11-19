@@ -53,47 +53,152 @@ export const valmikiRamayanTotal = valmikiRamayanChaptersManifest.reduce(
 );
 
 /**
- * The full corpus is intentionally loaded one kāṇḍa at a time. Importing all
- * seven 2.5–6 MB payloads here would put the entire epic on the Home startup
- * path through `texts.ts`.
+ * A kāṇḍa is LOADED, not required: asynchronously, a piece at a time, with the
+ * thread handed back between pieces. The largest kāṇḍa used to be a single
+ * 6.4 MB synchronous `require` in the reader's first render.
+ *
+ * Where its verses come from is decided when the app is BUNDLED, by the app
+ * version it is bundled for (`mobile/corpusDelivery.js`):
+ *
+ *   - A runtime whose store binary embeds the corpus reads it from 73 bundled
+ *     asset files (`assets/valmiki-ramayan/*.txt`, written from the
+ *     `chapter-0N.json` masters by `scripts/build-valmiki-assets.mjs`). The
+ *     27 MB corpus is then NOT in the JS bundle — it was more than half of it —
+ *     and no OTA update re-sends it.
+ *   - Every older runtime gets the masters compiled into the bundle, as before,
+ *     so an OTA from the latest branch asks nothing of a build that predates
+ *     the asset files.
+ *
+ * Both answer the same `./corpusSource` request (`corpusSource.ts`,
+ * `corpusSource.inbundle.ts`); everything below is shared.
+ *
+ * The source is reached through a `require()` thunk on purpose. This module is
+ * on the launch path (the manifest and the daily selection are); the asset
+ * handles, `expo-asset` and the masters must not be.
  */
-const chapterLoaders: readonly (() => ValmikiRamayanChapter)[] = [
-  () => require('./chapter-01.json') as ValmikiRamayanChapter,
-  () => require('./chapter-02.json') as ValmikiRamayanChapter,
-  () => require('./chapter-03.json') as ValmikiRamayanChapter,
-  () => require('./chapter-04.json') as ValmikiRamayanChapter,
-  () => require('./chapter-05.json') as ValmikiRamayanChapter,
-  () => require('./chapter-06.json') as ValmikiRamayanChapter,
-  () => require('./chapter-07.json') as ValmikiRamayanChapter,
-];
-
 const chapterCache = new Map<number, ValmikiRamayanChapter>();
+/**
+ * The corpus is 27 MB of text, so only the kāṇḍas in use stay resident: the one
+ * being read, the one preloaded after it, and the one just left (back-navigation).
+ * The least recently used is dropped when a fourth arrives. A screen that holds a
+ * kāṇḍa keeps its own reference, so eviction frees memory once it lets go.
+ */
+export const MAX_RESIDENT_CHAPTERS = 3;
+function remember(chapter: number, value: ValmikiRamayanChapter): void {
+  // Map keeps insertion order: delete + set makes `chapter` the most recent.
+  chapterCache.delete(chapter);
+  chapterCache.set(chapter, value);
+  while (chapterCache.size > MAX_RESIDENT_CHAPTERS) {
+    const oldest = chapterCache.keys().next().value as number;
+    chapterCache.delete(oldest);
+  }
+}
+const chapterLoads = new Map<number, Promise<ValmikiRamayanChapter>>();
 
 /** Lightweight anchors used by Daily Bhakti and on-device search. */
 export const valmikiRamayanDailySelection =
   dailySelection as unknown as readonly ValmikiRamayanVerse[];
 
-export function getValmikiRamayanChapter(chapter: number): ValmikiRamayanChapter {
-  const idx = chapter - 1;
-  if (idx < 0 || idx >= chapterLoaders.length) {
-    throw new Error(
-      `valmiki-ramayan: chapter ${chapter} out of range (1-${chapterLoaders.length})`
+function isValidChapter(chapter: number): boolean {
+  return Number.isInteger(chapter) && chapter >= 1 && chapter <= valmikiRamayanChaptersManifest.length;
+}
+
+/** The kāṇḍa if this process has already loaded it, else null. Never does any work. */
+export function peekValmikiRamayanChapter(chapter: number): ValmikiRamayanChapter | null {
+  const cached = chapterCache.get(chapter);
+  if (!cached) return null;
+  remember(chapter, cached); // a kāṇḍa on screen is, by definition, in use
+  return cached;
+}
+
+/**
+ * Load a kāṇḍa. Concurrent callers share one load; loaded kāṇḍas are kept
+ * least-recently-used, up to `MAX_RESIDENT_CHAPTERS`. A failed load is
+ * forgotten, so the next call tries again.
+ */
+export function loadValmikiRamayanChapter(chapter: number): Promise<ValmikiRamayanChapter> {
+  if (!isValidChapter(chapter)) {
+    return Promise.reject(
+      new Error(
+        `valmiki-ramayan: chapter ${chapter} out of range (1-${valmikiRamayanChaptersManifest.length})`
+      )
     );
   }
   const cached = chapterCache.get(chapter);
-  if (cached) return cached;
-  const loaded = chapterLoaders[idx]();
-  assertChapterInvariants(loaded, valmikiRamayanChaptersManifest[idx]);
-  chapterCache.set(chapter, loaded);
-  return loaded;
+  if (cached) {
+    remember(chapter, cached);
+    return Promise.resolve(cached);
+  }
+  let pending = chapterLoads.get(chapter);
+  if (!pending) {
+    pending = readChapter(chapter).then(
+      (loaded) => {
+        remember(chapter, loaded);
+        chapterLoads.delete(chapter);
+        return loaded;
+      },
+      (error: unknown) => {
+        chapterLoads.delete(chapter);
+        throw error;
+      }
+    );
+    chapterLoads.set(chapter, pending);
+  }
+  return pending;
+}
+
+/** One macrotask, so a touch or a frame can run between two parts. */
+const yieldToEventLoop = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+async function readChapter(chapter: number): Promise<ValmikiRamayanChapter> {
+  const summary = valmikiRamayanChaptersManifest[chapter - 1];
+  const { readKandaParts } = require('./corpusSource') as typeof import('./corpusSource');
+  const validator = createChapterValidator(summary);
+  const verses: ValmikiRamayanVerse[] = [];
+
+  await readKandaParts(chapter, async (parsed, part) => {
+    if (!Array.isArray(parsed) || parsed.length !== part.verseCount || verses.length !== part.firstVerse) {
+      throw new Error(`valmiki-ramayan: chapter ${chapter} part at verse ${part.firstVerse} is not the published part`);
+    }
+    for (const verse of parsed as ValmikiRamayanVerse[]) {
+      validator.check(verse);
+      verses.push(withMeaningFallback(verse));
+    }
+    await yieldToEventLoop();
+  });
+  validator.finish(verses.length);
+  return { ...summary, verses };
+}
+
+/**
+ * How many verses into kāṇḍa `kanda` its sarga `sarga` begins, or -1 when that
+ * sarga has no verse. Answered from a small generated table, so following a
+ * "kāṇḍa.sarga" reference does not load a kāṇḍa just to find where to open it.
+ */
+export function valmikiSargaStartIndex(kanda: number, sarga: number): number {
+  const { valmikiSargaStarts } = require('./sargaStarts') as typeof import('./sargaStarts');
+  return valmikiSargaStarts[kanda]?.[sarga - 1] ?? -1;
+}
+
+/**
+ * A blank meaning means the pinned upstream had no usable text for that language
+ * (site-navigation residue, a Sanskrit echo, or an English "Missing" placeholder —
+ * see `scripts/build-valmiki-ramayan.py`). Show the verse's other sourced meaning
+ * rather than nothing or the residue, so every consumer (reader, share, read-aloud,
+ * bookmarks) still receives non-empty strings.
+ */
+export function withMeaningFallback(v: ValmikiRamayanVerse): ValmikiRamayanVerse {
+  if (v.meaningHi.trim() && v.meaningEn.trim()) return v;
+  return {
+    ...v,
+    meaningHi: v.meaningHi.trim() ? v.meaningHi : v.meaningEn,
+    meaningEn: v.meaningEn.trim() ? v.meaningEn : v.meaningHi,
+  };
 }
 
 const DEVANAGARI = /[ऀ-ॿ]/;
 
 (function assertValmikiRamayanManifestInvariants() {
-  if (chapterLoaders.length !== valmikiRamayanChaptersManifest.length) {
-    throw new Error('valmiki-ramayan: chapter count mismatch with manifest');
-  }
   for (let i = 0; i < valmikiRamayanChaptersManifest.length; i++) {
     const summary = valmikiRamayanChaptersManifest[i];
     if (summary.chapter !== i + 1 || summary.sargaCount < 1 || summary.verseCount < 1) {
@@ -102,57 +207,55 @@ const DEVANAGARI = /[ऀ-ॿ]/;
   }
 })();
 
-function assertChapterInvariants(
-  c: ValmikiRamayanChapter,
-  manifestEntry: ValmikiRamayanChapterSummary
-) {
+/**
+ * The same per-kāṇḍa invariants as before, checked verse by verse as each part
+ * arrives instead of in one pass over a whole kāṇḍa at the end.
+ */
+function createChapterValidator(summary: ValmikiRamayanChapterSummary) {
   const seenIds = new Set<string>();
-  if (c.verses.length !== c.verseCount) {
-    throw new Error(
-      `valmiki-ramayan: chapter ${c.chapter} declares ${c.verseCount} verses but has ${c.verses.length}`
-    );
-  }
-  if (
-    manifestEntry.chapter !== c.chapter ||
-    manifestEntry.sargaCount !== c.sargaCount ||
-    manifestEntry.verseCount !== c.verseCount ||
-    manifestEntry.titleHi !== c.titleHi ||
-    manifestEntry.titleEn !== c.titleEn
-  ) {
-    throw new Error(`valmiki-ramayan: manifest entry ${c.chapter} drifts from chapter payload`);
-  }
   const seenSargas = new Set<string>();
-  for (const v of c.verses) {
-    if (seenIds.has(v.id)) throw new Error(`valmiki-ramayan: duplicate verse id '${v.id}'`);
-    seenIds.add(v.id);
-    if (v.kanda !== c.chapter) {
-      throw new Error(`valmiki-ramayan: ${v.id} kanda ${v.kanda} != chapter ${c.chapter}`);
-    }
-    if (v.stanza !== c.chapter) {
-      throw new Error(`valmiki-ramayan: ${v.id} stanza must equal its kāṇḍa number`);
-    }
-    if (v.lines.length < 1) throw new Error(`valmiki-ramayan: ${v.id} has no lines`);
-    // The reader renders `linesEn` index-paired with `lines` (RULEBOOK §11.12).
-    if (v.lines.length !== v.linesEn.length) {
-      throw new Error(
-        `valmiki-ramayan: ${v.id} has ${v.lines.length} lines but ${v.linesEn.length} linesEn`
-      );
-    }
-    for (const line of v.linesEn) {
-      if (!line.trim()) throw new Error(`valmiki-ramayan: ${v.id} has an empty linesEn entry`);
-      if (DEVANAGARI.test(line)) {
-        throw new Error(`valmiki-ramayan: ${v.id} has Devanagari in linesEn`);
+  return {
+    check(v: ValmikiRamayanVerse): void {
+      if (seenIds.has(v.id)) throw new Error(`valmiki-ramayan: duplicate verse id '${v.id}'`);
+      seenIds.add(v.id);
+      if (v.kanda !== summary.chapter) {
+        throw new Error(`valmiki-ramayan: ${v.id} kanda ${v.kanda} != chapter ${summary.chapter}`);
       }
-    }
-    if (!v.meaningHi.trim() || !v.meaningEn.trim()) {
-      throw new Error(`valmiki-ramayan: ${v.id} has empty meaning`);
-    }
-    if (!v.reference.trim()) throw new Error(`valmiki-ramayan: ${v.id} has no reference`);
-    seenSargas.add(v.reference.split('.')[1] ?? '');
-  }
-  if (seenSargas.size !== c.sargaCount) {
-    throw new Error(
-      `valmiki-ramayan: chapter ${c.chapter} has ${seenSargas.size} sargas, expected ${c.sargaCount}`
-    );
-  }
+      if (v.stanza !== summary.chapter) {
+        throw new Error(`valmiki-ramayan: ${v.id} stanza must equal its kāṇḍa number`);
+      }
+      if (v.lines.length < 1) throw new Error(`valmiki-ramayan: ${v.id} has no lines`);
+      // The reader renders `linesEn` index-paired with `lines` (RULEBOOK §11.12).
+      if (v.lines.length !== v.linesEn.length) {
+        throw new Error(
+          `valmiki-ramayan: ${v.id} has ${v.lines.length} lines but ${v.linesEn.length} linesEn`
+        );
+      }
+      for (const line of v.linesEn) {
+        if (!line.trim()) throw new Error(`valmiki-ramayan: ${v.id} has an empty linesEn entry`);
+        if (DEVANAGARI.test(line)) {
+          throw new Error(`valmiki-ramayan: ${v.id} has Devanagari in linesEn`);
+        }
+      }
+      // One side may be blank (unusable upstream row, filled by `withMeaningFallback`);
+      // a verse with no usable meaning in either language is a corpus defect.
+      if (!v.meaningHi.trim() && !v.meaningEn.trim()) {
+        throw new Error(`valmiki-ramayan: ${v.id} has no meaning in either language`);
+      }
+      if (!v.reference.trim()) throw new Error(`valmiki-ramayan: ${v.id} has no reference`);
+      seenSargas.add(v.reference.split('.')[1] ?? '');
+    },
+    finish(verseCount: number): void {
+      if (verseCount !== summary.verseCount) {
+        throw new Error(
+          `valmiki-ramayan: chapter ${summary.chapter} declares ${summary.verseCount} verses but has ${verseCount}`
+        );
+      }
+      if (seenSargas.size !== summary.sargaCount) {
+        throw new Error(
+          `valmiki-ramayan: chapter ${summary.chapter} has ${seenSargas.size} sargas, expected ${summary.sargaCount}`
+        );
+      }
+    },
+  };
 }

@@ -16,6 +16,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { useRoutineSheet } from '@/contexts/RoutineSheetContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
 import { metaFont } from '@/utils/scriptFont';
 import type { OrderedTitlePart, TitleSizeScale } from '@/utils/titleByLanguage';
 
@@ -145,12 +147,18 @@ export function CardTitles({ primary, secondary, meta }: { primary: TitleLine; s
 export function CardRoutineTail({ sourceId, nameEn }: { sourceId: string; nameEn: string }) {
   const { colors, radii } = useTheme();
   const { openAddToRoutine } = useRoutineSheet();
+  const { lang } = useGitaLanguage();
   return (
     <View style={styles.tail}>
       <Pressable
         onPress={() => openAddToRoutine(sourceId)}
         accessibilityRole="button"
-        accessibilityLabel={`Add ${nameEn} to a routine`}
+        accessibilityLabel={pick(lang, {
+          hi: `“${nameEn}” को साधना में जोड़ें`,
+          en: `Add ${nameEn} to a routine`,
+          gu: `“${nameEn}” ને સાધનામાં ઉમેરો`,
+          kn: `“${nameEn}” ಅನ್ನು ಸಾಧನೆಗೆ ಸೇರಿಸಿ`,
+        })}
         hitSlop={12}
         style={({ pressed }) => [
           styles.addBtn,

@@ -163,7 +163,7 @@ export function daanKathaShareable(katha: DaanKathaEntry): ShareableProse {
           ...katha.sections.flatMap((s) => pairParagraphs(s.paragraphsHi, s.paragraphsEn)),
           heading('शिक्षा', 'The teaching'),
           para(katha.teachingHi, katha.teachingEn),
-          para(`स्रोत: ${katha.canonHi}`, `Source: ${katha.canonEn || katha.canonHi}`),
+          para(katha.canonHi, katha.canonEn || katha.canonHi),
         ],
       },
     ],

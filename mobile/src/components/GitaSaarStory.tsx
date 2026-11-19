@@ -5,7 +5,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { gitaSaarStories } from '@/data/gita-saar/stories';
 import type { LearningCopy } from '@/data/gita-saar/experience';
 import { readerIllustrationAsset } from '@/data/readerIllustrationAsset';
-import { meaningByLang, meaningSourceLang, pick } from '@/utils/localize';
+import { contentByLang, meaningByLang, meaningSourceLang, pick } from '@/utils/localize';
 import { meaningToken, scriptTitleFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import ReadingBanner from './ReadingBanner';
@@ -250,32 +250,25 @@ export function GitaSaarStoryDetails({
           {copy(story.everyday)}
         </ProseParagraph>
       </View>
-      <ProseParagraph style={[label, { color: colors.inkMuted, marginTop: 18 }]}>
+      {story.sources.some(source => source.inAppRef) && <ProseParagraph style={[label, { color: colors.inkMuted, marginTop: 18 }]}>
         {pick(lang, {
-          hi: 'मूल ग्रंथ',
-          en: 'Story sources',
-          gu: 'મૂળ ગ્રંથ',
-          kn: 'ಮೂಲ ಗ್ರಂಥಗಳು',
+          hi: 'ऐप में संबंधित पाठ',
+          en: 'Related readings in Vedansh',
+          gu: 'ઍપમાં સંબંધિત પાઠ',
+          kn: 'ಆ್ಯಪ್‌ನಲ್ಲಿ ಸಂಬಂಧಿತ ಪಠ್ಯಗಳು',
         })}
       </ProseParagraph>
-      {story.sources.map((source) => {
-        const passage =
-          lang === 'hi' ? source.passageHi ?? source.passage : source.passage;
+      }
+      {story.sources.filter(source => source.inAppRef).map((source) => {
+        const passage = contentByLang(lang, source.passageHi ?? source.passage, source.passage);
         const ref = source.inAppRef;
         const citation = `${copy(source.title)} · ${passage}`;
-        if (!ref) {
-          return (
-            <View key={source.url} style={[styles.source, { borderColor: colors.divider }]}>
-              <AppIcon name="text" color={colors.saffronDeep} size={16} />
-              <ProseParagraph style={[label, { flex: 1 }]}>{citation}</ProseParagraph>
-            </View>
-          );
-        }
+        if (!ref) return null;
         const canOpen =
           ref.kind === 'gita' ? Boolean(onOpenGitaRef) : Boolean(onOpenRamayanRef);
         return (
           <Pressable
-            key={source.url}
+            key={ref.kind === 'gita' ? `gita-${ref.chapter}.${ref.verse}` : `valmiki-${ref.kanda}.${ref.sarga}`}
             testID={
               ref.kind === 'gita'
                 ? `gita-saar-source-gita-${ref.chapter}.${ref.verse}`

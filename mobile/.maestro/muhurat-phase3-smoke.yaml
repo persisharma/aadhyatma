@@ -140,9 +140,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 # The साक्ष्य framing keeps hora visibly outside the tier contract.
 - assertVisible: "Evidence|साक्ष्य"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── यात्रा: the 13th occasion and its दिशा chip row ──────────────────────────

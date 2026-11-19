@@ -1,0 +1,15 @@
+appId: com.prashantsharma.vedansh
+---
+# At accessibility sizes the directory spans many screens. Find the large
+# banner at a normal scroll speed before making the final short adjustments.
+- scrollUntilVisible:
+    element: { id: home-sanatan-card }
+    direction: DOWN
+    speed: 35
+    visibilityPercentage: 45
+    timeout: 90000
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "home-sanatan-card" }
+- waitForAnimationToEnd
+- assertVisible: { id: home-sanatan-card }

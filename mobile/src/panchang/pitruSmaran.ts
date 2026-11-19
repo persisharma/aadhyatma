@@ -27,7 +27,7 @@
 // src/panchang). AsyncStorage/React live in PitruSmaranContext and the hooks.
 
 import { addDays } from './calendarGrid';
-import { runInBackground, runSynchronously } from './backgroundWork';
+import { runInBackground, runSynchronously, type WorkPriority } from './backgroundWork';
 import { aparahnaCover, computeTithiAndMonthSteps } from './engine';
 import { matchesLunarTithiRuleOnDate, type ObservanceLocation } from './festivalEngine';
 import {
@@ -385,9 +385,10 @@ export function pitruPakshaWindow(gregorianYear: number, options: SolveOptions =
 export function pitruPakshaWindowAsync(
   year: number,
   isCancelled: () => boolean = () => false,
-  options: SolveOptions = {}
+  options: SolveOptions = {},
+  priority: WorkPriority = 'background'
 ): Promise<PitruPakshaWindow | null | undefined> {
-  return runInBackground(pitruPakshaWindowSteps(year, options), isCancelled);
+  return runInBackground(pitruPakshaWindowSteps(year, options), isCancelled, priority);
 }
 
 /**
@@ -404,13 +405,37 @@ export function pakshaShraddhaDay(
   gregorianYear: number,
   options: SolveOptions = {}
 ): Date | null {
-  const window = pitruPakshaWindow(gregorianYear, options);
+  return runSynchronously(pakshaShraddhaDaySteps(rule, gregorianYear, options));
+}
+
+/**
+ * Same answer as `pakshaShraddhaDay`, yielding inside the window scan and the
+ * aparahna day table — for a screen that must stay tappable while a cold
+ * fortnight solves. Rejects only if the engine throws; resolves `undefined`
+ * when cancelled.
+ */
+export function pakshaShraddhaDayAsync(
+  rule: TithiRule | 'sarvapitri',
+  gregorianYear: number,
+  isCancelled: () => boolean = () => false,
+  options: SolveOptions = {},
+  priority: WorkPriority = 'background'
+): Promise<Date | null | undefined> {
+  return runInBackground(pakshaShraddhaDaySteps(rule, gregorianYear, options), isCancelled, priority);
+}
+
+function* pakshaShraddhaDaySteps(
+  rule: TithiRule | 'sarvapitri',
+  gregorianYear: number,
+  options: SolveOptions
+): Generator<void, Date | null, void> {
+  const window = yield* pitruPakshaWindowSteps(gregorianYear, options);
   if (!window) return null;
   if (rule === 'sarvapitri') return window.end;
   if (!isValidTithiRule(rule)) return null;
   if (rule.paksha === 'shukla' && rule.tithi === 15) return window.purnima;
   if (rule.tithi === 15) return window.end; // krishna 15 = amavasya = Sarvapitri
-  const found = pakshaTithiDays(gregorianYear, window, options).get(rule.tithi + 14);
+  const found = (yield* pakshaTithiDaysSteps(gregorianYear, window, options)).get(rule.tithi + 14);
   if (found && found.getTime() <= window.end.getTime()) return found;
   return window.end;
 }

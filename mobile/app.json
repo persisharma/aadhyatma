@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.prashantsharma.vedansh",
-      "versionCode": 15,
+      "versionCode": 20,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFF1D5"
@@ -36,7 +36,9 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "blockedPermissions": [
-        "android.permission.ACTIVITY_RECOGNITION"
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
       ],
       "permissions": [
         "FOREGROUND_SERVICE",
@@ -51,7 +53,30 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              "./assets/fonts/VedanshDevotionalText.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-devanagari/500Medium/NotoSerifDevanagari_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-devanagari/600SemiBold/NotoSerifDevanagari_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/cormorant-garamond/400Regular_Italic/CormorantGaramond_400Regular_Italic.ttf",
+              "./node_modules/@expo-google-fonts/cormorant-garamond/500Medium/CormorantGaramond_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/cormorant-garamond/600SemiBold/CormorantGaramond_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/cormorant-garamond/600SemiBold_Italic/CormorantGaramond_600SemiBold_Italic.ttf",
+              "./node_modules/@expo-google-fonts/cormorant-garamond/700Bold/CormorantGaramond_700Bold.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-gujarati/500Medium/NotoSerifGujarati_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-gujarati/600SemiBold/NotoSerifGujarati_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-kannada/500Medium/NotoSerifKannada_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-kannada/600SemiBold/NotoSerifKannada_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/inter/500Medium/Inter_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/inter/600SemiBold/Inter_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/tiro-devanagari-sanskrit/400Regular/TiroDevanagariSanskrit_400Regular.ttf"
+            ]
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -84,6 +109,8 @@
       "./plugins/withJapamAlarmNative.js",
       "./plugins/withJapamAlarmIos.js",
       "./plugins/withHomeWidgets.js",
+      "./plugins/withAndroidLaunchWindow.js",
+      "./plugins/withAndroidReleaseShrink.js",
       [
         "expo-location",
         {
@@ -91,7 +118,6 @@
           "isAndroidBackgroundLocationEnabled": false
         }
       ],
-      "expo-secure-store",
       [
         "expo-image-picker",
         {

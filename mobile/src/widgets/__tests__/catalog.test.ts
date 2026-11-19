@@ -100,7 +100,7 @@ test('every Android provider in the catalog is a real class, a registered receiv
 test('only the small verse cell reads the excerpt — wider cells read the full lines', () => {
   const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
   const verseView = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('MARK: - आज का पंचांग'));
-  assert.match(verseView, /family == \.systemSmall\s*\{\s*Text\(v\.excerpt/, 'iOS must gate v.excerpt behind systemSmall');
+  assert.match(verseView, /family == \.systemSmall\s*\{[\s\S]*?Text\(v\.excerpt/, 'iOS must gate v.excerpt behind systemSmall');
   assert.equal(verseView.match(/v\.excerpt/g)?.length, 1, 'iOS reads the excerpt in exactly one branch');
   assert.match(verseView, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)/, 'the wide iOS cell must flow the full lines');
 
@@ -108,10 +108,38 @@ test('only the small verse cell reads the excerpt — wider cells read the full 
   const renderVerse = kotlin.slice(kotlin.indexOf('private fun renderVerse'), kotlin.indexOf('/** Each surface owns'));
   assert.match(renderVerse, /narrow -> vd\.getJSONObject\("excerpt"\)/, 'Android must gate the excerpt behind the narrow cell');
   assert.equal(renderVerse.match(/"excerpt"/g)?.length, 1, 'Android reads the excerpt in exactly one branch');
-  assert.match(renderVerse, /padas\.joinToString\(" · "\)/, 'the wide Android cell must flow the full lines');
+  assert.match(renderVerse, /padas\.joinToString\("\\n"\)/, 'the wide Android cell must preserve the full lines');
 
   // A cell that trims the verse has to say so rather than clip a wrapped line.
   assert.match(read('home-widgets', 'android', 'res', 'layout', 'vedansh_widget_verse.xml'), /android:id="@\+id\/widget_title"[^>]*android:ellipsize="end"/);
+});
+
+// The visual delight revision must affect the *placed* iOS widgets, not only
+// the JS gallery. It also must not change the actual date/tithi/verse sources.
+test('native small Panchang has a distinct devotional hierarchy and adaptive verse retains source', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+  const small = swift.slice(swift.indexOf('private func smallPanchang('), swift.indexOf('MARK: - आज का पंचांग'));
+  const panchang = swift.slice(swift.indexOf('MARK: - आज का पंचांग'), swift.indexOf('MARK: - जप-साधना'));
+  const verse = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('private func smallPanchang('));
+  assert.ok(small.length > 150, 'missing actual native small-Panchang layout');
+  assert.match(panchang, /family == \.systemSmall\s*\{[\s\S]*?ViewThatFits\(in: \.vertical\)/,
+    'systemSmall Panchang must render the new SwiftUI composition');
+  assert.match(panchang, /smallPanchang\(p, running: running, city: payload\.panchang\.cityLabel\.value\(lang\), lang: lang, compact: false\)/);
+  assert.match(panchang, /smallPanchang\(p, running: running, city: payload\.panchang\.cityLabel\.value\(lang\), lang: lang, compact: true\)/);
+  assert.match(small, /p\.representedDate\.value\(lang\)/);
+  assert.match(small, /running\.name\.value\(lang\)/);
+  assert.match(small, /running\.till/);
+  assert.match(small, /p\.vrat/);
+  assert.match(small, /p\.sunrise\.value\(lang\)/);
+  assert.match(small, /palette\.saffronDeep/);
+  assert.match(small, /palette\.gold/);
+  assert.match(panchang, /\.widgetURL\(URL\(string: p\.deepLink\)\)/);
+  assert.match(verse, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)/);
+  assert.match(verse, /Text\(v\.source\.value\(lang\)\)/);
+  assert.match(verse, /ViewThatFits\(in: \.vertical\)/);
+  assert.match(verse, /diamond\.fill/);
+  assert.match(verse, /book\.closed\.fill/);
+  assert.match(verse, /\.accessibilityLabel\(v\.accessibilityLabel\.value\(lang\)\)/);
 });
 
 test('size labels exist in all four reading languages', () => {

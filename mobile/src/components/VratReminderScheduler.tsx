@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { AppState, type AppStateStatus } from 'react-native';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
-import { getNextOccurrence, getRuleById } from '@/panchang/vratCatalog';
 import { scheduleVratReminders, cancelAllVratReminders } from '@/notifications/vratScheduler';
-import type { VratReminderInput } from '@/notifications/vratReminderPure';
+import { followedVratReminderInputs } from '@/notifications/followedVratInputs';
 import { visarjanReminderInputs } from '@/panchang/arcs';
 import { useArcChoices } from '@/panchang/useArcChoices';
 
@@ -29,6 +29,7 @@ function startOfLocalDay(d: Date): Date {
 export default function VratReminderScheduler() {
   const { follows, reminderDefault, isLoading } = useVratFollows();
   const { permissionStatus } = useNotificationPreferences();
+  const { lang } = useGitaLanguage();
   const [calendarSystem] = usePanchangCalendarSystem();
   const { choices: arcChoices, hydrated: arcHydrated } = useArcChoices();
   const [foregroundTick, setForegroundTick] = useState(0);
@@ -53,33 +54,15 @@ export default function VratReminderScheduler() {
       }
       const now = new Date();
       const today = startOfLocalDay(now);
-      const inputs: VratReminderInput[] = [];
-      for (const f of follows) {
-        const rule = getRuleById(f.ruleId);
-        if (!rule) continue;
-        const next = getNextOccurrence(rule.id, today, calendarSystem);
-        const pref = f.reminder ?? reminderDefault;
-        inputs.push({
-          ruleId: rule.id,
-          order: f.order,
-          nameHi: rule.nameHi,
-          nameEn: rule.nameEn,
-          nextDate: next?.date ?? null,
-          pref: {
-            advanceDays: pref.advanceDays,
-            dayOf: pref.dayOf,
-            dayOfTime: pref.dayOfTime ?? reminderDefault.dayOfTime ?? { hour: 7, minute: 0 },
-          },
-        });
-      }
+      const inputs = followedVratReminderInputs(follows, reminderDefault, today, calendarSystem);
       inputs.push(...visarjanReminderInputs(arcChoices, today, calendarSystem));
       if (cancelled) return;
-      await scheduleVratReminders(inputs, now).catch(() => undefined);
+      await scheduleVratReminders(inputs, now, lang).catch(() => undefined);
     })();
     return () => {
       cancelled = true;
     };
-  }, [isLoading, follows, reminderDefault, permissionStatus, calendarSystem, foregroundTick, arcChoices, arcHydrated]);
+  }, [isLoading, follows, reminderDefault, permissionStatus, calendarSystem, foregroundTick, arcChoices, arcHydrated, lang]);
 
   return null;
 }

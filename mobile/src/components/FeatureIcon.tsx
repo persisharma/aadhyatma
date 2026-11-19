@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import { storybookSources } from './storybookSources';
 import { moreIconSources } from './MoreIcon';
+import { PAINTED_ICON_DECODE } from './paintedIconDecode';
 
 // Shared subjects reuse the actual More source rather than a second drawing.
 export const featureIconSources = {
@@ -19,8 +20,8 @@ export const featureIconSources = {
 export type FeatureIconName = keyof typeof featureIconSources;
 
 /** The Discover card owns accessibility and its action. */
-export default function FeatureIcon({ name }: { name: FeatureIconName }) {
-  return <Image source={featureIconSources[name]} style={{ width: 32, height: 32 }}
+export default function FeatureIcon({ name, size = 32 }: { name: FeatureIconName; size?: number }) {
+  return <Image source={featureIconSources[name]} style={{ width: size, height: size }} {...PAINTED_ICON_DECODE}
     resizeMode="contain" fadeDuration={0} accessible={false} accessibilityElementsHidden
     importantForAccessibility="no-hide-descendants" testID={`feature-icon-${name}`} />;
 }

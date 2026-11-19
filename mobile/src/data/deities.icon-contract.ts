@@ -23,6 +23,7 @@ const expectedIcons: Record<Deity, DeityIconKey> = {
   shani: 'shani',
   kali: 'kali',
   navagraha: 'navagraha',
+  parshuram: 'parashu',
 };
 
 for (const deity of deities) {

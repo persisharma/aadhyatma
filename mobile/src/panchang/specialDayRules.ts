@@ -7,16 +7,17 @@
 // RULEBOOK §23.14–23.17 and pinned in `observanceDates.test.ts`.
 
 import { addDays } from './calendarGrid';
-import { computeTithiAndMonth, sunriseForDate, sunsetForDate } from './engine';
+import { civilDateOf, civilFieldsOf } from './civilTime';
+import { computeTithiAndMonth, getSiderealSunLng, sunriseForDate, sunsetForDate } from './engine';
 import {
   arunodaya,
   contains,
   crossingAfter,
+  crossingBefore,
   dayFractionSpan,
   elongationAt,
   hinduMidnight,
   nakshatraSpan,
-  nishitaSpan,
   overlapMs,
   tithiSpan,
   type Span,
@@ -28,6 +29,44 @@ const ROHINI = 3;
 
 function startOfDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+/**
+ * Ganga Dussehra is kept in Adhik Jyeshtha when Jyeshtha repeats (Dharmasindhu,
+ * Jyeshtha-masa). Called only for this rule's Dashami candidates, 8–11 days
+ * after conjunction: the 15-day search therefore contains exactly one new moon.
+ * Equal solar signs at the preceding two conjunctions identify the Adhik
+ * lunation immediately before this one; do not repeat the festival in Nija.
+ */
+export function followsAdhikJyeshtha(dashamiDay: Date, options: PanchangComputationOptions): boolean {
+  const current = crossingBefore(elongationAt, sunriseForDate(dashamiDay, options), 0, 15 * 24);
+  if (!current) throw new Error('Missing conjunction before Jyeshtha Dashami');
+  const previous = crossingBefore(elongationAt, new Date(current.getTime() - 60_000), 0, 31 * 24);
+  if (!previous) throw new Error('Missing preceding Jyeshtha conjunction');
+  const sign = (instant: Date) => Math.floor(getSiderealSunLng(instant, civilFieldsOf(instant).year) / 30);
+  return sign(previous) === sign(current);
+}
+
+/** Madhyahna-vyapini Panchami; both/neither midday covered → earlier day. */
+export function rishiPanchamiDay(sunriseDay: Date, options: PanchangComputationOptions): Date {
+  const panchami = tithiSpan(4, sunriseForDate(addDays(sunriseDay, -1), options));
+  if (!panchami) return sunriseDay;
+  const first = civilDateOf(panchami.start);
+  const next = addDays(first, 1);
+  const covers = (day: Date) => overlapMs(panchami, dayFractionSpan(day, 0.4, 0.6, options)) > 0;
+  return !covers(first) && covers(next) ? next : first;
+}
+
+/**
+ * Purnima upavasa: the previous Chaturdashi day qualifies only when Purnima
+ * already touches its Madhyahna. Evening-only onset belongs to the sunrise
+ * Purnima day. This is a fasting-day rule, separate from snan-daan / Sharad.
+ */
+export function purnimaVratDay(sunriseDay: Date, options: PanchangComputationOptions): Date {
+  const purnima = tithiSpan(SHUKLA_PURNIMA, sunriseForDate(addDays(sunriseDay, -1), options));
+  if (!purnima) return sunriseDay;
+  const previous = addDays(sunriseDay, -1);
+  return overlapMs(purnima, dayFractionSpan(previous, 0.4, 0.6, options)) > 0 ? previous : sunriseDay;
 }
 
 /**
@@ -159,16 +198,16 @@ export function ekadashiDays(anchor: Date, ekadashiIndex: number, options: Panch
  * कृष्ण जन्माष्टमी — Smarta and Vaishnava (ISKCON) days. Drik: "The preference
  * is given to the day … when Ashtami Tithi prevails during Nishita and further
  * rules are added to include Rohini Nakshatra"; "Vaishnavism never observe
- * Janmashtami on Saptami Tithi". Nishita is the 8th of the night's 15 muhurtas.
+ * Janmashtami on Saptami Tithi". For day selection Dharmasindhu defines
+ * Nishita as the night midpoint; the eighth muhurta is only its coarse span.
  *
  * Smarta, between d1 (the day the Ashtami begins, or the day before its sunrise
  * day) and d2 = d1 + 1:
- *  1. One Nishita holds Ashtami AND Rohini → that day (2023 6 Sep, 2024 26 Aug,
- *     2029 31 Aug).
+ *  1. One midnight holds Ashtami AND Rohini → that day (2023 6 Sep, 2024 26 Aug).
  *  2. Ashtami in only one Nishita → that day (2025 15 Aug, 2026 4 Sep, 2028
  *     13 Aug) — EXCEPT when that Ashtami began after d1's sunset and on d2 it is
  *     the sunrise tithi and meets Rohini in daylight: then d2 (2027 25 Aug,
- *     2016 25 Aug).
+ *     2016 25 Aug, 2029 1 Sep).
  *  3. Both or neither → d2.
  *
  * Vaishnava, as ISKCON's GCal computes it: the day whose sunrise has Ashtami
@@ -184,15 +223,17 @@ export function janmashtamiDays(sunriseDay: Date, options: PanchangComputationOp
   const rohini = nakshatraSpan(ROHINI, ashtami.start);
 
   // Smarta.
-  const d1 = startOfDay(
-    ashtami.start.getTime() < sunriseForDate(ashtami.start, opts).getTime()
-      ? addDays(ashtami.start, -1)
-      : ashtami.start
-  );
+  // `ashtami.start` is an INSTANT: its civil date is India's (`civilDateOf`),
+  // never the phone's own y/m/d.
+  const startDay = civilDateOf(ashtami.start);
+  const d1 = ashtami.start.getTime() < sunriseForDate(startDay, opts).getTime() ? addDays(startDay, -1) : startDay;
   const d2 = addDays(d1, 1);
-  const nishita = (day: Date) => nishitaSpan(day, opts);
-  const ashtamiAt = (day: Date) => overlapMs(nishita(day), ashtami) > 0;
-  const jayantiAt = (day: Date) => ashtamiAt(day) && rohini !== null && overlapMs(nishita(day), rohini) > 0;
+  // Dharmasindhu's Janmashtami section explicitly defines Nishitha as
+  // ratryardha (the night midpoint) and excludes tithi present only on the
+  // wrong side of it. Overlap with the coarse eighth muhurta is insufficient:
+  // 2026 Dec 1 Ashtami opens after midnight; 2029 Sep 1 Rohini does too.
+  const ashtamiAt = (day: Date) => contains(ashtami, hinduMidnight(day, opts));
+  const jayantiAt = (day: Date) => ashtamiAt(day) && rohini !== null && contains(rohini, hinduMidnight(day, opts));
   let smarta: Date;
   const j1 = jayantiAt(d1);
   const j2 = jayantiAt(d2);
@@ -215,7 +256,8 @@ export function janmashtamiDays(sunriseDay: Date, options: PanchangComputationOp
   const sunriseDays = [d1, d2, addDays(d2, 1)].filter((day) => contains(ashtami, sunriseForDate(day, opts)));
   let vaishnava: Date;
   if (sunriseDays.length === 0) {
-    vaishnava = startOfDay(addDays(ashtami.end, ashtami.end.getTime() < sunriseForDate(ashtami.end, opts).getTime() ? 0 : 1));
+    const endDay = civilDateOf(ashtami.end);
+    vaishnava = addDays(endDay, ashtami.end.getTime() < sunriseForDate(endDay, opts).getTime() ? 0 : 1);
   } else if (sunriseDays.length === 1) {
     vaishnava = sunriseDays[0];
   } else {

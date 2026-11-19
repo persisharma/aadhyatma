@@ -6,7 +6,6 @@ import {
   NativeSyntheticEvent,
   Pressable,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   type ViewToken,
@@ -19,6 +18,8 @@ import { getStuti, type StutiVerse } from '@/data/stuti';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
@@ -45,7 +46,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'StutiReader'>;
 const DOT_COUNT = 5;
 
 export default function StutiReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -73,6 +74,8 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     setProgress({
@@ -147,19 +150,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
           backAccessibilityLabel="Back to home"
           right={
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {total}
-              </Text>
+              <ReaderPageCounter current={currentIndex + 1} total={total} {...jump} />
               {audioTrack && (
                 <Pressable
                   onPress={() => {
@@ -183,15 +174,15 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
-          <LanguageToggle />
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: width < 360 ? 6 : 18 }, width < 360 && styles.toggleRowNarrow]}>
+          <LanguageToggle compact={width < 360} />
           <AddToRoutineButton sourceId={stutiId} />
           {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
-          <View style={styles.japaSlot}>
+          <View style={[styles.japaSlot, width < 360 && styles.actionSlotNarrow]}>
             <StartJapaButton navigation={navigation} sourceId={stutiId} verseIndex={currentIndex} />
           </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
-          <View style={styles.readAloudSlot}>
+          <View style={[styles.readAloudSlot, width < 360 && styles.actionSlotNarrow]}>
             <ReadAloudButton control={readAloud} />
           </View>
         </View>
@@ -235,6 +226,7 @@ export default function StutiReaderScreen({ navigation, route }: Props) {
                         share(
                           {
                             sourceId: stutiId,
+                            verseIndex: index,
                             sectionNameHi: stuti.titleHi,
                             sectionNameEn: stuti.titleEn,
                             verseLabelHi: item.labelHi,
@@ -300,9 +292,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  counter: {
-    includeFontPadding: false,
-  },
   toggleRow: {
     paddingVertical: 6,
     paddingBottom: 12,
@@ -316,6 +305,8 @@ const styles = StyleSheet.create({
     bottom: 12,
     justifyContent: 'center',
   },
+  toggleRowNarrow: { flexWrap: 'wrap', paddingHorizontal: 16 },
+  actionSlotNarrow: { position: 'relative', left: 0, right: 0, top: 0, bottom: 0 },
   listContainer: {
     flex: 1,
   },

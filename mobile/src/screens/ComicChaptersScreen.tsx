@@ -61,9 +61,9 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
         const title = episode[language].title;
         return <ListingCard
           testID={`comic-episode-${episode.id}`}
-          eyebrow={`${language === 'hi' ? 'प्रसंग' : 'Episode'} ${index + 1}`}
+          eyebrow={`${pick(lang, { hi: 'प्रसंग', en: 'Episode', gu: 'પ્રસંગ', kn: 'ಪ್ರಸಂಗ' })} ${index + 1}`}
           title={title}
-          meta={`${episode.panels.length} ${language === 'hi' ? 'पृष्ठ' : 'pages'}`}
+          meta={`${episode.panels.length} ${pick(lang, { hi: 'पृष्ठ', en: 'pages', gu: 'પૃષ્ઠ', kn: 'ಪುಟಗಳು' })}`}
           thumbnail={<ComicArt compact fill panel={cover.panel} comicId={route.params.comicId} focusX={cover.focusX} label={title} />}
           onPress={() => navigation.navigate('ComicReader', { comicId: route.params.comicId, episodeId: episode.id })}
         />;

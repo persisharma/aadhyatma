@@ -1,0 +1,72 @@
+# Post-review social journey, design.md §54. Requires a simulator with a store/browser handler.
+# This only opens the listing; it never submits a review or follows an account.
+# Uses real store handoff state and a real bookmark action, without test-only seed code.
+# Run on a returning test install with a free shared launch opportunity and no
+# confirmed social pages. Do not clear its data: first-run setup owns that day.
+# Both social pages are configured; Facebook must remain available after confirming Instagram.
+appId: com.prashantsharma.vedansh
+---
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- runFlow: _open-settings.yaml
+- scrollUntilVisible:
+    element: { text: "Language,.*" }
+    centerElement: true
+- tapOn: "Language,.*"
+- tapOn: "English"
+- scrollUntilVisible:
+    element: { text: "Rate the App" }
+    centerElement: true
+- tapOn: "Rate the app"
+- tapOn: "Rate 5 stars"
+- launchApp:
+    appId: com.prashantsharma.vedansh
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- waitForAnimationToEnd
+- tapOn: { text: "Not now", optional: true }
+- tapOn: { text: "Close", optional: true }
+- assertNotVisible: "Stay connected with Vedansh"
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- tapOn: "Sacred Books\\..*Tap to open\\."
+- tapOn: "Sundarkand\\..*Tap to open\\."
+- tapOn: { text: "Start over from the beginning", optional: true }
+- tapOn: "Chapter 1\\..*Tap to open\\."
+- waitForAnimationToEnd
+- tapOn: { text: "Jump to beginning", optional: true }
+- tapOn: { text: "Remove bookmark", optional: true }
+- tapOn: "Add bookmark"
+- extendedWaitUntil:
+    visible: "Stay connected with Vedansh"
+    timeout: 10000
+- assertVisible: "Follow Vedansh on Instagram"
+- assertVisible: "Follow Vedansh on Facebook"
+- assertNotVisible: "Rate 5 stars"
+- takeScreenshot: e2e-shots/social-follow
+- tapOn: "Maybe later"
+- assertNotVisible: "Stay connected with Vedansh"
+# A new completed save earns the social prompt again in the same session.
+- tapOn: "Remove bookmark"
+- tapOn: "Add bookmark"
+- extendedWaitUntil:
+    visible: "Stay connected with Vedansh"
+    timeout: 10000
+- tapOn: "I already follow Vedansh on Instagram"
+- assertNotVisible: "Follow Vedansh on Instagram"
+- assertVisible: "Follow Vedansh on Facebook"
+- tapOn: "I already follow Vedansh on Facebook"
+- assertNotVisible: "Stay connected with Vedansh"
+# Cold process remains quiet; action-after-reload persistence also has provider coverage.
+- stopApp
+- launchApp:
+    clearState: false
+    arguments:
+      RCT_jsLocation: "${typeof METRO_PORT === 'undefined' ? '127.0.0.1:8084' : '127.0.0.1:' + METRO_PORT}"
+- waitForAnimationToEnd
+- assertNotVisible: "Stay connected with Vedansh"
+- stopApp

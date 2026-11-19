@@ -3,6 +3,14 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Text, View as mockView } from 'react-native';
 
+// Native WebView is supplied by the installed app; keep the real docked player in this contract.
+jest.mock('react-native-webview', () => ({ WebView: 'WebView' }));
+
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useFocusEffect: () => undefined,
+}));
+
 jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light', Medium: 'Medium' },
   impactAsync: jest.fn(() => Promise.resolve()),

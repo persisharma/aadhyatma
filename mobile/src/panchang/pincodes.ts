@@ -38,6 +38,7 @@
  *
  * Data provenance, gates and measured accuracy: `scripts/build-pincodes.mjs`.
  */
+import { runInBackground, runSynchronously } from './backgroundWork';
 import { nearestCity } from './locations';
 import type { LocationSource, PanchangLocation } from './types';
 
@@ -234,6 +235,45 @@ export function toPincodeLocation(entry: PincodeEntry, source: LocationSource, p
   };
 }
 
+/** The self-describing half of a persisted `pin-` location: labels plus coordinate. */
+export type PincodePlaceRecord = {
+  labelHi: string;
+  labelEn: string;
+  latitude: number;
+  longitude: number;
+  elevation: number;
+};
+
+/** India bounding box — the same gate `scripts/build-pincodes.mjs` applies when generating. */
+const INDIA_BOUNDS = { latMin: 6.5, latMax: 37.6, lngMin: 68.0, lngMax: 97.5 };
+
+function isFiniteInRange(value: unknown, min: number, max: number): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
+}
+
+/**
+ * Structural validation of a stored pincode record, WITHOUT the table: both readers of a
+ * persisted `pin-` record — the Panchang location (`panchangPrefs`, on the launch path) and
+ * a birth profile (`birthProfiles`, read by every Jyotish surface) — must rebuild it from the
+ * record itself, because looking it up would load the lazy 605 KB table. Every field is
+ * range-checked; anything malformed is null and the caller treats it as corrupt.
+ */
+export function parsePincodePlaceRecord(record: {
+  labelHi?: unknown;
+  labelEn?: unknown;
+  latitude?: unknown;
+  longitude?: unknown;
+  elevation?: unknown;
+}): PincodePlaceRecord | null {
+  const { labelHi, labelEn, latitude, longitude, elevation } = record;
+  if (typeof labelHi !== 'string' || labelHi.length === 0) return null;
+  if (typeof labelEn !== 'string' || labelEn.length === 0) return null;
+  if (!isFiniteInRange(latitude, INDIA_BOUNDS.latMin, INDIA_BOUNDS.latMax)) return null;
+  if (!isFiniteInRange(longitude, INDIA_BOUNDS.lngMin, INDIA_BOUNDS.lngMax)) return null;
+  if (!isFiniteInRange(elevation, -500, 9000)) return null;
+  return { labelHi, labelEn, latitude, longitude, elevation };
+}
+
 // ── Place names ─────────────────────────────────────────────────────────────────
 
 export type PlaceKind = 'head' | 'sub' | 'branch';
@@ -294,11 +334,14 @@ export function foldPlaceName(raw: string): string {
     .replace(/([a-z])\1+/g, '$1');
 }
 
-function separatorStarts(joined: string, count: number): Int32Array {
+function* separatorStartsSteps(joined: string, count: number): Generator<void, Int32Array, void> {
   const starts = new Int32Array(count + 1);
   let name = 0;
   for (let i = 0; i < joined.length; i += 1) {
     if (joined.charCodeAt(i) === 124 /* | */) starts[++name] = i + 1;
+    // ~1.6 MB of characters per string: hand the thread back every 64k so a slow
+    // phone never spends a whole frame in here.
+    if ((i & 0xffff) === 0xffff) yield;
   }
   starts[count] = joined.length + 1;
   return starts;
@@ -309,8 +352,13 @@ function separatorStarts(joined: string, count: number): Int32Array {
  * Built once: offset tables for the display and folded strings (search is native
  * `indexOf` over the folded one, so 1.6 MB scans in milliseconds), each name's pincode
  * row, and the head offices of every district so "Saran" finds Chapra.
+ *
+ * Written as steps because it is ~3.3 M character reads plus 165k rows: run in
+ * one piece while the location sheet was opening, it stalled typing and touches
+ * on a slow phone. `warmPlaceIndex` runs these steps cooperatively; a search
+ * that arrives before they finish runs the same steps to the end at once.
  */
-function loadPlaceIndex(): PlaceIndex | null {
+export function* placeIndexSteps(): Generator<void, PlaceIndex | null, void> {
   if (placeIndex || placeIndexFailed) return placeIndex;
   const data = loadTable();
   if (!data) {
@@ -318,7 +366,11 @@ function loadPlaceIndex(): PlaceIndex | null {
     return null;
   }
   try {
+    // Each table is one module load and cannot be split; give the thread back
+    // between them.
+    yield;
     const offices = require('./pincodeOffices.json') as OfficeTable;
+    yield;
     if (
       offices.format !== EXPECTED_FORMAT ||
       offices.pincodeCount !== data.count ||
@@ -340,15 +392,13 @@ function loadPlaceIndex(): PlaceIndex | null {
         }
         rowOfName[next++] = row;
       }
+      if ((row & 0x3ff) === 0x3ff) yield;
     }
-    placeIndex = {
-      offices,
-      nameStarts: separatorStarts(offices.names, offices.count),
-      foldStarts: separatorStarts(offices.folded, offices.count),
-      rowOfName,
-      firstOfRow,
-      districtHeads,
-    };
+    const nameStarts = yield* separatorStartsSteps(offices.names, offices.count);
+    const foldStarts = yield* separatorStartsSteps(offices.folded, offices.count);
+    // A search may have finished the index synchronously while this job was parked.
+    if (placeIndex) return placeIndex;
+    placeIndex = { offices, nameStarts, foldStarts, rowOfName, firstOfRow, districtHeads };
     return placeIndex;
   } catch {
     placeIndexFailed = true;
@@ -356,9 +406,33 @@ function loadPlaceIndex(): PlaceIndex | null {
   }
 }
 
-/** Preload the name index off the critical path. Safe to call repeatedly. */
-export function warmPlaceIndex(): void {
-  loadPlaceIndex();
+function loadPlaceIndex(): PlaceIndex | null {
+  if (placeIndex || placeIndexFailed) return placeIndex;
+  return runSynchronously(placeIndexSteps());
+}
+
+/** True once the name index is built (or has failed for good). */
+export function isPlaceIndexSettled(): boolean {
+  return placeIndex !== null || placeIndexFailed;
+}
+
+let placeIndexWarm: Promise<void> | null = null;
+
+/**
+ * Preload the name index off the critical path, in small slices on the
+ * foreground lane (a person is looking at the sheet). Safe to call repeatedly;
+ * resolves when the index is ready.
+ */
+export function warmPlaceIndex(): Promise<void> {
+  if (isPlaceIndexSettled()) return Promise.resolve();
+  if (!placeIndexWarm) {
+    placeIndexWarm = runInBackground(placeIndexSteps(), undefined, 'foreground')
+      .then(() => undefined, () => undefined)
+      .finally(() => {
+        placeIndexWarm = null;
+      });
+  }
+  return placeIndexWarm;
 }
 
 function nameAt(index: PlaceIndex, i: number): string {
@@ -480,6 +554,32 @@ export function placesForPincode(pincode: string): string[] {
  * Ties go to the city, which is the better label when the distances are equal: a real
  * bilingual place name rather than six digits and a state.
  */
+/**
+ * How far a GPS fix may be from the place it snaps to. Every Panchang place is in
+ * India, and the snap had no limit: a phone in London or New Jersey was silently
+ * stored as the nearest Indian pincode and every date computed for it. Well inside
+ * India the nearest place is a few km away and the worst gaps (Ladakh, the
+ * islands, the Srinagar valley) stay under ~160 km, so 250 km keeps every Indian
+ * fix and refuses anything genuinely abroad.
+ */
+export const MAX_GPS_SNAP_KM = 250;
+
+/** Great-circle distance in km (haversine). */
+export function distanceKm(aLat: number, aLng: number, bLat: number, bLng: number): number {
+  const rad = Math.PI / 180;
+  const dLat = (bLat - aLat) * rad;
+  const dLng = (bLng - aLng) * rad;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(aLat * rad) * Math.cos(bLat * rad) * Math.sin(dLng / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+/** `snapToNearestLocation`, or null when the fix is farther than `MAX_GPS_SNAP_KM`
+ * from every place the app knows — the phone is outside India. */
+export function snapToNearestLocationInRange(latitude: number, longitude: number): PanchangLocation | null {
+  const snapped = snapToNearestLocation(latitude, longitude);
+  return distanceKm(latitude, longitude, snapped.latitude, snapped.longitude) <= MAX_GPS_SNAP_KM ? snapped : null;
+}
+
 export function snapToNearestLocation(latitude: number, longitude: number): PanchangLocation {
   const city = nearestCity(latitude, longitude);
   const cityLocation: PanchangLocation = {

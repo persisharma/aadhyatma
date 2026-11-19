@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 /**
  * Content correctness validation tests.
  * Verifies all religious content against internet-verified canonical sources.
@@ -7,7 +8,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { library } from '../texts';
-import { deities } from '../deities';
+import { deityCatalog as deities } from '../deities';
 import { categories } from '../categories';
 import { purposes } from '../purposes';
 import {
@@ -684,7 +685,8 @@ assert.equal(libraryById.get('khatu-shyam-chalisa')?.sub, '40 चौपाई + 
 assert.equal(libraryById.get('sundarkand')?.sub, '16 अनुभाग · 354 पद');
 assert.match(libraryById.get('ramcharitmanas')?.nameHi || '', /मंगलाचरण/);
 assert.doesNotMatch(libraryById.get('ramcharitmanas')?.sub || '', /अंश|Excerpt/i);
-assert.match(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
+assert.doesNotMatch(libraryById.get('vishnu-sahasranama')?.nameHi || '', /अंश/);
+assert.match(libraryById.get('vishnu-sahasranama')?.subEn || '', /selected/i);
 assert.equal(libraryById.get('durga-stotram')?.nameHi, 'दुर्गा स्तोत्रम्');
 assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
 
@@ -707,6 +709,9 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
   let shipped = 0;
   let shippedSargas = 0;
   const references = new Set<string>();
+  const VALMIKI_SITE_CHROME = new Set(['Hindu Dharma', 'हिन्दू धर्म', 'मिथक व लोकथाएं', 'पुस्तकें व साहित्य']);
+  const blankHi: Record<number, number> = {};
+  const blankEn: Record<number, number> = {};
   for (const summary of manifest) {
     const file = `valmiki-ramayan/chapter-0${summary.chapter}.json`;
     const chapter = readJson(file) as {
@@ -777,8 +782,28 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
         verse.linesEn.length,
         `${verse.id}: linesEn must be index-paired with lines (RULEBOOK §11.12)`
       );
-      assert.ok(verse.meaningHi.trim(), `${verse.id}: missing Hindi meaning`);
-      assert.ok(verse.meaningEn.trim(), `${verse.id}: missing English meaning`);
+      // RULEBOOK §11.6: unusable upstream rows ship blank (the loader falls back to the
+      // other sourced meaning) — never site-navigation residue, placeholders or the Sanskrit.
+      assert.ok(
+        verse.meaningHi.trim() || verse.meaningEn.trim(),
+        `${verse.id}: needs a meaning in at least one language`
+      );
+      if (!verse.meaningHi.trim()) blankHi[summary.chapter] = (blankHi[summary.chapter] ?? 0) + 1;
+      if (!verse.meaningEn.trim()) blankEn[summary.chapter] = (blankEn[summary.chapter] ?? 0) + 1;
+      assert.ok(
+        !VALMIKI_SITE_CHROME.has(verse.meaningHi.replace(/[‌‍﻿]/g, '').trim()),
+        `${verse.id}: meaningHi is website navigation text, not a meaning`
+      );
+      assert.ok(
+        !/^(missing|in progress)$/i.test(verse.meaningEn.trim()),
+        `${verse.id}: meaningEn is an upstream placeholder, not a meaning`
+      );
+      const bareHi = verse.meaningHi.replace(/[\s।॥|.0-9०-९]/gu, '');
+      const bareSanskrit = verse.lines.join('').replace(/[\s।॥|.0-9०-९]/gu, '');
+      assert.ok(
+        !bareHi || (bareHi !== bareSanskrit && !(bareHi.length > 20 && bareSanskrit.includes(bareHi))),
+        `${verse.id}: meaningHi repeats the Sanskrit instead of translating it`
+      );
       assert.ok(
         !verse.lines.some((line) => /[^\u0900-\u097f\s।॥]/u.test(line)),
         `${verse.id}: Sanskrit lines must not contain headings, OCR characters, or citation artifacts`
@@ -791,6 +816,10 @@ assert.match(libraryById.get('durga-stotram')?.sub || '', /चयनित/);
     shipped += chapter.verses.length;
     shippedSargas += summary.sargaCount;
   }
+  // Pinned with EXPECTED_BLANK_MEANINGS in scripts/build-valmiki-ramayan.py: the gap may
+  // only shrink deliberately (when Gita Press text is captured), never grow silently.
+  assert.deepEqual(blankHi, { 2: 6, 3: 24, 4: 19, 5: 10, 6: 9, 7: 12 }, 'blank Hindi meanings drifted');
+  assert.deepEqual(blankEn, { 3: 3, 4: 2 }, 'blank English meanings drifted');
   assert.equal(shipped, 23289, 'complete verified corpus total must remain 23,289 verses');
   assert.equal(shippedSargas, 648, 'complete corpus must contain 648 sargas');
   assert.equal(entry.verseCount, shipped, 'library verseCount must equal shipped verses');
@@ -954,6 +983,9 @@ function collectJsonFiles(dirRel = ''): string[] {
       entry.name !== 'ayodhyaComicAssetManifest.json' &&
       entry.name !== 'backgroundAssetManifest.json' &&
       entry.name !== 'readerIllustrationManifest.json' &&
+      // Supplemental teaching artwork is an upload-gated hash map. Its source
+      // ledger and byte budgets are verified by prepare-sanatan-learning.mjs.
+      rel !== 'sanatan-parichay/lessonArtManifest.json' &&
       // Art aliases are semantic asset mappings, not scripture. Their manifest
       // coverage and approved bytes are checked by readerIllustrationAsset tests.
       entry.name !== 'readerIllustrationAliases.json' &&
@@ -967,6 +999,14 @@ function collectJsonFiles(dirRel = ''): string[] {
       rel !== 'devotionalShareManifest.json' &&
       // Suvichar is a published artwork hash map, not a scripture corpus.
       rel !== 'suvicharManifest.json' &&
+      // Generated portrait delivery hashes, not scripture. suvichar.jest.test
+      // verifies the exact manifest, source/master hashes and R2 registration.
+      rel !== 'suvicharPortraitManifest.json' &&
+      // Parshuram activation contains only verified artwork hashes, not scripture.
+      rel !== 'parshuramPublication.json' &&
+      // Text-free festival art hashes, not scripture. OccasionYearCards checks
+      // the complete source ledger, SHA-256 and catalog subject coverage.
+      rel !== 'festivalHeroManifest.json' &&
       rel !== 'valmiki-ramayan/daily-selection.json'
     ) {
       files.push(rel);
@@ -990,13 +1030,30 @@ for (const file of collectJsonFiles()) {
   assert.ok(data.source, `${file} should declare source provenance`);
   // This exact collection is original prose, not scripture requiring collation.
   // Require honest authorship rather than inventing two external source URLs.
+  // Sanatan lessons are authored introductions, not a new liturgical corpus.
+  // Validate their cited-source graph instead of treating prose as collated scripture.
+  if (file === 'sanatan-parichay/content.json') {
+    assert.equal(data.source.kind, 'app-written-editorial-introductions');
+    assert.match(data.source.baseText, /not a scripture collection/i);
+    assert.match(data.source.approvedOn, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(data.source.approval.trim());
+    assert.deepEqual(data.source.referenceUrls, []);
+    assert.equal(data.topics.length, 13);
+    for (const topic of data.topics) {
+      assert.equal(topic.pages.length, 3);
+      assert.ok(topic.refs.length > 0);
+      for (const ref of topic.refs) assert.ok(data.sources[ref]?.edition && data.sources[ref]?.location);
+    }
+    assert.ok(!/https?:\/\//.test(JSON.stringify(data)), 'research URLs do not ship in lesson content');
+    continue;
+  }
   if (file === 'suvichar-content/originals.json') {
     assert.equal(data.source.kind, 'app-written-original-reflections');
     assert.match(data.source.baseText, /not a scripture collection/i);
     assert.match(data.source.approvedOn, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(data.source.approval.trim());
     assert.deepEqual(data.source.referenceUrls, []);
-    assert.equal(data.entries.length, 84);
+    assert.equal(data.entries.length, 92);
     assert.ok(data.entries.every((entry: { sourceId: string }) => entry.sourceId === 'vedansh-original'));
     continue;
   }
@@ -1047,6 +1104,10 @@ for (const file of [
   'khatu-shyam-chalisa/khatu-shyam-chalisa.json',
   'lakshmi-chalisa/lakshmi-chalisa.json',
   'surya-chalisa/surya-chalisa.json',
+  'vaishno-devi-chalisa/vaishno-devi-chalisa.json',
+  'shani-chalisa/shani-chalisa.json',
+  'santoshi-mata-chalisa/santoshi-mata-chalisa.json',
+  'kali-chalisa/kali-chalisa.json',
   'aarti/om-jai-shiv-omkara.json',
   'aarti/jai-ambe-gauri.json',
   'aarti/jai-ganesh-deva.json',
@@ -1239,3 +1300,119 @@ for (const [source, id, thumb] of allThumbs) {
 // ─── Done ────────────────────────────────────────────────────────────────────
 
 console.log('All content correctness tests passed');
+
+// A2: maintainer-selected complete Sri Mandir edition; never a composite.
+{
+  const data = readJson('vaishno-devi-chalisa/vaishno-devi-chalisa.json');
+  const entry = library.find(e => e.id === 'vaishno-devi-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['durga']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 42);
+  assert.deepEqual(data.counts, { openingDohas: 1, chaupais: 40, closingDohas: 1, totalVerses: 42 });
+  const verses: { id: string; type: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 42);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(new Set(verses.map(v => v.id)).size, 42);
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '201a31b871b2f81d2dce2906c198010a75f9f6f4f244c68b1ab336d2292c51ce');
+  assert.ok(verses[8].lines.join(' ').includes('पोषण'));
+  assert.ok(verses[32].lines.join(' ').includes('बर्वत'));
+  assert.ok(verses[39].lines.join(' ').includes('आश्विन चैत्र'));
+  assert.ok(verses[40].lines.join(' ').includes('शर्मा'));
+  assert.ok(data.source.editionDecision.includes('Prashant'));
+  assert.equal(data.source.referenceUrls.length, 4);
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
+
+// A1: complete chosen Drik edition, with the Vimal closing (not a composite).
+{
+  const data = readJson('shani-chalisa/shani-chalisa.json');
+  const entry = library.find(e => e.id === 'shani-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['shani']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 43);
+  assert.deepEqual(data.counts, { openingDohas: 2, chaupais: 40, closingDohas: 1, totalVerses: 43 });
+  const verses: { id: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 43);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(new Set(verses.map(v => v.id)).size, 43);
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '882ba37b12d70349b60dbaafa3d87b60e95ab22b3560619e6c86909e96ffd4e7');
+  assert.ok(verses[2].lines[0].includes('जयति जयति शनिदेव दयाला'));
+  assert.ok(verses[34].lines[1].includes('चाँजी'));
+  assert.ok(verses[42].lines[0].includes('विमल'));
+  assert.ok(!verses.some(v => v.lines.join(' ').includes('ललिता')));
+  assert.ok(data.source.editionDecision.includes('Prashant'));
+  assert.ok(data.source.referenceUrls.length >= 3);
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
+
+// A3: maintainer-selected complete Drik Panchang edition; never a composite.
+{
+  const data = readJson('santoshi-mata-chalisa/santoshi-mata-chalisa.json');
+  const entry = library.find(e => e.id === 'santoshi-mata-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['durga']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 42);
+  assert.deepEqual(data.counts, { openingDohas: 1, chaupais: 40, closingDohas: 1, totalVerses: 42 });
+  const verses: { id: string; type: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 42);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(new Set(verses.map(v => v.id)).size, 42);
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '99e9fa421fbe8891cacefd956c4a9a2e93fd47e80678e09fe6239ca5eb7115aa');
+  assert.ok(verses[34].lines[0].startsWith('सात शुक्र'));
+  assert.ok(data.source.variants.includes('सोलह शुक्र'));
+  assert.ok(data.source.editionDecision.includes('Prashant'));
+  assert.equal(data.source.referenceUrls.length, 2);
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
+
+// A4 preserves the entire requested Kali composition, including all 54 body couplets.
+{
+  const data = readJson('kali-chalisa/kali-chalisa.json');
+  const entry = library.find(e => e.id === 'kali-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['kali']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 57);
+  assert.deepEqual(data.counts, { openingDohas: 2, chaupais: 54, closingDohas: 1, totalVerses: 57 });
+  const verses: { id: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 57);
+  assert.equal(new Set(verses.map(v => v.id)).size, 57);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 54 }, (_, i) => i + 1));
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '36bc77cb73d3004083677b257d1e59c378cde39b418aa2d863554f170db6a6cc');
+  assert.ok(verses[0].lines[0].startsWith('जय काली जगदम्ब जय'));
+  assert.ok(verses[55].lines[0].startsWith('पाठ करै चालीसा जोई'));
+  assert.ok(verses[56].lines[0].startsWith('जय तारा, जय दक्षिणा'));
+  assert.equal(data.source.referenceUrls.length, 2);
+  assert.ok(data.source.variants.includes('सहस्त्राक्षि'));
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}
+
+// A5 pins the complete Radha edition, including the separately preserved body 8-9.
+{
+  const data = readJson('radha-chalisa/radha-chalisa.json');
+  const entry = library.find(e => e.id === 'radha-chalisa');
+  assert.ok(entry);
+  assert.deepEqual(entry.deities, ['radha']);
+  assert.equal(entry.addedInVersion, '1.5.7');
+  assert.equal(entry.status, 'active');
+  assert.equal(entry.verseCount, 43);
+  assert.deepEqual(data.counts, { openingDohas: 2, chaupais: 40, closingDohas: 1, totalVerses: 43 });
+  const verses: { id: string; section: string; number: number; lines: string[]; linesEn: string[]; meaningHi: string; meaningEn: string }[] = data.verses;
+  assert.equal(verses.length, 43);
+  assert.equal(new Set(verses.map(v => v.id)).size, 43);
+  assert.deepEqual(verses.filter(v => v.section === 'body').map(v => v.number), Array.from({ length: 40 }, (_, i) => i + 1));
+  assert.equal(createHash('sha256').update(verses.map(v => v.lines.join(' ')).join('\n')).digest('hex'), '52fefe451670192d7aa7ae27dd4a480c29bdc2afed75bffde5e8c9e68daf5690');
+  assert.ok(verses[0].lines[0].startsWith('श्री राधे वृषभानुजा'));
+  assert.ok(verses[10].lines[0].startsWith('प्रेम स्वरूपिणि'));
+  assert.ok(verses[42].lines[0].startsWith('श्रीराधा सर्वेश्वरी'));
+  assert.equal(data.source.referenceUrls.length, 3);
+  assert.ok(data.source.variants.includes('धनश्याम'));
+  assert.ok(verses.every(v => v.lines.length === v.linesEn.length && v.meaningHi.trim() && v.meaningEn.trim()));
+}

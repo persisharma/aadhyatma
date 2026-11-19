@@ -45,6 +45,33 @@
       "meaningEn": "An invocation of the Lord (Krishna, Rama) along with His joy-giving energy (Hare). The Vaishnava tradition holds this as the great mantra of deliverance in the present age."
     },
     {
+      "id": "krishna-beej-mantra",
+      "nameHi": "कृष्ण बीज मंत्र",
+      "nameEn": "Krishna Beej Mantra",
+      "sub": "कृष्ण जप · क्लीं बीजाक्षर",
+      "subEn": "Krishna japa · Kleem seed syllable",
+      "thumb": "कृ",
+      "deities": [
+        "krishna"
+      ],
+      "lines": [
+        "ॐ क्लीं कृष्णाय नमः"
+      ],
+      "linesEn": [
+        "oṁ klīṁ kṛṣhṇāya namaḥ"
+      ],
+      "meaningHi": "ॐ — भगवान् श्रीकृष्ण को नमस्कार। ‘क्लीं’ कृष्ण-उपासना से जुड़ा बीजाक्षर है; यह प्रेम-भाव से भगवान् का स्मरण कराता है।",
+      "meaningEn": "Om — salutations to Lord Krishna. Kleem is the seed syllable associated with his worship, remembering him with loving devotion.",
+      "source": {
+        "baseText": "Krishna beej mantra. Shubh Panchang and InstaAstro both give it as the Krishna beej mantra (InstaAstro spells the anusvara as क्लीम); some lists call ॐ कृष्णाय नमः the moola mantra instead. Exact Devanagari search-verified on 2026-11-07; this build environment's network policy blocked opening the pages, so re-read both before release. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://shubhpanchang.com/hi/mantra/krishna/krishna-beej-mantra",
+          "https://instaastro.com/hi/mantras/krishna/"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
       "id": "gayatri-mantra",
       "nameHi": "गायत्री मंत्र",
       "nameEn": "Gayatri Mantra",
@@ -129,6 +156,26 @@
       "meaningEn": "Glory to Shri Rama, the perfect embodiment of dharma. ‘Jai Shri Ram’ is the beloved victory-cry of Rama's devotees — in naam japa every ‘Jai Shri Ram’ moves one bead; 108 times, one mala."
     },
     {
+      "id": "sita-ram-naam",
+      "nameHi": "सीता राम नाम जप",
+      "nameEn": "Sita Ram Naam Japa",
+      "sub": "नाम जप · हर नाम एक मनका",
+      "subEn": "Naam japa · one bead per name",
+      "thumb": "सी",
+      "deities": [
+        "rama"
+      ],
+      "lines": [
+        "सीता राम"
+      ],
+      "linesEn": [
+        "Sita Ram"
+      ],
+      "meaningHi": "श्री सीता और श्री राम का युगल नाम। नाम जप में हर ‘सीता राम’ पर एक मनका आगे बढ़ता है — 108 नाम, एक माला।",
+      "meaningEn": "The paired holy names of Shri Sita and Shri Rama. In naam japa every ‘Sita Ram’ moves one bead — 108 names, one mala.",
+      "naam": true
+    },
+    {
       "id": "saraswati-moola-mantra",
       "nameHi": "सरस्वती मूल मंत्र",
       "nameEn": "Saraswati Moola Mantra",
@@ -182,6 +229,33 @@
           "https://lrc.la.utexas.edu/books/rigveda/RV07"
         ],
         "retrievedOn": "2026-10-13"
+      }
+    },
+    {
+      "id": "rudra-mantra",
+      "nameHi": "रुद्र मंत्र",
+      "nameEn": "Rudra Mantra",
+      "sub": "शिव जप · रुद्र मंत्र",
+      "subEn": "Shiva japa · Rudra mantra",
+      "thumb": "रु",
+      "deities": [
+        "shiva"
+      ],
+      "lines": [
+        "ॐ नमो भगवते रुद्राय"
+      ],
+      "linesEn": [
+        "oṁ namo bhagavate rudrāya"
+      ],
+      "meaningHi": "ॐ — भगवान् रुद्र को नमस्कार। रुद्र शिव का वैदिक नाम है।",
+      "meaningEn": "Om — salutations to Lord Rudra, the Vedic name of Shiva.",
+      "source": {
+        "baseText": "Rudra mantra. Exact Devanagari search-verified on 2026-11-07; this build environment's network policy blocked opening the pages, so re-read both before release. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://astrosage.com/mantra/rudra-mantra.asp",
+          "https://instaastro.com/hi/mantras/rudra/"
+        ],
+        "retrievedOn": "2026-11-07"
       }
     },
     {
@@ -266,6 +340,33 @@
       }
     },
     {
+      "id": "om-ham-hanumate-namah",
+      "nameHi": "ॐ हं हनुमते नमः",
+      "nameEn": "Om Ham Hanumate Namah",
+      "sub": "हनुमान जप · हं बीजाक्षर",
+      "subEn": "Hanuman japa · Ham seed syllable",
+      "thumb": "ह",
+      "deities": [
+        "hanuman"
+      ],
+      "lines": [
+        "ॐ हं हनुमते नमः"
+      ],
+      "linesEn": [
+        "oṁ haṁ hanumate namaḥ"
+      ],
+      "meaningHi": "ॐ — ‘हं’ बीजाक्षर के साथ श्री हनुमान जी को नमस्कार।",
+      "meaningEn": "Om — salutations to Shri Hanuman with the seed syllable Ham.",
+      "source": {
+        "baseText": "Hanuman mantra with the Ham seed syllable. Shubh Panchang shows it as the heading of its Hanuman page; Patrika lists it (written नम:) among Hanuman mantras as the second confirmation. Exact Devanagari search-verified on 2026-11-07; this build environment's network policy blocked opening the pages, so re-read both before release. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://shubhpanchang.com/hi/bhakti-player/hanuman",
+          "https://www.patrika.com/dharma-karma/hanumaan-janmotsav-2020-shubh-muhurat-date-and-timing-with-puja-5971469/"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
       "id": "shri-ram-jai-ram",
       "nameHi": "श्री राम जय राम",
       "nameEn": "Shri Ram Jai Ram",
@@ -293,6 +394,33 @@
       }
     },
     {
+      "id": "rama-moola-mantra",
+      "nameHi": "राम मूल मंत्र",
+      "nameEn": "Rama Moola Mantra",
+      "sub": "राम जप · मूल मंत्र",
+      "subEn": "Rama japa · root mantra",
+      "thumb": "रा",
+      "deities": [
+        "rama"
+      ],
+      "lines": [
+        "ॐ श्री रामाय नमः"
+      ],
+      "linesEn": [
+        "oṁ śhrī rāmāya namaḥ"
+      ],
+      "meaningHi": "ॐ — श्री राम को नमस्कार, जो धर्म और मर्यादा के आदर्श हैं।",
+      "meaningEn": "Om — salutations to Shri Rama, the ideal of dharma and right conduct.",
+      "source": {
+        "baseText": "Rama moola mantra. Exact Devanagari search-verified on 2026-11-07; this build environment's network policy blocked opening the pages, so re-read both before release. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://shubhpanchang.com/hi/mantra/rama/rama-moola-mantra",
+          "https://www.bhaktibharat.com/amp/mantra/shri-ram-mantra"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
       "id": "durga-beej-mantra",
       "nameHi": "दुर्गा बीज मंत्र",
       "nameEn": "Durga Beej Mantra",
@@ -317,6 +445,89 @@
           "https://shubhpanchang.com/hi/mantra/durga/durga-beeja-mantra"
         ],
         "retrievedOn": "2026-10-21"
+      }
+    },
+    {
+      "id": "navarna-mantra",
+      "nameHi": "नवार्ण मंत्र",
+      "nameEn": "Navarna Mantra",
+      "sub": "दुर्गा जप · नवाक्षर मंत्र",
+      "subEn": "Durga japa · nine-syllable mantra",
+      "thumb": "न",
+      "deities": [
+        "durga"
+      ],
+      "lines": [
+        "ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे"
+      ],
+      "linesEn": [
+        "oṁ aiṁ hrīṁ klīṁ chāmuṇḍāyai vichche"
+      ],
+      "meaningHi": "देवी चामुण्डा का नवाक्षर मंत्र (ॐ के बाद नौ अक्षर)। परम्परा में ‘ऐं’, ‘ह्रीं’, ‘क्लीं’ बीजाक्षर महासरस्वती, महालक्ष्मी और महाकाली से जोड़े जाते हैं; दुर्गा सप्तशती पाठ के साथ इसका जप होता है।",
+      "meaningEn": "The nine-syllable mantra of Devi Chamunda (nine syllables after Om). Tradition links the seed syllables Aim, Hreem and Kleem with Mahasaraswati, Mahalakshmi and Mahakali; it is chanted with the Durga Saptashati recitation.",
+      "source": {
+        "baseText": "Durga Navarna mantra. Exact Devanagari search-verified on 2026-11-07; this build environment's network policy blocked opening the pages, so re-read both before release. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/goddesses/durga/mantra/durga-navarna-mantra.html?lang=hi",
+          "https://shubhpanchang.com/hi/mantra/durga/durga-navarna-mantra"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
+      "id": "mahalakshmi-mantra",
+      "nameHi": "महालक्ष्मी मंत्र",
+      "nameEn": "Mahalakshmi Mantra",
+      "sub": "लक्ष्मी जप · श्रीं बीजाक्षर",
+      "subEn": "Lakshmi japa · Shreem seed syllable",
+      "thumb": "ल",
+      "deities": [
+        "lakshmi"
+      ],
+      "lines": [
+        "ॐ श्रीं महालक्ष्म्यै नमः"
+      ],
+      "linesEn": [
+        "oṁ śhrīṁ mahālakṣhmyai namaḥ"
+      ],
+      "meaningHi": "ॐ — देवी महालक्ष्मी को नमस्कार। ‘श्रीं’ लक्ष्मी से जुड़ा बीजाक्षर है; यह श्री — शुभता, सौन्दर्य और समृद्धि — का स्मरण कराता है।",
+      "meaningEn": "Om — salutations to Goddess Mahalakshmi. Shreem is the seed syllable associated with her, evoking Shri — auspiciousness, grace and abundance.",
+      "source": {
+        "baseText": "Mahalakshmi Shreem mantra. Exact Devanagari search-verified on 2026-11-07 against Shubh Panchang (Mahalakshmi beej mantra) and Satyori; this build environment's network policy blocked opening the pages, so re-read both — and confirm against Drik Panchang — before release. The Hindi and English meanings are original editorial glosses of the salutation and seed syllable.",
+        "referenceUrls": [
+          "https://shubhpanchang.com/hi/mantra/lakshmi/mahalakshmi-beej-mantra",
+          "https://satyori.com/mantras/om-shreem-mahalakshmiyei-namaha/"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
+    },
+    {
+      "id": "kubera-mantra",
+      "nameHi": "कुबेर मंत्र",
+      "nameEn": "Kubera Mantra",
+      "sub": "पञ्चत्रिंशाक्षर मंत्र · 35-syllable",
+      "subEn": "Panchatrimshakshara mantra · 35-syllable",
+      "thumb": "कु",
+      "deities": [
+        "kubera"
+      ],
+      "lines": [
+        "ॐ यक्षाय कुबेराय वैश्रवणाय धनधान्याधिपतये",
+        "धनधान्यसमृद्धिं मे देहि दापय स्वाहा"
+      ],
+      "linesEn": [
+        "oṁ yakṣhāya kuberāya vaiśhravaṇāya dhanadhānyādhipataye",
+        "dhanadhānyasamṛddhiṁ me dehi dāpaya svāhā"
+      ],
+      "meaningHi": "ॐ — यक्षों के राजा, विश्रवा-पुत्र (वैश्रवण) कुबेर को, जो धन और धान्य के अधिपति हैं, अर्पण। मुझे धन-धान्य की समृद्धि दीजिए, दिलवाइए। ‘स्वाहा’ से यह अर्पण पूर्ण होता है।",
+      "meaningEn": "Om — offered to Kubera, king of the Yakshas, Vaishravana (son of Vishrava), lord of wealth and grain: grant me abundance of wealth and grain, and let it be granted. Svaha completes the offering.",
+      "source": {
+        "baseText": "Kubera Panchatrimshakshara (35 syllables after Om) mantra. The complete Devanagari string was search-verified verbatim on 2026-11-07 against Drik Panchang's Kubera Mantra page and shlokam.org; this build environment's network policy blocked opening the pages, so re-read both before release. The two-line break is presentational only. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/shri-kubera/mantra/kubera-mantra.html?lang=hi",
+          "https://shlokam.org/shloka/kubera-mantra.htm"
+        ],
+        "retrievedOn": "2026-11-07"
       }
     },
     {
@@ -563,10 +774,37 @@
         ],
         "retrievedOn": "2026-10-21"
       }
+    },
+    {
+      "id": "shani-moola-mantra",
+      "nameHi": "शनि मूल मंत्र",
+      "nameEn": "Shani Moola Mantra",
+      "sub": "शनि जप · शं बीजाक्षर",
+      "subEn": "Shani japa · Sham seed syllable",
+      "thumb": "श",
+      "deities": [
+        "shani"
+      ],
+      "lines": [
+        "ॐ शं शनैश्चराय नमः"
+      ],
+      "linesEn": [
+        "oṁ śhaṁ śhanaiśhcharāya namaḥ"
+      ],
+      "meaningHi": "ॐ — ‘शं’ बीजाक्षर के साथ शनिदेव (शनैश्चर, मन्द गति से चलने वाले) को नमस्कार।",
+      "meaningEn": "Om — salutations to Shani Dev (Shanaishchara, the slow-moving one) with the seed syllable Sham.",
+      "source": {
+        "baseText": "Shani moola mantra (the short form; the Navagraha beej entry keeps ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः). Exact Devanagari search-verified on 2026-11-07; this build environment's network policy blocked opening the pages, so re-read both before release. The Hindi and English meanings are original editorial glosses.",
+        "referenceUrls": [
+          "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-shani/shani-mantras.html?lang=hi",
+          "https://shubhpanchang.com/hi/mantra/shani/shani-moola-mantra"
+        ],
+        "retrievedOn": "2026-11-07"
+      }
     }
   ],
   "source": {
-    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation. Ganesha Ashtakshara, Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram and Durga beej mantras, and the nine Navagraha beej mantras (same text as the jyotishi-approved GRAHA_UPAY table), each with its own two reference pages. The 2026-10-21 additions were checked through web-search results only (the build environment's network policy blocked opening the pages); their meanings are original editorial glosses.",
+    "baseText": "Traditional japa mantras including Panchakshari, Hare Krishna Mahamantra, Gayatri Mantra, Dvadashakshari Vasudeva mantra, and Radha naam japa (one bead per name). Saraswati Moola Mantra cross-verified with Drik Panchang and Sri Matham Puja Sangraha. Mahamrityunjaya Mantra (Rigveda 7.59.12) shares the Shiva Stotram reading's collation. Ganesha Ashtakshara, Om Namo Narayanaya, Hanuman moola, Shri Ram Jai Ram and Durga beej mantras, and the nine Navagraha beej mantras (same text as the jyotishi-approved GRAHA_UPAY table), each with its own two reference pages. The 2026-10-21 additions were checked through web-search results only (the build environment's network policy blocked opening the pages); their meanings are original editorial glosses. The 2026-11-07 addition — Mahalakshmi Shreem mantra and Kubera 35-syllable mantra — is search-verified only (reference hosts blocked in the build environment); re-read their pages before release. A second 2026-11-07 addition — Krishna beej, Rudra, Sita Ram naam japa, Om Ham Hanumate Namah, Rama moola, Navarna and Shani moola — is likewise search-verified only; re-read before release.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_deities_misc/sArthagAyatrI.html",
       "https://vedabase.io/en/library/kb/90/",
@@ -601,7 +839,22 @@
       "https://dekhopanchang.com/mr/calendar/graha-shanti-rahu",
       "https://www.bhaktibharat.com/mantra/rahu-mantra",
       "https://www.bhaktibharat.com/mantra/ketu-mantra",
-      "https://dekhopanchang.com/en/puja/graha-shanti-ketu"
+      "https://dekhopanchang.com/en/puja/graha-shanti-ketu",
+      "https://shubhpanchang.com/hi/mantra/lakshmi/mahalakshmi-beej-mantra",
+      "https://satyori.com/mantras/om-shreem-mahalakshmiyei-namaha/",
+      "https://www.drikpanchang.com/vedic-mantra/gods/shri-kubera/mantra/kubera-mantra.html?lang=hi",
+      "https://shlokam.org/shloka/kubera-mantra.htm",
+      "https://shubhpanchang.com/hi/mantra/krishna/krishna-beej-mantra",
+      "https://instaastro.com/hi/mantras/krishna/",
+      "https://astrosage.com/mantra/rudra-mantra.asp",
+      "https://instaastro.com/hi/mantras/rudra/",
+      "https://shubhpanchang.com/hi/bhakti-player/hanuman",
+      "https://www.patrika.com/dharma-karma/hanumaan-janmotsav-2020-shubh-muhurat-date-and-timing-with-puja-5971469/",
+      "https://shubhpanchang.com/hi/mantra/rama/rama-moola-mantra",
+      "https://www.drikpanchang.com/vedic-mantra/goddesses/durga/mantra/durga-navarna-mantra.html?lang=hi",
+      "https://shubhpanchang.com/hi/mantra/durga/durga-navarna-mantra",
+      "https://www.drikpanchang.com/vedic-mantra/gods/navagraha/lord-shani/shani-mantras.html?lang=hi",
+      "https://shubhpanchang.com/hi/mantra/shani/shani-moola-mantra"
     ],
     "retrievedOn": "2026-10-13"
   }

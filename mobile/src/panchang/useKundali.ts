@@ -41,9 +41,12 @@ import {
 
 export {
   MAX_PEOPLE,
+  birthCity,
+  birthPlaceFromPincode,
   birthProfileToInput,
   parseStoredBirthProfile,
   validateBirthProfile,
+  type BirthPlace,
   type BirthProfile,
   type BirthProfileErrors,
   type PersonProfile,

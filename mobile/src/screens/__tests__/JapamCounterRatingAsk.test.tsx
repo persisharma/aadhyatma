@@ -39,6 +39,9 @@ jest.mock('@/contexts/JapamCounterContext', () => ({
     increment: mockIncrement,
     resetBeads: jest.fn(),
     clear: jest.fn(),
+    getSankalp: () => null,
+    takeSankalp: jest.fn(),
+    releaseSankalp: jest.fn(),
   }),
 }));
 
@@ -50,7 +53,7 @@ jest.mock('expo-haptics', () => ({
   notificationAsync: jest.fn(() => Promise.resolve()),
   impactAsync: jest.fn(() => Promise.resolve()),
   NotificationFeedbackType: { Success: 'success' },
-  ImpactFeedbackStyle: { Light: 'light' },
+  ImpactFeedbackStyle: { Light: 'light', Medium: 'medium' },
 }));
 jest.mock('expo-linear-gradient', () => {
   const r = require('react');

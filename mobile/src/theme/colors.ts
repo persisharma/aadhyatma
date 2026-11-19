@@ -21,9 +21,16 @@ export const lightColors = {
   // colors.contrast.test.ts.
   inkMuted: '#6E5230',
 
+  festivalInk: '#70251B',
   saffron: '#B8621B',
   saffronDeep: '#8A3E0B',
   gold: '#A67C34',
+  // Selected Darshan floating pill (Option C). Artwork stays in its registry.
+  darshanFrom: '#A65217',
+  darshanTo: '#7D350C',
+  darshanBorder: '#D9AB68',
+  darshanInk: '#FFF2D7',
+  darshanBead: '#F1CC8C',
   // Utility ink and active navigation sampled from the selected Storybook
   // direction; illustration subjects retain their own painted pigments.
   iconInk: '#6F3F1D',

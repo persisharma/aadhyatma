@@ -2,7 +2,7 @@
 title: Readers
 type: subsystem
 sources: [mobile/src/components/AutoSlideScrollView.tsx, mobile/src/screens/_useAutoSlide.ts, mobile/src/utils/autoSlideStore.ts, mobile/src/components/AutoSlideButton.tsx, mobile/src/screens/GarudPuranReaderScreen.tsx, mobile/src/screens/GarudPuranChaptersScreen.tsx, mobile/src/data/garud-puran/index.ts, mobile/src/screens/DailyBhaktiScreen.tsx, mobile/src/components/ReadingArtwork.tsx, mobile/src/components/ProseReadingCard.tsx, mobile/src/components/ProseParagraph.tsx, mobile/src/components/ReaderHeader.tsx, mobile/src/screens/_useReaderReadAloud.ts, mobile/src/components/readAloud/ReadAloudButton.tsx, mobile/src/data/valmiki-ramayan/index.ts, mobile/src/screens/GitaReaderScreen.tsx, mobile/src/screens/ValmikiRamayanReaderScreen.tsx, mobile/src/screens/ShivaStrotamReaderScreen.tsx, mobile/src/screens/SundarkandReaderScreen.tsx, mobile/src/screens/DurgaStotramReaderScreen.tsx, mobile/src/screens/AshtakamReaderScreen.tsx, mobile/src/data/ashtakam/index.ts, mobile/src/data/aarti/ids.ts, mobile/src/data/aarti/index.ts, mobile/src/data/aarti/shani-aarti.json, mobile/src/data/aarti/dattatreya-aarti.json, mobile/src/data/surya-chalisa/surya-chalisa.json, mobile/src/data/chalisaRegistry.ts, mobile/src/data/texts.ts, mobile/src/screens/_useSafeChapter.ts, mobile/src/components/NextChapterCard.tsx, mobile/src/components/PrevChapterCard.tsx, mobile/src/components/AddToRoutineButton.tsx, mobile/src/screens/__tests__/readerAutoAdvance.test.tsx, mobile/src/screens/__tests__/gitaAutoAdvance.test.tsx, mobile/src/screens/__tests__/AshtakamReaderScreen.test.tsx, scripts/build-valmiki-ramayan.py, mobile/src/data/japam/index.ts, mobile/src/data/backgrounds.ts, RULEBOOK.md]
-last_verified_date: 2026-10-22
+last_verified_date: 2026-11-19
 confidence: high
 status: current
 ---
@@ -15,8 +15,10 @@ bookmark/share buttons, and pager dots. The **top bar is shared** — `ReaderHea
 July 2026 — but the rest of the shell is not: every reader is still a near-identical copy of the
 same paging pattern, so that behavior is kept consistent by convention + tests, not by a base
 component. Content is bundled JSON loaded per chapter via `get<Section>Chapter()`. Valmiki
-Ramayan is the large-corpus case: its 23,289 verified verse records stay split across seven
-kāṇḍa JSON modules, and the accessor requires/caches only the kāṇḍa the reader opens. The Home,
+Ramayan is the large-corpus case and the one exception (11 Nov 2026): its 23,289 verse records are
+**not in the JS bundle**. They ship as 73 bundled asset parts generated from the kāṇḍa masters,
+and `loadValmikiRamayanChapter()` reads and caches a kāṇḍa asynchronously; the reader screen is
+a loader wrapping the unchanged reader, with a loading and a retry state (design.md §53). The Home,
 Daily Bhakti, and search paths use the 28-row `daily-selection.json` projection so they do not
 parse the complete epic during startup; the platform bundle still carries every kāṇḍa offline.
 
@@ -51,7 +53,9 @@ parse the complete epic during startup; the platform bundle still carries every 
 Readers call `useReaderPlayback(args)` (`_useAutoSlide.ts`) in place of `useReaderReadAloud(args)` —
 same args, returns `{ readAloud, autoSlide }`, and keeps the two hands-free modes mutually exclusive.
 Kids Stories and the comic call `useAutoSlide` directly with their own `pageChars`/`goToPage`.
-Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval; pace persists in
+Pages hold for their text length (`autoSlideDurationMs`), not a fixed interval, at four paces
+(slow 1.6 · normal 1 · fast 0.6 · very fast 0.3 — Nov 2026; very fast is half of fast and the meter
+has four bars). Pace persists in
 the `autoSlideStore` module store (no provider — launch graph untouched), which also carries the
 3 s hand-off that keeps a slideshow playing across a chapter `navigation.replace`. Long pages scroll
 to the bottom in 70%-of-a-screen steps (each holding for its share of the page time by height)
@@ -175,6 +179,21 @@ the eight other additions contribute 72 pages. Jay Adhya Shakti stays at index 1
 Shani at 11 and Dattatreya at 12; this PR appends nine IDs at positions 13–21.
 Native/test evidence is kept in the integration review linked by the audit.
 
+**Page counter and jump (19 Nov 2026, design.md §94, RULEBOOK §3 "Reader page counter").**
+The `n / total` in every reader's `ReaderHeader` is the shared `ReaderPageCounter`,
+a button that opens `PageJumpSheet` (the Gita verse sheet without the chapter
+field). FlatList readers spread `useReaderJump({ listRef, offset, setCurrentIndex,
+readAloud, autoSlide })` (`screens/_useReaderJump.ts`) onto it: opening stops both
+hands-free modes, and the jump sets the index and calls `scrollToIndex` without
+animation, adding the reader's `offset` where a previous-chapter card is prepended.
+Sanatan, Kids Stories and the comic call their own page function from `onJump`;
+the Gita passes `onPress` and keeps its chapter + verse sheet. The jump stays
+inside the open chapter everywhere except the Gita. The accessibility label is the
+literal counter ("3 / 12") and the action is the hint, because about 630 Maestro
+assertions read the counter text. `components/__tests__/ReaderPageCounter.test.tsx`
+carries a guard that scans every screen: any file styling its own
+`typography.pageCounter`, or a `*ReaderScreen.tsx` without `<ReaderPageCounter`, fails.
+
 **Tests:** `readerAutoAdvance.test.tsx` enforces the auto-advance contract for every
 multi-chapter reader (transition injected at chapter 1's tail, prev-transition at chapter 2's
 head, no trailing transition on the final chapter, and `navigation.replace` fires on the
@@ -235,6 +254,12 @@ measured popularity ranking, and every item remains ineligible for release.
 
 ## Gotchas
 
+- **Two answers to `./corpusSource`, chosen at bundle time.** `corpusSource.ts` reads the asset parts; `corpusSource.inbundle.ts` requires the masters. Metro picks by app version (`mobile/corpusDelivery.js`, threshold 1.5.7) so an OTA to an older store build keeps the corpus in the bundle. TypeScript and Jest always see `corpusSource.ts`; `valmikiBundleDelivery.jest.test.ts` loads every kāṇḍa through the in-bundle source and compares it byte for byte with the asset one. Keep the two files' exports identical, never import the in-bundle one by name, and put shared behaviour (validation, meaning fallback, caching) in `index.ts`, not in a source.
+- **The Valmiki masters must never be imported by app code (other than `corpusSource.inbundle.ts`), and the parts must be regenerated after any master edit.** `mobile/scripts/build-valmiki-assets.mjs` writes `assets/valmiki-ramayan/*.txt`, `parts.ts` and `sargaStarts.ts`; `valmikiAssets.test.ts` fails on an import of a master or on drift. One `import ch from './chapter-06.json'` puts 6.4 MB back into every OTA.
+- **The Valmiki reader mounts only with its kāṇḍa in memory.** `ValmikiRamayanReaderScreen` is a loader; `LoadedReader` is the reader. Do not merge them back: `currentIndex` is initialised from the opening verse, and a reader mounted before its verses exist would report verse 1 as the resume position.
+- **Auto-slide's hand-off is renewed across the Valmiki load.** The 3 s hand-off (`autoSlideStore.HANDOFF_MS`) is claimed by `useReaderPlayback`, which lives in `LoadedReader` and so mounts only after the kāṇḍa is in memory. `useAutoSlideCarriedAcrossLoad` (in `ValmikiRamayanReaderScreen.tsx`) notes a hand-off that is live when the screen opens on an unloaded kāṇḍa and calls `renewAutoSlideHandoff` in a layout effect when the text is ready — before the playback hook's passive effect claims it. Without it the slideshow stops silently at a kāṇḍa boundary whenever the load outlasts 3 s (found in the post-merge review, 11 Nov 2026). A lapsed hand-off is never revived; a failed load drops it. Any other reader that becomes asynchronous needs the same treatment.
+- **Tests read the real parts.** `jest/textAssetTransformer.js` turns a part's asset handle into its path and `jest.setup.js` replaces `partReader` with a file read, so `loadValmikiRamayanChapter` works in Jest. Load the kāṇḍa in `beforeAll` when a test needs the reader on its synchronous path.
+
 - **Auto-slide's `goToPage` must set the index itself where the pager tracks position via
   `onMomentumScrollEnd`** (Kids Stories, comic): a programmatic `scrollToIndex` never fires it on
   iOS, so the slideshow would stall on page 1. Readers tracking `onScroll`/viewability are fine.
@@ -294,3 +319,52 @@ User review corrected the initial portrait layout against current-main PR #449 (
 ### Garud Puran final Style 3 integration (2026-10-12)
 
 After user approval, nine exact Style 3 WebPs (1,433,814 bytes total) were bundled locally; the approval and hashes are pinned in `docs/content/garud-puran/artwork/manifest.json`. Current-main `ReadingArtwork` and `BackgroundLayer(readingParchment)` provide the common banner/divider/paper treatment. `HomeStackNavigator` registers both routes lazily, the generated route graph warms the reader from the index, and search yields per reading. Prose sharing carries source context without truncating the explanation; saved progress is labelled Reading / Page. See `docs/content/garud-puran/INTEGRATION.md` for final verification. **Since 16 Oct the nine paintings ship from R2**, not the bundle: they are `reading-backgrounds` entries `garud-puran--<artId>` (folder added to `prepare-reading-backgrounds.mjs`), `garudPuranImages` holds `RemoteBackground` descriptors, and `ListingThumbImage` crops R2 art from manifest dimensions. See [[integrations/reading-artwork]].
+
+
+### Screen-clipping corrections (5 November 2026)
+
+ReaderHeader now measures trailing actions, balances the back column from their actual width (minimum 48dp), and preserves complete wrapping titles. Explicit side minima, custom Back labels and mastheads remain supported. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.
+
+## Selected Kabir and Rahim dohas (5 November 2026)
+
+`data/doha/index.ts` adds two lazily loaded four-couplet selections to the existing flat reader registry. Their public category is Granth; the internal `StutiReader` route is reused for its typed verse shell, not to label the poets as deities or the poems as stotrams. Per-couplet provenance keeps chosen editions and variants distinct. New library rows use generated counts and neutral manuscript artwork; no new artwork object, route or provider is required.
+
+The registry-derived category, full-text search, bookmark and resume routes retain each collection's identity and exact verse index. `versePoolFlat` appends both collections, preserving older Daily Bhakti offsets and serving saved/daily/routine lookups. Hindi/English are editorial; Gujarati/Kannada follow existing re-scripting. No source URL reaches the UI. Focused script/content/pool checks are separate from pending native language/size/lifecycle/export checks. See design.md §88, RULEBOOK §33 and `docs/reviews/bhakti-dohe.md` for scope and acceptance.
+
+
+**Doha curation scope — 6 November 2026.** Only bhakti or constructive Suvichar qualifies, regardless of poet. Each authored verse now has a unique, nonempty `themes` array (`bhakti`/`suvichar`) and `themeReasonHi`; `doha/curation.ts` and registry-wide data tests check this contract. The list subtitles name both themes. Eligibility metadata never substitutes for source collation, and no runtime filtering may shift saved positions. The 60-item chat shortlist is research material, not an active corpus expansion. Existing eight payload verses/counts and all routes remain stable.
+
+
+### Daily Bhakti and Suvichar eligibility — 6 November 2026
+
+The eight verified canonical dohas participate in Daily Bhakti and Suvichar. Daily Bhakti retains the appended flat-source segments, complete verses/meanings and neutral prayer sharing artwork. Suvichar projects the same reader payloads through `data/doha/suvichar.ts`: six subject-neutral dohas suit all eighteen deity choices; the Hari doha is limited to the nine explicit Vishnu/Ram/Krishna choices, and the Ram-sharan doha to Rama/Ram Darbar. New poems require explicit artwork eligibility before exposure. No text, source or stable reader index is rewritten.
+
+Daily/weekday Suvichar cards rotate eligible originals followed by eligible dohas. Browse and Another thought order specific originals, general originals, eligible dohas, then existing referenced meanings. The unchanged 84 originals and 621 referenced messages remain available; the full catalogue now has 713 messages. Stable `DH-<canonical-verse-id>` IDs persist in preferences and favorites. Full Hindi and pronunciation-based English romanization are projected, with Gujarati/Kannada using the existing Hindi re-scripting policy. Poet and original-doha/romanization credit appears through the existing source label and share caption; edits remove attribution. Do not label these poems as Vedansh originals or as words spoken by the depicted deity. The 60-item research shortlist remains unintegrated.
+
+Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
+
+
+## Gita verse picker — Proposal 06
+
+`GitaVerseJumpSheet` is mounted only while choosing. It reads chapter counts/titles from the manifest and accepts four numeral scripts. `GitaReaderScreen` stops playback, suppresses pager callbacks and suspends dwell until dismissal. Only Open loads the selected chapter and resolves the real verse number. Route replacement preserves the calling stack and mounts a new reader directly at the target, so no skipped page receives progress/coverage. Cancel does not write position; the original verse may still receive legitimate dwell credit accrued before opening. Existing transition timers are cancelled on unmount. No other reader or routine completion contract changes.
+
+Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.
+
+## Verse presentation parity — 16 November 2026
+
+`utils/versePresentation.ts` removes a closing numeric citation only if the visible
+label already supplies exactly that reference. `verseLinesByLang` takes an optional
+label for Gita/Gita Saar, numbered verse pages and share cards, before re-scripting.
+Daily Bhakti and devotional sharing use the same presentation. Canonical text,
+bookmarks, read-aloud source data and verse IDs remain unchanged. `DevotionalVerseBody`
+keeps charan rows at compact/large text sizes, allowing each row to wrap and the
+paper to grow; no layout event or timeout merges rows into a flowing paragraph.
+
+B1 Satyanarayan Aarti (17 Nov 2026) appends index 22 with nine pages from the complete dated 1930 edition. Puja instructions and ref now select this aarti; previous positions are preserved. Existing Vishnu artwork is reused. Source variants and native-pending acceptance: `docs/evaluations/b1-satyanarayan-aarti/review.md`.
+
+
+## Complete Saptashati reading collection (PR #702)
+
+`SaptashatiCoreScreen` uses the existing collection route and LibraryCard/ReaderHeader surfaces. It opens three preliminary readings (full Devi Kavacham, Argala, Kilak) followed by all thirteen chapter-specific Stuti sources. `data/saptashatiCore.ts` declares counts totaling 700 traditional numbered units; these include speaker announcements and short salutation units, not only full metrical verses. Ritual procedure is not bundled. Each chapter is a separate stable source, so returning to the collection selects the next chapter; this does not introduce automatic cross-source chapter advance.
+
+`getStuti` requires each chapter payload lazily. Catalog/search, static generated counts, artwork/backgrounds, discovery and verse-to-japa are integrated. New Daily Bhakti entries append to `versePoolFlat.ts`, preserving prior pool offsets. Chapter 1's IDs remain unchanged, as do saved references to the hidden old mixed Durga Kavach selection. Full source collation, original Hindi/English meaning decisions and exact exclusions are recorded in `docs/evaluations/remaining-content/saptashati-completion-sources.md`. Gujarati/Kannada retain the existing script/fallback policy. Browser component evidence and automated tests are distinct from still-pending native lifecycle, sharing, accessibility and performance acceptance. This section describes the PR implementation, not a merged release.

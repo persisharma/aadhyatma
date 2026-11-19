@@ -1,3 +1,5 @@
+import { kavachamIds as kavachamIdList } from '@/data/kavacham';
+import { getReadingLink } from '@/data/readingLinks';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { library, type LibraryEntry } from '@/data/texts';
 import type { RoutineItem } from '@/data/routine/types';
@@ -6,6 +8,7 @@ import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti/ids';
 import { bhajanIds } from '@/data/bhajan/ids';
 import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
+import { suktamIds as suktamIdList } from '@/data/suktam';
 import { stutiIds as stutiIdList } from '@/data/stuti';
 import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
 import { durgaStotramChaptersManifest } from '@/data/durga-stotram';
@@ -26,7 +29,16 @@ import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeRoster } from '@/vastu/homeRecord';
 import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
-type Nav = NativeStackNavigationProp<HomeStackParamList>;
+type Nav = Pick<NativeStackNavigationProp<HomeStackParamList>, 'navigate'>;
+
+/** Open the original chapter, retaining its canonical progress/bookmark identity. */
+export function navigateReadingLink(nav: Nav, id: string): boolean {
+  const link = getReadingLink(id);
+  if (!link) return false;
+  if (link.sourceId === 'ganesh-stotram') nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
+  else nav.navigate('SaptashatiCore');
+  return true;
+}
 
 /**
  * Nested-navigation params for a screen inside the Panchang tab's stack.
@@ -115,6 +127,11 @@ const chalisaIds = new Set([
   'khatu-shyam-chalisa',
   'lakshmi-chalisa',
   'surya-chalisa',
+  'vaishno-devi-chalisa',
+  'shani-chalisa',
+  'santoshi-mata-chalisa',
+  'kali-chalisa',
+  'radha-chalisa',
 ]);
 
 // Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on
@@ -124,15 +141,10 @@ const chalisaIds = new Set([
 const ashtakamIds = new Set<string>(ashtakamIdList);
 
 // Suktam (सूक्तम्) multi-instance form — one SuktamReader dispatches on `suktamId`.
-const suktamIds = new Set(['devi-suktam', 'purusha-suktam', 'narayana-suktam']);
+const suktamIds = new Set<string>(suktamIdList);
 
 // Kavacham (कवच) multi-instance form — one KavachamReader dispatches on `kavachamId`.
-const kavachamIds = new Set([
-  'rama-raksha-stotra',
-  'ganesha-kavacham',
-  'shiva-kavacham',
-  'durga-kavach',
-]);
+const kavachamIds = new Set<string>(kavachamIdList);
 
 // Stuti (स्तुति) multi-instance form — one StutiReader dispatches on `stutiId`.
 // Derived from the data registry (same rationale as ashtakamIds above).
@@ -492,6 +504,11 @@ export function buildProgressTarget(p: {
  */
 export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
   const sourceId = canonicalSourceId(bm.sourceId);
+  // These registry-backed readers are flat: reuse the progress target so saved
+  // dohas (and sibling flat texts) retain their discriminator and exact page.
+  if (stutiIds.has(sourceId) || ashtakamIds.has(sourceId) || suktamIds.has(sourceId) || kavachamIds.has(sourceId)) {
+    return buildProgressTarget(bm);
+  }
   if (chalisaIds.has(sourceId)) {
     return {
       screen: 'ChalisaReader',
@@ -547,3 +564,4 @@ export function navigateToBookmark(nav: Nav, bm: BookmarkRef): boolean {
 export function suvicharTabTarget(): { screen: 'Suvichar'; initial: false } {
   return { screen: 'Suvichar', initial: false };
 }
+

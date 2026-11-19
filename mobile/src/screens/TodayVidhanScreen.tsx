@@ -10,7 +10,7 @@ import AppIcon from '@/components/AppIcon';
  * the shared day store, which the Home Today strip has usually warmed already.
  */
 import React, { useEffect, useState } from 'react';
-import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -26,6 +26,7 @@ import { navigateAskTarget } from '@/ask/actions';
 import type { AskTarget } from '@/ask/types';
 import type { BriefingSection } from '@/ask/briefing';
 import type { HomeStackParamList } from '@/navigation/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'TodayVidhan'>;
 
@@ -37,7 +38,7 @@ export default function TodayVidhanScreen({ navigation }: Props) {
 
   useEffect(() => {
     let cancelled = false;
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       import('@/ask/briefing')
         .then((m) => {
           if (cancelled) return;

@@ -4,6 +4,7 @@
  * live completion flag (manual mark OR genuine reading/japa today).
  */
 import { useMemo } from 'react';
+import { useTodayKey } from '@/utils/useTodayKey';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useUserActivity, toDateKey } from '@/contexts/UserActivityContext';
@@ -34,6 +35,9 @@ export function useRoutineToday(): RoutineTodaySummary {
   const { routines, isManualDone, manualDoneAt } = useRoutines();
   const { getProgress } = useReadingProgress();
   const { dayTotals } = useUserActivity();
+  // The memo reads `new Date()`: without a day key it kept yesterday's weekday
+  // schedule in a process that stayed alive past midnight.
+  const dayKey = useTodayKey();
 
   return useMemo(() => {
     const now = new Date();
@@ -76,5 +80,6 @@ export function useRoutineToday(): RoutineTodaySummary {
       total: entries.length,
       hasRoutine: routines.length > 0,
     };
-  }, [routines, isManualDone, manualDoneAt, getProgress, dayTotals]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [routines, isManualDone, manualDoneAt, getProgress, dayTotals, dayKey]);
 }

@@ -1,6 +1,7 @@
 # Granth Category Smoke Test
 #
-# Verifies the Granth category and its 6 active sections render correctly.
+# Verifies the Granth category and its active sections render correctly.
+# The Kabir/Rahim selected dohas are exercised in doha-smoke.yaml.
 # Sections: Bhagavad Gītā, Gita Saar, Sundarkand, Ramcharitmanas Mangalacharan, Valmiki Ramayan, Garud Puran.
 #
 # This flow opens Valmiki Ramayan and its final kanda to exercise the
@@ -84,3 +85,4 @@ appId: com.prashantsharma.vedansh
 # Clean up for the next flow.
 - stopApp:
     appId: com.prashantsharma.vedansh
+

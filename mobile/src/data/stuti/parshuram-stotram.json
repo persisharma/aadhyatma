@@ -1,0 +1,128 @@
+{
+  "titleHi": "श्री परशुराम स्तोत्रम्",
+  "titleEn": "Parshuram Stotram",
+  "deity": "parshuram",
+  "source": {
+    "baseText": "Shri Vasudevananda Saraswati (Tembe Swami), Parashurama Stotram, complete seven-verse recension. Sanskrit Documents collated with Stotra Nidhi.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_vishhnu/parashurAmastotram2.html",
+      "https://stotranidhi.com/hi/sri-parashurama-stotram-in-sanskrit/"
+    ],
+    "retrievedOn": "2026-11-06",
+    "notes": "All seven verses including the closing phalashruti, in source order. Sanskrit Documents is the base recension: verse 7 चिरजीवनम्; Stotra Nidhi reads चिरजीविनम्. Do not combine recensions. IAST is normalized to standard e/o and ṃ from the published text. Hindi/English meanings are editorial translations, not additional scripture. Historical martial epithets are translated faithfully, not presented as instructions toward any present-day community. Colophon: इति श्रीवासुदेवानन्दसरस्वतीविरचितं श्रीपरशुरामस्तोत्रं सम्पूर्णम् ।"
+  },
+  "verses": [
+    {
+      "id": "parshuram-stotram-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Shloka · 1",
+      "lines": [
+        "कराभ्यां परशुं चापं दधानं रेणुकात्मजम् ।",
+        "जामदग्न्यं भजे रामं भार्गवं क्षत्रियान्तकम् ॥ १॥"
+      ],
+      "linesEn": [
+        "karābhyāṃ paraśuṃ cāpaṃ dadhānaṃ reṇukātmajam",
+        "jāmadagnyaṃ bhaje rāmaṃ bhārgavaṃ kṣatriyāntakam"
+      ],
+      "meaningHi": "मैं रेणुका और जमदग्नि के पुत्र, भृगुवंशीय राम का भजन करता हूँ, जो हाथों में परशु और धनुष धारण करते हैं तथा क्षत्रियों का अन्त करने वाले कहलाते हैं।",
+      "meaningEn": "I worship Rama of the Bhrigu lineage, the son of Renuka and Jamadagni, who bears an axe and a bow and is called the destroyer of Kshatriyas."
+    },
+    {
+      "id": "parshuram-stotram-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Shloka · 2",
+      "lines": [
+        "नमामि भार्गवं रामं रेणुकाचित्तनन्दनम् ।",
+        "मोचिताम्बार्तिमुत्पातनाशनं क्षत्रनाशनम् ॥ २॥"
+      ],
+      "linesEn": [
+        "namāmi bhārgavaṃ rāmaṃ reṇukācittanandanam",
+        "mocitāmbārtimutpātanāśanaṃ kṣatranāśanam"
+      ],
+      "meaningHi": "मैं भृगुवंशीय राम को प्रणाम करता हूँ, जो रेणुका के हृदय को आनन्द देने वाले, माता का दुःख दूर करने वाले, उत्पातों और क्षत्रिय सत्ता का नाश करने वाले हैं।",
+      "meaningEn": "I bow to Rama of the Bhrigu lineage, who delights Renuka’s heart, relieves his mother’s distress, and destroys calamities and Kshatriya power."
+    },
+    {
+      "id": "parshuram-stotram-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Shloka · 3",
+      "lines": [
+        "भयार्तस्वजनत्राणतत्परं धर्मतत्परम् ।",
+        "गतगर्वप्रियं शूरं जमदग्निसुतं मतम् ॥ ३॥"
+      ],
+      "linesEn": [
+        "bhayārtasvajanatrāṇatatparaṃ dharmatatparam",
+        "gatagarvapriyaṃ śūraṃ jamadagnisutaṃ matam"
+      ],
+      "meaningHi": "वे भय से पीड़ित अपने जनों की रक्षा और धर्म में तत्पर हैं। अहंकार से रहित जन उन्हें प्रिय हैं। मैं उन विख्यात, शूरवीर जमदग्नि-पुत्र का स्मरण करता हूँ।",
+      "meaningEn": "He is devoted to protecting his frightened people and to dharma. Those free from pride are dear to him. I remember that revered, courageous son of Jamadagni."
+    },
+    {
+      "id": "parshuram-stotram-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Shloka · 4",
+      "lines": [
+        "वशीकृतमहादेवं दृप्तभूपकुलान्तकम् ।",
+        "तेजस्विनं कार्तवीर्यनाशनं भवनाशनम् ॥ ४॥"
+      ],
+      "linesEn": [
+        "vaśīkṛtamahādevaṃ dṛptabhūpakulāntakam",
+        "tejasvinaṃ kārtavīryanāśanaṃ bhavanāśanam"
+      ],
+      "meaningHi": "वे महादेव को अनुकूल कर लेने वाले, अभिमानी राजवंशों का अन्त करने वाले, तेजस्वी, कार्तवीर्य का नाश करने वाले तथा संसार-बन्धन मिटाने वाले हैं।",
+      "meaningEn": "He wins Mahadeva’s favour, brings proud royal lineages to an end, shines with spiritual radiance, destroys Kartavirya, and removes the bondage of worldly existence."
+    },
+    {
+      "id": "parshuram-stotram-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Shloka · 5",
+      "lines": [
+        "परशुं दक्षिणे हस्ते वामे च दधतं धनुः ।",
+        "रम्यं भृगुकुलोत्तंसं घनश्यामं मनोहरम् ॥ ५॥"
+      ],
+      "linesEn": [
+        "paraśuṃ dakṣiṇe haste vāme ca dadhataṃ dhanuḥ",
+        "ramyaṃ bhṛgukulottaṃsaṃ ghanaśyāmaṃ manoharam"
+      ],
+      "meaningHi": "उनके दाएँ हाथ में परशु और बाएँ हाथ में धनुष है। वे सुन्दर, भृगुकुल के भूषण, मेघ के समान श्याम तथा मन को हरने वाले हैं।",
+      "meaningEn": "He holds an axe in his right hand and a bow in his left. Beautiful and captivating, dark as a rain cloud, he is the ornament of the Bhrigu lineage."
+    },
+    {
+      "id": "parshuram-stotram-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Shloka · 6",
+      "lines": [
+        "शुद्धं बुद्धं महाप्रज्ञामण्डितं रणपण्डितम् ।",
+        "रामं श्रीदत्तकरुणाभाजनं विप्ररञ्जनम् ॥ ६॥"
+      ],
+      "linesEn": [
+        "śuddhaṃ buddhaṃ mahāprajñāmaṇḍitaṃ raṇapaṇḍitam",
+        "rāmaṃ śrīdattakaruṇābhājanaṃ viprarañjanam"
+      ],
+      "meaningHi": "वे शुद्ध, जाग्रत ज्ञान वाले, महान प्रज्ञा से सुशोभित और युद्धविद्या में निपुण हैं। वे श्रीदत्त की करुणा के पात्र और विप्रों को प्रसन्न करने वाले राम हैं।",
+      "meaningEn": "Pure and awakened, adorned with great wisdom and skilled in warfare, Rama receives Shri Datta’s compassion and brings joy to the learned Brahmins."
+    },
+    {
+      "id": "parshuram-stotram-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Shloka · 7",
+      "lines": [
+        "मार्गणाशोषिताब्ध्यंशं पावनं चिरजीवनम् ।",
+        "य एतानि जपेद्रामनामानि स कृती भवेत् ॥ ७॥"
+      ],
+      "linesEn": [
+        "mārgaṇāśoṣitābdhyaṃśaṃ pāvanaṃ cirajīvanam",
+        "ya etāni japedrāmanāmāni sa kṛtī bhavet"
+      ],
+      "meaningHi": "वे बाण से समुद्र के एक भाग को सुखाने वाले, पवित्र करने वाले और चिरजीवी हैं। स्तोत्र की फलश्रुति कहती है कि राम के इन नामों का जप करने वाला कृतार्थ होता है।",
+      "meaningEn": "He dries a portion of the ocean with his arrow, purifies, and lives on through the ages. The hymn’s closing verse says that one who chants these names of Rama becomes fulfilled."
+    }
+  ]
+}

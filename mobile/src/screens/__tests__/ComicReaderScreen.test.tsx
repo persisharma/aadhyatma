@@ -24,6 +24,7 @@ jest.mock('@/components/ReaderHeader', () => ({ __esModule: true, default: (prop
   const React = require('react'); return React.createElement('ReaderHeader', props, props.right);
 } }));
 jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
+jest.mock('@/components/ReaderPageCounter', () => ({ __esModule: true, default: 'ReaderPageCounter' }));
 // Auto-slide is covered by its own hook/button; these suites replace react-native
 // wholesale, so stub it like the other reader controls.
 jest.mock('@/components/AutoSlideButton', () => ({ __esModule: true, default: 'AutoSlideButton' }));
@@ -100,12 +101,12 @@ test('62 grouped pages use swipe paging and unrestricted vertical scrolling with
 test('swiping, language/size changes, rotation and route changes keep the intended scene', () => {
   const { tree, props, find } = mount({ comicId: 'balakanda-v1', panelId: 'bk-06-03' });
   const start = comicPageIndex(book, undefined, 'bk-06-03');
-  expect(find('comic-progress').props.children[0]).toBe(start + 1);
+  expect(find('comic-progress').props.current).toBe(start + 1);
   act(() => find('comic-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: (start + 1) * 390 } } }));
   for (const lang of ['en', 'gu', 'kn', 'hi']) {
     mockLang = lang; mockLarge = true;
     act(() => tree.update(<Screen {...props} />));
-    expect(find('comic-progress').props.children[0]).toBe(start + 2);
+    expect(find('comic-progress').props.current).toBe(start + 2);
     expect(find('comic-pager').props.extraData.typography.meaning.fontSize).toBe(23);
   }
   const viewport = tree.root.findAllByType('View' as any).find(node => node.props.onLayout)!;
@@ -114,7 +115,7 @@ test('swiping, language/size changes, rotation and route changes keep the intend
   expect(find('comic-pager').props.getItemLayout(null, 3).offset).toBe(2304);
   const next = { ...props, route: { params: { comicId: 'balakanda-v1', episodeId: 'bk-29' } } };
   act(() => tree.update(<Screen {...next} />));
-  expect(find('comic-progress').props.children[0]).toBe(comicPageIndex(book, 'bk-29') + 1);
+  expect(find('comic-progress').props.current).toBe(comicPageIndex(book, 'bk-29') + 1);
 });
 test('unknown comic is handled and authored regional text preserves app language', () => {
   expect(mount({ comicId: 'missing' }).find('comic-reader-error')).toBeTruthy();
@@ -123,4 +124,10 @@ test('unknown comic is handled and authored regional text preserves app language
   expect(tree.root.findAllByProps({testID:'comic-language-fallback'})).toHaveLength(0);
   expect(tree.root.findAllByType('ComicPage' as any).every(node => node.props.language === 'gu')).toBe(true);
   expect(mockLang).toBe('gu');
+});
+test('the counter jumps straight to a chosen page', () => {
+  const { find } = mount({ comicId: 'balakanda-v1' });
+  act(() => find('comic-progress').props.onJump(40));
+  expect(find('comic-progress').props.current).toBe(40);
+  expect(mockScroll).toHaveBeenLastCalledWith(expect.objectContaining({ index: 39 }));
 });

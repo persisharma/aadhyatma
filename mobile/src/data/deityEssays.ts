@@ -13,6 +13,7 @@ const source =
   'Curated deity overview from bundled text provenance and standard devotional catalog context; browse copy only.';
 
 export const deityEssays: Partial<Record<Deity, DeityEssay>> = {
+  parshuram: { deityId: 'parshuram', titleHi: 'तप, ज्ञान और धर्मनिष्ठा', titleEn: 'Tapas, Wisdom, and Devotion to Dharma', bodyHi: 'भगवान परशुराम रेणुका और महर्षि जमदग्नि के पुत्र तथा भृगुवंशीय ऋषि माने जाते हैं। उनका परशु और धनुष विशिष्ट पहचान हैं। यहाँ श्री वासुदेवानन्द सरस्वती रचित सात श्लोकों का सम्पूर्ण परशुराम स्तोत्र हिन्दी और अंग्रेज़ी अर्थ सहित पढ़ें।', bodyEn: 'Bhagwan Parshuram is revered as the sage of the Bhrigu lineage, son of Renuka and Jamadagni, recognized by his axe and bow. Read Shri Vasudevananda Saraswati’s complete seven-verse Parshuram Stotram with Hindi and English meanings.', source: 'Shri Vasudevananda Saraswati, Parashurama Stotram, verses 1, 3, 5–7; Sanskrit Documents and Stotra Nidhi, checked 6 November 2026.' },
   hanuman: {
     deityId: 'hanuman',
     titleHi: 'भक्ति, बल और निर्भयता के आराध्य',

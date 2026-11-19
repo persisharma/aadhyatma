@@ -15,7 +15,6 @@
  * returns null — the verified rule text renders alone.
  */
 import { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import {
@@ -29,6 +28,7 @@ import {
 import { hydratePanchangDays, persistPanchangDays } from '@/panchang/panchangDayCache';
 import { deriveUpvasParana, type UpvasParanaDisplay } from '@/panchang/upvasParana';
 import type { PanchangData, UpvasParanaRule } from '@/panchang/types';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 /** The one civil day each computable kind needs; null for text-only. */
 function neededDay(parana: UpvasParanaRule, occurrence: Date): Date | null {
@@ -92,7 +92,7 @@ export function useUpvasParana(
     if (warm || !scopeSettled) return;
 
     let cancelled = false;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
     let handle: ReturnType<typeof setTimeout> | undefined;
 
     void (async () => {
@@ -105,7 +105,7 @@ export function useUpvasParana(
         return;
       }
       // The day was not on disk: solve it, but only once the UI is idle.
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         handle = setTimeout(() => {
           if (cancelled) return;
           try {

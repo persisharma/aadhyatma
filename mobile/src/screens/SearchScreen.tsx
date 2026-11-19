@@ -3,6 +3,7 @@ import StoryIcon from '@/components/StoryIcon';
 import CategoryIcon from '@/components/CategoryIcon';
 import { deities, deityIconKey } from '@/data/deities';
 import AppIcon from '@/components/AppIcon';
+import { getReadingLink } from '@/data/readingLinks';
 import React, {
   useCallback,
   useEffect,
@@ -27,6 +28,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import {
   EMPTY_SEARCH_INDEX,
   runSearch,
@@ -42,7 +44,7 @@ import { useNewContent } from '@/contexts/NewContentContext';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { contentByLang, pick } from '@/utils/localize';
 import { pillTextStyle } from '@/utils/langType';
-import { buildProgressTarget, navigateToEntryStart } from '@/navigation/entryRoutes';
+import { navigateReadingLink, buildProgressTarget, navigateToEntryStart } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useAsk } from '@/ask/useAsk';
 import { navigateAskTarget } from '@/ask/actions';
@@ -50,6 +52,11 @@ import type { AskTarget } from '@/ask/types';
 import AskAnswerCard, { AskAbstainCard } from '@/components/AskAnswerCard';
 import { useShare } from '@/utils/shareVerse';
 import { askAnswerShareable } from '@/utils/shareContent';
+
+// Resolve on the Search surface only; compatible with the native Jest runtime.
+const SanatanSearchResults = React.lazy<typeof import('@/components/SanatanSearchResults').default>(
+  async () => ({ default: require('@/components/SanatanSearchResults').default })
+);
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Search'>;
 
@@ -180,6 +187,21 @@ export default function SearchScreen({ navigation, route }: Props) {
         navigation.navigate('VidhiDetail', { vidhiId: sourceId });
         return;
       }
+      if (sourceId.startsWith('katha:')) {
+        commitRecent(query);
+        Keyboard.dismiss();
+        navigation.navigate('VratKathaReader', { kathaId: sourceId.slice(6) });
+        return;
+      }
+      const link = getReadingLink(sourceId);
+      if (link || sourceId === 'katha-library') {
+        commitRecent(query);
+        Keyboard.dismiss();
+        if (link) {
+          navigateReadingLink(navigation, sourceId);
+        } else navigation.navigate('KathaLibrary');
+        return;
+      }
       const entry = library.find((e) => e.id === sourceId);
       if (!entry) return;
       markSeen(sourceId);
@@ -291,7 +313,7 @@ export default function SearchScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.back,
@@ -375,7 +397,8 @@ export default function SearchScreen({ navigation, route }: Props) {
             spacing={spacing}
             radii={radii}
             lang={lang}
-            header={askHeader}
+            header={<>{askHeader}<React.Suspense fallback={null}><SanatanSearchResults query={query}
+              onOpen={(topicId, initialPage) => navigation.navigate('SanatanReader', { topicId, initialPage })} /></React.Suspense></>}
             empty={
               askHeader ? null : index ? (
                 <ZeroState colors={colors} typography={typography} lang={lang} />

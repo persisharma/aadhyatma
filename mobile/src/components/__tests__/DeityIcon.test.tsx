@@ -4,7 +4,7 @@ import { Image, Text } from 'react-native';
 
 import DeityIcon from '../DeityIcon';
 import { deityArtwork } from '../deityArtwork';
-import { deities } from '@/data/deities';
+import { deityCatalog } from '@/data/deities';
 
 function render(node: React.ReactElement): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
@@ -20,14 +20,16 @@ function texts(tree: TestRenderer.ReactTestRenderer) {
 
 describe('DeityIcon', () => {
   test('every registered deity renders bundled symbolic art, without duplicate labels or text', () => {
-    expect(Object.keys(deityArtwork)).toHaveLength(21);
-    for (const deity of deities) {
+    // Prepared deities still need bundled art before their publication gate opens.
+    expect(Object.keys(deityArtwork).sort()).toEqual(deityCatalog.map(d => d.iconKey).sort());
+    for (const deity of deityCatalog) {
       const tree = render(<DeityIcon iconKey={deity.iconKey} />);
       expect(texts(tree)).toHaveLength(0);
       const image = tree.root.findByType(Image);
       expect(image.props.source).toBeTruthy();
       expect(image.props.source.uri).toBeUndefined();
       expect(image.props.accessible).toBe(false);
+      expect(image.props.testID).toBe(`storybook-${deityArtwork[deity.iconKey]}`);
       expect(tree.root.findAllByProps({ testID: `deity-glyph-${deity.iconKey}` }).length).toBeGreaterThan(0);
     }
   });

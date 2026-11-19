@@ -1,9 +1,12 @@
+import { darshanForTemple } from '@/data/darshan/channels';
+import { DarshanAction } from '@/components/darshan/DarshanUI';
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
@@ -45,6 +48,7 @@ const DEITY_LABELS: Record<Deity, { hi: string; en: string }> = {
   shani: { hi: 'शनि', en: 'SHANI' },
   kali: { hi: 'काली', en: 'KALI' },
   navagraha: { hi: 'नवग्रह', en: 'NAVAGRAHA' },
+  parshuram: { hi: 'परशुराम', en: 'PARSHURAM' },
 };
 
 function deityLabel(deity: Deity, lang: Lang): string {
@@ -91,7 +95,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.backBtn,
@@ -120,6 +124,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
+          {darshanForTemple(temple.id) && <DarshanAction testID="temple-darshan" label={contentByLang(lang, 'मंदिर दर्शन देखें', 'Watch temple Darshan')} onPress={() => navigation.navigate('DarshanPlayer', { templeId: temple.id })} />}
+
           <View style={styles.hero}>
             <Text
               style={{
@@ -271,18 +277,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
             </View>
           ) : null}
 
-          <Text
-            style={{
-              textAlign: 'center',
-              fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : scriptBodyFont(lang, typography.meaning.fontFamily),
-              fontSize: 12,
-              color: colors.inkMuted,
-              marginTop: spacing.xl,
-              fontStyle: lang === 'en' ? 'italic' : 'normal',
-            }}
-          >
-            {`${pick(lang, { hi: 'स्रोत', en: 'Sources', gu: 'સ્રોત', kn: 'ಮೂಲಗಳು' })} — ${temple.sources.map((s) => s.label).join(', ')}`}
-          </Text>
+
         </ScrollView>
       </SafeAreaView>
     </View>

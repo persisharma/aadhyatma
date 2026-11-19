@@ -5,7 +5,7 @@ import {CHARACTERS, PALETTES, ell, rr, poly, s, flat, eye, limb} from '../story-
 Object.assign(PALETTES.puppet, {anjana: '#D98B55', vayu: '#6FA7CF', indra: '#E1A35E', brahma: '#D9873F', rahu: '#3A2A4E', elephant: '#ECE6D6', saree: '#2F8A3B', hair: '#1A0E08', beard: '#F3EEDD', cave: '#1E0A04'});
 Object.assign(PALETTES.patta, {anjana: '#E7A06A', vayu: '#86BCE0', indra: '#F2BE7C', brahma: '#E59A4E', rahu: '#2B2244', elephant: '#FFF9EC', saree: '#3E7A35', hair: '#120B06', beard: '#FFF9EC', cave: '#14100C'});
 
-function deva({skin, robe = 'red', item, beard, scarf, sideHeads}) {
+export function deva({skin, robe = 'red', item, beard, scarf, sideHeads}) {
   const parts = [];
   if (scarf) parts.push({id: 'scarf', parent: 'body', at: [-40, -160], amp: 14, freq: 0.9, first: true, shapes: [s('M0,0 C-40,-30 -70,10 -110,-10 C-150,-30 -170,10 -210,-6 C-190,26 -160,34 -130,22 C-95,8 -70,44 -30,30 C-15,26 -5,22 0,24Z', scarf)]});
   parts.push({id: 'armBack', parent: 'body', at: [-48, -150], base: 14, amp: 5, freq: 0.7, first: true, shapes: limb(100, 28, skin)});

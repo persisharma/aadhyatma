@@ -12,7 +12,7 @@ status: current
 Bhajan lyrics with meaning, listed inside the Bhajan (audio) tab rather than on the Home grid.
 `bhajan` is a real `ContentCategory`, so search, deity pages, routines, bookmarks, resume and NEW
 badges work through the ordinary `library` machinery; only its listing is special. The shelf
-shipped as plumbing with an **empty catalog** (15 Nov 2026): no text had cleared RULEBOOK §11/§32
+shipped as plumbing with an **empty catalog** (15 Nov 2026): no text had cleared RULEBOOK §11/§34
 yet, so the Bhajan tab shows no door.
 
 ## Details

@@ -38,9 +38,9 @@ on:
         required: true
         type: string
       runtime_version:
-        description: Target store runtime (appVersion of the live build, e.g. 1.5.3)
+        description: Target store runtime (appVersion of the live build, e.g. 1.5.6)
         required: true
-        default: "1.5.3"
+        default: "1.5.6"
         type: string
       channel:
         description: EAS channel to publish to

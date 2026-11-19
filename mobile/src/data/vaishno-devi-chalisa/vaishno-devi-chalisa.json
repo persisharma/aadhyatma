@@ -1,0 +1,785 @@
+{
+  "titleHi": "वैष्णो देवी चालीसा",
+  "titleEn": "Vaishno Devi Chalisa",
+  "subtitleHi": "गरुड़ वाहिनी वैष्णवी",
+  "subtitleEn": "Garud vahini Vaishnavi",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Complete Sri Mandir edition, selected by maintainer Prashant on 2026-11-16 after full comparison with Drik Panchang, HinduNidhi and Bhakti Bharat. Preserve this edition rather than constructing a majority composite. Only whitespace and visual line wrapping are normalized. Hindi and English meanings and pronunciation-based ASCII romanization are original editorial work.",
+    "referenceUrls": [
+      "https://www.srimandir.com/articles/chalisa/vaishno-devi-chalisa",
+      "https://www.drikpanchang.com/lyrics/chalisa/vaishno-mata/vaishno-mata-chalisa.html?lang=hi",
+      "https://hindunidhi.com/mata-vashno-devi-chalisa-hindi/",
+      "https://www.bhaktibharat.com/chalisa/vaishno-chalisha"
+    ],
+    "retrievedOn": "2026-11-16",
+    "editionDecision": "Prashant approved the complete Sri Mandir edition and documentation of alternate readings on 2026-11-16. This is a chosen-edition decision, not a claim that four websites are independent textual witnesses.",
+    "variants": "Sri Mandir retains पोषण (8), दीनी (19), बर्वत (32), Sharma signature (40), and the Ashvin/Chaitra stanza (39). Drik/Bhakti Bharat read शोषण, दीना, बरवन; HinduNidhi omits stanza 39 and reads कमल in the signature. Other Sri Mandir spellings, including लांगू वीर, कहलाए आदि कुंवारी, पूजन कीन and तुमको ध्याना, are retained without silent repair. Meaning of बर्वत is unresolved; the editorial gloss describes the attested named figures and remembrance, without inventing a lexical interpretation.",
+    "unreadCandidate": "Pavitra Granth returned HTTP 403; search snippets were not treated as a full verified edition."
+  },
+  "counts": {
+    "openingDohas": 1,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 42
+  },
+  "verses": [
+    {
+      "id": "opening-doha",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "गरुड़ वाहिनी वैष्णवी, त्रिकुटा पर्वत धाम।",
+        "काली, लक्ष्मी, सरस्वती, शक्ति तुम्हें प्रणाम॥"
+      ],
+      "linesEn": [
+        "Garud vahini Vaishnavi, Trikuta parvat dham.",
+        "Kali, Lakshmi, Saraswati, shakti tumhen pranam."
+      ],
+      "meaningHi": "गरुड़वाहिनी वैष्णवी को त्रिकुटा पर्वत की अधिष्ठात्री और काली, लक्ष्मी, सरस्वती रूपी शक्ति मानकर प्रणाम किया गया है। यह दोहा पाठ के आरम्भ में देवी का स्मरण है।",
+      "meaningEn": "The opening salutes Vaishnavi, borne by Garuda and dwelling on Trikuta, as the power of Kali, Lakshmi and Saraswati. It begins the recitation with remembrance of the Goddess."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "नमो नमो वैष्णो वरदानी,",
+        "कलि काल में शुभ कल्याणी।"
+      ],
+      "linesEn": [
+        "Namo namo Vaishno varadani,",
+        "Kali kaal mein shubh kalyani."
+      ],
+      "meaningHi": "वर देने वाली वैष्णो देवी को बार-बार नमस्कार है। कलिकाल में शुभ और कल्याण देने वाली माँ की स्तुति से प्रार्थना आगे बढ़ती है।",
+      "meaningEn": "Repeated salutations are offered to Vaishno, the giver of blessings. The prayer praises her as a source of goodness in the age of Kali."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "मणि पर्वत पर ज्योति तुम्हारी,",
+        "पिंडी रूप में हो अवतारी॥"
+      ],
+      "linesEn": [
+        "Mani parvat par jyoti tumhari,",
+        "Pindi roop mein ho avatari."
+      ],
+      "meaningHi": "मणि पर्वत पर देवी की ज्योति और पिंडी रूप में उनके प्रकट होने का वर्णन है। भक्त उस रूप को स्मरण कर प्रणाम करता है।",
+      "meaningEn": "The verse describes the Goddess's light on Mani mountain and her manifestation as a pindi. It recalls the form in which she is worshipped."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "देवी देवता अंश दियो है,",
+        "रत्नाकर घर जन्म लियो है।"
+      ],
+      "linesEn": [
+        "Devi devata ansh diyo hai,",
+        "Ratnakar ghar janm liyo hai."
+      ],
+      "meaningHi": "देवी-देवताओं के अंश से रत्नाकर के घर जन्म लेने की कथा कही गई है। यह देवी के प्राकट्य का भक्तिपरक वर्णन है।",
+      "meaningEn": "The hymn tells of her birth in Ratnakar's home with a portion of the gods' divine powers. This is the devotional account of her manifestation."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "करी तपस्या राम को पाऊँ,",
+        "त्रेता की शक्ति कहलाऊँ॥"
+      ],
+      "linesEn": [
+        "Kari tapasya Ram ko paaun,",
+        "Treta ki shakti kahlaaun."
+      ],
+      "meaningHi": "राम को पाने की इच्छा से तपस्या करने और त्रेता की शक्ति कहलाने का भाव है। कथा में देवी का संकल्प और तप स्मरण किया गया है।",
+      "meaningEn": "She undertakes austerities to attain Rama and be known as the power of Treta. The verse recalls her resolve and devotion within the sacred story."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "कहा राम मणि पर्वत जाओ,",
+        "कलयुग की देवी कहलाओ।"
+      ],
+      "linesEn": [
+        "Kaha Ram mani parvat jaao,",
+        "Kalyug ki devi kahlaao."
+      ],
+      "meaningHi": "कथा में राम देवी से मणि पर्वत जाने और कलयुग की देवी कहलाने को कहते हैं। यह उनके आगे के निवास का निर्देश है।",
+      "meaningEn": "In the hymn's narrative, Rama asks her to go to Mani mountain and be known as the Goddess of Kaliyug. This points to her future dwelling."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "विष्णु रूप से कल्कि बनकर,",
+        "लूंगा शक्ति रूप बदलकर॥"
+      ],
+      "linesEn": [
+        "Vishnu roop se Kalki bankar,",
+        "Loonga shakti roop badalkar."
+      ],
+      "meaningHi": "राम के कथन में विष्णु के कल्कि रूप और शक्ति का रूप बदलकर स्वीकार करने का संकेत है। यह भविष्य के मिलन का भक्तिपरक आश्वासन है।",
+      "meaningEn": "The speech refers to Vishnu taking the form of Kalki and receiving Shakti in a changed form. Within the story, it is an assurance of a future union."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "तब तक त्रिकुटा घाटी जाओ,",
+        "गुफा अंधेरी जाकर पाओ।"
+      ],
+      "linesEn": [
+        "Tab tak Trikuta ghati jaao,",
+        "Gufa andheri jaakar paao."
+      ],
+      "meaningHi": "तब तक त्रिकुटा घाटी में जाकर अँधेरी गुफा खोजने का निर्देश है। यह देवी की गुफा-यात्रा की कथा को आगे बढ़ाता है।",
+      "meaningEn": "Until then, she is asked to go to the Trikuta valley and find the dark cave. This continues the story of her journey to the shrine."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "काली-लक्ष्मी-सरस्वती माँ,",
+        "करेंगी पोषण-पार्वती माँ॥"
+      ],
+      "linesEn": [
+        "Kali-Lakshmi-Saraswati maa,",
+        "Karengi poshan-Parvati maa."
+      ],
+      "meaningHi": "काली, लक्ष्मी, सरस्वती और पार्वती माँ का नाम लेकर पोषण का आश्वासन दिया गया है। पाठ में देवी के इन रूपों का साथ-साथ स्मरण है।",
+      "meaningEn": "Kali, Lakshmi, Saraswati and Mother Parvati are invoked with an assurance of nurture. The hymn remembers these forms of the Goddess together."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "ब्रह्मा, विष्णु, शंकर द्वारे,",
+        "हनुमत, भैरों प्रहरी प्यारे।"
+      ],
+      "linesEn": [
+        "Brahma, Vishnu, Shankar dwaare,",
+        "Hanumat, Bhairon prahari pyaare."
+      ],
+      "meaningHi": "द्वार पर ब्रह्मा, विष्णु और शंकर का स्मरण है; हनुमान और भैरों प्रिय प्रहरी कहे गए हैं। यह देवी के द्वार का भक्तिपरक चित्रण है।",
+      "meaningEn": "Brahma, Vishnu and Shankar are named at the doorway, with Hanuman and Bhairon as beloved guardians. The verse evokes the Goddess's sacred entrance."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "रिद्धि,",
+        "सिद्धि चंवर डुलावें, कलियुग-वासी पूजत आवें॥"
+      ],
+      "linesEn": [
+        "Riddhi, Siddhi chanvar dulaaven,",
+        "Kaliyug-vaasi poojat aaven."
+      ],
+      "meaningHi": "रिद्धि और सिद्धि चँवर डुलाती हैं और कलियुग के लोग पूजा करने आते हैं। यह देवी की सेवा और भक्तों के आगमन का दृश्य है।",
+      "meaningEn": "Riddhi and Siddhi wave ceremonial fans while people of Kaliyug arrive to worship. The scene brings together service to the Goddess and the gathering of devotees."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "पान सुपारी ध्वजा नारियल,",
+        "चरणामृत चरणों का निर्मल।"
+      ],
+      "linesEn": [
+        "Paan supari dhvaja nariyal,",
+        "Charanamrit charanon ka nirmal."
+      ],
+      "meaningHi": "पान, सुपारी, ध्वजा और नारियल जैसे अर्पणों तथा निर्मल चरणामृत का स्मरण है। ये पाठ में पूजा के दृश्य का अंग हैं, अनिवार्य खरीद की सूची नहीं।",
+      "meaningEn": "Betel leaf, areca nut, a flag, coconut and pure charanamrit are recalled as offerings. They belong to the hymn's worship scene rather than a compulsory shopping list."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "दिया फलित वर माँ मुस्काई,",
+        "करन तपस्या पर्वत आई॥"
+      ],
+      "linesEn": [
+        "Diya phalit var maa muskaai,",
+        "Karan tapasya parvat aai."
+      ],
+      "meaningHi": "वर मिलने पर माँ मुस्कराईं और तपस्या करने पर्वत पर आईं। कथा उनके संकल्प को आगे बढ़ाने का वर्णन करती है।",
+      "meaningEn": "Having received the blessing, the Mother smiles and comes to the mountain for austerities. The story follows her resolve into practice."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "कलि काल की भड़की ज्वाला,",
+        "इक दिन अपना रूप निकाला।"
+      ],
+      "linesEn": [
+        "Kali kaal ki bhadki jwala,",
+        "Ik din apna roop nikala."
+      ],
+      "meaningHi": "कलिकाल की ज्वाला भड़कने पर एक दिन देवी ने अपना रूप प्रकट किया। यह संकट के समय उनके प्राकट्य का काव्यात्मक वर्णन है।",
+      "meaningEn": "As the flames of the age of Kali flare, the Goddess reveals her form. The verse describes her appearance in a time of trouble through devotional imagery."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "कन्या बन नगरोटा आई,",
+        "योगी भैरों दिया दिखाई॥"
+      ],
+      "linesEn": [
+        "Kanya ban Nagrota aai,",
+        "Yogi Bhairon diya dikhaai."
+      ],
+      "meaningHi": "माँ कन्या बनकर नगरोटा आईं और योगी भैरों दिखाई दिया। यहाँ कथा में दोनों पात्रों का सामना होता है।",
+      "meaningEn": "The Mother comes to Nagrota as a young girl, where the yogi Bhairon appears. The verse introduces their encounter in the narrative."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "रूप देख सुंदर ललचाया,",
+        "पीछे-पीछे भागा आया।"
+      ],
+      "linesEn": [
+        "Roop dekh sundar lalchaaya,",
+        "Peechhe-peechhe bhaaga aaya."
+      ],
+      "meaningHi": "सुन्दर रूप देखकर भैरों ललचाया और पीछे दौड़ने लगा। कथा उसके अनुचित आकर्षण और पीछा करने को दर्शाती है।",
+      "meaningEn": "Seeing her beauty, Bhairon becomes covetous and runs after her. The narrative describes his wrongful desire and pursuit."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "कन्याओं के साथ मिली माँ,",
+        "कौल-कंदौली तभी चली माँ॥"
+      ],
+      "linesEn": [
+        "Kanyaon ke saath mili maa,",
+        "Kaul-Kandoli tabhi chali maa."
+      ],
+      "meaningHi": "माँ कन्याओं के साथ मिलीं और कौल-कंदौली की ओर चलीं। यह उनकी यात्रा में उस स्थान का स्मरण है।",
+      "meaningEn": "The Mother joins the girls and proceeds to Kaul-Kandoli. The verse remembers that place as part of her journey."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "देवा माई दर्शन दीना,",
+        "पवन रूप हो गई प्रवीणा।"
+      ],
+      "linesEn": [
+        "Deva Mai darshan deena,",
+        "Pavan roop ho gai praveena."
+      ],
+      "meaningHi": "देवा माई में दर्शन देने और पवन रूप हो जाने का वर्णन है। कथा देवी की गति और रूप-परिवर्तन को स्मरण करती है।",
+      "meaningEn": "The hymn describes her appearance at Deva Mai and her taking the form of wind. It recalls her movement and changing form within the story."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "नवरात्रों में लीला रचाई,",
+        "भक्त श्रीधर के घर आई॥"
+      ],
+      "linesEn": [
+        "Navratron mein leela rachaai,",
+        "Bhakt Shridhar ke ghar aai."
+      ],
+      "meaningHi": "नवरात्रों में लीला करते हुए माँ भक्त श्रीधर के घर आईं। यह भक्त के घर देवी के आगमन का स्मरण है।",
+      "meaningEn": "During Navratri, the Mother comes to her devotee Shridhar's home. The verse remembers this visit as part of her sacred play."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "योगिन को भण्डारा दीनी,",
+        "सबने रुचिकर भोजन कीना।"
+      ],
+      "linesEn": [
+        "Yogin ko bhandaara deeni,",
+        "Sabne ruchikar bhojan keena."
+      ],
+      "meaningHi": "योगियों को भण्डारा दिया गया और सबने रुचि से भोजन किया। कथा में अतिथि-सत्कार और सामूहिक भोजन का प्रसंग है।",
+      "meaningEn": "A feast is offered to the yogis, and everyone enjoys the food. The verse recalls hospitality and a shared meal in the narrative."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "मांस मदिरा भैरों मांगी,",
+        "रूप पवन कर इच्छा त्यागी॥"
+      ],
+      "linesEn": [
+        "Maans madira Bhairon maangi,",
+        "Roop pavan kar ichchha tyaagi."
+      ],
+      "meaningHi": "भैरों ने मांस और मदिरा माँगी; माँ पवन रूप होकर उस इच्छा से अलग हो गईं। कथा में उनकी माँग स्वीकार नहीं होती।",
+      "meaningEn": "Bhairon asks for meat and liquor; the Mother takes the form of wind and withdraws from his demand. The narrative does not present his demand as accepted."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "बाण मारकर गंगा निकाली,",
+        "पर्वत भागी हो मतवाली।"
+      ],
+      "linesEn": [
+        "Baan maarkar Ganga nikaali,",
+        "Parvat bhaagi ho matvaali."
+      ],
+      "meaningHi": "देवी ने बाण मारकर गंगा निकाली और पर्वत की ओर बढ़ीं। यह यात्रा-कथा में जल के प्रकट होने का स्मरण है।",
+      "meaningEn": "The Goddess brings forth Ganga with an arrow and hastens toward the mountain. The verse recalls the appearance of water in the pilgrimage narrative."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "चरण रखे आए एक शिला जब,",
+        "चरण पादुका नाम पड़ा तब॥"
+      ],
+      "linesEn": [
+        "Charan rakhe aaye ek shila jab,",
+        "Charan Paduka naam pada tab."
+      ],
+      "meaningHi": "एक शिला पर देवी के चरण पड़ने से उस स्थान का नाम चरण पादुका पड़ा। पाठ उस पवित्र पड़ाव के नाम की कथा सुनाता है।",
+      "meaningEn": "When her feet touch a rock, the place receives the name Charan Paduka. The hymn recounts the sacred story behind that stopping place."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "पीछे भैरव था बलकारी,",
+        "छोटी गुफा में जाय पधारी।"
+      ],
+      "linesEn": [
+        "Peechhe Bhairav tha balkaari,",
+        "Chhoti gufa mein jaay padhaari."
+      ],
+      "meaningHi": "बलशाली भैरव पीछे था और माँ छोटी गुफा में गईं। कथा में यह आश्रय लेने का अगला प्रसंग है।",
+      "meaningEn": "With the powerful Bhairav following her, the Mother enters a small cave. This is the next refuge in the narrative."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "नौ माह तक किया निवासा,",
+        "चली फोड़कर किया प्रकाशा॥"
+      ],
+      "linesEn": [
+        "Nau maah tak kiya nivaasa,",
+        "Chali phodkar kiya prakaasha."
+      ],
+      "meaningHi": "देवी ने नौ माह निवास किया, फिर गुफा को फोड़कर आगे निकलीं और प्रकाश किया। यह गुफा-निवास और प्रस्थान की कथा है।",
+      "meaningEn": "The Goddess dwells there for nine months, then breaks through and emerges with light. The verse recounts her stay in the cave and departure."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "आद्या शक्ति-ब्रह्म कुमारी,",
+        "कहलाए आदि कुंवारी।"
+      ],
+      "linesEn": [
+        "Aadya shakti-Brahm kumaari,",
+        "Kahlaaye Aadi Kunvaari."
+      ],
+      "meaningHi": "आदिशक्ति को ब्रह्म-कुमारी और आदि कुंवारी कहकर स्मरण किया गया है। ये नाम कथा में देवी के स्वरूप को व्यक्त करते हैं।",
+      "meaningEn": "The primordial power is addressed as Brahm Kumari and Aadi Kunvaari. These names express the Goddess's identity within the hymn."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "गुफा द्वार पहुंची मुस्काई,",
+        "लांगू वीर ने आज्ञा पाई॥"
+      ],
+      "linesEn": [
+        "Gufa dwaar pahunchi muskaai,",
+        "Laangoo Veer ne aagya paai."
+      ],
+      "meaningHi": "माँ मुस्कराती हुई गुफा के द्वार पहुँचीं और लांगू वीर को आज्ञा मिली। कथा में देवी और उनके सेवक का सम्बन्ध सामने आता है।",
+      "meaningEn": "The Mother reaches the cave entrance smiling, and Laangoo Veer receives her command. The verse recalls the bond between the Goddess and her attendant."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "भागा भागा भैरों आया,",
+        "रक्षा हित निज शस्त्र चलाया।"
+      ],
+      "linesEn": [
+        "Bhaaga bhaaga Bhairon aaya,",
+        "Raksha hit nij shastra chalaaya."
+      ],
+      "meaningHi": "भैरों दौड़ता हुआ आया तो रक्षा के लिए शस्त्र चलाया गया। यह कथा में पीछा करने से रक्षा करने की ओर बढ़ता प्रसंग है।",
+      "meaningEn": "As Bhairon comes running, a weapon is used in defence. The story turns from pursuit to protection."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "पड़ा शीश जा पर्वत ऊपर,",
+        "किया क्षमा जा दिया उसे वर॥"
+      ],
+      "linesEn": [
+        "Pada sheesh ja parvat oopar,",
+        "Kiya kshama ja diya use var."
+      ],
+      "meaningHi": "भैरों का सिर पर्वत पर गिरा; फिर उसे क्षमा और वर मिला। इस प्रसंग में संघर्ष के बाद देवी की क्षमा का वर्णन है।",
+      "meaningEn": "Bhairon's head falls upon the mountain, and he is then granted forgiveness and a boon. The verse places the Goddess's mercy after the conflict."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "अपने संग में पुजवाऊंगी,",
+        "भैंरो घाटी बनवाऊंगी।"
+      ],
+      "linesEn": [
+        "Apne sang mein pujvaaungi,",
+        "Bhairon ghati banvaaungi."
+      ],
+      "meaningHi": "देवी कहती हैं कि भैरों की पूजा उनके साथ होगी और भैरों घाटी बनेगी। यह कथा में दिए गए वर का वर्णन है।",
+      "meaningEn": "The Goddess says that Bhairon will be worshipped alongside her and that Bhairon valley will be established. This states the boon within the narrative."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "पहले मेरा दर्शन होगा,",
+        "पीछे तेरा सुमिरन होगा॥"
+      ],
+      "linesEn": [
+        "Pahle mera darshan hoga,",
+        "Peechhe tera sumiran hoga."
+      ],
+      "meaningHi": "पहले देवी के दर्शन और बाद में भैरों के स्मरण की बात कही गई है। यह पाठ में यात्रा और उपासना के क्रम का संकेत है।",
+      "meaningEn": "The Goddess's darshan comes first, followed by remembrance of Bhairon. The verse gives the order of worship described in the hymn."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "बैठ गई माँ पिंडी होकर,",
+        "चरणों में बहता जल झर-झर।"
+      ],
+      "linesEn": [
+        "Baith gai maa pindi hokar,",
+        "Charanon mein bahta jal jhar-jhar."
+      ],
+      "meaningHi": "माँ पिंडी रूप में विराजमान हो गईं और चरणों में जल बहने लगा। यह गुफा के पवित्र दर्शन का भक्तिपरक चित्र है।",
+      "meaningEn": "The Mother takes her place in pindi form, with water flowing at her feet. The verse evokes the sacred sight within the cave."
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "चौंसठ योगिनी-भैंरो बर्वत,",
+        "सप्तऋषि आ करते सुमरन॥"
+      ],
+      "linesEn": [
+        "Chaunsath yogini-Bhairon barvat,",
+        "Saptarishi aa karte sumaran."
+      ],
+      "meaningHi": "चौंसठ योगिनियों और भैरों के उल्लेख के साथ सप्तऋषियों के आकर स्मरण करने का वर्णन है। इस प्रसंग में देवी की सामूहिक वन्दना का भाव है।",
+      "meaningEn": "The verse mentions the sixty-four yoginis and Bhairon, and describes the seven sages coming in remembrance. It evokes collective reverence for the Goddess."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "घंटा ध्वनि पर्वत पर बाजे,",
+        "गुफा निराली सुंदर लागे।"
+      ],
+      "linesEn": [
+        "Ghanta dhvani parvat par baaje,",
+        "Gufa niraali sundar laage."
+      ],
+      "meaningHi": "पर्वत पर घंटों की ध्वनि गूँजती है और गुफा निराली-सुन्दर लगती है। यह दर्शन के वातावरण को स्मरण कराता है।",
+      "meaningEn": "Bells sound on the mountain, and the cave appears uniquely beautiful. The verse recalls the atmosphere of worship at the shrine."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "भक्त श्रीधर पूजन कीन,",
+        "भक्ति सेवा का वर लीन॥"
+      ],
+      "linesEn": [
+        "Bhakt Shridhar poojan keen,",
+        "Bhakti seva ka var leen."
+      ],
+      "meaningHi": "भक्त श्रीधर ने पूजा की और भक्ति तथा सेवा का वर पाया। इस प्रार्थना में भक्ति और सेवा स्वयं माँगी गई कृपा हैं।",
+      "meaningEn": "Shridhar worships and receives the blessing of devotion and service. Here, devotion and service are themselves the gifts sought."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "सेवक ध्यानूं तुमको ध्याना,",
+        "ध्वजा व चोला आन चढ़ाया।"
+      ],
+      "linesEn": [
+        "Sevak Dhyanoon tumko dhyaana,",
+        "Dhvaja va chola aan chadhaaya."
+      ],
+      "meaningHi": "सेवक ध्यानूं ने देवी का ध्यान किया और ध्वजा तथा चोला चढ़ाया। यह भक्त के स्मरण और अर्पण का प्रसंग है।",
+      "meaningEn": "The devotee Dhyanoon remembers the Goddess and offers a flag and robe. The verse recalls his devotion through remembrance and offerings."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "सिंह सदा दर पहरा देता,",
+        "पंजा शेर का दुख हर लेता॥"
+      ],
+      "linesEn": [
+        "Sinh sada dar pahra deta,",
+        "Panja sher ka dukh har leta."
+      ],
+      "meaningHi": "सिंह को द्वार का प्रहरी और उसका पंजा दुःख हरने वाला कहा गया है। यह रक्षा का भक्तिपरक विश्वास है, उपचार का आश्वासन नहीं।",
+      "meaningEn": "The lion is described as guarding the entrance, its paw relieving sorrow. This is a devotional image of protection, not a promise of medical treatment."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "जम्बू द्वीप महाराज मनाया,",
+        "सर सोने का छत्र चढ़ाया।"
+      ],
+      "linesEn": [
+        "Jamboo dweep maharaj manaaya,",
+        "Sar sone ka chhatra chadhaaya."
+      ],
+      "meaningHi": "जम्बू द्वीप के महाराज द्वारा आराधना और सोने का छत्र चढ़ाने का वर्णन है। पाठ यहाँ राजकीय अर्पण को स्मरण करता है।",
+      "meaningEn": "The hymn recalls a ruler of Jamboo Dweep paying homage and offering a golden canopy. It remembers a royal offering without specifying the ruler's identity."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "हीरे की मूरत संग प्यारी,",
+        "जगे अखंड इक जोत तुम्हारी॥"
+      ],
+      "linesEn": [
+        "Heere ki moorat sang pyaari,",
+        "Jage akhand ik jot tumhaari."
+      ],
+      "meaningHi": "प्रिय हीरे की मूर्ति और निरन्तर जलती अखण्ड ज्योति का वर्णन है। यह देवी के दरबार में श्रद्धा से किए गए दर्शन का भाव है।",
+      "meaningEn": "The verse describes a precious diamond image and an unbroken flame. It evokes a reverent vision of the Goddess's shrine."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "आश्विन चैत्र नवराते आऊं,",
+        "पिंडी रानी दर्शन पाऊं।"
+      ],
+      "linesEn": [
+        "Aashvin Chaitra navraate aaun,",
+        "Pindi raani darshan paaun."
+      ],
+      "meaningHi": "भक्त आश्विन और चैत्र के नवरात्रों में आकर पिंडी रूप माँ के दर्शन की इच्छा करता है। यह यात्रा की व्यक्तिगत प्रार्थना है।",
+      "meaningEn": "The devotee wishes to come during the Navratris of Ashvin and Chaitra to behold the Mother in pindi form. It is a personal prayer to visit the shrine."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "सेवक ‘शर्मा‘ शरण तिहारी,",
+        "हरो वैष्णो विपत हमारी॥"
+      ],
+      "linesEn": [
+        "Sevak 'Sharma' sharan tihaari,",
+        "Haro Vaishno vipat hamaari."
+      ],
+      "meaningHi": "सेवक ‘शर्मा’ देवी की शरण लेकर अपनी विपत्ति दूर करने की प्रार्थना करता है। यह चौपाइयों का समर्पण-भाव से किया गया समापन है।",
+      "meaningEn": "The servant 'Sharma' takes refuge in the Goddess and asks her to remove distress. This closes the chaupais with an appeal of surrender."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "number": 1,
+      "labelHi": "समापन दोहा",
+      "labelEn": "Closing Doha",
+      "lines": [
+        "कलयुग में महिमा तेरी, है माँ अपरंपार।",
+        "धर्म की हानि हो रही, प्रगट हो अवतार॥"
+      ],
+      "linesEn": [
+        "Kalyug mein mahima teri, hai maa aparampaar.",
+        "Dharm ki haani ho rahi, pragat ho avataar."
+      ],
+      "meaningHi": "कलयुग में माँ की अपार महिमा का स्मरण करके, धर्म की हानि के समय प्रकट होने की प्रार्थना है। समापन दोहा रक्षा और धर्म के लिए विनती करता है।",
+      "meaningEn": "The closing doha remembers the Mother's boundless glory in Kaliyug and asks her to appear as dharma declines. It concludes with an appeal for protection and righteousness."
+    }
+  ]
+}

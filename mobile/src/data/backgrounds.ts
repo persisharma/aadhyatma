@@ -61,12 +61,34 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
   parvati: backgroundImages.deity_parvati_bhavani,
   narasimha: backgroundImages.deity_narasimha_prahlad,
   dattatreya: backgroundImages.deity_dattatreya,
+  parshuram: backgroundImages.deity_parshuram,
   shani: backgroundImages.deity_shani,
   kali: backgroundImages.deity_kali,
   navagraha: backgroundImages.deity_navagraha_icons,
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
+  'durga-devi-kavacham': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-1': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-2': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-3': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-4': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-5': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-6': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-7': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-8': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-9': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-10': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-11': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-12': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-13': backgroundImages.deity_durga_lion,
+  'durga-kilak-stotram': backgroundImages.deity_durga_lion,
+  'durga-argala-stotram': backgroundImages.deity_durga_lion,
+  'hanuman-bahuk': chalisaImages.hanuman_sea,
+  'aditya-hridayam': backgroundImages.deity_surya,
+  'kanakadhara-stotram': backgroundImages.deity_lakshmi,
+  'shri-suktam': backgroundImages.deity_lakshmi,
+  'kalabhairav-ashtakam': shivaStrotamImages.shiva,
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
   'garud-puran': garudPuranImages.cover,
@@ -75,17 +97,25 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'shiva-strotam': shivaStrotamImages.shiva,
   'om-namah-shivaya': shivaStrotamImages.shiva,
   'hare-krishna-mahamantra': backgroundImages.deity_krishna_bansuri,
+  'krishna-beej-mantra': backgroundImages.deity_krishna_bansuri,
   'gayatri-mantra': backgroundImages.source_gayatri_savitri_sun,
   'om-namo-bhagavate-vasudevaya': backgroundImages.source_vishnu_narayana,
   'radha-naam': backgroundImages.deity_radha_krishna,
   'jai-shri-ram': backgroundImages.deity_rama_darbar,
+  'sita-ram-naam': backgroundImages.deity_rama_darbar,
   'saraswati-moola-mantra': backgroundImages.deity_saraswati_veena,
   'mahamrityunjaya-mantra': shivaStrotamImages.shiva,
+  'rudra-mantra': shivaStrotamImages.shiva,
   'ganapati-gam-mantra': backgroundImages.deity_ganesha_modak,
   'om-namo-narayanaya': backgroundImages.source_vishnu_narayana,
   'hanuman-moola-mantra': chalisaImages.ram_hanuman,
+  'om-ham-hanumate-namah': chalisaImages.ram_hanuman,
+  'mahalakshmi-mantra': backgroundImages.deity_lakshmi,
+  'kubera-mantra': backgroundImages.deity_kubera,
   'shri-ram-jai-ram': backgroundImages.deity_rama_darbar,
+  'rama-moola-mantra': backgroundImages.deity_rama_darbar,
   'durga-beej-mantra': backgroundImages.deity_durga_lion,
+  'navarna-mantra': backgroundImages.deity_durga_lion,
   'surya-beej-mantra': backgroundImages.deity_surya,
   'chandra-beej-mantra': backgroundImages.deity_navagraha_icons,
   'mangal-beej-mantra': backgroundImages.deity_navagraha_icons,
@@ -95,6 +125,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'shani-beej-mantra': backgroundImages.deity_shani,
   'rahu-beej-mantra': backgroundImages.deity_navagraha_icons,
   'ketu-beej-mantra': backgroundImages.deity_navagraha_icons,
+  'shani-moola-mantra': backgroundImages.deity_shani,
   ramcharitmanas: backgroundImages.deity_rama_darbar,
   'valmiki-ramayan': backgroundImages.deity_rama_darbar,
   'durga-stotram': backgroundImages.deity_durga_lion,
@@ -112,12 +143,18 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'khatu-shyam-chalisa': backgroundImages.theerth_khatu_shyam,
   'lakshmi-chalisa': backgroundImages.deity_lakshmi,
   'surya-chalisa': backgroundImages.deity_surya,
+  'vaishno-devi-chalisa': backgroundImages.deity_durga_lion,
+  'shani-chalisa': backgroundImages.deity_shani,
+  'santoshi-mata-chalisa': backgroundImages.deity_durga_lion,
+  'kali-chalisa': backgroundImages.deity_kali,
+  'radha-chalisa': backgroundImages.deity_radha_krishna,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
   'ram-aarti': backgroundImages.deity_rama_darbar,
   'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
+  'satyanarayan-aarti': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
   'jai-ganesh-deva': backgroundImages.deity_ganesha_modak,
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,
@@ -162,6 +199,8 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'shiva-kavacham': shivaStrotamImages.shiva,
   'durga-kavach': backgroundImages.deity_durga_lion,
   'krishna-stuti': backgroundImages.deity_krishna_bansuri,
+  'kabir-bhakti-dohe': backgroundImages.category_granth_open_scripture,
+  'rahim-bhakti-dohe': backgroundImages.category_granth_open_scripture,
   'durga-stuti-arjuna': backgroundImages.deity_durga_lion,
   'mahalakshmi-ashtakam': backgroundImages.deity_lakshmi,
   'surya-ashtakam': backgroundImages.deity_surya,
@@ -176,6 +215,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'kalika-ashtakam': backgroundImages.deity_kali,
   rudrashtakam: shivaStrotamImages.shiva,
   'navagraha-stotram': backgroundImages.deity_navagraha_icons,
+  'parshuram-stotram': backgroundImages.deity_parshuram,
 };
 
 const hanumanChalisaOverrides: Record<string, BackgroundImage> = {
@@ -238,7 +278,7 @@ export function getTheerthIllustration(templeId: string): BackgroundImage | unde
   return theerthBackgroundOverrides[templeId];
 }
 
-const deityBackgroundList: BackgroundImage[] = Object.values(deityBackgrounds);
+const deityBackgroundList: BackgroundImage[] = deities.map(deity => deityBackgrounds[deity.id]);
 
 /**
  * A random deity backdrop, for the "By Deity" index which isn't tied to a single
@@ -339,3 +379,4 @@ export function getReaderBackground(
     }
   }
 })();
+

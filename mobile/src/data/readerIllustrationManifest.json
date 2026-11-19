@@ -360,6 +360,12 @@
       "ext": "webp",
       "width": 960,
       "height": 480
+    },
+    "deity-parshuram": {
+      "hash": "c700a59650dc0b61",
+      "ext": "webp",
+      "width": 1080,
+      "height": 1080
     }
   }
 }

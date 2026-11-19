@@ -1,4 +1,5 @@
 import * as Notifications from 'expo-notifications';
+import { resetNotificationFamiliesForTests } from '../familyArm';
 import {
   cancelAllPitruSmaranReminders,
   schedulePitruSmaranReminders,
@@ -25,6 +26,8 @@ const schedule = Notifications.scheduleNotificationAsync as jest.Mock;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  // Each test models a fresh app process: nothing armed yet.
+  resetNotificationFamiliesForTests();
   pending.mockResolvedValue([]);
   cancel.mockResolvedValue(undefined);
   schedule.mockResolvedValue('scheduled');

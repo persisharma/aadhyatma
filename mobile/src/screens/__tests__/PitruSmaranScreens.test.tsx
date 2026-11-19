@@ -31,11 +31,22 @@ jest.mock('@react-navigation/native', () => ({
 
 jest.mock('@/panchang/pitruSmaran', () => {
   const actual = jest.requireActual('@/panchang/pitruSmaran');
+  const nextObservanceForEntry = jest.fn((..._args: unknown[]): unknown => null);
+  const pitruPakshaWindow = jest.fn((..._args: unknown[]): unknown => null);
+  const pakshaShraddhaDay = jest.fn((..._args: unknown[]): unknown => null);
   return {
     ...actual,
-    nextObservanceForEntry: jest.fn(() => null),
-    pitruPakshaWindow: jest.fn(() => null),
-    pakshaShraddhaDay: jest.fn(() => null),
+    nextObservanceForEntry,
+    pitruPakshaWindow,
+    pakshaShraddhaDay,
+    // The screens solve cooperatively (`runInBackground`). These answer from the
+    // SAME mocks, so each case's `mockReturnValue` drives both paths and the
+    // assertions below read identical dates whichever path a screen takes.
+    nextObservanceForEntrySteps: jest.fn(function* (...args: unknown[]) {
+      return nextObservanceForEntry(...args);
+    }),
+    pitruPakshaWindowAsync: jest.fn((...args: unknown[]) => Promise.resolve(pitruPakshaWindow(...args))),
+    pakshaShraddhaDayAsync: jest.fn((...args: unknown[]) => Promise.resolve(pakshaShraddhaDay(...args))),
     deriveTithiRuleFromDate: jest.fn(),
   };
 });
@@ -147,11 +158,15 @@ function wrap(children: React.ReactNode) {
   );
 }
 
-// Flush the screens' deferred setTimeout(0) solve effects.
+// Flush the screens' deferred solve effects. Cooperative solves hop through
+// several timer turns (interaction gate → background slices → publish), so one
+// `setTimeout(0)` is not enough; a handful of turns settles every mocked chain.
 async function flush() {
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  });
+  for (let turn = 0; turn < 8; turn += 1) {
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+  }
 }
 
 function allText(tree: TestRenderer.ReactTestRenderer): string {

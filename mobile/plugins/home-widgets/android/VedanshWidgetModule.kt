@@ -37,14 +37,21 @@ class VedanshWidgetModule(private val context: ReactApplicationContext) : ReactC
 
     @ReactMethod
     fun readPayload(promise: Promise) {
-        promise.resolve(context.getSharedPreferences(VedanshWidgetProvider.PREFS, 0)
-            .getString(VedanshWidgetProvider.PAYLOAD_KEY, null))
+        try {
+            promise.resolve(context.getSharedPreferences(VedanshWidgetProvider.PREFS, 0)
+                .getString(VedanshWidgetProvider.PAYLOAD_KEY, null))
+        } catch (e: Exception) { promise.reject("E_WIDGET_READ", e) }
     }
 
+    // AppWidgetManager.getInstance() is null on devices without home-screen
+    // widget support (no FEATURE_APP_WIDGETS), and a throw from a legacy
+    // @ReactMethod is not a promise rejection. Every path answers "unsupported".
     @ReactMethod
     fun isPinWidgetSupported(promise: Promise) {
-        val manager = AppWidgetManager.getInstance(context)
-        promise.resolve(Build.VERSION.SDK_INT >= 26 && manager.isRequestPinAppWidgetSupported)
+        try {
+            val manager: AppWidgetManager? = AppWidgetManager.getInstance(context)
+            promise.resolve(Build.VERSION.SDK_INT >= 26 && manager?.isRequestPinAppWidgetSupported == true)
+        } catch (_: Exception) { promise.resolve(false) }
     }
 
     /**
@@ -54,10 +61,12 @@ class VedanshWidgetModule(private val context: ReactApplicationContext) : ReactC
     @ReactMethod
     fun requestPinWidget(content: String?, promise: Promise) {
         if (Build.VERSION.SDK_INT < 26) { promise.resolve(false); return }
-        val manager = AppWidgetManager.getInstance(context)
-        if (!manager.isRequestPinAppWidgetSupported) { promise.resolve(false); return }
-        val surface = if (content == "verse") VedanshWidgetProvider.Surface.VERSE else VedanshWidgetProvider.Surface.PANCHANG
-        val provider = ComponentName(context, VedanshWidgetProvider.providerFor(surface))
-        promise.resolve(manager.requestPinAppWidget(provider, null, null))
+        try {
+            val manager: AppWidgetManager? = AppWidgetManager.getInstance(context)
+            if (manager == null || !manager.isRequestPinAppWidgetSupported) { promise.resolve(false); return }
+            val surface = if (content == "verse") VedanshWidgetProvider.Surface.VERSE else VedanshWidgetProvider.Surface.PANCHANG
+            val provider = ComponentName(context, VedanshWidgetProvider.providerFor(surface))
+            promise.resolve(manager.requestPinAppWidget(provider, null, null))
+        } catch (_: Exception) { promise.resolve(false) }
     }
 }

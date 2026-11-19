@@ -37,7 +37,14 @@ Exclusivity is arbitrated by `src/audio/playbackArbiter.ts`, **not** by any cont
 
 A plain module singleton: `registerStopper(kind, stop)` returns an unregister callback suitable
 for a `useEffect`, and `claimPlayback(kind)` silences every *other* source. `PlaybackKind` is
-`'recorded' | 'tts' | 'japam'`.
+`'recorded' | 'tts' | 'japam' | 'youtube'`.
+
+**Gotcha — a source with its own controls must claim on *their* start too.** The docked YouTube
+embed keeps YouTube's in-video ▶ (`controls: true`), which never passes through the strip's
+`play()`. Until Nov 2026 its `onChangeState(PLAYING)` set state without claiming, so resuming from
+the embed played over the bhajan that had paused it. It now claims when PLAYING arrives while its
+`playingRef` says paused (design.md §91). Any future source with native/embedded controls needs
+the same hook.
 
 It is a module rather than a context field on purpose: routing exclusion through
 `AudioPlayerContext`'s value would force every screen test that stubs `useAudioPlayerContext` to
@@ -106,6 +113,11 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 
 ## Gotchas
 
+- **A track that never loads no longer spins forever (Nov 2026 audit, UX-01).** `AudioPlayerContext` arms a 15 s stall timer on tap; on expiry buffering clears and `playbackNotice` is `loadFailed` (message + Retry in the mini-player and Now Playing); a late load still plays and clears it. `noAudio` covers a track with no source. Position lives in `AudioPositionContext` (`useAudioPosition`), so action-only consumers do not re-render twice a second; speed and repeat persist under `@vedansh/audio-prefs`. Customer copy must pass `userFacingImplementationCopy.test.ts` (no "internet/offline" wording).
+- **Downloads are verified before they are trusted** (`assetIntegrity.ts`): every manifest key is `sha256(bytes)[0:16]` (all 11 manifests, checked against the live CDN), files up to 4 MiB are hashed natively with expo-crypto, larger ones only need to be non-empty. An empty cached file is no longer a hit.
+
+- **The app-wide player is created on first use, never at launch (Nov 2026 ANR fix).** `AudioPlayerProvider` holds no player until `playTrack`/`togglePlay`/`toggleLoop` call `ensurePlayer()`. On Android, expo-audio's constructor builds ExoPlayer on the main thread (the JS thread blocks on it via `runBlocking`), and `sendPlayerUpdate` emits status from `Dispatchers.Main`. That is the `JSTypeConverter` frame in Play's launch ANR clusters. `stop()`, `seekTo` and `setRate` never create a player, because the arbiter calls `stop()` whenever read-aloud or japam starts. The status listener is attached inside `ensurePlayer()`, synchronously before `replace()`, because a cached file can report loaded before an effect would subscribe. `ensureBackgroundAudioMode()` moved there too.
+
 - **Never substitute a voice across languages, and never let the engine do it for you.** This is
   the whole point of the per-language design: reading Gujarati with only a Hindi voice installed must
   be *silent*, not Gujarati-read-as-Hindi. Three guards, all needed — `resolveVoice` returns `null`
@@ -115,6 +127,12 @@ so a stale non-Indian preference can never resurrect a dropped accent.
 - **Both platforms fail SILENTLY for a missing voice — `onError` never fires.** iOS leaves
   `utterance.voice = nil` and uses the system default; Android's `speakOut` falls back to
   `Locale.getDefault()`. Availability therefore comes from a `getAvailableVoicesAsync()` probe
+  (**on first need only** — `ensureVoices()` from `useReaderReadAloud` on a cleared 500 ms timer after mount — not `InteractionManager`, whose immediate outlived Jest fake timers and hung the CI reader shard — or the voice
+  sheet opening; never at provider mount, because Android answers it with a main-thread `getVoices()`
+  binder call in expo-speech's init callback — Nov 2026 ANR audit). `patches/expo-speech+14.0.8.patch`
+  also moves that init-callback drain onto expo's serial AsyncFunction queue (ready flag flipped there,
+  so queued work keeps order) and stops activity-destroy from constructing an engine just to shut it
+  down; `expoSpeechPatch.test.ts` pins the installed source — re-port it on any expo-speech upgrade
   (raced against a 4 s timeout — Android's engine binds slowly) plus a **3 s `onStart` watchdog**
   for the OEM engine that reports a language then emits nothing. Never gate on `onError`.
 - **Never pass `'hi-IN'` as Android's `language`.** `SpeechModule.kt` does `Locale(options.language)`
@@ -159,3 +177,8 @@ so a stale non-Indian preference can never resurrect a dropped accent.
   RULEBOOK forbids emoji. The visible label is localized; the `accessibilityLabel` stays English
   ("Read aloud" / "Pause reading aloud" / "Read aloud unavailable") for Maestro. The `♪`
   (`READ_ALOUD_GLYPH`) now only marks the More → Read Aloud settings row.
+
+
+### Screen-clipping corrections (5 November 2026)
+
+Now Playing keeps Minimize outside a vertically scrolling body. Full track titles wrap; compact/enlarged layouts can scroll through seek, transport and repeat without changing playback callbacks. Browser regression evidence and pending native checks are recorded in `docs/reviews/2026-11-05-screen-clipping.md`.

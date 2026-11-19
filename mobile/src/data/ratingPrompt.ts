@@ -19,12 +19,13 @@
  */
 
 import { APP_STORE_URL, PLAY_STORE_URL } from '@/data/shareLinks';
+import { ENGAGEMENT_PROMPTS, newSocialPromptState, parseSocialPromptState, type SocialPromptState } from '@/data/engagementPrompts';
 
 export const RATING_PROMPT_STORAGE_KEY = '@vedansh/rating-prompt';
 
 /**
  * `pending`  — never answered; still askable (subject to the gate).
- * `rated`    — two positive store hand-offs. Automatic asking has ended.
+ * `rated`    — a successful store hand-off. Automatic asking has ended.
  * `declined` — the user tapped "Don't ask again". Never ask again.
  *
  * Note "rated" records that we *handed off* to the store, not that a review was
@@ -52,6 +53,8 @@ export const RATING_ASK_TRIGGERS: readonly RatingAskTrigger[] = [
 ];
 
 export type RatingPromptState = {
+  campaignId: string;
+  social: SocialPromptState;
   /** How many times the sheet has auto-opened (manual opens from More don't count). */
   askCount: number;
   /** Epoch ms of the last auto-open, or null if never shown. */
@@ -72,13 +75,15 @@ export type RatingPromptState = {
   /** Last explicit response; none also covers killing the app while the ask is open. */
   response: 'none' | 'dismissed' | 'low' | 'store';
   respondedAt: number | null;
-  /** Two positive store hand-offs end automatic asking. */
+  /** Successful store hand-offs stop automatic rating asks. */
   storeHandoffCount: number;
-  /** The next action after the first positive hand-off, even if it precedes day two. */
+  /** Legacy follow-up timestamp retained for storage compatibility; no longer used. */
   followupActionAt: number | null;
 };
 
 export const RATING_PROMPT_DEFAULTS: RatingPromptState = {
+  campaignId: ENGAGEMENT_PROMPTS.reviewCampaignId,
+  social: newSocialPromptState(),
   askCount: 0,
   lastAskedAt: null,
   outcome: 'pending',
@@ -96,7 +101,7 @@ export const MIN_APP_OPENS = 2;
 export const MIN_ACTIVE_DAYS = 2;
 /** Close: time-only repeat after two days; an action can qualify earlier. */
 export const REASK_COOLDOWN_DAYS = 2;
-/** No dismissal-count ceiling; two positive store hand-offs are terminal. */
+/** No dismissal-count ceiling; a successful store hand-off ends automatic rating asks. */
 export const MAX_ASKS: number | null = null;
 /**
  * In-app stars at or above this hand off to the store's review page; below it the
@@ -122,20 +127,30 @@ export function feedbackEmail(): string | null {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
+function newRatingPromptState(): RatingPromptState {
+  return { ...RATING_PROMPT_DEFAULTS, campaignId: ENGAGEMENT_PROMPTS.reviewCampaignId, social: newSocialPromptState() };
+}
+
 export function parseRatingPromptState(raw: string | null): RatingPromptState {
-  if (!raw) return RATING_PROMPT_DEFAULTS;
+  if (!raw) return newRatingPromptState();
   try {
     const parsed = JSON.parse(raw) as Partial<RatingPromptState>;
-    if (!parsed || typeof parsed !== 'object') return RATING_PROMPT_DEFAULTS;
+    if (!parsed || typeof parsed !== 'object') return newRatingPromptState();
+    // Missing ID is the pre-campaign record: preserve it on initial rollout.
+    if ((parsed.campaignId ?? 'initial') !== ENGAGEMENT_PROMPTS.reviewCampaignId) {
+      return { ...newRatingPromptState(), social: parseSocialPromptState(parsed.social) };
+    }
     const positiveTime = (value: unknown): number | null =>
       typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
     const lastAskedAt = positiveTime(parsed.lastAskedAt);
     const lowRatedAt = positiveTime(parsed.lowRatedAt);
     const count = typeof parsed.storeHandoffCount === 'number' && Number.isSafeInteger(parsed.storeHandoffCount) && parsed.storeHandoffCount >= 0
       ? parsed.storeHandoffCount : parsed.outcome === 'rated' ? 1 : 0;
-    // Legacy rated meant ONE store hand-off. It now receives the required follow-up.
-    const legacyFollowup = parsed.outcome === 'rated' && count < 2;
+    // Any prior store hand-off now advances to the social stage.
+    const handedOff = count > 0 || parsed.outcome === 'rated';
     return {
+      campaignId: ENGAGEMENT_PROMPTS.reviewCampaignId,
+      social: parseSocialPromptState(parsed.social),
       askCount:
         typeof parsed.askCount === 'number' && Number.isFinite(parsed.askCount) && parsed.askCount >= 0
           ? Math.floor(parsed.askCount)
@@ -145,11 +160,11 @@ export function parseRatingPromptState(raw: string | null): RatingPromptState {
           ? parsed.lastAskedAt
           : RATING_PROMPT_DEFAULTS.lastAskedAt,
       outcome: parsed.outcome === 'declined' ? 'declined'
-        : parsed.outcome === 'rated' && !legacyFollowup ? 'rated' : 'pending',
-      response: legacyFollowup ? 'store'
+        : handedOff ? 'rated' : 'pending',
+      response: handedOff ? 'store'
         : ['none', 'dismissed', 'low', 'store'].includes(parsed.response ?? '') ? parsed.response!
         : lowRatedAt !== null ? 'low' : 'none',
-      respondedAt: positiveTime(parsed.respondedAt) ?? (legacyFollowup ? (lastAskedAt ?? 1) : lowRatedAt),
+      respondedAt: positiveTime(parsed.respondedAt) ?? (handedOff ? (lastAskedAt ?? 1) : lowRatedAt),
       storeHandoffCount: count,
       followupActionAt: positiveTime(parsed.followupActionAt),
       asksByTrigger: parseAsksByTrigger(parsed.asksByTrigger),
@@ -159,7 +174,7 @@ export function parseRatingPromptState(raw: string | null): RatingPromptState {
           : RATING_PROMPT_DEFAULTS.lowRatedAt,
     };
   } catch {
-    return RATING_PROMPT_DEFAULTS;
+    return newRatingPromptState();
   }
 }
 
@@ -193,13 +208,9 @@ export type RatingEligibilityInput = {
   blockedBySurface: boolean;
 };
 
-/** A store follow-up requires an action, so it never has a time-only deadline. */
+/** Dismissal and low-star pauses have time-based deadlines; store hand-offs do not. */
 export function timeBasedRatingAskAt(state: RatingPromptState): number | null {
   if (state.outcome !== 'pending') return null;
-  if (state.response === 'store') {
-    if (state.followupActionAt === null) return null;
-    return Math.max((state.respondedAt ?? state.lastAskedAt ?? 1) + REASK_COOLDOWN_DAYS * DAY_MS, state.followupActionAt);
-  }
   const at = state.response === 'low' ? state.lowRatedAt ?? state.respondedAt
     : state.respondedAt ?? state.lastAskedAt;
   if (at === null) return null;
@@ -212,15 +223,11 @@ export function timeBasedRatingAskAt(state: RatingPromptState): number | null {
  */
 export function isEligibleForRatingPrompt(input: RatingEligibilityInput): boolean {
   const { state, appOpens, activeDays, trigger, now, blockedBySurface } = input;
-  if (state.outcome !== 'pending') return false;
+  if (state.outcome !== 'pending' || state.storeHandoffCount > 0) return false;
   if (MAX_ASKS !== null && state.askCount >= MAX_ASKS) return false;
   if (blockedBySurface) return false;
   const completedAction = trigger !== undefined && trigger !== 'app-engaged';
   const responseAt = state.respondedAt ?? state.lastAskedAt;
-  if (state.response === 'store') {
-    // "Whichever is later": at least two days AND a subsequent completed action.
-    return (completedAction || state.followupActionAt !== null) && responseAt !== null && now - responseAt >= REASK_COOLDOWN_DAYS * DAY_MS;
-  }
   if (state.response === 'low' || state.lowRatedAt !== null) {
     return now - (state.lowRatedAt ?? responseAt ?? now) >= LOW_RATING_COOLDOWN_DAYS * DAY_MS;
   }
@@ -255,22 +262,15 @@ export function afterAsked(
   };
 }
 
-/** Record the first subsequent action even before day two; it must not be lost. */
-export function afterStoreFollowupAction(state: RatingPromptState, now: number): RatingPromptState {
-  if (state.outcome !== 'pending' || state.response !== 'store' || state.followupActionAt !== null) return state;
-  return { ...state, followupActionAt: now };
-}
-
 /** Close/Maybe later: two days or a new completed action, whichever comes first. */
 export function afterDismissed(state: RatingPromptState, now: number): RatingPromptState {
   return { ...state, response: 'dismissed', respondedAt: now, lowRatedAt: null, followupActionAt: null };
 }
 
-/** First 4–5★ hand-off schedules one follow-up; the second positive hand-off is terminal. */
-export function afterRated(state: RatingPromptState, now: number, stars = 5): RatingPromptState {
-  if (stars < STORE_MIN_STARS) return afterLowRating(state, now);
+/** A successful store hand-off, at any star count, advances to the social stage. */
+export function afterRated(state: RatingPromptState, now: number, _stars = 5): RatingPromptState {
   const storeHandoffCount = state.storeHandoffCount + 1;
-  return { ...state, outcome: storeHandoffCount >= 2 ? 'rated' : 'pending',
+  return { ...state, outcome: 'rated',
     response: 'store', respondedAt: now, lowRatedAt: null, followupActionAt: null, storeHandoffCount };
 }
 

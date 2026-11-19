@@ -63,6 +63,10 @@ jest.mock('@/utils/useTodayKey', () => ({ useTodayKey: () => 'Wed Aug 26 2026' }
 // the share flow, and the tag rules themselves are pinned by shareHashtags.test.ts.
 // `mockObservances` drives the one test that checks the timely tags reach the caption.
 let mockObservances: { rule: { nameHi: string; nameEn: string; deityEn: string } }[] = [];
+jest.mock('@/panchang/festivalEngine', () => ({
+  ...jest.requireActual('@/panchang/festivalEngine'),
+  getCachedObservancesForDate: () => mockObservances,
+}));
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
   useObservancesForDate: () => mockObservances,
@@ -105,6 +109,7 @@ async function openPicker() {
   });
   trees.push(tree!);
   await act(async () => byLabel(tree!, 'trigger').props.onPress());
+  act(() => byLabel(tree!, 'Card style: Current card').props.onPress());
   return tree!;
 }
 
@@ -116,6 +121,20 @@ async function settle() {
   await act(async () => {
     await new Promise<void>((resolve) => setTimeout(resolve, 200));
   });
+}
+
+/**
+ * A fixed 200 ms delay can finish before React schedules the off-screen
+ * Story/Reel layout on a busy CI runner. Poll only in the test that expects a
+ * capture; tests asserting no capture retain the short settle() check.
+ */
+async function waitForCapture() {
+  for (let attempt = 0; attempt < 20 && mockCaptureRef.mock.calls.length === 0; attempt += 1) {
+    await act(async () => {
+      await new Promise<void>((resolve) => setTimeout(resolve, 100));
+    });
+  }
+  expect(mockCaptureRef).toHaveBeenCalled();
 }
 
 function byLabel(tree: TestRenderer.ReactTestRenderer, label: string) {
@@ -176,7 +195,7 @@ describe('share target flow', () => {
     mockMeasuredHeight = 1800;
     const tree = await openPicker();
     await act(async () => byLabel(tree, 'Share as Instagram story or reel').props.onPress());
-    await settle();
+    await waitForCapture();
     expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 4170 / PixelRatio.get() });
   });
 
@@ -189,6 +208,7 @@ describe('share target flow', () => {
     mockCaptureRef.mockClear();
     mockMeasuredHeight = 675;
     await act(async () => byLabel(long, 'trigger').props.onPress());
+    act(() => byLabel(long, 'Card style: Current card').props.onPress());
     await act(async () => byLabel(long, 'Share to other apps').props.onPress());
     await settle();
     expect(mockCaptureRef.mock.calls[0][1]).toMatchObject({ width: 1080 / PixelRatio.get(), height: 1350 / PixelRatio.get() });
@@ -197,8 +217,10 @@ describe('share target flow', () => {
   test('the share button opens the picker instead of sharing straight away', async () => {
     const tree = await openPicker();
     expect(byLabel(tree, 'Share on Instagram')).toBeDefined();
-    expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(0);
+    // The classic card is previewed; only the off-screen capture must stay absent.
+    expect(tree.root.findAllByType('ShareCard' as never)).toHaveLength(1);
     expect(tree.root.findAllByType('ShareStoryCanvas' as never)).toHaveLength(0);
+    expect(mockCaptureRef).not.toHaveBeenCalled();
     expect(mockShareAsync).not.toHaveBeenCalled();
     expect(rnShare).not.toHaveBeenCalled();
   });

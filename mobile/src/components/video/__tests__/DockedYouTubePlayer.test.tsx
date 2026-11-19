@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { AppState } from 'react-native';
+import { AppState, Linking, Platform } from 'react-native';
 import type { VideoMapping } from '@/data/video/videoMappings';
 
 // ---- mocks ------------------------------------------------------------------
@@ -112,6 +112,40 @@ it('claims the playback arbiter the moment it opens', () => {
   act(() => r.unmount());
 });
 
+it('a resume from the embed’s own controls silences the source that paused it', () => {
+  // Regression: the in-video ▶ (controls: true) reported PLAYING without claiming the
+  // arbiter, so the bhajan that had paused the video kept playing over it.
+  const stopRecorded = jest.fn();
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  const unregister = arbiter.registerStopper('recorded', stopRecorded);
+  // A bhajan starts: the arbiter pauses the video.
+  act(() => arbiter.claimPlayback('recorded'));
+  expect(mockRnyi.props?.play).toBe(false);
+  expect(stopRecorded).not.toHaveBeenCalled();
+  // The user taps play inside the video itself.
+  const claim = jest.spyOn(arbiter, 'claimPlayback');
+  act(() => (mockRnyi.props?.onChangeState as (s: string) => void)('playing'));
+  expect(claim).toHaveBeenCalledWith('youtube');
+  expect(stopRecorded).toHaveBeenCalledTimes(1);
+  expect(mockRnyi.props?.play).toBe(true);
+  unregister();
+  act(() => r.unmount());
+});
+
+it('does not re-claim on a PLAYING report for playback it already owns', () => {
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  const claim = jest.spyOn(arbiter, 'claimPlayback');
+  act(() => (mockRnyi.props?.onChangeState as (s: string) => void)('playing'));
+  expect(claim).not.toHaveBeenCalled();
+  act(() => r.unmount());
+});
+
 it('shows the localized error card on a player error', () => {
   let r!: TestRenderer.ReactTestRenderer;
   act(() => {
@@ -175,4 +209,104 @@ it('removes its AppState listener on unmount (no leak after teardown)', () => {
   });
   act(() => r.unmount());
   expect(remove).toHaveBeenCalled();
+});
+
+
+it('broadcasts accept display metadata without forging recitation verification and skip duration polling', () => {
+  jest.useFakeTimers();
+  const interval = jest.spyOn(global, 'setInterval');
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={{ videoId: 'AAAAAAAAAAA', titleHi: 'सोमनाथ', titleEn: 'Somnath', channel: 'Shree Somnath Trust' }} uiLang="en" broadcast onClose={() => {}} />); });
+  act(() => (mockRnyi.props?.onReady as () => void)());
+  expect(interval).not.toHaveBeenCalled();
+  expect(allText(tree)).toContain('Temple broadcast');
+  expect(allText(tree)).not.toContain('0:00');
+  act(() => tree.unmount());
+});
+
+
+it('wires broadcast pause, play, close and fresh-source retry without app-owned outgoing links', () => {
+  const close = jest.fn(), refresh = jest.fn();
+  const external = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" broadcast onClose={close} onRefreshSource={refresh} />); });
+  const tap = (label: string) => act(() => tree.root.findAll(n => n.props.accessibilityLabel === label && typeof n.props.onPress === 'function')[0].props.onPress());
+  tap('Pause'); expect(mockRnyi.props?.play).toBe(false);
+  tap('Play'); expect(mockRnyi.props?.play).toBe(true);
+  expect(tree.root.findAll(n => n.props.accessibilityLabel === 'Open in YouTube')).toHaveLength(0);
+  expect(external).not.toHaveBeenCalled();
+  tap('Close video'); expect(close).toHaveBeenCalledTimes(1);
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  const retry = tree.root.findAll(n => typeof n.props.onPress === 'function' && n.props.accessibilityRole === 'button')[0];
+  act(() => retry.props.onPress()); expect(refresh).toHaveBeenCalledTimes(1);
+  act(() => tree.unmount());
+});
+
+it('retains the reader same-video handoff while broadcast error recovery stays in app', () => {
+  const external = jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
+  const browse = jest.fn();
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />); });
+  act(() => tree.root.findAll(n => n.props.accessibilityLabel === 'Open in YouTube' && typeof n.props.onPress === 'function')[0].props.onPress());
+  expect(external).toHaveBeenCalledWith('https://www.youtube.com/watch?v=AETFvQonfV8');
+  act(() => tree.unmount());
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" broadcast onChooseBroadcast={browse} onClose={() => {}} />); });
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  expect(allText(tree)).not.toContain('Open in YouTube');
+  const button = tree.root.findAll(n => n.props.accessibilityRole === 'button' && typeof n.props.onPress === 'function').find(n => n.props.onPress === browse);
+  expect(button).toBeDefined();
+  act(() => button!.props.onPress());
+  expect(browse).toHaveBeenCalled();
+  act(() => tree.unmount());
+});
+
+it('allows broadcast labels to wrap so large system text keeps both controls reachable', () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="kn" broadcast onClose={() => {}} />); });
+  const label = tree.root.findAll(n => n.props.children === 'ದೇವಾಲಯದ ಪ್ರಸಾರ' && n.props.style)[0];
+  expect(label.props.numberOfLines).toBeUndefined();
+  expect(require('react-native').StyleSheet.flatten(label.props.style).flexShrink).toBe(1);
+  act(() => tree.unmount());
+});
+
+describe('ANR-03: poster first, WebView after the sheet has painted (Android)', () => {
+  afterEach(() => { jest.useRealTimers(); });
+
+  it('shows a poster first and mounts the player a beat later on Android', () => {
+    jest.useFakeTimers();
+    jest.replaceProperty(Platform, 'OS', 'android');
+    let r!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+    });
+    expect(mockRnyi.props).toBeUndefined();
+    expect(r.root.findAllByProps({ testID: 'youtube-poster' }).length).toBeGreaterThan(0);
+    act(() => { jest.advanceTimersByTime(200); });
+    expect(mockRnyi.props?.videoId).toBe(mapping.videoId);
+    expect(r.root.findAllByProps({ testID: 'youtube-poster' })).toHaveLength(0);
+    act(() => r.unmount());
+  });
+
+  it('mounts the player at once on iOS (the Chromium stall is Android-only)', () => {
+    jest.replaceProperty(Platform, 'OS', 'ios');
+    let r!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+    });
+    expect(mockRnyi.props?.videoId).toBe(mapping.videoId);
+    act(() => r.unmount());
+  });
+});
+
+it('UX-09: a failed "Open in YouTube" shows a brief message', async () => {
+  jest.spyOn(Linking, 'openURL').mockRejectedValue(new Error('no handler'));
+  let r!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    r = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" onClose={() => {}} />);
+  });
+  expect(r.root.findAllByProps({ testID: 'youtube-open-failed' })).toHaveLength(0);
+  const open = r.root.find((n) => n.props.accessibilityLabel === 'Open in YouTube' && typeof n.props.onPress === 'function');
+  await act(async () => { open.props.onPress(); });
+  expect(allText(r)).toContain('Couldn’t open YouTube');
+  act(() => r.unmount());
 });

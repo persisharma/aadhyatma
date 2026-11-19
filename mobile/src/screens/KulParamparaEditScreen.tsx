@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Keyboard,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -22,6 +21,7 @@ import { saveKulRecord, useKulRecord } from '@/panchang/kulParamparaStore';
 import type { KulRecord, KuldevKind } from '@/panchang/kulParampara';
 import type { Deity } from '@/data/texts';
 import { useTheme } from '@/theme/ThemeContext';
+import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
@@ -213,7 +213,7 @@ export default function KulParamparaEditScreen({ navigation }: Props) {
           title={contentByLang(lang, 'कुल परम्परा — सम्पादन', 'Kul Parampara — Edit')}
           onBack={() => navigation.goBack()}
         />
-        <ScrollView
+        <KeyboardAwareScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
@@ -444,7 +444,7 @@ export default function KulParamparaEditScreen({ navigation }: Props) {
               'The kuldev is never guessed from the gotra — no caste or community classification exists here.'
             )}
           </Text>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </View>
   );

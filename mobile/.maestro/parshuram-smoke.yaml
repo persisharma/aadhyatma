@@ -1,0 +1,43 @@
+# Run after `node scripts/prepare-parshuram.mjs --publish` and native startup.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- scrollUntilVisible:
+    element: { text: "By Deity. Tap to open." }
+    direction: DOWN
+- tapOn: "By Deity. Tap to open."
+- scrollUntilVisible:
+    element: { text: "Bhagwan Parshuram\\..*" }
+    direction: DOWN
+- tapOn: "Bhagwan Parshuram\\..*"
+- assertVisible: "Parshuram Stotram.*Tap to open\\."
+- tapOn: "Parshuram Stotram.*Tap to open\\."
+- tapOn: { id: "resume-start-over", optional: true }
+- assertVisible: "कराभ्यां परशुं चापं.*"
+- takeScreenshot: parshuram-reader-first
+- repeat:
+    times: 6
+    commands:
+      - swipe: { start: "85%,50%", end: "15%,50%", duration: 350 }
+      - waitForAnimationToEnd
+- assertVisible: "य एतानि जपेद्रामनामानि.*"
+- takeScreenshot: parshuram-reader-final
+- tapOn: "Back to home"
+- assertVisible: "Parshuram Stotram.*Tap to open\\."
+- tapOn: { id: "tab-bhakti" }
+- tapOn: { id: "open-suvichar" }
+- tapOn: { id: "suvichar-mode-custom" }
+- tapOn: { id: "suvichar-deity-parshuram" }
+- scrollUntilVisible:
+    element: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-browse-thoughts" }
+- tapOn: { id: "suvichar-thought-search" }
+- inputText: "VD-0085"
+- tapOn: { id: "suvichar-thought-VD-0085" }
+- scrollUntilVisible:
+    element: { id: "suvichar-card-message" }
+    direction: UP
+- assertVisible: { id: "suvichar-card-source" }
+- takeScreenshot: parshuram-suvichar-standing
+- tapOn: { id: "suvichar-favorite" }
+- stopApp

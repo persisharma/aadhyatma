@@ -1,0 +1,598 @@
+{
+  "baseline": "7d057e95cb3cf0a39aa6d090d7d9a00cc1972755",
+  "purpose": "Regression snapshots of unchanged identities, not published correctness fixtures",
+  "excluded": [
+    "ganga-dussehra",
+    "rishi-panchami",
+    "purnima-vrat",
+    "masik-krishna-janmashtami",
+    "janmashtami",
+    "janmashtami-vaishnava"
+  ],
+  "cases": [
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "purnimant",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "7fd8cfb698731da91a50f2ab164f13d29a725c99c75cf34b54c38018a4c82b78"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "purnimant",
+      "year": 2027,
+      "unaffectedCount": 344,
+      "sha256": "24fe4b170eb9ee756f815f227ff6111719ab2bfc34fb1e1a3fb84376072e7616"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "purnimant",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "668d4a788d1897d784de3cd7e4fccf7559974f8fee6f8eb0d21191eeb8915cf0"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "purnimant",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "caa37bbb89a03a336931c316df02d7d0fa21dd2e80fb03e7932f0c3a617c6dbb"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "amanta",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "1ac12bbe75786e48ccfafc475d7b21b514aa2a266072b9d6bcd7568f720fb8d5"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "amanta",
+      "year": 2027,
+      "unaffectedCount": 343,
+      "sha256": "ebeed5b71f8cfad71d790ca6c257c624a19ee316217473a0eb1a85bd9ed52da7"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "amanta",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "be16545c5a6bd4c5abffd88a32382c78620211ddc4ae3674598c52b3e7c3bf0d"
+    },
+    {
+      "city": "Ujjain",
+      "location": null,
+      "system": "amanta",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "c30a7c7bbe92aee0614749ac8aa55c5b43a5bb77c8b1664af09d4c5aa42aac46"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "purnimant",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "358357cbd94d45b6a0d0a0ce80d54e38c010c5be16ef0b4c0217c822cb9acac1"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "purnimant",
+      "year": 2027,
+      "unaffectedCount": 344,
+      "sha256": "24fe4b170eb9ee756f815f227ff6111719ab2bfc34fb1e1a3fb84376072e7616"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "purnimant",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "5b6c747d7531edce7baaab56334944f23eee2635ac6bcc8c06bd2d52dd3f043d"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "purnimant",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "631d3c4a4c6016f9c3cef14572a3612a749743097766187c82ead9b15a2c7206"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "amanta",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "6e5409b43d34a4e7371dea6fa90e301674882fa0bf6eb721d670b6b627174eee"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "amanta",
+      "year": 2027,
+      "unaffectedCount": 343,
+      "sha256": "ebeed5b71f8cfad71d790ca6c257c624a19ee316217473a0eb1a85bd9ed52da7"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "amanta",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "a131bd17b78eda852870b5c31f6447111620c28733d72a6195a6539ea541178f"
+    },
+    {
+      "city": "Delhi",
+      "location": {
+        "cityId": "delhi",
+        "latitude": 28.6139,
+        "longitude": 77.209,
+        "elevation": 216
+      },
+      "system": "amanta",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "47d3642be1b5eefb315d764844c8d231ab3ce737f3f7cd6ea1e390b0fb48901a"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "purnimant",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "7fd8cfb698731da91a50f2ab164f13d29a725c99c75cf34b54c38018a4c82b78"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "purnimant",
+      "year": 2027,
+      "unaffectedCount": 344,
+      "sha256": "a333745d42bb7153aeb8947bac871f8ce6a729d29129d1954271bc86aaed38ba"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "purnimant",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "5b6c747d7531edce7baaab56334944f23eee2635ac6bcc8c06bd2d52dd3f043d"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "purnimant",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "caa37bbb89a03a336931c316df02d7d0fa21dd2e80fb03e7932f0c3a617c6dbb"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "amanta",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "1ac12bbe75786e48ccfafc475d7b21b514aa2a266072b9d6bcd7568f720fb8d5"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "amanta",
+      "year": 2027,
+      "unaffectedCount": 343,
+      "sha256": "3f168f3888f9f32318f6df55eb2b802e49c64f4ad3b3d43db351297273b4556e"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "amanta",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "a131bd17b78eda852870b5c31f6447111620c28733d72a6195a6539ea541178f"
+    },
+    {
+      "city": "Jaipur",
+      "location": {
+        "cityId": "jaipur",
+        "latitude": 26.9124,
+        "longitude": 75.7873,
+        "elevation": 431
+      },
+      "system": "amanta",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "c30a7c7bbe92aee0614749ac8aa55c5b43a5bb77c8b1664af09d4c5aa42aac46"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "purnimant",
+      "year": 2026,
+      "unaffectedCount": 336,
+      "sha256": "cb6543fb7bce7e506296667c1c0cbead81719ec2441a74b564c2755aae0c3937"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "purnimant",
+      "year": 2027,
+      "unaffectedCount": 344,
+      "sha256": "729bc1d51b5780aab5763ecc1ce4ff1a2149e954dac2dd8555b0258d752ccc94"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "purnimant",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "4d18a6c1f410c61e3f44c2306b0e6ced762b9e080d7df2987347a7328fd05511"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "purnimant",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "caa37bbb89a03a336931c316df02d7d0fa21dd2e80fb03e7932f0c3a617c6dbb"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "amanta",
+      "year": 2026,
+      "unaffectedCount": 336,
+      "sha256": "0186c376062c2fc2bc43c1634f692492e565f25f7d39b17d568d47a405332e36"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "amanta",
+      "year": 2027,
+      "unaffectedCount": 343,
+      "sha256": "fc6b2bd3b77428f4acc89d6b4f7fc08ae309d35a90f602b8292c2379db1ce8ca"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "amanta",
+      "year": 2028,
+      "unaffectedCount": 345,
+      "sha256": "7471a05356fa225b4c8b97afbc8930f2808d5963604161d38cef2737a5aa0241"
+    },
+    {
+      "city": "Mumbai",
+      "location": {
+        "cityId": "mumbai",
+        "latitude": 19.076,
+        "longitude": 72.8777,
+        "elevation": 14
+      },
+      "system": "amanta",
+      "year": 2029,
+      "unaffectedCount": 332,
+      "sha256": "c30a7c7bbe92aee0614749ac8aa55c5b43a5bb77c8b1664af09d4c5aa42aac46"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "purnimant",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "1772ccc40f1cd320450727bdd96e4bc8581dd4affbf1fa4b1b32e245b684bcc5"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "purnimant",
+      "year": 2027,
+      "unaffectedCount": 344,
+      "sha256": "24fe4b170eb9ee756f815f227ff6111719ab2bfc34fb1e1a3fb84376072e7616"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "purnimant",
+      "year": 2028,
+      "unaffectedCount": 343,
+      "sha256": "7a355729e680a2fa1bd9f061f7fd63aff653d561d271136bc6a199dfc6cad1f9"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "purnimant",
+      "year": 2029,
+      "unaffectedCount": 331,
+      "sha256": "711033e47a2b8bf27da1c6980544865d0e70aa1d2050b1e372fa7e440a65f1a5"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "amanta",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "d1f9da199d17751ccf8bfa7506a5199daba3c0d73fddbd4569dfb4c800ff3141"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "amanta",
+      "year": 2027,
+      "unaffectedCount": 343,
+      "sha256": "ebeed5b71f8cfad71d790ca6c257c624a19ee316217473a0eb1a85bd9ed52da7"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "amanta",
+      "year": 2028,
+      "unaffectedCount": 343,
+      "sha256": "ff733528cc0cae429dae6873149c69a9223ca6320673c678d408b58c20fd0d94"
+    },
+    {
+      "city": "Bengaluru",
+      "location": {
+        "cityId": "bengaluru",
+        "latitude": 12.9716,
+        "longitude": 77.5946,
+        "elevation": 920
+      },
+      "system": "amanta",
+      "year": 2029,
+      "unaffectedCount": 331,
+      "sha256": "83ce9e2d112aa6e2a4c530aeac9c4a77605435caf5b8896fca81940f0adce93b"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "purnimant",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "e5f3fd34f24eb063ed53d8f534e3f99d8cdeb79fb24d9d00e828bd7b9c9f14c8"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "purnimant",
+      "year": 2027,
+      "unaffectedCount": 344,
+      "sha256": "24fe4b170eb9ee756f815f227ff6111719ab2bfc34fb1e1a3fb84376072e7616"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "purnimant",
+      "year": 2028,
+      "unaffectedCount": 343,
+      "sha256": "c94d6dfdd6d160c836ee93d211e6f6b87446be3ff5eaa9f0703dfc96b961f023"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "purnimant",
+      "year": 2029,
+      "unaffectedCount": 331,
+      "sha256": "4d0e6f8db47c7b5e2000e31a50b2c276c3a1c8b389eb6e3dea2cf9e82d7045b2"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "amanta",
+      "year": 2026,
+      "unaffectedCount": 337,
+      "sha256": "4fc39f0602af6e41419f2aa681a831af79df3347477c6124bc5ac4858b777cfd"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "amanta",
+      "year": 2027,
+      "unaffectedCount": 343,
+      "sha256": "ebeed5b71f8cfad71d790ca6c257c624a19ee316217473a0eb1a85bd9ed52da7"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "amanta",
+      "year": 2028,
+      "unaffectedCount": 343,
+      "sha256": "65ac6ada933d2043ce23b826787f13ffd252990a2deefa24e9f3a0f855035efe"
+    },
+    {
+      "city": "Varanasi",
+      "location": {
+        "cityId": "varanasi",
+        "latitude": 25.3176,
+        "longitude": 82.9739,
+        "elevation": 81
+      },
+      "system": "amanta",
+      "year": 2029,
+      "unaffectedCount": 331,
+      "sha256": "2e9b1ae13595f12915b5a89d3845c1e5412cca63492e1b81cf833daf82761299"
+    }
+  ]
+}

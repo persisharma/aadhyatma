@@ -6,6 +6,7 @@ import { fontFamilies } from '@/theme/typography';
 import { JAPAM_BEADS_PER_ROUND } from '@/data/japam';
 import { useReducedMotion } from '@/utils/useReducedMotion';
 import {
+  MALA_RING_INSET,
   malaBeadAngle,
   malaBeadState,
   malaDirection,
@@ -24,7 +25,7 @@ const BRASS = ['#F2D48A', '#C39A45', '#8A6424'] as const;
 
 // Space around the ring for the Sumeru + tassel, which rotate with it and can
 // sit at any angle.
-const RING_INSET = 34;
+const RING_INSET = MALA_RING_INSET;
 
 type Props = {
   /** Beads chanted in the current round (0–107). */
@@ -155,8 +156,8 @@ export default function JapamMala({ count, rounds, size, playing, notice, hint, 
     }
     const loop = Animated.loop(
       Animated.sequence([
-        Animated.timing(pulse, { toValue: 0.35, duration: 700, useNativeDriver: true }),
-        Animated.timing(pulse, { toValue: 1, duration: 700, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0.35, duration: 700, useNativeDriver: true, isInteraction: false }),
+        Animated.timing(pulse, { toValue: 1, duration: 700, useNativeDriver: true, isInteraction: false }),
       ])
     );
     loop.start();

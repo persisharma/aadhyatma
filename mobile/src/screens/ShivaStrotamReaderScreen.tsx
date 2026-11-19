@@ -4,7 +4,6 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   type ViewToken,
@@ -35,6 +34,8 @@ import StartJapaButton from '@/components/StartJapaButton';
 import { clampIndex } from '@/utils/clamp';
 import { contentByLang } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { useShare } from '@/utils/shareVerse';
 import { useSafeChapter } from './_useSafeChapter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -66,7 +67,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ShivaStrotamReader'>;
 const DOT_COUNT = 5;
 
 export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -126,6 +127,8 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, offset, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     if (chapter == null) return;
@@ -232,19 +235,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to stotram list"
           right={
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <ReaderPageCounter current={currentIndex + 1} total={verseCount} {...jump} />
           }
         />
 
@@ -325,6 +316,7 @@ export default function ShivaStrotamReaderScreen({ navigation, route }: Props) {
                           share(
                             {
                               sourceId: 'shiva-strotam',
+                              verseIndex,
                               sectionNameHi: chapter.titleHi,
                               sectionNameEn: chapter.titleEn,
                               verseLabelHi: isIntro ? 'परिचय' : `श्लोक ${item.chapter}.${item.number}`,
@@ -389,11 +381,6 @@ const styles = StyleSheet.create({
   },
   safe: {
     flex: 1,
-  },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 48,
-    textAlign: 'right',
   },
   toggleRow: {
     paddingVertical: 6,

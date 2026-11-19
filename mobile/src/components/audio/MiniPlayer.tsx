@@ -9,16 +9,16 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { deityIconKey } from '@/data/deities';
 import DeityIcon from '@/components/DeityIcon';
-import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
+import { useAudioPlayerContext, useAudioPosition } from '@/contexts/AudioPlayerContext';
+import { playbackNoticeText, retryLabel } from '@/components/audio/audioCopy';
 
 // Matches the bottom tab bar height in TabNavigator (60 + safe-area inset).
 const TAB_BAR_BASE_HEIGHT = 60;
 
 /**
  * Persistent mini-player. Rendered ONCE at the app root (App.tsx) so it floats
- * over every tab/stack while a track is loaded. Docks just above the tab bar,
- * mirroring the RoutineBanner; tapping the body expands the now-playing
- * overlay.
+ * over every tab/stack while a track is loaded. Docks just above the tab bar;
+ * tapping the body expands the now-playing overlay.
  */
 export default function MiniPlayer() {
   const { colors, radii, spacing, typography } = useTheme();
@@ -28,12 +28,14 @@ export default function MiniPlayer() {
     currentTrack,
     isPlaying,
     isBuffering,
-    positionSec,
+    playbackNotice,
     durationSec,
     togglePlay,
     stop,
     openNowPlaying,
+    retryPlayback,
   } = useAudioPlayerContext();
+  const positionSec = useAudioPosition();
 
   if (!currentTrack) return null;
 
@@ -85,14 +87,36 @@ export default function MiniPlayer() {
             >
               {title}
             </Text>
-            <View style={[styles.progressTrack, { backgroundColor: colors.divider }]}>
-              <View
-                style={[styles.progressFill, { backgroundColor: colors.saffron, width: `${progress * 100}%` }]}
-              />
-            </View>
+            {playbackNotice ? (
+              <Text
+                numberOfLines={2}
+                accessibilityLiveRegion="polite"
+                style={[styles.notice, { color: colors.inkMuted, fontFamily: typography.cardLatin.fontFamily }]}
+              >
+                {playbackNoticeText(lang, playbackNotice)}
+              </Text>
+            ) : (
+              <View style={[styles.progressTrack, { backgroundColor: colors.divider }]}>
+                <View
+                  style={[styles.progressFill, { backgroundColor: colors.saffron, width: `${progress * 100}%` }]}
+                />
+              </View>
+            )}
           </View>
         </Pressable>
 
+        {playbackNotice === 'loadFailed' ? (
+          <Pressable
+            testID="mini-player-retry"
+            onPress={retryPlayback}
+            accessibilityRole="button"
+            accessibilityLabel={retryLabel(lang)}
+            hitSlop={8}
+            style={({ pressed }) => [styles.iconBtn, pressed && { opacity: 0.6 }]}
+          >
+            <AppIcon name="reset" size={21} color={colors.iconInk} />
+          </Pressable>
+        ) : (
         <Pressable
           onPress={togglePlay}
           disabled={isBuffering}
@@ -108,6 +132,7 @@ export default function MiniPlayer() {
             <AppIcon name={isPlaying ? "pause" : "play"} size={21} color={colors.iconInk} weight="fill" />
           )}
         </Pressable>
+        )}
 
         <Pressable
           onPress={stop}
@@ -159,6 +184,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     includeFontPadding: false,
+  },
+  notice: {
+    fontSize: 12,
+    lineHeight: 16,
   },
   progressTrack: {
     height: 3,
