@@ -47,6 +47,8 @@ const LANDING_ART = {
   learn: require('@assets/jyotish-landing/learn.webp'),
 };
 const STEP_COUNT = 5;
+/** A bundled Image must fill its View-owned frame on both axes, or Android keeps its intrinsic size. */
+const IMAGE_FILL = { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' } as const;
 
 function devotionalTarget(sourceId: string) {
   const entry = library.find((candidate) => candidate.id === sourceId && candidate.status === 'active');
@@ -181,7 +183,7 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
   const banner = (testID: string, source: number | ReturnType<typeof vidhiArtworkAsset>) => (
     <View testID={testID} style={[s.banner, { borderColor: colors.panchangTileBorder, borderRadius: radii.lg }, elevation.card]} accessible={false} importantForAccessibility="no-hide-descendants">
       {typeof source === 'number'
-        ? <Image source={source} resizeMode="cover" style={StyleSheet.absoluteFill} accessible={false} />
+        ? <Image source={source} resizeMode="cover" style={IMAGE_FILL} accessible={false} />
         : <CachedArtwork source={source} style={StyleSheet.absoluteFill} resizeMode="cover" />}
     </View>
   );
@@ -230,7 +232,7 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
     <View testID="dasha-guide-index-view" style={s.stack}>
       <LinearGradient colors={warm} style={[s.card, { borderColor: colors.panchangTileBorder, borderRadius: radii.lg, overflow: 'hidden' }, elevation.card]}>
         <View style={s.heroArt} accessible={false} importantForAccessibility="no-hide-descendants">
-          <Image source={LANDING_ART.hero} resizeMode="cover" style={StyleSheet.absoluteFill} accessible={false} />
+          <Image source={LANDING_ART.hero} resizeMode="cover" style={IMAGE_FILL} accessible={false} />
         </View>
         <View style={s.heroBody}>
           <LinearGradient colors={night} style={[s.heroDisc, { borderColor: colors.gold }, elevation.card]}>
@@ -703,7 +705,7 @@ function stepThumb(index: number, guide: DashaGuide, colors: any, night: readonl
   return (
     <View style={[frame, { backgroundColor: colors.panchangTileFrom }]} accessible={false}>
       {source !== null
-        ? <Image source={source} resizeMode="cover" style={StyleSheet.absoluteFill} accessible={false} />
+        ? <Image source={source} resizeMode="cover" style={IMAGE_FILL} accessible={false} />
         : <CachedArtwork source={vidhiArtworkAsset('deepmala')} style={StyleSheet.absoluteFill} resizeMode="cover" />}
     </View>
   );
