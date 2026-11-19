@@ -258,7 +258,7 @@ export default function GitaSaarVersePage({
               },
             ]}
           >
-            {verseLinesByLang(lang, verse.sanskrit, verse.transliteration).map(
+            {verseLinesByLang(lang, verse.sanskrit, verse.transliteration, `${verse.chapter}.${verse.number}`).map(
               (line, i) => {
                 const vtok = verseToken(lang, typography);
                 return (

@@ -19,7 +19,8 @@ it.each([288, 358, 540])('keeps readable verse type and lets the full paper widt
   let tree: ReactTestRenderer;
   act(() => { tree = create(<DevotionalVerseBody header="गीता · 16.12" verse={verse} meaning="अर्थ" lang="hi" art="krishna" width={width} verseStyle={{ fontSize: 22, lineHeight: 36 }} meaningStyle={{}} />); });
   const text = tree!.root.findByProps({ testID: 'devotional-share-verse' });
-  expect(text.props.children).toBe(verse);
+  expect(text.props.children).toBe(verse.replace('16.12।।', ''));
+  expect(text.props.children).not.toContain('16.12');
   expect(StyleSheet.flatten(text.props.style).fontSize).toBe(22);
   expect(StyleSheet.flatten(text.parent!.props.style).paddingHorizontal).toBe(55 * width / 1080);
   expect(text.props.adjustsFontSizeToFit).toBeUndefined();
@@ -32,22 +33,20 @@ describe('one charan per row', () => {
   const mount = (exportMode = false) => create(<DevotionalVerseBody header="सुंदरकाण्ड" verse={flow} verseRows={rows} meaning="अर्थ" lang="hi" art="hanuman"
     width={358} verseStyle={{ fontSize: 23, lineHeight: 36 }} meaningStyle={{}} exportMode={exportMode} />);
   const verse = (tree: ReactTestRenderer) => tree.root.findByProps({ testID: 'devotional-share-verse' });
-  it.each([[2, rows.join('\n')], [3, flow]])('shows %i native lines as %j once layout reports', (lines, shown) => {
+  it('preserves charan boundaries even when a long row wraps on the phone', () => {
     let tree: ReactTestRenderer; act(() => { tree = mount(); });
+    const text = verse(tree!);
+    act(() => text.props.onTextLayout?.({ nativeEvent: { lines: Array.from({ length: 4 }, () => ({})) } }));
     expect(verse(tree!).props.children).toBe(rows.join('\n'));
-    expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBe(0);
-    act(() => verse(tree!).props.onTextLayout({ nativeEvent: { lines: Array.from({ length: lines }, () => ({})) } }));
-    expect(verse(tree!).props.children).toBe(shown);
     expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBeUndefined();
     act(() => tree!.unmount());
   });
-  it('falls back to the flowing verse when native layout never reports', () => {
-    jest.useFakeTimers();
+  it('renders rows immediately without a hidden probe or timeout', () => {
     let tree: ReactTestRenderer; act(() => { tree = mount(); });
-    act(() => { jest.advanceTimersByTime(500); });
-    expect(verse(tree!).props.children).toBe(flow);
+    expect(verse(tree!).props.children).toBe(rows.join('\n'));
+    expect(verse(tree!).props.onTextLayout).toBeUndefined();
     expect(StyleSheet.flatten(verse(tree!).props.style).opacity).toBeUndefined();
-    act(() => tree!.unmount()); jest.useRealTimers();
+    act(() => tree!.unmount());
   });
   it('shows the rows on the export card without probing', () => {
     let tree: ReactTestRenderer; act(() => { tree = mount(true); });

@@ -2,7 +2,7 @@
 title: Home Widgets
 type: subsystem
 sources: [mobile/src/widgets, mobile/assets/widget-backgrounds, mobile/scripts/build-widget-backgrounds.mts, mobile/src/data/versePool.ts, mobile/src/screens/WidgetGalleryScreen.tsx, mobile/src/components/DailyBhaktiNudge.tsx, mobile/plugins/withHomeWidgets.js, mobile/plugins/withHomeWidgetsIos.js, mobile/plugins/home-widgets, mobile/modules/home-widgets-ios, mobile/App.tsx]
-last_verified_date: 2026-11-13
+last_verified_date: 2026-11-16
 confidence: high
 status: current
 ---
@@ -24,7 +24,7 @@ The schema is `WidgetPayloadV1` in `widgets/contract.ts`:
 - every localized field carries `hi`, `en`, `gu`, and `kn` so native consumers never transliterate.
 - Japam stores true total beads/rounds, a japa-only streak, the last-used mantra, and its snapshot date.
 
-Content and size are independent. Each content type is its own widget kind — `VedanshVerseWidget`, `VedanshPanchangWidget`, `VedanshJapamWidget` on iOS; `VedanshVerseWidgetProvider` and `VedanshPanchangWidgetProvider` on Android — so the OS gallery lists them separately and the user picks the size. `widgets/catalog.ts` declares content → native kind, offered sizes, and recommended size once; the gallery renders from it and `catalog.test.ts` fails when the Swift `supportedFamilies`, the Kotlin providers, the `withHomeWidgets.js` receivers, or their `appwidget-provider`/layout resources drift from it. Every kind renders every size it advertises: the verse reads the full `lines` array on every cell except the small square (large gives each pada its own line, wide flows them as one ` · `-joined paragraph over three lines), and the Panchang goes from a tithi glance to labelled sunrise/Rahu Kaal/Abhijit rows.
+Content and size are independent. Each content type is its own widget kind — `VedanshVerseWidget`, `VedanshPanchangWidget`, `VedanshJapamWidget` on iOS; `VedanshVerseWidgetProvider` and `VedanshPanchangWidgetProvider` on Android — so the OS gallery lists them separately and the user picks the size. `widgets/catalog.ts` declares content → native kind, offered sizes, and recommended size once; the gallery renders from it and `catalog.test.ts` fails when the Swift `supportedFamilies`, the Kotlin providers, the `withHomeWidgets.js` receivers, or their `appwidget-provider`/layout resources drift from it. Every kind renders every size it advertises: the verse reads the full `lines` array on every cell except the small square (wide and large both preserve each supplied pada boundary with newlines), and the Panchang goes from a tithi glance to labelled sunrise/Rahu Kaal/Abhijit rows.
 
 Android stores the complete document as one synchronously committed SharedPreferences string, updates both `AppWidgetProvider`s, and supports per-kind launcher pin requests (`requestPinWidget(content)`). iOS writes a temporary file into the shared App Group, replaces/moves it atomically, and reloads WidgetKit timelines. The Expo config plugins generate the Android receiver/package wiring and an iOS 16 widget extension with an explicit host target dependency, Embed App Extensions phase, App Group entitlements, and bundled Indic/Latin fonts.
 
@@ -63,6 +63,16 @@ binary; OTA alone cannot ship it. Multisource tests sample real Daily Bhakti
 Gita, Sahasranama, stotra, Ramcharitmanas and Sundarkand entries in all four
 languages. Native per-size typography/art/VoiceOver acceptance remains
 pending until a device run with screenshots is recorded.
+
+## Verse line boundaries and duplicate citations (16 November 2026)
+
+`versePresentation.ts` strips a closing numbered citation only when it matches the
+visible source label, retaining punctuation and canonical data. The deferred
+planner applies it before four-script localization and uses a new derived-cache
+revision. Swift's `flowedVerse`, Kotlin wide/tall cells and the gallery preserve
+newlines; small excerpts remain bounded. Rebase the open Ornate Heritage redesign
+(#681) without restoring its old middle-dot joining. Native placement remains a
+separate acceptance gate from payload/source tests.
 
 ## Dependencies
 

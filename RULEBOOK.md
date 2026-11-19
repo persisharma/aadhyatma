@@ -1159,6 +1159,12 @@ The compiled report reads each of the nine grahas the way a family pandit does â
 - Verse and Panchang select Heritage at sunrise through just before sunset, Midnight Temple otherwise. Every native timeline/alarm must include the solar boundaries in addition to content boundaries, so switching does not depend on reopening JS.
 - `scripts/build-widget-heritage.mjs` owns all new day/night plates, source/derivative hashes and gallery index. Preserve pixel budgets, opaque text-safe regions, AA contrast and resource-shrinker retention. Schema stays v1; native layout/art changes still require a binary.
 
+### 15.2.2 Verse presentation and reference ownership
+
+- Canonical scripture arrays, verse identities and references are immutable. The visible source label owns the citation; display code may remove only a terminal danda-delimited number matching that label. Use `utils/versePresentation.ts`, including before widget-payload localization. Never strip arbitrary scripture numbers or change canonical JSON to fix layout.
+- Full-size widget and in-app verse compositions preserve authored rows. Native wrapping may grow a row, but never joins the next row onto it. Shared devotional cards grow vertically and have no row-fit paragraph fallback. Small/narrow widget excerpts remain bounded and explicit.
+- Changing payload presentation invalidates the derived widget plan cache. Keep all four scripts, complete accessibility text, source identity and deep links. WidgetKit/RemoteViews changes still require native binaries and placed-widget visual evidence.
+
 ### 15.3 Native delivery and OTA safety
 
 - Initial delivery is **store-binary-only**. No OTA may add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts. A JS planner/copy change may ship OTA only to a runtime whose native reader already supports that schema â€” mind the store runtime version ([[ota-runtime-version-mismatch]] gotcha).

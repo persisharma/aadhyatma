@@ -335,6 +335,15 @@ Validation: five focused Node integration tests execute the production pool, con
 
 Evidence and native acceptance limitations: `docs/reviews/2026-11-13-gita-verse-navigation.md`.
 
+## Verse presentation parity — 16 November 2026
+
+`utils/versePresentation.ts` removes a closing numeric citation only if the visible
+label already supplies exactly that reference. `verseLinesByLang` takes an optional
+label for Gita/Gita Saar, numbered verse pages and share cards, before re-scripting.
+Daily Bhakti and devotional sharing use the same presentation. Canonical text,
+bookmarks, read-aloud source data and verse IDs remain unchanged. `DevotionalVerseBody`
+keeps charan rows at compact/large text sizes, allowing each row to wrap and the
+paper to grow; no layout event or timeout merges rows into a flowing paragraph.
 
 B1 Satyanarayan Aarti (17 Nov 2026) appends index 22 with nine pages from the complete dated 1930 edition. Puja instructions and ref now select this aarti; previous positions are preserved. Existing Vishnu artwork is reused. Source variants and native-pending acceptance: `docs/evaluations/b1-satyanarayan-aarti/review.md`.
 

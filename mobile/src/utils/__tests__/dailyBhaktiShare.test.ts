@@ -14,7 +14,7 @@ it('preserves every Daily Bhakti verse and meaning in all four languages in one 
     for (const lang of langs) {
       const { pages, header: label } = prepared[lang];
       const header = `${contentByLang(lang, v.sourceNameHi, v.sourceNameEn)} · ${label}`;
-      expect(pages.map(p => p.devotional!.verse).join('')).toBe(verseLinesByLang(lang, v.textHi, v.textEn).join('\n'));
+      expect(pages.map(p => p.devotional!.verse).join('')).toBe(verseLinesByLang(lang, v.textHi, v.textEn, v.labelHi).join('\n'));
       expect(pages.map(p => p.devotional!.meaning).join('')).toBe(meaningByLang(lang, v.meaningHi, v.meaningEn));
       expect(pages).toHaveLength(1);
       for (const { devotional: p } of pages) {
@@ -58,7 +58,7 @@ it('rejoins exact text slices and signals missing selected pages', () => {
   for (const lang of langs) {
     const { pages, header } = dailyBhaktiShareable(v).scopes[0].prepared![lang];
     const text = buildProseShareText({ header, pages, indices: pages.map((_, i) => i), lang });
-    expect(text).toContain(verseLinesByLang(lang, v.textHi, v.textEn).join('\n'));
+    expect(text).toContain(verseLinesByLang(lang, v.textHi, v.textEn, v.labelHi).join('\n'));
     expect(text).toContain(meaningByLang(lang, v.meaningHi, v.meaningEn));
     if (pages.length > 1 && pages[0].devotional!.meaning) expect(buildProseShareText({ header, pages, indices: [0], lang })).toContain(pages[0].devotional!.meaning + '…');
   }

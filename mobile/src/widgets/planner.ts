@@ -1,3 +1,4 @@
+import { verseLinesForDisplay } from '@/utils/versePresentation';
 import { WIDGET_SCHEMA_VERSION, WIDGET_TIME_ZONE, isValidIanaTimeZone, widgetDateKey, type PanchangWidgetDay, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 import type { Lang } from '@/data/gita/language';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
@@ -108,18 +109,9 @@ export function buildWidgetPayload(input: WidgetPlannerInput): WidgetPayloadV1 {
 // (◌ U+25CC) once the ellipsis follows — the exact class RULEBOOK §11.14 gates.
 const DANGLING_CLUSTER_TAIL = /[्્್‌‍]+$/u;
 
-/**
- * The verse as one flowing paragraph, padas separated by ` · `.
- *
- * This — not `twoLineExcerpt` — is what the wide widget cell renders (the Swift
- * `flowedVerse` and the Kotlin `padas.joinToString(" · ")` mirror it, the same
- * way the section eyebrows are mirrored; the large cell gives each pada its own
- * line instead) and what the gallery facsimile shows. The excerpt below is a
- * *small-cell* string; feeding it to a cell with three lines of room cut a
- * two-line shloka one pada early with the third line still empty.
- */
-export function flowedVerse(lines: readonly string[]): string {
-  return lines.map((line) => line.trim()).filter(Boolean).join(' · ');
+/** Full verse with authored line boundaries; only small cells use the bounded excerpt. */
+export function flowedVerse(lines: readonly string[], referenceLabel?: string): string {
+  return verseLinesForDisplay(lines, referenceLabel).map(line => line.trim()).filter(Boolean).join('\n');
 }
 
 /**
