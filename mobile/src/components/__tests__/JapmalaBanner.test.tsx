@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import JapmalaBanner from '@/components/home/JapmalaBanner';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -89,3 +89,18 @@ test.each(['durga-saptashati-core', 'aditya-hridayam'] as const)(
     expect(navigate.mock.calls).toEqual([['CategoryList', { categoryId: 'stotram', practice: true }]]);
     act(() => tree.unmount());
   });
+
+test('the banner is titled Japmala and its Indic lines keep 1.65x leading, so no matra is cut off', () => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => {
+    tree = TestRenderer.create(<JapmalaBanner navigation={{ navigate: jest.fn() } as never} />);
+  });
+  const lines = tree.root.findAllByType(Text).map(node => StyleSheet.flatten(node.props.style));
+  expect(tree.root.findAllByType(Text)[0].props.children).toBe('जपमाला');
+  // RULEBOOK §3 "Listing cards" rule 7: tighter boxes clip ि, ी and the anusvara.
+  for (const style of lines.filter(item => typeof item?.lineHeight === 'number')) {
+    expect(style.lineHeight).toBeGreaterThanOrEqual(Math.ceil(style.fontSize * 1.65));
+  }
+  act(() => tree.unmount());
+});
+

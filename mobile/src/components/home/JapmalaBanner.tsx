@@ -52,12 +52,8 @@ export default function JapmalaBanner({
     : mantraId === 'sita-ram-naam'
       ? contentByLang(lang, 'सीता राम', 'Sita Ram')
       : contentByLang(lang, mantra.nameHi, mantra.nameEn);
-  const label = pick(lang, {
-    hi: 'जपमाला | अनंत जप',
-    en: 'Japmala | Anant jap',
-    gu: 'જપમાળા | અનંત જપ',
-    kn: 'ಜಪಮಾಲೆ | ಅನಂತ ಜಪ',
-  });
+  // The banner's job is to lead to the Japmala section, so its name is the title.
+  const label = pick(lang, { hi: 'जपमाला', en: 'Japmala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
   const fontFamily = titleFontByLang(lang);
   const stat = hymn
     ? contentByLang(lang, 'पाठ', 'recitations')
@@ -89,8 +85,8 @@ export default function JapmalaBanner({
         onPress={() => press.activateTile(openSection)}
       >
         <View style={styles.info}>
-          <Text style={{ fontFamily, fontSize: 11, lineHeight: 14, color: '#873c15' }}>{label}</Text>
-          <Text style={{ fontFamily, fontSize: 21, lineHeight: 28, color: '#782b1a' }}>{title}</Text>
+          <Text style={{ fontFamily, fontSize: 21, lineHeight: 35, color: '#782b1a' }}>{label}</Text>
+          <Text style={{ fontFamily, fontSize: 14, lineHeight: 24, color: '#873c15' }}>{title}</Text>
           <View style={styles.count}>
             {!hymn && fontScale <= 1.2 ? (
               <Svg width={92} height={34} viewBox="-3 -2 179 68" accessible={false}>
@@ -168,7 +164,7 @@ const styles = StyleSheet.create({
   // Keep foreground spacing off the frame so the image fills its entire inner bounds.
   artwork: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   door: { flex: 1, minHeight: 98, flexDirection: 'row', alignItems: 'center' },
-  info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3, paddingVertical: 6, justifyContent: 'center' },
+  info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3, paddingVertical: 2, justifyContent: 'center' },
   count: { minHeight: 36, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 5 },
   pressed: { opacity: 0.8 },
   open: {
