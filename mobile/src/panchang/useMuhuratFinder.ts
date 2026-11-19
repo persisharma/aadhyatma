@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
 import { computeMuhuratDay } from './muhurat';
 import {
   evaluateDay,
@@ -29,6 +28,7 @@ import {
 } from './muhuratFinderScan';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from './usePanchang';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 export { FINDER_WINDOW_DAYS };
 export type { AbujhDay };
@@ -71,7 +71,7 @@ export function useMuhuratFinder(
   useEffect(() => {
     let cancelled = false;
     setState({ loading: true, summary: null, firstAfter: [] });
-    const task = InteractionManager.runAfterInteractions(async () => {
+    const task = runWhenIdle(async () => {
       const opts = { calendarSystem, location };
       const rule = getEventRule(occasionId);
       const start = startOfToday();
@@ -154,7 +154,7 @@ export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void 
 
   useEffect(() => {
     let cancelled = false;
-    const task = InteractionManager.runAfterInteractions(async () => {
+    const task = runWhenIdle(async () => {
       const opts = { calendarSystem, location };
       const start = startOfToday();
       await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
@@ -345,7 +345,7 @@ export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhS
   useEffect(() => {
     let cancelled = false;
     setState({ loading: true, days: [] });
-    const task = InteractionManager.runAfterInteractions(async () => {
+    const task = runWhenIdle(async () => {
       const opts = { calendarSystem, location };
       const start = startOfToday();
       try {

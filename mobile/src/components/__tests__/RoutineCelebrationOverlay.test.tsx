@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Text } from 'react-native';
+import { Modal, Text } from 'react-native';
 import RoutineCelebrationOverlay from '@/components/RoutineCelebrationOverlay';
 
 // ---- mutable mock state (reset in beforeEach) ----
@@ -143,5 +143,14 @@ describe('RoutineCelebrationOverlay', () => {
     act(() => petals.props.onPress());
     expect(mockRequestAsk).toHaveBeenCalledTimes(1);
     expect(mockRequestAsk).toHaveBeenCalledWith('routine-complete');
+  });
+
+  it('Android Back dismisses the celebration without asking for a rating (UX-11)', () => {
+    mockToday = complete([{ key: 'r1:a' }]);
+    const tree = render();
+    expect(textOf(tree)).toContain('PETALS');
+    act(() => tree.root.findByType(Modal).props.onRequestClose());
+    expect(textOf(tree)).not.toContain('PETALS');
+    expect(mockRequestAsk).not.toHaveBeenCalled();
   });
 });

@@ -1,4 +1,5 @@
-import { lazy } from 'react';
+import { createElement, lazy } from 'react';
+import { onStackRetry } from './StackLoadBoundary';
 import type { PanchangHomeMode } from './types';
 
 /**
@@ -12,7 +13,16 @@ import type { PanchangHomeMode } from './types';
 type StackModule = { default: React.ComponentType<{ initialMode?: PanchangHomeMode }> };
 let loading: Promise<StackModule> | null = null;
 
-const load = () => (loading ??= import('./PanchangStackNavigator'));
+const load = () => {
+  const p = (loading ??= import('./PanchangStackNavigator'));
+  // Forget a failed evaluation so a Retry re-attempts the import instead of
+  // re-throwing the cached rejection (StackLoadBoundary).
+  p.catch(() => {
+    if (loading === p) loading = null;
+    failed = true;
+  });
+  return p;
+};
 
 /**
  * Evaluate the Panchang chunk BEFORE `NavigationContainer` mounts.
@@ -30,4 +40,17 @@ const load = () => (loading ??= import('./PanchangStackNavigator'));
  */
 export const preloadPanchangStack = load;
 
-export const LazyPanchangStackNavigator = lazy(load);
+// `React.lazy` caches a rejection forever, so after a failed load a fresh one is
+// made when a boundary's Retry fires. NOT on mount: React re-mounts a suspending
+// tree while it waits, which would rebuild the lazy on every attempt and loop.
+let LazyStack = lazy(load);
+let failed = false;
+onStackRetry(() => {
+  if (!failed) return;
+  failed = false;
+  LazyStack = lazy(load);
+});
+
+export function LazyPanchangStackNavigator(props: { initialMode?: PanchangHomeMode }) {
+  return createElement(LazyStack, props);
+}

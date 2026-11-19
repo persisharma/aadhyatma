@@ -32,7 +32,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-daivi
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: gita-saar-theme-dhyan }
     direction: DOWN
@@ -48,4 +48,4 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd:
     timeout: 30000
 - takeScreenshot: e2e-shots/gita-saar-story-dhyan
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

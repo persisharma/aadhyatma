@@ -7,6 +7,7 @@
  * routine item complete by the exact same rules.
  */
 import { useMemo } from 'react';
+import { useTodayKey } from '@/utils/useTodayKey';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useUserActivity, toDateKey } from '@/contexts/UserActivityContext';
@@ -85,6 +86,9 @@ export function useSadhanaToday(): SadhanaTodayCard[] {
   const { getProgress } = useReadingProgress();
   const { dayTotals } = useUserActivity();
   const [calendarSystem] = usePanchangCalendarSystem();
+  // The memo reads `new Date()`: without a day key the cards stayed on yesterday
+  // in a process that was still running after midnight.
+  const dayKey = useTodayKey();
 
   return useMemo(() => {
     const now = new Date();
@@ -130,5 +134,6 @@ export function useSadhanaToday(): SadhanaTodayCard[] {
       });
     }
     return orderSadhanaCards(cards);
-  }, [activeEnrollments, getProgress, dayTotals, calendarSystem]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeEnrollments, getProgress, dayTotals, calendarSystem, dayKey]);
 }

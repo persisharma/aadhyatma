@@ -101,6 +101,29 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { visible: "Setup language continue|Setup city continue|Setup widgets continue|Enable reminders" }
     file: _finish-first-run-setup.yaml
+# iOS can drop a tap that lands while the setup sheet is still being presented:
+# seen in CI, "Setup language continue" was tapped at its final bounds and the
+# language step stayed up, covering Home for the rest of the flow. Home's text
+# is still readable behind the sheet, so a wait for Home passes. Walk it again.
+- runFlow:
+    when:
+      visible: "Setup language continue"
+    commands:
+      - waitForAnimationToEnd
+      - tapOn: "Setup language continue"
+      - tapOn:
+          text: "Setup city continue"
+          optional: true
+      - tapOn:
+          text: "Setup widgets continue"
+          optional: true
+      - tapOn:
+          text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+          optional: true
+      - waitForAnimationToEnd
+      - tapOn:
+          text: "Ask App Not to Track"
+          optional: true
 # Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
 # after the dismissal block above ran — seen on slow Android cold starts —
 # clear it now so it can't swallow the first in-flow tap. No-ops otherwise.

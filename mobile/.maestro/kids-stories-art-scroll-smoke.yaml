@@ -52,8 +52,8 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - assertVisible: "ಪೂತನೆ ಕೃಷ್ಣನನ್ನು ಎತ್ತಿಕೊಂಡಳು. ನಗುವಿನ ಹಿಂದೆ ಕೆಟ್ಟ ಉದ್ದೇಶವಿತ್ತು. ಕೃಷ್ಣ ಸಾಮಾನ್ಯ ಶಿಶುವಂತೆ ಕಂಡರೂ, ಅವನಿಗೆ ಅವಳ ಉದ್ದೇಶ ತಿಳಿದಿತ್ತು."
 - takeScreenshot: kids-putana-kn-large-pt07
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-ganesha" }
 - scrollUntilVisible:
     element: { id: "kids-story-ganesha-birth" }
@@ -124,9 +124,9 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - assertVisible: "ಶಿವನ ಆಜ್ಞೆಯಂತೆ ಗಣಗಳು ಉತ್ತರಕ್ಕೆ ಹೋಗಿ ಆನೆಯ ತಲೆ ತಂದರು. ಅದನ್ನು ಬಾಲಕನ ದೇಹಕ್ಕೆ ಜೋಡಿಸಿದರು. ಮಂತ್ರ ಮತ್ತು ಪವಿತ್ರ ನೀರಿನಿಂದ ಅವನು ಮತ್ತೆ ಜೀವಂತನಾದ. ಈಗ ಅವನಿಗೆ ಆನೆಯ ಮುಖವಿತ್ತು."
 - takeScreenshot: kids-ganesha-birth-kn-large-gb05
-- tapOn: "Back"
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "home-kids-stories-card" }
     centerElement: true
@@ -192,6 +192,6 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - assertVisible: "The whole world was in distress. The gods and other beings turned to Brahma, the creator, for help. Brahma explained Vayu’s sorrow. Then they went with him to find Vayu and Hanuman."
 - takeScreenshot: kids-hanuman-sun-en-large-hs09-caption
-- tapOn: "Back"
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

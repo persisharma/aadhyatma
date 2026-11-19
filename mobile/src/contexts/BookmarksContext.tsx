@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { canonicalBookmarkId, canonicalSourceId } from '@/data/sourceIdMigration';
 import { reportRatingAsk } from '@/contexts/ratingAsk';
+import { setItemWithRetry, showBookmarksLoadingNotice } from '@/utils/persistWithRetry';
 
 const STORAGE_KEY = '@vedansh/bookmarks';
 
@@ -89,12 +90,12 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
   const persist = useCallback((next: BookmarkRef[]) => {
     setBookmarks(next);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    void setItemWithRetry(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const addBookmark = useCallback(
     (ref: BookmarkRef) => {
-      if (isLoading) return;
+      if (isLoading) return showBookmarksLoadingNotice();
       persist([ref, ...bookmarks.filter((b) => b.id !== ref.id)]);
       if (!bookmarks.some((b) => b.id === ref.id)) reportRatingAsk('bookmark-saved');
     },
@@ -103,7 +104,7 @@ export function BookmarksProvider({ children }: { children: React.ReactNode }) {
 
   const removeBookmark = useCallback(
     (id: string) => {
-      if (isLoading) return;
+      if (isLoading) return showBookmarksLoadingNotice();
       persist(bookmarks.filter((b) => b.id !== id));
     },
     [isLoading, bookmarks, persist]

@@ -150,9 +150,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-hi-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-putana" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-ganesha" }
 - scrollUntilVisible:
     element: { id: "kids-story-ganesha-birth" }
@@ -297,9 +297,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-hi-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-ganesha-birth" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-hanuman" }
 - scrollUntilVisible:
     element: { id: "kids-story-hanuman-sun" }
@@ -431,7 +431,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-hi-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-hanuman-sun" }
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

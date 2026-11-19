@@ -7,7 +7,9 @@ test('startup coordinator keeps planner and Panchang graph behind a dynamic boun
   const source = fs.readFileSync(path.join(process.cwd(), 'src/widgets/WidgetCoordinator.tsx'), 'utf8');
   assert.doesNotMatch(source, /^import .*planPayload/m);
   assert.match(source, /await import\('\.\/planPayload'\)/);
-  assert.match(source, /InteractionManager\.runAfterInteractions/);
+  // Deferred behind the idle queue — through the one helper that wraps
+  // `InteractionManager` (`utils/runWhenIdle`, see `runWhenIdleOnly.test.ts`).
+  assert.match(source, /runWhenIdle\(/);
   assert.match(source, /generation !== generationRef\.current/);
   assert.match(source, /deviceTimeZone/);
 });
@@ -127,7 +129,10 @@ test('App resolves a cold widget URL or launching notification before navigation
   // ONE shared promise, so the preload and the React.lazy render never race two
   // evaluations of the same chunk.
   assert.match(lazyStack, /loading \?\?= import\('\.\/PanchangStackNavigator'\)/);
-  assert.match(lazyStack, /export const LazyPanchangStackNavigator = lazy\(load\)/);
+  // The lazy is rebuilt after a failed load (a boundary's Retry), so it is a
+  // `let` behind a stable exported component rather than an exported const.
+  assert.match(lazyStack, /let LazyStack = lazy\(load\)/);
+  assert.match(lazyStack, /export function LazyPanchangStackNavigator/);
   assert.doesNotMatch(tabs, /lazy\(\(\) => import/);
   // The lazy stack renders inside an error boundary, outside the Suspense one.
   assert.match(tabs, /<StackLoadBoundary>[\s\S]*<Suspense[\s\S]*LazyPanchangStackNavigator[\s\S]*<\/Suspense>[\s\S]*<\/StackLoadBoundary>/);

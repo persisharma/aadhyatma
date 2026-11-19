@@ -25,7 +25,7 @@
  * have settled, because before that the scope key is a placeholder.
  */
 import { useEffect, useMemo, useState } from 'react';
-import { InteractionManager } from 'react-native';
+import { isOnCivilDay } from './civilTime';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated } from '@/panchang/usePanchang';
 import { useMinuteTick } from '@/utils/useMinuteTick';
@@ -46,6 +46,7 @@ import {
   type KaalWindow,
   type MuhuratDay,
 } from './muhurat';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 export type UseMuhuratResult = {
   /** null while the (deferred) solve is in flight or the day is invalid. */
@@ -65,13 +66,6 @@ export type UseMuhuratResult = {
 
 const DAY_MS = 86_400_000;
 
-function isSameLocalDay(a: Date, b: Date): boolean {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
-}
 
 type Solved = {
   md: MuhuratDay;
@@ -163,7 +157,7 @@ export function useMuhurat(
   const { location, isLoading: locationLoading } = usePanchangLocation();
   const calendarHydrated = usePanchangCalendarHydrated();
   const dateMs = date.getTime();
-  const isToday = isSameLocalDay(date, new Date());
+  const isToday = isOnCivilDay(new Date(), date);
   const scope = scopeKeyFor(location, calendarSystem);
   const cacheKey = `${scope}|${dateKeyFor(date)}|${isToday ? 1 : 0}`;
   /**
@@ -197,7 +191,7 @@ export function useMuhurat(
     if (!scopeSettled) return;
 
     let cancelled = false;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
     let handle: ReturnType<typeof setTimeout> | undefined;
     let release: (() => void) | undefined;
 
@@ -213,7 +207,7 @@ export function useMuhurat(
           return;
         }
         release = resolve;
-        interaction = InteractionManager.runAfterInteractions(() => {
+        interaction = runWhenIdle(() => {
           handle = setTimeout(() => {
             release = undefined;
             resolve();

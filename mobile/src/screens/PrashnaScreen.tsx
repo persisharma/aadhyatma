@@ -9,6 +9,7 @@ import BasisChain from '@/components/BasisChain';
 import PrashnaPhaseContent from '@/components/PrashnaPhaseContent';
 import JyotishStateCard from '@/components/JyotishStateCard';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
@@ -129,7 +130,7 @@ export default function PrashnaScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             style={({ pressed }) => [
               styles.backButton,
               { borderColor: colors.divider, backgroundColor: colors.parchmentSoft },

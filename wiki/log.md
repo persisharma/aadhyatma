@@ -1587,6 +1587,10 @@ Added the complete selected Drik 43-unit Radha Chalisa through the existing regi
 
 ## [2026-11-18] ingest | PR #702 completes all thirteen Saptashati chapter sources (700 traditional numbered units), preserving existing IDs and append-only Daily Bhakti offsets; readers wiki records collection/lazy-loader integration and pending native acceptance.
 
+## [2026-11-18] ingest | Mobile audit fixes (OTA set)
+
+Fixes from the 17 Nov 2026 mobile audit that need no native build: Panchang dates and clock times are India's on any device zone (`civilTime.ts`, cache versions bumped), "today" rolls over at midnight and on foreground, a root and per-tab error boundary, reminder copy in the reading language, an iOS pending-notification budget, per-family Android channels, in-place Japam alarm re-arm, audio load-failure notice, verified downloads, coalesced activity writes, a 250 km GPS snap limit, and a single `runWhenIdle` wrapper in front of `InteractionManager`. Subsystem gotchas updated in panchang, notifications, japam-alarms, audio and routine. Native and device checks are pending; see the PR.
+
 ## [2026-11-18] ingest | Mobile audit fixes (store-build set)
 
 Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages aligned to the SDK 54 expected versions (expo-doctor 18/18), the four patched packages pinned exactly, unused `expo-secure-store` removed (it added a Face ID usage string), storage permissions blocked on Android, `expo-clipboard` added behind a probe so OTAs to older binaries keep the React Native API, the Japam alarm receiver guarded so a failed post cannot end the repeating alarm, config plugins importing `expo/config-plugins`, and a prebuild introspection test. Runbook gotchas added for the Android release gate and the Meta SDK bump. Not built or run on a device.

@@ -107,7 +107,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Best dates|More suitable dates|No auspicious muhurat.*"
     timeout: 60000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # …and through the Abujh (Special auspicious days) scan.
@@ -210,9 +210,9 @@ appId: com.prashantsharma.vedansh
     visible: ".*DrikPanchang convention.*|Not suitable.*"
     timeout: 20000
 - assertVisible: "Why this date"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Special days off the same hydrated cache.

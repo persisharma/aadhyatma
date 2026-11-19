@@ -62,7 +62,11 @@ test('a day of opens: one full arm per process, nothing for an unchanged plan', 
   }
 
   // Whatever it costs, the queue must hold the same notifications as before.
-  expect(held).toBeGreaterThanOrEqual(30 + 2 + 5);
+  // Daily verse holds its platform slice (20 on iOS since the shared 64-slot budget, 30 elsewhere).
+  const { familyCap } = require('@/notifications/notificationBudget') as typeof import('@/notifications/notificationBudget');
+  const { Platform } = require('react-native') as typeof import('react-native');
+  const dailySlots = Math.min(30, familyCap(Platform.OS, 'dailyVerse'));
+  expect(held).toBeGreaterThanOrEqual(dailySlots + 2 + 5);
   expect(mockOs.pending.size).toBe(held);
 
   // A relaunch re-registers every slot (it has to: see `familyArm`), but with

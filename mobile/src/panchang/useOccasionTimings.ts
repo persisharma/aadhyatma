@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated } from './usePanchang';
 import { useLenses } from './useLenses';
@@ -8,6 +7,7 @@ import { dateKeyFor, scopeKeyFor } from './panchangDayStore';
 import { prepareOccasionTimings } from './occasionTimingWork';
 import type { OccasionTiming } from './occasionTimings';
 import type { CalendarSystem } from './types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 export function useOccasionTimings(date: Date | null, calendarSystem: CalendarSystem, ruleId?: string) {
   const { location, isLoading } = usePanchangLocation();
   const hydrated = usePanchangCalendarHydrated();
@@ -18,7 +18,7 @@ export function useOccasionTimings(date: Date | null, calendarSystem: CalendarSy
   useEffect(() => {
     if (!date || isLoading || !hydrated || !lensesHydrated) return;
     let cancelled = false;
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       void prepareOccasionTimings(date, { calendarSystem, location }, lenses, () => cancelled, ruleId)
         .then(items => { if (!cancelled && items) setState({ key, items, error: false }); })
         .catch(() => { if (!cancelled) setState({ key, items: [], error: true }); });

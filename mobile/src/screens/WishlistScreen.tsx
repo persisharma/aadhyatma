@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick } from '@/utils/localize';
 import { readableRomanization } from '@/utils/readableRomanization';
@@ -126,7 +127,7 @@ export default function WishlistScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.backBtn,

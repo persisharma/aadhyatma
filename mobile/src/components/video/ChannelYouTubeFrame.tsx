@@ -3,6 +3,18 @@ import { WebView } from 'react-native-webview';
 import { PLAYER_STATES } from 'react-native-youtube-iframe';
 import { channelEmbedHTML, DARSHAN_EMBED_ORIGIN } from '@/video/channelEmbed';
 
+/**
+ * The only navigation this WebView may perform is its own embed page (the
+ * app-identity base URL its HTML is loaded under, or the blank first load).
+ * Anything else, such as a link inside the player, is refused: the YouTube
+ * iframe itself loads as a sub-frame of that page and is not a navigation of the
+ * WebView. Mirrors the docked player's guard (react-native-youtube-iframe).
+ */
+export function allowDarshanNavigation(request: { url: string; mainDocumentURL?: string }): boolean {
+  const url = request.mainDocumentURL || request.url;
+  return url === 'about:blank' || url === DARSHAN_EMBED_ORIGIN || url.startsWith(`${DARSHAN_EMBED_ORIGIN}/`);
+}
+
 export default function ChannelYouTubeFrame({ channelId, height, play, onReady, onError, onChangeState }: {
   channelId: string;
   height: number;
@@ -27,6 +39,7 @@ export default function ChannelYouTubeFrame({ channelId, height, play, onReady, 
     allowsInlineMediaPlayback
     allowsFullscreenVideo
     mediaPlaybackRequiresUserAction={false}
+    onShouldStartLoadWithRequest={allowDarshanNavigation}
     // Keep normal YouTube controls/branding; there are no app-owned exit CTAs.
     onMessage={({ nativeEvent }) => {
       try {

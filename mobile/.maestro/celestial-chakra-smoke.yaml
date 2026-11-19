@@ -7,7 +7,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { text: "Close", optional: true }
 - tapOn: { text: "Got it", optional: true }
 - tapOn: { id: "tab-home" }
-- tapOn: { text: "Back", optional: true }
+- tapOn: { text: "Back|वापस|પાછા|ಹಿಂದೆ", optional: true }
 - scrollUntilVisible:
     element: { text: ".*Today.s Panchang.*" }
     direction: UP
@@ -27,7 +27,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: jyotish
 - tapOn: "Create Kundali"
 - assertVisible: "Birth name"
-- tapOn: "Back.*"
+- tapOn: "Back.*|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: "Create Kundali"
 - tapOn: "Vrat & Parv"
 - assertVisible: "My Vrat.*"

@@ -5,7 +5,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { gitaSaarStories } from '@/data/gita-saar/stories';
 import type { LearningCopy } from '@/data/gita-saar/experience';
 import { readerIllustrationAsset } from '@/data/readerIllustrationAsset';
-import { meaningByLang, meaningSourceLang, pick } from '@/utils/localize';
+import { contentByLang, meaningByLang, meaningSourceLang, pick } from '@/utils/localize';
 import { meaningToken, scriptTitleFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import ReadingBanner from './ReadingBanner';
@@ -260,8 +260,7 @@ export function GitaSaarStoryDetails({
       </ProseParagraph>
       }
       {story.sources.filter(source => source.inAppRef).map((source) => {
-        const passage =
-          lang === 'hi' ? source.passageHi ?? source.passage : source.passage;
+        const passage = contentByLang(lang, source.passageHi ?? source.passage, source.passage);
         const ref = source.inAppRef;
         const citation = `${copy(source.title)} · ${passage}`;
         if (!ref) return null;

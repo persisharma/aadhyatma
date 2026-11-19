@@ -1,5 +1,5 @@
-import { InteractionManager } from 'react-native';
 import { isConstrainedDevice } from '@/utils/devicePace';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Depth-staged background warm-up for lazy screens.
@@ -132,7 +132,7 @@ const CONSTRAINED_MAX_DEPTH = 2;
  */
 export function idleTick(gapMs: number = GAP_MS): Promise<void> {
   return new Promise((resolve) => {
-    InteractionManager.runAfterInteractions(() => {
+    runWhenIdle(() => {
       setTimeout(resolve, gapMs);
     });
   });

@@ -38,6 +38,9 @@ jobs:
       CI: '1'
       NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
       NATIVE_SMOKE_DRIVER_CHECK: '1'
+      # Same as the other iOS journeys: the default wait timed out twice on
+      # macos-26 ("iOS driver not ready in time") before any flow ran.
+      MAESTRO_DRIVER_STARTUP_TIMEOUT: '300000'
     steps:
       - uses: actions/checkout@v4
         with:

@@ -9,7 +9,6 @@
  * on the same rule share one persisted answer.
  */
 import { useEffect, useMemo, useState } from 'react';
-import { InteractionManager } from 'react-native';
 
 import { useBirthProfileRoster } from './useKundali';
 import { janmaTithiRuleFromBirthDate } from './janmaTithi';
@@ -28,6 +27,7 @@ import {
   type JanmaPrefsState,
 } from './janmaTithiPrefs';
 import type { PersonProfile } from './birthProfiles';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 export type JanmaTithiPerson = {
   person: PersonProfile;
@@ -98,7 +98,7 @@ export function useJanmaTithiList(todayMs: number): JanmaTithiListEntry[] | null
     if (!hydrated) return undefined;
     let cancelled = false;
     const isCancelled = () => cancelled;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
 
     const today = new Date(todayMs);
     const rules = people
@@ -115,7 +115,7 @@ export function useJanmaTithiList(todayMs: number): JanmaTithiListEntry[] | null
       // Cooperative (`runInBackground`, 4 ms slices): every person's annual scan
       // used to run as ONE task — up to eight of them, long enough on a phone
       // that no tap could land while the list filled in.
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         void (async () => {
           const solved = new Map<string, Date | null>();
           for (const { person, rule } of people) {
@@ -187,7 +187,7 @@ export function useJanmaTithiDetailSolve(rule: TithiRule | null, todayMs: number
     }
     let cancelled = false;
     const isCancelled = () => cancelled;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
 
     void hydrateSmaranSolves([rule], new Date(todayMs), 'janma').then(() => {
       if (cancelled) return;
@@ -195,7 +195,7 @@ export function useJanmaTithiDetailSolve(rule: TithiRule | null, todayMs: number
       setSolve(warm);
       if (warm.restReady) return;
 
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         void (async () => {
           const today = new Date(todayMs);
           const [next] = await ensureOccurrencesAsync(rule, today, 1, isCancelled, 'janma', 'foreground');
@@ -242,7 +242,7 @@ export function useJanmaTithiForDate(date: Date): JanmaTithiPerson[] {
     let cancelled = false;
     setMatches([]);
     let handle: ReturnType<typeof setTimeout> | undefined;
-    const interaction = InteractionManager.runAfterInteractions(() => {
+    const interaction = runWhenIdle(() => {
       handle = setTimeout(() => {
         const day = new Date(dateMs);
         const result = people.filter(({ rule }) => {

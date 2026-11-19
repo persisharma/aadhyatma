@@ -25,7 +25,7 @@ import { DISHA_LABELS } from '@/panchang/eventMuhurat';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, meaningByLang } from '@/utils/localize';
 import { withShareLinks } from '@/data/shareLinks';
-import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
 import {
   FINDING_CLASS_LABELS,
   FINDING_CLASS_ORDER,
@@ -289,7 +289,7 @@ function FindingRow({ finding, cls }: { finding: HomeFinding; cls: FindingClass 
       style={[styles.findingRow, { borderBottomColor: colors.divider }]}
     >
       <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 8 }}>
-        <Text style={{ flex: 1, fontFamily: titleFont, fontSize: 14.5, lineHeight: 21, color: colors.ink }}>{title}</Text>
+        <Text style={{ flex: 1, fontFamily: titleFont, fontSize: 14.5, lineHeight: titleLeading(14.5), color: colors.ink }}>{title}</Text>
         <Text
           style={{
             fontFamily: titleFont,

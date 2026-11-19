@@ -1,4 +1,5 @@
 import * as FileSystem from 'expo-file-system/legacy';
+import { verifyDownloadedAsset } from '../assetIntegrity';
 import {
   subscribeBackgroundAsset,
   evictBackgroundAsset,
@@ -21,6 +22,7 @@ type MockTask = {
   cancel: jest.Mock;
 };
 const mockTasks: MockTask[] = [];
+jest.mock('../assetIntegrity', () => ({ verifyDownloadedAsset: jest.fn(async () => undefined) }));
 jest.mock('expo-file-system/legacy', () => ({
   documentDirectory: 'file:///docs/',
   getInfoAsync: jest.fn(async (path: string) => mockFiles.has(path) ? { exists: true, size: mockFiles.get(path), isDirectory: false } : { exists: false }),
@@ -517,4 +519,14 @@ test('scratch left by a killed process is swept once, before the first download'
   expect(mockFiles.has('file:///docs/reading-backgrounds/first.webp')).toBe(true);
   expect(mockFiles.has('file:///docs/reading-backgrounds/second.webp')).toBe(true);
   expect(FileSystem.readDirectoryAsync).toHaveBeenCalledTimes(1);
+});
+
+test('a download that fails integrity verification is never promoted and settles to the fallback', async () => {
+  jest.mocked(verifyDownloadedAsset).mockRejectedValueOnce(new Error('content does not match its key'));
+  const listener = subscribe('tampered'); await flush();
+  mockTasks[0].finish(); await flush();
+  expect(listener).toHaveBeenCalledWith(null);
+  expect(FileSystem.moveAsync).not.toHaveBeenCalled();
+  expect(mockFiles.has('file:///docs/reading-backgrounds/tampered.webp')).toBe(false);
+  expect(verifyDownloadedAsset).toHaveBeenCalledWith(expect.stringContaining('tampered.webp'), 'tampered');
 });

@@ -8,8 +8,18 @@
  */
 
 import type { TextStyle } from 'react-native';
-import { fontFamilies, type TypographyScale } from '@/theme/typography';
+import { fontFamilies, typography as baseTypography, type TypographyScale } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
+
+/**
+ * Line height for a title at `fontSize`, using the leading of the shared listing
+ * title token (`typography.listingTitle`, ~1.7x). Indic and Kannada marks above and
+ * below the line clip below ~1.53x / ~1.65x, so titles should take this instead of
+ * a hand-picked ratio.
+ */
+export function titleLeading(fontSize: number): number {
+  return Math.round(fontSize * (baseTypography.listingTitle.lineHeight / baseTypography.listingTitle.fontSize));
+}
 
 /** True only for English — drives italic/size ternaries that are script-class based. */
 export function isLatinLang(lang: Lang): boolean {

@@ -151,3 +151,6 @@ Native iOS/Android layout, screen-reader focus and lifecycle acceptance remain r
 
 ## Proposal 11 — amount input
 `data/daan/amount.ts` validates new amounts only. INR prefix, Indian/international grouping and four digit scripts are supported. Invalid nonblank input cannot save and remains editable; the form previews the interpreted value. Existing ledger hydration/CSV and historical values are unchanged. Proposal 10 (backdating) must preserve this guard when editing the same form. Open audit PR #703 changes the keyboard wrapper and save-failure behavior: retain those independently when integrating. No open Proposal 10 PR was found on 18 November 2026.
+
+### Audit integration follow-up (18 November 2026)
+#705 was merged at `13e51c10`. #703 at `ac0aec45` includes it with no textual Daan conflict, but had never applied its keyboard wrapper or retry helper to Daan. The follow-up uses both shared utilities, awaits durable adds, preserves failed drafts, and serializes add/removal writes. A failed removal stays visible; its confirmation and stable-ID safeguards remain. Native keyboard/device evidence is still pending.

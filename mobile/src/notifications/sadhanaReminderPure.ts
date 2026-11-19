@@ -8,6 +8,8 @@
  * always parameterised.
  */
 
+import type { Lang } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { ROLLING_WINDOW_DAYS } from './pure';
 
 /** Identifier prefix for all PRD-11 sadhana reminders. Lets us cancel just ours. */
@@ -98,13 +100,16 @@ export function planSadhanaReminders(
   return { planned, truncated };
 }
 
-/** Hindi-led notification copy for one planned sadhana reminder. */
-export function formatSadhanaReminderContent(p: PlannedSadhanaNotification): {
+/** Notification copy for one planned sadhana reminder, in the reading language. */
+export function formatSadhanaReminderContent(
+  p: PlannedSadhanaNotification,
+  lang: Lang = 'hi'
+): {
   title: string;
   body: string;
 } {
   return {
-    title: 'संकल्प स्मरण',
-    body: `${p.titleHi} · आज की साधना`,
+    title: contentByLang(lang, 'संकल्प स्मरण', 'Sankalp reminder'),
+    body: `${contentByLang(lang, p.titleHi, p.titleEn)} · ${contentByLang(lang, 'आज की साधना', "Today's practice")}`,
   };
 }

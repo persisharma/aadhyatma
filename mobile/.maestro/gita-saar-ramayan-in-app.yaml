@@ -40,7 +40,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Back to chapters"
 - waitForAnimationToEnd:
     timeout: 30000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - extendedWaitUntil:
     visible: { id: gita-saar-featured }
     timeout: 30000

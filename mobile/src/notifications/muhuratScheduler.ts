@@ -8,7 +8,11 @@
  * from ever touching each other's slots.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planMuhuratReminders,
@@ -28,7 +32,7 @@ export type MuhuratNotificationPayload = {
 
 /** Cancel every muhurat reminder we own, leaving other notifications untouched. */
 export async function cancelAllMuhuratReminders(): Promise<void> {
-  await cancelNotificationFamily(MUHURAT_NOTIF_PREFIX);
+  await settleAfter('muhurat', cancelNotificationFamily(MUHURAT_NOTIF_PREFIX));
 }
 
 /**
@@ -39,12 +43,15 @@ export async function cancelAllMuhuratReminders(): Promise<void> {
  */
 export async function scheduleMuhuratReminders(
   inputs: MuhuratReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  const { planned } = planMuhuratReminders(inputs, now);
+  const { planned } = planMuhuratReminders(inputs, now, familyCap(Platform.OS, 'muhurat'));
+
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('muhurat', lang) : undefined;
 
   const slots: FamilySlot[] = planned.map((p) => {
-    const { title, body } = formatMuhuratReminderContent(p);
+    const { title, body } = formatMuhuratReminderContent(p, lang);
     const payload: MuhuratNotificationPayload = {
       type: 'muhurat-reminder',
       occasionId: p.occasionId,
@@ -67,10 +74,11 @@ export async function scheduleMuhuratReminders(
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
         date: p.fireDate,
-      },
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
     };
   });
 
   // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
-  return armNotificationFamily(MUHURAT_NOTIF_PREFIX, slots);
+  return settleAfter('muhurat', armNotificationFamily(MUHURAT_NOTIF_PREFIX, slots));
 }

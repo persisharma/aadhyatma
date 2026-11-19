@@ -64,20 +64,17 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
-import * as Crypto from 'expo-crypto';
 import * as Notifications from 'expo-notifications';
 import { readNotificationPermissionState } from './permissionState';
+import { getInstallId } from './installId';
 import {
   EAS_PROJECT_ID,
-  INSTALL_ID_KEY,
   PUSH_REGISTRY_ENDPOINT,
   PUSH_SYNC_TIMEOUT_MS,
   PUSH_TOKEN_KEY,
   PUSH_TOKEN_SYNC_KEY,
   buildDeviceRegistrationBody,
   deviceRegistrationFingerprint,
-  isUsableInstallId,
-  makeInstallId,
   resolveApiKey,
   resolvePushEndpoint,
   runUploadWithRetry,
@@ -138,23 +135,7 @@ async function write(key: string, value: string): Promise<void> {
   }
 }
 
-/**
- * Our stable install id — the device id captured on open.
- *
- * Minted once from a fresh random UUID (no permission, no OS identifier, no push
- * token required), persisted, then read back forever. It is the permission-free
- * handle a server joins the push token to later, so it must exist on the very
- * first open; `Crypto.randomUUID()` is the entropy source and carries no
- * privacy-disclosure weight. A failure to read/write storage only costs a
- * redundant mint-and-register on the next open.
- */
-export async function getInstallId(now: number = Date.now()): Promise<string> {
-  const existing = await read(INSTALL_ID_KEY);
-  if (isUsableInstallId(existing)) return existing.trim();
-  const minted = makeInstallId(Crypto.randomUUID(), now);
-  await write(INSTALL_ID_KEY, minted);
-  return minted;
-}
+export { getInstallId };
 
 /** The last token we captured, without doing any work to refresh it. */
 export async function getCapturedPushToken(): Promise<string | null> {

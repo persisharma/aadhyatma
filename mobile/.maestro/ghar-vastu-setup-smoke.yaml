@@ -112,6 +112,6 @@ appId: com.prashantsharma.vedansh
     id: "ghar-remeasure"
 
 # ── Back out cleanly (finish replaced the route; Back returns to Vastu Disha) ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "Vastu Disha"

@@ -23,11 +23,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import { readNotificationPermissionState } from './permissionState';
+import { getInstallId } from './installId';
 import {
-  INSTALL_ID_KEY,
   PUSH_SYNC_TIMEOUT_MS,
-  isUsableInstallId,
-  makeInstallId,
   runUploadWithRetry,
 } from './pushTokenPure';
 import {
@@ -100,16 +98,6 @@ function readAppVersion(): string {
   }
 }
 
-/** Our stable install id — shared with the push registrar, minted here if the
- * device never granted notifications (so no push token ever seeded it). */
-async function resolveInstallId(now: number): Promise<string> {
-  const existing = await read(INSTALL_ID_KEY);
-  if (isUsableInstallId(existing)) return existing.trim();
-  const minted = makeInstallId(`${now}-${Math.random()}`, now);
-  await write(INSTALL_ID_KEY, minted);
-  return minted;
-}
-
 async function attemptUpload(endpoint: string, body: string, apiKey: string): Promise<number | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), PUSH_SYNC_TIMEOUT_MS);
@@ -138,7 +126,7 @@ async function runHeartbeat(now: number): Promise<DeviceHeartbeatResult> {
 
   const permission = await readNotificationPermissionState();
   const alarmCount = countEnabledAlarms(await read(JAPAM_ALARMS_KEY));
-  const installId = await resolveInstallId(now);
+  const installId = await getInstallId(now);
 
   const body: HeartbeatBody = {
     installId,

@@ -108,7 +108,7 @@ appId: com.prashantsharma.vedansh
     id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Krishna Stotram
@@ -124,7 +124,7 @@ appId: com.prashantsharma.vedansh
     id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Bajrang Baan
@@ -140,7 +140,7 @@ appId: com.prashantsharma.vedansh
     id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Ram Stuti
@@ -156,11 +156,11 @@ appId: com.prashantsharma.vedansh
     id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # Back to Home — stotram tile must now render WITHOUT the badge.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

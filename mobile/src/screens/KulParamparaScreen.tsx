@@ -1,6 +1,6 @@
 import StoryIcon from '@/components/StoryIcon';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -21,6 +21,7 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { panchangTabTarget } from '@/navigation/entryRoutes';
 import type { MoreStackParamList, TabParamList } from '@/navigation/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'KulParampara'>;
 
@@ -53,7 +54,7 @@ export default function KulParamparaScreen({ navigation }: Props) {
       return undefined;
     }
     let cancelled = false;
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       const next = nextKulVratOccurrence(vratRule.id, startOfLocalDay(new Date()));
       if (!cancelled) setVratNext(next);
     });

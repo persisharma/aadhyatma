@@ -9,6 +9,8 @@ let mockLang: 'hi' | 'en' = 'hi';
 let mockReduceMotion = false;
 const mockNavigate = jest.fn();
 let mockObservances: unknown[] = [];
+// Date-aware override for the pre-dawn carry-over case.
+let mockObservancesFor: ((date: Date) => unknown[]) | null = null;
 let mockMuhurat: { muhurat: unknown; panchang: unknown } = { muhurat: null, panchang: null };
 const mockUseMuhurat = jest.fn(() => mockMuhurat);
 
@@ -33,7 +35,7 @@ jest.mock('@/utils/useReducedMotion', () => ({ useReducedMotion: () => mockReduc
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: mockLang }) }));
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
-  useObservancesForDate: () => mockObservances,
+  useObservancesForDate: (date: Date) => (mockObservancesFor ? mockObservancesFor(date) : mockObservances),
 }));
 jest.mock('@/panchang/useMuhurat', () => ({
   useMuhurat: (...args: unknown[]) => mockUseMuhurat(...(args as [])),
@@ -140,6 +142,7 @@ beforeEach(() => {
   mockNavigate.mockClear();
   mockUseMuhurat.mockClear();
   mockObservances = [];
+  mockObservancesFor = null;
   mockMuhurat = { muhurat: null, panchang: null };
   mockKnownWindow = null;
   mockHydrateSolves.mockClear();
@@ -205,6 +208,28 @@ describe('TodayStrip', () => {
     // to a single trailing AM/PM (formatRange).
     expect(text).toContain('11:17 – 12:05');
     expect(text).toContain('09:00 – 10:39');
+  });
+
+  it('before sunrise carries last night\'s festival over, as the Panchang ribbon does', () => {
+    // 00:00–sunrise is still yesterday's Hindu day. Home used to show the new
+    // civil date's observance while the Panchang tab showed last night's.
+    const yesterday = { date: new Date(), rule: { id: 'janmashtami', nameHi: 'जन्माष्टमी', nameEn: 'Janmashtami' } };
+    const todays = { date: new Date(), rule: { id: 'nanda-utsav', nameHi: 'नन्दोत्सव', nameEn: 'Nanda Utsav' } };
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+    mockObservancesFor = (date) => (date.getTime() < startOfToday.getTime() ? [yesterday] : [todays]);
+
+    // Sunrise still ahead → pre-dawn.
+    mockMuhurat = { muhurat: muhuratDay, panchang: { ...panchangDay, sunrise: new Date(Date.now() + 60 * 60_000) } };
+    const before = textOf(render());
+    expect(before).toContain('जन्माष्टमी की रात्रि');
+    expect(before).not.toContain('नन्दोत्सव');
+
+    // Sunrise passed → the civil date's own observance.
+    mockMuhurat = { muhurat: muhuratDay, panchang: { ...panchangDay, sunrise: new Date(Date.now() - 60 * 60_000) } };
+    const after = textOf(render());
+    expect(after).toContain('नन्दोत्सव');
+    expect(after).not.toContain('जन्माष्टमी');
   });
 
   it('lays the chips on one horizontal-scroll row (no wrap on narrow devices)', () => {

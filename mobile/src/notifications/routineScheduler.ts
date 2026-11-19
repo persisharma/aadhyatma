@@ -6,12 +6,17 @@
  * expo-notifications glue around it — mirroring `sadhanaScheduler.ts`.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap, familyWindowDays } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planRoutineReminders,
   formatRoutineReminderContent,
   ROUTINE_NOTIF_PREFIX,
+  ROUTINE_WINDOW_DAYS,
   type RoutineReminderInput,
 } from './routineReminderPure';
 
@@ -23,7 +28,7 @@ export type RoutineNotificationPayload = {
 
 /** Cancel every routine reminder we own, leaving other notifications untouched. */
 export async function cancelAllRoutineReminders(): Promise<void> {
-  await cancelNotificationFamily(ROUTINE_NOTIF_PREFIX);
+  await settleAfter('routine', cancelNotificationFamily(ROUTINE_NOTIF_PREFIX));
 }
 
 /**
@@ -33,12 +38,20 @@ export async function cancelAllRoutineReminders(): Promise<void> {
  */
 export async function scheduleRoutineReminders(
   inputs: RoutineReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  const { planned } = planRoutineReminders(inputs, now);
+  const { planned } = planRoutineReminders(
+    inputs,
+    now,
+    familyWindowDays(Platform.OS, 'routine', ROUTINE_WINDOW_DAYS),
+    familyCap(Platform.OS, 'routine')
+  );
+
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('routine', lang) : undefined;
 
   const slots: FamilySlot[] = planned.map((p) => {
-    const { title, body } = formatRoutineReminderContent(p);
+    const { title, body } = formatRoutineReminderContent(p, lang);
     const payload: RoutineNotificationPayload = {
       type: 'routine-reminder',
       routineId: p.routineId,
@@ -55,10 +68,11 @@ export async function scheduleRoutineReminders(
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
         date: p.fireDate,
-      },
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
     };
   });
 
   // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
-  return armNotificationFamily(ROUTINE_NOTIF_PREFIX, slots);
+  return settleAfter('routine', armNotificationFamily(ROUTINE_NOTIF_PREFIX, slots));
 }

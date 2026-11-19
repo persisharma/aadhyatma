@@ -109,7 +109,7 @@ appId: com.prashantsharma.vedansh
     visible: "About"
     timeout: 15000
 - assertVisible: "Next · .*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Cleanup: turn Jain back off so the next flow starts unlensed ──

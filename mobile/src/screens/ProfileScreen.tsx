@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useTodayKey } from '@/utils/useTodayKey';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -82,7 +83,10 @@ export default function ProfileScreen({ navigation }: Props) {
   } = useUserActivity();
 
   const [mode, setMode] = useState<RangeMode>('lifetime');
-  const today = useMemo(() => new Date(), []);
+  // Re-read when the local day changes, so the ranges do not stay on yesterday.
+  const todayKey = useTodayKey();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const today = useMemo(() => new Date(), [todayKey]);
 
   const identityName = orderTitlesByLanguage(lang, 'साधक', 'Sadhak', {
     devPrimary: 22,

@@ -158,6 +158,35 @@ describe('RoutineContext — timestamped done marks (PRD-10)', () => {
     expect(get().manualDoneAt('r1:a')).toBe(0);
   });
 
+  it("drops yesterday's marks when the app stays alive past midnight", async () => {
+    // The date filter used to run only when the provider loaded from storage, so
+    // a process that survived the night kept showing yesterday's items as done —
+    // and the first mark of the new day saved them again under today's date.
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date(2026, 10, 17, 22, 0, 0));
+    try {
+      const get = mountProbe();
+      await act(async () => undefined);
+      act(() => get().markManualDone('r1:a'));
+      expect(get().isManualDone('r1:a')).toBe(true);
+
+      // 02:00 the next day; the process kept running.
+      act(() => {
+        jest.advanceTimersByTime(4 * 60 * 60 * 1000);
+      });
+      expect(get().isManualDone('r1:a')).toBe(false);
+      expect(get().manualDoneAt('r1:a')).toBeUndefined();
+
+      act(() => get().markManualDone('r1:b'));
+      expect(get().isManualDone('r1:b')).toBe(true);
+      const persisted = JSON.parse(store[DONE_KEY] as string);
+      expect(persisted.date).toBe(toDateKey(new Date(2026, 10, 18)));
+      expect(Object.keys(persisted.marks)).toEqual(['r1:b']);
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('discards a previous-day done-set (daily reset)', async () => {
     store[DONE_KEY] = JSON.stringify({ date: '2000-01-01', marks: { 'r1:a': 123 } });
     const get = mountProbe();

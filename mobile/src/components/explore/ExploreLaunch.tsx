@@ -1,6 +1,6 @@
 import { isBrandLaunchVisible, useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import React, { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, Linking, Platform } from 'react-native';
+import { AppState, Linking, Platform } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import * as Notifications from 'expo-notifications';
 import * as Updates from 'expo-updates';
@@ -15,6 +15,7 @@ import { HOUR, pickExplore, recordDecline, recordShown, recordVisit } from '@/da
 import { sectionForRoute, type ExploreSection } from '@/data/discovery/sections';
 import { exploreSnapshot, loadExplore, setExploreVisible, updateExplore, useExploreStore } from '@/data/discovery/store';
 import ExploreSheet from './ExploreSheet';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 export default function ExploreLaunch({ targeted = false }: { targeted?: boolean }) {
     const snapshot = useExploreStore(), tour = useTour(), reminders = useNotificationPreferences(), rating = useRatingPrompt();
     const launch = useLaunchAsks();
@@ -75,7 +76,7 @@ export default function ExploreLaunch({ targeted = false }: { targeted?: boolean
             return;
         let cancelled = false;
         let timer: ReturnType<typeof setTimeout> | undefined;
-        const task = InteractionManager.runAfterInteractions(() => {
+        const task = runWhenIdle(() => {
             timer = setTimeout(async () => {
                 if (cancelled || isBrandLaunchVisible() || claimed.current || intent.current || higherRef.current || AppState.currentState !== 'active' || navigationRef.getCurrentRoute()?.name !== 'Home')
                     return;

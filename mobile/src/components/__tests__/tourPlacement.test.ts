@@ -4,6 +4,7 @@ import {
   inflateRect,
   sameRect,
   measureSettled,
+  tourCardMaxHeight,
   CARD_GAP,
   MEASURE_MAX_TRIES,
   MEASURE_MIN_TRIES,
@@ -89,6 +90,31 @@ describe('placeTourCard', () => {
     const mid = placeTourCard({ x: 175, y: 700, width: 40, height: 50 }, screen, insets);
     expect(mid.arrowLeft).toBeGreaterThan(150);
     expect(mid.arrowLeft).toBeLessThan(180);
+  });
+});
+
+describe('tourCardMaxHeight (card band under the Skip row)', () => {
+  // Enlarged iOS text in CI: the step counter + Skip row ended at y=106 and the
+  // uncapped card (~715pt) reached above it, so Skip could not be tapped.
+  const band = { top: 106, bottom: 34 };
+
+  test('is the band between the header row and the bottom safe area, less the pin margins', () => {
+    expect(tourCardMaxHeight(screen, band)).toBe(844 - 106 - 34 - 16);
+    expect(tourCardMaxHeight({ width: 390, height: 100 }, band)).toBe(0);
+  });
+
+  test('a capped card never starts above the header row, whatever the target or copy length', () => {
+    const max = tourCardMaxHeight(screen, band);
+    const homeTab = tabItemRect(0, 5, screen, band.bottom);
+    const targets = [homeTab, { x: 20, y: 120, width: 350, height: 80 }, { x: 0, y: 300, width: 390, height: 300 }];
+    for (const target of targets) {
+      for (const h of [200, 400, 600, max]) {
+        const p = placeTourCard(target, screen, band, 20, 22, h);
+        const top = p.top ?? screen.height - (p.bottom as number) - h;
+        expect(top).toBeGreaterThanOrEqual(band.top);
+        expect(top + h).toBeLessThanOrEqual(screen.height - band.bottom);
+      }
+    }
   });
 });
 

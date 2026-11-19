@@ -24,6 +24,19 @@ import {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
+// One error boundary per tab stack: a render error or failed lazy screen costs
+// that tab (Retry / Home fallback), never the whole app. Panchang/Vrat have theirs
+// in CalendarStackRoot below.
+function HomeTabRoot() {
+  return <StackLoadBoundary><HomeStackNavigator /></StackLoadBoundary>;
+}
+function AudioTabRoot() {
+  return <StackLoadBoundary><AudioStackNavigator /></StackLoadBoundary>;
+}
+function MoreTabRoot() {
+  return <StackLoadBoundary><MoreStackNavigator /></StackLoadBoundary>;
+}
+
 // Full-screen reader routes that should hide the bottom tab bar so it doesn't
 // compete with immersive reading. Lives at the tab level (rather than per-screen
 // setOptions) so the bar animates out cleanly and restores itself on blur.
@@ -95,7 +108,7 @@ export default function TabNavigator() {
     >
       <Tab.Screen
         name="HomeTab"
-        component={HomeStackNavigator}
+        component={HomeTabRoot}
         options={({ route }) => {
           const focused = getFocusedRouteNameFromRoute(route) ?? 'Home';
           return {
@@ -159,7 +172,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="AudioTab"
-        component={AudioStackNavigator}
+        component={AudioTabRoot}
         options={{
           title: contentByLang(lang, 'भजन', 'Bhajan'),
           tabBarLabel: tabLabel('भजन', 'Bhajan'),
@@ -172,7 +185,7 @@ export default function TabNavigator() {
       />
       <Tab.Screen
         name="MoreTab"
-        component={MoreStackNavigator}
+        component={MoreTabRoot}
         options={({ route }) => ({
           // Preserve existing cross-stack and notification destinations while
           // exposing the hub through Home's gear instead of a sixth tab slot.

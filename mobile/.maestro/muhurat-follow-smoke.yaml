@@ -207,7 +207,7 @@ appId: com.prashantsharma.vedansh
 # Griha Pravesh is chaturmas-barred for a large part of the year; when its
 # window is empty the screen must offer a follow on the first date after.
 # headerShown:false custom back chevron — tap it (edge-swipe `- back` won't pop).
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - tapOn: { id: "tab-panchang" }
 - waitForAnimationToEnd

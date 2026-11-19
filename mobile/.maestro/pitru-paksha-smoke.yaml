@@ -123,7 +123,7 @@ appId: com.prashantsharma.vedansh
             text: "Open Gita — Adhyaya 15"
           centerElement: true
           timeout: 15000
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
       # The day hands off into the reader ON the lesson that answers it.
       - scrollUntilVisible:
@@ -181,7 +181,7 @@ appId: com.prashantsharma.vedansh
       - tapOn: "Open katha rama-jalanjali"
       - waitForAnimationToEnd
       - assertVisible: { id: "pitru-katha-screen" }
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
       # Glossary: looked up behind its door.
       - scrollUntilVisible:
@@ -200,11 +200,11 @@ appId: com.prashantsharma.vedansh
       - waitForAnimationToEnd
       - assertVisible: "1 / 7"
       - assertVisible: "What Pitru Paksha is"
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
-      - tapOn: "Back"
+      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
 
 # ── 5. Delete the ancestor — back to the empty state ──
