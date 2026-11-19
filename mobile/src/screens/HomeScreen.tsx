@@ -26,6 +26,8 @@ import { pick, contentByLang } from '@/utils/localize';
 import { titleFontByLang, pillTextStyle } from '@/utils/langType';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
+import FestiveToran from '@/components/FestiveToran';
+import { getTodayFestival } from '@/data/discoveryMeta';
 import { useObservancesForDate, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useTodayKey } from '@/utils/useTodayKey';
 import { launchMarkOnce } from '@/utils/launchTrace';
@@ -43,7 +45,9 @@ const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHom
 
 const FeaturedReadings = React.lazy(() => import('@/components/home/FeaturedReadings'));
 const JapmalaBanner = React.lazy(() => import('@/components/home/JapmalaBanner'));
-const ContinueReading = React.lazy(() => import('@/components/home/ContinueReading'));
+// The Today cluster (restored 19 Nov 2026): today's deity links and the FOR TODAY row.
+const DeityDayLinks = React.lazy(() => import('@/components/DeityDayLinks'));
+const TodayRecommendationsRow = React.lazy(() => import('@/components/TodayRecommendationsRow'));
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
@@ -84,6 +88,8 @@ export default function HomeScreen({ navigation }: Props) {
 
   const todayKey = useTodayKey();
   const today = React.useMemo(() => new Date(todayKey), [todayKey]);
+  // A catalog festival day hangs the toran under the wordmark (design.md §55).
+  const todayFestival = React.useMemo(() => getTodayFestival(today), [today]);
   const [calendar] = usePanchangCalendarSystem();
   const observances = useObservancesForDate(today,calendar);
   const occasion = observances.find(o => o.rule.category === 'festival') ?? observances[0];
@@ -372,8 +378,13 @@ export default function HomeScreen({ navigation }: Props) {
             </Text>
           </Pressable>
 
+          {todayFestival && (
+            <FestiveToran greetingHi={todayFestival.greetingHi} greetingEn={todayFestival.greetingEn} />
+          )}
+
           <TodayStrip />
-          <React.Suspense fallback={null}><ContinueReading navigation={navigation} /></React.Suspense>
+          <React.Suspense fallback={null}><DeityDayLinks /></React.Suspense>
+          <React.Suspense fallback={null}><TodayRecommendationsRow horizontalGutter={gridPadding} /></React.Suspense>
           <React.Suspense fallback={<View style={{minHeight:198}} />}><FeaturedReadings navigation={navigation} width={gridWidth} largeText={largeText}/></React.Suspense>
           <View ref={japaTileRef} collapsable={false}>
             <React.Suspense fallback={<View style={{minHeight:114}} />}><JapmalaBanner navigation={navigation}/></React.Suspense>
@@ -415,14 +426,14 @@ export default function HomeScreen({ navigation }: Props) {
 
           {heading(pick(lang,{hi:'कथाएँ और परंपराएँ',en:'Stories and traditions',gu:'કથાઓ અને પરંપરાઓ',kn:'ಕಥೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳು'}))}
           <View style={{ gap: 12, marginBottom: 12 }}>
-            <React.Suspense fallback={<View style={{ height: 108 }} />}>
+            <React.Suspense fallback={<View style={{ height: 86 }} />}>
               <KidsStoriesHomeCard
                 onPress={() => activateTile(() => navigation.navigate('KidsStoryLibrary'))}
                 onPressIn={() => beginTilePress(() => navigation.navigate('KidsStoryLibrary'))}
                 onPressOut={finishTilePress}
               />
             </React.Suspense>
-            <React.Suspense fallback={<View style={{ height: 108 }} />}>
+            <React.Suspense fallback={<View style={{ height: 86 }} />}>
               <SanatanHomeCard
                 onPress={() => activateTile(() => navigation.navigate('SanatanParichay'))}
                 onPressIn={() => beginTilePress(() => navigation.navigate('SanatanParichay'))}

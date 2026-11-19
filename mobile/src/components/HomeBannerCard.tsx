@@ -7,7 +7,7 @@ import { titleFontByLang } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import AppIcon from '@/components/AppIcon';
 
-/** Side of the square artwork slot; a card's own cover sizes itself from this. */
+/** Side of the square picture; the card is as tall as it (more only when the text needs it). */
 export const HOME_BANNER_ART = 84;
 
 type Props = {
@@ -37,7 +37,8 @@ export default function HomeBannerCard({ testID, title, action,
       backgroundColor: colors.cardActiveFrom }, elevation.card, pressed && styles.pressed]}>
     <LinearGradient colors={[colors.cardActiveFrom, colors.cardActiveTo]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
       pointerEvents="none" style={[StyleSheet.absoluteFillObject, { borderRadius: radii.lg }]} />
-    <View style={styles.artwork} accessible={false}>{artwork}</View>
+    {/* Edge to edge on the left and the full height of the card; it fills this slot. */}
+    <View style={[styles.artwork, { borderTopLeftRadius: radii.lg - 1, borderBottomLeftRadius: radii.lg - 1 }]} accessible={false}>{artwork}</View>
     <View style={styles.content}>
       <Text style={{ color: colors.ink, fontFamily: face.fontFamily, fontSize: face.fontSize,
         fontStyle: face.fontStyle, letterSpacing: face.letterSpacing,
@@ -55,9 +56,9 @@ export default function HomeBannerCard({ testID, title, action,
 }
 
 const styles = StyleSheet.create({
-  card: { minHeight: 108, borderWidth: 1, padding: 12, flexDirection: 'row', alignItems: 'center', gap: 15 },
+  card: { borderWidth: 1, flexDirection: 'row', alignItems: 'stretch', gap: 14 },
   pressed: { opacity: 0.88 },
-  artwork: { width: HOME_BANNER_ART, height: HOME_BANNER_ART, flexShrink: 0, justifyContent: 'center' },
-  content: { flex: 1, minWidth: 0, alignSelf: 'stretch', justifyContent: 'center', gap: 4 },
+  artwork: { width: HOME_BANNER_ART, minHeight: HOME_BANNER_ART, flexShrink: 0, overflow: 'hidden' },
+  content: { flex: 1, minWidth: 0, paddingVertical: 8, paddingRight: 12, justifyContent: 'center', gap: 2 },
   actionRow: { marginTop: 2, flexDirection: 'row', alignItems: 'center', gap: 5 },
 });

@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { pick } from '@/utils/localize';
-import HomeBannerCard, { HOME_BANNER_ART } from '@/components/HomeBannerCard';
+import HomeBannerCard from '@/components/HomeBannerCard';
 import { assetBaseUrl, remoteAssetRequest } from '@/data/assetManifest';
 import kidsStoryManifest from '@/data/kidsStoryAssetManifest.json';
 import { useCachedAsset } from '@/utils/useCachedAsset';
@@ -46,5 +46,5 @@ export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: 
 }
 
 const styles = StyleSheet.create({
-  cover: { width: HOME_BANNER_ART, height: HOME_BANNER_ART, borderRadius: 12 },
+  cover: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
 });

@@ -12,5 +12,5 @@ export default function SanatanHomeCard(props: { onPress: () => void; onPressIn:
   const action = contentByLang(lang, 'कभी सोचा है? जानें', 'Explore traditions');
   return <HomeBannerCard {...props} testID="home-sanatan-card" title={title}
     action={action} accessibilityLabel={`${title}. ${subtitle}`}
-    artwork={<FramedPainting source={require('@assets/sanatan-parichay/basics.webp')} testID="sanatan-home-artwork" />} />;
+    artwork={<FramedPainting fill source={require('@assets/sanatan-parichay/basics.webp')} testID="sanatan-home-artwork" />} />;
 }

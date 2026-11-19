@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
-import JapmalaBanner from '@/components/home/JapmalaBanner';
+import JapmalaBanner, { JAPMALA_ART_RATIO } from '@/components/home/JapmalaBanner';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 
 let mockRecitations: Record<string, { count: number; updatedAt: number }> = {};
@@ -45,6 +45,10 @@ test('Japmala artwork fills the rounded frame independently of control spacing',
     height: '100%',
   });
   expect(image.props.accessible).toBe(false);
+  // Never stretched: the painting is drawn at its own proportions, pinned left.
+  expect(image.props.resizeMode).toBe('cover');
+  const art = tree.root.findAll(node => node.props.testID === 'home-japa-art')[0];
+  expect(StyleSheet.flatten(art.props.style)).toMatchObject({ position: 'absolute', left: 0, top: 0, bottom: 0, aspectRatio: JAPMALA_ART_RATIO, minWidth: '100%' });
 
   act(() => tree.unmount());
 });

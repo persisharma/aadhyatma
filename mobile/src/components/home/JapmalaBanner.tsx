@@ -16,6 +16,8 @@ const curve =
   'M86 32 C66 12 54 4 36 5 C-4 6 -4 58 36 59 C55 60 70 48 86 32 C105 13 120 4 137 5 C177 6 177 58 137 59 C117 60 104 49 86 32 Z';
 // Native SVG dash distances use viewBox units, even when rendered at phone size.
 const loopLength = 416.63;
+// ananta-jap.jpg is 1102 × 292.
+export const JAPMALA_ART_RATIO = 1102 / 292;
 const numerals = { hi: 'hi-IN-u-nu-deva', gu: 'gu-IN-u-nu-gujr', kn: 'kn-IN-u-nu-knda', en: 'en-IN' };
 
 export default function JapmalaBanner({
@@ -65,13 +67,19 @@ export default function JapmalaBanner({
     navigation.navigate('CategoryList', { categoryId: hymn ? 'stotram' : 'japam', practice: true });
   return (
     <View testID="home-japa-banner" style={styles.banner}>
-      <Image
-        source={require('../../../assets/home-readings/ananta-jap.jpg')}
-        resizeMode="stretch"
-        style={styles.artwork}
-        accessible={false}
-        accessibilityIgnoresInvertColors
-      />
+      {/* The painting keeps its own proportions: its frame is as tall as the banner,
+          as wide as that height needs (never narrower than the banner) and pinned to
+          the left, so a taller banner crops the sky on the right instead of
+          stretching Hanuman ji. */}
+      <View testID="home-japa-art" pointerEvents="none" style={styles.artFrame}>
+        <Image
+          source={require('../../../assets/home-readings/ananta-jap.jpg')}
+          resizeMode="cover"
+          style={styles.artwork}
+          accessible={false}
+          accessibilityIgnoresInvertColors
+        />
+      </View>
       <Pressable
         testID="home-japa-choose"
         accessibilityRole="button"
@@ -162,6 +170,7 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
   // Keep foreground spacing off the frame so the image fills its entire inner bounds.
+  artFrame: { position: 'absolute', left: 0, top: 0, bottom: 0, aspectRatio: JAPMALA_ART_RATIO, minWidth: '100%' },
   artwork: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
   door: { flex: 1, minHeight: 98, flexDirection: 'row', alignItems: 'center' },
   info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3, paddingVertical: 2, justifyContent: 'center' },

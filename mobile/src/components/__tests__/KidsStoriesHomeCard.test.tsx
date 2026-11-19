@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import KidsStoriesHomeCard from '../KidsStoriesHomeCard';
-import { HOME_BANNER_ART } from '../HomeBannerCard';
 import manifest from '@/data/kidsStoryAssetManifest.json';
 
 let mockUri: string | null = null;
@@ -19,9 +18,9 @@ test('the Home story door remains usable while CDN art loads, then uses the cach
   act(() => { tree = TestRenderer.create(element); });
   const placeholder = tree.root.findAllByType(View).find(n => {
     const style = StyleSheet.flatten(n.props.style);
-    return style?.width === HOME_BANNER_ART && style.backgroundColor;
+    return style?.width === '100%' && style.backgroundColor;
   })!;
-  expect(StyleSheet.flatten(placeholder.props.style).height).toBe(HOME_BANNER_ART);
+  expect(StyleSheet.flatten(placeholder.props.style).height).toBe('100%');
   expect(tree.root.findAllByType(Image)).toHaveLength(0);
   const request = mockCache.mock.calls[0][0];
   expect(request).toEqual({ key: manifest.assets['story-library'].hash, ext: 'webp', subdir: 'kids-stories',
@@ -32,7 +31,8 @@ test('the Home story door remains usable while CDN art loads, then uses the cach
   act(() => tree.update(React.cloneElement(element)));
   const image = tree.root.findByType(Image);
   expect(image.props.source).toEqual({ uri: mockUri });
-  expect(StyleSheet.flatten(image.props.style)).toMatchObject({ width: HOME_BANNER_ART, height: HOME_BANNER_ART });
+  // The cover fills the card's square picture slot (HomeBannerCard owns its size).
+  expect(StyleSheet.flatten(image.props.style)).toMatchObject({ position: 'absolute', width: '100%', height: '100%' });
   act(() => tree.unmount());
   mockUri = null;
 });
