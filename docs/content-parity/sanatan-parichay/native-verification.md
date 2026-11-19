@@ -96,3 +96,28 @@ Record device/OS, screenshots and actual exports before marking ready.
 This Linux environment exposes no `adb`, `maestro` or iOS simulator, so none of
 those device checks has been claimed. Written/parsed flows are distinct from
 executed native E2E. Required pending checks keep the PR draft.
+
+## Review round — 19 November 2026 (commit `6285f67eb`)
+
+Scope: the shared-component rebuild of Sanatan Parichay, the reader page counter
+and picker in every reader, the 33-devata lesson leading with koti, and the Home
+notes raised in the same review (Japmala banner, banner cards, "और जानें").
+Device: iPhone 17 Pro simulator, iOS 26.5, native debug build, Metro dev bundle.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Typecheck; Jest (422 suites, 4788 tests); data (249) and Ask (49) suites | PASS | Run on the working tree that became `6285f67eb`. |
+| `sanatan-parichay-smoke.yaml`: hub card → lesson, koti-first page title, counter opens the named picker, jump to page 3, back to page 2, plate caption, viewer zoom buttons, resume on page 2 after relaunch | PASS | English, Standard size. |
+| Counter and picker in an ordinary reader (Hanuman Chalisa: `1 / 43` → picker → `12 / 43`) | PASS | Ad-hoc flow, English, Standard size. |
+| Home Japmala banner: single clean edge, one tap target, opens the Japmala picker; Back returns to Home | PASS | Ad-hoc flow and screenshots, Hindi, Standard size. |
+| Home banner cards in one language; "और जानें" carousel present with a shuffled lead card | PASS | Screenshot, Hindi, Standard size. One launch observed, so a *different* order on the next launch is covered by the unit tests, not by the device. |
+| `home-featured-readings`, `japam-smoke`, `japam-infinity-smoke`, `japam-sankalp-smoke`, `discover-icons-smoke` | PENDING | Not completed: Metro's dev bundler ran out of memory (8 GB and 12 GB heaps) while these flows cold-launched with cleared state. Needs a Metro-free build or a rerun one flow at a time. |
+| Other Sanatan flows (`sanatan-swastika-guide`, `sanatan-visual-learning`, `sanatan-native-collections`) | PENDING | Not run. |
+| Counter and picker in the other 25 readers on a device | PENDING | Covered by typecheck, each reader's Jest suite and the screen-scanning guard only. Far jumps in Kids Stories and the comic, the Gita Saar keyboard case, the Vidhi steps and long named rows at Large size need a look. |
+| Gujarati and Kannada; Large size; compact width; double-tap zoom; Android | PENDING | Not run. |
+
+A debug-build note for whoever reruns the flows: the "Open debugger to view
+warnings" toast covers the setup sheet's Continue button and the tab bar. It was
+raised on every Home render by a malformed gradient offset in the Japmala banner,
+fixed in this round; a new warning anywhere will bring it back and break
+`_launch.yaml` at the setup sheet.
