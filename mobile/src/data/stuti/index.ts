@@ -46,7 +46,8 @@ export type StutiId =
   | 'durga-saptashati-chapter-11'
   | 'durga-saptashati-chapter-12'
   | 'durga-saptashati-chapter-13'
-  | 'kanakadhara-stotram';
+  | 'kanakadhara-stotram'
+  | 'aditya-hridayam';
 
 export type StutiPayload = {
   id: StutiId;
@@ -56,7 +57,7 @@ export type StutiPayload = {
   verses: readonly StutiVerse[];
 };
 
-const registry: Record<Exclude<StutiId, DohaId | 'durga-saptashati-chapter-1' | 'durga-saptashati-chapter-2' | 'durga-saptashati-chapter-3' | 'durga-saptashati-chapter-4' | 'durga-saptashati-chapter-5' | 'durga-saptashati-chapter-6' | 'durga-saptashati-chapter-7' | 'durga-saptashati-chapter-8' | 'durga-saptashati-chapter-9' | 'durga-saptashati-chapter-10' | 'durga-saptashati-chapter-11' | 'durga-saptashati-chapter-12' | 'durga-saptashati-chapter-13' | 'hanuman-bahuk' | 'durga-argala-stotram' | 'durga-kilak-stotram' | 'kanakadhara-stotram'>, StutiPayload> = {
+const registry: Record<Exclude<StutiId, DohaId | 'durga-saptashati-chapter-1' | 'durga-saptashati-chapter-2' | 'durga-saptashati-chapter-3' | 'durga-saptashati-chapter-4' | 'durga-saptashati-chapter-5' | 'durga-saptashati-chapter-6' | 'durga-saptashati-chapter-7' | 'durga-saptashati-chapter-8' | 'durga-saptashati-chapter-9' | 'durga-saptashati-chapter-10' | 'durga-saptashati-chapter-11' | 'durga-saptashati-chapter-12' | 'durga-saptashati-chapter-13' | 'hanuman-bahuk' | 'durga-argala-stotram' | 'durga-kilak-stotram' | 'kanakadhara-stotram' | 'aditya-hridayam'>, StutiPayload> = {
   'parshuram-stotram': { id: 'parshuram-stotram', titleHi: parshuramStotram.titleHi, titleEn: parshuramStotram.titleEn, deity: parshuramStotram.deity, verses: parshuramStotram.verses },
   'krishna-stuti': {
     id: 'krishna-stuti',
@@ -99,6 +100,7 @@ export const stutiIds: readonly StutiId[] = [
   'durga-argala-stotram',
   'durga-kilak-stotram',
   'kanakadhara-stotram',
+  'aditya-hridayam',
   'durga-saptashati-chapter-1',
   'durga-saptashati-chapter-2',
   'durga-saptashati-chapter-3',
@@ -132,8 +134,9 @@ export function getStuti(id: string | undefined): StutiPayload {
   if (id === 'durga-argala-stotram') return require('./durga-argala-stotram.json') as StutiPayload;
   if (id === 'durga-kilak-stotram') return require('./durga-kilak-stotram.json') as StutiPayload;
   if (id === 'kanakadhara-stotram') return require('./kanakadhara-stotram.json') as StutiPayload;
+  if (id === 'aditya-hridayam') return require('./aditya-hridayam.json') as StutiPayload;
   if (isDohaId(id)) return getDoha(id);
-  if (id && id in registry) return registry[id as Exclude<StutiId, DohaId | 'durga-saptashati-chapter-1' | 'durga-saptashati-chapter-2' | 'durga-saptashati-chapter-3' | 'durga-saptashati-chapter-4' | 'durga-saptashati-chapter-5' | 'durga-saptashati-chapter-6' | 'durga-saptashati-chapter-7' | 'durga-saptashati-chapter-8' | 'durga-saptashati-chapter-9' | 'durga-saptashati-chapter-10' | 'durga-saptashati-chapter-11' | 'durga-saptashati-chapter-12' | 'durga-saptashati-chapter-13' | 'hanuman-bahuk' | 'durga-argala-stotram' | 'durga-kilak-stotram' | 'kanakadhara-stotram'>];
+  if (id && id in registry) return registry[id as Exclude<StutiId, DohaId | 'durga-saptashati-chapter-1' | 'durga-saptashati-chapter-2' | 'durga-saptashati-chapter-3' | 'durga-saptashati-chapter-4' | 'durga-saptashati-chapter-5' | 'durga-saptashati-chapter-6' | 'durga-saptashati-chapter-7' | 'durga-saptashati-chapter-8' | 'durga-saptashati-chapter-9' | 'durga-saptashati-chapter-10' | 'durga-saptashati-chapter-11' | 'durga-saptashati-chapter-12' | 'durga-saptashati-chapter-13' | 'hanuman-bahuk' | 'durga-argala-stotram' | 'durga-kilak-stotram' | 'kanakadhara-stotram' | 'aditya-hridayam'>];
   return registry['krishna-stuti'];
 }
 

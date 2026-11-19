@@ -17,6 +17,7 @@ import durgaArgala from '../src/data/stuti/durga-argala-stotram.json';
 import hanumanBahuk from '../src/data/stuti/hanuman-bahuk.json';
 import kalabhairavAshtakam from '../src/data/ashtakam/kalabhairav-ashtakam.json';
 import shriSuktam from '../src/data/suktam/shri-suktam.json';
+import adityaHridayam from '../src/data/stuti/aditya-hridayam.json';
 import kanakadharaStotram from '../src/data/stuti/kanakadhara-stotram.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
 import kabirDohe from '../src/data/doha/kabir-bhakti-dohe.json';
@@ -91,6 +92,7 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length],
   ['shriSuktamTotal', shriSuktam.verses.length],
   ['kanakadharaStotramTotal', kanakadharaStotram.verses.length],
+  ['adityaHridayamTotal', adityaHridayam.verses.length],
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length],
   ['aartiVerseCounts', Object.fromEntries(aartiIdByIndex.map((id, index) => [id, getAarti(index).verses.length]))],

@@ -31,6 +31,7 @@ import {
   kalabhairavAshtakamTotal,
   shriSuktamTotal,
   kanakadharaStotramTotal,
+  adityaHridayamTotal,
   kabirBhaktiDoheTotal,
   rahimBhaktiDoheTotal,
   garudPuranTotal,
@@ -154,6 +155,18 @@ export type LibraryEntry = {
 };
 
 export const library: readonly LibraryEntry[] = [
+  {
+    id: 'aditya-hridayam',
+    nameHi: 'आदित्य हृदयम्',
+    nameEn: 'Aditya Hridayam',
+    sub: '३१ श्लोक · अर्थ सहित',
+    subEn: '31 verses · with meaning',
+    thumb: 'सू',
+    status: 'active',
+    category: 'stotram',
+    deities: ['surya'],
+    verseCount: adityaHridayamTotal,
+  },
   { id: 'parshuram-stotram', nameHi: 'श्री परशुराम स्तोत्रम्', nameEn: 'Parshuram Stotram', sub: '७ श्लोक · अर्थ सहित', subEn: '7 verses · with meaning', thumb: 'प', status: parshuramPublished ? 'active' : 'coming', hidden: !parshuramPublished, category: 'stotram', deities: ['parshuram'], verseCount: parshuramStotramTotal },
   {
     id: 'hanuman-chalisa',
