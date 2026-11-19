@@ -68,7 +68,7 @@ describe('the one request Metro answers differently', () => {
   });
 
   const metroConfigFor = (forced: 'assets' | 'bundle', resolveBefore?: jest.Mock) => {
-    let config: { resolver: { assetExts: string[]; resolveRequest: (...args: unknown[]) => unknown }; valmikiCorpusDelivery: string };
+    let config: { resolver: { assetExts: string[]; resolveRequest: (...args: unknown[]) => unknown } };
     // The override is read by name; this is the name `corpusDelivery.js` exports.
     expect(delivery.OVERRIDE_ENV).toBe('VALMIKI_CORPUS_DELIVERY');
     const before = process.env.VALMIKI_CORPUS_DELIVERY;
@@ -92,7 +92,10 @@ describe('the one request Metro answers differently', () => {
 
   test('metro.config.js sends that request to the in-bundle source for an older runtime', () => {
     const config = metroConfigFor('bundle');
-    expect(config.valmikiCorpusDelivery).toBe('bundle');
+    // The chosen delivery is read off what the resolver does, not off an extra
+    // key on the Metro config: Metro validates its config and warned about one
+    // ("Unknown option valmikiCorpusDelivery"), which buried real warnings.
+    expect(Object.keys(config)).not.toContain('valmikiCorpusDelivery');
     const ctx = context();
     expect(config.resolver.resolveRequest(ctx, './corpusSource', 'android')).toBe('resolved');
     expect(ctx.resolveRequest).toHaveBeenCalledWith(ctx, './corpusSource.inbundle', 'android');

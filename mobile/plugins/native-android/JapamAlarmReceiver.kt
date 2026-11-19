@@ -57,7 +57,16 @@ class JapamAlarmReceiver : BroadcastReceiver() {
         // longer armed, the snooze must not ring.
         if (isSnoozeFire && !isAlarmStillArmed(context, baseAlarmId)) return
 
-        postAlarmNotification(context, alarmId, baseAlarmId, mantraId, label)
+        // Guarded: this runs in the background with nobody to report to. A failure
+        // while creating the channel or posting (a revoked notification
+        // permission, a sound that will not resolve) used to crash the process
+        // here and skip the re-arm below, ending the repeating alarm until the
+        // app was next opened. The alarm missing once is the lesser harm.
+        try {
+            postAlarmNotification(context, alarmId, baseAlarmId, mantraId, label)
+        } catch (e: Throwable) {
+            android.util.Log.w("JapamAlarm", "Alarm notification could not be posted", e)
+        }
 
         if (!isSnoozeFire) {
             rescheduleNextOccurrence(context, alarmId, mantraId, fireAt, label, repeatDaysEncoded)

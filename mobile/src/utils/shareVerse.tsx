@@ -10,7 +10,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Alert, Clipboard, Platform, Share, View } from 'react-native';
+import { Alert, Platform, Share, View } from 'react-native';
+import { copyToClipboard } from './clipboard';
 import { captureRef } from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import ShareCard from '@/components/ShareCard';
@@ -654,14 +655,11 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
     ): Promise<boolean> => {
       if (target === 'instagram') {
         // Instagram's share intent ignores any text handed to it, so the caption
-        // goes to the clipboard for the reader to paste. Deprecated RN API, but
-        // the one already in use app-wide (NameDetailSheet) — no native dep, so
-        // this whole feature still ships over OTA.
-        try {
-          Clipboard.setString(caption);
-        } catch {
-          // Clipboard is best-effort: the card itself still carries the branding.
-        }
+        // goes to the clipboard for the reader to paste. `copyToClipboard` uses
+        // expo-clipboard where the binary has it and React Native's own API on
+        // older binaries, so this whole feature still ships over OTA. It is
+        // best-effort: the card itself still carries the branding.
+        copyToClipboard(caption);
       }
 
       if (fileUri) {
@@ -904,11 +902,7 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
         const label = { hi: `${uris.length} पृष्ठ`, en: `${uris.length} pages` };
         const caption = proseCaption(state.content, scope, state.lang, target, label);
         if (target === 'instagram') {
-          try {
-            Clipboard.setString(caption);
-          } catch {
-            // best-effort, as above
-          }
+          copyToClipboard(caption); // best-effort, as above
           // Pause on the hand-off steps: the reader needs them before the OS sheet.
           setProse((p) => (p ? { ...p, view: 'carouselReady', readyUris: uris, progress: { done: uris.length, total: uris.length } } : p));
           return;

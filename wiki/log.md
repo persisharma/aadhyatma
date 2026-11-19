@@ -1579,3 +1579,7 @@ ReaderControlRow measures centred and trailing controls, stacking playback when 
 Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.
 
 ## [2026-11-18] ingest | PR #702 completes all thirteen Saptashati chapter sources (700 traditional numbered units), preserving existing IDs and append-only Daily Bhakti offsets; readers wiki records collection/lazy-loader integration and pending native acceptance.
+
+## [2026-11-18] ingest | Mobile audit fixes (store-build set)
+
+Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages aligned to the SDK 54 expected versions (expo-doctor 18/18), the four patched packages pinned exactly, unused `expo-secure-store` removed (it added a Face ID usage string), storage permissions blocked on Android, `expo-clipboard` added behind a probe so OTAs to older binaries keep the React Native API, the Japam alarm receiver guarded so a failed post cannot end the repeating alarm, config plugins importing `expo/config-plugins`, and a prebuild introspection test. Runbook gotchas added for the Android release gate and the Meta SDK bump. Not built or run on a device.
