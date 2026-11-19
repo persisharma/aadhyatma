@@ -11,6 +11,8 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import ReaderControlRow from '@/components/ReaderControlRow';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
@@ -31,7 +33,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'AartiReader'>;
 const DOT_COUNT = 5;
 
 export default function AartiReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -91,6 +93,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
   }, [aarti.verses.length, currentIndex]);
 
   const topTitle = contentByLang(lang, aarti.titleHi, aarti.titleEn);
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
 
   const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = e.nativeEvent.contentOffset.x;
@@ -115,9 +118,7 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
           title={topTitle}
           onBack={() => navigation.goBack()}
           right={
-            <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
-              {currentIndex + 1} / {aarti.verses.length}
-            </Text>
+            <ReaderPageCounter current={currentIndex + 1} total={aarti.verses.length} {...jump} />
           }
         />
 
@@ -212,7 +213,6 @@ export default function AartiReaderScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },

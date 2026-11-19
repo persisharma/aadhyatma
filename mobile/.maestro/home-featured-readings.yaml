@@ -14,8 +14,9 @@ appId: com.prashantsharma.vedansh
     element: { id: home-japa-banner }
     direction: DOWN
     visibilityPercentage: 100
-- assertVisible: { id: home-japa-count }
-- assertVisible: { id: home-japa-start }
+# The banner is a single door to the Japmala section; nothing is counted on Home.
+- assertNotVisible: { id: home-japa-count }
+- assertNotVisible: { id: home-japa-start }
 - takeScreenshot: e2e-shots/home-japmala-banner
 - tapOn: { id: home-japa-choose }
 - tapOn: { id: practice-tab-stotram }

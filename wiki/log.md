@@ -1602,3 +1602,12 @@ Added `panchang/dashaPractice.ts` (`buildDashaPractice`: the period lord's `GRAH
 ## [2026-11-19] ingest | Mahadasha guide (step-by-step, from the Dasha tab)
 
 Replaced the Dasha tab's inline upay card and expanding timeline rows with a guide per running/upcoming Mahadasha: `panchang/dashaGuide.ts` (`buildDashaGuide`, pure, adults only, ended periods null), `panchang/dashaGuideContent.ts` (draft explanatory copy), `screens/DashaGuideScreen.tsx` (index + five steps, painted art, night panels, Back-to-index on a step). Daan opens the Daan-Punya home; Prashna opens only for a primary-bhava purpose at its min age. Updated [[panchang]], design.md §51/§51e, RULEBOOK §14.3.5/§14.4. Native Maestro run, four-language/Large visual QA and editorial review of the new copy are pending.
+
+## [2026-11-19] ingest | Shared reader counter jump, Sanatan Parichay rebuild, Home notes
+
+`subsystems/readers` gains the page counter + picker contract (`ReaderPageCounter`, `PageJumpSheet`, `useReaderJump`, the screen-scanning guard). `subsystems/sanatan-parichay` records the rebuild on `ListingCard` / `PagerNavBar` / `ImageZoomViewer`, the removed overview route, the text legend, and the 33-devata lesson leading with koti = kinds. Home changes of the same branch (Japmala banner artwork margin and outlined controls, single-language banner cards, the restored shuffled "और जानें" carousel) are in design.md §18/§32 only.
+
+## [2026-11-19] gap | No wiki page for the Home screen
+
+Home's structure lives only in design.md §18, and that section still describes the pre-November layout (Today recommendations row, DISCOVER label, 16-tile grid) apart from the paragraphs updated on 19 Nov. A `subsystems/home` page, written after §18 is brought up to date, would stop the next change from starting at a stale description.
+

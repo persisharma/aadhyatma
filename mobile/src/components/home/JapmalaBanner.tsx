@@ -4,20 +4,20 @@ import Svg, { Defs, LinearGradient as SvgGradient, Path, Stop, Text as SvgText }
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
-import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { findJapamMantra, JAPAM_BEADS_PER_ROUND } from '@/data/japam';
 import { getPracticeHymn } from '@/data/practiceHymn';
-import { library } from '@/data/texts';
-import { navigateReadingLink, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 import { contentByLang, pick } from '@/utils/localize';
+import AppIcon from '@/components/AppIcon';
 import { titleFontByLang } from '@/utils/langType';
 
 const curve =
   'M86 32 C66 12 54 4 36 5 C-4 6 -4 58 36 59 C55 60 70 48 86 32 C105 13 120 4 137 5 C177 6 177 58 137 59 C117 60 104 49 86 32 Z';
 // Native SVG dash distances use viewBox units, even when rendered at phone size.
 const loopLength = 416.63;
+// ananta-jap.jpg is 1102 × 292.
+export const JAPMALA_ART_RATIO = 1102 / 292;
 const numerals = { hi: 'hi-IN-u-nu-deva', gu: 'gu-IN-u-nu-gujr', kn: 'kn-IN-u-nu-knda', en: 'en-IN' };
 
 export default function JapmalaBanner({
@@ -28,8 +28,7 @@ export default function JapmalaBanner({
   const { lang } = useGitaLanguage();
   const press = useTilePress();
   const { fontScale } = useWindowDimensions();
-  const { entries, recitations, getEntry, increment, countRecitation, isLoading } = useJapamCounter();
-  const { getProgress } = useReadingProgress();
+  const { entries, recitations, getEntry } = useJapamCounter();
   const fmt = React.useMemo(() => new Intl.NumberFormat(numerals[lang]), [lang]);
   const mantraId = React.useMemo(
     () =>
@@ -55,83 +54,54 @@ export default function JapmalaBanner({
     : mantraId === 'sita-ram-naam'
       ? contentByLang(lang, 'सीता राम', 'Sita Ram')
       : contentByLang(lang, mantra.nameHi, mantra.nameEn);
-  const label = pick(lang, {
-    hi: 'जपमाला | अनंत जप',
-    en: 'Japmala | Anant jap',
-    gu: 'જપમાળા | અનંત જપ',
-    kn: 'ಜಪಮಾಲೆ | ಅನಂತ ಜಪ',
-  });
+  // The banner's job is to lead to the Japmala section, so its name is the title.
+  const label = pick(lang, { hi: 'जपमाला', en: 'Japmala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
   const fontFamily = titleFontByLang(lang);
   const stat = hymn
     ? contentByLang(lang, 'पाठ', 'recitations')
     : fmt.format(beads.rounds) + ' ' + contentByLang(lang, 'माला', beads.rounds === 1 ? 'mala' : 'malas');
-  const countHint = hymn
-    ? pick(lang, { hi: 'एक पाठ गिनें', en: 'Count one recitation', gu: 'એક પાઠ ગણો', kn: 'ಒಂದು ಪಠಣ ಎಣಿಸಿ' })
-    : pick(lang, { hi: 'एक मनका गिनें', en: 'Count one bead', gu: 'એક મણકો ગણો', kn: 'ಒಂದು ಮಣಿ ಎಣಿಸಿ' });
-  const addCount = () => {
-    if (isLoading) return;
-    if (hymn) countRecitation(hymn.id);
-    else increment(mantraId);
-  };
-  const open = () => {
-    if (!hymn) {
-      navigation.navigate('JapamCounter', { mantraId });
-      return;
-    }
-    if (navigateReadingLink(navigation, hymn.id)) return;
-    const saved = getProgress(hymn.id);
-    if (saved && navigateToProgress(navigation, saved)) return;
-    const entry = library.find((item) => item.id === hymn.id);
-    if (entry) navigateToEntryStart(navigation, entry);
-  };
-  const openLabel = hymn
-    ? pick(lang, { hi: 'पाठ खोलें', en: 'Open reading', gu: 'પાઠ ખોલો', kn: 'ಪಾಠ ತೆರೆಯಿರಿ' })
-    : pick(lang, { hi: 'जप खोलें', en: 'Open practice', gu: 'જપ ખોલો', kn: 'ಜಪ ತೆರೆಯಿರಿ' });
+  // The banner is one door into the Japmala section (owner's direction, 19 Nov
+  // 2026): it shows the last practice and its count, but nothing is counted on
+  // Home. Counting, choosing and starting all happen in the section itself.
+  const openSection = () =>
+    navigation.navigate('CategoryList', { categoryId: hymn ? 'stotram' : 'japam', practice: true });
   return (
     <View testID="home-japa-banner" style={styles.banner}>
-      <Image
-        source={require('../../../assets/home-readings/ananta-jap.jpg')}
-        resizeMode="stretch"
-        style={styles.artwork}
-        accessible={false}
-        accessibilityIgnoresInvertColors
-      />
-      <View style={styles.info}>
-        <Pressable
-          accessibilityRole="button"
-          testID="home-japa-choose"
-          accessibilityLabel={pick(lang, {
-            hi: 'मंत्र और स्तोत्र चुनें',
-            en: 'Choose a mantra or stotram',
-            gu: 'મંત્ર અથવા સ્તોત્ર પસંદ કરો',
-            kn: 'ಮಂತ್ರ ಅಥವಾ ಸ್ತೋತ್ರ ಆಯ್ಕೆಮಾಡಿ',
-          })}
-          style={styles.control}
-          onPress={() =>
-            navigation.navigate('CategoryList', { categoryId: hymn ? 'stotram' : 'japam', practice: true })
-          }
-        >
-          <Text style={{ fontFamily, fontSize: 11, color: '#873c15' }}>{label}</Text>
-          <Text style={{ fontFamily, fontSize: 21, color: '#782b1a' }}>{title} ⌄</Text>
-        </Pressable>
-        <Pressable
-          testID="home-japa-count"
-          accessibilityRole="button"
-          disabled={isLoading}
-          accessibilityLabel={countHint}
-          accessibilityValue={{ text: fmt.format(count) + ' ' + stat }}
-          style={styles.count}
-          onPressIn={() => press.beginTilePress(addCount)}
-          onPressOut={press.finishTilePress}
-          onPress={() => press.activateTile(addCount)}
-        >
-          {!hymn && fontScale <= 1.2 ? (
-            <View pointerEvents="none" accessible={false}>
+      {/* The painting keeps its own proportions: its frame is as tall as the banner,
+          as wide as that height needs (never narrower than the banner) and pinned to
+          the left, so a taller banner crops the sky on the right instead of
+          stretching Hanuman ji. */}
+      <View testID="home-japa-art" pointerEvents="none" style={styles.artFrame}>
+        <Image
+          source={require('../../../assets/home-readings/ananta-jap.jpg')}
+          resizeMode="cover"
+          style={styles.artwork}
+          accessible={false}
+          accessibilityIgnoresInvertColors
+        />
+      </View>
+      <Pressable
+        testID="home-japa-choose"
+        accessibilityRole="button"
+        accessibilityLabel={
+          pick(lang, { hi: 'जपमाला खोलें', en: 'Open Japmala', gu: 'જપમાળા ખોલો', kn: 'ಜಪಮಾಲೆ ತೆರೆಯಿರಿ' }) + ' · ' + title
+        }
+        accessibilityValue={{ text: fmt.format(count) + ' ' + stat }}
+        style={({ pressed }) => [styles.door, pressed && styles.pressed]}
+        onPressIn={() => press.beginTilePress(openSection)}
+        onPressOut={press.finishTilePress}
+        onPress={() => press.activateTile(openSection)}
+      >
+        <View style={styles.info}>
+          <Text style={{ fontFamily, fontSize: 21, lineHeight: 35, color: '#782b1a' }}>{label}</Text>
+          <Text style={{ fontFamily, fontSize: 14, lineHeight: 24, color: '#873c15' }}>{title}</Text>
+          <View style={styles.count}>
+            {!hymn && fontScale <= 1.2 ? (
               <Svg width={92} height={34} viewBox="-3 -2 179 68" accessible={false}>
                 <Defs>
                   <SvgGradient id="japGold" x1="0%" y1="0%" x2="70%" y2="100%">
                     <Stop offset="0" stopColor="#af4a16" />
-                    <Stop offset=".4" stopColor="#ffc550" />
+                    <Stop offset="0.4" stopColor="#ffc550" />
                     <Stop offset="1" stopColor="#aa4619" />
                   </SvgGradient>
                 </Defs>
@@ -170,24 +140,19 @@ export default function JapmalaBanner({
                   </SvgText>
                 ))}
               </Svg>
-            </View>
-          ) : (
-            <Text style={{ fontFamily, color: '#762b12' }}>
-              {fmt.format(count)}
-              {hymn ? '' : ' / ' + fmt.format(108)}
-            </Text>
-          )}
-          <Text style={{ fontFamily, fontSize: 12, color: '#694324' }}>{stat}</Text>
-        </Pressable>
-      </View>
-      <Pressable
-        onPress={open}
-        accessibilityRole="button"
-        testID="home-japa-start"
-        accessibilityLabel={openLabel + ' · ' + title}
-        style={styles.play}
-      >
-        <Text style={{ color: '#fff5d9', fontSize: 19 }}>▶</Text>
+            ) : (
+              <Text style={{ fontFamily, color: '#762b12' }}>
+                {fmt.format(count)}
+                {hymn ? '' : ' / ' + fmt.format(108)}
+              </Text>
+            )}
+            <Text style={{ fontFamily, fontSize: 12, color: '#694324' }}>{stat}</Text>
+          </View>
+        </View>
+        {/* A drawn cue, not a second button: the whole banner is the target. */}
+        <View style={styles.open}>
+          <AppIcon name="next" size={22} color="#fff5d9" />
+        </View>
       </Pressable>
     </View>
   );
@@ -205,11 +170,13 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
   // Keep foreground spacing off the frame so the image fills its entire inner bounds.
+  artFrame: { position: 'absolute', left: 0, top: 0, bottom: 0, aspectRatio: JAPMALA_ART_RATIO, minWidth: '100%' },
   artwork: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
-  info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3, paddingVertical: 4 },
-  control: { minHeight: 44, justifyContent: 'center' },
-  count: { minHeight: 44, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 5 },
-  play: {
+  door: { flex: 1, minHeight: 98, flexDirection: 'row', alignItems: 'center' },
+  info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3, paddingVertical: 2, justifyContent: 'center' },
+  count: { minHeight: 36, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 5 },
+  pressed: { opacity: 0.8 },
+  open: {
     width: 44,
     height: 44,
     marginRight: 12,

@@ -57,3 +57,17 @@ it('teaches the four aims and a complete drawing sequence without inventing mand
   expect(topic.pages[2][1]).toContain('Do not label all reverse-facing religious forms inauspicious');
   expect(topic.refs).toEqual(expect.arrayContaining(['HAF-SWASTIKA', 'HA-SWASTIKA', 'AWGP-SWASTIKA']));
 });
+
+it('opens the thirty-three lesson with koti as "kinds, not crore" and a recorded dictionary source', () => {
+  const topic = getSanatanTopics().find(item => item.id === 'thirty')!;
+  const [hindi, english] = topic.pages[0].map(text => text.split(/\n\s*\n/)[0]);
+  // Owner's direction, 19 Nov 2026: the meaning of koti leads; it must not wait for the last page.
+  expect(hindi).toContain('‘कोटि’ का अर्थ ‘प्रकार’ या ‘श्रेणी’ है, ‘करोड़’ नहीं।');
+  expect(english).toContain('koti means “kind” or “class”, not “crore”.');
+  expect(getSanatanPageTitles(topic)[0]).toEqual(['कोटि यानी प्रकार, करोड़ नहीं', 'Koti means kinds, not crore']);
+  // Apte lists both senses (6: crore, 9: class); the count itself is the Upanishad's.
+  expect(topic.refs).toEqual(['BU-MADH', 'BU-MULLER', 'KOTI-APTE']);
+  expect(content.sources['KOTI-APTE'].location).toContain('senses 6 and 9');
+  // The honest limit stays in the lesson: the passage itself does not use the word.
+  expect(topic.pages[2][1]).toContain('does not use the word koti');
+});

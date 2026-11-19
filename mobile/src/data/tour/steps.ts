@@ -175,8 +175,8 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'up',
     titleHi: 'जपमाला',
     titleEn: 'JapMala',
-    bodyHi: 'जपमाला में मंत्र या स्तोत्र चुनें। मनका गिनने के लिए गिनती पर स्पर्श करें।',
-    bodyEn: 'Choose a mantra or stotram on the Japmala banner. Tap its counter to count a bead.',
+    bodyHi: 'यह बैनर जपमाला खोलता है। वहाँ मंत्र या स्तोत्र चुनें और जप गिनें।',
+    bodyEn: 'This banner opens Japmala. Choose a mantra or stotram there and count your japa.',
   },
   {
     id: 'japa-inside',

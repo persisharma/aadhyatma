@@ -36,6 +36,7 @@ import VidhiStepArtwork from '@/components/VidhiStepArtwork';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import { readingParchment } from '@/data/backgroundAsset';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { vidhiMantraShareable } from '@/utils/shareContent';
@@ -44,6 +45,7 @@ import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import AutoSlideButton from '@/components/AutoSlideButton';
 import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import { useReaderPlayback } from '@/screens/_useAutoSlide';
+import { useReaderJump } from '@/screens/_useReaderJump';
 import { clampIndex } from '@/utils/clamp';
 import type { VidhiStackParamList } from '@/navigation/types';
 
@@ -94,7 +96,7 @@ type ConductPage =
  * screen readers on entry (design.md §12).
  */
 export default function VidhiConductScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const vidhi = getVidhiById(route.params.vidhiId);
   const isPersonalTithi = vidhi?.anchor === 'personal-tithi';
@@ -214,6 +216,10 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
     listRef.current?.scrollToIndex({ index, animated: true });
     setIndex(index);
   }, [pages.length, setIndex]);
+  // Steps are free to visit in any order (swipe, neighbour taps, resume), so the
+  // counter may jump to any of them. Unanimated: an animated run across several
+  // pages would report each one passed as the current step.
+  const jump = useReaderJump({ listRef, setCurrentIndex: setIndex, readAloud, autoSlide });
 
   // A window resize changes every page's offset. Preserve the active step.
   const previousWidth = useRef(width);
@@ -248,16 +254,12 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
             isPersonalTithi ? 'Back to guide overview' : 'Back to puja overview'
           )}
           right={
-            <Text
-              style={{
-                color: colors.inkMuted,
-                fontFamily: typography.pageCounter.fontFamily,
-                fontSize: typography.pageCounter.fontSize,
-                fontStyle: 'italic',
-              }}
-            >
-              {`${counterIndex} / ${steps.length}`}
-            </Text>
+            <ReaderPageCounter
+              current={counterIndex}
+              total={steps.length}
+              titles={steps.map((step) => contentByLang(lang, step.titleHi, step.titleEn))}
+              {...jump}
+            />
           }
           sideWidth={60}
         />

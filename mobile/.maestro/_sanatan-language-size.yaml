@@ -1,46 +1,12 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _open-settings.yaml
-# Settings retains its scroll offset. Return to its first row before searching
-# downward, even if iOS still exposes a partially clipped language row.
 - scrollUntilVisible:
-    element: { id: settings-back }
-    direction: UP
-    speed: 65
-    timeout: 90000
-- scrollUntilVisible:
-    element: { text: "Language,.*" }
+    element: { text: "Language,.*", above: { id: tab-home } }
     direction: DOWN
-    speed: 20
-    centerElement: true
-    timeout: 90000
-- scrollUntilVisible:
-    element: { text: "Language,.*" }
-    direction: UP
-    speed: 15
-    centerElement: true
-    timeout: 20000
-- runFlow:
-    when: { notVisible: { text: "Language, ${READING_LANGUAGE}" } }
-    commands:
-      - tapOn: "Language,.*"
-      - tapOn: "${READING_LANGUAGE}"
-# Changing script reflows the settings above this row. In particular, the
-# Gujarati-to-Kannada transition can move it several screens below the viewport.
-- runFlow:
-    when: { notVisible: { text: "Language, ${READING_LANGUAGE}" } }
-    commands:
-      - scrollUntilVisible:
-          element: { id: settings-back }
-          direction: UP
-          speed: 65
-          timeout: 90000
-      - scrollUntilVisible:
-          element: { text: "Language, ${READING_LANGUAGE}" }
-          direction: DOWN
-          speed: 35
-          timeout: 90000
-- assertVisible: "Language, ${READING_LANGUAGE}"
+    timeout: 60000
+- tapOn: "Language,.*"
+- tapOn: "${READING_LANGUAGE}"
 - scrollUntilVisible:
     element: { text: "Reading size,.*", above: { id: tab-home } }
     direction: DOWN
@@ -52,25 +18,33 @@ appId: com.prashantsharma.vedansh
 - runFlow: _sanatan-home-entry.yaml
 - takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
+# At large text the screen centre is on the search field, which swallows the
+# scroll gesture; start the first drag low, over the cards.
+- swipe: { start: "50%,88%", end: "50%,62%", duration: 400 }
 - runFlow:
     file: _sanatan-reveal-row.yaml
     env: { ROW_ID: "sanatan-collection-dikpal" }
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-start" }
-- takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-# Capture the adjacent lesson page using the reader's native horizontal pager.
-# The collections journey separately exercises the Next button on every topic.
-- swipe: { start: "88%,60%", end: "12%,60%", duration: 350 }
-- extendedWaitUntil:
-    visible: "2\\s*/\\s*3"
-    timeout: 15000
+# The pager bar stays on screen at every language and size; no scrolling to reach Next.
+- assertVisible: { id: sanatan-next }
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- assertVisible: "2\\s*/\\s*3"
+# The figure area (plate, caption, legend) and a legend can be taller than a phone
+# screen, and iOS reports a partly hidden element's full frame, so waiting for all
+# of it never ends. Wait for part of it; assert the content itself separately.
 - scrollUntilVisible:
     element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
     direction: DOWN
+    visibilityPercentage: 20
     timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+# The ten painted names are also native text under the plate, at the chosen size.
+- scrollUntilVisible:
+    element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    visibilityPercentage: 20
+    timeout: 60000
+- takeScreenshot: "e2e-shots/sanatan-legend-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

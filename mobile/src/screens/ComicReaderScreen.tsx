@@ -3,6 +3,7 @@ import { FlatList, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import ComicPage from '@/components/ComicPage';
@@ -62,7 +63,7 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
   });
   return <SafeAreaView testID="comic-native-reader" style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
     <ReaderHeader title={book?.title[language] ?? ''} onBack={() => navigation.goBack()} sideWidth={60} style={{ paddingHorizontal: 8, paddingTop: 4, paddingBottom: 4, minHeight: 56 }} right={current &&
-      <Text testID="comic-progress" style={{ ...typography.pageCounter, color: colors.inkMuted, textAlign: 'right', minWidth: 48 }}>{index + 1} / {pages.length}</Text>} />
+      <ReaderPageCounter testID="comic-progress" current={index + 1} total={pages.length} onOpen={autoSlide.stop} onJump={page => goToPage(page - 1)} />} />
     {book ? <>
       <ReadingProgressBar current={index + 1} total={pages.length} />
       <View style={{ paddingVertical: 8, justifyContent: 'center' }}>

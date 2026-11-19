@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { useTheme } from '@/theme/ThemeContext';
+import { ListingSectionHeader } from '@/components/ListingCard';
 import { Copy, Panel, useSanatanText } from './Primitives';
 import type { Pair } from '@/data/sanatan-parichay';
 
@@ -37,16 +38,16 @@ export default function SwastikaGuide({ mode }: { mode: 'meaning' | 'drawing' })
   const t = useSanatanText();
   if (mode === 'meaning') return <View testID="swastika-meaning">
     <Figure stage={2} />
-    <Copy heading>{t(['चार पुरुषार्थ', 'Four aims of life'])}</Copy>
+    <ListingSectionHeader>{t(['चार पुरुषार्थ', 'Four aims of life'])}</ListingSectionHeader>
     {goals.map(goal => <Copy key={goal[1]}>{t(goal)}</Copy>)}
     <Copy>{t(['यह एक प्रतीकात्मक व्याख्या है; हर लक्ष्य के लिए किसी एक भुजा का स्थान निश्चित नहीं है।', 'This is a symbolic interpretation; each aim need not occupy one fixed arm.'])}</Copy>
   </View>;
   return <View testID="swastika-drawing" style={{ gap: 16 }}>
-    <Copy heading>{t(['चित्रों से अभ्यास करें', 'Practise with the diagrams'])}</Copy>
+    <ListingSectionHeader>{t(['चित्रों से अभ्यास करें', 'Practise with the diagrams'])}</ListingSectionHeader>
     <Copy>{t(['यह सीखने का क्रम है; विशेष पूजा में अपनी परम्परा की विधि मानें।', 'This is a learning sequence. Follow your tradition for a specific ritual.'])}</Copy>
     {steps.map(step => <View key={step.stage} testID={`swastika-stage-${step.stage}`}>
       <Panel>
-        <Copy heading>{`${step.stage + 1}. ${t(step.title)}`}</Copy>
+        <ListingSectionHeader>{`${step.stage + 1}. ${t(step.title)}`}</ListingSectionHeader>
         <Figure stage={step.stage} />
         <Copy>{t(step.caption)}</Copy>
       </Panel>

@@ -7,6 +7,7 @@ const mockScroll = jest.fn();
 const mockShare = jest.fn();
 jest.mock('@/utils/shareVerse', () => ({ useShare: () => ({ share: mockShare, busy: false }) }));
 jest.mock('@/components/ShareButton', () => ({ __esModule: true, default: 'ShareButton' }));
+jest.mock('@/components/ReaderPageCounter', () => ({ __esModule: true, default: 'ReaderPageCounter' }));
 // Auto-slide is covered by its own hook/button; these suites replace react-native
 // wholesale, so stub it like the other reader controls.
 jest.mock('@/components/AutoSlideButton', () => ({ __esModule: true, default: 'AutoSlideButton' }));
@@ -61,13 +62,13 @@ afterEach(() => { mockLang = 'hi'; mockScroll.mockClear(); });
 test.each(kidsStories.filter(item => item.id !== story.id))('$id uses the same reader from first scene to takeaway without research notes in every language', (item: KidsStory) => {
   const { tree, props, find } = mount(undefined, item.id);
   expect(find('story-pager').props.data).toEqual(item.pages);
-  expect(find('story-progress').props.children).toEqual([1, ' / ', item.pages.length]);
+  expect(find('story-progress').props).toMatchObject({ current: 1, total: item.pages.length });
   expect(tree.root.findAllByType('KidsStoryArt' as any).map(node => node.props.art)).toEqual(item.pages.map(page => page.art));
   act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * (item.pages.length - 1) } } }));
   for (const language of ['hi', 'en', 'gu', 'kn'] as const) {
     mockLang = language;
     act(() => tree.update(<Screen {...props} />));
-    expect(find('story-progress').props.children[0]).toBe(item.pages.length);
+    expect(find('story-progress').props.current).toBe(item.pages.length);
     const texts = tree.root.findAllByType('Text' as any).map(node => node.props.children);
     expect(texts).toContain(item.pages[0].text[language]);
     expect(texts).toContain(item.pages[item.pages.length - 1].text[language]);
@@ -93,7 +94,7 @@ test('first scene mounts with a horizontal pager, a counter and no page buttons'
   expect(pager.props.getItemLayout(null, 2)).toEqual({ length: 390, offset: 780, index: 2 });
   expect(tree.root.findAllByType('Text' as any).some(node => node.props.children === story.pages[0].text.hi)).toBe(true);
   // Gita-style swipe-only navigation: a header counter, no Previous/Next buttons.
-  expect(find('story-progress').props.children[0]).toBe(1);
+  expect(find('story-progress').props.current).toBe(1);
   expect(tree.root.findAllByProps({ testID: 'story-prev' })).toHaveLength(0);
   expect(tree.root.findAllByProps({ testID: 'story-next' })).toHaveLength(0);
   act(() => tree.unmount());
@@ -107,21 +108,21 @@ test('the tab-hosted reader leaves the bottom safe-area inset to its navigator',
 
 test('swipes, language changes and layout changes keep one page index', () => {
   const { tree, props, find } = mount('yamuna-crossing');
-  expect(find('story-progress').props.children[0]).toBe(12);
+  expect(find('story-progress').props.current).toBe(12);
   for (const language of ['en', 'gu', 'kn', 'hi']) {
     mockLang = language;
     act(() => tree.update(<Screen {...props} />));
-    expect(find('story-progress').props.children[0]).toBe(12);
+    expect(find('story-progress').props.current).toBe(12);
     expect(find('story-pager').props.keyExtractor(story.pages[11])).toBe('yamuna-crossing');
   }
   act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 390 * 12 } } }));
-  expect(find('story-progress').props.children[0]).toBe(13);
+  expect(find('story-progress').props.current).toBe(13);
   const layout = tree.root.findAllByType('View' as any).find(node => node.props.onLayout)!;
   act(() => layout.props.onLayout({ nativeEvent: { layout: { width: 700 } } }));
   expect(find('story-pager').props.initialScrollIndex).toBe(12);
   expect(find('story-pager').props.getItemLayout(null, 12).offset).toBe(8400);
   act(() => find('story-pager').props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: 700 * 13 } } }));
-  expect(find('story-progress').props.children[0]).toBe(14);
+  expect(find('story-progress').props.current).toBe(14);
   act(() => tree.unmount());
 });
 
@@ -143,4 +144,14 @@ test('share follows the visible scene and authored reading language', () => {
   expect(content.scopes[content.scopes.length - 1].id).toBe('scene-4');
   expect(content.scopes[0].prepared.gu.firstLine).toBe('દુર્ગા, કાલી અને રક્તબીજ');
   act(() => tree.unmount());
+});
+
+test('the counter names every scene and jumps straight to the chosen one', () => {
+  const { find } = mount();
+  const counter = find('story-progress');
+  expect(counter.props.titles).toHaveLength(story.pages.length);
+  expect(counter.props.titles.every((title: string) => title.length > 0)).toBe(true);
+  act(() => counter.props.onJump(5));
+  expect(find('story-progress').props.current).toBe(5);
+  expect(mockScroll).toHaveBeenLastCalledWith(expect.objectContaining({ index: 4 }));
 });

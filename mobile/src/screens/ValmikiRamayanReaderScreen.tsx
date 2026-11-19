@@ -25,6 +25,8 @@ import {
 } from '@/data/valmiki-ramayan';
 import { useGitaLanguage } from '@/data/gita/language';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -197,7 +199,7 @@ function ChapterPending({
 }
 
 function LoadedReader({ chapter, navigation, route }: Props & { chapter: ValmikiRamayanChapter }) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -253,6 +255,8 @@ function LoadedReader({ chapter, navigation, route }: Props & { chapter: Valmiki
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, offset, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     setProgress({
@@ -360,19 +364,7 @@ function LoadedReader({ chapter, navigation, route }: Props & { chapter: Valmiki
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
           right={
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <ReaderPageCounter current={currentIndex + 1} total={verseCount} {...jump} />
           }
         />
 
@@ -525,11 +517,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 22,
     borderRadius: 999,
-  },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 56,
-    textAlign: 'right',
   },
   toggleRow: {
     paddingVertical: 6,

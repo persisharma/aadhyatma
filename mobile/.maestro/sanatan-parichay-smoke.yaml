@@ -6,7 +6,7 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/sanatan-entry-home
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: lang-toggle-en }
-- assertVisible: "Every tradition.*"
+- assertVisible: "13 introductions.*"
 - takeScreenshot: e2e-shots/sanatan-entry-hub
 - tapOn: { id: sanatan-search }
 - inputText: "33 koti devta"
@@ -14,32 +14,53 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     file: _sanatan-reveal-row.yaml
     env: { ROW_ID: "sanatan-collection-thirty" }
-- tapOn: "Thirty-three devata"
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-start" }
-- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
-- scrollUntilVisible:
-    element: { text: "Save for later", above: { id: tab-home } }
-    direction: DOWN
-    timeout: 60000
+# The card opens the lesson directly; save and share sit at the top of the page.
+- tapOn: { id: sanatan-collection-thirty, retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
 - tapOn: "Save for later"
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-next" }
-- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+- assertVisible: "Remove saved lesson"
+- assertVisible: "Share"
+# The lesson opens with what "koti" means; it must not wait for the last page.
+- assertVisible: "Koti means kinds, not crore"
+# The question leads the answer card under the painting; on a short screen it
+# is below the fold.
+- scrollUntilVisible:
+    element: { text: "Who are the thirty-three devata[?]" }
+    direction: DOWN
+    timeout: 30000
+# The counter is a button, as in the Gita reader: it opens the page picker, which
+# names each page. Jump to the last page, then step back to the figure page.
+- tapOn: { id: sanatan-page-counter }
+- assertVisible: "Go to page"
+- assertVisible: "Page 1[.] Koti means kinds, not crore"
+- tapOn: { id: page-jump-page-3 }
+- tapOn: { id: page-jump-open }
+- assertVisible: "3\\s*/\\s*3"
+- tapOn: { id: pager-previous }
 - assertVisible: "2\\s*/\\s*3"
 # The illustrated lesson now explains the 33 deities on its teaching plate.
 - scrollUntilVisible:
     element: { id: sanatan-plate-thirty, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
-- assertVisible: "In this Upanishadic dialogue, 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]"
+- scrollUntilVisible:
+    element: { text: "Koti here means “kinds”, not “crore”: 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]" }
+    direction: DOWN
+    timeout: 30000
+- assertVisible: "Koti here means “kinds”, not “crore”: 8 Vasus, 11 Rudras, 12 Adityas, Indra and Prajapati make 33[.]"
 - takeScreenshot: e2e-shots/sanatan-thirty-three-en
+# The plate opens in the shared picture viewer; the buttons zoom without a gesture.
+- tapOn: { id: sanatan-plate-thirty }
+- assertVisible: { id: image-viewer }
+- assertVisible: "Zoom 1×"
+- tapOn: { id: image-viewer-zoom-in }
+- assertVisible: "Zoom 1.75×"
+- takeScreenshot: e2e-shots/sanatan-thirty-three-viewer
+- tapOn: { id: image-viewer-close }
+- assertNotVisible: { id: image-viewer }
 - assertNotVisible: "Sources & context"
 - assertNotVisible: "https?://.*"
-- tapOn: Back
-- tapOn: Back
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-search, text: "33 koti devta" }
     direction: UP

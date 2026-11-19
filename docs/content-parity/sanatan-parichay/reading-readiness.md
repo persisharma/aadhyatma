@@ -16,7 +16,7 @@ Gujarati and Kannada use the app's established Hindi-to-script transliteration p
 | --- | --- | --- |
 | Foundations | Avatara, divine form and grouping; ten versus innumerable manifestations | Bhagavad Gita 4.7; Bhagavata 1.3.26 |
 | Ganesha | Identifying attributes, Atharvashirsha description, Ekadanta and visual variation | Met object 37397; Ganapati Atharvashirsha 9/13 |
-| Thirty-three | Dialogue, 8+11+12+1+1, movement toward unity; limits of the koti claim | Brihadaranyaka 3.9.1–9, Madhavananda/Shankara and Muller |
+| Thirty-three | Koti as “kind/class”, not crore, stated first (owner's direction, 19 Nov 2026); dialogue, 8+11+12+1+1, movement toward unity; the passage itself does not use the word koti | Apte, koṭi senses 6 (crore) and 9 (class) — `KOTI-APTE`, re-checked 19 Nov 2026 against the Cologne Digital Sanskrit Lexicon scan of Apte 1890, p. 425; Brihadaranyaka 3.9.1–9, Madhavananda/Shankara and Muller |
 | Dikpals | Eight horizontal directions plus above/below; complete selected roster and Ananta variation | Kamika Purvapada direction passages; UOU CVK01 pp155–157 |
 | Navagraha | Nine names, hymn epithets, astronomical categories and nodes | Navagraha Stotra 1–9; NASA Moon Essentials: Orbit |
 | Swastika | Auspicious use; all four purusharthas; other interpretations; clockwise drawing stages; optional dots, tradition variation and historical context | HAF guide; Himalayan Academy Loving Ganesha ch7; AWGP Jan–Feb 2005 geometry; ISKCON Educational Services symbols |

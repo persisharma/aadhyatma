@@ -11,21 +11,21 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     file: _sanatan-reveal-row.yaml
     env: { ROW_ID: "sanatan-collection-symbols" }
-- tapOn: "Sacred symbols"
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-page-2" }
-- tapOn: "Four arms, four aims of life"
+- tapOn: { id: sanatan-collection-symbols, retryTapIfNoChange: true }
+- assertVisible: "1\\s*/\\s*3"
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
+- assertVisible: "Four arms, four aims of life"
 - scrollUntilVisible:
     element: { id: sanatan-plate-symbols, above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
+- scrollUntilVisible:
+    element: { text: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]" }
+    direction: DOWN
+    timeout: 30000
 - assertVisible: "The swastika expresses a wish for well-being. The four aims of life are one recognised symbolic interpretation[.]"
 - takeScreenshot: e2e-shots/sanatan-swastika-four-aims
-- runFlow:
-    file: _sanatan-reveal-row.yaml
-    env: { ROW_ID: "sanatan-next" }
 - tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "3\\s*/\\s*3"
 - scrollUntilVisible:
@@ -47,17 +47,13 @@ appId: com.prashantsharma.vedansh
     element: { text: "This guide does not prescribe.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
+# Share is one of the two round buttons at the top of the page.
 - scrollUntilVisible:
     element: { text: "Share", above: { id: tab-home } }
-    direction: DOWN
-    timeout: 60000
-- assertVisible: "Share"
-- tapOn: Back
-- scrollUntilVisible:
-    element: { text: "Sacred symbols" }
     direction: UP
     timeout: 60000
-- tapOn: Back
+- assertVisible: "Share"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: sanatan-search, text: "how to draw swastika" }
     direction: UP
