@@ -25,7 +25,7 @@ export default function CollectionCard({ topic, variant = 'row', onPress, testID
     {row ? <>
       <Painting id={topic.id} small />
       <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
-        <Text style={title}>{t(topic.name)}</Text><Text style={meta}>{t(topic.title)}</Text>
+        <Text style={title}>{t(topic.title)}</Text><Text style={meta}>{t(topic.name)}</Text>
       </View>
       <AppIcon name="next" size={18} color={colors.saffronDeep} />
     </> : <>

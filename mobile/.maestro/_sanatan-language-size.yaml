@@ -1,21 +1,14 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _open-settings.yaml
-# Settings is a tab, so it keeps the previous case's scroll position. When that
-# left Language above the screen, scrolling down never found it (CI, Android
-# enlarged, third case). Start from the top: the back button is its first item.
 - scrollUntilVisible:
-    element: { id: settings-back }
-    direction: UP
-    timeout: 30000
-- scrollUntilVisible:
-    element: { text: "Language,.*" }
+    element: { text: "Language,.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
 - scrollUntilVisible:
-    element: { text: "Reading size,.*" }
+    element: { text: "Reading size,.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - tapOn: "Reading size,.*"
@@ -25,45 +18,29 @@ appId: com.prashantsharma.vedansh
 - runFlow: _sanatan-home-entry.yaml
 - takeScreenshot: "e2e-shots/sanatan-home-frame-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
 - tapOn: { id: home-sanatan-card }
-# Enlarged iOS text (CI): the row first appeared after 42-57 of 60 s, and in
-# English the centring swipe used up the rest. Allow two minutes.
-- scrollUntilVisible:
-    element: { id: sanatan-collection-dikpal }
-    direction: DOWN
-    timeout: 120000
-    visibilityPercentage: 50
-    centerElement: true
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-dikpal" }
 - takeScreenshot: "e2e-shots/sanatan-hub-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
+- tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
 - runFlow:
-    file: _sanatan-open-row.yaml
-    env:
-      ROW_ID: sanatan-collection-dikpal
-# Centre the button before tapping: at enlarged iOS text the scroll stopped with
-# Open lesson cut off at the bottom edge, and the tap at its centre missed (CI).
-- scrollUntilVisible:
-    element: { id: sanatan-start }
-    direction: DOWN
-    timeout: 60000
-    centerElement: true
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-start" }
 - takeScreenshot: "e2e-shots/sanatan-collection-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-# Kannada Large (CI): centring left Open lesson at y 62-163, under the header, and
-# the centre tap missed; the subflow taps lower and retries.
-- runFlow:
-    file: _sanatan-open-row.yaml
-    env:
-      ROW_ID: sanatan-start
+- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
 - takeScreenshot: "e2e-shots/sanatan-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"
-# Large Gujarati and Kannada pages are long: reaching Next took 48 of 60 seconds
-# on CI, leaving too little for the centring swipes. Allow two minutes.
+# Next is the last control. At large Kannada type this lesson spans many screens.
 - scrollUntilVisible:
     element: { id: sanatan-next }
     direction: DOWN
+    speed: 65
     timeout: 120000
-    centerElement: true
-- tapOn: { id: sanatan-next }
+- swipe: { direction: UP }
+- waitForAnimationToEnd
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
 - assertVisible: "2\\s*/\\s*3"
 - scrollUntilVisible:
-    element: { id: sanatan-explore-dikpal }
+    element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
     direction: DOWN
-    timeout: 120000
+    timeout: 60000
 - takeScreenshot: "e2e-shots/sanatan-diagram-${READING_LANGUAGE}-${READING_SIZE}-${CAPTURE_SUFFIX}"

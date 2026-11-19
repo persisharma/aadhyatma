@@ -1,6 +1,6 @@
 const {
   AndroidConfig, withAndroidManifest, withInfoPlist, withStringsXml,
-} = require('@expo/config-plugins');
+} = require('expo/config-plugins');
 
 function withMetaAppEvents(config, { enabled, appId }) {
   // Read inside the native plugin, so the token isn't serialized into the

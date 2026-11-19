@@ -7,7 +7,7 @@ appId: com.prashantsharma.vedansh
     direction: UP
     timeout: 30000
 - scrollUntilVisible:
-    element: { text: "Language,.*" }
+    element: { text: "Language,.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - tapOn: "Language,.*"
@@ -37,7 +37,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
 - scrollUntilVisible:
-    element: { id: sanatan-search }
+    element: { id: sanatan-search, above: { id: tab-home } }
     direction: UP
     timeout: 15000
 - tapOn: { id: sanatan-search }
@@ -46,7 +46,7 @@ appId: com.prashantsharma.vedansh
 - pressKey: Enter
 - assertVisible: { id: sanatan-search, text: "${QUERY}" }
 - scrollUntilVisible:
-    element: { id: sanatan-collection-symbols }
+    element: { id: sanatan-collection-symbols, above: { id: tab-home } }
     direction: DOWN
     visibilityPercentage: 50
     timeout: 60000

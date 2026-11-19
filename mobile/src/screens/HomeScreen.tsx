@@ -1,6 +1,4 @@
 import AppIcon from '@/components/AppIcon';
-import DarshanFloatingButton from '@/components/darshan/DarshanFloatingButton';
-import FeatureIcon from '@/components/FeatureIcon';
 import React from 'react';
 import {
   useWindowDimensions,
@@ -18,32 +16,31 @@ import { useTheme } from '@/theme/ThemeContext';
 import { categories } from '@/data/categories';
 import CategoryCard from '@/components/CategoryCard';
 import CategoryIcon, { type CategoryIconKey } from '@/components/CategoryIcon';
-import FeatureCard, { type FeatureSpotlight } from '@/components/FeatureCard';
 import HomeWordmark from '@/components/HomeWordmark';
 import { homeLayout } from '@/utils/homeLayout';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
-import { pillTextStyle } from '@/utils/langType';
+import { pick, contentByLang } from '@/utils/localize';
+import { titleFontByLang, pillTextStyle } from '@/utils/langType';
 import RoutineBanner from '@/components/RoutineBanner';
 import TodayStrip from '@/components/TodayStrip';
-import TodayRecommendationsRow from '@/components/TodayRecommendationsRow';
-import FestiveToran from '@/components/FestiveToran';
-import { getTodayFestival } from '@/data/discoveryMeta';
+import { useObservancesForDate, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useTodayKey } from '@/utils/useTodayKey';
 import { launchMarkOnce } from '@/utils/launchTrace';
 import type { HomeStackParamList } from '@/navigation/types';
 import type { ContentCategory } from '@/data/texts';
 import { useNewContent } from '@/contexts/NewContentContext';
 import { useTilePressController, TilePressProvider } from '@/contexts/TilePressContext';
-import { shuffleBySeed } from '@/utils/shuffleBySeed';
 import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import { useTourTarget, scrollNodeIntoView } from '@/components/tour/tourTargets';
 
 // The illustrated card sits below the category grid. Load its art and copy in
 // a separate chunk so the Home launch graph stays within its byte budget.
 const SanatanHomeCard = React.lazy(() => import('@/components/SanatanHomeCard'));
-const DeityDayLinks = React.lazy(() => import('@/components/DeityDayLinks'));
 const KidsStoriesHomeCard = React.lazy(() => import('@/components/KidsStoriesHomeCard'));
+
+const FeaturedReadings = React.lazy(() => import('@/components/home/FeaturedReadings'));
+const JapmalaBanner = React.lazy(() => import('@/components/home/JapmalaBanner'));
+const ContinueReading = React.lazy(() => import('@/components/home/ContinueReading'));
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 
@@ -82,14 +79,11 @@ export default function HomeScreen({ navigation }: Props) {
     [rootNav]
   );
 
-  // Festive toran (design.md §55): on the 18 catalog festivals Home hangs a
-  // garland + greeting chip under the wordmark. Same festival resolution as the
-  // FOR TODAY row's leading card (and the morning's notification), so the three
-  // surfaces always name the same day. `new Date(todayKey)` mirrors
-  // TodayRecommendationsRow; the observance lookup is the cheap precomputed-table
-  // path the row already takes on this same render.
   const todayKey = useTodayKey();
-  const todayFestival = React.useMemo(() => getTodayFestival(new Date(todayKey)), [todayKey]);
+  const today = React.useMemo(() => new Date(todayKey), [todayKey]);
+  const [calendar] = usePanchangCalendarSystem();
+  const observances = useObservancesForDate(today,calendar);
+  const occasion = observances.find(o => o.rule.category === 'festival') ?? observances[0];
 
   type TileItem = {
     key: string;
@@ -103,28 +97,20 @@ export default function HomeScreen({ navigation }: Props) {
     fullWidth?: boolean;
   };
 
-  // Launcher grid: the registry content categories (categories.ts, ranked by
-  // usefulness + USP), with non-content tiles interleaved at their ranked
-  // spots — व्रत (a door into the Panchang observance engine, PRD-09) and
-  // कुंडली (the PRD-C Jyotish landing) right after जप, and देवता after तीर्थ.
-  // These are permanent launchers, not shuffled Discover cards: high-intent
-  // tools must remain findable in the same place on every visit.
-  // Anchoring by id (not index) keeps the interleave correct if categories are
-  // added/reordered. Memoized so the CategoryCards keep stable icon/onPress
-  // props across unrelated HomeScreen re-renders (context churn, tour registration).
+  // Keep the compact Home shortcuts in a stable order. Library contains every reading form.
   const tiles: TileItem[] = React.useMemo(() => {
     const iconFor = (key: CategoryIconKey) => <CategoryIcon iconKey={key} size={spacing.homeCategoryArtwork} />;
     const vratTile: TileItem = {
       key: 'vrat',
-      nameHi: 'व्रत',
-      nameEn: 'Vrat & Parv',
-      shortNameEn: 'Vrat',
+      nameHi: 'आज का व्रत',
+      nameEn: 'Today’s vrat',
       status: 'active',
       icon: iconFor('vrat'),
       onPress: () =>
-        rootNav.navigate('VratTab', panchangTabTarget('ObservanceList', { category: 'vrat' })),
+        occasion ? rootNav.navigate('VratTab',panchangTabTarget('ObservanceDetail',{ruleId:occasion.rule.id,dateMs:today.getTime()})) : rootNav.navigate('PanchangTab',panchangTabTarget('PanchangHome',{initialTab:'calendar',dateMs:today.getTime()})),
     };
-    const kathaTile: TileItem = { key: 'katha', nameHi: 'कथा संग्रह', nameEn: 'Katha Library', shortNameEn: 'Katha', status: 'active', icon: iconFor('granth'), onPress: () => navigation.navigate('KathaLibrary') };
+    const libraryTile: TileItem = {key:'library',nameHi:'पुस्तकालय',nameEn:'Library',status:'active',icon:iconFor('granth'),
+      hasNew: categories.some(c=>hasNewInCategory(c.id)),onPress:()=>navigation.navigate('ReadingLibrary')};
     const deityTile: TileItem = {
       key: 'deity',
       nameHi: 'देवता',
@@ -181,6 +167,9 @@ export default function HomeScreen({ navigation }: Props) {
     };
     const result: TileItem[] = [];
     for (const c of categories) {
+      if(c.id==='granth') result.push(libraryTile);
+      if(c.id==='japam') result.push(vratTile,kundaliTile,muhuratTile);
+      if(!['chalisa','aarti','theerth'].includes(c.id)) continue;
       result.push({
         key: c.id,
         nameHi: c.nameHi,
@@ -194,15 +183,11 @@ export default function HomeScreen({ navigation }: Props) {
             ? navigation.navigate('TheerthMap', {})
             : navigation.navigate('CategoryList', { categoryId: c.id as ContentCategory }),
       });
-      if (c.id === 'japam') result.push(vratTile, kundaliTile, muhuratTile);
-      if (c.id === 'granth') result.push(kathaTile);
       if (c.id === 'theerth') result.push(deityTile, purposeTile);
     }
-    // Fifteen launchers fill five 3-col rows; दान-पुण्य closes the grid as one
-    // full-width row (PRD-26; design.md §18).
     result.push(daanTile);
     return result;
-  }, [hasNewInCategory, navigation, rootNav, spacing.homeCategoryArtwork]);
+  }, [hasNewInCategory, navigation, rootNav, spacing.homeCategoryArtwork, occasion, today]);
 
   const { width, fontScale } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -210,131 +195,12 @@ export default function HomeScreen({ navigation }: Props) {
   const { contentWidth, gridWidth, gridPadding, gridGap, tileWidth, launcherHeight, largeText } =
     homeLayout(width - insets.left - insets.right, fontScale);
 
-  // Discover carousel — wide cards that peek the next one. Width is the viewport
-  // minus the side gutter and a sliver of the following card; snap by card+gap.
-  const featureGap = spacing.md;
-  const featureWidth = Math.min(320, contentWidth - gridPadding - 56);
-  const featureSnap = featureWidth + featureGap;
-
-  // Spotlight content. One flexible card shell (FeatureCard) carries every
-  // section so awareness of each surface is raised from a single carousel.
-  const spotlights: (FeatureSpotlight & { onPress: () => void })[] = [
-    {
-      key: 'routine',
-      titleHi: 'नित्य साधना', titleEn: 'Daily Practice',
-      descHi: 'अपनी दैनिक साधना चुनें और निरंतरता बनाए रखें।',
-      descEn: 'Pick your daily rituals and keep the streak alive.',
-      ctaHi: 'शुरू करें', ctaEn: 'Begin',
-      icon: <FeatureIcon name="routine" />,
-      onPress: () => navigation.navigate('RoutineToday'),
-    },
-    {
-      key: 'daily-bhakti',
-      titleHi: 'दैनिक भक्ति', titleEn: 'Daily Verse',
-      descHi: 'हर दिन एक नया श्लोक चिंतन और भक्ति के लिए।',
-      descEn: 'A fresh shloka to reflect on every single day.',
-      ctaHi: 'पढ़ें', ctaEn: 'Read',
-      icon: <FeatureIcon name="daily-bhakti" />,
-      onPress: () => rootNav.navigate('DailyBhaktiTab'),
-    },
-    {
-      // दान-पुण्य (PRD-26) launch-awareness card — the educate-first giving layer.
-      key: 'daan-punya',
-      titleHi: 'दान-पुण्य', titleEn: 'Daan Punya',
-      descHi: 'जप · व्रत · दान — पहले महत्व, फिर देना। कभी भी।',
-      descEn: 'Japa · vrat · daan — understand first, then give. Any day.',
-      ctaHi: 'खोलें', ctaEn: 'Open',
-      hasNew: true,
-      icon: <FeatureIcon name="daan-punya" />,
-      onPress: () => navigation.navigate('DaanPunya'),
-    },
-    // NOTE: no Panchang spotlight here — the Today strip (§48) owns that
-    // surface now; a second card produced two "Today's Panchang." buttons for
-    // screen readers.
-    {
-      key: 'sankalp',
-      titleHi: 'संकल्प', titleEn: 'Sadhana Programs',
-      descHi: '४१-दिन हनुमान चालीसा जैसे तैयार संकल्प लें।',
-      descEn: 'Take a prebuilt vow, like the 41-day Hanuman Chalisa.',
-      ctaHi: 'संकल्प लें', ctaEn: 'Begin',
-      icon: <FeatureIcon name="sankalp" />,
-      onPress: () => navigation.navigate('SadhanaPrograms'),
-    },
-    {
-      // Standing zero-state discovery door. The Today strip is contextual and
-      // the Panchang ledger is a planning surface; this card makes the feature
-      // discoverable on Home before anybody has saved a family tithi.
-      key: 'pitru-smaran',
-      titleHi: 'पितृ स्मरण', titleEn: 'Pitru Smaran',
-      descHi: 'एक बार तिथि जोड़ें—हर वर्ष श्राद्ध की सही तारीख़ जानें।',
-      descEn: 'Save a tithi once and know its shraddha date every year.',
-      ctaHi: 'स्मरण जोड़ें', ctaEn: 'Set up',
-      hasNew: true,
-      icon: <FeatureIcon name="pitru-smaran" />,
-      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('PitruSmaranList')),
-    },
-    {
-      // PRD-19 Phase 2B Discover card: the vidhi catalog's Home awareness door.
-      // The Panchang day-panel pill is date-dependent and the Vrat & Parv tile
-      // is two taps deep; this card makes guided pujas discoverable on Home.
-      // Pushed on the Home stack (the vidhi flow is registered on both stacks):
-      // a cross-tab jump left back popping to the Panchang calendar, which in
-      // its default mode shows no vidhi door at all.
-      key: 'puja-vidhi',
-      titleHi: 'पूजा विधि', titleEn: 'Guided Pujas',
-      descHi: 'सत्यनारायण से शिवरात्रि तक—हर चरण, हर मन्त्र साथ।',
-      descEn: 'Satyanarayan to Shivaratri — every step, guided in hand.',
-      ctaHi: 'विधि देखें', ctaEn: 'Open',
-      hasNew: true,
-      icon: <FeatureIcon name="puja-vidhi" />,
-      onPress: () => navigation.navigate('VidhiCatalog'),
-    },
-    {
-      // PRD-41 Discover card: the जिज्ञासा door. Opens the आज का विधान briefing
-      // (standing questions answered for today), which in turn opens the
-      // answer-first search box for anything else. Pushed on the Home stack so
-      // back returns here.
-      key: 'jijnasa',
-      titleHi: 'जिज्ञासा · आज का विधान', titleEn: 'Ask Vedansh',
-      descHi: 'आज की तिथि, व्रत, भोग, मुहूर्त—एक प्रश्न में उत्तर।',
-      descEn: "Today's tithi, vrat, bhog, muhurat — answered in one line.",
-      ctaHi: 'पूछें', ctaEn: 'Ask',
-      hasNew: true,
-      icon: <FeatureIcon name="jijnasa" />,
-      onPress: () => navigation.navigate('TodayVidhan'),
-    },
-    {
-      key: 'theerth',
-      titleHi: 'तीर्थ यात्रा', titleEn: 'Sacred Journeys',
-      descHi: 'भारत के पवित्र मंदिरों और धामों की खोज करें।',
-      descEn: 'Explore sacred temples and dhams across Bharat.',
-      ctaHi: 'खोजें', ctaEn: 'Explore',
-      icon: <FeatureIcon name="theerth" />,
-      onPress: () => navigation.navigate('TheerthMap', {}),
-    },
-    {
-      // Launch-release Discover card (PRD-15 §3.4, design.md §HomeWidgets). One
-      // spotlight raising awareness of home-screen widgets; it opens the in-app
-      // Widget Gallery (which carries the platform add-widget instructions) —
-      // it never promises a system widget-picker jump. WidgetGallery lives on
-      // the More stack, so route through the MoreTab like the tour steps do.
-      key: 'home-widgets',
-      titleHi: 'होम-स्क्रीन विजेट', titleEn: 'Home-Screen Widgets',
-      descHi: 'आज का श्लोक, पंचांग और जप—होम स्क्रीन पर।',
-      descEn: "Today's verse, Panchang, and japa on your home screen.",
-      ctaHi: 'देखें', ctaEn: 'View',
-      hasNew: true,
-      icon: <FeatureIcon name="home-widgets" />,
-      onPress: () => rootNav.navigate('MoreTab', moreTabTarget('WidgetGallery')),
-    },
-  ];
-
-  // All cards always render (awareness = coverage); their order is shuffled once
-  // per app open so a different section leads each visit. The seed is captured
-  // at mount (useMemo []), so the order is fresh on each open yet stable across
-  // re-renders while the user is on Home. See utils/shuffleBySeed.
-  const shuffleSeed = React.useMemo(() => Date.now(), []);
-  const orderedSpotlights = shuffleBySeed(spotlights, shuffleSeed);
+  const heading = (title: string, all = false) => <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginTop:14,marginBottom:6}}>
+    <Text accessibilityRole="header" style={{fontFamily:titleFontByLang(lang),fontSize:15,color:colors.inkSoft}}>{title}</Text>
+    {all && <Pressable testID="home-all-features" accessibilityRole="button" style={{minHeight:44,justifyContent:'center'}} onPress={()=>navigation.navigate('ReadingLibrary',{features:true})}>
+      <Text style={{fontFamily:titleFontByLang(lang),color:colors.saffronDeep}}>{pick(lang,{hi:'सभी देखें',en:'View all',gu:'બધું જુઓ',kn:'ಎಲ್ಲವನ್ನೂ ನೋಡಿ'})} ›</Text>
+    </Pressable>}
+  </View>;
 
   return (
     <View style={styles.root}>
@@ -394,40 +260,17 @@ export default function HomeScreen({ navigation }: Props) {
             </Text>
           </Pressable>
 
-          {todayFestival && (
-            <FestiveToran
-              greetingHi={todayFestival.greetingHi}
-              greetingEn={todayFestival.greetingEn}
-            />
-          )}
-
           <TodayStrip />
-          <React.Suspense fallback={null}><DeityDayLinks /></React.Suspense>
-
-          <TodayRecommendationsRow horizontalGutter={gridPadding} />
-
-          {/* Routine banner, inline (not docked) on Home — it sits with the
-              Today strip as the "today" cluster, above the library grid, so it
-              no longer floats over and clips the DISCOVER carousel below. */}
+          <React.Suspense fallback={null}><ContinueReading navigation={navigation} /></React.Suspense>
+          <React.Suspense fallback={<View style={{minHeight:198}} />}><FeaturedReadings navigation={navigation} width={gridWidth} largeText={largeText}/></React.Suspense>
+          <View ref={japaTileRef} collapsable={false}>
+            <React.Suspense fallback={<View style={{minHeight:114}} />}><JapmalaBanner navigation={navigation}/></React.Suspense>
+          </View>
           <View style={styles.routineInline}>
             <RoutineBanner bannerRef={routineCardRef} />
           </View>
 
-          <Text
-            style={[
-              styles.sectionLabel,
-              styles.sectionLabelSpaced,
-              {
-                color: colors.inkMuted,
-                fontSize: typography.sectionLabel.fontSize,
-                fontFamily: typography.sectionLabel.fontFamily,
-                letterSpacing: typography.sectionLabel.letterSpacing,
-              },
-            ]}
-          >
-            CATEGORIES
-          </Text>
-
+          {heading(pick(lang,{hi:'श्रेणियाँ',en:'Categories',gu:'શ્રેણીઓ',kn:'ವರ್ಗಗಳು'}),true)}
           {/* categoriesGrid tour target rings the whole grid, not one tile. */}
           <View style={[styles.grid, { gap: gridGap }]} ref={categoriesGridRef} collapsable={false}>
             {tiles.map((tile) => (
@@ -436,14 +279,8 @@ export default function HomeScreen({ navigation }: Props) {
                 // दान-पुण्य is the grid's full-width closing row (design.md §18);
                 // other tiles use the current responsive grid track.
                 style={{ width: tile.fullWidth ? gridWidth : tileWidth }}
-                ref={
-                  tile.key === 'japam'
-                    ? japaTileRef
-                    : tile.key === 'theerth'
-                      ? theerthTileRef
-                      : undefined
-                }
-                collapsable={tile.key === 'japam' || tile.key === 'theerth' ? false : undefined}
+                ref={tile.key==='theerth'?theerthTileRef:undefined}
+                collapsable={tile.key==='theerth'?false:undefined}
               >
                 <CategoryCard
                   nameHi={tile.nameHi}
@@ -464,20 +301,7 @@ export default function HomeScreen({ navigation }: Props) {
             ))}
           </View>
 
-          <Text
-            style={[
-              styles.sectionLabel,
-              styles.sectionLabelSpaced,
-              {
-                color: colors.inkMuted,
-                fontSize: typography.sectionLabel.fontSize,
-                fontFamily: typography.sectionLabel.fontFamily,
-                letterSpacing: typography.sectionLabel.letterSpacing,
-              },
-            ]}
-          >
-            STORIES FOR KIDS
-          </Text>
+          {heading(pick(lang,{hi:'कथाएँ और परंपराएँ',en:'Stories and traditions',gu:'કથાઓ અને પરંપરાઓ',kn:'ಕಥೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳು'}))}
           <View style={{ gap: 12, marginBottom: 12 }}>
             <React.Suspense fallback={<View style={{ height: 138 }} />}>
               <KidsStoriesHomeCard
@@ -495,64 +319,11 @@ export default function HomeScreen({ navigation }: Props) {
             </React.Suspense>
           </View>
 
-          <Text
-            style={[
-              styles.sectionLabel,
-              styles.sectionLabelSpaced,
-              styles.discoverLabel,
-              {
-                color: colors.inkMuted,
-                fontSize: typography.sectionLabel.fontSize,
-                fontFamily: typography.sectionLabel.fontFamily,
-                letterSpacing: typography.sectionLabel.letterSpacing,
-              },
-            ]}
-          >
-            DISCOVER
-          </Text>
-
-          <ScrollView
-              testID="home-discover-carousel"
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              decelerationRate="fast"
-              snapToInterval={featureSnap}
-              snapToAlignment="start"
-              // Full-bleed: cancel the page gutter so cards run edge-to-edge and the
-              // next card peeks, then re-pad the content so the first card aligns
-              // with the rest of the page.
-              style={{ marginHorizontal: -gridPadding }}
-              contentContainerStyle={{
-                paddingHorizontal: gridPadding,
-                gap: featureGap,
-                // The FOR TODAY strip's touch-band fix, mirrored here: the cards
-                // are Pressables inside this horizontal ScrollView, and the shared
-                // first-tap fallback is only suppressed when onScrollBeginDrag
-                // fires. An arced horizontal flick that starts near the band edge
-                // can lose the first-pixel gesture negotiation to the card
-                // Pressable / outer vertical page-scroll — so the swipe randomly
-                // opens a card or stalls instead of scrolling. Padding the band
-                // top+bottom enlarges the scrollable frame and the arc tolerance
-                // so the horizontal scroll reliably wins the drag. It grows the
-                // touch target, not the visible cards.
-                paddingVertical: 10,
-              }}
-              // A horizontal swipe here is a scroll, not a tap — suppress the
-              // shared first-tap fallback so a swipe never opens a card.
-              onScrollBeginDrag={markTileDrag}
-            >
-              {orderedSpotlights.map(({ onPress, ...item }) => (
-                <FeatureCard
-                  key={item.key}
-                  testID={`home-discover-${item.key}`}
-                  item={item}
-                  width={featureWidth}
-                  onPress={() => activateTile(onPress)}
-                  onPressIn={() => beginTilePress(onPress)}
-                  onPressOut={finishTilePress}
-                />
-              ))}
-            </ScrollView>
+          {heading(pick(lang,{hi:'और जानें',en:'Explore more',gu:'વધુ જાણો',kn:'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ'}))}
+          <View style={{flexDirection:'row',gap:gridGap}}>
+            <View style={{flex:1}}><CategoryCard variant="launcher" nameHi="मंदिर दर्शन" nameEn="Temple Darshan" status="active" icon={<CategoryIcon iconKey="theerth" size={52}/>} onPress={()=>navigation.navigate('DarshanQuick')}/></View>
+            <View style={{flex:1}}><CategoryCard variant="launcher" nameHi="पूजा विधि" nameEn="Guided pujas" status="active" icon={<CategoryIcon iconKey="vrat" size={52}/>} onPress={()=>navigation.navigate('VidhiCatalog')}/></View>
+          </View>
 
           <Text
             style={[
@@ -603,7 +374,6 @@ export default function HomeScreen({ navigation }: Props) {
           )}
         </ScrollView>
         </TilePressProvider>
-        <DarshanFloatingButton onPress={() => navigation.navigate('DarshanQuick')} />
       </SafeAreaView>
     </View>
   );
@@ -638,19 +408,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   searchText: { flex: 1, fontSize: 14, textTransform: 'none', letterSpacing: 0 },
-  sectionLabel: {
-    textTransform: 'uppercase',
-    marginBottom: 8,
-    paddingHorizontal: 4,
-  },
-  sectionLabelSpaced: {
-    marginTop: 16,
-  },
-  discoverLabel: {
-    // The DISCOVER band below carries its own top padding (the touch-band fix),
-    // so drop the label's bottom margin rather than stacking the two spacings.
-    marginBottom: 0,
-  },
   routineInline: {
     marginTop: 16,
   },

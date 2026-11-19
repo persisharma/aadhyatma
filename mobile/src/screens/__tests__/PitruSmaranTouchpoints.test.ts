@@ -2,11 +2,10 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 describe('Pitru Smaran standing discovery', () => {
-  test('Home always registers a zero-state DISCOVER card that opens the ledger', () => {
-    const source = fs.readFileSync(path.resolve(__dirname, '..', 'HomeScreen.tsx'), 'utf8');
-    expect(source).toMatch(/key: 'pitru-smaran'/);
+  test('All features includes the family remembrance ledger before the first entry', () => {
+    const source = fs.readFileSync(path.resolve(__dirname, '..', 'ReadingLibraryScreen.tsx'), 'utf8');
+    expect(source).toContain('Family remembrance');
     expect(source).toMatch(/moreTabTarget\('PitruSmaranList'\)/);
-    expect(source).toMatch(/Save a tithi once and know its shraddha date every year/);
   });
 
   test('the Panchang ledger invitation cannot be dismissed while empty', () => {

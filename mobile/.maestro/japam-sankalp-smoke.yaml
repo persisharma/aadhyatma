@@ -28,12 +28,11 @@ appId: com.prashantsharma.vedansh
 - runFlow: _launch.yaml
 
 - scrollUntilVisible:
-    element:
-      text: "JapMala.*Tap to open\\."
+    element: { id: home-japa-choose }
     direction: DOWN
     timeout: 20000
     centerElement: true
-- tapOn: "JapMala.*Tap to open\\."
+- tapOn: { id: home-japa-choose }
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Om Namah Shivaya\\..*Tap to open\\."

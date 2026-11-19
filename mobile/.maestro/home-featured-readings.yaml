@@ -1,0 +1,20 @@
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- assertVisible: { id: home-featured-gita-saar }
+- assertVisible: { id: home-featured-bhagavad-gita }
+- assertVisible: { id: home-featured-sundarkand }
+- assertVisible: { id: home-featured-valmiki-ramayan }
+- assertVisible: { id: home-featured-hanuman-chalisa }
+- assertVisible: { id: home-featured-aarti }
+- tapOn: { id: home-featured-gita-saar }
+- extendedWaitUntil: { visible: { id: gita-saar-featured }, timeout: 30000 }
+- tapOn: { id: tab-home }
+- tapOn: { id: home-japa-choose }
+- tapOn: { id: practice-tab-stotram }
+- tapOn: { id: reading-link-aditya-hridayam }
+- assertVisible: "Open reading.*|पाठ खोलें.*|પાઠ ખોલો.*|ಪಾಠ ತೆರೆಯಿರಿ.*"
+- tapOn: { id: tab-home }
+- scrollUntilVisible: { element: { text: "Library[.].*" }, centerElement: true }
+- tapOn: "Library[.].*"
+- assertVisible: { id: reading-library-search }

@@ -5,7 +5,7 @@ import { FlatList, Modal, Text, TextInput } from 'react-native';
 import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { ShareProvider } from '@/utils/shareVerse';
-import { getSanatanTopics, getSanatanTopic } from '@/data/sanatan-parichay';
+import { getSanatanTopics, getSanatanTopic, getSanatanReadingPages } from '@/data/sanatan-parichay';
 import SanatanParichayScreen from '../SanatanParichayScreen';
 import SanatanReaderScreen from '../SanatanReaderScreen';
 import ExploreDiagram from '@/components/sanatan/ExploreDiagram';
@@ -64,19 +64,12 @@ test('unknown reader IDs do not substitute another deity or start playback', asy
   expect(tree.root.findAllByType(FlatList)).toHaveLength(0);
   act(() => tree.unmount());
 });
-test('directions include the selected above/below source, and Dashavatara lists stay separate', async () => {
-  const tree = await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} onCollection={jest.fn()} />);
-  const above = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Above')[0];
-  act(() => above.props.onPress());
-  expect(text(tree)).toContain('Above · Brahma');
+test('the figure page shows the painted teaching plate and its one-line caption', async () => {
+  const tree = await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} />);
+  expect(tree.root.findAll(node => node.props.testID === 'sanatan-explore-dikpal').length).toBeGreaterThan(0);
+  expect(tree.root.findAll(node => node.props.accessibilityRole === 'image').length).toBeGreaterThan(0);
+  expect(text(tree)).toContain('directions');
   act(() => tree.unmount());
-  const avatars = await render(<ExploreDiagram topic={getSanatanTopic('forms')!} onCollection={jest.fn()} />);
-  expect(text(avatars)).toContain('9. Krishna');
-  const jayadeva = avatars.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Jayadeva')[0];
-  act(() => jayadeva.props.onPress());
-  expect(text(avatars)).toContain('9. Buddha');
-  expect(text(avatars)).not.toContain('9. Krishna');
-  act(() => avatars.unmount());
 });
 
 test('finishing persists the final page and clears resume before returning', async () => {
@@ -123,8 +116,8 @@ for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
     const button = tree.root.findAll(n => n.props.accessibilityRole === 'button' && n.props.accessibilityLabel === contentByLang(lang, 'साझा करें', 'Share'))[0];
     await act(async () => button.props.onPress());
     const payload = share.mock.calls[0][0] as unknown as sharing.ShareableProse;
-    expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: topic.pages[0][0], en: topic.pages[0][1] }]);
-    expect(payload.scopes[1].blocks).toEqual(topic.pages.map(([hi, en]) => ({ kind: 'para', hi, en })));
+    expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: getSanatanReadingPages(topic)[0][0], en: getSanatanReadingPages(topic)[0][1] }]);
+    expect(payload.scopes[1].blocks).toEqual(getSanatanReadingPages(topic).map(([hi, en]) => ({ kind: 'para', hi, en })));
     act(() => tree.unmount());
   });
 }
@@ -142,12 +135,12 @@ for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
       for (let stage = 0; stage < 3; stage++) {
         expect(tree.root.findAll(node => node.props.testID === `swastika-stage-${stage}`).length).toBeGreaterThan(0);
       }
-      for (const paragraph of contentByLang(lang, ...topic.pages[2]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph);
+      for (const paragraph of contentByLang(lang, ...topic.pages[2]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph.replace(/^\d+\.\s+/,''));
       const button = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === contentByLang(lang, 'साझा करें', 'Share'))[0];
       await act(async () => button.props.onPress());
       const payload = share.mock.calls[0][0] as sharing.ShareableProse;
       expect(share.mock.calls[0][1]).toBe(lang);
-      expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: topic.pages[2][0], en: topic.pages[2][1] }]);
+      expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: getSanatanReadingPages(topic)[2][0], en: getSanatanReadingPages(topic)[2][1] }]);
       expect(payload.scopes[1].blocks).toHaveLength(3);
       act(() => tree.unmount());
     });
@@ -178,3 +171,11 @@ test('drawing stages preserve four equal right-angle clockwise turns and add dot
   }
   act(() => tree.unmount());
 });
+
+for (const lang of ['hi','en','gu','kn'] as const) {
+ test(`${lang}: the figure page renders its painted plate and caption`,async()=>{
+  const tree=await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!}/>,lang);
+  expect(tree.root.findAll(n=>n.props.accessibilityRole==='image').length).toBeGreaterThan(0);
+  act(()=>tree.unmount());
+ });
+}

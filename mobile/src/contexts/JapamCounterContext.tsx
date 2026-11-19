@@ -30,11 +30,16 @@ export type JapamCounterEntry = {
 };
 
 type EntryMap = Record<string, JapamCounterEntry>;
+export type RecitationMap = Record<string, { count: number; updatedAt: number }>;
+const RECITATION_KEY = "@vedansh/stotram-recitations";
+
 type SankalpMap = Record<string, JapaSankalp>;
 
 type JapamCounterContextValue = {
   isLoading: boolean;
   entries: Readonly<EntryMap>;
+  recitations: Readonly<RecitationMap>;
+  countRecitation: (sourceId: string) => void;
   getEntry: (mantraId: string) => JapamCounterEntry;
   /** Adds `beads` (default 1) to the count, rolling over to new rounds at
    *  JAPAM_BEADS_PER_ROUND. Safe to call several times in one synchronous tick
@@ -57,6 +62,8 @@ const EMPTY: JapamCounterEntry = { count: 0, rounds: 0, updatedAt: 0 };
 const JapamCounterContext = createContext<JapamCounterContextValue>({
   isLoading: true,
   entries: {},
+  recitations: {},
+  countRecitation: () => {},
   getEntry: () => EMPTY,
   increment: () => EMPTY,
   resetBeads: () => {},
@@ -70,6 +77,9 @@ const JapamCounterContext = createContext<JapamCounterContextValue>({
 export function JapamCounterProvider({ children }: { children: React.ReactNode }) {
   const [entries, setEntries] = useState<EntryMap>({});
   const [sankalps, setSankalps] = useState<SankalpMap>({});
+  const [recitations, setRecitations] = useState<RecitationMap>({});
+  const recitationRef = useRef<RecitationMap>({});
+  const writeQueue = useRef(Promise.resolve());
   const [isLoading, setIsLoading] = useState(true);
   const { logJapaBead, logJapaRound } = useUserActivity();
 
@@ -113,8 +123,27 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
       .finally(() => {
         sankalpsHydratedRef.current = true;
       });
-    Promise.all([counts, vows]).finally(() => setIsLoading(false));
+    const hymns = AsyncStorage.getItem(RECITATION_KEY).then(raw => {
+      if (!raw) return;
+      const saved: RecitationMap = {};
+      for (const [id, value] of Object.entries(JSON.parse(raw) ?? {})) {
+        const row = value as RecitationMap[string] | null;
+        if (row && Number.isSafeInteger(row.count) && row.count > 0 && Number.isFinite(row.updatedAt)) saved[id] = row;
+      }
+      recitationRef.current = saved;
+      setRecitations(saved);
+    }).catch(() => undefined);
+    Promise.all([counts, vows, hymns]).finally(() => setIsLoading(false));
   }, []);
+
+  const countRecitation = useCallback((sourceId: string) => {
+    if (isLoading) return;
+    const current = recitationRef.current;
+    const next = {...current, [sourceId]: {count: (current[sourceId]?.count ?? 0) + 1, updatedAt: Date.now()}};
+    recitationRef.current = next;
+    setRecitations(next);
+    writeQueue.current = writeQueue.current.then(() => AsyncStorage.setItem(RECITATION_KEY, JSON.stringify(next))).catch(() => undefined);
+  }, [isLoading]);
 
   const persist = useCallback((next: EntryMap) => {
     entriesRef.current = next;
@@ -208,6 +237,8 @@ export function JapamCounterProvider({ children }: { children: React.ReactNode }
       value={{
         isLoading,
         entries,
+        recitations,
+        countRecitation,
         getEntry,
         increment,
         resetBeads,

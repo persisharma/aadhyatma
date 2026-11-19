@@ -23,7 +23,7 @@ import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import JanmaTithiDayChip from '@/components/JanmaTithiDayChip';
 import { TodayChakraOrnament } from '@/components/CelestialChakra';
-import { moreTabTarget } from '@/navigation/entryRoutes';
+import { moreTabTarget, panchangTabTarget } from '@/navigation/entryRoutes';
 import {
   isPitruPakshaDayTableWarm,
   pitruPakshaObservanceForDate,
@@ -100,7 +100,6 @@ export default function TodayStrip() {
   const rootNav = useNavigation<any>();
   const isFocused = useIsFocused();
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
-  const openPanchang = React.useCallback(() => rootNav.navigate('PanchangTab'), [rootNav]);
   const [calendarSystem] = usePanchangCalendarSystem();
 
   // India's current date, rolled over at its midnight / on app foreground — the
@@ -121,6 +120,18 @@ export default function TodayStrip() {
   const carriedOver = useObservancesForDate(preDawn ? carryOverDate : today, calendarSystem);
   const tonight = preDawn && carriedOver.length > 0;
   const observances = tonight ? carriedOver : observancesToday;
+  // A carried-over festival belongs to yesterday, so its detail page opens on that date.
+  const observanceDate = tonight ? carryOverDate : today;
+  const festival = observances.find(o => o.rule.category === 'festival')?.rule;
+  const festivalTitle = festival
+    ? (tonight ? tonightTitle(festival) : { hi: festival.nameHi, en: festival.nameEn })
+    : null;
+  const openPanchang = () => rootNav.navigate('PanchangTab', panchangTabTarget('PanchangHome', {
+    initialTab: 'calendar', dateMs: today.getTime(),
+  }));
+  const openToday = festival
+    ? () => rootNav.navigate('VratTab', panchangTabTarget('ObservanceDetail', { ruleId: festival.id, dateMs: observanceDate.getTime() }))
+    : openPanchang;
   /**
    * The public Pitru-Paksha chip, resolved the same way every other panchang
    * answer on this card is (§48, `usePitruSmaranSolves`): a memory read paints
@@ -271,6 +282,7 @@ export default function TodayStrip() {
       : []),
     ...observances.slice(0, 2).map((o) => ({
       key: o.rule.id,
+      onPress: () => rootNav.navigate('VratTab',panchangTabTarget('ObservanceDetail',{ruleId:o.rule.id,dateMs:observanceDate.getTime()})),
       labelHi: tonight ? tonightTitle(o.rule).hi : o.rule.nameHi,
       labelEn: tonight ? tonightTitle(o.rule).en : o.rule.nameEn,
       bg: colors.saffronTint,
@@ -496,15 +508,15 @@ export default function TodayStrip() {
           must remain independently focusable/tappable on iOS. This header keeps
           the original Panchang action and label without swallowing its siblings. */}
       <Pressable
-        onPress={() => activateTile(openPanchang)}
-        onPressIn={() => beginTilePress(openPanchang)}
+        onPress={() => activateTile(openToday)}
+        onPressIn={() => beginTilePress(openToday)}
         onPressOut={finishTilePress}
         accessibilityRole="button"
-        accessibilityLabel={a11y}
+        accessibilityLabel={festivalTitle ? contentByLang(lang,festivalTitle.hi,festivalTitle.en) : a11y}
       >
         <View style={styles.headRow}>
           <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
-            {contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
+            {festival ? contentByLang(lang,'आज का पर्व','Today’s festival') : contentByLang(lang, 'आज का पंचांग', "Today's Panchang")}
           </Text>
           <Text style={{ fontFamily: fontFamilies.latinSemiBold, fontSize: 14, color: colors.saffronDeep }}>
             ›
@@ -520,7 +532,7 @@ export default function TodayStrip() {
             ...(lang === 'en' ? { letterSpacing: 0.3 } : null),
           }}
         >
-          {headline}
+          {festivalTitle ? contentByLang(lang,festivalTitle.hi,festivalTitle.en) : headline}
         </Text>
       </Pressable>
       {/* Reserve this row even before the deferred Panchang solve completes.

@@ -1,17 +1,16 @@
-# More now opens from Home's top-right gear. The first Home tap pops its stack;
-# the second, on Home itself, scrolls the page back to the top (useScrollToTop).
-# Scroll swipes alone are not enough: they start at screen centre, which after a
-# deep Home visit can sit inside a horizontal row (CI, Android: Home never moved).
+# Reselect Home to pop its stack, then return to the header in the same session.
 appId: com.prashantsharma.vedansh
 ---
-- tapOn: { id: "tab-home" }
-- tapOn: { id: "tab-home" }
+- tapOn: { id: tab-home }
 - waitForAnimationToEnd
-# Require the whole gear: a partly hidden one is tapped at its centre, which on
-# iOS can land on the status bar and never open Settings (seen in CI).
+- tapOn: { id: tab-home }
+- waitForAnimationToEnd
 - scrollUntilVisible:
-    element: { id: "home-settings" }
+    element: { id: home-settings }
     direction: UP
-    centerElement: false
-- tapOn: { id: "home-settings" }
+    timeout: 90000
+# A partially exposed gear can sit behind the iOS safe area.
+- swipe: { direction: DOWN }
+- waitForAnimationToEnd
+- tapOn: { id: home-settings, retryTapIfNoChange: true }
 - waitForAnimationToEnd

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { withDangerousMod, withGradleProperties } = require('@expo/config-plugins');
+const { withDangerousMod, withGradleProperties } = require('expo/config-plugins');
 const { mergeContents } = require('@expo/config-plugins/build/utils/generateCode');
 
 /**

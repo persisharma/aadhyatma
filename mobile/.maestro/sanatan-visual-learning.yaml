@@ -1,0 +1,51 @@
+# Executed by the native search matrix; parsing this file is not device evidence.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-dikpal" }
+- tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-start" }
+- tapOn: { id: sanatan-start, retryTapIfNoChange: true }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-next" }
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+# Figure page: the painted teaching plate (language-picked) replaces the old vector schematic.
+- scrollUntilVisible:
+    element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    timeout: 60000
+- assertVisible: { id: sanatan-explore-dikpal }
+- takeScreenshot: e2e-shots/sanatan-dikpal-plate
+- tapOn: Back
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: sanatan-search, above: { id: tab-home } }
+    direction: UP
+    timeout: 60000
+- tapOn: { id: sanatan-search }
+- inputText: Maitreyi
+- pressKey: Enter
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-rishis" }
+- tapOn: { id: sanatan-collection-rishis, retryTapIfNoChange: true }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-page-3" }
+- tapOn: "Maitreyi’s distinct question"
+- assertVisible: "3\\s*/\\s*3"
+- takeScreenshot: e2e-shots/sanatan-search-maitreyi-exact-page
+- tapOn: Back
+- tapOn: Back
+- scrollUntilVisible:
+    element: { id: sanatan-search, text: Maitreyi }
+    direction: UP
+    timeout: 60000

@@ -359,7 +359,15 @@ describe('TodayStrip', () => {
       (n) => n.props?.accessibilityRole === 'button' && typeof n.props?.onPress === 'function'
     )[0];
     act(() => button.props.onPress());
-    expect(mockNavigate).toHaveBeenCalledWith('PanchangTab');
+    expect(mockNavigate).toHaveBeenCalledWith('PanchangTab', {screen:'PanchangHome', initial:false, params:{initialTab:'calendar',dateMs:expect.any(Number)}});
+  });
+
+  it('opens the named festival occurrence from its Home headline', () => {
+    mockObservances = [{rule:{id:'diwali',category:'festival',nameHi:'दीपावली',nameEn:'Diwali'}}];
+    const tree = render();
+    const headline = tree.root.findAll(n => n.props?.accessibilityLabel === 'दीपावली' && typeof n.props.onPress === 'function')[0];
+    act(() => headline.props.onPress());
+    expect(mockNavigate).toHaveBeenCalledWith('VratTab', {screen:'ObservanceDetail',initial:false,params:{ruleId:'diwali',dateMs:expect.any(Number)}});
   });
 
   it('accepts a tap while all Panchang content is unresolved', () => {
@@ -370,7 +378,7 @@ describe('TodayStrip', () => {
     expect(mockMuhurat.panchang).toBeNull();
     expect(mockKnownWindow).toBeNull();
     act(() => button.props.onPress());
-    expect(mockNavigate).toHaveBeenCalledWith('PanchangTab');
+    expect(mockNavigate).toHaveBeenCalledWith('PanchangTab', {screen:'PanchangHome', initial:false, params:{initialTab:'calendar',dateMs:expect.any(Number)}});
   });
 
   it('wires the card for Home first-tap recovery (onPressIn/onPressOut)', () => {
