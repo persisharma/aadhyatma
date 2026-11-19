@@ -7,6 +7,7 @@ import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { findJapamMantra, JAPAM_BEADS_PER_ROUND } from '@/data/japam';
 import { getPracticeHymn } from '@/data/practiceHymn';
+import { navigateStotramPractice } from '@/navigation/entryRoutes';
 import type { HomeStackParamList } from '@/navigation/types';
 import { contentByLang, pick } from '@/utils/localize';
 import { titleFontByLang } from '@/utils/langType';
@@ -71,7 +72,7 @@ export default function JapmalaBanner({
   };
   const open = () =>
     hymn
-      ? navigation.navigate('StotramPractice', { sourceId: hymn.id })
+      ? navigateStotramPractice(navigation, hymn.id)
       : navigation.navigate('JapamCounter', { mantraId });
   return (
     <View testID="home-japa-banner" style={styles.banner}>

@@ -20,6 +20,15 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: home-japa-choose }
 - tapOn: { id: practice-tab-stotram }
 - scrollUntilVisible:
+    element: { id: reading-link-durga-saptashati-core }
+    direction: DOWN
+- tapOn: { id: reading-link-durga-saptashati-core }
+- extendedWaitUntil:
+    visible: { id: saptashati-chapter-list-heading }
+    timeout: 15000
+- tapOn: Back
+- assertVisible: { id: practice-tab-stotram }
+- scrollUntilVisible:
     element: { text: 'Aditya Hridayam\..*Tap to open\.' }
     direction: DOWN
 - tapOn: 'Aditya Hridayam\..*Tap to open\.'

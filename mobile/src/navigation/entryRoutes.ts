@@ -1,5 +1,5 @@
 import { kavachamIds as kavachamIdList } from '@/data/kavacham';
-import { getReadingLink } from '@/data/readingLinks';
+import { getReadingLink, saptashatiCollectionId } from '@/data/readingLinks';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { library, type LibraryEntry } from '@/data/texts';
 import type { RoutineItem } from '@/data/routine/types';
@@ -37,6 +37,15 @@ export function navigateReadingLink(nav: Nav, id: string): boolean {
   if (link.sourceId === 'ganesh-stotram') nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
   else nav.navigate('SaptashatiCore');
   return true;
+}
+
+/** The full Saptashati is a chapter collection, including when opened from Japmala. */
+export function navigateStotramPractice(nav: Nav, sourceId: string): void {
+  if (sourceId === saptashatiCollectionId) {
+    navigateReadingLink(nav, sourceId);
+    return;
+  }
+  nav.navigate('StotramPractice', { sourceId });
 }
 
 /**

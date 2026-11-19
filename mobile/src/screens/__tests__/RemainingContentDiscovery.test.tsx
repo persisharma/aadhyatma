@@ -6,6 +6,7 @@ import { ShareProvider } from '@/utils/shareVerse';
 import { getKathaLibrary } from '@/panchang/vratCatalog';
 import KathaLibraryScreen from '../KathaLibraryScreen';
 import SaptashatiCoreScreen from '../SaptashatiCoreScreen';
+import CategoryListScreen from '../CategoryListScreen';
 import DeityDayLinks from '@/components/DeityDayLinks';
 import LibraryCard from '@/components/LibraryCard';
 import ListingCard from '@/components/ListingCard';
@@ -27,6 +28,21 @@ test('katha hub opens its selected canonical story in the local Home stack',asyn
  act(()=>card.props.onPress());
  expect(mockNavigate).toHaveBeenCalledWith('VratKathaReader',{kathaId:story.id});
 });
+test('tapping Saptashati from either Stotram list opens the chapter list in one step', async () => {
+  for (const practice of [false, true]) {
+    await mount(<CategoryListScreen
+      navigation={mockNavigation as never}
+      route={{ name: 'CategoryList', key: 'test', params: { categoryId: 'stotram', practice } }}
+    />);
+    const card = tree.root.findAllByType(ListingCard)
+      .find((item) => item.props.testID === 'reading-link-durga-saptashati-core')!;
+    mockNavigate.mockClear();
+    act(() => card.props.onPress());
+    expect(mockNavigate.mock.calls).toEqual([['SaptashatiCore']]);
+    if (!practice) act(() => tree.unmount());
+  }
+});
+
 test('Saptashati collection opens the full versioned Kavach',async()=>{
  await mount(<SaptashatiCoreScreen navigation={mockNavigation as never} route={{name:'SaptashatiCore',key:'test'} as never}/>);
  const cards=tree.root.findAllByType(LibraryCard);expect(cards).toHaveLength(16);

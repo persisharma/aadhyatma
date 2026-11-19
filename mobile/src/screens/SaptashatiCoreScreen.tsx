@@ -22,7 +22,7 @@ export default function SaptashatiCoreScreen({ navigation }: NativeStackScreenPr
     <SafeAreaView edges={['top', 'left', 'right']} style={{ flex: 1 }}>
       <ReaderHeader title={contentByLang(lang, 'दुर्गा सप्तशती', 'Durga Saptashati')} onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={{ padding: spacing.xxl, gap: spacing.md, paddingBottom: 48 }}>
-        <Text accessibilityRole="header" style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 18, lineHeight: 29, color: colors.ink }}>{contentByLang(lang, 'सभी १३ अध्याय', 'All 13 chapters')}</Text>
+        <Text testID="saptashati-chapter-list-heading" accessibilityRole="header" style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 18, lineHeight: 29, color: colors.ink }}>{contentByLang(lang, 'सभी १३ अध्याय', 'All 13 chapters')}</Text>
         <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 15, lineHeight: 25, color: colors.inkMuted }}>{contentByLang(lang, 'सभी १३ अध्यायों के ७०० पारम्परिक पाठांश, अर्थ सहित पढ़ें। कवच, अर्गला और कीलक भी साथ हैं। अनुष्ठान-विधि इस पाठ-संग्रह में शामिल नहीं है।', 'Read all 13 chapters with meanings: 700 traditionally numbered text units, plus Kavach, Argala and Kilak. Ritual instructions are not part of this reading collection.')}</Text>
         {saptashatiCoreIds.map(id => {
           const entry = library.find(item => item.id === id);

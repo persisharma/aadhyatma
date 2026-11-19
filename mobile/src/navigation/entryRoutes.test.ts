@@ -7,6 +7,7 @@ import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeRecord, HomeRoster } from '@/vastu/homeRecord';
 import {
   navigateReadingLink,
+  navigateStotramPractice,
   buildEntryStartTarget,
   buildBookmarkTarget,
   buildGharVastuDoorTarget,
@@ -572,6 +573,16 @@ for (const [id,screen,params] of [
  const {nav,calls}=makeNav(); assert.equal(navigateReadingLink(nav as never,id),true);
  assert.deepEqual(calls,[{name:screen,params}]);
 }
+// The collection opens its chapter list for reading from the Japmala surfaces.
+for (const [sourceId, expected] of [
+  ['durga-saptashati-core', { name: 'SaptashatiCore', params: undefined }],
+  ['aditya-hridayam', { name: 'StotramPractice', params: { sourceId: 'aditya-hridayam' } }],
+] as const) {
+  const { nav, calls } = makeNav();
+  navigateStotramPractice(nav as never, sourceId);
+  assert.deepEqual(calls, [expected]);
+}
+
 for(const [id,screen,key,last] of [
  ['aditya-hridayam','StutiReader','stutiId',30],
  ['kanakadhara-stotram','StutiReader','stutiId',21],

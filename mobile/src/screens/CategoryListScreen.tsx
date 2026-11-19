@@ -20,7 +20,7 @@ import ResumeReadingSheet from '@/components/ResumeReadingSheet';
 import { useResumeSheetCoverage } from '@/components/useResumeSheetCoverage';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useNewContent } from '@/contexts/NewContentContext';
-import { navigateReadingLink, isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
+import { navigateReadingLink, navigateStotramPractice, isChapteredEntry, navigateToEntryStart, navigateToProgress } from '@/navigation/entryRoutes';
 import { formatLocation } from '@/utils/formatLocation';
 import type { HomeStackParamList } from '@/navigation/types';
 import { useTourTarget } from '@/components/tour/tourTargets';
@@ -52,7 +52,7 @@ export default function CategoryListScreen({ navigation, route }: Props) {
   const handlePress = (entry: LibraryEntry) => {
     if(route.params.practice && categoryId==='stotram'){
       markSeen(entry.id);
-      navigation.navigate('StotramPractice',{sourceId:entry.id});
+      navigateStotramPractice(navigation, entry.id);
       return;
     }
     if (isLoading) {
@@ -151,7 +151,12 @@ export default function CategoryListScreen({ navigation, route }: Props) {
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl, gap: spacing.md }]}
           showsVerticalScrollIndicator={false}
         >
-          {categoryId === 'stotram' && <ReadingLinks onOpen={(id) => route.params.practice ? navigation.navigate('StotramPractice', {sourceId:id}) : navigateReadingLink(navigation, id)} />}
+          {categoryId === 'stotram' && (
+            <ReadingLinks onOpen={(id) => {
+              if (route.params.practice) navigateStotramPractice(navigation, id);
+              else navigateReadingLink(navigation, id);
+            }} />
+          )}
           {items.map((entry, i) => {
             const onPress = entry.status === 'active' ? () => handlePress(entry) : undefined;
             const card = <LibraryCard entry={entry} onPress={onPress} />;
