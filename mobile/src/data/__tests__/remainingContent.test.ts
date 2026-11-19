@@ -13,7 +13,7 @@ import { readingLinks } from '../readingLinks';
 
 test('complete new texts have contiguous stable units and complete bilingual fields', () => {
   for (const [payload, count] of [
-    [getStuti('kanakadhara-stotram'),22], [getStuti('hanuman-bahuk'),44],
+    [getStuti('aditya-hridayam'),31], [getStuti('kanakadhara-stotram'),22], [getStuti('hanuman-bahuk'),44],
     [getSuktam('shri-suktam'),16], [getAshtakam('kalabhairav-ashtakam'),9],
     [getStuti('durga-saptashati-chapter-1'),104], [getKavacham('durga-devi-kavacham'),56],
     [getStuti('durga-argala-stotram'),27], [getStuti('durga-kilak-stotram'),14],
@@ -27,6 +27,19 @@ test('complete new texts have contiguous stable units and complete bilingual fie
       assert.ok(!/[\u0900-\u097f]/.test(verse.linesEn.join(' ')));
     });
   }
+});
+
+test('Aditya Hridayam is a standalone Surya hymn with the complete published sequence', () => {
+  const id = 'aditya-hridayam';
+  const entry = library.find((item) => item.id === id);
+  const { verses } = getStuti(id);
+  assert.equal(entry?.category, 'stotram');
+  assert.deepEqual(entry?.deities, ['surya']);
+  assert.equal(entry?.verseCount, 31);
+  assert.equal(readingLinks.some((link) => String(link.id) === id), false);
+  assert.ok(verses[0].lines[0].startsWith('ततो युद्धपरिश्रान्तं'));
+  assert.ok(verses[3].lines[0].startsWith('आदित्यहृदयं पुण्यं'));
+  assert.ok(verses[30].lines.at(-1)?.endsWith('वचस्त्वरेति॥'));
 });
 
 test('Vishnu core reaches the final thousand-name verse and labels protection separately', () => {

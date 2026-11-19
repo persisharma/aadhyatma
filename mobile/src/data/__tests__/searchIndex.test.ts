@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { deities } from '../deities';
 import { library } from '../texts';
+import { readingLinks } from '../readingLinks';
 import { VIDHI_ENTRIES } from '../vidhi';
 import {
   _resetSearchIndexForTest,
@@ -60,13 +61,16 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   }
 }
 
-// Section count matches library count plus one row per published vidhi
-// (PRD-19 Phase 2B — vidhi rows ride the section group).
+// Each library entry, published vidhi, reading shortcut and katha gets one section row.
 {
-  const activeCount = library.filter((e) => e.status === 'active' && !e.hidden)
-    .length;
-  assert.equal(index.sections.length, library.filter(entry => !entry.hidden).length + VIDHI_ENTRIES.length + 4 + getKathaLibrary().length);
-  assert.ok(activeCount > 0);
+  const expectedIds = [
+    ...library.filter((entry) => !entry.hidden).map((entry) => entry.id),
+    ...VIDHI_ENTRIES.map((entry) => entry.id),
+    ...readingLinks.map((entry) => entry.id),
+    ...getKathaLibrary().map((entry) => `katha:${entry.id}`),
+    'katha-library',
+  ];
+  assert.deepEqual(index.sections.map((entry) => entry.sourceId).sort(), expectedIds.sort());
 }
 
 // Every published vidhi is findable by title and by the "पूजा विधि" keyword,
@@ -346,8 +350,21 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
  assert.ok(runSearch('वैश्य मनोरथ पायो', index).verses.some(r => r.entry.sourceId === 'satyanarayan-aarti' && r.entry.verseIndex === 4));
 }
 
+// Aditya Hridayam has one independent library result and its own verses.
+{
+  const hymnId = 'aditya-hridayam';
+  for (const query of ['Aditya Hridayam', 'आदित्य हृदयम्']) {
+    const hits = runSearch(query, index).sections.filter((hit) => hit.entry.sourceId === hymnId);
+    assert.equal(hits.length, 1, query);
+  }
+  const verses = index.verses.filter((verse) => verse.sourceId === hymnId);
+  assert.equal(verses.length, 31);
+  assert.equal(verses[0].verseIndex, 0);
+  assert.equal(verses[30].verseIndex, 30);
+}
+
 // Canonical reading doors are title-searchable without duplicating verse corpora.
-for (const [query, id] of [['Aditya Hridayam', 'aditya-hridayam'], ['Ganesh Atharvashirsha', 'ganesh-atharvashirsha'], ['Katha Library', 'katha-library']]) {
+for (const [query, id] of [['Ganesh Atharvashirsha', 'ganesh-atharvashirsha'], ['Katha Library', 'katha-library']]) {
   assert.ok(runSearch(query, index).sections.some((hit) => hit.entry.sourceId === id));
   assert.equal(index.verses.some((verse) => verse.sourceId === id), false);
 }

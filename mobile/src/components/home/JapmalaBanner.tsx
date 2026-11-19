@@ -74,11 +74,12 @@ export default function JapmalaBanner({
       ? navigation.navigate('StotramPractice', { sourceId: hymn.id })
       : navigation.navigate('JapamCounter', { mantraId });
   return (
-    <View style={styles.banner}>
+    <View testID="home-japa-banner" style={styles.banner}>
       <Image
         source={require('../../../assets/home-readings/ananta-jap.jpg')}
         resizeMode="stretch"
-        style={[StyleSheet.absoluteFillObject, { width: '100%', height: '100%' }]}
+        style={styles.artwork}
+        accessible={false}
         accessibilityIgnoresInvertColors
       />
       <View style={styles.info}>
@@ -189,16 +190,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff0d2',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 4,
-    paddingRight: 12,
     marginTop: 14,
   },
-  info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3 },
+  // Keep foreground spacing off the frame so the image fills its entire inner bounds.
+  artwork: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
+  info: { marginLeft: '28%', flex: 1, minWidth: 0, paddingLeft: 3, paddingVertical: 4 },
   control: { minHeight: 44, justifyContent: 'center' },
   count: { minHeight: 44, flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 5 },
   play: {
     width: 44,
     height: 44,
+    marginRight: 12,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ba521a',

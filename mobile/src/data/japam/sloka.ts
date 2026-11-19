@@ -69,6 +69,7 @@ function stuti(id: string): () => Corpus {
  * (`slokaJapa.test.ts` keeps this list and the library in step).
  */
 const SOURCES: readonly SlokaSource[] = [
+  { sourceId: 'aditya-hridayam', deities: ['surya'], unit: 'whole', corpus: stuti('aditya-hridayam') },
   { sourceId: 'kanakadhara-stotram', deities: ['lakshmi'], unit: 'whole', corpus: stuti('kanakadhara-stotram') },
   { sourceId: 'hanuman-bahuk', deities: ['hanuman'], unit: 'whole', corpus: stuti('hanuman-bahuk') },
   { sourceId: 'durga-argala-stotram', deities: ['durga'], unit: 'whole', corpus: stuti('durga-argala-stotram') },

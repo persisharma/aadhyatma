@@ -99,6 +99,7 @@ const FLAT_SOURCES: readonly FlatSource[] = [
   stuti('durga-saptashati-chapter-11', verseCounts.durgaSaptashatiChapter11Total),
   stuti('durga-saptashati-chapter-12', verseCounts.durgaSaptashatiChapter12Total),
   stuti('durga-saptashati-chapter-13', verseCounts.durgaSaptashatiChapter13Total),
+  stuti('aditya-hridayam', verseCounts.adityaHridayamTotal),
 ];
 
 type LibraryLookup = {
