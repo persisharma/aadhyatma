@@ -33,6 +33,11 @@ export function useTodayKey(): string {
         refresh();
         scheduleMidnightTick();
       }, nextMidnight.getTime() - now.getTime());
+      // A day-rollover timer must never be what keeps a JS runtime alive. On a
+      // phone `setTimeout` returns a number and this is a no-op; under Node
+      // (Jest) it stops an hours-long timer from holding the process open after
+      // a suite that mounted a provider without unmounting it.
+      (timeout as { unref?: () => void }).unref?.();
     };
     scheduleMidnightTick();
 

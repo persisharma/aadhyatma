@@ -2,12 +2,27 @@ import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import TestRenderer, { act } from 'react-test-renderer';
 import JapmalaBanner from '@/components/home/JapmalaBanner';
+import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
+
+let mockRecitations: Record<string, { count: number; updatedAt: number }> = {};
+
+let mockProgress: ReadingProgress | undefined;
+afterEach(() => {
+  mockRecitations = {};
+  mockProgress = undefined;
+});
+
+jest.mock('@/contexts/ReadingProgressContext', () => ({
+  useReadingProgress: () => ({
+    getProgress: (sourceId: string) => sourceId === mockProgress?.sourceId ? mockProgress : undefined,
+  }),
+}));
 
 jest.mock('@/data/gita/language', () => ({ useGitaLanguage: () => ({ lang: 'hi' }) }));
 jest.mock('@/contexts/JapamCounterContext', () => ({
   useJapamCounter: () => ({
     entries: {},
-    recitations: {},
+    recitations: mockRecitations,
     getEntry: () => ({ count: 0, rounds: 0, updatedAt: 0 }),
     isLoading: false,
   }),
@@ -54,3 +69,23 @@ test('the banner is one door to the Japmala section and counts nothing on Home',
   expect(navigate).toHaveBeenCalledWith('CategoryList', { categoryId: 'japam', practice: true });
   act(() => tree.unmount());
 });
+
+// Main (#710) had the banner's play button open a saved hymn's reading. The owner
+// then asked (19 Nov 2026) for the banner to do one thing only: lead to the
+// Japmala section. A saved hymn still shows its count, and the door opens the
+// section on its Hymns tab, where the reading is one tap away.
+test.each(['durga-saptashati-core', 'aditya-hridayam'] as const)(
+  'the saved %s banner keeps its count and opens the Japmala section on Hymns', (sourceId) => {
+    mockRecitations = { [sourceId]: { count: 3, updatedAt: 1 } };
+    mockProgress = { sourceId, verseIndex: 5, updatedAt: 1 };
+    const navigate = jest.fn();
+    let tree!: TestRenderer.ReactTestRenderer;
+    act(() => {
+      tree = TestRenderer.create(<JapmalaBanner navigation={{ navigate } as never} />);
+    });
+    const door = tree.root.findAll(node => node.props.testID === 'home-japa-choose' && typeof node.props.onPress === 'function')[0];
+    expect(door.props.accessibilityValue.text).toBe('३ पाठ');
+    act(() => door.props.onPress());
+    expect(navigate.mock.calls).toEqual([['CategoryList', { categoryId: 'stotram', practice: true }]]);
+    act(() => tree.unmount());
+  });

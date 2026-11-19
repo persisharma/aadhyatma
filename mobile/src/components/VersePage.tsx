@@ -49,7 +49,7 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
 
   const bg = useMemo(() => getReaderBackground(sourceId, verse), [sourceId, verse]);
 
-  const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
+  const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn, verse.labelHi);
   const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, {
     gu: verse.meaningGu,
     kn: verse.meaningKn,

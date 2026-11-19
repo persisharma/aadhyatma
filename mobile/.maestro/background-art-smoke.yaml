@@ -43,7 +43,7 @@ appId: com.prashantsharma.vedansh
     visible: "Shani Ashtakam.*"
     timeout: 15000
 - takeScreenshot: e2e-shots/vedansh-bg-art-shani
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── By Deity → Maa Kali (new deity_kali plate) ──
@@ -59,9 +59,9 @@ appId: com.prashantsharma.vedansh
     visible: "Kalika Ashtakam.*"
     timeout: 15000
 - takeScreenshot: e2e-shots/vedansh-bg-art-kali
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Home → Kavacham (new category_kavacham_protection plate) ──

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import {
   useMuhuratFollows,
   dateFromFollowKey,
   DEFAULT_MUHURAT_REMINDER,
 } from '@/contexts/MuhuratFollowContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { getEventRule } from '@/panchang/eventMuhurat';
@@ -14,6 +15,7 @@ import { hydratePanchangDays } from '@/panchang/panchangDayCache';
 import { dateKeyFor, dayAt, dayStoreFor, scopeKeyFor, cachedDayInputsAsync } from '@/panchang/panchangDayStore';
 import { scheduleMuhuratReminders, cancelAllMuhuratReminders } from '@/notifications/muhuratScheduler';
 import type { MuhuratReminderInput } from '@/notifications/muhuratReminderPure';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Headless: keeps muhurat reminders (PRD-16 §6.7) armed. Renders nothing.
@@ -31,6 +33,7 @@ import type { MuhuratReminderInput } from '@/notifications/muhuratReminderPure';
 export default function MuhuratReminderScheduler() {
   const { follows, isLoading, pruneExpired } = useMuhuratFollows();
   const { permissionStatus } = useNotificationPreferences();
+  const { lang } = useGitaLanguage();
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
   const [foregroundTick, setForegroundTick] = useState(0);
@@ -56,7 +59,7 @@ export default function MuhuratReminderScheduler() {
     let cancelled = false;
     // Behind InteractionManager: re-arming solves up to `cap` days of panchang
     // on a cold start, and that must never compete with Home's first frame.
-    const task = InteractionManager.runAfterInteractions(async () => {
+    const task = runWhenIdle(async () => {
       if (permissionStatus !== 'granted') {
         await cancelAllMuhuratReminders().catch(() => undefined);
         return;
@@ -126,13 +129,13 @@ export default function MuhuratReminderScheduler() {
         });
       }
       if (cancelled) return;
-      await scheduleMuhuratReminders(inputs, now).catch(() => undefined);
+      await scheduleMuhuratReminders(inputs, now, lang).catch(() => undefined);
     });
     return () => {
       cancelled = true;
       task.cancel();
     };
-  }, [isLoading, follows, permissionStatus, location, calendarSystem, foregroundTick]);
+  }, [isLoading, follows, permissionStatus, location, calendarSystem, lang, foregroundTick]);
 
   return null;
 }

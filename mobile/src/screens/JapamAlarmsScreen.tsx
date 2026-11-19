@@ -17,6 +17,7 @@ import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { contentByLang, pick } from '@/utils/localize';
 import { isLatinLang, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useJapamAlarms, type AlarmDraft, type AlarmPatch } from '@/contexts/JapamAlarmsContext';
@@ -135,7 +136,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.back,

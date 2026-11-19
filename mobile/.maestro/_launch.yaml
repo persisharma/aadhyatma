@@ -1,26 +1,5 @@
-# Shared boot flow — used as a subflow at the start of every category smoke test.
-#
-# Why a separate file: the Expo Go launch + project select + first-load wait
-# is identical across every smoke test. Keeping it here means a single change
-# (e.g., the Expo Go version updates and the open URL changes) ripples to all
-# flows at once.
-#
-# Caller contract:
-#   - Caller's appId MUST be com.prashantsharma.vedansh (Expo Go).
-#   - This flow exits with the Vedansh Home screen rendered and Maestro able
-#     to read past the Expo dev-menu sheet (config.yaml sets
-#     snapshotKeyHonorModalViews: false).
-#   - The featured reading assertions are the canary that confirms the
-#     bundle finished executing. Keep these above-the-fold: the category directory starts below the featured readings.
-#   - Expo Go can leave a native dev-menu bottom sheet open after project load;
-#     the downward swipe dismisses it when present and is harmless on Home.
-#   - On first launch one onboarding surface may auto-appear over Home and
-#     block downstream flows until dismissed: a genuine fresh install gets the
-#     feature tour (dismiss via "Skip") and then the language/size setup sheet
-#     (dismiss via "Begin"); a returning user on the debut release gets the
-#     What's New sheet (dismiss via its "Close" ✕). All optional taps are
-#     harmless no-ops once the surface has been seen, and the tour and What's
-#     New are mutually exclusive.
+# Start the installed Vedansh app with clean state and finish first-run surfaces.
+# Release builds contain their own bundle. Development builds use the Metro port below.
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
@@ -122,11 +101,29 @@ appId: com.prashantsharma.vedansh
 - runFlow:
     when: { visible: "Setup language continue|Setup city continue|Setup widgets continue|Enable reminders" }
     file: _finish-first-run-setup.yaml
-# A shared boot check must also work when system text pushes the grid below the fold.
-# The standard-size first-viewport contract is checked in home-featured-readings.
-- extendedWaitUntil:
-    visible: { id: home-settings }
-    timeout: 60000
+# iOS can drop a tap that lands while the setup sheet is still being presented:
+# seen in CI, "Setup language continue" was tapped at its final bounds and the
+# language step stayed up, covering Home for the rest of the flow. Home's text
+# is still readable behind the sheet, so a wait for Home passes. Walk it again.
+- runFlow:
+    when:
+      visible: "Setup language continue"
+    commands:
+      - waitForAnimationToEnd
+      - tapOn: "Setup language continue"
+      - tapOn:
+          text: "Setup city continue"
+          optional: true
+      - tapOn:
+          text: "Setup widgets continue"
+          optional: true
+      - tapOn:
+          text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+          optional: true
+      - waitForAnimationToEnd
+      - tapOn:
+          text: "Ask App Not to Track"
+          optional: true
 # Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
 # after the dismissal block above ran — seen on slow Android cold starts —
 # clear it now so it can't swallow the first in-flow tap. No-ops otherwise.
@@ -136,10 +133,13 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Begin"
     optional: true
-- swipe:
-    direction: DOWN
 - waitForAnimationToEnd
 
 - tapOn:
     id: explore-not-now
     optional: true
+# A swipe on native Home can activate a launcher. Finish by observing Home.
+- extendedWaitUntil:
+    visible: { id: home-settings }
+    timeout: 60000
+- assertNotVisible: "Setup language continue|Setup city continue|Setup widgets continue|Enable reminders|Skip tour"

@@ -42,7 +42,7 @@ List affected routes and states, data/asset dependencies, relevant conditional c
 ### U3. Match the approved design in the running app.
 
 - [ ] Verified with evidence.
-Reuse the existing typography, artwork registries, cards, reader shells, sheets and interaction helpers. Compare the actual installed screen with the approved reference for hierarchy, proportions, spacing, colour, icons, artwork, copy and motion. Explain any required deviation. A generated mockup or browser reconstruction does not prove native fidelity.
+Reuse the existing typography, artwork registries, cards, reader shells, sheets and interaction helpers. Compare the actual installed screen with the approved reference for hierarchy, proportions, spacing, colour, icons, artwork, copy and motion. Explain any required deviation. In a mixed listing, inspect the first shortcut beside ordinary rows and the first unit of each group. Identify the shared card and variant for each, and add the affected screen to its existing card regression test. A generated mockup or browser reconstruction does not prove native fidelity.
 
 ### U4. Verify language, typography and responsive layout.
 

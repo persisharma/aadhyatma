@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Modal } from 'react-native';
+import { Alert, Modal } from 'react-native';
 import { DaanLedgerProvider } from '@/contexts/DaanLedgerContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import DaanLedgerScreen from '../DaanLedgerScreen';
@@ -67,13 +67,26 @@ test('blur cancels without writing, and repeated remove taps keep the original t
   await act(async () => blur()); expect(mockSetItem).not.toHaveBeenCalled(); expect(node('daan-remove-dialog')).toBeUndefined();
 });
 
-test('failed existing optimistic storage write is not represented as durable deletion', async () => {
-  await mount(); await press('daan-entry-remove-one');
-  mockSetItem.mockImplementationOnce(async () => { throw new Error('storage full'); });
-  await press('daan-remove-confirm'); expect(node('daan-entry-one')).toBeUndefined();
-  await act(async () => tree.unmount()); await mount();
-  // Existing provider behavior: failed write leaves the original stored bytes.
-  expect(node('daan-entry-one')).toBeDefined();
+test('failed deletion stays visible and stored until a successful retry', async () => {
+  jest.useFakeTimers();
+  const notice = jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+  const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+  try {
+    await mount(); await press('daan-entry-remove-one');
+    const original = mockStored;
+    mockSetItem.mockRejectedValue(new Error('storage full'));
+    await press('daan-remove-confirm');
+    expect(node('daan-entry-one')).toBeDefined();
+    await act(async () => { await jest.advanceTimersByTimeAsync(600); });
+    expect(mockSetItem).toHaveBeenCalledTimes(2);
+    expect(mockStored).toBe(original);
+    expect(node('daan-entry-one')).toBeDefined();
+    mockSetItem.mockImplementation(async (_key, value) => { mockStored = value; });
+    await press('daan-entry-remove-one'); await press('daan-remove-confirm');
+    expect(node('daan-entry-one')).toBeUndefined();
+    await act(async () => tree.unmount()); await mount();
+    expect(node('daan-entry-one')).toBeUndefined();
+  } finally { notice.mockRestore(); warn.mockRestore(); jest.useRealTimers(); }
 });
 
 

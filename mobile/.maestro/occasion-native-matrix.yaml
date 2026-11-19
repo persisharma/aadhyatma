@@ -16,21 +16,47 @@ appId: com.prashantsharma.vedansh
 - tapOn: 'Reading size,.*'
 - tapOn: '${READING_SIZE}'
 - tapOn: Done
+# The header Back button scrolls away with Settings; bring it back first.
+- scrollUntilVisible:
+    element: { id: settings-back }
+    direction: UP
 - tapOn: { id: settings-back }
 - tapOn: { id: tab-panchang }
 - tapOn: 'Location: .*'
 - tapOn: 'Search city, village or pincode'
 - inputText: Delh
-- hideKeyboard
-- tapOn: Delhi
+# No hideKeyboard: on iOS it flicks at screen centre, which on the iPhone SE is
+# the Delhi row, so it picked Delhi and closed the picker before the tap below
+# (CI). The results take taps with the keyboard up, and Delhi (the second row,
+# under its header) sits above the keyboard. The default city may already be
+# Delhi, whose row then reads "Delhi, selected".
+- tapOn: 'Delhi(, selected)?'
+- extendedWaitUntil:
+    notVisible: 'Search city, village or pincode'
+    timeout: 10000
 - runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: 'Language,.*' }
     centerElement: true
 - tapOn: 'Language,.*'
 - tapOn: '${LANGUAGE_NAME}'
+# The header Back button scrolls away with Settings; bring it back first.
+- scrollUntilVisible:
+    element: { id: settings-back }
+    direction: UP
 - tapOn: { id: settings-back }
 - openLink: 'vedansh://widget/panchang?date=${OCCASION_DATE}'
+# iOS asks "Open in Vedansh?" before following the link (CI); accept it. The
+# prompt can arrive more than 15 s after the link, after a short visibility
+# check has given up (CI), so wait for it. Optional: iOS may not ask again.
+- extendedWaitUntil:
+    visible: 'Open in .Vedansh.\?'
+    timeout: 30000
+    optional: true
+- runFlow:
+    when: { visible: 'Open' }
+    commands:
+      - tapOn: 'Open'
 - scrollUntilVisible:
     element: { text: '${EXPECTED_CLOCK}' }
     direction: DOWN

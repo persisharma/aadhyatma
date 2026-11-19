@@ -9,6 +9,8 @@
  * RN/expo. `now` is always parameterised.
  */
 
+import type { Lang } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { ROLLING_WINDOW_DAYS } from './pure';
 
 /** Identifier prefix for all PRD-07 P3 routine reminders. Lets us cancel just ours. */
@@ -122,18 +124,28 @@ export function planRoutineReminders(
 }
 
 /**
- * Hindi-led notification copy for one planned routine reminder. Routine names
+ * Notification copy for one planned routine reminder, in the reading language. Routine names
  * are user-entered and either field may be blank, so the Devanagari name falls
  * back to the English one. No live counts: content is baked at schedule time,
  * so any count would be stale by the moment it fires.
  */
-export function formatRoutineReminderContent(p: PlannedRoutineNotification): {
+export function formatRoutineReminderContent(
+  p: PlannedRoutineNotification,
+  lang: Lang = 'hi'
+): {
   title: string;
   body: string;
 } {
-  const name = p.nameHi || p.nameEn;
+  // en prefers the English name; hi/gu/kn prefer the Devanagari one (gu/kn
+  // re-script it). Either falls back to the other when blank.
+  const name =
+    lang === 'en'
+      ? p.nameEn || p.nameHi
+      : p.nameHi
+        ? contentByLang(lang, p.nameHi, p.nameEn)
+        : p.nameEn;
   return {
-    title: 'नित्य साधना स्मरण',
-    body: `${name} · आज की साधना`,
+    title: contentByLang(lang, 'नित्य साधना स्मरण', 'Daily practice reminder'),
+    body: `${name} · ${contentByLang(lang, 'आज की साधना', "Today's practice")}`,
   };
 }

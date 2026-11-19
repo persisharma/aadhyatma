@@ -16,6 +16,7 @@
  */
 import { Platform } from 'react-native';
 import { Directory, File, Paths } from 'expo-file-system';
+import { verifyDownloadedAsset } from './assetIntegrity';
 import { downloadWithResume, sweepAbandonedScratch } from './resumableDownload';
 
 /**
@@ -57,7 +58,19 @@ const inFlight = new Map<string, Promise<string>>();
  */
 export function cachedFileUri({ key, ext, subdir }: CachedAssetRequest): string | null {
   const file = new File(new Directory(Paths.document, subdir), `${key}.${ext}`);
-  return file.exists ? file.uri : null;
+  // An empty file is a corrupt leftover, never a hit (size only: nothing is
+  // hashed on a cache hit, so launches stay free).
+  return file.exists && file.size > 0 ? file.uri : null;
+}
+
+/** Drop a cached file that turned out undecodable, so the next request fetches it afresh. */
+export function evictCachedAsset({ key, ext, subdir }: CachedAssetRequest): void {
+  const file = new File(new Directory(Paths.document, subdir), `${key}.${ext}`);
+  try {
+    if (file.exists) file.delete();
+  } catch {
+    /* already gone */
+  }
 }
 
 /**
@@ -69,7 +82,10 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
   const dir = new Directory(Paths.document, subdir);
   const file = new File(dir, `${key}.${ext}`);
 
-  if (file.exists) return file.uri;
+  if (file.exists) {
+    if (file.size > 0) return file.uri;
+    file.delete(); // an empty leftover is not a hit; fetch it again
+  }
 
   const pending = inFlight.get(file.uri);
   if (pending) return pending;
@@ -89,6 +105,8 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
         })
       );
       try {
+        // Never promote bytes that do not match the manifest key (assetIntegrity).
+        await verifyDownloadedAsset(scratch.uri, key);
         scratch.move(file); // atomic: the final file only ever exists complete
       } catch (err) {
         // Leave nothing half-written that a later call would treat as a cache hit.

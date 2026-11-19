@@ -52,3 +52,16 @@ test('content is Hindi-led and names the program', () => {
   assert.equal(title, 'संकल्प स्मरण');
   assert.ok(body.includes('हनुमान चालीसा'));
 });
+
+test('content follows the reading language (BEH-04)', () => {
+  const p = planSadhanaReminders([input()], NOW, 1).planned[0];
+  const en = formatSadhanaReminderContent(p, 'en');
+  assert.equal(en.title, 'Sankalp reminder');
+  assert.equal(en.body, "Hanuman Chalisa · Today's practice");
+  const gu = formatSadhanaReminderContent(p, 'gu');
+  assert.match(gu.title + gu.body, /[઀-૿]/);
+  assert.doesNotMatch(gu.title + gu.body, /[ऀ-ॿ]/);
+  const kn = formatSadhanaReminderContent(p, 'kn');
+  assert.match(kn.title + kn.body, /[ಀ-೿]/);
+  assert.doesNotMatch(kn.title + kn.body, /[ऀ-ॿ]/);
+});

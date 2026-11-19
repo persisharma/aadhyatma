@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { AppState, InteractionManager } from 'react-native';
+import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGitaLanguage } from '@/data/gita/language';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -9,6 +9,7 @@ import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { isValidIanaTimeZone, stableWidgetPayloadKey } from './contract';
 import { writeWidgetPayload } from './native';
 import { launchMarkOnce } from '@/utils/launchTrace';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const LAST_PLAN_KEY = '@vedansh/widget:last-plan-key-v1';
 const THROTTLE_MS = 30_000;
@@ -27,7 +28,6 @@ export default function WidgetCoordinator() {
   const { entries, isLoading: countersLoading } = useJapamCounter();
   const lastRunAt = useRef(0);
   const generationRef = useRef(0);
-  const revision = JSON.stringify(activity);
   const lastUsedMantraId = Object.entries(entries).sort((a, b) => b[1].updatedAt - a[1].updatedAt)[0]?.[0];
   const resolvedTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const deviceTimeZone = isValidIanaTimeZone(resolvedTimeZone) ? resolvedTimeZone : 'UTC';
@@ -46,7 +46,7 @@ export default function WidgetCoordinator() {
       if (timer) clearTimeout(timer);
       const delay = Math.max(0, THROTTLE_MS - (Date.now() - lastRunAt.current));
       timer = setTimeout(() => {
-        InteractionManager.runAfterInteractions(async () => {
+        runWhenIdle(async () => {
           if (cancelled) return;
           inFlight = true;
           try {
@@ -101,7 +101,7 @@ export default function WidgetCoordinator() {
     schedule();
     const sub = AppState.addEventListener('change', (state) => { if (state === 'active') schedule(); });
     return () => { cancelled = true; if (timer) clearTimeout(timer); sub.remove(); };
-  }, [activity, activityLoading, calendarHydrated, calendarSystem, countersLoading, deviceTimeZone, lang, languageLoading, location, locationLoading, revision, lastUsedMantraId]);
+  }, [activity, activityLoading, calendarHydrated, calendarSystem, countersLoading, deviceTimeZone, lang, languageLoading, location, locationLoading, lastUsedMantraId]);
 
   return null;
 }

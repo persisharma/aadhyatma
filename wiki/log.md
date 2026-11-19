@@ -1562,6 +1562,13 @@ Restored the feature onto current main without undoing the share-hand-off revert
 
 Added the 42-unit Ganapati/Sharada-opening composition to the existing Chalisa reader, catalog, search, discovery and saved routes. Chosen Drik edition compared with Ved Puran; seven/sixteen-Friday variant recorded internally. Owner authorized the A2-style edition/checklist resolution for A3. Reuses Durga art; no release or new audio. Native verification pending; see `docs/evaluations/a3-santoshi-mata-chalisa/review.md`.
 
+## [2026-11-16] ingest | Preserve shloka rows and one visible reference
+
+Updated home-widgets and readers for the shared presentation-only matching-citation
+formatter, preserved native/app/share row boundaries and widget cache invalidation.
+Canonical scripture and stable identities are unchanged. Native visual acceptance
+and the open ornate-widget integration are explicitly separate gates.
+
 ## [2026-11-16] ingest | A4 Kali Chalisa complete edition
 
 Added `kali-chalisa` through the existing registry/reader with Kali art, search, stable saved routes and generated counts. Full Drik text collated against Aaj Tak: 54 body couplets plus three dohas, not a forced forty; edition variants and acceptance limitations in `docs/evaluations/a4-kali-chalisa/review.md`. Current repository policy and established Chalisa pattern replace the unavailable historical checklist under the authorized approach. Native verification remains pending; no merge/build/release authorized.
@@ -1579,6 +1586,10 @@ ReaderControlRow measures centred and trailing controls, stacking playback when 
 Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.
 
 ## [2026-11-18] ingest | PR #702 completes all thirteen Saptashati chapter sources (700 traditional numbered units), preserving existing IDs and append-only Daily Bhakti offsets; readers wiki records collection/lazy-loader integration and pending native acceptance.
+
+## [2026-11-18] ingest | Mobile audit fixes (OTA set)
+
+Fixes from the 17 Nov 2026 mobile audit that need no native build: Panchang dates and clock times are India's on any device zone (`civilTime.ts`, cache versions bumped), "today" rolls over at midnight and on foreground, a root and per-tab error boundary, reminder copy in the reading language, an iOS pending-notification budget, per-family Android channels, in-place Japam alarm re-arm, audio load-failure notice, verified downloads, coalesced activity writes, a 250 km GPS snap limit, and a single `runWhenIdle` wrapper in front of `InteractionManager`. Subsystem gotchas updated in panchang, notifications, japam-alarms, audio and routine. Native and device checks are pending; see the PR.
 
 ## [2026-11-18] ingest | Mobile audit fixes (store-build set)
 

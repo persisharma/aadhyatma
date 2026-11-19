@@ -27,8 +27,8 @@ export type PanchangComputationOptions = {
   calendarSystem?: CalendarSystem;
   // Omitted ⇒ Ujjain (the historical default; precomputed observance tables assume it).
   location?: GeoLocation & { cityId?: string };
-  // Optional civil-date basis for callers that persist dated output. The normal
-  // in-app Panchang keeps its historical device-local behaviour when omitted.
+  // The zone a civil date is read in. Omitted ⇒ India (`civilTime.ts`), because
+  // every supported location is there; it is NOT the device zone.
   civilTimeZone?: string;
 };
 

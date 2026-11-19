@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
 import { useGitaLanguage } from '@/data/gita/language';
@@ -11,6 +11,7 @@ import {
   cancelAllPitruSmaranReminders,
   schedulePitruSmaranReminders,
 } from '@/notifications/pitruSmaranScheduler';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /** Headless private reminder re-arm. Only explicitly opted-in entries participate. */
 export default function PitruSmaranReminderScheduler() {
@@ -37,7 +38,7 @@ export default function PitruSmaranReminderScheduler() {
       cancelAllPitruSmaranReminders().catch(() => undefined);
       return () => { cancelled = true; };
     }
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       if (cancelled) return;
       const now = new Date();
       const today = startOfLocalDay(now);

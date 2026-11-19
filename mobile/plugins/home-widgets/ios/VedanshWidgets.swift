@@ -519,11 +519,10 @@ struct VedanshWidgetView: View {
       .widgetURL(URL(string: "vedansh://widget/panchang?date=\(key)"))
   }
   private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(palette.gold) }
-  // The verse as one flowing paragraph, padas separated the way the planner's
-  // excerpt separates them, so the wide cell keeps the shipped look while the
-  // text wraps to whatever line count the cell actually has.
+  // Preserve every authored pada boundary in all wide/condensed compositions.
+  // Each pada can wrap naturally; it never flows into the preceding line.
   private func flowedVerse(_ lines: [String]) -> String {
-    lines.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }.joined(separator: " · ")
+    lines.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }.joined(separator: "\n")
   }
   // Section eyebrows are the one piece of widget copy the payload does not carry,
   // so they are localized here in the same four languages (gu/kn used to fall back

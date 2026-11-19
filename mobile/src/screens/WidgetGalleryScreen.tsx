@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, AppState, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View, type TextStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -9,8 +9,9 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
 import { radii, spacing } from '@/theme/spacing';
-import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
+import { widgetPayloadKey } from '@/utils/widgetPayloadKey';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
 import { WIDGET_TEXT_TOKENS, widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
 import { widgetBackgroundImages } from '@assets/widget-backgrounds';
@@ -39,10 +40,22 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   // previous hand-rolled Inter + letterSpacing split the Devanagari shirorekha.
   const eyebrowStyle = eyebrowTextStyle(lang, 11);
 
-  const refresh = useCallback(() => { readWidgetPayload().then(setPayloadState); }, []);
+  // The poll below decodes to a new object every time; only set state when the
+  // payload actually changed, so an idle gallery does not re-render every 5 s.
+  const lastPayloadKey = useRef('');
+  const refresh = useCallback(() => {
+    readWidgetPayload()
+      .then((next) => {
+        const key = widgetPayloadKey(next);
+        if (key === lastPayloadKey.current) return;
+        lastPayloadKey.current = key;
+        setPayloadState(next);
+      })
+      .catch(() => undefined);
+  }, []);
   useFocusEffect(useCallback(() => {
     refresh();
-    isWidgetPinSupported().then(setPinSupported);
+    isWidgetPinSupported().then(setPinSupported).catch(() => undefined);
     const interval = setInterval(refresh, 5_000);
     const sub = AppState.addEventListener('change', (state) => { if (state === 'active') refresh(); });
     return () => { clearInterval(interval); sub.remove(); };
@@ -68,7 +81,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   // The gallery is a medium-cell facsimile. The native iOS widget measures
   // actual glyphs with ViewThatFits; this conservative approximation similarly
   // gives text more width before shrinking it on a crowded verse.
-  const previewVerseLength = verse ? flowedVerse(verse.lines[lang]).length : 0;
+  const previewVerseLength = verse ? flowedVerse(verse.lines[lang], verse.source[lang]).length : 0;
   const previewVerseDense = previewVerseLength > 105;
   const previewVerseMedium = previewVerseLength > 64;
   const verseArtPadding = previewVerseDense ? spacing.md : previewVerseMedium ? 52 : 90;
@@ -93,9 +106,9 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
         <View style={styles.grid}>
           <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" verseArtPadding={verseArtPadding} colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* The facsimile stands in for the recommended (wide) cell, which
-                renders the whole verse flowed across three lines — not the
+                renders the whole verse with authored line breaks — not the
                 small-cell excerpt (design.md §59). */}
-            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(verse.lines[lang]) : recovery}</Text>
+            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(verse.lines[lang], verse.source[lang]) : recovery}</Text>
             {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{verse.source[lang]}</Text> : null}
             {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>
@@ -106,7 +119,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
               <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.accent }}>
                 {day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}
               </Text>
-              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: 35, color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
+              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: titleLeading(25), color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
               {tithi.till ? <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{tithi.till[lang]}</Text> : null}
               {day.vrat ? <View style={{ borderLeftWidth: 3, borderLeftColor: panchangPalette.accent, borderRadius: 7, backgroundColor: appearance === 'night' ? '#24344A' : '#F1E3C6', paddingHorizontal: 7, paddingVertical: 5 }}>
                 <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{day.vrat[lang]}</Text>

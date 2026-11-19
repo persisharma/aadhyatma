@@ -20,6 +20,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
 import { isLatinLang } from '@/utils/langType';
@@ -454,7 +455,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.back,

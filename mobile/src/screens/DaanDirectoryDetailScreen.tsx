@@ -15,7 +15,7 @@
  * declining is silent.
  */
 import React, { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -24,7 +24,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { getDaanKatha, getDaanOrg } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
-import { contentByLang, meaningByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanDirectoryDetail'>;
@@ -50,7 +50,12 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
 
   const openOfficial = () => {
     setHandOff('handedOff');
-    Linking.openURL(org.officialUrl).catch(() => undefined);
+    Linking.openURL(org.officialUrl).catch(() => {
+      Alert.alert(
+        pick(lang, { hi: 'लिंक नहीं खुल सका', en: 'Could not open the link', gu: 'લિંક ખોલી શકાઈ નહીં', kn: 'ಲಿಂಕ್ ತೆರೆಯಲಾಗಲಿಲ್ಲ' }),
+        pick(lang, { hi: 'कृपया बाद में फिर कोशिश करें।', en: 'Please try again later.', gu: 'કૃપા કરીને થોડી વાર પછી ફરી પ્રયાસ કરો.', kn: 'ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' }),
+      );
+    });
   };
   const officialHost = org.officialUrl.replace(/^https?:\/\//, '');
 

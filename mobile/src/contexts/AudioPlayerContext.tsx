@@ -7,12 +7,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createAudioPlayer, type AudioPlayer, type AudioStatus } from 'expo-audio';
 import { ensureBackgroundAudioMode } from '@/audio/audioSession';
 import { claimPlayback, registerStopper } from '@/audio/playbackArbiter';
 import { AUDIO_TRACKS, type AudioTrack } from '@/data/audio/tracks';
 import { audioRemoteRequest, hasRealAudio } from '@assets/audio-library';
 import { cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
+import { useGitaLanguage } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 
 // Only tracks with a real recording participate in playback / skip.
 const PLAYABLE_TRACKS = AUDIO_TRACKS.filter((t) => hasRealAudio(t.id));
@@ -34,15 +37,23 @@ const SKIP_SECONDS = 15;
 // tick is 500 ms and the final position often lands a hair short of duration,
 // so an exact compare would miss the ending on some platforms.
 const END_EPSILON_SEC = 0.35;
+// A tapped track that has not reported loaded this long after the tap is
+// treated as failed (offline, or the CDN is down): the spinner gives way to a
+// message and a retry. A source that loads later still starts, and clears it.
+const LOAD_STALL_MS = 15000;
+const PREFS_KEY = '@vedansh/audio-prefs';
+
+/** Why the current track is not playing, for the strip/now-playing to explain. */
+export type PlaybackNotice = 'noAudio' | 'loadFailed';
 
 type AudioPlayerContextValue = {
   currentTrack: AudioTrack | null;
   isPlaying: boolean;
   isLoaded: boolean;
-  /** True while a tapped track is downloading/decrypting before it can play. */
+  /** True while a tapped track is buffering before it can play. */
   isBuffering: boolean;
-  /** Current position in seconds. */
-  positionSec: number;
+  /** Set when the track has no audio yet, or never finished loading (see `retryPlayback`). */
+  playbackNotice: PlaybackNotice | null;
   /** Track duration in seconds (falls back to the catalog's nominal length). */
   durationSec: number;
   rate: number;
@@ -62,9 +73,15 @@ type AudioPlayerContextValue = {
   stop: () => void;
   openNowPlaying: () => void;
   closeNowPlaying: () => void;
+  /** Reload the current track after a `loadFailed` notice. */
+  retryPlayback: () => void;
 };
 
 const AudioPlayerContext = createContext<AudioPlayerContextValue | null>(null);
+// Position ticks at 2 Hz while playing. It lives in its own context so that only
+// the surfaces that draw progress re-render on each tick; everything else reads
+// the stable value above.
+const AudioPositionContext = createContext(0);
 
 export function AudioPlayerProvider({ children }: { children: React.ReactNode }) {
   // One player for the whole session, created on FIRST USE, never at launch.
@@ -75,6 +92,8 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   // play recorded audio, so they never pay for it.
   const [player, setPlayer] = useState<AudioPlayer | null>(null);
   const playerRef = useRef<AudioPlayer | null>(null);
+  const loopRef = useRef(false);
+  const statusRef = useRef<AudioStatus | null>(null);
   const statusSubRef = useRef<{ remove: () => void } | null>(null);
   const ensurePlayer = useCallback((): AudioPlayer => {
     if (playerRef.current) return playerRef.current;
@@ -84,18 +103,72 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     // not in an effect: the caller replaces the source immediately, and a
     // cached file can report loaded before an effect would have subscribed —
     // a lost `isLoaded` leaves the loaded-gate armed and the track never starts.
-    statusSubRef.current = created.addListener('playbackStatusUpdate', (s) => setStatus(s));
+    statusSubRef.current = created.addListener('playbackStatusUpdate', (s) => {
+      statusRef.current = s;
+      setStatus(s);
+    });
+    // The saved repeat preference applies to the first player the session makes.
+    created.loop = loopRef.current;
     playerRef.current = created;
     setPlayer(created);
     return created;
   }, []);
   const [status, setStatus] = useState<AudioStatus | null>(null);
+  const { lang } = useGitaLanguage();
+  const langRef = useRef(lang);
+  langRef.current = lang;
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
   const [rate, setRateState] = useState(1.0);
   const [nowPlayingOpen, setNowPlayingOpen] = useState(false);
-  // True between a new-track tap and the moment it actually starts (download +
-  // decrypt), so the play controls can show a spinner instead of looking stuck.
+  // True between a new-track tap and the moment it actually starts (buffering),
+  // so the play controls can show a spinner instead of looking stuck.
   const [isBuffering, setIsBuffering] = useState(false);
+  const [isLoopPref, setIsLoopPref] = useState(false);
+  const [playbackNotice, setPlaybackNotice] = useState<PlaybackNotice | null>(null);
+  const noticeRef = useRef<PlaybackNotice | null>(null);
+  const showNotice = useCallback((next: PlaybackNotice | null) => {
+    noticeRef.current = next;
+    setPlaybackNotice(next);
+  }, []);
+  const stallTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearStallTimer = useCallback(() => {
+    if (stallTimerRef.current) {
+      clearTimeout(stallTimerRef.current);
+      stallTimerRef.current = null;
+    }
+  }, []);
+
+  // Speed and repeat survive a relaunch. Read once; a change the user makes
+  // before the read lands wins.
+  const prefsTouchedRef = useRef(false);
+  const persistPrefs = useCallback(() => {
+    prefsTouchedRef.current = true;
+    AsyncStorage.setItem(PREFS_KEY, JSON.stringify({ rate: rateRef.current, loop: loopRef.current })).catch(
+      () => undefined
+    );
+  }, []);
+  useEffect(() => {
+    let live = true;
+    AsyncStorage.getItem(PREFS_KEY)
+      .then((raw) => {
+        if (!live || prefsTouchedRef.current || !raw) return;
+        const saved = JSON.parse(raw) as { rate?: unknown; loop?: unknown };
+        if (typeof saved.rate === 'number' && Number.isFinite(saved.rate)) {
+          const restored = Math.min(MAX_RATE, Math.max(MIN_RATE, saved.rate));
+          rateRef.current = restored;
+          setRateState(restored);
+        }
+        if (typeof saved.loop === 'boolean') {
+          loopRef.current = saved.loop;
+          setIsLoopPref(saved.loop);
+          if (playerRef.current) playerRef.current.loop = saved.loop;
+        }
+      })
+      .catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, []);
 
   // Keep the live rate available to playTrack without re-creating the callback.
   const rateRef = useRef(rate);
@@ -114,14 +187,17 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (wantPlayRef.current && status?.isLoaded) {
       wantPlayRef.current = false;
+      clearStallTimer();
+      if (noticeRef.current === 'loadFailed') showNotice(null); // it loaded after all
       setIsBuffering(false);
       player?.play();
     }
-  }, [status, player]);
+  }, [status, player, clearStallTimer, showNotice]);
 
   // Tear down the player when the app tree unmounts (app exit).
   useEffect(() => {
     return () => {
+      clearStallTimer();
       statusSubRef.current?.remove();
       statusSubRef.current = null;
       try {
@@ -131,6 +207,15 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       }
       playerRef.current = null;
     };
+  }, [clearStallTimer]);
+
+  /** A finished track sits at its end: playing from there is silent, so start over. */
+  const restartIfFinished = useCallback((target: AudioPlayer) => {
+    const s = statusRef.current;
+    const duration = s?.duration ?? 0;
+    if (duration > 0 && !s?.playing && (s?.currentTime ?? 0) >= duration - END_EPSILON_SEC) {
+      target.seekTo(0).catch(() => undefined);
+    }
   }, []);
 
   const playTrack = useCallback(
@@ -139,20 +224,27 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       // interrupts, so two sources would otherwise play over each other.
       claimPlayback('recorded');
       setNowPlayingOpen(false);
-      // Re-tapping the current track just resumes.
-      if (track.id === currentTrack?.id) {
-        ensurePlayer().play();
+      // Re-tapping the current track just resumes (a failed load retries instead).
+      if (track.id === currentTrack?.id && noticeRef.current == null) {
+        const current = ensurePlayer();
+        restartIfFinished(current);
+        current.play();
         return;
       }
+      clearStallTimer();
+      showNotice(null);
       const request = audioRemoteRequest(track.id);
       if (request == null) {
-        // No audio for this track yet — surface it without crashing.
+        // No audio for this track yet — say so instead of doing nothing.
+        wantPlayRef.current = false;
+        setIsBuffering(false);
         setCurrentTrack(track);
+        showNotice('noAudio');
         return;
       }
       const player = ensurePlayer();
       // Stop the outgoing track at once so it doesn't keep playing through the
-      // new one's download/decrypt (which can take a beat on first use).
+      // new one's download (which can take a beat on first use).
       try {
         player.pause();
       } catch {
@@ -164,7 +256,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       setIsBuffering(true);
       try {
         player.setActiveForLockScreen(true, {
-          title: track.titleEn,
+          title: contentByLang(langRef.current, track.titleHi, track.titleEn),
           artist: track.artistEn ?? 'Vedansh',
         });
       } catch {
@@ -181,9 +273,20 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       player.setPlaybackRate(rateRef.current, 'high');
       // Defer play() to the loaded-gate effect — the source buffers first.
       wantPlayRef.current = true;
+      // Offline or a failing CDN never reports loaded: give up waiting visibly.
+      stallTimerRef.current = setTimeout(() => {
+        stallTimerRef.current = null;
+        if (!wantPlayRef.current) return;
+        setIsBuffering(false);
+        showNotice('loadFailed');
+      }, LOAD_STALL_MS);
     },
-    [ensurePlayer, currentTrack?.id]
+    [ensurePlayer, currentTrack?.id, restartIfFinished, clearStallTimer, showNotice]
   );
+
+  const retryPlayback = useCallback(() => {
+    if (currentTrack) playTrack(currentTrack);
+  }, [currentTrack, playTrack]);
 
   // Warm a track's on-device cache before the user taps it (e.g. on press-in),
   // so a later play is local + offline. Fire-and-forget; `cachedAssetUri` dedups
@@ -194,22 +297,26 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     void cachedAssetUri(request).catch(() => undefined);
   }, []);
 
+  // Reads the status through a ref so this callback (and the context value)
+  // keep their identity across the 2 Hz status ticks.
   const togglePlay = useCallback(() => {
-    if (status?.playing) playerRef.current?.pause();
-    else ensurePlayer().play();
-  }, [ensurePlayer, status?.playing]);
+    if (statusRef.current?.playing) {
+      playerRef.current?.pause();
+      return;
+    }
+    const target = ensurePlayer();
+    restartIfFinished(target);
+    target.play();
+  }, [ensurePlayer, restartIfFinished]);
 
   const seekTo = useCallback((seconds: number) => {
     playerRef.current?.seekTo(Math.max(0, seconds)).catch(() => undefined);
   }, []);
 
-  const skipBy = useCallback(
-    (seconds: number) => {
-      const next = (status?.currentTime ?? 0) + seconds;
-      playerRef.current?.seekTo(Math.max(0, next)).catch(() => undefined);
-    },
-    [status?.currentTime]
-  );
+  const skipBy = useCallback((seconds: number) => {
+    const next = (statusRef.current?.currentTime ?? 0) + seconds;
+    playerRef.current?.seekTo(Math.max(0, next)).catch(() => undefined);
+  }, []);
 
   /**
    * The track `offset` positions from the current one within the playable set.
@@ -286,26 +393,34 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     (next: number) => {
       const clamped = Math.min(MAX_RATE, Math.max(MIN_RATE, +next.toFixed(2)));
       setRateState(clamped);
+      rateRef.current = clamped;
+      persistPrefs();
       // No player yet: playTrack applies the rate (rateRef) when one is made.
       const player = playerRef.current;
       if (!player) return;
       player.shouldCorrectPitch = true;
       player.setPlaybackRate(clamped, 'high');
     },
-    []
+    [persistPrefs]
   );
 
   const toggleLoop = useCallback(() => {
     const player = ensurePlayer();
-    player.loop = !player.loop;
+    const next = !player.loop;
+    player.loop = next;
+    loopRef.current = next;
+    setIsLoopPref(next);
+    persistPrefs();
     // Nudge a status refresh so consumers re-render with the new loop flag.
-    setStatus((s) => (s ? { ...s, loop: player.loop } : s));
-  }, [ensurePlayer]);
+    setStatus((s) => (s ? { ...s, loop: next } : s));
+  }, [ensurePlayer, persistPrefs]);
 
   const stop = useCallback(() => {
     // Disarm a pending play so a still-buffering source can't start after Stop —
     // or after read-aloud / japam has claimed the session (the 'recorded' stopper).
     wantPlayRef.current = false;
+    clearStallTimer();
+    showNotice(null);
     setIsBuffering(false);
     // Never creates a player: the arbiter calls this whenever read-aloud or
     // japam starts, including in sessions that never played recorded audio.
@@ -319,7 +434,7 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
     }
     setCurrentTrack(null);
     setNowPlayingOpen(false);
-  }, []);
+  }, [clearStallTimer, showNotice]);
 
   const openNowPlaying = useCallback(() => setNowPlayingOpen(true), []);
   const closeNowPlaying = useCallback(() => setNowPlayingOpen(false), []);
@@ -333,10 +448,10 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       isPlaying: status?.playing ?? false,
       isLoaded: status?.isLoaded ?? false,
       isBuffering,
-      positionSec: status?.currentTime ?? 0,
+      playbackNotice,
       durationSec: status?.duration || currentTrack?.durationSec || 0,
       rate,
-      isLooping: status?.loop ?? false,
+      isLooping: status?.loop ?? isLoopPref,
       nowPlayingOpen,
       playTrack,
       prefetchTrack,
@@ -350,15 +465,17 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       stop,
       openNowPlaying,
       closeNowPlaying,
+      retryPlayback,
     }),
     [
       currentTrack,
       status?.playing,
       status?.isLoaded,
       isBuffering,
-      status?.currentTime,
+      playbackNotice,
       status?.duration,
       status?.loop,
+      isLoopPref,
       rate,
       nowPlayingOpen,
       playTrack,
@@ -373,10 +490,20 @@ export function AudioPlayerProvider({ children }: { children: React.ReactNode })
       stop,
       openNowPlaying,
       closeNowPlaying,
+      retryPlayback,
     ]
   );
 
-  return <AudioPlayerContext.Provider value={value}>{children}</AudioPlayerContext.Provider>;
+  return (
+    <AudioPlayerContext.Provider value={value}>
+      <AudioPositionContext.Provider value={status?.currentTime ?? 0}>{children}</AudioPositionContext.Provider>
+    </AudioPlayerContext.Provider>
+  );
+}
+
+/** Current position in seconds. Re-renders its caller on every tick: use it only where progress is drawn. */
+export function useAudioPosition(): number {
+  return useContext(AudioPositionContext);
 }
 
 export function useAudioPlayerContext(): AudioPlayerContextValue {

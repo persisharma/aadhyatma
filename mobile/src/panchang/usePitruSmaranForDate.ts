@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
 import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { entryMatchesDate, type SmaranEntry } from './pitruSmaran';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * The saved पितृ स्मरण entries whose observance falls on `date` — drives the muted
@@ -23,7 +23,7 @@ export function usePitruSmaranForDate(date: Date): SmaranEntry[] {
     let cancelled = false;
     setMatches([]);
     let handle: ReturnType<typeof setTimeout> | undefined;
-    const interaction = InteractionManager.runAfterInteractions(() => {
+    const interaction = runWhenIdle(() => {
       handle = setTimeout(() => {
         const day = new Date(dateMs);
         const result = entries.filter((entry) => {

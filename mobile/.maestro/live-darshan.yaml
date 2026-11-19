@@ -31,9 +31,9 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - tapOn: { id: "darshan-guide" }
 - assertVisible: { id: "temple-darshan" }
-- tapOn: "Back"
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "home-darshan-floating" }
 - tapOn: { id: "tab-panchang" }
 - assertNotVisible: { id: "home-darshan-floating" }

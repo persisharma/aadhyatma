@@ -157,9 +157,9 @@ appId: com.prashantsharma.vedansh
     id: "kundali-generate-button"
 - waitForAnimationToEnd:
     timeout: 20000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── 3. With the profile: the quiet row on cards, the strip on the detail ─────

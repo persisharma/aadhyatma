@@ -1,4 +1,5 @@
 import { runSynchronously } from './backgroundWork';
+import { PANCHANG_CIVIL_OFFSET_MS, PANCHANG_CIVIL_TIME_ZONE } from './civilTime';
 import {
   Body,
   EclipticGeoMoon,
@@ -65,10 +66,21 @@ export function getSiderealMoonLng(date: Date, year: number): number {
 
 const civilFormatters = new Map<string, Intl.DateTimeFormat>();
 
+// The civil zone of every Panchang location (see `civilTime.ts`). It used to
+// default to the DEVICE zone, which is only the same thing on a phone set to
+// IST: on a phone in the Americas the device's midnight falls after that day's
+// Indian sunrise, so "the first sunrise after midnight" was the NEXT day's and
+// every date showed tomorrow's tithi (17 Nov 2026 at Ujjain: Ashtami on an IST
+// phone, Navami on a New York one).
+const IST_OFFSET_MS = PANCHANG_CIVIL_OFFSET_MS;
+
 type CivilParts = { year: number; month: number; day: number };
 
-function civilParts(date: Date, timeZone?: string): CivilParts {
-  if (!timeZone) return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
+function civilParts(date: Date, timeZone: string = PANCHANG_CIVIL_TIME_ZONE): CivilParts {
+  if (timeZone === PANCHANG_CIVIL_TIME_ZONE) {
+    const shifted = new Date(date.getTime() + IST_OFFSET_MS);
+    return { year: shifted.getUTCFullYear(), month: shifted.getUTCMonth() + 1, day: shifted.getUTCDate() };
+  }
   let formatter = civilFormatters.get(timeZone);
   if (!formatter) {
     formatter = new Intl.DateTimeFormat('en-US', {
@@ -87,8 +99,15 @@ function instantYear(date: Date, timeZone?: string): number {
   return civilParts(date, timeZone).year;
 }
 
-function civilStart(localDate: Date, timeZone?: string): Date {
-  if (!timeZone) return new Date(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0);
+/**
+ * Midnight that starts a civil date in `timeZone`. `localDate` is a LABEL: only
+ * its device-local year/month/day are read, and they name the civil date in the
+ * target zone (the whole app builds its days as `new Date(y, m, d)`).
+ */
+function civilStart(localDate: Date, timeZone: string = PANCHANG_CIVIL_TIME_ZONE): Date {
+  if (timeZone === PANCHANG_CIVIL_TIME_ZONE) {
+    return new Date(Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate()) - IST_OFFSET_MS);
+  }
   const target = { year: localDate.getFullYear(), month: localDate.getMonth() + 1, day: localDate.getDate() };
   const wantedUtc = Date.UTC(target.year, target.month - 1, target.day);
   let instant = wantedUtc;
@@ -781,7 +800,7 @@ export function tithiAtMoonrise(
   if (sunriseTithi !== expectedTithiIndex && (sunriseTithi + 1) % 30 !== expectedTithiIndex) return null;
   const moonrise = moonriseFor(localDate, options.location, options.civilTimeZone);
   if (!moonrise) return null;
-  const year = moonrise.getFullYear();
+  const year = instantYear(moonrise, options.civilTimeZone);
   return computeTithiIndex(getSiderealSunLng(moonrise, year), getSiderealMoonLng(moonrise, year));
 }
 

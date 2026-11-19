@@ -1,7 +1,7 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { PLAYER_STATES } from 'react-native-youtube-iframe';
-import ChannelYouTubeFrame from '../ChannelYouTubeFrame';
+import ChannelYouTubeFrame, { allowDarshanNavigation } from '../ChannelYouTubeFrame';
 import { channelEmbedHTML, channelEmbedUrl, DARSHAN_EMBED_ORIGIN } from '@/video/channelEmbed';
 import { darshanChannels } from '@/data/darshan/channels';
 
@@ -15,6 +15,7 @@ type NativeProps = {
   onError: () => void;
   onHttpError?: () => void;
   onContentProcessDidTerminate: () => void;
+  onShouldStartLoadWithRequest: (request: { url: string; mainDocumentURL?: string }) => boolean;
 };
 let mockProps: NativeProps;
 jest.mock('react-native-webview', () => {
@@ -88,4 +89,21 @@ it('reports actual player states, autoplay blocking, native and embed errors', (
   act(() => mockProps.onContentProcessDidTerminate());
   expect(callbacks.onError).toHaveBeenCalledTimes(3);
   expect(() => act(() => mockProps.onMessage({ nativeEvent: { data: 'malformed' } }))).not.toThrow();
+});
+
+it('SEC-12: only its own embed page may navigate; links out of the player are refused', () => {
+  render();
+  const guard = mockProps.onShouldStartLoadWithRequest;
+  expect(guard).toBe(allowDarshanNavigation);
+  // The initial load (blank, or the app-identity base URL the HTML is served under).
+  expect(guard({ url: 'about:blank' })).toBe(true);
+  expect(guard({ url: `${DARSHAN_EMBED_ORIGIN}/` })).toBe(true);
+  // The YouTube iframe is a sub-frame: its main document is still ours.
+  expect(guard({ url: 'https://www.youtube.com/embed/live_stream?channel=x', mainDocumentURL: `${DARSHAN_EMBED_ORIGIN}/` })).toBe(true);
+  // Top-level navigations elsewhere are blocked.
+  expect(guard({ url: 'https://www.youtube.com/watch?v=abc' })).toBe(false);
+  expect(guard({ url: 'https://evil.example/' })).toBe(false);
+  expect(guard({ url: `${DARSHAN_EMBED_ORIGIN}.evil.example/` })).toBe(false);
+  expect(guard({ url: 'https://evil.example/', mainDocumentURL: 'https://evil.example/' })).toBe(false);
+  expect(guard({ url: 'javascript:alert(1)' })).toBe(false);
 });

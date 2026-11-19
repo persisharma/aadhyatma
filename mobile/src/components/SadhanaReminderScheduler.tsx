@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AppState, type AppStateStatus } from 'react-native';
 import { useSadhana } from '@/contexts/SadhanaContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useGitaLanguage } from '@/data/gita/language';
 import { getProgram } from '@/data/sadhana/programs';
 import { scheduleSadhanaReminders, cancelAllSadhanaReminders } from '@/notifications/sadhanaScheduler';
 import type { SadhanaReminderInput } from '@/notifications/sadhanaReminderPure';
@@ -20,6 +21,7 @@ import type { SadhanaReminderInput } from '@/notifications/sadhanaReminderPure';
 export default function SadhanaReminderScheduler() {
   const { activeEnrollments, reminderProgramIds, isLoading } = useSadhana();
   const { prefs, permissionStatus } = useNotificationPreferences();
+  const { lang } = useGitaLanguage();
   const [foregroundTick, setForegroundTick] = useState(0);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
 
@@ -57,12 +59,12 @@ export default function SadhanaReminderScheduler() {
         });
       }
       if (cancelled) return;
-      await scheduleSadhanaReminders(inputs).catch(() => undefined);
+      await scheduleSadhanaReminders(inputs, new Date(), lang).catch(() => undefined);
     })();
     return () => {
       cancelled = true;
     };
-  }, [isLoading, activeEnrollments, reminderProgramIds, prefs, permissionStatus, foregroundTick]);
+  }, [isLoading, activeEnrollments, reminderProgramIds, prefs, permissionStatus, lang, foregroundTick]);
 
   return null;
 }

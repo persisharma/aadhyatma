@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { familyCap } from './notificationBudget';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import type { Lang } from '@/data/gita/language';
 import {
@@ -22,7 +23,7 @@ export async function schedulePitruPakshaReminders(
   now = new Date(),
   lang: Lang = 'hi'
 ): Promise<number> {
-  const planned = planPitruPakshaReminders(windows, now);
+  const planned = planPitruPakshaReminders(windows, now, familyCap(Platform.OS, 'pitruPaksha'));
   // A channel's attributes are pinned at creation, so once per process is enough.
   if (Platform.OS === 'android' && planned.length > 0 && !channelEnsured) {
     await Notifications.setNotificationChannelAsync(PITRU_PAKSHA_CHANNEL_ID, {

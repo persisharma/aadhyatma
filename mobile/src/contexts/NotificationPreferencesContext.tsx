@@ -15,6 +15,7 @@ import {
   scheduleDailyVerseRollingWindow,
 } from '@/notifications/scheduler';
 import { MAX_REMINDER_TIMES, type TimeOfDay } from '@/notifications/pure';
+import { isLegacyChannelRetired, LEGACY_SHARED_CHANNEL_ID } from '@/notifications/notificationChannels';
 import type { DayAngaMap } from '@/notifications/dayAnga';
 import {
   readNotificationPermissionState,
@@ -665,13 +666,22 @@ export function configureForegroundNotificationHandler() {
 
   // Android 8+ drops notifications that aren't bound to a channel. Without
   // this, scheduled daily-verse reminders can be silently suppressed by the
-  // OS or shown with no heads-up, even when permission is granted.
+  // OS or shown with no heads-up, even when permission is granted. The five
+  // reminder families now own per-family channels (`notificationChannels.ts`);
+  // this shared one is kept only until they have all re-armed onto them, then
+  // retired for good (a retired flag stops it being recreated at boot).
   if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'Daily verse reminders',
-      importance: Notifications.AndroidImportance.DEFAULT,
-      sound: 'default',
-      lightColor: '#B8621B',
-    }).catch(() => undefined);
+    isLegacyChannelRetired()
+      .then((retired) =>
+        retired
+          ? undefined
+          : Notifications.setNotificationChannelAsync(LEGACY_SHARED_CHANNEL_ID, {
+              name: 'Daily verse reminders',
+              importance: Notifications.AndroidImportance.DEFAULT,
+              sound: 'default',
+              lightColor: '#B8621B',
+            })
+      )
+      .catch(() => undefined);
   }
 }

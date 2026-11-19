@@ -74,11 +74,27 @@ export default function DailyBhaktiScreen() {
   // that verse — even if the screen was already mounted (e.g. the user had
   // browsed away with "next"). Looked up by identity, so it always matches the
   // notification regardless of pool-size drift.
+  //
+  // Keyed on the params OBJECT, not its primitives: tapping the same reminder
+  // again after browsing away carries identical sourceId/chapter/verseIndex, so a
+  // primitive dependency never re-ran, while every navigate() delivers a fresh
+  // params object. The functional update keeps a re-render with an unchanged
+  // verse a no-op.
+  const routeParams = route.params;
   useEffect(() => {
     if (sourceId == null || verseIndex == null) return;
     const found = findVerse(sourceId, verseIndex, chapter);
-    if (found) setVerse(found);
-  }, [sourceId, chapter, verseIndex]);
+    if (!found) return;
+    setVerse((prev) =>
+      prev &&
+      prev.sourceId === found.sourceId &&
+      prev.verseIndex === found.verseIndex &&
+      prev.chapter === found.chapter
+        ? prev
+        : found
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- routeParams is the re-run trigger; the rest are read from it
+  }, [routeParams]);
 
   const refresh = useCallback(() => {
     setVerse(getRandomVerse());
@@ -94,7 +110,7 @@ export default function DailyBhaktiScreen() {
       ? `${verse.sourceId}:${verse.verseIndex}`
       : `${verse.sourceId}:${verse.chapter ?? ''}:${verse.verseIndex}`;
   const verseLines = verse
-    ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi)
+    ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi, verse.labelHi)
     : [];
   const verseType = verseToken(lang, typography);
 
@@ -164,9 +180,8 @@ export default function DailyBhaktiScreen() {
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
-              // One charan per row when each fits; otherwise the stored lines flow
-              // together so a short fragment can use the previous row.
-              verse={verseLines.join(' ')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
+              // Preserve charan boundaries; long rows wrap and the paper grows.
+              verse={verseLines.join('\n')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
               meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
               verseStyle={{ ...verseType, lineHeight: lang === 'hi' ? devotionalReaderVerseLeading(verseType.fontSize) : verseType.lineHeight, color: colors.ink }}

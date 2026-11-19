@@ -23,9 +23,10 @@
  *     discrete one-shots while the skip is pending; the every-foreground
  *     reconcile restores the plain recurrence once the date passes.
  *
- * `scheduleJapamAlarms(alarms)` is idempotent: it cancels every Japam-alarm
- * slot it owns first (except in-flight snoozes), then schedules enabled
- * alarms. Safe to call on any state change.
+ * `scheduleJapamAlarms(alarms)` is idempotent: it re-arms every enabled alarm in
+ * place (scheduling a slot replaces the one with the same identifier), then
+ * cancels the Japam-alarm slots it owns that are no longer wanted (except
+ * in-flight snoozes). Safe to call on any state change.
  */
 
 import { Platform } from 'react-native';
@@ -238,7 +239,9 @@ function expoTriggerPlan(
 
 async function scheduleViaExpo(
   alarms: JapamAlarm[],
-  now: Date
+  now: Date,
+  /** Receives every identifier this pass plans, so the caller can cancel the rest. */
+  planned: Set<string> = new Set()
 ): Promise<number> {
   await ensureSnoozeCategory();
   let scheduled = 0;
@@ -264,6 +267,7 @@ async function scheduleViaExpo(
     const content = buildContent(alarm, customSound);
     let ok = false;
     for (const plan of plans) {
+      planned.add(plan.identifier);
       try {
         await Notifications.scheduleNotificationAsync({
           identifier: plan.identifier,
@@ -424,7 +428,7 @@ async function cancelOrphanedSnoozes(activeAlarmIds: Set<string>): Promise<void>
   }
 }
 
-/** Serialization chain: reconciles are cancel-then-schedule sequences with
+/** Serialization chain: reconciles are schedule-then-cancel sequences with
  *  many awaits; two overlapping runs can interleave so a stale run's
  *  schedule pass lands after a fresh run's cancel pass, re-arming a
  *  just-disabled alarm. Chaining runs start-to-finish makes the last caller
@@ -432,9 +436,9 @@ async function cancelOrphanedSnoozes(activeAlarmIds: Set<string>): Promise<void>
 let reconcileChain: Promise<unknown> = Promise.resolve();
 
 /**
- * Reconcile the OS-scheduled Japam alarms with the given list. Cancels every
- * existing Japam-alarm slot first, then schedules enabled ones. Idempotent,
- * and serialized against concurrent invocations.
+ * Reconcile the OS-scheduled Japam alarms with the given list: schedules the
+ * enabled ones in place, then cancels slots that are no longer wanted.
+ * Idempotent, and serialized against concurrent invocations.
  *
  * Returns the count of alarms actually scheduled.
  */
@@ -444,8 +448,32 @@ export function scheduleJapamAlarms(alarms: JapamAlarm[]): Promise<number> {
   return run;
 }
 
+/** Cancel pending expo-tier japam slots (never snoozes) that `keep` does not
+ *  list — leftovers of a removed/changed alarm or of an older app version. */
+async function cancelStaleExpoSlots(keep: Set<string>): Promise<void> {
+  const pending = await Notifications.getAllScheduledNotificationsAsync();
+  await Promise.all(
+    pending
+      .filter(
+        (n) =>
+          n.identifier.startsWith(JAPAM_ALARM_IDENTIFIER_PREFIX) &&
+          !isSnoozeIdentifier(n.identifier) &&
+          !keep.has(n.identifier)
+      )
+      .map((n) =>
+        Notifications.cancelScheduledNotificationAsync(n.identifier).catch(
+          () => undefined
+        )
+      )
+  );
+}
+
 async function doScheduleJapamAlarms(alarms: JapamAlarm[]): Promise<number> {
-  await cancelAllJapamAlarmNotifications();
+  // Re-arm in place and cancel only what is no longer wanted, AFTER the new
+  // schedule is in: cancelling everything first left a window (several awaits
+  // long) where a process kill or a due alarm found nothing armed, and on
+  // Android the native cancelAll also emptied the list the boot receiver
+  // restores from.
   const now = new Date();
   // One-time alarms whose recorded moment has passed already rang — never
   // re-arm them; the context's housekeeping will flip them to disabled.
@@ -459,7 +487,14 @@ async function doScheduleJapamAlarms(alarms: JapamAlarm[]): Promise<number> {
   // supports it; otherwise we fall through to the expo-notifications
   // path. `scheduleNativeAlarmsForDay` no-ops when no module is bound.
   if (isNativeAlarmSupported()) {
-    return scheduleNativeAlarmsForDay(armable);
+    const count = await scheduleNativeAlarmsForDay(armable);
+    // The native tier owns the alarms; any expo-tier slot is a leftover from
+    // an older app version.
+    await cancelStaleExpoSlots(new Set());
+    return count;
   }
-  return scheduleViaExpo(armable, now);
+  const planned = new Set<string>();
+  const count = await scheduleViaExpo(armable, now, planned);
+  await cancelStaleExpoSlots(planned);
+  return count;
 }

@@ -83,6 +83,23 @@ export function placeTourCard(
   return { bottom: insets.bottom + 8, arrow: 'up', arrowLeft };
 }
 
+/** Fallback height (px) of the overlay's header row (step counter + Skip) until
+ *  `FeatureTour` measures it; with the type scale it grows past this. */
+export const TOUR_HEADER_HEIGHT_EST = 40;
+
+/**
+ * Tallest the card (incl. its arrow) may grow: the band between `insets.top` and
+ * the bottom safe area, less the 8px margin `placeTourCard` keeps at each pinned
+ * edge. `FeatureTour` passes the header row's bottom as `insets.top` both here
+ * and to `placeTourCard`, so a card at any type scale sits below the step
+ * counter and Skip rather than over them. The card body scrolls when the copy
+ * needs more room than this (seen in CI at enlarged iOS text: the uncapped card
+ * covered Skip, so the tour could not be skipped).
+ */
+export function tourCardMaxHeight(screen: Screen, insets: Insets): number {
+  return Math.max(0, screen.height - insets.top - insets.bottom - 16);
+}
+
 function clamp(v: number, lo: number, hi: number): number {
   return Math.min(Math.max(v, lo), hi);
 }

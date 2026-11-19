@@ -150,7 +150,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-gu-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-putana" }
 - scrollUntilVisible:
     element: { id: "kids-story-kaliya-nag" }
@@ -256,9 +256,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-gu-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-kaliya-nag" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-ganesha" }
 - scrollUntilVisible:
     element: { id: "kids-story-ganesha-birth" }
@@ -403,9 +403,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-gu-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-ganesha-birth" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-hanuman" }
 - scrollUntilVisible:
     element: { id: "kids-story-hanuman-sun" }
@@ -537,10 +537,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-gu-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-hanuman-sun" }
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - runFlow: _open-settings.yaml
 - scrollUntilVisible:
     element: { text: "Reading size,.*" }
@@ -689,7 +689,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-putana-kn-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-putana" }
 - scrollUntilVisible:
     element: { id: "kids-story-kaliya-nag" }
@@ -795,9 +795,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-kaliya-nag-kn-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-kaliya-nag" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-ganesha" }
 - scrollUntilVisible:
     element: { id: "kids-story-ganesha-birth" }
@@ -942,9 +942,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-ganesha-birth-kn-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-ganesha-birth" }
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { id: "kids-story-deity-hanuman" }
 - scrollUntilVisible:
     element: { id: "kids-story-hanuman-sun" }
@@ -1076,7 +1076,7 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     centerElement: true
 - takeScreenshot: kids-hanuman-sun-kn-source
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "kids-story-hanuman-sun" }
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

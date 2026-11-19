@@ -113,7 +113,7 @@ appId: com.prashantsharma.vedansh
 # of the 2x2 grid, and a running Sade Sati makes it the one LIVE tile — the
 # teaser row that used to sit inside the chart-glance card is now this tile's
 # own reading, printed in words (§12) rather than signalled by the fill alone.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "From your full chart"

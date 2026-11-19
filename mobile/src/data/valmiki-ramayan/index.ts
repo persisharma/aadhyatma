@@ -77,6 +77,22 @@ export const valmikiRamayanTotal = valmikiRamayanChaptersManifest.reduce(
  * handles, `expo-asset` and the masters must not be.
  */
 const chapterCache = new Map<number, ValmikiRamayanChapter>();
+/**
+ * The corpus is 27 MB of text, so only the kāṇḍas in use stay resident: the one
+ * being read, the one preloaded after it, and the one just left (back-navigation).
+ * The least recently used is dropped when a fourth arrives. A screen that holds a
+ * kāṇḍa keeps its own reference, so eviction frees memory once it lets go.
+ */
+export const MAX_RESIDENT_CHAPTERS = 3;
+function remember(chapter: number, value: ValmikiRamayanChapter): void {
+  // Map keeps insertion order: delete + set makes `chapter` the most recent.
+  chapterCache.delete(chapter);
+  chapterCache.set(chapter, value);
+  while (chapterCache.size > MAX_RESIDENT_CHAPTERS) {
+    const oldest = chapterCache.keys().next().value as number;
+    chapterCache.delete(oldest);
+  }
+}
 const chapterLoads = new Map<number, Promise<ValmikiRamayanChapter>>();
 
 /** Lightweight anchors used by Daily Bhakti and on-device search. */
@@ -89,13 +105,16 @@ function isValidChapter(chapter: number): boolean {
 
 /** The kāṇḍa if this process has already loaded it, else null. Never does any work. */
 export function peekValmikiRamayanChapter(chapter: number): ValmikiRamayanChapter | null {
-  return chapterCache.get(chapter) ?? null;
+  const cached = chapterCache.get(chapter);
+  if (!cached) return null;
+  remember(chapter, cached); // a kāṇḍa on screen is, by definition, in use
+  return cached;
 }
 
 /**
- * Load a kāṇḍa. Concurrent callers share one load; a loaded kāṇḍa is kept for
- * the life of the process, as it always was. A failed load is forgotten, so the
- * next call tries again.
+ * Load a kāṇḍa. Concurrent callers share one load; loaded kāṇḍas are kept
+ * least-recently-used, up to `MAX_RESIDENT_CHAPTERS`. A failed load is
+ * forgotten, so the next call tries again.
  */
 export function loadValmikiRamayanChapter(chapter: number): Promise<ValmikiRamayanChapter> {
   if (!isValidChapter(chapter)) {
@@ -106,12 +125,15 @@ export function loadValmikiRamayanChapter(chapter: number): Promise<ValmikiRamay
     );
   }
   const cached = chapterCache.get(chapter);
-  if (cached) return Promise.resolve(cached);
+  if (cached) {
+    remember(chapter, cached);
+    return Promise.resolve(cached);
+  }
   let pending = chapterLoads.get(chapter);
   if (!pending) {
     pending = readChapter(chapter).then(
       (loaded) => {
-        chapterCache.set(chapter, loaded);
+        remember(chapter, loaded);
         chapterLoads.delete(chapter);
         return loaded;
       },

@@ -42,8 +42,22 @@ if [[ -z "${META_TRACKING_ENABLED:-}" ]]; then
 fi
 export META_TRACKING_ENABLED
 
+# The device-registration key is an EXPO_PUBLIC_ value: Expo inlines it into the
+# bundle from the environment or mobile/.env* at export time, and eas.json `env`
+# is not applied to `eas update`. Published without it, an OTA bundle silently
+# falls back to capture-only registration (no push token, no heartbeat auth).
+# Presence only — the value is never read or printed. Warns; does not stop.
+DEVICE_KEY_NAME="EXPO_PUBLIC_DEVICE_REGISTRATION_API_KEY"
+if [[ -n "${!DEVICE_KEY_NAME:-}" ]] || grep -qs "^${DEVICE_KEY_NAME}=." .env .env.local .env.production .env.production.local; then
+  DEVICE_KEY_STATE="set"
+else
+  DEVICE_KEY_STATE="NOT SET"
+  echo "WARN: ${DEVICE_KEY_NAME} is not set in the environment or mobile/.env*; this OTA will register devices in capture-only mode." >&2
+fi
+
 echo "Channel: ${CHANNEL}"
 echo "Platform: ${PLATFORM}"
+echo "Device registration key: ${DEVICE_KEY_STATE}"
 echo "Meta tracking: ${META_TRACKING_ENABLED:-unset (disabled)}"
 echo "Message: ${MESSAGE}"
 # How the Valmiki corpus travels follows the runtime being published to

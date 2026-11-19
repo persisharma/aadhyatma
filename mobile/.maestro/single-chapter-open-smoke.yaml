@@ -86,7 +86,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── Assertion 3: ONE Back lands on the category list, not a one-row index ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "Bajrang Baan\\..*Tap to open\\."

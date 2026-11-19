@@ -136,7 +136,7 @@ appId: com.prashantsharma.vedansh
 
 # ── Step 8: Cleanup — Back to Detail, then set the sankalp aside ──
 # Back pops RoutineToday → the now-active SadhanaProgramDetail.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - extendedWaitUntil:
     visible: "In progress · Day 1 / 41"

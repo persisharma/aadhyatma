@@ -80,7 +80,7 @@ appId: com.prashantsharma.vedansh
 # Each katha row is a Pressable with an explicit accessibilityLabel
 # "Read katha <Title>" (children collapse into it), so match that, not bare "Read".
 - assertVisible: "Read katha.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Vrat tile → per-type list → back ──
@@ -107,7 +107,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "No saved observances here.*"
 - tapOn: "Area: all"
 - assertVisible: "Follow Nirjala Ekadashi"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Search → result → dedicated detail page ──
@@ -134,7 +134,7 @@ appId: com.prashantsharma.vedansh
 # renders and the placeholder is gone.
 - assertVisible: "Follow"
 - assertNotVisible: "COMING SOON"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Restore Hindi default (best-effort) + cleanup ──

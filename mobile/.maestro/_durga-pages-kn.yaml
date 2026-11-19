@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ಸಾಂಪ್ರದಾಯಿಕ ನವದುರ್ಗಾ ಕ್ರಮವನ್ನು ಆಧರಿಸಿದ ನವರಾತ್ರಿಯ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ. ಕುಟುಂಬ ಮತ್ತು ಪ್ರದೇಶಗಳ ಆಚರಣೆಗಳು ಬೇರೆಯಾಗಿರುತ್ತವೆ. ಇದು ಪೂಜಾ ಅಥವಾ ಉಪವಾಸದ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-nv03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shailaputri" }
     centerElement: true
@@ -118,7 +118,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ಶಿವಪುರಾಣ 2.3.6–7ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗದ ಬಳಿಕ ಶೈಲಪುತ್ರಿಯ ಮೊದಲ ದಿನದ ಸಾಂಪ್ರದಾಯಿಕ ಪರಿಚಯ. ಈ ಅಧ್ಯಾಯಗಳು ಸ್ವತಃ ಈ ನವದುರ್ಗಾ ಹೆಸರನ್ನು ಬಳಸುವುದಿಲ್ಲ. ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-sp04-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-brahmacharini" }
     centerElement: true
@@ -226,7 +226,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ಶಿವಪುರಾಣ 2.3.21–29ರ ಸಂಬಂಧಿತ ಪಾರ್ವತಿಯ ಪ್ರಸಂಗ, ಬ್ರಹ್ಮಚಾರಿಣಿಯ ಎರಡನೇ ದಿನದ ರೂಪದೊಂದಿಗೆ ಸಂಬಂಧಿಸಿದೆ. ಮಕ್ಕಳಿಗಾಗಿ ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಅಗ್ನಿಪರೀಕ್ಷೆಯನ್ನು ಬಿಡಲಾಗಿದೆ; ಇದು ಸಾಧನೆಯ ಮಾರ್ಗದರ್ಶಿಯಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-br07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-chandraghanta" }
     centerElement: true
@@ -306,7 +306,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-cg05-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-kushmanda" }
     centerElement: true
@@ -358,7 +358,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-ku03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-skandamata" }
     centerElement: true
@@ -438,7 +438,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-sk05-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-mahishasura" }
     centerElement: true
@@ -616,7 +616,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 2–4ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ. ಯುದ್ಧ ಮತ್ತು ಮರಣವನ್ನು ಭೀಕರ ವಿವರಗಳಿಲ್ಲದೆ ಹೇಳಲಾಗಿದೆ. ನವದುರ್ಗಾ ಸಂಪ್ರದಾಯದಲ್ಲಿ ಈ ಜಯವನ್ನು ಕಾತ್ಯಾಯನಿಗೆ ಸಂಬಂಧಿಸಲಾಗುತ್ತದೆ. ಎಂಟು ಕೈಗಳು ಸಾಂಪ್ರದಾಯಿಕ ಕಲಾಚಿತ್ರಣ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-dm12-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-kalaratri" }
     centerElement: true
@@ -654,7 +654,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-kr02-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-mahagauri" }
     centerElement: true
@@ -762,7 +762,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ಸಂಬಂಧಿತ ಶಿವಪುರಾಣ ಪ್ರಸಂಗದ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ಸರಳ ರೂಪಾಂತರ ಮತ್ತು ಅದರ ನವದುರ್ಗಾ ಸಂಬಂಧ. ಅಧ್ಯಾಯವೇ ಈ ನವದುರ್ಗಾ ರೂಪವನ್ನು ಹೆಸರಿಸುವುದಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-mg07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-siddhidatri" }
     centerElement: true
@@ -814,7 +814,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ನವದುರ್ಗೆಯ ಭಕ್ತಿ ಸಂಪ್ರದಾಯದ ಸಂಕ್ಷಿಪ್ತ ಪರಿಚಯ; ಇದು ಪ್ರತ್ಯೇಕ ಪುರಾಣ ಸಾಹಸಕಥೆಯಲ್ಲ. ಸಾಂಪ್ರದಾಯಿಕ ಮೂಲವಿವರಣೆಯನ್ನು ಮೂಲಕ್ಕೆ ಸಂಬಂಧಿಸಲಾಗಿದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-si03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-raktabeej" }
     centerElement: true
@@ -922,7 +922,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 7.27 ಮತ್ತು 8ರ ಮಕ್ಕಳಿಗಾಗಿ ರೂಪಾಂತರ. ಇಲ್ಲಿ ಕಾಳಿಯನ್ನು ಚಾಮುಂಡೆ ಎಂದು ಕರೆಯಲಾಗಿದೆ; ಕಾಲರಾತ್ರಿ ಎಂದು ಬದಲಿಸಿಲ್ಲ. ರಕ್ತ ಮತ್ತು ಯುದ್ಧದ ಸಂಕ್ಷಿಪ್ತ ನಿರೂಪಣೆ ಇದೆ; ಚಿತ್ರಗಳು ಭೀಕರವಾಗಿಲ್ಲ. ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-rb07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shumbha-nishumbha" }
     centerElement: true
@@ -1128,7 +1128,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 5–10ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ. ಪ್ರತ್ಯೇಕ ರಕ್ತಬೀಜ ಪುಸ್ತಕ ಆ ಭಾಗವನ್ನು ಹೆಚ್ಚು ವಿವರಿಸುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-sn14-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-suratha-samadhi" }
     centerElement: true
@@ -1236,7 +1236,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ದೇವೀ ಮಾಹಾತ್ಮ್ಯ 1 ಮತ್ತು 13ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಕಠಿಣ ಉಪವಾಸ ಮತ್ತು ಸ್ವರಕ್ತ ಅರ್ಪಣೆಯ ವಿವರಗಳನ್ನು ಕೈಬಿಡಲಾಗಿದೆ. ಅವರ ಆರಾಧನೆ ಮೂರು ವರ್ಷ ನಡೆಯುತ್ತದೆ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-su07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shakambhari" }
     centerElement: true
@@ -1358,6 +1358,6 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "ದೇವೀ ಭಾಗವತ 7.28ರ ಮಕ್ಕಳಿಗಾಗಿ ಮೂಲ ರೂಪಾಂತರ. ಬರದ ಕಾರಣ ಪುರಾಣದ ನಿರೂಪಣೆಯಾಗಿದೆ; ವೈಜ್ಞಾನಿಕ ವಿವರಣೆಯಲ್ಲ. ಯುದ್ಧ-ಮರಣದ ಭೀಕರ ವಿವರಗಳಿಲ್ಲ; ಪಾಠ ಸಂಪಾದಕೀಯವಾಗಿದೆ."
 - takeScreenshot: durga-kn-${DURGA_SIZE}-sa08-ending
-- tapOn: "Back"
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

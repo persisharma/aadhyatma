@@ -21,10 +21,23 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: home-japa-choose }
 - tapOn: { id: practice-tab-stotram }
 - scrollUntilVisible:
+    element: { id: reading-link-durga-saptashati-core }
+    direction: DOWN
+- tapOn: { id: reading-link-durga-saptashati-core }
+- extendedWaitUntil:
+    visible: { id: saptashati-collection-scope }
+    timeout: 15000
+- assertVisible: { id: saptashati-reading-durga-devi-kavacham }
+- scrollUntilVisible:
+    element: { id: saptashati-reading-durga-saptashati-chapter-1 }
+    direction: DOWN
+- takeScreenshot: e2e-shots/saptashati-chapter-list
+- tapOn: Back
+- assertVisible: { id: practice-tab-stotram }
+- scrollUntilVisible:
     element: { text: 'Aditya Hridayam\..*Tap to open\.' }
     direction: DOWN
 - tapOn: 'Aditya Hridayam\..*Tap to open\.'
-- tapOn: "Open reading.*|पाठ खोलें.*|પાઠ ખોલો.*|ಪಾಠ ತೆರೆಯಿರಿ.*"
 - extendedWaitUntil:
     visible: "Aditya Hridayam|आदित्य हृदयम्|આદિત્ય હૃદયમ્|ಆದಿತ್ಯ ಹೃದಯಮ್"
     timeout: 15000

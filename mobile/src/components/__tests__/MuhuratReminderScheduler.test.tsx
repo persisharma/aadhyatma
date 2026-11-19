@@ -55,6 +55,11 @@ jest.mock('@/contexts/NotificationPreferencesContext', () => ({
   useNotificationPreferences: () => ({ permissionStatus: mockPermission }),
 }));
 
+jest.mock('@/data/gita/language', () => ({
+  ...jest.requireActual('@/data/gita/language'),
+  useGitaLanguage: () => ({ lang: 'hi' }),
+}));
+
 jest.mock('@/panchang/usePanchang', () => ({
   usePanchangCalendarSystem: () => ['purnimant', jest.fn()],
 }));

@@ -16,7 +16,6 @@
  *     wait on a ~259 ms solve of a date further down the page.
  */
 import { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
 
 import {
   ensureOccurrencesAsync,
@@ -38,6 +37,7 @@ import {
 } from './pitruSmaran';
 import { startOfLocalDay } from './pitruSmaranDisplay';
 import type { WorkPriority } from './backgroundWork';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 /**
  * The Gregorian year whose Pitru Paksha a surface should show: this one until its
@@ -93,7 +93,7 @@ export function useSmaranListSolve(entries: SmaranEntry[], todayMs: number): Sma
   useEffect(() => {
     let cancelled = false;
     const isCancelled = () => cancelled;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
 
     // Rule 2: the read starts now, not after the interactions.
     void hydrateSmaranSolves(entries.map((e) => e.tithiRule), new Date(todayMs)).then(() => {
@@ -106,7 +106,7 @@ export function useSmaranListSolve(entries: SmaranEntry[], todayMs: number): Sma
       // fortnight and the detail prewarm — as ONE task, seconds long on a
       // phone, during which no tap could land. A warm list skips straight to
       // the prewarm, which is itself a memory read once the detail is warm.
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         void (async () => {
           const today = new Date(todayMs);
           if (!warm) {
@@ -228,7 +228,7 @@ export function useSmaranDetailSolve(rule: SmaranRule | undefined, todayMs: numb
     if (!rule) return undefined;
     let cancelled = false;
     const isCancelled = () => cancelled;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
 
     void hydrateSmaranSolves([rule], new Date(todayMs)).then(() => {
       if (cancelled) return;
@@ -238,7 +238,7 @@ export function useSmaranDetailSolve(rule: SmaranRule | undefined, todayMs: numb
 
       // Cooperative solves (see the list above): a notification or deep link
       // can open this screen cold, and each stage used to be one long task.
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         void (async () => {
           const today = new Date(todayMs);
           // Foreground lane: this screen is open and waiting on these answers, so

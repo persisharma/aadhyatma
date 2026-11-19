@@ -7,6 +7,7 @@
 // RULEBOOK §23.14–23.17 and pinned in `observanceDates.test.ts`.
 
 import { addDays } from './calendarGrid';
+import { civilDateOf, civilFieldsOf } from './civilTime';
 import { computeTithiAndMonth, getSiderealSunLng, sunriseForDate, sunsetForDate } from './engine';
 import {
   arunodaya,
@@ -42,7 +43,7 @@ export function followsAdhikJyeshtha(dashamiDay: Date, options: PanchangComputat
   if (!current) throw new Error('Missing conjunction before Jyeshtha Dashami');
   const previous = crossingBefore(elongationAt, new Date(current.getTime() - 60_000), 0, 31 * 24);
   if (!previous) throw new Error('Missing preceding Jyeshtha conjunction');
-  const sign = (instant: Date) => Math.floor(getSiderealSunLng(instant, instant.getFullYear()) / 30);
+  const sign = (instant: Date) => Math.floor(getSiderealSunLng(instant, civilFieldsOf(instant).year) / 30);
   return sign(previous) === sign(current);
 }
 
@@ -50,7 +51,7 @@ export function followsAdhikJyeshtha(dashamiDay: Date, options: PanchangComputat
 export function rishiPanchamiDay(sunriseDay: Date, options: PanchangComputationOptions): Date {
   const panchami = tithiSpan(4, sunriseForDate(addDays(sunriseDay, -1), options));
   if (!panchami) return sunriseDay;
-  const first = startOfDay(panchami.start);
+  const first = civilDateOf(panchami.start);
   const next = addDays(first, 1);
   const covers = (day: Date) => overlapMs(panchami, dayFractionSpan(day, 0.4, 0.6, options)) > 0;
   return !covers(first) && covers(next) ? next : first;
@@ -222,11 +223,10 @@ export function janmashtamiDays(sunriseDay: Date, options: PanchangComputationOp
   const rohini = nakshatraSpan(ROHINI, ashtami.start);
 
   // Smarta.
-  const d1 = startOfDay(
-    ashtami.start.getTime() < sunriseForDate(ashtami.start, opts).getTime()
-      ? addDays(ashtami.start, -1)
-      : ashtami.start
-  );
+  // `ashtami.start` is an INSTANT: its civil date is India's (`civilDateOf`),
+  // never the phone's own y/m/d.
+  const startDay = civilDateOf(ashtami.start);
+  const d1 = ashtami.start.getTime() < sunriseForDate(startDay, opts).getTime() ? addDays(startDay, -1) : startDay;
   const d2 = addDays(d1, 1);
   // Dharmasindhu's Janmashtami section explicitly defines Nishitha as
   // ratryardha (the night midpoint) and excludes tithi present only on the
@@ -256,7 +256,8 @@ export function janmashtamiDays(sunriseDay: Date, options: PanchangComputationOp
   const sunriseDays = [d1, d2, addDays(d2, 1)].filter((day) => contains(ashtami, sunriseForDate(day, opts)));
   let vaishnava: Date;
   if (sunriseDays.length === 0) {
-    vaishnava = startOfDay(addDays(ashtami.end, ashtami.end.getTime() < sunriseForDate(ashtami.end, opts).getTime() ? 0 : 1));
+    const endDay = civilDateOf(ashtami.end);
+    vaishnava = addDays(endDay, ashtami.end.getTime() < sunriseForDate(endDay, opts).getTime() ? 0 : 1);
   } else if (sunriseDays.length === 1) {
     vaishnava = sunriseDays[0];
   } else {

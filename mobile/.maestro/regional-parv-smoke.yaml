@@ -78,9 +78,9 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Next · .*"
 - assertVisible: "Read katha.*"
 - assertVisible: "Follow"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── The reported observance: catalog search → detail → it resolves to a date ──
@@ -100,7 +100,7 @@ appId: com.prashantsharma.vedansh
     timeout: 15000
 - assertVisible: "Next · .*"
 - assertVisible: "Follow"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── A dated folk-deity rule that now carries its katha ──
@@ -126,9 +126,9 @@ appId: com.prashantsharma.vedansh
     visible: "Veer Tejaji Katha"
     timeout: 15000
 - assertVisible: "Part · 1/6"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Restore Hindi default (best-effort) + cleanup ──

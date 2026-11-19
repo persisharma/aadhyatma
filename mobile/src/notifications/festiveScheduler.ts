@@ -9,6 +9,7 @@
 
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { familyCap } from './notificationBudget';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import type { Lang } from '@/data/gita/language';
 import {
@@ -68,9 +69,16 @@ export async function cancelAllFestiveReminders(): Promise<void> {
 export async function scheduleFestiveReminders(
   inputs: FestiveReminderInput[],
   now: Date = new Date(),
-  lang: Lang = 'hi'
+  lang: Lang = 'hi',
+  suppress: ReadonlySet<string> = new Set()
 ): Promise<number> {
-  const { planned } = planFestiveReminders(inputs, now);
+  const { planned } = planFestiveReminders(
+    inputs,
+    now,
+    undefined,
+    familyCap(Platform.OS, 'festive'),
+    suppress
+  );
   // An empty plan still means "hold nothing": it cancels ours.
   if (planned.length === 0) return armNotificationFamily(FESTIVE_NOTIF_PREFIX, []);
 

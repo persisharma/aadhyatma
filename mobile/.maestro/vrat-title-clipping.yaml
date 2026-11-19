@@ -54,8 +54,8 @@ env:
 - takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-search
 - tapOn: { id: "observance-card-.*", index: 0 }
 - waitForAnimationToEnd
-- assertVisible: { text: "Back" }
-- tapOn: "Back"
+- assertVisible: { text: "Back|वापस|પાછા|ಹಿಂದೆ" }
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: catalog-search }
 - assertVisible: { id: "observance-card-.*" }
 - takeScreenshot: e2e-shots/vrat-type-${LANGUAGE}-${READING_SIZE}-returned

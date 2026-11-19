@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useCivilToday } from '@/panchang/useCivilToday';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import CatalogBackground from '@/components/CatalogBackground';
@@ -33,10 +34,6 @@ type Props = NativeStackScreenProps<PanchangStackParamList, 'MyVrat'>;
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुल', 'अग', 'सित', 'अक्टू', 'नवं', 'दिसं'];
 
-function startOfLocalDay(d: Date): Date {
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-}
-
 function shortDate(date: Date, lang: Lang): string {
   const months =
     lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
@@ -64,7 +61,9 @@ export default function MyVratScreen({ navigation }: Props) {
   // They also gate the empty state: a user may follow a muhurat before any vrat.
   const { followCount: muhuratFollowCount } = useMuhuratFollows();
 
-  const today = useMemo(() => startOfLocalDay(new Date()), []);
+  // India's current date, rolled over at midnight and on foreground — a `new Date()`
+  // read once at mount left "Today / Tomorrow" a day off after a night in the background.
+  const today = useCivilToday();
 
   // Followed rules paired with their next occurrence, sorted soonest-first so a
   // vrat whose date has just passed (and rolled to its next occurrence) sinks to

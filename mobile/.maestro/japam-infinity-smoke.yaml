@@ -41,7 +41,7 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     id: "japam-style-infinity"
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
 - stopApp
@@ -59,7 +59,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: home-japa-choose }
 - tapOn: "Om Namah Shivaya\\..*Tap to open\\."
 - assertVisible: ".*शुरू करने के लिए स्पर्श करें.*[1-9][0-9]* of 108.*"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 # The full Gayatri keeps its 4.5-second cadence (4s canonical × 1.125). Review its native
 # script, complete reading text and ornate frame; a saved count must survive.
 - tapOn: "Gayatri Mantra\\..*Tap to open\\."

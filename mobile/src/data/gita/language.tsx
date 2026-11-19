@@ -112,6 +112,15 @@ export function GitaLanguageProvider({ initialLang, children }: ProviderProps) {
   return <GitaLanguageContext.Provider value={value}>{children}</GitaLanguageContext.Provider>;
 }
 
+/**
+ * The language context, or null outside the provider — for the one surface that
+ * must still render when the provider tree is what broke (the error fallback).
+ * Everything else uses `useGitaLanguage`, which throws on a wiring mistake.
+ */
+export function useOptionalGitaLanguage(): GitaLanguageContextValue | null {
+  return useContext(GitaLanguageContext);
+}
+
 export function useGitaLanguage(): GitaLanguageContextValue {
   const ctx = useContext(GitaLanguageContext);
   if (!ctx) {

@@ -53,7 +53,7 @@ test('real short/medium/long Daily Bhakti sources preserve every pada in all fou
       assert.ok(padas.length > 0 && padas.every((s) => s.trim().length > 0),
         `${verse.sourceId} ${lang} has empty text`);
       const full = flowedVerse(padas);
-      assert.equal(full.split(' · ').length, padas.length,
+      assert.equal(full.split('\n').length, padas.length,
         `${verse.sourceId} ${lang} lost a pada`);
       assert.ok(full.startsWith(padas[0].trim()) && full.endsWith(padas[padas.length - 1].trim()),
         `${verse.sourceId} ${lang} lost its first or last pada`);

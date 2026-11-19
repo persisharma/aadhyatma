@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import { toDateKey, useUserActivity } from '@/contexts/UserActivityContext';
+import { setItemWithRetry } from '@/utils/persistWithRetry';
 
 const STORAGE_KEY = '@vedansh/reading-progress';
 
@@ -114,7 +115,7 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
   const persist = useCallback((next: ProgressMap) => {
     progressRef.current = next;
     setProgressState(next);
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next)).catch(() => undefined);
+    void setItemWithRetry(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const setProgress = useCallback(

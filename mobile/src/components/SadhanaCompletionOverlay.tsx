@@ -68,7 +68,7 @@ export default function SadhanaCompletionOverlay() {
 
   if (!shower) return null;
   return (
-    <Modal visible transparent animationType="none" presentationStyle="overFullScreen" onRequestClose={() => undefined}>
+    <Modal visible transparent animationType="none" presentationStyle="overFullScreen" onRequestClose={() => setShower(null)}>
       <RoutineCelebration
         key={shower.programId}
         caption={shower.caption}

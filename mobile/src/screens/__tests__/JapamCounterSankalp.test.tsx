@@ -10,6 +10,7 @@ import * as Haptics from 'expo-haptics';
 import { useKeepAwake } from 'expo-keep-awake';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import { ThemeProvider } from '@/theme/ThemeContext';
 
@@ -346,7 +347,7 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     const enter = byTestId(tree, 'japam-fullscreen');
     expect(enter.props.accessibilityLabel).toBe('Full screen');
     // Not in the top bar, not inside the style radiogroup.
-    const topBar = byLabel(tree, 'Back').parent!;
+    const topBar = byLabel(tree, backLabel('hi')).parent!;
     expect(topBar.findAll((n) => n.props.accessibilityLabel === 'Full screen')).toHaveLength(0);
     const group = tree.root.findAll((n) => n.props.accessibilityRole === 'radiogroup')[0];
     expect(group.findAll((n) => n.props.testID === 'japam-fullscreen')).toHaveLength(0);

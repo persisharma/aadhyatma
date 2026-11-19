@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { InteractionManager } from 'react-native';
 import {
   getCachedObservancesForDate,
   getObservancesForDate,
@@ -18,6 +17,7 @@ import {
 } from './panchangPrefs';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { serializeLenses } from './lenses';
+import { useCivilToday } from './useCivilToday';
 import { useLenses } from './useLenses';
 import type {
   CalendarSystem,
@@ -26,6 +26,7 @@ import type {
   ResolvedFestival,
   ResolvedObservance,
 } from './types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 export type UsePanchangResult = {
   today: PanchangData;
@@ -105,7 +106,7 @@ export function __resetCalendarSystemStoreForTests(value: CalendarSystem = 'purn
 }
 
 export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): UsePanchangResult {
-  const todayKey = new Date().toDateString();
+  const todayDate = useCivilToday();
   const { location } = usePanchangLocation();
   const storeVersion = useObservanceStoreVersion();
   // The lens SET is a fresh object on every publish, so the memo key is its
@@ -119,8 +120,8 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   // usually already solved (by the Today strip, a previous launch, or the finder)
   // and costs nothing.
   const today = useMemo(
-    () => solvePanchangDay(new Date(todayKey), calendarSystem, location),
-    [todayKey, calendarSystem, location]
+    () => solvePanchangDay(todayDate, calendarSystem, location),
+    [todayDate, calendarSystem, location]
   );
 
   // Festival resolution scans two years of the lunar calendar (~1.7s on V8,
@@ -132,7 +133,7 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const result = getUpcomingObservances(new Date(), UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location, lenses);
+      const result = getUpcomingObservances(todayDate, UPCOMING_MAX, calendarSystem, UPCOMING_WINDOW_DAYS, location, lenses);
       if (!cancelled) setUpcoming(result);
     }, 0);
     return () => {
@@ -140,7 +141,7 @@ export function useTodayPanchang(calendarSystem: CalendarSystem = 'purnimant'): 
       clearTimeout(handle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [todayKey, calendarSystem, location, storeVersion, lensKey]);
+  }, [todayDate, calendarSystem, location, storeVersion, lensKey]);
 
   return { today, upcoming };
 }
@@ -188,7 +189,7 @@ export function useObservancesForDate(
       setObservances([]);
     }
     let handle: ReturnType<typeof setTimeout> | undefined;
-    const interaction = InteractionManager.runAfterInteractions(() => {
+    const interaction = runWhenIdle(() => {
       handle = setTimeout(() => {
         const result = getObservancesForDate(selected, calendarSystem, location, lenses);
         if (!cancelled) setObservances(result);

@@ -91,6 +91,7 @@ import { currentBuildFingerprint } from '@/utils/buildFingerprint';
 import { resetDerivedCachesIfBuildChanged } from '@/utils/derivedCacheReset';
 import { prefetchTodayPanchang } from '@/panchang/panchangLaunchPrefetch';
 import RootNavigator from '@/navigation/RootNavigator';
+import StackLoadBoundary, { setErrorBoundaryHomeAction } from '@/navigation/StackLoadBoundary';
 import WidgetCoordinator from '@/widgets/WidgetCoordinator';
 import { handleWidgetDeepLink, parseWidgetDeepLink, widgetStartTarget } from '@/widgets/deepLink';
 import { launchMark, launchMarkOnce } from '@/utils/launchTrace';
@@ -226,6 +227,16 @@ export default function App() {
     return () => { cancelled = true; clearTimeout(timeoutId); };
   }, []);
 
+  // Home action for every error-boundary fallback (root and per tab).
+  useEffect(() => {
+    setErrorBoundaryHomeAction(() => {
+      if (navigationRef.isReady()) {
+        navigationRef.navigate('HomeTab', { screen: 'Home' });
+      }
+    });
+    return () => setErrorBoundaryHomeAction(null);
+  }, []);
+
   // Wire notification taps to deep-link navigation. Handles both:
   //  (a) Cold start — app was killed; iOS launches us with the tap response,
   //      pulled via `getLastNotificationResponseAsync()`.
@@ -349,6 +360,10 @@ export default function App() {
         <FontScaleProvider>
         <ThemeProvider>
           <GitaLanguageProvider>
+            {/* Root error boundary: inside theme + language so its fallback is
+                localized, outside every other provider so a throwing provider or
+                screen shows Retry / Home instead of killing the app. */}
+            <StackLoadBoundary>
             <AudioPlayerProvider>
             {/* Read-aloud needs the reading language and its own prefs; it sits
                 inside AudioPlayerProvider so both register with the playback
@@ -497,6 +512,7 @@ export default function App() {
             </ReadAloudProvider>
             </ReadAloudPrefsProvider>
             </AudioPlayerProvider>
+            </StackLoadBoundary>
           </GitaLanguageProvider>
         </ThemeProvider>
         </FontScaleProvider>

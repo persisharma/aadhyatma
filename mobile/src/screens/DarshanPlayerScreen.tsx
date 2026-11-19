@@ -14,7 +14,7 @@ import DockedYouTubePlayer from '@/components/video/DockedYouTubePlayer';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useFontScale } from '@/contexts/FontScaleContext';
-import { cardFontByLang } from '@/utils/langType';
+import { cardFontByLang, titleLeading } from '@/utils/langType';
 import { contentByLang, meaningByLang, pick } from '@/utils/localize';
 import { darshanForTemple, darshanChannels } from '@/data/darshan/channels';
 import { getTempleDetailById } from '@/data/theerth/temples';
@@ -124,7 +124,7 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
       <View style={styles.body}>
         <View testID="darshan-summary" style={styles.summary}>
           <View testID="darshan-title-row" style={styles.titleRow}>
-            <DarshanText testID="darshan-title" accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 24 * factor, lineHeight: 34 * factor, flexGrow: 1, flexShrink: 1, flexBasis: 180 }}>{title}</DarshanText>
+            <DarshanText testID="darshan-title" accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 24 * factor, lineHeight: titleLeading(24 * factor), flexGrow: 1, flexShrink: 1, flexBasis: 180 }}>{title}</DarshanText>
             <LanguageToggle compact />
           </View>
           <View style={styles.location}><AppIcon name="location" size={14} color={colors.saffronDeep} />
@@ -150,11 +150,11 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
           </Pressable>
         </View>
         {!!readings.length && <View testID="darshan-readings" style={styles.section}>
-          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: 32 * factor }}>{pick(lang, { hi: 'दर्शन के साथ आरती व पाठ', en: 'Aarti and readings for your devotion', gu: 'દર્શન સાથે આરતી અને પાઠ', kn: 'ದರ್ಶನದೊಂದಿಗೆ ಆರತಿ ಮತ್ತು ಪಠಣ' })}</DarshanText>
+          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: titleLeading(22 * factor) }}>{pick(lang, { hi: 'दर्शन के साथ आरती व पाठ', en: 'Aarti and readings for your devotion', gu: 'દર્શન સાથે આરતી અને પાઠ', kn: 'ದರ್ಶನದೊಂದಿಗೆ ಆರತಿ ಮತ್ತು ಪಠಣ' })}</DarshanText>
           {readings.map((entry) => <LibraryCard key={entry.id} entry={entry} onPress={() => { markSeen(entry.id); navigateToEntryStart(navigation, entry); }} />)}
         </View>}
         <View style={styles.section}>
-          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: 32 * factor }}>{pick(lang, { hi: 'अन्य मंदिरों के दर्शन', en: 'Darshan from other temples', gu: 'બીજાં મંદિરોના દર્શન', kn: 'ಇತರ ದೇವಾಲಯಗಳ ದರ್ಶನ' })}</DarshanText>
+          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: titleLeading(22 * factor) }}>{pick(lang, { hi: 'अन्य मंदिरों के दर्शन', en: 'Darshan from other temples', gu: 'બીજાં મંદિરોના દર્શન', kn: 'ಇತರ ದೇವಾಲಯಗಳ ದರ್ಶನ' })}</DarshanText>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.temples}>
             {darshanChannels.filter((c) => c.templeId !== channel.templeId).map((c) => <View key={c.templeId} style={{ width: 280 }}>
               <DarshanCard channel={c} onPress={() => navigation.replace('DarshanPlayer', { templeId: c.templeId })} />

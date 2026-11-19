@@ -62,7 +62,7 @@ appId: com.prashantsharma.vedansh
     id: "resume-start-over"
     optional: true
 - waitForAnimationToEnd
-- tapOn: "Back"                       # reader/chapters → Krishna deity list
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"                       # reader/chapters → Krishna deity list
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:
@@ -72,9 +72,9 @@ appId: com.prashantsharma.vedansh
 - assertNotVisible: "Krishna Stotram\\..*New\\..*Tap to open\\."
 
 # ── Cleanup: back to Home, reset NEW state ──
-- tapOn: "Back"                       # deity list → deity index
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"                       # deity list → deity index
 - waitForAnimationToEnd
-- tapOn: "Back"                       # deity index → Home
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"                       # deity index → Home
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element:

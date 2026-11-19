@@ -1,5 +1,5 @@
 import React from 'react';
-import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useReducedMotion } from '@/utils/useReducedMotion';
@@ -17,7 +17,8 @@ import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN, VARA_NAMES_EN, VARA_NAMES_HI } from '
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { contentByLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
-import { useTodayKey } from '@/utils/useTodayKey';
+import { useCivilToday } from '@/panchang/useCivilToday';
+import { isPreDawn, tonightTitle } from '@/panchang/preDawn';
 import { launchMarkOnce } from '@/utils/launchTrace';
 import PitruSmaranDayChip from '@/components/PitruSmaranDayChip';
 import JanmaTithiDayChip from '@/components/JanmaTithiDayChip';
@@ -36,6 +37,7 @@ import {
   knownPakshaWindow,
   persistSmaranSolves,
 } from '@/panchang/pitruSmaranSolves';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 /**
  * Home "आज · Today" strip (design.md §48): a one-card daily-panchang glance —
@@ -100,19 +102,36 @@ export default function TodayStrip() {
   const { beginTilePress, markTileDrag, finishTilePress, activateTile } = useTilePress();
   const [calendarSystem] = usePanchangCalendarSystem();
 
-  // useTodayKey rolls the civil date over at midnight / on app foreground.
+  // India's current date, rolled over at its midnight / on app foreground — the
+  // same "today" the Panchang tab and the widgets use (`civilTime.ts`).
   // The focus-gated minute tick below handles intra-day tithi handovers.
-  const todayKey = useTodayKey();
-  const today = React.useMemo(() => new Date(todayKey), [todayKey]);
-  const observances = useObservancesForDate(today, calendarSystem);
+  const today = useCivilToday();
+  const observancesToday = useObservancesForDate(today, calendarSystem);
+  const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: isFocused });
+  // Before sunrise the Hindu day is still yesterday's, so a festival kept last
+  // night is the one running. Same rule as the Panchang tab's ribbon
+  // (`panchang/preDawn.ts`): the two used to disagree between midnight and
+  // sunrise. Re-read on every render; the minute tick above keeps it current.
+  const preDawn = isPreDawn(panchang?.sunrise);
+  const carryOverDate = React.useMemo(
+    () => new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1),
+    [today]
+  );
+  const carriedOver = useObservancesForDate(preDawn ? carryOverDate : today, calendarSystem);
+  const tonight = preDawn && carriedOver.length > 0;
+  const observances = tonight ? carriedOver : observancesToday;
+  // A carried-over festival belongs to yesterday, so its detail page opens on that date.
+  const observanceDate = tonight ? carryOverDate : today;
   const festival = observances.find(o => o.rule.category === 'festival')?.rule;
+  const festivalTitle = festival
+    ? (tonight ? tonightTitle(festival) : { hi: festival.nameHi, en: festival.nameEn })
+    : null;
   const openPanchang = () => rootNav.navigate('PanchangTab', panchangTabTarget('PanchangHome', {
     initialTab: 'calendar', dateMs: today.getTime(),
   }));
   const openToday = festival
-    ? () => rootNav.navigate('VratTab', panchangTabTarget('ObservanceDetail', { ruleId: festival.id, dateMs: today.getTime() }))
+    ? () => rootNav.navigate('VratTab', panchangTabTarget('ObservanceDetail', { ruleId: festival.id, dateMs: observanceDate.getTime() }))
     : openPanchang;
-  const { muhurat, panchang } = useMuhurat(today, calendarSystem, { live: isFocused });
   /**
    * The public Pitru-Paksha chip, resolved the same way every other panchang
    * answer on this card is (§48, `usePitruSmaranSolves`): a memory read paints
@@ -138,7 +157,7 @@ export default function TodayStrip() {
   );
   React.useEffect(() => {
     let cancelled = false;
-    let interaction: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let interaction: IdleTask | undefined;
     let handle: ReturnType<typeof setTimeout> | undefined;
     const year = today.getFullYear();
 
@@ -146,7 +165,7 @@ export default function TodayStrip() {
     // missing, and the fortnight's day table when today is inside it — waits for
     // an idle UI, yields while it solves, then persists whatever it had to solve.
     const solveWhenIdle = () => {
-      interaction = InteractionManager.runAfterInteractions(() => {
+      interaction = runWhenIdle(() => {
         handle = setTimeout(async () => {
           if (cancelled) return;
           const cold = knownPakshaWindow(year) === null;
@@ -263,9 +282,9 @@ export default function TodayStrip() {
       : []),
     ...observances.slice(0, 2).map((o) => ({
       key: o.rule.id,
-      onPress: () => rootNav.navigate('VratTab',panchangTabTarget('ObservanceDetail',{ruleId:o.rule.id,dateMs:today.getTime()})),
-      labelHi: o.rule.nameHi,
-      labelEn: o.rule.nameEn,
+      onPress: () => rootNav.navigate('VratTab',panchangTabTarget('ObservanceDetail',{ruleId:o.rule.id,dateMs:observanceDate.getTime()})),
+      labelHi: tonight ? tonightTitle(o.rule).hi : o.rule.nameHi,
+      labelEn: tonight ? tonightTitle(o.rule).en : o.rule.nameEn,
       bg: colors.saffronTint,
       fg: colors.saffronDeep,
     })),
@@ -299,7 +318,7 @@ export default function TodayStrip() {
 
   const a11yFest = observances
     .slice(0, 2)
-    .map((o) => o.rule.nameEn)
+    .map((o) => (tonight ? tonightTitle(o.rule).en : o.rule.nameEn))
     .join(', ');
   const a11y = panchang && liveTithi
     ? `Today's Panchang. ${panchang.vara.nameEn}, ${liveTithi.nameEn}.${a11yFest ? ` ${a11yFest}.` : ''} Tap to open.`
@@ -493,7 +512,7 @@ export default function TodayStrip() {
         onPressIn={() => beginTilePress(openToday)}
         onPressOut={finishTilePress}
         accessibilityRole="button"
-        accessibilityLabel={festival ? contentByLang(lang,festival.nameHi,festival.nameEn) : a11y}
+        accessibilityLabel={festivalTitle ? contentByLang(lang,festivalTitle.hi,festivalTitle.en) : a11y}
       >
         <View style={styles.headRow}>
           <Text style={[eyebrowTextStyle(lang, 12), { color: colors.saffronDeep }]}>
@@ -513,7 +532,7 @@ export default function TodayStrip() {
             ...(lang === 'en' ? { letterSpacing: 0.3 } : null),
           }}
         >
-          {festival ? contentByLang(lang,festival.nameHi,festival.nameEn) : headline}
+          {festivalTitle ? contentByLang(lang,festivalTitle.hi,festivalTitle.en) : headline}
         </Text>
       </Pressable>
       {/* Reserve this row even before the deferred Panchang solve completes.

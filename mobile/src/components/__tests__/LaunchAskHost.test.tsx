@@ -25,6 +25,7 @@ let mockLaunch: any = {
     stopped: false,
   },
 };
+let mockHydrate: () => Promise<void> = () => Promise.resolve();
 const mockClaim = jest.fn(() => true),
   mockSuppress = jest.fn(),
   mockComplete = jest.fn();
@@ -58,7 +59,7 @@ jest.mock('../widgetNudgeStore', () => ({
 }));
 jest.mock('../launchAskStore', () => ({
   useLaunchAsks: () => mockLaunch,
-  hydrateLaunchAsks: () => Promise.resolve(),
+  hydrateLaunchAsks: () => mockHydrate(),
   claimLaunchAsk: () => mockClaim(),
   suppressLaunchAsks: () => mockSuppress(),
   completeLaunchSelection: () => mockComplete(),
@@ -86,6 +87,7 @@ async function mount(targeted = false) {
 beforeEach(() => {
   Platform.OS = 'android';
   jest.clearAllMocks();
+  mockHydrate = () => Promise.resolve();
   mockTour = {
     isLoading: false,
     shouldShowOnboardingSetup: false,
@@ -116,6 +118,11 @@ test('setup takes precedence over every later ask', async () => {
   await mount();
   expect(tree.root.findAllByType('Setup' as any)).toHaveLength(1);
   expect(tree.root.findAllByType('Reminder' as any)).toHaveLength(0);
+});
+test('a rejected hydrate still reaches the loaded state, so the ask appears (CRASH-06)', async () => {
+  mockHydrate = () => Promise.reject(new Error('storage unavailable'));
+  await mount();
+  expect(tree.root.findAllByType('Reminder' as any)).toHaveLength(1);
 });
 test('a targeted cold start suppresses all launch asks', async () => {
   mockTour.shouldShowOnboardingSetup = true;

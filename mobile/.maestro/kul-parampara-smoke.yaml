@@ -40,7 +40,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Janma Tithi, none saved"
 - waitForAnimationToEnd
 - assertVisible: "Add birth details in Kundali"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── कुल परम्परा: empty state → create ──
