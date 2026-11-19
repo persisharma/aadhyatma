@@ -1,0 +1,517 @@
+{
+  "id": "aditya-hridayam",
+  "titleHi": "आदित्य हृदयम्",
+  "titleEn": "Aditya Hridayam",
+  "deity": "surya",
+  "source": {
+    "baseText": "Traditional 31-verse Aditya Hridayam as published in the main hymn of Sanskrit Documents, from Valmiki Ramayana, Yuddha Kanda.",
+    "referenceUrls": [
+      "https://sanskritdocuments.org/doc_z_misc_navagraha/adityahriday.html",
+      "https://heritage.iitk.ac.in/VRAM/section/1277/read"
+    ],
+    "retrievedOn": "2026-11-19",
+    "notes": "The Sanskrit Documents 31-verse sequence includes the battlefield opening and the final speech by Surya. The reader presents that sequence without the optional nyasa and viniyoga. Uses the first readings printed in the selected witness where it lists alternatives. Verse punctuation is normalized and labels carry the printed verse numbers. Hindi and English meanings are original editorial prose."
+  },
+  "verses": [
+    {
+      "id": "aditya-hridayam-1",
+      "number": 1,
+      "labelHi": "श्लोक · १",
+      "labelEn": "Verse · 1",
+      "lines": [
+        "ततो युद्धपरिश्रान्तं समरे चिन्तया स्थितम्।",
+        "रावणं चाग्रतो दृष्ट्वा युद्धाय समुपस्थितम्॥"
+      ],
+      "linesEn": [
+        "tato yuddhapariśrāntaṃ samare chintayā sthitam",
+        "rāvaṇaṃ chāgrato dṛiṣṭvā yuddhāya samupasthitam"
+      ],
+      "meaningHi": "युद्ध से थके राम रणभूमि में चिंतामग्न खड़े थे। उनके सामने रावण फिर युद्ध के लिए तैयार था।",
+      "meaningEn": "Rama stood on the battlefield, weary from fighting and deep in thought, as Ravana faced him ready for battle."
+    },
+    {
+      "id": "aditya-hridayam-2",
+      "number": 2,
+      "labelHi": "श्लोक · २",
+      "labelEn": "Verse · 2",
+      "lines": [
+        "दैवतैश्च समागम्य द्रष्टुमभ्यागतो रणम्।",
+        "उपागम्याब्रवीद्राममगस्त्यो भगवानृषिः॥"
+      ],
+      "linesEn": [
+        "daivataiścha samāgamya draṣṭumabhyāgato raṇam",
+        "upāgamyābravīdrāmamagastyo bhagavānṛiṣhiḥ"
+      ],
+      "meaningHi": "देवताओं के साथ युद्ध देखने आए महर्षि अगस्त्य राम के पास पहुँचे और उनसे बोले।",
+      "meaningEn": "The venerable sage Agastya, who had come with the gods to witness the battle, approached Rama and spoke."
+    },
+    {
+      "id": "aditya-hridayam-3",
+      "number": 3,
+      "labelHi": "श्लोक · ३",
+      "labelEn": "Verse · 3",
+      "lines": [
+        "राम राम महाबाहो शृणु गुह्यं सनातनम्।",
+        "येन सर्वानरीन्वत्स समरे विजयिष्यसि॥"
+      ],
+      "linesEn": [
+        "rāma rāma mahābāho śhṛiṇu guhyaṃ sanātanam",
+        "yena sarvānarīnvatsa samare vijayiṣyasi"
+      ],
+      "meaningHi": "हे महाबाहु राम! यह सनातन रहस्य सुनो, जिसके द्वारा तुम युद्ध में अपने सभी शत्रुओं पर विजय पाओगे।",
+      "meaningEn": "Rama, mighty-armed Rama, listen to this ancient secret by which you will overcome all your enemies in battle."
+    },
+    {
+      "id": "aditya-hridayam-4",
+      "number": 4,
+      "labelHi": "श्लोक · ४",
+      "labelEn": "Verse · 4",
+      "lines": [
+        "आदित्यहृदयं पुण्यं सर्वशत्रुविनाशनम्।",
+        "जयावहं जपेन्नित्यमक्षयं परमं शिवम्॥"
+      ],
+      "linesEn": [
+        "ādityahṛidayaṃ puṇyaṃ sarvaśhatruvināśhanam",
+        "jayāvahaṃ japennityamakṣhayaṃ paramaṃ śhivam"
+      ],
+      "meaningHi": "यह पवित्र आदित्यहृदय विजय देने वाला, शत्रुओं का नाश करने वाला और अक्षय कल्याणकारी स्तोत्र है। इसका नित्य जप करना चाहिए।",
+      "meaningEn": "This sacred Aditya Hridayam brings victory, overcomes enemies and is held to be imperishable and supremely auspicious. It is to be recited regularly."
+    },
+    {
+      "id": "aditya-hridayam-5",
+      "number": 5,
+      "labelHi": "श्लोक · ५",
+      "labelEn": "Verse · 5",
+      "lines": [
+        "सर्वमङ्गलमाङ्गल्यं सर्वपापप्रणाशनम्।",
+        "चिन्ताशोकप्रशमनमायुर्वर्धनमुत्तमम्॥"
+      ],
+      "linesEn": [
+        "sarvamaṅgalamāṅgalyaṃ sarvapāpapraṇāśhanam",
+        "chintāśhokapraśhamanamāyurvardhanamuttamam"
+      ],
+      "meaningHi": "अगस्त्य इसे मंगलों में श्रेष्ठ बताते हैं। उनके अनुसार यह पाप का नाश करता है, चिंता और शोक शांत करता है और आयु बढ़ाता है।",
+      "meaningEn": "Agastya praises it as the most auspicious of blessings, a destroyer of wrongdoing, a reliever of anxiety and grief, and a giver of long life."
+    },
+    {
+      "id": "aditya-hridayam-6",
+      "number": 6,
+      "labelHi": "श्लोक · ६",
+      "labelEn": "Verse · 6",
+      "lines": [
+        "रश्मिमन्तं समुद्यन्तं देवासुरनमस्कृतम्।",
+        "पूजयस्व विवस्वन्तं भास्करं भुवनेश्वरम्॥"
+      ],
+      "linesEn": [
+        "raśmimantaṃ samudyantaṃ devāsuranamaskṛitam",
+        "pūjayasva vivasvantaṃ bhāskaraṃ bhuvaneśvaram"
+      ],
+      "meaningHi": "किरणों से दमकते उदयमान विवस्वान की पूजा करो। देव और असुर दोनों उस प्रकाशदाता भास्कर, संसार के स्वामी, को नमन करते हैं।",
+      "meaningEn": "Worship the radiant, rising Vivasvan, revered by gods and asuras alike: Bhaskara, the maker of light and lord of the worlds."
+    },
+    {
+      "id": "aditya-hridayam-7",
+      "number": 7,
+      "labelHi": "श्लोक · ७",
+      "labelEn": "Verse · 7",
+      "lines": [
+        "सर्वदेवात्मको ह्येष तेजस्वी रश्मिभावनः।",
+        "एष देवासुरगणाँल्लोकान् पाति गभस्तिभिः॥"
+      ],
+      "linesEn": [
+        "sarvadevātmako hyeṣha tejasvī raśmibhāvanaḥ",
+        "eṣha devāsuragaṇāṃllokān pāti gabhastibhiḥ"
+      ],
+      "meaningHi": "यह तेजस्वी सूर्य सभी देवताओं का स्वरूप है। अपनी किरणों से वह देवों, असुरों और लोकों का पालन करता है।",
+      "meaningEn": "This radiant Sun embodies all the gods and sustains gods, asuras and the worlds through his rays."
+    },
+    {
+      "id": "aditya-hridayam-8",
+      "number": 8,
+      "labelHi": "श्लोक · ८",
+      "labelEn": "Verse · 8",
+      "lines": [
+        "एष ब्रह्मा च विष्णुश्च शिवः स्कन्दः प्रजापतिः।",
+        "महेन्द्रो धनदः कालो यमः सोमो ह्यपां पतिः॥"
+      ],
+      "linesEn": [
+        "eṣha brahmā cha viṣṇuścha śhivaḥ skandaḥ prajāpatiḥ",
+        "mahendro dhanadaḥ kālo yamaḥ somo hyapāṃ patiḥ"
+      ],
+      "meaningHi": "वही ब्रह्मा, विष्णु, शिव, स्कन्द और प्रजापति है। वही इन्द्र, कुबेर, काल, यम, सोम और जल के स्वामी वरुण का रूप है।",
+      "meaningEn": "He is Brahma, Vishnu, Shiva, Skanda and Prajapati. He is also Indra, Kubera, Time, Yama, Soma and Varuna, lord of the waters."
+    },
+    {
+      "id": "aditya-hridayam-9",
+      "number": 9,
+      "labelHi": "श्लोक · ९",
+      "labelEn": "Verse · 9",
+      "lines": [
+        "पितरो वसवः साध्या ह्यश्विनौ मरुतो मनुः।",
+        "वायुर्वह्निः प्रजाप्राण ऋतुकर्ता प्रभाकरः॥"
+      ],
+      "linesEn": [
+        "pitaro vasavaḥ sādhyā hyaśvinau maruto manuḥ",
+        "vāyurvahniḥ prajāprāṇa ṛitukartā prabhākaraḥ"
+      ],
+      "meaningHi": "वही पितर, वसु, साध्य, दोनों अश्विनी कुमार, मरुत और मनु है। वही वायु, अग्नि, प्राणियों की जीवनशक्ति, ऋतुओं का रचयिता और प्रकाशदाता है।",
+      "meaningEn": "He is the ancestors, Vasus, Sadhyas, Ashvins, Maruts and Manu. He is wind and fire, the breath of living beings, the maker of seasons and the source of light."
+    },
+    {
+      "id": "aditya-hridayam-10",
+      "number": 10,
+      "labelHi": "श्लोक · १०",
+      "labelEn": "Verse · 10",
+      "lines": [
+        "आदित्यः सविता सूर्यः खगः पूषा गभस्तिमान्।",
+        "सुवर्णसदृशो भानुर्हिरण्यरेता दिवाकरः॥"
+      ],
+      "linesEn": [
+        "ādityaḥ savitā sūryaḥ khagaḥ pūṣhā gabhastimān",
+        "suvarṇasadṛiśho bhānurhiraṇyaretā divākaraḥ"
+      ],
+      "meaningHi": "वह अदिति के पुत्र आदित्य, प्रेरक सविता, आकाशचारी सूर्य और पोषक पूषा है। वह किरणों वाला, स्वर्ण के समान चमकता, स्वर्णबीज और दिन का निर्माता है।",
+      "meaningEn": "He is Aditya, son of Aditi, Savita the impeller, Surya who traverses the sky, and Pusha the nourisher. Ray-bearing and golden-bright, he bears the golden seed and makes the day."
+    },
+    {
+      "id": "aditya-hridayam-11",
+      "number": 11,
+      "labelHi": "श्लोक · ११",
+      "labelEn": "Verse · 11",
+      "lines": [
+        "हरिदश्वः सहस्रार्चिः सप्तसप्तिर्मरीचिमान्।",
+        "तिमिरोन्मथनः शम्भुस्त्वष्टा मार्ताण्ड अंशुमान्॥"
+      ],
+      "linesEn": [
+        "haridaśvaḥ sahasrārchiḥ saptasaptirmarīchimān",
+        "timironmathanaḥ śhambhustvaṣṭā mārtāṇḍa aṃśhumān"
+      ],
+      "meaningHi": "वह हरित वर्ण के अश्वों वाला, सहस्र किरणों से दीप्त और सात घोड़ों वाले रथ का स्वामी है। वह अंधकार दूर करने वाला, कल्याणदाता, सृष्टि को आकार देने वाला और किरणमय मार्ताण्ड है।",
+      "meaningEn": "He has tawny steeds, shines with a thousand rays and rides with seven horses. He dispels darkness, brings well-being, shapes creation and shines as Martanda."
+    },
+    {
+      "id": "aditya-hridayam-12",
+      "number": 12,
+      "labelHi": "श्लोक · १२",
+      "labelEn": "Verse · 12",
+      "lines": [
+        "हिरण्यगर्भः शिशिरस्तपनो भास्करो रविः।",
+        "अग्निगर्भोऽदितेः पुत्रः शङ्खः शिशिरनाशनः॥"
+      ],
+      "linesEn": [
+        "hiraṇyagarbhaḥ śhiśhirastapano bhāskaro raviḥ",
+        "agnigarbho'diteḥ putraḥ śhaṅkhaḥ śhiśhiranāśhanaḥ"
+      ],
+      "meaningHi": "वह हिरण्यगर्भ, शीतलता और ताप का अधिष्ठाता, प्रकाशदाता भास्कर और रवि है। वह अग्नि को धारण करने वाला, अदिति का पुत्र, शङ्ख और शीत दूर करने वाला है।",
+      "meaningEn": "He is Hiranyagarbha, the golden womb, the cool one and the heater, Bhaskara and Ravi. He holds fire within, is Aditi’s son, is called Shankha and drives away cold."
+    },
+    {
+      "id": "aditya-hridayam-13",
+      "number": 13,
+      "labelHi": "श्लोक · १३",
+      "labelEn": "Verse · 13",
+      "lines": [
+        "व्योमनाथस्तमोभेदी ऋग्यजुःसामपारगः।",
+        "घनवृष्टिरपां मित्रो विन्ध्यवीथी प्लवङ्गमः॥"
+      ],
+      "linesEn": [
+        "vyomanāthastamobhedī ṛigyajuḥsāmapāragaḥ",
+        "ghanavṛiṣṭirapāṃ mitro vindhyavīthī plavaṅgamaḥ"
+      ],
+      "meaningHi": "वह आकाश का स्वामी, अंधकार को भेदने वाला और ऋग्, यजुः तथा साम वेद का पारंगत है। वह मेघों से वर्षा कराने वाला, जल का मित्र और विन्ध्य के मार्ग को लाँघने वाला है।",
+      "meaningEn": "He is lord of the sky, piercer of darkness and knower of the Rig, Yajur and Sama Vedas. He brings rain from clouds, befriends the waters and leaps across the Vindhya path."
+    },
+    {
+      "id": "aditya-hridayam-14",
+      "number": 14,
+      "labelHi": "श्लोक · १४",
+      "labelEn": "Verse · 14",
+      "lines": [
+        "आतपी मण्डली मृत्युः पिङ्गलः सर्वतापनः।",
+        "कविर्विश्वो महातेजाः रक्तः सर्वभवोद्भवः॥"
+      ],
+      "linesEn": [
+        "ātapī maṇḍalī mṛityuḥ piṅgalaḥ sarvatāpanaḥ",
+        "kavirviśvo mahātejāḥ raktaḥ sarvabhavodbhavaḥ"
+      ],
+      "meaningHi": "वह ताप देने वाला, गोल मण्डलधारी, मृत्यु का स्वरूप, सुनहरा और सबको तपाने वाला है। वह द्रष्टा, विश्वरूप, महातेजस्वी, लाल आभा वाला और समस्त उत्पत्ति का मूल है।",
+      "meaningEn": "He gives heat, bears the solar disc, embodies death and warms all with his tawny light. He is the seer, the universe, the greatly radiant red one, the source of all that comes to be."
+    },
+    {
+      "id": "aditya-hridayam-15",
+      "number": 15,
+      "labelHi": "श्लोक · १५",
+      "labelEn": "Verse · 15",
+      "lines": [
+        "नक्षत्रग्रहताराणामधिपो विश्वभावनः।",
+        "तेजसामपि तेजस्वी द्वादशात्मन्नमोऽस्तु ते॥"
+      ],
+      "linesEn": [
+        "nakṣhatragrahatārāṇāmadhipo viśvabhāvanaḥ",
+        "tejasāmapi tejasvī dvādaśhātmannamo'stu te"
+      ],
+      "meaningHi": "वह नक्षत्रों, ग्रहों और तारों का स्वामी तथा विश्व का पोषक है। हे तेजस्वियों में भी अधिक तेजस्वी, बारह रूपों वाले सूर्य, आपको नमन।",
+      "meaningEn": "He rules the constellations, planets and stars and nourishes the universe. Salutations to you, brighter than the brightest, whose form is twelvefold."
+    },
+    {
+      "id": "aditya-hridayam-16",
+      "number": 16,
+      "labelHi": "श्लोक · १६",
+      "labelEn": "Verse · 16",
+      "lines": [
+        "नमः पूर्वाय गिरये पश्चिमायाद्रये नमः।",
+        "ज्योतिर्गणानां पतये दिनाधिपतये नमः॥"
+      ],
+      "linesEn": [
+        "namaḥ pūrvāya giraye paśchimāyādraye namaḥ",
+        "jyotirgaṇānāṃ pataye dinādhipataye namaḥ"
+      ],
+      "meaningHi": "पूर्व के पर्वत को नमन, पश्चिम के पर्वत को नमन। आकाश की ज्योतियों के स्वामी और दिन के अधिपति को नमन।",
+      "meaningEn": "Salutations to the eastern mountain and the western mountain. Salutations to the lord of the heavenly lights and ruler of the day."
+    },
+    {
+      "id": "aditya-hridayam-17",
+      "number": 17,
+      "labelHi": "श्लोक · १७",
+      "labelEn": "Verse · 17",
+      "lines": [
+        "जयाय जयभद्राय हर्यश्वाय नमो नमः।",
+        "नमो नमः सहस्रांशो आदित्याय नमो नमः॥"
+      ],
+      "linesEn": [
+        "jayāya jayabhadrāya haryaśvāya namo namaḥ",
+        "namo namaḥ sahasrāṃśho ādityāya namo namaḥ"
+      ],
+      "meaningHi": "विजय और विजय के मंगल के स्वरूप को बारंबार नमन। हरित वर्ण के अश्वों वाले, हे सहस्रकिरणमय आदित्य, आपको बारंबार नमन।",
+      "meaningEn": "Repeated salutations to victory and the good it brings, and to the one with tawny steeds. Repeated salutations to you, thousand-rayed Aditya."
+    },
+    {
+      "id": "aditya-hridayam-18",
+      "number": 18,
+      "labelHi": "श्लोक · १८",
+      "labelEn": "Verse · 18",
+      "lines": [
+        "नम उग्राय वीराय सारङ्गाय नमो नमः।",
+        "नमः पद्मप्रबोधाय मार्ताण्डाय नमो नमः॥"
+      ],
+      "linesEn": [
+        "nama ugrāya vīrāya sāraṅgāya namo namaḥ",
+        "namaḥ padmaprabodhāya mārtāṇḍāya namo namaḥ"
+      ],
+      "meaningHi": "प्रचण्ड, वीर और वेगवान सूर्य को बारंबार नमन। कमलों को खिलाने वाले मार्ताण्ड को बारंबार नमन।",
+      "meaningEn": "Repeated salutations to the fierce, heroic and swift one. Repeated salutations to Martanda, who awakens the lotuses."
+    },
+    {
+      "id": "aditya-hridayam-19",
+      "number": 19,
+      "labelHi": "श्लोक · १९",
+      "labelEn": "Verse · 19",
+      "lines": [
+        "ब्रह्मेशानाच्युतेशाय सूर्यायादित्यवर्चसे।",
+        "भास्वते सर्वभक्षाय रौद्राय वपुषे नमः॥"
+      ],
+      "linesEn": [
+        "brahmeśhānāchyuteśhāya sūryāyādityavarchase",
+        "bhāsvate sarvabhakṣhāya raudrāya vapuṣhe namaḥ"
+      ],
+      "meaningHi": "ब्रह्मा, ईशान और अच्युत के अधीश्वर, आदित्य के तेज से युक्त सूर्य को नमन। प्रकाशमान, सबको ग्रसने वाले रौद्र रूप को नमन।",
+      "meaningEn": "Salutations to Surya, lord of Brahma, Ishana and Achyuta, radiant with Aditya’s brilliance. Salutations to his shining, all-devouring and formidable form."
+    },
+    {
+      "id": "aditya-hridayam-20",
+      "number": 20,
+      "labelHi": "श्लोक · २०",
+      "labelEn": "Verse · 20",
+      "lines": [
+        "तमोघ्नाय हिमघ्नाय शत्रुघ्नायामितात्मने।",
+        "कृतघ्नघ्नाय देवाय ज्योतिषां पतये नमः॥"
+      ],
+      "linesEn": [
+        "tamoghnāya himaghnāya śhatrughnāyāmitātmane",
+        "kṛitaghnaghnāya devāya jyotiṣhāṃ pataye namaḥ"
+      ],
+      "meaningHi": "अंधकार, हिम और शत्रुओं का नाश करने वाले असीम स्वरूप को नमन। कृतघ्नों का दमन करने वाले देव और ज्योतियों के स्वामी को नमन।",
+      "meaningEn": "Salutations to the boundless one who dispels darkness and frost and destroys enemies. Salutations to the god who subdues the ungrateful, lord of the heavenly lights."
+    },
+    {
+      "id": "aditya-hridayam-21",
+      "number": 21,
+      "labelHi": "श्लोक · २१",
+      "labelEn": "Verse · 21",
+      "lines": [
+        "तप्तचामीकराभाय वह्नये विश्वकर्मणे।",
+        "नमस्तमोऽभिनिघ्नाय रुचये लोकसाक्षिणे॥"
+      ],
+      "linesEn": [
+        "taptachāmīkarābhāya vahnaye viśvakarmaṇe",
+        "namastamo'bhinighnāya ruchaye lokasākṣhiṇe"
+      ],
+      "meaningHi": "तप्त सोने की आभा वाले, अग्निस्वरूप और विश्व के रचयिता को नमन। अंधकार मिटाने वाले, दीप्तिमान और लोकों के साक्षी को नमन।",
+      "meaningEn": "Salutations to him who glows like heated gold, who is fire and the maker of the universe. Salutations to the shining witness of the worlds, who drives out darkness."
+    },
+    {
+      "id": "aditya-hridayam-22",
+      "number": 22,
+      "labelHi": "श्लोक · २२",
+      "labelEn": "Verse · 22",
+      "lines": [
+        "नाशयत्येष वै भूतं तदेव सृजति प्रभुः।",
+        "पायत्येष तपत्येष वर्षत्येष गभस्तिभिः॥"
+      ],
+      "linesEn": [
+        "nāśhayatyeṣha vai bhūtaṃ tadeva sṛijati prabhuḥ",
+        "pāyatyeṣha tapatyeṣha varṣhatyeṣha gabhastibhiḥ"
+      ],
+      "meaningHi": "यही प्रभु प्राणियों का संहार करता है और फिर उनकी सृष्टि करता है। अपनी किरणों से वह जल ग्रहण करता है, ताप देता है और वर्षा करता है।",
+      "meaningEn": "This lord dissolves what has come into being and creates it again. Through his rays he draws up water, gives heat and sends rain."
+    },
+    {
+      "id": "aditya-hridayam-23",
+      "number": 23,
+      "labelHi": "श्लोक · २३",
+      "labelEn": "Verse · 23",
+      "lines": [
+        "एष सुप्तेषु जागर्ति भूतेषु परिनिष्ठितः।",
+        "एष एवाग्निहोत्रं च फलं चैवाग्निहोत्रिणाम्॥"
+      ],
+      "linesEn": [
+        "eṣha supteṣhu jāgarti bhūteṣhu pariniṣṭhitaḥ",
+        "eṣha evāgnihotraṃ cha phalaṃ chaivāgnihotriṇām"
+      ],
+      "meaningHi": "प्राणियों में स्थित वह उनके सोने पर भी जागता है। वही अग्निहोत्र है और अग्निहोत्र करने वालों को मिलने वाला फल भी वही है।",
+      "meaningEn": "He dwells in beings and remains awake while they sleep. He is both the Agnihotra offering and the fruit it yields to those who perform it."
+    },
+    {
+      "id": "aditya-hridayam-24",
+      "number": 24,
+      "labelHi": "श्लोक · २४",
+      "labelEn": "Verse · 24",
+      "lines": [
+        "वेदाश्च क्रतवश्चैव क्रतूनां फलमेव च।",
+        "यानि कृत्यानि लोकेषु सर्व एष रविः प्रभुः॥"
+      ],
+      "linesEn": [
+        "vedāścha kratavaśchaiva kratūnāṃ phalameva cha",
+        "yāni kṛityāni lokeṣhu sarva eṣha raviḥ prabhuḥ"
+      ],
+      "meaningHi": "वही वेद, यज्ञ और यज्ञों का फल है। लोकों में जो कर्म किए जाते हैं, उन सबका स्वामी यही रवि है।",
+      "meaningEn": "He is the Vedas, the sacrifices and their fruit. Ravi is the lord of all the works that are performed in the worlds."
+    },
+    {
+      "id": "aditya-hridayam-25",
+      "number": 25,
+      "labelHi": "श्लोक · २५",
+      "labelEn": "Verse · 25",
+      "lines": [
+        "एनमापत्सु कृच्छ्रेषु कान्तारेषु भयेषु च।",
+        "कीर्तयन् पुरुषः कश्चिन्नावसीदति राघव॥"
+      ],
+      "linesEn": [
+        "enamāpatsu kṛichchhreṣhu kāntāreṣhu bhayeṣhu cha",
+        "kīrtayan puruṣhaḥ kaśchinnāvasīdati rāghava"
+      ],
+      "meaningHi": "हे राघव! विपत्ति, कठिनाई, वन या भय के समय जो इसका कीर्तन करता है, उसका धैर्य नहीं टूटता।",
+      "meaningEn": "Raghava, one who praises him amid danger, hardship, wilderness or fear does not lose heart."
+    },
+    {
+      "id": "aditya-hridayam-26",
+      "number": 26,
+      "labelHi": "श्लोक · २६",
+      "labelEn": "Verse · 26",
+      "lines": [
+        "पूजयस्वैनमेकाग्रो देवदेवं जगत्पतिम्।",
+        "एतत् त्रिगुणितं जप्त्वा युद्धेषु विजयिष्यसि॥"
+      ],
+      "linesEn": [
+        "pūjayasvainamekāgro devadevaṃ jagatpatim",
+        "etat triguṇitaṃ japtvā yuddheṣhu vijayiṣyasi"
+      ],
+      "meaningHi": "एकाग्र होकर इस देवाधिदेव और जगत के स्वामी की पूजा करो। अगस्त्य कहते हैं कि इस स्तोत्र को तीन बार जपकर राम युद्ध में विजय पाएँगे।",
+      "meaningEn": "Worship this god of gods, the lord of the world, with a focused mind. Agastya tells Rama that by reciting the hymn three times he will prevail in battle."
+    },
+    {
+      "id": "aditya-hridayam-27",
+      "number": 27,
+      "labelHi": "श्लोक · २७",
+      "labelEn": "Verse · 27",
+      "lines": [
+        "अस्मिन्क्षणे महाबाहो रावणं त्वं वधिष्यसि।",
+        "एवमुक्त्वा तदाऽगस्त्यो जगाम च यथागतम्॥"
+      ],
+      "linesEn": [
+        "asminkṣhaṇe mahābāho rāvaṇaṃ tvaṃ vadhiṣyasi",
+        "evamuktvā tadā'gastyo jagāma cha yathāgatam"
+      ],
+      "meaningHi": "हे महाबाहु! इसी क्षण तुम रावण का वध करोगे। यह कहकर अगस्त्य जिस मार्ग से आए थे, उसी से लौट गए।",
+      "meaningEn": "Mighty-armed one, you will slay Ravana at this very moment. Having spoken, Agastya departed the way he had come."
+    },
+    {
+      "id": "aditya-hridayam-28",
+      "number": 28,
+      "labelHi": "श्लोक · २८",
+      "labelEn": "Verse · 28",
+      "lines": [
+        "एतच्छ्रुत्वा महातेजा नष्टशोकोऽभवत्तदा।",
+        "धारयामास सुप्रीतो राघवः प्रयतात्मवान्॥"
+      ],
+      "linesEn": [
+        "etachchhrutvā mahātejā naṣṭaśhoko'bhavattadā",
+        "dhārayāmāsa suprīto rāghavaḥ prayatātmavān"
+      ],
+      "meaningHi": "यह सुनकर तेजस्वी राम का शोक मिट गया। प्रसन्न और संयत होकर उन्होंने स्तोत्र को मन में धारण किया।",
+      "meaningEn": "Hearing this, radiant Rama’s grief fell away. Pleased and composed, he took the hymn to heart."
+    },
+    {
+      "id": "aditya-hridayam-29",
+      "number": 29,
+      "labelHi": "श्लोक · २९",
+      "labelEn": "Verse · 29",
+      "lines": [
+        "आदित्यं प्रेक्ष्य जप्त्वा तु परं हर्षमवाप्तवान्।",
+        "त्रिराचम्य शुचिर्भूत्वा धनुरादाय वीर्यवान्॥"
+      ],
+      "linesEn": [
+        "ādityaṃ prekṣya japtvā tu paraṃ harṣhamavāptavān",
+        "trirāchamya śhuchirbhūtvā dhanurādāya vīryavān"
+      ],
+      "meaningHi": "आदित्य को देखकर स्तोत्र जपने पर राम को बड़ा हर्ष हुआ। तीन बार आचमन कर, शुद्ध होकर, वीर राम ने धनुष उठा लिया।",
+      "meaningEn": "Looking towards Aditya, Rama recited the hymn and felt great joy. He sipped water three times in purification, then took up his bow."
+    },
+    {
+      "id": "aditya-hridayam-30",
+      "number": 30,
+      "labelHi": "श्लोक · ३०",
+      "labelEn": "Verse · 30",
+      "lines": [
+        "रावणं प्रेक्ष्य हृष्टात्मा युद्धाय समुपागमत्।",
+        "सर्वयत्नेन महता वधे तस्य धृतोऽभवत्॥"
+      ],
+      "linesEn": [
+        "rāvaṇaṃ prekṣya hṛiṣṭātmā yuddhāya samupāgamat",
+        "sarvayatnena mahatā vadhe tasya dhṛito'bhavat"
+      ],
+      "meaningHi": "रावण को देखकर राम उत्साह से युद्ध के लिए आगे बढ़े और पूरे प्रयत्न से उसका वध करने का निश्चय किया।",
+      "meaningEn": "Seeing Ravana, Rama went eagerly into battle, resolved to exert all his strength to slay him."
+    },
+    {
+      "id": "aditya-hridayam-31",
+      "number": 31,
+      "labelHi": "श्लोक · ३१",
+      "labelEn": "Verse · 31",
+      "lines": [
+        "अथ रविरवदन्निरीक्ष्य रामं",
+        "मुदितमनाः परमं प्रहृष्यमाणः।",
+        "निशिचरपतिसङ्क्षयं विदित्वा",
+        "सुरगणमध्यगतो वचस्त्वरेति॥"
+      ],
+      "linesEn": [
+        "atha raviravadannirīkṣya rāmaṃ",
+        "muditamanāḥ paramaṃ prahṛiṣyamāṇaḥ",
+        "niśhicharapatisaṅkṣhayaṃ viditvā",
+        "suragaṇamadhyagato vachastvareti"
+      ],
+      "meaningHi": "राक्षसराज रावण का अंत निकट जानकर, देवताओं के बीच खड़े सूर्य ने हर्ष से राम की ओर देखा और कहा, ‘शीघ्र करो।’",
+      "meaningEn": "Knowing that the lord of the night-roamers was about to fall, the Sun looked joyfully upon Rama from among the gods and said, ‘Make haste.’"
+    }
+  ]
+}

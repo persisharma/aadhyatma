@@ -566,7 +566,6 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
 
 // Discovery doors retain the existing canonical reader and location.
 for (const [id,screen,params] of [
- ['aditya-hridayam','ValmikiRamayanReader',{chapter:6,initialIndex:4653}],
  ['ganesh-atharvashirsha','GaneshStotramReader',{chapter:2,initialIndex:0}],
  ['durga-saptashati-core','SaptashatiCore',undefined],
 ] as const) {
@@ -574,6 +573,7 @@ for (const [id,screen,params] of [
  assert.deepEqual(calls,[{name:screen,params}]);
 }
 for(const [id,screen,key,last] of [
+ ['aditya-hridayam','StutiReader','stutiId',30],
  ['kanakadhara-stotram','StutiReader','stutiId',21],
  ['hanuman-bahuk','StutiReader','stutiId',43],
  ['shri-suktam','SuktamReader','suktamId',15],

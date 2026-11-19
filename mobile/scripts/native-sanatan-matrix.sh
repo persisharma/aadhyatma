@@ -70,9 +70,10 @@ for text_setting in standard enlarged; do
   SANATAN_PHASE="matrix-$text_setting"
   # Each matrix has all four reading scripts and both in-app reading presets.
   # _launch clears test app storage at matrix start; persistence is tested above.
-  # 50 min: on iOS enlarged text each of the eight cases takes about four and a
-  # half minutes after six of setup (CI), past the earlier 35-minute limit.
-  node scripts/run-native-diagnostic.cjs --timeout-ms 3000000 maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/$text_setting.xml" \
+  matrix_timeout_ms=2100000
+  # The eight cases take longer to scroll through at iOS accessibility sizes.
+  if [[ "$PLATFORM" == ios && "$text_setting" == enlarged ]]; then matrix_timeout_ms=3000000; fi
+  node scripts/run-native-diagnostic.cjs --timeout-ms "$matrix_timeout_ms" maestro --device "$DEVICE" test --config .maestro/config.yaml --format junit --output "$SANATAN_OUTPUT/$text_setting.xml" \
     -e "CAPTURE_SUFFIX=$PLATFORM-$text_setting" .maestro/sanatan-parichay-language-size.yaml \
     2>&1 | tee "$SANATAN_OUTPUT/$text_setting.log"
   mkdir -p "$SANATAN_OUTPUT/$text_setting"

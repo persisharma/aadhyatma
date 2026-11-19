@@ -15,6 +15,7 @@ import durgaSaptashatiChapterOne from '../stuti/durga-saptashati-chapter-1.json'
 import durgaKilak from '../stuti/durga-kilak-stotram.json';
 import durgaArgala from '../stuti/durga-argala-stotram.json';
 import hanumanBahuk from '../stuti/hanuman-bahuk.json';
+import adityaHridayam from '../stuti/aditya-hridayam.json';
 import kanakadharaStotram from '../stuti/kanakadhara-stotram.json';
 import shriSuktam from '../suktam/shri-suktam.json';
 import kalabhairavAshtakam from '../ashtakam/kalabhairav-ashtakam.json';
@@ -78,6 +79,7 @@ test('every generated verse count still matches its corpus', () => {
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],
   ['rahimBhaktiDoheTotal', rahimDohe.verses.length, generated.rahimBhaktiDoheTotal],
   ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['adityaHridayamTotal', adityaHridayam.verses.length, generated.adityaHridayamTotal],
   ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
   ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
   ['hanumanBahukTotal', hanumanBahuk.verses.length, generated.hanumanBahukTotal],
@@ -176,6 +178,7 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   const exported = Object.keys(generated).sort();
   const expected = [
   ['kanakadharaStotramTotal', kanakadharaStotram.verses.length, generated.kanakadharaStotramTotal],
+  ['adityaHridayamTotal', adityaHridayam.verses.length, generated.adityaHridayamTotal],
   ['shriSuktamTotal', shriSuktam.verses.length, generated.shriSuktamTotal],
   ['kalabhairavAshtakamTotal', kalabhairavAshtakam.verses.length, generated.kalabhairavAshtakamTotal],
   ['kabirBhaktiDoheTotal', kabirDohe.verses.length, generated.kabirBhaktiDoheTotal],

@@ -81,6 +81,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'durga-kilak-stotram': backgroundImages.deity_durga_lion,
   'durga-argala-stotram': backgroundImages.deity_durga_lion,
   'hanuman-bahuk': chalisaImages.hanuman_sea,
+  'aditya-hridayam': backgroundImages.deity_surya,
   'kanakadhara-stotram': backgroundImages.deity_lakshmi,
   'shri-suktam': backgroundImages.deity_lakshmi,
   'kalabhairav-ashtakam': shivaStrotamImages.shiva,

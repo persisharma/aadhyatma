@@ -38,6 +38,7 @@ export function devotionalPlateArt(art: DevotionalArt) {
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'parshuram-stotram': 'parshuram',
+  'aditya-hridayam': 'surya',
   'kanakadhara-stotram': 'lakshmi', 'shri-suktam': 'lakshmi',
   'kalabhairav-ashtakam': 'shiva', 'hanuman-bahuk': 'hanuman',
   'durga-devi-kavacham': 'durga', 'durga-argala-stotram': 'durga',

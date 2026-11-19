@@ -34,8 +34,7 @@ type Nav = Pick<NativeStackNavigationProp<HomeStackParamList>, 'navigate'>;
 export function navigateReadingLink(nav: Nav, id: string): boolean {
   const link = getReadingLink(id);
   if (!link) return false;
-  if (link.sourceId === 'valmiki-ramayan') nav.navigate('ValmikiRamayanReader', { chapter: link.chapter, initialIndex: link.verseIndex });
-  else if (link.sourceId === 'ganesh-stotram') nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
+  if (link.sourceId === 'ganesh-stotram') nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
   else nav.navigate('SaptashatiCore');
   return true;
 }

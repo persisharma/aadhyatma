@@ -9,6 +9,9 @@ on:
       - 'mobile/scripts/select-native-ios-device.cjs'
       - 'mobile/scripts/run-native-diagnostic.cjs'
       - 'mobile/.maestro/*sanatan*.yaml'
+      - 'mobile/.maestro/_launch.yaml'
+      - 'mobile/.maestro/_finish-first-run-setup.yaml'
+      - 'mobile/.maestro/_open-settings.yaml'
       - 'mobile/.maestro/native-ios-input-check.yaml'
       - 'mobile/src/components/sanatan/**'
       - 'mobile/src/components/SanatanHomeCard.tsx'
@@ -37,8 +40,7 @@ jobs:
     env:
       NATIVE_IOS_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-2
       SANATAN_MATRIX_SCOPE: ${{ matrix.scope }}
-    # About 26 min of build and setup plus up to 50 min for the enlarged-text matrix.
-    timeout-minutes: 90
+    timeout-minutes: ${{ matrix.scope == 'enlarged' && 90 || 75 }}
     defaults:
       run:
         working-directory: mobile

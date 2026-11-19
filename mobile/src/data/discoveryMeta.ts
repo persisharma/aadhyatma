@@ -147,6 +147,11 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
   'durga-saptashati-chapter-11': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-11.json; devotional reading, no guaranteed result.` },
   'durga-saptashati-chapter-12': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-12.json; devotional reading, no guaranteed result.` },
   'durga-saptashati-chapter-13': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-13.json; devotional reading, no guaranteed result.` },
+  'aditya-hridayam': {
+    purposes: ['devotion'],
+    bestTime: 'any',
+    source: 'Valmiki Ramayan, Yuddha Kanda. Sanskrit Documents 31-verse reading with original Vedansh meanings.',
+  },
   'kanakadhara-stotram': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/kanakadhara-stotram.json; devotional reading, no guaranteed result.` },
   'shri-suktam': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} suktam/shri-suktam.json; devotional reading, no guaranteed result.` },
   'kalabhairav-ashtakam': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} ashtakam/kalabhairav-ashtakam.json; devotional reading, no guaranteed result.` },
