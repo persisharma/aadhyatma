@@ -46,9 +46,13 @@ appId: com.prashantsharma.vedansh
     direction: UP
 - tapOn: { id: settings-back }
 - openLink: 'vedansh://widget/panchang?date=${OCCASION_DATE}'
-# iOS asks "Open in Vedansh?" before following the link (CI); accept it.
-- waitForAnimationToEnd:
-    timeout: 5000
+# iOS asks "Open in Vedansh?" before following the link (CI); accept it. The
+# prompt can arrive more than 15 s after the link, after a short visibility
+# check has given up (CI), so wait for it. Optional: iOS may not ask again.
+- extendedWaitUntil:
+    visible: 'Open in .Vedansh.\?'
+    timeout: 30000
+    optional: true
 - runFlow:
     when: { visible: 'Open' }
     commands:
