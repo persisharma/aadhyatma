@@ -229,6 +229,10 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "kundali-house-topic-6" }
 - assertVisible: ".*House 6.*"
 - tapOn: "Done with Kundali explanation"
+# The centred house-6 row leaves the tab row above the fold on iPhone 16e.
+- scrollUntilVisible:
+    element: { text: "Grahas tab" }
+    direction: UP
 - tapOn: "Grahas tab"
 - scrollUntilVisible:
     element: { id: "kundali-graha-moon" }
