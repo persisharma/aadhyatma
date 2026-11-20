@@ -98,21 +98,31 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Month August"
 # The year list is a non-virtualized ScrollView in a transparent Modal: Maestro
 # can't scrollUntilVisible it, visibility guards see every (off-screen) row, and
-# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS lands
-# 1992 with a fixed fast-swipe count; Android's fling scrolling varies too much,
-# so it slow-drags PAST 1992 (deterministic, no fling, no dismiss) then
-# self-corrects: tap 1992 (a safe no-op while off-screen) and nudge the list up
-# until the day grid opens. Both branches end on August 1992's day grid.
+# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS used a
+# fixed fast-swipe count, but fling distance depends on the screen: on the CI
+# iPhone 16e it missed 1992 and the blind tap closed the sheet. iOS now avoids
+# scrolling the list at all: Year 2024 always sits in the list's first screenful
+# (the list opens at the top and is 220 pt on every phone — the same anchor
+# multi-profile-jyotish-smoke.yaml uses), and with August already chosen,
+# exactly 384 taps of "Previous month" land on August 1992, on any screen size.
+# Android's fling scrolling varies too much, so it slow-drags PAST 1992
+# (deterministic, no fling, no dismiss) then self-corrects: tap 1992 (a safe
+# no-op while off-screen) and nudge the list up until the day grid opens. Both
+# branches end on August 1992's day grid.
 - runFlow:
     when:
       platform: iOS
     commands:
-      - repeat:
-          times: 4
-          commands:
-            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - tapOn:
+          id: "calendar-year-2024"
       - waitForAnimationToEnd
-      - tapOn: "Year 1992"
+      - repeat:
+          times: 384
+          commands:
+            - tapOn: "Previous month"
+      - extendedWaitUntil:
+          visible: "14 August 1992"
+          timeout: 10000
 - runFlow:
     when:
       platform: Android
@@ -207,10 +217,18 @@ appId: com.prashantsharma.vedansh
     direction: UP
 - tapOn: "Chart tab"
 - assertVisible: { id: "kundali-view-picture" }
-- tapOn: { id: "kundali-house-6" }
+# Open house 6 through Life areas, whose rows are plain native buttons. The
+# chart cells are react-native-svg groups: on the iOS simulator their
+# accessibility frames do not match the drawn cell, so a Maestro tap on
+# `kundali-house-6` lands outside it and no sheet opens (CI iPhone 16e run).
+# Cell taps stay covered by NorthIndianChart/KundaliLearning Jest tests.
+- tapOn: { id: "kundali-view-topics" }
+- scrollUntilVisible:
+    element: { id: "kundali-house-topic-6" }
+    centerElement: true
+- tapOn: { id: "kundali-house-topic-6" }
 - assertVisible: ".*House 6.*"
 - tapOn: "Done with Kundali explanation"
-- tapOn: { id: "kundali-view-topics" }
 - tapOn: "Grahas tab"
 - scrollUntilVisible:
     element: { id: "kundali-graha-moon" }
@@ -258,22 +276,38 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: "dasha-guide-index-view"
 - assertVisible: "In this guide · 5 steps"
+- takeScreenshot: e2e-shots/dasha-guide-index
 - tapOn:
     id: "dasha-guide-start"
 - assertVisible: "Step 1 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-1
 - tapOn:
     id: "dasha-guide-next"
+- assertVisible: "Step 2 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-2
 - tapOn:
     id: "dasha-guide-next"
+- assertVisible: "Step 3 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-3
 - tapOn:
     id: "dasha-guide-next"
 - assertVisible: "Step 4 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-4
 - scrollUntilVisible:
     element:
       id: "dasha-guide-chant"
     direction: DOWN
     timeout: 15000
-- assertVisible: ".*not a fix or a guarantee.*"
+- scrollUntilVisible:
+    element:
+      text: ".*not a fix or a guarantee.*"
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: e2e-shots/dasha-guide-step-4-mantra
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 5 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-5
 # Back on a step returns to the index; Back on the index leaves the guide.
 - tapOn:
     id: "dasha-guide-back"
@@ -301,6 +335,7 @@ appId: com.prashantsharma.vedansh
     id: "dasha-timeline-guide-mercury"
 - assertVisible: "Mercury Mahadasha"
 - assertVisible: "Upcoming period"
+- takeScreenshot: e2e-shots/dasha-guide-upcoming-index
 - tapOn:
     id: "dasha-guide-back"
 - assertVisible: "Vimshottari Dasha"
