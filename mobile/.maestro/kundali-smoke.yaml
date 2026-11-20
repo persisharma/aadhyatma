@@ -265,8 +265,13 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*left.*"
 - assertVisible: ".*Now.*"
 # The Mahadasha lord's beej mantra (Jupiter → Guru) opens its japam counter.
-- assertVisible:
-    id: "dasha-beej-japa"
+# On iPhone 16e the pill sits below the Antardasha strip, past the fold.
+- scrollUntilVisible:
+    element:
+      id: "dasha-beej-japa"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
 - assertVisible: "Chant Guru Beej Mantra on the mala, for the Jupiter Mahadasha"
 # The running Mahadasha's guide (design.md §51e): index, steps, Back to the
 # index, then Back to the Dasha tab.
