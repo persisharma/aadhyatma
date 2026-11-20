@@ -4541,9 +4541,11 @@ page that matched, as global Search does; the resume card opens the stored page.
 
 **Reader (`SanatanReaderScreen`).** Shared `ReaderHeader` with the shared
 `ReaderPageCounter` ("2 / 3"; tapping it opens the page picker with each page's
-name, §94), `ReadingProgressBar`, then
-one centred wrapping row: `LanguageToggle`, read-aloud, auto-slide. Horizontally
-paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
+name, §94), `ReadingProgressBar`, then the shared `ReaderControlRow` (§56.2):
+`LanguageToggle` centred, read-aloud pinned right. Auto-slide (स्वतः) is not a
+third pill in that group; it sits inline on its own left-aligned row just above
+the pager bar (this screen's pager bottom is `PagerNavBar`, so the usual floating
+bottom-left slot would overlap it). Horizontally paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
 pill (the collection name; "चित्र से समझें" on the figure page) and, on the gutter,
 the shared round `BookmarkButton` and `ShareButton` — then the page heading (one
 step above the reading size). Page 1: the collection painting (opens the picture
@@ -4568,8 +4570,9 @@ Research provenance never appears as a screen, action, footer or share appendix
 Use theme colours, script-aware text, ProseParagraph and ProseReadingCard. Touch
 targets are at least 48pt (filter chips share the 44pt chip class of §33). Content
 scrolls rather than being ellipsized. Diagram facts have equivalent text
-captions and, where authored, a text legend. On narrow screens the playback
-controls wrap below the language toggle. The Swastika geometry remains SVG; the
+captions and, where authored, a text legend. On narrow screens `ReaderControlRow`
+stacks the read-aloud control below the centred language toggle; auto-slide keeps
+its own row above the pager bar. The Swastika geometry remains SVG; the
 paintings provide the approved rich imagery.
 
 Files: `mobile/src/screens/{SanatanParichayScreen,SanatanReaderScreen}.tsx`,

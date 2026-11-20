@@ -10,6 +10,7 @@ import { useSanatanLearning } from '@/data/sanatan-parichay/store';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReaderControlRow from '@/components/ReaderControlRow';
 import ProseReadingCard from '@/components/ProseReadingCard';
 import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import AutoSlideButton from '@/components/AutoSlideButton';
@@ -112,12 +113,12 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
         right={<ReaderPageCounter testID="sanatan-page-counter" current={page + 1} total={data.length} titles={titles.map(title => t(title))}
           onOpen={() => { readAloud.stop(); autoSlide.stop(); }} onJump={next => go(next - 1)} />} />
       <ReadingProgressBar current={page + 1} total={data.length} />
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: spacing.readingGutter, paddingVertical: 8 }}>
+      {/* The shared reader control row: language toggle centred, सुनें pinned right,
+          as in every other reader (design.md §56.2/§87). स्वतः is NOT a third pill in
+          this group — it lives on its own row above the pager bar below. */}
+      <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
         <LanguageToggle />
-        <ReadAloudButton control={readAloud} />
-        {/* The pill pins itself to flex-start; the wrapper lets the row centre it. */}
-        <View><AutoSlideButton control={autoSlide} floating={false} /></View>
-      </View>
+      </ReaderControlRow>
       <FlatList ref={listRef} data={data} keyExtractor={item => item.id} horizontal pagingEnabled style={{ flex: 1 }}
         initialScrollIndex={initialPage} extraData={lang} CellRendererComponent={autoSlide.Cell}
         showsHorizontalScrollIndicator={false} getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
@@ -151,6 +152,12 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
             {index===data.length-1&&<LessonRelated id={topic.id} onOpen={openRelated}/>}
           </AutoSlideScrollView>
         </View>} />
+      {/* स्वतः (auto-slide) inline, left-aligned above the pager bar: this screen's
+          pager bottom is PagerNavBar, so the usual floating bottom-left slot would
+          overlap it (AutoSlideButton: inline for occupied pager bottoms). */}
+      <View style={{ paddingHorizontal: spacing.readingGutter, paddingBottom: 8, alignItems: 'flex-start' }}>
+        <AutoSlideButton control={autoSlide} floating={false} />
+      </View>
       <PagerNavBar page={page} total={data.length} nextTestID="sanatan-next"
         onPrevious={() => go(page - 1)} onNext={() => page < data.length - 1 ? go(page + 1) : finish()}
         previousLabel={t(['पिछला पृष्ठ','Previous page'])} nextLabel={t(['अगला पृष्ठ','Next page'])}
