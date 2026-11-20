@@ -217,10 +217,18 @@ appId: com.prashantsharma.vedansh
     direction: UP
 - tapOn: "Chart tab"
 - assertVisible: { id: "kundali-view-picture" }
-- tapOn: { id: "kundali-house-6" }
+# Open house 6 through Life areas, whose rows are plain native buttons. The
+# chart cells are react-native-svg groups: on the iOS simulator their
+# accessibility frames do not match the drawn cell, so a Maestro tap on
+# `kundali-house-6` lands outside it and no sheet opens (CI iPhone 16e run).
+# Cell taps stay covered by NorthIndianChart/KundaliLearning Jest tests.
+- tapOn: { id: "kundali-view-topics" }
+- scrollUntilVisible:
+    element: { id: "kundali-house-topic-6" }
+    centerElement: true
+- tapOn: { id: "kundali-house-topic-6" }
 - assertVisible: ".*House 6.*"
 - tapOn: "Done with Kundali explanation"
-- tapOn: { id: "kundali-view-topics" }
 - tapOn: "Grahas tab"
 - scrollUntilVisible:
     element: { id: "kundali-graha-moon" }
