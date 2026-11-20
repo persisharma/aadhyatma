@@ -22,7 +22,14 @@ describe('listing share cards', () => {
     })),
   ];
 
-  test.each(cases)('$id preserves every visible entry in a readable series', ({ id, titleHi, titleEn, entries }) => {
+  // An empty listing has nothing to share, and no screen offers it: the bhajan
+  // shelf hides its share button until a verified bhajan exists (design.md §34.1).
+  test('an empty listing builds no share scope', () => {
+    const share = buildListingShare({ sourceId: 'empty', titleHi: 'खाली', titleEn: 'Empty', background: null, items: [] });
+    expect(share.scopes).toHaveLength(0);
+  });
+
+  test.each(cases.filter((c) => c.entries.length > 0))('$id preserves every visible entry in a readable series', ({ id, titleHi, titleEn, entries }) => {
     const share = buildListingShare({
       sourceId: id, titleHi, titleEn, background: null,
       items: entries.map((entry) => ({

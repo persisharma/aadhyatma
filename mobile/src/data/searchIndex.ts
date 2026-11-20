@@ -92,6 +92,7 @@ import {
   type ValmikiRamayanVerse,
 } from './valmiki-ramayan';
 import { getSanskar, sanskarIds } from './sanskar';
+import { getBhajan } from './bhajan';
 import { VIDHI_ENTRIES, type VidhiEntry } from './vidhi';
 import { getPurposeMeta } from './purposes';
 import { purposesForText } from './discoveryMeta';
@@ -546,6 +547,11 @@ function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator
     return;
   }
 
+  if (entry.category === 'bhajan') {
+    pushBhajan(verses, entry);
+    return;
+  }
+
   if (entry.category === 'sanskar') {
     pushSanskar(verses, entry);
     return;
@@ -882,6 +888,28 @@ function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
   const aarti = aartiCollection[idx];
   if (!aarti) return;
   aarti.verses.forEach((v: AartiVerse, verseIdx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: verseIdx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+/** Bhajans share the aarti verse shape (`lines` + `linesEn`) — RULEBOOK §7 Path A. */
+function pushBhajan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const bhajan = getBhajan(entry.id);
+  if (!bhajan) return;
+  bhajan.verses.forEach((v, verseIdx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,

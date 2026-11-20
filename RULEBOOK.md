@@ -98,7 +98,7 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 3 | `nameEn` | **yes** | `Hanuman Chalisa` | listing card title (italic English row) |
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph kept as DATA (search/metadata/contract) — never drawn as an icon or a fallback (§3 *Painted art only*); every card renders bundled deity artwork with category fallback (design.md §42). Exactly **one akshara** (one consonant cluster + optional matra/sign, an independent vowel, or ॐ) — never two syllables like `गण`/`जय`, which render wider than sibling thumbs in the same row. Enforced for library/japam/audio/sadhana thumbs by `contentCorrectness.test.ts` §20 |
-| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar`, `ashtakam`, `suktam`, `kavacham` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §12. `ashtakam`, `suktam` and `kavacham` are PRD-A forms, each with a multi-instance reader (dispatching on `ashtakamId`/`suktamId`/`kavachamId`, like the chalisas). **Stuti** is a fourth PRD-A form but is **not** a category — its texts (Krishna Stuti, Durga Stuti) are filed under `stotram` (स्तुति ≈ स्तोत्रम्) yet still render via the multi-instance `StutiReader`, routed by `stutiId`. |
+| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar`, `ashtakam`, `suktam`, `kavacham`, `bhajan` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home — except `bhajan` (`placement: 'bhajan-tab'`), whose listing lives inside the Bhajan tab (§34). The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §12. `ashtakam`, `suktam` and `kavacham` are PRD-A forms, each with a multi-instance reader (dispatching on `ashtakamId`/`suktamId`/`kavachamId`, like the chalisas). **Stuti** is a fourth PRD-A form but is **not** a category — its texts (Krishna Stuti, Durga Stuti) are filed under `stotram` (स्तुति ≈ स्तोत्रम्) yet still render via the multi-instance `StutiReader`, routed by `stutiId`. |
 | 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from the `Deity` union in `mobile/src/data/texts.ts` and display metadata in `deities.ts`: `rama`, `krishna`, `vishnu`, `shiva`, `hanuman`, `durga`, `ganesha`, `savitr` (Maa Gayatri), `saraswati`, `lakshmi` (Maa Lakshmi), `surya` (Surya Dev), `radha` (Radha Rani), `kartikeya` (Kartikeya), `kubera` (Kubera), `ganga` (Maa Ganga), `parvati` (Maa Parvati), `narasimha` (Narasimha), `dattatreya` (Dattatreya), `shani` (Shani Dev), `kali` (Maa Kali), `navagraha` (Navagraha), `parshuram` (Bhagwan Parshuram, publication-gated) — PRD-A deity expansion §A.4.2 complete, 9 → 21 (source of truth: `mobile/src/data/deities.ts`). The section appears under each tagged deity in the Deity Index/Detail surfaces. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
 | 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.webp` | approved source artwork registered by a typed R2 descriptor and content hash; bundled neutral parchment fallback. Separate opening-card illustrations follow §11.8 and `design.md` §6. |
@@ -342,6 +342,8 @@ The contract for such a flow:
 3. **Every door pushes in place.** No `navigate('<Other>Tab', …)` from a door on a tab that hosts the flow.
 4. **A genuine cross-stack hop stays runtime-checked.** Where a flow hands off to a screen that may not live on its current stack (vidhi conduct → shipped readers), use `navigateToHomeStackTarget` (`navigation/entryRoutes.ts`): it pushes in place when the enclosing stack registers the target route and falls back to the Home tab when it does not. If the product copy promises return to the current step, mount that reader locally too — the personal-tithi guide therefore registers `GitaReader` on More, and its Back path is test-pinned.
 
+The bhajan text shelf (§34) is the second such flow: `BhajanStackParamList` is intersected into the Home and Audio param lists, and `BhajanList` / `BhajanReader` are registered on both stacks.
+
 Do **not** apply this to a flow with doors on one tab: a duplicate registration there is pure surface area. Guarded by `src/navigation/__tests__/vidhiBackNavigation.test.ts`.
 
 ### 6.1 Onboarding surfaces — feature tour, first-run setup & What's New (contract)
@@ -390,7 +392,7 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 
 | Verse shape | Devanagari source | Latin source | Used by |
 |---|---|---|---|
-| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas, valmiki-ramayan |
+| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, bhajans, sundarkand, ramcharitmanas, valmiki-ramayan |
 | `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
@@ -702,6 +704,8 @@ Removing browser links alone does not satisfy this rule.
   without editorial source notes in reading, auto-slide text budgets or sharing.
   Gita Saar offers only real related in-app readings, without research-only rows.
   Ask answers cannot expose source-verified badges, PRD numbers or copyright notes.
+  The bhajan reader shows only the poet/tradition credit (`bhajan-attribution`, §34);
+  its `source.*` fields never render.
 - `contentSourceUiPolicy.test.ts` runs in the existing reader Jest gate. Its AST
   scanner covers production screens/components, Ask intents and share modules;
   fixtures prove detection of the known disclosure, publisher and review-field
@@ -1738,6 +1742,20 @@ Daily/weekday Suvichar cards rotate eligible originals followed by eligible doha
 
 Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
 
+
+## 34. Bhajan text shelf (भजन संग्रह) — the sung-text contract
+
+Bhajan lyrics with meaning, listed inside the Bhajan tab (design.md §34.1). Bhajans are sung, regional and variant-rich, so the shelf adds rules on top of §11:
+
+1. **Registry.** A bhajan is four things added together: a payload `mobile/src/data/bhajan/<id>.json` (`BhajanData`), a loader in `bhajanLoaders` (`data/bhajan/index.ts`), a `bhajanCatalog` row `{ id, group }` (`data/bhajan/ids.ts`) and an active `library` entry with `category: 'bhajan'` and `verseCount`. `bhajanLibrary.test.ts` fails if any one is missing. Ids are persisted (bookmarks, progress, routines): append only, kebab-case, never reused.
+2. **Group.** `group` is the deity the bhajan addresses (a `Deity` id from `deities.ts`) or a region (`rajasthani`, `lok-bhajan`). Never add a deity id for a folk deity (Ramdev Pir, Tejaji, Gogaji) — shelve under the region. When `group` is a deity, the entry's `deities` must include it.
+3. **Sources.** §11.1–§11.6 apply in full: two independent published sources actually read, verbatim lines, complete text. Folk and saint-poet texts circulate in many sung variants — ship the reading both sources share, record other verses in `source.notes`, and never splice recensions (§11.6). The Maintainer-attested single-source exception (§11.1) is available but must be listed in `contentCorrectness.test.ts` like any other.
+4. **Rights.** Traditional texts and saint-poets (Meera, Surdas, Tulsidas, Kabir, Narsinh Mehta, Tukaram, Vidyapati) are in scope. Film songs and modern compositions stay out unless the maintainer records distribution rights in the JSON. The competitor list that seeded the backlog is a parity reference only, never a text source.
+5. **Devotional only.** The shelf is for bhajans, including local/regional ones (owner direction, 16 Nov 2026). A folk song with no devotional subject — Kesariya Balam, Ghoomar, Gorband, Panihari, Bedu Pako — is out of scope, however famous. A regional song qualifies only when it addresses or praises a deity, saint or the divine (Chhath geet, Holi rasiya, Vidyapati, Kabir, Ramdev ji).
+6. **No duplicates.** An aarti is an aarti: a text already shipped as an aarti, stotram or chalisa is not re-filed as a bhajan (§11.11), and an aarti not yet in the app goes to the Aarti category.
+7. **Meaning.** `meaningHi` and `meaningEn` for every verse (§11.13). Lines in Rajasthani, Bhojpuri, Braj, Maithili or another regional language also need a plain Hindi gloss in `meaningHi`; record the spoken language in `language`.
+8. **Credit.** `attributionHi/En` names the poet or `पारम्परिक / Traditional`; the reader shows it as plain text (§11.16).
+9. **Verification.** `npm test` (incl. `bhajanLibrary.test.ts`, `BhajanShelf.test.tsx`, `searchIndex.test.ts`, `libraryIntegrity.test.ts`), `npx tsx scripts/gen-verse-counts.mts` when counts change (§11.10), and `.maestro/bhajan-text-smoke.yaml` on both platforms. The acquisition backlog and per-row status live in `docs/content-parity/bhajan-library.md`.
 
 ### Parshuram integration (6 November 2026)
 

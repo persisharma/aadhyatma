@@ -40,6 +40,9 @@ const VidhiCatalogScreen = lazyScreen('VidhiCatalog', 2, () => import('@/screens
 
 // depth 3 — reached from a depth-2 screen
 const AartiReaderScreen = lazyScreen('AartiReader', 3, () => import('@/screens/AartiReaderScreen'));
+// Bhajan text shelf — also hosted by the Bhajan tab's stack (RULEBOOK §6.0.1).
+const BhajanListScreen = lazyScreen('BhajanList', 3, () => import('@/screens/BhajanListScreen'));
+const BhajanReaderScreen = lazyScreen('BhajanReader', 3, () => import('@/screens/BhajanReaderScreen'));
 const AshtakamReaderScreen = lazyScreen('AshtakamReader', 3, () => import('@/screens/AshtakamReaderScreen'));
 const BajrangBaanChaptersScreen = lazyScreen('BajrangBaanChapters', 3, () => import('@/screens/BajrangBaanChaptersScreen'));
 const BajrangBaanReaderScreen = lazyScreen('BajrangBaanReader', 3, () => import('@/screens/BajrangBaanReaderScreen'));
@@ -274,6 +277,12 @@ export default function HomeStackNavigator() {
       <Stack.Screen
         name="AartiReader"
         component={AartiReaderScreen}
+        options={{ gestureEnabled: false, animation: 'fade' }}
+      />
+      <Stack.Screen name="BhajanList" component={BhajanListScreen} />
+      <Stack.Screen
+        name="BhajanReader"
+        component={BhajanReaderScreen}
         options={{ gestureEnabled: false, animation: 'fade' }}
       />
       <Stack.Screen

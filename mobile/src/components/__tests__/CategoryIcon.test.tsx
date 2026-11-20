@@ -11,7 +11,7 @@ function render(iconKey: CategoryIconKey) {
   return tree.root;
 }
 it('renders every category through bundled artwork without a duplicate accessible label', () => {
-  const keys: CategoryIconKey[] = ['granth', 'stotram', 'chalisa', 'japam', 'deity', 'aarti', 'theerth', 'sanskar', 'kavacham', 'ashtakam', 'suktam', 'vrat', 'purpose', 'insight', 'muhurat', 'daan'];
+  const keys: CategoryIconKey[] = ['granth', 'stotram', 'chalisa', 'japam', 'deity', 'aarti', 'theerth', 'sanskar', 'kavacham', 'ashtakam', 'suktam', 'bhajan', 'vrat', 'purpose', 'insight', 'muhurat', 'daan'];
   for (const key of keys) {
     const art = render(key).findByType(Image);
     expect(art.props.source).toBeTruthy();

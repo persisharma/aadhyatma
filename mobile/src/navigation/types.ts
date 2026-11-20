@@ -60,7 +60,18 @@ export type GharVastuStackParamList = {
   GharVastuCompare: { homeIds: readonly string[] };
 };
 
-export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
+/**
+ * Bhajan text shelf (design.md §34.1). Doors on two tabs — the Bhajan tab's
+ * shelf door, and Home's search / deity / routine / resume paths — so both
+ * stacks host it (RULEBOOK §6.0.1). Ids are string catalog ids, never
+ * positions: they are persisted in bookmarks and progress.
+ */
+export type BhajanStackParamList = {
+  BhajanList: undefined;
+  BhajanReader: { bhajanId: string; initialIndex?: number };
+};
+
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & BhajanStackParamList & {
   SanatanParichay: undefined;
   SanatanReader: { topicId: string; initialPage?: number };
   GrahaReference: {focusGraha?:Graha}|undefined;
@@ -270,8 +281,9 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing
-// surface is a root overlay, not a route, so the stack only hosts the library.
-export type AudioStackParamList = {
+// surface is a root overlay, not a route; the stack hosts the audio library and
+// the bhajan text shelf (BhajanStackParamList).
+export type AudioStackParamList = BhajanStackParamList & {
   AudioLibrary: undefined;
 };
 

@@ -1611,3 +1611,8 @@ Replaced the Dasha tab's inline upay card and expanding timeline rows with a gui
 
 Home's structure lives only in design.md §18, and that section still describes the pre-November layout (Today recommendations row, DISCOVER label, 16-tile grid) apart from the paragraphs updated on 19 Nov. A `subsystems/home` page, written after §18 is brought up to date, would stop the next change from starting at a stale description.
 
+## [2026-11-15] ingest | Bhajan text shelf plumbing
+Added [[subsystems/bhajan-text]]: `bhajan` category placed in the Bhajan tab, door → deity-grouped list → aarti-shell reader, routes on Home + Audio stacks, search Path A, RULEBOOK §34 (renumbered from §32 when main added Sanatan Parichay), design.md §34.1. Catalog ships empty; backlog in docs/content-parity/bhajan-library.md.
+
+## [2026-11-15] gap | No verified bhajan text yet
+Lyrics hosts were blocked by the session network policy, so no bhajan cleared RULEBOOK §11.1. Next: allow the hosts, collate the TODO rows two-source, then add JSON + catalog + library entries.

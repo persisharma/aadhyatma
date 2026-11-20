@@ -106,7 +106,10 @@ export type ContentCategory =
   | 'sanskar'
   | 'kavacham'
   | 'ashtakam'
-  | 'suktam';
+  | 'suktam'
+  // Bhajan text shelf (भजन संग्रह) — listed inside the Bhajan tab, not on the
+  // Home grid (`categories.ts` placement 'bhajan-tab'). design.md §34.1.
+  | 'bhajan';
 export type Deity =
   | 'rama'
   | 'krishna'
