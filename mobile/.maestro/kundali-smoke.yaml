@@ -422,7 +422,11 @@ appId: com.prashantsharma.vedansh
     element: { text: "Open Gochar" }
     direction: DOWN
     timeout: 15000
-- assertVisible: "Open Prashna"
+# Prashna is the last door under Gochar; on iPhone 16e it sits below the fold.
+- scrollUntilVisible:
+    element: { text: "Open Prashna" }
+    direction: DOWN
+    timeout: 15000
 - scrollUntilVisible:
     element:
       text: "Open Daily Rashifal"
