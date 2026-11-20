@@ -27,7 +27,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { vidhiArtworkAsset } from '@/data/vidhiArtworkAsset';
-import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { buildDashaGuide, type DashaGuide, type GuideText } from '@/panchang/dashaGuide';
 import { DASHA_GUIDE_COPY } from '@/panchang/dashaGuideContent';
@@ -36,7 +36,7 @@ import { useKundali } from '@/panchang/useKundali';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { isLatinLang, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'DashaGuide'>;
 
@@ -89,10 +89,12 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
   };
   const openLibrary = (sourceId: string) => {
     const target = devotionalTarget(sourceId);
-    if (target) rootNav.navigate('HomeTab', target);
+    // Pushes in place where this stack mounts the reader (Panchang does, so
+    // Back returns to the guide); falls back to the Home tab otherwise.
+    if (target) navigateToHomeStackTarget(rootNav, target);
   };
 
-  const s = useMemo(() => buildStyles(factor), [factor]);
+  const s = useMemo(() => buildStyles(factor, isLatinLang(lang)), [factor, lang]);
   const c = (text: GuideText) => contentByLang(lang, text.hi, text.en);
   const m = (text: GuideText) => meaningByLang(lang, text.hi, text.en);
   const lines = (list: { hi: readonly string[]; en: readonly string[] }) =>
@@ -206,7 +208,7 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
   const bullet = (text: string, key: string, color: string = colors.inkSoft, size = 14) => (
     <View key={key} style={s.bulletRow}>
       <LinearGradient colors={[colors.nightGold, colors.gold]} style={s.bulletDot} />
-      <Text style={[s.bulletText, { color, fontFamily: bodyFont, fontSize: size * factor, lineHeight: size * 1.6 * factor }]}>{text}</Text>
+      <Text style={[s.bulletText, { color, fontFamily: bodyFont, fontSize: size * factor, lineHeight: Math.ceil(size * (isLatinLang(lang) ? 1.6 : 1.7) * factor) }]}>{text}</Text>
     </View>
   );
   const darkTile = (tile: { label: GuideText; value: GuideText; sub: GuideText }, key: string, valueLatin = false) => (
@@ -503,7 +505,7 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
           )}
           <Pressable
             testID="dasha-guide-open-daan"
-            onPress={() => rootNav.navigate('HomeTab', { screen: 'DaanPunya' })}
+            onPress={() => navigateToHomeStackTarget(rootNav, { screen: 'DaanPunya' })}
             accessibilityRole="button"
             accessibilityLabel="Open Daan-Punya to read about these causes and see verified organisations"
             style={({ pressed }) => [s.secondaryButton, { borderColor: colors.saffron, marginTop: 10 }, pressed && s.pressed]}
@@ -632,8 +634,10 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
   const body = [indexView, step1, step2, step3, step4, step5][step];
   const nextTitle = step > 0 && step < STEP_COUNT ? stepTitles[step] : null;
 
+  // The tab bar owns the bottom inset; a second one here left an empty band
+  // under the footer.
   return (
-    <SafeAreaView style={[s.root, { backgroundColor: colors.background }]} edges={['top', 'bottom']}>
+    <SafeAreaView style={[s.root, { backgroundColor: colors.background }]} edges={['top', 'left', 'right']}>
       {header(c(g.title))}
       {step > 0 && (
         <View style={s.stepHead}>
@@ -711,8 +715,12 @@ function stepThumb(index: number, guide: DashaGuide, colors: any, night: readonl
   );
 }
 
-function buildStyles(factor: number) {
+function buildStyles(factor: number, latin: boolean) {
   const f = (size: number) => size * factor;
+  // Indic lines need >=1.65em inside their own box or matras and the
+  // shirorekha clip on iOS (RULEBOOK §3; typography.ts listing tokens). Latin
+  // keeps its authored leading; hi/gu/kn take 1.7em.
+  const lead = (size: number, latinLeading: number) => (latin ? f(latinLeading) : Math.ceil(f(size) * 1.7));
   return StyleSheet.create({
     root: { flex: 1 },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
@@ -722,13 +730,13 @@ function buildStyles(factor: number) {
     header: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 8 },
     roundButton: { width: 44, height: 44, borderRadius: 22, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
     backGlyph: { fontSize: 26, lineHeight: 28, marginTop: -2 },
-    headerTitle: { flex: 1, fontSize: f(20), lineHeight: f(28) },
+    headerTitle: { flex: 1, fontSize: f(20), lineHeight: lead(20, 28) },
     indexButton: { minHeight: 44, paddingHorizontal: 14, borderRadius: 999, borderWidth: 1, justifyContent: 'center' },
     indexButtonText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
     stepHead: { paddingHorizontal: 16, paddingTop: 12 },
     segments: { flexDirection: 'row', gap: 4 },
     segment: { flex: 1, height: 6, borderRadius: 999 },
-    stepTitle: { fontSize: f(23), lineHeight: f(32), marginTop: 2 },
+    stepTitle: { fontSize: f(23), lineHeight: lead(23, 32), marginTop: 2 },
     scroll: { padding: 16, paddingBottom: 24 },
     stack: { gap: 12 },
     card: { borderWidth: 1 },
@@ -738,7 +746,7 @@ function buildStyles(factor: number) {
     heroBody: { alignItems: 'center', paddingHorizontal: 14, paddingBottom: 14 },
     heroDisc: { width: 104, height: 104, borderRadius: 52, borderWidth: 2, marginTop: -56, alignItems: 'center', justifyContent: 'center' },
     statusPill: { marginTop: 8, paddingHorizontal: 10, paddingVertical: 3, borderRadius: 999 },
-    heroTitle: { fontSize: f(23), lineHeight: f(32), marginTop: 4, textAlign: 'center' },
+    heroTitle: { fontSize: f(23), lineHeight: lead(23, 32), marginTop: 4, textAlign: 'center' },
     caption: { fontFamily: fontFamilies.inter, fontSize: f(12), lineHeight: f(18) },
     track: { height: 6, borderRadius: 999, overflow: 'hidden', marginTop: 10 },
     trackFill: { height: '100%', borderRadius: 999 },
@@ -749,16 +757,16 @@ function buildStyles(factor: number) {
     stepThumbWrap: { width: 48, height: 48 },
     stepBadge: { position: 'absolute', top: -6, left: -6, minWidth: 20, height: 20, borderRadius: 10, borderWidth: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 3 },
     stepBadgeText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
-    stepRowTitle: { fontSize: f(15), lineHeight: f(22) },
+    stepRowTitle: { fontSize: f(15), lineHeight: lead(15, 22) },
     chevron: { fontSize: 22, lineHeight: 24 },
-    lead: { fontSize: f(15), lineHeight: f(25), marginTop: 6 },
-    body: { fontSize: f(14), lineHeight: f(23) },
-    smallBody: { fontSize: f(13), lineHeight: f(21) },
-    question: { fontSize: f(15), lineHeight: f(23) },
+    lead: { fontSize: f(15), lineHeight: lead(15, 25), marginTop: 6 },
+    body: { fontSize: f(14), lineHeight: lead(14, 23) },
+    smallBody: { fontSize: f(13), lineHeight: lead(13, 21) },
+    question: { fontSize: f(15), lineHeight: lead(15, 23) },
     grid3: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 10 },
     turn: { flexBasis: '30%', flexGrow: 1, alignItems: 'center', paddingTop: 10, paddingBottom: 8, paddingHorizontal: 4 },
     turnIndex: { position: 'absolute', top: 5, left: 8, fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
-    turnName: { fontSize: f(13), lineHeight: f(19), marginTop: 4, textAlign: 'center' },
+    turnName: { fontSize: f(13), lineHeight: lead(13, 19), marginTop: 4, textAlign: 'center' },
     turnYears: { fontFamily: fontFamilies.inter, fontSize: f(11), lineHeight: f(16) },
     turnTag: { marginTop: 4, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999 },
     turnTagText: { fontSize: 11 },
@@ -767,22 +775,22 @@ function buildStyles(factor: number) {
     wrapColumn: { flexDirection: 'column' },
     wrapColumnStart: { flexDirection: 'column', alignItems: 'flex-start' },
     darkTile: { flex: 1, padding: 12 },
-    darkTileValue: { fontSize: f(14), lineHeight: f(21), marginTop: 4 },
-    darkTileSub: { fontSize: f(12), lineHeight: f(18), marginTop: 2 },
+    darkTileValue: { fontSize: f(14), lineHeight: lead(14, 21), marginTop: 4 },
+    darkTileSub: { fontSize: f(12), lineHeight: lead(12, 18), marginTop: 2 },
     antarRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8, minHeight: 30, paddingVertical: 4, borderTopWidth: 1 },
     antarName: { fontSize: f(12) },
     centered: { alignItems: 'center' },
     glow: { shadowOpacity: 0.55, shadowRadius: 22, shadowOffset: { width: 0, height: 0 } },
-    nightTitle: { fontSize: f(17), lineHeight: f(27), marginTop: 10, textAlign: 'center' },
+    nightTitle: { fontSize: f(17), lineHeight: lead(17, 27), marginTop: 10, textAlign: 'center' },
     chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 10 },
     chip: { paddingHorizontal: 12, paddingVertical: 5, borderWidth: 1, borderRadius: 999 },
     chipText: { fontSize: f(12) },
     solidChip: { paddingHorizontal: 14, paddingVertical: 7, borderRadius: 999 },
-    solidChipText: { fontSize: f(13), lineHeight: f(20) },
+    solidChipText: { fontSize: f(13), lineHeight: lead(13, 20) },
     lessonRow: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, borderWidth: 1, marginTop: 8 },
     numberDisc: { width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
     numberDiscText: { fontFamily: fontFamilies.interSemiBold, fontSize: 15 },
-    lessonWord: { fontSize: f(15), lineHeight: f(22) },
+    lessonWord: { fontSize: f(15), lineHeight: lead(15, 22) },
     rowCenter: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     smallDisc: { width: 56, height: 56, borderRadius: 28, borderWidth: 2, alignItems: 'center', justifyContent: 'center' },
     houseGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 12 },
@@ -792,7 +800,7 @@ function buildStyles(factor: number) {
     bulletDot: { width: 8, height: 8, borderRadius: 4, marginTop: 8 },
     bulletText: { flex: 1 },
     tendBox: { marginTop: 12, paddingVertical: 10, paddingHorizontal: 12 },
-    practiceTitle: { fontSize: f(17), lineHeight: f(25) },
+    practiceTitle: { fontSize: f(17), lineHeight: lead(17, 25) },
     icon: { width: 60, height: 60 },
     iconRound: { width: 60, height: 60, borderRadius: 30, borderWidth: 2, overflow: 'hidden' },
     weekRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, marginTop: 12 },
@@ -801,7 +809,7 @@ function buildStyles(factor: number) {
     innerBox: { marginTop: 12, padding: 12, borderWidth: 1 },
     sevaRow: { paddingHorizontal: 12, paddingBottom: 8, borderWidth: 1 },
     mantraBox: { marginTop: 12, paddingVertical: 14, paddingHorizontal: 12, borderWidth: 1, alignItems: 'center' },
-    mantra: { fontSize: f(19), lineHeight: f(32), textAlign: 'center' },
+    mantra: { fontSize: f(19), lineHeight: lead(19, 32), textAlign: 'center' },
     mala: { width: 64, height: 64, borderRadius: 32, borderWidth: 4, borderStyle: 'dotted', alignItems: 'center', justifyContent: 'center' },
     malaText: { fontFamily: fontFamilies.interSemiBold, fontSize: 16 },
     primaryOnNight: { minHeight: 48, marginTop: 14, borderRadius: 999, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 },
@@ -812,7 +820,7 @@ function buildStyles(factor: number) {
     qMark: { width: 32, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
     qMarkText: { fontFamily: fontFamilies.interSemiBold, fontSize: 16 },
     quoteBox: { marginTop: 8, paddingVertical: 10, paddingHorizontal: 12 },
-    quote: { fontSize: f(14), lineHeight: f(23), marginTop: 4 },
+    quote: { fontSize: f(14), lineHeight: lead(14, 23), marginTop: 4 },
     star: { position: 'absolute', opacity: 0.85 },
     linkButton: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start' },
     linkText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },

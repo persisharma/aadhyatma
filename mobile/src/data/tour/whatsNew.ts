@@ -26,13 +26,22 @@ export type WhatsNewEntry = {
  * Current app version. Must match `expo.version` in `mobile/app.json`. This is
  * the key against which the user's "last seen what's new" is compared.
  */
-export const APP_TOUR_VERSION = '1.5.6';
+export const APP_TOUR_VERSION = '1.5.8';
 
 /**
  * Per-version what's-new content. The latest entry is shown when the user
  * first opens this version of the app after updating.
  */
 export const whatsNew: Readonly<Record<string, WhatsNewEntry>> = {
+  '1.5.8': {
+    version: '1.5.8',
+    items: [{
+      titleHi: 'महादशा मार्गदर्शिका',
+      titleEn: 'Mahadasha guide',
+      bodyHi: 'कुंडली के दशा भाग में अब हर चल रही और आने वाली महादशा पाँच चरणों में समझें — ग्रह का अर्थ, आपकी कुंडली में उसका स्थान, और परम्परा का अभ्यास।',
+      bodyEn: 'In Kundali’s Dasha tab, each running and upcoming Mahadasha now opens a five-step guide — what the graha stands for, where it sits in your chart, and the tradition’s practice.',
+    }],
+  },
   '1.5.6': {
     version: '1.5.6',
     items: [{
