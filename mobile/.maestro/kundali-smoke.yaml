@@ -98,21 +98,31 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Month August"
 # The year list is a non-virtualized ScrollView in a transparent Modal: Maestro
 # can't scrollUntilVisible it, visibility guards see every (off-screen) row, and
-# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS lands
-# 1992 with a fixed fast-swipe count; Android's fling scrolling varies too much,
-# so it slow-drags PAST 1992 (deterministic, no fling, no dismiss) then
-# self-corrects: tap 1992 (a safe no-op while off-screen) and nudge the list up
-# until the day grid opens. Both branches end on August 1992's day grid.
+# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS used a
+# fixed fast-swipe count, but fling distance depends on the screen: on the CI
+# iPhone 16e it missed 1992 and the blind tap closed the sheet. iOS now avoids
+# scrolling the list at all: Year 2024 always sits in the list's first screenful
+# (the list opens at the top and is 220 pt on every phone — the same anchor
+# multi-profile-jyotish-smoke.yaml uses), and with August already chosen,
+# exactly 384 taps of "Previous month" land on August 1992, on any screen size.
+# Android's fling scrolling varies too much, so it slow-drags PAST 1992
+# (deterministic, no fling, no dismiss) then self-corrects: tap 1992 (a safe
+# no-op while off-screen) and nudge the list up until the day grid opens. Both
+# branches end on August 1992's day grid.
 - runFlow:
     when:
       platform: iOS
     commands:
-      - repeat:
-          times: 4
-          commands:
-            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - tapOn:
+          id: "calendar-year-2024"
       - waitForAnimationToEnd
-      - tapOn: "Year 1992"
+      - repeat:
+          times: 384
+          commands:
+            - tapOn: "Previous month"
+      - extendedWaitUntil:
+          visible: "14 August 1992"
+          timeout: 10000
 - runFlow:
     when:
       platform: Android
