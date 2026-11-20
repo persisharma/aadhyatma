@@ -33,7 +33,7 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { backLabel } from '@/utils/a11yLabels';
 import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
-import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { dashaGuideOffered, formatDashaSpan } from '@/panchang/dashaGuide';
 import { buildDashaReading } from '@/panchang/dashaReading';
@@ -224,7 +224,9 @@ export default function KundaliScreen({ navigation, route }: Props) {
 
   const openPractice = (sourceId = 'navagraha-stotram') => {
     const target = devotionalTarget(sourceId);
-    if (target) rootNav.navigate('HomeTab', target);
+    // In place where this stack mounts the reader, so Back returns here
+    // (RULEBOOK §6.0.1); otherwise the Home tab.
+    if (target) navigateToHomeStackTarget(rootNav, target);
   };
 
   const handleTabChange = (tab: KundaliResultTab) => {

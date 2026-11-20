@@ -344,6 +344,8 @@ The contract for such a flow:
 
 The bhajan text shelf (§34) is the second such flow: `BhajanStackParamList` is intersected into the Home and Audio param lists, and `BhajanList` / `BhajanReader` are registered on both stacks.
 
+The Mahadasha guide (design.md §51e) applies rule 4: its japa, paath and Daan-Punya doors open Home-stack screens, so the Panchang stack mounts every screen those doors can reach (`JyotishPracticeRoutes`, picked from `HomeStackParamList` in `navigation/types.ts`) and the guide and the Dasha tab push through `navigateToHomeStackTarget`. `navigation/__tests__/dashaGuidePracticeRoutes.test.ts` resolves every beej-japa and `GRAHA_UPAY` practice source and fails if its screen is not mounted on Panchang.
+
 Do **not** apply this to a flow with doors on one tab: a duplicate registration there is pure surface area. Guarded by `src/navigation/__tests__/vidhiBackNavigation.test.ts`.
 
 ### 6.1 Onboarding surfaces — feature tour, first-run setup & What's New (contract)

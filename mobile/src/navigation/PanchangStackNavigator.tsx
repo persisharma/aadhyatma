@@ -32,6 +32,15 @@ const DaanJourneyScreen = lazyScreen('DaanJourney', 4, () => import('@/screens/D
 const KundaliReportScreen = lazyScreen('KundaliReport', 4, () => import('@/screens/KundaliReportScreen'));
 const GrahaReferenceScreen = lazyScreen('GrahaReference', 4, () => import('@/screens/GrahaReferenceScreen'));
 const DashaGuideScreen = lazyScreen('DashaGuide', 4, () => import('@/screens/DashaGuideScreen'));
+// The guide's practice doors push in place so Back returns to the guide
+// (RULEBOOK §6.0.1 rule 4; the same components Home mounts).
+const JapamCounterScreen = lazyScreen('JapamCounter', 5, () => import('@/screens/JapamCounterScreen'));
+const ChalisaReaderScreen = lazyScreen('ChalisaReader', 5, () => import('@/screens/ChalisaReaderScreen'));
+const AshtakamReaderScreen = lazyScreen('AshtakamReader', 5, () => import('@/screens/AshtakamReaderScreen'));
+const KavachamReaderScreen = lazyScreen('KavachamReader', 5, () => import('@/screens/KavachamReaderScreen'));
+const VishnuSahasranamaChaptersScreen = lazyScreen('VishnuSahasranamaChapters', 5, () => import('@/screens/VishnuSahasranamaChaptersScreen'));
+const VishnuSahasranamaReaderScreen = lazyScreen('VishnuSahasranamaReader', 6, () => import('@/screens/VishnuSahasranamaReaderScreen'));
+const DaanPunyaScreen = lazyScreen('DaanPunya', 5, () => import('@/screens/DaanPunyaScreen'));
 const MuhuratDayDetailScreen = lazyScreen('MuhuratDayDetail', 4, () => import('@/screens/MuhuratDayDetailScreen'));
 const MuhuratResultsScreen = lazyScreen('MuhuratResults', 4, () => import('@/screens/MuhuratResultsScreen'));
 const NamkaranRashiScreen = lazyScreen('NamkaranRashi', 4, () => import('@/screens/NamkaranRashiScreen'));
@@ -104,7 +113,16 @@ export default function PanchangStackNavigator({ initialMode = 'calendar' }: { i
       />
       {/* दान-पुण्य (PRD-26) — the Observance-Detail daan door pushes the
           journey in place; entry/directory/katha are its terminal pushes.
-          DaanPunya itself stays More-only (the educate home has one door). */}
+          DaanPunya is mounted too so the Mahadasha guide's daan door returns
+          to the guide on Back. */}
+      <Stack.Screen name="DaanPunya" component={DaanPunyaScreen} options={{ animation: 'slide_from_right' }} />
+      {/* Mahadasha guide practice doors (design.md §51e) — Back returns to the guide. */}
+      <Stack.Screen name="JapamCounter" component={JapamCounterScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
+      <Stack.Screen name="ChalisaReader" component={ChalisaReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
+      <Stack.Screen name="AshtakamReader" component={AshtakamReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
+      <Stack.Screen name="KavachamReader" component={KavachamReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
+      <Stack.Screen name="VishnuSahasranamaChapters" component={VishnuSahasranamaChaptersScreen} />
+      <Stack.Screen name="VishnuSahasranamaReader" component={VishnuSahasranamaReaderScreen} options={{ gestureEnabled: false, animation: 'fade' }} />
       <Stack.Screen name="DaanJourney" component={DaanJourneyScreen} options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="DaanLedger" component={DaanLedgerScreen} options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="DaanEntry" component={DaanEntryScreen} options={{ animation: 'slide_from_right' }} />

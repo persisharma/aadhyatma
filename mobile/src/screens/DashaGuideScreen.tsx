@@ -27,7 +27,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { vidhiArtworkAsset } from '@/data/vidhiArtworkAsset';
-import { buildEntryStartTarget } from '@/navigation/entryRoutes';
+import { buildEntryStartTarget, navigateToHomeStackTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { buildDashaGuide, type DashaGuide, type GuideText } from '@/panchang/dashaGuide';
 import { DASHA_GUIDE_COPY } from '@/panchang/dashaGuideContent';
@@ -89,7 +89,9 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
   };
   const openLibrary = (sourceId: string) => {
     const target = devotionalTarget(sourceId);
-    if (target) rootNav.navigate('HomeTab', target);
+    // Pushes in place where this stack mounts the reader (Panchang does, so
+    // Back returns to the guide); falls back to the Home tab otherwise.
+    if (target) navigateToHomeStackTarget(rootNav, target);
   };
 
   const s = useMemo(() => buildStyles(factor, isLatinLang(lang)), [factor, lang]);
@@ -503,7 +505,7 @@ export default function DashaGuideScreen({ navigation, route }: Props) {
           )}
           <Pressable
             testID="dasha-guide-open-daan"
-            onPress={() => rootNav.navigate('HomeTab', { screen: 'DaanPunya' })}
+            onPress={() => navigateToHomeStackTarget(rootNav, { screen: 'DaanPunya' })}
             accessibilityRole="button"
             accessibilityLabel="Open Daan-Punya to read about these causes and see verified organisations"
             style={({ pressed }) => [s.secondaryButton, { borderColor: colors.saffron, marginTop: 10 }, pressed && s.pressed]}

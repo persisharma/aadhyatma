@@ -215,7 +215,18 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
+/**
+ * The Mahadasha guide's practice doors (design.md §51e) — beej japa, the
+ * lord's paath and the Daan-Punya home — are mounted on the Panchang stack too,
+ * so Back from them returns to the guide instead of Home's root (RULEBOOK
+ * §6.0.1 rule 4). Declared once on Home; picked here so the params cannot drift.
+ */
+export type JyotishPracticeRoutes = Pick<
+  HomeStackParamList,
+  'JapamCounter' | 'ChalisaReader' | 'AshtakamReader' | 'KavachamReader' | 'VishnuSahasranamaChapters' | 'VishnuSahasranamaReader' | 'DaanPunya'
+>;
+
+export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & JyotishPracticeRoutes & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;
