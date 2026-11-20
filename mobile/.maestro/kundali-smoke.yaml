@@ -392,7 +392,8 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
 - assertVisible: ".*No name or birth details are included.*"
-- assertVisible: ".*whole card in a 4:5 frame.*"
+# The Rashifal card shares as one whole image (no 4:5 crop line on this sheet).
+- assertVisible: ".*WhatsApp gets the whole card as one image.*"
 - tapOn: "Cancel"
 - waitForAnimationToEnd
 # The Moon sign is the card hero, so it is already on screen (one line:
