@@ -379,7 +379,9 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "From your full chart"
     timeout: 15000
-- assertVisible: "Person switcher"
+# The person switcher is the "WHOSE JYOTISH" row; its chip names the saved
+# profile.
+- assertVisible: "Show Jyotish for Aarav"
 - assertVisible: "Favour|FAVOUR"
 - assertVisible: "Pause|PAUSE"
 - assertVisible: "Reflect|REFLECT"
@@ -393,9 +395,10 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*whole card in a 4:5 frame.*"
 - tapOn: "Cancel"
 - waitForAnimationToEnd
-# The Moon sign is the card hero, so it is already on screen.
-- assertVisible: "Kumbha"
-- assertVisible: "Aquarius"
+# The Moon sign is the card hero, so it is already on screen (one line:
+# "Kumbha · Aquarius").
+- assertVisible: ".*Kumbha.*"
+- assertVisible: ".*Aquarius.*"
 # §51c dissolved the chart-glance card into the door grid: Lagna and nakshatra
 # are now the Kundali TILE's reading, and the dasha lord lives one tap deeper on
 # the Kundali result. The grid can sit below the fold on Android's shorter
