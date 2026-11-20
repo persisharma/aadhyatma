@@ -414,7 +414,10 @@ appId: com.prashantsharma.vedansh
     element: { text: "Open Guna Milan" }
     direction: DOWN
     timeout: 15000
-- assertVisible: "Open Namkaran"
+# Namkaran is release-gated (panchang/namkaranRelease.ts: NAMKARAN_RELEASED is
+# false), and this journey runs on a Release build, so its door must stay
+# hidden. namkaran-smoke.yaml covers the door on dev builds.
+- assertNotVisible: "Open Namkaran"
 - scrollUntilVisible:
     element: { text: "Open Gochar" }
     direction: DOWN
