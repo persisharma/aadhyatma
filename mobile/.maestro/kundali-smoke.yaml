@@ -324,7 +324,11 @@ appId: com.prashantsharma.vedansh
     id: "dasha-guide-index-view"
 - tapOn:
     id: "dasha-guide-back"
-- assertVisible: "Vimshottari Dasha"
+# Back lands on the Dasha tab where the reader left it: scrolled to the guide
+# door, with the "Vimshottari Dasha" heading above the fold on iPhone 16e.
+# Assert the door the guide was opened from.
+- assertVisible:
+    id: "dasha-guide-door"
 # Each "Now" level is named; anchor on a concrete row in the full Mahadasha
 # timeline because the two section captions can scroll past as one block.
 - scrollUntilVisible:
@@ -347,7 +351,9 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: e2e-shots/dasha-guide-upcoming-index
 - tapOn:
     id: "dasha-guide-back"
-- assertVisible: "Vimshottari Dasha"
+# Back returns to the timeline row the guide was opened from.
+- assertVisible:
+    id: "dasha-timeline-guide-mercury"
 
 # Kundali sharing is explicit because the card contains personal birth details.
 - tapOn: "Share your Kundali"
