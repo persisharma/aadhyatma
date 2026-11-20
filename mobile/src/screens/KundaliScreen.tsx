@@ -78,7 +78,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { fontFamilies } from '@/theme/typography';
 import { contentByLang, meaningByLang } from '@/utils/localize';
-import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+import { isLatinLang, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { runWhenIdle } from '@/utils/runWhenIdle';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'Kundali'>;
@@ -1223,7 +1223,7 @@ function KundaliResult({
                 <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: (lang === 'en' ? 10 : 12) * factor }]}>
                   {contentByLang(lang, 'इस महादशा को समझें', 'Understand this Mahadasha')}
                 </Text>
-                <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15 * factor, lineHeight: 23 * factor, marginTop: 3 }}>
+                <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15 * factor, lineHeight: (isLatinLang(lang) ? 23 : 26) * factor, marginTop: 3 }}>
                   {contentByLang(lang, `${GRAHA_NAMES_HI[currentDasha.maha.lord]} महादशा`, `${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha`)}
                 </Text>
                 <Text style={[resultStyles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), marginTop: 2 }]}>
@@ -1375,7 +1375,7 @@ function KundaliResult({
                         accessibilityLabel={`Open the ${GRAHA_NAMES_EN[period.lord]} Mahadasha: what it means and what to do`}
                         style={({ pressed }) => [resultStyles.timelineGuideLink, pressed && { opacity: 0.7 }]}
                       >
-                        <Text style={[resultStyles.timelineGuideText, { color: colors.saffronDeep }]}>
+                        <Text style={[resultStyles.timelineGuideText, { color: colors.saffronDeep }, !isLatinLang(lang) && { fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 13, lineHeight: 22 }]}>
                           {contentByLang(lang, 'अर्थ, उपाय और कारण ›', 'What it means and what to do ›')}
                         </Text>
                       </Pressable>
@@ -1794,7 +1794,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   dashaReading: { borderWidth: 1, padding: 14, marginBottom: 14 },
-  dashaReadingBody: { fontSize: 12, lineHeight: 19, marginTop: 6 },
+  dashaReadingBody: { fontSize: 12, lineHeight: 20, marginTop: 6 },
   currentDashaTitle: { fontFamily: fontFamilies.interSemiBold, fontSize: 14, marginTop: 5 },
   beejJapaLink: { minHeight: 44, maxWidth: '100%', marginBottom: 14, paddingHorizontal: 14, paddingVertical: 10, borderWidth: 1, alignSelf: 'flex-start', justifyContent: 'center' },
   beejJapaText: { fontFamily: fontFamilies.interSemiBold, fontSize: 13 },
