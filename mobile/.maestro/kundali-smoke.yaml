@@ -517,12 +517,13 @@ appId: com.prashantsharma.vedansh
 
 # Change exposes the 12-sign grid with plain-English equivalents; no sign is
 # duplicated as both the traditional and translation label.
+# The control sits near the top of the screen, where it can never be scrolled
+# to the centre; centerElement made this wait time out on iPhone 16e.
 - scrollUntilVisible:
     element:
       text: "Change Moon sign"
     direction: UP
     timeout: 10000
-    centerElement: true
 - tapOn: "Change Moon sign"
 - waitForAnimationToEnd
 - assertVisible: "Done choosing Moon sign"
