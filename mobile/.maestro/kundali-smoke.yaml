@@ -339,11 +339,14 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Mercury Mahadasha"
 # An upcoming Mahadasha opens its own guide from the timeline (ended periods
 # carry no link).
+# Centre the row: at the bottom edge the link sits under the tab bar, and a
+# tap there lands on the Home tab instead (CI iPhone 16e, run 6).
 - scrollUntilVisible:
     element:
       id: "dasha-timeline-guide-mercury"
     direction: DOWN
     timeout: 15000
+    centerElement: true
 - tapOn:
     id: "dasha-timeline-guide-mercury"
 - assertVisible: "Mercury Mahadasha"
