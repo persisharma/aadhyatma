@@ -359,14 +359,16 @@ appId: com.prashantsharma.vedansh
     id: "dasha-timeline-guide-mercury"
 
 # Kundali sharing is explicit because the card contains personal birth details.
+# Jyotish cards share through the common ShareTargetSheet (whole 4:5 card,
+# "Share to other apps", Cancel) since the #686–#689 share-sheet work.
 - tapOn: "Share your Kundali"
 - waitForAnimationToEnd
-- assertVisible: "4:5 · 1080×1350"
+- assertVisible: ".*whole card in a 4:5 frame.*"
 - assertVisible: ".*includes the chart name, birth date, time, and city.*"
 # The card's own method footer is the last thing inside the fixed 4:5 box.
 - assertVisible: ".*Lahiri ayanamsa.*"
-- assertVisible: "Open share sheet"
-- tapOn: "Close share preview"
+- assertVisible: "Share to other apps"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
 
 # Returning to Jyotish refreshes storage. Since design.md §51c the landing has
@@ -388,8 +390,8 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
 - assertVisible: ".*No name or birth details are included.*"
-- assertVisible: "4:5 · 1080×1350"
-- tapOn: "Close share preview"
+- assertVisible: ".*whole card in a 4:5 frame.*"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
 # The Moon sign is the card hero, so it is already on screen.
 - assertVisible: "Kumbha"
@@ -481,7 +483,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Share selected day’s Rashifal"
 - tapOn: "Share selected day’s Rashifal"
 - assertVisible: ".*No name or birth details are included.*"
-- tapOn: "Close share preview"
+- tapOn: "Cancel"
 - tapOn:
     id: "rashifal-day--1"
 - assertVisible: "Share selected day’s Rashifal"
@@ -498,8 +500,8 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
 - assertVisible: ".*No name or birth details are included.*"
-- assertVisible: "Open share sheet"
-- tapOn: "Close share preview"
+- assertVisible: "Share to other apps"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
 
 # Change exposes the 12-sign grid with plain-English equivalents; no sign is
