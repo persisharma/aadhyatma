@@ -258,22 +258,38 @@ appId: com.prashantsharma.vedansh
 - assertVisible:
     id: "dasha-guide-index-view"
 - assertVisible: "In this guide · 5 steps"
+- takeScreenshot: e2e-shots/dasha-guide-index
 - tapOn:
     id: "dasha-guide-start"
 - assertVisible: "Step 1 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-1
 - tapOn:
     id: "dasha-guide-next"
+- assertVisible: "Step 2 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-2
 - tapOn:
     id: "dasha-guide-next"
+- assertVisible: "Step 3 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-3
 - tapOn:
     id: "dasha-guide-next"
 - assertVisible: "Step 4 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-4
 - scrollUntilVisible:
     element:
       id: "dasha-guide-chant"
     direction: DOWN
     timeout: 15000
-- assertVisible: ".*not a fix or a guarantee.*"
+- scrollUntilVisible:
+    element:
+      text: ".*not a fix or a guarantee.*"
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: e2e-shots/dasha-guide-step-4-mantra
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 5 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-5
 # Back on a step returns to the index; Back on the index leaves the guide.
 - tapOn:
     id: "dasha-guide-back"
@@ -301,6 +317,7 @@ appId: com.prashantsharma.vedansh
     id: "dasha-timeline-guide-mercury"
 - assertVisible: "Mercury Mahadasha"
 - assertVisible: "Upcoming period"
+- takeScreenshot: e2e-shots/dasha-guide-upcoming-index
 - tapOn:
     id: "dasha-guide-back"
 - assertVisible: "Vimshottari Dasha"
