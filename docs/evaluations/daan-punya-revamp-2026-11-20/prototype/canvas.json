@@ -1,0 +1,27 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-20T07:20:00Z" },
+  "title": "Daan-Punya Revamp Prototype",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 1500, "title": "A · Guide index · Friday", "is_interactive": true },
+    "AStep1.dc.html": { "x": 470, "y": 0, "w": 390, "h": 1720, "title": "A · Step 1 · What daan is", "is_interactive": true },
+    "AStep2.dc.html": { "x": 940, "y": 0, "w": 390, "h": 1860, "title": "A · Step 2 · How to give", "is_interactive": true },
+    "AStep3.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 1720, "title": "A · Step 3 · What to give today", "is_interactive": true },
+    "AStep4.dc.html": { "x": 1880, "y": 0, "w": 390, "h": 1960, "title": "A · Step 4 · Whom it reaches", "is_interactive": true },
+    "AStep5.dc.html": { "x": 2350, "y": 0, "w": 390, "h": 1600, "title": "A · Step 5 · Remember it quietly", "is_interactive": true },
+    "AHindi.dc.html": { "x": 2820, "y": 0, "w": 390, "h": 1500, "title": "विकल्प A · सूची · हिन्दी", "is_interactive": true },
+    "AHindiStep3.dc.html": { "x": 3290, "y": 0, "w": 390, "h": 1760, "title": "चरण 3 · आज क्या दें", "is_interactive": true },
+    "CauseIcon.dc.html": { "x": 3760, "y": 0, "w": 96, "h": 96, "title": "Seva icon (shared part)" },
+    "OptionB.dc.html": { "x": 0, "y": 2380, "w": 390, "h": 2400, "title": "B · Today-first home", "is_interactive": true },
+    "OptionC.dc.html": { "x": 470, "y": 2380, "w": 390, "h": 2100, "title": "C · Learn through the five kathas", "is_interactive": true },
+    "CausePage.dc.html": { "x": 940, "y": 2380, "w": 390, "h": 1800, "title": "Daan-dwaar · one seva (shared by A, B, C)" }
+  },
+  "order": ["Main.dc.html", "AStep1.dc.html", "AStep2.dc.html", "AStep3.dc.html", "AStep4.dc.html", "AStep5.dc.html", "AHindi.dc.html", "AHindiStep3.dc.html", "CauseIcon.dc.html", "OptionB.dc.html", "OptionC.dc.html", "CausePage.dc.html"],
+  "notes": {
+    "rowA": { "x": 0, "y": -300, "text": "Option A · Daan as a 5-step guide, like the Mahadasha guide", "kind": "title1", "maxW": 3856 },
+    "rowB": { "x": 0, "y": 2080, "text": "Option B · today-first home  ·  Option C · learn through kathas  ·  Daan-dwaar page", "kind": "title1", "maxW": 1330 }
+  },
+  "designSystems": []
+}
