@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { isObservanceDataReady, matchesLunarTithiRuleOnDate, resolveObservancesForYear, resolveObservancesForYearLive } from '../festivalEngine';
+import { getObservancesForDate, isObservanceDataReady, matchesLunarTithiRuleOnDate, resolveObservancesForYear, resolveObservancesForYearLive, searchObservances } from '../festivalEngine';
 import { getRuleById } from '../vratCatalog';
 
 // CI guard for the "Janmashtami one lunar month early" class of bug. The full cross-check
@@ -33,6 +33,28 @@ function engineDate(id: string, year: number): string | null {
   return o ? iso(o.date) : null;
 }
 const dayDiff = (a: string, b: string) => Math.abs((new Date(a).getTime() - new Date(b).getTime()) / 86400000);
+
+test('Vaikuntha Chaturdashi is searchable and calendar-visible on the published dates', () => {
+  const id = 'vaikuntha-chaturdashi';
+  const cases = [
+    new Date(2025, 10, 4), new Date(2026, 10, 23), new Date(2027, 10, 12),
+  ];
+  for (const query of ['Vaikunth Chaturdashi', 'वैकुंठ चतुर्दशी', 'बैकुण्ठ चतुर्दशी']) {
+    assert.ok(searchObservances(query).some((rule) => rule.id === id), query);
+  }
+  for (const system of ['purnimant', 'amanta'] as const) {
+    for (const date of cases) {
+      assert.ok(getObservancesForDate(date, system).some((item) => item.rule.id === id), iso(date));
+    }
+    for (let year = 2024; year <= 2031; year += 1) {
+      const dates = resolveObservancesForYear(year, system).filter((item) => item.rule.id === id);
+      assert.equal(dates.length, 1, `${system} ${year}`);
+      const rule = dates[0].rule;
+      assert.equal(rule.dayRule, 'nishita');
+      assert.ok(matchesLunarTithiRuleOnDate(rule, dates[0].date, system), `${system} ${year}: bundled and live day differ`);
+    }
+  }
+});
 
 // Real published civil dates (Ujjain/IST). Source of truth — NOT engine output.
 const ANCHORS: Record<string, string> = {
