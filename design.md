@@ -3604,6 +3604,9 @@ Lock Screen families get no art.
 
 ## 60. Event Muhurat Finder (शुभ मुहूर्त खोज, PRD-16)
 
+**India civil scan date (Proposal 14).** Finder results, Special auspicious days and picker warm-up use `useCivilToday`: refresh just after IST midnight and on foreground return, with no rescan on same-day return. Results are keyed by the active date and scan inputs so an old list cannot flash before effect cleanup; obsolete progressive/final callbacks are ignored. Both result lists show a wrapping, script-aware 13/23 saffron-deep scan-start date beneath the city/convention line. Date labels and valid overnight window instants retain their existing meaning; horizons, ranking, routing and absolute-date cache keys are unchanged. Finder additionally checks yesterday once for windows that cross today's IST midnight and have not ended. Only those original windows carry over, with unchanged endpoints and tier. They expire by a bounded timer or foreground refresh without rescanning or extending the upcoming horizon. Abujh entries are day labels with no timed-window payload, so expired prior-day entries leave that list. Rolling cache warm-up defaults explicitly to `civilToday()`; the shared device-local `startOfToday` helper is unchanged.
+
+
 **Purpose.** Answer *"which day should I do this on?"* from the shipped panchang/muhurat/jyotish primitives — ranked days with the auspicious windows inside each, fully offline. Answer-first: the recommendation leads; the panchang reasoning is inspected second.
 
 **Structure.** Four screens in the Panchang stack (`MuhuratFinder` → `MuhuratResults` → `MuhuratDayDetail`; `AbujhDays` beside them):
