@@ -111,6 +111,7 @@
       "./plugins/withHomeWidgets.js",
       "./plugins/withAndroidLaunchWindow.js",
       "./plugins/withAndroidReleaseShrink.js",
+      "./plugins/withAndroidPortraitOptional.js",
       [
         "expo-location",
         {
