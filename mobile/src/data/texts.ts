@@ -9,6 +9,7 @@
 // theme corpus behind a `require()` thunk, so importing the counts here is
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest, bhagavatamTitleHi, bhagavatamTitleEn, bhagavatamVerseCount } from './bhagavatam';
 import {
   durgaDeviKavachamTotal,
   durgaSaptashatiChapterOneTotal,
@@ -194,6 +195,18 @@ export const library: readonly LibraryEntry[] = [
     category: 'granth',
     deities: ['krishna'],
     verseCount: 701,
+  },
+  {
+    id: BHAGAVATAM_ID,
+    nameHi: bhagavatamTitleHi,
+    nameEn: bhagavatamTitleEn,
+    sub: `${bhagavatamChaptersManifest.length} चयनित पाठ · ${bhagavatamVerseCount} श्लोक`,
+    subEn: `${bhagavatamChaptersManifest.length} selected readings · ${bhagavatamVerseCount} verses`,
+    thumb: 'भा',
+    status: 'active',
+    category: 'granth',
+    deities: ['krishna', 'vishnu'],
+    verseCount: bhagavatamVerseCount,
   },
   {
     // गीता सार — themed readings over the bundled Gita (design.md §77,

@@ -10,6 +10,7 @@ import { BookmarksProvider, useBookmarks } from '@/contexts/BookmarksContext';
 import { ShareProvider } from '@/utils/shareVerse';
 import { __resetReadCoverageStore, useReadCoverage } from '@/utils/readCoverageStore';
 import * as gita from '@/data/gita';
+import { BHAGAVATAM_ID } from '@/data/bhagavatam';
 import GitaReaderScreen from '../GitaReaderScreen';
 import GitaVersePage from '@/components/GitaVersePage';
 
@@ -29,13 +30,16 @@ let saved: ReturnType<typeof useBookmarks>;
 let coverage: ReturnType<typeof useReadCoverage>;
 let stack: any;
 const router = StackRouter({ initialRouteName: 'Search' });
-const options = { routeNames: ['Search', 'GitaReader'], routeParamList: {}, routeGetIdList: {} };
+const options = { routeNames: ['Search', 'GitaReader', 'BhagavatamReader'], routeParamList: {}, routeGetIdList: {} };
 const replace = jest.fn();
 function Probe() { saved = useBookmarks(); progress = useReadingProgress(); coverage = useReadCoverage(); return null; }
-function Journey() {
+function Journey({ reader = 'GitaReader' }: { reader?: 'GitaReader' | 'BhagavatamReader' }) {
   const { isLoading } = useReadingProgress();
   const [state, setState] = useState(() => router.getRehydratedState({
-    stale: true, routes: [{ name: 'Search', params: { query: 'action' } }, { name: 'GitaReader', params: { chapter: 2, initialIndex: 11 } }], index: 1,
+    stale: true, routes: [{ name: 'Search', params: { query: 'action' } }, {
+      name: reader,
+      params: reader === 'BhagavatamReader' ? { chapter: 1, initialIndex: 0 } : { chapter: 2, initialIndex: 11 },
+    }], index: 1,
   }, options));
   stack = state;
   const route = state.routes[state.index];
@@ -44,10 +48,25 @@ function Journey() {
     goBack: () => setState(old => router.getRehydratedState(router.getStateForAction(old, CommonActions.goBack(), options) ?? old, options)),
     navigate: jest.fn(),
   };
-  return <><Probe />{!isLoading && route.name === 'GitaReader' && <GitaReaderScreen key={route.key} route={route as any} navigation={navigation as any} />}</>;
+  return <><Probe />{!isLoading && route.name !== 'Search' && <GitaReaderScreen key={route.key} route={route as any} navigation={navigation as any} />}</>;
 }
 const press = (id: string) => act(() => tree.root.findAll(n => n.props.testID === id && typeof n.props.onPress === 'function')[0].props.onPress());
 const type = (value: string) => act(() => tree.root.findByType(TextInput).props.onChangeText(value));
+async function mountJourney(reader?: 'BhagavatamReader') {
+  await act(async () => {
+    tree = TestRenderer.create(
+      <SafeAreaInsetsContext.Provider value={{ top: 24, bottom: 16, left: 0, right: 0 }}>
+        <GitaLanguageProvider initialLang="en">
+          <BookmarksProvider>
+            <ReadingProgressProvider>
+              <ShareProvider><Journey reader={reader} /></ShareProvider>
+            </ReadingProgressProvider>
+          </BookmarksProvider>
+        </GitaLanguageProvider>
+      </SafeAreaInsetsContext.Provider>,
+    );
+  });
+}
 beforeEach(async () => {
   jest.useFakeTimers();
   jest.setSystemTime(new Date('2026-11-13T10:00:00Z'));
@@ -55,9 +74,54 @@ beforeEach(async () => {
   await AsyncStorage.clear();
   __resetReadCoverageStore();
   replace.mockClear(); mockStopSpeech.mockClear(); mockStopSlide.mockClear();
-  await act(async () => { tree = TestRenderer.create(<SafeAreaInsetsContext.Provider value={{ top: 24, bottom: 16, left: 0, right: 0 }}><GitaLanguageProvider initialLang="en"><BookmarksProvider><ReadingProgressProvider><ShareProvider><Journey /></ShareProvider></ReadingProgressProvider></BookmarksProvider></GitaLanguageProvider></SafeAreaInsetsContext.Provider>); });
+  await mountJourney();
 });
 afterEach(() => { act(() => tree.unmount()); jest.useRealTimers(); jest.restoreAllMocks(); });
+
+test('Bhāgavatam uses canonical numbers for sparse jumps and keeps its own bookmarks and progress', async () => {
+  act(() => tree.unmount());
+  await mountJourney('BhagavatamReader');
+  press('gita-jump-trigger');
+  expect(tree.root.findByType(TextInput).props.value).toBe('15');
+  type('१६');
+  const open = tree.root.findAll(n => n.props.testID === 'gita-jump-open' && typeof n.props.onPress === 'function')[0];
+  expect(open.props.disabled).toBe(true);
+  press('gita-jump-chapter');
+  press('gita-jump-chapter-4');
+  expect(tree.root.findByType(TextInput).props.value).toBe('54');
+  type('૫૫');
+  press('gita-jump-open');
+  expect(replace).toHaveBeenCalledWith('BhagavatamReader', { chapter: 4, initialIndex: 1 });
+  const page = tree.root.findAllByType(GitaVersePage).find(n => n.props.verse.scriptureRef === '4.8.55')!;
+  expect(page.props.verse.meaningEn).toContain('Tulsi');
+  act(() => page.props.topActions.props.children[0].props.onToggle());
+  expect(saved.isBookmarked('srimad-bhagavatam:4:1')).toBe(true);
+  expect(saved.isBookmarked('bhagavad-gita:4:1')).toBe(false);
+  expect(progress.getChapterProgress(BHAGAVATAM_ID, 4)?.verseIndex).toBe(1);
+  act(() => tree.root.findByType(GitaReaderScreen).props.navigation.goBack());
+  expect(stack.routes[0].params).toEqual({ query: 'action' });
+});
+
+test('Sudāmā reading offers only 3, 5 and 9 and rejects verse 4', async () => {
+  act(() => tree.unmount());
+  await mountJourney('BhagavatamReader');
+  press('gita-jump-trigger');
+  press('gita-jump-chapter');
+  press('gita-jump-chapter-3');
+  for (const number of [3, 5, 9]) {
+    expect(tree.root.findAll(n => n.props.testID === `gita-jump-verse-${number}`).length).toBeGreaterThan(0);
+  }
+  expect(tree.root.findAll(n => n.props.testID === 'gita-jump-verse-4')).toHaveLength(0);
+  type('4');
+  expect(tree.root.findAll(n => n.props.testID === 'gita-jump-open' && typeof n.props.onPress === 'function')[0].props.disabled).toBe(true);
+  act(() => tree.root.findByType(TextInput).props.onSubmitEditing());
+  expect(replace).not.toHaveBeenCalled();
+  type('5');
+  press('gita-jump-open');
+  expect(replace).toHaveBeenCalledWith('BhagavatamReader', { chapter: 3, initialIndex: 1 });
+  expect(progress.getChapterProgress(BHAGAVATAM_ID, 3)?.verseIndex).toBe(1);
+  expect(progress.getChapterProgress('bhagavad-gita', 3)).toBeUndefined();
+});
 
 test('cancel preserves position, stored progress and Back stack; sheet time is not reading', async () => {
   const before = progress.getChapterProgress('bhagavad-gita', 2);

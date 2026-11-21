@@ -11,6 +11,7 @@
 export const routeGraph: Readonly<Record<string, readonly string[]>> = {
   "AbujhDays": ["MuhuratDetail"],
   "BajrangBaanChapters": ["BajrangBaanReader"],
+  "BhagavatamChapters": ["BhagavatamReader"],
   "BrowseByPurpose": ["PurposeList"],
   "ComicChapters": ["ComicReader"],
   "DaanDirectory": ["DaanDirectoryDetail"],

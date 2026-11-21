@@ -4,6 +4,7 @@ import { garudPuranImages } from '@assets/garud-puran';
 import { gitaImages } from '@assets/gita';
 import { shivaStrotamImages } from '@assets/shiva-strotam';
 import { aartiIdByIndex } from './aarti/ids';
+import { BHAGAVATAM_ID } from './bhagavatam';
 import { bhajanGroupOf } from './bhajan/ids';
 import { categories } from './categories';
 import { deities } from './deities';
@@ -91,6 +92,7 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'kalabhairav-ashtakam': shivaStrotamImages.shiva,
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
+  [BHAGAVATAM_ID]: backgroundImages.category_granth_open_scripture,
   'garud-puran': garudPuranImages.cover,
   'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
   sundarkand: chalisaImages.hanuman_sea,

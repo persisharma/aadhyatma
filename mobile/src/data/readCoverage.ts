@@ -27,6 +27,7 @@ import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
 import { garudPuranChaptersManifest } from '@/data/garud-puran';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest } from '@/data/bhagavatam';
 import { gitaSaarChaptersManifest } from '@/data/gita-saar';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import { getVersePoolLastPositions } from '@/data/versePool';
@@ -79,6 +80,7 @@ function chapteredManifests(): Record<string, readonly ManifestRow[]> {
     'valmiki-ramayan': valmikiRamayanChaptersManifest,
     sundarkand: sundarkandChaptersManifest,
     'bhagavad-gita': gitaChaptersManifest,
+    [BHAGAVATAM_ID]: bhagavatamChaptersManifest,
     'garud-puran': garudPuranChaptersManifest,
     'gita-saar': gitaSaarChaptersManifest,
   };

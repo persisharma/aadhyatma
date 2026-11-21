@@ -7,6 +7,8 @@ export type GitaVerse = {
   id: string;
   chapter: number;
   number: number;
+  /** Scripture reference when chapter is a local selection index. */
+  scriptureRef?: string;
   sanskrit: string[];
   transliteration: string[];
   meaningHi: string;
@@ -28,6 +30,8 @@ export type GitaChapter = {
 };
 
 export type GitaChapterSummary = {
+  scriptureChapter?: { canto: number; chapter: number };
+  verseNumbers?: readonly number[];
   chapter: number;
   titleHi: string;
   titleEn: string;

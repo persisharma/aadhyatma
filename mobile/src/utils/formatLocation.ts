@@ -1,4 +1,5 @@
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
+import { BHAGAVATAM_ID, getBhagavatamVerseReference } from '@/data/bhagavatam';
 
 export function formatLocation(progress: ReadingProgress): { hi: string; en: string } {
   const verseNum = progress.verseIndex + 1;
@@ -18,6 +19,10 @@ export function formatLocation(progress: ReadingProgress): { hi: string; en: str
         hi: `अध्याय ${progress.chapter} · श्लोक ${verseNum}`,
         en: `Chapter ${progress.chapter} · Verse ${verseNum}`,
       };
+    case BHAGAVATAM_ID: {
+      const reference = getBhagavatamVerseReference(progress.chapter, progress.verseIndex);
+      return reference ? { hi: `श्लोक ${reference}`, en: `Verse ${reference}` } : { hi: 'चयनित पाठ', en: 'Selected reading' };
+    }
     case 'sundarkand':
       return {
         hi: `सर्ग ${progress.chapter} · पद ${verseNum}`,

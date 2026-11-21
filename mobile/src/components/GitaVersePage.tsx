@@ -66,10 +66,11 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
     kn: 'ವ್ಯಾಖ್ಯಾನ',
   });
 
+  const reference = verse.scriptureRef ?? `${verse.chapter}.${verse.number}`;
   const pillText = contentByLang(
     lang,
-    `श्लोक · ${verse.chapter}.${verse.number}`,
-    `Shloka · ${verse.chapter}.${verse.number}`
+    `श्लोक · ${reference}`,
+    `Shloka · ${reference}`
   );
 
   // Meaning body styling follows the meaning's SOURCE language (kn meaning is English),
@@ -83,9 +84,9 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
     lineHeight: meaningTok.lineHeight,
   } as const;
 
-  const displayedLines = verseLinesByLang(lang, verse.sanskrit, verse.transliteration, `${verse.chapter}.${verse.number}`);
+  const displayedLines = verseLinesByLang(lang, verse.sanskrit, verse.transliteration, reference);
   const a11yLabel = [
-    `Verse ${verse.chapter}.${verse.number}`,
+    `Verse ${reference}`,
     ...displayedLines,
     meaningLabel,
     meaning,
