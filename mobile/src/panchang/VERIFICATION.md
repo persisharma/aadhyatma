@@ -173,6 +173,27 @@ rule and the new lunar-tithi `weekday` constraint then demanded that Shravana Pu
 be a Friday. The anchor now strips `weekday`. **Diff the table by rule id — the byte diff is
 unreadable and this is what it is for.**
 
+### Vaikuntha Chaturdashi (21 November 2026)
+
+The Kartik Shukla 14 observance uses the existing Nishita day matcher with
+its sunrise fallback. The card calculates the full local Nishita interval
+and the Chaturdashi tithi as separate ranges. A tithi can finish before
+Nishita begins or ends, as in the 2025 and 2026 references.
+
+| New Delhi (IST) | Nishita Kala | Chaturdashi tithi |
+| --- | --- | --- |
+| 4 November 2025 | 23:39 to 00:31 next day | 02:05 to 22:36 |
+| 23 November 2026 | 23:41 to 00:35 next day | 02:36 to 23:42 |
+| 12 November 2027 | 23:39 to 00:32 next day | 10:20 to 09:55 next day |
+
+Drik Panchang date and clock references:
+[2025](https://www.drikpanchang.com/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html?year=2025),
+[2026](https://www.drikpanchang.com/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html?year=2026),
+[2027](https://www.drikpanchang.com/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html?year=2027).
+[myPanchang’s Ujjain monthly calendar](https://www.mypanchang.com/newsite/calembedfull.php?locid=1253914&masa=p&mn=11&yr=2026) independently lists 23 November 2026 and distinguishes the Upavasa and Arunodaya traditions.
+The katha and offerings cite [Skanda Purana, Vaishnava Khanda, Kartika Mahatmya 35](https://www.wisdomlib.org/hinduism/book/the-skanda-purana/d/doc371677.html).
+Ujjain’s Harihar Milan procession follows the temple’s timetable.
+
 ## Reproduce
 ```
 cd mobile

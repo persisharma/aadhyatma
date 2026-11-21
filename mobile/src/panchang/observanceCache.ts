@@ -52,7 +52,7 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 //      old city scans while retaining follows and all other user preferences.
 // v13: a civil date and a sankranti day are India's (IST), not the device zone's
 //      (`civilTime.ts`). City scans made on a phone outside India were a day off.
-const CACHE_VERSION = 13;
+const CACHE_VERSION = 14;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 
