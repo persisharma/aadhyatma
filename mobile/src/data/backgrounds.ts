@@ -5,6 +5,7 @@ import { gitaImages } from '@assets/gita';
 import { shivaStrotamImages } from '@assets/shiva-strotam';
 import { aartiIdByIndex } from './aarti/ids';
 import { BHAGAVATAM_ID } from './bhagavatam';
+import { bhajanGroupOf } from './bhajan/ids';
 import { categories } from './categories';
 import { deities } from './deities';
 import { japamMantras } from './japam';
@@ -35,6 +36,9 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   // backgrounds resolve by source id below (Lingashtakam → Shiva sketch).
   ashtakam: backgroundImages.category_stotram_hymn_scroll,
   suktam: backgroundImages.category_stotram_hymn_scroll,
+  // Bhajan shelf reuses the diya plate (sung devotion, like aarti). Each
+  // bhajan's reader resolves to its group deity's plate (getSourceBackground).
+  bhajan: backgroundImages.category_aarti_diya,
   // No `stuti` key — स्तुति folded into `stotram` (not a category). Its texts
   // resolve per-id reader backgrounds via sourceBackgrounds below.
 };
@@ -299,7 +303,15 @@ export function getDaanBackground(): BackgroundImage {
 }
 
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
-  return sourceBackgrounds[sourceId] ?? null;
+  const own = sourceBackgrounds[sourceId];
+  if (own) return own;
+  // Bhajans take their group deity's plate; regional groups (Rajasthani, lok
+  // geet) have no deity, so they keep the shelf's diya plate.
+  const bhajanGroup = bhajanGroupOf(sourceId);
+  if (bhajanGroup) {
+    return (deityBackgrounds as Record<string, BackgroundImage>)[bhajanGroup] ?? categoryBackgrounds.bhajan;
+  }
+  return null;
 }
 
 export function getReaderBackground(

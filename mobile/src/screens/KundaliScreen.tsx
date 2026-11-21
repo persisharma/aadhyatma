@@ -35,6 +35,7 @@ import { GRAHA_BEEJ_JAPA_ID } from '@/data/japam/grahaBeej';
 import { library } from '@/data/texts';
 import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import type { PanchangStackParamList } from '@/navigation/types';
+import { dashaGuideOffered, formatDashaSpan } from '@/panchang/dashaGuide';
 import { buildDashaReading } from '@/panchang/dashaReading';
 import {
   DASHA_YEARS,
@@ -45,6 +46,7 @@ import {
   RASHI_NAMES_HI,
   RASHI_NAMES_WESTERN,
   type Graha,
+  type DashaLord,
   type KundaliChart,
   type KundaliResultTab,
 } from '@/panchang/kundali';
@@ -120,18 +122,6 @@ function formatBirthTime(value: string): string {
   return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 }
 
-function formatDuration(milliseconds: number, roundUp = false): string {
-  const round = roundUp ? Math.ceil : Math.floor;
-  const totalMonths = Math.max(0, round(milliseconds / (365.2425 / 12 * 86_400_000)));
-  const years = Math.floor(totalMonths / 12);
-  const months = totalMonths % 12;
-  if (years && months) return `${years} y ${months} m`;
-  if (years) return `${years} y`;
-  // Antardashas are as short as ~3.6 months, so their edges need day
-  // granularity — "0 m elapsed" would read as a stopped clock.
-  if (!months) return `${Math.max(0, round(milliseconds / 86_400_000))} d`;
-  return `${months} m`;
-}
 
 function devotionalTarget(sourceId: string) {
   const entry = library.find((candidate) => candidate.id === sourceId);
@@ -476,6 +466,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
                 onChangeTab={handleTabChange}
                 onOpenPractice={() => openPractice()}
                 onOpenJapa={openPractice}
+                onOpenGuide={(lord) => navigation.navigate('DashaGuide', { lord })}
                 onManageDetails={() => setEditing(true)}
                 onOpenReport={() => navigation.navigate('KundaliReport')}
                 onOpenGrahaReference={(focusGraha) => navigation.navigate('GrahaReference', focusGraha ? { focusGraha } : undefined)}
@@ -850,6 +841,7 @@ function KundaliResult({
   onChangeTab,
   onOpenPractice,
   onOpenJapa,
+  onOpenGuide,
   onManageDetails,
   onOpenReport,
   onOpenGrahaReference,
@@ -866,6 +858,8 @@ function KundaliResult({
   onOpenPractice: () => void;
   /** Opens a japam counter by its library id (the Mahadasha lord's beej mantra). */
   onOpenJapa: (sourceId: string) => void;
+  /** Opens the Mahadasha guide for one period (design.md §51e). */
+  onOpenGuide: (lord: DashaLord) => void;
   onManageDetails: () => void;
   onOpenReport: () => void;
   onOpenGrahaReference: (graha?: Graha) => void;
@@ -1054,7 +1048,7 @@ function KundaliResult({
                   ? `${GRAHA_NAMES_EN[currentDasha.antar.lord]} Antardasha`
                   : null,
                 ...currentWindows.map((window) =>
-                  `${window.labelEn} ${formatPeriodDate(window.period.start)} to ${formatPeriodDate(window.period.end)}, ${formatDuration(now.getTime() - window.period.start.getTime())} elapsed, ${formatDuration(window.period.end.getTime() - now.getTime(), true)} left`),
+                  `${window.labelEn} ${formatPeriodDate(window.period.start)} to ${formatPeriodDate(window.period.end)}, ${formatDashaSpan(now.getTime() - window.period.start.getTime())} elapsed, ${formatDashaSpan(window.period.end.getTime() - now.getTime(), true)} left`),
               ]
                 .filter(Boolean)
                 .join(', ')}
@@ -1132,10 +1126,10 @@ function KundaliResult({
                     </View>
                     <View testID={`dasha-progress-labels-${window.key}`} style={[resultStyles.progressCaptions, compact && { flexDirection: 'column', alignItems: 'flex-start' }]}>
                       <Text style={[resultStyles.progressCaption, { color: colors.inkMuted }]}>
-                        {formatDuration(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
+                        {formatDashaSpan(elapsed)} {contentByLang(lang, 'पूरे', 'elapsed')}
                       </Text>
                       <Text style={[resultStyles.progressCaption, { color: colors.inkMuted }]}>
-                        {formatDuration(remaining, true)} {contentByLang(lang, 'शेष', 'left')}
+                        {formatDashaSpan(remaining, true)} {contentByLang(lang, 'शेष', 'left')}
                       </Text>
                     </View>
                   </View>
@@ -1209,6 +1203,36 @@ function KundaliResult({
               </Pressable>
             );
           })()}
+          {currentDasha && dashaGuideOffered(chart, currentDasha.maha, now) && (
+            // The running Mahadasha's guide (design.md §51e): what it means,
+            // what to do and why, step by step. Adults only — a minor keeps
+            // the pill above and nothing instructive (RULEBOOK §14.3.5).
+            <Pressable
+              testID="dasha-guide-door"
+              onPress={() => onOpenGuide(currentDasha.maha.lord)}
+              accessibilityRole="button"
+              accessibilityLabel={`Understand the ${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha: what it means, what to do, and why`}
+              style={({ pressed }) => [
+                resultStyles.guideDoor,
+                { borderColor: colors.cardActiveBorder, backgroundColor: colors.cardActiveFrom, borderRadius: radii.lg },
+                elevation.subtle,
+                pressed && { opacity: 0.75 },
+              ]}
+            >
+              <View style={{ flex: 1, minWidth: 0 }}>
+                <Text style={[pillTextStyle(lang, typography.sectionLabel), { color: colors.saffronDeep, fontSize: (lang === 'en' ? 10 : 12) * factor }]}>
+                  {contentByLang(lang, 'इस महादशा को समझें', 'Understand this Mahadasha')}
+                </Text>
+                <Text style={{ color: colors.ink, fontFamily: scriptTitleFont(lang, typography.readerTitle.fontFamily), fontSize: 15 * factor, lineHeight: 23 * factor, marginTop: 3 }}>
+                  {contentByLang(lang, `${GRAHA_NAMES_HI[currentDasha.maha.lord]} महादशा`, `${GRAHA_NAMES_EN[currentDasha.maha.lord]} Mahadasha`)}
+                </Text>
+                <Text style={[resultStyles.dashaReadingBody, { color: colors.inkSoft, fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), marginTop: 2 }]}>
+                  {contentByLang(lang, 'इसका अर्थ, क्या करें और क्यों', 'What it means, what to do, and why')}
+                </Text>
+              </View>
+              <Text style={[resultStyles.guideDoorChevron, { color: colors.saffronDeep }]} accessibilityElementsHidden importantForAccessibility="no">›</Text>
+            </Pressable>
+          )}
           {(() => {
             const reading = buildDashaReading(chart, now);
             if (!reading) return null;
@@ -1272,8 +1296,11 @@ function KundaliResult({
                 chart.input.date.getTime() >= period.start.getTime()
                 && chart.input.date.getTime() < period.end.getTime();
               const durationLabel = birthWithin
-                ? `${formatDuration(period.end.getTime() - chart.input.date.getTime(), true)} ${contentByLang(lang, 'जन्म पर शेष', 'left at birth')}`
+                ? `${formatDashaSpan(period.end.getTime() - chart.input.date.getTime(), true)} ${contentByLang(lang, 'जन्म पर शेष', 'left at birth')}`
                 : `${DASHA_YEARS[period.lord]} ${contentByLang(lang, 'वर्ष', 'years')}`;
+              // The running and every upcoming Mahadasha open their guide; a
+              // period that has ended asks for nothing now (design.md §51e).
+              const guideOffered = dashaGuideOffered(chart, period, now);
               return (
                 <View
                   key={`${period.lord}-${period.start.toISOString()}`}
@@ -1340,6 +1367,19 @@ function KundaliResult({
                       {formatPeriodDate(period.start)} — {formatPeriodDate(period.end)} ·{' '}
                       {durationLabel}
                     </Text>
+                    {guideOffered && (
+                      <Pressable
+                        testID={`dasha-timeline-guide-${period.lord}`}
+                        onPress={() => onOpenGuide(period.lord)}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Open the ${GRAHA_NAMES_EN[period.lord]} Mahadasha: what it means and what to do`}
+                        style={({ pressed }) => [resultStyles.timelineGuideLink, pressed && { opacity: 0.7 }]}
+                      >
+                        <Text style={[resultStyles.timelineGuideText, { color: colors.saffronDeep }]}>
+                          {contentByLang(lang, 'अर्थ, उपाय और कारण ›', 'What it means and what to do ›')}
+                        </Text>
+                      </Pressable>
+                    )}
                   </View>
                 </View>
               );
@@ -1773,6 +1813,10 @@ const styles = StyleSheet.create({
   dashaTitleRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 },
   nowTag: { paddingHorizontal: 7, paddingVertical: 3 },
   nowTagText: { fontFamily: fontFamilies.interSemiBold, fontSize: 11 },
+  timelineGuideLink: { minHeight: 44, alignSelf: 'flex-start', justifyContent: 'center', marginTop: 2 },
+  timelineGuideText: { fontFamily: fontFamilies.interSemiBold, fontSize: 12 },
+  guideDoor: { flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 64, marginBottom: 14, paddingVertical: 12, paddingHorizontal: 14, borderWidth: 1 },
+  guideDoorChevron: { fontSize: 22, lineHeight: 24 },
   practiceLabel: { fontSize: 12, marginTop: 18, marginBottom: 8 },
   referenceCard: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderWidth: 1, marginTop: 10 },
   referenceGlyph: { fontSize: 22, width: 24, textAlign: 'center' },

@@ -6,6 +6,7 @@ import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti/ids';
+import { bhajanIds } from '@/data/bhajan/ids';
 import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
 import { suktamIds as suktamIdList } from '@/data/suktam';
 import { stutiIds as stutiIdList } from '@/data/stuti';
@@ -275,6 +276,9 @@ export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | nul
   if (aartiIndex != null) {
     return { screen: 'AartiReader', params: { aartiIndex } };
   }
+  if (bhajanIds.has(entry.id)) {
+    return { screen: 'BhajanReader', params: { bhajanId: entry.id, initialIndex: 0 } };
+  }
   const chaptersRoute = stotramChaptersRouteById[entry.id];
   if (chaptersRoute) {
     // A single-chapter text has nothing to choose from: its chapters index is a
@@ -368,6 +372,10 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
   if (aartiIndex != null) {
     nav.navigate('AartiReader', { aartiIndex, initialIndex: progress.verseIndex });
+    return true;
+  }
+  if (bhajanIds.has(sourceId)) {
+    nav.navigate('BhajanReader', { bhajanId: sourceId, initialIndex: progress.verseIndex });
     return true;
   }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];
@@ -476,6 +484,12 @@ export function buildProgressTarget(p: {
       params: { aartiIndex, initialIndex: p.verseIndex },
     };
   }
+  if (bhajanIds.has(sourceId)) {
+    return {
+      screen: 'BhajanReader',
+      params: { bhajanId: sourceId, initialIndex: p.verseIndex },
+    };
+  }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];
   if (readerRoute && p.chapter != null) {
     return {
@@ -516,6 +530,12 @@ export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
     return {
       screen: 'AartiReader',
       params: { aartiIndex, initialIndex: bm.verseIndex },
+    };
+  }
+  if (bhajanIds.has(sourceId)) {
+    return {
+      screen: 'BhajanReader',
+      params: { bhajanId: sourceId, initialIndex: bm.verseIndex },
     };
   }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];

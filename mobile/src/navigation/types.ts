@@ -1,5 +1,5 @@
 import type { OccasionId } from '@/panchang/eventMuhurat';
-import type { Graha } from '@/panchang/kundali';
+import type { DashaLord, Graha } from '@/panchang/kundali';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
@@ -60,7 +60,18 @@ export type GharVastuStackParamList = {
   GharVastuCompare: { homeIds: readonly string[] };
 };
 
-export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
+/**
+ * Bhajan text shelf (design.md §34.1). Doors on two tabs — the Bhajan tab's
+ * shelf door, and Home's search / deity / routine / resume paths — so both
+ * stacks host it (RULEBOOK §6.0.1). Ids are string catalog ids, never
+ * positions: they are persisted in bookmarks and progress.
+ */
+export type BhajanStackParamList = {
+  BhajanList: undefined;
+  BhajanReader: { bhajanId: string; initialIndex?: number };
+};
+
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & BhajanStackParamList & {
   SanatanParichay: undefined;
   SanatanReader: { topicId: string; initialPage?: number };
   GrahaReference: {focusGraha?:Graha}|undefined;
@@ -237,6 +248,8 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   // नवग्रह परिचय — the generic "Know the nine grahas" reference (design.md §79).
   // `focusGraha` opens one graha expanded (the chart card's "Know this graha" link).
   GrahaReference: { focusGraha?: Graha } | undefined;
+  /** Mahadasha guide (design.md §51e): the lord names the period — each lord runs once in the 120-year cycle. */
+  DashaGuide: { lord: DashaLord };
   // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
   // `purposeId` preselects a purpose (the Ask intent deep-links here).
   Prashna: { purposeId?: string; questionId?: string } | undefined;
@@ -270,8 +283,9 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing
-// surface is a root overlay, not a route, so the stack only hosts the library.
-export type AudioStackParamList = {
+// surface is a root overlay, not a route; the stack hosts the audio library and
+// the bhajan text shelf (BhajanStackParamList).
+export type AudioStackParamList = BhajanStackParamList & {
   AudioLibrary: undefined;
 };
 

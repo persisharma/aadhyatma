@@ -24,7 +24,7 @@ const readings = [
     hi: 'भगवद् गीता',
     en: 'Bhagavad Gita',
     art: require('../../../assets/home-readings/gita.jpg'),
-    open: (n: Nav) => n.navigate('GitaReader', { chapter: 1, initialIndex: 0 }),
+    open: (n: Nav) => n.navigate('GitaChapters'),
   },
   {
     id: 'sundarkand',

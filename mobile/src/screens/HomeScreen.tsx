@@ -119,7 +119,7 @@ export default function HomeScreen({ navigation }: Props) {
         occasion ? rootNav.navigate('VratTab',panchangTabTarget('ObservanceDetail',{ruleId:occasion.rule.id,dateMs:today.getTime()})) : rootNav.navigate('PanchangTab',panchangTabTarget('PanchangHome',{initialTab:'calendar',dateMs:today.getTime()})),
     };
     const libraryTile: TileItem = {key:'library',nameHi:'पुस्तकालय',nameEn:'Library',status:'active',icon:iconFor('granth'),
-      hasNew: categories.some(c=>hasNewInCategory(c.id)),onPress:()=>navigation.navigate('ReadingLibrary')};
+      hasNew: categories.some(c=>c.placement!=='bhajan-tab'&&hasNewInCategory(c.id)),onPress:()=>navigation.navigate('ReadingLibrary')};
     const deityTile: TileItem = {
       key: 'deity',
       nameHi: 'देवता',
@@ -176,6 +176,8 @@ export default function HomeScreen({ navigation }: Props) {
     };
     const result: TileItem[] = [];
     for (const c of categories) {
+      // The bhajan shelf lives inside the Bhajan tab (design.md §34.1).
+      if (c.placement === 'bhajan-tab') continue;
       if(c.id==='granth') result.push(libraryTile);
       if(c.id==='japam') result.push(vratTile,kundaliTile,muhuratTile);
       if(!['chalisa','aarti','theerth'].includes(c.id)) continue;

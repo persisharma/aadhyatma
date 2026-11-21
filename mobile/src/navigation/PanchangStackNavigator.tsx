@@ -31,6 +31,7 @@ const VidhiDetailScreen = lazyScreen('VidhiDetail', 3, () => import('@/screens/V
 const DaanJourneyScreen = lazyScreen('DaanJourney', 4, () => import('@/screens/DaanJourneyScreen'));
 const KundaliReportScreen = lazyScreen('KundaliReport', 4, () => import('@/screens/KundaliReportScreen'));
 const GrahaReferenceScreen = lazyScreen('GrahaReference', 4, () => import('@/screens/GrahaReferenceScreen'));
+const DashaGuideScreen = lazyScreen('DashaGuide', 4, () => import('@/screens/DashaGuideScreen'));
 const MuhuratDayDetailScreen = lazyScreen('MuhuratDayDetail', 4, () => import('@/screens/MuhuratDayDetailScreen'));
 const MuhuratResultsScreen = lazyScreen('MuhuratResults', 4, () => import('@/screens/MuhuratResultsScreen'));
 const NamkaranRashiScreen = lazyScreen('NamkaranRashi', 4, () => import('@/screens/NamkaranRashiScreen'));
@@ -163,6 +164,12 @@ export default function PanchangStackNavigator({ initialMode = 'calendar' }: { i
       <Stack.Screen
         name="GrahaReference"
         component={GrahaReferenceScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      {/* Mahadasha guide (design.md §51e) — pushed from the Dasha tab, so Back returns there. */}
+      <Stack.Screen
+        name="DashaGuide"
+        component={DashaGuideScreen}
         options={{ animation: 'slide_from_right' }}
       />
       {/* प्रश्न (PRD-43) — a require() thunk keeps the composer off the launch graph. */}

@@ -16,3 +16,11 @@ References follow the listed chapter numbering. Match Sanskrit incipits when com
 The app stores positions by stable reading and page index. Append new readings and pages so bookmarks, routines and progress continue to resolve. Search, share and the Gita-style jump sheet display the source canto, chapter and verse. Each reading loads its own payload on demand.
 
 Native iOS and Android checks remain pending. The Granth Maestro flow covers entry and jumping to a selected verse. Device acceptance needs all scripts and sizes, compact layout, navigation and progress, artwork, sharing, read-aloud and offline reading.
+
+## PR #712 main integration — 21 November 2026
+
+Merged main `6f97ae4c3d5916552421eade72f628bd49ee7503` into the existing draft branch. The only textual conflict was adjacent imports in `backgrounds.ts`; both Bhāgavatam and Bhajan artwork resolvers are retained. The six readings, 18 verses and original source/page IDs are unchanged. Home's featured Gita tile retains main's chapter-list route. Added regressions for search `10.81.5` → reading 3, index 1, and the Sudāmā picker allowing 3/5/9 while rejecting 4.
+
+Executed: TypeScript; 42 focused Jest assertions; 31 focused data/navigation assertions; all three reader shards; widgets, engine, data and Ask gates. Granth YAML parsing and agent-instruction verification pass. The suite exposed existing feature acceptance gaps: Bhāgavatam JSON lacks the root provenance structure required by `contentCorrectness`, `texts.ts` imports the Bhāgavatam corpus entry point rather than generated counts, and Daily Bhakti lacks a Bhāgavatam devotional-share artwork mapping. Main also has an app-tour version mismatch (1.5.6 versus app version 1.5.8). These are reported failures, not waived checks; no canonical text, release version or test gate was changed during conflict resolution.
+
+Native iOS/Android Maestro, all four languages at Standard/Large, compact/enlarged-system-text layouts, lifecycle/offline persistence, actual playback/share exports and Android responsiveness/ANR evidence remain pending. No native runtime is available in this checkout. Keep the PR draft. No merge, readiness change, deployment or release is authorized by this conflict task.

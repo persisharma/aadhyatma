@@ -98,21 +98,31 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Month August"
 # The year list is a non-virtualized ScrollView in a transparent Modal: Maestro
 # can't scrollUntilVisible it, visibility guards see every (off-screen) row, and
-# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS lands
-# 1992 with a fixed fast-swipe count; Android's fling scrolling varies too much,
-# so it slow-drags PAST 1992 (deterministic, no fling, no dismiss) then
-# self-corrects: tap 1992 (a safe no-op while off-screen) and nudge the list up
-# until the day grid opens. Both branches end on August 1992's day grid.
+# an off-screen testID tap hits the backdrop and dismisses the sheet. iOS used a
+# fixed fast-swipe count, but fling distance depends on the screen: on the CI
+# iPhone 16e it missed 1992 and the blind tap closed the sheet. iOS now avoids
+# scrolling the list at all: Year 2024 always sits in the list's first screenful
+# (the list opens at the top and is 220 pt on every phone — the same anchor
+# multi-profile-jyotish-smoke.yaml uses), and with August already chosen,
+# exactly 384 taps of "Previous month" land on August 1992, on any screen size.
+# Android's fling scrolling varies too much, so it slow-drags PAST 1992
+# (deterministic, no fling, no dismiss) then self-corrects: tap 1992 (a safe
+# no-op while off-screen) and nudge the list up until the day grid opens. Both
+# branches end on August 1992's day grid.
 - runFlow:
     when:
       platform: iOS
     commands:
-      - repeat:
-          times: 4
-          commands:
-            - swipe: { start: "50%, 70%", end: "50%, 50%", duration: 250 }
+      - tapOn:
+          id: "calendar-year-2024"
       - waitForAnimationToEnd
-      - tapOn: "Year 1992"
+      - repeat:
+          times: 384
+          commands:
+            - tapOn: "Previous month"
+      - extendedWaitUntil:
+          visible: "14 August 1992"
+          timeout: 10000
 - runFlow:
     when:
       platform: Android
@@ -207,10 +217,22 @@ appId: com.prashantsharma.vedansh
     direction: UP
 - tapOn: "Chart tab"
 - assertVisible: { id: "kundali-view-picture" }
-- tapOn: { id: "kundali-house-6" }
+# Open house 6 through Life areas, whose rows are plain native buttons. The
+# chart cells are react-native-svg groups: on the iOS simulator their
+# accessibility frames do not match the drawn cell, so a Maestro tap on
+# `kundali-house-6` lands outside it and no sheet opens (CI iPhone 16e run).
+# Cell taps stay covered by NorthIndianChart/KundaliLearning Jest tests.
+- tapOn: { id: "kundali-view-topics" }
+- scrollUntilVisible:
+    element: { id: "kundali-house-topic-6" }
+    centerElement: true
+- tapOn: { id: "kundali-house-topic-6" }
 - assertVisible: ".*House 6.*"
 - tapOn: "Done with Kundali explanation"
-- tapOn: { id: "kundali-view-topics" }
+# The centred house-6 row leaves the tab row above the fold on iPhone 16e.
+- scrollUntilVisible:
+    element: { text: "Grahas tab" }
+    direction: UP
 - tapOn: "Grahas tab"
 - scrollUntilVisible:
     element: { id: "kundali-graha-moon" }
@@ -243,9 +265,70 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*left.*"
 - assertVisible: ".*Now.*"
 # The Mahadasha lord's beej mantra (Jupiter → Guru) opens its japam counter.
-- assertVisible:
-    id: "dasha-beej-japa"
+# On iPhone 16e the pill sits below the Antardasha strip, past the fold.
+- scrollUntilVisible:
+    element:
+      id: "dasha-beej-japa"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
 - assertVisible: "Chant Guru Beej Mantra on the mala, for the Jupiter Mahadasha"
+# The running Mahadasha's guide (design.md §51e): index, steps, Back to the
+# index, then Back to the Dasha tab.
+- scrollUntilVisible:
+    element:
+      id: "dasha-guide-door"
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: "dasha-guide-door"
+- assertVisible:
+    id: "dasha-guide-index-view"
+- assertVisible: "In this guide · 5 steps"
+- takeScreenshot: e2e-shots/dasha-guide-index
+- tapOn:
+    id: "dasha-guide-start"
+- assertVisible: "Step 1 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-1
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 2 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-2
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 3 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-3
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 4 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-4
+- scrollUntilVisible:
+    element:
+      id: "dasha-guide-chant"
+    direction: DOWN
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: ".*not a fix or a guarantee.*"
+    direction: DOWN
+    timeout: 15000
+- takeScreenshot: e2e-shots/dasha-guide-step-4-mantra
+- tapOn:
+    id: "dasha-guide-next"
+- assertVisible: "Step 5 of 5"
+- takeScreenshot: e2e-shots/dasha-guide-step-5
+# Back on a step returns to the index; Back on the index leaves the guide.
+- tapOn:
+    id: "dasha-guide-back"
+- assertVisible:
+    id: "dasha-guide-index-view"
+- tapOn:
+    id: "dasha-guide-back"
+# Back lands on the Dasha tab where the reader left it: scrolled to the guide
+# door, with the "Vimshottari Dasha" heading above the fold on iPhone 16e.
+# Assert the door the guide was opened from.
+- assertVisible:
+    id: "dasha-guide-door"
 # Each "Now" level is named; anchor on a concrete row in the full Mahadasha
 # timeline because the two section captions can scroll past as one block.
 - scrollUntilVisible:
@@ -254,16 +337,38 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
     timeout: 15000
 - assertVisible: "Mercury Mahadasha"
+# An upcoming Mahadasha opens its own guide from the timeline (ended periods
+# carry no link).
+# Centre the row: at the bottom edge the link sits under the tab bar, and a
+# tap there lands on the Home tab instead (CI iPhone 16e, run 6).
+- scrollUntilVisible:
+    element:
+      id: "dasha-timeline-guide-mercury"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn:
+    id: "dasha-timeline-guide-mercury"
+- assertVisible: "Mercury Mahadasha"
+- assertVisible: "Upcoming period"
+- takeScreenshot: e2e-shots/dasha-guide-upcoming-index
+- tapOn:
+    id: "dasha-guide-back"
+# Back returns to the timeline row the guide was opened from.
+- assertVisible:
+    id: "dasha-timeline-guide-mercury"
 
 # Kundali sharing is explicit because the card contains personal birth details.
+# Jyotish cards share through the common ShareTargetSheet (whole 4:5 card,
+# "Share to other apps", Cancel) since the #686–#689 share-sheet work.
 - tapOn: "Share your Kundali"
 - waitForAnimationToEnd
-- assertVisible: "4:5 · 1080×1350"
+- assertVisible: ".*whole card in a 4:5 frame.*"
 - assertVisible: ".*includes the chart name, birth date, time, and city.*"
 # The card's own method footer is the last thing inside the fixed 4:5 box.
 - assertVisible: ".*Lahiri ayanamsa.*"
-- assertVisible: "Open share sheet"
-- tapOn: "Close share preview"
+- assertVisible: "Share to other apps"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
 
 # Returning to Jyotish refreshes storage. Since design.md §51c the landing has
@@ -274,7 +379,9 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "From your full chart"
     timeout: 15000
-- assertVisible: "Person switcher"
+# The person switcher is the "WHOSE JYOTISH" row; its chip names the saved
+# profile.
+- assertVisible: "Show Jyotish for Aarav"
 - assertVisible: "Favour|FAVOUR"
 - assertVisible: "Pause|PAUSE"
 - assertVisible: "Reflect|REFLECT"
@@ -285,12 +392,14 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
 - assertVisible: ".*No name or birth details are included.*"
-- assertVisible: "4:5 · 1080×1350"
-- tapOn: "Close share preview"
+# The Rashifal card shares as one whole image (no 4:5 crop line on this sheet).
+- assertVisible: ".*WhatsApp gets the whole card as one image.*"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
-# The Moon sign is the card hero, so it is already on screen.
-- assertVisible: "Kumbha"
-- assertVisible: "Aquarius"
+# The Moon sign is the card hero, so it is already on screen (one line:
+# "Kumbha · Aquarius").
+- assertVisible: ".*Kumbha.*"
+- assertVisible: ".*Aquarius.*"
 # §51c dissolved the chart-glance card into the door grid: Lagna and nakshatra
 # are now the Kundali TILE's reading, and the dasha lord lives one tap deeper on
 # the Kundali result. The grid can sit below the fold on Android's shorter
@@ -305,7 +414,10 @@ appId: com.prashantsharma.vedansh
     element: { text: "Open Guna Milan" }
     direction: DOWN
     timeout: 15000
-- assertVisible: "Open Namkaran"
+# Namkaran is release-gated (panchang/namkaranRelease.ts: NAMKARAN_RELEASED is
+# false), and this journey runs on a Release build, so its door must stay
+# hidden. namkaran-smoke.yaml covers the door on dev builds.
+- assertNotVisible: "Open Namkaran"
 - scrollUntilVisible:
     element: { text: "Open Gochar" }
     direction: DOWN
@@ -378,7 +490,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Share selected day’s Rashifal"
 - tapOn: "Share selected day’s Rashifal"
 - assertVisible: ".*No name or birth details are included.*"
-- tapOn: "Close share preview"
+- tapOn: "Cancel"
 - tapOn:
     id: "rashifal-day--1"
 - assertVisible: "Share selected day’s Rashifal"
@@ -395,8 +507,8 @@ appId: com.prashantsharma.vedansh
 - tapOn: "Share today’s Rashifal"
 - waitForAnimationToEnd
 - assertVisible: ".*No name or birth details are included.*"
-- assertVisible: "Open share sheet"
-- tapOn: "Close share preview"
+- assertVisible: "Share to other apps"
+- tapOn: "Cancel"
 - waitForAnimationToEnd
 
 # Change exposes the 12-sign grid with plain-English equivalents; no sign is

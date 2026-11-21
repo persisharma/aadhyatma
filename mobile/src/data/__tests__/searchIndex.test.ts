@@ -36,6 +36,10 @@ const index = getSearchIndex();
   const match = runSearch('4.8.55', index).verses.find(hit => hit.entry.sourceId === BHAGAVATAM_ID)?.entry;
   assert.ok(match);
   assert.deepEqual(buildProgressTarget(match), { screen: 'BhagavatamReader', params: { chapter: 4, initialIndex: 1 } });
+  const sudama = runSearch('10.81.5', index).verses.find(hit => hit.entry.sourceId === BHAGAVATAM_ID)?.entry;
+  assert.ok(sudama);
+  assert.deepEqual(buildProgressTarget(sudama), { screen: 'BhagavatamReader', params: { chapter: 3, initialIndex: 1 } });
+  assert.equal(getBhagavatamChapter(3).verses[sudama.verseIndex].scriptureRef, '10.81.5');
 }
 
 // Poet titles and exact doha wording remain discoverable with the correct page.

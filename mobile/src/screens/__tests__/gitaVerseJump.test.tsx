@@ -102,6 +102,27 @@ test('Bhāgavatam uses canonical numbers for sparse jumps and keeps its own book
   expect(stack.routes[0].params).toEqual({ query: 'action' });
 });
 
+test('Sudāmā reading offers only 3, 5 and 9 and rejects verse 4', async () => {
+  act(() => tree.unmount());
+  await mountJourney('BhagavatamReader');
+  press('gita-jump-trigger');
+  press('gita-jump-chapter');
+  press('gita-jump-chapter-3');
+  for (const number of [3, 5, 9]) {
+    expect(tree.root.findAll(n => n.props.testID === `gita-jump-verse-${number}`).length).toBeGreaterThan(0);
+  }
+  expect(tree.root.findAll(n => n.props.testID === 'gita-jump-verse-4')).toHaveLength(0);
+  type('4');
+  expect(tree.root.findAll(n => n.props.testID === 'gita-jump-open' && typeof n.props.onPress === 'function')[0].props.disabled).toBe(true);
+  act(() => tree.root.findByType(TextInput).props.onSubmitEditing());
+  expect(replace).not.toHaveBeenCalled();
+  type('5');
+  press('gita-jump-open');
+  expect(replace).toHaveBeenCalledWith('BhagavatamReader', { chapter: 3, initialIndex: 1 });
+  expect(progress.getChapterProgress(BHAGAVATAM_ID, 3)?.verseIndex).toBe(1);
+  expect(progress.getChapterProgress('bhagavad-gita', 3)).toBeUndefined();
+});
+
 test('cancel preserves position, stored progress and Back stack; sheet time is not reading', async () => {
   const before = progress.getChapterProgress('bhagavad-gita', 2);
   press('gita-jump-trigger');
