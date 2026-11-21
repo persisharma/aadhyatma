@@ -4,19 +4,23 @@ import { getStoredObservanceYear } from '../../observanceStore';
 
 jest.mock('@/utils/derivedCacheReset', () => ({ awaitDerivedCacheReset: jest.fn(async () => {}) }));
 
-it('drops v11 dates, hydrates corrected v12 dates and retains user follows', async () => {
+// This OTA adds Vaikuntha Chaturdashi. Previously scanned cities must reload their
+// observance year to pick up the new date, while saved follows stay intact.
+it('discards old city dates and rehydrates the new observance without changing follows', async () => {
   const city = 'occasion-cache-regression';
   const follows = '@vedansh/vrat-follows';
   await AsyncStorage.clear();
   await AsyncStorage.setItem(follows, JSON.stringify(['rishi-panchami']));
+  const existing = [['rishi-panchami', '2026-09-15']];
+  const current = [...existing, ['vaikuntha-chaturdashi', '2026-11-23']];
   for (const system of ['purnimant', 'amanta'] as const) {
-    await AsyncStorage.setItem(`@vedansh:observances:v11:${city}:${system}:2026`, JSON.stringify([['rishi-panchami', '2026-09-16']]));
-    await AsyncStorage.setItem(`@vedansh:observances:v12:${city}:${system}:2026`, JSON.stringify([['rishi-panchami', '2026-09-15']]));
+    await AsyncStorage.setItem(`@vedansh:observances:v12:${city}:${system}:2026`, JSON.stringify(existing));
+    await AsyncStorage.setItem(`@vedansh:observances:v14-android156:${city}:${system}:2026`, JSON.stringify(current));
   }
   await hydrateObservanceCache(city, ['purnimant', 'amanta'], [2026]);
   for (const system of ['purnimant', 'amanta'] as const) {
-    expect(await AsyncStorage.getItem(`@vedansh:observances:v11:${city}:${system}:2026`)).toBeNull();
-    expect(getStoredObservanceYear(city, system, 2026)).toEqual([['rishi-panchami', '2026-09-15']]);
+    expect(await AsyncStorage.getItem(`@vedansh:observances:v12:${city}:${system}:2026`)).toBeNull();
+    expect(getStoredObservanceYear(city, system, 2026)).toEqual(current);
   }
   expect(await AsyncStorage.getItem(follows)).toBe(JSON.stringify(['rishi-panchami']));
 });

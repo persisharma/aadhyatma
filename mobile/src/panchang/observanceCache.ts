@@ -50,7 +50,9 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // v11: chandrodaya uses geometric Moon centre, matching published Drik clocks.
 // v12: occasion-specific Ganga/Rishi/Purnima/Krishna date corrections; discard
 //      old city scans while retaining follows and all other user preferences.
-const CACHE_VERSION = 12;
+// The Android 1.5.6 OTA keeps a distinct cache namespace from main because
+// it uses a different observance engine. Old city scans must pick up Vaikuntha Chaturdashi.
+const CACHE_VERSION = '14-android156';
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

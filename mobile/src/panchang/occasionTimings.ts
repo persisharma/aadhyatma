@@ -8,7 +8,7 @@ import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
 import type { ObservanceRule } from './types';
 
 export type FestivalMotif = 'diya' | 'fire' | 'shastra' | 'kalash' | 'moon' | 'sun' | 'shiva' | 'ganesh' | 'rakhi' | 'lotus';
-type Recipe = 'lakshmi' | 'midday' | 'rama' | 'vijaya' | 'nishita' | 'shiva' | 'holika' | 'moon' | 'karwa' | 'chhath' | 'afternoon' | 'morning' | 'pratah' | 'pradosh' | 'rakhi' | 'ekadashi' | 'ghata' | 'guidance';
+type Recipe = 'lakshmi' | 'midday' | 'rama' | 'vijaya' | 'nishita' | 'shiva' | 'vaikuntha' | 'holika' | 'moon' | 'karwa' | 'chhath' | 'afternoon' | 'morning' | 'pratah' | 'pradosh' | 'rakhi' | 'ekadashi' | 'ghata' | 'guidance';
 export type OccasionProfile = { id: string; ruleId: string; recipe: Recipe; motif: FestivalMotif; nameHi?: string; nameEn?: string; before?: number; source: string; sunriseAnchor?: boolean };
 export type OccasionWindow = Span & { labelHi: string; labelEn: string; event?: boolean };
 export type OccasionTiming = { id: string; ruleId: string; date: Date; nameHi: string; nameEn: string; motif: FestivalMotif; windows: OccasionWindow[]; noteHi?: string; noteEn?: string };
@@ -34,6 +34,7 @@ export const OCCASION_PROFILES: readonly OccasionProfile[] = [
   profile('raksha-bandhan', 'rakhi', 'rakhi', '/festivals/raksha-bandhan/raksha-bandhan-date-time.html'),
   profile('janmashtami', 'nishita', 'lotus', '/dashavatara/lord-krishna/krishna-janmashtami-date-time.html'),
   profile('janmashtami-vaishnava', 'nishita', 'lotus', '/iskcon/lord/krishna-janmashtami-date-time.html'),
+  profile('vaikuntha-chaturdashi', 'vaikuntha', 'lotus', '/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html'),
   profile('karwa-chauth', 'karwa', 'moon', '/festivals/karwa-chauth/karwa-chauth-date-time.html'),
   ...uniqueRules.filter(r => r.dayRule === 'chandrodaya' && r.id !== 'karwa-chauth').map(r => profile(r.id, 'moon', 'moon', '/vrats/sankashti-chaturthi-dates.html')),
   ...['chhath-puja', 'chaiti-chhath'].map(id => profile(id, 'chhath', 'sun', '/chhath/chhath-puja-calendar.html')),
@@ -121,6 +122,18 @@ export function solveOccasion({ profile: r, date, rule }: TimingOccurrence, days
       add(night(7 / 15, 8 / 15), 'निशिता पूजा', 'Nishita puja');
       if (r.ruleId === 'maha-shivaratri') for (let i = 0; i < 4; i++) add(night(i / 4, (i + 1) / 4), `रात्रि प्रहर ${i + 1}`, `Night prahar ${i + 1}`);
       break;
+    case 'vaikuntha': {
+      // Published almanacs show the full Nishita even when Chaturdashi
+      // ends earlier. Show both spans so their different boundaries are clear.
+      const nishita = night(7 / 15, 8 / 15);
+      add(nishita, 'निशीथ काल', 'Nishita Kala');
+      add(tithi, 'चतुर्दशी तिथि', 'Chaturdashi tithi');
+      if (tithi && tithi.end < nishita.end) {
+        out.noteHi = 'चतुर्दशी तिथि निशीथ काल की समाप्ति से पहले समाप्त होती है। पूजा का समय अपनी परंपरा के अनुसार तय करें।';
+        out.noteEn = 'Chaturdashi ends before Nishita Kala ends. Follow your tradition for the time of worship.';
+      }
+      break;
+    }
     case 'pradosh': add(intersect(night(0, .2), tithi), 'प्रदोष पूजा', 'Pradosh puja'); break;
     case 'morning': add(intersect(day(0, .5), tithi), 'पूर्वाह्न पूजा', 'Forenoon puja'); break;
     case 'pratah': add(intersect(day(0, .2), tithi), 'प्रातःकाल पूजा', 'Morning puja'); break;

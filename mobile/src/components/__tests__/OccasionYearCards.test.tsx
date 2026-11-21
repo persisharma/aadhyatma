@@ -29,9 +29,9 @@ async function mount(node: React.ReactNode, lang: Lang = 'en') {
 }
 const copy = (tree: TestRenderer.ReactTestRenderer) => tree.root.findAllByType(Text).map(n => n.props.children).join('\n');
 afterEach(() => { act(() => trees.splice(0).forEach(t => t.unmount())); mockShare.mockClear(); });
-test('closed full-year inventory: every one of 197 named identities has a profile, guidance and reviewed subject', () => {
+test('closed full-year inventory: every one of 198 named identities has a profile, guidance and reviewed subject', () => {
   expect(rules.map(r => ({ id: r.id, nameEn: r.nameEn, deityEn: r.deityEn }))).toEqual(reviewed);
-  expect(reviewed).toHaveLength(197);
+  expect(reviewed).toHaveLength(198);
   expect(new Set(OCCASION_CARD_PROFILES.map(p => p.ruleId))).toEqual(new Set(reviewed.map(r => r.id)));
   for (const r of rules) {
     expect(Object.prototype.hasOwnProperty.call(observanceSubjects, r.deityEn)).toBe(true);

@@ -12,6 +12,10 @@ const vinayaka = (date: string, start: string, end: string) => entry('vinayaka-c
 const shiva = (date: string, start: string, end: string) => entry('masik-shivaratri', date, start, end, '/vrats/masik-shivaratri-dates.html');
 const pradosh = (paksha: string, date: string, start: string, end: string) => entry(`pradosh-vrat-${paksha}`, date, start, end, '/vrats/pradoshdates.html');
 const ghata = (id: string, date: string, start: string, end: string, path: string): PublishedOccasion => ({ ...entry(id, date, start, end, path), guidanceOnly: true });
+const vaikuntha = (date: string, nishita: [string, string], tithi: [string, string]): PublishedOccasion => ({
+  ...entry('vaikuntha-chaturdashi', date, nishita[0], nishita[1], '/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html'),
+  clocks: [nishita, tithi],
+});
 
 export const PUBLISHED_OCCASIONS: readonly PublishedOccasion[] = [
   entry('diwali', '2026-11-08', '17:54', '19:50', '/festivals/lakshmipuja/festivals-lakshmipuja-timings.html'),
@@ -28,6 +32,9 @@ export const PUBLISHED_OCCASIONS: readonly PublishedOccasion[] = [
   entry('janmashtami', '2026-09-04', '23:57', '00:43+1', '/dashavatara/lord-krishna/krishna-janmashtami-date-time.html'),
   entry('janmashtami', '2025-08-15', '00:04+1', '00:47+1', '/dashavatara/lord-krishna/krishna-janmashtami-date-time.html'),
   entry('janmashtami-vaishnava', '2025-08-16', '00:04+1', '00:47+1', '/dashavatara/lord-krishna/krishna-janmashtami-date-time.html'),
+  vaikuntha('2025-11-04', ['23:39', '00:31+1'], ['02:05', '22:36']),
+  vaikuntha('2026-11-23', ['23:41', '00:35+1'], ['02:36', '23:42']),
+  vaikuntha('2027-11-12', ['23:39', '00:32+1'], ['10:20', '09:55+1']),
   { ...entry('karwa-chauth', '2026-10-29', '17:38', '18:56', '/festivals/karwa-chauth/karwa-chauth-date-time.html'), clocks: [['17:38', '18:56'], ['20:17', '20:17']] },
   moon('sakat-chauth', '2026-01-06', '20:59'),
   moon('bahula-chaturthi', '2026-08-31', '20:29'),

@@ -78,6 +78,7 @@ export const ANNUAL: AnnualFestival[] = [
   { id: 'diwali', month: 8, paksha: 'krishna', tithi: 15, muhurta: 'pradosh' }, // Lakshmi Puja (Amavasya at Pradosh)
   { id: 'govardhan-puja', month: 8, paksha: 'shukla', tithi: 1, muhurta: 'udaya' },
   { id: 'bhai-dooj', month: 8, paksha: 'shukla', tithi: 2, muhurta: 'udaya' },
+  { id: 'vaikuntha-chaturdashi', month: 8, paksha: 'shukla', tithi: 14, muhurta: 'nishita' },
 
   // Regional wave 1 (Sept 2026) — Rajasthani, Bihari/Maithil and Jain observances.
   // `sakat-chauth` is deliberately absent: it is chandrodaya-matched and this script
