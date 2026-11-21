@@ -1616,3 +1616,7 @@ Added [[subsystems/bhajan-text]]: `bhajan` category placed in the Bhajan tab, do
 
 ## [2026-11-15] gap | No verified bhajan text yet
 Lyrics hosts were blocked by the session network policy, so no bhajan cleared RULEBOOK §11.1. Next: allow the hosts, collate the TODO rows two-source, then add JSON + catalog + library entries.
+
+## [2026-11-21] ingest | Proposal 14 finder and Abujh India-day scans
+
+Documented reactive IST scan starts, keyed result visibility, late callback rejection and explicit warm-up date policy. Native verification remains pending.
