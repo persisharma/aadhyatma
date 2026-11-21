@@ -6,7 +6,7 @@ import { join, resolve } from 'node:path';
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const require = createRequire(join(process.env.RAM_LALLA_PREVIEW_DEPS, 'package.json'));
 const { chromium } = require('playwright');
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, ...(process.env.RAM_LALLA_CHROMIUM ? { executablePath: process.env.RAM_LALLA_CHROMIUM } : {}) });
 try {
   const page = await browser.newPage({ viewport: { width: 600, height: 1200 }, deviceScaleFactor: 2 });
   const errors = [], cells = [], output = resolve(root, 'tmp/ram-lalla-preview');

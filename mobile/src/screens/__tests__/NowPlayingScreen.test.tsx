@@ -16,6 +16,7 @@ jest.mock('react-native-svg', () => {
 jest.mock('@/contexts/AudioPlayerContext', () => ({
   SKIP_SECONDS: 15,
   useAudioPlayerContext: jest.fn(),
+  useAudioPosition: () => 0,
 }));
 
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
@@ -53,11 +54,11 @@ function state(overrides: Record<string, unknown> = {}) {
   };
 }
 
-function render(): TestRenderer.ReactTestRenderer {
+function render(lang: 'hi' | 'en' | 'gu' | 'kn' = 'en'): TestRenderer.ReactTestRenderer {
   let tree!: TestRenderer.ReactTestRenderer;
   act(() => {
     tree = TestRenderer.create(
-      <GitaLanguageProvider initialLang="hi">
+      <GitaLanguageProvider initialLang={lang}>
         <NowPlayingScreen />
       </GitaLanguageProvider>
     );
@@ -111,12 +112,12 @@ describe('NowPlayingScreen', () => {
   });
 
   test('keeps long titles and every transport control in a scrollable body, with minimize outside it', () => {
-    const currentTrack = { ...gayatri, titleHi: 'गायत्री मंत्र — पूर्ण पाठ और विस्तृत गायन' };
+    const currentTrack = { ...gayatri, titleEn: 'Gayatri Mantra — complete recitation and extended chanting' };
     mockUse.mockReturnValue(state({ currentTrack }));
     const tree = render();
     const scroll = tree.root.findByType(ScrollView);
     expect(scroll.props.testID).toBe('now-playing-scroll');
-    expect(scroll.findAllByType(Text).find(node => node.props.children === currentTrack.titleHi)!.props.numberOfLines).toBeUndefined();
+    expect(scroll.findAllByType(Text).find(node => node.props.children === currentTrack.titleEn)!.props.numberOfLines).toBeUndefined();
     expect(scroll.findAll(node => typeof node.props.onPress === 'function').some(node => node.props.accessibilityLabel === 'Toggle loop')).toBe(true);
     expect(scroll.findAll(node => typeof node.props.onPress === 'function').some(node => node.props.accessibilityLabel === 'Minimize player')).toBe(false);
     act(() => tree.unmount());
@@ -140,5 +141,33 @@ describe('NowPlayingScreen', () => {
     act(() => button('Seek').props.onPress({ nativeEvent: { locationX: 60 } }));
     expect(value.seekTo).toHaveBeenCalledWith(50);
     act(() => tree.unmount());
+  });
+
+  test('UX-05: control labels follow the reading language; play/pause stays English for e2e', () => {
+    mockUse.mockReturnValue(state());
+    for (const lang of ['hi', 'gu', 'kn'] as const) {
+      const l = labels(render(lang));
+      for (const english of ['Previous track', 'Next track', 'Rewind 15 seconds', 'Forward 15 seconds', 'Toggle loop', 'Minimize player', 'Seek']) {
+        expect(l).not.toContain(english);
+      }
+      expect(l).toContain('Play');
+    }
+    expect(labels(render('hi'))).toContain('पिछला ट्रैक');
+  });
+
+  test('UX-01: a stalled load shows the message and a Retry that reloads the track', () => {
+    const retryPlayback = jest.fn();
+    mockUse.mockReturnValue(state({ playbackNotice: 'loadFailed', retryPlayback }));
+    const tree = render('en');
+    expect(textOf(tree)).toContain('Couldn’t load this track');
+    act(() => tree.root.findByProps({ testID: 'now-playing-retry' }).props.onPress());
+    expect(retryPlayback).toHaveBeenCalledTimes(1);
+  });
+
+  test('UX-09: no-audio track says so, with no retry', () => {
+    mockUse.mockReturnValue(state({ playbackNotice: 'noAudio' }));
+    const tree = render('en');
+    expect(textOf(tree)).toContain('isn’t available yet');
+    expect(tree.root.findAllByProps({ testID: 'now-playing-retry' })).toHaveLength(0);
   });
 });

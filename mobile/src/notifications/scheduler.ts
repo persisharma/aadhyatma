@@ -7,7 +7,10 @@
  * unit-tested without bootstrapping React Native.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { familyCap } from './notificationBudget';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
 import type { Lang } from '@/data/gita/language';
 import { getVerseAtPoolIndex, getVersePoolSize } from '@/data/versePool';
 import { assignSlotVerseIndices, toDateKey, type ReminderSlot } from './seed';
@@ -15,7 +18,6 @@ import type { DayAngaMap } from './dayAnga';
 import {
   computeFireDatesMulti,
   formatNotificationContent,
-  IOS_PENDING_CAP,
   NOTIF_IDENTIFIER_PREFIX,
   type DailyReminderConfig,
   type NotificationPayload,
@@ -39,7 +41,7 @@ export type { DayAnga, DayAngaMap } from './dayAnga';
  * notifications (today: none, but JapamAudioPlayer could grow some) alone.
  */
 export async function cancelAllDailyVerseNotifications(): Promise<void> {
-  await cancelNotificationFamily(NOTIF_IDENTIFIER_PREFIX);
+  await settleAfter('dailyVerse', cancelNotificationFamily(NOTIF_IDENTIFIER_PREFIX));
 }
 
 /**
@@ -63,17 +65,21 @@ export async function scheduleDailyVerseRollingWindow(
   angas: DayAngaMap = {}
 ): Promise<number> {
   // Nothing to schedule still means "hold nothing": an empty plan cancels ours.
-  if (!config.enabled || config.times.length === 0) return armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, []);
+  if (!config.enabled || config.times.length === 0) {
+    return settleAfter('dailyVerse', armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, []));
+  }
 
   const poolSize = getVersePoolSize();
-  if (poolSize === 0) return armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, []);
+  if (poolSize === 0) return settleAfter('dailyVerse', armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, []));
 
-  const dates = computeFireDatesMulti(config.times, now);
+  // iOS shares its 64 pending slots with every other family (see `notificationBudget`).
+  const cap = familyCap(Platform.OS, 'dailyVerse');
+  const dates = computeFireDatesMulti(config.times, now, cap);
 
   // Hard cap: never exceed iOS's pending-notification budget. When the user
   // has multiple reminder times, this caps total notifications across all of
   // them — the nearest fire instants win.
-  const limit = Math.min(dates.length, IOS_PENDING_CAP);
+  const limit = Math.min(dates.length, cap);
   const fires = dates.slice(0, limit);
 
   // One verse per slot (day + time). Same-day reminders get distinct verses so
@@ -84,6 +90,7 @@ export async function scheduleDailyVerseRollingWindow(
   }));
   const verseIndices = assignSlotVerseIndices(slots, poolSize);
 
+  const channelId = fires.length > 0 ? await ensureFamilyChannel('dailyVerse', lang) : undefined;
   const requests: FamilySlot[] = [];
   for (let i = 0; i < fires.length; i += 1) {
     const fire = fires[i];
@@ -111,11 +118,12 @@ export async function scheduleDailyVerseRollingWindow(
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
         date: fire,
-      },
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
     });
   }
 
   // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`) — a
   // future PRD-06 diagnostics pass can ingest these via a local crash log.
-  return armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, requests);
+  return settleAfter('dailyVerse', armNotificationFamily(NOTIF_IDENTIFIER_PREFIX, requests));
 }

@@ -1,3 +1,4 @@
+import MuhuratScanStart from '@/components/MuhuratScanStart';
 import React from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -29,7 +30,7 @@ const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अ
 export default function AbujhDaysScreen({ navigation }: Props) {
   const { colors, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const { loading, days } = useAbujhDays();
+  const { loading, days, startDate } = useAbujhDays();
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   return (
@@ -46,6 +47,7 @@ export default function AbujhDaysScreen({ navigation }: Props) {
         </View>
       ) : (
         <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
+          <MuhuratScanStart date={startDate} />
           <Text
             style={{
               fontFamily: typography.cardLatin.fontFamily,

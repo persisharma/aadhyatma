@@ -1,17 +1,13 @@
-import type { CachedAssetRequest } from '@/utils/assetCache';
+import manifest from './suvicharPortraitManifest.json';
+import { assetBaseUrl, remoteAssetRequest } from './assetManifest';
 
-/** Real shrine photographs are separate from painted full-card masters. Never redraw the idol. */
+/** Legacy API name: standalone generated portraits also reuse reviewed paper/footer slices. */
 const ramLalla = {
-  width: 960, height: 1619,
-  hi: 'राम लला · अयोध्या', en: 'Ram Lalla · Ayodhya',
-  // Legal photo credit belongs on the exported image, independently of scripture attribution.
-  credit: "Photo: Prime Minister's Office · GODL-India\npib.gov.in/photshare/150987_3_1_photoshare.aspx",
-  request: {
-    key: 'f02f160854115012', ext: 'jpg', subdir: 'suvichar-photos',
-    // Reviewed Commons delivery rendition; the same bytes are preserved in assets/suvichar/photos.
-    // Use the existing download-once cache, including its timeout, cancellation and offline reuse.
-    remoteUrl: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/PM_at_the_Pran_Pratishtha_ceremony_of_Shree_Ram_Janmaboomi_Temple_in_Ayodhya%2C_Uttar_Pradesh_on_January_22%2C_2024_%28cropped%29.jpg/960px-PM_at_the_Pran_Pratishtha_ceremony_of_Shree_Ram_Janmaboomi_Temple_in_Ayodhya%2C_Uttar_Pradesh_on_January_22%2C_2024_%28cropped%29.jpg',
-  } satisfies CachedAssetRequest,
+  kind: 'generated', width: 1122, height: 1402,
+  hi: 'श्री राम लला', en: 'Shri Ram Lalla', credit: '',
+  // Measured on the approved card: exclude its baked lettering, message and sender.
+  crop: { x: .025, y: .082, w: .95, h: .482 },
+  request: remoteAssetRequest(manifest, 'ram-lalla', assetBaseUrl())!,
 } as const;
 
 export function suvicharPhotoArt(deity: string) {

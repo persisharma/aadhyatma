@@ -1,4 +1,5 @@
 import type { KathaContentEntry } from '../types';
+import vaikunthaChaturdashi from './entries/vaikuntha-chaturdashi-katha';
 import e0 from './entries/ahoi-ashtami-vrat-katha';
 import e1 from './entries/aja-ekadashi-katha';
 import e2 from './entries/akshaya-navami-katha';
@@ -181,4 +182,5 @@ export const KATHA_CONTENT: KathaContentEntry[] = [
   e87,
   e88,
   e89,
+  vaikunthaChaturdashi,
 ];

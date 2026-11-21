@@ -99,15 +99,15 @@ appId: com.prashantsharma.vedansh
     text: "Start over from the beginning"
     optional: true
 - waitForAnimationToEnd
-- assertVisible: "Back"
-- tapOn: "Back"
+- assertVisible: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: ".*Sources.*"
 
 # Back to the drill-in, back to the listing, then switch to By State.
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - tapOn: "By State"
 - waitForAnimationToEnd

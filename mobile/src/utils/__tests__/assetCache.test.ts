@@ -16,7 +16,7 @@
  *   3. No silent corruption — a failed download propagates (never a blank
  *      fallback) and leaves nothing stored, so the next mount retries cleanly.
  */
-import { ASSET_DOWNLOAD_STALL_MS, cachedAssetUri, cachedFileUri } from '@/utils/assetCache';
+import { ASSET_DOWNLOAD_STALL_MS, assetDownloadStallMs, cachedAssetUri, cachedFileUri, evictCachedAsset } from '@/utils/assetCache';
 import { resetResumableDownloadsForTests } from '@/utils/resumableDownload';
 
 /**
@@ -58,6 +58,8 @@ jest.mock('expo-file-system', () => {
     uri: string;
     constructor(...parts: unknown[]) { this.uri = join(parts); }
     get exists() { return mockState.files.has(this.uri); }
+    get size() { return Math.max(mockState.files.get(this.uri) ?? 0, 0); }
+    async bytes() { return new Uint8Array([1, 2, 3]); }
     delete() { mockState.files.delete(this.uri); }
     move(dest: { uri: string }) {
       if (!mockState.files.has(this.uri)) throw new Error('Source does not exist');
@@ -71,6 +73,13 @@ jest.mock('expo-file-system', () => {
   };
   return { Directory, File, Paths };
 });
+
+// Native SHA-256 stand-in: the test chooses the digest the "device" computes.
+let mockDigestHex = '';
+jest.mock('expo-crypto', () => ({
+  CryptoDigestAlgorithm: { SHA256: 'SHA-256' },
+  digest: jest.fn(async () => new Uint8Array((mockDigestHex.match(/../g) ?? []).map(h => parseInt(h, 16))).buffer),
+}));
 
 jest.mock('expo-file-system/legacy', () => ({
   getInfoAsync: jest.fn(async (uri: string) => {
@@ -294,5 +303,53 @@ describe('slow and interrupted connections', () => {
     fsState.transfers[0].finish(status);
     await expect(pending).resolves.toBe('failed');
     expect(fsState.files.has('file:///doc/kids-stories/a3f9c2.webp')).toBe(false);
+  });
+});
+
+test('the stall limit is never stricter than the platform’s own client was', () => {
+  // Android's client gave up after 10 s without a byte; resuming keeps what arrived.
+  expect(assetDownloadStallMs('android')).toBe(15_000);
+  // iOS's waits 60 s and cannot resume, so an earlier cut-off would discard a download that was only waiting.
+  expect(assetDownloadStallMs('ios')).toBe(60_000);
+  expect([15_000, 60_000]).toContain(ASSET_DOWNLOAD_STALL_MS);
+});
+
+describe('integrity (SEC-06)', () => {
+  const DIGEST_KEY = '0123456789abcdef';
+  const digestReq = () => req({ key: DIGEST_KEY, remoteUrl: `https://cdn.example.com/${DIGEST_KEY}.webp` });
+  const FINAL = `file:///doc/kids-stories/${DIGEST_KEY}.webp`;
+
+  it('promotes a download whose SHA-256 starts with the manifest key', async () => {
+    mockDigestHex = `${DIGEST_KEY}ffffffffffff`;
+    await expect(cachedAssetUri(digestReq())).resolves.toBe(FINAL);
+    expect(fsState.files.has(FINAL)).toBe(true);
+  });
+
+  it('rejects mismatching bytes and leaves neither a cache hit nor a scratch behind', async () => {
+    mockDigestHex = 'ffffffffffffffffffff';
+    await expect(cachedAssetUri(digestReq())).rejects.toThrow('does not match its key');
+    expect(fsState.files.has(FINAL)).toBe(false);
+    expect([...fsState.files.keys()].filter(uri => uri.endsWith('.part'))).toEqual([]);
+    // The next request fetches again instead of trusting anything.
+    mockDigestHex = `${DIGEST_KEY}00`;
+    await expect(cachedAssetUri(digestReq())).resolves.toBe(FINAL);
+    expect(fsState.downloads).toHaveLength(2);
+  });
+
+  it('treats an empty cached file as a miss, not a hit', async () => {
+    mockDigestHex = `${DIGEST_KEY}00`;
+    fsState.files.set('file:///doc/kids-stories', -1);
+    fsState.files.set(FINAL, 0);
+    expect(cachedFileUri(digestReq())).toBeNull();
+    await expect(cachedAssetUri(digestReq())).resolves.toBe(FINAL);
+    expect(fsState.downloads).toHaveLength(1);
+    expect(fsState.files.get(FINAL)).toBeGreaterThan(0);
+  });
+
+  it('evictCachedAsset removes an undecodable file so the next request downloads it again', async () => {
+    mockDigestHex = `${DIGEST_KEY}00`;
+    await cachedAssetUri(digestReq());
+    evictCachedAsset(digestReq());
+    expect(cachedFileUri(digestReq())).toBeNull();
   });
 });

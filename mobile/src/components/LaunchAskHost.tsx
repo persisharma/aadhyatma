@@ -55,9 +55,13 @@ export default function LaunchAskHost({
   const [trackingReady, setTrackingReady] = useState(Platform.OS !== 'ios');
   useEffect(() => {
     let alive = true;
-    void Promise.all([hydrateLaunchAsks(), loadNudgeRecord()]).then(() => {
-      if (alive) setLoaded(true);
-    });
+    // A rejected hydrate must still reach the loaded state, or the launch asks
+    // never appear (they wait on `loaded`); the store then runs on its defaults.
+    void Promise.all([hydrateLaunchAsks(), loadNudgeRecord()])
+      .catch(() => undefined)
+      .then(() => {
+        if (alive) setLoaded(true);
+      });
     return () => {
       alive = false;
     };

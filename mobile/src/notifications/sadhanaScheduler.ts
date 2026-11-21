@@ -6,12 +6,17 @@
  * expo-notifications glue around it — mirroring `vratScheduler.ts`.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap, familyWindowDays } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planSadhanaReminders,
   formatSadhanaReminderContent,
   SADHANA_NOTIF_PREFIX,
+  SADHANA_WINDOW_DAYS,
   type SadhanaReminderInput,
 } from './sadhanaReminderPure';
 
@@ -23,7 +28,7 @@ export type SadhanaNotificationPayload = {
 
 /** Cancel every sadhana reminder we own, leaving other notifications untouched. */
 export async function cancelAllSadhanaReminders(): Promise<void> {
-  await cancelNotificationFamily(SADHANA_NOTIF_PREFIX);
+  await settleAfter('sadhana', cancelNotificationFamily(SADHANA_NOTIF_PREFIX));
 }
 
 /**
@@ -33,12 +38,20 @@ export async function cancelAllSadhanaReminders(): Promise<void> {
  */
 export async function scheduleSadhanaReminders(
   inputs: SadhanaReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  const { planned } = planSadhanaReminders(inputs, now);
+  const { planned } = planSadhanaReminders(
+    inputs,
+    now,
+    familyWindowDays(Platform.OS, 'sadhana', SADHANA_WINDOW_DAYS),
+    familyCap(Platform.OS, 'sadhana')
+  );
+
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('sadhana', lang) : undefined;
 
   const slots: FamilySlot[] = planned.map((p) => {
-    const { title, body } = formatSadhanaReminderContent(p);
+    const { title, body } = formatSadhanaReminderContent(p, lang);
     const payload: SadhanaNotificationPayload = {
       type: 'sadhana-reminder',
       programId: p.programId,
@@ -55,10 +68,11 @@ export async function scheduleSadhanaReminders(
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
         date: p.fireDate,
-      },
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
     };
   });
 
   // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
-  return armNotificationFamily(SADHANA_NOTIF_PREFIX, slots);
+  return settleAfter('sadhana', armNotificationFamily(SADHANA_NOTIF_PREFIX, slots));
 }

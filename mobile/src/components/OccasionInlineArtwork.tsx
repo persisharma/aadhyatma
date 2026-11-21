@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { InteractionManager, View } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContext } from '@react-navigation/native';
 import ObservanceArtwork from './ObservanceArtwork';
 import type { OccasionTiming } from '@/panchang/occasionTimings';
 import { OBSERVANCE_RULES } from '@/panchang/festivals';
+import { runWhenIdle, type IdleTask } from '@/utils/runWhenIdle';
 
 /** Screen-only frame: text/navigation never wait for a remote painting.
  * The export renderer is evaluated only after layout and navigation settle.
@@ -15,7 +16,7 @@ export default function OccasionInlineArtwork({ item }: { item: OccasionTiming }
   const [painted, setPainted] = useState(false);
   const identity = `${item.id}:${item.ruleId}`;
   useEffect(() => {
-    let task: ReturnType<typeof InteractionManager.runAfterInteractions> | undefined;
+    let task: IdleTask | undefined;
     let alive = true;
     let generation = 0;
     const stop = () => { generation++; task?.cancel(); task = undefined; if (alive) { setActive(false); setPainted(false); } };
@@ -23,7 +24,7 @@ export default function OccasionInlineArtwork({ item }: { item: OccasionTiming }
       const current = ++generation;
       task?.cancel();
       if (width <= 0 || (navigation && !navigation.isFocused())) return;
-      task = InteractionManager.runAfterInteractions(() => {
+      task = runWhenIdle(() => {
         if (alive && current === generation && (!navigation || navigation.isFocused())) setActive(true);
       });
     };

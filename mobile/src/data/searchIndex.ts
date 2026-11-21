@@ -13,6 +13,8 @@
  */
 
 import { library, type LibraryEntry } from './texts';
+import { readingLinks } from './readingLinks';
+import { getKathaLibrary } from '../panchang/vratCatalog';
 import { deities } from './deities';
 import { getChalisa, type ChalisaId } from './chalisaRegistry';
 import { getAshtakam, ashtakamIds, type AshtakamId } from './ashtakam';
@@ -36,6 +38,7 @@ import {
   type GitaVerse,
 } from './gita';
 import { getGarudPuranChapter, garudPuranChaptersManifest } from './garud-puran';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest, getBhagavatamChapter } from './bhagavatam';
 import { getGitaSaarChapter, gitaSaarChaptersManifest, type GitaSaarVerse } from './gita-saar';
 import {
   getSundarkandChapter,
@@ -90,6 +93,7 @@ import {
   type ValmikiRamayanVerse,
 } from './valmiki-ramayan';
 import { getSanskar, sanskarIds } from './sanskar';
+import { getBhajan } from './bhajan';
 import { VIDHI_ENTRIES, type VidhiEntry } from './vidhi';
 import { getPurposeMeta } from './purposes';
 import { purposesForText } from './discoveryMeta';
@@ -108,6 +112,11 @@ const CHALISA_IDS: readonly ChalisaId[] = [
   'khatu-shyam-chalisa',
   'lakshmi-chalisa',
   'surya-chalisa',
+  'vaishno-devi-chalisa',
+  'shani-chalisa',
+  'santoshi-mata-chalisa',
+  'kali-chalisa',
+  'radha-chalisa',
 ];
 
 const ASHTAKAM_IDS: readonly AshtakamId[] = ashtakamIds;
@@ -297,7 +306,24 @@ function buildSectionEntries(): readonly SearchSectionEntry[] {
   // Vidhi rows ride the section group (PRD-19 Phase 2B): a vidhi is a
   // procedure, not a text, so it contributes a single openable row (no verse
   // entries). SearchScreen routes vidhi sourceIds to VidhiDetail.
-  return [...library.map((entry) => sectionEntry(entry)), ...VIDHI_ENTRIES.map(vidhiSectionEntry)];
+  return [...library.filter(entry => !entry.hidden).map((entry) => sectionEntry(entry)), ...VIDHI_ENTRIES.map(vidhiSectionEntry),
+    ...getKathaLibrary().map((katha): SearchSectionEntry => {
+      const fieldsNorm = [katha.titleHi, katha.titleEn, 'कथा', 'Katha story'].map(normalize);
+      return { type: 'section', id: `section:katha:${katha.id}`, sourceId: `katha:${katha.id}`,
+        displayHi: katha.titleHi, displayEn: katha.titleEn, subtitleHi: 'कथा संग्रह',
+        thumb: 'क', norm: fieldsNorm.join(' '), fieldsNorm };
+    }),
+    ...readingLinks.map((link): SearchSectionEntry => {
+      const fieldsNorm = [link.titleHi, link.titleEn, link.detailHi, link.detailEn].map(normalize);
+      return { type: 'section', id: `section:${link.id}`, sourceId: link.id,
+        displayHi: link.titleHi, displayEn: link.titleEn, subtitleHi: link.detailHi,
+        thumb: '॥', norm: fieldsNorm.join(' '), fieldsNorm };
+    }),
+    { type: 'section', id: 'section:katha-library', sourceId: 'katha-library',
+      displayHi: 'कथा संग्रह', displayEn: 'Katha Library', subtitleHi: 'व्रत और पर्व की कथाएँ', thumb: '॥',
+      norm: normalize('कथा संग्रह व्रत Katha Library vrat stories'),
+      fieldsNorm: [normalize('कथा संग्रह व्रत'), normalize('Katha Library vrat stories')] },
+  ];
 }
 
 function vidhiSectionEntry(vidhi: VidhiEntry): SearchSectionEntry {
@@ -400,8 +426,13 @@ function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator
     return;
   }
 
-  if (entry.id === 'bhagavad-gita') {
-    yield* pushChapteredGita(verses, entry);
+  if (entry.id === 'bhagavad-gita' || entry.id === BHAGAVATAM_ID) {
+    const isBhagavatam = entry.id === BHAGAVATAM_ID;
+    yield* pushChapteredGita(
+      verses, entry,
+      isBhagavatam ? bhagavatamChaptersManifest : gitaChaptersManifest,
+      isBhagavatam ? getBhagavatamChapter : getGitaChapter,
+    );
     return;
   }
 
@@ -519,6 +550,11 @@ function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator
 
   if (entry.category === 'aarti') {
     pushAarti(verses, entry);
+    return;
+  }
+
+  if (entry.category === 'bhajan') {
+    pushBhajan(verses, entry);
     return;
   }
 
@@ -647,10 +683,16 @@ function pushSuktamVerses(out: SearchVerseEntry[], entry: LibraryEntry) {
   });
 }
 
-function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
-  for (const ch of gitaChaptersManifest) {
-    const chapter = getGitaChapter(ch.chapter);
+function* pushChapteredGita(
+  out: SearchVerseEntry[],
+  entry: LibraryEntry,
+  manifest: typeof gitaChaptersManifest,
+  getChapter: typeof getGitaChapter,
+) {
+  for (const ch of manifest) {
+    const chapter = getChapter(ch.chapter);
     chapter.verses.forEach((v: GitaVerse, idx) => {
+      const reference = v.scriptureRef ?? `${ch.chapter}.${v.number}`;
       out.push(
         makeVerseEntry({
           sourceId: entry.id,
@@ -658,8 +700,8 @@ function* pushChapteredGita(out: SearchVerseEntry[], entry: LibraryEntry) {
           sectionNameEn: entry.nameEn,
           chapter: ch.chapter,
           verseIndex: idx,
-          labelHi: `श्लोक ${ch.chapter}.${v.number}`,
-          labelEn: `Verse ${ch.chapter}.${v.number}`,
+          labelHi: `श्लोक ${reference}`,
+          labelEn: `Verse ${reference}`,
           linesHi: v.sanskrit,
           linesEn: v.transliteration,
           meaningHi: v.meaningHi,
@@ -858,6 +900,28 @@ function pushAarti(out: SearchVerseEntry[], entry: LibraryEntry) {
   const aarti = aartiCollection[idx];
   if (!aarti) return;
   aarti.verses.forEach((v: AartiVerse, verseIdx) => {
+    out.push(
+      makeVerseEntry({
+        sourceId: entry.id,
+        sectionNameHi: entry.nameHi,
+        sectionNameEn: entry.nameEn,
+        verseIndex: verseIdx,
+        labelHi: v.labelHi,
+        labelEn: v.labelEn,
+        linesHi: v.lines,
+        linesEn: v.linesEn,
+        meaningHi: v.meaningHi,
+        meaningEn: v.meaningEn,
+      })
+    );
+  });
+}
+
+/** Bhajans share the aarti verse shape (`lines` + `linesEn`) — RULEBOOK §7 Path A. */
+function pushBhajan(out: SearchVerseEntry[], entry: LibraryEntry) {
+  const bhajan = getBhajan(entry.id);
+  if (!bhajan) return;
+  bhajan.verses.forEach((v, verseIdx) => {
     out.push(
       makeVerseEntry({
         sourceId: entry.id,

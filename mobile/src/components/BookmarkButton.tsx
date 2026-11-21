@@ -8,9 +8,12 @@ import { useReducedMotion } from '@/utils/useReducedMotion';
 type Props = {
   isBookmarked: boolean;
   onToggle: () => void;
+  /** Defaults to the reader's "Add bookmark" / "Remove bookmark"; override where the heart saves something else. */
+  accessibilityLabel?: string;
+  testID?: string;
 };
 
-export default function BookmarkButton({ isBookmarked, onToggle }: Props) {
+export default function BookmarkButton({ isBookmarked, onToggle, accessibilityLabel, testID }: Props) {
   const { colors } = useTheme();
   const reduceMotion = useReducedMotion();
   const scale = useRef(new Animated.Value(1)).current;
@@ -33,7 +36,8 @@ export default function BookmarkButton({ isBookmarked, onToggle }: Props) {
       onPress={handleToggle}
       style={styles.target}
       accessibilityRole="button"
-      accessibilityLabel={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+      testID={testID}
+      accessibilityLabel={accessibilityLabel ?? (isBookmarked ? 'Remove bookmark' : 'Add bookmark')}
       accessibilityState={{ selected: isBookmarked }}
     >
       <View style={[styles.circle, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>

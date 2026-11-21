@@ -11,12 +11,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { __resetDeviceHeartbeatState, sendDeviceHeartbeat } from '../deviceHeartbeat';
 import { HEARTBEAT_FINGERPRINT_KEY, JAPAM_ALARMS_KEY } from '../deviceHeartbeatPure';
-import { INSTALL_ID_KEY } from '../pushTokenPure';
+import { INSTALL_ID_KEY, makeInstallId } from '../pushTokenPure';
+import { getInstallId } from '../installId';
 import * as permissionState from '../permissionState';
 
 const ENDPOINT = 'https://hb.example.com/heartbeat';
 const API_KEY = 'test-registration-key';
 const NOW = Date.UTC(2026, 9, 25, 6, 0, 0); // 2026-10-25 within Asia/Kolkata
+
+jest.mock('expo-crypto', () => ({
+  randomUUID: jest.fn(() => '11111111-2222-3333-4444-555555555555'),
+}));
 
 jest.mock('expo-constants', () => ({ default: { expoConfig: { version: '1.5.2' } } }));
 
@@ -110,6 +115,21 @@ test('reuses the push registrar install id when one already exists', async () =>
   await AsyncStorage.setItem(INSTALL_ID_KEY, 'vd-existing-id-value');
   await sendDeviceHeartbeat({ now: NOW });
   expect(JSON.parse(fetchMock.mock.calls[0][1].body).installId).toBe('vd-existing-id-value');
+});
+
+test('mints a missing install id through the shared minter (Crypto UUID, never Math.random)', async () => {
+  const random = jest.spyOn(Math, 'random');
+  try {
+    await sendDeviceHeartbeat({ now: NOW });
+    const sent = JSON.parse(fetchMock.mock.calls[0][1].body).installId;
+    expect(sent).toBe(makeInstallId('11111111-2222-3333-4444-555555555555', NOW));
+    expect(await AsyncStorage.getItem(INSTALL_ID_KEY)).toBe(sent);
+    // The push registrar reads the very same id back.
+    expect(await getInstallId()).toBe(sent);
+    expect(random).not.toHaveBeenCalled();
+  } finally {
+    random.mockRestore();
+  }
 });
 
 test('the same unchanged day makes no second request', async () => {

@@ -1,4 +1,5 @@
 import * as FileSystem from 'expo-file-system/legacy';
+import { verifyDownloadedAsset } from '../assetIntegrity';
 import {
   subscribeBackgroundAsset,
   evictBackgroundAsset,
@@ -21,6 +22,7 @@ type MockTask = {
   cancel: jest.Mock;
 };
 const mockTasks: MockTask[] = [];
+jest.mock('../assetIntegrity', () => ({ verifyDownloadedAsset: jest.fn(async () => undefined) }));
 jest.mock('expo-file-system/legacy', () => ({
   documentDirectory: 'file:///docs/',
   getInfoAsync: jest.fn(async (path: string) => mockFiles.has(path) ? { exists: true, size: mockFiles.get(path), isDirectory: false } : { exists: false }),
@@ -296,6 +298,29 @@ test.each([200, 416, 503])('a resumed response of HTTP %i is discarded, not appe
   expect(mockFiles.has(mockTasks[1].path)).toBe(false);
 });
 
+test('an error answer to a resumed request costs that file its bytes, not the session its resuming', async () => {
+  onAndroid();
+  subscribe('flaky'); await flush();
+  mockTasks[0].progress(50_000, 340_000);
+  jest.advanceTimersByTime(BACKGROUND_DOWNLOAD_STALL_MS); await flush();
+  subscriptions[0](); await flush();
+  const flaky = subscribe('flaky'); await flush();
+  expect(mockTasks[1].resumeFrom).toBe(50_000);
+  // The Worker is briefly unavailable. That says nothing about Range support.
+  mockTasks[1].finish(503); await flush();
+  expect(flaky).toHaveBeenCalledWith(null);
+  expect(mockFiles.has(mockTasks[1].path)).toBe(false);
+
+  subscribe('other'); await flush();
+  mockTasks[2].progress(100_000, 340_000);
+  jest.advanceTimersByTime(BACKGROUND_DOWNLOAD_STALL_MS); await flush();
+  subscriptions[2](); await flush();
+  const other = subscribe('other'); await flush();
+  expect(mockTasks[3].resumeFrom).toBe(100_000);
+  mockTasks[3].progress(340_000, 340_000); mockTasks[3].finish(206); await flush();
+  expect(other).toHaveBeenCalledWith('file:///docs/reading-backgrounds/other.webp');
+});
+
 test('a resumed file of the wrong length is discarded', async () => {
   onAndroid();
   subscribe('short'); await flush();
@@ -356,6 +381,32 @@ test('a download completing as its last viewer leaves is still stored for the ne
   const next = subscribe('late'); await flush();
   expect(next).toHaveBeenCalledWith('file:///docs/reading-backgrounds/late.webp');
   expect(mockTasks).toHaveLength(1);
+});
+
+test('a completed download gives up its progress listener', async () => {
+  const listener = subscribe('done'); await flush();
+  mockTasks[0].progress(20, 20); mockTasks[0].finish(); await flush();
+  expect(listener).toHaveBeenCalledWith('file:///docs/reading-backgrounds/done.webp');
+  // The legacy task drops its listener only when cancelled; one that simply
+  // finished would keep it for the life of the process.
+  expect(mockTasks[0].cancel).toHaveBeenCalledTimes(1);
+});
+
+test('leaving while the scratch path is being cleared never starts a transfer nobody can stop', async () => {
+  let finishClearing!: () => void;
+  jest.mocked(FileSystem.deleteAsync).mockImplementationOnce(() => new Promise<void>(resolve => { finishClearing = resolve; }));
+  const listener = subscribe('left-while-clearing'); await flush();
+  expect(FileSystem.createDownloadResumable).not.toHaveBeenCalled();
+  subscriptions[0]();
+  finishClearing(); await flush();
+  expect(FileSystem.createDownloadResumable).not.toHaveBeenCalled();
+  expect(listener).not.toHaveBeenCalled();
+
+  // The slot is free and the artwork is still fetched for the next viewer.
+  const next = subscribe('left-while-clearing'); await flush();
+  expect(mockTasks).toHaveLength(1);
+  mockTasks[0].finish(); await flush();
+  expect(next).toHaveBeenCalledWith('file:///docs/reading-backgrounds/left-while-clearing.webp');
 });
 
 test('leaving one viewer keeps shared work; leaving the last cancels it without callbacks', async () => {
@@ -468,4 +519,14 @@ test('scratch left by a killed process is swept once, before the first download'
   expect(mockFiles.has('file:///docs/reading-backgrounds/first.webp')).toBe(true);
   expect(mockFiles.has('file:///docs/reading-backgrounds/second.webp')).toBe(true);
   expect(FileSystem.readDirectoryAsync).toHaveBeenCalledTimes(1);
+});
+
+test('a download that fails integrity verification is never promoted and settles to the fallback', async () => {
+  jest.mocked(verifyDownloadedAsset).mockRejectedValueOnce(new Error('content does not match its key'));
+  const listener = subscribe('tampered'); await flush();
+  mockTasks[0].finish(); await flush();
+  expect(listener).toHaveBeenCalledWith(null);
+  expect(FileSystem.moveAsync).not.toHaveBeenCalled();
+  expect(mockFiles.has('file:///docs/reading-backgrounds/tampered.webp')).toBe(false);
+  expect(verifyDownloadedAsset).toHaveBeenCalledWith(expect.stringContaining('tampered.webp'), 'tampered');
 });

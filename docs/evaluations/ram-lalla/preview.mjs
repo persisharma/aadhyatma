@@ -16,7 +16,8 @@ const manifest = JSON.parse(await (await import('node:fs/promises')).readFile(jo
 for (const frame of ['mandir-jharokha', 'pushp-aangan', 'bhakti-patra']) {
   await copyFile(join(root, `mobile/assets/suvichar/rama--${frame}.webp`), join(output, `${manifest.assets[`rama--${frame}`].hash}.webp`));
 }
-await copyFile(join(root, 'mobile/assets/suvichar/photos/ram-lalla-ayodhya.jpg'), join(output, 'f02f160854115012.jpg'));
+const portraitManifest = JSON.parse(await (await import('node:fs/promises')).readFile(join(root, 'mobile/src/data/suvicharPortraitManifest.json'), 'utf8'));
+await copyFile(join(root, 'mobile/assets/suvichar/portraits/ram-lalla-front-facing.webp'), join(output, `${portraitManifest.assets['ram-lalla'].hash}.webp`));
 const fontDirs = ['noto-serif-devanagari', 'noto-serif-gujarati', 'noto-serif-kannada', 'cormorant-garamond'];
 let fontCSS = '';
 for (const folder of fontDirs) {

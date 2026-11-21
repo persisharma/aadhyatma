@@ -412,6 +412,20 @@ describe('पात्र-परिचय — a place, not a profile (RULEBOOK �
     await act(async () => tree.unmount());
   });
 
+  test('a failed hand-off says so instead of doing nothing (UX-09)', async () => {
+    const { Linking, Alert } = require('react-native');
+    const openURL = jest.spyOn(Linking, 'openURL').mockRejectedValue(new Error('no handler'));
+    const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => undefined);
+    const tree = await renderDetail('akshaya-patra');
+    await press(tree, 'daan-org-give');
+    await press(tree, 'daan-org-open');
+    expect(openURL).toHaveBeenCalled();
+    expect(alert).toHaveBeenCalledTimes(1);
+    openURL.mockRestore();
+    alert.mockRestore();
+    await act(async () => tree.unmount());
+  });
+
   test('an "about this work" description renders only for rows that carry one', async () => {
     const withDesc = await renderDetail('change-with-one');
     expect(has(withDesc, 'daan-org-description')).toBe(true);

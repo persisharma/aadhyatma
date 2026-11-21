@@ -4,6 +4,7 @@ import { ruleVisibleForLenses, type ObservanceLens } from './lenses';
 const VratListUrl = 'https://www.drikpanchang.com/vrats/hindu-vrat-list.html';
 const HinduCalendarUrl = 'https://www.drikpanchang.com/calendars/hindu/hinducalendar.html';
 const VratKathaUrl = 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html';
+const VaikunthaChaturdashiUrl = 'https://www.drikpanchang.com/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html';
 
 // Regional folk-deity and community observances are absent from the Drik festival
 // index, so their rules cite a different authority (RULEBOOK §11.1 lets any of the
@@ -218,6 +219,7 @@ export const KATHA_CATALOG: KathaCatalogEntry[] = [
   katha({ id: 'janmashtami-katha', nameHi: 'जन्माष्टमी कथा', nameEn: 'Janmashtami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['janmashtami'] }),
   katha({ id: 'vasant-panchami-katha', nameHi: 'वसंत पंचमी कथा', nameEn: 'Vasant Panchami Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['vasant-panchami'] }),
   katha({ id: 'akshaya-navami-katha', nameHi: 'अक्षय नवमी कथा', nameEn: 'Akshaya Navami Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['akshaya-navami'] }),
+  katha({ id: 'vaikuntha-chaturdashi-katha', nameHi: 'वैकुंठ चतुर्दशी व्रत कथा', nameEn: 'Vaikuntha Chaturdashi Vrat Katha', kind: 'vrat-katha', sourceUrl: VaikunthaChaturdashiUrl, relatedRuleIds: ['vaikuntha-chaturdashi'] }),
   katha({ id: 'chhath-puja-katha', nameHi: 'छठ पूजा कथा', nameEn: 'Chhath Puja Katha', kind: 'vrat-katha', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['chhath-puja', 'chaiti-chhath'] }),
   katha({ id: 'ganga-dussehra-katha', nameHi: 'गंगा दशहरा कथा', nameEn: 'Ganga Dussehra Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['ganga-dussehra'] }),
   katha({ id: 'gita-jayanti-katha', nameHi: 'गीता जयंती कथा', nameEn: 'Gita Jayanti Katha', kind: 'festival-legend', sourceUrl: 'https://www.drikpanchang.com/vrat-katha/vrat-katha.html', relatedRuleIds: ['gita-jayanti'] }),
@@ -444,6 +446,24 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   // (BhaktiBharat "Gopashtami", Drik "Gopashtami"; 99Pandit concurs).
   festival({ id: 'gopashtami', nameHi: 'गोपाष्टमी', nameEn: 'Gopashtami', lunarMonth: 8, paksha: 'shukla', tithi: 8, marker: 'dot', deityHi: 'श्री कृष्ण व गौ माता', deityEn: 'Shri Krishna and Gau Mata', shortDescriptionHi: 'कार्तिक शुक्ल अष्टमी को गोपाष्टमी — वह दिन जब श्री कृष्ण ने पहली बार गायों को चराने वन भेजा और गोप कहलाए। गौ माता और बछड़ों का श्रृंगार कर पूजन, परिक्रमा और गोग्रास अर्पण किया जाता है; मथुरा, वृंदावन और समस्त ब्रज में यह बड़ा उत्सव है।', shortDescriptionEn: 'Gopashtami on Kartika Shukla Ashtami — the day Shri Krishna first took the cows out to graze and became a gopa. Cows and calves are adorned and worshipped, circumambulated and offered the gograsa; Mathura, Vrindavan and all of Braj keep it as a great festival.', searchTerms: ['gopashtami', 'gopastami', 'gau puja', 'braj', 'vrindavan', 'krishna gopa'] }),
   festival({ id: 'akshaya-navami', nameHi: 'अक्षय नवमी', nameEn: 'Akshaya Navami', lunarMonth: 8, paksha: 'shukla', tithi: 9, marker: 'dot', category: 'vrat', kathaId: 'akshaya-navami-katha', bhogId: 'akshaya-navami-bhog' }),
+  // 23 Nov 2026: Drik Panchang (Delhi) and myPanchang (Ujjain) agree on
+  // the Vaishnava observance. The separate fast and local procession may
+  // follow another reckoning. Nishita falls back to sunrise when no midpoint
+  // lies in Chaturdashi, as on 4 Nov 2025 and 23 Nov 2026.
+  // https://www.mypanchang.com/newsite/calembedfull.php?locid=1253914&masa=p&mn=11&yr=2026
+  vrat({
+    id: 'vaikuntha-chaturdashi',
+    nameHi: 'वैकुंठ चतुर्दशी', nameEn: 'Vaikuntha Chaturdashi',
+    lunarMonth: 8, paksha: 'shukla', tithi: 14, dayRule: 'nishita',
+    deityHi: 'भगवान शिव व श्री विष्णु', deityEn: 'Lord Shiva and Shri Vishnu',
+    shortDescriptionHi: 'कार्तिक शुक्ल चतुर्दशी को हरि और हर की संयुक्त उपासना होती है। विष्णु पूजन में निशीथ काल का महत्व है। शिव पूजन और मणिकर्णिका स्नान की अरुणोदय परंपरा की गणना अलग होती है।',
+    shortDescriptionEn: 'On Kartik Shukla Chaturdashi, devotees honour Vishnu and Shiva together. The Vishnu observance follows Nishita. The Arunodaya tradition for Shiva worship and Manikarnika Snan follows a separate reckoning.',
+    searchTerms: ['Vaikunth Chaturdashi', 'Baikunth Chaturdashi', 'वैकुण्ठ चतुर्दशी', 'बैकुंठ चतुर्दशी', 'बैकुण्ठ चतुर्दशी', 'Vaikuntha Chaturdashi Vrat'],
+    sourceUrl: VaikunthaChaturdashiUrl,
+    kathaId: 'vaikuntha-chaturdashi-katha',
+    bhogId: 'vaikuntha-chaturdashi-bhog',
+    linkSectionId: 'vishnu-sahasranama',
+  }),
   // Kartika Purnima — Tripurari Purnima / Dev Deepawali, the close of Kartik snan.
   // Published: 24 Nov 2026 (Drik "Kartik Purnima", SmartPuja). The monthly
   // `purnima-vrat` already fires on this tithi; the named festival did not exist.
@@ -481,8 +501,6 @@ export const FESTIVAL_RULES: ObservanceRule[] = [
   //   • Durga Ashtami (Sharad) — already the Ashvin `masik-durgashtami` day,
   //     which matches Drik 2024–2029 (19 Oct 2026); a second rule would put
   //     it on the calendar twice. Maha Navami ships below (madhyahna).
-  //   • Vaikuntha Chaturdashi — nishita-vyapini (modelled since the Sept 2026
-  //     day-rule audit), but still a single source for 2026.
   //   • Balarama Jayanti (Bhadrapada S6, Drik) — distinct from Hal Shashthi
   //     below; sources give three dates across three traditions.
   //   • Gayatri Jayanti, Ramanuja Jayanti — the tithi itself is contested

@@ -5,13 +5,15 @@
  * ledger-core sanitizer, a gupt entry's note/amount is never captured, not
  * merely hidden. Amounts never render outside this ledger and its export.
  */
-import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { AccessibilityInfo, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
 import TextField from '@/components/TextField';
+import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
+import { parseDaanAmount } from '@/data/daan/amount';
 import { useDaanLedger } from '@/contexts/DaanLedgerContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import {
@@ -38,7 +40,7 @@ function localIsoDate(d: Date): string {
 export default function DaanEntryScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii } = useTheme();
   const { lang } = useGitaLanguage();
-  const { addEntry } = useDaanLedger();
+  const { addEntry, isLoading } = useDaanLedger();
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
 
@@ -51,9 +53,40 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
   const [note, setNote] = useState('');
   const [amountText, setAmountText] = useState('');
 
-  const onSave = () => {
+  const [amountTouched, setAmountTouched] = useState(false);
+  const amount = gupt ? { kind: 'blank' as const } : parseDaanAmount(amountText);
+  const amountError = pick(lang, {
+    hi: 'राशि जाँचें। उदाहरण: 1,000 या 1,000.50। दशमलव के बाद अधिकतम 2 अंक रखें।',
+    en: 'Check the amount. Use 1,000 or 1,000.50, with at most 2 decimal places.',
+    gu: 'રકમ તપાસો. ઉદાહરણ: 1,000 અથવા 1,000.50. દશાંશ પછી વધુમાં વધુ 2 અંક રાખો.',
+    kn: 'ಮೊತ್ತ ಪರಿಶೀಲಿಸಿ. ಉದಾಹರಣೆ: 1,000 ಅಥವಾ 1,000.50. ದಶಮಾಂಶದ ನಂತರ ಗರಿಷ್ಠ 2 ಅಂಕಿಗಳಿರಲಿ.',
+  });
+  const amountLabel = pick(lang, {
+    hi: 'राशि (₹) — वैकल्पिक · निजी', en: 'Amount (₹) — optional · private',
+    gu: 'રકમ (₹) — વૈકલ્પિક · ખાનગી', kn: 'ಮೊತ್ತ (₹) — ಐಚ್ಛಿಕ · ಖಾಸಗಿ',
+  });
+  const showAmountError = amountTouched && amount.kind === 'invalid';
+
+  const [saving, setSaving] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const savingRef = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  const saveError = pick(lang, {
+    hi: 'दान सहेजा नहीं गया। विवरण यहीं हैं — फिर से दर्ज करें।',
+    en: 'Daan was not saved. Your details are still here — try Record again.',
+    gu: 'દાન સચવાયું નથી. વિગતો અહીં જ છે — ફરી નોંધો.',
+    kn: 'ದಾನ ಉಳಿಸಲಾಗಿಲ್ಲ. ವಿವರಗಳು ಇಲ್ಲಿಯೇ ಇವೆ — ಮತ್ತೆ ದಾಖಲಿಸಿ.',
+  });
+
+  const onSave = async () => {
+    if (isLoading || savingRef.current) return;
+    if (amount.kind === 'invalid') {
+      setAmountTouched(true);
+      AccessibilityInfo.announceForAccessibility(amountError);
+      return;
+    }
     const now = Date.now();
-    const amount = parseFloat(amountText);
     const entry: DaanLedgerEntry = {
       id: `daan-${now}`,
       isoDate: localIsoDate(new Date()),
@@ -66,11 +99,30 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
       ...(gupt ? {} : {
         occasionId: route.params?.occasionId,
         note: note.trim() ? note.trim() : undefined,
-        amountInr: Number.isFinite(amount) && amount >= 0 ? amount : undefined,
+        amountInr: amount.kind === 'valid' ? amount.value : undefined,
       }),
     };
-    addEntry(entry);
-    navigation.goBack();
+    savingRef.current = true;
+    setSaving(true);
+    setSaveFailed(false);
+    try {
+      const saved = await addEntry(entry);
+      if (!mounted.current) return;
+      if (saved) {
+        if (navigation.isFocused?.() !== false) navigation.goBack();
+      } else {
+        setSaveFailed(true);
+        AccessibilityInfo.announceForAccessibility(saveError);
+      }
+    } catch {
+      if (mounted.current) {
+        setSaveFailed(true);
+        AccessibilityInfo.announceForAccessibility(saveError);
+      }
+    } finally {
+      savingRef.current = false;
+      if (mounted.current) setSaving(false);
+    }
   };
 
   const fieldLabelStyle = {
@@ -90,7 +142,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
         variant="index"
         onBack={() => navigation.goBack()}
       />
-      <ScrollView
+      <KeyboardAwareScrollView
         contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}
         keyboardShouldPersistTaps="handled"
       >
@@ -117,6 +169,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
                 accessibilityRole="button"
                 accessibilityState={{ selected: active }}
                 accessibilityLabel={`Category ${DAAN_CATEGORY_LABELS[cat].en}`}
+                disabled={saving}
                 onPress={() => setCategory(cat)}
                 style={[
                   styles.chip,
@@ -148,6 +201,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
             testID="daan-gupt-switch"
             value={gupt}
             onValueChange={setGupt}
+            disabled={saving}
             trackColor={{ false: colors.border, true: colors.saffron }}
             thumbColor={colors.parchment}
             accessibilityLabel="Gupt daan"
@@ -161,6 +215,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
               variant="form"
               testID="daan-entry-note"
               value={note}
+              editable={!saving}
               onChangeText={setNote}
               placeholder={pick(lang, {
                 hi: 'जैसे: खिचड़ी, मंदिर अन्नक्षेत्र में…',
@@ -170,14 +225,19 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
               })}
             />
             <Text style={fieldLabelStyle}>
-              {contentByLang(lang, 'राशि (₹) — वैकल्पिक · निजी', 'Amount (₹) — optional · private')}
+              {amountLabel}
             </Text>
             <TextField
               variant="form"
               testID="daan-entry-amount"
               value={amountText}
+              editable={!saving}
               onChangeText={setAmountText}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
+              onBlur={() => setAmountTouched(true)}
+              accessibilityLabel={amountLabel}
+              accessibilityHint={showAmountError ? amountError : undefined}
+              style={{ height: 'auto', minHeight: 48, paddingVertical: 12, fontFamily: bodyFont }}
               placeholder={pick(lang, {
                 hi: 'कभी किसी सूची या share card में नहीं दिखती',
                 en: 'Never shown on any list or share card',
@@ -185,14 +245,31 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
                 kn: 'ಯಾವುದೇ ಪಟ್ಟಿ ಅಥವಾ share cardನಲ್ಲಿ ಕಾಣುವುದಿಲ್ಲ',
               })}
             />
+            {showAmountError ? (
+              <Text testID="daan-amount-error" accessibilityRole="alert" accessibilityLiveRegion="polite"
+                style={{ fontFamily: bodyFont, fontSize: typography.meaning.fontSize, lineHeight: typography.meaning.lineHeight, color: colors.saffronDeep, marginTop: spacing.sm }}>
+                {amountError}
+              </Text>
+            ) : amount.kind === 'valid' ? (
+              <Text testID="daan-amount-preview"
+                style={{ fontFamily: bodyFont, fontSize: typography.meaning.fontSize, lineHeight: typography.meaning.lineHeight, color: colors.inkSoft, marginTop: spacing.sm }}>
+                {pick(lang, { hi: 'दर्ज होने वाली राशि', en: 'Amount to record', gu: 'નોંધવાની રકમ', kn: 'ದಾಖಲಿಸಬೇಕಾದ ಮೊತ್ತ' })}: {amount.display}
+              </Text>
+            ) : null}
           </View>
         ) : null}
 
+        {saveFailed ? <Text testID="daan-save-error" accessibilityRole="alert" accessibilityLiveRegion="polite"
+          style={{ fontFamily: bodyFont, fontSize: typography.meaning.fontSize, lineHeight: typography.meaning.lineHeight, color: colors.saffronDeep, marginTop: spacing.sm }}>
+          {saveError}
+        </Text> : null}
         <Pressable
           testID="daan-entry-save"
           accessibilityRole="button"
           accessibilityLabel="Save this daan"
           onPress={onSave}
+          disabled={isLoading || saving}
+          accessibilityState={{ disabled: isLoading || saving, busy: saving }}
           style={[styles.saveBtn, { backgroundColor: colors.saffron, borderRadius: radii.pill }]}
         >
           <Text style={{ fontFamily: titleFont, fontSize: 13.5, color: colors.onPrimary }}>
@@ -207,7 +284,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
             'Daan given at the gate, in the hundi, or to a neighbour can be recorded here too.'
           )}
         </Text>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

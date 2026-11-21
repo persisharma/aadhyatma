@@ -9,7 +9,7 @@ import { getSanatanTopics } from '@/data/sanatan-parichay';
 /** RN Image.ios/Android applies source width/height before the supplied style.
  * Include those defaults: an aspectRatio-only Image incorrectly keeps 640dp.
  */
-function assertFramed(tree: TestRenderer.ReactTestRenderer, small = false) {
+function assertFramed(tree: TestRenderer.ReactTestRenderer, small: boolean | 'fill' = false) {
   const image = tree.root.findByType(Image);
   const nativeImageStyle = StyleSheet.flatten([{ width: 960, height: 640 }, image.props.style]);
   expect(nativeImageStyle).toMatchObject({ position: 'absolute', width: '100%', height: '100%' });
@@ -17,7 +17,11 @@ function assertFramed(tree: TestRenderer.ReactTestRenderer, small = false) {
   expect(frame).toBeDefined();
   const style = StyleSheet.flatten(frame.props.style);
   expect(style.overflow).toBe('hidden');
-  if (small) expect(style).toMatchObject({ width: 81, height: 54 });
+  if (small === 'fill') {
+    expect(style).toMatchObject({ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 });
+    expect(style.height).toBeUndefined();
+  }
+  else if (small) expect(style).toMatchObject({ width: 81, height: 54 });
   else {
     expect(style).toMatchObject({ width: '100%', aspectRatio: 1.5 });
     expect(style.height).toBeUndefined();
@@ -30,7 +34,8 @@ test.each<Lang>(['hi', 'en', 'gu', 'kn'])('Home image cannot retain the bundled 
   await act(async () => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}>
     <SanatanHomeCard onPress={onPress} onPressIn={jest.fn()} onPressOut={jest.fn()} />
   </GitaLanguageProvider>); });
-  assertFramed(tree);
+  // On Home the painting fills the card's full-height square slot.
+  assertFramed(tree, 'fill');
   act(() => tree.root.findAll(node => node.props.testID === 'home-sanatan-card')[0].props.onPress());
   expect(onPress).toHaveBeenCalledTimes(1);
   act(() => tree.unmount());

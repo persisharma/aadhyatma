@@ -13,6 +13,7 @@ import { buildEntryStartTarget } from '@/navigation/entryRoutes';
 import {
   computeKundali,
   getCurrentDasha,
+  GRAHA_NAMES_EN,
   RASHI_NAMES_EN,
   RASHI_NAMES_WESTERN,
 } from '@/panchang/kundali';
@@ -228,6 +229,30 @@ test('Kundali result leads with plain-language insights and exposes all expert t
     screen: 'JapamCounter',
     params: { mantraId: GRAHA_BEEJ_JAPA_ID[mahaLord] },
   });
+  // The running Mahadasha's guide door (design.md §51e) replaces any inline upay.
+  assert.equal(tree.root.findAllByProps({ testID: 'dasha-practice' }).length, 0);
+  const door = tree.root.findByProps({ testID: 'dasha-guide-door' });
+  assert.equal(door.props.accessibilityLabel, `Understand the ${GRAHA_NAMES_EN[mahaLord]} Mahadasha: what it means, what to do, and why`);
+  assert.ok(text.includes('Understand this Mahadasha'));
+  mockNavigation.navigate.mockClear();
+  act(() => door.props.onPress());
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('DashaGuide', { lord: mahaLord });
+  // The running and every upcoming Mahadasha open their guide from the
+  // timeline; a period that has ended offers no action.
+  const rightNow = Date.now();
+  const endedPeriods = mockChart.vimshottari.filter((period) => period.end.getTime() <= rightNow);
+  const openPeriods = mockChart.vimshottari.filter((period) => period.end.getTime() > rightNow);
+  assert.ok(endedPeriods.length > 0 && openPeriods.length > 1, 'fixture has ended, running and upcoming Mahadashas');
+  for (const period of endedPeriods) {
+    assert.equal(tree.root.findAllByProps({ testID: `dasha-timeline-guide-${period.lord}` }).length, 0, `${period.lord} has ended`);
+  }
+  for (const period of openPeriods) {
+    assert.ok(tree.root.findByProps({ testID: `dasha-timeline-guide-${period.lord}` }), `${period.lord} is running or ahead`);
+  }
+  const nextLord = openPeriods.find((period) => period.lord !== mahaLord)!.lord;
+  mockNavigation.navigate.mockClear();
+  act(() => tree.root.findByProps({ testID: `dasha-timeline-guide-${nextLord}` }).props.onPress());
+  expect(mockNavigation.navigate).toHaveBeenCalledWith('DashaGuide', { lord: nextLord });
   // PRD-20 Phase 4: the period reading sits above the timeline, structural only.
   assert.ok(text.includes('Reading this period'));
   assert.ok(text.includes('Tradition links'));

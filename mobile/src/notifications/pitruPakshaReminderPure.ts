@@ -3,6 +3,9 @@ import type { PitruPakshaWindow } from '@/panchang/pitruSmaran';
 
 export const PITRU_PAKSHA_NOTIF_PREFIX = 'pitru-paksha-reminder';
 
+/** Season notices held at once (current + next window = 2 x 2). */
+export const PITRU_PAKSHA_REMINDER_CAP = 4;
+
 export type PlannedPitruPakshaReminder = {
   identifier: string;
   kind: 'seasonStart' | 'sarvapitriEve';
@@ -17,7 +20,8 @@ function eveOf(date: Date): Date {
 
 export function planPitruPakshaReminders(
   windows: { year: number; window: PitruPakshaWindow }[],
-  now: Date
+  now: Date,
+  cap: number = PITRU_PAKSHA_REMINDER_CAP
 ): PlannedPitruPakshaReminder[] {
   return windows
     .flatMap(({ year, window }) => [
@@ -36,7 +40,7 @@ export function planPitruPakshaReminders(
     ])
     .filter((item) => item.fireDate.getTime() > now.getTime())
     .sort((a, b) => a.fireDate.getTime() - b.fireDate.getTime())
-    .slice(0, 4);
+    .slice(0, cap);
 }
 
 export function formatPitruPakshaReminderContent(

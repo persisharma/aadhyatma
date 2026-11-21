@@ -22,9 +22,11 @@ import type { HomeStackParamList } from '@/navigation/types';
 import { contentByLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
 import AutoSlideButton from '@/components/AutoSlideButton';
 import { useReaderPlayback } from '@/screens/_useAutoSlide';
+import { useReaderJump } from '@/screens/_useReaderJump';
 import ShareButton from '@/components/ShareButton';
 import { useShare } from '@/utils/shareVerse';
 import { vratKathaShareable } from '@/utils/shareContent';
@@ -58,6 +60,7 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
     currentIndex,
     listRef,
   });
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
 
   const getItemLayout = useCallback(
     (_: unknown, index: number) => ({ length: width, offset: width * index, index }),
@@ -92,9 +95,12 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
           right={
             katha && total > 0 ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily }]}>
-                  {currentIndex + 1} / {total}
-                </Text>
+                <ReaderPageCounter
+                  current={currentIndex + 1}
+                  total={total}
+                  titles={sections.map((s) => contentByLang(lang, s.titleHi, s.titleEn))}
+                  {...jump}
+                />
                 <ShareButton
                   onPress={() => void share(vratKathaShareable(katha, currentIndex), lang)}
                   busy={shareBusy}
@@ -176,7 +182,6 @@ export default function VratKathaReaderScreen({ navigation, route }: Props) {
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  counter: { includeFontPadding: false, minWidth: 44, textAlign: 'right', fontStyle: 'italic' },
   toggleRow: { flexDirection: 'row', justifyContent: 'center', paddingTop: 6, paddingBottom: 6, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 6, justifyContent: 'center' },
   autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 6, justifyContent: 'center' },

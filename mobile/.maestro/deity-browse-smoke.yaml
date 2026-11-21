@@ -54,7 +54,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Back"
     timeout: 15000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # Back on the Vishnu deity list, the entry is still listed.
 - assertVisible: "Vishnu Sahasranama.*Tap to open\\."

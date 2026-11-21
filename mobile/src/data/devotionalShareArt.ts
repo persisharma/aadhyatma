@@ -38,6 +38,23 @@ export function devotionalPlateArt(art: DevotionalArt) {
 
 export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   'parshuram-stotram': 'parshuram',
+  'aditya-hridayam': 'surya',
+  'kanakadhara-stotram': 'lakshmi', 'shri-suktam': 'lakshmi',
+  'kalabhairav-ashtakam': 'shiva', 'hanuman-bahuk': 'hanuman',
+  'durga-devi-kavacham': 'durga', 'durga-argala-stotram': 'durga',
+  'durga-kilak-stotram': 'durga', 'durga-saptashati-chapter-1': 'durga',
+  'durga-saptashati-chapter-2': 'durga',
+  'durga-saptashati-chapter-3': 'durga',
+  'durga-saptashati-chapter-4': 'durga',
+  'durga-saptashati-chapter-5': 'durga',
+  'durga-saptashati-chapter-6': 'durga',
+  'durga-saptashati-chapter-7': 'durga',
+  'durga-saptashati-chapter-8': 'durga',
+  'durga-saptashati-chapter-9': 'durga',
+  'durga-saptashati-chapter-10': 'durga',
+  'durga-saptashati-chapter-11': 'durga',
+  'durga-saptashati-chapter-12': 'durga',
+  'durga-saptashati-chapter-13': 'durga',
   // Poet collections use the existing neutral master, with no invented deity portrait.
   'kabir-bhakti-dohe': 'prayer', 'rahim-bhakti-dohe': 'prayer',
   'gita-saar': 'krishna', 'bhagavad-gita': 'krishna', 'krishna-stotram': 'krishna',
@@ -61,6 +78,7 @@ export const devotionalSourceArt: Readonly<Record<string, DevotionalArt>> = {
   // only when the text is addressed to it by name; general prayers retain the neutral plate.
   'gayatri-chalisa': 'gayatri', 'khatu-shyam-chalisa': 'khatu-shyam', 'lakshmi-chalisa': 'lakshmi',
   'gayatri-aarti': 'gayatri', 'khatu-shyam-aarti': 'khatu-shyam', 'om-jai-lakshmi-mata': 'lakshmi',
+  'satyanarayan-aarti': 'vishnu',
   'shani-aarti': 'shani', 'dattatreya-aarti': 'dattatreya', 'om-jai-gange-mata': 'ganga',
   'ambe-tu-hai-jagdambe-kali': 'kali', 'kubera-aarti': 'kubera', 'santoshi-mata-aarti': 'santoshi',
   'ahoi-mata-aarti': 'ahoi', 'vaishno-devi-aarti': 'vaishno', 'ekadashi-mata-aarti': 'ekadashi',

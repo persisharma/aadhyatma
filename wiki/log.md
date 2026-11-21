@@ -1502,3 +1502,123 @@ Updated share/design/integration contracts for shared top/cartouche and English 
 
 ## [2026-11-11] ingest | Low-end Android / slow-network pass (OTA half). Remote artwork is limited by stall, not total time, and resumes on Android (`utils/resumableDownload.ts`, shared by both asset caches); painted icons decode near their drawn size (`PAINTED_ICON_DECODE`); the background warm-up narrows on a constrained launch (`utils/devicePace.ts`, 800 ms bundle evaluation) and leaves the search index to the Search screen; notification families arm through `notifications/familyArm.ts` (identical plan not re-armed within a process, only stale slots cancelled, one shared pending read). Numbers and method: `docs/engineering/android-low-end-performance-2026-11.md`, reproducible with `mobile/scripts/perf-report.mts` and `rearmCost.jest.test.ts`. design.md §6/§38/§75 and the icon section, [[integrations/reading-artwork]], [[subsystems/notifications]], [[concepts/deity-icons]] and [[overview]] synced.
 ## [2026-11-11] gap | No device run for the low-end pass: release-mode profiling on a lower-configuration Android phone, `Range` support on the CDN, and calibration of the 800 ms constrained threshold are pending. On-demand Gujarati/Kannada font loading was dropped (Android keeps a fallback typeface for text rendered before its family registers); embedding fonts is in the store-build PR.
+
+## [2026-11-11] ingest | Post-merge review of the low-end Android pass (both halves on `main` at `d4a5a8b`). Seven regressions fixed, each with a test that fails on `d4a5a8b`: resource shrinking would have emptied the Japam alarm sounds (found only by `getIdentifier(<mantra id>, "raw")`) — the shrink plugin now writes `res/raw/vedansh_release_keep.xml`, RULEBOOK §2; auto-slide stopped at a kāṇḍa boundary when the load outlasted the 3 s hand-off — renewed across the load; a cancel during scratch clearing started a download nobody could stop; a 5xx on a resumed request disabled resuming for the session; finished downloads leaked their progress listener; a warm-up pass that had just run dry swallowed a `prioritise()`; and `assetCache` cut iOS downloads off after 15 s without a byte where the system waited 60 s (now 60 s on iOS, 15 s on Android). Pages: [[readers]], [[integrations/reading-artwork]], [[overview]].
+## [2026-11-11] gap | Android store builds carry the fifteen fonts twice (embedded and as Metro assets), 5.6 MB before compression; size effect unmeasured, removal is a release-order decision. The alarm-sound keep, like every other store-build check, is unverified on a real build.
+## [2026-11-11] ingest | OTAs from the latest branch stay compatible with older store builds. The Valmiki corpus delivery is now chosen at bundle time from the app version (`mobile/corpusDelivery.js`, `metro.config.js`): 1.5.6 and older keep the masters in the JS bundle through `corpusSource.inbundle.ts`; 1.5.7 and newer read the asset parts. Real exports: runtime 1.5.6 → 51.7 MB, 318 assets, no parts; runtime 1.5.7 → 26.6 MB, 391 assets. Replaces the unenforceable "release order" rule (RULEBOOK §2). Pages: [[overview]], [[readers]].
+
+
+## [2026-11-11] ingest | Ram Lalla generated artwork integration
+
+Located the final approved front-facing image omitted from merged #663. Added immutable portrait delivery manifest/catalog registration and shared source clipping across the composer/selectors. Removed Ayodhya and the obsolete photographic credit while preserving stable IDs and archived rights. Public R2 bytes and native/export/device acceptance remain pending; see docs/evaluations/ram-lalla/generated-art-review.md.
+
+## [2026-11-13] ingest | Daan record-specific deletion confirmation
+Privacy-safe confirmation and no-write cancellation documented in [[daan-punya]]. Existing optimistic persistence limitation retained.
+
+## [2026-11-13] ingest | Individual occasion text-share dates
+
+Proposal 08 adds the image-reference civil date/year to dated individual text shares, preserves undated guidance/full Panchang headings, and disambiguates year-crossing text windows. See [[panchang]]. Provider integration covers all four export languages, cancellation and retained download links; native handoff verification remains pending.
+
+- 2026-11-13: Proposal 06 adds Gita counter → chapter/verse picker. Updated readers subsystem from implementation; native verification remains pending.
+
+## [2026-11-13] ingest | Direct WhatsApp / Instagram share hand-off
+
+The share sheet's WhatsApp and Instagram choices now open the app itself (design.md §39.11, RULEBOOK §3): Android WhatsApp row + series WhatsApp album, Instagram post/story on both platforms, with fallback to the unchanged OS sheet. Native config in `plugins/withShareTargetApps.js` (store build required). iOS keeps the OS sheet for WhatsApp — no public image API. Updated [[subsystems/share]]. Targeted Jest suites only; full suite, Maestro and device hand-offs pending.
+
+- 2026-11-13: Android widgets gain the iOS Heritage/Midnight composition (eyebrow capsule, header mark, gold rule, divided small-Panchang sunrise, large-Panchang rows). Updated [[home-widgets]]; needs a new Android binary; launcher verification pending.
+
+## [2026-11-14] update | Instagram reel row; no direct iOS Instagram post
+
+iPhone device test of #686: story landed directly in the story editor; WhatsApp kept the iOS sheet (as designed); the direct iOS post opened Instagram on a different photo and saved a copy to Photos, and the combined story/reel row lost Reel. Fix: iOS post back to the OS sheet (JS-only, OTA), `instagram` dropped from the iOS query schemes, the row split into "Instagram story" (direct) and "Instagram reel" (always the sheet, `'sheet'` hand-off). design.md §39.1/§39.11, RULEBOOK §3, [[subsystems/share]] updated.
+
+## [2026-11-14] revert | Direct WhatsApp / Instagram hand-off reverted (#686, #688)
+
+Product decision after device testing: the share sheet did not meet expectations, so both #686 and #688 are reverted and the original share behaviour is back — one Share row (OS sheet, "WhatsApp, Messages, anywhere"), Instagram post and Instagram story / reel rows through the OS sheet (expo-sharing), no WhatsApp rows, no `directShare.ts`, no `withShareTargetApps` plugin. design.md §39, RULEBOOK §3 and [[subsystems/share]] are back to their pre-#686 text. The two entries above stay as history. Device findings worth keeping if this is retried: iPhone Instagram story via `instagram-stories://` landed in the story editor; the iOS `instagram://library?LocalIdentifier=` post route opened the wrong photo and saved a copy to Photos; WhatsApp has no iOS image API.
+
+## [2026-11-14] ingest | Floating Darshan journey, official live-page discovery, channel fallback and playback/favourites invariants → integrations/live-darshan. Native acceptance pending.
+
+## [2026-11-15] update | Selected Darshan floating icon
+
+Restored the feature onto current main without undoing the share-hand-off revert. Matched Option C’s painted temple, saffron gradient, gold border/bead and warm shadow, retaining audio clearance and four-language accessible labels. Native acceptance remains pending; see [[integrations/live-darshan]].
+
+- 2026-11-16: Diagnosed lost Darshan autoplay in the installed YouTube bridge patch; wait for player readiness and preserve latest pause intent. Six real-library/WebView-boundary regressions reproduce the old failure. Updated design §91, RULEBOOK Darshan contract and integration wiki; native evidence remains pending.
+
+- 2026-11-16: Expanded Darshan to visible stable channel embeds for all nine audited channels; kept dedicated-camera discovery, moved recovery/content into the app, enlarged the pinned player and preserved native fullscreen. Updated design §§91–92/RULEBOOK integration; real device fullscreen/playback and performance remain pending.
+
+
+## 2026-11-16 — A2 Vaishno Devi Chalisa
+- Added the complete maintainer-selected Sri Mandir edition (42 pages), original Hindi/English meanings and pronunciation romanization to the existing Chalisa reader.
+- Wired Durga/category listings, search, progress/bookmarks, discovery, existing artwork and generated count; stable IDs and older rows retained.
+- The missing 4a checklist was explicitly replaced by current repository rules and the Chalisa pattern with maintainer approval. Source variants stay in internal metadata; no bibliography UI.
+- See `docs/evaluations/a2-vaishno-devi-chalisa/review.md` for validation and pending native evidence. No merge/release or next work package.
+
+## [2026-11-16] ingest | A1 Shani Chalisa chosen-edition integration
+
+- Added `shani-chalisa` to the existing Chalisa reader, search, navigation, discovery and Shani artwork mapping; 43 stable units and original Hindi/English meanings, derived Gujarati/Kannada scripts.
+- Corrected the parity manifest’s Drik `/other/` candidate: it is a separate composition. Retained the complete main edition with Vimal closing; source differences and all-unit collation are recorded in `docs/evaluations/a1-shani-chalisa/`.
+- Current repository checklist + merged A2 pattern replace the absent historical checklist under maintainer authorization. No reader or release contract changed. Native and performance checks remain pending; draft PR required.
+
+## 2026-11-16 — A3 Santoshi Mata Chalisa
+
+Added the 42-unit Ganapati/Sharada-opening composition to the existing Chalisa reader, catalog, search, discovery and saved routes. Chosen Drik edition compared with Ved Puran; seven/sixteen-Friday variant recorded internally. Owner authorized the A2-style edition/checklist resolution for A3. Reuses Durga art; no release or new audio. Native verification pending; see `docs/evaluations/a3-santoshi-mata-chalisa/review.md`.
+
+## [2026-11-16] ingest | Preserve shloka rows and one visible reference
+
+Updated home-widgets and readers for the shared presentation-only matching-citation
+formatter, preserved native/app/share row boundaries and widget cache invalidation.
+Canonical scripture and stable identities are unchanged. Native visual acceptance
+and the open ornate-widget integration are explicitly separate gates.
+
+## [2026-11-16] ingest | A4 Kali Chalisa complete edition
+
+Added `kali-chalisa` through the existing registry/reader with Kali art, search, stable saved routes and generated counts. Full Drik text collated against Aaj Tak: 54 body couplets plus three dohas, not a forced forty; edition variants and acceptance limitations in `docs/evaluations/a4-kali-chalisa/review.md`. Current repository policy and established Chalisa pattern replace the unavailable historical checklist under the authorized approach. Native verification remains pending; no merge/build/release authorized.
+
+## [2026-11-17] ingest | A4 PR integration and actual-component captures
+
+PR #698 integrates main a8f6046d cleanly, adds explicit UTF-8 to the browser preview, and preserves actual-reader capture evidence. Native checks remain pending; compact web header crowding is documented in docs/evaluations/a4-kali-chalisa/review.md. No merge or release.
+
+## [2026-11-17] ingest | Chalisa control clearance
+
+ReaderControlRow measures centred and trailing controls, stacking playback when touch clearance would be lost. All Chalisa entries share the fix; other reader families are recorded for separate adoption. Capture coverage now checks both 320/390 widths at Standard/Large in all four scripts.
+
+## [2026-11-17] ingest | A5 Radha Chalisa
+
+Added the complete selected Drik 43-unit Radha Chalisa through the existing registry reader. Original Hindi/English meanings; gu/kn script fallback, existing Radha–Krishna art, source variants internal. A5 stacks on unmerged A4 #698; native evidence remains pending. See `docs/evaluations/a5-radha-chalisa/review.md`.
+
+## [2026-11-18] ingest | PR #702 completes all thirteen Saptashati chapter sources (700 traditional numbered units), preserving existing IDs and append-only Daily Bhakti offsets; readers wiki records collection/lazy-loader integration and pending native acceptance.
+
+## [2026-11-18] ingest | Mobile audit fixes (OTA set)
+
+Fixes from the 17 Nov 2026 mobile audit that need no native build: Panchang dates and clock times are India's on any device zone (`civilTime.ts`, cache versions bumped), "today" rolls over at midnight and on foreground, a root and per-tab error boundary, reminder copy in the reading language, an iOS pending-notification budget, per-family Android channels, in-place Japam alarm re-arm, audio load-failure notice, verified downloads, coalesced activity writes, a 250 km GPS snap limit, and a single `runWhenIdle` wrapper in front of `InteractionManager`. Subsystem gotchas updated in panchang, notifications, japam-alarms, audio and routine. Native and device checks are pending; see the PR.
+
+## [2026-11-18] ingest | Mobile audit fixes (store-build set)
+
+Changes from the 17 Nov 2026 audit that need a new native binary: Expo packages aligned to the SDK 54 expected versions (expo-doctor 18/18), the four patched packages pinned exactly, unused `expo-secure-store` removed (it added a Face ID usage string), storage permissions blocked on Android, `expo-clipboard` added behind a probe so OTAs to older binaries keep the React Native API, the Japam alarm receiver guarded so a failed post cannot end the repeating alarm, config plugins importing `expo/config-plugins`, and a prebuild introspection test. Runbook gotchas added for the Android release gate and the Meta SDK bump. Not built or run on a device.
+
+## [2026-11-12] ingest | Dasha tab — what to do in a Mahadasha
+
+Added `panchang/dashaPractice.ts` (`buildDashaPractice`: the period lord's `GRAHA_UPAY` row, adults only, `dasha` basis) and extracted `components/GrahaUpayPanel.tsx` from the report's graha cards so the Dasha tab and the report share one upay treatment. The Dasha tab gains a `dasha-practice` card under the unchanged beej pill and a collapsed upay toggle per non-running timeline row. No new prescriptive content was authored. Updated [[panchang]], design.md §51/§78, RULEBOOK §14.3.5/§14.4. Maestro steps authored, native run and visual QA pending.
+
+## [2026-11-19] ingest | Mahadasha guide (step-by-step, from the Dasha tab)
+
+Replaced the Dasha tab's inline upay card and expanding timeline rows with a guide per running/upcoming Mahadasha: `panchang/dashaGuide.ts` (`buildDashaGuide`, pure, adults only, ended periods null), `panchang/dashaGuideContent.ts` (draft explanatory copy), `screens/DashaGuideScreen.tsx` (index + five steps, painted art, night panels, Back-to-index on a step). Daan opens the Daan-Punya home; Prashna opens only for a primary-bhava purpose at its min age. Updated [[panchang]], design.md §51/§51e, RULEBOOK §14.3.5/§14.4. Native Maestro run, four-language/Large visual QA and editorial review of the new copy are pending.
+
+## [2026-11-19] ingest | Shared reader counter jump, Sanatan Parichay rebuild, Home notes
+
+`subsystems/readers` gains the page counter + picker contract (`ReaderPageCounter`, `PageJumpSheet`, `useReaderJump`, the screen-scanning guard). `subsystems/sanatan-parichay` records the rebuild on `ListingCard` / `PagerNavBar` / `ImageZoomViewer`, the removed overview route, the text legend, and the 33-devata lesson leading with koti = kinds. Home changes of the same branch (Japmala banner artwork margin and outlined controls, single-language banner cards, the restored shuffled "और जानें" carousel) are in design.md §18/§32 only.
+
+## [2026-11-19] gap | No wiki page for the Home screen
+
+Home's structure lives only in design.md §18, and that section still describes the pre-November layout (Today recommendations row, DISCOVER label, 16-tile grid) apart from the paragraphs updated on 19 Nov. A `subsystems/home` page, written after §18 is brought up to date, would stop the next change from starting at a stale description.
+
+## [2026-11-15] ingest | Bhajan text shelf plumbing
+Added [[subsystems/bhajan-text]]: `bhajan` category placed in the Bhajan tab, door → deity-grouped list → aarti-shell reader, routes on Home + Audio stacks, search Path A, RULEBOOK §34 (renumbered from §32 when main added Sanatan Parichay), design.md §34.1. Catalog ships empty; backlog in docs/content-parity/bhajan-library.md.
+
+## [2026-11-15] gap | No verified bhajan text yet
+Lyrics hosts were blocked by the session network policy, so no bhajan cleared RULEBOOK §11.1. Next: allow the hosts, collate the TODO rows two-source, then add JSON + catalog + library entries.
+
+## [2026-11-21] ingest | Proposal 14 finder and Abujh India-day scans
+
+Documented reactive IST scan starts, keyed result visibility, late callback rejection and explicit warm-up date policy. Native verification remains pending.
+
+## [2026-11-21] ingest | Carry-over verdict metadata follows the surviving best window; future ranking and horizon remain unchanged.

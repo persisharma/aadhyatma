@@ -12,6 +12,9 @@ appId: com.prashantsharma.vedansh
     element: { id: "suvichar-card-deity-photo" }
 - assertVisible: { id: "suvichar-card-deity-photo" }
 - assertVisible: { id: "suvichar-card-deity-name" }
+- assertVisible: "श्री राम लला"
+- assertNotVisible: "Photo: Prime Minister.*"
+- assertNotVisible: "राम लला · अयोध्या"
 - scrollUntilVisible:
     element: { id: "suvichar-frame-pushp-aangan" }
     direction: UP

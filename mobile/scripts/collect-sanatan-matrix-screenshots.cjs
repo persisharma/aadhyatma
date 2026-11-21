@@ -3,7 +3,7 @@ const path = require('node:path');
 
 const languages = ['Hindi', 'English', 'Gujarati', 'Kannada'];
 const sizes = ['Standard', 'Large'];
-const surfaces = ['home-frame-', 'hub-', 'collection-', '', 'diagram-'];
+const surfaces = ['home-frame-', 'hub-', '', 'diagram-', 'legend-'];
 
 function collectSanatanMatrixScreenshots(root, output, suffix) {
   if (!/^(ios|android)-(standard|enlarged)$/.test(suffix)) throw Error('Invalid native matrix suffix');

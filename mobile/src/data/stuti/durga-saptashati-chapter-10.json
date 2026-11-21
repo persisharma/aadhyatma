@@ -1,0 +1,519 @@
+{
+  "id": "durga-saptashati-chapter-10",
+  "titleHi": "दुर्गा सप्तशती — दशम अध्याय",
+  "titleEn": "Durga Saptashati — Chapter 10",
+  "deity": "durga",
+  "source": {
+    "baseText": "Complete chapter 10 of Devi Mahatmya / Durga Saptashati, Markandeya Purana: 32 traditional numbered text units, including speaker announcements and half-verses where present. Drik Panchang numbered reading collated in full against Baba Rampuri’s Sanskrit publication.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/durga-saptashati/chapters/tenth-chapter/durga-saptashati-tenth-chapter.html",
+      "https://rampuri.com/durga-saptashati-text/"
+    ],
+    "retrievedOn": "2026-11-18",
+    "notes": "Ancient Sanskrit only; original editorial Hindi/English meanings and checked reader-convention romanization. Drik base retained at recension differences except two documented orthographic corrections in chapters11/13 supported by Rampuri. See saptashati-chapters-8-13-sources.md for every substantive difference. Unnumbered dhyana, optional bija framing and colophon are outside this numbered chapter. Traditional promises are reported as devotional statements, not health or safety guarantees. No audio."
+  },
+  "verses": [
+    {
+      "id": "durga-saptashati-chapter-10-1",
+      "number": 1,
+      "labelHi": "पाठ · १",
+      "labelEn": "Text unit · 1",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि ने शुम्भ के अंतिम युद्ध का वर्णन किया।",
+      "meaningEn": "The sage continued with the account of Shumbha’s final battle."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-2",
+      "number": 2,
+      "labelHi": "पाठ · २",
+      "labelEn": "Text unit · 2",
+      "lines": [
+        "निशुम्भं निहतं दृष्ट्वा भ्रातरं प्राणसम्मितम्।",
+        "हन्यमानं बलं चैव शुम्भः क्रुद्धोऽब्रवीद्वचः॥"
+      ],
+      "linesEn": [
+        "niśhumbhaṃ nihataṃ dṛiṣṭvā bhrātaraṃ prāṇasammitam",
+        "hanyamānaṃ balaṃ chaiva śhumbhaḥ kruddho'bravīdvachaḥ"
+      ],
+      "meaningHi": "प्राणों के समान प्रिय भाई निशुम्भ को मरा और सेना को नष्ट होता देखकर शुम्भ ने क्रोध से कहा।",
+      "meaningEn": "Seeing his brother Nishumbha, dear as his own life, slain and his army being destroyed, Shumbha spoke angrily."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-3",
+      "number": 3,
+      "labelHi": "पाठ · ३",
+      "labelEn": "Text unit · 3",
+      "lines": [
+        "बलावलेपाद्दुष्टे त्वं मा दुर्गे गर्वमावह।",
+        "अन्यासां बलमाश्रित्य युद्ध्यसे यातिमानिनी॥"
+      ],
+      "linesEn": [
+        "balāvalepādduṣṭe tvaṃ mā durge garvamāvaha",
+        "anyāsāṃ balamāśhritya yuddhyase yātimāninī"
+      ],
+      "meaningHi": "हे दुर्गे, अपने बल का इतना गर्व मत करो; तुम दूसरों की शक्ति पर भरोसा करके लड़ रही हो। यह शुम्भ की चुनौती है।",
+      "meaningEn": "Do not boast of your strength, Durga; you fight by relying on the power of others. These are Shumbha’s challenging words."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-4",
+      "number": 4,
+      "labelHi": "पाठ · ४",
+      "labelEn": "Text unit · 4",
+      "lines": [
+        "देव्युवाच॥"
+      ],
+      "linesEn": [
+        "devyuvācha"
+      ],
+      "meaningHi": "देवी ने उत्तर दिया।",
+      "meaningEn": "The goddess replied."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-5",
+      "number": 5,
+      "labelHi": "पाठ · ५",
+      "labelEn": "Text unit · 5",
+      "lines": [
+        "एकैवाहं जगत्यत्र द्वितीया का ममापरा।",
+        "पश्यैता दुष्ट मय्येव विशन्त्यो मद्विभूतयः॥"
+      ],
+      "linesEn": [
+        "ekaivāhaṃ jagatyatra dvitīyā kā mamāparā",
+        "paśhyaitā duṣṭa mayyeva viśhantyo madvibhūtayaḥ"
+      ],
+      "meaningHi": "इस जगत में मैं अकेली हूँ; मुझसे अलग दूसरी कौन है? देखो, ये मेरी ही विभूतियाँ मुझमें लौट रही हैं।",
+      "meaningEn": "I alone exist here in the world; who else is separate from me? Look: these manifestations of my power are returning into me."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-6",
+      "number": 6,
+      "labelHi": "पाठ · ६",
+      "labelEn": "Text unit · 6",
+      "lines": [
+        "ततः समस्तास्ता देव्यो ब्रह्माणीप्रमुखा लयम्।",
+        "तस्या देव्यास्तनौ जग्मुरेकैवासीत्तदाम्बिका॥"
+      ],
+      "linesEn": [
+        "tataḥ samastāstā devyo brahmāṇīpramukhā layam",
+        "tasyā devyāstanau jagmurekaivāsīttadāmbikā"
+      ],
+      "meaningHi": "तब ब्रह्माणी आदि सभी देवियाँ देवी के शरीर में लीन हो गईं और केवल अम्बिका रह गईं।",
+      "meaningEn": "Then all the goddesses, beginning with Brahmani, merged into her body, and Ambika alone remained."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-7",
+      "number": 7,
+      "labelHi": "पाठ · ७",
+      "labelEn": "Text unit · 7",
+      "lines": [
+        "देव्युवाच॥"
+      ],
+      "linesEn": [
+        "devyuvācha"
+      ],
+      "meaningHi": "देवी फिर बोलीं।",
+      "meaningEn": "The goddess spoke again."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-8",
+      "number": 8,
+      "labelHi": "पाठ · ८",
+      "labelEn": "Text unit · 8",
+      "lines": [
+        "अहं विभूत्या बहुभिरिह रूपैर्यदास्थिता।",
+        "तत्संहृतं मयैकैव तिष्ठाम्याजौ स्थिरो भव॥"
+      ],
+      "linesEn": [
+        "ahaṃ vibhūtyā bahubhiriha rūpairyadāsthitā",
+        "tatsaṃhṛitaṃ mayaikaiva tiṣṭhāmyājau sthiro bhava"
+      ],
+      "meaningHi": "मैं अपनी शक्ति से अनेक रूपों में प्रकट हुई थी; अब उन्हें समेटकर अकेली खड़ी हूँ। युद्ध में दृढ़ रहो।",
+      "meaningEn": "Through my power I appeared in many forms; now I have withdrawn them and stand alone. Hold your ground in battle."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-9",
+      "number": 9,
+      "labelHi": "पाठ · ९",
+      "labelEn": "Text unit · 9",
+      "lines": [
+        "ऋषिरुवाच॥"
+      ],
+      "linesEn": [
+        "ṛiṣiruvācha"
+      ],
+      "meaningHi": "ऋषि ने आगे कहा।",
+      "meaningEn": "The sage continued."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-10",
+      "number": 10,
+      "labelHi": "पाठ · १०",
+      "labelEn": "Text unit · 10",
+      "lines": [
+        "ततः प्रववृते युद्धं देव्याः शुम्भस्य चोभयोः।",
+        "पश्यतां सर्वदेवानामसुराणां च दारुणम्॥"
+      ],
+      "linesEn": [
+        "tataḥ pravavṛite yuddhaṃ devyāḥ śhumbhasya chobhayoḥ",
+        "paśhyatāṃ sarvadevānāmasurāṇāṃ cha dāruṇam"
+      ],
+      "meaningHi": "सभी देवताओं और असुरों के देखते हुए देवी और शुम्भ के बीच भीषण युद्ध आरम्भ हुआ।",
+      "meaningEn": "Before all the gods and asuras, a terrible battle began between the goddess and Shumbha."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-11",
+      "number": 11,
+      "labelHi": "पाठ · ११",
+      "labelEn": "Text unit · 11",
+      "lines": [
+        "शरवर्षैः शितैः शस्त्रैस्तथास्त्रैश्चैव दारुणैः।",
+        "तयोर्युद्धमभूद्भूयः सर्वलोकभयङ्करम्॥"
+      ],
+      "linesEn": [
+        "śharavarṣaiḥ śhitaiḥ śhastraistathāstraiśhchaiva dāruṇaiḥ",
+        "tayoryuddhamabhūdbhūyaḥ sarvalokabhayaṅkaram"
+      ],
+      "meaningHi": "बाणों की वर्षा, तीखे शस्त्रों और भयानक अस्त्रों से उनका युद्ध फिर समस्त लोकों को डराने लगा।",
+      "meaningEn": "With showers of arrows, sharp weapons and dreadful missiles, their renewed battle terrified all the worlds."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-12",
+      "number": 12,
+      "labelHi": "पाठ · १२",
+      "labelEn": "Text unit · 12",
+      "lines": [
+        "दिव्यान्यस्त्राणि शतशो मुमुचे यान्यथाम्बिका।",
+        "बभञ्ज तानि दैत्येन्द्रस्तत्प्रतीघातकर्तृभिः॥"
+      ],
+      "linesEn": [
+        "divyānyastrāṇi śhataśho mumuche yānyathāmbikā",
+        "babhañja tāni daityendrastatpratīghātakartṛibhiḥ"
+      ],
+      "meaningHi": "अम्बिका ने सैकड़ों दिव्य अस्त्र छोड़े, जिन्हें दैत्यराज ने उनके प्रतिरोधी अस्त्रों से तोड़ दिया।",
+      "meaningEn": "Ambika released hundreds of divine missiles, which the asura king broke with weapons designed to counter them."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-13",
+      "number": 13,
+      "labelHi": "पाठ · १३",
+      "labelEn": "Text unit · 13",
+      "lines": [
+        "मुक्तानि तेन चास्त्राणि दिव्यानि परमेश्वरी।",
+        "बभञ्ज लीलयैवोग्रहुङ्कारोच्चारणादिभिः॥"
+      ],
+      "linesEn": [
+        "muktāni tena chāstrāṇi divyāni parameśhvarī",
+        "babhañja līlayaivograhuṅkārochchāraṇādibhiḥ"
+      ],
+      "meaningHi": "उसके छोड़े दिव्य अस्त्रों को परमेश्वरी ने प्रचंड हुंकार आदि से सहज ही नष्ट कर दिया।",
+      "meaningEn": "The supreme goddess effortlessly destroyed his divine missiles through her fierce cry and other countermeasures."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-14",
+      "number": 14,
+      "labelHi": "पाठ · १४",
+      "labelEn": "Text unit · 14",
+      "lines": [
+        "ततः शरशतैर्देवीमाच्छादयत सोऽसुरः।",
+        "सापि तत्कुपिता देवी धनुश्चिच्छेद चेषुभिः॥"
+      ],
+      "linesEn": [
+        "tataḥ śharaśhatairdevīmāchchhādayata so'suraḥ",
+        "sāpi tatkupitā devī dhanuśhchichchheda cheṣubhiḥ"
+      ],
+      "meaningHi": "असुर ने देवी को सैकड़ों बाणों से ढक दिया; क्रोधित देवी ने अपने बाणों से उसका धनुष काट दिया।",
+      "meaningEn": "The asura covered the goddess with hundreds of arrows; angered, she severed his bow with her own shafts."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-15",
+      "number": 15,
+      "labelHi": "पाठ · १५",
+      "labelEn": "Text unit · 15",
+      "lines": [
+        "छिन्ने धनुषि दैत्येन्द्रस्तथा शक्तिमथाददे।",
+        "चिच्छेद देवी चक्रेण तामप्यस्य करे स्थिताम्॥"
+      ],
+      "linesEn": [
+        "chhinne dhanuṣi daityendrastathā śhaktimathādade",
+        "chichchheda devī chakreṇa tāmapyasya kare sthitām"
+      ],
+      "meaningHi": "धनुष कटने पर उसने शक्ति उठाई; देवी ने उसके हाथ में रहते ही उसे चक्र से काट दिया।",
+      "meaningEn": "When his bow was cut, he took up a spear; the goddess severed it with her discus while it was still in his hand."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-16",
+      "number": 16,
+      "labelHi": "पाठ · १६",
+      "labelEn": "Text unit · 16",
+      "lines": [
+        "ततः खड्गमुपादाय शतचन्द्रं च भानुमत्।",
+        "अभ्यधावत्तदा देवीं दैत्यानामधिपेश्वरः॥"
+      ],
+      "linesEn": [
+        "tataḥ khaḍgamupādāya śhatachandraṃ cha bhānumat",
+        "abhyadhāvattadā devīṃ daityānāmadhipeśhvaraḥ"
+      ],
+      "meaningHi": "तब दैत्यराज तलवार और सौ चंद्र-चिह्नों वाली चमकती ढाल लेकर देवी पर दौड़ा।",
+      "meaningEn": "Then the asura lord rushed at the goddess with a sword and a shining shield marked with a hundred moons."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-17",
+      "number": 17,
+      "labelHi": "पाठ · १७",
+      "labelEn": "Text unit · 17",
+      "lines": [
+        "तस्यापतत एवाशु खड्गं चिच्छेद चण्डिका।",
+        "धनुर्मुक्तैः शितैर्बाणैश्चर्म चार्ककरामलम्॥"
+      ],
+      "linesEn": [
+        "tasyāpatata evāśhu khaḍgaṃ chichchheda chaṇḍikā",
+        "dhanurmuktaiḥ śhitairbāṇaiśhcharma chārkakarāmalam"
+      ],
+      "meaningHi": "चण्डिका ने उसे आते ही तीखे बाणों से उसकी तलवार और सूर्य-किरणों जैसी उज्ज्वल ढाल काट दी।",
+      "meaningEn": "As he charged, Chandika’s sharp arrows cut apart his sword and his shield, bright as the sun’s rays."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-18",
+      "number": 18,
+      "labelHi": "पाठ · १८",
+      "labelEn": "Text unit · 18",
+      "lines": [
+        "हताश्वः स तदा दैत्यश्छिन्नधन्वा विसारथिः।",
+        "जग्राह मुद्गरं घोरमम्बिकानिधनोद्यतः॥"
+      ],
+      "linesEn": [
+        "hatāśhvaḥ sa tadā daityaśhchhinnadhanvā visārathiḥ",
+        "jagrāha mudgaraṃ ghoramambikānidhanodyataḥ"
+      ],
+      "meaningHi": "घोड़ों और सारथी से रहित, धनुष खो चुका दैत्य अम्बिका को मारने के लिए भयानक मुद्गर उठाकर खड़ा हुआ।",
+      "meaningEn": "Deprived of his horses, charioteer and bow, the asura took up a terrible hammer, determined to kill Ambika."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-19",
+      "number": 19,
+      "labelHi": "पाठ · १९",
+      "labelEn": "Text unit · 19",
+      "lines": [
+        "चिच्छेदापततस्तस्य मुद्गरं निशितैः शरैः।",
+        "तथापि सोऽभ्यधावत्तां मुष्टिमुद्यम्य वेगवान्॥"
+      ],
+      "linesEn": [
+        "chichchhedāpatatastasya mudgaraṃ niśhitaiḥ śharaiḥ",
+        "tathāpi so'bhyadhāvattāṃ muṣṭimudyamya vegavān"
+      ],
+      "meaningHi": "देवी ने आते हुए उसके मुद्गर को तीखे बाणों से काट दिया; फिर भी वह मुट्ठी उठाकर तेजी से दौड़ा।",
+      "meaningEn": "The goddess cut his approaching hammer with sharp arrows, but he still rushed at her with his fist raised."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-20",
+      "number": 20,
+      "labelHi": "पाठ · २०",
+      "labelEn": "Text unit · 20",
+      "lines": [
+        "स मुष्टिं पातयामास हृदये दैत्यपुङ्गवः।",
+        "देव्यास्तं चापि सा देवी तलेनोरस्यताडयत्॥"
+      ],
+      "linesEn": [
+        "sa muṣṭiṃ pātayāmāsa hṛidaye daityapuṅgavaḥ",
+        "devyāstaṃ chāpi sā devī talenorasyatāḍayat"
+      ],
+      "meaningHi": "दैत्य ने देवी की छाती पर मुक्का मारा और देवी ने उसकी छाती पर हथेली से चोट की।",
+      "meaningEn": "The asura struck the goddess’s chest with his fist, and she struck his chest with her palm."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-21",
+      "number": 21,
+      "labelHi": "पाठ · २१",
+      "labelEn": "Text unit · 21",
+      "lines": [
+        "तलप्रहाराभिहतो निपपात महीतले।",
+        "स दैत्यराजः सहसा पुनरेव तथोत्थितः॥"
+      ],
+      "linesEn": [
+        "talaprahārābhihato nipapāta mahītale",
+        "sa daityarājaḥ sahasā punareva tathotthitaḥ"
+      ],
+      "meaningHi": "हथेली की चोट से वह धरती पर गिरा, पर तुरंत फिर उठ खड़ा हुआ।",
+      "meaningEn": "The blow of her palm threw him to the ground, but he immediately rose again."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-22",
+      "number": 22,
+      "labelHi": "पाठ · २२",
+      "labelEn": "Text unit · 22",
+      "lines": [
+        "उत्पत्य च प्रगृह्योच्चैर्देवीं गगनमास्थितः।",
+        "तत्रापि सा निराधारा युयुधे तेन चण्डिका॥"
+      ],
+      "linesEn": [
+        "utpatya cha pragṛihyochchairdevīṃ gaganamāsthitaḥ",
+        "tatrāpi sā nirādhārā yuyudhe tena chaṇḍikā"
+      ],
+      "meaningHi": "देवी को पकड़कर वह ऊँचा आकाश में उछला; वहाँ भी चण्डिका बिना किसी आधार के उससे लड़ीं।",
+      "meaningEn": "Seizing the goddess, he leapt high into the sky; even there Chandika fought him without any support beneath her."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-23",
+      "number": 23,
+      "labelHi": "पाठ · २३",
+      "labelEn": "Text unit · 23",
+      "lines": [
+        "नियुद्धं खे तदा दैत्यश्चण्डिका च परस्परम्।",
+        "चक्रतुः प्रथमं सिद्धमुनिविस्मयकारकम्॥"
+      ],
+      "linesEn": [
+        "niyuddhaṃ khe tadā daityaśhchaṇḍikā cha parasparam",
+        "chakratuḥ prathamaṃ siddhamunivismayakārakam"
+      ],
+      "meaningHi": "आकाश में दोनों का हाथापाई का अद्भुत युद्ध देखकर सिद्ध और मुनि विस्मित रह गए।",
+      "meaningEn": "Their extraordinary hand-to-hand combat in the sky astonished the perfected beings and sages."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-24",
+      "number": 24,
+      "labelHi": "पाठ · २४",
+      "labelEn": "Text unit · 24",
+      "lines": [
+        "ततो नियुद्धं सुचिरं कृत्वा तेनाम्बिका सह।",
+        "उत्पात्य भ्रामयामास चिक्षेप धरणीतले॥"
+      ],
+      "linesEn": [
+        "tato niyuddhaṃ suchiraṃ kṛitvā tenāmbikā saha",
+        "utpātya bhrāmayāmāsa chikṣhepa dharaṇītale"
+      ],
+      "meaningHi": "बहुत देर तक लड़ने के बाद अम्बिका ने उसे उठाया, घुमाया और धरती पर फेंक दिया।",
+      "meaningEn": "After fighting him for a long time, Ambika lifted him, whirled him around and hurled him to the earth."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-25",
+      "number": 25,
+      "labelHi": "पाठ · २५",
+      "labelEn": "Text unit · 25",
+      "lines": [
+        "स क्षिप्तो धरणीं प्राप्य मुष्टिमुद्यम्य वेगितः।",
+        "अभ्यधावत दुष्टात्मा चण्डिकानिधनेच्छया॥"
+      ],
+      "linesEn": [
+        "sa kṣhipto dharaṇīṃ prāpya muṣṭimudyamya vegitaḥ",
+        "abhyadhāvata duṣṭātmā chaṇḍikānidhanechchhayā"
+      ],
+      "meaningHi": "धरती पर गिरकर वह दुष्ट फिर मुट्ठी उठाए चण्डिका को मारने की इच्छा से वेगपूर्वक दौड़ा।",
+      "meaningEn": "After landing, the wicked asura again raised his fist and charged swiftly, intent on killing Chandika."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-26",
+      "number": 26,
+      "labelHi": "पाठ · २६",
+      "labelEn": "Text unit · 26",
+      "lines": [
+        "तमायान्तं ततो देवी सर्वदैत्यजनेश्वरम्।",
+        "जगत्यां पातयामास भित्त्वा शूलेन वक्षसि॥"
+      ],
+      "linesEn": [
+        "tamāyāntaṃ tato devī sarvadaityajaneśhvaram",
+        "jagatyāṃ pātayāmāsa bhittvā śhūlena vakṣhasi"
+      ],
+      "meaningHi": "उस दैत्यराज को आते देखकर देवी ने शूल से उसकी छाती बेधी और उसे धरती पर गिरा दिया।",
+      "meaningEn": "As the asura lord approached, the goddess pierced his chest with her spear and cast him down."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-27",
+      "number": 27,
+      "labelHi": "पाठ · २७",
+      "labelEn": "Text unit · 27",
+      "lines": [
+        "स गतासुः पपातोर्व्यां देवीशूलाग्रविक्षतः।",
+        "चालयन् सकलां पृथ्वीं साब्धिद्वीपां सपर्वताम्॥"
+      ],
+      "linesEn": [
+        "sa gatāsuḥ papātorvyāṃ devīśhūlāgravikṣhataḥ",
+        "chālayan sakalāṃ pṛithvīṃ sābdhidvīpāṃ saparvatām"
+      ],
+      "meaningHi": "देवी के शूल से विदीर्ण होकर वह प्राणहीन गिरा; उसके गिरने से समुद्रों, द्वीपों और पर्वतों सहित धरती हिल गई।",
+      "meaningEn": "Pierced by the goddess’s spear, he fell lifeless, shaking the whole earth with its seas, islands and mountains."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-28",
+      "number": 28,
+      "labelHi": "पाठ · २८",
+      "labelEn": "Text unit · 28",
+      "lines": [
+        "ततः प्रसन्नमखिलं हते तस्मिन् दुरात्मनि।",
+        "जगत्स्वास्थ्यमतीवाप निर्मलं चाभवन्नभः॥"
+      ],
+      "linesEn": [
+        "tataḥ prasannamakhilaṃ hate tasmin durātmani",
+        "jagatsvāsthyamatīvāpa nirmalaṃ chābhavannabhaḥ"
+      ],
+      "meaningHi": "उस दुष्ट के मरते ही समस्त जगत प्रसन्न और स्वस्थ दशा में लौट आया तथा आकाश निर्मल हो गया।",
+      "meaningEn": "With the wicked asura slain, the whole world became tranquil and regained its well-being; the sky grew clear."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-29",
+      "number": 29,
+      "labelHi": "पाठ · २९",
+      "labelEn": "Text unit · 29",
+      "lines": [
+        "उत्पातमेघाः सोल्का ये प्रागासंस्ते शमं ययुः।",
+        "सरितो मार्गवाहिन्यस्तथासंस्तत्र पातिते॥"
+      ],
+      "linesEn": [
+        "utpātameghāḥ solkā ye prāgāsaṃste śhamaṃ yayuḥ",
+        "sarito mārgavāhinyastathāsaṃstatra pātite"
+      ],
+      "meaningHi": "पहले के अशुभ बादल और उल्काएँ शांत हो गईं; नदियाँ फिर अपने स्वाभाविक मार्गों में बहने लगीं।",
+      "meaningEn": "The ominous clouds and meteors ceased, and the rivers again flowed in their proper courses."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-30",
+      "number": 30,
+      "labelHi": "पाठ · ३०",
+      "labelEn": "Text unit · 30",
+      "lines": [
+        "ततो देवगणाः सर्वे हर्षनिर्भरमानसाः।",
+        "बभूवुर्निहते तस्मिन् गन्धर्वा ललितं जगुः॥"
+      ],
+      "linesEn": [
+        "tato devagaṇāḥ sarve harṣanirbharamānasāḥ",
+        "babhūvurnihate tasmin gandharvā lalitaṃ jaguḥ"
+      ],
+      "meaningHi": "शुम्भ के मारे जाने पर देवताओं के मन आनंद से भर गए और गन्धर्वों ने मधुर गीत गाए।",
+      "meaningEn": "At Shumbha’s death, the gods’ hearts filled with joy and the gandharvas sang beautifully."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-31",
+      "number": 31,
+      "labelHi": "पाठ · ३१",
+      "labelEn": "Text unit · 31",
+      "lines": [
+        "अवादयंस्तथैवान्ये ननृतुश्चाप्सरोगणाः।",
+        "ववुः पुण्यास्तथा वाताः सुप्रभोऽभूद्दिवाकरः॥"
+      ],
+      "linesEn": [
+        "avādayaṃstathaivānye nanṛituśhchāpsarogaṇāḥ",
+        "vavuḥ puṇyāstathā vātāḥ suprabho'bhūddivākaraḥ"
+      ],
+      "meaningHi": "अन्य दिव्य कलाकारों ने वाद्य बजाए, अप्सराएँ नाचीं, शुभ वायु चली और सूर्य उज्ज्वल हो उठा।",
+      "meaningEn": "Others played instruments, the apsaras danced, auspicious winds blew and the sun shone brightly."
+    },
+    {
+      "id": "durga-saptashati-chapter-10-32",
+      "number": 32,
+      "labelHi": "पाठ · ३२",
+      "labelEn": "Text unit · 32",
+      "lines": [
+        "जज्वलुश्चाग्नयः शान्ताः शान्ता दिग्जनितस्वनाः॥"
+      ],
+      "linesEn": [
+        "jajvaluśhchāgnayaḥ śhāntāḥ śhāntā digjanitasvanāḥ"
+      ],
+      "meaningHi": "अग्नियाँ शांत होकर शुभ ढंग से जलने लगीं और दिशाओं की अशुभ ध्वनियाँ थम गईं।",
+      "meaningEn": "The fires burned steadily and peacefully, and the ominous sounds from the directions fell silent."
+    }
+  ]
+}

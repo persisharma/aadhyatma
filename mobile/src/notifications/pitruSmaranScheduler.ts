@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { familyCap } from './notificationBudget';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import type { Lang } from '@/data/gita/language';
 import {
@@ -36,7 +37,7 @@ export async function schedulePitruSmaranReminders(
   now = new Date(),
   lang: Lang = 'hi'
 ): Promise<number> {
-  const planned = planPitruSmaranReminders(inputs, now);
+  const planned = planPitruSmaranReminders(inputs, now, familyCap(Platform.OS, 'pitruSmaran'));
   const channelId = planned.length > 0 ? await ensureChannel().catch(() => undefined) : undefined;
   const slots: FamilySlot[] = planned.map((item) => {
     const { title, body } = formatPitruSmaranReminderContent(item, lang);

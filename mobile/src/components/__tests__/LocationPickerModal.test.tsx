@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Linking, Text } from 'react-native';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { CITIES, MAJOR_CITIES, type City } from '@/panchang/locations';
 import { RAJASTHAN_TEHSILS } from '@/panchang/rajasthanTehsils';
@@ -12,11 +12,12 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }));
 
 const mockSelectCity = jest.fn();
+let mockGpsStatus = 'idle';
 const mockSelectPincode = jest.fn((_pincode: string, _place?: string) => true);
 jest.mock('@/contexts/PanchangLocationContext', () => ({
   usePanchangLocation: () => ({
     location: { cityId: 'ujjain', labelHi: 'उज्जैन', labelEn: 'Ujjain' },
-    gpsStatus: 'idle',
+    gpsStatus: mockGpsStatus,
     selectCity: (id: string) => mockSelectCity(id),
     selectPincode: (pin: string, place?: string) => (place === undefined ? mockSelectPincode(pin) : mockSelectPincode(pin, place)),
     requestDeviceLocation: () => Promise.resolve('granted'),
@@ -35,6 +36,7 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 const trees: TestRenderer.ReactTestRenderer[] = [];
 
 afterEach(async () => {
+  mockGpsStatus = 'idle';
   for (const tree of trees) {
     await act(async () => {
       tree.unmount();
@@ -87,6 +89,27 @@ describe('LocationPickerModal', () => {
     mockSelectCity.mockReset();
     mockSelectPincode.mockReset();
     mockSelectPincode.mockReturnValue(true);
+  });
+
+  test('a fix outside India explains itself instead of silently moving the reader', async () => {
+    mockGpsStatus = 'outside';
+    const tree = await renderPicker('en');
+    const notice = tree.root.findByProps({ testID: 'location-outside-india' });
+    expect(String(notice.props.children)).toContain('outside India');
+    expect(tree.root.findAllByProps({ testID: 'location-open-settings' })).toHaveLength(0);
+  });
+
+  test('a denied permission offers the way to system Settings', async () => {
+    mockGpsStatus = 'denied';
+    const openSettings = jest.spyOn(Linking, 'openSettings').mockResolvedValue(undefined);
+    const tree = await renderPicker('en');
+    const link = tree.root.findAllByProps({ testID: 'location-open-settings' })[0];
+    expect(link.props.accessibilityLabel).toBe('Open Settings');
+    await act(async () => {
+      link.props.onPress();
+    });
+    expect(openSettings).toHaveBeenCalledTimes(1);
+    openSettings.mockRestore();
   });
 
   test('renders both tiers under group headers, national first', async () => {

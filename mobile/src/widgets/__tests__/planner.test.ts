@@ -65,12 +65,12 @@ test('the flowed verse the wide/large cells render is complete and never ellipsi
   // line empty. The wide cell reads this instead, and it carries every pada.
   const bg512 = ['युक्तः कर्मफलं त्यक्त्वा शान्तिमाप्नोति नैष्ठिकीम्।', 'अयुक्तः कामकारेण फले सक्तो निबध्यते॥'];
   const flowed = flowedVerse(bg512);
-  assert.equal(flowed, `${bg512[0]} · ${bg512[1]}`);
+  assert.equal(flowed, `${bg512[0]}\n${bg512[1]}`);
   assert.ok(!flowed.includes('…'), 'the flowed verse is never truncated');
-  assert.ok(flowed.length > twoLineExcerpt(bg512).length, 'the excerpt really did cut this verse short');
+  assert.ok(flowed.length > twoLineExcerpt(bg512, 60).length, 'a constrained excerpt still cuts this verse short');
   // Blank/padded padas are dropped and trimmed, exactly as the excerpt does, so
   // the two strings differ only in where they stop.
-  assert.equal(flowedVerse([' अ ', '', '  ', 'ब']), 'अ · ब');
+  assert.equal(flowedVerse([' अ ', '', '  ', 'ब']), 'अ\nब');
 });
 
 // ── runningTithi — the selector all three readers implement ────────────────

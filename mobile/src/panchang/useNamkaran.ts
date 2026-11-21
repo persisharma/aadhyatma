@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
 
 import { parseIstMoment } from './gunaMilan';
 import { calculateNamkaran, type NamkaranResult } from './namkaran';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 export type NamkaranRequest =
   | { kind: 'birth'; date: string; time: string | null }
@@ -28,7 +28,7 @@ export function useNamkaran(request: NamkaranRequest): NamkaranComputeState {
     let active = true;
     let timer: ReturnType<typeof setTimeout> | null = null;
     setState({ status: 'computing' });
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       timer = setTimeout(() => {
         if (!active) return;
         try {

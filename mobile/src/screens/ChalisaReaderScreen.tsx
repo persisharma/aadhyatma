@@ -19,12 +19,15 @@ import { getChalisa, type ChalisaVerse } from '@/data/chalisaRegistry';
 import { useGitaLanguage } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReaderControlRow from '@/components/ReaderControlRow';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import AddToRoutineButton from '@/components/AddToRoutineButton';
 import VersePage from '@/components/VersePage';
@@ -47,7 +50,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ChalisaReader'>;
 const DOT_COUNT = 5;
 
 export default function ChalisaReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -89,6 +92,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     setProgress({
@@ -192,19 +197,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
           backAccessibilityLabel="Back to home"
           right={
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-              <Text
-                style={[
-                  styles.counter,
-                  {
-                    color: colors.inkMuted,
-                    fontFamily: typography.pageCounter.fontFamily,
-                    fontSize: typography.pageCounter.fontSize,
-                    fontStyle: 'italic',
-                  },
-                ]}
-              >
-                {currentIndex + 1} / {total}
-              </Text>
+              <ReaderPageCounter current={currentIndex + 1} total={total} {...jump} />
               {audioTrack && (
                 <Pressable
                   onPress={() => {
@@ -240,15 +233,10 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <View style={styles.toggleRow}>
+        <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={chalisaId} />
-          {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
-              pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
-          <View style={styles.readAloudSlot}>
-            <ReadAloudButton control={readAloud} />
-          </View>
-        </View>
+        </ReaderControlRow>
 
         {/* The video CTA / auto-scroll pill lives on its OWN centred row, not in the
             toggle group: on 375–390 pt widths a third pill in the centred group grows
@@ -416,17 +404,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
   },
-  counter: {
-    includeFontPadding: false,
-  },
-  toggleRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 18,
-    paddingTop: 6,
-    paddingBottom: 12,
-  },
   videoCtaRow: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -453,13 +430,6 @@ const styles = StyleSheet.create({
   videoCtaText: {
     fontSize: 13,
     fontWeight: '600',
-  },
-  readAloudSlot: {
-    position: 'absolute',
-    right: 16,
-    top: 6,
-    bottom: 12,
-    justifyContent: 'center',
   },
   listContainer: {
     flex: 1,

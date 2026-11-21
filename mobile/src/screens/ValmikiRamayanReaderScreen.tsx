@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -25,6 +25,8 @@ import {
 } from '@/data/valmiki-ramayan';
 import { useGitaLanguage } from '@/data/gita/language';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import { contentByLang } from '@/utils/localize';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -40,7 +42,8 @@ import AddToRoutineButton from '@/components/AddToRoutineButton';
 import ValmikiRamayanVersePage from '@/components/ValmikiRamayanVersePage';
 import { clampIndex } from '@/utils/clamp';
 import { useShare } from '@/utils/shareVerse';
-import { useValmikiChapter } from './_useValmikiChapter';
+import { useValmikiChapter, type ValmikiChapterState } from './_useValmikiChapter';
+import { hasLiveAutoSlideHandoff, renewAutoSlideHandoff } from '@/utils/autoSlideStore';
 import { fontFamilies } from '@/theme/typography';
 import { isLatinLang, scriptTitleFont, titleFontByLang } from '@/utils/langType';
 import ReadAloudButton from '@/components/readAloud/ReadAloudButton';
@@ -86,10 +89,41 @@ const PRELOAD_NEXT_WITHIN = 8;
  */
 export default function ValmikiRamayanReaderScreen({ navigation, route }: Props) {
   const state = useValmikiChapter(route.params.chapter, navigation, 'ValmikiRamayanChapters');
+  useAutoSlideCarriedAcrossLoad(route.params.chapter, state.status);
   if (state.status === 'ready') {
     return <LoadedReader key={state.chapter.chapter} chapter={state.chapter} navigation={navigation} route={route} />;
   }
   return <ChapterPending state={state} onBack={() => navigation.goBack()} />;
+}
+
+/**
+ * Hands-free reading crosses a kāṇḍa boundary through a hand-off that lapses
+ * after `HANDOFF_MS` (`utils/autoSlideStore`). The playback that claims it lives
+ * in `LoadedReader`, which mounts only once the kāṇḍa is in memory — so on a
+ * phone where that load outlasts the window, the slideshow would stop at every
+ * kāṇḍa boundary without a word. When the kāṇḍa was required synchronously the
+ * claim always happened on mount.
+ *
+ * A hand-off that is live when this screen opens on a kāṇḍa it still has to
+ * load is therefore renewed the moment the text is ready: the wait for the load
+ * does not count against it. One that had already lapsed is left lapsed, and a
+ * load that FAILED drops it — the reader has to tap Retry, and playback does
+ * not restart by itself after that.
+ *
+ * The renewal runs in a layout effect, which React runs before the passive
+ * effect in `LoadedReader`'s playback hook that makes the claim.
+ */
+function useAutoSlideCarriedAcrossLoad(chapter: number | undefined, status: ValmikiChapterState['status']): void {
+  const carry = useRef<{ chapter: number | undefined; live: boolean } | null>(null);
+  if (carry.current?.chapter !== chapter) {
+    carry.current = { chapter, live: status === 'loading' && hasLiveAutoSlideHandoff(SOURCE_ID) };
+  }
+  useLayoutEffect(() => {
+    const pending = carry.current;
+    if (!pending?.live || status === 'loading') return;
+    pending.live = false;
+    if (status === 'ready') renewAutoSlideHandoff(SOURCE_ID);
+  }, [status]);
 }
 
 /**
@@ -165,7 +199,7 @@ function ChapterPending({
 }
 
 function LoadedReader({ chapter, navigation, route }: Props & { chapter: ValmikiRamayanChapter }) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -221,6 +255,8 @@ function LoadedReader({ chapter, navigation, route }: Props & { chapter: Valmiki
     currentIndex,
     listRef,
   });
+
+  const jump = useReaderJump({ listRef, offset, setCurrentIndex, readAloud, autoSlide });
 
   useEffect(() => {
     setProgress({
@@ -328,19 +364,7 @@ function LoadedReader({ chapter, navigation, route }: Props & { chapter: Valmiki
           onBack={() => navigation.goBack()}
           backAccessibilityLabel="Back to chapters"
           right={
-            <Text
-              style={[
-                styles.counter,
-                {
-                  color: colors.inkMuted,
-                  fontFamily: typography.pageCounter.fontFamily,
-                  fontSize: typography.pageCounter.fontSize,
-                  fontStyle: 'italic',
-                },
-              ]}
-            >
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <ReaderPageCounter current={currentIndex + 1} total={verseCount} {...jump} />
           }
         />
 
@@ -493,11 +517,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 22,
     borderRadius: 999,
-  },
-  counter: {
-    includeFontPadding: false,
-    minWidth: 56,
-    textAlign: 'right',
   },
   toggleRow: {
     paddingVertical: 6,

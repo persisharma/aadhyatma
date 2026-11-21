@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { contentByLang } from '@/utils/localize';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
 import { library } from '@/data/texts';
@@ -67,7 +68,7 @@ export default function DeityIndexScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.backBtn,

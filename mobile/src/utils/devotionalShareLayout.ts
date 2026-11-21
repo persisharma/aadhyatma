@@ -77,7 +77,7 @@ function coupletHalves(line: string): string[] | null {
  * Verse rows with one charan each. Only a stored couplet line (Sundarkand and Bajrang
  * Baan keep two charans per line) splits; romanized lines split at their single ". "
  * where the Devanagari line did. Every other line stays whole. DevotionalVerseBody shows
- * these rows only when each fits on one row.
+ * these rows at every width, wrapping long rows without merging boundaries.
  */
 export function devotionalCharanRows(lang: Lang, devaLines: readonly string[], shownLines: readonly string[]): string[] {
   return shownLines.flatMap((line, i) => {

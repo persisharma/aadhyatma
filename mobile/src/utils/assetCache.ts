@@ -14,7 +14,9 @@
  * lands at a new path and is fetched once on its own, while everything unchanged
  * keeps its existing local file — no blanket cache-bust, no stale bytes.
  */
+import { Platform } from 'react-native';
 import { Directory, File, Paths } from 'expo-file-system';
+import { verifyDownloadedAsset } from './assetIntegrity';
 import { downloadWithResume, sweepAbandonedScratch } from './resumableDownload';
 
 /**
@@ -22,8 +24,17 @@ import { downloadWithResume, sweepAbandonedScratch } from './resumableDownload';
  * so there is no ceiling on duration: a slow download is allowed to finish, and
  * on Android an interrupted one continues from its stored bytes on the next
  * request instead of starting over (see `resumableDownload`).
+ *
+ * Never stricter than the platform's own client was before this cache shared
+ * that transfer. Android's gave up after 10 s without a byte, so 15 s is more
+ * patient and the bytes are kept. iOS's waits 60 s, and iOS cannot resume:
+ * cutting it off sooner would throw away a whole download that was only
+ * waiting, so there the limit is the system's own.
  */
-export const ASSET_DOWNLOAD_STALL_MS = 15000;
+export function assetDownloadStallMs(os: string): number {
+  return os === 'ios' ? 60_000 : 15_000;
+}
+export const ASSET_DOWNLOAD_STALL_MS = assetDownloadStallMs(Platform.OS);
 
 export interface CachedAssetRequest {
   /** Content hash — the stable, unguessable filename stem. */
@@ -47,7 +58,19 @@ const inFlight = new Map<string, Promise<string>>();
  */
 export function cachedFileUri({ key, ext, subdir }: CachedAssetRequest): string | null {
   const file = new File(new Directory(Paths.document, subdir), `${key}.${ext}`);
-  return file.exists ? file.uri : null;
+  // An empty file is a corrupt leftover, never a hit (size only: nothing is
+  // hashed on a cache hit, so launches stay free).
+  return file.exists && file.size > 0 ? file.uri : null;
+}
+
+/** Drop a cached file that turned out undecodable, so the next request fetches it afresh. */
+export function evictCachedAsset({ key, ext, subdir }: CachedAssetRequest): void {
+  const file = new File(new Directory(Paths.document, subdir), `${key}.${ext}`);
+  try {
+    if (file.exists) file.delete();
+  } catch {
+    /* already gone */
+  }
 }
 
 /**
@@ -59,7 +82,10 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
   const dir = new Directory(Paths.document, subdir);
   const file = new File(dir, `${key}.${ext}`);
 
-  if (file.exists) return file.uri;
+  if (file.exists) {
+    if (file.size > 0) return file.uri;
+    file.delete(); // an empty leftover is not a hit; fetch it again
+  }
 
   const pending = inFlight.get(file.uri);
   if (pending) return pending;
@@ -79,6 +105,8 @@ export async function cachedAssetUri({ key, ext, subdir, remoteUrl }: CachedAsse
         })
       );
       try {
+        // Never promote bytes that do not match the manifest key (assetIntegrity).
+        await verifyDownloadedAsset(scratch.uri, key);
         scratch.move(file); // atomic: the final file only ever exists complete
       } catch (err) {
         // Leave nothing half-written that a later call would treat as a cache hit.

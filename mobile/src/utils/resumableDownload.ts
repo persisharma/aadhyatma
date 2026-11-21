@@ -27,8 +27,10 @@
  * native module would append to the partial. Three independent checks stop that
  * from becoming a cached picture: the resumed response must report the same
  * total as the first one, must be HTTP 206, and the finished file must be
- * exactly that total. The first server that fails any of them turns resuming
- * off for the rest of the session.
+ * exactly that total. A response that fails any of them is never cached. One
+ * that shows `Range` being ignored (a different total, a whole 2xx body, a
+ * wrong final length) also turns resuming off for the rest of the session; an
+ * error status (5xx, 429, 404) only costs that one file its kept bytes.
  *
  * Resume state is deliberately in memory only. A scratch file left by a killed
  * process is never treated as progress; callers sweep those.
@@ -106,18 +108,23 @@ async function usablePartial(key: string, resumable: boolean): Promise<Partial |
 async function run(request: ResumableDownloadRequest, resumable: boolean): Promise<string> {
   const { key, url, scratchBase, stallMs, maxMs, onAbortable, isCancelled } = request;
   const resume = await usablePartial(key, resumable);
+  const scratch = resume?.uri ?? `${scratchBase}.${++attempt}.part`;
+  // A process-killed attempt may have left this path behind. It is never
+  // progress, and it must not make a fresh download append to stale bytes.
+  if (!resume) await remove(scratch);
+  // Checked LAST: nothing is awaited between here and `onAbortable` below, so a
+  // caller that gave up during either wait above never starts a transfer that
+  // nobody holds the abort for.
   if (isCancelled?.()) {
     // Nothing was started, so what the last attempt left is still intact.
     if (resume) partials.set(key, resume);
     throw new DownloadInterrupted('aborted');
   }
-  const scratch = resume?.uri ?? `${scratchBase}.${++attempt}.part`;
-  // A process-killed attempt may have left this path behind. It is never
-  // progress, and it must not make a fresh download append to stale bytes.
-  if (!resume) await remove(scratch);
 
   let total = resume?.total ?? 0;
   let wrongTotal = false;
+  /** The answer to a ranged request showed the server does not honour `Range`. */
+  let rangeIgnored = false;
   let interrupt!: (error: Error) => void;
   const interrupted = new Promise<never>((_, reject) => { interrupt = reject; });
   // The race below settles on whichever comes first; the loser must not surface
@@ -163,6 +170,10 @@ async function run(request: ResumableDownloadRequest, resumable: boolean): Promi
     if (!result) throw new DownloadInterrupted('aborted');
     if (result.status !== (resume ? 206 : 200)) {
       rejectedResponse = true;
+      // Only a whole body in answer to a ranged request says the server ignores
+      // `Range`. A 503, 429 or 404 says nothing about it, and must not cost
+      // every later download in the session its kept bytes.
+      rangeIgnored = Boolean(resume) && result.status >= 200 && result.status < 300;
       throw new Error(`Download failed with HTTP ${result.status}`);
     }
     const size = await sizeOf(scratch);
@@ -172,8 +183,15 @@ async function run(request: ResumableDownloadRequest, resumable: boolean): Promi
     // where the reported total is not the file's length at all.)
     if (size === 0 || (resume && size !== resume.total)) {
       rejectedResponse = true;
+      rangeIgnored = Boolean(resume);
       throw new Error('Downloaded file is incomplete');
     }
+    // The legacy task removes its progress listener only in `cancelAsync` /
+    // `pauseAsync`, so a task that simply finished would keep it — and this
+    // closure — for the life of the process, and every later progress event
+    // would be handed to all of them. Cancelling a finished task does nothing
+    // natively.
+    await download.cancelAsync().catch(() => undefined);
     return scratch;
   } catch (error) {
     await download.cancelAsync().catch(() => undefined);
@@ -190,7 +208,7 @@ async function run(request: ResumableDownloadRequest, resumable: boolean): Promi
       if (grace) clearTimeout(grace);
     }
 
-    if (resume && (wrongTotal || rejectedResponse)) rangeRefused = true;
+    if (resume && (wrongTotal || rangeIgnored)) rangeRefused = true;
     const offset = !wrongTotal && !rejectedResponse && resumable && !rangeRefused && total > 0
       ? await sizeOf(scratch)
       : 0;

@@ -52,6 +52,9 @@ const { readValmikiPart } = jest.requireMock<typeof import('@/data/valmiki-ramay
   '@/data/valmiki-ramayan/partReader'
 );
 const mockReadPart = readValmikiPart as jest.MockedFunction<typeof readValmikiPart>;
+const { armAutoSlideHandoff, HANDOFF_MS, __resetAutoSlideStore } = jest.requireActual<
+  typeof import('@/utils/autoSlideStore')
+>('@/utils/autoSlideStore');
 const readPartFromDisk = mockReadPart.getMockImplementation()!;
 
 type ReaderProps = React.ComponentProps<typeof ValmikiRamayanReaderScreen>;
@@ -101,6 +104,25 @@ async function waitFor(done: () => boolean, timeoutMs = 15_000) {
     await act(async () => {
       await new Promise<void>((resolve) => setTimeout(resolve, 5));
     });
+  }
+}
+const labelled = (t: TestRenderer.ReactTestRenderer, label: string) =>
+  t.root.findAll((node) => node.props.accessibilityLabel === label).length > 0;
+/** The slideshow control reads "Pause" exactly while auto-slide is playing. */
+const isPlaying = (t: TestRenderer.ReactTestRenderer) => labelled(t, 'Pause slideshow');
+/**
+ * Run `body` on a clock the test can push forward, so "the load took longer
+ * than the hand-off window" does not need a slow machine.
+ */
+async function withSkewedClock(body: (advance: (ms: number) => void) => Promise<void>) {
+  const realNow = Date.now;
+  let skew = 0;
+  const spy = jest.spyOn(Date, 'now').mockImplementation(() => realNow() + skew);
+  try {
+    await body((ms) => { skew += ms; });
+  } finally {
+    spy.mockRestore();
+    __resetAutoSlideStore();
   }
 }
 /** Let the part reads, the parses and the yields between them run to the end. */
@@ -194,6 +216,50 @@ test('the next kāṇḍa starts loading while the last verses of this one are o
   expect(peekValmikiRamayanChapter(7)).not.toBeNull();
 });
 
+describe('hands-free reading arriving from the previous kāṇḍa', () => {
+  // The outgoing reader arms the hand-off as its slideshow turns past the last
+  // page; any owner that is not the incoming reader's stands in for it here.
+  const OUTGOING_READER = -1;
+
+  test('carries on when the kāṇḍa takes longer to load than the hand-off window', async () => {
+    // Kāṇḍa 3 has not been opened by any test above.
+    expect(peekValmikiRamayanChapter(3)).toBeNull();
+    await withSkewedClock(async (advance) => {
+      armAutoSlideHandoff('valmiki-ramayan', OUTGOING_READER);
+      const t = mount(3);
+      expect(has(t, 'valmiki-chapter-loading')).toBe(true);
+      // A slow phone: the parts are still being read when the window closes.
+      advance(HANDOFF_MS + 2_000);
+      await settle();
+      await waitFor(() => isPlaying(t), 3_000);
+      expect(isPlaying(t)).toBe(true);
+    });
+  });
+
+  test('does not restart by itself after a load that failed', async () => {
+    // Kāṇḍa 1 has not been opened by any test above.
+    expect(peekValmikiRamayanChapter(1)).toBeNull();
+    await withSkewedClock(async (advance) => {
+      armAutoSlideHandoff('valmiki-ramayan', OUTGOING_READER);
+      mockReadPart.mockRejectedValue(new Error('asset unreadable'));
+      const t = mount(1);
+      await settle();
+      expect(has(t, 'valmiki-chapter-failed')).toBe(true);
+
+      // The reader looks at the message for a while before tapping Retry.
+      advance(HANDOFF_MS + 2_000);
+      mockReadPart.mockImplementation(readPartFromDisk);
+      act(() => {
+        t.root.findByProps({ testID: 'valmiki-chapter-retry' }).props.onPress();
+      });
+      await settle();
+      await waitFor(() => isPlaying(t), 300);
+      expect(labelled(t, 'Start slideshow')).toBe(true);
+      expect(isPlaying(t)).toBe(false);
+    });
+  });
+});
+
 test('opening a kāṇḍa at its start does not load the next one', async () => {
   // Kāṇḍa 2 has not been opened by any test above.
   await loadValmikiRamayanChapter(1);
@@ -204,6 +270,20 @@ test('opening a kāṇḍa at its start does not load the next one', async () =>
   await waitFor(() => false, 300);
   expect(mockReadPart.mock.calls.length).toBe(reads);
   expect(peekValmikiRamayanChapter(2)).toBeNull();
+});
+
+test('a hand-off that had already lapsed when the kāṇḍa opened is not revived by its load', async () => {
+  // Kāṇḍa 2 is still unopened: the test above only checked it was not preloaded.
+  expect(peekValmikiRamayanChapter(2)).toBeNull();
+  await withSkewedClock(async (advance) => {
+    armAutoSlideHandoff('valmiki-ramayan', -1);
+    advance(HANDOFF_MS + 2_000);
+    const t = mount(2);
+    await settle();
+    await waitFor(() => isPlaying(t), 300);
+    expect(labelled(t, 'Start slideshow')).toBe(true);
+    expect(isPlaying(t)).toBe(false);
+  });
 });
 
 describe('a kāṇḍa already in memory', () => {

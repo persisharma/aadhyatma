@@ -14,10 +14,10 @@ jest.mock('@/utils/backgroundAssetCache', () => ({
 let tree: ReactTestRenderer;
 afterEach(() => { if (tree) act(() => tree.unmount()); });
 
-it('offers Ayodhya Ram Lalla separately, with one cached photograph across all frames and Ram content', () => {
-  expect(suvicharDeities.find(d => d.id === 'ram-lalla')).toMatchObject({ hi: 'राम लला · अयोध्या', en: 'Ram Lalla · Ayodhya' });
+it('offers the approved generated Ram Lalla separately, from R2 across every frame and Ram content', () => {
+  expect(suvicharDeities.find(d => d.id === 'ram-lalla')).toMatchObject({ hi: 'श्री राम लला', en: 'Shri Ram Lalla' });
   const requests = suvicharFrames.map(f => suvicharArtRequest('ram-lalla', f.id));
-  expect(requests.every(r => r && r.ext === 'jpg')).toBe(true);
+  expect(requests.every(r => r && r.ext === 'webp' && r.remoteUrl.includes('cdn.vedansh.app/suvichar-portraits/'))).toBe(true);
   expect(new Set(requests.map(r => r?.key)).size).toBe(1);
   expect(suvicharTemplatesFor(0).some(t => t.deity === 'ram-lalla')).toBe(true);
   expect(suvicharTemplatesFor(0).find(t => t.deity === 'hanuman')?.frame).toBe('mandir-jharokha');
@@ -29,16 +29,21 @@ it('offers Ayodhya Ram Lalla separately, with one cached photograph across all f
 });
 
 it.each(suvicharFrames.flatMap(f => (['hi', 'en', 'gu', 'kn'] as const).flatMap(lang => [320, 540].map(width => ({ frame: f.id, lang, width })))))(
-  'uses the actual photo in $frame/$lang/$width, waits for decode and preserves full text', ({ frame, lang, width }) => {
+  'uses the approved front-facing art in $frame/$lang/$width, waits for decode and preserves full text', ({ frame, lang, width }) => {
     const ready = jest.fn();
     const message = contentByLang(lang, 'श्रद्धा रखिए और प्रेम बाँटिए। '.repeat(8), 'Keep faith and share kindness. '.repeat(8));
     act(() => { tree = create(<SuvicharCard deity="ram-lalla" frame={frame} message={message} name="Sharma family" lang={lang} width={width} onReady={ready} />); });
-    const photo = tree.root.findByProps({ testID: 'suvichar-card-deity-photo' });
-    expect(photo.props.source.uri).toMatch(/\.jpg$/);
-    expect(photo.props.resizeMode).toBe('stretch'); // explicit source aspect; top aligned, crown never centre-cropped
-    expect(photo.props.style.height / photo.props.style.width).toBeCloseTo(1619 / 960);
+    const photo = tree.root.findAllByType(Image).find(i => i.props.testID === 'suvichar-card-deity-photo')!;
+    expect(photo.props.source.uri).toMatch(/\.webp$/);
+    expect(photo.props.resizeMode).toBe('stretch'); // explicit source aspect; the shared clip excludes baked message/sender text
+    expect(photo.props.style.height / photo.props.style.width).toBeCloseTo(1402 / 1122);
+    const clip = tree.root.findByProps({ testID: 'suvichar-card-deity-photo-crop' }).props.style;
+    expect(clip.overflow).toBe('hidden');
+    expect(-photo.props.style.top / photo.props.style.height).toBeCloseTo(.082);
+    expect((clip.height - photo.props.style.top) / photo.props.style.height).toBeCloseTo(.564);
     expect(tree.root.findByProps({ testID: 'suvichar-card-message' }).props.children).toBe(message);
-    expect(tree.root.findByProps({ testID: 'suvichar-card-photo-credit' }).props.children).toContain('GODL-India');
+    expect(tree.root.findAllByProps({ testID: 'suvichar-card-photo-credit' })).toHaveLength(0);
+    expect(tree.root.findByProps({ testID: 'suvichar-card-deity-name' }).props.children).not.toMatch(/Ayodhya|अयोध्या/);
     const fixed = width * 1.25 * (suvicharHeroFraction('ram-lalla', frame) + 1 - suvicharFooterBand(frame, 'ram-lalla').start);
     act(() => tree.root.findByProps({ testID: 'suvichar-card-body' }).props.onLayout({ nativeEvent: { layout: { height: 500 } } }));
     act(() => tree.root.findByProps({ testID: 'suvichar-card' }).props.onLayout({ nativeEvent: { layout: { height: fixed + 500 } } }));

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { withAndroidManifest, withDangerousMod, withMainApplication, withEntitlementsPlist, AndroidConfig } = require('@expo/config-plugins');
+const { withAndroidManifest, withDangerousMod, withMainApplication, withEntitlementsPlist, AndroidConfig } = require('expo/config-plugins');
 
 const GROUP = 'group.com.prashantsharma.vedansh.widgets';
 const ANDROID_FILES = ['WidgetPayloadContract.kt', 'VedanshWidgetModule.kt', 'VedanshWidgetPackage.kt', 'VedanshWidgetProvider.kt'];

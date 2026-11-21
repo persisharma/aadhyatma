@@ -142,3 +142,15 @@ content is generated from the registries, so it cannot drift from the code).
 Research publisher and verification records remain internal under RULEBOOK
 §11.16. Canonical work/passage identity may remain as teaching context; do not
 wrap it in a source feature or append a bibliography to the app or share output.
+
+## Record deletion confirmation (Proposal 09)
+
+`DaanLedgerScreen` keeps a pending stable ID in screen memory and opens the Saved Verses-style modal. Ordinary records show category, original ISO date and complete optional note, never amount. Gupt records show only label/date. Cancellation paths and route blur clear memory without storage calls; confirmation consumes the ID synchronously before calling the existing provider. Restart while pending preserves the record. The provider still updates optimistically and swallows storage errors; a failed write can reappear after restart. No storage-format change or undo is introduced.
+
+Native iOS/Android layout, screen-reader focus and lifecycle acceptance remain required; component/provider tests are not device evidence.
+
+## Proposal 11 — amount input
+`data/daan/amount.ts` validates new amounts only. INR prefix, Indian/international grouping and four digit scripts are supported. Invalid nonblank input cannot save and remains editable; the form previews the interpreted value. Existing ledger hydration/CSV and historical values are unchanged. Proposal 10 (backdating) must preserve this guard when editing the same form. Open audit PR #703 changes the keyboard wrapper and save-failure behavior: retain those independently when integrating. No open Proposal 10 PR was found on 18 November 2026.
+
+### Audit integration follow-up (18 November 2026)
+#705 was merged at `13e51c10`. #703 at `ac0aec45` includes it with no textual Daan conflict, but had never applied its keyboard wrapper or retry helper to Daan. The follow-up uses both shared utilities, awaits durable adds, preserves failed drafts, and serializes add/removal writes. A failed removal stays visible; its confirmation and stable-ID safeguards remain. Native keyboard/device evidence is still pending.

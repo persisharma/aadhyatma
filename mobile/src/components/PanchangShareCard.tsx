@@ -1,4 +1,4 @@
-import { isSameLocalDay } from '@/panchang/muhuratFormat';
+import { isOnCivilDay } from '@/panchang/civilTime';
 import FestiveCorners from './FestiveCorners';
 import FestivalMotif from './FestivalMotif';
 import { occasionRange, occasionRangeParts } from '@/panchang/occasionTimingFormat';
@@ -59,7 +59,7 @@ export default function PanchangShareCard({ model, lang, onIconLoad, brand = nul
   const primary = ritual?.windows[0];
   const referenceDay = model.referenceDay ?? ritual?.date;
   const displayed = primary && referenceDay ? occasionRangeParts(primary, referenceDay, lang) : null;
-  const datedClock = !!displayed && !!referenceDay && (!isSameLocalDay(displayed.start, referenceDay) || (!!displayed.end && !isSameLocalDay(displayed.end, referenceDay)));
+  const datedClock = !!displayed && !!referenceDay && (!isOnCivilDay(displayed.start, referenceDay) || (!!displayed.end && !isOnCivilDay(displayed.end, referenceDay)));
   const clockText = displayed && primary ? (datedClock && !primary.event && displayed.endText
     ? `${displayed.startText}\n– ${displayed.endText}`
     : occasionRange(primary, referenceDay!, lang)) : null;

@@ -1,0 +1,92 @@
+[
+  {
+    "chapter": 1,
+    "titleHi": "यशोदा और दामोदर",
+    "titleEn": "Yaśodā and Dāmodara",
+    "scriptureChapter": {
+      "canto": 10,
+      "chapter": 9
+    },
+    "verseNumbers": [
+      15,
+      18,
+      19
+    ],
+    "verseCount": 3
+  },
+  {
+    "chapter": 2,
+    "titleHi": "गोवर्धन की शरण",
+    "titleEn": "Shelter at Govardhan",
+    "scriptureChapter": {
+      "canto": 10,
+      "chapter": 25
+    },
+    "verseNumbers": [
+      19,
+      20,
+      28
+    ],
+    "verseCount": 3
+  },
+  {
+    "chapter": 3,
+    "titleHi": "सुदामा की भेंट",
+    "titleEn": "Sudāmā’s Gift",
+    "scriptureChapter": {
+      "canto": 10,
+      "chapter": 81
+    },
+    "verseNumbers": [
+      3,
+      5,
+      9
+    ],
+    "verseCount": 3
+  },
+  {
+    "chapter": 4,
+    "titleHi": "ध्रुव को नारद का उपदेश",
+    "titleEn": "Nārada’s Guidance to Dhruva",
+    "scriptureChapter": {
+      "canto": 4,
+      "chapter": 8
+    },
+    "verseNumbers": [
+      54,
+      55,
+      56
+    ],
+    "verseCount": 3
+  },
+  {
+    "chapter": 5,
+    "titleHi": "प्रह्लाद और नरसिंह",
+    "titleEn": "Prahlāda and Narasiṁha",
+    "scriptureChapter": {
+      "canto": 7,
+      "chapter": 8
+    },
+    "verseNumbers": [
+      15,
+      17,
+      29
+    ],
+    "verseCount": 3
+  },
+  {
+    "chapter": 6,
+    "titleHi": "गजेन्द्र की प्रार्थना",
+    "titleEn": "Gajendra’s Prayer",
+    "scriptureChapter": {
+      "canto": 8,
+      "chapter": 3
+    },
+    "verseNumbers": [
+      2,
+      4,
+      32
+    ],
+    "verseCount": 3
+  }
+]

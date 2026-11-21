@@ -19,6 +19,8 @@ on:
       - 'mobile/src/contexts/JapamCounterContext.tsx'
       - 'mobile/src/screens/JapamCounterScreen.tsx'
       - 'mobile/.maestro/japam-sankalp-smoke.yaml'
+      - 'mobile/.maestro/_launch.yaml'
+      - 'mobile/.maestro/_finish-first-run-setup.yaml'
       - 'mobile/src/navigation/TabNavigator.tsx'
       - '.github/workflows/native-japam-ios.yml'
 
@@ -142,6 +144,9 @@ jobs:
             native-output/*.png
             native-output/*.xml
             native-output/*.ips
+            native-output/maestro-debug/**/commands*.json
+            native-output/maestro-debug/**/screen-hierarchy/*.json
+            native-output/maestro-debug/**/screenshots/*.png
           retention-days: 14
           if-no-files-found: warn
       - name: Stop simulator

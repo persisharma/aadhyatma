@@ -108,6 +108,8 @@ and a संकल्प Home DISCOVER spotlight card — pinned by `screens/__t
 
 ## Gotchas
 
+- **Manual done marks carry their date in state (Nov 2026 audit, BEH-02).** The date used to be checked only when `RoutineContext` loaded from storage, so a process that survived midnight kept yesterday's items done and the first new mark saved them under today's date. `useRoutineToday` and `useSadhanaToday` also key their memos on `useTodayKey()`.
+
 - **Completion is derived, not stored** — only manual marks and the celebration date persist;
   auto-completion recomputes from progress whose `updatedAt` date-key must equal **today**.
 - **Done-marks reset daily** purely by date comparison on load/persist — there is no scheduler.

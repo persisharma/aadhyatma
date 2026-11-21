@@ -6,7 +6,11 @@
  * the thin expo-notifications glue around it — mirroring `scheduler.ts`.
  */
 
+import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { ensureFamilyChannel, settleAfter } from './notificationChannels';
+import { familyCap } from './notificationBudget';
+import type { Lang } from '@/data/gita/language';
 import { armNotificationFamily, cancelNotificationFamily, type FamilySlot } from './familyArm';
 import {
   planVratReminders,
@@ -24,7 +28,7 @@ export type VratNotificationPayload = {
 
 /** Cancel every vrat reminder we own, leaving other notifications untouched. */
 export async function cancelAllVratReminders(): Promise<void> {
-  await cancelNotificationFamily(VRAT_NOTIF_PREFIX);
+  await settleAfter('vrat', cancelNotificationFamily(VRAT_NOTIF_PREFIX));
 }
 
 /**
@@ -34,12 +38,15 @@ export async function cancelAllVratReminders(): Promise<void> {
  */
 export async function scheduleVratReminders(
   inputs: VratReminderInput[],
-  now: Date = new Date()
+  now: Date = new Date(),
+  lang: Lang = 'hi'
 ): Promise<number> {
-  const { planned } = planVratReminders(inputs, now);
+  const { planned } = planVratReminders(inputs, now, familyCap(Platform.OS, 'vrat'));
+
+  const channelId = planned.length > 0 ? await ensureFamilyChannel('vrat', lang) : undefined;
 
   const slots: FamilySlot[] = planned.map((p) => {
-    const { title, body } = formatVratReminderContent(p);
+    const { title, body } = formatVratReminderContent(p, lang);
     const payload: VratNotificationPayload = {
       type: 'vrat-reminder',
       ruleId: p.ruleId,
@@ -57,10 +64,11 @@ export async function scheduleVratReminders(
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.DATE,
         date: p.fireDate,
-      },
+        ...(channelId !== undefined ? { channelId } : {}),
+      } as Notifications.NotificationTriggerInput,
     };
   });
 
   // Per-slot scheduling failure is non-fatal (see `armNotificationFamily`).
-  return armNotificationFamily(VRAT_NOTIF_PREFIX, slots);
+  return settleAfter('vrat', armNotificationFamily(VRAT_NOTIF_PREFIX, slots));
 }

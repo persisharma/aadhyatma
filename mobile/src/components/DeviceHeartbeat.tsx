@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppState, InteractionManager, type AppStateStatus } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 import { sendDeviceHeartbeat } from '@/notifications/deviceHeartbeat';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 /**
  * Headless: once per local day (or when the reported state changes), posts a
@@ -31,7 +32,7 @@ export default function DeviceHeartbeat() {
 
   useEffect(() => {
     let cancelled = false;
-    const task = InteractionManager.runAfterInteractions(() => {
+    const task = runWhenIdle(() => {
       if (cancelled) return;
       sendDeviceHeartbeat().catch(() => undefined);
     });

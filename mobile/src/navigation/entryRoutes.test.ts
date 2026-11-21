@@ -6,6 +6,7 @@ import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import type { HomeRecord, HomeRoster } from '@/vastu/homeRecord';
 import {
+  navigateReadingLink,
   buildEntryStartTarget,
   buildBookmarkTarget,
   buildGharVastuDoorTarget,
@@ -184,8 +185,8 @@ for (const sourceId of [
 {
   const target = buildEntryStartTarget({
     id: 'vishnu-sahasranama',
-    nameHi: 'विष्णु सहस्रनाम अंश',
-    nameEn: 'Vishnu Sahasranama Excerpt',
+    nameHi: 'विष्णु सहस्रनाम',
+    nameEn: 'Vishnu Sahasranama',
     sub: '',
     subEn: '',
     thumb: '',
@@ -513,3 +514,72 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
   assert.deepEqual(formatLocation(progress), { hi: 'पाठ 12 · पृष्ठ 2', en: 'Reading 12 · Page 2' });
 }
 
+
+// A2: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'vaishno-devi-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 39 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 39 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::39`, sourceId, verseIndex: 39 })), target);
+}
+
+// A1: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'shani-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 42 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 42 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::42`, sourceId, verseIndex: 42 })), target);
+}
+
+// A3: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'santoshi-mata-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 39 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 39 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::39`, sourceId, verseIndex: 39 })), target);
+}
+// A4: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'kali-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 56 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 56 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::56`, sourceId, verseIndex: 56 })), target);
+}
+
+// A5: listing, resume and saved verse all resolve to the same flat reader.
+{
+  const sourceId = 'radha-chalisa';
+  const entry = library.find(e => e.id === sourceId)!;
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 0 } });
+  const target = { screen: 'ChalisaReader', params: { chalisaId: sourceId, initialIndex: 42 } };
+  assert.deepEqual(buildProgressTarget({ sourceId, verseIndex: 42 }), target);
+  assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::42`, sourceId, verseIndex: 42 })), target);
+}
+
+// Discovery doors retain the existing canonical reader and location.
+for (const [id,screen,params] of [
+ ['ganesh-atharvashirsha','GaneshStotramReader',{chapter:2,initialIndex:0}],
+ ['durga-saptashati-core','SaptashatiCore',undefined],
+] as const) {
+ const {nav,calls}=makeNav(); assert.equal(navigateReadingLink(nav as never,id),true);
+ assert.deepEqual(calls,[{name:screen,params}]);
+}
+for(const [id,screen,key,last] of [
+ ['aditya-hridayam','StutiReader','stutiId',30],
+ ['kanakadhara-stotram','StutiReader','stutiId',21],
+ ['hanuman-bahuk','StutiReader','stutiId',43],
+ ['shri-suktam','SuktamReader','suktamId',15],
+ ['kalabhairav-ashtakam','AshtakamReader','ashtakamId',8],
+] as const) {
+ const entry=library.find(e=>e.id===id)!;
+ assert.deepEqual(buildEntryStartTarget(entry),{screen,params:{initialIndex:0,[key]:id}});
+ assert.deepEqual(buildBookmarkTarget(bm({sourceId:id,verseIndex:last})),{screen,params:{initialIndex:last,[key]:id}});
+}

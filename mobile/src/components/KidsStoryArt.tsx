@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Image, View, Text } from 'react-native';
+import { ActivityIndicator, Image, Pressable, View, Text } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
+import { useGitaLanguage } from '@/data/gita/language';
+import { pick } from '@/utils/localize';
 import { assetBaseUrl, remoteAssetRequest, type RemoteAssetManifest } from '@/data/assetManifest';
 import kidsStoryManifestJson from '@/data/kidsStoryAssetManifest.json';
-import { useCachedAsset } from '@/utils/useCachedAsset';
+import { useCachedAssetState } from '@/utils/useCachedAsset';
 import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
 import { coverRect } from '@/utils/coverRect';
 
@@ -61,9 +63,13 @@ export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError,
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
   const retainedHeight = kidsStoryArtRetainedHeight(art);
-  const cachedUri = useCachedAsset(resolvedUri ? null : kidsStoryArtRequest(art));
-  const uri = resolvedUri ?? cachedUri;
-  if (fill) return <KidsStoryArtFill art={art} label={label} uri={uri} onLoad={onLoad} onError={onError} />;
+  const request = resolvedUri ? null : kidsStoryArtRequest(art);
+  const asset = useCachedAssetState(request);
+  const uri = resolvedUri ?? asset.uri;
+  // A file that downloaded but will not decode is dropped, so Retry fetches it afresh.
+  const handleError = () => { if (!resolvedUri) asset.markUndecodable(); onError?.(); };
+  const placeholder = <ArtPlaceholder label={label} pending={Boolean(request) && !asset.failed} failed={asset.failed} retry={asset.retry} compact={fill} />;
+  if (fill) return <KidsStoryArtFill art={art} label={label} uri={uri} onLoad={onLoad} onError={handleError} placeholder={placeholder} />;
   return (
     <View
       accessibilityRole="image"
@@ -72,16 +78,46 @@ export default function KidsStoryArt({ art, label, resolvedUri, onLoad, onError,
       style={{ width: '100%', aspectRatio: 4 / (5 * retainedHeight), flexShrink: 0, overflow: 'hidden', borderRadius: 12, backgroundColor: colors.parchmentSoft }}
     >
       {uri ? (
-        <Image onLoad={onLoad} onError={onError} accessible={false} source={{ uri }} resizeMode="contain" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: width ? width * (5 / 4) : '100%' }} />
-      ) : (
-        <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>
-      )}
+        <Image onLoad={onLoad} onError={handleError} accessible={false} source={{ uri }} resizeMode="contain" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: width ? width * (5 / 4) : '100%' }} />
+      ) : placeholder}
     </View>
   );
 }
 
-function KidsStoryArtFill({ art, label, uri, onLoad, onError }: {
-  art: string; label: string; uri: string | null | undefined; onLoad?: () => void; onError?: () => void;
+/** Loading spinner, or the retry affordance after a failed download (mirrors ComicArt). */
+function ArtPlaceholder({ label, pending, failed, retry, compact }: {
+  label: string; pending: boolean; failed: boolean; retry: () => void; compact: boolean;
+}) {
+  const { colors } = useTheme();
+  const { lang } = useGitaLanguage();
+  if (failed) {
+    return (
+      <Pressable
+        testID="kids-story-art-retry"
+        accessibilityRole="button"
+        accessibilityLabel={pick(lang, { hi: 'चित्र फिर लोड करें', en: 'Retry picture', gu: 'ચિત્ર ફરી લોડ કરો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}
+        onPress={retry}
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 12 }}
+      >
+        <Text style={{ color: colors.inkSoft, textAlign: 'center' }}>
+          {compact ? '↻' : pick(lang, { hi: 'चित्र लोड नहीं हुआ। फिर कोशिश करें', en: 'Picture unavailable. Tap to retry', gu: 'ચિત્ર લોડ થયું નહીં. ફરી પ્રયાસ કરો', kn: 'ಚಿತ್ರ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' })}
+        </Text>
+      </Pressable>
+    );
+  }
+  if (pending) {
+    return (
+      <View testID="kids-story-art-loading" style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={colors.saffron} />
+      </View>
+    );
+  }
+  // No remote art for this label: the caption stands in, as before.
+  return compact ? null : <Text style={{ color: colors.ink, padding: 20 }}>{label}</Text>;
+}
+
+function KidsStoryArtFill({ art, label, uri, onLoad, onError, placeholder }: {
+  art: string; label: string; uri: string | null | undefined; onLoad?: () => void; onError?: () => void; placeholder: React.ReactNode;
 }) {
   const { colors } = useTheme();
   const [box, setBox] = useState({ width: 0, height: 0 });
@@ -95,7 +131,7 @@ function KidsStoryArtFill({ art, label, uri, onLoad, onError }: {
     >
       {uri && geometry ? (
         <Image onLoad={onLoad} onError={onError} accessible={false} source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', ...geometry }} />
-      ) : null}
+      ) : uri ? null : placeholder}
     </View>
   );
 }

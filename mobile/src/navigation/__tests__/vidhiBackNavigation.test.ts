@@ -55,8 +55,8 @@ describe('vidhi back navigation', () => {
 
   test('Home-side doors push in place instead of jumping to the Panchang tab', () => {
     const home = src('..', 'screens', 'HomeScreen.tsx');
-    expect(home).toMatch(/key: 'puja-vidhi'/);
-    expect(home).toMatch(/onPress: \(\) => navigation\.navigate\('VidhiCatalog'\)/);
+    expect(home).toContain('Guided pujas');
+    expect(home).toMatch(/navigation\.navigate\('VidhiCatalog'\)/);
 
     const search = src('..', 'screens', 'SearchScreen.tsx');
     expect(search).toMatch(/navigation\.navigate\('VidhiDetail', \{ vidhiId: sourceId \}\)/);

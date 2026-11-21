@@ -53,29 +53,47 @@ export const valmikiRamayanTotal = valmikiRamayanChaptersManifest.reduce(
 );
 
 /**
- * The corpus is NOT in the JS bundle.
+ * A kāṇḍa is LOADED, not required: asynchronously, a piece at a time, with the
+ * thread handed back between pieces. The largest kāṇḍa used to be a single
+ * 6.4 MB synchronous `require` in the reader's first render.
  *
- * It is 27 MB. While this module `require()`d the seven kāṇḍa JSONs they were
- * compiled into the Hermes bundle — more than half of it — and every OTA update
- * re-downloaded all of it for a text most sessions never open. The verses now
- * ship as bundled asset files (`assets/valmiki-ramayan/*.txt`, written from the
- * `chapter-0N.json` masters by `scripts/build-valmiki-assets.mjs`): stored once
- * in the store binary, addressed by content hash, and never re-sent by an
- * update unless their own bytes change.
+ * Where its verses come from is decided when the app is BUNDLED, by the app
+ * version it is bundled for (`mobile/corpusDelivery.js`):
  *
- * So a kāṇḍa is LOADED, not required: asynchronously, a part at a time, with
- * the thread handed back between parts. The largest kāṇḍa used to be a single
- * 6.4 MB synchronous `require` that froze the reader while it opened.
+ *   - A runtime whose store binary embeds the corpus reads it from 73 bundled
+ *     asset files (`assets/valmiki-ramayan/*.txt`, written from the
+ *     `chapter-0N.json` masters by `scripts/build-valmiki-assets.mjs`). The
+ *     27 MB corpus is then NOT in the JS bundle — it was more than half of it —
+ *     and no OTA update re-sends it.
+ *   - Every older runtime gets the masters compiled into the bundle, as before,
+ *     so an OTA from the latest branch asks nothing of a build that predates
+ *     the asset files.
  *
- * `parts.ts` and `partReader.ts` are reached through `require()` thunks on
- * purpose. This module is on the launch path (the manifest and the daily
- * selection are); the asset handles and `expo-asset` must not be.
+ * Both answer the same `./corpusSource` request (`corpusSource.ts`,
+ * `corpusSource.inbundle.ts`); everything below is shared.
+ *
+ * The source is reached through a `require()` thunk on purpose. This module is
+ * on the launch path (the manifest and the daily selection are); the asset
+ * handles, `expo-asset` and the masters must not be.
  */
 const chapterCache = new Map<number, ValmikiRamayanChapter>();
+/**
+ * The corpus is 27 MB of text, so only the kāṇḍas in use stay resident: the one
+ * being read, the one preloaded after it, and the one just left (back-navigation).
+ * The least recently used is dropped when a fourth arrives. A screen that holds a
+ * kāṇḍa keeps its own reference, so eviction frees memory once it lets go.
+ */
+export const MAX_RESIDENT_CHAPTERS = 3;
+function remember(chapter: number, value: ValmikiRamayanChapter): void {
+  // Map keeps insertion order: delete + set makes `chapter` the most recent.
+  chapterCache.delete(chapter);
+  chapterCache.set(chapter, value);
+  while (chapterCache.size > MAX_RESIDENT_CHAPTERS) {
+    const oldest = chapterCache.keys().next().value as number;
+    chapterCache.delete(oldest);
+  }
+}
 const chapterLoads = new Map<number, Promise<ValmikiRamayanChapter>>();
-
-/** How many part files are read from disk at once. Parsing is still one at a time. */
-const READ_CONCURRENCY = 4;
 
 /** Lightweight anchors used by Daily Bhakti and on-device search. */
 export const valmikiRamayanDailySelection =
@@ -87,13 +105,16 @@ function isValidChapter(chapter: number): boolean {
 
 /** The kāṇḍa if this process has already loaded it, else null. Never does any work. */
 export function peekValmikiRamayanChapter(chapter: number): ValmikiRamayanChapter | null {
-  return chapterCache.get(chapter) ?? null;
+  const cached = chapterCache.get(chapter);
+  if (!cached) return null;
+  remember(chapter, cached); // a kāṇḍa on screen is, by definition, in use
+  return cached;
 }
 
 /**
- * Load a kāṇḍa. Concurrent callers share one load; a loaded kāṇḍa is kept for
- * the life of the process, as it always was. A failed load is forgotten, so the
- * next call tries again.
+ * Load a kāṇḍa. Concurrent callers share one load; loaded kāṇḍas are kept
+ * least-recently-used, up to `MAX_RESIDENT_CHAPTERS`. A failed load is
+ * forgotten, so the next call tries again.
  */
 export function loadValmikiRamayanChapter(chapter: number): Promise<ValmikiRamayanChapter> {
   if (!isValidChapter(chapter)) {
@@ -104,12 +125,15 @@ export function loadValmikiRamayanChapter(chapter: number): Promise<ValmikiRamay
     );
   }
   const cached = chapterCache.get(chapter);
-  if (cached) return Promise.resolve(cached);
+  if (cached) {
+    remember(chapter, cached);
+    return Promise.resolve(cached);
+  }
   let pending = chapterLoads.get(chapter);
   if (!pending) {
     pending = readChapter(chapter).then(
       (loaded) => {
-        chapterCache.set(chapter, loaded);
+        remember(chapter, loaded);
         chapterLoads.delete(chapter);
         return loaded;
       },
@@ -128,28 +152,20 @@ const yieldToEventLoop = () => new Promise<void>((resolve) => setTimeout(resolve
 
 async function readChapter(chapter: number): Promise<ValmikiRamayanChapter> {
   const summary = valmikiRamayanChaptersManifest[chapter - 1];
-  const { valmikiParts } = require('./parts') as typeof import('./parts');
-  const { readValmikiPart } = require('./partReader') as typeof import('./partReader');
-  const parts = valmikiParts[chapter - 1];
+  const { readKandaParts } = require('./corpusSource') as typeof import('./corpusSource');
   const validator = createChapterValidator(summary);
   const verses: ValmikiRamayanVerse[] = [];
 
-  for (let at = 0; at < parts.length; at += READ_CONCURRENCY) {
-    const batch = parts.slice(at, at + READ_CONCURRENCY);
-    const texts = await Promise.all(batch.map((part) => readValmikiPart(part.source)));
-    for (let i = 0; i < texts.length; i += 1) {
-      const part = batch[i];
-      const parsed = JSON.parse(texts[i]) as ValmikiRamayanVerse[];
-      if (!Array.isArray(parsed) || parsed.length !== part.verseCount || verses.length !== part.firstVerse) {
-        throw new Error(`valmiki-ramayan: chapter ${chapter} part at verse ${part.firstVerse} is not the published part`);
-      }
-      for (const verse of parsed) {
-        validator.check(verse);
-        verses.push(withMeaningFallback(verse));
-      }
-      await yieldToEventLoop();
+  await readKandaParts(chapter, async (parsed, part) => {
+    if (!Array.isArray(parsed) || parsed.length !== part.verseCount || verses.length !== part.firstVerse) {
+      throw new Error(`valmiki-ramayan: chapter ${chapter} part at verse ${part.firstVerse} is not the published part`);
     }
-  }
+    for (const verse of parsed as ValmikiRamayanVerse[]) {
+      validator.check(verse);
+      verses.push(withMeaningFallback(verse));
+    }
+    await yieldToEventLoop();
+  });
   validator.finish(verses.length);
   return { ...summary, verses };
 }

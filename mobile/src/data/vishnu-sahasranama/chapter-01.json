@@ -1,7 +1,7 @@
 {
   "chapter": 1,
-  "titleHi": "पूर्वपीठिका",
-  "titleEn": "Purva Pithika",
+  "titleHi": "पूर्वपीठिका — चयनित पाठ",
+  "titleEn": "Purva Pithika — Selected Invocation",
   "verseCount": 23,
   "verses": [
     {
@@ -10,14 +10,14 @@
       "number": 0,
       "sanskrit": [
         "॥ विष्णु सहस्रनाम ॥",
-        "पूर्वपीठिका"
+        "पूर्वपीठिका — चयनित पाठ"
       ],
       "linesEn": [
         "Vishnu Sahasranama",
-        "Purva Pithika (Invocation)"
+        "Purva Pithika — Selected Invocation"
       ],
-      "meaningHi": "लाभ:\n\nविष्णु सहस्रनाम की पूर्वपीठिका विघ्न-निवारण और मन की शुद्धि के लिए पढ़ी जाती है। इसके पाठ से ध्यान में एकाग्रता, अन्तःकरण की शान्ति, और सहस्रनाम पाठ का सम्पूर्ण फल प्राप्त होता है। यह आवाहन भाग मुख्य स्तोत्र की नींव है — बिना इसके पाठ अपूर्ण माना जाता है।\n\nकथा:\n\nमहाभारत के अनुशासन पर्व में भीष्म पितामह ने शर-शय्या पर लेटे हुए युधिष्ठिर को विष्णु सहस्रनाम सुनाया। पूर्वपीठिका में ध्यान-श्लोक हैं जो पाठ से पूर्व विघ्न-निवारण हेतु उच्चारित किए जाते हैं। कुछ परम्पराओं में प्रथम श्लोक गणेश को भी समर्पित माना जाता है।",
-      "meaningEn": "Benefits:\n\nThe Purva Pithika (invocation) of Vishnu Sahasranama is recited for obstacle removal and purification of the mind. Its recitation brings concentration in meditation, inner peace, and ensures the full fruit of the Sahasranama recitation. This invocation section is the foundation of the main stotram — without it, the recitation is considered incomplete.\n\nStory:\n\nIn the Anushasana Parva of the Mahabharata, Bhishma Pitamaha recited the Vishnu Sahasranama to Yudhishthira while lying on his bed of arrows. The Purva Pithika contains meditation verses recited before the main text for obstacle removal. Some traditions also attribute the first verse to Ganesha."
+      "meaningHi": "यह चयनित पूर्वपीठिका मंगलाचरण, व्यास-वन्दना और युधिष्ठिर-भीष्म संवाद प्रस्तुत करती है। नाम-जप से पहले श्रद्धा और ध्यान का भाव जगाना इसका प्रयोजन है। विभिन्न पाठ-परम्पराओं में आरम्भिक मन्त्र और न्यास भिन्न हैं; यहाँ सम्पूर्ण अनुष्ठान-विधि नहीं दी गई है।\n\nयुधिष्ठिर परम आश्रय और धर्म का प्रश्न करते हैं, और भीष्म विष्णु की स्तुति का मार्ग बताते हैं। मुख्य अध्याय में अब सम्पूर्ण सहस्रनाम उपलब्ध है।",
+      "meaningEn": "This selected introduction includes invocations, honour to Vyasa and the dialogue between Yudhishthira and Bhishma. It prepares a devotional and attentive frame of mind. Opening mantras and nyasa differ between recitation traditions; this is not a complete ritual manual.\n\nYudhishthira asks about the highest refuge and dharma, and Bhishma responds with praise of Vishnu. The main chapter now contains the complete thousand-name hymn."
     },
     {
       "id": "vs-1-1",
@@ -357,12 +357,14 @@
     }
   ],
   "source": {
-    "baseText": "Vishnu Sahasranama from Mahabharata Anushasana Parva; app stores an excerpt, with main-stotram names 1-287 only.",
+    "baseText": "Vishnu Sahasranama: complete 107-verse thousand-name hymn, followed by the traditional protection stanza; accompanying invocation and closing selections are identified separately. Ancient Sanskrit with original Vedansh explanations for additions.",
     "referenceUrls": [
       "https://sanskritdocuments.org/doc_vishhnu/vsahasranew.html",
-      "https://www.opensadhaka.com/stotras/vishnu-sahasranama",
-      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html"
+      "https://www.drikpanchang.com/deities-namavali/gods/lord-vishnu/stotram/vishnu-sahasranama-stotram.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_dhyanam.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_3.html",
+      "https://www.swami-krishnananda.org/vishnu/vishnu_phala.html"
     ],
-    "retrievedOn": "2026-05-30"
+    "retrievedOn": "2026-11-17"
   }
 }

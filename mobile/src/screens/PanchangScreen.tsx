@@ -1,4 +1,7 @@
 import OccasionSection from '@/components/OccasionSection';
+import { isPreDawn } from '@/panchang/preDawn';
+import { useCivilToday } from '@/panchang/useCivilToday';
+import { civilToday } from '@/panchang/civilTime';
 import { vratOccasionTarget, panchangDatedEntry } from '@/navigation/vratOccasionTarget';
 import { useOccasionTimings } from '@/panchang/useOccasionTimings';
 import type { CatalogArtworkName } from '@/components/CatalogCategoryArtwork';
@@ -15,7 +18,7 @@ import CelestialGlyph from '@/components/CelestialGlyph';
 import PanchangDaySurface from '@/components/PanchangDaySurface';
 import PanchangNextDayCard from '@/components/PanchangNextDayCard';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { GestureResponderEvent } from 'react-native';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -106,6 +109,7 @@ import PersonChips from '@/components/PersonChips';
 import { getCityById } from '@/panchang/locations';
 import { birthCity } from '@/panchang/birthProfiles';
 import type { PanchangHomeMode, PanchangStackParamList } from '@/navigation/types';
+import { runWhenIdle } from '@/utils/runWhenIdle';
 
 const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const MONTHS_FULL_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -176,10 +180,22 @@ export default function PanchangScreen({ route }: Props) {
   const panchangSegmentRef = useTourTarget('panchangSegment', undefined, isFocused);
   const rootNav = useNavigation<any>();
   const { followCount } = useVratFollows();
-  const todayKey = new Date().toDateString();
-  const today = useMemo(() => startOfLocalDay(new Date(todayKey)), [todayKey]);
-  const [selectedDate, setSelectedDate] = useState(() => startOfLocalDay(route.params?.dateMs ? new Date(route.params.dateMs) : new Date()));
-  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
+  // India's current date (`civilTime.ts`), kept current across midnight and
+  // app foregrounds.
+  const today = useCivilToday();
+  const [selectedDate, setSelectedDate] = useState(() => (route.params?.dateMs ? startOfLocalDay(new Date(route.params.dateMs)) : today));
+  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(today));
+  // When the day rolls over, a selection that was resting on "today" follows it
+  // (after a night in the background the screen used to keep yesterday selected).
+  // A date the reader browsed to on purpose is left alone.
+  const previousToday = useRef(today);
+  useEffect(() => {
+    const was = previousToday.current;
+    previousToday.current = today;
+    if (was.getTime() === today.getTime()) return;
+    setSelectedDate((current) => (current.getTime() === was.getTime() ? today : current));
+    setVisibleMonth((current) => (current.getTime() === startOfMonth(was).getTime() ? startOfMonth(today) : current));
+  }, [today]);
   const [calendarExpanded, setCalendarExpanded] = useState(false);
   const [panchangTab, setPanchangTab] = useState<PanchangHomeMode>(
     route.params?.initialTab ?? 'calendar'
@@ -206,7 +222,7 @@ export default function PanchangScreen({ route }: Props) {
   // Before sunrise the Hindu day is still yesterday's, so a festival kept last
   // night is the one running — the ribbon above the Muhurat card carries it over.
   // Read once per render, not ticked: the screen re-renders on any selection.
-  const preDawnToday = p != null && selectedDate.getTime() === today.getTime() && Date.now() < p.sunrise.getTime();
+  const preDawnToday = selectedDate.getTime() === today.getTime() && isPreDawn(p?.sunrise);
   const carryOverDate = useMemo(() => addDays(selectedDate, -1), [selectedDate]);
   const carryOver = useObservancesForDate(preDawnToday ? carryOverDate : selectedDate, calendarSystem);
   const ribbonTonight = preDawnToday && carryOver.length > 0;
@@ -238,7 +254,7 @@ export default function PanchangScreen({ route }: Props) {
   // so for most users this effect is a single read that changes no pixel.
   useEffect(() => {
     let cancelled = false;
-    const handle = InteractionManager.runAfterInteractions(() => {
+    const handle = runWhenIdle(() => {
       void seedFromLocationOnce({
         cityId: location.cityId,
         isTehsil: getCityById(location.cityId)?.districtEn != null,
@@ -1882,7 +1898,7 @@ function CatalogLedgerBar({
   useEffect(() => {
     let cancelled = false;
     const handle = setTimeout(() => {
-      const today = startOfLocalDay(new Date());
+      const today = civilToday();
       const dates = entries
         .map((entry) => {
           try { return nextObservanceForEntry(entry, today); } catch { return null; }

@@ -63,7 +63,7 @@ appId: com.prashantsharma.vedansh
 - extendedWaitUntil:
     visible: "Vrat"
     timeout: 15000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 # The [Panchang | Vrat & Parv | Jyotish] segment lives on PanchangHome — visible
 # only if the calendar screen sits under ObservanceList in the stack (initial: false).

@@ -15,11 +15,22 @@ import { hasRealAudio } from '@assets/audio-library';
 import { useAudioPlayerContext } from '@/contexts/AudioPlayerContext';
 import TrackCard from '@/components/audio/TrackCard';
 import { useTourTarget } from '@/components/tour/tourTargets';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { AudioStackParamList } from '@/navigation/types';
+import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from '@/components/ListCard';
+import CategoryIcon from '@/components/CategoryIcon';
+import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { bhajanShelfEntries } from '@/data/bhajan/shelf';
 
 export default function AudioLibraryScreen() {
   const { colors, spacing, typography } = useTheme();
   const { lang } = useGitaLanguage();
   const { currentTrack, isPlaying, playTrack, prefetchTrack, openNowPlaying } = useAudioPlayerContext();
+  const navigation = useNavigation<NativeStackNavigationProp<AudioStackParamList>>();
+  // Bhajan text shelf (design.md §34.1): the door shows only once at least one
+  // verified bhajan is registered — never an empty shelf.
+  const bhajanTextCount = useMemo(() => bhajanShelfEntries().length, []);
   const [filter, setFilter] = useState<Deity | null>(null);
   // Feature-tour anchor for the Bhajan "inside" step (design.md §47).
   const bhajanInsideRef = useTourTarget('bhajanInside');
@@ -82,6 +93,13 @@ export default function AudioLibraryScreen() {
           </ScrollView>
 
           <View ref={bhajanInsideRef} collapsable={false} style={{ paddingHorizontal: spacing.screenGutter, gap: 12 }}>
+            {bhajanTextCount > 0 && (
+              <>
+                <SectionHeading hi="भजन पढ़ें" en="Read" />
+                <BhajanShelfDoor count={bhajanTextCount} onPress={() => navigation.navigate('BhajanList')} />
+              </>
+            )}
+
             {currentTrack && (
               <>
                 <SectionHeading hi="जारी रखें" en="Continue listening" />
@@ -122,6 +140,33 @@ export default function AudioLibraryScreen() {
         </ScrollView>
       </SafeAreaView>
     </View>
+  );
+}
+
+/** The door into the bhajan text shelf — the shared regular ListCard (design.md §8). */
+function BhajanShelfDoor({ count, onPress }: { count: number; onPress: () => void }) {
+  const { lang } = useGitaLanguage();
+  const { primary, secondary } = orderTitlesByLanguage(lang, 'भजन संग्रह', 'Bhajan Lyrics', CARD_TITLE_SIZES);
+  const meta = pick(lang, {
+    hi: `${count} भजन · अर्थ सहित`,
+    en: `${count} bhajans · with meaning`,
+    gu: `${count} ભજન · અર્થ સહિત`,
+    kn: `${count} ಭಜನೆಗಳು · ಅರ್ಥ ಸಹಿತ`,
+  });
+  return (
+    <ListCard
+      onPress={onPress}
+      testID="bhajan-shelf-door"
+      accessibilityLabel={`Bhajan Lyrics. ${count} bhajans with meaning. Tap to open.`}
+      style={styles.inList}
+      leading={
+        <CardThumb>
+          <CategoryIcon iconKey="bhajan" />
+        </CardThumb>
+      }
+    >
+      <CardTitles primary={primary} secondary={secondary} meta={meta} />
+    </ListCard>
   );
 }
 
@@ -226,6 +271,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     includeFontPadding: false,
   },
+  inList: { marginBottom: 0 },
   heading: {
     fontSize: 15,
     marginTop: 16,

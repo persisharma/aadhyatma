@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
+import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import { pick, type LocalizedStrings } from '@/utils/localize';
@@ -60,7 +61,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        <ScrollView
+        <KeyboardAwareScrollView
           contentContainerStyle={[styles.scroll, { paddingHorizontal: spacing.xxl }]}
           showsVerticalScrollIndicator={false}
         >
@@ -178,7 +179,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               />
             </>
           )}
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     </View>
   );

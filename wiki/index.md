@@ -20,6 +20,7 @@
 - [[panchang]] — Panchang tab: Hindu-calendar engine, festival/vrat observances, **festival arcs (पर्व-अर्क: sthapana → family-chosen visarjan)**, Daily Muhurat, shubh-yoga annotations (annotate-only), Kundali (incl. the draft **graha-by-graha cards with counted labels and upay**, jyotishi-gated), deterministic Daily Rashifal, private IST-only Guna Milan, newborn-private Namkaran, and dated one-shot muhurat follows.
 - [[japam]] — JapaMala counter: per-id 108-bead counts, the mantra list vs the id resolver, and **sloka japa** (any stotram shloka chanted like a mantra from the reader's `जप` pill, `sloka.<source>.<chapter>.<number>` ids).
 - [[japam-alarms]] — Japam Alarms: repeat-days, one-time, and skip-next; native AlarmKit/AlarmManager tier with expo fallback.
+- [[subsystems/bhajan-text]] — भजन संग्रह: bhajan lyrics + meaning listed inside the Bhajan tab (`placement: 'bhajan-tab'`), deity/region-grouped shelf, shared Home/Audio reader routes, four-part test-pinned registry; shipped empty pending verified sources.
 - [[audio]] — the three sound sources (recorded library, japam loop, read-aloud TTS), the playback arbiter that keeps them mutually exclusive, and the expo-speech platform traps.
 - [[notifications]] — ten local notification families (daily verse, vrat, **muhurat**, festive, **return / वापसी स्मरण**, sadhana, **routine**, personal Pitru Smaran, public Pitru Paksha, japam), the pure-planner + glue + headless-scheduler shape, the shared iOS pending budget, and notification-tap deep links.
 - [[home-widgets]] — cross-platform Home/Lock Screen widgets: versioned 14-day IST snapshot, atomic native bridges, generated extension/provider wiring, gallery, and exact deep links.
@@ -41,6 +42,7 @@
 _(none yet — add per-model pages as they warrant)_
 
 ## Integrations
+- [[integrations/live-darshan]] — Home floating door, native quick sheet and official-broadcast resolution with honest channel fallbacks.
 - [[integrations/meta-app-events]] — build-gated Android/iOS Meta activation measurement, ATT/privacy guards, native release requirements and verification limits.
 - [[integrations/reading-artwork]] — distinct reading backgrounds and Krishna-style reader illustrations, R2 manifests, immediate offline visuals, shared lifetime cache and bounded downloads.
 

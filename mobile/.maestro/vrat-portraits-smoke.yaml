@@ -14,7 +14,7 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - tapOn: { id: "tab-vrat" }
 # Reselecting an already-open tab may preserve its category stack.
-- tapOn: { text: "Back", optional: true }
+- tapOn: { text: "Back|वापस|પાછા|ಹಿಂದೆ", optional: true }
 - scrollUntilVisible:
     element: { text: "My Vrat" }
     direction: UP
@@ -45,7 +45,7 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Area: all"
 - waitForAnimationToEnd
 - takeScreenshot: e2e-shots/vrat-portraits-large-list
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { text: "My Vrat" }
     direction: UP

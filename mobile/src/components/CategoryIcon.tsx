@@ -28,6 +28,8 @@ const artwork = {
   granth: 'granth', stotram: 'stotram', chalisa: 'chalisa', japam: 'japam',
   deity: 'deity', aarti: 'aarti', theerth: 'theerth', sanskar: 'sanskar',
   kavacham: 'kavacham', ashtakam: 'ashtakam', suktam: 'suktam',
+  // No painted bhajan icon yet: the hymn scroll stands in (sung praise).
+  bhajan: 'stotram',
   vrat: 'vrat', purpose: 'purpose', insight: 'kundali', muhurat: 'muhurat', daan: 'daan',
 } as const satisfies Record<Exclude<CategoryIconKey, PurposeIconKey | 'routine'>, StoryIconName>;
 

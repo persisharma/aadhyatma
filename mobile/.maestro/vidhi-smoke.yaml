@@ -208,7 +208,7 @@ appId: com.prashantsharma.vedansh
 # ── Step 9: Exit conduct (state saved) → overview → out ──
 - tapOn: "Back to puja overview"
 - waitForAnimationToEnd
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 
 # ── Step 10: Restore Hindi (best-effort) ──

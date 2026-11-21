@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, Text, View, useWindowDimensions, type ViewToken } from 'react-native';
+import { FlatList, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View, useWindowDimensions, type ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -11,6 +11,8 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { useReadDwell } from './_useReadDwell';
 import ReaderHeader from '@/components/ReaderHeader';
+import ReaderPageCounter from '@/components/ReaderPageCounter';
+import { useReaderJump } from './_useReaderJump';
 import BookmarkButton from '@/components/BookmarkButton';
 import ShareButton from '@/components/ShareButton';
 import JumpToStartButton from '@/components/JumpToStartButton';
@@ -53,7 +55,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'VishnuSahasranamaReader
 const DOT_COUNT = 5;
 
 export default function VishnuSahasranamaReaderScreen({ navigation, route }: Props) {
-  const { colors, typography } = useTheme();
+  const { colors } = useTheme();
   const { lang } = useGitaLanguage();
   const { addBookmark, removeBookmark, isBookmarked, bookmarks } = useBookmarks();
   const { setProgress } = useReadingProgress();
@@ -183,6 +185,8 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
   // share is in flight — the in-page header actions depend on all three.
   const listExtraData = useMemo(() => ({ lang, bookmarks, shareBusy }), [lang, bookmarks, shareBusy]);
 
+  const jump = useReaderJump({ listRef, offset, setCurrentIndex, readAloud, autoSlide });
+
   if (!chapter) return <View style={[styles.root, { backgroundColor: colors.parchment }]} />;
 
   return (
@@ -192,23 +196,21 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
           title={topTitle}
           onBack={() => navigation.goBack()}
           right={
-            <Text style={[styles.counter, { color: colors.inkMuted, fontFamily: typography.pageCounter.fontFamily, fontSize: typography.pageCounter.fontSize, fontStyle: 'italic' }]}>
-              {currentIndex + 1} / {verseCount}
-            </Text>
+            <ReaderPageCounter current={currentIndex + 1} total={verseCount} {...jump} />
           }
         />
 
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
-        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
-          <LanguageToggle />
+        <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: width < 360 ? 6 : 18 }, width < 360 && styles.toggleRowNarrow]}>
+          <LanguageToggle compact={width < 360} />
           <AddToRoutineButton sourceId="vishnu-sahasranama" chapter={chapter.chapter} />
           {/* Pinned left, mirroring read-aloud on the right (design.md §35.1). */}
-          <View style={styles.japaSlot}>
+          <View style={[styles.japaSlot, width < 360 && styles.actionSlotNarrow]}>
             <StartJapaButton navigation={navigation} sourceId="vishnu-sahasranama" chapter={chapter.chapter} verseIndex={currentIndex} />
           </View>
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
-          <View style={styles.readAloudSlot}>
+          <View style={[styles.readAloudSlot, width < 360 && styles.actionSlotNarrow]}>
             <ReadAloudButton control={readAloud} />
           </View>
         </View>
@@ -306,10 +308,11 @@ export default function VishnuSahasranamaReaderScreen({ navigation, route }: Pro
 const styles = StyleSheet.create({
   root: { flex: 1 },
   safe: { flex: 1 },
-  counter: { includeFontPadding: false, minWidth: 48, textAlign: 'right' },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
   japaSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
+  toggleRowNarrow: { flexWrap: 'wrap', paddingHorizontal: 16 },
+  actionSlotNarrow: { position: 'relative', left: 0, right: 0, top: 0, bottom: 0 },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },

@@ -1,0 +1,802 @@
+{
+  "titleHi": "राधा चालीसा",
+  "titleEn": "Radha Chalisa",
+  "subtitleHi": "श्री राधे वृषभानुजा",
+  "subtitleEn": "Shri Radhe Vrishabhanuja",
+  "language": "hi-en",
+  "script": "Devanagari + Latin",
+  "source": {
+    "baseText": "Complete Drik Panchang Radha Chalisa, read in full and compared with HinduNidhi and JaapDaily. Traditional prayer only; Hindi/English meanings and ASCII pronunciation are original editorial work.",
+    "referenceUrls": [
+      "https://www.drikpanchang.com/lyrics/chalisa/shri-radha/shri-radha-chalisa.html?lang=hi",
+      "https://hindunidhi.com/shri-radha-chalisa-hindi/",
+      "https://jaapdaily.com/learn/chalisa/radha-chalisa/"
+    ],
+    "retrievedOn": "2026-11-16",
+    "editionDecision": "Prashant authorized autonomous evidence-based edition selection. Preserve the complete Drik text: two opening dohas, forty separate chaupais and one closing doha. These are separate publications, not proof of independent manuscript lineages. Do not mix readings or import modern publisher translations.",
+    "variants": "JaapDaily agrees in sequence and wording apart from equivalent nasal signs/spacing: कुँवरि/कुंवरि (1,34), पाँइ/पांइ (18), गलबाँही/गलबांही and माँही/मांही (21), plus श्रीराधा/श्री राधा and श्रीवृन्दावन/श्री वृन्दावन in closing. HinduNidhi has extensive spelling/wording differences, including वुषभानुजा, अमित बोध versus अमित मोद (2), तुवा versus तब (30), यदुपति versus यशुमति (38), धनश्याम versus घनश्याम (closing). Retain Drik, corroborated by JaapDaily, rather than silently blending. Aastha compresses body 8-9 into one and has 39 body units plus राम नाम in place of राधा नाम; excluded as base. Preserve Drik लीला वपु तब (30) without invented correction.",
+    "access": "Full prayers read through web retrieval. Pavitra Granth direct retrieval returned HTTP 403; it is not a verified reference. No HTTP status is inferred for successful web-cache retrievals.",
+    "notes": "Benefits and theological descriptions are attributed to the hymn, not universal promises. Gujarati/Kannada use existing script-conversion fallback, not newly verified native translations. No source UI or recorded audio is introduced."
+  },
+  "counts": {
+    "openingDohas": 2,
+    "chaupais": 40,
+    "closingDohas": 1,
+    "totalVerses": 43
+  },
+  "verses": [
+    {
+      "id": "opening-doha-1",
+      "type": "doha",
+      "section": "opening",
+      "number": 1,
+      "labelHi": "दोहा · १",
+      "labelEn": "Doha · 1",
+      "lines": [
+        "श्री राधे वृषभानुजा, भक्तनि प्राणाधार।",
+        "वृन्दाविपिन विहारिणि, प्रणवौं बारंबार॥"
+      ],
+      "linesEn": [
+        "Shri Radhe Vrishabhanuja, bhaktani praanadhaar.",
+        "Vrindaavipin vihaarini, pranavau baarambaar."
+      ],
+      "meaningHi": "वृषभानु की पुत्री राधा भक्तों के प्राणों का आधार और वृन्दावन में विहार करने वाली हैं। भक्त उन्हें बार-बार प्रणाम करता है।",
+      "meaningEn": "The devotee repeatedly bows to Radha, daughter of Vrishabhanu, who sustains her devotees and wanders in Vrindavan."
+    },
+    {
+      "id": "opening-doha-2",
+      "type": "doha",
+      "section": "opening",
+      "number": 2,
+      "labelHi": "दोहा · २",
+      "labelEn": "Doha · 2",
+      "lines": [
+        "जैसौ तैसौ रावरौ, कृष्ण प्रिया सुखधाम।",
+        "चरण शरण निज दीजिये, सुन्दर सुखद ललाम॥"
+      ],
+      "linesEn": [
+        "Jaisau taisau raavarau, Krishna priya sukhadhaam.",
+        "Charan sharan nij deejiye, sundar sukhad lalaam."
+      ],
+      "meaningHi": "भक्त कहता है कि मैं जैसा भी हूँ, आपका हूँ। हे कृष्णप्रिया, अपने सुन्दर और सुखद चरणों की शरण दीजिए।",
+      "meaningEn": "Whatever my condition, I belong to you. Beloved of Krishna, grant me shelter at your beautiful, comforting feet."
+    },
+    {
+      "id": "chaupai-01",
+      "type": "chaupai",
+      "section": "body",
+      "number": 1,
+      "labelHi": "चौपाई · १",
+      "labelEn": "Chaupai · 1",
+      "lines": [
+        "जय वृषभानु कुँवरि श्री श्यामा।",
+        "कीरति नंदिनी शोभा धामा॥"
+      ],
+      "linesEn": [
+        "Jai Vrishabhanu kunwari Shri Shyaama.",
+        "Keerati nandini shobha dhaama."
+      ],
+      "meaningHi": "वृषभानु की पुत्री श्यामा की जय हो। कीर्ति की यह पुत्री शोभा का धाम कही गई हैं।",
+      "meaningEn": "The hymn hails Shyama, daughter of Vrishabhanu and Kirti, as an abode of beauty."
+    },
+    {
+      "id": "chaupai-02",
+      "type": "chaupai",
+      "section": "body",
+      "number": 2,
+      "labelHi": "चौपाई · २",
+      "labelEn": "Chaupai · 2",
+      "lines": [
+        "नित्य विहारिनि श्याम अधारा।",
+        "अमित मोद मंगल दातारा॥"
+      ],
+      "linesEn": [
+        "Nitya vihaarini Shyaam adhaara.",
+        "Amit mod mangal daataara."
+      ],
+      "meaningHi": "राधा सदा विहार करने वाली, श्याम का आधार और अपार आनन्द तथा मंगल देने वाली कही गई हैं।",
+      "meaningEn": "Radha is praised as Shyam's support, ever engaged in divine play and giving boundless joy and auspiciousness."
+    },
+    {
+      "id": "chaupai-03",
+      "type": "chaupai",
+      "section": "body",
+      "number": 3,
+      "labelHi": "चौपाई · ३",
+      "labelEn": "Chaupai · 3",
+      "lines": [
+        "रास विलासिनि रस विस्तारिनि।",
+        "सहचरि सुभग यूथ मन भावनि॥"
+      ],
+      "linesEn": [
+        "Raas vilaasini ras vistaarini.",
+        "Sahachari subhag yooth man bhaavani."
+      ],
+      "meaningHi": "राधा रास की लीला और उसके रस को विस्तार देती हैं। वे अपनी सुन्दर सखी-मण्डली के मन को प्रिय हैं।",
+      "meaningEn": "Radha unfolds the joy of the rasa dance and delights the hearts of her companion sakhis."
+    },
+    {
+      "id": "chaupai-04",
+      "type": "chaupai",
+      "section": "body",
+      "number": 4,
+      "labelHi": "चौपाई · ४",
+      "labelEn": "Chaupai · 4",
+      "lines": [
+        "नित्य किशोरी राधा गोरी।",
+        "श्याम प्राणधन अति जिय भोरी॥"
+      ],
+      "linesEn": [
+        "Nitya kishori Radha gori.",
+        "Shyaam praanadhan ati jiya bhori."
+      ],
+      "meaningHi": "राधा नित्य किशोरी, गौरवर्णा और सरल हृदय वाली हैं। श्याम उनके प्राणों का धन हैं।",
+      "meaningEn": "Ever-youthful and fair Radha is described as innocent at heart, with Shyam as her treasured life."
+    },
+    {
+      "id": "chaupai-05",
+      "type": "chaupai",
+      "section": "body",
+      "number": 5,
+      "labelHi": "चौपाई · ५",
+      "labelEn": "Chaupai · 5",
+      "lines": [
+        "करुणा सागर हिय उमंगिनी।",
+        "ललितादिक सखियन की संगिनी॥"
+      ],
+      "linesEn": [
+        "Karuna saagar hiya umangini.",
+        "Lalitaadik sakhiyan ki sangini."
+      ],
+      "meaningHi": "वे करुणा का सागर हैं और उनका हृदय उमंग से भरा है। वे ललिता आदि सखियों की संगिनी हैं।",
+      "meaningEn": "Her heart overflows with compassion and delight; Lalita and the other sakhis are her companions."
+    },
+    {
+      "id": "chaupai-06",
+      "type": "chaupai",
+      "section": "body",
+      "number": 6,
+      "labelHi": "चौपाई · ६",
+      "labelEn": "Chaupai · 6",
+      "lines": [
+        "दिन कर कन्या कूल विहारिनि।",
+        "कृष्ण प्राण प्रिय हिय हुलसावनि॥"
+      ],
+      "linesEn": [
+        "Din kar kanya kool vihaarini.",
+        "Krishna praan priya hiya hulasaavani."
+      ],
+      "meaningHi": "राधा सूर्यपुत्री यमुना के तट पर विहार करती हैं। वे कृष्ण को प्राणों जैसी प्रिय हैं और उनका हृदय हर्षित करती हैं।",
+      "meaningEn": "She wanders beside the Yamuna, daughter of the Sun, and gladdens Krishna, to whom she is dear as life."
+    },
+    {
+      "id": "chaupai-07",
+      "type": "chaupai",
+      "section": "body",
+      "number": 7,
+      "labelHi": "चौपाई · ७",
+      "labelEn": "Chaupai · 7",
+      "lines": [
+        "नित्य श्याम तुमरौ गुण गावैं।",
+        "राधा राधा कहि हरषावैं॥"
+      ],
+      "linesEn": [
+        "Nitya Shyaam tumarau gun gaavain.",
+        "Radha Radha kahi harashaavain."
+      ],
+      "meaningHi": "श्याम निरन्तर राधा के गुण गाते हैं। राधा का नाम पुकारते हुए वे आनन्दित होते हैं।",
+      "meaningEn": "Shyam continually praises Radha and rejoices in calling her name."
+    },
+    {
+      "id": "chaupai-08",
+      "type": "chaupai",
+      "section": "body",
+      "number": 8,
+      "labelHi": "चौपाई · ८",
+      "labelEn": "Chaupai · 8",
+      "lines": [
+        "मुरली में नित नाम उचारें।",
+        "तुव कारण लीला वपु धारें॥"
+      ],
+      "linesEn": [
+        "Murali mein nit naam uchaaren.",
+        "Tuv kaaran leela vapu dhaaren."
+      ],
+      "meaningHi": "कृष्ण अपनी मुरली में राधा का नाम उच्चारते हैं। उनके लिए ही वे लीला का रूप धारण करते हैं।",
+      "meaningEn": "Krishna voices Radha's name through his flute and assumes his form of divine play for her sake."
+    },
+    {
+      "id": "chaupai-09",
+      "type": "chaupai",
+      "section": "body",
+      "number": 9,
+      "labelHi": "चौपाई · ९",
+      "labelEn": "Chaupai · 9",
+      "lines": [
+        "प्रेम स्वरूपिणि अति सुकुमारी।",
+        "श्याम प्रिया वृषभानु दुलारी॥"
+      ],
+      "linesEn": [
+        "Prem swaroopini ati sukumaari.",
+        "Shyaam priya Vrishabhanu dulaari."
+      ],
+      "meaningHi": "राधा प्रेम की मूर्ति और अत्यन्त कोमल हैं। वे श्याम की प्रिया तथा वृषभानु की दुलारी हैं।",
+      "meaningEn": "Radha embodies love and tenderness, beloved of Shyam and cherished by Vrishabhanu."
+    },
+    {
+      "id": "chaupai-10",
+      "type": "chaupai",
+      "section": "body",
+      "number": 10,
+      "labelHi": "चौपाई · १०",
+      "labelEn": "Chaupai · 10",
+      "lines": [
+        "नवल किशोरी अति छवि धामा।",
+        "द्युति लघु लगै कोटि रति कामा॥"
+      ],
+      "linesEn": [
+        "Naval kishori ati chhavi dhaama.",
+        "Dyuti laghu lagai koti Rati Kaama."
+      ],
+      "meaningHi": "उनका किशोर सौन्दर्य सदा नया है। स्तुति कहती है कि उनकी कान्ति के आगे करोड़ों रति और कामदेव की चमक भी छोटी पड़ती है।",
+      "meaningEn": "Her youthful beauty is ever fresh. In the hymn's praise, even countless Ratis and Kamadevas appear dim beside her radiance."
+    },
+    {
+      "id": "chaupai-11",
+      "type": "chaupai",
+      "section": "body",
+      "number": 11,
+      "labelHi": "चौपाई · ११",
+      "labelEn": "Chaupai · 11",
+      "lines": [
+        "गौरांगी शशि निंदक बदना।",
+        "सुभग चपल अनियारे नयना॥"
+      ],
+      "linesEn": [
+        "Gauraangi shashi nindak badana.",
+        "Subhag chapal aniyaare nayana."
+      ],
+      "meaningHi": "उनके गौर वर्ण और मुख की आभा चन्द्रमा को भी फीका करती है। उनके नेत्र सुन्दर, चंचल और तीखे हैं।",
+      "meaningEn": "Her fair form and radiant face outshine the moon in this poetic description; her eyes are lovely, lively and keen."
+    },
+    {
+      "id": "chaupai-12",
+      "type": "chaupai",
+      "section": "body",
+      "number": 12,
+      "labelHi": "चौपाई · १२",
+      "labelEn": "Chaupai · 12",
+      "lines": [
+        "जावक युत युग पंकज चरना।",
+        "नूपुर धुनि प्रीतम मन हरना॥"
+      ],
+      "linesEn": [
+        "Jaavak yut yug pankaj charana.",
+        "Noopur dhuni preetam man harana."
+      ],
+      "meaningHi": "उनके दोनों कमल जैसे चरण लाल रंग से सजे हैं। पायल की ध्वनि उनके प्रिय का मन मोह लेती है।",
+      "meaningEn": "Her lotus-like feet are coloured with red dye, and the sound of her anklets captivates her beloved."
+    },
+    {
+      "id": "chaupai-13",
+      "type": "chaupai",
+      "section": "body",
+      "number": 13,
+      "labelHi": "चौपाई · १३",
+      "labelEn": "Chaupai · 13",
+      "lines": [
+        "संतत सहचरि सेवा करहीं।",
+        "महा मोद मंगल मन भरहीं॥"
+      ],
+      "linesEn": [
+        "Santat sahachari seva karahin.",
+        "Maha mod mangal man bharahin."
+      ],
+      "meaningHi": "सखियाँ निरन्तर उनकी सेवा करती हैं। उनके मन महान आनन्द और मंगल से भर जाते हैं।",
+      "meaningEn": "Her companions serve her continually, their hearts filling with joy and auspicious feeling."
+    },
+    {
+      "id": "chaupai-14",
+      "type": "chaupai",
+      "section": "body",
+      "number": 14,
+      "labelHi": "चौपाई · १४",
+      "labelEn": "Chaupai · 14",
+      "lines": [
+        "रसिकन जीवन प्राण अधारा।",
+        "राधा नाम सकल सुख सारा॥"
+      ],
+      "linesEn": [
+        "Rasikan jeevan praan adhaara.",
+        "Radha naam sakal sukh saara."
+      ],
+      "meaningHi": "राधा रसिक भक्तों के जीवन और प्राणों का आधार हैं। उनके नाम को सभी सुखों का सार कहा गया है।",
+      "meaningEn": "For devotees immersed in loving devotion, Radha sustains life itself; her name is praised as the essence of happiness."
+    },
+    {
+      "id": "chaupai-15",
+      "type": "chaupai",
+      "section": "body",
+      "number": 15,
+      "labelHi": "चौपाई · १५",
+      "labelEn": "Chaupai · 15",
+      "lines": [
+        "अगम अगोचर नित्य स्वरूपा।",
+        "ध्यान धरत निशिदिन ब्रज भूपा॥"
+      ],
+      "linesEn": [
+        "Agam agochar nitya swaroopa.",
+        "Dhyaan dharat nishidin Braj bhoopa."
+      ],
+      "meaningHi": "उनका नित्य स्वरूप इन्द्रियों और साधारण समझ से परे है। ब्रज के स्वामी कृष्ण दिन-रात उनका ध्यान करते हैं।",
+      "meaningEn": "Her eternal nature lies beyond ordinary perception and understanding; Krishna, lord of Braj, meditates on her day and night."
+    },
+    {
+      "id": "chaupai-16",
+      "type": "chaupai",
+      "section": "body",
+      "number": 16,
+      "labelHi": "चौपाई · १६",
+      "labelEn": "Chaupai · 16",
+      "lines": [
+        "उपजेउ जासु अंश गुण खानी।",
+        "कोटिन उमा रमा ब्रह्मानी॥"
+      ],
+      "linesEn": [
+        "Upajeu jaasu ansh gun khaani.",
+        "Kotin Uma Rama Brahmaani."
+      ],
+      "meaningHi": "इस स्तुति में राधा को गुणों की खान कहा गया है, जिनके अंश से करोड़ों उमा, रमा और ब्रह्माणी प्रकट होती हैं।",
+      "meaningEn": "The hymn praises Radha as a treasury of qualities, from whose portion countless forms of Uma, Rama and Brahmani arise."
+    },
+    {
+      "id": "chaupai-17",
+      "type": "chaupai",
+      "section": "body",
+      "number": 17,
+      "labelHi": "चौपाई · १७",
+      "labelEn": "Chaupai · 17",
+      "lines": [
+        "नित्य धाम गोलोक विहारिनि।",
+        "जन रक्षक दुख दोष नसावनि॥"
+      ],
+      "linesEn": [
+        "Nitya dhaam Golok vihaarini.",
+        "Jan rakshak dukh dosh nasaavani."
+      ],
+      "meaningHi": "वे नित्य गोलोक धाम में विहार करती हैं। वे भक्तों की रक्षा करने और उनके दुःख तथा दोष हरने वाली कही गई हैं।",
+      "meaningEn": "She dwells in the eternal realm of Goloka and is praised as the protector who removes devotees' sorrows and faults."
+    },
+    {
+      "id": "chaupai-18",
+      "type": "chaupai",
+      "section": "body",
+      "number": 18,
+      "labelHi": "चौपाई · १८",
+      "labelEn": "Chaupai · 18",
+      "lines": [
+        "शिव अज मुनि सनकादिक नारद।",
+        "पार न पाँइ शेष अरु शारद॥"
+      ],
+      "linesEn": [
+        "Shiv Aj muni Sanakaadik Naarad.",
+        "Paar na paain Shesh aru Shaarad."
+      ],
+      "meaningHi": "शिव, ब्रह्मा, सनक आदि मुनि, नारद, शेष और सरस्वती भी उनकी महिमा का अन्त नहीं पा सकते।",
+      "meaningEn": "Even Shiva, Brahma, the Sanaka sages, Narada, Shesha and Saraswati cannot fathom the limit of her glory."
+    },
+    {
+      "id": "chaupai-19",
+      "type": "chaupai",
+      "section": "body",
+      "number": 19,
+      "labelHi": "चौपाई · १९",
+      "labelEn": "Chaupai · 19",
+      "lines": [
+        "राधा शुभ गुण रूप उजारी।",
+        "निरखि प्रसन्न होत बनबारी॥"
+      ],
+      "linesEn": [
+        "Radha shubh gun roop ujaari.",
+        "Nirakhi prasanna hot Banabaari."
+      ],
+      "meaningHi": "राधा शुभ गुणों और उज्ज्वल रूप से सुशोभित हैं। उन्हें देखकर वनविहारी कृष्ण प्रसन्न होते हैं।",
+      "meaningEn": "Radha shines with beauty and auspicious qualities; seeing her brings joy to Krishna."
+    },
+    {
+      "id": "chaupai-20",
+      "type": "chaupai",
+      "section": "body",
+      "number": 20,
+      "labelHi": "चौपाई · २०",
+      "labelEn": "Chaupai · 20",
+      "lines": [
+        "ब्रज जीवन धन राधा रानी।",
+        "महिमा अमित न जाय बखानी॥"
+      ],
+      "linesEn": [
+        "Braj jeevan dhan Radha raani.",
+        "Mahima amit na jaay bakhaani."
+      ],
+      "meaningHi": "राधा रानी ब्रज के जीवन का धन हैं। उनकी असीम महिमा का पूरा वर्णन नहीं हो सकता।",
+      "meaningEn": "Queen Radha is Braj's treasured life; her immeasurable greatness cannot be fully expressed."
+    },
+    {
+      "id": "chaupai-21",
+      "type": "chaupai",
+      "section": "body",
+      "number": 21,
+      "labelHi": "चौपाई · २१",
+      "labelEn": "Chaupai · 21",
+      "lines": [
+        "प्रीतम संग देइ गलबाँही।",
+        "बिहरत नित वृन्दावन माँही॥"
+      ],
+      "linesEn": [
+        "Preetam sang dei galabaahin.",
+        "Biharat nit Vrindaavan maahin."
+      ],
+      "meaningHi": "वे अपने प्रिय के गले में बाँह डालकर सदा वृन्दावन में विहार करती हैं।",
+      "meaningEn": "With her arm around her beloved, she wanders continually in Vrindavan."
+    },
+    {
+      "id": "chaupai-22",
+      "type": "chaupai",
+      "section": "body",
+      "number": 22,
+      "labelHi": "चौपाई · २२",
+      "labelEn": "Chaupai · 22",
+      "lines": [
+        "राधा कृष्ण कृष्ण कहैं राधा।",
+        "एक रूप दोउ प्रीति अगाधा॥"
+      ],
+      "linesEn": [
+        "Radha Krishna Krishna kahain Radha.",
+        "Ek roop dou preeti agaadha."
+      ],
+      "meaningHi": "राधा कृष्ण को पुकारती हैं और कृष्ण राधा को। दोनों की एकता और अगाध प्रेम का वर्णन है।",
+      "meaningEn": "Radha calls Krishna and Krishna calls Radha; the verse celebrates their unity and unfathomable love."
+    },
+    {
+      "id": "chaupai-23",
+      "type": "chaupai",
+      "section": "body",
+      "number": 23,
+      "labelHi": "चौपाई · २३",
+      "labelEn": "Chaupai · 23",
+      "lines": [
+        "श्री राधा मोहन मन हरनी।",
+        "जन सुख दायक प्रफुलित बदनी॥"
+      ],
+      "linesEn": [
+        "Shri Radha Mohan man harani.",
+        "Jan sukh daayak praphulit badani."
+      ],
+      "meaningHi": "प्रसन्न मुख वाली राधा मोहन का मन हर लेती हैं। वे भक्तों को सुख देने वाली कही गई हैं।",
+      "meaningEn": "Joyful-faced Radha captivates Mohan's heart and is praised as a giver of happiness to devotees."
+    },
+    {
+      "id": "chaupai-24",
+      "type": "chaupai",
+      "section": "body",
+      "number": 24,
+      "labelHi": "चौपाई · २४",
+      "labelEn": "Chaupai · 24",
+      "lines": [
+        "कोटिक रूप धरें नंद नंदा।",
+        "दर्श करन हित गोकुल चन्दा॥"
+      ],
+      "linesEn": [
+        "Kotik roop dharen Nand nanda.",
+        "Darsh karan hit Gokul chanda."
+      ],
+      "meaningHi": "नन्द के पुत्र, गोकुल के चन्द्र कृष्ण, राधा के दर्शन के लिए करोड़ों रूप धारण करते हैं।",
+      "meaningEn": "Krishna, Nanda's son and Gokul's moon, takes countless forms in his longing to behold Radha."
+    },
+    {
+      "id": "chaupai-25",
+      "type": "chaupai",
+      "section": "body",
+      "number": 25,
+      "labelHi": "चौपाई · २५",
+      "labelEn": "Chaupai · 25",
+      "lines": [
+        "रास केलि करि तुम्हें रिझावें।",
+        "मान करौ जब अति दुःख पावें॥"
+      ],
+      "linesEn": [
+        "Raas keli kari tumhen rijhaaven.",
+        "Maan karau jab ati dukh paaven."
+      ],
+      "meaningHi": "कृष्ण रास की लीला से राधा को प्रसन्न करते हैं। जब वे मान करती हैं तो कृष्ण बहुत दुखी होते हैं।",
+      "meaningEn": "Krishna seeks to delight Radha through the rasa dance and feels deep sorrow when she withdraws in loving displeasure."
+    },
+    {
+      "id": "chaupai-26",
+      "type": "chaupai",
+      "section": "body",
+      "number": 26,
+      "labelHi": "चौपाई · २६",
+      "labelEn": "Chaupai · 26",
+      "lines": [
+        "प्रफुलित होत दर्श जब पावें।",
+        "विविध भांति नित विनय सुनावें॥"
+      ],
+      "linesEn": [
+        "Praphulit hot darsh jab paaven.",
+        "Vividh bhaanti nit vinay sunaaven."
+      ],
+      "meaningHi": "राधा के दर्शन से कृष्ण खिल उठते हैं। वे अनेक प्रकार से उनके सामने विनय करते हैं।",
+      "meaningEn": "The sight of Radha makes Krishna rejoice, and he offers her many tender appeals."
+    },
+    {
+      "id": "chaupai-27",
+      "type": "chaupai",
+      "section": "body",
+      "number": 27,
+      "labelHi": "चौपाई · २७",
+      "labelEn": "Chaupai · 27",
+      "lines": [
+        "वृन्दारण्य विहारिनि श्यामा।",
+        "नाम लेत पूरण सब कामा॥"
+      ],
+      "linesEn": [
+        "Vrindaaranya vihaarini Shyaama.",
+        "Naam let pooran sab kaama."
+      ],
+      "meaningHi": "वृन्दावन के वन में विहार करने वाली श्यामा का नाम लेने से सभी कामनाएँ पूरी होने का भक्तिपूर्ण विश्वास व्यक्त किया गया है।",
+      "meaningEn": "This verse expresses the devotional belief that calling Shyama's name fulfils one's wishes; she is the wanderer of Vrindavan's forest."
+    },
+    {
+      "id": "chaupai-28",
+      "type": "chaupai",
+      "section": "body",
+      "number": 28,
+      "labelHi": "चौपाई · २८",
+      "labelEn": "Chaupai · 28",
+      "lines": [
+        "कोटिन यज्ञ तपस्या करहू।",
+        "विविध नेम व्रत हिय में धरहू॥"
+      ],
+      "linesEn": [
+        "Kotin yagya tapasya karahoo.",
+        "Vividh nem vrat hiya mein dharahoo."
+      ],
+      "meaningHi": "भक्त चाहे करोड़ों यज्ञ और तप करे तथा अनेक नियम और व्रत हृदय में धारण करे—अगली चौपाई इस बात को पूरा करती है।",
+      "meaningEn": "Even countless sacrifices, austerities, disciplines and vows are considered here; the thought continues in the next verse."
+    },
+    {
+      "id": "chaupai-29",
+      "type": "chaupai",
+      "section": "body",
+      "number": 29,
+      "labelHi": "चौपाई · २९",
+      "labelEn": "Chaupai · 29",
+      "lines": [
+        "तऊ न श्याम भक्तहिं अपनावें।",
+        "जब लगि राधा नाम न गावें॥"
+      ],
+      "linesEn": [
+        "Tau na Shyaam bhaktahin apanaaven.",
+        "Jab lagi Radha naam na gaaven."
+      ],
+      "meaningHi": "पिछली चौपाई को पूरा करते हुए, यह स्तुति राधा के नाम को कृष्ण की स्वीकृति पाने के लिए आवश्यक बताती है।",
+      "meaningEn": "Completing the preceding thought, the hymn places the singing of Radha's name at the heart of being accepted by Shyam."
+    },
+    {
+      "id": "chaupai-30",
+      "type": "chaupai",
+      "section": "body",
+      "number": 30,
+      "labelHi": "चौपाई · ३०",
+      "labelEn": "Chaupai · 30",
+      "lines": [
+        "वृन्दाविपिन स्वामिनी राधा।",
+        "लीला वपु तब अमित अगाधा॥"
+      ],
+      "linesEn": [
+        "Vrindaavipin swaamini Radha.",
+        "Leela vapu tab amit agaadha."
+      ],
+      "meaningHi": "राधा वृन्दावन के वन की स्वामिनी हैं। उनके लीला-स्वरूप की महिमा असीम और अगाध कही गई है।",
+      "meaningEn": "Radha is praised as mistress of Vrindavan's groves, with a form of divine play that is limitless and unfathomable."
+    },
+    {
+      "id": "chaupai-31",
+      "type": "chaupai",
+      "section": "body",
+      "number": 31,
+      "labelHi": "चौपाई · ३१",
+      "labelEn": "Chaupai · 31",
+      "lines": [
+        "स्वयं कृष्ण पावैं नहिं पारा।",
+        "और तुम्हें को जानन हारा॥"
+      ],
+      "linesEn": [
+        "Swayam Krishna paavain nahin paara.",
+        "Aur tumhen ko jaanan haara."
+      ],
+      "meaningHi": "जब स्वयं कृष्ण उनकी महिमा का अन्त नहीं पाते, तो अन्य कौन उन्हें पूरी तरह जान सकता है? यही स्तुति का भाव है।",
+      "meaningEn": "The hymn asks: if even Krishna cannot reach the limit of her greatness, who else could fully know her?"
+    },
+    {
+      "id": "chaupai-32",
+      "type": "chaupai",
+      "section": "body",
+      "number": 32,
+      "labelHi": "चौपाई · ३२",
+      "labelEn": "Chaupai · 32",
+      "lines": [
+        "श्री राधा रस प्रीति अभेदा।",
+        "सादर गान करत नित वेदा॥"
+      ],
+      "linesEn": [
+        "Shri Radha ras preeti abheda.",
+        "Saadar gaan karat nit Veda."
+      ],
+      "meaningHi": "राधा, रस और प्रेम में अभेद बताया गया है। वेद उनका आदर से निरन्तर गान करते हैं।",
+      "meaningEn": "Radha, devotional joy and love are presented as inseparable, and the Vedas as continually singing her praise with reverence."
+    },
+    {
+      "id": "chaupai-33",
+      "type": "chaupai",
+      "section": "body",
+      "number": 33,
+      "labelHi": "चौपाई · ३३",
+      "labelEn": "Chaupai · 33",
+      "lines": [
+        "राधा त्यागि कृष्ण को भजिहैं।",
+        "ते सपनेहु जग जलधि न तरि हैं॥"
+      ],
+      "linesEn": [
+        "Radha tyaagi Krishna ko bhajihain.",
+        "Te sapanehu jag jaladhi na tari hain."
+      ],
+      "meaningHi": "इस स्तुति के भक्ति-भाव में, राधा को छोड़कर केवल कृष्ण को भजने से संसार-सागर पार नहीं होता।",
+      "meaningEn": "Within this hymn's devotional outlook, worshipping Krishna while forsaking Radha does not carry one across worldly existence."
+    },
+    {
+      "id": "chaupai-34",
+      "type": "chaupai",
+      "section": "body",
+      "number": 34,
+      "labelHi": "चौपाई · ३४",
+      "labelEn": "Chaupai · 34",
+      "lines": [
+        "कीरति कुँवरि लाड़िली राधा।",
+        "सुमिरत सकल मिटहिं भवबाधा॥"
+      ],
+      "linesEn": [
+        "Keerati kunwari laadili Radha.",
+        "Sumirat sakal mitahin bhavabaadha."
+      ],
+      "meaningHi": "कीर्ति की लाड़िली पुत्री राधा का स्मरण संसार की बाधाएँ हरने वाला कहा गया है।",
+      "meaningEn": "Remembering Radha, Kirti's beloved daughter, is praised as removing the obstacles of worldly life."
+    },
+    {
+      "id": "chaupai-35",
+      "type": "chaupai",
+      "section": "body",
+      "number": 35,
+      "labelHi": "चौपाई · ३५",
+      "labelEn": "Chaupai · 35",
+      "lines": [
+        "नाम अमंगल मूल नसावन।",
+        "त्रिविध ताप हर हरि मनभावन॥"
+      ],
+      "linesEn": [
+        "Naam amangal mool nasaavan.",
+        "Trividh taap har Hari manabhaavan."
+      ],
+      "meaningHi": "उनका नाम अमंगल की जड़ मिटाता और तीन प्रकार के ताप हरता बताया गया है। यह हरि को प्रिय है।",
+      "meaningEn": "Her name is praised as uprooting misfortune and relieving the threefold afflictions, while pleasing Hari."
+    },
+    {
+      "id": "chaupai-36",
+      "type": "chaupai",
+      "section": "body",
+      "number": 36,
+      "labelHi": "चौपाई · ३६",
+      "labelEn": "Chaupai · 36",
+      "lines": [
+        "राधा नाम लेइ जो कोई।",
+        "सहजहि दामोदर बस होई॥"
+      ],
+      "linesEn": [
+        "Radha naam lei jo koi.",
+        "Sahajahi Daamodar bas hoi."
+      ],
+      "meaningHi": "जो राधा का नाम लेता है, उसके प्रेम के वश दामोदर सहज ही हो जाते हैं—यह प्रेमभक्ति की महिमा है।",
+      "meaningEn": "The verse celebrates loving devotion: Damodara is readily won over by one who takes Radha's name."
+    },
+    {
+      "id": "chaupai-37",
+      "type": "chaupai",
+      "section": "body",
+      "number": 37,
+      "labelHi": "चौपाई · ३७",
+      "labelEn": "Chaupai · 37",
+      "lines": [
+        "राधा नाम परम सुखदाई।",
+        "भजतहिं कृपा करहिं यदुराई॥"
+      ],
+      "linesEn": [
+        "Radha naam param sukhadaai.",
+        "Bhajatahin kripa karahin Yaduraai."
+      ],
+      "meaningHi": "राधा का नाम परम सुख देने वाला बताया गया है। इसका भजन करने वाले पर यदुवंश के स्वामी कृष्ण कृपा करते हैं।",
+      "meaningEn": "Radha's name is praised as deeply comforting; Krishna, lord of the Yadus, bestows grace on the one who chants it."
+    },
+    {
+      "id": "chaupai-38",
+      "type": "chaupai",
+      "section": "body",
+      "number": 38,
+      "labelHi": "चौपाई · ३८",
+      "labelEn": "Chaupai · 38",
+      "lines": [
+        "यशुमति नन्दन पीछे फिरिहैं।",
+        "जो कोऊ राधा नाम सुमिरिहैं॥"
+      ],
+      "linesEn": [
+        "Yashumati nandan peechhe phirihain.",
+        "Jo kou Radha naam sumirihain."
+      ],
+      "meaningHi": "राधा का नाम स्मरण करने वाले के पीछे यशोदा के पुत्र कृष्ण स्वयं चलते हैं—ऐसा प्रेमपूर्ण चित्र स्तुति में है।",
+      "meaningEn": "The hymn offers an affectionate image of Krishna, Yashoda's son, following the person who remembers Radha's name."
+    },
+    {
+      "id": "chaupai-39",
+      "type": "chaupai",
+      "section": "body",
+      "number": 39,
+      "labelHi": "चौपाई · ३९",
+      "labelEn": "Chaupai · 39",
+      "lines": [
+        "रास विहारिनि श्यामा प्यारी।",
+        "करहु कृपा बरसाने वारी॥"
+      ],
+      "linesEn": [
+        "Raas vihaarini Shyaama pyaari.",
+        "Karahu kripa Barasaane vaari."
+      ],
+      "meaningHi": "रास में विहार करने वाली प्यारी श्यामा से, बरसाने की राधा से, कृपा की प्रार्थना है।",
+      "meaningEn": "A prayer asks beloved Shyama of the rasa dance, Radha of Barsana, to show her grace."
+    },
+    {
+      "id": "chaupai-40",
+      "type": "chaupai",
+      "section": "body",
+      "number": 40,
+      "labelHi": "चौपाई · ४०",
+      "labelEn": "Chaupai · 40",
+      "lines": [
+        "वृन्दावन है शरण तिहारी।",
+        "जय जय जय वृषभानु दुलारी॥"
+      ],
+      "linesEn": [
+        "Vrindaavan hai sharan tihaari.",
+        "Jai jai jai Vrishabhanu dulaari."
+      ],
+      "meaningHi": "वृन्दावन उनकी शरण में है। भक्त वृषभानु की दुलारी राधा की बार-बार जय बोलता है।",
+      "meaningEn": "Vrindavan is placed under her protection, and the devotee repeatedly hails Vrishabhanu's beloved daughter."
+    },
+    {
+      "id": "closing-doha",
+      "type": "doha",
+      "section": "closing",
+      "labelHi": "समापन दोहा",
+      "labelEn": "Closing Doha",
+      "lines": [
+        "श्रीराधा सर्वेश्वरी, रसिकेश्वर घनश्याम।",
+        "करहुँ निरंतर बास मैं, श्रीवृन्दावन धाम॥"
+      ],
+      "linesEn": [
+        "Shri Radha sarveshwari, rasikeshwar Ghanashyaam.",
+        "Karahun nirantar baas main, Shri Vrindaavan dhaam."
+      ],
+      "meaningHi": "राधा सर्वेश्वरी हैं और घनश्याम रसिकों के स्वामी। भक्त श्रीवृन्दावन धाम में निरन्तर निवास की कामना करता है।",
+      "meaningEn": "The closing honours Radha as sovereign and Ghanashyam as lord of loving devotees, then asks for lasting residence in Vrindavan."
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+# Executed by the native search matrix; parsing this file is not device evidence.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
+- tapOn: { id: lang-toggle-en }
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-dikpal" }
+- tapOn: { id: sanatan-collection-dikpal, retryTapIfNoChange: true }
+# The opening painting opens in the shared picture viewer.
+- tapOn: { id: sanatan-painting-dikpal }
+- assertVisible: { id: image-viewer }
+- tapOn: { id: image-viewer-close }
+- tapOn: { id: sanatan-next, retryTapIfNoChange: true }
+# Figure page: the painted teaching plate (language-picked) replaces the old vector schematic.
+# The figure area (plate, caption, legend) and a legend can be taller than a phone
+# screen, and iOS reports a partly hidden element's full frame, so waiting for all
+# of it never ends. Wait for part of it; assert the content itself separately.
+- scrollUntilVisible:
+    element: { id: sanatan-explore-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    visibilityPercentage: 20
+    timeout: 60000
+- assertVisible: { id: sanatan-explore-dikpal }
+- takeScreenshot: e2e-shots/sanatan-dikpal-plate
+- tapOn: { id: sanatan-plate-dikpal }
+- assertVisible: { id: image-viewer }
+- tapOn: { id: image-viewer-zoom-in }
+- assertVisible: "Zoom 1.75×"
+- takeScreenshot: e2e-shots/sanatan-dikpal-viewer
+- tapOn: { id: image-viewer-close }
+- scrollUntilVisible:
+    element: { id: sanatan-legend-dikpal, above: { id: tab-home } }
+    direction: DOWN
+    visibilityPercentage: 20
+    timeout: 60000
+- scrollUntilVisible:
+    element: { text: "North · Kubera", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 30000
+- scrollUntilVisible:
+    element: { text: "Below · Vishnu", above: { id: tab-home } }
+    direction: DOWN
+    timeout: 30000
+- takeScreenshot: e2e-shots/sanatan-dikpal-legend
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- scrollUntilVisible:
+    element: { id: sanatan-search, above: { id: tab-home } }
+    direction: UP
+    timeout: 60000
+- tapOn: { id: sanatan-search }
+- inputText: Maitreyi
+- pressKey: Enter
+- runFlow:
+    file: _sanatan-reveal-row.yaml
+    env: { ROW_ID: "sanatan-collection-rishis" }
+# The search hit opens the page that matched: Maitreyi is taught on page 3.
+- tapOn: { id: sanatan-collection-rishis, retryTapIfNoChange: true }
+- assertVisible: "3\\s*/\\s*3"
+- assertVisible: "Maitreyi’s distinct question"
+- takeScreenshot: e2e-shots/sanatan-search-maitreyi-exact-page
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- scrollUntilVisible:
+    element: { id: sanatan-search, text: Maitreyi }
+    direction: UP
+    timeout: 60000

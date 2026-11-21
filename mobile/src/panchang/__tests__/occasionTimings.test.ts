@@ -70,6 +70,20 @@ for (const fixture of PUBLISHED_OCCASIONS) test(`source audit: ${fixture.id} ${f
 test('source audit accounts for every registered occasion, including guidance-only profiles', () => {
   assert.deepEqual(new Set(PUBLISHED_OCCASIONS.map(f => f.id)), new Set(OCCASION_PROFILES.map(p => p.ruleId)));
 });
+
+test('Vaikuntha Chaturdashi distinguishes Nishita Kala from the tithi it can outlast', () => {
+  const date = new Date(2026, 10, 23);
+  const { items } = solved(date);
+  const item = items.find(i => i.ruleId === 'vaikuntha-chaturdashi');
+  assert.ok(item);
+  const [nishita, tithi] = item.windows;
+  assert.equal(nishita.labelEn, 'Nishita Kala');
+  assert.equal(tithi.labelEn, 'Chaturdashi tithi');
+  assert.ok(tithi.end < nishita.end);
+  assert.match(item.noteEn ?? '', /Chaturdashi ends before Nishita Kala ends/);
+  assert.equal(nishita.end.getDate(), 24);
+  assert.equal(tithi.end.getDate(), 23);
+});
 test('coincident Janmashtami traditions are not duplicated in 2026', () => {
   const options = { calendarSystem: 'purnimant' as const, location: delhi };
   const found = runSynchronously(findTimingOccurrences(new Date(2026, 8, 4), options, new Set()));

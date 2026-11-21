@@ -57,7 +57,7 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
     props.meaningTitleHi ?? '',
     props.meaningTitleEn ?? ''
   );
-  const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn);
+  const lines = verseLinesByLang(props.lang, props.linesHi, props.linesEn, props.verseLabelHi);
   // Constrained surface (design.md §13 sanctioned): keeps its own tuned sizes, but the
   // font family must follow the script or gu/kn render as tofu. hi/en unchanged — en
   // romanization keeps rendering in the Devanagari face (which carries Latin glyphs), as before.

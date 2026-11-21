@@ -219,7 +219,10 @@ See [the setup and publication contract](../../docs/engineering/r2-auto-upload.m
   whatever a ranged request returns, so a server (or a Worker in front of the bucket) that
   ignores `Range` would append the whole file to the partial. `resumableDownload` requires the
   resumed response to report the original total, to be HTTP 206, and the finished file to be
-  exactly that length; any failure discards the bytes and disables resuming for the session.
+  exactly that length; any failure discards the bytes. A failure that shows `Range` being
+  ignored (different total, a whole 2xx body, wrong final length) also disables resuming for the
+  session; an error status (5xx, 429, 404) does not — one flaky answer must not cost every later
+  download its kept bytes.
   Whether `cdn.vedansh.app` honours `Range` could not be probed from the build sandbox — the code
   is correct either way, but the resume saving only exists if it does.
 - **Resume state is memory-only by design.** A `.part` left by a killed process is swept before

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, type AppStateStatus } from 'react-native';
 import { useRoutines } from '@/contexts/RoutineContext';
 import { useNotificationPreferences } from '@/contexts/NotificationPreferencesContext';
+import { useGitaLanguage } from '@/data/gita/language';
 import { useRoutineToday } from '@/data/routine/useRoutineToday';
 import { scheduleRoutineReminders, cancelAllRoutineReminders } from '@/notifications/routineScheduler';
 import type { RoutineReminderInput } from '@/notifications/routineReminderPure';
@@ -22,6 +23,7 @@ import type { RoutineReminderInput } from '@/notifications/routineReminderPure';
 export default function RoutineReminderScheduler() {
   const { routines, isLoading } = useRoutines();
   const { permissionStatus } = useNotificationPreferences();
+  const { lang } = useGitaLanguage();
   const today = useRoutineToday();
   const [foregroundTick, setForegroundTick] = useState(0);
   const appStateRef = useRef<AppStateStatus>(AppState.currentState);
@@ -85,12 +87,12 @@ export default function RoutineReminderScheduler() {
         });
       }
       if (cancelled) return;
-      await scheduleRoutineReminders(inputs).catch(() => undefined);
+      await scheduleRoutineReminders(inputs, new Date(), lang).catch(() => undefined);
     })();
     return () => {
       cancelled = true;
     };
-  }, [isLoading, routines, permissionStatus, completedTodaySignature, foregroundTick]);
+  }, [isLoading, routines, permissionStatus, completedTodaySignature, lang, foregroundTick]);
 
   return null;
 }

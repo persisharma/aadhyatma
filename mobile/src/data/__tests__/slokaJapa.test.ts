@@ -51,7 +51,7 @@ test('the reader page maps to the shloka on screen; a title card starts the firs
   assert.equal(slokaJapaId('bajrang-baan', 1, 0), 'sloka.bajrang-baan.1.0');
   assert.equal(findJapamMantra('sloka.bajrang-baan.1.0')?.nameHi, 'बजरंग बाण · दोहा');
   // A stotra spanning chapters names the part too.
-  assert.equal(findJapamMantra('sloka.vishnu-sahasranama.2.1')?.nameEn, 'Vishnu Sahasranama Excerpt · Dhyanam · Shloka 1');
+  assert.equal(findJapamMantra('sloka.vishnu-sahasranama.2.1')?.nameEn, 'Vishnu Sahasranama · Dhyanam · Shloka 1');
   // Registry readers have one chapter.
   assert.equal(slokaJapaId('krishna-stuti', 1, 2), 'sloka.krishna-stuti.1.3');
   assert.equal(slokaJapaId('hanuman-chalisa', 1, 0), null);

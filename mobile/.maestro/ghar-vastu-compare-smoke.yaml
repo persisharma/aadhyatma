@@ -77,7 +77,7 @@ appId: com.prashantsharma.vedansh
     visible:
       id: "ghar-vastu-screen"
     timeout: 15000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "Vastu Disha"
 
@@ -129,7 +129,7 @@ appId: com.prashantsharma.vedansh
     visible:
       id: "ghar-vastu-screen"
     timeout: 15000
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "My homes"
 
@@ -159,6 +159,6 @@ appId: com.prashantsharma.vedansh
 - assertVisible: ".*decision is yours.*"
 
 # ── Back out cleanly ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "My homes"

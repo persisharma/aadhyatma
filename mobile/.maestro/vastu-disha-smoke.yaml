@@ -74,6 +74,6 @@ appId: com.prashantsharma.vedansh
 - assertVisible: "Kitchen"
 
 # ── Back out cleanly ──
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - assertVisible: "Vastu Disha, new"

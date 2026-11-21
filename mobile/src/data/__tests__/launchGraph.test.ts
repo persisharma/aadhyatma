@@ -109,6 +109,8 @@ const FORBIDDEN = [
   // The Valmiki corpus is bundled as asset files. Neither their handles nor the
   // native reader behind them belongs on the launch path.
   /^src\/data\/valmiki-ramayan\/(parts|partReader)\.ts$/,
+  // …nor does either answer to `./corpusSource` (asset files, or the masters in the bundle).
+  /^src\/data\/valmiki-ramayan\/corpusSource(\.inbundle)?\.ts$/,
   /^src\/panchang\/pincode(Data|Offices)\.json$/,
   // The shared artwork loader is eager, but puja metadata is needed only when
   // opening a guide. Keep that category behind its request-time require().

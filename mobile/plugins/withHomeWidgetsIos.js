@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { withDangerousMod, withXcodeProject } = require('@expo/config-plugins');
+const { withDangerousMod, withXcodeProject } = require('expo/config-plugins');
 const PbxFile = require('xcode/lib/pbxFile');
 
 const TARGET = 'VedanshWidgets';

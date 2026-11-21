@@ -71,6 +71,14 @@ import {
   type SuryaChalisaVerse,
 } from './surya-chalisa';
 
+import { vaishnoDeviChalisaTitleEn, vaishnoDeviChalisaTitleHi, vaishnoDeviChalisaVerses, type VaishnoDeviChalisaVerse } from './vaishno-devi-chalisa';
+
+import { shaniChalisaTitleEn, shaniChalisaTitleHi, shaniChalisaVerses, type ShaniChalisaVerse } from './shani-chalisa';
+import { santoshiMataChalisaTitleEn, santoshiMataChalisaTitleHi, santoshiMataChalisaVerses, type SantoshiMataChalisaVerse } from './santoshi-mata-chalisa';
+import { kaliChalisaTitleEn, kaliChalisaTitleHi, kaliChalisaVerses, type KaliChalisaVerse } from './kali-chalisa';
+
+import { radhaChalisaTitleEn, radhaChalisaTitleHi, radhaChalisaVerses, type RadhaChalisaVerse } from './radha-chalisa';
+
 export type ChalisaId =
   | 'hanuman-chalisa'
   | 'shiv-chalisa'
@@ -83,7 +91,12 @@ export type ChalisaId =
   | 'saraswati-chalisa'
   | 'khatu-shyam-chalisa'
   | 'lakshmi-chalisa'
-  | 'surya-chalisa';
+  | 'surya-chalisa'
+  | 'vaishno-devi-chalisa'
+  | 'shani-chalisa'
+  | 'santoshi-mata-chalisa'
+  | 'kali-chalisa'
+  | 'radha-chalisa';
 
 export type ChalisaVerse =
   | HanumanChalisaVerse
@@ -97,7 +110,12 @@ export type ChalisaVerse =
   | SaraswatiChalisaVerse
   | KhatuShyamChalisaVerse
   | LakshmiChalisaVerse
-  | SuryaChalisaVerse;
+  | SuryaChalisaVerse
+  | VaishnoDeviChalisaVerse
+  | ShaniChalisaVerse
+  | SantoshiMataChalisaVerse
+  | KaliChalisaVerse
+  | RadhaChalisaVerse;
 
 export type ChalisaPayload = {
   id: ChalisaId;
@@ -178,6 +196,36 @@ const registry: Record<ChalisaId, ChalisaPayload> = {
     titleHi: suryaChalisaTitleHi,
     titleEn: suryaChalisaTitleEn,
     verses: suryaChalisaVerses,
+  },
+  'vaishno-devi-chalisa': {
+    id: 'vaishno-devi-chalisa',
+    titleHi: vaishnoDeviChalisaTitleHi,
+    titleEn: vaishnoDeviChalisaTitleEn,
+    verses: vaishnoDeviChalisaVerses,
+  },
+  'shani-chalisa': {
+    id: 'shani-chalisa',
+    titleHi: shaniChalisaTitleHi,
+    titleEn: shaniChalisaTitleEn,
+    verses: shaniChalisaVerses,
+  },
+  'santoshi-mata-chalisa': {
+    id: 'santoshi-mata-chalisa',
+    titleHi: santoshiMataChalisaTitleHi,
+    titleEn: santoshiMataChalisaTitleEn,
+    verses: santoshiMataChalisaVerses,
+  },
+  'kali-chalisa': {
+    id: 'kali-chalisa',
+    titleHi: kaliChalisaTitleHi,
+    titleEn: kaliChalisaTitleEn,
+    verses: kaliChalisaVerses,
+  },
+  'radha-chalisa': {
+    id: 'radha-chalisa',
+    titleHi: radhaChalisaTitleHi,
+    titleEn: radhaChalisaTitleEn,
+    verses: radhaChalisaVerses,
   },
 };
 

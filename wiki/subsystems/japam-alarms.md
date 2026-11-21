@@ -63,6 +63,8 @@ Japam Alarms let users schedule timed reminders to chant a mantra, with per-alar
 
 ## Gotchas
 
+- **Reconcile re-arms in place (Nov 2026 audit, CRASH-03).** `doScheduleJapamAlarms` schedules first and cancels only what is no longer wanted; it used to cancel everything first, leaving a window where a kill or a due alarm found nothing armed, and Android's native `cancelAll` also emptied the list the boot receiver restores from. The native modules have no list call, so `@vedansh/japam-alarms/native-armed` records armed ids (written before scheduling; with no record, or if it cannot be written, the native state is cleared once as before). Device checks still owed: reboot restore, and a kill during a foreground reconcile.
+
 - **`repeatDays: []` = one-time, not "disabled"** — the empty-array shape is the one-time sentinel; `undefined` means daily. `isOnceAlarm` and `repeatsDaily` distinguish the three modes.
 - **iOS 64-pending budget** — expo WEEKLY triggers consume pending slots. `JAPAM_EXPO_SLOT_CAP = 24` leaves room for the daily-verse rolling window. Don't raise this without auditing total pending usage.
 - **Skip forces one-shots on recurrence tiers** — a pending `skipNextDate` can't be expressed as a gap in a WEEKLY/AlarmKit recurrence rule. The scheduler replaces the standing recurrence with `N` discrete one-shots for the skip window, identified by the `:occN` suffix scheme.

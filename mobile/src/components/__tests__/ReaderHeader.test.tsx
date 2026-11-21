@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
+import { backLabel } from '@/utils/a11yLabels';
 import ReaderHeader from '../ReaderHeader';
 
 const trees: ReactTestRenderer[] = [];
@@ -25,7 +26,7 @@ test.each<Lang>(['hi', 'en', 'gu', 'kn'])('%s preserves the full title and both 
   expect(text.props.numberOfLines).toBeUndefined();
   expect(text.props.adjustsFontSizeToFit).toBeUndefined();
   expect(text.props.allowFontScaling).toBe(true);
-  act(() => tree.root.findAll(node => typeof node.props.onPress === 'function').find(node => node.props.accessibilityLabel === 'Back')!.props.onPress());
+  act(() => tree.root.findAll(node => typeof node.props.onPress === 'function').find(node => node.props.accessibilityLabel === backLabel(lang))!.props.onPress());
   act(() => tree.root.findAll(node => typeof node.props.onPress === 'function').find(node => node.props.accessibilityLabel === 'Header action')!.props.onPress());
   expect(onBack).toHaveBeenCalledTimes(1);
   expect(onAction).toHaveBeenCalledTimes(1);
@@ -47,4 +48,11 @@ test('retains explicit side minima, custom back labels and branded mastheads', (
   expect(StyleSheet.flatten(actions.props.style).minWidth).toBe(96);
   expect(tree.root.findAll(node => typeof node.props.onPress === 'function').some(node => node.props.accessibilityLabel === 'Back to chapters')).toBe(true);
   expect(tree.root.findAllByType(View).some(node => node.props.accessibilityLabel === title)).toBe(true);
+});
+
+test('the default Back label is localized, not English-only (UX-05)', () => {
+  expect(['hi', 'en', 'gu', 'kn'].map(l => backLabel(l as Lang))).toEqual(['वापस', 'Back', 'પાછા', 'ಹಿಂದೆ']);
+  const { tree } = render('gu');
+  expect(tree.root.findAll(node => node.props.accessibilityLabel === 'Back')).toHaveLength(0);
+  expect(tree.root.findAll(node => node.props.accessibilityLabel === 'પાછા').length).toBeGreaterThan(0);
 });

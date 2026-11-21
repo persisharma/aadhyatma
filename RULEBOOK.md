@@ -98,7 +98,7 @@ Every section, regardless of size, must supply these inputs. The slash command w
 | 3 | `nameEn` | **yes** | `Hanuman Chalisa` | listing card title (italic English row) |
 | 4 | `sub` | **yes** | `40 चौपाई · अर्थ सहित` | listing subtitle. Devanagari, follows the `<count> <unit> · अर्थ सहित` pattern of existing sections |
 | 5 | `thumb` | **yes** | `ह` / `भ` / `सु` / `ॐ` | single Devanagari glyph kept as DATA (search/metadata/contract) — never drawn as an icon or a fallback (§3 *Painted art only*); every card renders bundled deity artwork with category fallback (design.md §42). Exactly **one akshara** (one consonant cluster + optional matra/sign, an independent vowel, or ॐ) — never two syllables like `गण`/`जय`, which render wider than sibling thumbs in the same row. Enforced for library/japam/audio/sadhana thumbs by `contentCorrectness.test.ts` §20 |
-| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar`, `ashtakam`, `suktam`, `kavacham` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home. The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §12. `ashtakam`, `suktam` and `kavacham` are PRD-A forms, each with a multi-instance reader (dispatching on `ashtakamId`/`suktamId`/`kavachamId`, like the chalisas). **Stuti** is a fourth PRD-A form but is **not** a category — its texts (Krishna Stuti, Durga Stuti) are filed under `stotram` (स्तुति ≈ स्तोत्रम्) yet still render via the multi-instance `StutiReader`, routed by `stutiId`. |
+| 6 | `category` | **yes** | `granth` | One of: `granth`, `stotram`, `chalisa`, `japam`, `aarti`, `theerth`, `sanskar`, `ashtakam`, `suktam`, `kavacham`, `bhajan` (source of truth: `mobile/src/data/categories.ts`). Determines which grid tile this section appears under on Home — except `bhajan` (`placement: 'bhajan-tab'`), whose listing lives inside the Bhajan tab (§34). The `japam` tile routes to `JapamCounterScreen` (counter UI) instead of the standard verse pager. The `theerth` tile routes to the Theerth browse screen (state/category list; map in the drill-in view) — see §12. `ashtakam`, `suktam` and `kavacham` are PRD-A forms, each with a multi-instance reader (dispatching on `ashtakamId`/`suktamId`/`kavachamId`, like the chalisas). **Stuti** is a fourth PRD-A form but is **not** a category — its texts (Krishna Stuti, Durga Stuti) are filed under `stotram` (स्तुति ≈ स्तोत्रम्) yet still render via the multi-instance `StutiReader`, routed by `stutiId`. |
 | 7 | `deities` | **yes** | `['hanuman', 'rama']` | Array of deity tags from the `Deity` union in `mobile/src/data/texts.ts` and display metadata in `deities.ts`: `rama`, `krishna`, `vishnu`, `shiva`, `hanuman`, `durga`, `ganesha`, `savitr` (Maa Gayatri), `saraswati`, `lakshmi` (Maa Lakshmi), `surya` (Surya Dev), `radha` (Radha Rani), `kartikeya` (Kartikeya), `kubera` (Kubera), `ganga` (Maa Ganga), `parvati` (Maa Parvati), `narasimha` (Narasimha), `dattatreya` (Dattatreya), `shani` (Shani Dev), `kali` (Maa Kali), `navagraha` (Navagraha), `parshuram` (Bhagwan Parshuram, publication-gated) — PRD-A deity expansion §A.4.2 complete, 9 → 21 (source of truth: `mobile/src/data/deities.ts`). The section appears under each tagged deity in the Deity Index/Detail surfaces. At least one required. |
 | 8 | Subsection structure | optional | 18 chapters / 7 kāṇḍas / none | if present, supply count + per-subsection `titleHi`/`titleEn` (mirrors Gita's `chapters-manifest.json`) |
 | 9 | **Background image(s)** for content page | **yes** | `mobile/assets/<id>/*.webp` | approved source artwork registered by a typed R2 descriptor and content hash; bundled neutral parchment fallback. Separate opening-card illustrations follow §11.8 and `design.md` §6. |
@@ -163,6 +163,18 @@ static import graph from `index.ts` and fails if a payload is reachable (it prin
 the import chain) or if the graph exceeds its byte budget. Never raise the budget
 to make it pass, and never add a payload to an allowlist — fix the importer.
 
+**A native resource found by name needs a keep entry (Nov 2026).** Android release
+builds shrink resources (`plugins/withAndroidReleaseShrink.js`), and the shrinker
+empties or drops anything it cannot see a reference to. A resource reached through
+`getIdentifier` with a name built at runtime is exactly that: the Japam alarm sounds
+(`app.json` → `expo-notifications` → `sounds[]`, copied to `res/raw`, found by mantra
+id) and the widget backgrounds. Raw resources are all kept by
+`res/raw/vedansh_release_keep.xml`, which the plugin writes; widget drawables by the
+widget plugin's own keep file. Adding a lookup of any other resource type from
+app-owned native code fails `AndroidReleaseShrinkPlugin.test.ts` until it has a
+`tools:keep` entry. A shrunk alarm sound does not crash — it rings silent — so this
+is never caught by a launch test.
+
 **A corpus too large for the bundle ships as assets (Nov 2026).** Lazy loading keeps
 a payload off the *launch path*; it does not keep it out of the *bundle*. Every
 `require()`d JSON is compiled into the Hermes bundle, which every OTA update
@@ -170,18 +182,32 @@ downloads whole. `valmiki-ramayan` (27 MB) is the worked case and the pattern fo
 anything of that order:
 1. The JSON masters stay where they are and remain the source of truth for
    provenance, the corpus tests and the builder. **No app module may import one**
-   (`src/data/__tests__/valmikiAssets.test.ts` fails if any does).
+   except `corpusSource.inbundle.ts` (rule 4), and nothing may import that file
+   by name (`src/data/__tests__/valmikiAssets.test.ts` fails on either).
 2. `mobile/scripts/build-valmiki-assets.mjs` writes the parts the app reads
    (`mobile/assets/valmiki-ramayan/*.txt`), the part table (`parts.ts`) and the
    sarga table (`sargaStarts.ts`). **Re-run it after any change to a master**;
    `--check` runs inside the same test and fails on drift.
-3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches the part
-   table and the native reader only through `require()` thunks, and the reader
-   screen owns a loading and a retry state (design.md §53).
-4. **Release order.** An OTA published to a runtime whose store binary does not
-   already contain these assets makes that update download all of them once
-   (27 MB in 73 files) before it can apply. Publish such an update only to
-   runtimes at or after the store build that embeds them.
+3. The loader is asynchronous (`loadValmikiRamayanChapter`), reaches its source
+   only through a `require()` thunk, and the reader screen owns a loading and a
+   retry state (design.md §53).
+4. **An OTA from the latest branch must work on every store build still in
+   use.** A runtime whose binary does not embed the parts would have to download
+   all of them (27 MB in 73 files) before the update applied, and would read them
+   through a path that build has never run. So the delivery is chosen when the
+   app is **bundled**, by the app version it is bundled for — which is the
+   runtime (`mobile/corpusDelivery.js`, applied in `mobile/metro.config.js`):
+   below `VALMIKI_ASSETS_SINCE_VERSION` the corpus module's `./corpusSource` is
+   answered by `corpusSource.inbundle.ts` and the masters are compiled into the
+   bundle exactly as before; at or above it, by `corpusSource.ts` and the parts.
+   A store build and every OTA published to it are bundled with the same
+   version (`ota-push.yml` rewrites `expo.version` to the target runtime), so
+   they cannot disagree. Never lower that constant past a version that has
+   shipped. `push.sh` prints the delivery before it publishes;
+   `VALMIKI_CORPUS_DELIVERY=assets|bundle` forces one for a single run.
+   Anything else that needs the new binary must be gated the same way: **the
+   JavaScript on the latest branch has to run on the oldest build an OTA can
+   still reach.**
 
 **Row 4 is mandatory even when an existing `*VersePage.tsx` *appears* to fit.** If the shapes are genuinely identical and you want to share rendering, the new file must re-export the existing component (`export { default } from './SundarkandVersePage';`) so the dependency is explicit and survives future shape changes. A reader screen must import only its own section's verse page — never another section's directly. (See §3 *Type safety on verse pages*.)
 
@@ -202,6 +228,7 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Background image.** Render with `<ImageBackground source={…} resizeMode="cover">` then layer the parchment `<LinearGradient>` overlay on top per `design.md` §6. Selection must be **deterministic per verse id** (e.g. `images[hash(verse.id) % images.length]`) — not random per render.
 - **Reader shell.** Horizontal paginated `FlatList`, ornament divider (`Ornament.tsx`), pager dots, language-aware top-bar title. Match the layouts of `GitaReaderScreen.tsx` and `SundarkandReaderScreen.tsx` — do not invent a third shell.
 - **The top bar is `ReaderHeader`, never a local copy.** Every reader and chapters/index screen renders `mobile/src/components/ReaderHeader.tsx` — `variant="reader"` (16 pt title) for readers, `variant="index"` (22/20) for chapters and index landing screens. Screens pass content (`title`, `right`, `onBack`) and never geometry. Hand-rolling a `topBar` + `back` + `title` style block is a hard reject: ~32 screens each carried their own copy until July 2026 and they had drifted to two gutters, three bottom paddings, two button sizes and an off-token title size. The back control's `accessibilityLabel` defaults to the **English, un-localized** `"Back"` because the Maestro flows tap that string and the default reading language is `hi`; override it only to name a destination. (`design.md` §9)
+- **Reader page counter — the counter is a button, in every reader.** A paged reader shows its `n / total` through `mobile/src/components/ReaderPageCounter.tsx` and nothing else; a hand-rolled counter `<Text>` (anything styled from `typography.pageCounter` in a screen) is a hard reject, because it cannot jump. Wire it with `useReaderJump` (`screens/_useReaderJump.ts`) for a FlatList pager, with the screen's own page function through `onJump`, or with `onPress` when the reader owns a richer picker (Gita: chapter + verse). Opening the picker stops read-aloud and auto-slide. Keep the visible text and the accessibility label as the literal counter ("3 / 12") — the Maestro flows assert it; the action goes in the hint. A new reader, or any change to an existing reader's top bar, adopts this (owner's direction, 19 November 2026: "this throughout reader"). Spec: design.md §94. Enforced by `components/__tests__/ReaderPageCounter.test.tsx`, whose guard scans every screen file, so a new reader is covered without editing the test.
 - **Complete reader-header titles.** The shared header measures trailing actions, balances the back column with at least a 48dp target, and wraps full localized titles. Do not restore a fixed 120dp action budget or clamp/shrink titles to hide overflow. Existing explicit side minima and branded mastheads remain supported.
 - **Karaoke uses the playback owner's clock.** In sections explicitly integrated with karaoke, use shared `KaraokeText` / `karaokeTiming` with one host-owned passage phase, configurable host speed and complete natively shaped words. Preserve typography, full content, pause/reset/lifecycle, accessibility and the host's sole counting/page-completion authority. No independent word timers or per-frame JS listeners. Infinity is integrated first; other readers' स्वतः wiring is deferred and requires their own whole-page/scroll/hold/native verification. See design.md §90 and `docs/engineering/karaoke-integration.md`.
 - **Japa sankalp progress has one writer.** A japa sankalp (design.md §35.2) is a one-time per-entry-id total in malas or japa, stored at `@vedansh/japam-sankalp` beside — never inside — the `@vedansh/japam-counter` map. Only `JapamCounterContext.increment` credits it, so every counting source (tap, Infinity loop, audio repetition) advances it exactly once; a new counting path must go through `increment`, never write the vow directly. Progress is credited only after the stored vows hydrate, caps at the target, and stops at `completedAt`. Reset Beads / Clear All never subtract from it. Its completion on the counter pauses every automatic source — Infinity stops running and a playing recording receives a new `stopToken` — so an unattended session never adds beads past the vow; a new automatic source must honour the same stop. Validate stored records per record (`parseJapaSankalps`); never throw on bad data. Tests: `japaSankalp.test.ts`, `JapaSankalpContext.test.tsx`, `JapamCounterSankalp.test.tsx`, `.maestro/japam-sankalp-smoke.yaml`.
@@ -218,11 +245,12 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
 - **Chaptered readers auto-advance across subsection boundaries.** A reader whose text has more than one subsection (`<section>ChaptersManifest.length > 1`) must let the user cross chapter/kāṇḍa boundaries **by swiping** — it must never dead-end on the last page of a subsection. Match `GitaReaderScreen.tsx` / `ShivaStrotamReaderScreen.tsx`: inject a `NextChapterCard` after the last verse (unless it is the last chapter) and a `PrevChapterCard` before the first verse (unless it is the first chapter) into the `FlatList` `data`; detect those `__type: 'transition' | 'prev-transition'` items in `onViewableItemsChanged` and `navigation.replace(<thisRoute>, { chapter })` (the prev case lands on the previous chapter's last verse via `initialIndex`). The prepended prev card shifts indices by one, so carry an `offset` through `initialScrollIndex`, `handleScroll`, and the viewable-index math. `mobile/src/screens/__tests__/readerAutoAdvance.test.tsx` enforces this for every multi-chapter reader — add a new chaptered reader to its table when you create one. (Origin: Durga / Ganesh / Saraswati / Vishnu Sahasranama readers rendered only `chapter.verses`, so swiping past a chapter's last verse dead-ended instead of advancing to the next subsection.)
 - **Top-bar title rule.** Reader screens, counter screens, and chapter index screens must **swap** the title to the active reading language — never render both stacked. Use `contentByLang(lang, titleHi, titleEn)` (gu/kn re-script `titleHi`); pick the font with `titleFontByLang(lang)`. Do **not** hand-write `lang === 'hi' ? titleHi : titleEn` — that silently shows English for gu/kn. Listing screens (Home, CategoryList, DeityList) still show **both** languages, but the active reading language now decides **order and focus**: the primary language leads in the prominent slot (top line on cards, first on the `·`-joined top bar) with the larger/heavier font, and the other language follows as a supporting line. This is computed by the shared `orderTitlesByLanguage()` helper (`mobile/src/utils/titleByLanguage.ts`) so category names and catalog/deity titles flip together everywhere; do not re-derive the order inline or hardcode Devanagari-first. Default `'hi'` preserves the historic Devanagari-first layout. (`design.md` §9, §15)
 - **List thumbnails are painted art.** A card or row thumbnail shows the Storybook painting for what it represents — `DeityIcon` for its deity, `CategoryIcon` for its category, `StoryIcon` for a feature — never a Devanagari letter or initials in a tile. The single-akshara `thumb` data stays only as `DeityIcon`'s text fallback. A subject with no painting yet goes into a brief under `docs/icon-briefs/` (style reference, shared prompt, acceptance checks) and its screen is listed in `LETTER_TILE_EXCEPTIONS` in `components/__tests__/paintedThumbs.test.ts` until the art lands; that test fails on any other letter tile. Letters that are the content itself (Namkaran syllables and name-index initials), the 108 count and dates are not icons and stay. Muhurat occasions and Vastu doors now have paintings and need no screen-level exception. Namkaran browse doors, Daan links, custom Kuldevta, Panchang reading doors and Kundali overview reuse the shared registries. (Origin: Oct 2026 — Sankalp, Puja Vidhi and Routine › Add still drew letter tiles after the rest of the app moved to painted art.)
-- **Listing cards — every section listing renders `ListingCard`.** A screen that lists the units of one section (comic episodes, Garud Puran readings, a kids-story shelf, any future illustrated list) renders `mobile/src/components/ListingCard.tsx`, with `ListingSectionHeader` for groups and `ListingScope` for the one centred line that says what the list is. A hand-rolled card (`LinearGradient` + a local text stack) is a hard reject. (Origin: Oct 2026 — three listings had grown three cards with three gutters, three thumbnail shapes, three meta formats, a missing language toggle and a 13 pt description carrying the 34 pt reading line height.) The contract (`design.md` §82):
+- **Listing cards — every section listing renders `ListingCard`.** A screen that lists the units of one section (comic episodes, Garud Puran readings, a kids-story shelf, the Sanatan Parichay hub, any future illustrated list) renders `mobile/src/components/ListingCard.tsx`, with `ListingSectionHeader` for groups and `ListingScope` for the one centred line that says what the list is. A hand-rolled card (`LinearGradient` + a local text stack) is a hard reject. (Origin: Oct 2026 — three listings had grown three cards with three gutters, three thumbnail shapes, three meta formats, a missing language toggle and a 13 pt description carrying the 34 pt reading line height.) The contract (`design.md` §82):
   1. **One language per card.** The title is the reading language only (`contentByLang` / `storyText`); the toggle above the list switches language. No second-language subtitle on section listings — it doubled card height. (Home, CategoryList and DeityList keep the bilingual pairing above.)
+     The Home banner cards (`HomeBannerCard`: Kids Stories, Sanatan Parichay) follow the same rule since 19 November 2026 — a second-language line made each card 138 dp tall for no gain. Test: `components/__tests__/KidsStoriesHomeCard.test.tsx`.
   2. **Same frame everywhere.** `LanguageToggle` on every listing (see "Language toggle"), `spacing.readingGutter` sides, `spacing.md` between cards, plain parchment behind the list.
   3. **One key image per unit, filling the thumb.** The thumb is 92 wide and stretches to the card's height (minimum 115 = 4:5); art is cover-cropped, never letterboxed (`KidsStoryArt fill`, `ComicArt fill`, `ListingThumbImage` with a focal point for wide paintings). Each unit shows the scene its title names, curated per unit (comic: `data/comicBooks/episodeCovers.ts`) — never its first panel or an arbitrary crop. One image reused across units is a content gap to close with new art, not a pattern.
-  4. **Eyebrow is the sequence only** — `प्रसंग N` / `पाठ N` / `दिन N`. No kind, age or form-name tags on the card (a form name may stay in the accessibility label).
+  4. **Eyebrow is the sequence only** — `प्रसंग N` / `पाठ N` / `दिन N` / `परिचय N`. No kind, age or form-name tags on the card (a form name may stay in the accessibility label).
   5. **Description is optional and one line**: at most 32 characters in every language, a phrase without a full stop, written to fit — never left to `numberOfLines` truncation. Introductions say so in this line (परिचय / “Meet …”).
   6. **Meta is the unit count only** — `N पृष्ठ` / `N pages` (a comic panel is a page). Facts true of the whole list (age, total, scope disclaimer) go once in `ListingScope`. Read progress is a bar, shown only where the section tracks progress.
   7. **Sizes come from `typography.listing*`.** Never spread a reading token (`meaningToken`) and override only `fontSize`: the 34 pt reading line height comes along with it. Indic listing/catalog lines reserve at least 1.65× leading inside their own Text bounds (bundled Kannada hhea extent is 1.62em). Today uses `catalogTitle/catalogMeta/catalogBody` without tight local overrides; calendar captions and date/countdown metadata use those shared tokens. Keep native system text scaling enabled and let cards grow. `CatalogTypography.test.tsx` guards rendered styles against the actual bundled TTF vertical metrics as well as the shared-token floor; include category subtitles and day-note/ledger siblings. Native glyph inspection is still required.
@@ -233,6 +261,7 @@ These are **non-negotiable** rules. The rulebook exists to keep them honest.
   - Sections with a subsection listing (Chapters Index, kāṇḍa list, etc.) ALSO surface the toggle on that listing.
   - State is shared across surfaces via the same hook — no per-screen forks.
 - **Categories & Deities.** Every `LibraryEntry` must have a valid `category` (one of the types in `categories.ts`) and at least one `deity` tag. The Home screen grid and deity section derive their content from these fields — no manual wiring required. **Adding a new `ContentCategory` or `Deity` also requires a tag entry in `mobile/src/data/shareHashtags.ts`** — `CATEGORY_TAGS` and `DEITY_TAGS` are exhaustive `Record<…>` maps that feed the Instagram share hashtags (design.md §39.2), so an unlisted member fails `tsc --noEmit`. Give it 1–3 tags people actually search, most canonical first.
+- **Aditya Hridayam** is a standalone Surya entry under `stotram`, keyed by `aditya-hridayam`. Its bundled payload cites its 31-verse witness and opens through the shared Stuti reader, with its own search, bookmark, reading progress and shloka-japa identity. The Japmala banner retains the same id for saved recitation totals.
 - **Every stotram shloka is startable as japa.** A `category: 'stotram'` entry must register in `SOURCES` in `mobile/src/data/japam/sloka.ts` (`unit: 'each'` when every chapter is its own hymn, `'whole'` when the section is one stotra — it only decides how a shloka is named) and its reader must render `StartJapaButton` with its current `verseIndex` in the toggle row's `japaSlot` (`design.md` §35.1). The shloka is chanted like a mantra, one bead per recitation; the corpus loads through a `require()` thunk, never a static import (`data/japam` is on the launch graph). `src/data/__tests__/slokaJapa.test.ts` fails if the registry and the stotram category drift apart. A shloka that is also a `japam.json` mantra (Mahamrityunjaya = Shiva Stotram ch. 3) maps to the mantra's id in `LIST_MANTRA` so one chant keeps one count; the two texts must stay identical (the test compares them).
 - **Japam items appear under their deity.** Japam mantras are shown under their tagged deity's listing (e.g., Gayatri Mantra appears under Maa Gayatri deity card). The deity card shows all content tagged with that deity regardless of category. Tapping a japam item from a deity list navigates to the Japam Counter screen for that mantra.
 - **Painted art only — the old text `thumb` is never drawn as an icon.** Wherever the Storybook artwork is integrated (library, category and deity lists, Search, FOR TODAY, routine rows, audio, Theerth, Vidhi, Kul Parampara, More/Discover), a mark is painted: `DeityIcon` (an entry's first `deities` tag), `CategoryIcon`, `StoryIcon`, `FeatureIcon` or `MoreIcon`. The single-akshara `thumb` (§1 row 5) is DATA only — never rendered, neither as the icon nor as a fallback, and `DeityIcon` takes no text fallback (an unknown key draws the painted `deity` seal). A new entry inherits its icon from its first deity tag, so it needs no new art when that deity has one; a subject with no fitting art gets new Storybook art through the design.md §42 pipeline, or its category art — never its old letter. Real content stays text: syllables, name-index initials, 108, dates. `src/data/__tests__/paintedIconsOnly.test.ts` fails on any `<x>.thumb` render or `fallbackText` in UI code.
@@ -290,6 +319,10 @@ New sections are registered in `mobile/src/navigation/HomeStackNavigator.tsx` (n
 
 No manual routing in HomeScreen is needed — `CategoryListScreen` filters items by their `category` field automatically.
 
+### Gita direct verse navigation
+
+The Gita counter picker is manifest-only until explicit Open. Resolve the chosen chapter lazily and look up its actual verse number, then replace the current reader route without adding a Back-stack entry. Never advance through skipped pages or infer completion from the selected number. Suspend read dwell and stop hands-free playback while the dialog is open; cancellation must not change resume data. Preserve all four numeral scripts and bounded chapter/verse controls. Tests must exercise navigation, storage, coverage, invalid inputs, load failure/retry and cancellation together; native journeys remain required. See design.md §9.1.
+
 ### 6.0 Cross-tab hand-offs: build them with a `*TabTarget` helper
 
 The bottom tab navigator is **lazy** (`TabNavigator.tsx`) — every tab except the first (`HomeTab`) mounts on its first `navigate`. React Navigation's nested `navigate` defaults to `initial: true`, which makes the named screen that stack's **initial route** instead of pushing it above the stack's own `initialRouteName`. The result is always the same: the target's back button has nothing to pop, and the stack's real root stays unreachable **for the rest of the session**.
@@ -308,6 +341,10 @@ The contract for such a flow:
 2. **Register the same components in every hosting navigator**, and type the screens against the shared list (`NativeStackScreenProps<VidhiStackParamList, …>`), never against one stack — one component serves all mountings.
 3. **Every door pushes in place.** No `navigate('<Other>Tab', …)` from a door on a tab that hosts the flow.
 4. **A genuine cross-stack hop stays runtime-checked.** Where a flow hands off to a screen that may not live on its current stack (vidhi conduct → shipped readers), use `navigateToHomeStackTarget` (`navigation/entryRoutes.ts`): it pushes in place when the enclosing stack registers the target route and falls back to the Home tab when it does not. If the product copy promises return to the current step, mount that reader locally too — the personal-tithi guide therefore registers `GitaReader` on More, and its Back path is test-pinned.
+
+The bhajan text shelf (§34) is the second such flow: `BhajanStackParamList` is intersected into the Home and Audio param lists, and `BhajanList` / `BhajanReader` are registered on both stacks.
+
+The Mahadasha guide (design.md §51e) applies rule 4: its japa, paath and Daan-Punya doors open Home-stack screens, so the Panchang stack mounts every screen those doors can reach (`JyotishPracticeRoutes`, picked from `HomeStackParamList` in `navigation/types.ts`) and the guide and the Dasha tab push through `navigateToHomeStackTarget`. `navigation/__tests__/dashaGuidePracticeRoutes.test.ts` resolves every beej-japa and `GRAHA_UPAY` practice source and fails if its screen is not mounted on Panchang.
 
 Do **not** apply this to a flow with doors on one tab: a duplicate registration there is pure surface area. Guarded by `src/navigation/__tests__/vidhiBackNavigation.test.ts`.
 
@@ -357,7 +394,7 @@ Every new section must also be reachable from global search (`SearchScreen`). Th
 
 | Verse shape | Devanagari source | Latin source | Used by |
 |---|---|---|---|
-| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, sundarkand, ramcharitmanas, valmiki-ramayan |
+| `lines` + `linesEn` | `lines` | `linesEn` | chalisas, aartis, bhajans, sundarkand, ramcharitmanas, valmiki-ramayan |
 | `sanskrit` + `linesEn` | `sanskrit` | `linesEn` | shiva-strotam, durga-stotram, ganesh-stotram, vishnu-sahasranama, hanuman-ashtak, ram-stuti |
 | `sanskrit` + `transliteration` | `sanskrit` | `transliteration` | bhagavad-gita |
 
@@ -543,6 +580,10 @@ Deity `nameHi`/`nameEn` must use the popularly recognized devotional name that u
 ### 11.10 Verse count sync is atomic
 `texts.ts` `verseCount` must always equal the JSON `verses.length`. The `sub` field count must match. `texts.ts` reads every count from the generated `mobile/src/data/verseCounts.ts` — never from a corpus module, because `texts.ts` is on the launch path and importing `xTotal` from `./x` evaluates whatever `./x` eagerly imports. After any content change that alters verse count: (a) update `chapters-manifest.json`, (b) regenerate the counts with `npx tsx scripts/gen-verse-counts.mts`, (c) update `chapteredTotals.test.ts` — atomically, in the same commit. `verseCounts.test.ts` fails if any generated count drifts from its corpus, and if `texts.ts` imports a corpus module directly. The aarti rows still spell `verseCount` and the `N पद` / `N verses` subtitle as literals, so `verseCounts.test.ts` also compares every aarti row with `aartiVerseCounts` (Nov 2026: Om Jai Shiv Omkara said 9 पद over a 12-entry टेक + 11 पद payload). Adding a text: add its count symbol to `scripts/gen-verse-counts.mts`, regenerate, and import it from `./verseCounts`. Origin: Every content fix in this audit caused cascading test failures from stale counts; the September 2026 launch-path audit found `texts.ts` pulling ~2 MB of scripture onto every cold start to read 46 integers.
 
+**Chalisa lengths are edition-specific.** The registry preserves the complete selected composition, not a fixed forty-body-unit limit. Kali Chalisa (`kali-chalisa`, A4) has 54 sourced body couplets plus three dohas (57 units); subtitles, generated counts, search and reader tests must agree with that payload. Never truncate a sourced work merely to fit its genre name.
+
+**Radha Chalisa (`radha-chalisa`, A5)** preserves the chosen complete 43-unit edition (2 opening dohas + 40 chaupais + 1 closing doha). Body 8 and 9 remain distinct; do not replace them with the shortened 39-unit transcription. The existing `radha` deity and Radha–Krishna art are used.
+
 ### 11.11 No duplicate content across sections
 A text must exist in exactly one location/category. Standalone Ashtak/Ashtakam texts (like Sankat Mochan Hanumanashtak) belong in the Ashtakam category — not duplicated in aarti or stotram. Before adding content, grep the repo for the text's first line to confirm it doesn't already exist elsewhere. Origin: Sankat Mochan existed in both aarti/ and hanuman-ashtak/ with different (both wrong) versions.
 
@@ -665,6 +706,8 @@ Removing browser links alone does not satisfy this rule.
   without editorial source notes in reading, auto-slide text budgets or sharing.
   Gita Saar offers only real related in-app readings, without research-only rows.
   Ask answers cannot expose source-verified badges, PRD numbers or copyright notes.
+  The bhajan reader shows only the poet/tradition credit (`bhajan-attribution`, §34);
+  its `source.*` fields never render.
 - `contentSourceUiPolicy.test.ts` runs in the existing reader Jest gate. Its AST
   scanner covers production screens/components, Ask intents and share modules;
   fixtures prove detection of the known disclosure, publisher and review-field
@@ -683,6 +726,34 @@ the same video, not a source citation. Record native four-script/Standard/Large,
 compact and system-text checks separately from automated tests. See the app-wide
 audit at `docs/reviews/2026-11-06-content-source-ui.md`.
 
+### Temple Darshan in-app playback (design.md §92)
+
+The Home floating-Darshan journey uses the audited channel roster and the visible
+YouTube channel embed to select current broadcasts. Dedicated official live-page
+iframe discovery may choose a specific temple camera, falling back to its stable
+channel player on failure. Do not scrape YouTube HTML, bundle dated video IDs,
+extract media URLs, forge recitation `status: verified`, infer current liveness or
+silently substitute an archive. A channel may be waiting/offline or reject embeds.
+Keep its publisher attribution visible, standard YouTube controls/branding intact,
+and offer in-app Retry, temple switching, the real temple guide and shipped readers.
+No app-owned YouTube/website exit buttons or external arrow on the Darshan player;
+verified recitation readers retain their existing same-video host hand-off.
+
+Channel WebView HTML uses the registered native app identity as HTTPS baseURL,
+Referer and player origin. Keep native fullscreen enabled on both video/channel
+paths; fullscreen is the OS WebView video presentation, never a second player or
+an overlay that obscures YouTube controls. Exiting fullscreen/rotation must retain
+the source and position; verify tabs/header are hidden and Back/Done restores the
+same screen on actual iOS/Android. Never report flags or mocked tests as device proof.
+
+No stream fetch/WebView at launch, hidden/background audio, downloads, invented
+reminders or partnership claims. Ready-before-play must honour the latest pause
+intent through loading, blur, background, competing audio and retry. Preserve
+favourite hydration/write ordering/retry and stable IDs. Test source failures,
+all channel routes, expanded temple content, real guide/reader navigation,
+four-script/Standard/Large/compact/system-text and fullscreen/lifecycle behaviour.
+Native visual, playback and performance/ANR evidence remain separate required gates.
+
 ### 11.17 Native image geometry is an enforced acceptance gate
 
 React Native supplies a bundled image's intrinsic `width` and `height` before
@@ -696,8 +767,12 @@ painting, even when the source file and aspect-ratio metadata are correct.
   `width: '100%', height: '100%'`. Fixed/derived numeric image width **and**
   height are also valid. Do not size a card from source pixels or use bare
   aspectRatio/absoluteFill on a native Image.
-- **Reuse the frame.** Sanatan Home, hub, collection, reader, diagrams and Search
-  use `FramedPainting`; the full scene stays 3:2 and thumbnails stay 81×54.
+- **Reuse the frame.** Sanatan Home, the reader's opening painting and Search use
+  `FramedPainting`; the full scene stays 3:2 and the Search thumbnail stays 81×54.
+  The hub lists lessons in the shared 92×115 listing thumb through
+  `ListingThumbImage` (an explicit cover rect with a per-painting focal point),
+  and the picture viewer (`ImageZoomViewer`) gives its frame the fitted width and
+  height with the image at explicit 100%.
   Audit sibling callers when fixing an image sizing issue. Cropping/resizing the
   master, hiding text or reducing font size does not fix an unconstrained image.
 - **Keep the regression in CI.** `nativeImageGeometryPolicy.test.ts` scans
@@ -977,7 +1052,7 @@ Dasha- and gochar-derived direction is expressed as a named period with real sta
 - No longevity, आयु, death, or fatality reading. No prediction of another person's death, divorce, illness, or misfortune.
 - No medical, psychiatric, legal, or financial **directive**, and no health prognosis. A `swasthya` purpose may read constitution (prakriti), routine and the classical 1st/6th/8th significations only, and must route anything symptomatic to a doctor.
 - No fear copy; no dosha framed as a curse or a defect of the person; no remedy sold as a fix; no gemstone, puja, or consultation commerce; no lead capture; no luck or compatibility score.
-- **Upaya comes from ONE table** *(changed 2 Oct 2026 by explicit product decision — the former three-stotra allow-list is replaced, not loosened)*. Every devotional prescription a Jyotish surface shows is a row of `GRAHA_UPAY` (`panchang/grahaReadingContent.ts`, §14.7): per graha one vaar, its daan items (the shared vaar table `data/daan/vaar.ts` for the seven weekday grahas; the Rahu/Ketu rows live in the practice table itself), one seva line, one beej mantra with its count, and one paath. The beej mantra may also open its japam counter: `GRAHA_BEEJ_JAPA_ID` (`data/japam/grahaBeej.ts`) maps each graha to a `japam.json` entry whose line is the table's mantra word for word (`grahaBeejJapa.test.ts`), shown from the upay panel and, for the Mahadasha lord, the Dasha tab — never a different or longer mantra, and its meaning names no count beyond the table's one mala. A paath may target only an active, existing library id through `buildEntryStartTarget()` — the `KundaliReportPracticeId` union is the allow-list: `navagraha-stotram`, `surya-ashtakam`, `shiv-chalisa`, `hanuman-chalisa`, `ganesh-chalisa`, `vishnu-sahasranama`, `mahalakshmi-ashtakam`, `shani-ashtakam`, `durga-chalisa`, `ganesha-kavacham`. Interpretation outside that table still does not invent devotional prescriptions. Every upaya is framed as a practice for steadiness and good conduct — never a fix, cure, guarantee or protection from harm; nothing in it costs money beyond the daan the person chooses to give; no gemstone, yantra, paid puja or consultation, ever. The table is §10 content behind the jyotishi review gate of §14.7.
+- **Upaya comes from ONE table** *(changed 2 Oct 2026 by explicit product decision — the former three-stotra allow-list is replaced, not loosened)*. Every devotional prescription a Jyotish surface shows is a row of `GRAHA_UPAY` (`panchang/grahaReadingContent.ts`, §14.7): per graha one vaar, its daan items (the shared vaar table `data/daan/vaar.ts` for the seven weekday grahas; the Rahu/Ketu rows live in the practice table itself), one seva line, one beej mantra with its count, and one paath. The beej mantra may also open its japam counter: `GRAHA_BEEJ_JAPA_ID` (`data/japam/grahaBeej.ts`) maps each graha to a `japam.json` entry whose line is the table's mantra word for word (`grahaBeejJapa.test.ts`), shown from the upay panel and, for the Mahadasha lord, the Dasha tab — never a different or longer mantra, and its meaning names no count beyond the table's one mala. **“What to do in a dasha” is that same row** (Nov 2026): the Mahadasha guide's practice step (design.md §51e) is `buildDashaPractice` (`panchang/dashaPractice.ts`, pure) — the period lord's `GRAHA_UPAY` row plus one intro naming the calculated period and the one framing line, with a `dasha` basis node — composed into the guide by `buildDashaGuide` (`panchang/dashaGuide.ts`). No per-dasha do/avoid list, forecast or second remedy table may be authored beside it; new prescriptive copy is `GRAHA_UPAY` content and goes through §14.7.7's review. The guide's own copy (`panchang/dashaGuideContent.ts`) may only **explain** — what a Mahadasha is, what the lord's reviewed keywords mean in everyday words, what daan/seva/a mantra/a mala are, why the practice is the lord's — and is scanned by `dashaGuide.engine.test.ts` with the §14.3.7 vocabulary. The guide returns null for a subject under 18 (the minor rule below) and for a Mahadasha that has ended. Its daan door opens the educate-first Daan-Punya home, never the directory (§27.1, §27.13); its Prashna door opens only a purpose whose primary bhava is the lord's house, never swasthya/man/santan, and only at the purpose's `minAge`. The composers stay out of `dashaReading.ts` so प्रश्न and Ask, which import that module, do not pull the graha content. A paath may target only an active, existing library id through `buildEntryStartTarget()` — the `KundaliReportPracticeId` union is the allow-list: `navagraha-stotram`, `surya-ashtakam`, `shiv-chalisa`, `hanuman-chalisa`, `ganesh-chalisa`, `vishnu-sahasranama`, `mahalakshmi-ashtakam`, `shani-ashtakam`, `durga-chalisa`, `ganesha-kavacham`. Interpretation outside that table still does not invent devotional prescriptions. Every upaya is framed as a practice for steadiness and good conduct — never a fix, cure, guarantee or protection from harm; nothing in it costs money beyond the daan the person chooses to give; no gemstone, yantra, paid puja or consultation, ever. The table is §10 content behind the jyotishi review gate of §14.7.
 - **Minor subjects**: where the subject's derived age is under the purpose's `minAge`, the purpose does not render a reading at all. विवाह, संतान, व्यापार, नौकरी and धन are closed for minors. A minor's reading addresses the parent, in a register that describes what to observe and encourage — never instructions about schooling, discipline, or the child's future.
 
 **6. Determinism and the AI/network boundary — pinned independently of the stance above.**
@@ -995,7 +1070,7 @@ The engine suites extend to: a `basis`-completeness assertion over every emitted
 - Beginner house/graha sheets reuse reviewed meanings and the actual chart. Empty houses are normal; follow their classical sign ruler to its actual placement. Separate dignity-first directional sign friendship from the report’s counted overall tone; lunar nodes stay ungraded. Adults may read the existing reviewed narrative/legacy personal graha reading with its factor reasons and non-empty basis; keep production review flags and the adult-only gate. Generic Graha Parichay and positions remain available for all ages. Do not re-author individual-chart prose or strip meaningful definitions.
 - Explanatory cards teach directly without repeating “केवल संकेत”, prediction guarantees or equivalent caveats in every card. Preserve the underlying derivation, accuracy and protected-topic contracts. Buttons/headings use all four authored UI languages; reviewed meaning prose follows the existing localization policy. Let text grow/scroll and adapt grids/tabs at compact/Large/system-text sizes.
 - `KundaliArtwork` owns eleven statically required transparent 256px palette PNGs reused by GrahaReferenceScreen, with an independent 300,000-byte budget and pinned shipped/master hashes. Existing icon budgets remain unchanged. Reproducible export and approved-source provenance travel with the PR; exact prompt history and installed visual verification are separate merge gates.
-- The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology.
+- The Dasha surface exposes the current Mahadasha/Antardasha, dates, elapsed and remaining time, and a full nine-period timeline. Those timing values must also be accessible to assistive technology. For an adult it also opens the Mahadasha guide (design.md §51e): a door under the beej pill for the running period, and a link on every timeline row that is running or upcoming — never on a Mahadasha that has ended (§14.3.5). The guide is an index of five steps (what the period is, what the graha stands for, in your chart, what to do, why), one step per screen; Back on a step returns to its index on every platform. The `dasha-beej-japa` pill keeps its place, testID and label for every age. Required checks for a guide change: `npm run typecheck`, `dashaGuide.engine.test.ts` and `dashaPractice.engine.test.ts` (engine), Jest `DashaGuideExperience.test.tsx` and `KundaliExperience.test.tsx`, and the guide steps of `.maestro/kundali-smoke.yaml` on iOS and Android.
 - Kundali and Rashifal share cards use the app theme and a 4:5 preview. Kundali must warn that personal birth details are included; Rashifal must state that name and birth details are excluded. Do not place duplicate share controls inside Kundali tabs.
 - A landing door is `components/JyotishToolTile.tsx` — never a hand-rolled card. Its `accessibilityLabel` stays the bare English door name (`Open Gochar`) because every Maestro flow targets it; the reading goes in `accessibilityValue`. A tile's reading must come from a value the surface already computed (`guidance.sadeSatiPhase`, the chart's own lagna/nakshatra) — never a fresh solve for a subtitle, and never gated content (`NAMAKSHAR_SOURCE.verified` is `false`, so today's namakshar does not reach the landing).
 - Required checks: `npm run typecheck`, `npm run test:engine`, targeted Jest for new UI (`components/__tests__/JyotishToolTile.test.tsx` for a door change), and `.maestro/kundali-smoke.yaml` plus `.maestro/multi-profile-jyotish-smoke.yaml` (§14.5) on an isolated simulator/worktree Metro port. If Maestro is not run, state that explicitly before merge.
@@ -1096,6 +1171,12 @@ The compiled report reads each of the nine grahas the way a family pandit does �
 - Verse and Panchang select Heritage at sunrise through just before sunset, Midnight Temple otherwise. Every native timeline/alarm must include the solar boundaries in addition to content boundaries, so switching does not depend on reopening JS.
 - `scripts/build-widget-heritage.mjs` owns all new day/night plates, source/derivative hashes and gallery index. Preserve pixel budgets, opaque text-safe regions, AA contrast and resource-shrinker retention. Schema stays v1; native layout/art changes still require a binary.
 
+### 15.2.2 Verse presentation and reference ownership
+
+- Canonical scripture arrays, verse identities and references are immutable. The visible source label owns the citation; display code may remove only a terminal danda-delimited number matching that label. Use `utils/versePresentation.ts`, including before widget-payload localization. Never strip arbitrary scripture numbers or change canonical JSON to fix layout.
+- Full-size widget and in-app verse compositions preserve authored rows. Native wrapping may grow a row, but never joins the next row onto it. Shared devotional cards grow vertically and have no row-fit paragraph fallback. Small/narrow widget excerpts remain bounded and explicit.
+- Changing payload presentation invalidates the derived widget plan cache. Keep all four scripts, complete accessibility text, source identity and deep links. WidgetKit/RemoteViews changes still require native binaries and placed-widget visual evidence.
+
 ### 15.3 Native delivery and OTA safety
 
 - Initial delivery is **store-binary-only**. No OTA may add or change native target code, entitlements, SwiftUI/RemoteViews layout, or fonts. A JS planner/copy change may ship OTA only to a runtime whose native reader already supports that schema — mind the store runtime version ([[ota-runtime-version-mismatch]] gotcha).
@@ -1110,6 +1191,9 @@ The compiled report reads each of the nine grahas the way a family pandit does �
 - **Device-only gates** (cannot be closed in CI/worktree; state their status explicitly before shipping): a clean CNG prebuild that reproducibly creates/entitles/signs the extension with no Xcode drift, an EAS build installing every signed target on a physical device, an app-write → widget-reload check, and per-size render / VoiceOver-TalkBack / large-text / Devanagari-matra screenshots. A local Swift module is not accepted as proof of extension-target feasibility.
 
 ## 17. Event Muhurat Finder (PRD-16) — rule-table contract
+
+**India civil scan date (Proposal 14).** Finder results, Special auspicious days and picker warm-up use `useCivilToday`: refresh just after IST midnight and on foreground return, with no rescan on same-day return. Results are keyed by the active date and scan inputs so an old list cannot flash before effect cleanup; obsolete progressive/final callbacks are ignored. Both result lists show a wrapping, script-aware 13/23 saffron-deep scan-start date beneath the city/convention line. Date labels and valid overnight window instants retain their existing meaning; horizons, ranking, routing and absolute-date cache keys are unchanged. Finder additionally checks yesterday once for windows that cross today's IST midnight and have not ended. Only those original windows carry over, with unchanged endpoints and per-window grading. Filtering preserves engine best-first order; the carry-over verdict tier and factors follow the first surviving window on initial load and expiry. They expire by a bounded timer or foreground refresh without rescanning or extending the upcoming horizon. Abujh entries are day labels with no timed-window payload, so expired prior-day entries leave that list. Rolling cache warm-up defaults explicitly to `civilToday()`; the shared device-local `startOfToday` helper is unchanged.
+
 
 **Startup integration invariant.** Callers mounted with Home must hydrate before calculating and use cooperative day/annual-scan APIs on a miss. An outer Promise, timer or `InteractionManager` callback is not a CPU yield inside a calculation. Numerical changes retain synchronous/cooperative parity tests, including timezone and end-time boundaries. Widget cached windows remain IST-scoped outside `panchangDayStore`; their key must invalidate on OTA/build, date, location, calendar and observance upgrades, and must not persist private activity. Validate with `scripts/profile-home-startup.mts` plus release-device tap tracing; a desktop timing is not an on-device latency result.
 
@@ -1237,6 +1321,8 @@ A vastu entry is **source-reviewed classical convention with its stated reason**
 17. **The engine judges; a model never does.** `assessHome`/`classifyPlacement` are the only producers of findings, classes and weights. The full-text handoff's framing instructs any downstream reader (human or AI) to stay inside the findings — no additions, no re-weighting, no remedies — and the future F2 vision pre-read may only PROPOSE pin positions for user confirmation, never touch the rule engine or its output.
 
 ## 23. Observance day selection (vyapini) — which civil day a rule falls on
+
+> **Civil date and clock — India's, never the device's (Nov 2026).** A `Date` in the Panchang code is either a LABEL (`new Date(y, m, d)`, naming a civil date) or an INSTANT (sunrise, a tithi end, "now"). Never read an instant's `getDate()`/`getHours()`, truncate it with a `startOfLocalDay`, or pass it where a label is expected: use `civilDateOf`, `civilFieldsOf`, `isOnCivilDay`, `civilDayStart` and `formatClock` (`mobile/src/panchang/civilTime.ts`). "Today" is `civilToday()` / `useCivilToday()`. The engine's default `civilTimeZone` is India, not the device zone. `deviceTimeZone.test.ts` runs the engine, a live observance year, the Pitru fortnight and the formatters under five device zones and fails on any difference; a new matcher or formatter that reads instants joins its probe. A change here is an engine change: bump `PANCHANG_DAY_CACHE_VERSION` and `CACHE_VERSION` (§17).
 
 A lunar rule names a **tithi**, not a date. The civil day it lands on depends on which instant of that day the tithi must cover — the vyapini convention. `ObservanceRule.dayRule` (`panchang/types.ts`) declares it; the matcher lives in `festivalEngine.ts` and nowhere else.
 
@@ -1369,6 +1455,9 @@ A daan entry is **source-reviewed tradition with its stated reason** — never a
 2. **The app never touches money (Resolution A, links-only).** No payment collection, processing, confirmation, commission, suggested amounts, targets or progress bars — the hand-off is `Linking.openURL` to the organization's own official channel behind the honest interstitial, and the return-offer renders at most once. No UPI VPAs anywhere (web-only hand-off; open decision #4). **PRD-26/PRD-40 boundary:** the PRD-40 dakshina/donation rail is ON HOLD; the daan directory (`directory.ts`) must **never contain a Vedansh-owned recipient** — every row's `officialUrl` is the organization's own channel (its own domain, a government domain, or its own hosted donation page when `directPay`), never ours (§27.8, directory hygiene). If PRD-40 ever resumes, it owns dakshina-to-Vedansh / partner-temples on its own surfaces and is never merged into this directory.
 3. **Punya is not a number.** No totals, streaks, scores, leaderboards or comparisons anywhere — the ledger is a smaran register; `buildLedgerCsv` via the OS share sheet is the single aggregation surface. No helper that sums amounts may be added to `data/daan/ledger.ts`.
 4. **The gupt guarantee is two-sided.** `sanitizeLedgerEntry` strips note/amount/occasion from gupt entries before persistence AND `isDaanLedgerEntry` rejects unsanitized gupt rows on hydration; the CSV keeps gupt rows bare. Amounts never render outside the ledger and its export.
+**New ledger amount input.** New non-Gupt amounts use `data/daan/amount.ts` full-input validation, never partial `parseFloat` parsing. Reject malformed grouping, ambiguous punctuation, excessive precision and unsafe numeric representation without writing or navigating. Blank stays optional; Gupt stores no detail; historical payloads and CSV shape remain unchanged. Pin form → real provider → payload/CSV round-trip in regression tests. The form uses the shared keyboard-aware wrapper and awaits the boolean add result before navigating; both failed writes keep the draft editable. Ledger add/remove writes serialize against durable state, with one retry and no optimistic success on failure.
+
+**Register deletion safeguard.** Removal requires confirmation of the selected stable ID. No amount in the confirmation; Gupt rows expose only localized Gupt label and original civil date, never category/note/tithi/occasion detail. Cancel, Android Back, outside dismissal and route blur must not write. Repeated confirmation consumes the ID once. Preserve storage schema, entry creation, month grouping, timestamps, tithi and CSV; confirmation is not Undo or a durable-write guarantee.
 5. **Verified-only accessors.** Every registry (`principles`, `occasions`, `kathas`, `directory`) exposes `status: 'verified'` rows only; drafts are indistinguishable from absence (the §20/§21/§22 pattern).
 6. **Source threshold.** A verified row needs ≥2 concordant references with a dated `verificationNote` — shipped verified in-repo content that itself carries the tradition counts as one (named by path), an external published domain as another. Contested enumerations (the daśa-dāna list is the recorded example) state the variance or stay draft.
 7. **Coverage discipline.** `occasions.ts` rows key to REAL solver rule ids (exact `ruleIds` beat `ruleIdSuffixes` families; `shattila-ekadashi` over `-ekadashi`, `makar-sankranti` over `-sankranti`). A day with no attested daan tradition gets NO row, and hosts (Observance Detail's last-section door, the home's आज card) render nothing for it — absent, never a placeholder. Grahan-daan stays out until the engine computes eclipses.
@@ -1491,9 +1580,11 @@ Daily Bhakti branding uses the approved flute/peacock PNGs via `DevotionalBrandi
 
 Daily Bhakti sharing keeps the complete verse and meaning in one measured image in every reading language. Preserve fixed readable type and all stored text; grow a long PNG instead of splitting its meaning or shrinking it into a short frame. The devotional source set (nine original full deity masters plus neutral prayer and eighteen complete 1080×1456 subject masters; `assets/devotional-share/manifest.json` is the provenance source of truth, combined delivery sources <9MiB; each optimized original portrait <600KiB, full 1080×1456 resolution) uses the separate `devotional-share` R2 prefix and shared persistent artwork cache. No Daily Bhakti painting may enter the bundled asset graph. `manifest.assets.*.authoringMaster` retains the nine lossless originals at a pinned Git revision; zero protected-pixel changes applies to authoring, not perceptually compressed delivery. Re-encode from these originals with `scripts/optimize-devotional-share.mjs` (reviewed WebP q94/m6/sharp YUV), never from a previously lossy delivery. Preserve all fitted geometry, and visually compare all changed paintings before publishing. `src/data/devotionalShareManifest.json` pins all 28 published objects; `prepare-devotional-share.mjs --verify --cdn` must confirm public bytes. Keep text/navigation usable on paper during first download or failure; cached art remains available offline. Each new subject is one complete portrait composition with a continuous painting-to-parchment transition, brand plaque, border and footer. Slice the same subject master throughout; never paste a landscape reader banner onto another deity’s body. Rows `meaningTop + 82`…`meaningTop + 128` of the meaning box must hold only paper and the box/side rules: they are mirror-tiled to grow the explanation (महत्त्व) box, so an ornament there repeats down the card. Image decode and final native measurement must both finish before capture. Preview and Story framing must use the full height. Test Hanuman Ashtak 1.5, all 1,676 candidates/four scripts, post/Story capture dimensions and failure refusal. Installed device export and WhatsApp validation remain required before merge. See design.md §39.9.
 
-### Photographic Suvichar subjects — 8 November 2026
+### Standalone Suvichar portraits — 11 November 2026
 
-A real shrine photograph uses `suvicharPhotoArt.ts` and a separate reviewed source/byte/hash/license ledger in `assets/suvichar/photos/`. Keep the original photographic identity and aspect; never generate an idol replacement. Print required image credit on the captured surface independently of scripture credit. Use the persistent shared cache and native decode/layout gate; no bundled photo, unbounded prefetch or share before paint. Existing painted-master provenance/publication checks still cover `suvicharPaintedDeities` exactly. A photo option may reuse explicitly reviewed paper/footer-only slices with its photographed hero; never expose the old painted deity in its card or thumbnail. Include all frame selectors, ready-made/custom selection, deity-specific content eligibility, weekday coverage, persistence and actual exports. Maintain existing default frame assignments when inserting new options. The first enabled photo (`ram-lalla`) uses a byte-verified Commons rendition; its paper masters remain on R2. A future host/encoding change needs updated provenance/hash and public-byte verification.
+`ram-lalla` now uses the exact generated front-facing card approved on 8 November, not the earlier PMO photograph. Preserve the lossless approved master, delivery/source hashes and request history under `assets/suvichar/portraits/`. The original full generation prompt is unavailable; never invent provenance. The legacy `suvicharPhotoArt.ts` API resolves the standalone portrait through `suvicharPortraitManifest.json`; `suvichar-portraits` is a registered R2 collection. A source file without its manifest/catalog entry is not an uploaded asset. Before merging activation, verify the public object’s full SHA-256. Post-merge R2 Upload rechecks/publishes registered objects; PR validation does not upload.
+
+Print **श्री राम लला / Shri Ram Lalla** without Ayodhya or the old photo credit. Preserve the stable `ram-lalla` ID, favorites, Ram content eligibility and Thursday coverage. `SuvicharPortraitImage` clips only the reviewed text-free scene (`x=.025, y=.082, w=.95, h=.482`) from the approved source, with aspect-preserving contain geometry shared by cards and selectors. Never display the source card’s baked message, sender, footer or branding as live content. Only the existing Rama masters’ reviewed paper/footer slices are reused. Keep editable scripture credit separate and retain the persistent cache, image decode/layout gate, cancellation and offline reuse. The historical PMO photo and rights ledger remain archived; they are not runtime delivery. Native four-script, Standard/Large and exported-file acceptance remain required.
 
 ### Suvichar personalization — 22 Oct 2026
 
@@ -1559,16 +1650,18 @@ Hindi/English prose pages, a topic-specific visual explanation and internal revi
 collection or a ritual manual. Keep unreviewed research seeds out of app discovery.
 See `docs/content-parity/sanatan-parichay/native-scope.md` and design.md §87.
 
-Use one lazy Home door and Home-stack hub/collection/reader routes; no new tab.
+Use one lazy Home door and Home-stack hub/reader routes; no new tab. There is no
+collection overview screen: a hub card opens the reader directly.
 Global Search resolves known IDs. Preserve the hub query/filter on Back. Unknown
 IDs must show an unavailable state, never a substitute deity. The selected
 Kamika Agama direction list and the two Dashavatara lists retain their own source
 context; do not merge their variants into one canonical roster.
 
 Research references never become a public screen, footer, button or share appendix (§11.16).
-Use the approved uniform 3:2 painted scene family for all thirteen collection
-thumbnails and banners, shared script/font tokens and the existing prose, audio,
-auto-slide and branded share components. Keep research links out of UI (§11.16).
+Use the approved uniform 3:2 painted scene family for all thirteen lessons — the
+full scene in the reader, cover-cropped to the shared 4:5 listing thumb in the hub —
+with shared script/font tokens and the existing prose, audio, auto-slide and
+branded share components. Keep research links out of UI (§11.16).
 The versioned learning store hydrates before serialized writes; storage failures
 cannot discard prior saved items. Opening records resume only, forward turns
 record pages left, and Finish clears resume after recording the final page.
@@ -1584,6 +1677,51 @@ exclusive ritual rule. Preserve the full instructions in narration/prose shares.
 Research URLs and source comparisons stay in the internal provenance ledger.
 The source/copy, four-script/size reader-share regression and
 `.maestro/sanatan-swastika-guide.yaml` accompany native visual/export acceptance.
+
+**Visual-learning contract (8 November 2026).** All ten directions must be
+represented in the visual teaching model: eight on the horizontal plane and two
+on a separately readable vertical axis. Do not use a decorative eight-spoke image
+as a complete ten-direction lesson. Keep exact teaching diagrams vector-based,
+names in scalable native text and selection work bounded. Preserve full rosters,
+definitions and instructions in narration/prose shares. Supplemental teaching art
+requires verified public bytes before manifest activation; a pending asset makes
+no request and leaves no empty frame. Prepared art and component previews do not
+establish native visual/ANR acceptance. Follow the evidence and upload contract in
+`docs/content-parity/sanatan-parichay/visual-learning/README.md`.
+
+**Shared-component contract (19 November 2026).** Sanatan Parichay is built from
+the app's shared listing and reader pieces, not a kit of its own (design.md §87,
+§93). Do not reintroduce a private card, a headline or feature block above the
+list, text Save/Share links, or Previous/Next buttons at the end of a page.
+
+- The hub is a §3 "Listing cards" screen: `ListingCard` rows (eyebrow `परिचय N`,
+  title = lesson title, description = collection name within the 32-character
+  budget, meta = page count, progress bar), `ListingScope`, `ListingSectionHeader`.
+  It is in the listing guard list in `components/__tests__/ListingCard.test.tsx`.
+- Turning pages never depends on scrolling to the end of a page: `PagerNavBar` is
+  fixed under the pages. Its last-page action is the explicit Finish that records
+  the final page and clears resume; forward turns still record the page left.
+- Save and share are the shared `BookmarkButton` and `ShareButton` at the top of
+  every page.
+- Every painting in the reader opens the shared picture viewer, and zoom has
+  button controls as well as gestures. A plate's painted names are repeated as
+  native text (`getSanatanLegend`) wherever the lesson has an authored roster, from
+  the same rows narration and sharing read — never a second, hand-typed copy.
+- The page counter is the shared `ReaderPageCounter` with the lesson's page names
+  (§3 "Reader page counter").
+- **The 33-devata lesson leads with the meaning of koti.** Page 1 opens by saying
+  that in "33 कोटि देवता" koti means kind or class, not crore, and only then gives
+  the Upanishad's count; the point must not wait for the last page (owner's
+  direction, 19 November 2026). Sources: Apte's dictionary, senses 6 (crore) and 9
+  (class) — `KOTI-APTE`, re-checked the same day against the Cologne scan of Apte
+  1890, p. 425 — and Brihadaranyaka 3.9 for the count. Page 3 keeps the honest
+  limit: that passage does not itself use the word. Enforced by
+  `data/__tests__/sanatanReadingCopy.jest.test.ts`.
+- Backing tests: `screens/__tests__/SanatanParichay.test.tsx` (card contract in four
+  languages and both sizes, direct open, matched search page, single pager pair,
+  legend, viewer), `components/__tests__/ImageZoomViewer.test.tsx`,
+  `utils/__tests__/imageZoom.test.ts`. Native acceptance uses `.maestro/sanatan-*.yaml`;
+  pinch, drag and double-tap are checked on a device or simulator.
 
 ## 33. Selected devotional dohas — Kabir and Rahim
 
@@ -1610,10 +1748,27 @@ Daily/weekday Suvichar cards rotate eligible originals followed by eligible doha
 Validation: five focused Node integration tests execute the production pool, content, localization, templates and preference parsers; all pass using Node 24 TypeScript stripping with temporary module-resolution hooks. The committed test joins `npm run test:data`. Existing Suvichar Jest rotation assertions now include eligible dohas; native Maestro browsing/edit coverage is authored. Full npm/typecheck/Jest and native iOS/Android four-script, Standard/Large, compact/system-text, capture and sharing acceptance remain pending for this revision. Earlier CI evidence identifies three inherited QuietCompanion onboarding failures also present on main (run 42057469290); no claim that this revision's CI is green. No merge, build or release performed.
 
 
+## 34. Bhajan text shelf (भजन संग्रह) — the sung-text contract
+
+Bhajan lyrics with meaning, listed inside the Bhajan tab (design.md §34.1). Bhajans are sung, regional and variant-rich, so the shelf adds rules on top of §11:
+
+1. **Registry.** A bhajan is four things added together: a payload `mobile/src/data/bhajan/<id>.json` (`BhajanData`), a loader in `bhajanLoaders` (`data/bhajan/index.ts`), a `bhajanCatalog` row `{ id, group }` (`data/bhajan/ids.ts`) and an active `library` entry with `category: 'bhajan'` and `verseCount`. `bhajanLibrary.test.ts` fails if any one is missing. Ids are persisted (bookmarks, progress, routines): append only, kebab-case, never reused.
+2. **Group.** `group` is the deity the bhajan addresses (a `Deity` id from `deities.ts`) or a region (`rajasthani`, `lok-bhajan`). Never add a deity id for a folk deity (Ramdev Pir, Tejaji, Gogaji) — shelve under the region. When `group` is a deity, the entry's `deities` must include it.
+3. **Sources.** §11.1–§11.6 apply in full: two independent published sources actually read, verbatim lines, complete text. Folk and saint-poet texts circulate in many sung variants — ship the reading both sources share, record other verses in `source.notes`, and never splice recensions (§11.6). The Maintainer-attested single-source exception (§11.1) is available but must be listed in `contentCorrectness.test.ts` like any other.
+4. **Rights.** Traditional texts and saint-poets (Meera, Surdas, Tulsidas, Kabir, Narsinh Mehta, Tukaram, Vidyapati) are in scope. Film songs and modern compositions stay out unless the maintainer records distribution rights in the JSON. The competitor list that seeded the backlog is a parity reference only, never a text source.
+5. **Devotional only.** The shelf is for bhajans, including local/regional ones (owner direction, 16 Nov 2026). A folk song with no devotional subject — Kesariya Balam, Ghoomar, Gorband, Panihari, Bedu Pako — is out of scope, however famous. A regional song qualifies only when it addresses or praises a deity, saint or the divine (Chhath geet, Holi rasiya, Vidyapati, Kabir, Ramdev ji).
+6. **No duplicates.** An aarti is an aarti: a text already shipped as an aarti, stotram or chalisa is not re-filed as a bhajan (§11.11), and an aarti not yet in the app goes to the Aarti category.
+7. **Meaning.** `meaningHi` and `meaningEn` for every verse (§11.13). Lines in Rajasthani, Bhojpuri, Braj, Maithili or another regional language also need a plain Hindi gloss in `meaningHi`; record the spoken language in `language`.
+8. **Credit.** `attributionHi/En` names the poet or `पारम्परिक / Traditional`; the reader shows it as plain text (§11.16).
+9. **Verification.** `npm test` (incl. `bhajanLibrary.test.ts`, `BhajanShelf.test.tsx`, `searchIndex.test.ts`, `libraryIntegrity.test.ts`), `npx tsx scripts/gen-verse-counts.mts` when counts change (§11.10), and `.maestro/bhajan-text-smoke.yaml` on both platforms. The acquisition backlog and per-row status live in `docs/content-parity/bhajan-library.md`.
+
 ### Parshuram integration (6 November 2026)
 
 The stable `parshuram` deity uses the `parashu` painted attribute and its own standing background. `stuti/parshuram-stotram.json` is the complete seven-verse Vasudevananda Saraswati recension, routed through the existing Stuti reader and flat Daily Bhakti pool. Original reflections VD-0085–VD-0092 belong only to Parshuram plus the universal original pool. `parshuramPublication.json` activates all new surfaces only after `scripts/prepare-parshuram.mjs --publish` verifies every public artwork hash. Keep pending masters out of runtime manifests. The new remote Daily Bhakti master is capped at 250 KiB independently; all pre-existing masters retain their 9 MiB aggregate cap. Suvichar retains 30 MiB. Exact prompts/provenance, publication procedure and native checks: `docs/content-parity/parshuram/README.md`.
 
+
+
+**Individual timing text shares (Proposal 08, 13 November 2026).** `OccasionTimingsCard` opts into a civil-date line after the occasion name in `occasionShareText`. It uses the existing localized short month plus the year (for example, `8 Nov 2026`), and exactly the `occasionCardReference` passed to the image. Adjacent ceremonies retain their own reference; parana visible on the selected day retains that day. Undated catalog guidance omits the date, while dated guidance keeps it. Individual text endpoints crossing the reference year explicitly include both endpoint years. Location, windows, notes, provider-added download links, image design and astronomical instants are unchanged. Full Panchang retains the default date-heading-free formatter because its body already carries the date. No extra interaction, storage, timer, asset or solver work is introduced.
 
 ### Compact Panchang muhurats and illustrated Vrat cards — 7 November 2026
 Panchang shows one CompactOccasionCard with the approved parchment/double-gold
@@ -1674,3 +1829,8 @@ Approved card-first share flow (8 November 2026): verse Share opens two labelled
 Share generation performance contract (8 November 2026): `TimelyTagsResolver` reads only `getCachedObservancesForDate`, applies the selected regional lenses, and subscribes to existing observance-store updates while mounted. A cache miss retains standard scripture/deity/weekday tags; it must never call the solving day hook, schedule a new year scan or wait for astronomy. Day, city, calendar and lens changes refresh the cached tags; closing unsubscribes. This applies to every card style through the shared provider. Devotional preview/capture identity strings are memoized across native height/paint updates. Artwork tile readiness advances a contiguous painted prefix instead of allocating/rescanning every tile per decode; committed shrink removes discarded tile indices so re-added tiles must paint again. Subject/width/frame changes remount the tile tracker. Full text, image geometry, source artwork, styles and fresh capture barriers remain unchanged. Regression tests cover cache misses outside bundled years, existing scan results, regional filters, day/city changes, unsubscribe, duplicate/reversed tile callbacks and shrink/regrow. Native image decode, actual exports, Android frame/memory profiling and ANR evidence remain separate pending checks.
 
 The devotional export reports settled geometry before artwork readiness, allowing the existing short layout wait and separate artwork wait to function independently. Capture still waits for all decoded slices and final native layout. No timeout, text, image dimensions or visual frame is changed. See `docs/reviews/2026-11-08-share-performance.md`.
+
+**Reader control clearance.** Chalisa uses the measured `ReaderControlRow`: reserve actual control widths plus touch clearance, and move trailing playback to a second row if it cannot fit beside the centred language/routine group. Do not solve overlap with reduced fonts or hidden labels. Recheck locale, text-size and width changes.
+
+
+B1 Satyanarayan Aarti (17 November 2026): the complete selected 1930 edition is appended at aarti index 22, with nine pages, original Hindi/English meanings and existing Vishnu art. Satyanarayan Puja instructions and handoff select this composition, not Om Jai Jagdish. Earlier indices stay fixed. Edition differences, rights basis, verification and native-pending evidence are recorded in `docs/evaluations/b1-satyanarayan-aarti/review.md`.

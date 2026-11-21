@@ -50,7 +50,9 @@ import type { CalendarSystem, ResolvedObservance } from './types';
 // v11: chandrodaya uses geometric Moon centre, matching published Drik clocks.
 // v12: occasion-specific Ganga/Rishi/Purnima/Krishna date corrections; discard
 //      old city scans while retaining follows and all other user preferences.
-const CACHE_VERSION = 12;
+// v13: a civil date and a sankranti day are India's (IST), not the device zone's
+//      (`civilTime.ts`). City scans made on a phone outside India were a day off.
+const CACHE_VERSION = 14;
 const KEY_ROOT = '@vedansh:observances:';
 const KEY_PREFIX = `${KEY_ROOT}v${CACHE_VERSION}:`;
 

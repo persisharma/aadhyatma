@@ -49,7 +49,7 @@ it('retains the sender through deity/frame changes and saves the latest name', a
   const calls = jest.mocked(AsyncStorage.setItem).mock.calls;
   expect(JSON.parse(calls[calls.length - 1][1]).name).toBe('Sharma family');
 });
-it('selects Ram Lalla, saves the photo card and hands its selected frame and sender to sharing', async () => {
+it('selects Ram Lalla, saves the approved generated card and hands its selected frame and sender to sharing', async () => {
   await mount();
   act(() => node('suvichar-name').props.onChangeText('Sharma family'));
   pickDeity('ram-lalla');
@@ -63,7 +63,7 @@ it('selects Ram Lalla, saves the photo card and hands its selected frame and sen
   await act(async () => node('suvichar-share').props.onPress());
   const element = sharedCard().render({ lang: 'hi', onReady: jest.fn() }) as React.ReactElement<Record<string, unknown>>;
   expect(element.props).toMatchObject({ deity: 'ram-lalla', frame: 'bhakti-patra', name: 'Sharma family', width: 540 });
-  expect(sharedCard().caption('hi').label).toBe('राम लला · अयोध्या');
+  expect(sharedCard().caption('hi').label).toBe('श्री राम लला');
 });
 it('shares nothing before art readiness, then hands the provider the branded card', async () => {
   await mount(); expect(node('suvichar-share').props.disabled).toBe(true);

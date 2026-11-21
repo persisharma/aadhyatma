@@ -1,13 +1,20 @@
 ---
 title: Sanatan Parichay
 type: subsystem
-sources: [mobile/src/data/sanatan-parichay/index.ts, mobile/src/data/sanatan-parichay/store.ts, mobile/src/screens/SanatanParichayScreen.tsx, mobile/src/screens/SanatanReaderScreen.tsx]
-last_verified_date: 2026-11-08
+sources: [mobile/src/data/sanatan-parichay/index.ts, mobile/src/data/sanatan-parichay/store.ts, mobile/src/data/sanatan-parichay/knowledge.ts, mobile/src/data/sanatan-parichay/content.json, mobile/src/screens/SanatanParichayScreen.tsx, mobile/src/screens/SanatanReaderScreen.tsx, mobile/src/components/sanatan/LessonPanels.tsx, mobile/src/components/PagerNavBar.tsx, mobile/src/components/ImageZoomViewer.tsx, mobile/src/components/ReaderPageCounter.tsx]
+last_verified_date: 2026-11-19
 confidence: high
 status: current
 ---
 
 ## Summary
+
+> **Gotcha / update (18 Nov 2026):** the figure page's visual is a **painted teaching
+> plate** (R2, prefix `sanatan-learning`), not an SVG schematic. 13 concepts × {hi,en}
+> = 26 webp; `lessonArtLang` maps hi+gu→hi plate, en+kn→en plate. `ExploreDiagram`
+> now renders `LessonArt` (CachedArtwork) + one caption line; `TenDirectionsDiagram`
+> and `ConceptFigures` were removed. Manifest `lessonArtManifest.json` is the R2
+> upload allowlist (`.github/workflows/r2-upload.yml`, dry-run on PRs).
 
 Thirteen approved editorial introductions form a question-led learning journey.
 Each has three Hindi/English paragraphs, a topic-specific visual explanation,
@@ -16,14 +23,16 @@ subset of research PR #605, not the full 201-topic catalogue.
 
 ## Details
 
-Home lazily mounts `SanatanHomeCard`; `SanatanParichay` is the hub or a collection
-overview depending on `topicId`. Push a collection to preserve hub query/filter
-on Back. `SanatanReader` validates IDs and page bounds. Global Search lazily adds
+Home lazily mounts `SanatanHomeCard`; `SanatanParichay` is the hub only (the
+collection overview and its `topicId` param were removed on 19 Nov 2026 — see the
+last section). A card opens `SanatanReader` directly; Back returns to the hub with
+its query and filter intact. `SanatanReader` validates IDs and page bounds. Global Search lazily adds
 up to three deterministic matching lessons. All routes live in the Home stack.
 
 The reader uses the shared header, progress, prose, read-aloud, auto-slide and
 share components. Diagrams keep selected-source variants separate. Share uses
-authored introductory paragraphs without bibliography or saved state.
+complete authored pages plus the lesson definitions, takeaway and visual rosters,
+without bibliography or saved state.
 The language helper derives Gujarati/Kannada script from Hindi prose.
 
 `@vedansh/sanatan-learning-v1` is independent of existing bookmarks/progress.
@@ -83,3 +92,52 @@ use shared script/reading tokens; narration and prose shares retain equivalent
 full drawing instructions. No universal stroke/finger/dot requirement is claimed.
 See `docs/content-parity/sanatan-parichay/swastika-guide.md` for source scope and
 pending native/editorial acceptance. This expansion is not a catalogue expansion.
+
+
+## Visual teaching — 8 November 2026
+
+All 13 introductions now have answers, terms, takeaways and real onward reading
+links. Search indexes taught terms/page headings and selects the matching page.
+The ten-direction schematic includes the vertical axis, with all ten readable
+native controls. Other diagrams distinguish temple spaces, literary forms,
+dialogue turns, elements and an illustrative Panchang row. New Ganesha/Tulasi
+teaching art is prepared but disabled until user upload and hash verification;
+`lessonArtManifest.json` is intentionally empty. Existing collection art remains.
+The publication script, source/export ledger and acceptance are in
+`docs/content-parity/sanatan-parichay/visual-learning/`. No catalogue expansion or
+full native Gujarati/Kannada translation is implied by this UI revision.
+
+
+## Shared-component rebuild — 19 November 2026
+
+The section no longer has a look of its own (RULEBOOK §32 "Shared-component
+contract", design.md §87/§93/§94).
+
+- **Hub.** `ListingCard` rows on the shared listing frame: eyebrow `परिचय N`
+  (sequence only), title = lesson title, description = collection name (the
+  32-character line cannot hold most questions), meta = page count, progress from
+  `learning.read`, a 4:5 `ListingThumbImage` with a per-collection `focusX`
+  (`sanatanThumbFocus`). Search uses `searchSanatanMatches`, so a hit opens the
+  matched page. The header bookmark is the saved-only filter.
+- **Reader.** `PagerNavBar` is fixed under the pages (previous / dots / next; the
+  last page's next is the Finish tick). The shared `BookmarkButton` and
+  `ShareButton` sit at the top of every page. The counter is the shared
+  `ReaderPageCounter` with the lesson's page names, so the picker lists
+  "1 · <page title>" rows ([[subsystems/readers]]).
+- **Pictures.** `ZoomableArtwork` wraps the opening painting and the teaching
+  plate; both open `ImageZoomViewer` (RN `Modal` + `PanResponder` + `Animated`, no
+  gesture-handler; pinch, drag, double-tap, +/− buttons; geometry is pure in
+  `utils/imageZoom.ts`). The plate runs edge to edge. `getSanatanLegend(id)`
+  repeats a plate's painted names as native text for the five lessons with an
+  authored roster (dikpal, thirty, graha, forms, elements); the other eight have
+  zoom only.
+- **33-devata lesson.** Page 1 now opens with koti = kind/class, not crore, then
+  the Upanishad's count; the owner asked that this not wait for page 3. `refs`
+  gained `KOTI-APTE` (Apte senses 6 and 9), which the provenance file already held.
+  Page 3 still says the passage itself does not use the word.
+
+Gotchas: the question lives in the page-1 "सरल उत्तर" card, not on the hub card.
+`sanatan-page-N` and `sanatan-start` test IDs are gone; flows use the card, the
+fixed `sanatan-next`, and `sanatan-page-counter`. The viewer's zoom readout is
+labelled "Zoom 1×" for accessibility, so flows assert that string, not "1×".
+

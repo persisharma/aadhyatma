@@ -4,6 +4,8 @@ import { garudPuranImages } from '@assets/garud-puran';
 import { gitaImages } from '@assets/gita';
 import { shivaStrotamImages } from '@assets/shiva-strotam';
 import { aartiIdByIndex } from './aarti/ids';
+import { BHAGAVATAM_ID } from './bhagavatam';
+import { bhajanGroupOf } from './bhajan/ids';
 import { categories } from './categories';
 import { deities } from './deities';
 import { japamMantras } from './japam';
@@ -34,6 +36,9 @@ const categoryBackgrounds: Record<ContentCategory, BackgroundImage> = {
   // backgrounds resolve by source id below (Lingashtakam → Shiva sketch).
   ashtakam: backgroundImages.category_stotram_hymn_scroll,
   suktam: backgroundImages.category_stotram_hymn_scroll,
+  // Bhajan shelf reuses the diya plate (sung devotion, like aarti). Each
+  // bhajan's reader resolves to its group deity's plate (getSourceBackground).
+  bhajan: backgroundImages.category_aarti_diya,
   // No `stuti` key — स्तुति folded into `stotram` (not a category). Its texts
   // resolve per-id reader backgrounds via sourceBackgrounds below.
 };
@@ -64,8 +69,30 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
+  'durga-devi-kavacham': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-1': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-2': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-3': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-4': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-5': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-6': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-7': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-8': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-9': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-10': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-11': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-12': backgroundImages.deity_durga_lion,
+  'durga-saptashati-chapter-13': backgroundImages.deity_durga_lion,
+  'durga-kilak-stotram': backgroundImages.deity_durga_lion,
+  'durga-argala-stotram': backgroundImages.deity_durga_lion,
+  'hanuman-bahuk': chalisaImages.hanuman_sea,
+  'aditya-hridayam': backgroundImages.deity_surya,
+  'kanakadhara-stotram': backgroundImages.deity_lakshmi,
+  'shri-suktam': backgroundImages.deity_lakshmi,
+  'kalabhairav-ashtakam': shivaStrotamImages.shiva,
   'hanuman-chalisa': chalisaImages.ram_hanuman,
   'bhagavad-gita': gitaImages.krishna_arjuna_vishvarupa,
+  [BHAGAVATAM_ID]: backgroundImages.category_granth_open_scripture,
   'garud-puran': garudPuranImages.cover,
   'gita-saar': gitaImages.krishna_arjuna_vishvarupa,
   sundarkand: chalisaImages.hanuman_sea,
@@ -118,12 +145,18 @@ const sourceBackgrounds: Record<string, BackgroundImage> = {
   'khatu-shyam-chalisa': backgroundImages.theerth_khatu_shyam,
   'lakshmi-chalisa': backgroundImages.deity_lakshmi,
   'surya-chalisa': backgroundImages.deity_surya,
+  'vaishno-devi-chalisa': backgroundImages.deity_durga_lion,
+  'shani-chalisa': backgroundImages.deity_shani,
+  'santoshi-mata-chalisa': backgroundImages.deity_durga_lion,
+  'kali-chalisa': backgroundImages.deity_kali,
+  'radha-chalisa': backgroundImages.deity_radha_krishna,
   'hanuman-ashtak': chalisaImages.hanuman_lankadahan,
   'bajrang-baan': chalisaImages.hanuman_lankadahan,
   'ram-stuti': backgroundImages.deity_rama_darbar,
   'ram-aarti': backgroundImages.deity_rama_darbar,
   'krishna-stotram': backgroundImages.deity_krishna_bansuri,
   'om-jai-jagdish': backgroundImages.source_vishnu_narayana,
+  'satyanarayan-aarti': backgroundImages.source_vishnu_narayana,
   'hanuman-aarti': chalisaImages.hanuman_lankadahan,
   'jai-ganesh-deva': backgroundImages.deity_ganesha_modak,
   'om-jai-shiv-omkara': shivaStrotamImages.shiva,
@@ -270,7 +303,15 @@ export function getDaanBackground(): BackgroundImage {
 }
 
 export function getSourceBackground(sourceId: string): BackgroundImage | null {
-  return sourceBackgrounds[sourceId] ?? null;
+  const own = sourceBackgrounds[sourceId];
+  if (own) return own;
+  // Bhajans take their group deity's plate; regional groups (Rajasthani, lok
+  // geet) have no deity, so they keep the shelf's diya plate.
+  const bhajanGroup = bhajanGroupOf(sourceId);
+  if (bhajanGroup) {
+    return (deityBackgrounds as Record<string, BackgroundImage>)[bhajanGroup] ?? categoryBackgrounds.bhajan;
+  }
+  return null;
 }
 
 export function getReaderBackground(

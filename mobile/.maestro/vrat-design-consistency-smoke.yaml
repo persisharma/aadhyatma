@@ -24,7 +24,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "observance-reminder-karwa-chauth" }
 - tapOn: { id: "reminder-sheet-save", optional: true }
 - assertVisible: "Remove saved Karwa Chauth"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: { text: "My Vrat.*", index: 0 }
 - waitForAnimationToEnd
 - assertVisible: "Reminders for Karwa Chauth"
@@ -47,12 +47,12 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: { id: "katha-search" }
 - takeScreenshot: e2e-shots/vrat-design-katha
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: "Festivals,.*"
 - waitForAnimationToEnd
 - assertVisible: "Area: all"
 - takeScreenshot: e2e-shots/vrat-design-parv
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - tapOn: "Upvas,.*"
 - waitForAnimationToEnd
 - assertVisible: "Area: all"

@@ -12,6 +12,8 @@
  * always parameterised.
  */
 
+import type { Lang } from '@/data/gita/language';
+import { contentByLang } from '@/utils/localize';
 import { ROLLING_WINDOW_DAYS } from './pure';
 
 /** Identifier prefix for all PRD-09 vrat notifications. Lets us cancel just ours. */
@@ -152,12 +154,36 @@ export function planVratReminders(
   return { planned, truncated };
 }
 
-/** Hindi-led notification copy for one planned vrat notification. */
-export function formatVratReminderContent(p: PlannedVratNotification): { title: string; body: string } {
-  const title = p.titleHi ?? 'व्रत स्मरण';
+/**
+ * Keys (`ruleId:occurrenceDateKey`) of the day-of notices a plan actually holds.
+ * The festive planner skips these so a followed festival is announced once.
+ */
+export function dayOfCoveredKeys(planned: PlannedVratNotification[]): Set<string> {
+  return new Set(
+    planned.filter((p) => p.kind === 'dayOf').map((p) => `${p.ruleId}:${p.occurrenceDateKey}`)
+  );
+}
+
+/**
+ * Notification copy for one planned vrat notification, in the reading language.
+ * Hindi keeps its Hindi-plus-English pairing; en is English only; gu/kn re-script
+ * the Hindi sentence. `titleHi` is only ever set by the visarjan override.
+ */
+export function formatVratReminderContent(
+  p: PlannedVratNotification,
+  lang: Lang = 'hi'
+): { title: string; body: string } {
+  const title = contentByLang(
+    lang,
+    p.titleHi ?? 'व्रत स्मरण',
+    p.titleHi ? 'Visarjan reminder' : 'Vrat reminder'
+  );
   if (p.kind === 'dayOf') {
-    return { title, body: `आज ${p.nameHi} है · ${p.nameEn} today` };
+    if (lang === 'hi') return { title, body: `आज ${p.nameHi} है · ${p.nameEn} today` };
+    return { title, body: contentByLang(lang, `आज ${p.nameHi} है`, `${p.nameEn} today`) };
   }
-  const when = p.advanceDays === 1 ? 'कल' : `${p.advanceDays} दिन में`;
-  return { title, body: `${when} ${p.nameHi} · ${p.nameEn}` };
+  const whenHi = p.advanceDays === 1 ? 'कल' : `${p.advanceDays} दिन में`;
+  if (lang === 'hi') return { title, body: `${whenHi} ${p.nameHi} · ${p.nameEn}` };
+  const whenEn = p.advanceDays === 1 ? 'tomorrow' : `in ${p.advanceDays} days`;
+  return { title, body: contentByLang(lang, `${whenHi} ${p.nameHi}`, `${p.nameEn} ${whenEn}`) };
 }

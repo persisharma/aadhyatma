@@ -1,14 +1,19 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import { FlatList, Modal, Text, TextInput } from 'react-native';
 import { GitaLanguageProvider, type Lang } from '@/data/gita/language';
 import { contentByLang } from '@/utils/localize';
 import { ShareProvider } from '@/utils/shareVerse';
-import { getSanatanTopics, getSanatanTopic } from '@/data/sanatan-parichay';
+import { getSanatanTopics, getSanatanTopic, getSanatanReadingPages } from '@/data/sanatan-parichay';
 import SanatanParichayScreen from '../SanatanParichayScreen';
 import SanatanReaderScreen from '../SanatanReaderScreen';
 import ExploreDiagram from '@/components/sanatan/ExploreDiagram';
+import ListingCard from '@/components/ListingCard';
+import BookmarkButton from '@/components/BookmarkButton';
+import { directions } from '@/data/sanatan-parichay/knowledge';
+import { experiences } from '@/data/sanatan-parichay/experience';
 import SwastikaGuide from '@/components/sanatan/SwastikaGuide';
 import { Path, Circle } from 'react-native-svg';
 import * as sharing from '@/utils/shareVerse';
@@ -29,21 +34,28 @@ function text(tree: TestRenderer.ReactTestRenderer) {
 }
 async function render(node: React.ReactNode, lang: Lang = 'en') {
   let tree!: TestRenderer.ReactTestRenderer;
-  await act(async () => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}><ThemeProvider><ShareProvider>{node}</ShareProvider></ThemeProvider></GitaLanguageProvider>); });
+  // The app root owns the safe-area provider; the picture viewer reads its insets.
+  await act(async () => { tree = TestRenderer.create(<SafeAreaInsetsContext.Provider value={{ top: 47, bottom: 34, left: 0, right: 0 }}><GitaLanguageProvider initialLang={lang}><ThemeProvider><ShareProvider>{node}</ShareProvider></ThemeProvider></GitaLanguageProvider></SafeAreaInsetsContext.Provider>); });
   return tree;
 }
 afterEach(() => { jest.clearAllMocks(); jest.restoreAllMocks(); mockReadingFactor = 1; });
-test('question search opens the exact collection and keeps the query on Back', async () => {
+// The innermost pressable carrying the testID (the shared card passes it down through two wrappers).
+const byId = (tree: TestRenderer.ReactTestRenderer, id: string) => tree.root.findAll(node => node.props.testID === id && typeof node.props.onPress === 'function').at(-1)!;
+const hostButtons = (tree: TestRenderer.ReactTestRenderer, label: string) => tree.root.findAll(node => typeof node.type === 'string' && node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === label);
+test('question search opens the exact lesson and keeps the query on Back', async () => {
   const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
   const input = tree.root.findByType(TextInput);
   expect(input.props.autoCorrect).toBe(false);
   expect(input.props.autoCapitalize).toBe('none');
   expect(input.props.returnKeyType).toBe('search');
   act(() => tree.root.findByType(TextInput).props.onChangeText('33 koti devta'));
-  const target = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Thirty-three devata')[0];
-  expect(target).toBeDefined();
+  expect(tree.root.findAllByType(ListingCard).map(node => node.props.testID).filter(id => String(id).startsWith('sanatan-collection-'))).toEqual(['sanatan-collection-thirty']);
+  const target = byId(tree, 'sanatan-collection-thirty');
+  expect(target.props.accessibilityLabel).toBe('Introduction 3. The reckoning of thirty-three. 3 pages. Tap to open.');
   act(() => target.props.onPress());
-  expect(navigation.push).toHaveBeenCalledWith('SanatanParichay', { topicId: 'thirty' });
+  // No overview screen in between: a card opens the lesson's first page.
+  expect(navigation.navigate).toHaveBeenCalledWith('SanatanReader', { topicId: 'thirty', initialPage: 0 });
+  expect(navigation.push).not.toHaveBeenCalled();
   expect(tree.root.findByType(TextInput).props.value).toBe('33 koti devta');
   act(() => tree.unmount());
 });
@@ -54,7 +66,7 @@ test.each<Lang>(['hi','en','gu','kn'])('reader renders complete authored prose i
   for (const paragraph of contentByLang(lang, ...topic.pages[0]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph);
   const list = tree.root.findByType(FlatList);
   await act(async () => { list.props.onMomentumScrollEnd({ nativeEvent: { contentOffset: { x: list.props.getItemLayout(null, 1).length } } }); });
-  expect(text(tree)).toMatch(/2\s*\/3/);
+  expect(text(tree)).toMatch(/2\s*\/\s*3/);
   act(() => tree.unmount());
 });
 test('unknown reader IDs do not substitute another deity or start playback', async () => {
@@ -64,19 +76,21 @@ test('unknown reader IDs do not substitute another deity or start playback', asy
   expect(tree.root.findAllByType(FlatList)).toHaveLength(0);
   act(() => tree.unmount());
 });
-test('directions include the selected above/below source, and Dashavatara lists stay separate', async () => {
-  const tree = await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} onCollection={jest.fn()} />);
-  const above = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Above')[0];
-  act(() => above.props.onPress());
-  expect(text(tree)).toContain('Above · Brahma');
+test('the figure page shows the painted teaching plate and its one-line caption', async () => {
+  const tree = await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!} />);
+  expect(tree.root.findAll(node => node.props.testID === 'sanatan-explore-dikpal').length).toBeGreaterThan(0);
+  const plate = byId(tree, 'sanatan-plate-dikpal');
+  expect(plate.props.accessibilityRole).toBe('button');
+  expect(plate.props.accessibilityLabel).toContain('View picture larger');
+  expect(text(tree)).toContain('directions');
+  // The ten painted names are also real text under the plate.
+  for (const [, direction, , guardian] of directions) { expect(text(tree)).toContain(direction); expect(text(tree)).toContain(guardian); }
+  expect(tree.root.findAllByType(Modal)).toHaveLength(0);
+  act(() => plate.props.onPress());
+  expect(tree.root.findAll(node => node.props.testID === 'image-viewer').length).toBeGreaterThan(0);
+  act(() => byId(tree, 'image-viewer-close').props.onPress());
+  expect(tree.root.findAll(node => node.props.testID === 'image-viewer')).toHaveLength(0);
   act(() => tree.unmount());
-  const avatars = await render(<ExploreDiagram topic={getSanatanTopic('forms')!} onCollection={jest.fn()} />);
-  expect(text(avatars)).toContain('9. Krishna');
-  const jayadeva = avatars.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === 'Jayadeva')[0];
-  act(() => jayadeva.props.onPress());
-  expect(text(avatars)).toContain('9. Buddha');
-  expect(text(avatars)).not.toContain('9. Krishna');
-  act(() => avatars.unmount());
 });
 
 test('finishing persists the final page and clears resume before returning', async () => {
@@ -95,22 +109,27 @@ test('finishing persists the final page and clears resume before returning', asy
 
 for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
   for (const factor of [1, 1.15]) {
-    test(`${lang}/${factor}: every collection has working page doors without a bibliography modal`, async () => {
+    test(`${lang}/${factor}: the hub lists every lesson on the shared card and opens its reader`, async () => {
       mockReadingFactor = factor;
+      const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']}
+        route={{ key: 'hub', name: 'SanatanParichay' }} />, lang);
+      expect(tree.root.findAllByType(Modal)).toHaveLength(0);
+      expect(text(tree)).not.toMatch(/Sources & context|स्रोत और सन्दर्भ|IMD Positional|Object 37397/);
+      expect(text(tree)).toContain(contentByLang(lang, '13 परिचय · चित्रों के साथ सरल उत्तर', '13 introductions · simple answers with pictures'));
+      expect(tree.root.findAllByType(ListingCard).filter(node => String(node.props.testID).startsWith('sanatan-collection-'))).toHaveLength(getSanatanTopics().length);
       for (const topic of getSanatanTopics()) {
-        const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']}
-          route={{ key: topic.id, name: 'SanatanParichay', params: { topicId: topic.id } }} />, lang);
-        expect(tree.root.findAllByType(Modal)).toHaveLength(0);
-        expect(text(tree)).not.toMatch(/Sources & context|स्रोत और सन्दर्भ|IMD Positional|Object 37397/);
-        for (let i = 0; i < 3; i++) {
-          const label = contentByLang(lang, ...topic.pageTitles![i]);
-          const target = tree.root.findAll(n => n.props.accessibilityRole === 'button' && n.props.accessibilityLabel === label)[0];
-          expect(target).toBeDefined();
-          act(() => target.props.onPress());
-          expect(navigation.navigate).toHaveBeenLastCalledWith('SanatanReader', { topicId: topic.id, initialPage: i });
-        }
-        act(() => tree.unmount());
+        const row = tree.root.findAllByType(ListingCard).find(node => node.props.testID === `sanatan-collection-${topic.id}`)!;
+        // RULEBOOK §3: the eyebrow is the sequence; the one-line description stays within 32 characters.
+        expect(row.props.eyebrow).toBe(`${contentByLang(lang, 'परिचय', 'Introduction')} ${getSanatanTopics().indexOf(topic) + 1}`);
+        expect(row.props.title).toBe(contentByLang(lang, ...topic.title));
+        expect(row.props.description).toBe(contentByLang(lang, ...topic.name));
+        expect([...row.props.description].length).toBeLessThanOrEqual(32);
+        expect(row.props.description).not.toMatch(/[.।]$/);
+        expect(row.props.meta).toBe(`3 ${contentByLang(lang, 'पृष्ठ', 'pages')}`);
+        act(() => row.props.onPress());
+        expect(navigation.navigate).toHaveBeenLastCalledWith('SanatanReader', { topicId: topic.id, initialPage: 0 });
       }
+      act(() => tree.unmount());
     });
   }
   test(`${lang}: page and whole-lesson shares contain exactly the authored prose`, async () => {
@@ -123,8 +142,8 @@ for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
     const button = tree.root.findAll(n => n.props.accessibilityRole === 'button' && n.props.accessibilityLabel === contentByLang(lang, 'साझा करें', 'Share'))[0];
     await act(async () => button.props.onPress());
     const payload = share.mock.calls[0][0] as unknown as sharing.ShareableProse;
-    expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: topic.pages[0][0], en: topic.pages[0][1] }]);
-    expect(payload.scopes[1].blocks).toEqual(topic.pages.map(([hi, en]) => ({ kind: 'para', hi, en })));
+    expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: getSanatanReadingPages(topic)[0][0], en: getSanatanReadingPages(topic)[0][1] }]);
+    expect(payload.scopes[1].blocks).toEqual(getSanatanReadingPages(topic).map(([hi, en]) => ({ kind: 'para', hi, en })));
     act(() => tree.unmount());
   });
 }
@@ -138,16 +157,16 @@ for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
       const topic = getSanatanTopic('symbols')!;
       const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
         route={{ key: 'drawing', name: 'SanatanReader', params: { topicId: 'symbols', initialPage: 2 } }} />, lang);
-      expect(text(tree)).toMatch(/3\s*\/3/);
+      expect(text(tree)).toMatch(/3\s*\/\s*3/);
       for (let stage = 0; stage < 3; stage++) {
         expect(tree.root.findAll(node => node.props.testID === `swastika-stage-${stage}`).length).toBeGreaterThan(0);
       }
-      for (const paragraph of contentByLang(lang, ...topic.pages[2]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph);
+      for (const paragraph of contentByLang(lang, ...topic.pages[2]).split(/\n\s*\n/)) expect(text(tree)).toContain(paragraph.replace(/^\d+\.\s+/,''));
       const button = tree.root.findAll(node => node.props.accessibilityRole === 'button' && node.props.accessibilityLabel === contentByLang(lang, 'साझा करें', 'Share'))[0];
       await act(async () => button.props.onPress());
       const payload = share.mock.calls[0][0] as sharing.ShareableProse;
       expect(share.mock.calls[0][1]).toBe(lang);
-      expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: topic.pages[2][0], en: topic.pages[2][1] }]);
+      expect(payload.scopes[0].blocks).toEqual([{ kind: 'para', hi: getSanatanReadingPages(topic)[2][0], en: getSanatanReadingPages(topic)[2][1] }]);
       expect(payload.scopes[1].blocks).toHaveLength(3);
       act(() => tree.unmount());
     });
@@ -176,5 +195,108 @@ test('drawing stages preserve four equal right-angle clockwise turns and add dot
     expect((x - 60) * dy - (y - 60) * dx).toBeGreaterThan(0);
     expect(Math.hypot(dx, dy)).toBe(43);
   }
+  act(() => tree.unmount());
+});
+
+for (const lang of ['hi','en','gu','kn'] as const) {
+ test(`${lang}: the figure page renders its painted plate, caption and legend`,async()=>{
+  const tree=await render(<ExploreDiagram topic={getSanatanTopic('dikpal')!}/>,lang);
+  expect(byId(tree,'sanatan-plate-dikpal')).toBeDefined();
+  expect(text(tree)).toContain(contentByLang(lang,...experiences.dikpal.answer));
+  expect(tree.root.findAll(n=>n.props.testID==='sanatan-legend-dikpal').length).toBeGreaterThan(0);
+  for(const [direction,,guardian] of directions)expect(text(tree)).toContain(contentByLang(lang,direction,''));
+  act(()=>tree.unmount());
+ });
+}
+
+test('a hub search opens the page that matched, not always the first', async () => {
+  const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
+  act(() => tree.root.findByType(TextInput).props.onChangeText('Maitreyi'));
+  act(() => byId(tree, 'sanatan-collection-rishis').props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('SanatanReader', { topicId: 'rishis', initialPage: 2 });
+  act(() => tree.unmount());
+});
+
+test('the fixed pager bar turns pages, and the first page has nothing before it', async () => {
+  const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
+    route={{ key: 'pager', name: 'SanatanReader', params: { topicId: 'dikpal', initialPage: 0 } }} />);
+  expect(byId(tree, 'pager-previous').props.disabled).toBe(true);
+  expect(byId(tree, 'sanatan-next').props.accessibilityLabel).toBe('Next page');
+  await act(async () => byId(tree, 'sanatan-next').props.onPress());
+  expect(text(tree)).toMatch(/2\s*\/\s*3/);
+  expect(byId(tree, 'pager-previous').props.disabled).toBe(false);
+  await act(async () => byId(tree, 'sanatan-next').props.onPress());
+  expect(byId(tree, 'sanatan-next').props.accessibilityLabel).toBe('Finish introduction');
+  await act(async () => byId(tree, 'pager-previous').props.onPress());
+  expect(text(tree)).toMatch(/2\s*\/\s*3/);
+  const stored = JSON.parse(jest.mocked(AsyncStorage.setItem).mock.calls.filter(([key]) => key === '@vedansh/sanatan-learning-v1').at(-1)![1]);
+  // Forward turns record the pages left; going back is not completion.
+  expect(stored.read.dikpal).toEqual(expect.arrayContaining([0, 1]));
+  expect(stored.resume).toEqual({ id: 'dikpal', page: 1 });
+  act(() => tree.unmount());
+});
+
+test('the opening painting opens the shared viewer, and the reader has no end-of-page buttons', async () => {
+  const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
+    route={{ key: 'zoom', name: 'SanatanReader', params: { topicId: 'deity', initialPage: 0 } }} />);
+  // One fixed pair for the whole lesson, not a pair at the end of every page.
+  expect(hostButtons(tree, 'Previous page')).toHaveLength(1);
+  expect(hostButtons(tree, 'Next page')).toHaveLength(1);
+  // The question the lesson answers stays in the journey, above its answer.
+  expect(text(tree)).toContain('How do we recognise a deity?');
+  act(() => byId(tree, 'sanatan-painting-deity').props.onPress());
+  expect(tree.root.findAll(node => node.props.testID === 'image-viewer').length).toBeGreaterThan(0);
+  expect(text(tree)).toContain('1×');
+  act(() => byId(tree, 'image-viewer-zoom-in').props.onPress());
+  expect(text(tree)).toContain('1.75×');
+  act(() => tree.unmount());
+});
+
+test('saved and group filters narrow the hub, and resume opens the stored page', async () => {
+  // Real store, driven through the reader: save one lesson and leave another on its last page.
+  const saving = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
+    route={{ key: 'save', name: 'SanatanReader', params: { topicId: 'time', initialPage: 0 } }} />);
+  const wasSaved = saving.root.findAllByType(BookmarkButton)[0].props.isBookmarked;
+  if (!wasSaved) await act(async () => saving.root.findAllByType(BookmarkButton)[0].props.onToggle());
+  expect(saving.root.findAllByType(BookmarkButton)[0].props.isBookmarked).toBe(true);
+  expect(saving.root.findAllByType(BookmarkButton)[0].props.accessibilityLabel).toBe('Remove saved lesson');
+  act(() => saving.unmount());
+  const leaving = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
+    route={{ key: 'leave', name: 'SanatanReader', params: { topicId: 'rishis', initialPage: 2 } }} />);
+  act(() => leaving.unmount());
+
+  const tree = await render(<SanatanParichayScreen navigation={navigation as unknown as HubProps['navigation']} route={{ key: 'hub', name: 'SanatanParichay' }} />);
+  const rows = () => tree.root.findAllByType(ListingCard).map(node => String(node.props.testID)).filter(id => id.startsWith('sanatan-collection-')).map(id => id.replace('sanatan-collection-', ''));
+  expect(rows()).toHaveLength(13);
+  act(() => byId(tree, 'sanatan-resume').props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('SanatanReader', { topicId: 'rishis', initialPage: 2 });
+  act(() => byId(tree, 'sanatan-filter-time').props.onPress());
+  expect(rows()).toEqual(['elements', 'time', 'texts', 'rishis']);
+  act(() => tree.root.findAllByType(BookmarkButton)[0].props.onToggle());
+  expect(rows()).toEqual(['time']);
+  // The saved view hides the cross-link to another section.
+  expect(tree.root.findAll(node => node.props.testID === 'sanatan-sanskar')).toHaveLength(0);
+  act(() => tree.root.findAllByType(BookmarkButton)[0].props.onToggle());
+  act(() => byId(tree, 'sanatan-filter-all').props.onPress());
+  expect(rows()).toHaveLength(13);
+  act(() => byId(tree, 'sanatan-sanskar').props.onPress());
+  expect(navigation.navigate).toHaveBeenLastCalledWith('CategoryList', { categoryId: 'sanskar' });
+  act(() => tree.unmount());
+});
+
+test('the page counter opens a named page picker and jumps straight to the chosen page', async () => {
+  const tree = await render(<SanatanReaderScreen navigation={navigation as unknown as ReaderProps['navigation']}
+    route={{ key: 'jump', name: 'SanatanReader', params: { topicId: 'thirty', initialPage: 0 } }} />);
+  const counter = byId(tree, 'sanatan-page-counter');
+  expect(counter.props).toMatchObject({ accessibilityRole: 'button', accessibilityLabel: '1 / 3', accessibilityHint: 'Go to page' });
+  act(() => counter.props.onPress());
+  // Each page is offered by name, and the "kinds, not crore" page leads the lesson.
+  expect(byId(tree, 'page-jump-page-1').props.accessibilityLabel).toBe('Page 1. Koti means kinds, not crore');
+  expect(byId(tree, 'page-jump-page-3').props.accessibilityLabel).toBe('Page 3. Beyond the count');
+  act(() => byId(tree, 'page-jump-page-3').props.onPress());
+  await act(async () => byId(tree, 'page-jump-open').props.onPress());
+  expect(byId(tree, 'sanatan-page-counter').props.accessibilityLabel).toBe('3 / 3');
+  expect(byId(tree, 'sanatan-next').props.accessibilityLabel).toBe('Finish introduction');
+  expect(tree.root.findAll(node => node.props.testID === 'page-jump-sheet')).toHaveLength(0);
   act(() => tree.unmount());
 });

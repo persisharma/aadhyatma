@@ -24,6 +24,7 @@
  */
 
 import type { Lang } from '@/data/gita/language';
+import { verseLinesForDisplay } from './versePresentation';
 import { readableRomanization } from './readableRomanization';
 import { transliterateDevanagari } from './transliterate';
 
@@ -92,9 +93,11 @@ export function commentaryByLang(
 export function verseLinesByLang(
   lang: Lang,
   devaLines: readonly string[],
-  latinLines: readonly string[]
+  latinLines: readonly string[],
+  referenceLabel?: string
 ): readonly string[] {
-  if (lang === 'hi') return devaLines;
-  if (lang === 'en') return readableRomanization(latinLines);
-  return devaLines.map((l) => transliterateDevanagari(l, lang));
+  const deva = verseLinesForDisplay(devaLines, referenceLabel);
+  if (lang === 'hi') return deva;
+  if (lang === 'en') return readableRomanization(verseLinesForDisplay(latinLines, referenceLabel));
+  return deva.map((l) => transliterateDevanagari(l, lang));
 }

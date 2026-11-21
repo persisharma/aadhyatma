@@ -474,6 +474,8 @@ struct VedanshWidgetView: View {
               Spacer(minLength: 0)
             }
             .padding(.horizontal, 2)
+            // Centre shorter complete verses in the wide canvas instead of
+            // leaving a conspicuous unused lower half beneath the artwork.
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
           }
         }
@@ -721,7 +723,7 @@ struct VedanshWidgetView: View {
         }
         .widgetURL(URL(string: p.deepLink))
         .accessibilityElement(children: .combine)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
       } else {
         VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
           Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
@@ -788,11 +790,10 @@ struct VedanshWidgetView: View {
       .widgetURL(URL(string: "vedansh://widget/panchang?date=\(key)"))
   }
   private func brand() -> some View { Text("ॐ वेदांश़").font(.custom("NotoSerifDevanagari-SemiBold", size: 10)).foregroundStyle(palette.gold) }
-  // The verse as one flowing paragraph, padas separated the way the planner's
-  // excerpt separates them, so the wide cell keeps the shipped look while the
-  // text wraps to whatever line count the cell actually has.
+  // Preserve every authored pada boundary in all wide/condensed compositions.
+  // Each pada can wrap naturally; it never flows into the preceding line.
   private func flowedVerse(_ lines: [String]) -> String {
-    lines.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }.joined(separator: " · ")
+    lines.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }.joined(separator: "\n")
   }
   // Section eyebrows are the one piece of widget copy the payload does not carry,
   // so they are localized here in the same four languages (gu/kn used to fall back

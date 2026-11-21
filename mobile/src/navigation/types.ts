@@ -1,5 +1,5 @@
 import type { OccasionId } from '@/panchang/eventMuhurat';
-import type { Graha } from '@/panchang/kundali';
+import type { DashaLord, Graha } from '@/panchang/kundali';
 import type { NavigatorScreenParams } from '@react-navigation/native';
 import type { ContentCategory, Deity } from '@/data/texts';
 import type { PurposeId } from '@/data/purposes';
@@ -60,10 +60,27 @@ export type GharVastuStackParamList = {
   GharVastuCompare: { homeIds: readonly string[] };
 };
 
-export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
-  SanatanParichay: { topicId?: string } | undefined;
+/**
+ * Bhajan text shelf (design.md §34.1). Doors on two tabs — the Bhajan tab's
+ * shelf door, and Home's search / deity / routine / resume paths — so both
+ * stacks host it (RULEBOOK §6.0.1). Ids are string catalog ids, never
+ * positions: they are persisted in bookmarks and progress.
+ */
+export type BhajanStackParamList = {
+  BhajanList: undefined;
+  BhajanReader: { bhajanId: string; initialIndex?: number };
+};
+
+export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & BhajanStackParamList & {
+  SanatanParichay: undefined;
   SanatanReader: { topicId: string; initialPage?: number };
+  GrahaReference: {focusGraha?:Graha}|undefined;
   Home: undefined;
+  KathaLibrary: undefined;
+  SaptashatiCore: undefined;
+  DarshanQuick: undefined;
+  DarshanList: undefined;
+  DarshanPlayer: { templeId: string };
   Suvichar: { exploreDraft?: { name:string; deity:'ram-darbar' } } | undefined;
   KidsStoryLibrary: undefined;
   KidsStoryDeity: { deityId: StoryDeityId };
@@ -77,7 +94,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
    * `initialQuery` pre-fills the box (a briefing card's "ask more" door).
    */
   Search: { seed?: { type: AskEntityType; id: string }; initialQuery?: string } | undefined;
-  CategoryList: { categoryId: ContentCategory };
+  ReadingLibrary: { features?: boolean } | undefined;
+  CategoryList: { categoryId: ContentCategory; practice?: boolean };
   DeityList: { deityId: Deity };
   DeityIndex: undefined;
   DeityDetail: { deityId: Deity };
@@ -90,6 +108,8 @@ export type HomeStackParamList = VidhiStackParamList & DaanStackParamList & {
   StutiReader: { initialIndex?: number; stutiId?: string } | undefined;
   GitaChapters: undefined;
   GitaReader: GitaReaderParams;
+  BhagavatamChapters: undefined;
+  BhagavatamReader: GitaReaderParams;
   GarudPuranChapters: undefined;
   GarudPuranReader: { chapter: number; initialIndex?: number };
   // गीता सार (design.md §77): a chapter is a theme, the reader pages its verses.
@@ -197,7 +217,18 @@ export type PanchangHomeMode = 'calendar' | 'catalog' | 'jyotish';
 
 // Panchang tab stack — the date-first calendar, the "Vrat & Parv" catalog
 // (PRD-09), and the Jyotish tools landing (PRD-C).
-export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {
+/**
+ * The Mahadasha guide's practice doors (design.md §51e) — beej japa, the
+ * lord's paath and the Daan-Punya home — are mounted on the Panchang stack too,
+ * so Back from them returns to the guide instead of Home's root (RULEBOOK
+ * §6.0.1 rule 4). Declared once on Home; picked here so the params cannot drift.
+ */
+export type JyotishPracticeRoutes = Pick<
+  HomeStackParamList,
+  'JapamCounter' | 'ChalisaReader' | 'AshtakamReader' | 'KavachamReader' | 'VishnuSahasranamaChapters' | 'VishnuSahasranamaReader' | 'DaanPunya'
+>;
+
+export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & JyotishPracticeRoutes & {
   PanchangHome:
     | {
         initialTab?: PanchangHomeMode;
@@ -228,6 +259,8 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
   // नवग्रह परिचय — the generic "Know the nine grahas" reference (design.md §79).
   // `focusGraha` opens one graha expanded (the chart card's "Know this graha" link).
   GrahaReference: { focusGraha?: Graha } | undefined;
+  /** Mahadasha guide (design.md §51e): the lord names the period — each lord runs once in the 120-year cycle. */
+  DashaGuide: { lord: DashaLord };
   // प्रश्न — purpose-driven reading for the active person (PRD-43 Wave D).
   // `purposeId` preselects a purpose (the Ask intent deep-links here).
   Prashna: { purposeId?: string; questionId?: string } | undefined;
@@ -261,8 +294,9 @@ export type PanchangStackParamList = VidhiStackParamList & DaanStackParamList & 
 };
 
 // Audio tab stack (prototype 'tab'/'both' entry styles). The now-playing
-// surface is a root overlay, not a route, so the stack only hosts the library.
-export type AudioStackParamList = {
+// surface is a root overlay, not a route; the stack hosts the audio library and
+// the bhajan text shelf (BhajanStackParamList).
+export type AudioStackParamList = BhajanStackParamList & {
   AudioLibrary: undefined;
 };
 

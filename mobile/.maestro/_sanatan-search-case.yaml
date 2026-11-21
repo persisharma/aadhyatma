@@ -1,26 +1,31 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _open-settings.yaml
+# Settings is a tab and keeps the previous case's scroll position; start from its top.
 - scrollUntilVisible:
-    element: { text: "Language,.*" }
+    element: { id: settings-back }
+    direction: UP
+    timeout: 30000
+- scrollUntilVisible:
+    element: { text: "Language,.*", above: { id: tab-home } }
     direction: DOWN
     timeout: 60000
 - tapOn: "Language,.*"
 - tapOn: "${READING_LANGUAGE}"
-- extendedWaitUntil:
-    visible: { text: "Language, ${READING_LANGUAGE}" }
+# The scroll can stop with Language as a sliver above the tab bar; the new
+# script's taller rows then push it below the fold (CI, Android, Gujarati).
+- scrollUntilVisible:
+    element: { text: "Language, ${READING_LANGUAGE}" }
+    direction: DOWN
     timeout: 15000
 - tapOn: { id: tab-home }
 - runFlow: _sanatan-home-entry.yaml
+# A matching card alone could be the unfiltered catalogue, so prove the empty
+# result state first. Each query is typed into a freshly opened hub: erasing in
+# place depends on where the tap leaves the cursor, which the field's width and
+# the text's length decide (on Android it left a stray letter behind).
 - tapOn: { id: home-sanatan-card }
 - tapOn: { id: sanatan-search }
-- inputText: "${QUERY}"
-- pressKey: Enter
-- assertVisible: { id: sanatan-search, text: "${QUERY}" }
-# A matching card alone could be the unfiltered catalogue. Prove the empty
-# result state, then restore the real query before capturing its matched topic.
-- tapOn: { id: sanatan-search }
-- eraseText
 - inputText: "zzzz-no-match"
 - pressKey: Enter
 - scrollUntilVisible:
@@ -28,17 +33,16 @@ appId: com.prashantsharma.vedansh
       text: "कोई परिचय नहीं मिला। दूसरा शब्द आज़माएँ।|No introductions found. Try another word.|કોઈ પરિચય નહીં મિલા। દૂસરા શબ્દ આજ઼માએઁ।|ಕೋಈ ಪರಿಚಯ ನಹೀಂ ಮಿಲಾ। ದೂಸರಾ ಶಬ್ದ ಆಜ಼ಮಾಏಁ।"
     direction: DOWN
     timeout: 15000
-- scrollUntilVisible:
-    element: { id: sanatan-search }
-    direction: UP
-    timeout: 15000
+# The back button is labelled in the reading language (#703).
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- runFlow: _sanatan-home-entry.yaml
+- tapOn: { id: home-sanatan-card }
 - tapOn: { id: sanatan-search }
-- eraseText
 - inputText: "${QUERY}"
 - pressKey: Enter
 - assertVisible: { id: sanatan-search, text: "${QUERY}" }
 - scrollUntilVisible:
-    element: { id: sanatan-collection-symbols }
+    element: { id: sanatan-collection-symbols, above: { id: tab-home } }
     direction: DOWN
     visibilityPercentage: 50
     timeout: 60000

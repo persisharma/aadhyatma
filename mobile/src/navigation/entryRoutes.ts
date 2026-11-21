@@ -1,10 +1,14 @@
+import { kavachamIds as kavachamIdList } from '@/data/kavacham';
+import { getReadingLink } from '@/data/readingLinks';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { library, type LibraryEntry } from '@/data/texts';
 import type { RoutineItem } from '@/data/routine/types';
 import type { BookmarkRef } from '@/contexts/BookmarksContext';
 import type { ReadingProgress } from '@/contexts/ReadingProgressContext';
 import { aartiIndexById } from '@/data/aarti/ids';
+import { bhajanIds } from '@/data/bhajan/ids';
 import { ashtakamIds as ashtakamIdList } from '@/data/ashtakam';
+import { suktamIds as suktamIdList } from '@/data/suktam';
 import { stutiIds as stutiIdList } from '@/data/stuti';
 import { shivaStrotamChaptersManifest } from '@/data/shiva-strotam';
 import { durgaStotramChaptersManifest } from '@/data/durga-stotram';
@@ -20,12 +24,22 @@ import { valmikiRamayanChaptersManifest } from '@/data/valmiki-ramayan';
 import { sundarkandChaptersManifest } from '@/data/sundarkand';
 import { gitaChaptersManifest } from '@/data/gita';
 import { garudPuranChaptersManifest } from '@/data/garud-puran';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest } from '@/data/bhagavatam';
 import { gitaSaarChaptersManifest } from '@/data/gita-saar';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import type { HomeRoster } from '@/vastu/homeRecord';
 import type { HomeStackParamList, MoreStackParamList, PanchangStackParamList } from './types';
 
-type Nav = NativeStackNavigationProp<HomeStackParamList>;
+type Nav = Pick<NativeStackNavigationProp<HomeStackParamList>, 'navigate'>;
+
+/** Open the original chapter, retaining its canonical progress/bookmark identity. */
+export function navigateReadingLink(nav: Nav, id: string): boolean {
+  const link = getReadingLink(id);
+  if (!link) return false;
+  if (link.sourceId === 'ganesh-stotram') nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
+  else nav.navigate('SaptashatiCore');
+  return true;
+}
 
 /**
  * Nested-navigation params for a screen inside the Panchang tab's stack.
@@ -114,6 +128,11 @@ const chalisaIds = new Set([
   'khatu-shyam-chalisa',
   'lakshmi-chalisa',
   'surya-chalisa',
+  'vaishno-devi-chalisa',
+  'shani-chalisa',
+  'santoshi-mata-chalisa',
+  'kali-chalisa',
+  'radha-chalisa',
 ]);
 
 // Ashtakam (अष्टकम्) multi-instance form — one AshtakamReader dispatches on
@@ -123,15 +142,10 @@ const chalisaIds = new Set([
 const ashtakamIds = new Set<string>(ashtakamIdList);
 
 // Suktam (सूक्तम्) multi-instance form — one SuktamReader dispatches on `suktamId`.
-const suktamIds = new Set(['devi-suktam', 'purusha-suktam', 'narayana-suktam']);
+const suktamIds = new Set<string>(suktamIdList);
 
 // Kavacham (कवच) multi-instance form — one KavachamReader dispatches on `kavachamId`.
-const kavachamIds = new Set([
-  'rama-raksha-stotra',
-  'ganesha-kavacham',
-  'shiva-kavacham',
-  'durga-kavach',
-]);
+const kavachamIds = new Set<string>(kavachamIdList);
 
 // Stuti (स्तुति) multi-instance form — one StutiReader dispatches on `stutiId`.
 // Derived from the data registry (same rationale as ashtakamIds above).
@@ -176,6 +190,7 @@ const stotramChaptersRouteById: Record<string, keyof HomeStackParamList> = {
   'valmiki-ramayan': 'ValmikiRamayanChapters',
   'sundarkand': 'SundarkandChapters',
   'bhagavad-gita': 'GitaChapters',
+  [BHAGAVATAM_ID]: 'BhagavatamChapters',
   'garud-puran': 'GarudPuranChapters',
   'gita-saar': 'GitaSaarChapters',
 };
@@ -207,6 +222,7 @@ const chapterCountBySourceId: Record<string, number> = {
   'valmiki-ramayan': valmikiRamayanChaptersManifest.length,
   'sundarkand': sundarkandChaptersManifest.length,
   'bhagavad-gita': gitaChaptersManifest.length,
+  [BHAGAVATAM_ID]: bhagavatamChaptersManifest.length,
   'garud-puran': garudPuranChaptersManifest.length,
   'gita-saar': gitaSaarChaptersManifest.length,
 };
@@ -226,6 +242,7 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
   'valmiki-ramayan': 'ValmikiRamayanReader',
   'sundarkand': 'SundarkandReader',
   'bhagavad-gita': 'GitaReader',
+  [BHAGAVATAM_ID]: 'BhagavatamReader',
   'garud-puran': 'GarudPuranReader',
   'gita-saar': 'GitaSaarReader',
 };
@@ -258,6 +275,9 @@ export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | nul
   const aartiIndex = (aartiIndexById as Record<string, number>)[entry.id];
   if (aartiIndex != null) {
     return { screen: 'AartiReader', params: { aartiIndex } };
+  }
+  if (bhajanIds.has(entry.id)) {
+    return { screen: 'BhajanReader', params: { bhajanId: entry.id, initialIndex: 0 } };
   }
   const chaptersRoute = stotramChaptersRouteById[entry.id];
   if (chaptersRoute) {
@@ -352,6 +372,10 @@ export function navigateToProgress(nav: Nav, progress: ReadingProgress): boolean
   const aartiIndex = (aartiIndexById as Record<string, number>)[sourceId];
   if (aartiIndex != null) {
     nav.navigate('AartiReader', { aartiIndex, initialIndex: progress.verseIndex });
+    return true;
+  }
+  if (bhajanIds.has(sourceId)) {
+    nav.navigate('BhajanReader', { bhajanId: sourceId, initialIndex: progress.verseIndex });
     return true;
   }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];
@@ -460,6 +484,12 @@ export function buildProgressTarget(p: {
       params: { aartiIndex, initialIndex: p.verseIndex },
     };
   }
+  if (bhajanIds.has(sourceId)) {
+    return {
+      screen: 'BhajanReader',
+      params: { bhajanId: sourceId, initialIndex: p.verseIndex },
+    };
+  }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];
   if (readerRoute && p.chapter != null) {
     return {
@@ -500,6 +530,12 @@ export function buildBookmarkTarget(bm: BookmarkRef): BookmarkTarget | null {
     return {
       screen: 'AartiReader',
       params: { aartiIndex, initialIndex: bm.verseIndex },
+    };
+  }
+  if (bhajanIds.has(sourceId)) {
+    return {
+      screen: 'BhajanReader',
+      params: { bhajanId: sourceId, initialIndex: bm.verseIndex },
     };
   }
   const readerRoute = stotramReaderRouteBySourceId[sourceId];

@@ -3,6 +3,7 @@ import AppIcon from './AppIcon';
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { useGitaLanguage } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { radii, spacing } from '@/theme/spacing';
 import { useTheme } from '@/theme/ThemeContext';
 import { isLatinLang, titleFontByLang } from '@/utils/langType';
@@ -74,7 +75,7 @@ export default function ReaderHeader({
         <Pressable
           onPress={onBack}
           accessibilityRole="button"
-          accessibilityLabel={backAccessibilityLabel ?? 'Back'}
+          accessibilityLabel={backAccessibilityLabel ?? backLabel(lang)}
           style={({ pressed }) => [
             styles.backTarget,
             pressed && { opacity: 0.7 },

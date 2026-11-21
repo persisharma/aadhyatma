@@ -40,5 +40,5 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "lang-toggle-en" }
 - assertVisible: { id: "comic-page-bala-plan-012" }
 - takeScreenshot: comic-native-vashishtha-en
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - assertVisible: { id: "comic-episodes" }

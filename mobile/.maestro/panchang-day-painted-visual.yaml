@@ -50,7 +50,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: panchang-next-day-sankashti-chaturthi-vrat }
 - waitForAnimationToEnd
 - assertVisible: "Sankashti Chaturthi Vrat"
-- tapOn: "Back.*"
+- tapOn: "Back.*|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
 - runFlow: _open-settings.yaml
 - scrollUntilVisible:

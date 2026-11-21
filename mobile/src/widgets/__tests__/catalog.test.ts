@@ -109,7 +109,7 @@ test('only the small verse cell reads the excerpt — wider cells read the full 
   const renderVerse = kotlin.slice(kotlin.indexOf('private fun renderVerse'), kotlin.indexOf('/** Each surface owns'));
   assert.match(renderVerse, /narrow -> vd\.getJSONObject\("excerpt"\)/, 'Android must gate the excerpt behind the narrow cell');
   assert.equal(renderVerse.match(/"excerpt"/g)?.length, 1, 'Android reads the excerpt in exactly one branch');
-  assert.match(renderVerse, /padas\.joinToString\(" · "\)/, 'the wide Android cell must flow the full lines');
+  assert.match(renderVerse, /padas\.joinToString\("\\n"\)/, 'the wide Android cell must preserve the full lines');
 
   // A cell that trims the verse has to say so rather than clip a wrapped line.
   assert.match(read('home-widgets', 'android', 'res', 'layout', 'vedansh_widget_verse.xml'), /android:id="@\+id\/widget_title"[^>]*android:ellipsize="end"/);

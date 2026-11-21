@@ -1,28 +1,5 @@
-# Shared boot flow — used as a subflow at the start of every category smoke test.
-#
-# Why a separate file: the Expo Go launch + project select + first-load wait
-# is identical across every smoke test. Keeping it here means a single change
-# (e.g., the Expo Go version updates and the open URL changes) ripples to all
-# flows at once.
-#
-# Caller contract:
-#   - Caller's appId MUST be com.prashantsharma.vedansh (Expo Go).
-#   - This flow exits with the Vedansh Home screen rendered and Maestro able
-#     to read past the Expo dev-menu sheet (config.yaml sets
-#     snapshotKeyHonorModalViews: false).
-#   - The Today-strip + For Today assertions are the canary that confirms the
-#     bundle finished executing. Keep these above-the-fold: Home now has daily
-#     recommendation cards before Categories, so older category tiles such as
-#     "Good Habits" can sit below the first viewport.
-#   - Expo Go can leave a native dev-menu bottom sheet open after project load;
-#     the downward swipe dismisses it when present and is harmless on Home.
-#   - On first launch one onboarding surface may auto-appear over Home and
-#     block downstream flows until dismissed: a genuine fresh install gets the
-#     feature tour (dismiss via "Skip") and then the language/size setup sheet
-#     (dismiss via "Begin"); a returning user on the debut release gets the
-#     What's New sheet (dismiss via its "Close" ✕). All optional taps are
-#     harmless no-ops once the surface has been seen, and the tour and What's
-#     New are mutually exclusive.
+# Start the installed Vedansh app with clean state and finish first-run surfaces.
+# Release builds contain their own bundle. Development builds use the Metro port below.
 appId: com.prashantsharma.vedansh
 ---
 - launchApp:
@@ -64,29 +41,7 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Don't Allow"
     optional: true
-# Quiet companion setup precedes ATT and the tour; never opt into notifications in boot.
-- tapOn:
-    text: "Setup language continue"
-    optional: true
-- tapOn:
-    text: "Setup city continue"
-    optional: true
-# First-run widgets now start on city Continue, with no separate Add CTA.
-# iPhone instructions stay inside onboarding; Android launcher confirmations are
-# optional across hosts. Dismiss both requests so unrelated smoke flows stay clean.
-- tapOn:
-    text: "Setup widgets continue"
-    optional: true
-- tapOn:
-    text: "Cancel|CANCEL|रद्द करें"
-    optional: true
-- waitForAnimationToEnd
-- tapOn:
-    text: "Cancel|CANCEL|रद्द करें"
-    optional: true
-- tapOn:
-    text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
-    optional: true
+- runFlow: _finish-first-run-setup.yaml
 - waitForAnimationToEnd
 - tapOn:
     text: "Ask App Not to Track"
@@ -142,16 +97,33 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Maybe later"
     optional: true
-# The Home "Today's Panchang" card is now a tappable launcher (PRD-C), so its
-# text is one merged accessibility label — "Today's Panchang. <weekday>,
-# <tithi>. … Tap to open." — exposed in English regardless of display language.
-# Maestro anchors selectors to an element's FULL text, so wildcard both ends.
-- extendedWaitUntil:
-    visible: ".*Today.s Panchang.*|.*आज का पंचांग.*"
-    timeout: 60000
-- extendedWaitUntil:
-    visible: "आज के लिए|FOR TODAY"
-    timeout: 60000
+# A native prompt can delay the setup sheet until after the initial pass.
+- runFlow:
+    when: { visible: "Setup language continue|Setup city continue|Setup widgets continue|Enable reminders" }
+    file: _finish-first-run-setup.yaml
+# iOS can drop a tap that lands while the setup sheet is still being presented:
+# seen in CI, "Setup language continue" was tapped at its final bounds and the
+# language step stayed up, covering Home for the rest of the flow. Home's text
+# is still readable behind the sheet, so a wait for Home passes. Walk it again.
+- runFlow:
+    when:
+      visible: "Setup language continue"
+    commands:
+      - waitForAnimationToEnd
+      - tapOn: "Setup language continue"
+      - tapOn:
+          text: "Setup city continue"
+          optional: true
+      - tapOn:
+          text: "Setup widgets continue"
+          optional: true
+      - tapOn:
+          text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ"
+          optional: true
+      - waitForAnimationToEnd
+      - tapOn:
+          text: "Ask App Not to Track"
+          optional: true
 # Belt-and-braces: if the tour (or the follow-on setup sheet) mounted only
 # after the dismissal block above ran — seen on slow Android cold starts —
 # clear it now so it can't swallow the first in-flow tap. No-ops otherwise.
@@ -161,10 +133,13 @@ appId: com.prashantsharma.vedansh
 - tapOn:
     text: "Begin"
     optional: true
-- swipe:
-    direction: DOWN
 - waitForAnimationToEnd
 
 - tapOn:
     id: explore-not-now
     optional: true
+# A swipe on native Home can activate a launcher. Finish by observing Home.
+- extendedWaitUntil:
+    visible: { id: home-settings }
+    timeout: 60000
+- assertNotVisible: "Setup language continue|Setup city continue|Setup widgets continue|Enable reminders|Skip tour"

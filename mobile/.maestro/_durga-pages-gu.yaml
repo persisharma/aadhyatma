@@ -52,7 +52,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "પરંપરાગત નવદુર્ગા ક્રમ આધારિત નવરાત્રિનો ટૂંકો પરિચય. પરિવારો અને પ્રદેશોના રિવાજો અલગ હોય છે. આ પૂજાવિધિ કે ઉપવાસ માર્ગદર્શન નથી; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-nv03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shailaputri" }
     centerElement: true
@@ -118,7 +118,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "શિવપુરાણ 2.3.6–7માંથી પાર્વતીનો સંબંધિત પ્રસંગ, પછી શૈલપુત્રીના પ્રથમ-દિવસ રૂપનો પરંપરાગત પરિચય. આ અધ્યાયોમાં આ નવદુર્ગા નામ પોતે નથી. બાળકો માટે મૌલિક રૂપાંતર; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-sp04-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-brahmacharini" }
     centerElement: true
@@ -226,7 +226,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "શિવપુરાણ 2.3.21–29નો પાર્વતી સંબંધિત પ્રસંગ, બ્રહ્મચારિણીના બીજા-દિવસ રૂપ સાથે જોડાયેલો. બાળકો માટે કઠોર ઉપવાસ અને અગ્નિપરીક્ષાનો પ્રસંગ છોડ્યો છે; આ સાધના માર્ગદર્શન નથી. શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-br07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-chandraghanta" }
     centerElement: true
@@ -306,7 +306,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "શિવ પુરાણની સંબંધિત કથાનું બાળકો માટે મૌલિક સરળ રૂપાંતર, પછી નવદુર્ગા રૂપ સાથે તેનો સંબંધ. અધ્યાયમાં આ નવદુર્ગા રૂપનું નામ નથી. શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-cg05-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-kushmanda" }
     centerElement: true
@@ -358,7 +358,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "નવદુર્ગાની ભક્તિપરંપરામાંથી ટૂંકો પરિચય; આ અલગ પુરાણકથા નથી. પરંપરાગત ઉત્પત્તિવર્ણનનો સ્રોત જણાવ્યો છે; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-ku03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-skandamata" }
     centerElement: true
@@ -438,7 +438,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "શિવ પુરાણની સંબંધિત કથાનું બાળકો માટે મૌલિક સરળ રૂપાંતર, પછી નવદુર્ગા રૂપ સાથે તેનો સંબંધ. અધ્યાયમાં આ નવદુર્ગા રૂપનું નામ નથી. શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-sk05-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-mahishasura" }
     centerElement: true
@@ -616,7 +616,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "દેવી માહાત્મ્ય 2–4નું બાળકો માટે મૌલિક સરળ રૂપાંતર. યુદ્ધ અને મૃત્યુની ભયાનક વિગતો ટાળેલી છે. નવદુર્ગા પરંપરામાં આ વિજય કાત્યાયની સાથે જોડાય છે. ચિત્રોમાં આઠ ભુજાઓ પરંપરાગત કલાત્મક રૂપ છે; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-dm12-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-kalaratri" }
     centerElement: true
@@ -654,7 +654,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "નવદુર્ગાની ભક્તિપરંપરામાંથી ટૂંકો પરિચય; આ અલગ પુરાણકથા નથી. પરંપરાગત ઉત્પત્તિવર્ણનનો સ્રોત જણાવ્યો છે; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-kr02-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-mahagauri" }
     centerElement: true
@@ -762,7 +762,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "શિવ પુરાણની સંબંધિત કથાનું બાળકો માટે મૌલિક સરળ રૂપાંતર, પછી નવદુર્ગા રૂપ સાથે તેનો સંબંધ. અધ્યાયમાં આ નવદુર્ગા રૂપનું નામ નથી. શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-mg07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-siddhidatri" }
     centerElement: true
@@ -814,7 +814,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "નવદુર્ગાની ભક્તિપરંપરામાંથી ટૂંકો પરિચય; આ અલગ પુરાણકથા નથી. પરંપરાગત ઉત્પત્તિવર્ણનનો સ્રોત જણાવ્યો છે; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-si03-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-raktabeej" }
     centerElement: true
@@ -922,7 +922,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "દેવી માહાત્મ્ય 7.27 અને 8નું બાળકો માટે રૂપાંતર. અહીં કાલીનું નામ ચામુંડા છે; તેમને કાલરાત્રિ કહ્યાં નથી. રક્ત અને યુદ્ધનું ટૂંકું વર્ણન છે; ચિત્રો ભયાનક નથી. શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-rb07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shumbha-nishumbha" }
     centerElement: true
@@ -1128,7 +1128,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "દેવી માહાત્મ્ય 5–10નું બાળકો માટે મૌલિક રૂપાંતર. યુદ્ધ-મૃત્યુની ભયાનક વિગતો નથી. અલગ રક્તબીજ પુસ્તક તે પ્રસંગને વધુ વિગતે કહે છે; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-sn14-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-suratha-samadhi" }
     centerElement: true
@@ -1236,7 +1236,7 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "દેવી માહાત્મ્ય 1 અને 13નું બાળકો માટે મૌલિક રૂપાંતર. કઠોર ઉપવાસ અને પોતાના રક્તની ભેટનો વર્ણન ટાળ્યો છે. તેમની ઉપાસના ત્રણ વર્ષ ચાલે છે; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-su07-ending
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - scrollUntilVisible:
     element: { id: "kids-story-durga-shakambhari" }
     centerElement: true
@@ -1358,6 +1358,6 @@ appId: com.prashantsharma.vedansh
     visibilityPercentage: 40
 - assertVisible: "દેવી ભાગવત 7.28નું બાળકો માટે મૌલિક રૂપાંતર. દુકાળનું કારણ પુરાણના વર્ણન પ્રમાણે છે, વૈજ્ઞાનિક સમજૂતી નથી. યુદ્ધ-મૃત્યુની ભયાનક વિગતો નથી; શીખ સંપાદકીય છે."
 - takeScreenshot: durga-gu-${DURGA_SIZE}-sa08-ending
-- tapOn: "Back"
-- tapOn: "Back"
-- tapOn: "Back"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"

@@ -1,9 +1,12 @@
+import { darshanForTemple } from '@/data/darshan/channels';
+import { DarshanAction } from '@/components/darshan/DarshanUI';
 import React from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
+import { backLabel } from '@/utils/a11yLabels';
 import { contentByLang, pick } from '@/utils/localize';
 import { meaningToken, pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { getTheerthBackground, getTheerthIllustration } from '@/data/backgrounds';
@@ -92,7 +95,7 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel="Back"
+            accessibilityLabel={backLabel(lang)}
             hitSlop={16}
             style={({ pressed }) => [
               styles.backBtn,
@@ -121,6 +124,8 @@ export default function TheerthDetailScreen({ route, navigation }: Props) {
           ]}
           showsVerticalScrollIndicator={false}
         >
+          {darshanForTemple(temple.id) && <DarshanAction testID="temple-darshan" label={contentByLang(lang, 'मंदिर दर्शन देखें', 'Watch temple Darshan')} onPress={() => navigation.navigate('DarshanPlayer', { templeId: temple.id })} />}
+
           <View style={styles.hero}>
             <Text
               style={{
