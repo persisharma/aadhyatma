@@ -113,10 +113,10 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
         right={<ReaderPageCounter testID="sanatan-page-counter" current={page + 1} total={data.length} titles={titles.map(title => t(title))}
           onOpen={() => { readAloud.stop(); autoSlide.stop(); }} onJump={next => go(next - 1)} />} />
       <ReadingProgressBar current={page + 1} total={data.length} />
-      {/* The shared reader control row: language toggle centred, सुनें pinned right,
-          as in every other reader (design.md §56.2/§87). स्वतः is NOT a third pill in
-          this group — it lives on its own row above the pager bar below. */}
-      <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
+      {/* The shared reader control row: स्वतः pinned top-left, language toggle centred,
+          सुनें pinned right — the app-wide auto-slide placement (design.md §56.2/§85/§87). */}
+      <ReaderControlRow leading={<AutoSlideButton control={autoSlide} floating={false} />}
+        trailing={<ReadAloudButton control={readAloud} />}>
         <LanguageToggle />
       </ReaderControlRow>
       <FlatList ref={listRef} data={data} keyExtractor={item => item.id} horizontal pagingEnabled style={{ flex: 1 }}
@@ -152,12 +152,6 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
             {index===data.length-1&&<LessonRelated id={topic.id} onOpen={openRelated}/>}
           </AutoSlideScrollView>
         </View>} />
-      {/* स्वतः (auto-slide) inline, left-aligned above the pager bar: this screen's
-          pager bottom is PagerNavBar, so the usual floating bottom-left slot would
-          overlap it (AutoSlideButton: inline for occupied pager bottoms). */}
-      <View style={{ paddingHorizontal: spacing.readingGutter, paddingBottom: 8, alignItems: 'flex-start' }}>
-        <AutoSlideButton control={autoSlide} floating={false} />
-      </View>
       <PagerNavBar page={page} total={data.length} nextTestID="sanatan-next"
         onPrevious={() => go(page - 1)} onNext={() => page < data.length - 1 ? go(page + 1) : finish()}
         previousLabel={t(['पिछला पृष्ठ','Previous page'])} nextLabel={t(['अगला पृष्ठ','Next page'])}

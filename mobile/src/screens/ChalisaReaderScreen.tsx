@@ -233,7 +233,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
-        <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
+        <ReaderControlRow leading={<AutoSlideButton control={autoSlide} floating={false} />}
+          trailing={<ReadAloudButton control={readAloud} />}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={chalisaId} />
         </ReaderControlRow>
@@ -375,8 +376,6 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
-          <AutoSlideButton control={autoSlide} />
-
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

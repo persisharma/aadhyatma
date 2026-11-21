@@ -4407,7 +4407,7 @@ Files: `mobile/src/utils/suvicharPhoto.ts`, `data/suvichar.ts` (`photo`, `isSend
 
 **Control.** `AutoSlideButton`, radius 999, 1 px `cardActiveBorder`, 13 pt title face (italic in English), `saffronDeep` tint. Idle: `parchmentSoft` pill, ▶ (`AppIcon play`, 14, fill) + `स्वतः · Auto · સ્વતઃ · ಸ್ವಯಂ`. Playing: `saffronTint` pill split by a hairline into ❚❚ (pause) and a four-bar pace meter (3 pt bars, 5/8/11/14 pt tall, unlit bars at 30% opacity) that cycles slow → normal → fast → very fast on tap and persists (`@vedansh/auto-slide`); a 2 pt `saffronDeep` countdown hairline runs along the pill's bottom to the next scroll or page turn (hidden while the page is held; omitted under reduced motion). Accessibility labels stay English for Maestro: `Start slideshow` / `Pause slideshow` / `Slideshow speed: <pace>` (`slow` / `normal` / `fast` / `very fast`).
 
-**Placement.** Verse readers: floating bottom-left of the pager (`left 16, bottom 16`, `elevation.lifted`), mirroring `JumpToStartButton` bottom-right and clear of the centred dots. Vrat Katha and पितृ पक्ष परिचय (prose fills the pager), Kids Stories (caption at the pager bottom) and the comic: inline (`floating={false}`) at the toggle row's left edge, opposite read-aloud/share. Vidhi conduct: inline beside the read-aloud pill on the phase row, step pages only.
+**Placement.** Uniform across the app: inline (`floating={false}`) at the **top-left** of the reader's control row — pinned to the left edge (`left 16`), opposite read-aloud/share pinned right, with the language toggle centred between them. Readers whose control row is the shared `ReaderControlRow` pass it as the `leading` slot; the rest use a left-anchored `autoSlideSlot` (`position:absolute, left:16`) mirroring their `readAloudSlot`. Vidhi conduct (no language toggle) pins स्वतः left and read-aloud right of the phase label, step pages only. `JumpToStartButton` keeps its own floating bottom-right slot; the pager's bottom-left is no longer used by स्वतः. (Earlier revisions floated स्वतः bottom-left over the pager, which overlapped scrolling body text and was inconsistent with the inline readers — superseded.)
 
 **Files:** `mobile/src/screens/_useAutoSlide.ts` (`useAutoSlide`, `useReaderPlayback`, scroll-then-turn driver), `mobile/src/utils/autoSlideStore.ts` (pace, pacing rule, chapter hand-off), `mobile/src/components/AutoSlideButton.tsx`, `mobile/src/components/AutoSlideScrollView.tsx` (page scroll view + the pager's `CellRendererComponent` that tells it its index). RULEBOOK §3 *auto-slide*.
 
@@ -4542,10 +4542,9 @@ page that matched, as global Search does; the resume card opens the stored page.
 **Reader (`SanatanReaderScreen`).** Shared `ReaderHeader` with the shared
 `ReaderPageCounter` ("2 / 3"; tapping it opens the page picker with each page's
 name, §94), `ReadingProgressBar`, then the shared `ReaderControlRow` (§56.2):
-`LanguageToggle` centred, read-aloud pinned right. Auto-slide (स्वतः) is not a
-third pill in that group; it sits inline on its own left-aligned row just above
-the pager bar (this screen's pager bottom is `PagerNavBar`, so the usual floating
-bottom-left slot would overlap it). Horizontally paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
+auto-slide (स्वतः) pinned top-left via the row's `leading` slot, `LanguageToggle`
+centred, read-aloud pinned right — the app-wide auto-slide placement (§85).
+Horizontally paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
 pill (the collection name; "चित्र से समझें" on the figure page) and, on the gutter,
 the shared round `BookmarkButton` and `ShareButton` — then the page heading (one
 step above the reading size). Page 1: the collection painting (opens the picture
@@ -4571,8 +4570,8 @@ Use theme colours, script-aware text, ProseParagraph and ProseReadingCard. Touch
 targets are at least 48pt (filter chips share the 44pt chip class of §33). Content
 scrolls rather than being ellipsized. Diagram facts have equivalent text
 captions and, where authored, a text legend. On narrow screens `ReaderControlRow`
-stacks the read-aloud control below the centred language toggle; auto-slide keeps
-its own row above the pager bar. The Swastika geometry remains SVG; the
+stacks the read-aloud control below the centred language toggle; auto-slide stays
+pinned top-left. The Swastika geometry remains SVG; the
 paintings provide the approved rich imagery.
 
 Files: `mobile/src/screens/{SanatanParichayScreen,SanatanReaderScreen}.tsx`,

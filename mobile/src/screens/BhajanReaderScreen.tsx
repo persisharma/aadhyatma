@@ -128,7 +128,8 @@ export default function BhajanReaderScreen({ navigation, route }: Props) {
 
         <ReadingProgressBar current={currentIndex + 1} total={verses.length} />
 
-        <ReaderControlRow trailing={<ReadAloudButton control={readAloud} />}>
+        <ReaderControlRow leading={<AutoSlideButton control={autoSlide} floating={false} />}
+          trailing={<ReadAloudButton control={readAloud} />}>
           <LanguageToggle />
           <AddToRoutineButton sourceId={sourceId} />
         </ReaderControlRow>
@@ -215,7 +216,6 @@ export default function BhajanReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
-          <AutoSlideButton control={autoSlide} />
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (

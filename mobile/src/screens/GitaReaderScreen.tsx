@@ -280,6 +280,11 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={styles.toggleRow}>
+          {/* स्वतः pinned top-left, inline — the app-wide auto-slide placement.
+              The toggle group stays centred; सुनें is pinned right (design.md §85/§56.2). */}
+          <View style={styles.autoSlideSlot}>
+            <AutoSlideButton control={autoSlide} floating={false} />
+          </View>
           <LanguageToggle />
           <AddToRoutineButton sourceId="bhagavad-gita" chapter={chapter.chapter} />
           {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
@@ -385,8 +390,6 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
-          <AutoSlideButton control={autoSlide} />
-
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
@@ -428,6 +431,13 @@ const styles = StyleSheet.create({
   readAloudSlot: {
     position: 'absolute',
     right: 16,
+    top: 6,
+    bottom: 12,
+    justifyContent: 'center',
+  },
+  autoSlideSlot: {
+    position: 'absolute',
+    left: 16,
     top: 6,
     bottom: 12,
     justifyContent: 'center',
