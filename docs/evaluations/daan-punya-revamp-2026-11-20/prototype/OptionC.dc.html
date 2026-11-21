@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daan-Punya — learn through the five kathas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#8A3E0B}a:hover{color:#8A3E0B}
+</style>
+</helmet>
+<div style="width: 390px; height: 2100px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; padding: 16px 16px 28px; background: linear-gradient(180deg, #F6ECD0 0%, #F1E3BF 100%); color: #1A0E03; font-family: 'Noto Serif Devanagari', serif">
+
+<div style="display: flex; align-items: center; gap: 12px">
+<button type="button" aria-label="Back" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid rgba(166, 124, 52, 0.3); background: #FFF9EE; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+</button>
+<div style="flex: 1; font-weight: 700; font-size: 21px; line-height: 30px">Daan-Punya</div>
+<button type="button" style="min-height: 44px; padding: 0 14px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 999px; background: #FFF9EE; color: #8A3E0B; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; cursor: pointer">Register</button>
+</div>
+
+<div style="border-radius: 24px; overflow: hidden; background: linear-gradient(135deg, #2A1508 0%, #45250E 100%); color: #FFF4DC; box-shadow: 0 8px 22px rgba(40, 24, 10, 0.22)">
+<img src="/_blob/14cc0ec5be0f4d9f8483c2364c76752e" alt="A householder offering food with both hands to an elder sage" style="display: block; width: 100%; height: 170px; object-fit: cover">
+<div style="padding: 16px 18px 18px">
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #F2C46B">Learn giving through five stories</div>
+<div style="margin-top: 4px; font-weight: 700; font-size: 22px; line-height: 32px">Each story teaches one thing about daan</div>
+<div style="margin-top: 10px; display: flex; align-items: center; gap: 10px">
+<div aria-hidden="true" style="flex: 1; display: flex; gap: 4px">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="5">
+<div style="flex: 1; height: 6px; border-radius: 3px; background: {{d.bg}}"></div>
+</sc-for>
+</div>
+<div style="font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #E9D8B6">{{progress}}</div>
+</div>
+</div>
+</div>
+
+<div style="position: relative">
+<div aria-hidden="true" style="position: absolute; left: 25px; top: 24px; bottom: 24px; width: 0; border-left: 3px dashed rgba(166, 124, 52, 0.5)"></div>
+<div style="position: relative; display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{stories}}" as="s" hint-placeholder-count="5">
+<div style="display: flex; gap: 12px; align-items: flex-start">
+<div style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 26px; background: {{s.nodeBg}}; border: 3px solid #F6ECD0; box-shadow: 0 0 0 1.5px {{s.ring}}; display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-weight: 700; font-size: 17px; color: {{s.nodeFg}}">{{s.num}}</div>
+<div style="flex: 1; min-width: 0; border: {{s.border}}; border-radius: 18px; background: #FFF9EE; overflow: hidden; box-shadow: 0 3px 10px rgba(90, 58, 30, 0.1)">
+<button type="button" onClick="{{s.pick}}" aria-expanded="{{s.expanded}}" style="width: 100%; min-height: 64px; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 0; background: transparent; text-align: left; cursor: pointer; font-family: inherit; color: inherit">
+<div style="flex: 1; min-width: 0">
+<div style="font-weight: 700; font-size: 16px; line-height: 24px">{{s.title}}</div>
+<div style="font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; line-height: 18px; color: #8A3E0B">{{s.lesson}}</div>
+</div>
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: {{s.chev}}"><path d="M6 9l6 6 6-6"></path></svg>
+</button>
+<sc-if value="{{s.open}}" hint-placeholder-val="{{false}}">
+<div style="padding: 0 12px 14px">
+<div style="height: 120px; border-radius: 14px; background: {{s.band}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #F2C46B">
+<span aria-hidden="true" style="font-size: 30px">॥</span>
+<span style="font-family: Inter, sans-serif; font-weight: 600; font-size: 11px; color: #E9D8B6">[katha painting]</span>
+</div>
+<div style="margin-top: 10px; font-weight: 500; font-size: 14px; line-height: 23px; color: #1A0E03">{{s.teaching}}</div>
+<div style="margin-top: 10px; display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; background: #F8EFD6">
+<dc-import name="CauseIcon" cause="{{s.icon}}" size="36" hint-size="36px,36px"></dc-import>
+<div style="flex: 1; min-width: 0">
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A3E0B">What it means for you</div>
+<div style="font-weight: 600; font-size: 14px; line-height: 22px">{{s.forYou}}</div>
+</div>
+</div>
+<div style="display: flex; gap: 8px; margin-top: 12px">
+<button type="button" style="flex: 1; min-height: 46px; border: 1.5px solid #B8621B; border-radius: 999px; background: transparent; color: #8A3E0B; font-family: Inter, sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer">Read the story</button>
+<button type="button" onClick="{{s.done}}" style="flex: 1; min-height: 46px; border: 0; border-radius: 999px; background: #B8621B; color: #FFFFFF; font-family: Inter, sans-serif; font-weight: 600; font-size: 13.5px; cursor: pointer">{{s.doneLabel}}</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border-radius: 24px; overflow: hidden; border: 1px solid rgba(166, 124, 52, 0.35); background: #FFF9EE; box-shadow: 0 6px 18px rgba(90, 58, 30, 0.14)">
+<img src="/_blob/c05044a8b69351edf2d74c73f0da221d" alt="Annapurna ladling food into Shiva’s bowl at Kashi" style="display: block; width: 100%; height: 150px; object-fit: cover">
+<div style="padding: 14px 16px 16px">
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8A3E0B">End of the path · your daan today</div>
+<div style="margin-top: 4px; font-weight: 700; font-size: 21px; line-height: 31px">Friday · rice, ghee, white cloth</div>
+<div style="font-weight: 500; font-size: 13.5px; line-height: 21px; color: #6E5230">Shukra’s day, given in the Annapurna bhaav. Serves food &amp; water and clothing.</div>
+<div style="display: flex; gap: 10px; margin-top: 14px">
+<a href="CausePage.dc.html" style="flex: 1; min-height: 50px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 1.5px solid #B8621B; border-radius: 999px; color: #8A3E0B; text-decoration: none; font-family: Inter, sans-serif; font-weight: 600; font-size: 14.5px">Daan-dwaar ›</a>
+<a href="Main.dc.html" style="flex: 1.3; min-height: 50px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 999px; background: #B8621B; color: #FFFFFF; text-decoration: none; font-family: Inter, sans-serif; font-weight: 600; font-size: 15px">Give today · दान करें</a>
+</div>
+</div>
+</div>
+
+<div>
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8A3E0B; margin-bottom: 10px">Also in Daan-Punya</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<a href="AStep4.dc.html" style="min-height: 60px; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 8px 12px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 16px; background: #FFF9EE; text-decoration: none; color: #1A0E03">
+<dc-import name="CauseIcon" cause="anna" size="40" hint-size="40px,40px"></dc-import>
+<span style="flex: 1; font-weight: 600; font-size: 15px">Nine kinds of seva</span>
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+<a href="AStep2.dc.html" style="min-height: 60px; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 8px 12px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 16px; background: #FFF9EE; text-decoration: none; color: #1A0E03">
+<img src="/_blob/2798c4747c705eee28f5ad461b941118" alt="" style="width: 40px; height: 40px; object-fit: contain">
+<span style="flex: 1; font-weight: 600; font-size: 15px">What the shastra says</span>
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+<a href="AStep5.dc.html" style="min-height: 60px; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 8px 12px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 16px; background: #FFF9EE; text-decoration: none; color: #1A0E03">
+<img src="/_blob/4fdceb74acf445496b74a82d5fd23699" alt="" style="width: 40px; height: 40px; object-fit: contain">
+<span style="flex: 1; font-weight: 600; font-size: 15px">Your register and gupt daan</span>
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+</a>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2100}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = {};
+}
+renderVals() {
+const st = this.state || {};
+const openIdx = st.open != null ? st.open : 0;
+const read = st.read || {};
+const bands = ['linear-gradient(135deg, #2A1508 0%, #45250E 100%)', 'linear-gradient(135deg, #2A1508 0%, #45250E 100%)', 'linear-gradient(135deg, #2A1508 0%, #45250E 100%)', 'linear-gradient(135deg, #2A1508 0%, #45250E 100%)', 'linear-gradient(135deg, #2A1508 0%, #45250E 100%)'];
+const DATA = [
+{ title: 'Sudama’s poha', lesson: 'Bhaav is the only measure', icon: 'anna',
+teaching: 'Bhaav is the only measure — a fistful of poha, given with love, is complete. This is why the register keeps no totals.',
+forYou: 'Give what you can, with love. A little is complete.' },
+{ title: 'King Rantideva', lesson: 'The last water, given first', icon: 'anna',
+teaching: 'The apex of anna-daan: the last water, given first — compassion outweighing hunger itself.',
+forYou: 'Food and water come first — anna heads every list of gifts.' },
+{ title: 'King Shibi', lesson: 'Protecting the one who seeks refuge', icon: 'seva',
+teaching: 'Protection of the one who seeks refuge is daan of the body and courage — seva ranks beside money, never below it.',
+forYou: 'Your time, effort and courage are daan too.' },
+{ title: 'Karna the Daanveer', lesson: 'The gift of the kavach and kundal', icon: 'seva',
+teaching: 'True giving costs the giver — Karna gave the very armour of his life, knowing exactly what it would cost.',
+forYou: 'Give from what you have — not only from what is left over.' },
+{ title: 'Bali and Vamana', lesson: 'Three steps of land', icon: 'seva',
+teaching: 'When ego dissolves in the gift, the giver becomes dear to the Lord himself — what is given never diminishes the giver.',
+forYou: 'Give without pride, and without counting.' }
+];
+const stories = DATA.map((s, i) => {
+const open = i === openIdx;
+const isRead = !!read[i];
+return Object.assign({}, s, {
+num: isRead ? '✓' : String(i + 1),
+open, expanded: open ? 'true' : 'false', chev: open ? 'rotate(180deg)' : 'none',
+band: bands[i],
+nodeBg: isRead ? '#8A3E0B' : (open ? '#2A1508' : '#FFF9EE'),
+nodeFg: isRead ? '#FFFFFF' : (open ? '#F2C46B' : '#8A3E0B'),
+ring: open ? '#B8621B' : 'rgba(166, 124, 52, 0.5)',
+border: open ? '2px solid #B8621B' : '1px solid rgba(166, 124, 52, 0.3)',
+pick: () => this.setState({ open: open ? -1 : i }),
+done: () => {
+const r = Object.assign({}, read); r[i] = true;
+this.setState({ read: r, open: i < 4 ? i + 1 : -1 });
+},
+doneLabel: i < 4 ? 'Next story ›' : 'Finish the path'
+});
+});
+const count = Object.keys(read).length;
+return {
+stories,
+dots: [0, 1, 2, 3, 4].map((i) => ({ bg: read[i] ? '#F2C46B' : 'rgba(242, 196, 107, 0.25)' })),
+progress: count + ' of 5 read'
+};
+}
+}
+</script>
+</body>
+</html>

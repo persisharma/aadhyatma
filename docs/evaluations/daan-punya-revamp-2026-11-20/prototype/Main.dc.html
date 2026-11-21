@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daan-Punya guide</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@500;600;700&family=Noto+Sans+Devanagari:wght@500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#8A3E0B}a:hover{color:#5A3A1E}
+</style>
+</helmet>
+<div style="width: 390px; height: {{frameH}}px; box-sizing: border-box; display: flex; flex-direction: column; background: linear-gradient(180deg, #F6ECD0 0%, #F1E3BF 100%); color: #1A0E03; font-family: 'Noto Serif Devanagari', serif">
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 16px 16px 0">
+<sc-if value="{{isIndex}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-label="{{c.backHome}}" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid rgba(166,124,52,0.30); background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 2px 8px rgba(90, 58, 30, 0.14); display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+</button>
+</sc-if>
+<sc-if value="{{isStep}}" hint-placeholder-val="{{false}}">
+<button type="button" aria-label="{{c.backIndex}}" onClick="{{goIndex}}" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid rgba(166,124,52,0.30); background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 2px 8px rgba(90, 58, 30, 0.14); display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+</button>
+</sc-if>
+<div style="flex: 1; min-width: 0; font-family: {{titleFont}}; font-weight: 700; font-size: {{h1Size}}; line-height: 32px">{{c.title}}</div>
+<sc-if value="{{isStep}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{goIndex}}" style="min-height: 44px; padding: 0 14px; border: 1px solid rgba(166,124,52,0.30); border-radius: 999px; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); color: #8A3E0B; font-family: {{labelFont}}; font-weight: 600; font-size: 12.5px; cursor: pointer">{{c.index}}</button>
+</sc-if>
+<sc-if value="{{isIndex}}" hint-placeholder-val="{{true}}">
+<button type="button" style="min-height: 44px; padding: 0 14px; border: 1px solid rgba(166,124,52,0.30); border-radius: 999px; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); color: #8A3E0B; font-family: {{labelFont}}; font-weight: 600; font-size: 12.5px; display: flex; align-items: center; gap: 6px; cursor: pointer">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"></path><path d="M9 9h6M9 13h6M9 17h3"></path></svg>
+{{c.register}}
+</button>
+</sc-if>
+</div>
+
+<sc-if value="{{isStep}}" hint-placeholder-val="{{false}}">
+<div style="padding: 14px 16px 0">
+<div aria-hidden="true" style="display: flex; gap: 4px">
+<sc-for list="{{segments}}" as="segment" hint-placeholder-count="5">
+<div style="flex: 1; height: 6px; border-radius: 999px; background: {{segment.bg}}"></div>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 12px">
+<div style="width: 64px; height: 64px; flex-shrink: 0; border-radius: 32px; background: radial-gradient(circle, rgba(242,196,107,0.45) 0%, rgba(242,196,107,0) 70%); display: flex; align-items: center; justify-content: center">
+<img src="{{stepIcon}}" alt="" style="width: 56px; height: 56px; object-fit: contain">
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #8A3E0B">{{stepCount}}</div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h1Size}}; line-height: 34px">{{stepTitle}}</div>
+<div style="font-weight: 500; font-size: 13.5px; line-height: 21px; color: #6E5230">{{stepLede}}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<div style="flex: 1; min-height: 0; overflow-y: auto; padding: 16px 16px 22px">
+
+<sc-if value="{{isIndex}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 22px">
+
+<div style="border: 1px solid rgba(166,124,52,0.30); border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 8px 22px rgba(90, 58, 30, 0.18)">
+<img src="/_blob/14cc0ec5be0f4d9f8483c2364c76752e" alt="{{c.heroAlt}}" style="display: block; width: 100%; height: 186px; object-fit: cover">
+<div style="padding: 16px 18px 18px">
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #8A3E0B">{{c.heroEyebrow}}</div>
+<div style="margin-top: 4px; font-family: {{titleFont}}; font-weight: 700; font-size: {{h2Size}}; line-height: 34px">{{c.heroTitle}}</div>
+<div style="margin-top: 6px; font-weight: 500; font-size: 14px; line-height: 23px; color: #5A3A1E">{{c.heroLede}}</div>
+</div>
+<div style="position: relative; display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border-top: 1px solid #A67C34">
+<span aria-hidden="true" style="position: absolute; left: 72px; top: 8px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; left: 190px; top: 12px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; left: 286px; top: 6px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<div style="width: 52px; height: 52px; flex-shrink: 0; border-radius: 26px; background: radial-gradient(circle, rgba(242,196,107,0.35) 0%, rgba(242,196,107,0) 70%); display: flex; align-items: center; justify-content: center">
+<img src="/_blob/0da2d1546dfe9bfba2a164d6e1b9d4b2" alt="" style="width: 46px; height: 46px; object-fit: contain">
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #F2C46B">{{c.todayEyebrow}}</div>
+<div style="font-weight: 600; font-size: 15px; line-height: 24px; color: #FFF4DC">{{today.items}}</div>
+</div>
+<button type="button" onClick="{{goToday}}" aria-label="{{c.openToday}}" style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 22px; border: 1px solid rgba(255,235,200,0.30); background: rgba(255,240,210,0.10); display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2C46B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+</button>
+</div>
+</div>
+
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.inGuide}}</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+<button type="button" onClick="{{s.go}}" aria-label="{{s.aria}}" style="width: 100%; min-height: 84px; box-sizing: border-box; display: flex; align-items: center; gap: 14px; padding: 10px 14px 10px 10px; border: {{s.border}}; border-radius: 20px; background: {{s.bg}}; box-shadow: 0 4px 12px rgba(90, 58, 30, 0.12); text-align: left; cursor: pointer; font-family: inherit; color: inherit">
+<div style="position: relative; width: 62px; height: 62px; flex-shrink: 0">
+<img src="{{s.icon}}" alt="" style="width: 62px; height: 62px; object-fit: contain">
+<div style="position: absolute; left: -4px; top: -4px; min-width: 24px; height: 24px; box-sizing: border-box; padding: 0 6px; border-radius: 12px; background: {{s.badgeBg}}; color: {{s.badgeFg}}; border: 2px solid #FFF8EA; font-family: Inter, sans-serif; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center">{{s.badge}}</div>
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 26px">{{s.title}}</div>
+<div style="font-weight: 500; font-size: 13px; line-height: 20px; color: #6E5230">{{s.lede}}</div>
+</div>
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.storiesLabel}}</div>
+<div style="display: flex; gap: 12px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 8px">
+<sc-for list="{{kathas}}" as="k" hint-placeholder-count="5">
+<button type="button" style="width: 172px; flex-shrink: 0; box-sizing: border-box; border: 1px solid rgba(166,124,52,0.30); border-radius: 20px; overflow: hidden; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); padding: 0; text-align: left; cursor: pointer; font-family: inherit; color: inherit; box-shadow: 0 4px 12px rgba(90, 58, 30, 0.14)">
+<div style="position: relative; height: 104px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border-bottom: 1px solid #A67C34; display: flex; align-items: center; justify-content: center">
+<span aria-hidden="true" style="position: absolute; left: 22px; top: 14px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 30px; top: 24px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; left: 40px; bottom: 16px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<div style="width: 92px; height: 92px; border-radius: 46px; background: radial-gradient(circle, rgba(242,196,107,0.42) 0%, rgba(242,196,107,0) 68%); display: flex; align-items: center; justify-content: center">
+<img src="{{k.icon}}" alt="" style="width: 68px; height: 68px; object-fit: contain">
+</div>
+<span style="position: absolute; right: 10px; top: 8px; font-family: Inter, sans-serif; font-weight: 600; font-size: 11px; color: #E9D8B6">{{k.num}}</span>
+</div>
+<div style="padding: 10px 12px 14px">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h4Size}}; line-height: 24px">{{k.title}}</div>
+<div style="margin-top: 2px; font-weight: 500; font-size: 12.5px; line-height: 19px; color: #6E5230">{{k.lesson}}</div>
+</div>
+</button>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{isS1}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 22px">
+<div style="border-radius: 24px; overflow: hidden; border: 1px solid rgba(166,124,52,0.30); box-shadow: 0 8px 22px rgba(90, 58, 30, 0.18)">
+<img src="/_blob/0c4057c509d1d32ad22bbd876a4df747" alt="{{c.s1Alt}}" style="display: block; width: 100%; height: 184px; object-fit: cover">
+</div>
+<div style="border-radius: 22px; padding: 18px; background: linear-gradient(180deg, #FFF5E0 0%, #F5DEAC 100%); border: 1px solid rgba(184, 98, 27, 0.4); box-shadow: 0 4px 12px rgba(90, 58, 30, 0.12)">
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #8A3E0B">{{c.oneLineLabel}}</div>
+<div style="margin-top: 6px; font-family: {{titleFont}}; font-weight: 700; font-size: {{h2Size}}; line-height: 33px; color: #1A0E03">{{c.oneLine}}</div>
+</div>
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.youKnowLabel}}</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{examples}}" as="e" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 14px; padding: 12px 14px; border: 1px solid rgba(166,124,52,0.30); border-radius: 18px; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 3px 10px rgba(90, 58, 30, 0.10)">
+<dc-import name="CauseIcon" cause="{{e.icon}}" size="54" hint-size="54px,54px"></dc-import>
+<div style="flex: 1; min-width: 0">
+<div style="font-weight: 700; font-size: 15.5px; line-height: 24px">{{e.title}}</div>
+<div style="font-weight: 500; font-size: 13px; line-height: 20px; color: #6E5230">{{e.why}}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.notMoneyLabel}}</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{notMoney}}" as="m" hint-placeholder-count="6">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 6px 12px; border: 1px solid rgba(166,124,52,0.30); border-radius: 18px; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); text-align: center; box-shadow: 0 3px 10px rgba(90, 58, 30, 0.10)">
+<dc-import name="CauseIcon" cause="{{m.icon}}" size="52" hint-size="52px,52px"></dc-import>
+<div style="font-weight: 600; font-size: 13px; line-height: 19px">{{m.label}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="position: relative; border-radius: 22px; padding: 20px 18px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border: 1px solid #A67C34; text-align: center">
+<span aria-hidden="true" style="position: absolute; left: 24px; top: 18px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 30px; top: 30px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; left: 52px; bottom: 40px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 60px; bottom: 22px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #F2C46B">{{c.vedaLabel}}</div>
+<div aria-hidden="true" style="margin: 12px auto 0; width: 120px; height: 1px; background: linear-gradient(90deg, rgba(166,124,52,0) 0%, #A67C34 50%, rgba(166,124,52,0) 100%)"></div>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px; line-height: 33px; color: #F2C46B; white-space: pre-line">मोघमन्नं विन्दते अप्रचेताः
+सत्यं ब्रवीमि वध इत्स तस्य ।
+नार्यमणं पुष्यति नो सखायं
+केवलाघो भवति केवलादी ॥</div>
+<div aria-hidden="true" style="margin: 12px auto 0; width: 120px; height: 1px; background: linear-gradient(90deg, rgba(166,124,52,0) 0%, #A67C34 50%, rgba(166,124,52,0) 100%)"></div>
+<div style="margin-top: 8px; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #C2AC88">Ṛgveda 10.117.6</div>
+<div style="margin-top: 12px; font-weight: 500; font-size: 14px; line-height: 23px; color: #E9D8B6; text-align: left">{{c.vedaMeaning}}</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isS2}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 22px">
+<div style="position: relative; border-radius: 22px; padding: 20px 18px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border: 1px solid #A67C34; text-align: center">
+<span aria-hidden="true" style="position: absolute; left: 24px; top: 18px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 34px; top: 26px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; left: 60px; bottom: 22px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<img src="/_blob/53d157e4cafa12571414bca7e70dd476" alt="" style="width: 54px; height: 54px; object-fit: contain">
+<div style="margin-top: 4px; font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #F2C46B">{{c.upLabel}}</div>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px; line-height: 33px; color: #F2C46B; white-space: pre-line">श्रद्धया देयम् । अश्रद्धया अदेयम् ।
+श्रिया देयम् । ह्रिया देयम् ।
+भिया देयम् । संविदा देयम् ॥</div>
+<div aria-hidden="true" style="margin: 12px auto 0; width: 120px; height: 1px; background: linear-gradient(90deg, rgba(166,124,52,0) 0%, #A67C34 50%, rgba(166,124,52,0) 100%)"></div>
+<div style="margin-top: 8px; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #C2AC88">Taittirīya Upaniṣad 1.11.3</div>
+</div>
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.sixLabel}}</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{sixWays}}" as="w" hint-placeholder-count="6">
+<div style="display: flex; flex-direction: column; padding: 14px 12px; border: {{w.border}}; border-radius: 20px; background: {{w.bg}}; box-shadow: 0 4px 12px rgba(90, 58, 30, 0.12)">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="width: 30px; height: 30px; border-radius: 15px; background: linear-gradient(180deg, #F2C46B 0%, #A67C34 100%); color: #2A1508; font-family: Inter, sans-serif; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center">{{w.num}}</div>
+<svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{w.ink}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<sc-if value="{{w.isFaith}}" hint-placeholder-val="{{true}}"><path d="M4 15h16c-1 3-4 5-8 5s-7-2-8-5z"></path><path d="M12 4c2 2.5 2 5 0 7-2-2-2-4.5 0-7z"></path></sc-if>
+<sc-if value="{{w.isNo}}" hint-placeholder-val="{{false}}"><path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"></path><path d="M4 4l16 16"></path></sc-if>
+<sc-if value="{{w.isMeans}}" hint-placeholder-val="{{false}}"><path d="M12 4v15M7 20h10M5 7h14"></path><path d="M5 7l-3 6h6zM19 7l-3 6h6z"></path></sc-if>
+<sc-if value="{{w.isHumble}}" hint-placeholder-val="{{false}}"><path d="M12 3c-1.5 2-3 5-3 9v5l-3 3M12 3c1.5 2 3 5 3 9v5l3 3"></path><path d="M12 3v14"></path></sc-if>
+<sc-if value="{{w.isAwe}}" hint-placeholder-val="{{false}}"><path d="M12 6c2 2.5 2 6 0 9-2-3-2-6.5 0-9z"></path><path d="M12 15c-3-1-6-3.5-7-7 3.5 0 6 2 7 4M12 15c3-1 6-3.5 7-7-3.5 0-6 2-7 4"></path><path d="M5 19h14"></path></sc-if>
+<sc-if value="{{w.isKnow}}" hint-placeholder-val="{{false}}"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.8"></circle></sc-if>
+</svg>
+</div>
+<div style="margin-top: 10px; font-weight: 700; font-size: 21px; line-height: 32px; color: {{w.wordInk}}">{{w.word}}</div>
+<div style="margin-top: 2px; font-weight: 700; font-size: 15px; line-height: 23px">{{w.plain}}</div>
+<div style="margin-top: 3px; font-weight: 500; font-size: 13px; line-height: 20px; color: #5A3A1E">{{w.child}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="position: relative; border-radius: 22px; padding: 20px 18px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border: 1px solid #A67C34; text-align: center">
+<span aria-hidden="true" style="position: absolute; left: 30px; top: 16px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 26px; bottom: 30px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #F2C46B">{{c.gitaLabel}}</div>
+<div style="margin-top: 12px; font-weight: 600; font-size: 18px; line-height: 33px; color: #F2C46B; white-space: pre-line">दातव्यमिति यद्दानं दीयतेऽनुपकारिणे।
+देशे काले च पात्रे च तद्दानं सात्त्विकं स्मृतम्।।</div>
+<div aria-hidden="true" style="margin: 12px auto 0; width: 120px; height: 1px; background: linear-gradient(90deg, rgba(166,124,52,0) 0%, #A67C34 50%, rgba(166,124,52,0) 100%)"></div>
+<div style="margin-top: 8px; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #C2AC88">Bhagavad Gītā 17.20</div>
+<div style="margin-top: 12px; font-weight: 500; font-size: 14px; line-height: 23px; color: #E9D8B6; text-align: left">{{c.gitaMeaning}}</div>
+<div style="margin-top: 14px; font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #F2C46B; text-align: left">{{c.checksLabel}}</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px">
+<sc-for list="{{checks}}" as="k" hint-placeholder-count="3">
+<div style="padding: 10px 6px; border-radius: 14px; background: rgba(255, 240, 210, 0.10); border: 1px solid rgba(255, 235, 200, 0.20); text-align: center">
+<div style="font-weight: 700; font-size: 16px; line-height: 24px; color: #F2C46B">{{k.word}}</div>
+<div style="font-weight: 500; font-size: 12.5px; line-height: 18px; color: #FFF4DC">{{k.plain}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.kindsLabel}}</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{kinds}}" as="g" hint-placeholder-count="3">
+<div style="display: flex; gap: 12px; padding: 12px 14px; border-radius: 16px; background: {{g.bg}}">
+<div style="width: 8px; flex-shrink: 0; border-radius: 4px; background: {{g.bar}}"></div>
+<div style="flex: 1; min-width: 0">
+<div style="font-weight: 700; font-size: 15px; line-height: 23px">{{g.name}}</div>
+<div style="font-weight: 500; font-size: 13px; line-height: 20px; color: #5A3A1E">{{g.plain}}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<button type="button" style="margin-top: 12px; width: 100%; min-height: 48px; border: 1.5px solid #B8621B; border-radius: 999px; background: transparent; color: #8A3E0B; font-family: {{labelFont}}; font-weight: 600; font-size: 14.5px; cursor: pointer">{{c.readGita}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isS3}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 22px">
+<div style="border: 1px solid rgba(166,124,52,0.30); border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 8px 22px rgba(90, 58, 30, 0.18)">
+<img src="/_blob/c05044a8b69351edf2d74c73f0da221d" alt="{{c.annapurnaAlt}}" style="display: block; width: 100%; height: 180px; object-fit: cover">
+<div style="padding: 14px 16px 16px">
+<div style="font-family: {{labelFont}}; font-weight: 700; font-size: 11px; letter-spacing: {{track}}; text-transform: uppercase; color: #8A3E0B">{{sel.eyebrow}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px">
+<sc-for list="{{sel.chips}}" as="ic" hint-placeholder-count="3">
+<span style="min-height: 34px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 8px; background: rgba(166, 124, 52, 0.22); color: #8A3E0B; font-weight: 700; font-size: 16px">{{ic.label}}</span>
+</sc-for>
+</div>
+<div style="margin-top: 10px; font-weight: 500; font-size: 13.5px; line-height: 21px; color: #6E5230">{{sel.note}}</div>
+<div style="margin-top: 14px; font-family: {{labelFont}}; font-weight: 600; font-size: 12.5px; color: #5A3A1E">{{c.servesLabel}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px">
+<sc-for list="{{sel.serves}}" as="sv" hint-placeholder-count="2">
+<button type="button" onClick="{{sv.go}}" style="min-height: 52px; display: flex; align-items: center; gap: 8px; padding: 4px 14px 4px 4px; border: 1px solid #A67C34; border-radius: 999px; background: #FFF8EA; box-shadow: 0 2px 8px rgba(90, 58, 30, 0.12); cursor: pointer; font-family: inherit; color: inherit">
+<dc-import name="CauseIcon" cause="{{sv.id}}" size="44" hint-size="44px,44px"></dc-import>
+<span style="font-weight: 600; font-size: 13.5px">{{sv.label}}</span>
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.weekLabel}}</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px">
+<sc-for list="{{vaar}}" as="v" hint-placeholder-count="7">
+<button type="button" onClick="{{v.pick}}" aria-label="{{v.full}}" style="min-height: 54px; padding: 4px 0; border-radius: 14px; border: {{v.border}}; background: {{v.bg}}; color: {{v.fg}}; font-family: {{labelFont}}; font-weight: 600; font-size: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+<span>{{v.short}}</span>
+<span aria-hidden="true" style="width: 5px; height: 5px; border-radius: 3px; background: {{v.dot}}"></span>
+</button>
+</sc-for>
+</div>
+<div style="margin-top: 8px; font-weight: 500; font-size: 12.5px; line-height: 19px; color: #6E5230">{{c.weekHint}}</div>
+</div>
+<div style="position: relative; border-radius: 22px; padding: 18px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border: 1px solid #A67C34; color: #FFF4DC">
+<span aria-hidden="true" style="position: absolute; right: 28px; top: 18px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 70px; top: 40px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<div style="display: flex; align-items: center; gap: 12px">
+<img src="/_blob/5ae1d7202ef86a05e57d40babd294579" alt="" style="width: 52px; height: 52px; object-fit: contain">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; color: #F2C46B">{{c.howMuchLabel}}</div>
+</div>
+<div style="margin-top: 10px; font-weight: 600; font-size: 16.5px; line-height: 27px">{{c.howMuch}}</div>
+<div style="margin-top: 8px; font-weight: 500; font-size: 13.5px; line-height: 22px; color: #E9D8B6">{{c.howMuchSudama}}</div>
+<button type="button" style="margin-top: 14px; min-height: 44px; padding: 0 16px; border: 1px solid rgba(242,196,107,0.6); border-radius: 999px; background: rgba(255,240,210,0.10); color: #F2C46B; font-family: {{labelFont}}; font-weight: 600; font-size: 13.5px; cursor: pointer">{{c.readSudama}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isS4}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="font-weight: 500; font-size: 14px; line-height: 23px; color: #5A3A1E">{{c.causesIntro}}</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{causes}}" as="cz" hint-placeholder-count="9">
+<button type="button" onClick="{{cz.pick}}" aria-pressed="{{cz.pressed}}" style="min-height: 104px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 10px 4px; border-radius: 20px; border: {{cz.border}}; background: {{cz.bg}}; box-shadow: 0 3px 10px rgba(90, 58, 30, 0.12); cursor: pointer; font-family: inherit">
+<dc-import name="CauseIcon" cause="{{cz.id}}" size="50" hint-size="50px,50px"></dc-import>
+<span style="font-weight: 600; font-size: 13px; line-height: 19px; text-align: center; color: {{cz.fg}}">{{cz.name}}</span>
+</button>
+</sc-for>
+</div>
+<div style="border: 1px solid rgba(166,124,52,0.30); border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 8px 22px rgba(90, 58, 30, 0.18)">
+<div style="position: relative; display: flex; align-items: center; gap: 14px; padding: 18px 16px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border-bottom: 1px solid #A67C34">
+<span aria-hidden="true" style="position: absolute; right: 30px; top: 14px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 90px; bottom: 16px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<dc-import name="CauseIcon" cause="{{cause.id}}" size="72" hint-size="72px,72px"></dc-import>
+<div style="flex: 1; min-width: 0">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h2Size}}; line-height: 30px; color: #FFF4DC">{{cause.name}}</div>
+<div style="margin-top: 2px; font-weight: 500; font-size: 13px; line-height: 20px; color: #E9D8B6">{{cause.whom}}</div>
+</div>
+</div>
+<div style="padding: 16px">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h4Size}}; line-height: 24px; color: #8A3E0B">{{c.whyDear}}</div>
+<div style="margin-top: 6px; font-weight: 500; font-size: 14px; line-height: 24px; color: #1A0E03">{{cause.mahatva}}</div>
+<sc-if value="{{cause.hasCite}}" hint-placeholder-val="{{true}}">
+<div style="margin-top: 8px; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; line-height: 18px; color: #6E5230">{{cause.cite}}</div>
+</sc-if>
+<div style="margin-top: 18px; font-family: {{titleFont}}; font-weight: 700; font-size: {{h4Size}}; line-height: 24px; color: #8A3E0B">{{c.placesLabel}}</div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px">
+<sc-for list="{{cause.orgs}}" as="o" hint-placeholder-count="3">
+<div style="padding: 12px 14px; border-radius: 14px; background: #F8EFD6">
+<div style="font-weight: 700; font-size: 14.5px; line-height: 22px">{{o.name}}</div>
+<div style="font-weight: 500; font-size: 12.5px; line-height: 19px; color: #6E5230">{{o.about}}</div>
+</div>
+</sc-for>
+</div>
+<a href="CausePage.dc.html" style="margin-top: 16px; min-height: 50px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; background: #8A3E0B; color: #FFFFFF; text-decoration: none; font-family: {{labelFont}}; font-weight: 600; font-size: 15px">{{cause.openLabel}}</a>
+</div>
+</div>
+<div style="font-weight: 500; font-size: 12.5px; line-height: 19px; color: #6E5230; text-align: center">{{c.noMoney}}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isS5}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid rgba(166,124,52,0.30); border-radius: 22px; background: linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%); box-shadow: 0 6px 16px rgba(90, 58, 30, 0.14)">
+<div style="width: 84px; height: 84px; flex-shrink: 0; border-radius: 42px; background: radial-gradient(circle, rgba(242,196,107,0.45) 0%, rgba(242,196,107,0) 70%); display: flex; align-items: center; justify-content: center">
+<img src="/_blob/2798c4747c705eee28f5ad461b941118" alt="" style="width: 72px; height: 72px; object-fit: contain">
+</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px">{{c.regTitle}}</div>
+<div style="font-weight: 500; font-size: 13.5px; line-height: 22px; color: #5A3A1E">{{c.regBody}}</div>
+</div>
+</div>
+<div>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; margin-bottom: 10px">{{c.sampleLabel}}</div>
+<div style="padding: 14px 16px; border-radius: 16px; background: #F8EFD6; border-left: 0">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="font-weight: 700; font-size: 15px">{{c.sampleCat}}</div>
+<div style="font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #6E5230">20 Nov</div>
+</div>
+<div style="margin-top: 4px; font-weight: 500; font-size: 13px; line-height: 20px; color: #6E5230">{{c.sampleTithi}}</div>
+<div style="margin-top: 6px; font-weight: 500; font-size: 13.5px; line-height: 21px">{{c.sampleNote}}</div>
+</div>
+<div style="margin-top: 8px; padding: 14px 16px; border-radius: 16px; background: rgba(166, 124, 52, 0.22)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="font-weight: 700; font-size: 15px; color: #8A3E0B">{{c.guptName}}</div>
+<div style="font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #5A3A1E">18 Nov</div>
+</div>
+<div style="margin-top: 4px; font-weight: 500; font-size: 13px; line-height: 20px; color: #5A3A1E">{{c.guptRow}}</div>
+</div>
+</div>
+<div style="position: relative; border-radius: 22px; padding: 18px; background: linear-gradient(180deg, #160A03 0%, #2A1508 55%, #5C3214 100%); border: 1px solid #A67C34; color: #FFF4DC">
+<span aria-hidden="true" style="position: absolute; right: 26px; top: 16px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; right: 80px; top: 34px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<span aria-hidden="true" style="position: absolute; left: 30px; bottom: 20px; width: 2px; height: 2px; border-radius: 1px; background: #FFF3D6"></span>
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h3Size}}; line-height: 28px; color: #F2C46B">{{c.guptLabel}}</div>
+<div style="margin-top: 6px; font-weight: 600; font-size: 15.5px; line-height: 26px">{{c.guptMeaning}}</div>
+<div aria-hidden="true" style="margin: 14px 0; height: 1px; background: linear-gradient(90deg, rgba(166,124,52,0) 0%, #A67C34 50%, rgba(166,124,52,0) 100%)"></div>
+<div style="display: flex; align-items: center; gap: 10px">
+<img src="/_blob/5ae1d7202ef86a05e57d40babd294579" alt="" style="width: 40px; height: 40px; object-fit: contain">
+<div style="font-family: {{titleFont}}; font-weight: 700; font-size: {{h4Size}}; line-height: 24px; color: #F2C46B">{{c.sudamaLabel}}</div>
+</div>
+<div style="margin-top: 6px; font-weight: 600; font-size: 15.5px; line-height: 26px">{{c.sudamaTeaching}}</div>
+</div>
+<div style="display: flex; gap: 10px">
+<button type="button" style="flex: 1; min-height: 50px; border: 1.5px solid #B8621B; border-radius: 999px; background: transparent; color: #8A3E0B; font-family: {{labelFont}}; font-weight: 600; font-size: 14.5px; cursor: pointer">{{c.openRegister}}</button>
+<button type="button" style="flex: 1.2; min-height: 50px; border: 0; border-radius: 999px; background: #8A3E0B; color: #FFFFFF; font-family: {{labelFont}}; font-weight: 600; font-size: 15px; cursor: pointer">{{c.recordDaan}}</button>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<div style="flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; padding: 10px 16px 16px; background: linear-gradient(180deg, #FFF8EA 0%, #F6ECD0 100%); border-top: 1px solid rgba(166,124,52,0.30); box-shadow: 0 -6px 16px rgba(90, 58, 30, 0.10)">
+<a href="CausePage.dc.html" style="min-height: 46px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #A67C34; border-radius: 999px; background: #FFF8EA; color: #8A3E0B; text-decoration: none; font-family: {{labelFont}}; font-weight: 600; font-size: 14.5px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V9l7-5 7 5v12"></path><path d="M10 21v-6h4v6"></path></svg>
+{{c.dwaar}}
+</a>
+<sc-if value="{{isIndex}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{start}}" style="width: 100%; min-height: 52px; border: 0; border-radius: 999px; background: #8A3E0B; color: #FFFFFF; box-shadow: 0 4px 12px rgba(138, 62, 11, 0.30); font-family: {{labelFont}}; font-weight: 600; font-size: 15.5px; cursor: pointer">{{c.begin}}</button>
+</sc-if>
+<sc-if value="{{isStep}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; gap: 10px; width: 100%">
+<button type="button" onClick="{{prev}}" style="flex: 1; min-height: 52px; border: 1.5px solid #B8621B; border-radius: 999px; background: transparent; color: #8A3E0B; font-family: {{labelFont}}; font-weight: 600; font-size: 15px; cursor: pointer">{{prevLabel}}</button>
+<button type="button" onClick="{{next}}" style="flex: 1.4; min-height: 52px; border: 0; border-radius: 999px; background: #8A3E0B; color: #FFFFFF; box-shadow: 0 4px 12px rgba(138, 62, 11, 0.30); font-family: {{labelFont}}; font-weight: 600; font-size: 15.5px; cursor: pointer">{{nextLabel}}</button>
+</div>
+</sc-if>
+</div>
+
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"lang":{"editor":"enum","options":["en","hi"],"default":"en"},"startStep":{"editor":"int","min":0,"max":5,"default":0},"frameHeight":{"editor":null,"default":1500},"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = {};
+}
+renderVals() {
+const hi = (this.props.lang ?? 'en') === 'hi';
+const L = (en, hiText) => (hi ? hiText : en);
+const st = this.state || {};
+const step = st.step != null ? st.step : Math.max(0, Math.min(5, Number(this.props.startStep ?? 0)));
+const vaarIdx = st.vaar != null ? st.vaar : 5;
+const causeId = st.cause || 'anna';
+const read = st.read || {};
+const go = (n) => () => {
+const nextRead = Object.assign({}, read);
+if (step > 0) nextRead[step] = true;
+this.setState({ step: n, read: nextRead });
+};
+const ICON = {
+s1: '/_blob/4823116dd97ea4d2a9d459467b4f4255',
+s2: '/_blob/53d157e4cafa12571414bca7e70dd476',
+s3: '/_blob/0da2d1546dfe9bfba2a164d6e1b9d4b2',
+s4: '/_blob/df09148e12f629fdadc064a54be88d48',
+s5: '/_blob/2798c4747c705eee28f5ad461b941118'
+};
+
+const CAUSES = [
+{ id: 'anna', name: L('Food & water', 'अन्न-जल सेवा'), short: L('Food & water', 'अन्न-जल'), whom: L('the hungry and thirsty — anna-kshetras, mid-day meals, water', 'भूखे और प्यासे — अन्नक्षेत्र, मध्याह्न भोजन, प्याऊ'),
+mahatva: L('From the bed of arrows Bhīṣma tells Yudhiṣṭhira that no gift exceeds anna-daan — beings are born of food and live by food. To feed the hungry is to give a day of life; this is why anna heads every festival’s list of gifts. Hunger is the lack that returns every day, and anna-daan the gift that can be made every day.', 'शरशय्या पर भीष्म युधिष्ठिर से कहते हैं कि अन्न-दान से बड़ा कोई दान नहीं — प्राणी अन्न से ही जन्मते हैं और अन्न से ही जीते हैं। जो भूखे को भोजन देता है, वह उसे एक दिन का जीवन देता है; इसीलिए हर पर्व की दान-सूची में अन्न पहले आता है। भूख वह अभाव है जो प्रतिदिन लौटता है, और अन्न-दान वह दान है जो प्रतिदिन दिया जा सकता है।'),
+cite: L('Mahābhārata · Anuśāsana (Dāna-dharma) Parva', 'महाभारत · अनुशासन (दानधर्म) पर्व'), orgs: ['akshaya', 'annamrita', 'cwo', 'ttd', 'rkm'] },
+{ id: 'gau', name: L('Gau seva', 'गौ-सेवा'), short: L('Gau seva', 'गौ-सेवा'), whom: L('cows — gaushalas, fodder, gau-gras', 'गौवंश — गौशाला, चारा, गौ-ग्रास'),
+mahatva: L('In this tradition the cow is Kāmadhenu, and Krishna’s very name — Govinda — means the one who delights the cows. Hence the old household rule of setting aside the first roti as gau-gras before anyone eats: giving begins with the one who cannot ask. Today that same seva takes the form of fodder, treatment, and shelter for old and infirm cattle in a gaushala.', 'गाय भारतीय परम्परा में कामधेनु मानी गई है, और श्रीकृष्ण का नाम ही गोविन्द — गायों को आनन्द देने वाला — है। इसीलिए भोजन से पहले पहली रोटी गौ-ग्रास के लिए निकालने की रीति चली आई: दान की शुरुआत उससे जो माँग नहीं सकता। आज यही सेवा गौशाला के चारे, चिकित्सा और वृद्ध-अशक्त गौवंश के आश्रय के रूप में होती है।'),
+cite: L('The app’s own Gau Seva vidhi · the gau-mahima of the Anuśāsana Parva', 'गौ-सेवा विधि (ऐप में) · महाभारत, अनुशासन पर्व की गौ-महिमा'), orgs: ['ttd'] },
+{ id: 'bal', name: L('Children', 'बाल-सेवा'), short: L('Children', 'बाल-सेवा'), whom: L('children — nutrition, protection, schooling', 'बच्चे — पोषण, सुरक्षा, विद्यालय'),
+mahatva: L('Navratri’s kanya-pujan teaches it directly — a young girl is honoured as the Devi and given food, cloth and dakshina. The tradition sees a deity in the child, so serving children is respect, not pity. A child left hungry or unschooled carries the lack for a lifetime, not for a day; food, a book or safety given here reaches that far.', 'नवरात्रि की कन्या-पूजन की रीति यही सिखाती है — बालिका को देवी मानकर भोजन, वस्त्र और दक्षिणा देना। परम्परा बच्चे में देवता देखती है, इसलिए बाल-सेवा दया नहीं, आदर है। भूखा या अनपढ़ रह गया बच्चा एक दिन का नहीं, पूरे जीवन का अभाव ढोता है; यहाँ दिया गया अन्न, पुस्तक या सुरक्षा वहीं तक जाती है।'),
+cite: L('The Navratri kanya-pujan tradition', 'नवरात्रि कन्या-पूजन की परम्परा'), orgs: ['akshaya', 'annamrita', 'cry'] },
+{ id: 'vriddha', name: L('Elder care', 'वृद्ध-सेवा'), short: L('Elders', 'वृद्ध-सेवा'), whom: L('elders — shelter, medical care, livelihood', 'वृद्धजन — आश्रय, चिकित्सा, आजीविका'),
+mahatva: L('To let the generation that gave first end in want is held to be the householder’s gravest lapse. What old age lacks is usually not food but medicine, shelter and company — and none of it is easily asked for. So this seva is usually done quietly: an elder’s treatment, spectacles, medicines, or two meals a day.', 'जिस पीढ़ी ने पहले दिया, उसे अन्त में अभाव में छोड़ देना गृहस्थ-धर्म की सबसे बड़ी चूक मानी गई है। वृद्धावस्था का अभाव प्रायः अन्न का नहीं, अकेलेपन, औषधि और आश्रय का होता है — और वह किसी से माँगा नहीं जाता। इसीलिए यह सेवा प्रायः चुपचाप की जाती है: बुज़ुर्ग का उपचार, चश्मा, दवा, या दो समय का भोजन।'),
+cite: '', orgs: ['helpage'] },
+{ id: 'vidya', name: L('Education', 'विद्या-दान'), short: L('Education', 'विद्या-दान'), whom: L('learners — books, fees, teaching', 'विद्यार्थी — पुस्तकें, शुल्क, शिक्षण'),
+mahatva: L('Both Guru Purnima and Vasant Panchami carry the practice of vidya-daan — a book, a pen, a term’s fees, or one’s own hours of teaching. Knowledge is the one gift that does not diminish in the giving; and it leaves the receiver able to give in turn, which is why tradition places it next after anna-daan.', 'गुरु पूर्णिमा और वसंत पंचमी दोनों पर विद्या-दान की रीति है — पुस्तक, लेखनी, शुल्क या स्वयं पढ़ाने का समय। विद्या वह एक दान है जो देने से घटती नहीं; और यह पात्र को आगे देने योग्य बना देती है, इसलिए परम्परा इसे अन्न-दान के बाद रखती है।'),
+cite: L('The daan tradition of Guru Purnima and Vasant Panchami', 'गुरु पूर्णिमा एवं वसंत पंचमी की दान-परम्परा'), orgs: ['rkm', 'cry'] },
+{ id: 'arogya', name: L('Health', 'आरोग्य-सेवा'), short: L('Health', 'आरोग्य'), whom: L('the ill — medical care, blood donation, medicine', 'रोगी — चिकित्सा, रक्त-दान, औषधि'),
+mahatva: L('Aushadha-daan and abhaya-daan — giving a sick person treatment, and giving them freedom from fear — travel together in the old lists, because illness brings want and fear at once. Blood donation is this in its present form: what is given is not money but something out of one’s own body, which cannot be priced and cannot be postponed.', 'औषध-दान और अभय-दान — रोगी को उपचार देना और भय से मुक्त करना — दान-सूचियों में सदा साथ आते हैं, क्योंकि रोग में अभाव और भय एक साथ आते हैं। रक्त-दान इसी का आज का रूप है: यहाँ दिया गया धन नहीं, शरीर से निकला वह दान है जिसका कोई मूल्य नहीं लगाया जा सकता और जिसे टाला भी नहीं जा सकता।'),
+cite: '', orgs: ['eraktkosh', 'simplyblood', 'rkm', 'helpage', 'cry'] },
+{ id: 'vastra', name: L('Clothing', 'वस्त्र-सेवा'), short: L('Clothing', 'वस्त्र'), whom: L('those without cover — cloth, blankets, dignity', 'ठिठुरते हुए — वस्त्र, कम्बल, गरिमा'),
+mahatva: L('The practice of giving cloth, blankets and til on Makar Sankranti and on amavasya is tied to the season — the gift is made where the want is, when it is. Cloth does not only keep out cold; it guards dignity, which is why in Draupadi’s story it is cloth itself that becomes the emblem of protection.', 'मकर संक्रान्ति और अमावस्या पर वस्त्र, कम्बल और तिल दान की रीति ऋतु से बँधी है — दान वहाँ दिया जाता है जहाँ अभाव उसी समय है। वस्त्र केवल शीत से नहीं बचाता, वह लज्जा और गरिमा की रक्षा करता है; इसीलिए द्रौपदी की कथा में वस्त्र ही रक्षा का प्रतीक बनता है।'),
+cite: L('The daan tradition of Makar Sankranti and amavasya', 'मकर संक्रान्ति एवं अमावस्या की दान-परम्परा'), orgs: ['goonj'] },
+{ id: 'jeev', name: L('Animals & birds', 'जीव-सेवा'), short: L('Animals', 'जीव-सेवा'), whom: L('animals and birds — shelter, treatment, feed and water', 'पशु-पक्षी — आश्रय, चिकित्सा, दाना-पानी'),
+mahatva: L('In the householder’s panchabali practice one share always belonged to animals and birds — grain on the roof, water in the courtyard. This is the gift that can bring back no return and no thanks; tradition therefore treats it as the plainest test of giving without expectation. A water bowl set out in summer, or treatment for an injured animal, is that same seva today.', 'गृहस्थ की पंचबलि-परम्परा में एक भाग सदा पशु-पक्षियों का रहा है — छत पर दाना, आँगन में जल। यह वह दान है जिसका न कोई प्रत्युपकार सम्भव है, न धन्यवाद; इसीलिए परम्परा इसे निष्काम दान की सबसे सरल कसौटी मानती है। ग्रीष्म में रखा जल-पात्र और घायल पशु का उपचार आज भी वही सेवा है।'),
+cite: '', orgs: ['bluecross'] },
+{ id: 'aapada', name: L('Disaster relief', 'आपदा-राहत'), short: L('Disaster', 'आपदा-राहत'), whom: L('those struck by disaster — immediate relief and rebuilding', 'आपदा-पीड़ित — तत्काल राहत और पुनर्वास'),
+mahatva: L('One limb of giving is desha-kāla — the fit receiver is the one whose need is now. Flood, earthquake or famine puts that “now” in front of you, and then giving does not wait for a festival. What is given here becomes food, shelter and rebuilding directly — and given late, it is wasted.', 'दान का एक अंग देश-काल है — सुपात्र वही है जिसे इसी समय आवश्यकता हो। बाढ़, भूकम्प या अकाल में वह काल सामने आ खड़ा होता है, और तब दान पर्व की प्रतीक्षा नहीं करता। यहाँ दिया गया सीधे अन्न, आश्रय और पुनर्निर्माण बनता है — और लौटने में देर हुई तो व्यर्थ हो जाता है।'),
+cite: '', orgs: ['goonj', 'rkm', 'helpage'] }
+];
+const ORGS = {
+akshaya: { name: L('The Akshaya Patra Foundation', 'अक्षय पात्र फाउंडेशन'), about: L('Fresh mid-day meals for government-school children, every school day.', 'सरकारी विद्यालयों के बच्चों को प्रतिदिन ताज़ा मध्याह्न भोजन।') },
+annamrita: { name: L('Annamrita Foundation', 'अन्नामृत फाउंडेशन'), about: L('Mid-day meals cooked in centralized kitchens and served in schools daily.', 'केन्द्रीकृत रसोइयों से विद्यालयों में प्रतिदिन मध्याह्न भोजन।') },
+cwo: { name: L('Change With One Foundation', 'चेंज विद वन फ़ाउंडेशन'), about: L('A Delhi community kitchen — hot, unlimited meals served to anyone with dignity for ₹10 (‘Change With One Meal’).', 'दिल्ली का सेवा-भोजनालय — हर किसी को ₹10 में सम्मान के साथ गर्म, असीमित भोजन (‘चेंज विद वन मील’)।') },
+ttd: { name: L('Sri Venkateswara Annaprasadam Trust (TTD)', 'श्री वेंकटेश्वर अन्नप्रसादम् ट्रस्ट (TTD)'), about: L('Free annaprasadam for pilgrims at Tirumala; the devasthanam’s Gosamrakshana Trust is its gau-seva door.', 'तिरुमला में तीर्थयात्रियों को निःशुल्क अन्नप्रसादम्; देवस्थानम् का गोसंरक्षण ट्रस्ट गौ-सेवा का द्वार है।') },
+rkm: { name: L('Ramakrishna Math & Mission, Belur', 'रामकृष्ण मठ एवं मिशन, बेलूड़'), about: L('The Ramakrishna Mission’s seva — food, education, medical care and disaster relief.', 'रामकृष्ण मिशन की सेवा — अन्न, शिक्षा, चिकित्सा और आपदा-राहत।') },
+goonj: { name: L('Goonj', 'गूँज'), about: L('Urban surplus cloth carried to villages — clothing work and disaster relief.', 'नगरों का अतिरिक्त वस्त्र गाँवों तक — वस्त्र-सेवा और आपदा-राहत।') },
+simplyblood: { name: L('Simply Blood', 'सिंपली ब्लड'), about: L('A virtual blood-donation platform — connects blood donors with those who need blood, free.', 'वर्चुअल रक्तदान मंच — रक्तदाता और ज़रूरतमंद को नि:शुल्क जोड़ता है।') },
+eraktkosh: { name: L('e-RaktKosh (Government of India)', 'ई-रक्तकोष (भारत सरकार)'), about: L('The Health Ministry’s national blood-services portal — donor registration, blood banks and camps.', 'स्वास्थ्य मंत्रालय का राष्ट्रीय रक्त-सेवा पोर्टल — रक्तदाता पंजीकरण, ब्लड बैंक और शिविर।') },
+helpage: { name: L('HelpAge India', 'हेल्पएज इंडिया'), about: L('Shelter, mobile healthcare units and livelihood support for the elderly.', 'वृद्धजनों के लिए आश्रय, चलती-फिरती चिकित्सा इकाइयाँ और आजीविका।') },
+cry: { name: L('CRY — Child Rights and You', 'क्राई — चाइल्ड राइट्स एंड यू'), about: L('Education, protection and nutrition work for underprivileged children.', 'वंचित बच्चों के लिए शिक्षा, सुरक्षा और पोषण का कार्य।') },
+bluecross: { name: L('Blue Cross of India', 'ब्लू क्रॉस ऑफ़ इंडिया'), about: L('A Chennai animal-welfare organization — hospitals and shelters for stray animals and birds.', 'चेन्नई की पशु-कल्याण संस्था — आवारा पशु-पक्षियों के अस्पताल और आश्रय।') }
+};
+const causeById = {};
+CAUSES.forEach((cz) => { causeById[cz.id] = cz; });
+
+const VAAR = [
+{ short: L('Sun', 'रवि'), full: L('Sunday', 'रविवार'), graha: L('Surya', 'सूर्य'), items: L('Wheat, jaggery, water in a copper vessel', 'गेहूँ, गुड़, ताँबे के पात्र में जल'), note: '', serves: ['anna'] },
+{ short: L('Mon', 'सोम'), full: L('Monday', 'सोमवार'), graha: L('Chandra', 'चन्द्र'), items: L('Milk, rice, mishri — white things', 'दूध, चावल, मिश्री — श्वेत वस्तु'), note: '', serves: ['anna'] },
+{ short: L('Tue', 'मंगल'), full: L('Tuesday', 'मंगलवार'), graha: L('Mangal', 'मंगल'), items: L('Masoor, jaggery, red cloth', 'मसूर, गुड़, लाल वस्त्र'), note: L('— and a vow of seva', '— और श्रम-सेवा का संकल्प'), serves: ['anna', 'vastra'] },
+{ short: L('Wed', 'बुध'), full: L('Wednesday', 'बुधवार'), graha: L('Budha', 'बुध'), items: L('Moong, green fodder', 'मूँग, हरा चारा'), note: L('Gau-gras — the cow’s share', 'गौ-ग्रास — गाय का भाग'), serves: ['gau'] },
+{ short: L('Thu', 'गुरु'), full: L('Thursday', 'गुरुवार'), graha: L('Brihaspati', 'बृहस्पति'), items: L('Chana dal, haldi, banana, books', 'चना दाल, हल्दी, केला, पुस्तकें'), note: L('The vaar of vidya-daan', 'विद्या-दान का वार'), serves: ['vidya', 'anna'] },
+{ short: L('Fri', 'शुक्र'), full: L('Friday', 'शुक्रवार'), graha: L('Shukra', 'शुक्र'), items: L('Rice, ghee, white cloth', 'चावल, घी, श्वेत वस्त्र'), note: L('Given in the Annapurna bhaav', 'अन्नपूर्णा-भाव से'), serves: ['anna', 'vastra'] },
+{ short: L('Sat', 'शनि'), full: L('Saturday', 'शनिवार'), graha: L('Shani', 'शनि'), items: L('Til, oil, black cloth, iron', 'तिल, तेल, काला वस्त्र, लोहा'), note: '', serves: ['anna', 'vastra'] }
+];
+const TODAY = 5;
+const selV = VAAR[vaarIdx];
+const isTodaySel = vaarIdx === TODAY;
+
+const stepsData = [
+{ title: L('What daan is', 'दान क्या है'), lede: L('Sharing a part of what you have', 'जो आपके पास है, उसका एक भाग बाँटना') },
+{ title: L('How to give', 'कैसे दें'), lede: L('With faith, by your means, with humility', 'श्रद्धा से, सामर्थ्य के अनुसार, विनम्रता से') },
+{ title: L('What to give today', 'आज क्या दें'), lede: L('Friday · rice, ghee, white cloth', 'शुक्रवार · चावल, घी, श्वेत वस्त्र') },
+{ title: L('Whom it reaches', 'किस तक पहुँचे'), lede: L('Nine kinds of seva, and places that do them', 'नौ प्रकार की सेवा, और उन्हें करने वाले स्थान') },
+{ title: L('Remember it quietly', 'चुपचाप याद रखें'), lede: L('Your register, and gupt daan', 'आपका खाता, और गुप्त दान') }
+];
+const iconList = [ICON.s1, ICON.s2, ICON.s3, ICON.s4, ICON.s5];
+
+const c = {
+title: L('Daan-Punya', 'दान-पुण्य'),
+backHome: L('Back', 'वापस'),
+backIndex: L('Back to the steps', 'चरणों की सूची पर वापस'),
+index: L('All steps', 'सभी चरण'),
+register: L('Register', 'खाता'),
+heroAlt: L('A householder offering food with both hands to an elder sage', 'एक गृहस्थ दोनों हाथों से वृद्ध ऋषि को अन्न दे रहा है'),
+heroEyebrow: L('A guide in 5 steps', '5 चरणों में मार्गदर्शिका'),
+heroTitle: L('Giving, the way the tradition teaches it', 'दान — जैसा परम्परा सिखाती है'),
+heroLede: L('What daan is, how to give, what to give today, whom it reaches — and how to remember it quietly.', 'दान क्या है, कैसे दें, आज क्या दें, किस तक पहुँचे — और उसे चुपचाप कैसे याद रखें।'),
+todayEyebrow: L('Today · Friday · Shukra’s day', 'आज · शुक्रवार · शुक्र का वार'),
+openToday: L('Open today’s daan', 'आज का दान खोलें'),
+inGuide: L('In this guide · 5 steps', 'इस मार्गदर्शिका में · 5 चरण'),
+readLabel: L('Read', 'पढ़ लिया'),
+storiesLabel: L('Five stories of giving', 'दान की पाँच कथाएँ'),
+s1Alt: L('A brass bowl of rice beside folded white cloth', 'चावल से भरा पीतल का पात्र और तह किया श्वेत वस्त्र'),
+gitaLabel: L('The Gita on the sattvik gift', 'सात्त्विक दान — गीता'),
+gitaMeaning: L('The gift given as a duty, to one who can make no return, at the right place and time and to a worthy patra — that daan is called sattvik.', '"देना कर्तव्य है" — इस भाव से, प्रत्युपकार की आशा के बिना, उचित देश, काल और पात्र को दिया गया दान सात्त्विक कहा गया है।'),
+servesLabel: L('Who this reaches — tap to see', 'यह किस तक पहुँचता है — छूकर देखें'),
+oneLineLabel: L('In one line', 'एक पंक्ति में'),
+oneLine: L('Daan means giving a part of what you have to someone who needs it — and wanting nothing back.', 'दान का अर्थ है — जो आपके पास है उसका एक भाग ज़रूरतमंद को देना, और बदले में कुछ न चाहना।'),
+youKnowLabel: L('Small daans you may already know', 'छोटे दान, जो आप शायद जानते हैं'),
+notMoneyLabel: L('Daan is not only money', 'दान केवल धन नहीं'),
+vedaLabel: L('What the Veda says', 'वेद क्या कहता है'),
+vedaMeaning: L('One who, though able, does not share, gains food in vain — the one who eats alone eats only sin. Giving is not a favour but dharma: to receive food is already a call to share it.', 'जो समझ रखते हुए भी नहीं बाँटता, उसका अन्न व्यर्थ जाता है — जो अकेला खाता है, वह केवल दोष ही खाता है। दान कृपा नहीं, धर्म है: अन्न पाने का अर्थ ही उसे बाँटना है।'),
+upLabel: L('The Upanishad’s six words', 'उपनिषद् के छह वचन'),
+sixLabel: L('Six ways to give, in plain words', 'देने के छह ढंग, सरल शब्दों में'),
+checksLabel: L('Three checks before you give', 'देने से पहले तीन बातें'),
+kindsLabel: L('Three kinds of giving · Gita 17.20–22', 'दान के तीन प्रकार · गीता 17.20–22'),
+readGita: L('Read Gita 17.20–22', 'गीता 17.20–22 पढ़ें'),
+annapurnaAlt: L('Annapurna ladling food into Shiva’s bowl at Kashi', 'काशी में अन्नपूर्णा शिव के पात्र में अन्न डाल रही हैं'),
+weekLabel: L('Every day has its daan', 'हर वार का अपना दान'),
+weekHint: L('Tap a day to see what the tradition gives on it.', 'किसी वार को छूकर देखें कि उस दिन परम्परा क्या देती है।'),
+howMuchLabel: L('How much should I give?', 'कितना दूँ?'),
+howMuch: L('There is no fixed amount. The Upanishad says: give by your means.', 'कोई निश्चित मात्रा नहीं। उपनिषद् कहता है — अपने सामर्थ्य के अनुसार दो।'),
+howMuchSudama: L('Sudama brought a fistful of poha, and it was complete. Bhaav is the measure, never the amount.', 'सुदामा मुट्ठी भर पोहा लाए, और वह पूर्ण था। मापदण्ड भाव है, मात्रा नहीं।'),
+readSudama: L('Read Sudama’s story', 'सुदामा की कथा पढ़ें'),
+causesIntro: L('Every daan serves someone. Tap a seva to see why it is held dear, and places that do this work.', 'हर दान किसी की सेवा करता है। किसी सेवा को छूकर देखें कि वह क्यों प्रिय मानी गई, और कौन-से स्थान यह कार्य करते हैं।'),
+whyDear: L('Why this daan is held dear', 'यह दान क्यों प्रिय है'),
+placesLabel: L('Places that serve it', 'जो स्थान यह सेवा करते हैं'),
+noMoney: L('Giving happens on each place’s own page. Vedansh never handles money.', 'दान हर स्थान के अपने पृष्ठ पर होता है। वेदांश कभी धन नहीं लेता।'),
+regTitle: L('Your daan register', 'आपका दान-खाता'),
+regBody: L('Write down what you gave. The day’s tithi is added for you.', 'जो दिया, वह लिख लें। उस दिन की तिथि अपने-आप जुड़ जाती है।'),
+sampleLabel: L('How entries look', 'प्रविष्टियाँ ऐसी दिखती हैं'),
+sampleCat: L('Anna · rice', 'अन्न · चावल'),
+sampleTithi: L('[tithi of the day] · Shukravar', '[उस दिन की तिथि] · शुक्रवार'),
+sampleNote: L('Rice for the temple kitchen', 'मन्दिर की रसोई के लिए चावल'),
+guptName: L('Gupt daan', 'गुप्त दान'),
+guptRow: L('Only the date is kept — no amount, no note, no recipient.', 'केवल तिथि रहती है — न राशि, न विवरण, न पात्र।'),
+guptLabel: L('Why gupt daan comes first', 'गुप्त दान पहले क्यों'),
+guptMeaning: L('Tradition holds the unannounced gift highest — the one the giver never mentions, even to themselves.', 'परम्परा उस दान को सबसे ऊँचा कहती है जो बिना बताए दिया जाए — जिसका उल्लेख देने वाला स्वयं भी न करे।'),
+sudamaLabel: L('From Sudama’s story', 'सुदामा की कथा से'),
+sudamaTeaching: L('Bhaav is the only measure — a fistful of poha, given with love, is complete. This is why the register keeps no totals.', 'भाव ही मापदण्ड है — मुट्ठी भर पोहा भी प्रेम से दिया जाए तो पूर्ण है। इसीलिए इस खाते में कोई योग नहीं।'),
+openRegister: L('Open register', 'खाता खोलें'),
+recordDaan: L('Record a daan', 'दान दर्ज करें'),
+dwaar: L('Daan-dwaar ›', 'दान-द्वार ›'),
+begin: L('Start the guide', 'मार्गदर्शिका आरम्भ करें')
+};
+
+const steps = stepsData.map((s, i) => ({
+num: String(i + 1), title: s.title, lede: s.lede, icon: iconList[i], go: go(i + 1),
+badge: read[i + 1] ? '✓' : String(i + 1),
+badgeBg: read[i + 1] ? '#2A1508' : '#8A3E0B', badgeFg: read[i + 1] ? '#F2C46B' : '#FFFFFF',
+bg: i === 2 ? 'linear-gradient(180deg, #FFF5E0 0%, #F5DEAC 100%)' : 'linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%)',
+border: i === 2 ? '1px solid #A67C34' : '1px solid rgba(166,124,52,0.30)',
+aria: L('Step ' + (i + 1) + ': ' + s.title + (read[i + 1] ? ', read' : ''), 'चरण ' + (i + 1) + ': ' + s.title + (read[i + 1] ? ', पढ़ लिया' : ''))
+}));
+
+const kathas = [
+{ icon: '/_blob/5ae1d7202ef86a05e57d40babd294579', title: L('Sudama’s poha', 'सुदामा का पोहा'), lesson: L('Bhaav is the only measure', 'भाव ही मापदण्ड') },
+{ icon: '/_blob/1692545a97d36f19f47997585ce00897', title: L('King Rantideva', 'राजा रन्तिदेव'), lesson: L('The last water, given first', 'अंतिम जल का दान') },
+{ icon: '/_blob/e1025563557f8268156a84dbe788faee', title: L('King Shibi', 'राजा शिबि'), lesson: L('Protecting the one who seeks refuge', 'शरणागत की रक्षा') },
+{ icon: '/_blob/b47365641c00eac15f214fa4d6f2f7e1', title: L('Karna the Daanveer', 'दानवीर कर्ण'), lesson: L('The gift of the kavach and kundal', 'कवच-कुण्डल का दान') },
+{ icon: '/_blob/a31fdd7490d2b0909813bc9e1578d298', title: L('Bali and Vamana', 'बलि–वामन'), lesson: L('Three steps of land', 'तीन पग भूमि') }
+].map((k, i) => Object.assign({ num: (i + 1) + ' / 5' }, k));
+
+const examples = [
+{ icon: 'gau', title: L('The first roti, set aside for the cow', 'पहली रोटी, गाय के लिए'), why: L('Giving begins with the one who cannot ask.', 'दान की शुरुआत उससे जो माँग नहीं सकता।') },
+{ icon: 'jeev', title: L('A bowl of water for birds in summer', 'ग्रीष्म में पक्षियों के लिए जल-पात्र'), why: L('A gift that brings back no return and no thanks.', 'ऐसा दान जिसका न प्रत्युपकार, न धन्यवाद।') },
+{ icon: 'vidya', title: L('A book for a child who has none', 'जिस बच्चे के पास पुस्तक नहीं, उसे पुस्तक'), why: L('Knowledge does not diminish in the giving.', 'विद्या देने से घटती नहीं।') }
+];
+const notMoney = [
+{ icon: 'anna', label: L('Food', 'अन्न') },
+{ icon: 'vastra', label: L('Cloth', 'वस्त्र') },
+{ icon: 'vidya', label: L('Books', 'पुस्तक') },
+{ icon: 'seva', label: L('Your time & work', 'समय और श्रम') },
+{ icon: 'arogya', label: L('Blood', 'रक्त') },
+{ icon: 'jeev', label: L('Grain & water for animals', 'पशु-पक्षी को दाना-पानी') }
+];
+const wayKind = (k) => ({ isFaith: k === 'faith', isNo: k === 'no', isMeans: k === 'means', isHumble: k === 'humble', isAwe: k === 'awe', isKnow: k === 'know',
+bg: k === 'no' ? 'rgba(158, 74, 46, 0.12)' : 'linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%)',
+border: k === 'no' ? '1px solid rgba(158, 74, 46, 0.45)' : '1px solid rgba(166,124,52,0.30)',
+ink: k === 'no' ? '#7A3722' : '#6F3F1D', wordInk: k === 'no' ? '#7A3722' : '#8A3E0B' });
+const sixWays = [
+Object.assign({ num: '1', word: 'श्रद्धया', plain: L('With faith', 'श्रद्धा से'), child: L('Give because you believe in it.', 'मन से मानकर दें।') }, wayKind('faith')),
+Object.assign({ num: '2', word: 'अश्रद्धया अदेयम्', plain: L('Never without faith', 'बिना श्रद्धा के नहीं'), child: L('If your heart is not in it, don’t give.', 'मन न हो तो न दें।') }, wayKind('no')),
+Object.assign({ num: '3', word: 'श्रिया', plain: L('By your means', 'सामर्थ्य के अनुसार'), child: L('Give what you can manage.', 'जितना सम्भव हो, उतना दें।') }, wayKind('means')),
+Object.assign({ num: '4', word: 'ह्रिया', plain: L('With humility', 'विनम्रता से'), child: L('Never look down on the one who receives.', 'लेने वाले को छोटा न समझें।') }, wayKind('humble')),
+Object.assign({ num: '5', word: 'भिया', plain: L('With awe', 'संकोच सहित'), child: L('Give gently, never proudly.', 'धीरे से दें, गर्व से नहीं।') }, wayKind('awe')),
+Object.assign({ num: '6', word: 'संविदा', plain: L('With understanding', 'समझ के साथ'), child: L('Know whom you give to, and why.', 'जानें किसे दे रहे हैं, और क्यों।') }, wayKind('know'))
+];
+const checks = [
+{ isPlace: true, isTime: false, isPerson: false, word: L('Desha', 'देश'), plain: L('the right place', 'उचित स्थान') },
+{ isPlace: false, isTime: true, isPerson: false, word: L('Kaala', 'काल'), plain: L('the right time', 'उचित समय') },
+{ isPlace: false, isTime: false, isPerson: true, word: L('Patra', 'पात्र'), plain: L('the right person', 'उचित व्यक्ति') }
+];
+const kinds = [
+{ name: L('Sattvik', 'सात्त्विक'), plain: L('Given as a duty, expecting nothing back — at the right place, time and to the right person.', 'कर्तव्य मानकर, बदले की आशा बिना — उचित स्थान, समय और पात्र को।'), bg: 'rgba(166, 124, 52, 0.14)', bar: '#A67C34' },
+{ name: L('Rajasik', 'राजसिक'), plain: L('Given to get something back, or given unwillingly.', 'बदले में कुछ पाने के लिए, या मन मारकर दिया गया।'), bg: 'rgba(184, 98, 27, 0.12)', bar: '#B8621B' },
+{ name: L('Tamasik', 'तामसिक'), plain: L('Given at the wrong place or time, to the wrong person, or without respect.', 'अनुचित स्थान या समय पर, अनुचित पात्र को, या बिना आदर के।'), bg: 'rgba(158, 74, 46, 0.12)', bar: '#9E4A2E' }
+];
+
+const vaar = VAAR.map((v, i) => {
+const on = i === vaarIdx;
+return {
+short: v.short, full: v.full + (i === TODAY ? L(', today', ', आज') : ''),
+pick: () => this.setState({ vaar: i }),
+bg: on ? '#2A1508' : '#FFF9EE', fg: on ? '#F2C46B' : '#5A3A1E',
+border: on ? '1.5px solid #2A1508' : '1px solid rgba(166, 124, 52, 0.3)',
+dot: i === TODAY ? (on ? '#F2C46B' : '#B8621B') : 'transparent'
+};
+});
+const sel = {
+eyebrow: (isTodaySel ? L('Today · ', 'आज · ') : '') + selV.full + L(' · ' + selV.graha + '’s day', ' · ' + selV.graha + ' का वार'),
+items: selV.items,
+chips: selV.items.split(/,\s*/).map((label) => ({ label: label.charAt(0).toUpperCase() + label.slice(1) })),
+note: selV.note || L('The traditional daan of this vaar', 'इस वार का पारम्परिक दान'),
+serves: selV.serves.map((id) => ({ id, label: causeById[id].short, go: () => this.setState({ step: 4, cause: id, read: Object.assign({}, read, { 3: true }) }) }))
+};
+
+const causes = CAUSES.map((cz) => {
+const on = cz.id === causeId;
+return {
+id: cz.id, name: cz.short, pressed: on ? 'true' : 'false',
+pick: () => this.setState({ cause: cz.id }),
+bg: on ? '#2A1508' : 'linear-gradient(180deg, #FFF8EA 0%, #F5E4BE 100%)',
+fg: on ? '#F2C46B' : '#1A0E03',
+border: on ? '1.5px solid #A67C34' : '1px solid rgba(166,124,52,0.30)'
+};
+});
+const cz = causeById[causeId];
+const cause = {
+id: cz.id, name: cz.name, whom: cz.whom, mahatva: cz.mahatva, cite: cz.cite, hasCite: !!cz.cite,
+orgs: cz.orgs.map((k) => ORGS[k]),
+openLabel: L('Open Daan-dwaar · ' + cz.short, 'दान-द्वार खोलें · ' + cz.short)
+};
+
+const isStep = step > 0;
+return {
+frameH: Number(this.props.frameHeight ?? 1500),
+labelFont: hi ? "'Noto Sans Devanagari', sans-serif" : 'Inter, sans-serif',
+titleFont: hi ? "'Noto Serif Devanagari', serif" : "'Cormorant Garamond', serif",
+h1Size: hi ? '23px' : '28px', h2Size: hi ? '21px' : '25px', h3Size: hi ? '18px' : '21px', h4Size: hi ? '16px' : '18px',
+track: hi ? '0' : '0.1em',
+c, steps, kathas, examples, notMoney, sixWays, checks, kinds, vaar, sel, causes, cause,
+today: { items: hi ? 'शुक्र का वार — चावल, घी, श्वेत वस्त्र' : 'Shukra’s day — rice, ghee, white cloth' },
+isIndex: !isStep, isStep,
+isS1: step === 1, isS2: step === 2, isS3: step === 3, isS4: step === 4, isS5: step === 5,
+segments: [1, 2, 3, 4, 5].map((n) => ({ bg: n <= step ? '#8A3E0B' : 'rgba(166, 124, 52, 0.25)' })),
+stepCount: isStep ? L('Step ' + step + ' of 5', 'चरण ' + step + ' / 5') : '',
+stepTitle: isStep ? stepsData[step - 1].title : '',
+stepLede: isStep ? stepsData[step - 1].lede : '',
+stepIcon: isStep ? iconList[step - 1] : ICON.s1,
+prevLabel: step === 1 ? L('‹ All steps', '‹ सभी चरण') : L('‹ Previous', '‹ पिछला'),
+nextLabel: step === 5 ? L('Finish', 'पूर्ण') : L('Next ›', 'आगे ›'),
+start: go(1),
+goIndex: go(0),
+goToday: go(3),
+prev: go(step - 1),
+next: go(step === 5 ? 0 : step + 1)
+};
+}
+}
+</script>
+</body>
+</html>

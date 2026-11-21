@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daan-dwaar — food and water</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#8A3E0B}a:hover{color:#8A3E0B}
+</style>
+</helmet>
+<div style="width: 390px; height: 1800px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px; padding: 16px 16px 28px; background: linear-gradient(180deg, #F6ECD0 0%, #F1E3BF 100%); color: #1A0E03; font-family: 'Noto Serif Devanagari', serif">
+
+<div style="display: flex; align-items: center; gap: 12px">
+<a href="Main.dc.html" aria-label="Back" style="width: 44px; height: 44px; box-sizing: border-box; flex-shrink: 0; border-radius: 22px; border: 1px solid rgba(166, 124, 52, 0.3); background: #FFF9EE; display: flex; align-items: center; justify-content: center; text-decoration: none">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
+</a>
+<div style="flex: 1; font-weight: 700; font-size: 21px; line-height: 30px">Daan-dwaar · दान-द्वार</div>
+</div>
+
+<div style="display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 4px">
+<sc-for list="{{chips}}" as="ch" hint-placeholder-count="9">
+<button type="button" style="min-height: 44px; flex-shrink: 0; display: flex; align-items: center; gap: 6px; padding: 4px 14px 4px 4px; border-radius: 999px; border: {{ch.border}}; background: {{ch.bg}}; color: {{ch.fg}}; font-family: Inter, sans-serif; font-weight: 600; font-size: 13px; cursor: pointer">
+<dc-import name="CauseIcon" cause="{{ch.id}}" size="34" hint-size="34px,34px"></dc-import>
+{{ch.name}}
+</button>
+</sc-for>
+</div>
+
+<div style="position: relative; height: 230px; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 22px rgba(40, 24, 10, 0.2)">
+<img src="/_blob/0c4057c509d1d32ad22bbd876a4df747" alt="A brass bowl of rice beside folded white cloth" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 50px 18px 16px; background: linear-gradient(180deg, rgba(22, 10, 3, 0) 0%, rgba(22, 10, 3, 0.88) 45%, rgba(22, 10, 3, 0.95) 100%); color: #FFF4DC">
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #F2C46B">Seva 1 of 9</div>
+<div style="font-weight: 700; font-size: 26px; line-height: 36px">Food &amp; water · अन्न-जल</div>
+<div style="font-weight: 500; font-size: 13.5px; line-height: 21px; color: #E9D8B6">the hungry and thirsty — anna-kshetras, mid-day meals, water</div>
+</div>
+</div>
+
+<div style="border: 1px solid rgba(166, 124, 52, 0.35); border-radius: 20px; background: #FFF9EE; padding: 16px 18px">
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8A3E0B">Why this daan is held dear</div>
+<div style="margin-top: 8px; font-weight: 500; font-size: 14.5px; line-height: 25px; color: #1A0E03">From the bed of arrows Bhīṣma tells Yudhiṣṭhira that no gift exceeds anna-daan — beings are born of food and live by food. To feed the hungry is to give a day of life; this is why anna heads every festival’s list of gifts. Hunger is the lack that returns every day, and anna-daan the gift that can be made every day.</div>
+<div style="margin-top: 10px; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #6E5230">Mahābhārata · Anuśāsana (Dāna-dharma) Parva</div>
+</div>
+
+<div>
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8A3E0B; margin-bottom: 10px">How this seva reaches people</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 16px; background: #FFF9EE; text-align: center">
+<dc-import name="CauseIcon" cause="anna" size="42" hint-size="42px,42px"></dc-import>
+<div style="font-weight: 600; font-size: 12.5px; line-height: 18px">Anna-kshetra meals</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 16px; background: #FFF9EE; text-align: center">
+<dc-import name="CauseIcon" cause="bal" size="42" hint-size="42px,42px"></dc-import>
+<div style="font-weight: 600; font-size: 12.5px; line-height: 18px">School mid-day meals</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 16px; background: #FFF9EE; text-align: center">
+<dc-import name="CauseIcon" cause="arogya" size="42" hint-size="42px,42px"></dc-import>
+<div style="font-weight: 600; font-size: 12.5px; line-height: 18px">Drinking water</div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8A3E0B; margin-bottom: 10px">Days the tradition gives anna</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+<div style="min-height: 44px; border-radius: 12px; border: {{d.border}}; background: {{d.bg}}; color: {{d.fg}}; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; display: flex; align-items: center; justify-content: center">{{d.short}}</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family: Inter, sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #8A3E0B; margin-bottom: 10px">Places that serve it · 5</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{orgs}}" as="o" hint-placeholder-count="5">
+<button type="button" style="width: 100%; box-sizing: border-box; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(166, 124, 52, 0.3); border-radius: 18px; background: #FFF9EE; text-align: left; cursor: pointer; font-family: inherit; color: inherit; box-shadow: 0 3px 10px rgba(90, 58, 30, 0.08)">
+<div style="width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; background: linear-gradient(135deg, #2A1508 0%, #45250E 100%); color: #F2C46B; font-family: Inter, sans-serif; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center">{{o.initial}}</div>
+<div style="flex: 1; min-width: 0">
+<div style="font-weight: 700; font-size: 15px; line-height: 23px">{{o.name}}</div>
+<div style="font-weight: 500; font-size: 12.5px; line-height: 19px; color: #6E5230">{{o.about}}</div>
+<div style="margin-top: 4px; font-family: Inter, sans-serif; font-weight: 600; font-size: 12px; color: #8A3E0B">{{o.handoff}}</div>
+</div>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="font-weight: 500; font-size: 12.5px; line-height: 19px; color: #6E5230; text-align: center">Vedansh does not represent these places and never handles money.</div>
+
+<button type="button" style="min-height: 50px; border: 1.5px solid #B8621B; border-radius: 999px; background: transparent; color: #8A3E0B; font-family: Inter, sans-serif; font-weight: 600; font-size: 15px; cursor: pointer">Record this daan in your register</button>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1800}}'>
+class Component extends DCLogic {
+renderVals() {
+const CH = [
+['anna', 'Food & water'], ['gau', 'Gau seva'], ['bal', 'Children'], ['vriddha', 'Elder care'], ['vidya', 'Education'],
+['arogya', 'Health'], ['vastra', 'Clothing'], ['jeev', 'Animals & birds'], ['aapada', 'Disaster relief']
+];
+const chips = CH.map(([id, name]) => {
+const on = id === 'anna';
+return { id, name, bg: on ? '#2A1508' : '#FFF9EE', fg: on ? '#F2C46B' : '#5A3A1E', border: on ? '1.5px solid #2A1508' : '1px solid rgba(166, 124, 52, 0.3)' };
+});
+const annaDays = [true, true, true, false, true, true, true];
+const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((short, i) => ({
+short,
+bg: annaDays[i] ? (i === 5 ? '#2A1508' : '#F8EFD6') : '#FFF9EE',
+fg: annaDays[i] ? (i === 5 ? '#F2C46B' : '#8A3E0B') : '#6E5230',
+border: annaDays[i] ? '1px solid rgba(184, 98, 27, 0.4)' : '1px dashed rgba(166, 124, 52, 0.35)'
+}));
+const orgs = [
+{ name: 'The Akshaya Patra Foundation', about: 'Fresh mid-day meals for government-school children, every school day.', handoff: 'Opens their website ›' },
+{ name: 'Annamrita Foundation', about: 'Mid-day meals cooked in centralized kitchens and served in schools daily.', handoff: 'Opens their website ›' },
+{ name: 'Change With One Foundation', about: 'A Delhi community kitchen — hot, unlimited meals served to anyone with dignity.', handoff: 'Opens their donation page ›' },
+{ name: 'Sri Venkateswara Annaprasadam Trust (TTD)', about: 'Free annaprasadam for pilgrims at Tirumala.', handoff: 'Opens their website ›' },
+{ name: 'Ramakrishna Math & Mission, Belur', about: 'Food, education, medical care and disaster relief.', handoff: 'Opens their website ›' }
+].map((o) => Object.assign({ initial: o.name.replace(/^The /, '').charAt(0) }, o));
+return { chips, days, orgs };
+}
+}
+</script>
+</body>
+</html>
