@@ -1620,3 +1620,5 @@ Lyrics hosts were blocked by the session network policy, so no bhajan cleared RU
 ## [2026-11-21] ingest | Proposal 14 finder and Abujh India-day scans
 
 Documented reactive IST scan starts, keyed result visibility, late callback rejection and explicit warm-up date policy. Native verification remains pending.
+
+## [2026-11-21] ingest | Carry-over verdict metadata follows the surviving best window; future ranking and horizon remain unchanged.

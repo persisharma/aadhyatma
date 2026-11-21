@@ -112,7 +112,7 @@ export function useMuhuratFinder(
         if (i === -1) {
           const midnight = civilDayStart(start).getTime();
           const windows = v.windows.filter(w => w.start.getTime() < midnight && w.end.getTime() > Date.now());
-          if (v.tier !== 'excluded' && windows.length) carryover = { ...v, windows };
+          if (v.tier !== 'excluded' && windows.length) carryover = withSurvivingWindows(v, windows);
           // The previous day is a bounded carry-over check, not part of the horizon.
           if (heavyThisChunk) await yieldToUi();
           heavyThisChunk = false;
@@ -159,6 +159,11 @@ export function useMuhuratFinder(
   return { ...visible, summary, startDate: start };
 }
 
+/** Filtering preserves engine best-first order; metadata follows its surviving best. */
+function withSurvivingWindows(verdict: DayVerdict, windows: DayVerdict['windows']): DayVerdict {
+  return { ...verdict, windows, tier: windows[0].tier, factors: windows[0].factors };
+}
+
 /** Expire only the carry-over row: same-day foreground returns never rescan. */
 function useLiveCarryover(summary: FinderSummary | null, carryover?: DayVerdict): FinderSummary | null {
   const [tick, setTick] = useState(0);
@@ -178,7 +183,7 @@ function useLiveCarryover(summary: FinderSummary | null, carryover?: DayVerdict)
     if (!summary || !carryover) return summary;
     const windows = carryover.windows.filter(w => w.end.getTime() > Date.now());
     if (!windows.length) return summary;
-    return summarize([{ ...carryover, windows }, ...summary.verdicts]);
+    return summarize([withSurvivingWindows(carryover, windows), ...summary.verdicts]);
   }, [summary, carryover, tick, nextEnd]);
 }
 

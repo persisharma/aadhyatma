@@ -6,6 +6,7 @@ import { dateKeyFor } from '../../panchangDayStore';
 
 
 let mockOvernight = false;
+let mockMixedCarryover = false;
 const mockLocation = { cityId: 'jaipur', latitude: 26.9, longitude: 75.8 };
 jest.mock('@/contexts/PanchangLocationContext', () => ({ usePanchangLocation: () => ({ location: mockLocation }) }));
 jest.mock('../../usePanchang', () => ({ usePanchangCalendarSystem: () => ['purnimant'] }));
@@ -31,12 +32,16 @@ jest.mock('../../abujhMuhurat', () => ({ ABUJH_RULE_IDS: [], pushyaYogaFor: () =
 jest.mock('../../eventMuhurat', () => ({
   getEventRule: () => ({}),
   evaluateDay: (_rule: unknown, dateMs: number) => ({
-    dateMs, tier: 'shreshtha',
+    dateMs, tier: 'shreshtha', doshas: [],
+    factors: { nakshatra: true, tithi: true, vara: true, lagna: true },
     // A valid window continues into the following civil morning.
-    windows: [{ start: new Date(jest.requireActual('../../civilTime').civilDayStart(new Date(dateMs)).getTime() + (mockOvernight ? 23 : 10) * 3600000),
+    windows: mockMixedCarryover && jest.requireActual('../../panchangDayStore').dateKeyFor(new Date(dateMs)) === '2026-12-18' ? [
+      { start: new Date('2026-12-18T18:00:00Z'), end: new Date('2026-12-18T18:30:30Z'), tier: 'shreshtha', factors: { nakshatra: true, tithi: true, vara: true, lagna: true } },
+      { start: new Date('2026-12-18T18:15:00Z'), end: new Date('2026-12-18T19:00:00Z'), tier: 'madhyam', factors: { nakshatra: false, tithi: true, vara: true, lagna: false } },
+    ] : [{ tier: 'shreshtha', factors: { nakshatra: true, tithi: true, vara: true, lagna: true }, start: new Date(jest.requireActual('../../civilTime').civilDayStart(new Date(dateMs)).getTime() + (mockOvernight ? 23 : 10) * 3600000),
       end: new Date(jest.requireActual('../../civilTime').civilDayStart(new Date(dateMs)).getTime() + (mockOvernight ? 26 : 12) * 3600000) }],
   }),
-  summarize: (days: unknown[]) => ({ verdicts: [...days], shreshtha: [...days], madhyam: [] }),
+  summarize: jest.requireActual('../../eventMuhurat').summarize,
 }));
 const mockAbujhScans: { start: Date; options: any }[] = [];
 jest.mock('../../muhuratFinderScan', () => ({
@@ -63,7 +68,7 @@ async function runTask(index = mockTasks.length - 1) { await act(async () => { a
 function foreground() { act(() => listeners.forEach(fn => fn('active'))); }
 beforeEach(() => {
   jest.useFakeTimers();
-  mockOvernight = false;
+  mockOvernight = false; mockMixedCarryover = false;
   mockTasks.length = 0; mockAbujhScans.length = 0; renders = []; listeners = [];
   mockHydrate.mockReset().mockResolvedValue(undefined);
   jest.spyOn(AppState, 'addEventListener').mockImplementation(((_event: string, cb: (s: string) => void) => {
@@ -166,5 +171,32 @@ test('carry-over expires while open without re-running the scan', async () => {
   expect(rows()).toHaveLength(2);
   act(() => jest.advanceTimersByTime(1001));
   expect(rows()).toHaveLength(1);
+  expect(mockTasks).toHaveLength(1);
+});
+
+// Real summarize verifies the visible section, not just the filtered payload.
+test.each(['fresh', 'timer'])('mixed-tier carry-over follows surviving best window (%s)', async mode => {
+  mockMixedCarryover = true;
+  clock(mode === 'fresh' ? '2026-12-18T18:31:00Z' : '2026-12-18T18:30:01Z');
+  act(() => { tree = TestRenderer.create(<Finder />); }); await runTask();
+  const future = latest.summary.verdicts.find((v: any) => dateKeyFor(new Date(v.dateMs)) === '2026-12-19');
+  const firstAfter = latest.firstAfter;
+  if (mode === 'timer') {
+    expect(latest.summary.shreshtha.some((v: any) => dateKeyFor(new Date(v.dateMs)) === '2026-12-18')).toBe(true);
+    act(() => jest.advanceTimersByTime(59000));
+  }
+  expect(latest.summary.madhyam).toHaveLength(1);
+  const carried = latest.summary.madhyam[0];
+  expect(dateKeyFor(new Date(carried.dateMs))).toBe('2026-12-18');
+  expect(carried.tier).toBe('madhyam');
+  expect(carried.factors).toEqual({ nakshatra: false, tithi: true, vara: true, lagna: false });
+  expect(carried.windows).toHaveLength(1);
+  expect(carried.windows[0].start.toISOString()).toBe('2026-12-18T18:15:00.000Z');
+  expect(carried.windows[0].end.toISOString()).toBe('2026-12-18T19:00:00.000Z');
+  expect(latest.summary.shreshtha).toEqual([future]);
+  expect(latest.summary.shreshtha[0]).toBe(future);
+  expect(latest.firstAfter).toBe(firstAfter);
+  expect(dateKeyFor(latest.startDate)).toBe('2026-12-19');
+  expect(latest.summary.verdicts).toHaveLength(2);
   expect(mockTasks).toHaveLength(1);
 });
