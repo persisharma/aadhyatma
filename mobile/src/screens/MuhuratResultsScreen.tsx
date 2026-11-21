@@ -1,3 +1,4 @@
+import MuhuratScanStart from '@/components/MuhuratScanStart';
 import StoryIcon from '@/components/StoryIcon';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -88,7 +89,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
   // यात्रा only (PRD-16/P3 §4.6): the chosen direction excludes its दिशा शूल
   // days. Scan-time state — never persisted, never carried by a follow.
   const [direction, setDirection] = useState<DishaDirection | undefined>(undefined);
-  const { loading, summary, firstAfter } = useMuhuratFinder(rule.id, undefined, direction);
+  const { loading, summary, firstAfter, startDate } = useMuhuratFinder(rule.id, undefined, direction);
   const titleFont = scriptTitleFont(lang, typography.cardHindi.fontFamily);
 
   // Phase 4: the quiet personal row (saved Kundali only — §8). The hook reads
@@ -358,17 +359,7 @@ export default function MuhuratResultsScreen({ navigation, route }: Props) {
         </View>
       ) : (
         <ScrollView contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.xxl }}>
-          <Text
-            style={{
-              fontFamily: typography.cardLatin.fontFamily,
-              fontSize: 12.5,
-              color: colors.inkMuted,
-              textAlign: 'center',
-            }}
-          >
-            {contentByLang(lang, location.labelHi, location.labelEn)}
-            {contentByLang(lang, ' · दृक्पंचांग पद्धति', ' · DrikPanchang convention')}
-          </Text>
+          <MuhuratScanStart date={startDate} />
 
           {/* गृह प्रवेश only (PRD-24 §6): the moment the direction questions are
               live. Pushes वास्तु दिशा in place on this stack — Back returns here. */}
