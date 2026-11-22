@@ -739,6 +739,13 @@ and offer in-app Retry, temple switching, the real temple guide and shipped read
 No app-owned YouTube/website exit buttons or external arrow on the Darshan player;
 verified recitation readers retain their existing same-video host hand-off.
 
+Playback failure may offer the selected temple's existing story only when its
+selected-language content is nonblank. Expand in place, wait for layout before
+scroll/focus, cancel stale focus on route/lifecycle changes, and never retry or
+resume playback from this action. Deterministic Maestro coverage uses the opt-in
+`VEDANSH_DARSHAN_E2E=1` development Metro fixture (never selected for production
+resolution); native accessibility/layout checks remain separately required.
+
 Channel WebView HTML uses the registered native app identity as HTTPS baseURL,
 Referer and player origin. Keep native fullscreen enabled on both video/channel
 paths; fullscreen is the OS WebView video presentation, never a second player or

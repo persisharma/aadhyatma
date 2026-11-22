@@ -1622,3 +1622,6 @@ Lyrics hosts were blocked by the session network policy, so no bhajan cleared RU
 Documented reactive IST scan starts, keyed result visibility, late callback rejection and explicit warm-up date policy. Native verification remains pending.
 
 ## [2026-11-21] ingest | Carry-over verdict metadata follows the surviving best window; future ranking and horizon remain unchanged.
+
+## [2026-11-22] ingest | Proposal 15 Darshan error story shortcut
+Updated live-darshan integration for in-place story scroll/focus and deterministic development E2E; native evidence remains pending.

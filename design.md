@@ -4884,6 +4884,23 @@ Native playback, visual fidelity in four scripts/Standard/Large/compact/system t
 VoiceOver/TalkBack, interruptions and device performance remain required pending
 acceptance; passing mocked screen tests is not native proof.
 
+
+**Playback-error story shortcut (Proposal 15, 22 November 2026).** Only a failed
+Darshan broadcast whose selected-language authored origin story is nonblank offers
+“मंदिर की कथा पढ़ें / Read temple story” (also Gujarati/Kannada). The existing
+secondary DarshanAction expands that same temple's story, measures the mounted
+story heading after layout, scrolls without animation and transfers accessibility
+focus on the next frame. Repeated taps keep it open; blur/background/unmount,
+route or language changes invalidate pending focus. Retry/Browse, favourites,
+normal playback and recitation errors retain their existing behavior. The error
+actions scroll within 45% of viewport height (minimum 200pt) so compact/enlarged
+text leaves the temple reader reachable. No new story, source or page is added.
+
+The approved visual is a concept; the PR reconstruction is not native QA. Native
+VoiceOver/TalkBack, all four languages × Standard/Large × compact/enlarged system
+text and iOS/Android journeys remain acceptance gates. The 8/10 within 10 seconds
+metric is a future usability target, not a measured result.
+
 ### Darshan recovery — updated 16 November 2026
 Retry re-resolves a dedicated temple source or retries its stable in-app channel player. Unavailable broadcasts lead to Retry, another temple, the complete temple guide or shipped devotional readings. The previous external website/YouTube recovery CTAs are superseded by the in-app journey above. Actual fullscreen, seek, volume, quality and platform interruptions still require device verification.
 
