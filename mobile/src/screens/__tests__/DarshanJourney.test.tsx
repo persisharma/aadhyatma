@@ -1,6 +1,6 @@
 import React from "react";
 import TestRenderer, { act } from "react-test-renderer";
-import { AppState, Linking, type AppStateStatus } from "react-native";
+import { AccessibilityInfo, AppState, Linking, ScrollView, View, type AppStateStatus } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@/theme/ThemeContext";
 import { GitaLanguageProvider, type Lang } from "@/data/gita/language";
@@ -301,4 +301,51 @@ it('retries the failed favourite snapshot in app without toggling the saved choi
   await flush();
   expect(write.mock.calls[write.mock.calls.length - 1]).toEqual(failedSnapshot);
   expect(tree.root.findAllByProps({ testID: 'darshan-save-retry' })).toHaveLength(0);
+});
+
+
+it.each(['hi', 'en', 'gu', 'kn'] as Lang[])('opens the existing story after layout without retry/navigation (%s)', async lang => {
+  jest.useFakeTimers();
+  const tree = await render('player', lang, 'banke-bihari');
+  const heading = tree.root.findAllByType(View).find(n => n.props.testID === 'darshan-story')!;
+  const scroll = tree.root.findAllByType(ScrollView).find(n => n.props.testID === 'darshan-content')!;
+  const measure = jest.spyOn(heading.instance, 'measureLayout').mockImplementation((_relative: unknown, done: unknown) => (done as (...args: any[]) => void)(0, 420, 200, 60));
+  const scrollTo = jest.spyOn(scroll.instance, 'scrollTo');
+  const focus = jest.spyOn(AccessibilityInfo, 'setAccessibilityFocus');
+  jest.spyOn(require('react-native'), 'findNodeHandle').mockReturnValue(42);
+  const player = tree.root.findByProps({ testID: 'youtube-native-boundary' });
+  const read = () => act(() => player.props.onReadTempleStory());
+  read();
+  expect(tree.root.findByProps({ testID: 'darshan-story-content' })).toBeDefined();
+  expect(scrollTo).not.toHaveBeenCalled();
+  act(() => scroll.props.onContentSizeChange());
+  act(() => jest.advanceTimersByTime(20));
+  expect(measure).toHaveBeenCalled();
+  expect(scrollTo).toHaveBeenCalledWith({ y: 420, animated: false });
+  act(() => jest.advanceTimersByTime(20));
+  expect(focus).toHaveBeenCalledWith(42);
+  read(); read();
+  act(() => jest.advanceTimersByTime(40));
+  expect(tree.root.findByProps({ testID: 'darshan-story' }).props.accessibilityState.expanded).toBe(true);
+  expect(tree.root.findByProps({ testID: 'youtube-native-boundary' })).toBe(player);
+  expect(nav.navigate).not.toHaveBeenCalled();
+  expect(nav.replace).not.toHaveBeenCalled();
+  // A queued native measurement cannot steal focus after blur.
+  let late!: (...args: any[]) => void;
+  measure.mockImplementation((_relative: unknown, done: unknown) => { late = done as (...args: any[]) => void; });
+  read();
+  act(() => jest.advanceTimersByTime(20));
+  act(() => mockFocus.blur?.());
+  focus.mockClear(); scrollTo.mockClear();
+  act(() => { late(0, 900, 200, 60); jest.advanceTimersByTime(40); });
+  expect(focus).not.toHaveBeenCalled();
+  expect(scrollTo).not.toHaveBeenCalled();
+});
+it.each(['', '   '])('withholds the shortcut when selected-language story is empty (%j)', async empty => {
+  const data = require('@/data/theerth/temples');
+  const original = data.getTempleDetailById('banke-bihari');
+  jest.spyOn(data, 'getTempleDetailById').mockReturnValue({ ...original, originStoryEn: empty });
+  const tree = await render('player', 'en', 'banke-bihari');
+  expect(tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.onReadTempleStory).toBeUndefined();
+  expect(tree.root.findAllByProps({ testID: 'darshan-story' })).toHaveLength(0);
 });

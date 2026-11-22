@@ -45,6 +45,7 @@ jest.mock('@/components/AppIcon', () => ({ __esModule: true, default: () => null
 
 jest.mock('@/theme/ThemeContext', () => ({
   useTheme: () => ({
+    typography: Object.fromEntries(['meaning', 'meaningEnglish', 'meaningGujarati', 'meaningKannada'].map(key => [key, { fontFamily: 'Test' }])),
     colors: {
       surface: '#fff',
       border: '#ccc',
@@ -76,6 +77,7 @@ jest.mock('@react-navigation/native', () => {
 });
 
 import DockedYouTubePlayer from '../DockedYouTubePlayer';
+import { GitaLanguageProvider } from '@/data/gita/language';
 import * as arbiter from '@/audio/playbackArbiter';
 
 const mapping: VideoMapping = {
@@ -309,4 +311,39 @@ it('UX-09: a failed "Open in YouTube" shows a brief message', async () => {
   await act(async () => { open.props.onPress(); });
   expect(allText(r)).toContain('Couldn’t open YouTube');
   act(() => r.unmount());
+});
+
+
+it.each([
+  ['hi', 'मंदिर की कथा पढ़ें'], ['en', 'Read temple story'],
+  ['gu', 'મંદિરની કથા વાંચો'], ['kn', 'ದೇವಾಲಯದ ಕಥೆಯನ್ನು ಓದಿ'],
+] as const)('offers a story only after a broadcast failure (%s)', (lang, label) => {
+  const story = jest.fn();
+  const retry = jest.fn();
+  const browse = jest.fn();
+  const claim = jest.spyOn(arbiter, 'claimPlayback');
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}><DockedYouTubePlayer mapping={mapping} uiLang={lang} broadcast onReadTempleStory={story} onRefreshSource={retry} onChooseBroadcast={browse} onClose={() => {}} /></GitaLanguageProvider>); });
+  expect(allText(tree)).not.toContain(label);
+  act(() => (mockRnyi.props?.onReady as () => void)());
+  expect(allText(tree)).not.toContain(label);
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  expect(allText(tree)).toContain(label);
+  const claims = claim.mock.calls.length;
+  const action = tree.root.findAll(n => n.props.testID === 'darshan-read-story' && n.props.accessibilityRole === 'button')[0];
+  act(() => { action.props.onPress(); action.props.onPress(); });
+  expect(story).toHaveBeenCalledTimes(2);
+  expect(retry).not.toHaveBeenCalled();
+  expect(browse).not.toHaveBeenCalled();
+  expect(claim).toHaveBeenCalledTimes(claims);
+  act(() => tree.unmount());
+});
+it.each([false, true])('does not offer absent stories or change reader recovery (broadcast=%s)', broadcast => {
+  let tree!: TestRenderer.ReactTestRenderer;
+  act(() => { tree = TestRenderer.create(<DockedYouTubePlayer mapping={mapping} uiLang="en" broadcast={broadcast} onReadTempleStory={broadcast ? undefined : jest.fn()} onClose={() => {}} />); });
+  act(() => (mockRnyi.props?.onError as (e: string) => void)('embed_not_allowed'));
+  expect(allText(tree)).not.toContain('Read temple story');
+  expect(allText(tree)).toContain('Retry');
+  if (!broadcast) expect(allText(tree)).toContain('YouTube');
+  act(() => tree.unmount());
 });
