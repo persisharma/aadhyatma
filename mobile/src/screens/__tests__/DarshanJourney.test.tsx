@@ -349,3 +349,23 @@ it.each(['', '   '])('withholds the shortcut when selected-language story is emp
   expect(tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.onReadTempleStory).toBeUndefined();
   expect(tree.root.findAllByProps({ testID: 'darshan-story' })).toHaveLength(0);
 });
+
+
+it('invalidates delayed focus and resets expansion when the same screen receives a new temple route', async () => {
+  jest.useFakeTimers();
+  const tree = await render('player', 'en', 'banke-bihari');
+  const heading = tree.root.findAllByType(View).find(n => n.props.testID === 'darshan-story')!;
+  let late!: (x: number, y: number, width: number, height: number) => void;
+  jest.spyOn(heading.instance, 'measureLayout').mockImplementation((_relative: unknown, done: unknown) => { late = done as typeof late; });
+  const focus = jest.spyOn(AccessibilityInfo, 'setAccessibilityFocus');
+  act(() => tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.onReadTempleStory());
+  act(() => tree.root.findByProps({ testID: 'darshan-content' }).props.onContentSizeChange());
+  act(() => jest.advanceTimersByTime(20));
+  act(() => tree.update(<FontScaleProvider><ThemeProvider><GitaLanguageProvider initialLang="en">
+    <DarshanPlayerScreen navigation={nav as never} route={{ key: 'banke-bihari', name: 'DarshanPlayer', params: { templeId: 'omkareshwar' } }} />
+  </GitaLanguageProvider></ThemeProvider></FontScaleProvider>));
+  expect(tree.root.findAllByProps({ testID: 'darshan-story-content' })).toHaveLength(0);
+  act(() => { late(0, 420, 200, 60); jest.advanceTimersByTime(40); });
+  expect(focus).not.toHaveBeenCalled();
+  expect(tree.root.findByProps({ testID: 'youtube-native-boundary' }).props.mapping.titleEn).toContain('Omkareshwar');
+});

@@ -1,6 +1,9 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { AppState, Linking, Platform } from 'react-native';
+import { AppState, Linking, Platform, StyleSheet, Text } from 'react-native';
+import * as ReactNative from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontScaleProvider } from '@/contexts/FontScaleContext';
 import type { VideoMapping } from '@/data/video/videoMappings';
 
 // ---- mocks ------------------------------------------------------------------
@@ -345,5 +348,26 @@ it.each([false, true])('does not offer absent stories or change reader recovery 
   expect(allText(tree)).not.toContain('Read temple story');
   expect(allText(tree)).toContain('Retry');
   if (!broadcast) expect(allText(tree)).toContain('YouTube');
+  act(() => tree.unmount());
+});
+
+
+it.each((['hi', 'en', 'gu', 'kn'] as const).flatMap(lang =>
+  (['M', 'L'] as const).flatMap(size => [false, true].map(compact => [lang, size, compact] as const)),
+))('keeps the story action scalable and error viewport bounded (%s/%s/compact=%s)', async (lang, size, compact) => {
+  jest.spyOn(AsyncStorage, 'getItem').mockImplementation(async key => key === '@vedansh/font-scale' ? size : null);
+  const height = compact ? 640 : 844;
+  jest.spyOn(ReactNative.Dimensions, 'get').mockReturnValue({ width: compact ? 320 : 390, height, scale: 2, fontScale: compact ? 2 : 1 });
+  let tree!: TestRenderer.ReactTestRenderer;
+  await act(async () => { tree = TestRenderer.create(<FontScaleProvider><GitaLanguageProvider initialLang={lang}>
+    <DockedYouTubePlayer mapping={mapping} uiLang={lang} broadcast onReadTempleStory={() => {}} onClose={() => {}} />
+  </GitaLanguageProvider></FontScaleProvider>); });
+  act(() => (mockRnyi.props?.onError as (error: string) => void)('embed_not_allowed'));
+  const action = tree.root.findAll(n => n.props.testID === 'darshan-read-story' && n.props.accessibilityRole === 'button')[0];
+  const label = action.findAllByType(Text)[0];
+  expect(StyleSheet.flatten(label.props.style).fontSize).toBe(17 * (size === 'L' ? 1.15 : 1));
+  expect(label.props.allowFontScaling).not.toBe(false);
+  expect(label.props.numberOfLines).toBeUndefined();
+  expect(tree.root.findByProps({ testID: 'darshan-error-actions' }).props.style.maxHeight).toBe(height * 0.45);
   act(() => tree.unmount());
 });
