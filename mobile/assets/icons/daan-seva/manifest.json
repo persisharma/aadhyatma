@@ -1,0 +1,206 @@
+{
+  "set": "daan-seva",
+  "artDirection": "Storybook miniatures — Daan प्रयोजन (cause) icons",
+  "generatedWith": "Codex built-in image_gen (painted), exported to 256-colour alpha palette",
+  "export": "512px PNG, 256-colour alpha palette, visible bounds fit 430px, recentred",
+  "icons": [
+    {
+      "name": "anna",
+      "file": "seva-anna.png",
+      "bytes": 33629,
+      "sha256": "4202380e87725d3469cc195509fd6b32b9f48c25932cf4119ea5e9092a02e53f",
+      "masterSha256": "52fa26363696af5f5f40f3a5977f30f76933fe87d96d9ae4dd4517f42d9ed9dd",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-anna.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        117,
+        56,
+        394,
+        456
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "gau",
+      "file": "seva-gau.png",
+      "bytes": 34524,
+      "sha256": "40ff2ea826b19fe0ce0767b3b673e12d94763598d810f123f9a7e1ef90e6e35e",
+      "masterSha256": "48ae2db7c6fcb2fc3832f0ab19418476a78349f209bc52c212f7f08e5f8e4c26",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-gau.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        56,
+        92,
+        456,
+        420
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "bal",
+      "file": "seva-bal.png",
+      "bytes": 46034,
+      "sha256": "5f514d84c336c844772a8ac4f96eb56d5e8d5a7a8e814efeb82898a264983397",
+      "masterSha256": "aedf17d17da4617d05ff0ab2287c6f73071e853f51d2a967c762e5eea75bc73f",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-bal.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        86,
+        56,
+        425,
+        456
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "vriddha",
+      "file": "seva-vriddha.png",
+      "bytes": 15169,
+      "sha256": "aadcc248c9e9b1f82667360b3e2fd7c8048533ce43dc3194764f1676e25a3900",
+      "masterSha256": "e3584cd517528505a85e21006770f76ecfc05611321c27e184088d81071d417b",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-vriddha.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        193,
+        57,
+        318,
+        456
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "vidya",
+      "file": "seva-vidya.png",
+      "bytes": 33436,
+      "sha256": "8a6eb096066371c62b507934212718de9c6695b6bee37ff4663c722ad376152e",
+      "masterSha256": "e1e5e9fefcfc7932e9a295033472e5ccd4d8832f31bc2993515637b235c0858a",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-vidya.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        56,
+        91,
+        456,
+        420
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "arogya",
+      "file": "seva-arogya.png",
+      "bytes": 45402,
+      "sha256": "8bb5f92990cd6feb6b968dfedfd27fe8c254fee288d748a825296372c96acf98",
+      "masterSha256": "6bf5c4e8d74b17344a3a0b819d3b739415b602524c943383dbff21b1d4d3cfb9",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-arogya.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        70,
+        56,
+        441,
+        456
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "vastra",
+      "file": "seva-vastra.png",
+      "bytes": 38103,
+      "sha256": "8d55025edc5c9b81a4081c952b10071d72cbc85659b7cbfc9a3c06efde45556c",
+      "masterSha256": "a7a747da8b7b836f29e72030e0de2f9993ff6addb25624a38a968eb610b63394",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-vastra.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        56,
+        112,
+        456,
+        400
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "jeev",
+      "file": "seva-jeev.png",
+      "bytes": 45131,
+      "sha256": "287d3080e590f3dd05abdee8856e865d417d9dde0946348a95a5d00d6bdc7ff4",
+      "masterSha256": "a6b894f8919c1ab754f3380b38b0715716ee5940312419edce4b1879b399a0b7",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-jeev.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        56,
+        64,
+        456,
+        448
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "name": "aapada",
+      "file": "seva-aapada.png",
+      "bytes": 26523,
+      "sha256": "033731c640648d1d30f6ff052eab96cf11cd7feee5cd7fc40f5f08d3789c6758",
+      "masterSha256": "2c6a117aad62a421df5e42597072dd79fea6b0fe6c265b0e916523db9b359a90",
+      "provenanceFile": "../../../../docs/evaluations/daan-punya-revamp-2026-11-20/v2-codex-review/seva-masters/seva-aapada.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "visibleBounds": [
+        56,
+        115,
+        456,
+        396
+      ],
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    }
+  ]
+}
