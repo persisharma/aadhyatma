@@ -17,6 +17,7 @@ const HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-cont
 const BUMP = 'INSERT INTO hits (k, n) VALUES (?1, 1) ON CONFLICT(k) DO UPDATE SET n = n + 1 RETURNING n';
 const READ = 'SELECT n FROM hits WHERE k = ?1';
 const SOURCE = /^[a-z0-9][a-z0-9_.-]{0,39}$/;
+const IST_OFFSET_MS = 330 * 60000;
 
 export async function onRequest({ request, env, waitUntil }) {
   if (request.method !== 'GET' && request.method !== 'POST') {
@@ -34,7 +35,8 @@ export async function onRequest({ request, env, waitUntil }) {
     const pick = (prefix) => results.filter((r) => r.k.startsWith(prefix))
       .map((r) => ({ name: r.k.slice(prefix.length), count: Number(r.n) }));
     const total = Number((results.find((r) => r.k === 'total') || { n: 0 }).n);
-    return new Response(JSON.stringify({ total, pages: pick('page:'), sources: pick('src:'), siteSources: pick('site:') }), { status: 200, headers: HEADERS });
+    const days = pick('day:').sort((a, b) => a.name.localeCompare(b.name));
+    return new Response(JSON.stringify({ total, pages: pick('page:'), sources: pick('src:'), siteSources: pick('site:'), days }), { status: 200, headers: HEADERS });
   }
 
   const raw = params.get('p') || '/';
@@ -48,6 +50,10 @@ export async function onRequest({ request, env, waitUntil }) {
   // table with junk keys.
   const src = (params.get('src') || '').toLowerCase();
   if (page && request.method === 'POST' && SOURCE.test(src)) keys.push(`${page === '/get/' ? 'src' : 'site'}:${src}`);
+
+  // Daily visits for /stats/: every counted visit also lands on its India-time
+  // date (`day:YYYY-MM-DD`), so the day rows always add up to the total.
+  if (request.method === 'POST') keys.push(`day:${new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10)}`);
 
   const results = await env.DB.batch(keys.map((k) => env.DB.prepare(sql).bind(k)));
 

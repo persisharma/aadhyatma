@@ -1,3 +1,4 @@
+import { dailySeries, istToday } from '/stats/daily.js';
 const $ = id => document.getElementById(id);
 // The owner token is kept in this browser only when "Remember on this device" is ticked.
 const TOKEN_KEY = 'vedansh-stats-token';
@@ -71,7 +72,32 @@ async function loadAllTime() {
     $('alltime-total').textContent=`${Number(d.total).toLocaleString()} visits`;
     $('alltime-source').textContent=live?`Live from ${live} (read-only, via the local preview)`:'Counted on this site since launch.';
     rows($('at-pages'),d.pages,'No page visits yet.');rows($('at-src'),d.sources,'No tagged download-link visits yet.');rows($('at-site'),d.siteSources,'No tagged landings yet.');
+    renderDaily(d.days);
   } catch(e) { $('alltime-source').textContent='The site counter is unavailable here.'; }
+}
+// One column per India-time day from the counter's `day:` rows; the peak day and
+// today carry their value on the cap, every day has a hover/focus tooltip, and the
+// same numbers are in a table.
+function renderDaily(days) {
+  const series=dailySeries(days,istToday()), chart=$('daily-chart'), tip=$('daily-tip');
+  chart.replaceChildren();$('daily-axis').replaceChildren();$('daily-rows').replaceChildren();tip.hidden=true;
+  if(!series.length){chart.append(node('div','The daily count starts with the next visit.','empty'));return;}
+  const when=(date,opts)=>new Date(`${date}T00:00:00Z`).toLocaleDateString('en-IN',{timeZone:'UTC',...opts});
+  const visits=n=>`${n.toLocaleString()} visit${n===1?'':'s'}`;
+  const max=Math.max(1,...series.map(d=>d.count)), peak=series.reduce((a,b)=>b.count>a.count?b:a), today=series.at(-1), yesterday=series.at(-2);
+  $('daily-summary').textContent=`Today ${today.count.toLocaleString()}${yesterday?` · Yesterday ${yesterday.count.toLocaleString()}`:''} · India time`;
+  const show=slot=>{tip.textContent=slot.dataset.tip;tip.hidden=false;const x=slot.offsetLeft+slot.offsetWidth/2,half=tip.offsetWidth/2;tip.style.left=`${Math.min(Math.max(x,half),chart.offsetWidth-half)}px`;tip.style.top=`${slot.firstChild.offsetTop-6}px`;};
+  for(const d of series){
+    const slot=node('div',undefined,'day');slot.tabIndex=0;
+    slot.dataset.tip=`${when(d.date,{weekday:'short',day:'numeric',month:'short'})} · ${visits(d.count)}`;slot.setAttribute('aria-label',slot.dataset.tip);
+    if(d===today || (d===peak && d.count>0)) slot.append(node('span',d.count.toLocaleString(),'cap'));
+    const bar=node('i');bar.style.height=`${d.count/max*100}%`;slot.append(bar);
+    for(const on of ['pointerenter','focus'])slot.addEventListener(on,()=>show(slot));
+    for(const off of ['pointerleave','blur'])slot.addEventListener(off,()=>{tip.hidden=true;});
+    chart.append(slot);
+    const tr=node('tr');tr.append(node('td',when(d.date,{weekday:'short',day:'numeric',month:'short',year:'numeric'})),node('td',d.count.toLocaleString()));$('daily-rows').prepend(tr);
+  }
+  $('daily-axis').append(node('span',when(series[0].date,{day:'numeric',month:'short'})),node('span','Today'));
 }
 loadAllTime();
 load();
