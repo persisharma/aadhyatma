@@ -2,6 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   AUTO_SLIDE_SPEEDS,
   autoSlideDurationMs,
+  nextAutoSlideSpeed,
+  type AutoSlideSpeed,
+  type AutoSlideStep,
   setAutoSlideSpeed,
   __resetAutoSlideStore,
 } from '../autoSlideStore';
@@ -31,6 +34,24 @@ describe('autoSlideDurationMs pace factors (design.md §85)', () => {
     const times = AUTO_SLIDE_SPEEDS.map((s) => autoSlideDurationMs(CHAUPAI, s));
     expect(AUTO_SLIDE_SPEEDS).toEqual(['slow', 'normal', 'fast', 'veryFast']);
     for (let i = 1; i < times.length; i++) expect(times[i]).toBeLessThan(times[i - 1]);
+  });
+});
+
+describe('nextAutoSlideSpeed', () => {
+  test('taps bounce at either end instead of wrapping fastest → slowest', () => {
+    let speed: AutoSlideSpeed = 'slow';
+    let direction: AutoSlideStep = 1;
+    const seen: AutoSlideSpeed[] = [speed];
+    for (let i = 0; i < 8; i++) {
+      ({ speed, direction } = nextAutoSlideSpeed(speed, direction));
+      seen.push(speed);
+    }
+    expect(seen).toEqual(['slow', 'normal', 'fast', 'veryFast', 'fast', 'normal', 'slow', 'normal', 'fast']);
+  });
+
+  test('a persisted extreme turns the right way on the first tap', () => {
+    expect(nextAutoSlideSpeed('veryFast', 1)).toEqual({ speed: 'fast', direction: -1 });
+    expect(nextAutoSlideSpeed('slow', -1)).toEqual({ speed: 'normal', direction: 1 });
   });
 });
 

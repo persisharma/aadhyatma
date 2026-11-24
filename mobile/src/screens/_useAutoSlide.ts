@@ -10,13 +10,14 @@ import {
 import { buildVerseScript } from '@/readAloud/verseScript';
 import { toReadableVerse } from '@/readAloud/verseAdapter';
 import {
-  AUTO_SLIDE_SPEEDS,
   armAutoSlideHandoff,
   autoSlideDurationMs,
+  nextAutoSlideSpeed,
   setAutoSlideSpeed,
   takeAutoSlideHandoff,
   useAutoSlideStore,
   type AutoSlideSpeed,
+  type AutoSlideStep,
 } from '@/utils/autoSlideStore';
 import {
   MAX_UTTERANCE_CHARS,
@@ -274,9 +275,12 @@ export function useAutoSlide(args: {
 
   const stop = useCallback(() => setPlaying(false), []);
 
+  // Taps bounce off the fastest/slowest level instead of wrapping (1→…→4→3→…→1).
+  const speedStepRef = useRef<AutoSlideStep>(1);
   const cycleSpeed = useCallback(() => {
-    const i = AUTO_SLIDE_SPEEDS.indexOf(speed);
-    setAutoSlideSpeed(AUTO_SLIDE_SPEEDS[(i + 1) % AUTO_SLIDE_SPEEDS.length]);
+    const next = nextAutoSlideSpeed(speed, speedStepRef.current);
+    speedStepRef.current = next.direction;
+    setAutoSlideSpeed(next.speed);
   }, [speed]);
 
   return {
