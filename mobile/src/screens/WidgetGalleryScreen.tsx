@@ -88,12 +88,12 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   const panchangPalette = day ? palette : WIDGET_APPEARANCE_TOKENS.day;
   const tithi = day ? runningTithi(day, now) : undefined;
   const recovery = payloadState.kind === 'expired'
-    ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' })
-    : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ' });
+    ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ', mr: 'विजेट ताजे करण्यासाठी वेदांश़ उघडा', te: 'విడ్జెట్‌లను రిఫ్రెష్ చేయడానికి వేదాంశ఼ తెరవండి' })
+    : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ', mr: 'विजेट तयार करण्यासाठी वेदांश़ उघडा', te: 'విడ్జెట్‌లను సిద్ధం చేయడానికి వేదాంశ఼ తెరవండి' });
 
   const pin = async (content: WidgetContent) => {
     const opened = await requestPinWidget(content);
-    if (!opened) Alert.alert('Widgets', pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, फिर विजेट चुनें।', en: 'Long-press the Home Screen, then choose Widgets.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, પછી Widgets પસંદ કરો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ಆಯ್ಕೆಮಾಡಿ.' }));
+    if (!opened) Alert.alert('Widgets', pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, फिर विजेट चुनें।', en: 'Long-press the Home Screen, then choose Widgets.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, પછી Widgets પસંદ કરો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ಆಯ್ಕೆಮಾಡಿ.', mr: 'होम स्क्रीन दाबून धरा, मग Widgets निवडा.', te: 'హోమ్ స్క్రీన్‌ను నొక్కి పట్టుకుని, Widgets ఎంచుకోండి.' }));
   };
 
   return (
@@ -101,7 +101,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
       <ReaderHeader title={contentByLang(lang, 'होम-स्क्रीन विजेट', 'Home-Screen Widgets')} onBack={navigation.goBack} variant="index" />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <Text style={[styles.intro, { color: colors.inkMuted, fontFamily: bodyFont }]}>
-          {pick(lang, { hi: 'हर विजेट का अपना आकार है। चौड़े में श्लोक के लिए अधिक जगह है, लंबे श्लोक टैप करके पूरे पढ़ें। छोटा पंचांग एक नज़र में दिखता है।', en: 'Each widget has its own sizes. Wide gives verses more room, and long verses open fully on tap; Small keeps the Panchang at a glance.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. પહોળા વિજેટમાં શ્લોકને વધુ જગ્યા મળે છે; લાંબો શ્લોક ટૅપ કરીને આખો વાંચો. પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಅಗಲದ ವಿಜೆಟ್‌ನಲ್ಲಿ ಶ್ಲೋಕಕ್ಕೆ ಹೆಚ್ಚು ಜಾಗ; ದೀರ್ಘ ಶ್ಲೋಕವನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಸಂಪೂರ್ಣ ಓದಿ. ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.' })}
+          {pick(lang, { hi: 'हर विजेट का अपना आकार है। चौड़े में श्लोक के लिए अधिक जगह है, लंबे श्लोक टैप करके पूरे पढ़ें। छोटा पंचांग एक नज़र में दिखता है।', en: 'Each widget has its own sizes. Wide gives verses more room, and long verses open fully on tap; Small keeps the Panchang at a glance.', gu: 'દરેક વિજેટ અલગ છે — જે જોઈએ તે, જે કદમાં જોઈએ તે ઉમેરો. પહોળા વિજેટમાં શ્લોકને વધુ જગ્યા મળે છે; લાંબો શ્લોક ટૅપ કરીને આખો વાંચો. પંચાંગ નાનામાં એક નજરનું રહે છે.', kn: 'ಪ್ರತಿ ವಿಜೆಟ್ ಪ್ರತ್ಯೇಕ — ಬೇಕಾದದ್ದನ್ನು, ಬೇಕಾದ ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ. ಅಗಲದ ವಿಜೆಟ್‌ನಲ್ಲಿ ಶ್ಲೋಕಕ್ಕೆ ಹೆಚ್ಚು ಜಾಗ; ದೀರ್ಘ ಶ್ಲೋಕವನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಸಂಪೂರ್ಣ ಓದಿ. ಪಂಚಾಂಗ ಚಿಕ್ಕದರಲ್ಲಿ ಒಂದೇ ನೋಟ.', mr: 'प्रत्येक विजेटचा स्वतःचा आकार आहे. रुंद विजेटमध्ये श्लोकाला अधिक जागा आहे; लांब श्लोक टॅप करून पूर्ण वाचा. लहान पंचांग एका दृष्टीक्षेपात दिसते.', te: 'ప్రతి విడ్జెట్‌కు దాని సొంత పరిమాణాలు ఉన్నాయి. వెడల్పాటి విడ్జెట్‌లో శ్లోకానికి ఎక్కువ చోటు; పొడవైన శ్లోకాన్ని ట్యాప్ చేసి పూర్తిగా చదవండి. చిన్న పంచాంగం ఒక్క చూపులో కనిపిస్తుంది.' })}
         </Text>
         <View style={styles.grid}>
           <Preview heritageImages={heritageImages} contentReady={!!verse} appearance={verse ? appearance : 'day'} subject={verse?.artKey ?? 'prayer'} content="verse" title={contentByLang(lang, 'आज का श्लोक', 'Today’s verse')} accessibilityLabel="Daily verse widget preview" verseArtPadding={verseArtPadding} colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
@@ -110,7 +110,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
                 small-cell excerpt (design.md §59). */}
             <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(widgetLines(verse.lines, lang), widgetText(verse.source, lang)) : recovery}</Text>
             {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{widgetText(verse.source, lang)}</Text> : null}
-            {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
+            {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›', mr: 'पूर्ण श्लोक वाचा ›', te: 'పూర్తి శ్లోకం చదవండి ›' })}</Text> : null}
           </Preview>
           <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${widgetText(day.representedDate, lang)} · ${widgetText(payloadState.payload.panchang.cityLabel, lang)}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* This is the small native widget's masthead / tithi / vrat-band /
@@ -138,8 +138,8 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
         <View style={[styles.instructions, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
           <Text style={[styles.instructionsTitle, { color: colors.ink, fontFamily: titleFont }]}>{contentByLang(lang, 'कैसे जोड़ें', 'How to add')}</Text>
           <Text style={[styles.instruction, { color: colors.inkSoft, fontFamily: bodyFont }]}>{Platform.OS === 'ios'
-            ? pick(lang, { hi: '1. होम स्क्रीन को दबाकर रखें  2. संपादित करें या + चुनें  3. “Vedansh” खोजें  4. विजेट चुनें, बग़ल में स्वाइप कर आकार चुनें, फिर जोड़ें', en: '1. Long-press the Home Screen  2. Tap Edit or +  3. Search “Vedansh”  4. Pick a widget, swipe sideways for its size, then add it', gu: '1. હોમ સ્ક્રીન દબાવી રાખો  2. Edit અથવા +  3. “Vedansh” શોધો  4. વિજેટ પસંદ કરો, બાજુમાં સ્વાઇપ કરી કદ પસંદ કરો, પછી ઉમેરો', kn: '1. ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿಯಿರಿ  2. Edit ಅಥವಾ +  3. “Vedansh” ಹುಡುಕಿ  4. ವಿಜೆಟ್ ಆಯ್ಕೆಮಾಡಿ, ಪಕ್ಕಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ ಗಾತ್ರ ಆರಿಸಿ, ನಂತರ ಸೇರಿಸಿ' })
-            : pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, Widgets खोलें और Vedansh चुनें। जोड़ने के बाद विजेट को दबाकर रखें और किनारे खींचकर आकार बदलें।', en: 'Long-press the Home Screen, open Widgets, and choose Vedansh. After adding, long-press the widget and drag its edges to resize.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, Widgets ખોલો અને Vedansh પસંદ કરો. ઉમેર્યા પછી વિજેટ દબાવી રાખી કિનારી ખેંચીને કદ બદલો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ತೆರೆಯಿರಿ ಮತ್ತು Vedansh ಆಯ್ಕೆಮಾಡಿ. ಸೇರಿಸಿದ ನಂತರ ವಿಜೆಟ್ ಒತ್ತಿಹಿಡಿದು ಅಂಚುಗಳನ್ನು ಎಳೆದು ಗಾತ್ರ ಬದಲಿಸಿ.' })}</Text>
+            ? pick(lang, { hi: '1. होम स्क्रीन को दबाकर रखें  2. संपादित करें या + चुनें  3. “Vedansh” खोजें  4. विजेट चुनें, बग़ल में स्वाइप कर आकार चुनें, फिर जोड़ें', en: '1. Long-press the Home Screen  2. Tap Edit or +  3. Search “Vedansh”  4. Pick a widget, swipe sideways for its size, then add it', gu: '1. હોમ સ્ક્રીન દબાવી રાખો  2. Edit અથવા +  3. “Vedansh” શોધો  4. વિજેટ પસંદ કરો, બાજુમાં સ્વાઇપ કરી કદ પસંદ કરો, પછી ઉમેરો', kn: '1. ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿಯಿರಿ  2. Edit ಅಥವಾ +  3. “Vedansh” ಹುಡುಕಿ  4. ವಿಜೆಟ್ ಆಯ್ಕೆಮಾಡಿ, ಪಕ್ಕಕ್ಕೆ ಸ್ವೈಪ್ ಮಾಡಿ ಗಾತ್ರ ಆರಿಸಿ, ನಂತರ ಸೇರಿಸಿ', mr: '1. होम स्क्रीन दाबून धरा  2. Edit किंवा + निवडा  3. “Vedansh” शोधा  4. विजेट निवडा, बाजूला स्वाइप करून आकार निवडा, मग जोडा', te: '1. హోమ్ స్క్రీన్‌ను నొక్కి పట్టుకోండి  2. Edit లేదా + నొక్కండి  3. “Vedansh” వెతకండి  4. విడ్జెట్ ఎంచుకుని, పక్కకు స్వైప్ చేసి పరిమాణం ఎంచుకోండి, ఆపై జోడించండి' })
+            : pick(lang, { hi: 'होम स्क्रीन को दबाकर रखें, Widgets खोलें और Vedansh चुनें। जोड़ने के बाद विजेट को दबाकर रखें और किनारे खींचकर आकार बदलें।', en: 'Long-press the Home Screen, open Widgets, and choose Vedansh. After adding, long-press the widget and drag its edges to resize.', gu: 'હોમ સ્ક્રીન દબાવી રાખો, Widgets ખોલો અને Vedansh પસંદ કરો. ઉમેર્યા પછી વિજેટ દબાવી રાખી કિનારી ખેંચીને કદ બદલો.', kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿದು Widgets ತೆರೆಯಿರಿ ಮತ್ತು Vedansh ಆಯ್ಕೆಮಾಡಿ. ಸೇರಿಸಿದ ನಂತರ ವಿಜೆಟ್ ಒತ್ತಿಹಿಡಿದು ಅಂಚುಗಳನ್ನು ಎಳೆದು ಗಾತ್ರ ಬದಲಿಸಿ.', mr: 'होम स्क्रीन दाबून धरा, Widgets उघडा आणि Vedansh निवडा. जोडल्यानंतर विजेट दाबून धरा आणि कडा ओढून आकार बदला.', te: 'హోమ్ స్క్రీన్‌ను నొక్కి పట్టుకుని, Widgets తెరిచి Vedansh ఎంచుకోండి. జోడించిన తర్వాత విడ్జెట్‌ను నొక్కి పట్టుకుని అంచులను లాగి పరిమాణం మార్చండి.' })}</Text>
         </View>
         <Text style={[styles.note, { color: colors.inkMuted, fontFamily: bodyFont }]}>{contentByLang(lang, 'विजेट पुराने आँकड़ों को आज का बताकर नहीं दिखाते।', 'Widgets never present stale information as today’s.')}</Text>
       </ScrollView>
@@ -172,7 +172,7 @@ type PreviewProps = {
 function Preview({ heritageImages = {}, contentReady = true, appearance = 'day', subject = 'prayer', verseArtPadding = 90, content, title, accessibilityLabel, colors, eyebrowStyle, lang, bodyFont, pinSupported, onPin, children }: PreviewProps) {
   const entry = widgetCatalogEntry(content);
   const canPin = Platform.OS === 'android' && !!entry.androidProvider;
-  const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು' });
+  const best = pick(lang, { hi: 'सुझाव', en: 'best', gu: 'સૂચિત', kn: 'ಶಿಫಾರಸು', mr: 'शिफारस', te: 'సిఫార్సు' });
   const sizeLabels = entry.sizes.map((size) => `${widgetSizeLabel(size, lang)}${size === entry.recommended ? ` · ${best}` : ''}`);
   // The same sketch plate the native widget draws at this kind's recommended size;
   // without one the card is the plain parchment it was.
@@ -187,7 +187,7 @@ function Preview({ heritageImages = {}, contentReady = true, appearance = 'day',
     {art ? <ImageBackground testID={`widget-art-${content}`} source={art} resizeMode="cover" style={[styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }]} imageStyle={styles.cardArt}>
       {React.cloneElement(previewBody, { style: [previewStyle, { backgroundColor: 'transparent' }] })}
     </ImageBackground> : previewBody}
-    <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
+    <View accessible accessibilityLabel={`${pick(lang, { hi: 'आकार', en: 'Sizes', gu: 'કદ', kn: 'ಗಾತ್ರ', mr: 'आकार', te: 'పరిమాణం' })}: ${sizeLabels.join(', ')}`} style={styles.sizeRow}>
       {entry.sizes.map((size, index) => {
         const recommended = size === entry.recommended;
         return <View key={size} style={[styles.sizeChip, { backgroundColor: recommended ? colors.saffronTint : 'transparent', borderColor: colors.divider }]}>

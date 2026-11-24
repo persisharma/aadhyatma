@@ -54,7 +54,7 @@ export function buildProseShareText(p: {
       return `${gapBefore ? '…' : ''}${text}${gapAfter ? '…' : ''}`;
     }).join('').trim();
     const verse = collect('verse'), meaning = collect('meaning');
-    return [p.header, '', verse, ...(meaning ? ['', pick(p.lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' }), meaning] : []), '', ...shareLinkLines(p.lang)].join('\n');
+    return [p.header, '', verse, ...(meaning ? ['', pick(p.lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ', mr: 'अर्थ', te: 'అర్థం' }), meaning] : []), '', ...shareLinkLines(p.lang)].join('\n');
   }
   for (const i of order) {
     const page = p.pages[i];

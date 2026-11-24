@@ -89,7 +89,7 @@ export default function AutoSlideButton({
           <AppIcon name={playing ? 'pause' : 'play'} size={14} color={tint} weight="fill" />
           {!playing && (
             <Text style={[styles.label, font, { color: tint }]} numberOfLines={1}>
-              {pick(lang, { hi: 'स्वतः', en: 'Auto', gu: 'સ્વતઃ', kn: 'ಸ್ವಯಂ' })}
+              {pick(lang, { hi: 'स्वतः', en: 'Auto', gu: 'સ્વતઃ', kn: 'ಸ್ವಯಂ', mr: 'स्वयं', te: 'స్వయం' })}
             </Text>
           )}
         </Pressable>

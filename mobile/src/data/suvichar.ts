@@ -120,8 +120,8 @@ export function senderFrom(name: string, saved: string): { name: string; nameOn:
 }
 /** The card's muted heading: authored thoughts are today's thought; wishes and reader-written text are wishes. */
 export const suvicharHeading = {
-  thought: { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ' },
-  wish: { hi: 'शुभकामनाएँ', en: 'Warm wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು' },
+  thought: { hi: 'आज का सुविचार', en: 'A thought for today', gu: 'આજનો સુવિચાર', kn: 'ಇಂದಿನ ಸುವಿಚಾರ', mr: 'आजचा सुविचार', te: 'నేటి సువిచారం' },
+  wish: { hi: 'शुभकामनाएँ', en: 'Warm wishes', gu: 'શુભેચ્છાઓ', kn: 'ಶುಭಾಶಯಗಳು', mr: 'शुभेच्छा', te: 'శుభాకాంక్షలు' },
 } as const;
 /** Sender photos are written by utils/suvicharPhoto.ts only; a corrupt preference can never point at another file. */
 export function isSenderPhotoName(value: unknown): value is string { return typeof value === 'string' && /^sender-\d+\.(jpe?g|png|heic|webp)$/i.test(value); }

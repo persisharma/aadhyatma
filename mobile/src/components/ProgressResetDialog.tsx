@@ -51,6 +51,8 @@ export default function ProgressResetDialog({ visible, targetLabel, readCount, o
               en: 'Reset progress?',
               gu: 'પ્રગતિ રીસેટ કરવી છે?',
               kn: 'ಪ್ರಗತಿಯನ್ನು ಮರುಹೊಂದಿಸಬೇಕೇ?',
+              mr: 'प्रगती रीसेट करायची?',
+              te: 'పురోగతిని రీసెట్ చేయాలా?',
             })}
           </Text>
           <Text style={[styles.target, { color: colors.inkMuted }]} numberOfLines={2}>
@@ -63,6 +65,8 @@ export default function ProgressResetDialog({ visible, targetLabel, readCount, o
               en: `${readCount} read marks will be cleared. Your completed readings and last-read place stay.`,
               gu: `${readCount} વાંચેલાં ચિહ્નો ભૂંસાઈ જશે. પૂર્ણ પાઠની ગણતરી અને છેલ્લું વાંચેલું સ્થાન એમ જ રહેશે.`,
               kn: `${readCount} ಓದಿದ ಗುರುತುಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಪೂರ್ಣ ಪಾಠಗಳ ಎಣಿಕೆ ಮತ್ತು ಕೊನೆಯ ಓದಿದ ಸ್ಥಳ ಹಾಗೆಯೇ ಇರುತ್ತದೆ.`,
+              mr: `${readCount} वाचल्याच्या खुणा पुसल्या जातील. पूर्ण पाठांची गणती आणि शेवटचे वाचलेले स्थान तसेच राहील.`,
+              te: `${readCount} చదివిన గుర్తులు తొలగించబడతాయి. పూర్తయిన పాఠాల లెక్క, చివరిగా చదివిన స్థానం అలాగే ఉంటాయి.`,
             })}
           </Text>
           <Pressable
@@ -77,7 +81,7 @@ export default function ProgressResetDialog({ visible, targetLabel, readCount, o
             ]}
           >
             <Text style={[styles.confirmText, { color: colors.onPrimary, fontFamily: titleFont }]}>
-              {pick(lang, { hi: 'रीसेट करें', en: 'Reset', gu: 'રીસેટ કરો', kn: 'ಮರುಹೊಂದಿಸಿ' })}
+              {pick(lang, { hi: 'रीसेट करें', en: 'Reset', gu: 'રીસેટ કરો', kn: 'ಮರುಹೊಂದಿಸಿ', mr: 'रीसेट करा', te: 'రీసెట్ చేయండి' })}
             </Text>
           </Pressable>
           <Pressable
@@ -88,7 +92,7 @@ export default function ProgressResetDialog({ visible, targetLabel, readCount, o
             style={styles.cancelBtn}
           >
             <Text style={[styles.cancelText, { color: colors.inkMuted }]}>
-              {pick(lang, { hi: 'रहने दें', en: 'Cancel', gu: 'રહેવા દો', kn: 'ರದ್ದುಮಾಡಿ' })}
+              {pick(lang, { hi: 'रहने दें', en: 'Cancel', gu: 'રહેવા દો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' })}
             </Text>
           </Pressable>
         </Pressable>

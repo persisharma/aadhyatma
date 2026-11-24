@@ -120,10 +120,10 @@ export default function ProfileScreen({ navigation }: Props) {
 
   const rangeLabel =
     mode === 'lifetime'
-      ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ' })
+      ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ', mr: 'सार्वकालिक', te: 'సార్వకాలికం' })
       : mode === 'monthly'
         ? `${contentByLang(lang, HI_MONTHS[today.getMonth()], EN_MONTHS[today.getMonth()])} ${today.getFullYear()}`
-        : pick(lang, { hi: 'आज', en: 'Today', gu: 'આજ', kn: 'ಇಂದು' });
+        : pick(lang, { hi: 'आज', en: 'Today', gu: 'આજ', kn: 'ಇಂದು', mr: 'आज', te: 'ఈరోజు' });
 
   const streak = currentStreak();
   const lifetimeDayCount = activeDateKeys().length;
@@ -173,7 +173,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 color: colors.ink,
               }}
             >
-              {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್' })}
+              {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್', mr: 'साधक प्रोफाइल', te: 'సాధక ప్రొఫైల్' })}
             </Text>
           </View>
           <View style={{ width: 44 }} />
@@ -250,7 +250,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   {streak}
                 </Text>
                 <Text style={[styles.identityFooterLabel, pillTextStyle(lang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
-                  {pick(lang, { hi: 'दिवस श्रृंखला', en: 'DAY STREAK', gu: 'દિવસ શ્રેણી', kn: 'ದಿನ ಸರಣಿ' })}
+                  {pick(lang, { hi: 'दिवस श्रृंखला', en: 'DAY STREAK', gu: 'દિવસ શ્રેણી', kn: 'ದಿನ ಸರಣಿ', mr: 'दिवस मालिका', te: 'రోజుల వరుస' })}
                 </Text>
               </View>
               <View
@@ -269,7 +269,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   {lifetimeDayCount}
                 </Text>
                 <Text style={[styles.identityFooterLabel, pillTextStyle(lang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
-                  {pick(lang, { hi: 'सक्रिय दिन', en: 'ACTIVE DAYS', gu: 'સક્રિય દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು' })}
+                  {pick(lang, { hi: 'सक्रिय दिन', en: 'ACTIVE DAYS', gu: 'સક્રિય દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು', mr: 'सक्रिय दिवस', te: 'క్రియాశీల రోజులు' })}
                 </Text>
               </View>
               <View
@@ -288,7 +288,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   {bookmarks.length}
                 </Text>
                 <Text style={[styles.identityFooterLabel, pillTextStyle(lang, { fontSize: 10, fontWeight: '600', letterSpacing: 1.6 }), { color: colors.inkMuted }]}>
-                  {pick(lang, { hi: 'सहेजे श्लोक', en: 'SAVED VERSES', gu: 'સાચવેલા શ્લોક', kn: 'ಉಳಿಸಿದ ಶ್ಲೋಕಗಳು' })}
+                  {pick(lang, { hi: 'सहेजे श्लोक', en: 'SAVED VERSES', gu: 'સાચવેલા શ્લોક', kn: 'ಉಳಿಸಿದ ಶ್ಲೋಕಗಳು', mr: 'जतन केलेले श्लोक', te: 'సేవ్ చేసిన శ్లోకాలు' })}
                 </Text>
               </View>
             </View>
@@ -309,10 +309,10 @@ export default function ProfileScreen({ navigation }: Props) {
               const active = mode === m;
               const tabLabel =
                 m === 'lifetime'
-                  ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ' })
+                  ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ', mr: 'सार्वकालिक', te: 'సార్వకాలికం' })
                   : m === 'monthly'
-                    ? pick(lang, { hi: 'मासिक', en: 'Monthly', gu: 'માસિક', kn: 'ಮಾಸಿಕ' })
-                    : pick(lang, { hi: 'दैनिक', en: 'Daily', gu: 'દૈનિક', kn: 'ದೈನಿಕ' });
+                    ? pick(lang, { hi: 'मासिक', en: 'Monthly', gu: 'માસિક', kn: 'ಮಾಸಿಕ', mr: 'मासिक', te: 'మాసిక' })
+                    : pick(lang, { hi: 'दैनिक', en: 'Daily', gu: 'દૈનિક', kn: 'ದೈನಿಕ', mr: 'दैनिक', te: 'దైనిక' });
               return (
                 <Pressable
                   key={m}
@@ -353,7 +353,7 @@ export default function ProfileScreen({ navigation }: Props) {
           <View style={styles.statGrid}>
             <StatTile
               valueLabel={String(totals.totalReads)}
-              label={{ hi: 'श्लोक पढ़े', en: 'Verses Read', gu: 'વાંચેલા શ્લોક', kn: 'ಓದಿದ ಶ್ಲೋಕಗಳು' }}
+              label={{ hi: 'श्लोक पढ़े', en: 'Verses Read', gu: 'વાંચેલા શ્લોક', kn: 'ಓದಿದ ಶ್ಲೋಕಗಳು', mr: 'वाचलेले श्लोक', te: 'చదివిన శ్లోకాలు' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -361,7 +361,7 @@ export default function ProfileScreen({ navigation }: Props) {
             />
             <StatTile
               valueLabel={String(totals.totalBeads)}
-              label={{ hi: 'बीज जपे', en: 'Beads Chanted', gu: 'જપેલા મણકા', kn: 'ಜಪಿಸಿದ ಮಣಿಗಳು' }}
+              label={{ hi: 'बीज जपे', en: 'Beads Chanted', gu: 'જપેલા મણકા', kn: 'ಜಪಿಸಿದ ಮಣಿಗಳು', mr: 'जपलेले मणी', te: 'జపించిన పూసలు' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -369,7 +369,7 @@ export default function ProfileScreen({ navigation }: Props) {
             />
             <StatTile
               valueLabel={String(totals.totalRounds)}
-              label={{ hi: 'आवृत्तियाँ', en: 'Rounds (Mala)', gu: 'આવૃત્તિ (માળા)', kn: 'ಆವೃತ್ತಿ (ಮಾಲಾ)' }}
+              label={{ hi: 'आवृत्तियाँ', en: 'Rounds (Mala)', gu: 'આવૃત્તિ (માળા)', kn: 'ಆವೃತ್ತಿ (ಮಾಲಾ)', mr: 'आवर्तने (माळ)', te: 'ఆవృత్తులు (మాల)' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -377,7 +377,7 @@ export default function ProfileScreen({ navigation }: Props) {
             />
             <StatTile
               valueLabel={String(totals.activeDays)}
-              label={{ hi: 'दिन', en: 'Days Active', gu: 'દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು' }}
+              label={{ hi: 'दिन', en: 'Days Active', gu: 'દિવસો', kn: 'ಸಕ್ರಿಯ ದಿನಗಳು', mr: 'सक्रिय दिवस', te: 'క్రియాశీల రోజులు' }}
               colors={colors}
               typography={typography}
               radii={radii}
@@ -404,7 +404,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   color: colors.ink,
                 }}
               >
-                {pick(lang, { hi: 'पिछले ७ दिन', en: 'Last 7 Days', gu: 'છેલ્લા ૭ દિવસ', kn: 'ಕಳೆದ ೭ ದಿನ' })}
+                {pick(lang, { hi: 'पिछले ७ दिन', en: 'Last 7 Days', gu: 'છેલ્લા ૭ દિવસ', kn: 'ಕಳೆದ ೭ ದಿನ', mr: 'मागील ७ दिवस', te: 'గత ౭ రోజులు' })}
               </Text>
               <Text
                 style={{
@@ -414,7 +414,7 @@ export default function ProfileScreen({ navigation }: Props) {
                 }}
               >
                 {sevenDayWindow.totalReads + sevenDayWindow.totalBeads}{' '}
-                {pick(lang, { hi: 'क्रियाएँ', en: 'actions', gu: 'ક્રિયાઓ', kn: 'ಕ್ರಿಯೆಗಳು' })}
+                {pick(lang, { hi: 'क्रियाएँ', en: 'actions', gu: 'ક્રિયાઓ', kn: 'ಕ್ರಿಯೆಗಳು', mr: 'क्रिया', te: 'క్రియలు' })}
               </Text>
             </View>
             <View style={styles.chartRow}>
@@ -490,6 +490,8 @@ export default function ProfileScreen({ navigation }: Props) {
                   en: 'No activity recorded for this period',
                   gu: 'આ સમયગાળામાં હજી કોઈ પ્રવૃત્તિ નથી',
                   kn: 'ಈ ಅವಧಿಯಲ್ಲಿ ಇನ್ನೂ ಯಾವುದೇ ಚಟುವಟಿಕೆ ಇಲ್ಲ',
+                  mr: 'या कालावधीत अद्याप कोणतीही क्रिया नाही',
+                  te: 'ఈ వ్యవధిలో ఇంకా ఏ కార్యకలాపం లేదు',
                 })}
               </Text>
               <Text
@@ -507,6 +509,8 @@ export default function ProfileScreen({ navigation }: Props) {
                   en: 'Begin reading or chanting — your practice will appear here',
                   gu: 'વાંચન કે જપ શરૂ કરો — તમારી સાધના અહીં દેખાશે',
                   kn: 'ಓದು ಅಥವಾ ಜಪ ಆರಂಭಿಸಿ — ನಿಮ್ಮ ಸಾಧನೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ',
+                  mr: 'वाचन किंवा जप सुरू करा — तुमची साधना येथे दिसेल',
+                  te: 'పఠనం లేదా జపం ప్రారంభించండి — మీ సాధన ఇక్కడ కనిపిస్తుంది',
                 })}
               </Text>
             </View>
@@ -533,7 +537,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {pick(lang, { hi: 'पाठ-अनुसार', en: 'By Text', gu: 'પાઠ અનુસાર', kn: 'ಪಠ್ಯದ ಪ್ರಕಾರ' })}
+                {pick(lang, { hi: 'पाठ-अनुसार', en: 'By Text', gu: 'પાઠ અનુસાર', kn: 'ಪಠ್ಯದ ಪ್ರಕಾರ', mr: 'पाठानुसार', te: 'పాఠం ప్రకారం' })}
               </Text>
               {perSourceList.map(([src, count], i) => (
                 <View
@@ -576,7 +580,7 @@ export default function ProfileScreen({ navigation }: Props) {
                       marginLeft: 6,
                     }}
                   >
-                    {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
+                    {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ', mr: 'श्लोक', te: 'శ్లోకాలు' })}
                   </Text>
                 </View>
               ))}
@@ -604,7 +608,7 @@ export default function ProfileScreen({ navigation }: Props) {
                   },
                 ]}
               >
-                {pick(lang, { hi: 'जप-अनुसार', en: 'By Japa', gu: 'જપ અનુસાર', kn: 'ಜಪದ ಪ್ರಕಾರ' })}
+                {pick(lang, { hi: 'जप-अनुसार', en: 'By Japa', gu: 'જપ અનુસાર', kn: 'ಜಪದ ಪ್ರಕಾರ', mr: 'जपानुसार', te: 'జపం ప్రకారం' })}
               </Text>
               {perMantraList.map(([mid, jr], i) => (
                 <View
@@ -645,7 +649,7 @@ export default function ProfileScreen({ navigation }: Props) {
                           color: colors.inkMuted,
                         }}
                       >
-                        {pick(lang, { hi: 'आवृत्ति', en: 'rounds', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ' })}
+                        {pick(lang, { hi: 'आवृत्ति', en: 'rounds', gu: 'આવૃત્તિ', kn: 'ಆವೃತ್ತಿ', mr: 'आवर्तने', te: 'ఆవృత్తులు' })}
                       </Text>
                     </Text>
                     <Text
@@ -657,7 +661,7 @@ export default function ProfileScreen({ navigation }: Props) {
                       }}
                     >
                       {jr.rounds * 108 + jr.beads}{' '}
-                      {pick(lang, { hi: 'बीज', en: 'beads', gu: 'મણકા', kn: 'ಮಣಿ' })}
+                      {pick(lang, { hi: 'बीज', en: 'beads', gu: 'મણકા', kn: 'ಮಣಿ', mr: 'मणी', te: 'పూసలు' })}
                     </Text>
                   </View>
                 </View>

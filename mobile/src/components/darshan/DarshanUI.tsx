@@ -99,7 +99,7 @@ export function DarshanCard({
           ? storybookSources.durga
           : storybookSources.theerth;
   const mode = pick(lang, {
-    hi: 'दर्शन देखें', en: 'Watch Darshan', gu: 'દર્શન જુઓ', kn: 'ದರ್ಶನ ವೀಕ್ಷಿಸಿ',
+    hi: 'दर्शन देखें', en: 'Watch Darshan', gu: 'દર્શન જુઓ', kn: 'ದರ್ಶನ ವೀಕ್ಷಿಸಿ', mr: 'दर्शन पाहा', te: 'దర్శనం చూడండి',
   });
   return (
     <Pressable

@@ -83,18 +83,18 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
     return () => sub.remove();
   }, [cancel]);
 
-  const heading = pick(lang, { hi: 'मंदिर दर्शन', en: 'Temple Darshan', gu: 'મંદિર દર્શન', kn: 'ದೇವಾಲಯ ದರ್ಶನ' });
+  const heading = pick(lang, { hi: 'मंदिर दर्शन', en: 'Temple Darshan', gu: 'મંદિર દર્શન', kn: 'ದೇವಾಲಯ ದರ್ಶನ', mr: 'मंदिर दर्शन', te: 'ఆలయ దర్శనం' });
   if (!channel || !temple) return <SafeAreaView style={[darshanStyles.root, { backgroundColor: colors.parchment }]}>
     <ReaderHeader title={heading} onBack={() => navigation.goBack()} />
-    <View style={darshanStyles.body}><DarshanText>{pick(lang, { hi: 'मंदिर नहीं मिला', en: 'Temple not found', gu: 'મંદિર મળ્યું નથી', kn: 'ದೇವಾಲಯ ಕಂಡುಬಂದಿಲ್ಲ' })}</DarshanText>
-      <DarshanAction label={pick(lang, { hi: 'अन्य मंदिर देखें', en: 'Browse temples', gu: 'બીજાં મંદિરો જુઓ', kn: 'ಇತರ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ' })} onPress={() => navigation.navigate('DarshanList')} />
+    <View style={darshanStyles.body}><DarshanText>{pick(lang, { hi: 'मंदिर नहीं मिला', en: 'Temple not found', gu: 'મંદિર મળ્યું નથી', kn: 'ದೇವಾಲಯ ಕಂಡುಬಂದಿಲ್ಲ', mr: 'मंदिर आढळले नाही', te: 'ఆలయం కనబడలేదు' })}</DarshanText>
+      <DarshanAction label={pick(lang, { hi: 'अन्य मंदिर देखें', en: 'Browse temples', gu: 'બીજાં મંદિરો જુઓ', kn: 'ಇತರ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ', mr: 'इतर मंदिरे पाहा', te: 'ఇతర ఆలయాలు చూడండి' })} onPress={() => navigation.navigate('DarshanList')} />
     </View>
   </SafeAreaView>;
   const title = contentByLang(lang, temple.nameHi, temple.nameEn);
   const saved = ids.includes(channel.templeId);
   const saveLabel = saved
-    ? pick(lang, { hi: 'पसंदीदा से हटाएँ', en: 'Remove favourite', gu: 'મનપસંદમાંથી દૂર કરો', kn: 'ಮೆಚ್ಚಿನವುಗಳಿಂದ ತೆಗೆಯಿರಿ' })
-    : pick(lang, { hi: 'पसंदीदा मंदिर में जोड़ें', en: 'Save temple', gu: 'મનપસંદ મંદિરમાં ઉમેરો', kn: 'ಮೆಚ್ಚಿನ ದೇವಾಲಯಗಳಿಗೆ ಸೇರಿಸಿ' });
+    ? pick(lang, { hi: 'पसंदीदा से हटाएँ', en: 'Remove favourite', gu: 'મનપસંદમાંથી દૂર કરો', kn: 'ಮೆಚ್ಚಿನವುಗಳಿಂದ ತೆಗೆಯಿರಿ', mr: 'आवडीतून काढा', te: 'ఇష్టమైనవాటి నుండి తీసివేయండి' })
+    : pick(lang, { hi: 'पसंदीदा मंदिर में जोड़ें', en: 'Save temple', gu: 'મનપસંદ મંદિરમાં ઉમેરો', kn: 'ಮೆಚ್ಚಿನ ದೇವಾಲಯಗಳಿಗೆ ಸೇರಿಸಿ', mr: 'आवडत्या मंदिरांत जोडा', te: 'ఇష్టమైన ఆలయాలకు జోడించండి' });
   const readings = darshanReadingsForDeity(temple.deity);
   return <SafeAreaView edges={['top', 'left', 'right']} style={[darshanStyles.root, { backgroundColor: colors.parchment }]}>
     <ReaderHeader title={heading} onBack={() => navigation.goBack()} right={
@@ -115,8 +115,8 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
         />}
         {phase !== 'playing' && <View testID="darshan-start" style={[styles.start, { minHeight: viewportHeight < 700 ? 200 : 240, backgroundColor: colors.parchmentDeep }]}>
           {phase === 'loading' ? <><ActivityIndicator color={colors.saffron} />
-            <DarshanText>{pick(lang, { hi: 'दर्शन जुड़ रहे हैं…', en: 'Connecting to Darshan…', gu: 'દર્શન સાથે જોડાઈ રહ્યા છીએ…', kn: 'ದರ್ಶನಕ್ಕೆ ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ…' })}</DarshanText></>
-            : <DarshanAction primary testID="darshan-watch" label={pick(lang, { hi: 'दर्शन फिर शुरू करें', en: 'Resume Darshan', gu: 'દર્શન ફરી શરૂ કરો', kn: 'ದರ್ಶನವನ್ನು ಪುನರಾರಂಭಿಸಿ' })} onPress={load} />}
+            <DarshanText>{pick(lang, { hi: 'दर्शन जुड़ रहे हैं…', en: 'Connecting to Darshan…', gu: 'દર્શન સાથે જોડાઈ રહ્યા છીએ…', kn: 'ದರ್ಶನಕ್ಕೆ ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ…', mr: 'दर्शनाशी जोडत आहोत…', te: 'దర్శనానికి అనుసంధానమవుతోంది…' })}</DarshanText></>
+            : <DarshanAction primary testID="darshan-watch" label={pick(lang, { hi: 'दर्शन फिर शुरू करें', en: 'Resume Darshan', gu: 'દર્શન ફરી શરૂ કરો', kn: 'ದರ್ಶನವನ್ನು ಪುನರಾರಂಭಿಸಿ', mr: 'दर्शन पुन्हा सुरू करा', te: 'దర్శనం మళ్లీ ప్రారంభించండి' })} onPress={load} />}
         </View>}
 
       </View>
@@ -131,30 +131,30 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
             <DarshanText style={{ color: colors.inkMuted, fontSize: 14 * factor, lineHeight: 22 * factor }}>{contentByLang(lang, temple.cityHi, temple.cityEn)} · {contentByLang(lang, temple.stateHi, temple.stateEn)}</DarshanText>
           </View>
           <DarshanText style={{ color: colors.inkMuted, fontSize: 12 * factor, lineHeight: 20 * factor }}>{channel.channel}</DarshanText>
-          {channel.kind === 'tv' && <DarshanText style={{ color: colors.inkMuted, fontSize: 12 * factor, lineHeight: 20 * factor }}>{pick(lang, { hi: 'मंदिर का भक्ति टीवी प्रसारण', en: 'Temple devotional TV', gu: 'મંદિરનું ભક્તિ ટીવી પ્રસારણ', kn: 'ದೇವಾಲಯದ ಭಕ್ತಿ ಟಿವಿ ಪ್ರಸಾರ' })}</DarshanText>}
+          {channel.kind === 'tv' && <DarshanText style={{ color: colors.inkMuted, fontSize: 12 * factor, lineHeight: 20 * factor }}>{pick(lang, { hi: 'मंदिर का भक्ति टीवी प्रसारण', en: 'Temple devotional TV', gu: 'મંદિરનું ભક્તિ ટીવી પ્રસારણ', kn: 'ದೇವಾಲಯದ ಭಕ್ತಿ ಟಿವಿ ಪ್ರಸಾರ', mr: 'मंदिराचे भक्ती टीव्ही प्रसारण', te: 'ఆలయ భక్తి టీవీ ప్రసారం' })}</DarshanText>}
         </View>
-        {failed && <View style={{ gap: 8 }}><DarshanText accessibilityLiveRegion="polite">{pick(lang, { hi: 'पसंदीदा सहेज नहीं सके। फिर प्रयास करें।', en: 'Could not save favourites. Please retry.', gu: 'મનપસંદ સાચવી શકાયા નથી. ફરી પ્રયાસ કરો.', kn: 'ಮೆಚ್ಚಿನವುಗಳನ್ನು ಉಳಿಸಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' })}</DarshanText><DarshanAction testID="darshan-save-retry" label={pick(lang, { hi: 'फिर प्रयास करें', en: 'Retry saving', gu: 'ફરી પ્રયાસ કરો', kn: 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' })} onPress={() => { void retry(); }} /></View>}
+        {failed && <View style={{ gap: 8 }}><DarshanText accessibilityLiveRegion="polite">{pick(lang, { hi: 'पसंदीदा सहेज नहीं सके। फिर प्रयास करें।', en: 'Could not save favourites. Please retry.', gu: 'મનપસંદ સાચવી શકાયા નથી. ફરી પ્રયાસ કરો.', kn: 'ಮೆಚ್ಚಿನವುಗಳನ್ನು ಉಳಿಸಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.', mr: 'आवडती जतन करता आली नाहीत. पुन्हा प्रयत्न करा.', te: 'ఇష్టమైనవాటిని సేవ్ చేయలేకపోయాం. మళ్లీ ప్రయత్నించండి.' })}</DarshanText><DarshanAction testID="darshan-save-retry" label={pick(lang, { hi: 'फिर प्रयास करें', en: 'Retry saving', gu: 'ફરી પ્રયાસ કરો', kn: 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ', mr: 'पुन्हा प्रयत्न करा', te: 'మళ్లీ ప్రయత్నించండి' })} onPress={() => { void retry(); }} /></View>}
         <View testID="darshan-about" style={[styles.about, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
-          <DarshanText accessibilityRole="header" style={{ color: colors.saffronDeep, fontFamily: cardFontByLang(lang) }}>{pick(lang, { hi: 'इस तीर्थ का महत्व', en: 'Why this temple is sacred', gu: 'આ તીર્થનું મહત્વ', kn: 'ಈ ಕ್ಷೇತ್ರದ ಮಹತ್ವ' })}</DarshanText>
+          <DarshanText accessibilityRole="header" style={{ color: colors.saffronDeep, fontFamily: cardFontByLang(lang) }}>{pick(lang, { hi: 'इस तीर्थ का महत्व', en: 'Why this temple is sacred', gu: 'આ તીર્થનું મહત્વ', kn: 'ಈ ಕ್ಷೇತ್ರದ ಮಹತ್ವ', mr: 'या तीर्थाचे महत्त्व', te: 'ఈ క్షేత్ర మహత్వం' })}</DarshanText>
           <DarshanText>{meaningByLang(lang, temple.significanceHi, temple.significanceEn)}</DarshanText>
           {!!temple.originStoryHi && <>
             <Pressable testID="darshan-story" accessibilityRole="button" accessibilityState={{ expanded: storyOpen }} onPress={() => setStoryOpen(!storyOpen)} style={[styles.textAction, { borderColor: colors.divider }]}>
-              <DarshanText style={{ color: colors.saffronDeep, flex: 1 }}>{pick(lang, { hi: 'मंदिर की कथा व परंपरा', en: 'Temple story and tradition', gu: 'મંદિરની કથા અને પરંપરા', kn: 'ದೇವಾಲಯದ ಕಥೆ ಮತ್ತು ಪರಂಪರೆ' })}</DarshanText>
+              <DarshanText style={{ color: colors.saffronDeep, flex: 1 }}>{pick(lang, { hi: 'मंदिर की कथा व परंपरा', en: 'Temple story and tradition', gu: 'મંદિરની કથા અને પરંપરા', kn: 'ದೇವಾಲಯದ ಕಥೆ ಮತ್ತು ಪರಂಪರೆ', mr: 'मंदिराची कथा व परंपरा', te: 'ఆలయ కథ మరియు సంప్రదాయం' })}</DarshanText>
               <AppIcon name={storyOpen ? 'caretUp' : 'caretDown'} size={20} color={colors.saffronDeep} />
             </Pressable>
             {storyOpen && <DarshanText testID="darshan-story-content">{meaningByLang(lang, temple.originStoryHi, temple.originStoryEn)}</DarshanText>}
           </>}
           <Pressable testID="darshan-guide" accessibilityRole="button" onPress={() => navigation.navigate('TheerthDetail', { templeId: temple.id })} style={styles.textAction}>
-            <DarshanText style={{ color: colors.saffronDeep, flex: 1 }}>{pick(lang, { hi: 'पूरा मंदिर परिचय पढ़ें', en: 'Read the complete temple guide', gu: 'મંદિરનો સંપૂર્ણ પરિચય વાંચો', kn: 'ಸಂಪೂರ್ಣ ದೇವಾಲಯ ಪರಿಚಯ ಓದಿ' })}</DarshanText>
+            <DarshanText style={{ color: colors.saffronDeep, flex: 1 }}>{pick(lang, { hi: 'पूरा मंदिर परिचय पढ़ें', en: 'Read the complete temple guide', gu: 'મંદિરનો સંપૂર્ણ પરિચય વાંચો', kn: 'ಸಂಪೂರ್ಣ ದೇವಾಲಯ ಪರಿಚಯ ಓದಿ', mr: 'मंदिराचा संपूर्ण परिचय वाचा', te: 'ఆలయ పూర్తి పరిచయం చదవండి' })}</DarshanText>
             <AppIcon name="next" size={18} color={colors.saffronDeep} />
           </Pressable>
         </View>
         {!!readings.length && <View testID="darshan-readings" style={styles.section}>
-          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: titleLeading(22 * factor) }}>{pick(lang, { hi: 'दर्शन के साथ आरती व पाठ', en: 'Aarti and readings for your devotion', gu: 'દર્શન સાથે આરતી અને પાઠ', kn: 'ದರ್ಶನದೊಂದಿಗೆ ಆರತಿ ಮತ್ತು ಪಠಣ' })}</DarshanText>
+          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: titleLeading(22 * factor) }}>{pick(lang, { hi: 'दर्शन के साथ आरती व पाठ', en: 'Aarti and readings for your devotion', gu: 'દર્શન સાથે આરતી અને પાઠ', kn: 'ದರ್ಶನದೊಂದಿಗೆ ಆರತಿ ಮತ್ತು ಪಠಣ', mr: 'दर्शनासोबत आरती व पाठ', te: 'దర్శనంతో పాటు హారతి, పఠనం' })}</DarshanText>
           {readings.map((entry) => <LibraryCard key={entry.id} entry={entry} onPress={() => { markSeen(entry.id); navigateToEntryStart(navigation, entry); }} />)}
         </View>}
         <View style={styles.section}>
-          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: titleLeading(22 * factor) }}>{pick(lang, { hi: 'अन्य मंदिरों के दर्शन', en: 'Darshan from other temples', gu: 'બીજાં મંદિરોના દર્શન', kn: 'ಇತರ ದೇವಾಲಯಗಳ ದರ್ಶನ' })}</DarshanText>
+          <DarshanText accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 22 * factor, lineHeight: titleLeading(22 * factor) }}>{pick(lang, { hi: 'अन्य मंदिरों के दर्शन', en: 'Darshan from other temples', gu: 'બીજાં મંદિરોના દર્શન', kn: 'ಇತರ ದೇವಾಲಯಗಳ ದರ್ಶನ', mr: 'इतर मंदिरांचे दर्शन', te: 'ఇతర ఆలయాల దర్శనం' })}</DarshanText>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.temples}>
             {darshanChannels.filter((c) => c.templeId !== channel.templeId).map((c) => <View key={c.templeId} style={{ width: 280 }}>
               <DarshanCard channel={c} onPress={() => navigation.replace('DarshanPlayer', { templeId: c.templeId })} />

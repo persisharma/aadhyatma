@@ -8,7 +8,7 @@ import type { ShareableCard } from '@/utils/shareVerse';
 let cardReady: (ready: boolean) => void = () => {};
 const card = (over: Partial<ShareableCard> = {}): ShareableCard => ({
   kind: 'card', sourceId: 'panchang.today', width: 340,
-  title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' },
+  title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ', mr: 'पंचांग शेअर करा', te: 'పంచాంగం షేర్ చేయండి' },
   tagNameHi: 'पंचांग', tagNameEn: 'Panchang',
   render: ({ onReady }) => { cardReady = onReady; return <Text>card</Text>; },
   caption: () => ({ sectionName: 'आज का पंचांग', label: '', firstLine: '' }),

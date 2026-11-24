@@ -66,12 +66,14 @@ export type DockedYouTubePlayerProps = {
 };
 
 function spokenLangLabel(lang: VideoMapping['spokenLang'], uiLang: Lang): string {
-  const map: Record<VideoMapping['spokenLang'], { hi: string; en: string; gu: string; kn: string }> = {
-    hi: { hi: 'हिन्दी', en: 'Hindi', gu: 'હિન્દી', kn: 'ಹಿಂದಿ' },
-    sa: { hi: 'संस्कृत', en: 'Sanskrit', gu: 'સંસ્કૃત', kn: 'ಸಂಸ್ಕೃತ' },
-    en: { hi: 'अंग्रेज़ी', en: 'English', gu: 'અંગ્રેજી', kn: 'ಇಂಗ್ಲಿಷ್' },
-    gu: { hi: 'गुजराती', en: 'Gujarati', gu: 'ગુજરાતી', kn: 'ಗುಜರಾತಿ' },
-    kn: { hi: 'कन्नड़', en: 'Kannada', gu: 'કન્નડ', kn: 'ಕನ್ನಡ' },
+  const map: Record<VideoMapping['spokenLang'], { hi: string; en: string; gu: string; kn: string; mr: string; te: string }> = {
+    hi: { hi: 'हिन्दी', en: 'Hindi', gu: 'હિન્દી', kn: 'ಹಿಂದಿ', mr: 'हिंदी', te: 'హిందీ' },
+    sa: { hi: 'संस्कृत', en: 'Sanskrit', gu: 'સંસ્કૃત', kn: 'ಸಂಸ್ಕೃತ', mr: 'संस्कृत', te: 'సంస్కృతం' },
+    en: { hi: 'अंग्रेज़ी', en: 'English', gu: 'અંગ્રેજી', kn: 'ಇಂಗ್ಲಿಷ್', mr: 'इंग्रजी', te: 'ఇంగ్లీష్' },
+    gu: { hi: 'गुजराती', en: 'Gujarati', gu: 'ગુજરાતી', kn: 'ಗುಜರಾತಿ', mr: 'गुजराती', te: 'గుజరాతీ' },
+    kn: { hi: 'कन्नड़', en: 'Kannada', gu: 'કન્નડ', kn: 'ಕನ್ನಡ', mr: 'कन्नड', te: 'కన్నడ' },
+    mr: { hi: 'मराठी', en: 'Marathi', gu: 'મરાઠી', kn: 'ಮರಾಠಿ', mr: 'मराठी', te: 'మరాఠీ' },
+    te: { hi: 'तेलुगु', en: 'Telugu', gu: 'તેલુગુ', kn: 'ತೆಲುಗು', mr: 'तेलुगू', te: 'తెలుగు' },
   };
   return pick(uiLang, map[lang]);
 }
@@ -237,6 +239,8 @@ export default function DockedYouTubePlayer({
     en: 'Open in YouTube',
     gu: 'YouTube માં ખોલો',
     kn: 'YouTube ನಲ್ಲಿ ತೆರೆ',
+    mr: 'YouTube मध्ये उघडा',
+    te: 'YouTubeలో తెరవండి',
   });
 
   return (
@@ -295,8 +299,8 @@ export default function DockedYouTubePlayer({
             accessibilityRole="button"
             accessibilityLabel={
               playing
-                ? pick(uiLang, { hi: 'रोकें', en: 'Pause', gu: 'થોભો', kn: 'ವಿರಾಮ' })
-                : pick(uiLang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಪ್ಲೇ' })
+                ? pick(uiLang, { hi: 'रोकें', en: 'Pause', gu: 'થોભો', kn: 'ವಿರಾಮ', mr: 'थांबवा', te: 'పాజ్ చేయండి' })
+                : pick(uiLang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಪ್ಲೇ', mr: 'प्ले करा', te: 'ప్లే చేయండి' })
             }
             hitSlop={8}
             style={[styles.ppBtn, broadcast && styles.broadcastButton, { backgroundColor: colors.saffron }]}
@@ -304,7 +308,7 @@ export default function DockedYouTubePlayer({
             <AppIcon name={playing ? 'pause' : 'play'} size={13} weight="fill" color={colors.onPrimary} />
           </Pressable>
           <Text style={[styles.time, broadcast && styles.broadcastTime, { color: colors.inkMuted }]} numberOfLines={broadcast ? undefined : 1}>
-            {broadcast ? pick(uiLang, { hi: 'मंदिर का प्रसारण', en: 'Temple broadcast', gu: 'મંદિરનું પ્રસારણ', kn: 'ದೇವಾಲಯದ ಪ್ರಸಾರ' }) : `${fmt(elapsed)} / ${fmt(duration)}`}
+            {broadcast ? pick(uiLang, { hi: 'मंदिर का प्रसारण', en: 'Temple broadcast', gu: 'મંદિરનું પ્રસારણ', kn: 'ದೇವಾಲಯದ ಪ್ರಸಾರ', mr: 'मंदिराचे प्रसारण', te: 'ఆలయ ప్రసారం' }) : `${fmt(elapsed)} / ${fmt(duration)}`}
           </Text>
           {broadcast && phase === 'loading' && <ActivityIndicator size="small" color={colors.saffron} />}
           <View style={styles.stripSpacer} />
@@ -320,7 +324,7 @@ export default function DockedYouTubePlayer({
           <Pressable
             onPress={onClose}
             accessibilityRole="button"
-            accessibilityLabel={pick(uiLang, { hi: 'वीडियो बंद करें', en: 'Close video', gu: 'વિડિઓ બંધ કરો', kn: 'ವೀಡಿಯೊ ಮುಚ್ಚಿ' })}
+            accessibilityLabel={pick(uiLang, { hi: 'वीडियो बंद करें', en: 'Close video', gu: 'વિડિઓ બંધ કરો', kn: 'ವೀಡಿಯೊ ಮುಚ್ಚಿ', mr: 'व्हिडिओ बंद करा', te: 'వీడియో మూసివేయండి' })}
             hitSlop={8}
             style={[styles.closeBtn, broadcast && styles.broadcastButton]}
           >
@@ -336,6 +340,8 @@ export default function DockedYouTubePlayer({
             en: 'Couldn’t open YouTube',
             gu: 'YouTube ખૂલી શક્યું નહીં',
             kn: 'YouTube ತೆರೆಯಲಾಗಲಿಲ್ಲ',
+            mr: 'YouTube उघडता आले नाही',
+            te: 'YouTube తెరవలేకపోయాం',
           })}
         </Text>
       )}
@@ -379,24 +385,28 @@ function ErrorCard({
           en: 'Can’t play this video',
           gu: 'આ વિડિઓ ચલાવી શકાતો નથી',
           kn: 'ಈ ವೀಡಿಯೊ ಪ್ಲೇ ಆಗಲಿಲ್ಲ',
+          mr: 'हा व्हिडिओ चालू शकला नाही',
+          te: 'ఈ వీడియో ప్లే కాలేదు',
         })}
       </Text>
       <Text style={[styles.errBody, { color: colors.inkMuted }]}>
-        {broadcast ? pick(uiLang, { hi: 'प्रसारण अभी नहीं चल सका। फिर प्रयास करें या दूसरे मंदिर के दर्शन देखें।', en: 'The broadcast could not start. Try again or choose another temple.', gu: 'પ્રસારણ શરૂ થઈ શક્યું નથી. ફરી પ્રયાસ કરો અથવા બીજું મંદિર પસંદ કરો.', kn: 'ಪ್ರಸಾರ ಪ್ರಾರಂಭವಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಮತ್ತೊಂದು ದೇವಾಲಯ ಆಯ್ಕೆಮಾಡಿ.' }) : pick(uiLang, {
+        {broadcast ? pick(uiLang, { hi: 'प्रसारण अभी नहीं चल सका। फिर प्रयास करें या दूसरे मंदिर के दर्शन देखें।', en: 'The broadcast could not start. Try again or choose another temple.', gu: 'પ્રસારણ શરૂ થઈ શક્યું નથી. ફરી પ્રયાસ કરો અથવા બીજું મંદિર પસંદ કરો.', kn: 'ಪ್ರಸಾರ ಪ್ರಾರಂಭವಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಮತ್ತೊಂದು ದೇವಾಲಯ ಆಯ್ಕೆಮಾಡಿ.', mr: 'प्रसारण सुरू होऊ शकले नाही. पुन्हा प्रयत्न करा किंवा दुसरे मंदिर निवडा.', te: 'ప్రసారం ప్రారంభం కాలేదు. మళ్లీ ప్రయత్నించండి లేదా మరో ఆలయాన్ని ఎంచుకోండి.' }) : pick(uiLang, {
           hi: 'आप ऑफ़लाइन हैं या वीडियो हटाया/निजी/प्रतिबंधित हो सकता है।',
           en: 'You’re offline, or the video was removed, made private, or can’t be embedded here.',
           gu: 'તમે ઑફલાઇન છો, અથવા વિડિઓ દૂર/ખાનગી/પ્રતિબંધિત હોઈ શકે છે.',
           kn: 'ನೀವು ಆಫ್‌ಲೈನ್ ಆಗಿದ್ದೀರಿ, ಅಥವಾ ವೀಡಿಯೊ ತೆಗೆದು/ಖಾಸಗಿ/ನಿರ್ಬಂಧಿತ ಆಗಿರಬಹುದು.',
+          mr: 'तुम्ही ऑफलाइन आहात, किंवा व्हिडिओ काढला/खासगी/प्रतिबंधित असू शकतो.',
+          te: 'మీరు ఆఫ్‌లైన్‌లో ఉన్నారు, లేదా వీడియో తొలగించబడి/ప్రైవేట్/నిరోధితమై ఉండవచ్చు.',
         })}
       </Text>
       <Pressable onPress={onRetry} accessibilityRole="button" style={[styles.retryBtn, { backgroundColor: colors.saffron }]}>
         <AppIcon name="reset" size={15} color={colors.onPrimary} />
         <Text style={[styles.retryText, { color: colors.onPrimary }]}>
-          {pick(uiLang, { hi: 'पुनः प्रयास', en: 'Retry', gu: 'ફરી પ્રયાસ', kn: 'ಮರುಪ್ರಯತ್ನ' })}
+          {pick(uiLang, { hi: 'पुनः प्रयास', en: 'Retry', gu: 'ફરી પ્રયાસ', kn: 'ಮರುಪ್ರಯತ್ನ', mr: 'पुन्हा प्रयत्न', te: 'మళ్లీ ప్రయత్నించండి' })}
         </Text>
       </Pressable>
       {broadcast && onChooseBroadcast && <Pressable onPress={onChooseBroadcast} accessibilityRole="button" style={styles.errOpen}>
-        <Text style={[styles.errOpenText, { color: colors.saffronDeep }]}>{pick(uiLang, { hi: 'अन्य मंदिर देखें', en: 'Browse temples', gu: 'બીજાં મંદિરો જુઓ', kn: 'ಇತರ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ' })}</Text>
+        <Text style={[styles.errOpenText, { color: colors.saffronDeep }]}>{pick(uiLang, { hi: 'अन्य मंदिर देखें', en: 'Browse temples', gu: 'બીજાં મંદિરો જુઓ', kn: 'ಇತರ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ', mr: 'इतर मंदिरे पाहा', te: 'ఇతర ఆలయాలు చూడండి' })}</Text>
       </Pressable>}
       {!broadcast && <Pressable onPress={onOpen} accessibilityRole="link" style={styles.errOpen}>
         <Text style={[styles.errOpenText, { color: colors.saffronDeep }]}>↗ {openLabel}</Text>

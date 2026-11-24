@@ -32,6 +32,8 @@ export default function DarshanQuickScreen({
     en: "Close",
     gu: "બંધ કરો",
     kn: "ಮುಚ್ಚಿ",
+    mr: "बंद करा",
+    te: "మూసివేయండి",
   });
   return (
     <View style={[styles.root, { backgroundColor: colors.modalBackdrop }]}>
@@ -67,6 +69,8 @@ export default function DarshanQuickScreen({
                 en: "Temple Darshan",
                 gu: "મંદિર દર્શન",
                 kn: "ದೇವಾಲಯ ದರ್ಶನ",
+                mr: "मंदिर दर्शन",
+                te: "ఆలయ దర్శనం",
               })}
             </DarshanText>
             <Pressable
@@ -85,6 +89,8 @@ export default function DarshanQuickScreen({
               en: "A moment with the divine. Join an official temple broadcast.",
               gu: "પ્રભુ સાથે થોડી ક્ષણો. મંદિરના અધિકૃત પ્રસારણ સાથે જોડાઓ.",
               kn: "ಭಗವಂತನೊಂದಿಗೆ ಕೆಲವು ಕ್ಷಣಗಳು. ದೇವಾಲಯದ ಅಧಿಕೃತ ಪ್ರಸಾರಕ್ಕೆ ಸೇರಿ.",
+              mr: "प्रभूसोबत काही क्षण. मंदिराच्या अधिकृत प्रसारणात सामील व्हा.",
+              te: "భగవంతునితో కొన్ని క్షణాలు. ఆలయ అధికారిక ప్రసారంలో చేరండి.",
             })}
           </DarshanText>
           {channels.map((channel) => (
@@ -106,6 +112,8 @@ export default function DarshanQuickScreen({
               en: "View all temples",
               gu: "બધાં મંદિરો જુઓ",
               kn: "ಎಲ್ಲಾ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ",
+              mr: "सर्व मंदिरे पाहा",
+              te: "అన్ని ఆలయాలు చూడండి",
             })}
             onPress={() => navigation.replace("DarshanList")}
           />

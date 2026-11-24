@@ -162,6 +162,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                   en: 'Your questions. Timeless wisdom.',
                   gu: 'જીવનના પ્રશ્નો · ગીતાના ઉત્તર',
                   kn: 'ಜೀವನದ ಪ್ರಶ್ನೆಗಳು · ಗೀತೆಯ ಉತ್ತರಗಳು',
+                  mr: 'जीवनाचे प्रश्न · गीतेची उत्तरे',
+                  te: 'జీవిత ప్రశ్నలు · గీత సమాధానాలు',
                 })}
               </ProseParagraph>
               <LanguageToggle compact />
@@ -179,6 +181,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                 en: 'A little light.\nFor whatever life brings.',
                 gu: 'દરેક મૂંઝવણમાં,\nથોડો પ્રકાશ.',
                 kn: 'ಪ್ರತಿ ಗೊಂದಲದಲ್ಲೂ,\nಸ್ವಲ್ಪ ಬೆಳಕು.',
+                mr: 'प्रत्येक गोंधळात,\nथोडासा प्रकाश.',
+                te: 'ప్రతి సందిగ్ధంలో,\nకొంచెం వెలుగు.',
               })}
             </ProseParagraph>
             <ProseParagraph style={[small, { marginBottom: 22 }]}>
@@ -187,6 +191,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                 en: 'Meet your day with a teaching from the Gita.',
                 gu: 'તમારા આજ માટે, શ્રીકૃષ્ણની એક શીખ.',
                 kn: 'ನಿಮ್ಮ ಇಂದಿಗಾಗಿ, ಶ್ರೀಕೃಷ್ಣನ ಒಂದು ಪಾಠ.',
+                mr: 'तुमच्या आजसाठी, श्रीकृष्णाची एक शिकवण.',
+                te: 'మీ ఈరోజు కోసం, శ్రీకృష్ణుని ఒక బోధ.',
               })}
             </ProseParagraph>
             <ProseParagraph
@@ -197,6 +203,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                 en: 'A moment of clarity',
                 gu: 'આજનું મનન',
                 kn: 'ಇಂದಿನ ಚಿಂತನೆ',
+                mr: 'आजचे मनन',
+                te: 'ఈరోజు మననం',
               })}
             </ProseParagraph>
             <Pressable
@@ -267,6 +275,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                       en: 'Continue where you left off',
                       gu: 'અહીંથી આગળ વાંચો',
                       kn: 'ಇಲ್ಲಿಂದ ಮುಂದುವರಿಸಿ',
+                      mr: 'इथूनच पुढे सुरू ठेवा',
+                      te: 'ఇక్కడి నుండి కొనసాగించండి',
                     })}
                   </ProseParagraph>
                   <ProseParagraph
@@ -292,6 +302,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                   en: 'What is on your mind?',
                   gu: 'આજે મનમાં શું છે?',
                   kn: 'ಇಂದು ಮನಸ್ಸಿನಲ್ಲಿ ಏನಿದೆ?',
+                  mr: 'आज मनात काय आहे?',
+                  te: 'ఈరోజు మనసులో ఏముంది?',
                 })}
               </ProseParagraph>
               <Pressable
@@ -317,6 +329,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                     en: 'My learning',
                     gu: 'મારી શીખ',
                     kn: 'ನನ್ನ ಕಲಿಕೆ',
+                    mr: 'माझी शिकवण',
+                    te: 'నా బోధలు',
                   })}
                 </ProseParagraph>
               </Pressable>
@@ -366,24 +380,32 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                         en: 'All themes',
                         gu: 'બધા વિષયો',
                         kn: 'ಎಲ್ಲ ವಿಷಯಗಳು',
+                        mr: 'सर्व विषय',
+                        te: 'అన్ని విషయాలు',
                       },
                       mind: {
                         hi: 'मन और भाव',
                         en: 'Mind & emotions',
                         gu: 'મન અને ભાવ',
                         kn: 'ಮನಸ್ಸು ಮತ್ತು ಭಾವನೆ',
+                        mr: 'मन आणि भाव',
+                        te: 'మనసు మరియు భావాలు',
                       },
                       life: {
                         hi: 'कर्म और जीवन',
                         en: 'Work & life',
                         gu: 'કર્મ અને જીવન',
                         kn: 'ಕರ್ಮ ಮತ್ತು ಜೀವನ',
+                        mr: 'कर्म आणि जीवन',
+                        te: 'కర్మ మరియు జీవితం',
                       },
                       heart: {
                         hi: 'हृदय और आत्मा',
                         en: 'Heart & self',
                         gu: 'હૃદય અને આત્મા',
                         kn: 'ಹೃದಯ ಮತ್ತು ಆತ್ಮ',
+                        mr: 'हृदय आणि आत्मा',
+                        te: 'హృదయం మరియు ఆత్మ',
                       },
                     }[key]
                   )}
@@ -479,6 +501,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                     en: 'My learning',
                     gu: 'મારી શીખ',
                     kn: 'ನನ್ನ ಕಲಿಕೆ',
+                    mr: 'माझी शिकवण',
+                    te: 'నా బోధలు',
                   })}
                 </ProseParagraph>
                 {saved.length === 0 && (
@@ -502,6 +526,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                         en: 'Keep what speaks to you. Every teaching has a save action at the end.',
                         gu: 'જે મનને સ્પર્શે, સાચવો. દરેક શીખના અંતે સાચવવાનો વિકલ્પ છે.',
                         kn: 'ಮನಸ್ಸಿಗೆ ತಟ್ಟಿದ್ದನ್ನು ಉಳಿಸಿ. ಪ್ರತಿ ಕಲಿಕೆಯ ಕೊನೆಯಲ್ಲಿ ಉಳಿಸುವ ಆಯ್ಕೆ ಇದೆ.',
+                        mr: 'जे मनाला भिडेल ते जतन करा. प्रत्येक शिकवणीच्या शेवटी जतन करण्याचा पर्याय आहे.',
+                        te: 'మనసును తాకినదాన్ని సేవ్ చేయండి. ప్రతి బోధ చివర సేవ్ చేసే ఎంపిక ఉంది.',
                       })}
                     </ProseParagraph>
                   </View>
@@ -567,6 +593,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                               en: 'My reflection',
                               gu: 'મારા મનની વાત',
                               kn: 'ನನ್ನ ಮನಸ್ಸಿನ ಮಾತು',
+                              mr: 'माझ्या मनातले',
+                              te: 'నా మనసులో మాట',
                             })}
                           </ProseParagraph>
                           <ProseParagraph
@@ -630,6 +658,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                             en: 'Remove reflection',
                             gu: 'વિચાર દૂર કરો',
                             kn: 'ವಿಚಾರ ತೆಗೆದುಹಾಕಿ',
+                            mr: 'विचार काढा',
+                            te: 'ఆలోచనను తీసివేయండి',
                           })}
                         </ProseParagraph>
                       </Pressable>
@@ -645,6 +675,8 @@ export default function GitaSaarThemesScreen({ navigation }: Props) {
                       en: 'Could not remove. Try again.',
                       gu: 'દૂર કરી શકાયું નથી. ફરી પ્રયાસ કરો.',
                       kn: 'ತೆಗೆದುಹಾಕಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+                      mr: 'काढता आले नाही. पुन्हा प्रयत्न करा.',
+                      te: 'తీసివేయలేకపోయాం. మళ్లీ ప్రయత్నించండి.',
                     })}
                   </ProseParagraph>
                 )}

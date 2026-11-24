@@ -18,7 +18,7 @@ export default function JapamTempoControl({ value, onChange, lang, fontFamily, i
   const [open, setOpen] = useState(false);
   const { colors, typography } = useTheme();
   const { factor } = useFontScale();
-  const label = pick(lang, { hi: 'जप की गति', en: 'Chanting speed', gu: 'જપની ગતિ', kn: 'ಜಪದ ವೇಗ' });
+  const label = pick(lang, { hi: 'जप की गति', en: 'Chanting speed', gu: 'જપની ગતિ', kn: 'ಜಪದ ವೇಗ', mr: 'जपाची गती', te: 'జపం వేగం' });
   return <View>
     <Pressable testID="japam-tempo-open" onPress={() => setOpen(true)} accessibilityRole="button"
       accessibilityLabel={`${label}, ${value.toFixed(1)}×`} accessibilityState={{ expanded: open }}

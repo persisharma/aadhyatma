@@ -35,6 +35,8 @@ function pagesWord(lang: Lang, n: number): string {
     en: n === 1 ? '1 page' : `${n} pages`,
     gu: `${n} પૃષ્ઠ`,
     kn: `${n} ಪುಟ`,
+    mr: n === 1 ? '1 पृष्ठ' : `${n} पृष्ठे`,
+    te: n === 1 ? '1 పేజీ' : `${n} పేజీలు`,
   });
 }
 
@@ -53,7 +55,7 @@ export default function SharePagesStrip(props: Props) {
     <View style={styles.wrap}>
       <View style={styles.head}>
         <Text style={eyebrow}>
-          {pick(props.lang, { hi: 'पृष्ठ', en: 'PAGES', gu: 'પૃષ્ઠ', kn: 'ಪುಟಗಳು' })} · {props.pageCount}
+          {pick(props.lang, { hi: 'पृष्ठ', en: 'PAGES', gu: 'પૃષ્ઠ', kn: 'ಪುಟಗಳು', mr: 'पृष्ठे', te: 'పేజీలు' })} · {props.pageCount}
         </Text>
         {props.scopes.length > 1 ? (
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ maxWidth: '100%', borderWidth: 1, borderColor: colors.divider, borderRadius: radii.pill }} contentContainerStyle={styles.segment}>
@@ -133,6 +135,8 @@ export default function SharePagesStrip(props: Props) {
             en: `${selectedCount} selected · page ${props.highlighted + 1} highlighted`,
             gu: `${selectedCount} પસંદ · પૃષ્ઠ ${props.highlighted + 1} પર`,
             kn: `${selectedCount} ಆಯ್ಕೆ · ಪುಟ ${props.highlighted + 1}`,
+            mr: `${selectedCount} निवडली · पृष्ठ ${props.highlighted + 1} वर`,
+            te: `${selectedCount} ఎంచుకున్నవి · పేజీ ${props.highlighted + 1}`,
           })}
         </Text>
         <Pressable
@@ -143,7 +147,7 @@ export default function SharePagesStrip(props: Props) {
           hitSlop={8}
         >
           <Text style={[eyebrowTextStyle(props.lang, 11.5), { color: colors.saffronDeep }]}>
-            {pick(props.lang, { hi: 'बड़ा देखें ›', en: 'Preview ›', gu: 'મોટું જુઓ ›', kn: 'ದೊಡ್ಡದಾಗಿ ›' })}
+            {pick(props.lang, { hi: 'बड़ा देखें ›', en: 'Preview ›', gu: 'મોટું જુઓ ›', kn: 'ದೊಡ್ಡದಾಗಿ ›', mr: 'मोठे पाहा ›', te: 'పెద్దగా చూడండి ›' })}
           </Text>
         </Pressable>
       </View>
@@ -155,6 +159,8 @@ export default function SharePagesStrip(props: Props) {
             en: `All-pages sharing takes up to ${MAX_SHARE_PAGES} — the first ${MAX_SHARE_PAGES} are selected. Swap pages to send the rest.`,
             gu: `એકસાથે વધુમાં વધુ ${MAX_SHARE_PAGES} — પહેલાં ${MAX_SHARE_PAGES} પસંદ છે.`,
             kn: `ಒಮ್ಮೆಗೆ ಗರಿಷ್ಠ ${MAX_SHARE_PAGES} — ಮೊದಲ ${MAX_SHARE_PAGES} ಆಯ್ಕೆಯಾಗಿವೆ.`,
+            mr: `एकावेळी जास्तीत जास्त ${MAX_SHARE_PAGES} — पहिली ${MAX_SHARE_PAGES} निवडली आहेत.`,
+            te: `ఒకేసారి గరిష్ఠంగా ${MAX_SHARE_PAGES} — మొదటి ${MAX_SHARE_PAGES} ఎంచుకోబడ్డాయి.`,
           })}
         </Text>
       ) : null}
@@ -172,6 +178,8 @@ export default function SharePagesStrip(props: Props) {
             en: `Up to ${MAX_SHARE_PAGES} pages at once — leave some out or pick one part. ${pagesWord(props.lang, selectedCount)} selected.`,
             gu: `એકસાથે વધુમાં વધુ ${MAX_SHARE_PAGES} પૃષ્ઠ — કેટલાક કાઢો અથવા એક પ્રસંગ પસંદ કરો.`,
             kn: `ಒಮ್ಮೆಗೆ ಗರಿಷ್ಠ ${MAX_SHARE_PAGES} ಪುಟಗಳು — ಕೆಲವನ್ನು ಬಿಡಿ ಅಥವಾ ಒಂದು ಭಾಗ ಆರಿಸಿ.`,
+            mr: `एकावेळी जास्तीत जास्त ${MAX_SHARE_PAGES} पृष्ठे — काही वगळा किंवा एक प्रसंग निवडा.`,
+            te: `ఒకేసారి గరిష్ఠంగా ${MAX_SHARE_PAGES} పేజీలు — కొన్ని తీసివేయండి లేదా ఒక భాగం ఎంచుకోండి.`,
           })}
         </Text>
       ) : null}

@@ -142,14 +142,18 @@ export function nudgeCopy(kind: NudgeKind, lang: Lang, times: TimeOfDay[]): Nudg
           en: 'A verse every morning',
           gu: 'દરરોજ સવારે શ્લોક મેળવો',
           kn: 'ಪ್ರತಿ ಬೆಳಗ್ಗೆ ಒಂದು ಶ್ಲೋಕ',
+          mr: 'रोज सकाळी एक श्लोक',
+          te: 'ప్రతి ఉదయం ఒక శ్లోకం',
         }),
         subtitle: pick(lang, {
           hi: `हर दिन ${at} बजे`,
           en: `Daily at ${at}`,
           gu: `દરરોજ ${at} વાગ્યે`,
           kn: `ಪ್ರತಿದಿನ ${at} ಕ್ಕೆ`,
+          mr: `दररोज ${at} वाजता`,
+          te: `ప్రతిరోజు ${at} కి`,
         }),
-        action: pick(lang, { hi: 'चालू करें', en: 'Turn on', gu: 'ચાલુ કરો', kn: 'ಆನ್ ಮಾಡಿ' }),
+        action: pick(lang, { hi: 'चालू करें', en: 'Turn on', gu: 'ચાલુ કરો', kn: 'ಆನ್ ಮಾಡಿ', mr: 'सुरू करा', te: 'ఆన్ చేయండి' }),
       };
     case 'reminderBlocked':
       return {
@@ -158,14 +162,18 @@ export function nudgeCopy(kind: NudgeKind, lang: Lang, times: TimeOfDay[]): Nudg
           en: 'Notifications are off',
           gu: 'સૂચનાઓ બંધ છે',
           kn: 'ಅಧಿಸೂಚನೆಗಳು ಆಫ್ ಆಗಿವೆ',
+          mr: 'सूचना बंद आहेत',
+          te: 'నోటిఫికేషన్‌లు ఆఫ్‌లో ఉన్నాయి',
         }),
         subtitle: pick(lang, {
           hi: 'फ़ोन की सेटिंग में चालू करें',
           en: 'Turn them on in phone Settings',
           gu: 'ફોનના સેટિંગ્સમાં ચાલુ કરો',
           kn: 'ಫೋನ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಆನ್ ಮಾಡಿ',
+          mr: 'फोनच्या सेटिंग्जमध्ये सुरू करा',
+          te: 'ఫోన్ సెట్టింగ్‌లలో ఆన్ చేయండి',
         }),
-        action: pick(lang, { hi: 'सेटिंग खोलें', en: 'Settings', gu: 'સેટિંગ્સ', kn: 'ಸೆಟ್ಟಿಂಗ್ಸ್' }),
+        action: pick(lang, { hi: 'सेटिंग खोलें', en: 'Settings', gu: 'સેટિંગ્સ', kn: 'ಸೆಟ್ಟಿಂಗ್ಸ್', mr: 'सेटिंग्ज', te: 'సెట్టింగ్‌లు' }),
       };
     case 'panchangWidget':
       return {
@@ -174,14 +182,18 @@ export function nudgeCopy(kind: NudgeKind, lang: Lang, times: TimeOfDay[]): Nudg
           en: 'Panchang on your Home Screen',
           gu: 'હોમ સ્ક્રીન પર પંચાંગ',
           kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ ಪಂಚಾಂಗ',
+          mr: 'होम स्क्रीनवर पंचांग',
+          te: 'హోమ్ స్క్రీన్‌పై పంచాంగం',
         }),
         subtitle: pick(lang, {
           hi: 'आज की तिथि और सूर्योदय, एक नज़र में',
           en: 'Today’s tithi and sunrise at a glance',
           gu: 'આજની તિથિ અને સૂર્યોદય, એક નજરમાં',
           kn: 'ಇಂದಿನ ತಿಥಿ ಮತ್ತು ಸೂರ್ಯೋದಯ, ಒಂದೇ ನೋಟದಲ್ಲಿ',
+          mr: 'आजची तिथी आणि सूर्योदय, एका दृष्टीक्षेपात',
+          te: 'ఈరోజు తిథి మరియు సూర్యోదయం, ఒక్క చూపులో',
         }),
-        action: pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' }),
+        action: pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ', mr: 'जोडा', te: 'జోడించండి' }),
       };
     case 'widget':
     default:
@@ -191,14 +203,18 @@ export function nudgeCopy(kind: NudgeKind, lang: Lang, times: TimeOfDay[]): Nudg
           en: 'Verse & Panchang widgets',
           gu: 'શ્લોક અને પંચાંગ વિજેટ',
           kn: 'ಶ್ಲೋಕ ಮತ್ತು ಪಂಚಾಂಗ ವಿಜೆಟ್',
+          mr: 'श्लोक आणि पंचांग विजेट',
+          te: 'శ్లోకం & పంచాంగం విడ్జెట్‌లు',
         }),
         subtitle: pick(lang, {
           hi: 'ऐप खोले बिना आज का श्लोक और तिथि',
           en: 'Today’s verse and tithi without opening the app',
           gu: 'એપ ખોલ્યા વિના આજનો શ્લોક અને તિથિ',
           kn: 'ಆಪ್ ತೆರೆಯದೆ ಇಂದಿನ ಶ್ಲೋಕ ಮತ್ತು ತಿಥಿ',
+          mr: 'ॲप न उघडता आजचा श्लोक आणि तिथी',
+          te: 'యాప్ తెరవకుండానే ఈరోజు శ్లోకం మరియు తిథి',
         }),
-        action: pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' }),
+        action: pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ', mr: 'जोडा', te: 'జోడించండి' }),
       };
   }
 }
@@ -211,5 +227,7 @@ export function reminderOnLine(lang: Lang, times: TimeOfDay[]): string {
     en: `Reminder on · ${at}`,
     gu: `સ્મરણ ચાલુ · ${at}`,
     kn: `ಸ್ಮರಣೆ ಆನ್ · ${at}`,
+    mr: `स्मरणपत्र सुरू · ${at}`,
+    te: `రిమైండర్ ఆన్ · ${at}`,
   });
 }

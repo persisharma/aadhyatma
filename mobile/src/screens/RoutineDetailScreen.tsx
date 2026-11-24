@@ -96,7 +96,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
         <Pressable
           onPress={() => navigation.navigate('RoutineAddItems', { routineId: routine.id })}
           accessibilityRole="button"
-          accessibilityLabel={pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' })}
+          accessibilityLabel={pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ', mr: 'जोडा', te: 'జోడించండి' })}
           hitSlop={12}
         >
           <Text style={{ color: colors.saffron, fontSize: 24 }}>＋</Text>
@@ -110,7 +110,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
             <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.inkMuted, marginBottom: 8 }}>
-              {pick(lang, { hi: 'वार · देव', en: 'Weekday · deity', gu: 'વાર · દેવ', kn: 'ವಾರ · ದೇವ' })}
+              {pick(lang, { hi: 'वार · देव', en: 'Weekday · deity', gu: 'વાર · દેવ', kn: 'ವಾರ · ದೇವ', mr: 'वार · देव', te: 'వారం · దేవుడు' })}
             </Text>
             <View style={styles.dayStrip}>
               {WEEKDAY_LABELS.map((w, i) => (
@@ -144,7 +144,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
 
         <View style={{ marginBottom: spacing.md }}>
           <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.inkMuted, marginBottom: 8 }}>
-            {pick(lang, { hi: 'स्मरण', en: 'Reminder', gu: 'સ્મરણ', kn: 'ಸ್ಮರಣ' })}
+            {pick(lang, { hi: 'स्मरण', en: 'Reminder', gu: 'સ્મરણ', kn: 'ಸ್ಮರಣ', mr: 'स्मरणपत्र', te: 'రిమైండర్' })}
           </Text>
           <View
             style={{
@@ -186,7 +186,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
                     trackColor={{ true: colors.saffron, false: colors.divider }}
                     thumbColor={colors.onPrimary}
                     ios_backgroundColor={colors.divider}
-                    accessibilityLabel={pick(lang, { hi: 'साधना स्मरण चालू / बंद', en: 'Toggle routine reminder', gu: 'સાધના સ્મરણ ચાલુ / બંધ', kn: 'ಸಾಧನಾ ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
+                    accessibilityLabel={pick(lang, { hi: 'साधना स्मरण चालू / बंद', en: 'Toggle routine reminder', gu: 'સાધના સ્મરણ ચાલુ / બંધ', kn: 'ಸಾಧನಾ ಸ್ಮರಣ ಆನ್ / ಆಫ್', mr: 'साधना स्मरणपत्र चालू / बंद', te: 'సాధన రిమైండర్ ఆన్ / ఆఫ్' })}
                   />
                 </View>
                 {routine.reminder && (
@@ -211,7 +211,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
 
         {routine.items.length === 0 && (
           <Text style={{ fontFamily: typography.meaning.fontFamily, fontSize: 14, color: colors.inkMuted, textAlign: 'center', marginVertical: 32 }}>
-            {pick(lang, { hi: 'कोई वस्तु नहीं जोड़ी गई', en: 'No items added yet', gu: 'કોઈ વસ્તુ ઉમેરી નથી', kn: 'ಯಾವುದೇ ವಸ್ತು ಸೇರಿಸಿಲ್ಲ' })}
+            {pick(lang, { hi: 'कोई वस्तु नहीं जोड़ी गई', en: 'No items added yet', gu: 'કોઈ વસ્તુ ઉમેરી નથી', kn: 'ಯಾವುದೇ ವಸ್ತು ಸೇರಿಸಿಲ್ಲ', mr: 'अद्याप काहीही जोडलेले नाही', te: 'ఇంకా ఏదీ జోడించలేదు' })}
           </Text>
         )}
 
@@ -234,7 +234,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
               <Pressable
                 onPress={() => removeItem(routine.id, item.id)}
                 accessibilityRole="button"
-                accessibilityLabel={pick(lang, { hi: 'हटाएँ', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' })}
+                accessibilityLabel={pick(lang, { hi: 'हटाएँ', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ', mr: 'काढा', te: 'తీసివేయండి' })}
                 hitSlop={10}
               >
                 <Text style={{ color: colors.inkMuted, fontSize: 20 }}>×</Text>
@@ -244,7 +244,7 @@ export default function RoutineDetailScreen({ navigation, route }: Props) {
         })}
 
         <RoutineButton
-          label={pick(lang, { hi: 'इस साधना को हटाएँ', en: 'Delete this routine', gu: 'આ સાધના કાઢી નાખો', kn: 'ಈ ಸಾಧನೆ ಅಳಿಸಿ' })}
+          label={pick(lang, { hi: 'इस साधना को हटाएँ', en: 'Delete this routine', gu: 'આ સાધના કાઢી નાખો', kn: 'ಈ ಸಾಧನೆ ಅಳಿಸಿ', mr: 'ही साधना हटवा', te: 'ఈ సాధనను తొలగించండి' })}
           variant="ghost"
           onPress={() => {
             // Don't goBack() here: deleting drops `routine` to undefined, and the

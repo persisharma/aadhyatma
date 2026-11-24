@@ -39,8 +39,8 @@ export default function TrackCard({ track, onPress, onPressIn, playing }: Props)
 
   const kindLabel =
     track.kind === 'recitation'
-      ? pick(lang, { hi: 'पाठ', en: 'Recitation', gu: 'પાઠ', kn: 'ಪಠಣ' })
-      : pick(lang, { hi: 'भजन', en: 'Bhajan', gu: 'ભજન', kn: 'ಭಜನೆ' });
+      ? pick(lang, { hi: 'पाठ', en: 'Recitation', gu: 'પાઠ', kn: 'ಪಠಣ', mr: 'पठण', te: 'పఠనం' })
+      : pick(lang, { hi: 'भजन', en: 'Bhajan', gu: 'ભજન', kn: 'ಭಜನೆ', mr: 'भजन', te: 'భజన' });
   const duration = fmt(track.durationSec);
   const sub = duration ? `${kindLabel} · ${duration}` : kindLabel;
 

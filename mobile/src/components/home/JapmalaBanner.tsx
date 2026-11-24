@@ -60,14 +60,16 @@ export default function JapmalaBanner({
     en: 'Japmala | Anant jap',
     gu: 'જપમાળા | અનંત જપ',
     kn: 'ಜಪಮಾಲೆ | ಅನಂತ ಜಪ',
+    mr: 'जपमाळ | अनंत जप',
+    te: 'జపమాల | అనంత జపం',
   });
   const fontFamily = titleFontByLang(lang);
   const stat = hymn
     ? contentByLang(lang, 'पाठ', 'recitations')
     : fmt.format(beads.rounds) + ' ' + contentByLang(lang, 'माला', beads.rounds === 1 ? 'mala' : 'malas');
   const countHint = hymn
-    ? pick(lang, { hi: 'एक पाठ गिनें', en: 'Count one recitation', gu: 'એક પાઠ ગણો', kn: 'ಒಂದು ಪಠಣ ಎಣಿಸಿ' })
-    : pick(lang, { hi: 'एक मनका गिनें', en: 'Count one bead', gu: 'એક મણકો ગણો', kn: 'ಒಂದು ಮಣಿ ಎಣಿಸಿ' });
+    ? pick(lang, { hi: 'एक पाठ गिनें', en: 'Count one recitation', gu: 'એક પાઠ ગણો', kn: 'ಒಂದು ಪಠಣ ಎಣಿಸಿ', mr: 'एक पाठ मोजा', te: 'ఒక పఠనం లెక్కించండి' })
+    : pick(lang, { hi: 'एक मनका गिनें', en: 'Count one bead', gu: 'એક મણકો ગણો', kn: 'ಒಂದು ಮಣಿ ಎಣಿಸಿ', mr: 'एक मणी मोजा', te: 'ఒక పూస లెక్కించండి' });
   const addCount = () => {
     if (isLoading) return;
     if (hymn) countRecitation(hymn.id);
@@ -85,8 +87,8 @@ export default function JapmalaBanner({
     if (entry) navigateToEntryStart(navigation, entry);
   };
   const openLabel = hymn
-    ? pick(lang, { hi: 'पाठ खोलें', en: 'Open reading', gu: 'પાઠ ખોલો', kn: 'ಪಾಠ ತೆರೆಯಿರಿ' })
-    : pick(lang, { hi: 'जप खोलें', en: 'Open practice', gu: 'જપ ખોલો', kn: 'ಜಪ ತೆರೆಯಿರಿ' });
+    ? pick(lang, { hi: 'पाठ खोलें', en: 'Open reading', gu: 'પાઠ ખોલો', kn: 'ಪಾಠ ತೆರೆಯಿರಿ', mr: 'पाठ उघडा', te: 'పఠనం తెరవండి' })
+    : pick(lang, { hi: 'जप खोलें', en: 'Open practice', gu: 'જપ ખોલો', kn: 'ಜಪ ತೆರೆಯಿರಿ', mr: 'जप उघडा', te: 'జపం తెరవండి' });
   return (
     <View testID="home-japa-banner" style={styles.banner}>
       <Image
@@ -105,6 +107,8 @@ export default function JapmalaBanner({
             en: 'Choose a mantra or stotram',
             gu: 'મંત્ર અથવા સ્તોત્ર પસંદ કરો',
             kn: 'ಮಂತ್ರ ಅಥವಾ ಸ್ತೋತ್ರ ಆಯ್ಕೆಮಾಡಿ',
+            mr: 'मंत्र किंवा स्तोत्र निवडा',
+            te: 'మంత్రం లేదా స్తోత్రం ఎంచుకోండి',
           })}
           style={styles.control}
           onPress={() =>

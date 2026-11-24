@@ -251,7 +251,7 @@ const ProseShareCard = React.forwardRef<View, ProseShareCardProps>(function Pros
             >
               {isLast
                 ? '॥ इति ॥'
-                : pick(props.lang, { hi: 'आगे पढ़ें →', en: 'continues →', gu: 'આગળ વાંચો →', kn: 'ಮುಂದೆ ಓದಿ →' })}
+                : pick(props.lang, { hi: 'आगे पढ़ें →', en: 'continues →', gu: 'આગળ વાંચો →', kn: 'ಮುಂದೆ ಓದಿ →', mr: 'पुढे वाचा →', te: 'ముందుకు చదవండి →' })}
             </Text>
             <View style={styles.index}>
               <View style={styles.dots}>

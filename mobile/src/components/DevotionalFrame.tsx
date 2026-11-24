@@ -202,7 +202,7 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-divider-image" onLoad={() => mark('divider')} onError={onError} />
     <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={68} bottomCap={48} testID="devotional-meaning-frame"
-      overlay={boxLabel('devotional-meaning-label', pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' }))}
+      overlay={boxLabel('devotional-meaning-label', pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ', mr: 'अर्थ', te: 'అర్థం' }))}
       onLoad={() => mark('meaning')} onError={onError} contentStyle={boxContent}>
       <Text testID="devotional-share-meaning" allowFontScaling={!exportMode}
         style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' || lang === 'te' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
@@ -213,7 +213,7 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
     {parts.commentary ? <>
       <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-commentary-divider-image" onLoad={() => mark('commentLead')} onError={onError} />
       <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={BOX_TILE[0]} bottomCap={spec.meaningBottom - spec.meaningTop - BOX_TILE[1]} tile={3}
-        testID="devotional-commentary-panel" overlay={boxLabel('devotional-commentary-label', pick(lang, { hi: 'महत्त्व', en: 'Significance', gu: 'મહત્ત્વ', kn: 'ಮಹತ್ತ್ವ' }))}
+        testID="devotional-commentary-panel" overlay={boxLabel('devotional-commentary-label', pick(lang, { hi: 'महत्त्व', en: 'Significance', gu: 'મહત્ત્વ', kn: 'ಮಹತ್ತ್ವ', mr: 'महत्त्व', te: 'మహత్త్వం' }))}
         onLoad={() => mark('comment')} onError={onError} contentStyle={boxContent}>
         <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
           style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' || lang === 'te' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text>

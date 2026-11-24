@@ -40,10 +40,10 @@ export default function SanskarVersePage({ verse, sourceId, width, topActions, s
 
   const pillText = useMemo(() => {
     if (isIntro) {
-      return pick(lang, { hi: 'परिचय', en: 'Introduction', gu: 'પરિચય', kn: 'ಪರಿಚಯ' });
+      return pick(lang, { hi: 'परिचय', en: 'Introduction', gu: 'પરિચય', kn: 'ಪರಿಚಯ', mr: 'परिचय', te: 'పరిచయం' });
     }
     if (isVidhi) {
-      return pick(lang, { hi: 'विधि', en: 'Method', gu: 'વિધિ', kn: 'ವಿಧಿ' });
+      return pick(lang, { hi: 'विधि', en: 'Method', gu: 'વિધિ', kn: 'ವಿಧಿ', mr: 'विधी', te: 'విధి' });
     }
     if (isStep) {
       const label = contentByLang(lang, verse.labelHi, verse.labelEn);
@@ -56,7 +56,7 @@ export default function SanskarVersePage({ verse, sourceId, width, topActions, s
 
   const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
   const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
-  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
+  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ', mr: 'भावार्थ', te: 'భావార్థం' });
   const hasVidhi = !!(verse.vidhiHi || verse.vidhiEn);
   const vidhiContent = meaningByLang(lang, verse.vidhiHi ?? '', verse.vidhiEn ?? '');
   const vidhiLabel = pick(lang, {
@@ -64,6 +64,8 @@ export default function SanskarVersePage({ verse, sourceId, width, topActions, s
     en: 'How to',
     gu: 'કેવી રીતે કરવું',
     kn: 'ಹೇಗೆ ಮಾಡಬೇಕು',
+    mr: 'कसे करावे',
+    te: 'ఎలా చేయాలి',
   });
 
   const verseTok = verseToken(lang, typography);

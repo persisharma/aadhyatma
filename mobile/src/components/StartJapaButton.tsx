@@ -52,7 +52,7 @@ export default function StartJapaButton({
     >
       <AppIcon name="repeat" size={14} color={colors.saffronDeep} />
       <Text style={[styles.label, { color: colors.saffronDeep }]} numberOfLines={1}>
-        {pick(lang, { hi: 'जप', en: 'Japa', gu: 'જપ', kn: 'ಜಪ' })}
+        {pick(lang, { hi: 'जप', en: 'Japa', gu: 'જપ', kn: 'ಜಪ', mr: 'जप', te: 'జపం' })}
       </Text>
     </Pressable>
   );

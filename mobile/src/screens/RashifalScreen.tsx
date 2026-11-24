@@ -46,6 +46,8 @@ const DATE_LOCALES: Record<Lang, string> = {
   hi: 'hi-IN',
   gu: 'gu-IN',
   kn: 'kn-IN',
+  mr: 'mr-IN',
+  te: 'te-IN',
 };
 
 function formatToday(date: Date, lang: Lang): string {

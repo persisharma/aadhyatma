@@ -20,11 +20,11 @@ import { type FontScale } from '@/theme/fontScale';
 
 const OPTIONS: readonly {
   value: FontScale;
-  label: { hi: string; en: string; gu: string; kn: string };
+  label: { hi: string; en: string; gu: string; kn: string; mr: string; te: string };
   a11y: string;
 }[] = [
-  { value: 'M', label: { hi: 'मानक', en: 'Standard', gu: 'માનક', kn: 'ಪ್ರಮಾಣಿತ' }, a11y: 'Standard' },
-  { value: 'L', label: { hi: 'बड़ा', en: 'Large', gu: 'મોટું', kn: 'ದೊಡ್ಡ' }, a11y: 'Large' },
+  { value: 'M', label: { hi: 'मानक', en: 'Standard', gu: 'માનક', kn: 'ಪ್ರಮಾಣಿತ', mr: 'मानक', te: 'ప్రామాణికం' }, a11y: 'Standard' },
+  { value: 'L', label: { hi: 'बड़ा', en: 'Large', gu: 'મોટું', kn: 'ದೊಡ್ಡ', mr: 'मोठा', te: 'పెద్దది' }, a11y: 'Large' },
 ];
 
 /**
@@ -36,6 +36,8 @@ export const READING_SIZE_SAMPLE: Record<Lang, string> = {
   en: 'Śrī Rāma jaya Rāma',
   gu: 'શ્રી રામ જય રામ',
   kn: 'ಶ್ರೀ ರಾಮ ಜಯ ರಾಮ',
+  mr: 'श्री राम जय राम',
+  te: 'శ్రీ రామ జయ రామ',
 };
 
 const SAMPLE = READING_SIZE_SAMPLE;
@@ -71,7 +73,7 @@ export default function ReadingSizePickerSheet({ visible, onClose }: Props) {
             accessibilityRole="header"
             style={{ fontFamily: cardFontByLang(lang), fontSize: 18, color: colors.ink, textAlign: 'center' }}
           >
-            {pick(lang, { hi: 'पाठ का आकार', en: 'Reading size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
+            {pick(lang, { hi: 'पाठ का आकार', en: 'Reading size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ', mr: 'वाचन आकार', te: 'చదివే పరిమాణం' })}
           </Text>
           <Text
             style={{ fontFamily: cardFontByLang(lang), fontSize: 12, color: colors.inkMuted, textAlign: 'center', marginTop: 2, marginBottom: spacing.md }}
@@ -81,13 +83,15 @@ export default function ReadingSizePickerSheet({ visible, onClose }: Props) {
               en: 'Verse & meaning text size',
               gu: 'શ્લોક અને અર્થનું કદ',
               kn: 'ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥದ ಗಾತ್ರ',
+              mr: 'श्लोक व अर्थाचा आकार',
+              te: 'శ్లోకం మరియు అర్థం పరిమాణం',
             })}
           </Text>
 
           <View
             style={styles.pillRow}
             accessibilityRole="radiogroup"
-            accessibilityLabel={pick(lang, { hi: 'पाठ का आकार', en: 'Reading size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
+            accessibilityLabel={pick(lang, { hi: 'पाठ का आकार', en: 'Reading size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ', mr: 'वाचन आकार', te: 'చదివే పరిమాణం' })}
           >
             {OPTIONS.map((opt) => {
               const selected = scale === opt.value;
@@ -123,11 +127,11 @@ export default function ReadingSizePickerSheet({ visible, onClose }: Props) {
           <Pressable
             onPress={onClose}
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಮುಗಿಯಿತು' })}
+            accessibilityLabel={pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಮುಗಿಯಿತು', mr: 'झाले', te: 'పూర్తయింది' })}
             style={({ pressed }) => [styles.done, { backgroundColor: colors.saffron }, pressed && { opacity: 0.85 }]}
           >
             <Text style={{ color: colors.onPrimary, fontFamily: cardFontByLang(lang), fontSize: 15 }}>
-              {pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಮುಗಿಯಿತು' })}
+              {pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಮುಗಿಯಿತು', mr: 'झाले', te: 'పూర్తయింది' })}
             </Text>
           </Pressable>
         </Pressable>

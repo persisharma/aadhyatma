@@ -38,7 +38,7 @@ export default function SharePagePreview(props: Props) {
           <Text style={[styles.glyph, { color: colors.saffron }]}>‹</Text>
         </Pressable>
         <Text style={{ fontFamily: cardFontByLang(props.lang), fontSize: 16, color: colors.ink }}>
-          {pick(props.lang, { hi: 'पृष्ठ', en: 'Page', gu: 'પૃષ્ઠ', kn: 'ಪುಟ' })} {props.index + 1} / {props.count}
+          {pick(props.lang, { hi: 'पृष्ठ', en: 'Page', gu: 'પૃષ્ઠ', kn: 'ಪುಟ', mr: 'पृष्ठ', te: 'పేజీ' })} {props.index + 1} / {props.count}
         </Text>
         <Pressable
           onPress={props.onToggle}
@@ -69,8 +69,8 @@ export default function SharePagePreview(props: Props) {
         </Pressable>
         <Text style={[eyebrowTextStyle(props.lang, 12), { color: colors.inkMuted }]}>
           {props.included
-            ? pick(props.lang, { hi: 'शृंखला में शामिल', en: 'In the series', gu: 'શ્રેણીમાં સામેલ', kn: 'ಸರಣಿಯಲ್ಲಿದೆ' })
-            : pick(props.lang, { hi: 'छोड़ा गया', en: 'Left out', gu: 'છોડી દીધું', kn: 'ಬಿಡಲಾಗಿದೆ' })}
+            ? pick(props.lang, { hi: 'शृंखला में शामिल', en: 'In the series', gu: 'શ્રેણીમાં સામેલ', kn: 'ಸರಣಿಯಲ್ಲಿದೆ', mr: 'मालिकेत समाविष्ट', te: 'సిరీస్‌లో ఉంది' })
+            : pick(props.lang, { hi: 'छोड़ा गया', en: 'Left out', gu: 'છોડી દીધું', kn: 'ಬಿಡಲಾಗಿದೆ', mr: 'वगळले', te: 'వదిలేశారు' })}
         </Text>
         <Pressable
           onPress={() => props.onStep(1)}
@@ -99,6 +99,8 @@ export default function SharePagePreview(props: Props) {
             en: 'Continue with this page',
             gu: 'આ પૃષ્ઠ સાથે આગળ',
             kn: 'ಈ ಪುಟದೊಂದಿಗೆ ಮುಂದುವರಿಸಿ',
+            mr: 'या पृष्ठासह पुढे',
+            te: 'ఈ పేజీతో కొనసాగించండి',
           })}
         </Text>
       </Pressable>

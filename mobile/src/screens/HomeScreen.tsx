@@ -198,7 +198,7 @@ export default function HomeScreen({ navigation }: Props) {
   const heading = (title: string, all = false) => <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginTop:14,marginBottom:6}}>
     <Text accessibilityRole="header" style={{fontFamily:titleFontByLang(lang),fontSize:15,color:colors.inkSoft}}>{title}</Text>
     {all && <Pressable testID="home-all-features" accessibilityRole="button" style={{minHeight:44,justifyContent:'center'}} onPress={()=>navigation.navigate('ReadingLibrary',{features:true})}>
-      <Text style={{fontFamily:titleFontByLang(lang),color:colors.saffronDeep}}>{pick(lang,{hi:'सभी देखें',en:'View all',gu:'બધું જુઓ',kn:'ಎಲ್ಲವನ್ನೂ ನೋಡಿ'})} ›</Text>
+      <Text style={{fontFamily:titleFontByLang(lang),color:colors.saffronDeep}}>{pick(lang,{hi:'सभी देखें',en:'View all',gu:'બધું જુઓ',kn:'ಎಲ್ಲವನ್ನೂ ನೋಡಿ',mr:'सर्व पाहा',te:'అన్నీ చూడండి'})} ›</Text>
     </Pressable>}
   </View>;
 
@@ -270,7 +270,7 @@ export default function HomeScreen({ navigation }: Props) {
             <RoutineBanner bannerRef={routineCardRef} />
           </View>
 
-          {heading(pick(lang,{hi:'श्रेणियाँ',en:'Categories',gu:'શ્રેણીઓ',kn:'ವರ್ಗಗಳು'}),true)}
+          {heading(pick(lang,{hi:'श्रेणियाँ',en:'Categories',gu:'શ્રેણીઓ',kn:'ವರ್ಗಗಳು',mr:'श्रेणी',te:'వర్గాలు'}),true)}
           {/* categoriesGrid tour target rings the whole grid, not one tile. */}
           <View style={[styles.grid, { gap: gridGap }]} ref={categoriesGridRef} collapsable={false}>
             {tiles.map((tile) => (
@@ -301,7 +301,7 @@ export default function HomeScreen({ navigation }: Props) {
             ))}
           </View>
 
-          {heading(pick(lang,{hi:'कथाएँ और परंपराएँ',en:'Stories and traditions',gu:'કથાઓ અને પરંપરાઓ',kn:'ಕಥೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳು'}))}
+          {heading(pick(lang,{hi:'कथाएँ और परंपराएँ',en:'Stories and traditions',gu:'કથાઓ અને પરંપરાઓ',kn:'ಕಥೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳು',mr:'कथा आणि परंपरा',te:'కథలు మరియు సంప్రదాయాలు'}))}
           <View style={{ gap: 12, marginBottom: 12 }}>
             <React.Suspense fallback={<View style={{ height: 138 }} />}>
               <KidsStoriesHomeCard
@@ -319,7 +319,7 @@ export default function HomeScreen({ navigation }: Props) {
             </React.Suspense>
           </View>
 
-          {heading(pick(lang,{hi:'और जानें',en:'Explore more',gu:'વધુ જાણો',kn:'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ'}))}
+          {heading(pick(lang,{hi:'और जानें',en:'Explore more',gu:'વધુ જાણો',kn:'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ',mr:'अधिक जाणून घ्या',te:'మరింత తెలుసుకోండి'}))}
           <View style={{flexDirection:'row',gap:gridGap}}>
             <View style={{flex:1}}><CategoryCard variant="launcher" nameHi="मंदिर दर्शन" nameEn="Temple Darshan" status="active" icon={<CategoryIcon iconKey="theerth" size={52}/>} onPress={()=>navigation.navigate('DarshanQuick')}/></View>
             <View style={{flex:1}}><CategoryCard variant="launcher" nameHi="पूजा विधि" nameEn="Guided pujas" status="active" icon={<CategoryIcon iconKey="vrat" size={52}/>} onPress={()=>navigation.navigate('VidhiCatalog')}/></View>

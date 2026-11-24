@@ -342,37 +342,43 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
   const titleEn = mantra.nameEn;
   // The mantra itself is shown once, in the tap surface; the top bar names the screen.
-  const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ' });
+  const screenTitle = pick(lang, { hi: 'जपमाला', en: 'JapaMala', gu: 'જપમાળા', kn: 'ಜಪಮಾಲೆ', mr: 'जपमाळ', te: 'జపమాల' });
 
-  const malasDoneLabel = pick(lang, { hi: 'माला पूर्ण', en: 'Malas done', gu: 'માળા પૂર્ણ', kn: 'ಮಾಲೆ ಪೂರ್ಣ' });
+  const malasDoneLabel = pick(lang, { hi: 'माला पूर्ण', en: 'Malas done', gu: 'માળા પૂર્ણ', kn: 'ಮಾಲೆ ಪೂರ್ಣ', mr: 'माळा पूर्ण', te: 'మాల పూర్తి' });
   const firstMalaLabel = pick(lang, {
     hi: 'पहली माला आरम्भ',
     en: 'First mala on its way',
     gu: 'પહેલી માળા શરૂ',
     kn: 'ಮೊದಲ ಮಾಲೆ ಆರಂಭ',
+    mr: 'पहिली माळ सुरू',
+    te: 'మొదటి మాల ఆరంభం',
   });
   const sumeruLabel = pick(lang, {
     hi: 'सुमेरु · माला पलटें',
     en: 'Sumeru · turn the mala',
     gu: 'સુમેરુ · માળા ફેરવો',
     kn: 'ಸುಮೇರು · ಮಾಲೆ ತಿರುಗಿಸಿ',
+    mr: 'सुमेरू · माळ उलटा',
+    te: 'సుమేరు · మాలను తిప్పండి',
   });
   const infinityCompleteLabel = pick(lang, {
     hi: 'माला पूर्ण · 108 जप', en: 'Mala complete · 108 chants',
-    gu: 'માળા પૂર્ણ · 108 જપ', kn: 'ಮಾಲೆ ಪೂರ್ಣ · 108 ಜಪ',
+    gu: 'માળા પૂર્ણ · 108 જપ', kn: 'ಮಾಲೆ ಪೂರ್ಣ · 108 ಜಪ', mr: 'माळ पूर्ण · 108 जप', te: 'మాల పూర్తి · 108 జపం',
   });
   const sankalpCompleteLabel = pick(lang, {
-    hi: 'संकल्प पूर्ण 🙏', en: 'Sankalp complete 🙏', gu: 'સંકલ્પ પૂર્ણ 🙏', kn: 'ಸಂಕಲ್ಪ ಪೂರ್ಣ 🙏',
+    hi: 'संकल्प पूर्ण 🙏', en: 'Sankalp complete 🙏', gu: 'સંકલ્પ પૂર્ણ 🙏', kn: 'ಸಂಕಲ್ಪ ಪೂರ್ಣ 🙏', mr: 'संकल्प पूर्ण 🙏', te: 'సంకల్పం పూర్తి 🙏',
   });
   const infinityHint = infinityRunning
-    ? pick(lang, { hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' })
-    : pick(lang, { hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' });
+    ? pick(lang, { hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ', mr: 'थांबवण्यासाठी स्पर्श करा', te: 'ఆపడానికి తాకండి' })
+    : pick(lang, { hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ', mr: 'सुरू करण्यासाठी स्पर्श करा', te: 'ప్రారంభించడానికి తాకండి' });
   const tapHint = japaStyle === 'infinity' ? infinityHint : audioPlaying
     ? pick(lang, {
         hi: 'सुनें · मंत्र के साथ मनके आगे बढ़ते हैं',
         en: 'Listening · beads advance with the chant',
         gu: 'સાંભળો · મંત્ર સાથે મણકા આગળ વધે છે',
         kn: 'ಆಲಿಸಿ · ಮಂತ್ರದೊಂದಿಗೆ ಮಣಿಗಳು ಮುಂದುವರಿಯುತ್ತವೆ',
+        mr: 'ऐका · मंत्रासोबत मणी पुढे सरकतात',
+        te: 'వినండి · మంత్రంతో పాటు పూసలు ముందుకు కదులుతాయి',
       })
     : sloka
       ? pick(lang, {
@@ -380,6 +386,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           en: 'Tap · one bead per shloka',
           gu: 'સ્પર્શ કરો · દરેક શ્લોકે એક મણકો',
           kn: 'ಸ್ಪರ್ಶಿಸಿ · ಪ್ರತಿ ಶ್ಲೋಕಕ್ಕೆ ಒಂದು ಮಣಿ',
+          mr: 'स्पर्श करा · प्रत्येक श्लोकाला एक मणी',
+          te: 'తాకండి · ప్రతి శ్లోకానికి ఒక పూస',
         })
     : naam
       ? pick(lang, {
@@ -387,10 +395,12 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
           en: 'Tap · one bead per name',
           gu: 'સ્પર્શ કરો · દરેક નામે એક મણકો',
           kn: 'ಸ್ಪರ್ಶಿಸಿ · ಪ್ರತಿ ನಾಮಕ್ಕೆ ಒಂದು ಮಣಿ',
+          mr: 'स्पर्श करा · प्रत्येक नामाला एक मणी',
+          te: 'తాకండి · ప్రతి నామానికి ఒక పూస',
         })
-      : pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ' });
-  const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦' });
-  const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
+      : pick(lang, { hi: 'जप के लिए स्पर्श करें', en: 'Tap to chant', gu: 'જપ માટે સ્પર્શ કરો', kn: 'ಜಪಕ್ಕಾಗಿ ಸ್ಪರ್ಶಿಸಿ', mr: 'जपासाठी स्पर्श करा', te: 'జపానికి తాకండి' });
+  const resetBeadsLabel = pick(lang, { hi: 'बीज पुनः ०', en: 'Reset Beads', gu: 'મણકા ફરી ૦', kn: 'ಮಣಿ ಮರು ೦', mr: 'मणी पुन्हा ०', te: 'పూసలు మళ్లీ ౦' });
+  const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು', mr: 'सर्व पुसा', te: 'అన్నీ తొలగించండి' });
   const nothingToReset = entry.count === 0 && entry.rounds === 0;
   // Script serif for gu/kn (constrained surface keeps its own sizes); null for hi/en.
   const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : lang === 'te' ? fontFamilies.telugu : null;
@@ -440,6 +450,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     en: 'Press and hold to exit full screen',
     gu: 'બહાર નીકળવા લાંબું દબાવો',
     kn: 'ಹೊರಬರಲು ಒತ್ತಿ ಹಿಡಿಯಿರಿ',
+    mr: 'बाहेर पडण्यासाठी दाबून धरा',
+    te: 'బయటకు రావడానికి నొక్కి పట్టుకోండి',
   });
 
 
@@ -539,8 +551,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         <View style={styles.styleChoices} accessibilityRole="radiogroup">
           {(['mala', 'infinity'] as const).map((value: JapamStyle) => {
             const label = value === 'mala'
-              ? pick(lang, { hi: 'माला', en: 'Mala', gu: 'માળા', kn: 'ಮಾಲೆ' })
-              : pick(lang, { hi: 'अनंत ∞', en: 'Infinity ∞', gu: 'અનંત ∞', kn: 'ಅನಂತ ∞' });
+              ? pick(lang, { hi: 'माला', en: 'Mala', gu: 'માળા', kn: 'ಮಾಲೆ', mr: 'माळ', te: 'మాల' })
+              : pick(lang, { hi: 'अनंत ∞', en: 'Infinity ∞', gu: 'અનંત ∞', kn: 'ಅನಂತ ∞', mr: 'अनंत ∞', te: 'అనంతం ∞' });
             const selected = japaStyle === value;
             return (
               <Pressable key={value} testID={`japam-style-${value}`} accessibilityRole="radio"
@@ -779,7 +791,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                   },
                 ]}
               >
-                {pick(lang, { hi: 'गिनती साफ़ करें?', en: 'Clear the count?', gu: 'ગણતરી સાફ કરવી?', kn: 'ಎಣಿಕೆ ತೆರವುಗೊಳಿಸಬೇಕೆ?' })}
+                {pick(lang, { hi: 'गिनती साफ़ करें?', en: 'Clear the count?', gu: 'ગણતરી સાફ કરવી?', kn: 'ಎಣಿಕೆ ತೆರವುಗೊಳಿಸಬೇಕೆ?', mr: 'मोजणी पुसायची?', te: 'లెక్కను తొలగించాలా?' })}
               </Text>
               {sankalp && !sankalpComplete ? (
                 <Text
@@ -831,6 +843,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                     en: 'The current bead count will reset to 0. Completed rounds are kept.',
                     gu: 'ચાલુ આવૃત્તિની ગણતરી શૂન્ય થઈ જશે. પૂર્ણ આવૃત્તિઓ સચવાશે.',
                     kn: 'ಪ್ರಸ್ತುತ ಮಣಿ ಎಣಿಕೆ ೦ ಗೆ ಮರುಹೊಂದಿಸಲಾಗುತ್ತದೆ. ಪೂರ್ಣ ಆವೃತ್ತಿಗಳು ಉಳಿಯುತ್ತವೆ.',
+                    mr: 'चालू आवृत्तीची मोजणी शून्य होईल. पूर्ण आवृत्त्या सुरक्षित राहतील.',
+                    te: 'ప్రస్తుత పూసల లెక్క సున్నా అవుతుంది. పూర్తయిన ఆవృత్తులు భద్రంగా ఉంటాయి.',
                   })}
                 </Text>
               </Pressable>
@@ -872,6 +886,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                     en: 'Beads and all rounds will be erased. This cannot be undone.',
                     gu: 'મણકા તથા બધી આવૃત્તિઓ ભૂંસાઈ જશે. આ ક્રિયા પાછી લઈ શકાતી નથી.',
                     kn: 'ಮಣಿ ಮತ್ತು ಎಲ್ಲಾ ಆವೃತ್ತಿಗಳು ಅಳಿಸಲ್ಪಡುತ್ತವೆ. ಇದನ್ನು ರದ್ದುಗೊಳಿಸಲಾಗದು.',
+                    mr: 'मणी आणि सर्व आवृत्त्या पुसल्या जातील. ही क्रिया पूर्ववत करता येणार नाही.',
+                    te: 'పూసలు, అన్ని ఆవృత్తులు తొలగిపోతాయి. దీన్ని రద్దు చేయలేరు.',
                   })}
                 </Text>
               </Pressable>
@@ -890,7 +906,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
                     },
                   ]}
                 >
-                  {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
+                  {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' })}
                 </Text>
               </Pressable>
             </SafeAreaView>

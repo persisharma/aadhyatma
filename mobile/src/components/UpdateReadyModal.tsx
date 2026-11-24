@@ -108,6 +108,8 @@ export default function UpdateReadyModal() {
           en: 'Dismiss',
           gu: 'બંધ કરો',
           kn: 'ಮುಚ್ಚಿ',
+          mr: 'बंद करा',
+          te: 'మూసివేయండి',
         })}
         style={[styles.backdrop, { backgroundColor: colors.modalBackdrop }]}
       >
@@ -138,6 +140,8 @@ export default function UpdateReadyModal() {
               en: 'A fresh update is ready',
               gu: 'નવું અપડેટ તૈયાર છે',
               kn: 'ಹೊಸ ಅಪ್‌ಡೇಟ್ ಸಿದ್ಧವಾಗಿದೆ',
+              mr: 'नवीन अपडेट तयार आहे',
+              te: 'కొత్త అప్‌డేట్ సిద్ధంగా ఉంది',
             })}
           </Text>
           <Text
@@ -154,6 +158,8 @@ export default function UpdateReadyModal() {
               en: 'New content and improvements have been downloaded. Apply them now, or they’ll apply automatically next time you open the app.',
               gu: 'નવી સામગ્રી અને સુધારા ડાઉનલોડ થઈ ગયા છે. હમણાં લાગુ કરો, અથવા ઍપ ફરી ખોલતાં આપમેળે લાગુ થશે.',
               kn: 'ಹೊಸ ವಿಷಯ ಮತ್ತು ಸುಧಾರಣೆಗಳು ಡೌನ್‌ಲೋಡ್ ಆಗಿವೆ. ಈಗ ಅನ್ವಯಿಸಿ, ಅಥವಾ ಆ್ಯಪ್ ಮತ್ತೆ ತೆರೆದಾಗ ತಾನಾಗಿಯೇ ಅನ್ವಯವಾಗುತ್ತದೆ.',
+              mr: 'नवीन सामग्री आणि सुधारणा डाउनलोड झाल्या आहेत. आत्ता लागू करा, किंवा ॲप पुन्हा उघडल्यावर त्या आपोआप लागू होतील.',
+              te: 'కొత్త కంటెంట్ మరియు మెరుగుదలలు డౌన్‌లోడ్ అయ్యాయి. ఇప్పుడే వర్తింపజేయండి, లేదా యాప్‌ను మళ్లీ తెరిచినప్పుడు అవి ఆటోమేటిక్‌గా వర్తిస్తాయి.',
             })}
           </Text>
 
@@ -165,6 +171,8 @@ export default function UpdateReadyModal() {
               en: 'Update now',
               gu: 'હમણાં અપડેટ કરો',
               kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ',
+              mr: 'आत्ता अपडेट करा',
+              te: 'ఇప్పుడే అప్‌డేట్ చేయండి',
             })}
             disabled={busy}
             style={({ pressed }) => [
@@ -191,6 +199,8 @@ export default function UpdateReadyModal() {
                 en: 'Update now',
                 gu: 'હમણાં અપડેટ કરો',
                 kn: 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ',
+                mr: 'आत्ता अपडेट करा',
+                te: 'ఇప్పుడే అప్‌డేట్ చేయండి',
               })}
             </Text>
           </Pressable>

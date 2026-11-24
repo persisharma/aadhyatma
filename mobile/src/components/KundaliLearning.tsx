@@ -50,7 +50,7 @@ function Relationship({ position }: { position: GrahaPosition }) {
     node: ['राहु और केतु चन्द्र कक्षा के दो पात हैं। उनकी उच्च-नीच और मैत्री की अलग परम्पराएँ हैं; यहाँ उनका भाव और राशि पढ़ें।', 'Rahu and Ketu are the two lunar orbital nodes. Traditions differ about their dignity and friendship; this view shows their house and sign.'],
   }[kind];
   return <View style={[ui.card, styles.inset]}>
-    <Text style={ui.label}>{pick(ui.lang, { hi: 'राशि से संबंध', en: 'Relationship with this sign', gu: 'રાશિ સાથેનો સંબંધ', kn: 'ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ' })}</Text>
+    <Text style={ui.label}>{pick(ui.lang, { hi: 'राशि से संबंध', en: 'Relationship with this sign', gu: 'રાશિ સાથેનો સંબંધ', kn: 'ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ', mr: 'राशीशी संबंध', te: 'రాశితో సంబంధం' })}</Text>
     <Text style={[ui.title, { fontSize: 18 * ui.factor }]}>{ui.c(label.hi, label.en)}</Text>
     <Text style={ui.body}>{ui.m(explanation[0], explanation[1])}</Text>
   </View>;
@@ -62,12 +62,12 @@ function PersonalReading({ card }: { card: KundaliGrahaCard | undefined }) {
   if (!card) return null;
   const paragraph = readingParagraph(card);
   return <View testID={`kundali-reading-${card.graha}`} style={styles.block}>
-    <Text style={ui.label}>{pick(ui.lang, { hi: 'इस स्थिति का अर्थ', en: 'What this placement suggests', gu: 'આ સ્થિતિનો અર્થ', kn: 'ಈ ಸ್ಥಾನದ ಅರ್ಥ' })}</Text>
+    <Text style={ui.label}>{pick(ui.lang, { hi: 'इस स्थिति का अर्थ', en: 'What this placement suggests', gu: 'આ સ્થિતિનો અર્થ', kn: 'ಈ ಸ್ಥಾನದ ಅರ್ಥ', mr: 'या स्थितीचा अर्थ', te: 'ఈ స్థితి అర్థం' })}</Text>
     <Text style={[ui.label, { color: ui.colors.ink }]}>{ui.c(card.toneLabelHi, card.toneLabelEn)}</Text>
     <Text style={ui.body}>{ui.m(paragraph.hi, paragraph.en)}</Text>
-    {!!paragraph.careHi && <><Text style={ui.label}>{pick(ui.lang, { hi: 'किस पर ध्यान दें', en: 'What to pay attention to', gu: 'શેનું ધ્યાન રાખવું', kn: 'ಯಾವುದರತ್ತ ಗಮನ ಕೊಡಬೇಕು' })}</Text><Text style={ui.body}>{ui.m(paragraph.careHi, paragraph.careEn)}</Text></>}
+    {!!paragraph.careHi && <><Text style={ui.label}>{pick(ui.lang, { hi: 'किस पर ध्यान दें', en: 'What to pay attention to', gu: 'શેનું ધ્યાન રાખવું', kn: 'ಯಾವುದರತ್ತ ಗಮನ ಕೊಡಬೇಕು', mr: 'कशाकडे लक्ष द्यावे', te: 'దేనిపై దృష్టి పెట్టాలి' })}</Text><Text style={ui.body}>{ui.m(paragraph.careHi, paragraph.careEn)}</Text></>}
     <Pressable testID={`kundali-why-${card.graha}`} accessibilityRole="button" accessibilityState={{ expanded: why }} onPress={() => setWhy(value => !value)} style={styles.action}>
-      <Text style={ui.label}>{pick(ui.lang, { hi: 'ऐसा क्यों कहा?', en: 'Why this reading?', gu: 'આવું કેમ કહેવાયું?', kn: 'ಹೀಗೆ ಹೇಳಲು ಕಾರಣವೇನು?' })} {why ? '−' : '+'}</Text>
+      <Text style={ui.label}>{pick(ui.lang, { hi: 'ऐसा क्यों कहा?', en: 'Why this reading?', gu: 'આવું કેમ કહેવાયું?', kn: 'ಹೀಗೆ ಹೇಳಲು ಕಾರಣವೇನು?', mr: 'असे का म्हटले?', te: 'ఇలా ఎందుకు చెప్పారు?' })} {why ? '−' : '+'}</Text>
     </Pressable>
     {why && <View style={[ui.card, styles.inset]}>
       {card.reasons.map(reason => <Text key={reason.id} style={ui.body}>{reason.vote === 'supports' ? '+ ' : '− '}{ui.m(reason.textHi, reason.textEn)}</Text>)}
@@ -81,7 +81,7 @@ function CalculationDetails({ position }: { position: GrahaPosition }) {
   const ui = useReadingUI();
   const [open, setOpen] = useState(false);
   return <View>
-    <Pressable accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpen(value => !value)} style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'गणना का विवरण', en: 'Calculation details', gu: 'ગણતરીની વિગતો', kn: 'ಲೆಕ್ಕಾಚಾರದ ವಿವರಗಳು' })} {open ? '−' : '+'}</Text></Pressable>
+    <Pressable accessibilityRole="button" accessibilityState={{ expanded: open }} onPress={() => setOpen(value => !value)} style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'गणना का विवरण', en: 'Calculation details', gu: 'ગણતરીની વિગતો', kn: 'ಲೆಕ್ಕಾಚಾರದ ವಿವರಗಳು', mr: 'गणनेचा तपशील', te: 'గణన వివరాలు' })} {open ? '−' : '+'}</Text></Pressable>
     {open && <Text style={ui.body}>{ui.c(`${Math.floor(position.degreeInRashi)}° ${Math.floor(position.degreeInRashi % 1 * 60)}′ · ${NAKSHATRA_NAMES_HI[position.nakshatraIndex]} · पद ${position.pada}${position.retrograde ? ' · वक्री' : ''}`, `${Math.floor(position.degreeInRashi)}° ${Math.floor(position.degreeInRashi % 1 * 60)}′ · ${NAKSHATRA_NAMES_EN[position.nakshatraIndex]} · Pada ${position.pada}${position.retrograde ? ' · Retrograde' : ''}`)}</Text>}
   </View>;
 }
@@ -112,26 +112,26 @@ function SheetContent({ chart, selection, onClose, onReference }: { chart: Kunda
           <Text accessibilityRole="header" style={ui.title}>{title}</Text>
           {house && <>
             <Text style={ui.label}>{ui.sign(house.rashiIndex)}</Text><Text style={ui.body}>{ui.m(house.meaning.hi, house.meaning.en)}</Text>
-            <Text style={ui.label}>{pick(ui.lang, { hi: 'इस भाव में ग्रह', en: 'Grahas in this house', gu: 'આ ભાવમાં ગ્રહો', kn: 'ಈ ಭಾವದಲ್ಲಿರುವ ಗ್ರಹಗಳು' })}</Text>
+            <Text style={ui.label}>{pick(ui.lang, { hi: 'इस भाव में ग्रह', en: 'Grahas in this house', gu: 'આ ભાવમાં ગ્રહો', kn: 'ಈ ಭಾವದಲ್ಲಿರುವ ಗ್ರಹಗಳು', mr: 'या भावातील ग्रह', te: 'ఈ భావంలోని గ్రహాలు' })}</Text>
             {house.occupants.length === 0 ? <Text testID="kundali-empty-house" style={ui.body}>{ui.m('जन्म के समय इस भाव में कोई ग्रह नहीं था। खाली भाव सामान्य हैं। इस जीवन-क्षेत्र को इसकी राशि और राशि-स्वामी की स्थिति से पढ़ते हैं।', 'No graha occupied this house at birth. Empty houses are normal. Read this life area through its sign and the placement of its ruler.')}</Text> : house.occupants.map(item => <View key={item.graha} style={styles.block}>
               <Pressable onPress={() => open({ kind: 'graha', graha: item.graha })} accessibilityRole="button" accessibilityLabel={`Learn about ${GRAHA_NAMES_EN[item.graha]}`} style={styles.grahaRow}><KundaliArtwork name={item.graha} size={52} /><View style={styles.flexCopy}><Text style={ui.title}>{ui.name(item.graha)} ›</Text><Text style={ui.body}>{ui.m(GRAHA_REFERENCE[item.graha].signifiesHi, GRAHA_REFERENCE[item.graha].signifiesEn)}</Text></View></Pressable>
               <PersonalReading card={cards.find(card => card.graha === item.graha)} /><Relationship position={item} />
             </View>)}
-            <Text style={ui.label}>{pick(ui.lang, { hi: 'भाव का स्वामी कहाँ है?', en: 'Where is this house’s ruler?', gu: 'ભાવનો સ્વામી ક્યાં છે?', kn: 'ಈ ಭಾವದ ಅಧಿಪತಿ ಎಲ್ಲಿದ್ದಾನೆ?' })}</Text>
+            <Text style={ui.label}>{pick(ui.lang, { hi: 'भाव का स्वामी कहाँ है?', en: 'Where is this house’s ruler?', gu: 'ભાવનો સ્વામી ક્યાં છે?', kn: 'ಈ ಭಾವದ ಅಧಿಪತಿ ಎಲ್ಲಿದ್ದಾನೆ?', mr: 'भावाचा स्वामी कुठे आहे?', te: 'ఈ భావాధిపతి ఎక్కడ ఉన్నాడు?' })}</Text>
             <Text style={ui.body}>{ui.m(`${ui.sign(house.rashiIndex)} राशि का स्वामी ${ui.name(house.lord)} है। ${house.lordPosition ? `आपकी कुंडली में वह भाव ${house.lordPosition.house} में है।` : ''} भाव का स्वामी (भावेश) इस जीवन-क्षेत्र को समझने का अगला कदम है।`, `${ui.name(house.lord)} rules ${ui.sign(house.rashiIndex)}. ${house.lordPosition ? `In this chart it occupies house ${house.lordPosition.house}.` : ''} The house ruler, called bhavesh, is the next step in understanding this life area.`)}</Text>
             {house.lordPosition && <Pressable accessibilityRole="button" accessibilityLabel={`Follow house ruler ${GRAHA_NAMES_EN[house.lord]}`} style={styles.action} onPress={() => open({ kind: 'graha', graha: house.lord })}><Text style={ui.label}>{ui.name(house.lord)} · {ui.c(`भाव ${house.lordPosition.house} समझें`, `Explore house ${house.lordPosition.house}`)} ›</Text></Pressable>}
           </>}
           {position && <>
             <Text style={ui.label}>{ui.c(`भाव ${position.house}`, `House ${position.house}`)} · {ui.sign(position.rashiIndex)}</Text>
-            <Text style={ui.label}>{pick(ui.lang, { hi: 'राशि से संबंध', en: 'Relationship with this sign', gu: 'રાશિ સાથેનો સંબંધ', kn: 'ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ' })} · {ui.c(PLACEMENT_LABELS[placementKind(position)].hi, PLACEMENT_LABELS[placementKind(position)].en)}</Text>
+            <Text style={ui.label}>{pick(ui.lang, { hi: 'राशि से संबंध', en: 'Relationship with this sign', gu: 'રાશિ સાથેનો સંબંધ', kn: 'ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ', mr: 'राशीशी संबंध', te: 'రాశితో సంబంధం' })} · {ui.c(PLACEMENT_LABELS[placementKind(position)].hi, PLACEMENT_LABELS[placementKind(position)].en)}</Text>
             <Text style={ui.body}>{ui.m(GRAHA_REFERENCE[position.graha].signifiesHi, GRAHA_REFERENCE[position.graha].signifiesEn)}</Text>
             <PersonalReading key={`reading-${position.graha}`} card={cards.find(card => card.graha === position.graha)} />
             <Relationship key={position.graha} position={position} />
-            <Text style={ui.label}>{pick(ui.lang, { hi: 'ग्रह परिचय', en: 'About this graha', gu: 'ગ્રહ પરિચય', kn: 'ಗ್ರಹದ ಪರಿಚಯ' })}</Text>
+            <Text style={ui.label}>{pick(ui.lang, { hi: 'ग्रह परिचय', en: 'About this graha', gu: 'ગ્રહ પરિચય', kn: 'ಗ್ರಹದ ಪರಿಚಯ', mr: 'ग्रह परिचय', te: 'గ్రహ పరిచయం' })}</Text>
             <Text style={ui.body}>{ui.m(GRAHA_REFERENCE[position.graha].natureHi, GRAHA_REFERENCE[position.graha].natureEn)}</Text>
             <Pressable onPress={() => open({ kind: 'house', house: position.house })} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{ui.c(`भाव ${position.house} का अर्थ समझें`, `Understand house ${position.house}`)} ›</Text></Pressable>
             <CalculationDetails key={`details-${position.graha}`} position={position} />
-            {onReference && <Pressable onPress={() => { onClose(); onReference(position.graha); }} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'ग्रह परिचय और नैसर्गिक मैत्री', en: 'Graha introduction and natural friendships', gu: 'ગ્રહ પરિચય અને નૈસર્ગિક મૈત્રી', kn: 'ಗ್ರಹ ಪರಿಚಯ ಮತ್ತು ನೈಸರ್ಗಿಕ ಮೈತ್ರಿ' })} ›</Text></Pressable>}
+            {onReference && <Pressable onPress={() => { onClose(); onReference(position.graha); }} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'ग्रह परिचय और नैसर्गिक मैत्री', en: 'Graha introduction and natural friendships', gu: 'ગ્રહ પરિચય અને નૈસર્ગિક મૈત્રી', kn: 'ಗ್ರಹ ಪರಿಚಯ ಮತ್ತು ನೈಸರ್ಗಿಕ ಮೈತ್ರಿ', mr: 'ग्रह परिचय आणि नैसर्गिक मैत्री', te: 'గ్రహ పరిచయం మరియు నైసర్గిక మైత్రి' })} ›</Text></Pressable>}
           </>}
           {current.kind === 'anchor' && <>
             <Text style={ui.body}>{current.anchor === 'lagna' ? ui.m(`जन्म के समय पूर्वी क्षितिज पर ${ui.sign(chart.lagnaRashiIndex)} राशि उदित थी। यही लग्न है और कुंडली का पहला भाव तय करती है।`, `${ui.sign(chart.lagnaRashiIndex)} was rising on the eastern horizon at birth. This is the Lagna; it sets house 1 in this chart.`) : current.anchor === 'moon' && moon ? ui.m(`जन्म के समय चन्द्र ${ui.sign(moon.rashiIndex)} राशि में था। चन्द्र राशि से मन, भावनाओं और भीतर की लय को पढ़ते हैं।`, `The Moon was in ${ui.sign(moon.rashiIndex)} at birth. The Moon sign is used to read feelings, the mind and inner rhythm.`) : moon ? ui.m(`जन्म के समय चन्द्र ${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} नक्षत्र, पद ${moon.pada} में था। नक्षत्र आकाश के 27 खंडों में से एक है; पद उसका चौथा हिस्सा है। इसी चन्द्र-स्थिति से विम्शोत्तरी दशा का आरम्भ निकलता है।`, `The Moon was in ${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]}, pada ${moon.pada}. A nakshatra is one of 27 sky divisions; a pada is one quarter of it. This Moon position sets the starting point for the Vimshottari period sequence.`) : ''}</Text>
@@ -145,7 +145,7 @@ function SheetContent({ chart, selection, onClose, onReference }: { chart: Kunda
             ].map(([hi, en, bodyHi, bodyEn]) => <View key={en} style={styles.block}><Text style={ui.title}>{ui.c(hi, en)}</Text><Text style={ui.body}>{ui.m(bodyHi, bodyEn)}</Text></View>)}
           </>}
         </ScrollView>
-        <Pressable onPress={back} accessibilityRole="button" accessibilityLabel={trail.length > 1 ? 'Back in Kundali explanation' : 'Done with Kundali explanation'} style={[styles.done, { backgroundColor: ui.colors.saffronTint }]}><Text style={ui.label}>{trail.length > 1 ? pick(ui.lang, { hi: 'पीछे', en: 'Back', gu: 'પાછળ', kn: 'ಹಿಂದೆ' }) : pick(ui.lang, { hi: 'समझ गए', en: 'Done', gu: 'સમજાયું', kn: 'ಆಯಿತು' })}</Text></Pressable>
+        <Pressable onPress={back} accessibilityRole="button" accessibilityLabel={trail.length > 1 ? 'Back in Kundali explanation' : 'Done with Kundali explanation'} style={[styles.done, { backgroundColor: ui.colors.saffronTint }]}><Text style={ui.label}>{trail.length > 1 ? pick(ui.lang, { hi: 'पीछे', en: 'Back', gu: 'પાછળ', kn: 'ಹಿಂದೆ', mr: 'मागे', te: 'వెనుకకు' }) : pick(ui.lang, { hi: 'समझ गए', en: 'Done', gu: 'સમજાયું', kn: 'ಆಯಿತು', mr: 'समजले', te: 'అర్థమైంది' })}</Text></Pressable>
       </View>
     </View>
   </Modal>;
@@ -168,17 +168,17 @@ export function KundaliSummary({ chart, at, onOpenTab }: { chart: KundaliChart; 
     { id: 'nakshatra' as const, hi: 'जन्म नक्षत्र', en: 'Birth nakshatra', value: moon ? ui.c(`${NAKSHATRA_NAMES_HI[moon.nakshatraIndex]} · पद ${moon.pada}`, `${NAKSHATRA_NAMES_EN[moon.nakshatraIndex]} · Pada ${moon.pada}`) : '—', meaning: ui.m('चन्द्र का आकाश-खंड · दशा का आधार', 'The Moon’s sky division · the basis for dasha') },
   ];
   return <View>
-    <Text style={ui.title}>{pick(ui.lang, { hi: 'आपकी कुंडली, सरल शब्दों में', en: 'Your chart, in simple words', gu: 'તમારી કુંડળી, સરળ શબ્દોમાં', kn: 'ನಿಮ್ಮ ಕುಂಡಲಿ, ಸರಳ ಮಾತುಗಳಲ್ಲಿ' })}</Text>
-    <Text style={[ui.body, { marginTop: 6, marginBottom: 16 }]}>{pick(ui.lang, { hi: 'तीन शुरुआत के बिंदु। किसी को छूकर उसका अर्थ जानें।', en: 'Three starting points. Tap any one to understand it.', gu: 'શરૂઆતના ત્રણ મુદ્દા. અર્થ જાણવા કોઈ એકને સ્પર્શ કરો.', kn: 'ಆರಂಭದ ಮೂರು ಅಂಶಗಳು. ಅರ್ಥ ತಿಳಿಯಲು ಒಂದನ್ನು ಸ್ಪರ್ಶಿಸಿ.' })}</Text>
+    <Text style={ui.title}>{pick(ui.lang, { hi: 'आपकी कुंडली, सरल शब्दों में', en: 'Your chart, in simple words', gu: 'તમારી કુંડળી, સરળ શબ્દોમાં', kn: 'ನಿಮ್ಮ ಕುಂಡಲಿ, ಸರಳ ಮಾತುಗಳಲ್ಲಿ', mr: 'तुमची कुंडली, सोप्या शब्दांत', te: 'మీ కుండలి, సరళమైన మాటల్లో' })}</Text>
+    <Text style={[ui.body, { marginTop: 6, marginBottom: 16 }]}>{pick(ui.lang, { hi: 'तीन शुरुआत के बिंदु। किसी को छूकर उसका अर्थ जानें।', en: 'Three starting points. Tap any one to understand it.', gu: 'શરૂઆતના ત્રણ મુદ્દા. અર્થ જાણવા કોઈ એકને સ્પર્શ કરો.', kn: 'ಆರಂಭದ ಮೂರು ಅಂಶಗಳು. ಅರ್ಥ ತಿಳಿಯಲು ಒಂದನ್ನು ಸ್ಪರ್ಶಿಸಿ.', mr: 'सुरुवातीचे तीन मुद्दे. अर्थ जाणण्यासाठी कोणत्याही एकाला स्पर्श करा.', te: 'ప్రారంభానికి మూడు అంశాలు. అర్థం తెలుసుకోవడానికి ఏదైనా ఒకదాన్ని తాకండి.' })}</Text>
     <View style={[ui.card, { marginBottom: 16 }]}>{anchors.map((anchor, index) => <Pressable key={anchor.id} testID={`kundali-summary-${anchor.id}`} accessibilityRole="button" accessibilityLabel={`Explain ${anchor.en}`} onPress={() => select({ kind: 'anchor', anchor: anchor.id })} style={[styles.anchor, index > 0 && { borderTopWidth: 1, borderTopColor: ui.colors.divider }]}>
       <KundaliArtwork name={anchor.id} size={64} /><View style={styles.flexCopy}><Text style={ui.label}>{ui.c(anchor.hi, anchor.en)}</Text><Text style={[ui.title, { fontSize: 18 * ui.factor }]}>{anchor.value}</Text><Text style={ui.body}>{anchor.meaning}</Text></View><Text style={ui.label}>›</Text>
     </Pressable>)}</View>
     {dasha && <Pressable onPress={() => onOpenTab('dasha')} accessibilityRole="button" accessibilityLabel="Explore current Dasha" style={[ui.card, styles.inset, { marginBottom: 16 }]}>
       <View style={styles.grahaRow}><KundaliArtwork name={dasha.maha.lord} size={64} />{dasha.antar && <KundaliArtwork name={dasha.antar.lord} size={44} />}<Text style={[ui.label, styles.flexCopy]}>{ui.c('अभी चल रही अवधि', 'Your current period')}</Text></View>
       <Text style={ui.title}>{ui.name(dasha.maha.lord)} {ui.c('महादशा', 'Mahadasha')}</Text>{dasha.antar && <Text style={ui.body}>{ui.name(dasha.antar.lord)} {ui.c('अन्तर्दशा', 'Antardasha')}</Text>}
-      <Text style={ui.label}>{pick(ui.lang, { hi: 'समयरेखा और अर्थ देखें', en: 'Explore the timeline and meaning', gu: 'સમયરેખા અને અર્થ જુઓ', kn: 'ಕಾಲರೇಖೆ ಮತ್ತು ಅರ್ಥ ನೋಡಿ' })} ›</Text>
+      <Text style={ui.label}>{pick(ui.lang, { hi: 'समयरेखा और अर्थ देखें', en: 'Explore the timeline and meaning', gu: 'સમયરેખા અને અર્થ જુઓ', kn: 'ಕಾಲರೇಖೆ ಮತ್ತು ಅರ್ಥ ನೋಡಿ', mr: 'कालरेषा आणि अर्थ पाहा', te: 'కాలరేఖ మరియు అర్థం చూడండి' })} ›</Text>
     </Pressable>}
-    <Pressable onPress={() => onOpenTab('chart')} accessibilityRole="button" style={[styles.done, { backgroundColor: ui.colors.saffronTint }]}><Text style={ui.label}>{pick(ui.lang, { hi: 'अपनी कुंडली को छूकर समझें', en: 'Explore your chart by touch', gu: 'તમારી કુંડળી સ્પર્શ કરીને સમજો', kn: 'ನಿಮ್ಮ ಕುಂಡಲಿಯನ್ನು ಸ್ಪರ್ಶಿಸಿ ತಿಳಿಯಿರಿ' })} ›</Text></Pressable>
+    <Pressable onPress={() => onOpenTab('chart')} accessibilityRole="button" style={[styles.done, { backgroundColor: ui.colors.saffronTint }]}><Text style={ui.label}>{pick(ui.lang, { hi: 'अपनी कुंडली को छूकर समझें', en: 'Explore your chart by touch', gu: 'તમારી કુંડળી સ્પર્શ કરીને સમજો', kn: 'ನಿಮ್ಮ ಕುಂಡಲಿಯನ್ನು ಸ್ಪರ್ಶಿಸಿ ತಿಳಿಯಿರಿ', mr: 'तुमच्या कुंडलीला स्पर्श करून समजून घ्या', te: 'మీ కుండలిని తాకి తెలుసుకోండి' })} ›</Text></Pressable>
     <LearningSheet chart={chart} selection={selection} onClose={close} />
   </View>;
 }
@@ -192,17 +192,17 @@ export function KundaliExplorer({ chart, mode, onReference }: { chart: KundaliCh
   const grahaRows = [0, 3, 6].map(start => GRAHA_ORDER.slice(start, start + 3));
   return <View>
     {mode === 'chart' ? <>
-      <View accessibilityRole="tablist" style={[styles.switcher, { borderColor: ui.colors.divider }]}>{(['picture', 'topics'] as const).map(id => <Pressable key={id} testID={`kundali-view-${id}`} accessibilityRole="tab" accessibilityState={{ selected: view === id }} onPress={() => setView(id)} style={[styles.switchButton, { backgroundColor: view === id ? ui.colors.saffronTint : 'transparent' }]}><Text style={ui.label}>{id === 'picture' ? pick(ui.lang, { hi: 'कुंडली चित्र', en: 'Chart picture', gu: 'કુંડળી ચિત્ર', kn: 'ಕುಂಡಲಿ ಚಿತ್ರ' }) : pick(ui.lang, { hi: 'जीवन के विषय', en: 'Life areas', gu: 'જીવનના વિષયો', kn: 'ಜೀವನದ ವಿಷಯಗಳು' })}</Text></Pressable>)}</View>
-      <Pressable onPress={() => select({ kind: 'guide' })} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'इसे कैसे पढ़ें?', en: 'How do I read this?', gu: 'આ કેવી રીતે વાંચવું?', kn: 'ಇದನ್ನು ಹೇಗೆ ಓದುವುದು?' })} ›</Text></Pressable>
+      <View accessibilityRole="tablist" style={[styles.switcher, { borderColor: ui.colors.divider }]}>{(['picture', 'topics'] as const).map(id => <Pressable key={id} testID={`kundali-view-${id}`} accessibilityRole="tab" accessibilityState={{ selected: view === id }} onPress={() => setView(id)} style={[styles.switchButton, { backgroundColor: view === id ? ui.colors.saffronTint : 'transparent' }]}><Text style={ui.label}>{id === 'picture' ? pick(ui.lang, { hi: 'कुंडली चित्र', en: 'Chart picture', gu: 'કુંડળી ચિત્ર', kn: 'ಕುಂಡಲಿ ಚಿತ್ರ', mr: 'कुंडली चित्र', te: 'కుండలి చిత్రం' }) : pick(ui.lang, { hi: 'जीवन के विषय', en: 'Life areas', gu: 'જીવનના વિષયો', kn: 'ಜೀವನದ ವಿಷಯಗಳು', mr: 'जीवनाचे विषय', te: 'జీవిత విషయాలు' })}</Text></Pressable>)}</View>
+      <Pressable onPress={() => select({ kind: 'guide' })} accessibilityRole="button" style={styles.action}><Text style={ui.label}>{pick(ui.lang, { hi: 'इसे कैसे पढ़ें?', en: 'How do I read this?', gu: 'આ કેવી રીતે વાંચવું?', kn: 'ಇದನ್ನು ಹೇಗೆ ಓದುವುದು?', mr: 'हे कसे वाचावे?', te: 'దీన్ని ఎలా చదవాలి?' })} ›</Text></Pressable>
       {view === 'picture' ? <View style={[ui.card, styles.inset]}>
-        <Text style={ui.body}>{pick(ui.lang, { hi: 'हर खाना जीवन का एक विषय है। भाव संख्या और राशि का नाम साथ पढ़ें; अर्थ जानने के लिए खाने को छुएँ।', en: 'Each cell is a life area. Read its house number and sign name together; tap a cell to understand it.', gu: 'દરેક ખાનું જીવનનો એક વિષય છે. ભાવનો નંબર અને રાશિનું નામ સાથે વાંચો; અર્થ જાણવા ખાનાને સ્પર્શ કરો.', kn: 'ಪ್ರತಿ ಖಾನೆಯು ಜೀವನದ ಒಂದು ವಿಷಯ. ಭಾವದ ಸಂಖ್ಯೆ ಮತ್ತು ರಾಶಿಯ ಹೆಸರನ್ನು ಜೊತೆಯಾಗಿ ಓದಿ; ಅರ್ಥ ತಿಳಿಯಲು ಖಾನೆಯನ್ನು ಸ್ಪರ್ಶಿಸಿ.' })}</Text>
+        <Text style={ui.body}>{pick(ui.lang, { hi: 'हर खाना जीवन का एक विषय है। भाव संख्या और राशि का नाम साथ पढ़ें; अर्थ जानने के लिए खाने को छुएँ।', en: 'Each cell is a life area. Read its house number and sign name together; tap a cell to understand it.', gu: 'દરેક ખાનું જીવનનો એક વિષય છે. ભાવનો નંબર અને રાશિનું નામ સાથે વાંચો; અર્થ જાણવા ખાનાને સ્પર્શ કરો.', kn: 'ಪ್ರತಿ ಖಾನೆಯು ಜೀವನದ ಒಂದು ವಿಷಯ. ಭಾವದ ಸಂಖ್ಯೆ ಮತ್ತು ರಾಶಿಯ ಹೆಸರನ್ನು ಜೊತೆಯಾಗಿ ಓದಿ; ಅರ್ಥ ತಿಳಿಯಲು ಖಾನೆಯನ್ನು ಸ್ಪರ್ಶಿಸಿ.', mr: 'प्रत्येक घर जीवनाचा एक विषय आहे. भावाचा क्रमांक आणि राशीचे नाव एकत्र वाचा; अर्थ जाणण्यासाठी घराला स्पर्श करा.', te: 'ప్రతి గడి జీవితంలోని ఒక విషయం. భావ సంఖ్య మరియు రాశి పేరును కలిపి చదవండి; అర్థం తెలుసుకోవడానికి గడిని తాకండి.' })}</Text>
         <NorthIndianChart chart={chart} size={Math.max(200, Math.min(width - 88, 380))} lang={ui.lang} onSelectHouse={house => select({ kind: 'house', house })} />
       </View> : <View>{chart.houses.map((_, index) => { const lesson = houseLesson(chart, index + 1); return <Pressable key={index} testID={`kundali-house-topic-${index + 1}`} accessibilityRole="button" accessibilityLabel={`Explore house ${index + 1}, ${lesson.meaning.shortEn}`} onPress={() => select({ kind: 'house', house: index + 1 })} style={[ui.card, styles.topic]}>
         <Text style={ui.label}>{ui.c(`भाव ${index + 1}`, `House ${index + 1}`)} · {ui.sign(lesson.rashiIndex)}</Text><Text style={[ui.title, { fontSize: 18 * ui.factor }]}>{ui.m(lesson.meaning.shortHi, lesson.meaning.shortEn)} ›</Text><Text style={ui.body}>{lesson.occupants.length ? lesson.occupants.map(item => ui.name(item.graha)).join(' · ') : ui.c('खाली भाव · अर्थ जानें', 'Empty house · understand its meaning')}</Text>
       </Pressable>; })}</View>}
     </> : <>
-      <Text style={ui.title}>{pick(ui.lang, { hi: 'अपने ग्रहों को जानें', en: 'Meet your grahas', gu: 'તમારા ગ્રહોને જાણો', kn: 'ನಿಮ್ಮ ಗ್ರಹಗಳನ್ನು ತಿಳಿಯಿರಿ' })}</Text>
-      <Text style={[ui.body, { marginTop: 6, marginBottom: 16 }]}>{pick(ui.lang, { hi: 'ग्रह को छूकर उसका परिचय, स्थिति का अर्थ और राशि से संबंध समझें।', en: 'Tap a graha for its nature, the meaning of its placement and its sign relationship.', gu: 'ગ્રહનો પરિચય, સ્થિતિનો અર્થ અને રાશિ સાથેનો સંબંધ જાણવા તેને સ્પર્શ કરો.', kn: 'ಗ್ರಹದ ಸ್ವಭಾವ, ಸ್ಥಾನದ ಅರ್ಥ ಮತ್ತು ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ ತಿಳಿಯಲು ಅದನ್ನು ಸ್ಪರ್ಶಿಸಿ.' })}</Text>
+      <Text style={ui.title}>{pick(ui.lang, { hi: 'अपने ग्रहों को जानें', en: 'Meet your grahas', gu: 'તમારા ગ્રહોને જાણો', kn: 'ನಿಮ್ಮ ಗ್ರಹಗಳನ್ನು ತಿಳಿಯಿರಿ', mr: 'तुमच्या ग्रहांना जाणून घ्या', te: 'మీ గ్రహాలను తెలుసుకోండి' })}</Text>
+      <Text style={[ui.body, { marginTop: 6, marginBottom: 16 }]}>{pick(ui.lang, { hi: 'ग्रह को छूकर उसका परिचय, स्थिति का अर्थ और राशि से संबंध समझें।', en: 'Tap a graha for its nature, the meaning of its placement and its sign relationship.', gu: 'ગ્રહનો પરિચય, સ્થિતિનો અર્થ અને રાશિ સાથેનો સંબંધ જાણવા તેને સ્પર્શ કરો.', kn: 'ಗ್ರಹದ ಸ್ವಭಾವ, ಸ್ಥಾನದ ಅರ್ಥ ಮತ್ತು ರಾಶಿಯೊಂದಿಗಿನ ಸಂಬಂಧ ತಿಳಿಯಲು ಅದನ್ನು ಸ್ಪರ್ಶಿಸಿ.', mr: 'ग्रहाचा परिचय, स्थितीचा अर्थ आणि राशीशी संबंध जाणण्यासाठी त्याला स्पर्श करा.', te: 'గ్రహ స్వభావం, స్థితి అర్థం మరియు రాశితో సంబంధం తెలుసుకోవడానికి దాన్ని తాకండి.' })}</Text>
       <View testID="kundali-graha-grid" style={styles.grid}>
         {grahaRows.map((row, rowIndex) => <View key={rowIndex} testID={`kundali-graha-row-${rowIndex + 1}`} style={styles.gridRow}>
           {row.map(graha => {

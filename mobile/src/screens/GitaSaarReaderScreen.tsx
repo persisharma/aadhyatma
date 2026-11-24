@@ -643,6 +643,8 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
                   en: 'Next teaching',
                   gu: 'આગળની શીખ',
                   kn: 'ಮುಂದಿನ ಕಲಿಕೆ',
+                  mr: 'पुढील शिकवण',
+                  te: 'తదుపరి బోధ',
                 })}
               </ProseParagraph>
               <AppIcon name="next" size={18} color={colors.saffronDeep} />

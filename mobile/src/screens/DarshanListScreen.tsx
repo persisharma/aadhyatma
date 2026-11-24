@@ -56,6 +56,8 @@ export default function DarshanListScreen({
           en: "Temple Darshan",
           gu: "મંદિર દર્શન",
           kn: "ದೇವಾಲಯ ದರ್ಶನ",
+          mr: "मंदिर दर्शन",
+          te: "ఆలయ దర్శనం",
         })}
         onBack={() => navigation.goBack()}
       />
@@ -70,6 +72,8 @@ export default function DarshanListScreen({
             en: "Broadcasts are operated by the temples. Availability and timings may change.",
             gu: "પ્રસારણ મંદિરો દ્વારા સંચાલિત છે. ઉપલબ્ધતા અને સમય બદલાઈ શકે છે.",
             kn: "ಪ್ರಸಾರವನ್ನು ದೇವಾಲಯಗಳು ನಿರ್ವಹಿಸುತ್ತವೆ. ಲಭ್ಯತೆ ಮತ್ತು ಸಮಯ ಬದಲಾಗಬಹುದು.",
+            mr: "प्रसारण मंदिरांद्वारे चालवले जाते. उपलब्धता आणि वेळ बदलू शकतात.",
+            te: "ప్రసారాలను ఆలయాలే నిర్వహిస్తాయి. లభ్యత మరియు సమయాలు మారవచ్చు.",
           })}
         </DarshanText>
         <TextField
@@ -81,12 +85,16 @@ export default function DarshanListScreen({
             en: "Search temple or city",
             gu: "મંદિર કે શહેર શોધો",
             kn: "ದೇವಾಲಯ ಅಥವಾ ನಗರ ಹುಡುಕಿ",
+            mr: "मंदिर किंवा शहर शोधा",
+            te: "ఆలయం లేదా నగరం వెతకండి",
           })}
           accessibilityLabel={pick(lang, {
             hi: "मंदिर खोजें",
             en: "Search temples",
             gu: "મંદિર શોધો",
             kn: "ದೇವಾಲಯ ಹುಡುಕಿ",
+            mr: "मंदिर शोधा",
+            te: "ఆలయాలు వెతకండి",
           })}
         />
         <DarshanAction
@@ -99,12 +107,16 @@ export default function DarshanListScreen({
                   en: "Show all temples",
                   gu: "બધાં મંદિરો બતાવો",
                   kn: "ಎಲ್ಲಾ ದೇವಾಲಯಗಳನ್ನು ತೋರಿಸಿ",
+                  mr: "सर्व मंदिरे दाखवा",
+                  te: "అన్ని ఆలయాలు చూపండి",
                 })
               : pick(lang, {
                   hi: "मेरे पसंदीदा मंदिर",
                   en: "My favourite temples",
                   gu: "મારાં મનપસંદ મંદિરો",
                   kn: "ನನ್ನ ಮೆಚ್ಚಿನ ದೇವಾಲಯಗಳು",
+                  mr: "माझी आवडती मंदिरे",
+                  te: "నా ఇష్టమైన ఆలయాలు",
                 })
           }
           onPress={() => setSavedOnly((v) => !v)}
@@ -117,6 +129,8 @@ export default function DarshanListScreen({
                 en: "Could not save or load favourites.",
                 gu: "મનપસંદ મંદિરો સાચવી કે વાંચી શકાયા નથી.",
                 kn: "ಮೆಚ್ಚಿನವುಗಳನ್ನು ಉಳಿಸಲು ಅಥವಾ ಓದಲು ಆಗಲಿಲ್ಲ.",
+                mr: "आवडती मंदिरे जतन किंवा लोड करता आली नाहीत.",
+                te: "ఇష్టమైనవాటిని సేవ్ లేదా లోడ్ చేయలేకపోయాం.",
               })}
             </DarshanText>
             <DarshanAction
@@ -125,6 +139,8 @@ export default function DarshanListScreen({
                 en: "Try again",
                 gu: "ફરી પ્રયાસ કરો",
                 kn: "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
+                mr: "पुन्हा प्रयत्न करा",
+                te: "మళ్లీ ప్రయత్నించండి",
               })}
               onPress={retry}
             />
@@ -148,6 +164,8 @@ export default function DarshanListScreen({
               en: "No temples found. Change the search or show all temples.",
               gu: "કોઈ મંદિર મળ્યું નથી. શોધ બદલો કે બધાં મંદિરો જુઓ.",
               kn: "ದೇವಾಲಯ ಕಂಡುಬಂದಿಲ್ಲ. ಹುಡುಕಾಟ ಬದಲಿಸಿ ಅಥವಾ ಎಲ್ಲವನ್ನೂ ನೋಡಿ.",
+              mr: "कोणतेही मंदिर आढळले नाही. शोध बदला किंवा सर्व मंदिरे पाहा.",
+              te: "ఆలయాలు ఏవీ కనబడలేదు. శోధన మార్చండి లేదా అన్ని ఆలయాలు చూడండి.",
             })}
           </DarshanText>
         )}

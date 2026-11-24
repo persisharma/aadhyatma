@@ -14,7 +14,7 @@ import { getComicBook, comicLanguage } from '@/data/comicBooks';
 import { episodeCover } from '@/data/comicBooks/episodeCovers';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
-import { pick } from '@/utils/localize';
+import { authoredByLang, pick } from '@/utils/localize';
 import type { HomeStackParamList } from '@/navigation/types';
 
 export default function ComicChaptersScreen({ navigation, route }: NativeStackScreenProps<HomeStackParamList, 'ComicChapters'>) {
@@ -32,6 +32,8 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
     en: `${episodes.length} episodes · A picture retelling of the ${kanda.en} of the Valmiki Ramayana. Not a verse-by-verse translation.`,
     gu: `${episodes.length} પ્રસંગ · વાલ્મીકિ રામાયણના ${kanda.gu}ની ચિત્રકથા. શ્લોક-દર-શ્લોક અનુવાદ નથી.`,
     kn: `${episodes.length} ಪ್ರಸಂಗಗಳು · ವಾಲ್ಮೀಕಿ ರಾಮಾಯಣದ ${kanda.kn} ಚಿತ್ರಕಥೆ. ಶ್ಲೋಕ-ದರ-ಶ್ಲೋಕ ಅನುವಾದವಲ್ಲ.`,
+    mr: `${episodes.length} प्रसंग · वाल्मीकी रामायणातील ${authoredByLang('mr', kanda)}ची चित्रकथा. श्लोकशः अनुवाद नाही.`,
+    te: `${episodes.length} ప్రసంగాలు · వాల్మీకి రామాయణంలోని ${authoredByLang('te', kanda)} చిత్రకథ. శ్లోకానుశ్లోక అనువాదం కాదు.`,
   }) : '';
   const listingShare = comic && book ? buildListingShare({
     sourceId: route.params.comicId,
@@ -44,7 +46,7 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
   }) : null;
   return <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
     <ReaderHeader
-      title={comic ? pick(lang, comic.title) : ''}
+      title={comic ? authoredByLang(lang, comic.title) : ''}
       variant="index"
       onBack={() => navigation.goBack()}
       sideWidth={60}
@@ -55,15 +57,15 @@ export default function ComicChaptersScreen({ navigation, route }: NativeStackSc
       contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingBottom: spacing.md, gap: spacing.md }}
       initialNumToRender={4} maxToRenderPerBatch={4} windowSize={5}
       ListHeaderComponent={episodes.length ? <ListingScope testID="comic-scope">{scope}</ListingScope> : null}
-      ListEmptyComponent={<Text style={{ color: colors.ink }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>}
+      ListEmptyComponent={<Text style={{ color: colors.ink }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.', mr: 'कथा सापडली नाही.', te: 'కథ దొరకలేదు.' })}</Text>}
       renderItem={({ item: episode, index }) => {
         const cover = episodeCover(episode);
         const title = episode[language].title;
         return <ListingCard
           testID={`comic-episode-${episode.id}`}
-          eyebrow={`${pick(lang, { hi: 'प्रसंग', en: 'Episode', gu: 'પ્રસંગ', kn: 'ಪ್ರಸಂಗ' })} ${index + 1}`}
+          eyebrow={`${pick(lang, { hi: 'प्रसंग', en: 'Episode', gu: 'પ્રસંગ', kn: 'ಪ್ರಸಂಗ', mr: 'प्रसंग', te: 'ప్రసంగం' })} ${index + 1}`}
           title={title}
-          meta={`${episode.panels.length} ${pick(lang, { hi: 'पृष्ठ', en: 'pages', gu: 'પૃષ્ઠ', kn: 'ಪುಟಗಳು' })}`}
+          meta={`${episode.panels.length} ${pick(lang, { hi: 'पृष्ठ', en: 'pages', gu: 'પૃષ્ઠ', kn: 'ಪುಟಗಳು', mr: 'पाने', te: 'పేజీలు' })}`}
           thumbnail={<ComicArt compact fill panel={cover.panel} comicId={route.params.comicId} focusX={cover.focusX} label={title} />}
           onPress={() => navigation.navigate('ComicReader', { comicId: route.params.comicId, episodeId: episode.id })}
         />;

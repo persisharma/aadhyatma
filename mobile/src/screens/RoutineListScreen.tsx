@@ -37,7 +37,7 @@ export default function RoutineListScreen({ navigation }: Props) {
               marginVertical: 40,
             }}
           >
-            {pick(lang, { hi: 'अभी कोई साधना नहीं', en: 'No routines yet', gu: 'હજી કોઈ સાધના નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸಾಧನೆ ಇಲ್ಲ' })}
+            {pick(lang, { hi: 'अभी कोई साधना नहीं', en: 'No routines yet', gu: 'હજી કોઈ સાધના નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸಾಧನೆ ಇಲ್ಲ', mr: 'अद्याप कोणतीही साधना नाही', te: 'ఇంకా ఏ సాధనా లేదు' })}
           </Text>
         )}
 
@@ -80,8 +80,8 @@ export default function RoutineListScreen({ navigation }: Props) {
                 <View style={{ backgroundColor: colors.saffronTint, borderRadius: radii.pill, paddingHorizontal: 8, paddingVertical: 3 }}>
                   <Text style={{ ...pillTextStyle(lang, typography.versePill), color: colors.saffronDeep }}>
                     {r.mode === 'weekday'
-                      ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ' })
-                      : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ' })}
+                      ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ', mr: 'वार', te: 'వారం' })
+                      : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ', mr: 'दैनिक', te: 'రోజువారీ' })}
                   </Text>
                 </View>
               </View>
@@ -102,6 +102,8 @@ export default function RoutineListScreen({ navigation }: Props) {
                   en: `${r.items.length} items`,
                   gu: `${r.items.length} વસ્તુઓ`,
                   kn: `${r.items.length} ವಸ್ತುಗಳು`,
+                  mr: `${r.items.length} वस्तू`,
+                  te: `${r.items.length} అంశాలు`,
                 })}
               </Text>
             </View>
@@ -110,7 +112,7 @@ export default function RoutineListScreen({ navigation }: Props) {
         ))}
 
         <RoutineButton
-          label={pick(lang, { hi: 'नई साधना बनाएँ', en: 'New routine', gu: 'નવી સાધના બનાવો', kn: 'ಹೊಸ ಸಾಧನೆ ರಚಿಸಿ' })}
+          label={pick(lang, { hi: 'नई साधना बनाएँ', en: 'New routine', gu: 'નવી સાધના બનાવો', kn: 'ಹೊಸ ಸಾಧನೆ ರಚಿಸಿ', mr: 'नवीन साधना तयार करा', te: 'కొత్త సాధన సృష్టించండి' })}
           variant="ghost"
           onPress={() => navigation.navigate('RoutineCreate')}
         />
@@ -120,6 +122,8 @@ export default function RoutineListScreen({ navigation }: Props) {
             en: 'Browse sankalps',
             gu: 'તૈયાર સંકલ્પ પસંદ કરો',
             kn: 'ಸಿದ್ಧ ಸಂಕಲ್ಪ ಆರಿಸಿ',
+            mr: 'तयार संकल्प निवडा',
+            te: 'సిద్ధ సంకల్పాలు ఎంచుకోండి',
           })}
           variant="ghost"
           onPress={() => navigation.navigate('SadhanaPrograms')}

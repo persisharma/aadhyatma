@@ -52,7 +52,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ', mr: 'मागे', te: 'వెనుకకు' })}
             hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >
@@ -66,7 +66,7 @@ export default function MuhuratDetailScreen({ navigation, route }: Props) {
           <ShareButton
             onPress={onShare}
             busy={busy || !ready || occasion.loading}
-            accessibilityLabel={pick(lang, { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' })}
+            accessibilityLabel={pick(lang, { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ', mr: 'पंचांग शेअर करा', te: 'పంచాంగం షేర్ చేయండి' })}
             accessibilityHint=""
           />
         </View>

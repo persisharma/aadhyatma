@@ -117,10 +117,10 @@ export function widgetCatalogEntry(content: WidgetContent): WidgetCatalogEntry {
 }
 
 const SIZE_LABELS: Record<WidgetSize, Record<Lang, string>> = {
-  small: { hi: 'छोटा', en: 'Small', gu: 'નાનું', kn: 'ಚಿಕ್ಕದು' },
-  medium: { hi: 'चौड़ा', en: 'Wide', gu: 'પહોળું', kn: 'ಅಗಲ' },
-  large: { hi: 'बड़ा', en: 'Large', gu: 'મોટું', kn: 'ದೊಡ್ಡದು' },
-  lock: { hi: 'लॉक स्क्रीन', en: 'Lock Screen', gu: 'લોક સ્ક્રીન', kn: 'ಲಾಕ್ ಸ್ಕ್ರೀನ್' },
+  small: { hi: 'छोटा', en: 'Small', gu: 'નાનું', kn: 'ಚಿಕ್ಕದು', mr: 'लहान', te: 'చిన్నది' },
+  medium: { hi: 'चौड़ा', en: 'Wide', gu: 'પહોળું', kn: 'ಅಗಲ', mr: 'रुंद', te: 'వెడల్పు' },
+  large: { hi: 'बड़ा', en: 'Large', gu: 'મોટું', kn: 'ದೊಡ್ಡದು', mr: 'मोठे', te: 'పెద్దది' },
+  lock: { hi: 'लॉक स्क्रीन', en: 'Lock Screen', gu: 'લોક સ્ક્રીન', kn: 'ಲಾಕ್ ಸ್ಕ್ರೀನ್', mr: 'लॉक स्क्रीन', te: 'లాక్ స్క్రీన్' },
 };
 
 export function widgetSizeLabel(size: WidgetSize, lang: Lang): string {

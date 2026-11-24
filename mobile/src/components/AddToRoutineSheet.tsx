@@ -109,7 +109,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
         >
           <View style={[styles.grabber, { backgroundColor: colors.divider }]} />
           <Text style={{ fontFamily: cardFontByLang(lang), fontSize: 18, color: colors.ink, textAlign: 'center' }}>
-            {pick(lang, { hi: `${tName} जोड़ें`, en: `Add ${tName}`, gu: `${tName} ઉમેરો`, kn: `${tName} ಸೇರಿಸಿ` })}
+            {pick(lang, { hi: `${tName} जोड़ें`, en: `Add ${tName}`, gu: `${tName} ઉમેરો`, kn: `${tName} ಸೇರಿಸಿ`, mr: `${tName} जोडा`, te: `${tName} జోడించండి` })}
           </Text>
           <Text
             style={{
@@ -126,6 +126,8 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
               en: `Add “${titleHi}” to a routine`,
               gu: `“${titleEn}” ને સાધનામાં ઉમેરો`,
               kn: `“${titleEn}” ಅನ್ನು ಸಾಧನೆಗೆ ಸೇರಿಸಿ`,
+              mr: `“${titleEn}” साधनेत जोडा`,
+              te: `“${titleEn}”ను సాధనకు జోడించండి`,
             })}
           </Text>
 
@@ -133,12 +135,12 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
           {chapters.length > 0 && (
             <View style={{ marginBottom: spacing.md }}>
               <Text style={{ ...typography.sectionLabel, color: colors.inkMuted, marginBottom: 8 }}>
-                {pick(lang, { hi: 'क्या जोड़ें', en: 'What to add', gu: 'શું ઉમેરવું', kn: 'ಏನು ಸೇರಿಸಬೇಕು' })}
+                {pick(lang, { hi: 'क्या जोड़ें', en: 'What to add', gu: 'શું ઉમેરવું', kn: 'ಏನು ಸೇರಿಸಬೇಕು', mr: 'काय जोडायचे', te: 'ఏమి జోడించాలి' })}
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8 }}>
                 <Pressable onPress={() => setChapterSel(null)} style={chip(chapterSel == null)}>
                   <Text style={{ fontFamily: cardFontByLang(lang), fontSize: 13, color: colors.ink }}>
-                    {pick(lang, { hi: 'पूरा', en: 'Whole', gu: 'આખું', kn: 'ಸಂಪೂರ್ಣ' })}
+                    {pick(lang, { hi: 'पूरा', en: 'Whole', gu: 'આખું', kn: 'ಸಂಪೂರ್ಣ', mr: 'संपूर्ण', te: 'మొత్తం' })}
                   </Text>
                 </Pressable>
                 {chapters.map((c) => (
@@ -163,7 +165,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                   paddingVertical: spacing.md,
                 }}
               >
-                {pick(lang, { hi: 'अभी कोई साधना नहीं', en: 'No routines yet', gu: 'હજી કોઈ સાધના નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸಾಧನೆ ಇಲ್ಲ' })}
+                {pick(lang, { hi: 'अभी कोई साधना नहीं', en: 'No routines yet', gu: 'હજી કોઈ સાધના નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸಾಧನೆ ಇಲ್ಲ', mr: 'अद्याप कोणतीही साधना नाही', te: 'ఇంకా ఏ సాధనా లేదు' })}
               </Text>
             )}
 
@@ -194,8 +196,8 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                   <View style={{ backgroundColor: colors.saffronTint, borderRadius: radii.pill, paddingHorizontal: 8, paddingVertical: 2 }}>
                     <Text style={{ ...pillTextStyle(lang, typography.versePill), color: colors.saffronDeep }}>
                       {r.mode === 'weekday'
-                        ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ' })
-                        : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ' })}
+                        ? pick(lang, { hi: 'वार', en: 'WEEKDAY', gu: 'વાર', kn: 'ವಾರ', mr: 'वार', te: 'వారం' })
+                        : pick(lang, { hi: 'दैनिक', en: 'DAILY', gu: 'દૈનિક', kn: 'ದೈನಿಕ', mr: 'दैनिक', te: 'రోజువారీ' })}
                     </Text>
                   </View>
                 </Pressable>
@@ -215,7 +217,7 @@ export default function AddToRoutineSheet({ sourceId, initialChapter, onClose }:
                   color: colors.saffron,
                 }}
               >
-                {pick(lang, { hi: 'नई साधना बनाएँ', en: 'New routine', gu: 'નવી સાધના બનાવો', kn: 'ಹೊಸ ಸಾಧನೆ ರಚಿಸಿ' })}
+                {pick(lang, { hi: 'नई साधना बनाएँ', en: 'New routine', gu: 'નવી સાધના બનાવો', kn: 'ಹೊಸ ಸಾಧನೆ ರಚಿಸಿ', mr: 'नवीन साधना तयार करा', te: 'కొత్త సాధన సృష్టించండి' })}
               </Text>
             </Pressable>
           </ScrollView>

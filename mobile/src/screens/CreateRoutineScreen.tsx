@@ -50,14 +50,14 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                   : navigation.goBack()
             }
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ', mr: 'मागे', te: 'వెనుకకు' })}
             hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >
             <Text style={{ color: colors.inkSoft, fontSize: 18 }}>‹</Text>
           </Pressable>
           <Text style={{ fontFamily: typography.readerTitle.fontFamily, fontSize: 16, color: colors.ink }}>
-            {pick(lang, { hi: 'नई साधना', en: 'New routine', gu: 'નવી સાધના', kn: 'ಹೊಸ ಸಾಧನೆ' })}
+            {pick(lang, { hi: 'नई साधना', en: 'New routine', gu: 'નવી સાધના', kn: 'ಹೊಸ ಸಾಧನೆ', mr: 'नवी साधना', te: 'కొత్త సాధన' })}
           </Text>
         </View>
 
@@ -68,7 +68,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           {step === 'choose' ? (
             <>
               <Heading
-                msg={{ hi: 'कैसे आरम्भ करें?', en: 'How would you like to begin?', gu: 'કેવી રીતે શરૂ કરવું?', kn: 'ಹೇಗೆ ಆರಂಭಿಸಬೇಕು?' }}
+                msg={{ hi: 'कैसे आरम्भ करें?', en: 'How would you like to begin?', gu: 'કેવી રીતે શરૂ કરવું?', kn: 'ಹೇಗೆ ಆರಂಭಿಸಬೇಕು?', mr: 'सुरुवात कशी करायची?', te: 'ఎలా ప్రారంభించాలి?' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
@@ -76,8 +76,8 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               <ModeCard
                 selected={false}
                 onPress={() => setStep('name')}
-                title={{ hi: 'अपनी साधना बनाएँ', en: 'Build your own', gu: 'તમારી સાધના બનાવો', kn: 'ನಿಮ್ಮ ಸಾಧನೆ ರಚಿಸಿ' }}
-                desc={{ hi: 'नाम दें, पाठ चुनें, अपनी दिनचर्या बनाएँ।', en: 'Name it, add texts, compose your daily practice.', gu: 'નામ આપો, પાઠ પસંદ કરો, તમારી દિનચર્યા બનાવો.', kn: 'ಹೆಸರಿಡಿ, ಪಠ್ಯ ಆರಿಸಿ, ನಿಮ್ಮ ದಿನಚರಿ ರಚಿಸಿ.' }}
+                title={{ hi: 'अपनी साधना बनाएँ', en: 'Build your own', gu: 'તમારી સાધના બનાવો', kn: 'ನಿಮ್ಮ ಸಾಧನೆ ರಚಿಸಿ', mr: 'तुमची साधना बनवा', te: 'మీ సాధనను రూపొందించండి' }}
+                desc={{ hi: 'नाम दें, पाठ चुनें, अपनी दिनचर्या बनाएँ।', en: 'Name it, add texts, compose your daily practice.', gu: 'નામ આપો, પાઠ પસંદ કરો, તમારી દિનચર્યા બનાવો.', kn: 'ಹೆಸರಿಡಿ, ಪಠ್ಯ ಆರಿಸಿ, ನಿಮ್ಮ ದಿನಚರಿ ರಚಿಸಿ.', mr: 'नाव द्या, पाठ निवडा, तुमची दिनचर्या बनवा.', te: 'పేరు పెట్టండి, పాఠాలు ఎంచుకోండి, మీ దినచర్యను రూపొందించండి.' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
@@ -87,8 +87,8 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               <ModeCard
                 selected={false}
                 onPress={() => navigation.navigate('SadhanaPrograms')}
-                title={{ hi: 'तैयार संकल्प चुनें', en: 'Choose a prebuilt sankalp', gu: 'તૈયાર સંકલ્પ પસંદ કરો', kn: 'ಸಿದ್ಧ ಸಂಕಲ್ಪ ಆರಿಸಿ' }}
-                desc={{ hi: 'जैसे ४१-दिन हनुमान चालीसा या १८ दिनों में गीता।', en: 'Like a 41-day Hanuman Chalisa or the Gītā in 18 days.', gu: 'જેમ કે ૪૧-દિવસ હનુમાન ચાલીસા અથવા ૧૮ દિવસમાં ગીતા.', kn: 'ಉದಾ. ೪೧-ದಿನ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಅಥವಾ ೧೮ ದಿನಗಳಲ್ಲಿ ಗೀತಾ.' }}
+                title={{ hi: 'तैयार संकल्प चुनें', en: 'Choose a prebuilt sankalp', gu: 'તૈયાર સંકલ્પ પસંદ કરો', kn: 'ಸಿದ್ಧ ಸಂಕಲ್ಪ ಆರಿಸಿ', mr: 'तयार संकल्प निवडा', te: 'సిద్ధ సంకల్పం ఎంచుకోండి' }}
+                desc={{ hi: 'जैसे ४१-दिन हनुमान चालीसा या १८ दिनों में गीता।', en: 'Like a 41-day Hanuman Chalisa or the Gītā in 18 days.', gu: 'જેમ કે ૪૧-દિવસ હનુમાન ચાલીસા અથવા ૧૮ દિવસમાં ગીતા.', kn: 'ಉದಾ. ೪೧-ದಿನ ಹನುಮಾನ್ ಚಾಲೀಸಾ ಅಥವಾ ೧೮ ದಿನಗಳಲ್ಲಿ ಗೀತಾ.', mr: 'उदा. ४१ दिवसांची हनुमान चालीसा किंवा १८ दिवसांत गीता.', te: 'ఉదా. 41 రోజుల హనుమాన్ చాలీసా లేదా 18 రోజుల్లో గీత.' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
@@ -99,13 +99,13 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           ) : step === 'name' ? (
             <>
               <Heading
-                msg={{ hi: 'साधना का नाम', en: 'Name your routine', gu: 'સાધનાનું નામ', kn: 'ನಿಮ್ಮ ಸಾಧನೆಗೆ ಹೆಸರಿಡಿ' }}
+                msg={{ hi: 'साधना का नाम', en: 'Name your routine', gu: 'સાધનાનું નામ', kn: 'ನಿಮ್ಮ ಸಾಧನೆಗೆ ಹೆಸರಿಡಿ', mr: 'साधनेचे नाव', te: 'సాధన పేరు' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
               />
               <Field
-                label={pick(lang, { hi: 'हिंदी नाम', en: 'Hindi name', gu: 'હિન્દી નામ', kn: 'ಹಿಂದಿ ಹೆಸರು' })}
+                label={pick(lang, { hi: 'हिंदी नाम', en: 'Hindi name', gu: 'હિન્દી નામ', kn: 'ಹಿಂದಿ ಹೆಸರು', mr: 'हिंदी नाव', te: 'హిందీ పేరు' })}
                 placeholder="प्रातः साधना"
                 value={nameHi}
                 onChangeText={setNameHi}
@@ -116,7 +116,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 spacing={spacing}
               />
               <Field
-                label={pick(lang, { hi: 'अंग्रेज़ी नाम', en: 'English name', gu: 'અંગ્રેજી નામ', kn: 'ಇಂಗ್ಲಿಷ್ ಹೆಸರು' })}
+                label={pick(lang, { hi: 'अंग्रेज़ी नाम', en: 'English name', gu: 'અંગ્રેજી નામ', kn: 'ಇಂಗ್ಲಿಷ್ ಹೆಸರು', mr: 'इंग्रजी नाव', te: 'ఇంగ్లీష్ పేరు' })}
                 placeholder="Morning Sadhana"
                 value={nameEn}
                 onChangeText={setNameEn}
@@ -127,7 +127,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 spacing={spacing}
               />
               <PrimaryButton
-                label={pick(lang, { hi: 'आगे', en: 'Next', gu: 'આગળ', kn: 'ಮುಂದೆ' })}
+                label={pick(lang, { hi: 'आगे', en: 'Next', gu: 'આગળ', kn: 'ಮುಂದೆ', mr: 'पुढे', te: 'తదుపరి' })}
                 lang={lang}
                 disabled={!nameReady}
                 onPress={() => setStep('mode')}
@@ -140,7 +140,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
           ) : (
             <>
               <Heading
-                msg={{ hi: 'यह कब चले?', en: 'Same every day, or by weekday?', gu: 'આ ક્યારે ચાલે?', kn: 'ಇದು ಯಾವಾಗ ನಡೆಯಬೇಕು?' }}
+                msg={{ hi: 'यह कब चले?', en: 'Same every day, or by weekday?', gu: 'આ ક્યારે ચાલે?', kn: 'ಇದು ಯಾವಾಗ ನಡೆಯಬೇಕು?', mr: 'ही साधना कधी चालावी?', te: 'ఇది ఎప్పుడు జరగాలి?' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
@@ -148,8 +148,8 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               <ModeCard
                 selected={mode === 'daily'}
                 onPress={() => setMode('daily')}
-                title={{ hi: 'दैनिक — हर दिन एक जैसा', en: 'Daily — same every day', gu: 'દૈનિક — દરરોજ એકસરખું', kn: 'ದೈನಿಕ — ಪ್ರತಿದಿನ ಒಂದೇ' }}
-                desc={{ hi: 'हर वस्तु प्रतिदिन दिखती है।', en: 'Every item shows every day.', gu: 'દરેક વસ્તુ રોજ દેખાય છે.', kn: 'ಪ್ರತಿ ವಸ್ತುವೂ ಪ್ರತಿದಿನ ಕಾಣಿಸುತ್ತದೆ.' }}
+                title={{ hi: 'दैनिक — हर दिन एक जैसा', en: 'Daily — same every day', gu: 'દૈનિક — દરરોજ એકસરખું', kn: 'ದೈನಿಕ — ಪ್ರತಿದಿನ ಒಂದೇ', mr: 'दैनिक — दररोज सारखेच', te: 'రోజువారీ — ప్రతిరోజూ ఒకేలా' }}
+                desc={{ hi: 'हर वस्तु प्रतिदिन दिखती है।', en: 'Every item shows every day.', gu: 'દરેક વસ્તુ રોજ દેખાય છે.', kn: 'ಪ್ರತಿ ವಸ್ತುವೂ ಪ್ರತಿದಿನ ಕಾಣಿಸುತ್ತದೆ.', mr: 'प्रत्येक बाब दररोज दिसते.', te: 'ప్రతి అంశం ప్రతిరోజూ కనిపిస్తుంది.' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
@@ -159,8 +159,8 @@ export default function CreateRoutineScreen({ navigation }: Props) {
               <ModeCard
                 selected={mode === 'weekday'}
                 onPress={() => setMode('weekday')}
-                title={{ hi: 'वार अनुसार — दिन के हिसाब से', en: 'By weekday — changes per day', gu: 'વાર પ્રમાણે — દિવસ મુજબ', kn: 'ವಾರದ ಪ್ರಕಾರ — ದಿನಕ್ಕೆ ತಕ್ಕಂತೆ' }}
-                desc={{ hi: 'हर दिन का अपना देव व पाठ।', en: 'Each day has its own deity and texts.', gu: 'દરેક દિવસનો પોતાનો દેવ અને પાઠ.', kn: 'ಪ್ರತಿ ದಿನಕ್ಕೂ ತನ್ನದೇ ದೇವ ಮತ್ತು ಪಠ್ಯ.' }}
+                title={{ hi: 'वार अनुसार — दिन के हिसाब से', en: 'By weekday — changes per day', gu: 'વાર પ્રમાણે — દિવસ મુજબ', kn: 'ವಾರದ ಪ್ರಕಾರ — ದಿನಕ್ಕೆ ತಕ್ಕಂತೆ', mr: 'वारानुसार — दिवसाप्रमाणे', te: 'వారం ప్రకారం — రోజును బట్టి' }}
+                desc={{ hi: 'हर दिन का अपना देव व पाठ।', en: 'Each day has its own deity and texts.', gu: 'દરેક દિવસનો પોતાનો દેવ અને પાઠ.', kn: 'ಪ್ರತಿ ದಿನಕ್ಕೂ ತನ್ನದೇ ದೇವ ಮತ್ತು ಪಠ್ಯ.', mr: 'प्रत्येक दिवसाचे स्वतःचे देव व पाठ.', te: 'ప్రతి రోజుకూ తనదైన దేవుడు, పాఠాలు.' }}
                 lang={lang}
                 colors={colors}
                 typography={typography}
@@ -168,7 +168,7 @@ export default function CreateRoutineScreen({ navigation }: Props) {
                 spacing={spacing}
               />
               <PrimaryButton
-                label={pick(lang, { hi: 'साधना बनाएँ', en: 'Create routine', gu: 'સાધના બનાવો', kn: 'ಸಾಧನೆ ರಚಿಸಿ' })}
+                label={pick(lang, { hi: 'साधना बनाएँ', en: 'Create routine', gu: 'સાધના બનાવો', kn: 'ಸಾಧನೆ ರಚಿಸಿ', mr: 'साधना बनवा', te: 'సాధనను రూపొందించండి' })}
                 lang={lang}
                 disabled={!mode}
                 onPress={create}

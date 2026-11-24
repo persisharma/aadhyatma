@@ -215,9 +215,9 @@ describe('JapamCounter turning mala (design.md §35)', () => {
     expect(beadLabel(tree)).toContain('107 of 108');
     expect(beadLabel(tree)).toContain('2 malas completed');
     expect(texts(tree).some(text => /^(आज|આજે|ಇಂದು) \d+|^\d+ (japa|names|shloka) today$/.test(text))).toBe(false);
-    expect(texts(tree)).toContain({ hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ' }[lang]);
+    expect(texts(tree)).toContain({ hi: 'शुरू करने के लिए स्पर्श करें', en: 'Tap to start', gu: 'શરૂ કરવા માટે સ્પર્શ કરો', kn: 'ಪ್ರಾರಂಭಿಸಲು ಸ್ಪರ್ಶಿಸಿ', mr: 'सुरू करण्यासाठी स्पर्श करा', te: 'ప్రారంభించడానికి తాకండి' }[lang]);
     await act(async () => { tapSurface(tree).props.onPress(); });
-    expect(texts(tree)).toContain({ hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ' }[lang]);
+    expect(texts(tree)).toContain({ hi: 'रोकने के लिए स्पर्श करें', en: 'Tap to pause', gu: 'રોકવા માટે સ્પર્શ કરો', kn: 'ನಿಲ್ಲಿಸಲು ಸ್ಪರ್ಶಿಸಿ', mr: 'थांबवण्यासाठी स्पर्श करा', te: 'ఆపడానికి తాకండి' }[lang]);
     expect(beadLabel(tree)).toContain('107 of 108');
     expect(AsyncStorage.setItem).not.toHaveBeenCalledWith('@vedansh/japam-style', expect.anything());
   });

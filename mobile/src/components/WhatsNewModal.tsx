@@ -75,12 +75,16 @@ export default function WhatsNewModal({
     en: "What's New",
     gu: 'નવી સુવિધાઓ',
     kn: 'ಹೊಸ ವೈಶಿಷ್ಟ್ಯಗಳು',
+    mr: 'नवीन सुविधा',
+    te: 'కొత్త ఫీచర్లు',
   });
   const gotIt = pick(lang, {
     hi: 'समझ गया',
     en: 'Got it',
     gu: 'સમજાયું',
     kn: 'ಅರ್ಥವಾಯಿತು',
+    mr: 'समजले',
+    te: 'అర్థమైంది',
   });
   const bodyFont = meaningToken(lang, typography).fontFamily;
 

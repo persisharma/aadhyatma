@@ -11,7 +11,7 @@ export default function ResetUndoPill({ onUndo }: { onUndo: () => void }) {
   return (
     <View style={styles.row}>
       <Text style={[styles.status, { color: colors.inkMuted }]}>
-        {pick(lang, { hi: 'प्रगति रीसेट हुई', en: 'Progress reset', gu: 'પ્રગતિ રીસેટ થઈ', kn: 'ಪ್ರಗತಿ ಮರುಹೊಂದಿಸಲಾಗಿದೆ' })}
+        {pick(lang, { hi: 'प्रगति रीसेट हुई', en: 'Progress reset', gu: 'પ્રગતિ રીસેટ થઈ', kn: 'ಪ್ರಗತಿ ಮರುಹೊಂದಿಸಲಾಗಿದೆ', mr: 'प्रगती रीसेट झाली', te: 'ప్రగతి రీసెట్ అయింది' })}
       </Text>
       <Pressable
         onPress={onUndo}
@@ -26,7 +26,7 @@ export default function ResetUndoPill({ onUndo }: { onUndo: () => void }) {
         ]}
       >
         <Text style={[styles.undoText, { color: colors.saffronDeep }]}>
-          {pick(lang, { hi: 'पूर्ववत करें', en: 'Undo', gu: 'પૂર્વવત્ કરો', kn: 'ರದ್ದುಗೊಳಿಸಿ' })}
+          {pick(lang, { hi: 'पूर्ववत करें', en: 'Undo', gu: 'પૂર્વવત્ કરો', kn: 'ರದ್ದುಗೊಳಿಸಿ', mr: 'पूर्ववत करा', te: 'రద్దు చేయండి' })}
         </Text>
       </Pressable>
     </View>

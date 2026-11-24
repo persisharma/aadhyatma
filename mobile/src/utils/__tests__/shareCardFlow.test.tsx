@@ -21,7 +21,7 @@ const card = (over: Partial<ShareableCard> = {}): ShareableCard => ({
   sourceId: 'panchang.today',
   width: 340,
   languages: true,
-  title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' },
+  title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ', mr: 'पंचांग शेअर करा', te: 'పంచాంగం షేర్ చేయండి' },
   tagNameHi: 'पंचांग',
   tagNameEn: 'Panchang',
   render: () => null,

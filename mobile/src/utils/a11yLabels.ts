@@ -8,5 +8,5 @@ import { pick } from './localize';
  * English on purpose for the e2e suite.
  */
 export function backLabel(lang: Lang): string {
-  return pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' });
+  return pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ', mr: 'मागे', te: 'వెనుకకు' });
 }

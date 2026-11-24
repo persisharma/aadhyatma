@@ -204,7 +204,7 @@ export default function ShareTargetSheet({
   const selectedCount = multi ? multi.selected.filter(Boolean).length : 0;
   const allDisabled = !!busy || !multi?.multiShareAvailable || selectedCount > MAX_SHARE_PAGES;
   const pageChip = multi
-    ? [pick(lang, { hi: `पृष्ठ ${multi.highlighted + 1}`, en: `page ${multi.highlighted + 1}`, gu: `પૃષ્ઠ ${multi.highlighted + 1}`, kn: `ಪುಟ ${multi.highlighted + 1}` })]
+    ? [pick(lang, { hi: `पृष्ठ ${multi.highlighted + 1}`, en: `page ${multi.highlighted + 1}`, gu: `પૃષ્ઠ ${multi.highlighted + 1}`, kn: `ಪುಟ ${multi.highlighted + 1}`, mr: `पृष्ठ ${multi.highlighted + 1}`, te: `పేజీ ${multi.highlighted + 1}` })]
     : [];
   const eyebrow = [indicSafeTag(lang, 1.6), { fontSize: 10, color: colors.inkMuted, marginTop: spacing.md }];
 
@@ -213,8 +213,8 @@ export default function ShareTargetSheet({
       accessibilityRole="header"
       style={{ fontFamily: titleFont, fontSize: 18, color: colors.ink, textAlign: 'center', marginBottom: multi ? 2 : spacing.md }}
     >
-      {choosingStyle ? pick(lang, { hi: 'कैसा कार्ड साझा करें?', en: 'Which card would you like to share?', gu: 'કયું કાર્ડ શેર કરવું છે?', kn: 'ಯಾವ ಕಾರ್ಡ್ ಹಂಚಿಕೊಳ್ಳಲು ಬಯಸುತ್ತೀರಿ?' }) : title ??
-        pick(lang, { hi: 'श्लोक साझा करें', en: 'Share this verse', gu: 'શ્લોક શેર કરો', kn: 'ಶ್ಲೋಕ ಹಂಚಿಕೊಳ್ಳಿ' })}
+      {choosingStyle ? pick(lang, { hi: 'कैसा कार्ड साझा करें?', en: 'Which card would you like to share?', gu: 'કયું કાર્ડ શેર કરવું છે?', kn: 'ಯಾವ ಕಾರ್ಡ್ ಹಂಚಿಕೊಳ್ಳಲು ಬಯಸುತ್ತೀರಿ?', mr: 'कोणते कार्ड शेअर करायचे?', te: 'ఏ కార్డ్ షేర్ చేయాలనుకుంటున్నారు?' }) : title ??
+        pick(lang, { hi: 'श्लोक साझा करें', en: 'Share this verse', gu: 'શ્લોક શેર કરો', kn: 'ಶ್ಲೋಕ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'श्लोक शेअर करा', te: 'శ్లోకం షేర్ చేయండి' })}
     </Text>
   );
 
@@ -222,12 +222,12 @@ export default function ShareTargetSheet({
     <TargetRow
       lang={lang}
       icon="text"
-      title={textTitle ?? pick(lang, { hi: 'टेक्स्ट में भेजें', en: 'Send as text', gu: 'લખાણ તરીકે મોકલો', kn: 'ಪಠ್ಯವಾಗಿ ಕಳುಹಿಸಿ' })}
+      title={textTitle ?? pick(lang, { hi: 'टेक्स्ट में भेजें', en: 'Send as text', gu: 'લખાણ તરીકે મોકલો', kn: 'ಪಠ್ಯವಾಗಿ ಕಳುಹಿಸಿ', mr: 'मजकूर म्हणून पाठवा', te: 'టెక్స్ట్‌గా పంపండి' })}
       sub={textSub ? textSub : multi
-        ? pick(lang, { hi: 'चुने पृष्ठ एक संदेश में — बिना चित्र', en: 'Selected pages as one message — no image', gu: 'પસંદ પૃષ્ઠ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಆಯ್ಕೆಯ ಪುಟಗಳು ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ' })
+        ? pick(lang, { hi: 'चुने पृष्ठ एक संदेश में — बिना चित्र', en: 'Selected pages as one message — no image', gu: 'પસંદ પૃષ્ઠ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಆಯ್ಕೆಯ ಪುಟಗಳು ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ', mr: 'निवडलेली पृष्ठे एका संदेशात — चित्राशिवाय', te: 'ఎంచుకున్న పేజీలు ఒకే సందేశంలో — చిత్రం లేకుండా' })
         : fullVerseImage
-        ? pick(lang, { hi: 'पूरा श्लोक और अर्थ — बिना चित्र', en: 'Full verse and meaning — no image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ — ಚಿತ್ರವಿಲ್ಲ' })
-        : pick(lang, { hi: 'पूरा पाठ एक संदेश में — बिना चित्र', en: 'The full text as one message — no image', gu: 'આખું લખાણ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ' })}
+        ? pick(lang, { hi: 'पूरा श्लोक और अर्थ — बिना चित्र', en: 'Full verse and meaning — no image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ — ಚಿತ್ರವಿಲ್ಲ', mr: 'संपूर्ण श्लोक आणि अर्थ — चित्राशिवाय', te: 'పూర్తి శ్లోకం మరియు అర్థం — చిత్రం లేకుండా' })
+        : pick(lang, { hi: 'पूरा पाठ एक संदेश में — बिना चित्र', en: 'The full text as one message — no image', gu: 'આખું લખાણ એક સંદેશમાં — ચિત્ર વિના', kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ ಒಂದು ಸಂದೇಶದಲ್ಲಿ — ಚಿತ್ರವಿಲ್ಲ', mr: 'संपूर्ण पाठ एका संदेशात — चित्राशिवाय', te: 'పూర్తి పాఠం ఒకే సందేశంలో — చిత్రం లేకుండా' })}
       chips={multi ? [String(selectedCount)] : undefined}
       onPress={onShareText}
       disabled={busy}
@@ -240,7 +240,7 @@ export default function ShareTargetSheet({
   const langChips = cardLang && onCardLang ? (
     <View style={styles.langWrap}>
       <Text style={[indicSafeTag(lang, 1.6), { fontSize: 10, color: colors.inkMuted }]}>
-        {pick(lang, { hi: 'कार्ड की भाषा', en: 'CARD LANGUAGE', gu: 'કાર્ડની ભાષા', kn: 'ಕಾರ್ಡ್ ಭಾಷೆ' })}
+        {pick(lang, { hi: 'कार्ड की भाषा', en: 'CARD LANGUAGE', gu: 'કાર્ડની ભાષા', kn: 'ಕಾರ್ಡ್ ಭಾಷೆ', mr: 'कार्डची भाषा', te: 'కార్డ్ భాష' })}
       </Text>
       <View style={styles.langRow} accessibilityRole="radiogroup" accessibilityLabel="Card language">
         {LANGUAGES.map((opt) => {
@@ -275,10 +275,10 @@ export default function ShareTargetSheet({
   const styleChoices = cardStyle && onCardStyle ? (
     <View testID="share-card-styles" style={{ gap: 12, marginVertical: spacing.sm, flexDirection: stackedChoices ? 'column' : 'row', alignItems: 'stretch' }}>
       {([
-        { value: 'current', label: { hi: 'मौजूदा कार्ड', en: 'Current card', gu: 'હાલનું કાર્ડ', kn: 'ಪ್ರಸ್ತುತ ಕಾರ್ಡ್' },
-          detail: { hi: 'सादा पाठ और अर्थ', en: 'Classic verse and meaning', gu: 'સાદો પાઠ અને અર્થ', kn: 'ಸರಳ ಪಠ್ಯ ಮತ್ತು ಅರ್ಥ' } },
-        { value: 'daily-bhakti', label: { hi: 'दैनिक भक्ति कार्ड', en: 'Daily Bhakti card', gu: 'દૈનિક ભક્તિ કાર્ડ', kn: 'ದೈನಂದಿನ ಭಕ್ತಿ ಕಾರ್ಡ್' },
-          detail: { hi: 'चित्र के साथ पाठ और अर्थ', en: 'Illustrated verse and meaning', gu: 'ચિત્ર સાથે પાઠ અને અર્થ', kn: 'ಚಿತ್ರದೊಂದಿಗೆ ಪಠ್ಯ ಮತ್ತು ಅರ್ಥ' } },
+        { value: 'current', label: { hi: 'मौजूदा कार्ड', en: 'Current card', gu: 'હાલનું કાર્ડ', kn: 'ಪ್ರಸ್ತುತ ಕಾರ್ಡ್', mr: 'सध्याचे कार्ड', te: 'ప్రస్తుత కార్డ్' },
+          detail: { hi: 'सादा पाठ और अर्थ', en: 'Classic verse and meaning', gu: 'સાદો પાઠ અને અર્થ', kn: 'ಸರಳ ಪಠ್ಯ ಮತ್ತು ಅರ್ಥ', mr: 'साधा पाठ आणि अर्थ', te: 'సాధారణ పాఠం మరియు అర్థం' } },
+        { value: 'daily-bhakti', label: { hi: 'दैनिक भक्ति कार्ड', en: 'Daily Bhakti card', gu: 'દૈનિક ભક્તિ કાર્ડ', kn: 'ದೈನಂದಿನ ಭಕ್ತಿ ಕಾರ್ಡ್', mr: 'दैनिक भक्ती कार्ड', te: 'దైనిక భక్తి కార్డ్' },
+          detail: { hi: 'चित्र के साथ पाठ और अर्थ', en: 'Illustrated verse and meaning', gu: 'ચિત્ર સાથે પાઠ અને અર્થ', kn: 'ಚಿತ್ರದೊಂದಿಗೆ ಪಠ್ಯ ಮತ್ತು ಅರ್ಥ', mr: 'चित्रासह पाठ आणि अर्थ', te: 'చిత్రంతో పాఠం మరియు అర్థం' } },
       ] as const).map(option => {
         const selected = cardStyle === option.value;
         return <Pressable key={option.value} testID={`share-card-style-${option.value}`}
@@ -296,7 +296,7 @@ export default function ShareTargetSheet({
           </Text>
           <Text style={[subLabel, { color: colors.inkMuted }]}>{pick(lang, option.detail)}</Text>
           <Text style={[subLabel, { color: colors.saffronDeep, marginTop: 12, paddingVertical: 8 }]}>
-            {pick(lang, { hi: 'यह कार्ड चुनें →', en: 'Choose this card →', gu: 'આ કાર્ડ પસંદ કરો →', kn: 'ಈ ಕಾರ್ಡ್ ಆರಿಸಿ →' })}
+            {pick(lang, { hi: 'यह कार्ड चुनें →', en: 'Choose this card →', gu: 'આ કાર્ડ પસંદ કરો →', kn: 'ಈ ಕಾರ್ಡ್ ಆರಿಸಿ →', mr: 'हे कार्ड निवडा →', te: 'ఈ కార్డ్ ఎంచుకోండి →' })}
           </Text>
         </Pressable>;
       })}
@@ -329,6 +329,8 @@ export default function ShareTargetSheet({
             en: `Rendering page ${Math.min(done + 1, total)} of ${total}…`,
             gu: `પૃષ્ઠ ${Math.min(done + 1, total)} / ${total} બની રહ્યું છે…`,
             kn: `ಪುಟ ${Math.min(done + 1, total)} / ${total} ತಯಾರಾಗುತ್ತಿದೆ…`,
+            mr: `पृष्ठ ${Math.min(done + 1, total)} / ${total} तयार होत आहे…`,
+            te: `పేజీ ${Math.min(done + 1, total)} / ${total} సిద్ధమవుతోంది…`,
           })}
         </Text>
         <View style={[styles.bar, { backgroundColor: colors.saffronTint }]}>
@@ -341,20 +343,20 @@ export default function ShareTargetSheet({
     const steps =
       Platform.OS === 'ios'
         ? [
-            pick(lang, { hi: 'अगली शीट में Instagram चुनें — सभी पृष्ठ एक पोस्ट में आएँगे', en: 'In the next sheet pick Instagram — all pages go into one post', gu: 'આગળની શીટમાં Instagram પસંદ કરો', kn: 'ಮುಂದಿನ ಶೀಟ್‌ನಲ್ಲಿ Instagram ಆರಿಸಿ' }),
-            pick(lang, { hi: `Instagram एक ही चित्र ले तो: “Save ${n} Images” चुनें, फिर Instagram → + → Select multiple`, en: `If Instagram takes only one: choose “Save ${n} Images”, then Instagram → + → Select multiple`, gu: `Instagram એક જ ચિત્ર લે તો: “Save ${n} Images”, પછી Instagram → + → Select multiple`, kn: `Instagram ಒಂದೇ ಚಿತ್ರ ತೆಗೆದುಕೊಂಡರೆ: “Save ${n} Images”, ನಂತರ Instagram → + → Select multiple` }),
+            pick(lang, { hi: 'अगली शीट में Instagram चुनें — सभी पृष्ठ एक पोस्ट में आएँगे', en: 'In the next sheet pick Instagram — all pages go into one post', gu: 'આગળની શીટમાં Instagram પસંદ કરો', kn: 'ಮುಂದಿನ ಶೀಟ್‌ನಲ್ಲಿ Instagram ಆರಿಸಿ', mr: 'पुढील शीटमध्ये Instagram निवडा', te: 'తదుపరి షీట్‌లో Instagram ఎంచుకోండి' }),
+            pick(lang, { hi: `Instagram एक ही चित्र ले तो: “Save ${n} Images” चुनें, फिर Instagram → + → Select multiple`, en: `If Instagram takes only one: choose “Save ${n} Images”, then Instagram → + → Select multiple`, gu: `Instagram એક જ ચિત્ર લે તો: “Save ${n} Images”, પછી Instagram → + → Select multiple`, kn: `Instagram ಒಂದೇ ಚಿತ್ರ ತೆಗೆದುಕೊಂಡರೆ: “Save ${n} Images”, ನಂತರ Instagram → + → Select multiple`, mr: `Instagram एकच चित्र घेत असल्यास: “Save ${n} Images”, नंतर Instagram → + → Select multiple`, te: `Instagram ఒకే చిత్రం తీసుకుంటే: “Save ${n} Images”, తర్వాత Instagram → + → Select multiple` }),
           ]
         : [
-            pick(lang, { hi: 'अगली शीट में Instagram → Feed चुनें — सभी पृष्ठ एक पोस्ट में आएँगे', en: 'In the next sheet pick Instagram → Feed — all pages go into one post', gu: 'આગળની શીટમાં Instagram → Feed પસંદ કરો', kn: 'ಮುಂದಿನ ಶೀಟ್‌ನಲ್ಲಿ Instagram → Feed ಆರಿಸಿ' }),
-            pick(lang, { hi: 'Instagram एक ही चित्र ले तो: पृष्ठ Photos/Gallery में सहेजें, फिर Instagram → + → Select multiple', en: 'If Instagram takes only one: save the pages to Photos/Gallery, then Instagram → + → Select multiple', gu: 'Instagram એક જ ચિત્ર લે તો: Photos/Gallery માં સાચવો, પછી Instagram → + → Select multiple', kn: 'Instagram ಒಂದೇ ಚಿತ್ರ ತೆಗೆದುಕೊಂಡರೆ: Photos/Gallery ನಲ್ಲಿ ಉಳಿಸಿ, ನಂತರ Instagram → + → Select multiple' }),
+            pick(lang, { hi: 'अगली शीट में Instagram → Feed चुनें — सभी पृष्ठ एक पोस्ट में आएँगे', en: 'In the next sheet pick Instagram → Feed — all pages go into one post', gu: 'આગળની શીટમાં Instagram → Feed પસંદ કરો', kn: 'ಮುಂದಿನ ಶೀಟ್‌ನಲ್ಲಿ Instagram → Feed ಆರಿಸಿ', mr: 'पुढील शीटमध्ये Instagram → Feed निवडा', te: 'తదుపరి షీట్‌లో Instagram → Feed ఎంచుకోండి' }),
+            pick(lang, { hi: 'Instagram एक ही चित्र ले तो: पृष्ठ Photos/Gallery में सहेजें, फिर Instagram → + → Select multiple', en: 'If Instagram takes only one: save the pages to Photos/Gallery, then Instagram → + → Select multiple', gu: 'Instagram એક જ ચિત્ર લે તો: Photos/Gallery માં સાચવો, પછી Instagram → + → Select multiple', kn: 'Instagram ಒಂದೇ ಚಿತ್ರ ತೆಗೆದುಕೊಂಡರೆ: Photos/Gallery ನಲ್ಲಿ ಉಳಿಸಿ, ನಂತರ Instagram → + → Select multiple', mr: 'Instagram एकच चित्र घेत असल्यास: Photos/Gallery मध्ये जतन करा, नंतर Instagram → + → Select multiple', te: 'Instagram ఒకే చిత్రం తీసుకుంటే: Photos/Galleryలో సేవ్ చేయండి, తర్వాత Instagram → + → Select multiple' }),
           ];
     steps.push(
-      pick(lang, { hi: 'कैप्शन और हैशटैग कॉपी हो चुके हैं — कैप्शन में लंबा दबाकर पेस्ट करें', en: 'Caption + hashtags are copied — long-press the caption and paste', gu: 'કૅપ્શન અને હૅશટૅગ કૉપી થઈ ગયા છે — પેસ્ટ કરો', kn: 'ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗಿದೆ — ಪೇಸ್ಟ್ ಮಾಡಿ' })
+      pick(lang, { hi: 'कैप्शन और हैशटैग कॉपी हो चुके हैं — कैप्शन में लंबा दबाकर पेस्ट करें', en: 'Caption + hashtags are copied — long-press the caption and paste', gu: 'કૅપ્શન અને હૅશટૅગ કૉપી થઈ ગયા છે — પેસ્ટ કરો', kn: 'ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗಿದೆ — ಪೇಸ್ಟ್ ಮಾಡಿ', mr: 'कॅप्शन आणि हॅशटॅग कॉपी झाले आहेत — पेस्ट करा', te: 'క్యాప్షన్, హ్యాష్‌ట్యాగ్‌లు కాపీ అయ్యాయి — పేస్ట్ చేయండి' })
     );
     body = (
       <View style={styles.ready}>
         <Text style={{ fontFamily: titleFont, fontSize: 17, color: colors.ink, textAlign: 'center' }}>
-          {pick(lang, { hi: `${n} पृष्ठ तैयार`, en: `${n} pages ready`, gu: `${n} પૃષ્ઠ તૈયાર`, kn: `${n} ಪುಟಗಳು ಸಿದ್ಧ` })}
+          {pick(lang, { hi: `${n} पृष्ठ तैयार`, en: `${n} pages ready`, gu: `${n} પૃષ્ઠ તૈયાર`, kn: `${n} ಪುಟಗಳು ಸಿದ್ಧ`, mr: `${n} पृष्ठे तयार`, te: `${n} పేజీలు సిద్ధం` })}
         </Text>
         {steps.map((step, i) => (
           <View key={i} style={styles.step}>
@@ -373,14 +375,14 @@ export default function ShareTargetSheet({
           ]}
         >
           <Text style={{ fontFamily: titleFont, fontSize: 15, color: colors.onPrimary }}>
-            {pick(lang, { hi: 'आगे बढ़ें', en: 'Continue', gu: 'આગળ વધો', kn: 'ಮುಂದುವರಿಸಿ' })}
+            {pick(lang, { hi: 'आगे बढ़ें', en: 'Continue', gu: 'આગળ વધો', kn: 'ಮುಂದುವರಿಸಿ', mr: 'सुरू ठेवा', te: 'కొనసాగించండి' })}
           </Text>
         </Pressable>
       </View>
     );
   } else {
     const allSub = !multi?.multiShareAvailable
-      ? pick(lang, { hi: 'ऐप के नए अपडेट में उपलब्ध', en: 'Needs the latest app update', gu: 'ઍપના નવા અપડેટમાં', kn: 'ಹೊಸ ಆ್ಯಪ್ ಅಪ್‌ಡೇಟ್‌ನಲ್ಲಿ' })
+      ? pick(lang, { hi: 'ऐप के नए अपडेट में उपलब्ध', en: 'Needs the latest app update', gu: 'ઍપના નવા અપડેટમાં', kn: 'ಹೊಸ ಆ್ಯಪ್ ಅಪ್‌ಡೇಟ್‌ನಲ್ಲಿ', mr: 'ॲपच्या नवीन अपडेटमध्ये', te: 'కొత్త యాప్ అప్‌డేట్‌లో' })
       : null;
     body = (
       <>
@@ -392,6 +394,8 @@ export default function ShareTargetSheet({
                 en: 'Too long for one card — split into a series',
                 gu: 'એક કાર્ડમાં સમાતું નથી — કાર્ડની શ્રેણી બની',
                 kn: 'ಒಂದು ಕಾರ್ಡ್‌ಗೆ ಉದ್ದ — ಕಾರ್ಡ್‌ಗಳ ಸರಣಿ',
+                mr: 'एका कार्डमध्ये मावत नाही — कार्डांची मालिका',
+                te: 'ఒక కార్డ్‌లో పట్టదు — కార్డ్‌ల శ్రేణి',
               })}
             </Text>
             <SharePagesStrip
@@ -410,13 +414,13 @@ export default function ShareTargetSheet({
               disabled={busy}
             />
             <Text style={eyebrow}>
-              {pick(lang, { hi: `सभी चुने पृष्ठ · ${selectedCount}`, en: `ALL SELECTED PAGES · ${selectedCount}`, gu: `બધાં પસંદ પૃષ્ઠ · ${selectedCount}`, kn: `ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು · ${selectedCount}` })}
+              {pick(lang, { hi: `सभी चुने पृष्ठ · ${selectedCount}`, en: `ALL SELECTED PAGES · ${selectedCount}`, gu: `બધાં પસંદ પૃષ્ઠ · ${selectedCount}`, kn: `ಆಯ್ಕೆಯ ಎಲ್ಲ ಪುಟಗಳು · ${selectedCount}`, mr: `सर्व निवडलेली पृष्ठे · ${selectedCount}`, te: `ఎంచుకున్న అన్ని పేజీలు · ${selectedCount}` })}
             </Text>
             <TargetRow
               lang={lang}
               icon="share"
-              title={pick(lang, { hi: 'सभी पृष्ठ साझा करें', en: 'Share all pages', gu: 'બધાં પૃષ્ઠ શેર કરો', kn: 'ಎಲ್ಲ ಪುಟ ಹಂಚಿಕೊಳ್ಳಿ' })}
-              sub={allSub ?? pick(lang, { hi: 'WhatsApp एल्बम, संदेश, Photos में सहेजें', en: 'WhatsApp album, Messages, Save to Photos', gu: 'WhatsApp આલ્બમ, સંદેશ, Photos', kn: 'WhatsApp ಆಲ್ಬಮ್, ಸಂದೇಶ, Photos' })}
+              title={pick(lang, { hi: 'सभी पृष्ठ साझा करें', en: 'Share all pages', gu: 'બધાં પૃષ્ઠ શેર કરો', kn: 'ಎಲ್ಲ ಪುಟ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'सर्व पृष्ठे शेअर करा', te: 'అన్ని పేజీలు షేర్ చేయండి' })}
+              sub={allSub ?? pick(lang, { hi: 'WhatsApp एल्बम, संदेश, Photos में सहेजें', en: 'WhatsApp album, Messages, Save to Photos', gu: 'WhatsApp આલ્બમ, સંદેશ, Photos', kn: 'WhatsApp ಆಲ್ಬಮ್, ಸಂದೇಶ, Photos', mr: 'WhatsApp अल्बम, संदेश, Photos', te: 'WhatsApp ఆల్బమ్, సందేశాలు, Photos' })}
               chips={[String(selectedCount)]}
               hotChip
               onPress={multi.onShareAll}
@@ -426,8 +430,8 @@ export default function ShareTargetSheet({
             <TargetRow
               lang={lang}
               icon="instagram"
-              title={pick(lang, { hi: 'Instagram कैरोसेल', en: 'Instagram carousel', gu: 'Instagram કૅરોસેલ', kn: 'Instagram ಕ್ಯಾರೋಸೆಲ್' })}
-              sub={allSub ?? pick(lang, { hi: 'सभी पृष्ठ एक पोस्ट में — कैप्शन कॉपी होगा', en: 'All pages as one post — caption is copied', gu: 'બધાં પૃષ્ઠ એક પોસ્ટમાં', kn: 'ಎಲ್ಲ ಪುಟಗಳು ಒಂದು ಪೋಸ್ಟ್‌ನಲ್ಲಿ' })}
+              title={pick(lang, { hi: 'Instagram कैरोसेल', en: 'Instagram carousel', gu: 'Instagram કૅરોસેલ', kn: 'Instagram ಕ್ಯಾರೋಸೆಲ್', mr: 'Instagram कॅरोसेल', te: 'Instagram కరోసెల్' })}
+              sub={allSub ?? pick(lang, { hi: 'सभी पृष्ठ एक पोस्ट में — कैप्शन कॉपी होगा', en: 'All pages as one post — caption is copied', gu: 'બધાં પૃષ્ઠ એક પોસ્ટમાં', kn: 'ಎಲ್ಲ ಪುಟಗಳು ಒಂದು ಪೋಸ್ಟ್‌ನಲ್ಲಿ', mr: 'सर्व पृष्ठे एका पोस्टमध्ये', te: 'అన్ని పేజీలు ఒకే పోస్ట్‌లో' })}
               chips={[String(selectedCount)]}
               hotChip
               onPress={multi.onInstagramCarousel}
@@ -438,7 +442,7 @@ export default function ShareTargetSheet({
             />
             {textRow}
             <Text style={eyebrow}>
-              {pick(lang, { hi: `केवल यह पृष्ठ · ${multi.highlighted + 1}`, en: `JUST THIS PAGE · ${multi.highlighted + 1}`, gu: `માત્ર આ પૃષ્ઠ · ${multi.highlighted + 1}`, kn: `ಈ ಪುಟ ಮಾತ್ರ · ${multi.highlighted + 1}` })}
+              {pick(lang, { hi: `केवल यह पृष्ठ · ${multi.highlighted + 1}`, en: `JUST THIS PAGE · ${multi.highlighted + 1}`, gu: `માત્ર આ પૃષ્ઠ · ${multi.highlighted + 1}`, kn: `ಈ ಪುಟ ಮಾತ್ರ · ${multi.highlighted + 1}`, mr: `फक्त हे पृष्ठ · ${multi.highlighted + 1}`, te: `ఈ పేజీ మాత్రమే · ${multi.highlighted + 1}` })}
             </Text>
           </>
         ) : null}
@@ -446,8 +450,8 @@ export default function ShareTargetSheet({
         <TargetRow
           lang={lang}
           icon="share"
-          title={pick(lang, { hi: 'शेयर करें', en: 'Share', gu: 'શેર કરો', kn: 'ಹಂಚಿಕೊಳ್ಳಿ' })}
-          sub={pick(lang, { hi: 'WhatsApp, संदेश या कहीं भी', en: 'WhatsApp, Messages, anywhere', gu: 'WhatsApp, સંદેશ કે ગમે ત્યાં', kn: 'WhatsApp, ಸಂದೇಶ ಅಥವಾ ಎಲ್ಲಿಯಾದರೂ' })}
+          title={pick(lang, { hi: 'शेयर करें', en: 'Share', gu: 'શેર કરો', kn: 'ಹಂಚಿಕೊಳ್ಳಿ', mr: 'शेअर करा', te: 'షేర్ చేయండి' })}
+          sub={pick(lang, { hi: 'WhatsApp, संदेश या कहीं भी', en: 'WhatsApp, Messages, anywhere', gu: 'WhatsApp, સંદેશ કે ગમે ત્યાં', kn: 'WhatsApp, ಸಂದೇಶ ಅಥವಾ ಎಲ್ಲಿಯಾದರೂ', mr: 'WhatsApp, संदेश किंवा कुठेही', te: 'WhatsApp, సందేశాలు లేదా ఎక్కడైనా' })}
           chips={pageChip}
           onPress={onShareSystem}
           disabled={busy}
@@ -457,10 +461,10 @@ export default function ShareTargetSheet({
           <TargetRow
             lang={lang}
             icon="instagram"
-            title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್' })}
+            title={pick(lang, { hi: 'Instagram पोस्ट', en: 'Instagram post', gu: 'Instagram પોસ્ટ', kn: 'Instagram ಪೋಸ್ಟ್', mr: 'Instagram पोस्ट', te: 'Instagram పోస్ట్' })}
             sub={wholeCard
-              ? pick(lang, { hi: 'पूरा कार्ड 4:5 फ़्रेम में — कुछ नहीं कटेगा', en: 'The whole card in a 4:5 frame — nothing cropped', gu: 'આખું કાર્ડ 4:5 ફ્રેમમાં — કશું કપાશે નહીં', kn: 'ಇಡೀ ಕಾರ್ಡ್ 4:5 ಚೌಕಟ್ಟಿನಲ್ಲಿ — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })
-              : fullVerseImage ? pick(lang, { hi: 'पूरा श्लोक और अर्थ एक चित्र में', en: 'Complete verse and meaning in one image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ એક ચિત્રમાં', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ ಒಂದೇ ಚಿತ್ರದಲ್ಲಿ' }) : pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್' })}
+              ? pick(lang, { hi: 'पूरा कार्ड 4:5 फ़्रेम में — कुछ नहीं कटेगा', en: 'The whole card in a 4:5 frame — nothing cropped', gu: 'આખું કાર્ડ 4:5 ફ્રેમમાં — કશું કપાશે નહીં', kn: 'ಇಡೀ ಕಾರ್ಡ್ 4:5 ಚೌಕಟ್ಟಿನಲ್ಲಿ — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ', mr: 'संपूर्ण कार्ड 4:5 फ्रेममध्ये — काहीही कापले जाणार नाही', te: 'మొత్తం కార్డ్ 4:5 ఫ్రేమ్‌లో — ఏదీ కత్తిరించబడదు' })
+              : fullVerseImage ? pick(lang, { hi: 'पूरा श्लोक और अर्थ एक चित्र में', en: 'Complete verse and meaning in one image', gu: 'સંપૂર્ણ શ્લોક અને અર્થ એક ચિત્રમાં', kn: 'ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ ಒಂದೇ ಚಿತ್ರದಲ್ಲಿ', mr: 'संपूर्ण श्लोक आणि अर्थ एका चित्रात', te: 'పూర్తి శ్లోకం మరియు అర్థం ఒకే చిత్రంలో' }) : pick(lang, { hi: 'फ़ीड के लिए 4:5 कार्ड', en: '4:5 card — for the feed', gu: 'ફીડ માટે 4:5 કાર્ડ', kn: 'ಫೀಡ್‌ಗಾಗಿ 4:5 ಕಾರ್ಡ್', mr: 'फीडसाठी 4:5 कार्ड', te: 'ఫీడ్ కోసం 4:5 కార్డ్' })}
             chips={wholeImage ? pageChip : [...pageChip, '4:5']}
             onPress={onShareInstagramPost}
             disabled={busy}
@@ -471,12 +475,12 @@ export default function ShareTargetSheet({
         <TargetRow
           lang={lang}
           icon="instagram"
-          title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್' })}
+          title={pick(lang, { hi: 'Instagram स्टोरी / रील', en: 'Instagram story / reel', gu: 'Instagram સ્ટોરી / રીલ', kn: 'Instagram ಸ್ಟೋರಿ / ರೀಲ್', mr: 'Instagram स्टोरी / रील', te: 'Instagram స్టోరీ / రీల్' })}
           sub={wholeCard
-            ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा कार्ड', en: 'Story frame with the whole card', gu: 'સ્ટોરી ફ્રેમમાં આખું કાર્ડ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಇಡೀ ಕಾರ್ಡ್' })
+            ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा कार्ड', en: 'Story frame with the whole card', gu: 'સ્ટોરી ફ્રેમમાં આખું કાર્ડ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಇಡೀ ಕಾರ್ಡ್', mr: 'स्टोरी फ्रेममध्ये संपूर्ण कार्ड', te: 'స్టోరీ ఫ్రేమ్‌లో మొత్తం కార్డ్' })
             : fullVerseImage
-            ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा श्लोक और अर्थ', en: 'Story frame with the complete verse and meaning', gu: 'સ્ટોરી ફ્રેમમાં સંપૂર્ણ શ્લોક અને અર્થ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ' })
-            : pick(lang, { hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा', en: 'Full screen 9:16 — nothing gets cropped', gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં', kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ' })}
+            ? pick(lang, { hi: 'स्टोरी फ्रेम में पूरा श्लोक और अर्थ', en: 'Story frame with the complete verse and meaning', gu: 'સ્ટોરી ફ્રેમમાં સંપૂર્ણ શ્લોક અને અર્થ', kn: 'ಸ್ಟೋರಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ', mr: 'स्टोरी फ्रेममध्ये संपूर्ण श्लोक आणि अर्थ', te: 'స్టోరీ ఫ్రేమ్‌లో పూర్తి శ్లోకం మరియు అర్థం' })
+            : pick(lang, { hi: 'पूरी स्क्रीन 9:16 — कुछ भी नहीं कटेगा', en: 'Full screen 9:16 — nothing gets cropped', gu: 'આખી સ્ક્રીન 9:16 — કશું કપાશે નહીં', kn: 'ಪೂರ್ಣ ಪರದೆ 9:16 — ಏನೂ ಕತ್ತರಿಸುವುದಿಲ್ಲ', mr: 'पूर्ण स्क्रीन 9:16 — काहीही कापले जाणार नाही', te: 'పూర్తి స్క్రీన్ 9:16 — ఏదీ కత్తిరించబడదు' })}
           chips={wholeImage ? pageChip : [...pageChip, '9:16']}
           onPress={onShareInstagramStory}
           disabled={busy}
@@ -493,6 +497,8 @@ export default function ShareTargetSheet({
               en: 'WhatsApp gets the whole card as one image, with the app link.',
               gu: 'WhatsApp પર આખું કાર્ડ એક ચિત્રમાં જશે, સાથે ઍપની લિંક.',
               kn: 'WhatsApp ಗೆ ಇಡೀ ಕಾರ್ಡ್ ಒಂದೇ ಚಿತ್ರವಾಗಿ, ಆ್ಯಪ್ ಲಿಂಕ್ ಜೊತೆ ಹೋಗುತ್ತದೆ.',
+              mr: 'WhatsApp वर संपूर्ण कार्ड एका चित्रात जाईल, सोबत ॲपची लिंक.',
+              te: 'WhatsAppకి మొత్తం కార్డ్ ఒకే చిత్రంగా, యాప్ లింక్‌తో పాటు వెళ్తుంది.',
             })}
           </Text>
         ) : fullVerseImage ? (
@@ -502,6 +508,8 @@ export default function ShareTargetSheet({
               en: 'Long verses use one taller image. You may need to adjust its framing in Instagram.',
               gu: 'લાંબા શ્લોક એક ઊંચા ચિત્રમાં આવશે. Instagram માં ચિત્રની ફ્રેમ ગોઠવવી પડી શકે છે.',
               kn: 'ಉದ್ದವಾದ ಶ್ಲೋಕಗಳು ಒಂದೇ ಎತ್ತರದ ಚಿತ್ರದಲ್ಲಿ ಬರುತ್ತವೆ. Instagram ನಲ್ಲಿ ಚಿತ್ರದ ಚೌಕಟ್ಟನ್ನು ಹೊಂದಿಸಬೇಕಾಗಬಹುದು.',
+              mr: 'लांब श्लोक एका उंच चित्रात येतील. Instagram मध्ये चित्राची फ्रेम जुळवावी लागू शकते.',
+              te: 'పొడవైన శ్లోకాలు ఒకే ఎత్తైన చిత్రంలో వస్తాయి. Instagramలో చిత్రం ఫ్రేమ్‌ను సర్దుబాటు చేయాల్సి రావచ్చు.',
             })}
           </Text>
         ) : null}
@@ -512,6 +520,8 @@ export default function ShareTargetSheet({
             en: 'Either way the caption + hashtags are copied — just paste in Instagram',
             gu: 'બંનેમાં કૅપ્શન અને હૅશટૅગ કૉપી થશે — Instagram માં પેસ્ટ કરો',
             kn: 'ಎರಡರಲ್ಲೂ ಶೀರ್ಷಿಕೆ ಮತ್ತು ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್ ಕಾಪಿ ಆಗುತ್ತವೆ — Instagram ನಲ್ಲಿ ಪೇಸ್ಟ್ ಮಾಡಿ',
+            mr: 'दोन्हीमध्ये कॅप्शन आणि हॅशटॅग कॉपी होतील — Instagram मध्ये पेस्ट करा',
+            te: 'రెండింటిలోనూ క్యాప్షన్, హ్యాష్‌ట్యాగ్‌లు కాపీ అవుతాయి — Instagramలో పేస్ట్ చేయండి',
           })}
         </Text>
 
@@ -527,7 +537,7 @@ export default function ShareTargetSheet({
           ]}
         >
           <Text style={[indicSafeTag(lang, 1.6), { fontSize: 10, color: colors.inkMuted, marginBottom: 6 }]}>
-            {pick(lang, { hi: 'हैशटैग', en: 'HASHTAGS', gu: 'હૅશટૅગ', kn: 'ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್' })}
+            {pick(lang, { hi: 'हैशटैग', en: 'HASHTAGS', gu: 'હૅશટૅગ', kn: 'ಹ್ಯಾಶ್‌ಟ್ಯಾಗ್', mr: 'हॅशटॅग', te: 'హ్యాష్‌ట్యాగ్‌లు' })}
           </Text>
           <ScrollView style={styles.previewScroll} nestedScrollEnabled>
             <Text
@@ -568,18 +578,18 @@ export default function ShareTargetSheet({
           <ScrollView key={choosingStyle ? 'styles' : 'targets'} style={styles.body} bounces={false} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             {!choosingStyle && (!multi || multi.view === 'targets') ? langChips : null}
             {choosingStyle ? <>
-              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center' }]}>{pick(lang, { hi: 'दो रूप, वही श्लोक और पूरा अर्थ।', en: 'Two styles. The same complete verse and meaning.', gu: 'બે શૈલી, એ જ સંપૂર્ણ શ્લોક અને અર્થ.', kn: 'ಎರಡು ಶೈಲಿಗಳು. ಅದೇ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ.' })}</Text>
+              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center' }]}>{pick(lang, { hi: 'दो रूप, वही श्लोक और पूरा अर्थ।', en: 'Two styles. The same complete verse and meaning.', gu: 'બે શૈલી, એ જ સંપૂર્ણ શ્લોક અને અર્થ.', kn: 'ಎರಡು ಶೈಲಿಗಳು. ಅದೇ ಸಂಪೂರ್ಣ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ.', mr: 'दोन रूपे, तोच संपूर्ण श्लोक आणि अर्थ.', te: 'రెండు శైలులు. అదే పూర్తి శ్లోకం మరియు అర్థం.' })}</Text>
               {styleChoices}
-              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center' }]}>{pick(lang, { hi: 'कार्ड चुनते ही साझा करने के विकल्प खुलेंगे।', en: 'Tap a card to open sharing options.', gu: 'શેર કરવાના વિકલ્પો માટે કાર્ડ પસંદ કરો.', kn: 'ಹಂಚಿಕೆ ಆಯ್ಕೆಗಳಿಗೆ ಕಾರ್ಡ್ ಆರಿಸಿ.' })}</Text>
+              <Text style={[subLabel, { color: colors.inkMuted, textAlign: 'center' }]}>{pick(lang, { hi: 'कार्ड चुनते ही साझा करने के विकल्प खुलेंगे।', en: 'Tap a card to open sharing options.', gu: 'શેર કરવાના વિકલ્પો માટે કાર્ડ પસંદ કરો.', kn: 'ಹಂಚಿಕೆ ಆಯ್ಕೆಗಳಿಗೆ ಕಾರ್ಡ್ ಆರಿಸಿ.', mr: 'कार्ड निवडताच शेअर करण्याचे पर्याय उघडतील.', te: 'షేరింగ్ ఎంపికల కోసం కార్డ్‌ను తాకండి.' })}</Text>
             </> : cardStyle ? <Pressable onPress={backToStyles} disabled={busy} accessibilityRole="button" accessibilityLabel="Change card style" style={{ minHeight: 44, justifyContent: 'center' }}>
-              <Text style={{ fontFamily: titleFont, color: colors.saffronDeep }}>{pick(lang, { hi: '← कार्ड बदलें', en: '← Change card', gu: '← કાર્ડ બદલો', kn: '← ಕಾರ್ಡ್ ಬದಲಿಸಿ' })}</Text>
+              <Text style={{ fontFamily: titleFont, color: colors.saffronDeep }}>{pick(lang, { hi: '← कार्ड बदलें', en: '← Change card', gu: '← કાર્ડ બદલો', kn: '← ಕಾರ್ಡ್ ಬದಲಿಸಿ', mr: '← कार्ड बदला', te: '← కార్డ్ మార్చండి' })}</Text>
             </Pressable> : null}
             {!choosingStyle && !multi && singleCardPreview ? <View style={{ alignItems: 'center', marginVertical: 12, flexDirection: cardStyle ? 'row' : 'column', gap: 16 }}>
               {cardStyle && renderStylePreview ? <>
                 {renderStylePreview(cardStyle, 64)}
                 <Text style={{ flex: 1, fontFamily: titleFont, fontSize: 16, color: colors.ink }}>{cardStyle === 'current'
-                  ? pick(lang, { hi: 'मौजूदा कार्ड', en: 'Current card', gu: 'હાલનું કાર્ડ', kn: 'ಪ್ರಸ್ತುತ ಕಾರ್ಡ್' })
-                  : pick(lang, { hi: 'दैनिक भक्ति कार्ड', en: 'Daily Bhakti card', gu: 'દૈનિક ભક્તિ કાર્ડ', kn: 'ದೈನಂದಿನ ಭಕ್ತಿ ಕಾರ್ಡ್' })}</Text>
+                  ? pick(lang, { hi: 'मौजूदा कार्ड', en: 'Current card', gu: 'હાલનું કાર્ડ', kn: 'ಪ್ರಸ್ತುತ ಕಾರ್ಡ್', mr: 'सध्याचे कार्ड', te: 'ప్రస్తుత కార్డ్' })
+                  : pick(lang, { hi: 'दैनिक भक्ति कार्ड', en: 'Daily Bhakti card', gu: 'દૈનિક ભક્તિ કાર્ડ', kn: 'ದೈನಂದಿನ ಭಕ್ತಿ ಕಾರ್ಡ್', mr: 'दैनिक भक्ती कार्ड', te: 'దైనిక భక్తి కార్డ్' })}</Text>
               </> : singleCardPreview}
             </View> : null}
             {!multi && note ? (
@@ -596,7 +606,7 @@ export default function ShareTargetSheet({
               style={({ pressed }) => [styles.cancel, pressed && { opacity: 0.7 }]}
             >
               <Text style={[eyebrowTextStyle(lang, 13), { color: colors.inkMuted }]}>
-                {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
+                {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' })}
               </Text>
             </Pressable>
           ) : null}

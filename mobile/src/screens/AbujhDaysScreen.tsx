@@ -4,14 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, isDevanagariLang } from '@/utils/localize';
+import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
 import { useAbujhDays } from '@/panchang/useMuhuratFinder';
 import { formatShortDate } from '@/panchang/muhuratFormat';
 import { VARA_NAMES_HI, VARA_NAMES_EN } from '@/panchang/names';
-import { transliterateDevanagari } from '@/utils/transliterate';
 import type { PanchangStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<PanchangStackParamList, 'AbujhDays'>;
@@ -64,12 +63,7 @@ export default function AbujhDaysScreen({ navigation }: Props) {
 
           {days.map((d) => {
             const date = new Date(d.dateMs);
-            const weekday =
-              lang === 'en'
-                ? VARA_NAMES_EN[date.getDay()]
-                : isDevanagariLang(lang)
-                  ? VARA_NAMES_HI[date.getDay()]
-                  : transliterateDevanagari(VARA_NAMES_HI[date.getDay()], lang);
+            const weekday = contentByLang(lang, VARA_NAMES_HI[date.getDay()], VARA_NAMES_EN[date.getDay()]);
             return (
               <ListCard
                 key={`${d.dateMs}-${d.nameEn}`}

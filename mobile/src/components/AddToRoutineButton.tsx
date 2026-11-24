@@ -25,7 +25,7 @@ export default function AddToRoutineButton({
     <Pressable
       onPress={() => openAddToRoutine(sourceId, chapter)}
       accessibilityRole="button"
-      accessibilityLabel={pick(lang, { hi: 'साधना में जोड़ें', en: 'Add to routine', gu: 'સાધનામાં ઉમેરો', kn: 'ಸಾಧನೆಗೆ ಸೇರಿಸಿ' })}
+      accessibilityLabel={pick(lang, { hi: 'साधना में जोड़ें', en: 'Add to routine', gu: 'સાધનામાં ઉમેરો', kn: 'ಸಾಧನೆಗೆ ಸೇರಿಸಿ', mr: 'साधनेत जोडा', te: 'సాధనకు జోడించండి' })}
       hitSlop={12}
       style={style}
     >

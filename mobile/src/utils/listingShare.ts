@@ -29,10 +29,10 @@ const ITEMS_PER_CARD = 3;
 const ADVANCE: Record<Lang, number> = { hi: 0.41, en: 0.44, gu: 0.43, kn: 0.56, mr: 0.41, te: 0.56 };
 
 const LABELS: LocalizedStrings = {
-  hi: 'सूची', en: 'Contents', gu: 'સૂચિ', kn: 'ಪಟ್ಟಿ',
+  hi: 'सूची', en: 'Contents', gu: 'સૂચિ', kn: 'ಪಟ್ಟಿ', mr: 'सूची', te: 'జాబితా',
 };
 const SHEET_TITLES: LocalizedStrings = {
-  hi: 'सूची साझा करें', en: 'Share this list', gu: 'સૂચિ શેર કરો', kn: 'ಪಟ್ಟಿ ಹಂಚಿಕೊಳ್ಳಿ',
+  hi: 'सूची साझा करें', en: 'Share this list', gu: 'સૂચિ શેર કરો', kn: 'ಪಟ್ಟಿ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'सूची शेअर करा', te: 'జాబితాను షేర్ చేయండి',
 };
 
 function pageFor(items: readonly ListingShareItem[], lang: Lang, title: string): ProsePage {

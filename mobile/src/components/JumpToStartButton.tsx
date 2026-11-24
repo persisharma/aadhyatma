@@ -47,7 +47,7 @@ export default function JumpToStartButton({ onPress, lang }: Props) {
           },
         ]}
       >
-        {pick(lang, { hi: 'आरंभ', en: 'Start', gu: 'આરંભ', kn: 'ಆರಂಭ' })}
+        {pick(lang, { hi: 'आरंभ', en: 'Start', gu: 'આરંભ', kn: 'ಆರಂಭ', mr: 'आरंभ', te: 'ఆరంభం' })}
       </Text>
     </Pressable>
   );

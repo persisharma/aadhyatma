@@ -73,11 +73,11 @@ export default function TodayVidhanScreen({ navigation }: Props) {
 
           {sections === null ? (
             <Text style={[styles.loading, { color: colors.inkMuted, fontFamily: bodyFont }]} accessibilityLabel="Composing today's vidhan">
-              {pick(lang, { hi: 'गणना हो रही है…', en: 'Composing…', gu: 'ગણતરી થઈ રહી છે…', kn: 'ಲೆಕ್ಕಾಚಾರ ನಡೆಯುತ್ತಿದೆ…' })}
+              {pick(lang, { hi: 'गणना हो रही है…', en: 'Composing…', gu: 'ગણતરી થઈ રહી છે…', kn: 'ಲೆಕ್ಕಾಚಾರ ನಡೆಯುತ್ತಿದೆ…', mr: 'गणना सुरू आहे…', te: 'గణన జరుగుతోంది…' })}
             </Text>
           ) : sections.length === 0 ? (
             <Text style={[styles.loading, { color: colors.inkMuted, fontFamily: bodyFont }]}>
-              {pick(lang, { hi: 'आज के लिए कुछ नहीं मिला।', en: 'Nothing to show for today.', gu: 'આજ માટે કંઈ મળ્યું નહીં.', kn: 'ಇಂದಿಗೆ ಏನೂ ಸಿಗಲಿಲ್ಲ.' })}
+              {pick(lang, { hi: 'आज के लिए कुछ नहीं मिला।', en: 'Nothing to show for today.', gu: 'આજ માટે કંઈ મળ્યું નહીં.', kn: 'ಇಂದಿಗೆ ಏನೂ ಸಿಗಲಿಲ್ಲ.', mr: 'आजसाठी काहीही आढळले नाही.', te: 'ఈరోజుకు ఏమీ లభించలేదు.' })}
             </Text>
           ) : (
             sections.map((s) => (

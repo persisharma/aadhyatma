@@ -17,6 +17,7 @@ export function companionTagline(lang: Lang): string {
   return pick(lang, {
     hi: 'आपका आध्यात्मिक साथी', en: 'Your spiritual companion',
     gu: 'તમારો આધ્યાત્મિક સાથી', kn: 'ನಿಮ್ಮ ಆಧ್ಯಾತ್ಮಿಕ ಸಂಗಾತಿ',
+    mr: 'तुमचा आध्यात्मिक सोबती', te: 'మీ ఆధ్యాత్మిక సహచరుడు',
   });
 }
 

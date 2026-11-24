@@ -17,8 +17,10 @@ export const comics: Comic[] = [
       en: 'Ramayana Comic · Bālakāṇḍa',
       gu: 'રામાયણ કોમિક · બાલકાંડ',
       kn: 'ರಾಮಾಯಣ ಕಾಮಿಕ್ · ಬಾಲಕಾಂಡ',
+      mr: 'रामायण कॉमिक · बालकांड',
+      te: 'రామాయణ కామిక్ · బాలకాండ',
     },
-    kanda: { hi: 'बालकाण्ड', en: 'Bala Kanda', gu: 'બાલકાંડ', kn: 'ಬಾಲಕಾಂಡ' },
+    kanda: { hi: 'बालकाण्ड', en: 'Bala Kanda', gu: 'બાલકાંડ', kn: 'ಬಾಲಕಾಂಡ', mr: 'बालकांड', te: 'బాలకాండ' },
     episodeCount: 29,
   },
   {
@@ -28,8 +30,10 @@ export const comics: Comic[] = [
       en: 'Ramayana Comic · Ayodhyākāṇḍa',
       gu: 'રામાયણ કોમિક · અયોધ્યાકાંડ',
       kn: 'ರಾಮಾಯಣ ಕಾಮಿಕ್ · ಅಯೋಧ್ಯಾಕಾಂಡ',
+      mr: 'रामायण कॉमिक · अयोध्याकांड',
+      te: 'రామాయణ కామిక్ · అయోధ్యాకాండ',
     },
-    kanda: { hi: 'अयोध्याकाण्ड', en: 'Ayodhya Kanda', gu: 'અયોધ્યાકાંડ', kn: 'ಅಯೋಧ್ಯಾಕಾಂಡ' },
+    kanda: { hi: 'अयोध्याकाण्ड', en: 'Ayodhya Kanda', gu: 'અયોધ્યાકાંડ', kn: 'ಅಯೋಧ್ಯಾಕಾಂಡ', mr: 'अयोध्याकांड', te: 'అయోధ్యాకాండ' },
     episodeCount: 81,
   },
 ];
@@ -48,11 +52,11 @@ export type RamayanaKanda = {
 };
 
 export const ramayanaKandas: RamayanaKanda[] = [
-  { id: 'bala', name: { hi: 'बालकाण्ड', en: 'Bala Kanda', gu: 'બાલકાંડ', kn: 'ಬಾಲಕಾಂಡ' }, comicId: 'balakanda-v1' },
-  { id: 'ayodhya', name: { hi: 'अयोध्याकाण्ड', en: 'Ayodhya Kanda', gu: 'અયોધ્યાકાંડ', kn: 'ಅಯೋಧ್ಯಾಕಾಂಡ' }, comicId: 'ayodhyakanda-v1' },
-  { id: 'aranya', name: { hi: 'अरण्यकाण्ड', en: 'Aranya Kanda', gu: 'અરણ્યકાંડ', kn: 'ಅರಣ್ಯಕಾಂಡ' } },
-  { id: 'kishkindha', name: { hi: 'किष्किन्धाकाण्ड', en: 'Kishkindha Kanda', gu: 'કિષ્કિંધાકાંડ', kn: 'ಕಿಷ್ಕಿಂಧಾಕಾಂಡ' } },
-  { id: 'sundara', name: { hi: 'सुन्दरकाण्ड', en: 'Sundara Kanda', gu: 'સુંદરકાંડ', kn: 'ಸುಂದರಕಾಂಡ' } },
-  { id: 'yuddha', name: { hi: 'युद्धकाण्ड', en: 'Yuddha Kanda', gu: 'યુદ્ધકાંડ', kn: 'ಯುದ್ಧಕಾಂಡ' } },
-  { id: 'uttara', name: { hi: 'उत्तरकाण्ड', en: 'Uttara Kanda', gu: 'ઉત્તરકાંડ', kn: 'ಉತ್ತರಕಾಂಡ' } },
+  { id: 'bala', name: { hi: 'बालकाण्ड', en: 'Bala Kanda', gu: 'બાલકાંડ', kn: 'ಬಾಲಕಾಂಡ', mr: 'बालकांड', te: 'బాలకాండ' }, comicId: 'balakanda-v1' },
+  { id: 'ayodhya', name: { hi: 'अयोध्याकाण्ड', en: 'Ayodhya Kanda', gu: 'અયોધ્યાકાંડ', kn: 'ಅಯೋಧ್ಯಾಕಾಂಡ', mr: 'अयोध्याकांड', te: 'అయోధ్యాకాండ' }, comicId: 'ayodhyakanda-v1' },
+  { id: 'aranya', name: { hi: 'अरण्यकाण्ड', en: 'Aranya Kanda', gu: 'અરણ્યકાંડ', kn: 'ಅರಣ್ಯಕಾಂಡ', mr: 'अरण्यकांड', te: 'అరణ్యకాండ' } },
+  { id: 'kishkindha', name: { hi: 'किष्किन्धाकाण्ड', en: 'Kishkindha Kanda', gu: 'કિષ્કિંધાકાંડ', kn: 'ಕಿಷ್ಕಿಂಧಾಕಾಂಡ', mr: 'किष्किंधाकांड', te: 'కిష్కింధాకాండ' } },
+  { id: 'sundara', name: { hi: 'सुन्दरकाण्ड', en: 'Sundara Kanda', gu: 'સુંદરકાંડ', kn: 'ಸುಂದರಕಾಂಡ', mr: 'सुंदरकांड', te: 'సుందరకాండ' } },
+  { id: 'yuddha', name: { hi: 'युद्धकाण्ड', en: 'Yuddha Kanda', gu: 'યુદ્ધકાંડ', kn: 'ಯುದ್ಧಕಾಂಡ', mr: 'युद्धकांड', te: 'యుద్ధకాండ' } },
+  { id: 'uttara', name: { hi: 'उत्तरकाण्ड', en: 'Uttara Kanda', gu: 'ઉત્તરકાંડ', kn: 'ಉತ್ತರಕಾಂಡ', mr: 'उत्तरकांड', te: 'ఉత్తరకాండ' } },
 ];

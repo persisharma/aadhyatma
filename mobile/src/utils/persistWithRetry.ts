@@ -43,12 +43,16 @@ const SAVE_FAILED_TITLE: LocalizedStrings = {
   en: 'Could not save',
   gu: 'સાચવી શકાયું નહીં',
   kn: 'ಉಳಿಸಲಾಗಲಿಲ್ಲ',
+  mr: 'जतन करता आले नाही',
+  te: 'సేవ్ చేయడం సాధ్యపడలేదు',
 };
 const SAVE_FAILED_BODY: LocalizedStrings = {
   hi: 'फ़ोन में जगह कम हो सकती है। ऐप बंद करने पर यह बदलाव खो सकता है।',
   en: 'Your phone may be low on storage. This change could be lost when the app closes.',
   gu: 'ફોનમાં જગ્યા ઓછી હોઈ શકે છે. ઍપ બંધ થતાં આ ફેરફાર ગુમાઈ શકે છે.',
   kn: 'ಫೋನ್‌ನಲ್ಲಿ ಜಾಗ ಕಡಿಮೆ ಇರಬಹುದು. ಆ್ಯಪ್ ಮುಚ್ಚಿದಾಗ ಈ ಬದಲಾವಣೆ ಕಳೆದುಹೋಗಬಹುದು.',
+  mr: 'फोनमध्ये जागा कमी असू शकते. ॲप बंद केल्यावर हा बदल हरवू शकतो.',
+  te: 'ఫోన్‌లో స్టోరేజ్ తక్కువగా ఉండవచ్చు. యాప్ మూసివేసినప్పుడు ఈ మార్పు పోవచ్చు.',
 };
 
 const LOADING_TITLE: LocalizedStrings = {
@@ -56,12 +60,16 @@ const LOADING_TITLE: LocalizedStrings = {
   en: 'Still loading',
   gu: 'હજી લોડ થઈ રહ્યું છે',
   kn: 'ಇನ್ನೂ ಲೋಡ್ ಆಗುತ್ತಿದೆ',
+  mr: 'अजून लोड होत आहे',
+  te: 'ఇంకా లోడ్ అవుతోంది',
 };
 const BOOKMARKS_LOADING_BODY: LocalizedStrings = {
   hi: 'आपके बुकमार्क लोड हो रहे हैं। कृपया एक पल बाद फिर दबाएँ।',
   en: 'Your bookmarks are still loading. Please tap again in a moment.',
   gu: 'તમારા બુકમાર્ક લોડ થઈ રહ્યા છે. કૃપા કરીને થોડી વાર પછી ફરી ટૅપ કરો.',
   kn: 'ನಿಮ್ಮ ಬುಕ್‌ಮಾರ್ಕ್‌ಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ಟ್ಯಾಪ್ ಮಾಡಿ.',
+  mr: 'तुमचे बुकमार्क लोड होत आहेत. कृपया थोड्या वेळाने पुन्हा टॅप करा.',
+  te: 'మీ బుక్‌మార్క్‌లు లోడ్ అవుతున్నాయి. దయచేసి కొద్దిసేపటి తర్వాత మళ్లీ ట్యాప్ చేయండి.',
 };
 
 /** A bookmark tap that arrives before the saved list has hydrated used to do nothing at all. */

@@ -60,10 +60,12 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
     en: 'Check the amount. Use 1,000 or 1,000.50, with at most 2 decimal places.',
     gu: 'રકમ તપાસો. ઉદાહરણ: 1,000 અથવા 1,000.50. દશાંશ પછી વધુમાં વધુ 2 અંક રાખો.',
     kn: 'ಮೊತ್ತ ಪರಿಶೀಲಿಸಿ. ಉದಾಹರಣೆ: 1,000 ಅಥವಾ 1,000.50. ದಶಮಾಂಶದ ನಂತರ ಗರಿಷ್ಠ 2 ಅಂಕಿಗಳಿರಲಿ.',
+    mr: 'रक्कम तपासा. उदाहरण: 1,000 किंवा 1,000.50. दशांशानंतर जास्तीत जास्त 2 अंक ठेवा.',
+    te: 'మొత్తాన్ని తనిఖీ చేయండి. ఉదాహరణ: 1,000 లేదా 1,000.50. దశాంశం తర్వాత గరిష్ఠంగా 2 అంకెలు ఉండాలి.',
   });
   const amountLabel = pick(lang, {
     hi: 'राशि (₹) — वैकल्पिक · निजी', en: 'Amount (₹) — optional · private',
-    gu: 'રકમ (₹) — વૈકલ્પિક · ખાનગી', kn: 'ಮೊತ್ತ (₹) — ಐಚ್ಛಿಕ · ಖಾಸಗಿ',
+    gu: 'રકમ (₹) — વૈકલ્પિક · ખાનગી', kn: 'ಮೊತ್ತ (₹) — ಐಚ್ಛಿಕ · ಖಾಸಗಿ', mr: 'रक्कम (₹) — ऐच्छिक · खाजगी', te: 'మొత్తం (₹) — ఐచ్ఛికం · ప్రైవేట్',
   });
   const showAmountError = amountTouched && amount.kind === 'invalid';
 
@@ -77,6 +79,8 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
     en: 'Daan was not saved. Your details are still here — try Record again.',
     gu: 'દાન સચવાયું નથી. વિગતો અહીં જ છે — ફરી નોંધો.',
     kn: 'ದಾನ ಉಳಿಸಲಾಗಿಲ್ಲ. ವಿವರಗಳು ಇಲ್ಲಿಯೇ ಇವೆ — ಮತ್ತೆ ದಾಖಲಿಸಿ.',
+    mr: 'दान जतन झाले नाही. तपशील इथेच आहेत — पुन्हा नोंदवा.',
+    te: 'దానం సేవ్ కాలేదు. వివరాలు ఇక్కడే ఉన్నాయి — మళ్లీ నమోదు చేయండి.',
   });
 
   const onSave = async () => {
@@ -222,6 +226,8 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
                 en: 'e.g. khichdi, at the temple anna-kshetra…',
                 gu: 'જેમ કે: ખીચડી, મંદિર અન્નક્ષેત્રમાં…',
                 kn: 'ಉದಾ: ಖಿಚಡಿ, ದೇವಸ್ಥಾನದ ಅನ್ನಕ್ಷೇತ್ರದಲ್ಲಿ…',
+                mr: 'उदा: खिचडी, मंदिराच्या अन्नक्षेत्रात…',
+                te: 'ఉదా: కిచిడీ, ఆలయ అన్నక్షేత్రంలో…',
               })}
             />
             <Text style={fieldLabelStyle}>
@@ -243,6 +249,8 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
                 en: 'Never shown on any list or share card',
                 gu: 'ક્યારેય કોઈ યાદી કે share cardમાં દેખાતી નથી',
                 kn: 'ಯಾವುದೇ ಪಟ್ಟಿ ಅಥವಾ share cardನಲ್ಲಿ ಕಾಣುವುದಿಲ್ಲ',
+                mr: 'कधीही कोणत्याही यादीत किंवा share card मध्ये दिसत नाही',
+                te: 'ఏ జాబితాలోనూ లేదా share cardలోనూ ఎప్పుడూ కనిపించదు',
               })}
             />
             {showAmountError ? (
@@ -253,7 +261,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
             ) : amount.kind === 'valid' ? (
               <Text testID="daan-amount-preview"
                 style={{ fontFamily: bodyFont, fontSize: typography.meaning.fontSize, lineHeight: typography.meaning.lineHeight, color: colors.inkSoft, marginTop: spacing.sm }}>
-                {pick(lang, { hi: 'दर्ज होने वाली राशि', en: 'Amount to record', gu: 'નોંધવાની રકમ', kn: 'ದಾಖಲಿಸಬೇಕಾದ ಮೊತ್ತ' })}: {amount.display}
+                {pick(lang, { hi: 'दर्ज होने वाली राशि', en: 'Amount to record', gu: 'નોંધવાની રકમ', kn: 'ದಾಖಲಿಸಬೇಕಾದ ಮೊತ್ತ', mr: 'नोंदवायची रक्कम', te: 'నమోదు చేయాల్సిన మొత్తం' })}: {amount.display}
               </Text>
             ) : null}
           </View>

@@ -30,6 +30,8 @@ export default function DarshanFloatingButton({
         en: "Open temple Darshan",
         gu: "મંદિર દર્શન ખોલો",
         kn: "ದೇವಾಲಯದ ದರ್ಶನ ತೆರೆಯಿರಿ",
+        mr: "मंदिर दर्शन उघडा",
+        te: "ఆలయ దర్శనం తెరవండి",
       })}
       onPress={onPress}
       style={({ pressed }) => [

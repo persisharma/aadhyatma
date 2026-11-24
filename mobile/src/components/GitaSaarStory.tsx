@@ -56,6 +56,8 @@ export function GitaSaarStoryHero({
           en: 'Wisdom through a story',
           gu: 'એક પ્રસંગથી સમજો',
           kn: 'ಒಂದು ಪ್ರಸಂಗದ ಮೂಲಕ ಅರಿಯಿರಿ',
+          mr: 'एका प्रसंगातून समजून घ्या',
+          te: 'ఒక ప్రసంగం ద్వారా తెలుసుకోండి',
         })}
       </ProseParagraph>
       <ProseParagraph
@@ -111,6 +113,8 @@ export function GitaSaarStoryDoor({
             en: 'This theme’s story',
             gu: 'આ વિષયનો પ્રસંગ',
             kn: 'ಈ ವಿಷಯದ ಪ್ರಸಂಗ',
+            mr: 'या विषयाचा प्रसंग',
+            te: 'ఈ విషయపు ప్రసంగం',
           })}
         </ProseParagraph>
         <ProseParagraph style={[heading, { fontSize: 16, lineHeight: 27 }]}>
@@ -146,12 +150,16 @@ export function GitaSaarStoryDetails({
                 en: 'From scripture · abridged',
                 gu: 'ગ્રંથ પ્રસંગ · સંક્ષેપ',
                 kn: 'ಗ್ರಂಥ ಪ್ರಸಂಗ · ಸಂಕ್ಷೇಪ',
+                mr: 'ग्रंथ प्रसंग · संक्षेप',
+                te: 'గ్రంథ ప్రసంగం · సంక్షేపం',
               }
             : {
                 hi: 'कथा · संक्षिप्त रूपांतर',
                 en: 'Story · abridged retelling',
                 gu: 'કથા · સંક્ષિપ્ત રૂપાંતર',
                 kn: 'ಕಥೆ · ಸಂಕ್ಷಿಪ್ತ ರೂಪಾಂತರ',
+                mr: 'कथा · संक्षिप्त रूपांतर',
+                te: 'కథ · సంక్షిప్త రూపాంతరం',
               }
         )}
       </ProseParagraph>
@@ -202,6 +210,8 @@ export function GitaSaarStoryDetails({
             en: 'The connection to the Gita',
             gu: 'ગીતા સાથેનો સંબંધ',
             kn: 'ಗೀತೆಯೊಂದಿಗಿನ ಸಂಬಂಧ',
+            mr: 'गीतेशी संबंध',
+            te: 'గీతతో సంబంధం',
           })}
         </ProseParagraph>
         <ProseParagraph style={[body, { color: colors.ink, marginTop: 10 }]}>
@@ -226,6 +236,8 @@ export function GitaSaarStoryDetails({
                     en: `Gita ${ref}`,
                     gu: `ગીતા ${ref}`,
                     kn: `ಗೀತೆ ${ref}`,
+                    mr: `गीता ${ref}`,
+                    te: `గీత ${ref}`,
                   })}
                 </ProseParagraph>
                 <AppIcon name="next" color={colors.saffronDeep} size={14} />
@@ -244,6 +256,8 @@ export function GitaSaarStoryDetails({
             en: 'What this looks like today',
             gu: 'તમારા દિવસમાં આનો અર્થ',
             kn: 'ನಿಮ್ಮ ದಿನದಲ್ಲಿ ಇದರ ರೂಪ',
+            mr: 'तुमच्या दिवसात याचे रूप',
+            te: 'మీ రోజులో దీని రూపం',
           })}
         </ProseParagraph>
         <ProseParagraph style={[body, { marginTop: 10 }]}>
@@ -256,6 +270,8 @@ export function GitaSaarStoryDetails({
           en: 'Related readings in Vedansh',
           gu: 'ઍપમાં સંબંધિત પાઠ',
           kn: 'ಆ್ಯಪ್‌ನಲ್ಲಿ ಸಂಬಂಧಿತ ಪಠ್ಯಗಳು',
+          mr: 'ॲपमधील संबंधित पाठ',
+          te: 'యాప్‌లో సంబంధిత పాఠాలు',
         })}
       </ProseParagraph>
       }

@@ -24,10 +24,12 @@ export default function KidsStoriesHomeCard({ onPress, onPressIn, onPressOut }: 
   const title = pick(lang, {
     hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids',
     gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು',
+    mr: 'मुलांच्या चित्रकथा', te: 'పిల్లల చిత్రకథలు',
   });
   const action = pick(lang, {
     hi: 'पात्र चुनें', en: 'Choose a deity',
     gu: 'દેવતા પસંદ કરો', kn: 'ದೇವರನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+    mr: 'देवता निवडा', te: 'దేవతను ఎంచుకోండి',
   });
   return (
     <HomeBannerCard

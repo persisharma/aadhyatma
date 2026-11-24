@@ -52,8 +52,8 @@ export default function DaanDirectoryDetailScreen({ navigation, route }: Props) 
     setHandOff('handedOff');
     Linking.openURL(org.officialUrl).catch(() => {
       Alert.alert(
-        pick(lang, { hi: 'लिंक नहीं खुल सका', en: 'Could not open the link', gu: 'લિંક ખોલી શકાઈ નહીં', kn: 'ಲಿಂಕ್ ತೆರೆಯಲಾಗಲಿಲ್ಲ' }),
-        pick(lang, { hi: 'कृपया बाद में फिर कोशिश करें।', en: 'Please try again later.', gu: 'કૃપા કરીને થોડી વાર પછી ફરી પ્રયાસ કરો.', kn: 'ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' }),
+        pick(lang, { hi: 'लिंक नहीं खुल सका', en: 'Could not open the link', gu: 'લિંક ખોલી શકાઈ નહીં', kn: 'ಲಿಂಕ್ ತೆರೆಯಲಾಗಲಿಲ್ಲ', mr: 'लिंक उघडता आली नाही', te: 'లింక్ తెరవలేకపోయాం' }),
+        pick(lang, { hi: 'कृपया बाद में फिर कोशिश करें।', en: 'Please try again later.', gu: 'કૃપા કરીને થોડી વાર પછી ફરી પ્રયાસ કરો.', kn: 'ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.', mr: 'कृपया नंतर पुन्हा प्रयत्न करा.', te: 'దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.' }),
       );
     });
   };

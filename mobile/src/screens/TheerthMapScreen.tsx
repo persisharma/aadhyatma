@@ -53,6 +53,8 @@ function categoryLabel(key: CategoryKey, lang: Lang): string {
       en: 'Other Famous Temples',
       gu: 'અન્ય પ્રસિદ્ધ તીર્થ',
       kn: 'ಇತರ ಪ್ರಸಿದ್ಧ ತೀರ್ಥ',
+      mr: 'इतर प्रसिद्ध तीर्थ',
+      te: 'ఇతర ప్రసిద్ధ తీర్థాలు',
     });
   const m = groupMeta[key];
   return contentByLang(lang, m.nameHi, m.nameEn);
@@ -94,7 +96,7 @@ export default function TheerthMapScreen({ navigation, route }: Props) {
               ? group
                 ? categoryLabel(group, lang)
                 : drillStateTitle(stateEn!, lang)
-              : pick(lang, { hi: 'तीर्थ', en: 'Theerth', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })
+              : pick(lang, { hi: 'तीर्थ', en: 'Theerth', gu: 'તીર્થ', kn: 'ತೀರ್ಥ', mr: 'तीर्थ', te: 'తీర్థాలు' })
           }
           onBack={() => navigation.goBack()}
           colors={colors}
@@ -250,7 +252,7 @@ function Listing({
         const card = (
           <BrowseCard
             name={c.label}
-            meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ' })}`}
+            meta={`${c.count} ${pick(lang, { hi: 'तीर्थ', en: 'temples', gu: 'તીર્થ', kn: 'ತೀರ್ಥ', mr: 'तीर्थ', te: 'తీర్థాలు' })}`}
             hasNew={c.hasNew}
             lang={lang}
             colors={colors}
@@ -337,6 +339,8 @@ function DrillIn({
           en: 'Tap a pin to read the temple’s story',
           gu: 'પિન સ્પર્શ કરી મંદિરની કથા વાંચો',
           kn: 'ಪಿನ್ ಸ್ಪರ್ಶಿಸಿ ದೇವಸ್ಥಾನದ ಕಥೆ ಓದಿ',
+          mr: 'पिनला स्पर्श करून मंदिराची कथा वाचा',
+          te: 'పిన్‌ను తాకి ఆలయ కథ చదవండి',
         })}
       </Text>
       {list.map((temple) => (

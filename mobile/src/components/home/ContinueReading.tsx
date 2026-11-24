@@ -55,6 +55,8 @@ export default function ContinueReading({
           en: 'Continue reading',
           gu: 'વાંચવાનું ચાલુ રાખો',
           kn: 'ಓದುವುದನ್ನು ಮುಂದುವರಿಸಿ',
+          mr: 'वाचन सुरू ठेवा',
+          te: 'చదవడం కొనసాగించండి',
         })}
       </Text>
       <Text style={{ fontFamily: titleFontByLang(lang), fontSize: 15, color: colors.ink }}>

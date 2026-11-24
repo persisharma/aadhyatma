@@ -44,11 +44,13 @@ export function readAloudRowLabel(
       en: 'Unavailable',
       gu: 'ઉપલબ્ધ નથી',
       kn: 'ಲಭ್ಯವಿಲ್ಲ',
+      mr: 'उपलब्ध नाही',
+      te: 'అందుబాటులో లేదు',
     });
   }
   const meaning = prefs.readMeaning
-    ? pick(lang, { hi: 'श्लोक व अर्थ', en: 'Verse & meaning', gu: 'શ્લોક અને અર્થ', kn: 'ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ' })
-    : pick(lang, { hi: 'केवल श्लोक', en: 'Verse only', gu: 'ફક્ત શ્લોક', kn: 'ಶ್ಲೋಕ ಮಾತ್ರ' });
+    ? pick(lang, { hi: 'श्लोक व अर्थ', en: 'Verse & meaning', gu: 'શ્લોક અને અર્થ', kn: 'ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ', mr: 'श्लोक व अर्थ', te: 'శ్లోకం, అర్థం' })
+    : pick(lang, { hi: 'केवल श्लोक', en: 'Verse only', gu: 'ફક્ત શ્લોક', kn: 'ಶ್ಲೋಕ ಮಾತ್ರ', mr: 'फक्त श्लोक', te: 'శ్లోకం మాత్రమే' });
   return `${meaning} · ${prefs.rate.toFixed(1)}×`;
 }
 
@@ -69,7 +71,7 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
   const selectedVoice = prefs.voiceByTarget[target];
   const voiceOptions = candidateVoices.slice(0, MAX_VOICE_OPTIONS);
 
-  const doneLabel = pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಮುಗಿಯಿತು' });
+  const doneLabel = pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಮುಗಿಯಿತು', mr: 'झाले', te: 'పూర్తయింది' });
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
@@ -92,7 +94,7 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
             accessibilityRole="header"
             style={{ fontFamily: chromeFont, fontSize: 18, color: colors.ink, textAlign: 'center' }}
           >
-            {pick(lang, { hi: 'पाठ सुनें', en: 'Read aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ' })}
+            {pick(lang, { hi: 'पाठ सुनें', en: 'Read aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ', mr: 'पाठ ऐका', te: 'పాఠం వినండి' })}
           </Text>
           <Text
             style={{
@@ -109,6 +111,8 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
               en: "Your device's voice — not a human recitation",
               gu: 'ઉપકરણની આવાજથી — માનવ પાઠ નથી',
               kn: 'ಸಾಧನದ ಧ್ವನಿಯಿಂದ — ಮಾನವ ಪಾಠವಲ್ಲ',
+              mr: 'उपकरणाच्या आवाजात — मानवी पाठ नाही',
+              te: 'పరికరం స్వరంతో — మానవ పఠనం కాదు',
             })}
           </Text>
 
@@ -118,7 +122,7 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
             ) : (
               <>
                 <SectionLabel
-                  text={pick(lang, { hi: 'आवाज़', en: 'Voice', gu: 'આવાજ', kn: 'ಧ್ವನಿ' })}
+                  text={pick(lang, { hi: 'आवाज़', en: 'Voice', gu: 'આવાજ', kn: 'ಧ್ವನಿ', mr: 'आवाज', te: 'స్వరం' })}
                   font={chromeFont}
                 />
                 <View
@@ -127,7 +131,7 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
                   accessibilityLabel="Read aloud voice"
                 >
                   <VoicePill
-                    label={pick(lang, { hi: 'स्वतः', en: 'Automatic', gu: 'સ્વતઃ', kn: 'ಸ್ವಯಂ' })}
+                    label={pick(lang, { hi: 'स्वतः', en: 'Automatic', gu: 'સ્વતઃ', kn: 'ಸ್ವಯಂ', mr: 'आपोआप', te: 'స్వయంచాలకం' })}
                     a11y="Automatic voice"
                     selected={!selectedVoice}
                     onPress={() => setVoice(target, undefined)}
@@ -152,13 +156,15 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
                     en: `For reading in ${languageName(lang)}`,
                     gu: `${languageName(lang)} માં વાંચવા માટે`,
                     kn: `${languageName(lang)} ನಲ್ಲಿ ಓದಲು`,
+                    mr: `${languageName(lang)} मध्ये वाचण्यासाठी`,
+                    te: `${languageName(lang)}లో చదవడానికి`,
                   })}
                 </Text>
               </>
             )}
 
             <SectionLabel
-              text={pick(lang, { hi: 'गति', en: 'Speed', gu: 'ગતિ', kn: 'ಗತಿ' })}
+              text={pick(lang, { hi: 'गति', en: 'Speed', gu: 'ગતિ', kn: 'ಗತಿ', mr: 'गती', te: 'వేగం' })}
               font={chromeFont}
             />
             <RateStepper
@@ -171,18 +177,18 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
             />
 
             <SectionLabel
-              text={pick(lang, { hi: 'क्या पढ़ें', en: 'What to read', gu: 'શું વાંચવું', kn: 'ಏನು ಓದಬೇಕು' })}
+              text={pick(lang, { hi: 'क्या पढ़ें', en: 'What to read', gu: 'શું વાંચવું', kn: 'ಏನು ಓದಬೇಕು', mr: 'काय वाचायचे', te: 'ఏమి చదవాలి' })}
               font={chromeFont}
             />
             <View style={styles.optionColumn}>
               <TogglePill
-                label={pick(lang, { hi: 'अर्थ भी', en: 'Meaning too', gu: 'અર્થ પણ', kn: 'ಅರ್ಥವೂ' })}
+                label={pick(lang, { hi: 'अर्थ भी', en: 'Meaning too', gu: 'અર્થ પણ', kn: 'ಅರ್ಥವೂ', mr: 'अर्थही', te: 'అర్థం కూడా' })}
                 a11y="Read meaning"
                 on={prefs.readMeaning}
                 onPress={() => setReadMeaning(!prefs.readMeaning)}
               />
               <TogglePill
-                label={pick(lang, { hi: 'व्याख्या भी', en: 'Commentary too', gu: 'વ્યાખ્યા પણ', kn: 'ವ್ಯಾಖ್ಯಾನವೂ' })}
+                label={pick(lang, { hi: 'व्याख्या भी', en: 'Commentary too', gu: 'વ્યાખ્યા પણ', kn: 'ವ್ಯಾಖ್ಯಾನವೂ', mr: 'व्याख्याही', te: 'వ్యాఖ్యానం కూడా' })}
                 a11y="Read commentary"
                 on={prefs.readCommentary}
                 onPress={() => setReadCommentary(!prefs.readCommentary)}
@@ -201,7 +207,7 @@ export default function ReadAloudSettingsSheet({ visible, onClose }: Props) {
                 ]}
               >
                 <Text style={{ color: colors.saffronDeep, fontFamily: chromeFont, fontSize: 14 }}>
-                  {pick(lang, { hi: 'सुनकर देखें', en: 'Preview', gu: 'સાંભળી જુઓ', kn: 'ಕೇಳಿ ನೋಡಿ' })}
+                  {pick(lang, { hi: 'सुनकर देखें', en: 'Preview', gu: 'સાંભળી જુઓ', kn: 'ಕೇಳಿ ನೋಡಿ', mr: 'ऐकून पाहा', te: 'విని చూడండి' })}
                 </Text>
               </Pressable>
             ) : null}
@@ -329,12 +335,16 @@ function UnavailableBlock({ lang, onRetry }: { lang: Lang; onRetry: () => void }
               en: `This device has no ${name} voice installed. Add ${name} speech data in settings, then come back.`,
               gu: `આ ઉપકરણમાં ${name} આવાજ નથી. સેટિંગ્સમાં ${name} વાણી ડાઉનલોડ કરીને પરત આવો.`,
               kn: `ಈ ಸಾಧನದಲ್ಲಿ ${name} ಧ್ವನಿ ಇಲ್ಲ. ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ${name} ವಾಣಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ ಹಿಂತಿರುಗಿ.`,
+              mr: `या उपकरणात ${name} आवाज नाही. सेटिंग्जमध्ये ${name} वाणी डाउनलोड करून परत या.`,
+              te: `ఈ పరికరంలో ${name} స్వరం లేదు. సెట్టింగ్‌లలో ${name} వాణిని డౌన్‌లోడ్ చేసి తిరిగి రండి.`,
             })
           : pick(lang, {
               hi: `इस उपकरण में ${name} की आवाज़ नहीं है। Settings › Accessibility › Spoken Content › Voices में जोड़ें।`,
               en: `This device has no ${name} voice installed. Add one in Settings › Accessibility › Spoken Content › Voices.`,
               gu: `આ ઉપકરણમાં ${name} આવાજ નથી. Settings › Accessibility › Spoken Content › Voices માં ઉમેરો.`,
               kn: `ಈ ಸಾಧನದಲ್ಲಿ ${name} ಧ್ವನಿ ಇಲ್ಲ. Settings › Accessibility › Spoken Content › Voices ನಲ್ಲಿ ಸೇರಿಸಿ.`,
+              mr: `या उपकरणात ${name} आवाज नाही. Settings › Accessibility › Spoken Content › Voices मध्ये जोडा.`,
+              te: `ఈ పరికరంలో ${name} స్వరం లేదు. Settings › Accessibility › Spoken Content › Voices లో జోడించండి.`,
             })}
       </Text>
 
@@ -360,6 +370,8 @@ function UnavailableBlock({ lang, onRetry }: { lang: Lang; onRetry: () => void }
                 en: 'Open TTS settings',
                 gu: 'TTS સેટિંગ્સ ખોલો',
                 kn: 'TTS ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ',
+                mr: 'TTS सेटिंग्ज उघडा',
+                te: 'TTS సెట్టింగ్‌లను తెరవండి',
               })}
             </Text>
           </Pressable>
@@ -381,6 +393,8 @@ function UnavailableBlock({ lang, onRetry }: { lang: Lang; onRetry: () => void }
               en: 'Check again',
               gu: 'ફરી તપાસો',
               kn: 'ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ',
+              mr: 'पुन्हा तपासा',
+              te: 'మళ్లీ తనిఖీ చేయండి',
             })}
           </Text>
         </Pressable>

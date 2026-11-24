@@ -52,7 +52,7 @@ export default function LanguagePickerSheet({ visible, onClose }: Props) {
             accessibilityRole="header"
             style={{ fontFamily: cardFontByLang(lang), fontSize: 18, color: colors.ink, textAlign: 'center', marginBottom: spacing.md }}
           >
-            {pick(lang, { hi: 'पढ़ने की भाषा', en: 'Reading language', gu: 'વાંચનની ભાષા', kn: 'ಓದುವ ಭಾಷೆ' })}
+            {pick(lang, { hi: 'पढ़ने की भाषा', en: 'Reading language', gu: 'વાંચનની ભાષા', kn: 'ಓದುವ ಭಾಷೆ', mr: 'वाचनाची भाषा', te: 'చదివే భాష' })}
           </Text>
 
           <View accessibilityRole="radiogroup">

@@ -266,6 +266,8 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   en: 'Play video',
                   gu: 'વિડિઓ ચલાવો',
                   kn: 'ವೀಡಿಯೊ ಪ್ಲೇ ಮಾಡಿ',
+                  mr: 'व्हिडिओ चालू करा',
+                  te: 'వీడియో ప్లే చేయండి',
                 })}
                 hitSlop={8}
                 style={({ pressed }) => [
@@ -278,7 +280,7 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   <AppIcon name="play" size={10} weight="fill" color={colors.onPrimary} />
                 </View>
                 <Text style={[styles.videoCtaText, { color: colors.ink }]}>
-                  {pick(lang, { hi: 'वीडियो', en: 'Video', gu: 'વિડિઓ', kn: 'ವೀಡಿಯೊ' })}
+                  {pick(lang, { hi: 'वीडियो', en: 'Video', gu: 'વિડિઓ', kn: 'ವೀಡಿಯೊ', mr: 'व्हिडिओ', te: 'వీడియో' })}
                 </Text>
               </Pressable>
             )}
@@ -291,12 +293,14 @@ export default function ChalisaReaderScreen({ navigation, route }: Props) {
                   en: 'Resume auto-scroll',
                   gu: 'ઓટો-સ્ક્રોલ ફરી શરૂ કરો',
                   kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್ ಮರುಪ್ರಾರಂಭಿಸಿ',
+                  mr: 'स्वयं-स्क्रोल पुन्हा सुरू करा',
+                  te: 'ఆటో-స్క్రోల్ మళ్లీ ప్రారంభించండి',
                 })}
                 hitSlop={8}
                 style={[styles.videoCta, { borderColor: colors.saffron, backgroundColor: colors.saffronTint }]}
               >
                 <Text style={[styles.videoCtaText, { color: colors.saffronDeep }]}>
-                  {pick(lang, { hi: 'स्वतः-स्क्रॉल', en: 'Auto-scroll', gu: 'ઓટો-સ્ક્રોલ', kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್' })} ⌄
+                  {pick(lang, { hi: 'स्वतः-स्क्रॉल', en: 'Auto-scroll', gu: 'ઓટો-સ્ક્રોલ', kn: 'ಸ್ವಯಂ-ಸ್ಕ್ರಾಲ್', mr: 'स्वयं-स्क्रोल', te: 'ఆటో-స్క్రోల్' })} ⌄
                 </Text>
               </Pressable>
             )}

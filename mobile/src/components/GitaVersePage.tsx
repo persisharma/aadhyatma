@@ -48,6 +48,8 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
           en: 'Extended commentary is available in Hindi only for this verse.',
           gu: 'આ શ્લોકની વિગતવાર વ્યાખ્યા ફક્ત અંગ્રેજીમાં ઉપલબ્ધ છે.',
           kn: 'ಈ ಶ್ಲೋಕದ ವಿವರವಾದ ವ್ಯಾಖ್ಯಾನ ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಮಾತ್ರ ಲಭ್ಯವಿದೆ.',
+          mr: 'या श्लोकाचे सविस्तर विवेचन फक्त इंग्रजीत उपलब्ध आहे.',
+          te: 'ఈ శ్లోకం యొక్క విస్తృత వ్యాఖ్యానం ఆంగ్లంలో మాత్రమే అందుబాటులో ఉంది.',
         })
       : null;
 
@@ -58,12 +60,16 @@ export default function GitaVersePage({ verse, sourceId, width, topActions, show
     en: 'Meaning',
     gu: 'ભાવાર્થ',
     kn: 'ಭಾವಾರ್ಥ',
+    mr: 'भावार्थ',
+    te: 'భావార్థం',
   });
   const commentaryLabel = pick(lang, {
     hi: 'व्याख्या',
     en: 'Commentary',
     gu: 'વ્યાખ્યા',
     kn: 'ವ್ಯಾಖ್ಯಾನ',
+    mr: 'व्याख्या',
+    te: 'వ్యాఖ్యానం',
   });
 
   const pillText = contentByLang(

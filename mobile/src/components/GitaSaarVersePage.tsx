@@ -199,7 +199,7 @@ export default function GitaSaarVersePage({
           {contentByLang(lang, verse.themeHi, verse.themeEn)}
         </ProseParagraph>
         <ProseParagraph style={[label, { marginBottom: 9 }]}>
-          {pick(lang, { hi: 'सार', en: 'Essence', gu: 'સાર', kn: 'ಸಾರ' })}
+          {pick(lang, { hi: 'सार', en: 'Essence', gu: 'સાર', kn: 'ಸಾರ', mr: 'सार', te: 'సారం' })}
         </ProseParagraph>
         <ProseParagraph
           testID="gita-saar-essence"
@@ -232,6 +232,8 @@ export default function GitaSaarVersePage({
               en: 'Original verse & meaning',
               gu: 'મૂળ શ્લોક અને અર્થ',
               kn: 'ಮೂಲ ಶ್ಲೋಕ ಮತ್ತು ಅರ್ಥ',
+              mr: 'मूळ श्लोक आणि अर्थ',
+              te: 'మూల శ్లోకం, అర్థం',
             })}
           </ProseParagraph>
           <AppIcon
@@ -287,6 +289,8 @@ export default function GitaSaarVersePage({
                     en: 'Meaning',
                     gu: 'ભાવાર્થ',
                     kn: 'ಭಾವಾರ್ಥ',
+                    mr: 'भावार्थ',
+                    te: 'భావార్థం',
                   })}
                 </ProseParagraph>
                 <ProseParagraph style={body}>
@@ -310,6 +314,8 @@ export default function GitaSaarVersePage({
                 en: 'Read the full meaning in the Gita',
                 gu: 'પૂરો અર્થ ગીતામાં વાંચો',
                 kn: 'ಪೂರ್ಣ ಅರ್ಥವನ್ನು ಗೀತೆಯಲ್ಲಿ ಓದಿ',
+                mr: 'संपूर्ण अर्थ गीतेत वाचा',
+                te: 'పూర్తి అర్థాన్ని గీతలో చదవండి',
               })}
             </ProseParagraph>
             <AppIcon name="next" size={17} color={colors.saffronDeep} />
@@ -346,6 +352,8 @@ export default function GitaSaarVersePage({
                 en: 'Take it into your day',
                 gu: 'આજ સાથે લઈ જાઓ',
                 kn: 'ಇಂದಿನ ದಿನಕ್ಕೆ ಜೊತೆಯಾಗಲಿ',
+                mr: 'आज सोबत घेऊन जा',
+                te: 'ఈరోజు మీతో తీసుకెళ్లండి',
               })}
             </ProseParagraph>
             <ProseParagraph
@@ -374,6 +382,8 @@ export default function GitaSaarVersePage({
                   en: 'Add a thought of your own',
                   gu: 'તમારો એક વિચાર લખો',
                   kn: 'ನಿಮ್ಮ ಒಂದು ವಿಚಾರ ಬರೆಯಿರಿ',
+                  mr: 'तुमचा एक विचार लिहा',
+                  te: 'మీ ఒక ఆలోచన రాయండి',
                 })}
               </ProseParagraph>
               <ProseParagraph style={[label, { color: colors.inkMuted }]}>
@@ -382,6 +392,8 @@ export default function GitaSaarVersePage({
                   en: 'Optional',
                   gu: 'વૈકલ્પિક',
                   kn: 'ಐಚ್ಛಿಕ',
+                  mr: 'ऐच्छिक',
+                  te: 'ఐచ్ఛికం',
                 })}
               </ProseParagraph>
             </Pressable>
@@ -418,6 +430,8 @@ export default function GitaSaarVersePage({
                         en: 'Done',
                         gu: 'પૂર્ણ',
                         kn: 'ಮುಗಿಯಿತು',
+                        mr: 'पूर्ण',
+                        te: 'పూర్తి',
                       })}
                     </ProseParagraph>
                   </Pressable>
@@ -440,6 +454,8 @@ export default function GitaSaarVersePage({
                     en: 'Today, I…',
                     gu: 'આજે હું…',
                     kn: 'ಇಂದು ನಾನು…',
+                    mr: 'आज मी…',
+                    te: 'ఈరోజు నేను…',
                   })}
                   style={[
                     body,
@@ -484,6 +500,8 @@ export default function GitaSaarVersePage({
                       en: 'Saving…',
                       gu: 'સાચવી રહ્યા છીએ…',
                       kn: 'ಉಳಿಸಲಾಗುತ್ತಿದೆ…',
+                      mr: 'जतन करत आहे…',
+                      te: 'సేవ్ చేస్తోంది…',
                     })
                   : saved
                     ? pick(lang, {
@@ -491,6 +509,8 @@ export default function GitaSaarVersePage({
                         en: 'Teaching saved',
                         gu: 'શીખ સાચવી લીધી',
                         kn: 'ಕಲಿಕೆ ಉಳಿಸಲಾಗಿದೆ',
+                        mr: 'शिकवण जतन झाली',
+                        te: 'పాఠం సేవ్ అయింది',
                       })
                     : reflection.trim()
                       ? pick(lang, {
@@ -498,12 +518,16 @@ export default function GitaSaarVersePage({
                           en: 'Save teaching & reflection',
                           gu: 'શીખ અને વિચાર સાચવો',
                           kn: 'ಕಲಿಕೆ ಮತ್ತು ವಿಚಾರ ಉಳಿಸಿ',
+                          mr: 'शिकवण आणि विचार जतन करा',
+                          te: 'పాఠం, ఆలోచన సేవ్ చేయండి',
                         })
                       : pick(lang, {
                           hi: 'सीख सहेजें',
                           en: 'Keep this teaching',
                           gu: 'શીખ સાચવો',
                           kn: 'ಕಲಿಕೆ ಉಳಿಸಿ',
+                          mr: 'शिकवण जतन करा',
+                          te: 'పాఠం సేవ్ చేయండి',
                         })}
               </ProseParagraph>
               <AppIcon
@@ -530,6 +554,8 @@ export default function GitaSaarVersePage({
                     en: 'Could not save. Your writing is still here; try again.',
                     gu: 'સાચવી શકાયું નથી. તમારું લખાણ અહીં છે; ફરી પ્રયાસ કરો.',
                     kn: 'ಉಳಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಬರಹ ಇಲ್ಲಿದೆ; ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+                    mr: 'जतन करता आले नाही. तुमचे लिखाण इथेच आहे; पुन्हा प्रयत्न करा.',
+                    te: 'సేవ్ చేయలేకపోయాం. మీ రాత ఇక్కడే ఉంది; మళ్లీ ప్రయత్నించండి.',
                   })
                 : saved
                   ? pick(lang, {
@@ -537,12 +563,16 @@ export default function GitaSaarVersePage({
                       en: 'Return to it anytime in My learning.',
                       gu: 'મારી શીખમાં ગમે ત્યારે ફરી વાંચો.',
                       kn: 'ನನ್ನ ಕಲಿಕೆಯಲ್ಲಿ ಮತ್ತೆ ಓದಿ.',
+                      mr: 'माझ्या शिकवणीत कधीही परत येऊन वाचा.',
+                      te: 'నా పాఠాల్లో ఎప్పుడైనా తిరిగి చదవండి.',
                     })
                   : pick(lang, {
                       hi: 'आपके निजी विचार, आपकी सीख के साथ।',
                       en: 'Your private reflections, kept with your learning.',
                       gu: 'તમારા ખાનગી વિચારો, તમારી શીખ સાથે.',
                       kn: 'ನಿಮ್ಮ ಖಾಸಗಿ ವಿಚಾರಗಳು, ನಿಮ್ಮ ಕಲಿಕೆಯ ಜೊತೆಗೆ.',
+                      mr: 'तुमचे खासगी विचार, तुमच्या शिकवणीसोबत.',
+                      te: 'మీ వ్యక్తిగత ఆలోచనలు, మీ పాఠాలతో పాటు.',
                     })}
             </ProseParagraph>
           </View>
@@ -555,6 +585,8 @@ export default function GitaSaarVersePage({
                 en: 'In one line',
                 gu: 'એક પંક્તિમાં',
                 kn: 'ಒಂದು ಸಾಲಿನಲ್ಲಿ',
+                mr: 'एका ओळीत',
+                te: 'ఒక్క వాక్యంలో',
               })}
             </ProseParagraph>
             <ProseParagraph

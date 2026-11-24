@@ -30,7 +30,7 @@ export default function PrevChapterCard({ width, prevTitle, lang }: Props) {
             },
           ]}
         >
-          {pick(lang, { hi: 'पिछला', en: 'Previous', gu: 'પાછળ', kn: 'ಹಿಂದಿನ' })}
+          {pick(lang, { hi: 'पिछला', en: 'Previous', gu: 'પાછળ', kn: 'ಹಿಂದಿನ', mr: 'मागील', te: 'మునుపటి' })}
         </Text>
         <Text
           style={[

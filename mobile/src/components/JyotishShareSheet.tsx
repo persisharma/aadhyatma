@@ -62,7 +62,7 @@ function JyotishShareOpener(props: Props) {
       sourceId: 'jyotish',
       width: CARD_WIDTH,
       previewLabel: `${p.titleEn} image preview`,
-      title: { hi: p.titleHi, en: p.titleEn, gu: contentByLang('gu', p.titleHi, p.titleEn), kn: contentByLang('kn', p.titleHi, p.titleEn) },
+      title: { hi: p.titleHi, en: p.titleEn, gu: contentByLang('gu', p.titleHi, p.titleEn), kn: contentByLang('kn', p.titleHi, p.titleEn), mr: contentByLang('mr', p.titleHi, p.titleEn), te: contentByLang('te', p.titleHi, p.titleEn) },
       note: meaningByLang(p.lang, p.privacyHi, p.privacyEn),
       tagNameHi: p.captionHi,
       tagNameEn: p.captionEn,

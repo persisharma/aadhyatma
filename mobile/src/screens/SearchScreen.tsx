@@ -264,7 +264,7 @@ export default function SearchScreen({ navigation, route }: Props) {
   const askExample = askExamples[placeholderIdx % Math.max(1, askExamples.length)];
   const placeholder = askExample
     ? contentByLang(lang, askExample.hi, askExample.en)
-    : pick(lang, { hi: 'श्लोक, पाठ, मंत्र खोजें…', en: 'Search verses, sections, mantras…', gu: 'શ્લોક, પાઠ, મંત્ર શોધો…', kn: 'ಶ್ಲೋಕ, ಪಠ್ಯ, ಮಂತ್ರ ಹುಡುಕಿ…' });
+    : pick(lang, { hi: 'श्लोक, पाठ, मंत्र खोजें…', en: 'Search verses, sections, mantras…', gu: 'શ્લોક, પાઠ, મંત્ર શોધો…', kn: 'ಶ್ಲೋಕ, ಪಠ್ಯ, ಮಂತ್ರ ಹುಡುಕಿ…', mr: 'श्लोक, पाठ, मंत्र शोधा…', te: 'శ్లోకం, పాఠం, మంత్రం వెతకండి…' });
 
   // The answer (or, for a question-shaped query, the abstain card) heads the
   // results list. A non-question query with no answer renders exactly as 1.4.6.
@@ -552,10 +552,10 @@ function EmptyState({
             <AppIcon name="question" size={26} color={colors.iconInk} weight="duotone" />
             <View style={styles.resultBody}>
               <Text style={[styles.resultPrimary, { color: colors.ink, fontFamily: typography.readerTitle.fontFamily }]} numberOfLines={1}>
-                {pick(lang, { hi: 'आज का विधान', en: "Today's Vidhan", gu: 'આજનું વિધાન', kn: 'ಇಂದಿನ ವಿಧಾನ' })}
+                {pick(lang, { hi: 'आज का विधान', en: "Today's Vidhan", gu: 'આજનું વિધાન', kn: 'ಇಂದಿನ ವಿಧಾನ', mr: 'आजचे विधान', te: 'ఈరోజు విధానం' })}
               </Text>
               <Text style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]} numberOfLines={1}>
-                {pick(lang, { hi: 'आज की तिथि · व्रत · शुभ समय · संकल्प', en: 'Tithi · observance · windows · sankalp', gu: 'તિથિ · વ્રત · શુભ સમય · સંકલ્પ', kn: 'ತಿಥಿ · ವ್ರತ · ಶುಭ ಸಮಯ · ಸಂಕಲ್ಪ' })}
+                {pick(lang, { hi: 'आज की तिथि · व्रत · शुभ समय · संकल्प', en: 'Tithi · observance · windows · sankalp', gu: 'તિથિ · વ્રત · શુભ સમય · સંકલ્પ', kn: 'ತಿಥಿ · ವ್ರತ · ಶುಭ ಸಮಯ · ಸಂಕಲ್ಪ', mr: 'तिथी · व्रत · शुभ वेळ · संकल्प', te: 'తిథి · వ్రతం · శుభ సమయం · సంకల్పం' })}
               </Text>
             </View>
             <AppIcon name="next" size={17} color={colors.iconInk} />
@@ -564,7 +564,7 @@ function EmptyState({
             <>
               <View style={styles.recentHeader}>
                 <GroupHeader
-                  label={pick(lang, { hi: 'हाल ही में', en: 'Recent', gu: 'તાજેતરનું', kn: 'ಇತ್ತೀಚಿನ' })}
+                  label={pick(lang, { hi: 'हाल ही में', en: 'Recent', gu: 'તાજેતરનું', kn: 'ಇತ್ತೀಚಿನ', mr: 'अलीकडील', te: 'ఇటీవలి' })}
                   count={recent.length}
                   lang={lang}
                   colors={colors}
@@ -573,12 +573,12 @@ function EmptyState({
                 <Pressable
                   onPress={onRecentClearAll}
                   accessibilityRole="button"
-                  accessibilityLabel={pick(lang, { hi: 'सभी हटाएं', en: 'Clear all', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ' })}
+                  accessibilityLabel={pick(lang, { hi: 'सभी हटाएं', en: 'Clear all', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ', mr: 'सर्व हटवा', te: 'అన్నీ తొలగించండి' })}
                   hitSlop={8}
                   style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
                 >
                   <Text style={{ color: colors.saffron, fontFamily: fontFamilies.inter, fontSize: 12 }}>
-                    {pick(lang, { hi: 'सभी हटाएं', en: 'Clear All', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ' })}
+                    {pick(lang, { hi: 'सभी हटाएं', en: 'Clear All', gu: 'બધું સાફ કરો', kn: 'ಎಲ್ಲವನ್ನು ತೆರವುಗೊಳಿಸಿ', mr: 'सर्व हटवा', te: 'అన్నీ తొలగించండి' })}
                   </Text>
                 </Pressable>
               </View>
@@ -624,7 +624,7 @@ function EmptyState({
           ) : null}
 
           <GroupHeader
-            label={pick(lang, { hi: 'लोकप्रिय', en: 'Popular', gu: 'લોકપ્રિય', kn: 'ಜನಪ್ರಿಯ' })}
+            label={pick(lang, { hi: 'लोकप्रिय', en: 'Popular', gu: 'લોકપ્રિય', kn: 'ಜನಪ್ರಿಯ', mr: 'लोकप्रिय', te: 'జనాదరణ పొందినవి' })}
             count={popular.length}
             lang={lang}
             colors={colors}
@@ -682,6 +682,8 @@ function PreparingState({
     en: 'Preparing search…',
     gu: 'શોધ તૈયાર થઈ રહી છે…',
     kn: 'ಹುಡುಕಾಟ ಸಿದ್ಧವಾಗುತ್ತಿದೆ…',
+    mr: 'शोध तयार होत आहे…',
+    te: 'శోధన సిద్ధమవుతోంది…',
   });
   return (
     <View
@@ -739,7 +741,7 @@ function ZeroState({
           { color: colors.ink, fontFamily: typography.readerTitle.fontFamily },
         ]}
       >
-        {pick(lang, { hi: 'कोई परिणाम नहीं', en: 'No matches found', gu: 'કોઈ પરિણામ નથી', kn: 'ಯಾವುದೇ ಫಲಿತಾಂಶವಿಲ್ಲ' })}
+        {pick(lang, { hi: 'कोई परिणाम नहीं', en: 'No matches found', gu: 'કોઈ પરિણામ નથી', kn: 'ಯಾವುದೇ ಫಲಿತಾಂಶವಿಲ್ಲ', mr: 'कोणतेही परिणाम नाहीत', te: 'ఫలితాలు ఏవీ లేవు' })}
       </Text>
       <Text
         style={[
@@ -747,7 +749,7 @@ function ZeroState({
           { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
         ]}
       >
-        {pick(lang, { hi: 'देवनागरी शब्द या पाठ का नाम आज़माएँ।', en: 'Try a Devanagari word or a section name.', gu: 'દેવનાગરી શબ્દ કે પાઠનું નામ અજમાવો.', kn: 'ದೇವನಾಗರಿ ಪದ ಅಥವಾ ಪಠ್ಯದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.' })}
+        {pick(lang, { hi: 'देवनागरी शब्द या पाठ का नाम आज़माएँ।', en: 'Try a Devanagari word or a section name.', gu: 'દેવનાગરી શબ્દ કે પાઠનું નામ અજમાવો.', kn: 'ದೇವನಾಗರಿ ಪದ ಅಥವಾ ಪಠ್ಯದ ಹೆಸರನ್ನು ಪ್ರಯತ್ನಿಸಿ.', mr: 'देवनागरी शब्द किंवा पाठाचे नाव वापरून पाहा.', te: 'దేవనాగరి పదం లేదా పాఠం పేరుతో ప్రయత్నించండి.' })}
       </Text>
     </View>
   );
@@ -793,7 +795,7 @@ function ResultsList({
       out.push({
         kind: 'header',
         key: 'h-sections',
-        label: pick(lang, { hi: 'पाठ', en: 'Sections', gu: 'પાઠ', kn: 'ಪಠ್ಯಗಳು' }),
+        label: pick(lang, { hi: 'पाठ', en: 'Sections', gu: 'પાઠ', kn: 'ಪಠ್ಯಗಳು', mr: 'पाठ', te: 'పాఠాలు' }),
         count: results.sections.length,
       });
       results.sections.forEach((h) =>
@@ -804,7 +806,7 @@ function ResultsList({
       out.push({
         kind: 'header',
         key: 'h-deities',
-        label: pick(lang, { hi: 'देवता', en: 'Deities', gu: 'દેવતા', kn: 'ದೇವತೆಗಳು' }),
+        label: pick(lang, { hi: 'देवता', en: 'Deities', gu: 'દેવતા', kn: 'ದೇವತೆಗಳು', mr: 'देवता', te: 'దేవతలు' }),
         count: results.deities.length,
       });
       results.deities.forEach((h) =>
@@ -815,7 +817,7 @@ function ResultsList({
       out.push({
         kind: 'header',
         key: 'h-verses',
-        label: pick(lang, { hi: 'श्लोक', en: 'Verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕಗಳು' }),
+        label: pick(lang, { hi: 'श्लोक', en: 'Verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕಗಳು', mr: 'श्लोक', te: 'శ్లోకాలు' }),
         count: results.verses.length,
       });
       results.verses.forEach((h) =>
@@ -825,7 +827,7 @@ function ResultsList({
         out.push({
           kind: 'capped',
           key: 'capped',
-          label: pick(lang, { hi: 'और परिणाम — विशिष्ट खोजें टाइप करें', en: 'More results — type a more specific query', gu: 'વધુ પરિણામ — વધુ ચોક્કસ શોધ ટાઇપ કરો', kn: 'ಹೆಚ್ಚಿನ ಫಲಿತಾಂಶ — ಹೆಚ್ಚು ನಿರ್ದಿಷ್ಟ ಹುಡುಕಾಟ ಟೈಪ್ ಮಾಡಿ' }),
+          label: pick(lang, { hi: 'और परिणाम — विशिष्ट खोजें टाइप करें', en: 'More results — type a more specific query', gu: 'વધુ પરિણામ — વધુ ચોક્કસ શોધ ટાઇપ કરો', kn: 'ಹೆಚ್ಚಿನ ಫಲಿತಾಂಶ — ಹೆಚ್ಚು ನಿರ್ದಿಷ್ಟ ಹುಡುಕಾಟ ಟೈಪ್ ಮಾಡಿ', mr: 'अधिक परिणाम — अधिक नेमका शोध टाइप करा', te: 'మరిన్ని ఫలితాలు — మరింత నిర్దిష్టంగా టైప్ చేయండి' }),
         });
       }
     }
@@ -921,7 +923,7 @@ function ResultsList({
                   style={[styles.resultSecondary, { color: colors.inkMuted, fontFamily: fontFamilies.inter }]}
                   numberOfLines={1}
                 >
-                  {pick(lang, { hi: 'देवता', en: 'Deity', gu: 'દેવતા', kn: 'ದೇವತೆ' })}
+                  {pick(lang, { hi: 'देवता', en: 'Deity', gu: 'દેવતા', kn: 'ದೇವತೆ', mr: 'देवता', te: 'దేవత' })}
                 </Text>
               </View>
               <AppIcon name="next" size={17} color={colors.iconInk} />

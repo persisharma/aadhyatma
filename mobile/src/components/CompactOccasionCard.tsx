@@ -42,11 +42,11 @@ export default function CompactOccasionCard({ items, date, error = false, onRetr
     <FestiveCorners size={42} />
     <View style={{ paddingHorizontal: 28, paddingBottom: 6 }}>
       <Text accessibilityRole="header" style={{ fontFamily: title, fontSize: 17 * factor, lineHeight: 29 * factor, textAlign: 'center', color: colors.festivalInk }}>
-        {pick(lang, { hi: 'पर्व के शुभ मुहूर्त', en: 'Occasion muhurats', gu: 'પર્વના શુભ મુહૂર્ત', kn: 'ಹಬ್ಬದ ಶುಭ ಮುಹೂರ್ತಗಳು' })}
+        {pick(lang, { hi: 'पर्व के शुभ मुहूर्त', en: 'Occasion muhurats', gu: 'પર્વના શુભ મુહૂર્ત', kn: 'ಹಬ್ಬದ ಶುಭ ಮುಹೂರ್ತಗಳು', mr: 'सणाचे शुभ मुहूर्त', te: 'పండుగ శుభ ముహూర్తాలు' })}
       </Text>
     </View>
     {error && <Pressable testID="compact-occasion-retry" accessibilityRole="button" onPress={onRetry} style={{ minHeight: 44, justifyContent: 'center' }}>
-      <Text style={{ fontFamily: body, fontSize: 13 * factor, lineHeight: 22 * factor, color: colors.saffronDeep }}>{pick(lang, { hi: 'समय प्राप्त नहीं हुआ · फिर प्रयास करें', en: 'Timings unavailable · Retry', gu: 'સમય મળ્યો નથી · ફરી પ્રયાસ કરો', kn: 'ಸಮಯ ಲಭ್ಯವಿಲ್ಲ · ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' })}</Text>
+      <Text style={{ fontFamily: body, fontSize: 13 * factor, lineHeight: 22 * factor, color: colors.saffronDeep }}>{pick(lang, { hi: 'समय प्राप्त नहीं हुआ · फिर प्रयास करें', en: 'Timings unavailable · Retry', gu: 'સમય મળ્યો નથી · ફરી પ્રયાસ કરો', kn: 'ಸಮಯ ಲಭ್ಯವಿಲ್ಲ · ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ', mr: 'वेळा उपलब्ध नाहीत · पुन्हा प्रयत्न करा', te: 'సమయాలు అందుబాటులో లేవు · మళ్లీ ప్రయత్నించండి' })}</Text>
     </Pressable>}
     {timedItems.map(item => <View key={`${item.id}:${+item.date}`} testID={`compact-occasion-group-${item.id}`}
       style={{ borderTopWidth: 1, borderTopColor: colors.goldChipBg, paddingVertical: 8, gap: 4 }}>
@@ -78,11 +78,11 @@ export default function CompactOccasionCard({ items, date, error = false, onRetr
       })}
     </View>)}
     {!timedItems.length && !error && <Text style={{ fontFamily: body, fontSize: 13 * factor, lineHeight: 22 * factor, color: colors.inkMuted, paddingVertical: 10 }}>
-      {pick(lang, { hi: 'इस दिन के पर्व व परंपराएँ व्रत में देखें।', en: 'See this day’s observances and traditions in Vrat.', gu: 'આ દિવસનાં પર્વ અને પરંપરાઓ વ્રતમાં જુઓ.', kn: 'ಈ ದಿನದ ಆಚರಣೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳನ್ನು ವ್ರತದಲ್ಲಿ ನೋಡಿ.' })}
+      {pick(lang, { hi: 'इस दिन के पर्व व परंपराएँ व्रत में देखें।', en: 'See this day’s observances and traditions in Vrat.', gu: 'આ દિવસનાં પર્વ અને પરંપરાઓ વ્રતમાં જુઓ.', kn: 'ಈ ದಿನದ ಆಚರಣೆಗಳು ಮತ್ತು ಸಂಪ್ರದಾಯಗಳನ್ನು ವ್ರತದಲ್ಲಿ ನೋಡಿ.', mr: 'या दिवसाचे सण व परंपरा व्रत विभागात पाहा.', te: 'ఈ రోజు పర్వాలు మరియు సంప్రదాయాలను వ్రతంలో చూడండి.' })}
     </Text>}
     <Pressable testID="compact-occasion-open-vrat" accessibilityRole="button" onPress={onOpenVrat}
       style={{ marginTop: 3, minHeight: 44, padding: 12, borderRadius: 10, backgroundColor: colors.goldTint, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-      <Text style={{ flex: 1, fontFamily: title, fontSize: 13 * factor, lineHeight: 22 * factor, color: colors.saffronDeep }}>{pick(lang, { hi: 'व्रत व पर्व में पूरे कार्ड देखें', en: 'View full cards in Vrat', gu: 'વ્રત અને પર્વમાં સંપૂર્ણ કાર્ડ જુઓ', kn: 'ವ್ರತದಲ್ಲಿ ಪೂರ್ಣ ಕಾರ್ಡ್‌ಗಳನ್ನು ನೋಡಿ' })}</Text>
+      <Text style={{ flex: 1, fontFamily: title, fontSize: 13 * factor, lineHeight: 22 * factor, color: colors.saffronDeep }}>{pick(lang, { hi: 'व्रत व पर्व में पूरे कार्ड देखें', en: 'View full cards in Vrat', gu: 'વ્રત અને પર્વમાં સંપૂર્ણ કાર્ડ જુઓ', kn: 'ವ್ರತದಲ್ಲಿ ಪೂರ್ಣ ಕಾರ್ಡ್‌ಗಳನ್ನು ನೋಡಿ', mr: 'व्रत व पर्व विभागात पूर्ण कार्ड पाहा', te: 'వ్రతంలో పూర్తి కార్డులు చూడండి' })}</Text>
       <Text accessible={false} style={{ fontSize: 20, color: colors.saffronDeep }}>›</Text>
     </Pressable>
   </LinearGradient>;

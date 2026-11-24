@@ -19,11 +19,12 @@ export default function SuvicharEntryCard({ lang, onPress }: { lang: Lang; onPre
   const { colors, spacing, radii, typography } = useTheme();
   const vaar = suvicharVaarFor(new Date());
   const deity = vaar ? suvicharDeities.find(d => d.id === vaar.deities[0])! : null;
-  const title = vaar ? pick(lang, { hi: `${vaar.hi} भेजें`, en: `Send ${vaar.en}`, gu: `${contentByLang('gu', vaar.hi, vaar.en)} મોકલો`, kn: `${contentByLang('kn', vaar.hi, vaar.en)} ಕಳುಹಿಸಿ` })
-    : pick(lang, { hi: 'आज का सुविचार भेजें', en: "Send today's wish", gu: 'આજનો સુવિચાર મોકલો', kn: 'ಇಂದಿನ ಸುವಿಚಾರ ಕಳುಹಿಸಿ' });
+  const title = vaar ? pick(lang, { hi: `${vaar.hi} भेजें`, en: `Send ${vaar.en}`, gu: `${contentByLang('gu', vaar.hi, vaar.en)} મોકલો`, kn: `${contentByLang('kn', vaar.hi, vaar.en)} ಕಳುಹಿಸಿ`, mr: `${vaar.hi} पाठवा`, te: `${contentByLang('te', vaar.hi, vaar.en)} పంపండి` })
+    : pick(lang, { hi: 'आज का सुविचार भेजें', en: "Send today's wish", gu: 'આજનો સુવિચાર મોકલો', kn: 'ಇಂದಿನ ಸುವಿಚಾರ ಕಳುಹಿಸಿ', mr: 'आजचा सुविचार पाठवा', te: 'ఈరోజు సువిచారం పంపండి' });
   const detail = deity ? pick(lang, { hi: `${deity.hi} का आज का कार्ड, आपके नाम के साथ`, en: `Today's ${deity.en} card, with your name`,
-    gu: `${contentByLang('gu', deity.hi, deity.en)}નું આજનું કાર્ડ, તમારા નામ સાથે`, kn: `${contentByLang('kn', deity.hi, deity.en)} ಅವರ ಇಂದಿನ ಕಾರ್ಡ್, ನಿಮ್ಮ ಹೆಸರಿನೊಂದಿಗೆ` })
-    : pick(lang, { hi: 'अपने नाम के साथ, परिवार और मित्रों को', en: 'With your name, to family and friends', gu: 'તમારા નામ સાથે, પરિવાર અને મિત્રોને', kn: 'ನಿಮ್ಮ ಹೆಸರಿನೊಂದಿಗೆ, ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರಿಗೆ' });
+    gu: `${contentByLang('gu', deity.hi, deity.en)}નું આજનું કાર્ડ, તમારા નામ સાથે`, kn: `${contentByLang('kn', deity.hi, deity.en)} ಅವರ ಇಂದಿನ ಕಾರ್ಡ್, ನಿಮ್ಮ ಹೆಸರಿನೊಂದಿಗೆ`,
+    mr: `${deity.hi} यांचे आजचे कार्ड, तुमच्या नावासह`, te: `${contentByLang('te', deity.hi, deity.en)} వారి ఈరోజు కార్డ్, మీ పేరుతో` })
+    : pick(lang, { hi: 'अपने नाम के साथ, परिवार और मित्रों को', en: 'With your name, to family and friends', gu: 'તમારા નામ સાથે, પરિવાર અને મિત્રોને', kn: 'ನಿಮ್ಮ ಹೆಸರಿನೊಂದಿಗೆ, ಕುಟುಂಬ ಮತ್ತು ಸ್ನೇಹಿತರಿಗೆ', mr: 'तुमच्या नावासह, कुटुंबीयांना आणि मित्रांना', te: 'మీ పేరుతో, కుటుంబానికి మరియు స్నేహితులకు' });
   // Cache only: Daily Bhakti never downloads a master for this decoration.
   const request = deity ? suvicharArtRequest(deity.id, 'mandir-jharokha') : null;
   const portrait = deity ? suvicharPhotoArt(deity.id) : null;
