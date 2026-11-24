@@ -1,7 +1,7 @@
 import { contentByLang } from '@/utils/localize';
 import { suvicharArtRequest, suvicharFrames, suvicharWishes, type SuvicharDeity, type SuvicharPreferences } from './suvichar';
 import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, type SuvicharTemplate } from './suvicharTemplates';
-import { LANG_VALUES } from '@/data/gita/language';
+import { LANG_VALUES } from '@/data/gita/langValues';
 
 export type SuvicharVaar = { hi: string; en: string; deities: readonly SuvicharDeity[] };
 

@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LANGUAGES, type Lang } from '@/data/gita/language';
+import type { Lang } from '@/data/gita/language';
+import { isLangValue } from '@/data/gita/langValues';
 import { pick, type LocalizedStrings } from './localize';
 
 /**
@@ -27,7 +28,7 @@ let writeCounter = 0;
 async function storedLang(): Promise<Lang> {
   try {
     const v = await AsyncStorage.getItem(LANG_STORAGE_KEY);
-    return LANGUAGES.some((l) => l.value === v) ? (v as Lang) : 'hi';
+    return isLangValue(v) ? v : 'hi';
   } catch {
     return 'hi';
   }

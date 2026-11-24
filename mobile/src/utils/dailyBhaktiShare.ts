@@ -3,7 +3,7 @@ import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import { contentByLang, meaningByLang, pick, verseLinesByLang } from './localize';
 import { devotionalCharanRows, paginateDevotional } from './devotionalShareLayout';
 import type { ShareableProse, ShareableProseScope, ShareableVerse } from './shareVerse';
-import { LANG_VALUES } from '@/data/gita/language';
+import { LANG_VALUES } from '@/data/gita/langValues';
 
 export const devotionalMeaningLabel = { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ', mr: 'अर्थ', te: 'అర్థం' };
 /** Prepare only the verse being shared; never construct the random pool on startup. */

@@ -4,7 +4,7 @@ import type { SuvicharDeity } from './suvichar';
 import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
 import { suvicharDohaSources, suvicharDohaThoughts, suvicharDohasFor } from './doha/suvichar';
-import { LANG_VALUES } from '@/data/gita/language';
+import { LANG_VALUES } from '@/data/gita/langValues';
 export { suvicharDohaThoughts } from './doha/suvichar';
 
 export type SuvicharThought = typeof catalogue.entries[number];

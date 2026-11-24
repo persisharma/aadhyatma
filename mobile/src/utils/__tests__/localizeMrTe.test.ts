@@ -81,3 +81,7 @@ describe('Marathi and Telugu reading languages', () => {
     expect(widgetLines({ hi: ['राम'], en: ['Rama'], gu: ['રામ'], kn: ['ರಾಮ'] }, 'te')).toEqual(['రామ']);
   });
 });
+
+test('LANG_VALUES stays in LANGUAGES order', () => {
+  expect(LANG_VALUES).toEqual(LANGUAGES.map((l) => l.value));
+});

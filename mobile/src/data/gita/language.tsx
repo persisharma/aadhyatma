@@ -36,8 +36,7 @@ export const LANGUAGES: readonly LanguageMeta[] = [
   { value: 'te', nativeLabel: 'తెలుగు', shortLabel: 'తె', a11yLabel: 'Telugu', script: 'telugu' },
 ];
 
-/** Every supported language code, in toggle order. */
-export const LANG_VALUES: readonly Lang[] = LANGUAGES.map((l) => l.value);
+export { LANG_VALUES } from './langValues';
 
 export function scriptOf(lang: Lang): LangScript {
   return (LANGUAGES.find((l) => l.value === lang) as LanguageMeta).script;

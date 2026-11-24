@@ -2,7 +2,7 @@ import { defaultSuvichar, suvicharDeities, suvicharReflections, suvicharWishes, 
 import { contentByLang } from '@/utils/localize';
 import { isSourcedSuvicharMessage, suvicharAllThoughts, suvicharThoughtForDay } from './suvicharContent';
 import { suvicharPhotoArt } from './suvicharPhotoArt';
-import { LANG_VALUES } from '@/data/gita/language';
+import { LANG_VALUES } from '@/data/gita/langValues';
 
 export type SuvicharTemplate = {
   id: string; kind: 'daily' | 'wish' | 'vaar'; deity: SuvicharDeity; frame: SuvicharFrame;
