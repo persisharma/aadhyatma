@@ -54,11 +54,11 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
     goToPage,
     continuesPastEnd: false,
   });
-  const library = pick(lang, { hi: 'कथा संग्रह', en: 'Story library', gu: 'વાર્તા સંગ્રહ', kn: 'ಕಥಾ ಸಂಗ್ರಹ' });
+  const library = pick(lang, { hi: 'कथा संग्रह', en: 'Story library', gu: 'વાર્તા સંગ્રહ', kn: 'ಕಥಾ ಸಂಗ್ರಹ', mr: 'कथा संग्रह', te: 'కథా సంగ్రహం' });
   if (!story) return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={library} onBack={() => navigation.goBack()} />
-      <Text style={{ ...meaningToken(lang, typography), padding: spacing.readingGutter, color: colors.ink }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>
+      <Text style={{ ...meaningToken(lang, typography), padding: spacing.readingGutter, color: colors.ink }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.', mr: 'कथा सापडली नाही.', te: 'కథ దొరకలేదు.' })}</Text>
     </SafeAreaView>
   );
   // The visible bottom tab bar already owns the bottom safe-area inset.
@@ -76,8 +76,8 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
           <AutoSlideButton control={autoSlide} floating={false} />
         </View>
         <View style={{ position: 'absolute', right: spacing.readingGutter }}>
-          <ShareButton busy={busy} accessibilityLabel={pick(lang, { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ' })}
-            accessibilityHint={pick(lang, { hi: 'चित्र और कथा के कार्ड चुनें', en: 'Choose illustrated story cards', gu: 'ચિત્ર અને વાર્તાનાં કાર્ડ પસંદ કરો', kn: 'ಚಿತ್ರ ಮತ್ತು ಕಥೆಯ ಕಾರ್ಡ್‌ಗಳನ್ನು ಆರಿಸಿ' })}
+          <ShareButton busy={busy} accessibilityLabel={pick(lang, { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'चित्रकथा शेअर करा', te: 'చిత్రకథ షేర్ చేయండి' })}
+            accessibilityHint={pick(lang, { hi: 'चित्र और कथा के कार्ड चुनें', en: 'Choose illustrated story cards', gu: 'ચિત્ર અને વાર્તાનાં કાર્ડ પસંદ કરો', kn: 'ಚಿತ್ರ ಮತ್ತು ಕಥೆಯ ಕಾರ್ಡ್‌ಗಳನ್ನು ಆರಿಸಿ', mr: 'चित्र आणि कथेची कार्डे निवडा', te: 'చిత్రం మరియు కథ కార్డ్‌లను ఎంచుకోండి' })}
             onPress={() => void share(kidsStoryShareable(story, index), lang)} />
         </View>
         <LanguageToggle />
@@ -124,7 +124,7 @@ export default function KidsStoryReaderScreen({ navigation, route }: NativeStack
             <KidsStoryArt art={page.art} label={storyText(page.title, lang)} />
             {caption}
             {isLast && <View style={{ padding: spacing.lg, gap: spacing.sm }}>
-              <Text style={{ fontFamily: titleFontByLang(lang), fontSize: 22, color: colors.saffronDeep }}>{pick(lang, { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ' })}</Text>
+              <Text style={{ fontFamily: titleFontByLang(lang), fontSize: 22, color: colors.saffronDeep }}>{pick(lang, { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ', mr: 'कथेची शिकवण', te: 'కథలోని నీతి' })}</Text>
               <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{storyText(story.takeaway, lang)}</Text>
             </View>}
           </AutoSlideScrollView>

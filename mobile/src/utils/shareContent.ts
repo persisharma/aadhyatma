@@ -216,7 +216,7 @@ export function theerthShareable(temple: TempleEntry): ShareableProse {
     sectionNameEn: 'Theerth',
     tagNameHi: temple.nameHi,
     tagNameEn: temple.nameEn,
-    sheetTitle: { hi: 'तीर्थ साझा करें', en: 'Share this theerth', gu: 'તીર્થ શેર કરો', kn: 'ತೀರ್ಥ ಹಂಚಿಕೊಳ್ಳಿ' },
+    sheetTitle: { hi: 'तीर्थ साझा करें', en: 'Share this theerth', gu: 'તીર્થ શેર કરો', kn: 'ತೀರ್ಥ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'तीर्थ शेअर करा', te: 'తీర్థం షేర్ చేయండి' },
     scopes,
   };
 }
@@ -273,7 +273,7 @@ export function observanceShareable(params: {
     sectionNameEn: 'Parv',
     tagNameHi: rule.nameHi,
     tagNameEn: rule.nameEn,
-    sheetTitle: { hi: 'पर्व साझा करें', en: 'Share this day', gu: 'પર્વ શેર કરો', kn: 'ಪರ್ವ ಹಂಚಿಕೊಳ್ಳಿ' },
+    sheetTitle: { hi: 'पर्व साझा करें', en: 'Share this day', gu: 'પર્વ શેર કરો', kn: 'ಪರ್ವ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'पर्व शेअर करा', te: 'పర్వం షేర్ చేయండి' },
     scopes: [
       {
         id: 'day',
@@ -312,7 +312,7 @@ export function askAnswerShareable(answer: {
     sectionNameEn: 'Ask Vedansh',
     tagNameHi: answer.headline.hi,
     tagNameEn: answer.headline.en,
-    sheetTitle: { hi: 'उत्तर साझा करें', en: 'Share this answer', gu: 'ઉત્તર શેર કરો', kn: 'ಉತ್ತರ ಹಂಚಿಕೊಳ್ಳಿ' },
+    sheetTitle: { hi: 'उत्तर साझा करें', en: 'Share this answer', gu: 'ઉત્તર શેર કરો', kn: 'ಉತ್ತರ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'उत्तर शेअर करा', te: 'సమాధానం షేర్ చేయండి' },
     scopes: [
       {
         id: 'answer',
@@ -335,7 +335,7 @@ export { kidsStoryShareable } from './kidsStoryShare';
 export function garudPuranShareable(chapter: GarudPuranChapter, page: GarudPuranPage): ShareableProse {
   return {
     kind: 'prose', sourceId: 'garud-puran', background: garudPuranImages[page.artId],
-    sheetTitle: { hi: 'यह पाठ साझा करें', en: 'Share this reading', gu: 'આ પાઠ શેર કરો', kn: 'ಈ ಪಾಠವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ' },
+    sheetTitle: { hi: 'यह पाठ साझा करें', en: 'Share this reading', gu: 'આ પાઠ શેર કરો', kn: 'ಈ ಪಾಠವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ', mr: 'हा पाठ शेअर करा', te: 'ఈ పాఠం షేర్ చేయండి' },
     sectionNameHi: 'गरुड़ पुराण — चयनित व्याख्या',
     sectionNameEn: 'Garud Puran — selected editorial reading',
     scopes: [{

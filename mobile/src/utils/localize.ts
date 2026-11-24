@@ -47,7 +47,7 @@ export function isRescriptLang(lang: Lang): lang is RescriptLang {
 }
 
 /** Languages read in Devanagari script (Hindi and Marathi). */
-export function isDevanagariLang(lang: Lang): boolean {
+export function isDevanagariLang(lang: Lang): lang is 'hi' | 'mr' {
   return lang === 'hi' || lang === 'mr';
 }
 

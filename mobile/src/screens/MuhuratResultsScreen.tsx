@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, isDevanagariLang } from '@/utils/localize';
+import { contentByLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CARD_TITLE_SIZES, CardThumb, CardTitles } from '@/components/ListCard';
@@ -47,13 +47,13 @@ const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अ
 function weekdayName(dateMs: number, lang: Lang): string {
   const wd = new Date(dateMs).getDay();
   if (lang === 'en') return VARA_NAMES_EN[wd];
-  if (isDevanagariLang(lang)) return VARA_NAMES_HI[wd];
+  if (lang === 'hi' || lang === 'mr') return VARA_NAMES_HI[wd];
   return transliterateDevanagari(VARA_NAMES_HI[wd], lang);
 }
 
 function rashiName(index: number, lang: Lang): string {
   if (lang === 'en') return RASHI_NAMES_EN[index];
-  if (isDevanagariLang(lang)) return RASHI_NAMES_HI[index];
+  if (lang === 'hi' || lang === 'mr') return RASHI_NAMES_HI[index];
   return transliterateDevanagari(RASHI_NAMES_HI[index], lang);
 }
 

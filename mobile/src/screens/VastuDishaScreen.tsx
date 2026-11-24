@@ -75,12 +75,16 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
             en: 'This device has no compass sensor — direction chosen by hand.',
             gu: 'આ ડિવાઇસમાં દિક્સૂચક નથી — દિશા જાતે પસંદ કરી છે.',
             kn: 'ಈ ಸಾಧನದಲ್ಲಿ ದಿಕ್ಸೂಚಕವಿಲ್ಲ — ದಿಕ್ಕನ್ನು ಕೈಯಾರೆ ಆರಿಸಲಾಗಿದೆ.',
+            mr: 'या डिव्हाइसमध्ये दिक्सूचक नाही — दिशा स्वतः निवडली आहे.',
+            te: 'ఈ పరికరంలో దిక్సూచి లేదు — దిశను చేతితో ఎంచుకున్నారు.',
           })
         : pick(lang, {
             hi: 'चुनी हुई दिशा — लाइव दिक्सूचक के लिए इसी दिशा को फिर दबाएँ।',
             en: 'Direction chosen by hand — tap it again for the live compass.',
             gu: 'જાતે પસંદ કરેલી દિશા — લાઇવ દિક્સૂચક માટે તે જ દિશા ફરી દબાવો.',
             kn: 'ಕೈಯಾರೆ ಆರಿಸಿದ ದಿಕ್ಕು — ಲೈವ್ ದಿಕ್ಸೂಚಕಕ್ಕೆ ಅದೇ ದಿಕ್ಕನ್ನು ಮತ್ತೆ ಒತ್ತಿರಿ.',
+            mr: 'स्वतः निवडलेली दिशा — लाइव्ह दिक्सूचकासाठी तीच दिशा पुन्हा दाबा.',
+            te: 'చేతితో ఎంచుకున్న దిశ — లైవ్ దిక్సూచి కోసం అదే దిశను మళ్లీ నొక్కండి.',
           });
     }
     switch (sensor.status) {
@@ -90,6 +94,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
           en: 'No compass sensor on this device — choose a direction below.',
           gu: 'આ ડિવાઇસમાં દિક્સૂચક ઉપલબ્ધ નથી — નીચેથી દિશા પસંદ કરો.',
           kn: 'ಈ ಸಾಧನದಲ್ಲಿ ದಿಕ್ಸೂಚಕ ಲಭ್ಯವಿಲ್ಲ — ಕೆಳಗಿನಿಂದ ದಿಕ್ಕನ್ನು ಆರಿಸಿ.',
+          mr: 'या डिव्हाइसमध्ये दिक्सूचक उपलब्ध नाही — खालून दिशा निवडा.',
+          te: 'ఈ పరికరంలో దిక్సూచి అందుబాటులో లేదు — కింద దిశను ఎంచుకోండి.',
         });
       case 'unreliable':
         return pick(lang, {
@@ -97,6 +103,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
           en: 'Reading is unsteady — hold the phone flat, away from metal, and sweep it in a figure-8.',
           gu: 'રીડિંગ અસ્થિર છે — ફોન સપાટ રાખો, ધાતુથી દૂર, અને ∞ આકારમાં ફેરવો.',
           kn: 'ಓದು ಅಸ್ಥಿರವಾಗಿದೆ — ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ, ಲೋಹದಿಂದ ದೂರ ಹಿಡಿದು ∞ ಆಕಾರದಲ್ಲಿ ತಿರುಗಿಸಿ.',
+          mr: 'रीडिंग अस्थिर आहे — फोन सपाट ठेवा, धातूपासून दूर, आणि ∞ आकारात फिरवा.',
+          te: 'రీడింగ్ అస్థిరంగా ఉంది — ఫోన్‌ను సమతలంగా, లోహానికి దూరంగా పట్టుకొని ∞ ఆకారంలో తిప్పండి.',
         });
       case 'tilted':
         // §A2/US-02: the flat-pose assumption has left the building; the dial
@@ -106,6 +114,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
           en: 'Hold the phone flat — a tilted phone shifts the direction.',
           gu: 'ફોન સપાટ રાખો — નમેલો ફોન દિશા બદલી નાખે છે.',
           kn: 'ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ ಹಿಡಿಯಿರಿ — ವಾಲಿದ ಫೋನ್ ದಿಕ್ಕನ್ನು ಬದಲಿಸುತ್ತದೆ.',
+          mr: 'फोन सपाट ठेवा — झुकलेला फोन दिशा बदलतो.',
+          te: 'ఫోన్‌ను సమతలంగా పట్టుకోండి — వంగిన ఫోన్ దిశను మారుస్తుంది.',
         });
       case 'starting':
         return pick(lang, {
@@ -113,6 +123,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
           en: 'Starting the compass…',
           gu: 'દિક્સૂચક શરૂ થઈ રહ્યું છે…',
           kn: 'ದಿಕ್ಸೂಚಕ ಪ್ರಾರಂಭವಾಗುತ್ತಿದೆ…',
+          mr: 'दिक्सूचक सुरू होत आहे…',
+          te: 'దిక్సూచి ప్రారంభమవుతోంది…',
         });
       default:
         // §A1/US-01: name the source — trust comes from saying which compass this is.
@@ -122,12 +134,16 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
               en: "The phone's own compass — the most accurate reading.",
               gu: 'ફોનનું પોતાનું દિક્સૂચક — સૌથી સચોટ પાઠ.',
               kn: 'ಫೋನಿನ ಸ್ವಂತ ದಿಕ್ಸೂಚಕ — ಅತ್ಯಂತ ನಿಖರ ಓದು.',
+              mr: 'फोनचा स्वतःचा दिक्सूचक — सर्वात अचूक रीडिंग.',
+              te: 'ఫోన్ సొంత దిక్సూచి — అత్యంత ఖచ్చితమైన రీడింగ్.',
             })
           : pick(lang, {
               hi: 'फ़ोन को समतल रखें — ऊपरी किनारा जिस ओर है, वही दिशा।',
               en: 'Hold the phone flat — the top edge points the direction you face.',
               gu: 'ફોન સપાટ રાખો — ઉપરની ધાર જે તરફ છે, તે જ દિશા.',
               kn: 'ಫೋನನ್ನು ಸಮತಟ್ಟಾಗಿ ಹಿಡಿಯಿರಿ — ಮೇಲ್ತುದಿ ತೋರುವ ದಿಕ್ಕೇ ನಿಮ್ಮ ದಿಕ್ಕು.',
+              mr: 'फोन सपाट ठेवा — वरची कड ज्या दिशेला, तीच तुमची दिशा.',
+              te: 'ఫోన్‌ను సమతలంగా పట్టుకోండి — పై అంచు చూపే దిశే మీ దిశ.',
             });
     }
   })();
@@ -197,6 +213,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
               en: 'For a truer north, enable the Panchang location.',
               gu: 'સચોટ ઉત્તર માટે પંચાંગ સ્થાન ચાલુ કરો.',
               kn: 'ನಿಖರ ಉತ್ತರಕ್ಕಾಗಿ ಪಂಚಾಂಗ ಸ್ಥಳವನ್ನು ಚಾಲನೆಗೊಳಿಸಿ.',
+              mr: 'अचूक उत्तरेसाठी पंचांग स्थान सुरू करा.',
+              te: 'ఖచ్చితమైన ఉత్తరం కోసం పంచాంగం స్థానాన్ని ఆన్ చేయండి.',
             })}
           </Text>
         ) : null}
@@ -222,8 +240,8 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
         >
           <Text style={{ fontFamily: titleFont, fontSize: 12, lineHeight: 19, color: held ? colors.saffronDeep : colors.inkSoft }}>
             {held
-              ? pick(lang, { hi: 'दिशा चालू करें', en: 'Resume', gu: 'દિશા ચાલુ કરો', kn: 'ದಿಕ್ಕು ಮುಂದುವರಿಸಿ' })
-              : pick(lang, { hi: 'दिशा रोकें', en: 'Hold', gu: 'દિશા રોકો', kn: 'ದಿಕ್ಕು ಹಿಡಿದಿಡಿ' })}
+              ? pick(lang, { hi: 'दिशा चालू करें', en: 'Resume', gu: 'દિશા ચાલુ કરો', kn: 'ದಿಕ್ಕು ಮುಂದುವರಿಸಿ', mr: 'दिशा सुरू करा', te: 'దిశ కొనసాగించండి' })
+              : pick(lang, { hi: 'दिशा रोकें', en: 'Hold', gu: 'દિશા રોકો', kn: 'ದಿಕ್ಕು ಹಿಡಿದಿಡಿ', mr: 'दिशा थांबवा', te: 'దిశ ఆపండి' })}
           </Text>
         </Pressable>
 
@@ -286,7 +304,7 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
             accessibilityLabel="My homes — place the rooms on the mandala and read the convention"
           >
             <CardTitles
-              primary={{ ...homesTitle.primary, text: pick(lang, { hi: 'मेरे घर', en: 'My homes', gu: 'મારાં ઘર', kn: 'ನನ್ನ ಮನೆಗಳು' }) }}
+              primary={{ ...homesTitle.primary, text: pick(lang, { hi: 'मेरे घर', en: 'My homes', gu: 'મારાં ઘર', kn: 'ನನ್ನ ಮನೆಗಳು', mr: 'माझी घरे', te: 'నా ఇళ్లు' }) }}
               secondary={homesTitle.secondary}
               meta={
                 roster.homes.length === 0
@@ -295,10 +313,12 @@ export default function VastuDishaScreen({ navigation }: { navigation: Navigatio
                       en: 'Place the rooms on the mandala — read the convention',
                       gu: 'ઓરડાઓને મંડલ પર મૂકો — વિધાનનો પાઠ વાંચો',
                       kn: 'ಕೋಣೆಗಳನ್ನು ಮಂಡಲದ ಮೇಲೆ ಇರಿಸಿ — ವಿಧಾನದ ಪಾಠ ಓದಿ',
+                      mr: 'खोल्या मंडलावर ठेवा — विधानाचा पाठ वाचा',
+                      te: 'గదులను మండలంపై ఉంచండి — విధానం పాఠం చదవండి',
                     })
                   : roster.homes.length === 1
                     ? roster.homes[0]!.label
-                    : `${roster.homes.length} ${pick(lang, { hi: 'घर सहेजे गए', en: 'homes saved', gu: 'ઘર સાચવ્યાં', kn: 'ಮನೆಗಳು ಉಳಿಸಲಾಗಿದೆ' })}`
+                    : `${roster.homes.length} ${pick(lang, { hi: 'घर सहेजे गए', en: 'homes saved', gu: 'ઘર સાચવ્યાં', kn: 'ಮನೆಗಳು ಉಳಿಸಲಾಗಿದೆ', mr: 'घरे जतन केली', te: 'ఇళ్లు సేవ్ చేయబడ్డాయి' })}`
               }
             />
           </ListCard>

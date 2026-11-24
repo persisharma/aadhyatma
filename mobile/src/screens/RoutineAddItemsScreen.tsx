@@ -115,7 +115,7 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
         {isWeekday && (
           <View style={{ marginBottom: spacing.md }}>
             <Text style={{ ...pillTextStyle(lang, typography.sectionLabel), color: colors.inkMuted, marginBottom: 8 }}>
-              {pick(lang, { hi: 'किस दिन के लिए', en: 'For which day', gu: 'કયા દિવસ માટે', kn: 'ಯಾವ ದಿನಕ್ಕಾಗಿ' })}
+              {pick(lang, { hi: 'किस दिन के लिए', en: 'For which day', gu: 'કયા દિવસ માટે', kn: 'ಯಾವ ದಿನಕ್ಕಾಗಿ', mr: 'कोणत्या दिवसासाठी', te: 'ఏ రోజు కోసం' })}
             </Text>
             <View style={styles.dayStrip}>
               {WEEKDAY_LABELS.map((w, i) => (
@@ -144,8 +144,8 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
         <TextField
           value={query}
           onChangeText={setQuery}
-          placeholder={pick(lang, { hi: 'पाठ या मंत्र खोजें…', en: 'Search texts or mantras…', gu: 'પાઠ કે મંત્ર શોધો…', kn: 'ಪಠ್ಯ ಅಥವಾ ಮಂತ್ರ ಹುಡುಕಿ…' })}
-          accessibilityLabel={pick(lang, { hi: 'सामग्री खोजें', en: 'Search content', gu: 'સામગ્રી શોધો', kn: 'ವಿಷಯ ಹುಡುಕಿ' })}
+          placeholder={pick(lang, { hi: 'पाठ या मंत्र खोजें…', en: 'Search texts or mantras…', gu: 'પાઠ કે મંત્ર શોધો…', kn: 'ಪಠ್ಯ ಅಥವಾ ಮಂತ್ರ ಹುಡುಕಿ…', mr: 'पाठ किंवा मंत्र शोधा…', te: 'పాఠం లేదా మంత్రం వెతకండి…' })}
+          accessibilityLabel={pick(lang, { hi: 'सामग्री खोजें', en: 'Search content', gu: 'સામગ્રી શોધો', kn: 'ವಿಷಯ ಹುಡುಕಿ', mr: 'सामग्री शोधा', te: 'విషయం వెతకండి' })}
           autoCorrect={false}
           autoCapitalize="none"
           returnKeyType="search"
@@ -218,22 +218,22 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
                   {suggested && (
                     <View style={{ backgroundColor: colors.goldTint, borderRadius: radii.pill, paddingHorizontal: 6, paddingVertical: 1 }}>
                       <Text style={{ ...pillTextStyle(lang, typography.versePill), color: colors.saffronDeep }}>
-                        {pick(lang, { hi: 'सुझाव', en: 'SUGGESTED', gu: 'સૂચન', kn: 'ಸೂಚನೆ' })}
+                        {pick(lang, { hi: 'सुझाव', en: 'SUGGESTED', gu: 'સૂચન', kn: 'ಸೂಚನೆ', mr: 'सूचना', te: 'సూచన' })}
                       </Text>
                     </View>
                   )}
                 </View>
                 <Text style={{ fontFamily: typography.cardLatin.fontFamily, fontSize: 11, color: colors.inkMuted, marginTop: 1 }}>
                   {entry.category === 'japam'
-                    ? pick(lang, { hi: '1 माला · 108', en: '1 mala · 108', gu: '1 માળા · 108', kn: '1 ಮಾಲಾ · 108' })
-                    : pick(lang, { hi: 'पूरा पाठ', en: 'Whole text', gu: 'આખો પાઠ', kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ' })}
+                    ? pick(lang, { hi: '1 माला · 108', en: '1 mala · 108', gu: '1 માળા · 108', kn: '1 ಮಾಲಾ · 108', mr: '1 माळ · 108', te: '1 మాల · 108' })
+                    : pick(lang, { hi: 'पूरा पाठ', en: 'Whole text', gu: 'આખો પાઠ', kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ', mr: 'संपूर्ण पाठ', te: 'పూర్తి పాఠం' })}
                 </Text>
               </View>
               <Pressable
                 onPress={() => toggle(entry)}
                 hitSlop={10}
                 accessibilityRole="button"
-                accessibilityLabel={`${added ? pick(lang, { hi: 'हटाएँ', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' }) : pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' })} ${contentByLang(lang, entry.nameHi, entry.nameEn)}`}
+                accessibilityLabel={`${added ? pick(lang, { hi: 'हटाएँ', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ', mr: 'काढा', te: 'తొలగించండి' }) : pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ', mr: 'जोडा', te: 'జోడించండి' })} ${contentByLang(lang, entry.nameHi, entry.nameEn)}`}
               >
                 <Text style={{ color: added ? colors.gold : colors.saffron, fontSize: 22 }}>{added ? '✓' : '＋'}</Text>
               </Pressable>
@@ -242,12 +242,12 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
         })}
         {ordered.length === 0 && (
           <Text style={{ fontFamily: scriptBodyFont(lang, typography.meaning.fontFamily), fontSize: 13, lineHeight: 20, color: colors.inkMuted, marginVertical: 24, textAlign: 'center' }}>
-            {pick(lang, { hi: 'कोई सामग्री नहीं मिली।', en: 'Nothing matches.', gu: 'કોઈ સામગ્રી મળી નથી.', kn: 'ಯಾವುದೇ ವಿಷಯ ಸಿಗಲಿಲ್ಲ.' })}
+            {pick(lang, { hi: 'कोई सामग्री नहीं मिली।', en: 'Nothing matches.', gu: 'કોઈ સામગ્રી મળી નથી.', kn: 'ಯಾವುದೇ ವಿಷಯ ಸಿಗಲಿಲ್ಲ.', mr: 'काहीही सापडले नाही.', te: 'ఏమీ దొరకలేదు.' })}
           </Text>
         )}
 
         <RoutineButton
-          label={pick(lang, { hi: 'पूर्ण', en: 'Done', gu: 'પૂર્ણ', kn: 'ಮುಗಿದಿದೆ' })}
+          label={pick(lang, { hi: 'पूर्ण', en: 'Done', gu: 'પૂર્ણ', kn: 'ಮುಗಿದಿದೆ', mr: 'झाले', te: 'పూర్తయింది' })}
           onPress={() => navigation.navigate('RoutineToday')}
         />
         <Text
@@ -264,6 +264,8 @@ export default function RoutineAddItemsScreen({ navigation, route }: Props) {
             en: 'Add whole texts or japa. Chapter-level selection is coming soon.',
             gu: 'આખા પાઠ કે જપ ઉમેરો. અધ્યાય-સ્તરની પસંદગી ટૂંક સમયમાં આવી રહી છે.',
             kn: 'ಸಂಪೂರ್ಣ ಪಠ್ಯ ಅಥವಾ ಜಪ ಸೇರಿಸಿ. ಅಧ್ಯಾಯ-ಮಟ್ಟದ ಆಯ್ಕೆ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ.',
+            mr: 'संपूर्ण पाठ किंवा जप जोडा. अध्याय-स्तरावरील निवड लवकरच येत आहे.',
+            te: 'పూర్తి పాఠాలు లేదా జపం జోడించండి. అధ్యాయ-స్థాయి ఎంపిక త్వరలో వస్తుంది.',
           })}
         </Text>
       </ScrollView>

@@ -38,7 +38,7 @@ export function RoutineShell({
           <Pressable
             onPress={onBack}
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ', mr: 'मागे', te: 'వెనుకకు' })}
             hitSlop={16}
             style={[styles.backBtn, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}
           >

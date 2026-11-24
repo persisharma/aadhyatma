@@ -78,7 +78,7 @@ export default function FeaturedReadings({
         accessibilityRole="header"
         style={{ fontFamily: titleFontByLang(lang), fontSize: 15, color: colors.inkSoft }}
       >
-        {pick(lang, { hi: 'प्रमुख पाठ', en: 'Featured readings', gu: 'મુખ્ય પાઠ', kn: 'ಪ್ರಮುಖ ಪಾಠಗಳು' })}
+        {pick(lang, { hi: 'प्रमुख पाठ', en: 'Featured readings', gu: 'મુખ્ય પાઠ', kn: 'ಪ್ರಮುಖ ಪಾಠಗಳು', mr: 'प्रमुख पाठ', te: 'ప్రముఖ పాఠాలు' })}
       </Text>
       <View style={styles.grid}>
         {readings.map((r) => {
@@ -94,7 +94,7 @@ export default function FeaturedReadings({
                 accessibilityLabel={
                   contentByLang(lang, r.hi, r.en) +
                   (newReading
-                    ? ' · ' + pick(lang, { hi: 'नया', en: 'New', gu: 'નવું', kn: 'ಹೊಸದು' })
+                    ? ' · ' + pick(lang, { hi: 'नया', en: 'New', gu: 'નવું', kn: 'ಹೊಸದು', mr: 'नवीन', te: 'కొత్తది' })
                     : '')
                 }
                 variant="launcher"

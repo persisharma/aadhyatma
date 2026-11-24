@@ -108,12 +108,12 @@ export default function AskAnswerCard({ answer, lang, onAction, compact, onShare
           <Pressable
             onPress={() => setShowWorking((v) => !v)}
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'गणना देखें', en: 'Show the working', gu: 'ગણતરી જુઓ', kn: 'ಲೆಕ್ಕಾಚಾರ ನೋಡಿ' })}
+            accessibilityLabel={pick(lang, { hi: 'गणना देखें', en: 'Show the working', gu: 'ગણતરી જુઓ', kn: 'ಲೆಕ್ಕಾಚಾರ ನೋಡಿ', mr: 'गणना पाहा', te: 'లెక్కింపు చూడండి' })}
             hitSlop={8}
           >
             <Text style={[styles.workingToggle, { color: colors.saffron, fontFamily: fontFamilies.interSemiBold }]}>
               {showWorking ? '▾ ' : '▸ '}
-              {pick(lang, { hi: 'गणना देखें', en: 'Show the working', gu: 'ગણતરી જુઓ', kn: 'ಲೆಕ್ಕಾಚಾರ ನೋಡಿ' })}
+              {pick(lang, { hi: 'गणना देखें', en: 'Show the working', gu: 'ગણતરી જુઓ', kn: 'ಲೆಕ್ಕಾಚಾರ ನೋಡಿ', mr: 'गणना पाहा', te: 'లెక్కింపు చూడండి' })}
             </Text>
           </Pressable>
           {showWorking
@@ -187,12 +187,16 @@ export function AskAbstainCard({ kind, suggestions, lang, onSuggestion, libraryE
           en: 'That asks about the future or a personal decision — Vedansh does not answer those.',
           gu: 'આ પ્રશ્ન ભવિષ્ય કે વ્યક્તિગત નિર્ણયનો છે — વેદાંશ તેનો ઉત્તર આપતું નથી.',
           kn: 'ಇದು ಭವಿಷ್ಯ ಅಥವಾ ವೈಯಕ್ತಿಕ ನಿರ್ಧಾರದ ಪ್ರಶ್ನೆ — ವೇದಾಂಶ ಇದಕ್ಕೆ ಉತ್ತರಿಸುವುದಿಲ್ಲ.',
+          mr: 'हा प्रश्न भविष्याचा किंवा वैयक्तिक निर्णयाचा आहे — वेदांश याचे उत्तर देत नाही.',
+          te: 'ఇది భవిష్యత్తు లేదా వ్యక్తిగత నిర్ణయానికి సంబంధించిన ప్రశ్న — వేదాంశ్ దీనికి సమాధానం ఇవ్వదు.',
         })
       : pick(lang, {
           hi: 'इसका उत्तर अभी नहीं दे सकते।',
           en: "We can't answer that one yet.",
           gu: 'આનો ઉત્તર હમણાં આપી શકતા નથી.',
           kn: 'ಇದಕ್ಕೆ ಈಗ ಉತ್ತರಿಸಲಾಗುತ್ತಿಲ್ಲ.',
+          mr: 'याचे उत्तर आत्ता देता येत नाही.',
+          te: 'దీనికి ఇప్పుడే సమాధానం ఇవ్వలేము.',
         });
   const secondary =
     kind === 'declined'
@@ -201,6 +205,8 @@ export function AskAbstainCard({ kind, suggestions, lang, onSuggestion, libraryE
           en: "Ask about today's tithi, a vrat, a bhog, a vidhi or a muhurat.",
           gu: 'આજની તિથિ, વ્રત, ભોગ, વિધિ કે મુહૂર્ત પૂછો.',
           kn: 'ಇಂದಿನ ತಿಥಿ, ವ್ರತ, ಭೋಗ, ವಿಧಿ ಅಥವಾ ಮುಹೂರ್ತ ಕೇಳಿ.',
+          mr: 'आजची तिथी, व्रत, भोग, विधी किंवा मुहूर्त विचारा.',
+          te: 'ఈరోజు తిథి, వ్రతం, భోగం, విధి లేదా ముహూర్తం అడగండి.',
         })
       : libraryEmpty
         ? pick(lang, {
@@ -208,12 +214,16 @@ export function AskAbstainCard({ kind, suggestions, lang, onSuggestion, libraryE
             en: 'The library found nothing either — try one of the questions below.',
             gu: 'પુસ્તકાલયમાં પણ કંઈ મળ્યું નહીં — નીચેના પ્રશ્નો અજમાવો.',
             kn: 'ಗ್ರಂಥಾಲಯದಲ್ಲೂ ಏನೂ ಸಿಗಲಿಲ್ಲ — ಕೆಳಗಿನ ಪ್ರಶ್ನೆಗಳನ್ನು ಪ್ರಯತ್ನಿಸಿ.',
+            mr: 'ग्रंथालयातही काही सापडले नाही — खालील प्रश्न वापरून पाहा.',
+            te: 'గ్రంథాలయంలో కూడా ఏమీ దొరకలేదు — కింది ప్రశ్నలను ప్రయత్నించండి.',
           })
         : pick(lang, {
             hi: 'नीचे पुस्तकालय से मिले परिणाम हैं।',
             en: "Here's what the library found instead.",
             gu: 'નીચે પુસ્તકાલયમાંથી મળેલાં પરિણામો છે.',
             kn: 'ಕೆಳಗೆ ಗ್ರಂಥಾಲಯದಿಂದ ದೊರೆತ ಫಲಿತಾಂಶಗಳಿವೆ.',
+            mr: 'खाली ग्रंथालयातून मिळालेले परिणाम आहेत.',
+            te: 'కింద గ్రంథాలయం నుండి లభించిన ఫలితాలు ఉన్నాయి.',
           });
 
   return (
@@ -228,7 +238,7 @@ export function AskAbstainCard({ kind, suggestions, lang, onSuggestion, libraryE
       {suggestions.length > 0 ? (
         <>
           <Text style={[eyebrowTextStyle(lang, 10.5, 1), { color: colors.inkMuted, marginTop: spacing.md, marginBottom: spacing.xs }]}>
-            {pick(lang, { hi: 'शायद आप यह पूछना चाहते हैं', en: 'Perhaps you meant', gu: 'કદાચ તમે આ પૂછવા માગો છો', kn: 'ಬಹುಶಃ ನೀವು ಇದನ್ನು ಕೇಳಲು ಬಯಸಿದ್ದೀರಿ' })}
+            {pick(lang, { hi: 'शायद आप यह पूछना चाहते हैं', en: 'Perhaps you meant', gu: 'કદાચ તમે આ પૂછવા માગો છો', kn: 'ಬಹುಶಃ ನೀವು ಇದನ್ನು ಕೇಳಲು ಬಯಸಿದ್ದೀರಿ', mr: 'कदाचित तुम्हाला हे विचारायचे आहे', te: 'బహుశా మీరు ఇది అడగాలనుకున్నారు' })}
           </Text>
           <View style={[styles.chips, { gap: spacing.sm }]}>
             {suggestions.map((s) => (

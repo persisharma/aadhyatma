@@ -158,6 +158,8 @@ export function CardRoutineTail({ sourceId, nameEn }: { sourceId: string; nameEn
           en: `Add ${nameEn} to a routine`,
           gu: `“${nameEn}” ને સાધનામાં ઉમેરો`,
           kn: `“${nameEn}” ಅನ್ನು ಸಾಧನೆಗೆ ಸೇರಿಸಿ`,
+          mr: `“${nameEn}” साधनेत जोडा`,
+          te: `“${nameEn}”ను సాధనకు జోడించండి`,
         })}
         hitSlop={12}
         style={({ pressed }) => [

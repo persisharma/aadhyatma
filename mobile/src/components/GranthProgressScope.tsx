@@ -58,6 +58,8 @@ function GranthProgressSummary({
     en: `${counts.read} / ${counts.total} read · ${counts.done} / ${counts.chapters} complete`,
     gu: `${counts.read} / ${counts.total} વાંચ્યા · ${counts.done} / ${counts.chapters} પૂર્ણ`,
     kn: `${counts.read} / ${counts.total} ಓದಲಾಗಿದೆ · ${counts.done} / ${counts.chapters} ಪೂರ್ಣ`,
+    mr: `${counts.read} / ${counts.total} वाचले · ${counts.done} / ${counts.chapters} पूर्ण`,
+    te: `${counts.read} / ${counts.total} చదివినవి · ${counts.done} / ${counts.chapters} పూర్తి`,
   });
 
   return (
@@ -81,6 +83,8 @@ function GranthProgressSummary({
               en: cov.paath === 1 ? '1 full reading' : `${cov.paath} full readings`,
               gu: `${cov.paath} પૂર્ણ પાઠ`,
               kn: `${cov.paath} ಪೂರ್ಣ ಪಾಠ`,
+              mr: `${cov.paath} पूर्ण पाठ`,
+              te: `${cov.paath} పూర్తి పాఠాలు`,
             })}
           </Text>
         ) : null}
@@ -95,6 +99,8 @@ function GranthProgressSummary({
               en: 'Long-press a chapter to reset just that one',
               gu: 'એક ભાગ રીસેટ કરવા તેને દબાવી રાખો',
               kn: 'ಒಂದು ಭಾಗವನ್ನು ಮರುಹೊಂದಿಸಲು ಅದನ್ನು ಒತ್ತಿ ಹಿಡಿಯಿರಿ',
+              mr: 'एक भाग रीसेट करण्यासाठी तो दाबून ठेवा',
+              te: 'ఒక భాగాన్ని రీసెట్ చేయడానికి దాన్ని నొక్కి పట్టుకోండి',
             })}
           </Text>
           <Pressable
@@ -105,7 +111,7 @@ function GranthProgressSummary({
             style={styles.resetBtn}
           >
             <Text style={[styles.resetText, { color: colors.avoidDeep }]}>
-              {pick(lang, { hi: 'प्रगति रीसेट', en: 'Reset progress', gu: 'પ્રગતિ રીસેટ', kn: 'ಪ್ರಗತಿ ಮರುಹೊಂದಿಸಿ' })}
+              {pick(lang, { hi: 'प्रगति रीसेट', en: 'Reset progress', gu: 'પ્રગતિ રીસેટ', kn: 'ಪ್ರಗತಿ ಮರುಹೊಂದಿಸಿ', mr: 'प्रगती रीसेट', te: 'ప్రగతి రీసెట్' })}
             </Text>
           </Pressable>
         </View>

@@ -141,6 +141,8 @@ export default function RoutineTodayScreen({ navigation }: Props) {
             en: 'Browse sankalps',
             gu: 'તૈયાર સંકલ્પ પસંદ કરો',
             kn: 'ಸಿದ್ಧ ಸಂಕಲ್ಪ ಆರಿಸಿ',
+            mr: 'तयार संकल्प निवडा',
+            te: 'సిద్ధ సంకల్పం ఎంచుకోండి',
           })}
           variant="ghost"
           onPress={() => navigation.navigate('SadhanaPrograms')}

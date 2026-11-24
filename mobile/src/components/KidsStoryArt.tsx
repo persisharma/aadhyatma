@@ -95,12 +95,12 @@ function ArtPlaceholder({ label, pending, failed, retry, compact }: {
       <Pressable
         testID="kids-story-art-retry"
         accessibilityRole="button"
-        accessibilityLabel={pick(lang, { hi: 'चित्र फिर लोड करें', en: 'Retry picture', gu: 'ચિત્ર ફરી લોડ કરો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })}
+        accessibilityLabel={pick(lang, { hi: 'चित्र फिर लोड करें', en: 'Retry picture', gu: 'ચિત્ર ફરી લોડ કરો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ', mr: 'चित्र पुन्हा लोड करा', te: 'చిత్రాన్ని మళ్లీ లోడ్ చేయండి' })}
         onPress={retry}
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 12 }}
       >
         <Text style={{ color: colors.inkSoft, textAlign: 'center' }}>
-          {compact ? '↻' : pick(lang, { hi: 'चित्र लोड नहीं हुआ। फिर कोशिश करें', en: 'Picture unavailable. Tap to retry', gu: 'ચિત્ર લોડ થયું નહીં. ફરી પ્રયાસ કરો', kn: 'ಚಿತ್ರ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' })}
+          {compact ? '↻' : pick(lang, { hi: 'चित्र लोड नहीं हुआ। फिर कोशिश करें', en: 'Picture unavailable. Tap to retry', gu: 'ચિત્ર લોડ થયું નહીં. ફરી પ્રયાસ કરો', kn: 'ಚಿತ್ರ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ', mr: 'चित्र लोड झाले नाही. पुन्हा प्रयत्न करा', te: 'చిత్రం లోడ్ కాలేదు. మళ్లీ ప్రయత్నించండి' })}
         </Text>
       </Pressable>
     );

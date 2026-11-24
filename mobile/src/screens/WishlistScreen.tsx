@@ -65,8 +65,8 @@ export default function WishlistScreen({ navigation }: Props) {
   const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : lang === 'te' ? fontFamilies.telugu : null;
   const scriptSerifBold =
     lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : lang === 'te' ? fontFamilies.teluguBold : null;
-  const removeLabel = pick(lang, { hi: 'हटायें', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' });
-  const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' });
+  const removeLabel = pick(lang, { hi: 'हटायें', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ', mr: 'काढून टाका', te: 'తొలగించండి' });
+  const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' });
   const { bookmarks, isLoading, removeBookmark } = useBookmarks();
   const { width } = useWindowDimensions();
   const rootNav = useNavigation<any>();
@@ -95,7 +95,7 @@ export default function WishlistScreen({ navigation }: Props) {
   }, [selectedSource, activeSource, isLoading]);
   const visibleBookmarks = activeSource === null ? bookmarks
     : bookmarks.filter((bm) => canonicalSourceId(bm.sourceId) === activeSource);
-  const allLabel = pick(lang, { hi: 'सभी', en: 'All', gu: 'બધા', kn: 'ಎಲ್ಲಾ' });
+  const allLabel = pick(lang, { hi: 'सभी', en: 'All', gu: 'બધા', kn: 'ಎಲ್ಲಾ', mr: 'सर्व', te: 'అన్నీ' });
   const filters = [
     { id: null, label: allLabel, count: bookmarks.length },
     ...Array.from(sources, ([id, group]) => ({
@@ -146,7 +146,7 @@ export default function WishlistScreen({ navigation }: Props) {
                 color: colors.ink,
               }}
             >
-              {pick(lang, { hi: 'संग्रह', en: 'Saved Verses', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
+              {pick(lang, { hi: 'संग्रह', en: 'Saved Verses', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ', mr: 'संग्रह', te: 'సంగ్రహం' })}
             </Text>
             <Text
               style={{
@@ -294,6 +294,8 @@ export default function WishlistScreen({ navigation }: Props) {
                 en: 'Remove from wishlist?',
                 gu: 'વિશલિસ્ટમાંથી દૂર કરવું?',
                 kn: 'ವಿಶ್‌ಲಿಸ್ಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಬೇಕೆ?',
+                mr: 'विशलिस्टमधून काढायचे?',
+                te: 'విష్‌లిస్ట్ నుండి తొలగించాలా?',
               })}
             </Text>
             <Text style={[styles.confirmBody, { color: colors.inkSoft, fontFamily: lang === 'en' ? typography.cardLatin.fontFamily : (scriptSerif ?? typography.meaning.fontFamily) }]}>
@@ -302,6 +304,8 @@ export default function WishlistScreen({ navigation }: Props) {
                 en: 'This verse will be removed from your wishlist.',
                 gu: 'આ શ્લોક તમારી વિશલિસ્ટમાંથી દૂર કરવામાં આવશે.',
                 kn: 'ಈ ಶ್ಲೋಕವನ್ನು ನಿಮ್ಮ ವಿಶ್‌ಲಿಸ್ಟ್‌ನಿಂದ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ.',
+                mr: 'हा श्लोक तुमच्या विशलिस्टमधून काढला जाईल.',
+                te: 'ఈ శ్లోకం మీ విష్‌లిస్ట్ నుండి తొలగించబడుతుంది.',
               })}
             </Text>
             <Pressable

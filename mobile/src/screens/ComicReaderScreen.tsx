@@ -80,6 +80,6 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
           renderItem={({ item: page }) => <ComicPage page={page} width={pageWidth} language={language} comicId={route.params.comicId}
             anchor={page === current ? anchor : undefined} onUserScroll={() => setAnchor(undefined)} />} />
       </View>
-    </> : <Text testID="comic-reader-error" style={{ ...meaningToken(lang, typography), color: colors.ink, padding: spacing.readingGutter }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.' })}</Text>}
+    </> : <Text testID="comic-reader-error" style={{ ...meaningToken(lang, typography), color: colors.ink, padding: spacing.readingGutter }}>{pick(lang, { hi: 'कथा नहीं मिली।', en: 'Story not found.', gu: 'વાર્તા મળી નથી.', kn: 'ಕಥೆ ಸಿಗಲಿಲ್ಲ.', mr: 'कथा सापडली नाही.', te: 'కథ దొరకలేదు.' })}</Text>}
   </SafeAreaView>;
 }

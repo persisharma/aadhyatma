@@ -130,6 +130,8 @@ const LANGUAGE_TAGS: Record<Lang, readonly string[]> = {
   en: ['VerseOfTheDay', 'DailyVerse'],
   gu: ['ગુજરાતી', 'GujaratiBhakti'],
   kn: ['ಕನ್ನಡ', 'KannadaBhakti'],
+  mr: ['मराठी', 'MarathiBhakti'],
+  te: ['తెలుగు', 'TeluguBhakti'],
 };
 
 const BRAND_TAGS = ['Vedansh', 'VedanshApp'] as const;

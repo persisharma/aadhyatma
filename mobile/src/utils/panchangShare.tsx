@@ -75,7 +75,7 @@ export function panchangShareable(input: ShareInput): ShareableCard {
     // Its text runs 12–14 dp from the edges, under the Reel's button column at full width.
     storyInset: storyRailInset,
     languages: true,
-    title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ' },
+    title: { hi: 'पंचांग साझा करें', en: 'Share panchang', gu: 'પંચાંગ શેર કરો', kn: 'ಪಂಚಾಂಗ ಹಂಚಿ', mr: 'पंचांग शेअर करा', te: 'పంచాంగం షేర్ చేయండి' },
     tagNameHi: 'पंचांग',
     tagNameEn: 'Panchang',
     render: ({ lang, onReady }) => <ReadyCard input={input} lang={lang} onReady={onReady} />,

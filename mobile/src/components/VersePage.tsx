@@ -54,7 +54,7 @@ export default function VersePage({ verse, sourceId, width, topActions, belowCon
     gu: verse.meaningGu,
     kn: verse.meaningKn,
   });
-  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
+  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ', mr: 'भावार्थ', te: 'భావార్థం' });
   const pillText = contentByLang(lang, verse.labelHi, verse.labelEn);
   const verseTok = verseToken(lang, typography);
 

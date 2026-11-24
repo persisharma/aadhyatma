@@ -220,6 +220,8 @@ export default function DailyBhaktiNudge({
           en: 'Add the verse and Panchang widgets',
           gu: 'શ્લોક અને પંચાંગ વિજેટ ઉમેરો',
           kn: 'ಶ್ಲೋಕ ಮತ್ತು ಪಂಚಾಂಗ ವಿಜೆಟ್‌ಗಳನ್ನು ಸೇರಿಸಿ',
+          mr: 'श्लोक आणि पंचांग विजेट जोडा',
+          te: 'శ్లోకం & పంచాంగం విడ్జెట్‌లను జోడించండి',
         })
       : kind === 'panchangWidget'
         ? pick(lang, {
@@ -227,6 +229,8 @@ export default function DailyBhaktiNudge({
             en: 'Add the Panchang widget',
             gu: 'પંચાંગ વિજેટ ઉમેરો',
             kn: 'ಪಂಚಾಂಗ ವಿಜೆಟ್ ಸೇರಿಸಿ',
+            mr: 'पंचांग विजेट जोडा',
+            te: 'పంచాంగం విడ్జెట్‌ను జోడించండి',
           })
         : blocked
           ? pick(lang, {
@@ -234,18 +238,24 @@ export default function DailyBhaktiNudge({
               en: 'Open notification settings',
               gu: 'સૂચના સેટિંગ્સ ખોલો',
               kn: 'ಅಧಿಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ',
+              mr: 'सूचना सेटिंग्ज उघडा',
+              te: 'నోటిఫికేషన్ సెట్టింగ్‌లు తెరవండి',
             })
           : pick(lang, {
               hi: 'दैनिक श्लोक स्मरण चालू करें',
               en: 'Turn on the daily verse reminder',
               gu: 'દૈનિક શ્લોક સ્મરણ ચાલુ કરો',
               kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಸ್ಮರಣೆ ಆನ್ ಮಾಡಿ',
+              mr: 'दैनिक श्लोक स्मरण सुरू करा',
+              te: 'దైనిక శ్లోక స్మరణ ఆన్ చేయండి',
             });
   const notNow = pick(lang, {
     hi: 'अभी नहीं',
     en: 'Not now',
     gu: 'હમણાં નહીં',
     kn: 'ಈಗ ಬೇಡ',
+    mr: 'आता नको',
+    te: 'ఇప్పుడు వద్దు',
   });
 
   return (
@@ -394,12 +404,16 @@ export function WidgetHowToSheet({
         en: 'A little devotion, at a glance.',
         gu: 'દરેક નજરમાં થોડું અધ્યાત્મ.',
         kn: 'ಪ್ರತಿ ನೋಟದಲ್ಲಿ ಸ್ವಲ್ಪ ಅಧ್ಯಾತ್ಮ.',
+        mr: 'प्रत्येक नजरेत थोडे अध्यात्म.',
+        te: 'ప్రతి చూపులో కొంచెం ఆధ్యాత్మికత.',
       })}
       kicker={pick(lang, {
         hi: 'आपकी होम स्क्रीन पर',
         en: 'On your Home Screen',
         gu: 'તમારી હોમ સ્ક્રીન પર',
         kn: 'ನಿಮ್ಮ ಹೋಮ್ ಸ್ಕ್ರೀನ್‌ನಲ್ಲಿ',
+        mr: 'तुमच्या होम स्क्रीनवर',
+        te: 'మీ హోమ్ స్క్రీన్‌పై',
       })}
       art="category-granth-open-scripture"
       primary={
@@ -409,8 +423,10 @@ export function WidgetHowToSheet({
               en: widgets.length > 1 ? 'Add both widgets' : 'Add Panchang',
               gu: 'વિજેટ ઉમેરો',
               kn: 'ವಿಜೆಟ್ ಸೇರಿಸಿ',
+              mr: 'विजेट जोडा',
+              te: 'విడ్జెట్ జోడించండి',
             })
-          : pick(lang, { hi: 'ठीक है', en: 'Got it', gu: 'ઠીક છે', kn: 'ಸರಿ' })
+          : pick(lang, { hi: 'ठीक है', en: 'Got it', gu: 'ઠીક છે', kn: 'ಸರಿ', mr: 'ठीक आहे', te: 'సరే' })
       }
       onPrimary={Platform.OS === 'android' ? (onAdd ?? onGallery) : onDone}
       secondary={pick(lang, {
@@ -418,6 +434,8 @@ export function WidgetHowToSheet({
         en: 'Not now',
         gu: 'હમણાં નહીં',
         kn: 'ಈಗ ಬೇಡ',
+        mr: 'आता नको',
+        te: 'ఇప్పుడు వద్దు',
       })}
       onSecondary={onClose}
     >
@@ -463,12 +481,16 @@ export function WidgetHowToBody({
       en: 'Long-press the Home Screen',
       gu: 'હોમ સ્ક્રીન દબાવી રાખો',
       kn: 'ಹೋಮ್ ಸ್ಕ್ರೀನ್ ಒತ್ತಿಹಿಡಿಯಿರಿ',
+      mr: 'होम स्क्रीन दाबून ठेवा',
+      te: 'హోమ్ స్క్రీన్‌ను నొక్కి పట్టుకోండి',
     }),
     pick(lang, {
       hi: 'संपादित करें या + चुनें',
       en: 'Tap Edit or +',
       gu: 'Edit અથવા + પસંદ કરો',
       kn: 'Edit ಅಥವಾ + ಆಯ್ಕೆಮಾಡಿ',
+      mr: 'Edit किंवा + निवडा',
+      te: 'Edit లేదా + ఎంచుకోండి',
     }),
     ...widgets.map((content, index) => {
       const name = IOS_WIDGET_NAMES[content];
@@ -482,12 +504,16 @@ export function WidgetHowToBody({
             en: `Search “Vedansh”, add “${name}” at ${size}`,
             gu: `“Vedansh” શોધો, “${name}” ${size} કદમાં ઉમેરો`,
             kn: `“Vedansh” ಹುಡುಕಿ, “${name}” ಅನ್ನು ${size} ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ`,
+            mr: `“Vedansh” शोधा, “${name}” ${size} आकारात जोडा`,
+            te: `“Vedansh” వెతకండి, “${name}”ను ${size} పరిమాణంలో జోడించండి`,
           })
         : pick(lang, {
             hi: `फिर + चुनें, “${name}” को ${size} आकार में जोड़ें`,
             en: `Tap + again, add “${name}” at ${size}`,
             gu: `ફરી + પસંદ કરો, “${name}” ${size} કદમાં ઉમેરો`,
             kn: `ಮತ್ತೆ + ಆಯ್ಕೆಮಾಡಿ, “${name}” ಅನ್ನು ${size} ಗಾತ್ರದಲ್ಲಿ ಸೇರಿಸಿ`,
+            mr: `पुन्हा + निवडा, “${name}” ${size} आकारात जोडा`,
+            te: `మళ్లీ + ఎంచుకోండి, “${name}”ను ${size} పరిమాణంలో జోడించండి`,
           });
     }),
   ];
@@ -519,6 +545,8 @@ export function WidgetHowToBody({
           en: 'Today’s Panchang',
           gu: 'આજનું પંચાંગ',
           kn: 'ಇಂದಿನ ಪಂಚಾಂಗ',
+          mr: 'आजचे पंचांग',
+          te: 'ఈరోజు పంచాంగం',
         });
 
   const preview = (content: NudgeWidget) => {
@@ -549,6 +577,8 @@ export function WidgetHowToBody({
               en: 'Today’s verse',
               gu: 'આજનો શ્લોક',
               kn: 'ಇಂದಿನ ಶ್ಲೋಕ',
+              mr: 'आजचा श्लोक',
+              te: 'ఈరోజు శ్లోకం',
             })}
           </Text>
           <Text
@@ -565,6 +595,8 @@ export function WidgetHowToBody({
                   en: 'Open Vedansh to prepare your widget',
                   gu: 'વિજેટ તૈયાર કરવા વેદાંશ ખોલો',
                   kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ ತೆರೆಯಿರಿ',
+                  mr: 'विजेट तयार करण्यासाठी वेदांश उघडा',
+                  te: 'విడ్జెట్ సిద్ధం చేయడానికి వేదాంశ్ తెరవండి',
                 })}
           </Text>
           {brand}
@@ -690,6 +722,8 @@ export function WidgetHowToBody({
             en: 'Your phone asks separately for each widget.',
             gu: 'ફોન દરેક વિજેટ માટે અલગથી પૂછશે.',
             kn: 'ಪ್ರತಿ ವಿಜೆಟ್‌ಗೆ ಫೋನ್ ಪ್ರತ್ಯೇಕವಾಗಿ ಕೇಳುತ್ತದೆ.',
+            mr: 'फोन प्रत्येक विजेटसाठी वेगळे विचारेल.',
+            te: 'ప్రతి విడ్జెట్‌కు ఫోన్ విడిగా అడుగుతుంది.',
           })}
         </Text>
       )}

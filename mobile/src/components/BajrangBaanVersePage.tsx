@@ -37,7 +37,7 @@ export default function BajrangBaanVersePage({ verse, sourceId, width, topAction
     [sourceId, verse]
   );
   const meaning = meaningByLang(lang, verse.meaningHi, verse.meaningEn, { gu: verse.meaningGu, kn: verse.meaningKn });
-  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ' });
+  const meaningLabel = pick(lang, { hi: 'भावार्थ', en: 'Meaning', gu: 'ભાવાર્થ', kn: 'ಭಾವಾರ್ಥ', mr: 'भावार्थ', te: 'భావార్థం' });
   const verseLines = verseLinesByLang(lang, verse.lines, verse.linesEn);
   const verseTok = verseToken(lang, typography);
   const pillText = useMemo(

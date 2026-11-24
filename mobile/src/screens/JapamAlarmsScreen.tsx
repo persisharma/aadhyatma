@@ -50,7 +50,7 @@ const INDIC_LABEL_RESET = { letterSpacing: 0, textTransform: 'none' } as const;
 
 /** "Mon, 6 Jul" — the short date used by skip-next copy. Locale-formatted
  *  with a plain fallback when Intl data is unavailable. */
-const DATE_LOCALE: Record<Lang, string> = { hi: 'hi-IN', en: 'en-IN', gu: 'gu-IN', kn: 'kn-IN' };
+const DATE_LOCALE: Record<Lang, string> = { hi: 'hi-IN', en: 'en-IN', gu: 'gu-IN', kn: 'kn-IN', mr: 'mr-IN', te: 'te-IN' };
 
 function shortDateLabel(ts: number, lang: Lang): string {
   const d = new Date(ts);
@@ -121,7 +121,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
 
   const titleHi = 'जप स्मरण';
   const titleEn = 'Japam Alarms';
-  const title = pick(lang, { hi: titleHi, en: titleEn, gu: 'જપ સ્મરણ', kn: 'ಜಪ ಸ್ಮರಣ' });
+  const title = pick(lang, { hi: titleHi, en: titleEn, gu: 'જપ સ્મરણ', kn: 'ಜಪ ಸ್ಮರಣ', mr: 'जप स्मरण', te: 'జప స్మరణ' });
   // The second title line is the bilingual companion: Hindi under English, English under the rest.
   const titleCompanion = latin ? titleHi : titleEn;
 
@@ -192,6 +192,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
               en: 'Wake to the mantra you chose, at the time you chose.',
               gu: 'પસંદ કરેલા સમયે મંત્ર-ધ્વનિ શરૂ થશે.',
               kn: 'ಆಯ್ಕೆ ಮಾಡಿದ ಸಮಯದಲ್ಲಿ ಮಂತ್ರ-ಧ್ವನಿ ಆರಂಭವಾಗುತ್ತದೆ.',
+              mr: 'निवडलेल्या वेळी मंत्र-ध्वनी सुरू होईल.',
+              te: 'ఎంచుకున్న సమయంలో మంత్ర-ధ్వని ప్రారంభమవుతుంది.',
             })}
           </Text>
 
@@ -221,6 +223,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   en: 'Notifications are disabled. Tap to open Settings.',
                   gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ચાલુ કરો.',
                   kn: 'ಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಆನ್ ಮಾಡಿ.',
+                  mr: 'सूचना परवानगी बंद आहे — सेटिंग्जमध्ये जाऊन सुरू करा.',
+                  te: 'నోటిఫికేషన్ అనుమతి ఆఫ్‌లో ఉంది — సెట్టింగ్‌లలో ఆన్ చేయండి.',
                 })}
               </Text>
             </Pressable>
@@ -257,6 +261,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                     en: 'Allow “Alarms & reminders” for precise Japam timing. Without it, Android may delay the alarm. Tap to open Settings.',
                     gu: 'ચોક્કસ સમયે જપ અલાર્મ માટે “અલાર્મ અને રિમાઇન્ડર”ની પરવાનગી આપો. પરવાનગી ન હોય તો અલાર્મ મોડું વાગી શકે છે.',
                     kn: 'ನಿಖರ ಸಮಯದ ಜಪ ಅಲಾರಂಗಾಗಿ “ಅಲಾರಂಗಳು ಮತ್ತು ಜ್ಞಾಪನೆಗಳು” ಅನುಮತಿ ನೀಡಿ. ಅನುಮತಿ ಇಲ್ಲದಿದ್ದರೆ ಅಲಾರಂ ತಡವಾಗಿ ಮೊಳಗಬಹುದು.',
+                    mr: 'अचूक वेळी जप अलार्मसाठी “अलार्म आणि स्मरणपत्रे” परवानगी द्या. परवानगी नसल्यास अलार्म उशिरा वाजू शकतो.',
+                    te: 'ఖచ్చితమైన సమయానికి జప అలారం కోసం “అలారాలు & రిమైండర్‌లు” అనుమతి ఇవ్వండి. అనుమతి లేకపోతే అలారం ఆలస్యంగా మోగవచ్చు.',
                   })}
                 </Text>
               </Pressable>
@@ -279,7 +285,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   { color: colors.ink, fontFamily: titleFont },
                 ]}
               >
-                {pick(lang, { hi: 'अभी कोई स्मरण नहीं', en: 'No alarms yet', gu: 'હજી કોઈ સ્મરણ નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸ್ಮರಣ ಇಲ್ಲ' })}
+                {pick(lang, { hi: 'अभी कोई स्मरण नहीं', en: 'No alarms yet', gu: 'હજી કોઈ સ્મરણ નથી', kn: 'ಇನ್ನೂ ಯಾವುದೇ ಸ್ಮರಣ ಇಲ್ಲ', mr: 'अजून कोणतेही स्मरण नाही', te: 'ఇంకా ఏ స్మరణా లేదు' })}
               </Text>
               <Text
                 style={[
@@ -292,6 +298,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   en: 'Add your first Japam alarm to begin.',
                   gu: 'પહેલું જપ-સ્મરણ ઉમેરો.',
                   kn: 'ಮೊದಲ ಜಪ-ಸ್ಮರಣ ಸೇರಿಸಿ.',
+                  mr: 'पहिले जप-स्मरण जोडा.',
+                  te: 'మొదటి జప-స్మరణను జోడించండి.',
                 })}
               </Text>
             </View>
@@ -316,7 +324,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
               collapsable={false}
               onPress={() => setEditor({ kind: 'new' })}
               accessibilityRole="button"
-              accessibilityLabel={pick(lang, { hi: 'स्मरण जोड़ें', en: 'Add alarm', gu: 'સ્મરણ ઉમેરો', kn: 'ಸ್ಮರಣ ಸೇರಿಸಿ' })}
+              accessibilityLabel={pick(lang, { hi: 'स्मरण जोड़ें', en: 'Add alarm', gu: 'સ્મરણ ઉમેરો', kn: 'ಸ್ಮರಣ ಸೇರಿಸಿ', mr: 'स्मरण जोडा', te: 'స్మరణను జోడించండి' })}
               style={({ pressed }) => [
                 styles.addBtn,
                 {
@@ -336,7 +344,7 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                   !latin && INDIC_LABEL_RESET,
                 ]}
               >
-                {pick(lang, { hi: '+ स्मरण जोड़ें', en: '+ Add alarm', gu: '+ સ્મરણ ઉમેરો', kn: '+ ಸ್ಮರಣ ಸೇರಿಸಿ' })}
+                {pick(lang, { hi: '+ स्मरण जोड़ें', en: '+ Add alarm', gu: '+ સ્મરણ ઉમેરો', kn: '+ ಸ್ಮರಣ ಸೇರಿಸಿ', mr: '+ स्मरण जोडा', te: '+ స్మరణ జోడించండి' })}
               </Text>
             </Pressable>
           ) : (
@@ -352,6 +360,8 @@ export default function JapamAlarmsScreen({ navigation }: Props) {
                 en: `Up to ${MAX_JAPAM_ALARMS} alarms.`,
                 gu: `વધુમાં વધુ ${MAX_JAPAM_ALARMS} સ્મરણ.`,
                 kn: `ಗರಿಷ್ಠ ${MAX_JAPAM_ALARMS} ಸ್ಮರಣ.`,
+                mr: `जास्तीत जास्त ${MAX_JAPAM_ALARMS} स्मरण.`,
+                te: `గరిష్ఠంగా ${MAX_JAPAM_ALARMS} స్మరణలు.`,
               })}
             </Text>
           )}
@@ -412,7 +422,7 @@ function AlarmRow({
         const skipped = new Date(`${alarm.skipNextDate}T12:00:00`);
         const date = shortDateLabel(skipped.getTime(), lang);
         parts.push(
-          pick(lang, { hi: `${date} छोड़ेंगे`, en: `skips ${date}`, gu: `${date} છોડશે`, kn: `${date} ಬಿಡಲಾಗುವುದು` })
+          pick(lang, { hi: `${date} छोड़ेंगे`, en: `skips ${date}`, gu: `${date} છોડશે`, kn: `${date} ಬಿಡಲಾಗುವುದು`, mr: `${date} वगळले जाईल`, te: `${date} దాటవేయబడుతుంది` })
         );
       }
     }
@@ -458,7 +468,7 @@ function AlarmRow({
         >
           {mantra
             ? contentByLang(lang, mantra.nameHi, mantra.nameEn)
-            : pick(lang, { hi: 'अज्ञात मंत्र', en: 'Unknown mantra', gu: 'અજ્ઞાત મંત્ર', kn: 'ಅಜ್ಞಾತ ಮಂತ್ರ' })}
+            : pick(lang, { hi: 'अज्ञात मंत्र', en: 'Unknown mantra', gu: 'અજ્ઞાત મંત્ર', kn: 'ಅಜ್ಞಾತ ಮಂತ್ರ', mr: 'अज्ञात मंत्र', te: 'తెలియని మంత్రం' })}
         </Text>
         <Text
           style={[
@@ -489,7 +499,7 @@ function AlarmRow({
         trackColor={{ false: colors.divider, true: colors.saffron }}
         thumbColor={colors.parchment}
         ios_backgroundColor={colors.divider}
-        accessibilityLabel={pick(lang, { hi: 'स्मरण चालू / बंद', en: 'Toggle alarm', gu: 'સ્મરણ ચાલુ / બંધ', kn: 'ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
+        accessibilityLabel={pick(lang, { hi: 'स्मरण चालू / बंद', en: 'Toggle alarm', gu: 'સ્મરણ ચાલુ / બંધ', kn: 'ಸ್ಮರಣ ಆನ್ / ಆಫ್', mr: 'स्मरण चालू / बंद', te: 'స్మరణ ఆన్ / ఆఫ్' })}
       />
     </Pressable>
   );
@@ -685,8 +695,8 @@ export function AlarmEditorSheet({
             ]}
           >
             {state?.kind === 'edit'
-              ? pick(lang, { hi: 'स्मरण सम्पादन', en: 'Edit alarm', gu: 'સ્મરણ સંપાદન', kn: 'ಸ್ಮರಣ ಸಂಪಾದನೆ' })
-              : pick(lang, { hi: 'नया स्मरण', en: 'New alarm', gu: 'નવું સ્મરણ', kn: 'ಹೊಸ ಸ್ಮರಣ' })}
+              ? pick(lang, { hi: 'स्मरण सम्पादन', en: 'Edit alarm', gu: 'સ્મરણ સંપાદન', kn: 'ಸ್ಮರಣ ಸಂಪಾದನೆ', mr: 'स्मरण संपादन', te: 'స్మరణ సవరణ' })
+              : pick(lang, { hi: 'नया स्मरण', en: 'New alarm', gu: 'નવું સ્મરણ', kn: 'ಹೊಸ ಸ್ಮರಣ', mr: 'नवीन स्मरण', te: 'కొత్త స్మరణ' })}
           </Text>
 
           <View style={styles.editorBlock}>
@@ -697,7 +707,7 @@ export function AlarmEditorSheet({
                 !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {pick(lang, { hi: 'समय', en: 'Time', gu: 'સમય', kn: 'ಸಮಯ' })}
+              {pick(lang, { hi: 'समय', en: 'Time', gu: 'સમય', kn: 'ಸಮಯ', mr: 'वेळ', te: 'సమయం' })}
             </Text>
             <TimeStepper value={time} onChange={onChangeTime} minuteStep={1} />
           </View>
@@ -710,7 +720,7 @@ export function AlarmEditorSheet({
                 !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {pick(lang, { hi: 'दोहराव', en: 'Repeat', gu: 'પુનરાવર્તન', kn: 'ಪುನರಾವರ್ತನೆ' })}
+              {pick(lang, { hi: 'दोहराव', en: 'Repeat', gu: 'પુનરાવર્તન', kn: 'ಪುನರಾವರ್ತನೆ', mr: 'पुनरावृत्ती', te: 'పునరావృతం' })}
             </Text>
             <View style={styles.dayChipsRow}>
               {ALL_WEEKDAYS.map((day) => {
@@ -764,6 +774,8 @@ export function AlarmEditorSheet({
                     en: ' — turns off after ringing',
                     gu: ' — વાગ્યા પછી બંધ થઈ જશે',
                     kn: ' — ಮೊಳಗಿದ ನಂತರ ಆಫ್ ಆಗುತ್ತದೆ',
+                    mr: ' — वाजल्यानंतर बंद होईल',
+                    te: ' — మోగిన తర్వాత ఆఫ్ అవుతుంది',
                   })
                 : ''}
             </Text>
@@ -778,7 +790,7 @@ export function AlarmEditorSheet({
                   !latin && INDIC_LABEL_RESET,
                 ]}
               >
-                {pick(lang, { hi: 'मंत्र', en: 'Mantra', gu: 'મંત્ર', kn: 'ಮಂತ್ರ' })}
+                {pick(lang, { hi: 'मंत्र', en: 'Mantra', gu: 'મંત્ર', kn: 'ಮಂತ್ರ', mr: 'मंत्र', te: 'మంత్రం' })}
               </Text>
               <ScrollView
                 horizontal
@@ -831,7 +843,7 @@ export function AlarmEditorSheet({
                             },
                           ]}
                         >
-                          {pick(lang, { hi: 'ध्वनि शीघ्र', en: 'audio soon', gu: 'ધ્વનિ ટૂંક સમયમાં', kn: 'ಧ್ವನಿ ಶೀಘ್ರದಲ್ಲೇ' })}
+                          {pick(lang, { hi: 'ध्वनि शीघ्र', en: 'audio soon', gu: 'ધ્વનિ ટૂંક સમયમાં', kn: 'ಧ್ವನಿ ಶೀಘ್ರದಲ್ಲೇ', mr: 'ध्वनी लवकरच', te: 'ధ్వని త్వరలో' })}
                         </Text>
                       )}
                     </Pressable>
@@ -849,16 +861,16 @@ export function AlarmEditorSheet({
                 !latin && INDIC_LABEL_RESET,
               ]}
             >
-              {pick(lang, { hi: 'नाम (वैकल्पिक)', en: 'Label (optional)', gu: 'નામ (વૈકલ્પિક)', kn: 'ಹೆಸರು (ಐಚ್ಛಿಕ)' })}
+              {pick(lang, { hi: 'नाम (वैकल्पिक)', en: 'Label (optional)', gu: 'નામ (વૈકલ્પિક)', kn: 'ಹೆಸರು (ಐಚ್ಛಿಕ)', mr: 'नाव (ऐच्छिक)', te: 'పేరు (ఐచ్ఛికం)' })}
             </Text>
             <TextInput
               value={label}
               onChangeText={setLabel}
-              placeholder={pick(lang, { hi: 'जैसे — ब्रह्ममुहूर्त', en: 'e.g. Brahmamuhurta', gu: 'જેમ કે — બ્રહ્મમુહૂર્ત', kn: 'ಉದಾ — ಬ್ರಹ್ಮಮುಹೂರ್ತ' })}
+              placeholder={pick(lang, { hi: 'जैसे — ब्रह्ममुहूर्त', en: 'e.g. Brahmamuhurta', gu: 'જેમ કે — બ્રહ્મમુહૂર્ત', kn: 'ಉದಾ — ಬ್ರಹ್ಮಮುಹೂರ್ತ', mr: 'उदा. — ब्रह्ममुहूर्त', te: 'ఉదా — బ్రహ్మముహూర్తం' })}
               placeholderTextColor={colors.inkMuted}
               maxLength={40}
               returnKeyType="done"
-              accessibilityLabel={pick(lang, { hi: 'स्मरण का नाम', en: 'Alarm label', gu: 'સ્મરણનું નામ', kn: 'ಸ್ಮರಣದ ಹೆಸರು' })}
+              accessibilityLabel={pick(lang, { hi: 'स्मरण का नाम', en: 'Alarm label', gu: 'સ્મરણનું નામ', kn: 'ಸ್ಮರಣದ ಹೆಸರು', mr: 'स्मरणाचे नाव', te: 'స్మరణ పేరు' })}
               style={[
                 styles.labelInput,
                 {
@@ -877,7 +889,7 @@ export function AlarmEditorSheet({
               onPress={onToggleSkip}
               accessibilityRole="button"
               accessibilityState={{ selected: skipNextDate !== undefined }}
-              accessibilityLabel={pick(lang, { hi: 'अगली बार छोड़ें', en: 'Skip next alarm', gu: 'આગલી વાર છોડો', kn: 'ಮುಂದಿನ ಬಾರಿ ಬಿಡಿ' })}
+              accessibilityLabel={pick(lang, { hi: 'अगली बार छोड़ें', en: 'Skip next alarm', gu: 'આગલી વાર છોડો', kn: 'ಮುಂದಿನ ಬಾರಿ ಬಿಡಿ', mr: 'पुढच्या वेळी वगळा', te: 'తదుపరిసారి దాటవేయండి' })}
               style={({ pressed }) => [
                 styles.skipBtn,
                 {
@@ -912,6 +924,8 @@ export function AlarmEditorSheet({
                         en: `Skipping ${date} ✓`,
                         gu: `છોડશે: ${date} ✓`,
                         kn: `ಬಿಡಲಾಗುವುದು: ${date} ✓`,
+                        mr: `वगळणार: ${date} ✓`,
+                        te: `దాటవేయబడుతుంది: ${date} ✓`,
                       });
                     })()
                   : (() => {
@@ -921,6 +935,8 @@ export function AlarmEditorSheet({
                         en: `Skip next (${date})`,
                         gu: `આગલી વાર છોડો (${date})`,
                         kn: `ಮುಂದಿನ ಬಾರಿ ಬಿಡಿ (${date})`,
+                        mr: `पुढच्या वेळी वगळा (${date})`,
+                        te: `తదుపరిసారి దాటవేయండి (${date})`,
                       });
                     })()}
               </Text>
@@ -942,6 +958,8 @@ export function AlarmEditorSheet({
                 en: `Rings ${until} — at ${at}`,
                 gu: `${at} — ${until} વાગશે`,
                 kn: `${at} — ${until} ಮೊಳಗುತ್ತದೆ`,
+                mr: `${at} — ${until} वाजेल`,
+                te: `${at} — ${until} మోగుతుంది`,
               });
             })()}
           </Text>
@@ -969,8 +987,8 @@ export function AlarmEditorSheet({
               ]}
             >
               {state?.kind === 'edit'
-                ? pick(lang, { hi: 'सहेजें', en: 'Save', gu: 'સાચવો', kn: 'ಉಳಿಸಿ' })
-                : pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ' })}
+                ? pick(lang, { hi: 'सहेजें', en: 'Save', gu: 'સાચવો', kn: 'ಉಳಿಸಿ', mr: 'जतन करा', te: 'సేవ్ చేయండి' })
+                : pick(lang, { hi: 'जोड़ें', en: 'Add', gu: 'ઉમેરો', kn: 'ಸೇರಿಸಿ', mr: 'जोडा', te: 'జోడించండి' })}
             </Text>
           </Pressable>
 
@@ -986,7 +1004,7 @@ export function AlarmEditorSheet({
                   { color: colors.inkMuted, fontFamily: chromeFont },
                 ]}
               >
-                {pick(lang, { hi: 'हटायें', en: 'Delete', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' })}
+                {pick(lang, { hi: 'हटायें', en: 'Delete', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ', mr: 'काढून टाका', te: 'తొలగించండి' })}
               </Text>
             </Pressable>
           )}
@@ -998,7 +1016,7 @@ export function AlarmEditorSheet({
                 { color: colors.inkMuted, fontFamily: chromeFont },
               ]}
             >
-              {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}
+              {pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' })}
             </Text>
           </Pressable>
           </ScrollView>

@@ -53,6 +53,8 @@ export default function ReadAloudButton({
       en: 'Voice unavailable',
       gu: 'આવાજ ઉપલબ્ધ નથી',
       kn: 'ಧ್ವನಿ ಲಭ್ಯವಿಲ್ಲ',
+      mr: 'आवाज उपलब्ध नाही',
+      te: 'వాయిస్ అందుబాటులో లేదు',
     });
     // Names the language the user is actually reading in — read-aloud never
     // substitutes another one, so this is the voice they need to install.
@@ -62,8 +64,10 @@ export default function ReadAloudButton({
       en: `This device has no ${name} voice installed. Add ${name} speech data in your device's settings.`,
       gu: `આ ઉપકરણમાં ${name} આવાજ નથી. ઉપકરણની સેટિંગ્સમાં ${name} વાણી ડાઉનલોડ કરો.`,
       kn: `ಈ ಸಾಧನದಲ್ಲಿ ${name} ಧ್ವನಿ ಇಲ್ಲ. ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ${name} ವಾಣಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ.`,
+      mr: `या उपकरणात ${name} आवाज नाही. उपकरणाच्या सेटिंग्जमध्ये ${name} वाणी डाउनलोड करा.`,
+      te: `ఈ పరికరంలో ${name} వాయిస్ లేదు. పరికర సెట్టింగ్‌లలో ${name} వాణి డౌన్‌లోడ్ చేయండి.`,
     });
-    const close = pick(lang, { hi: 'ठीक है', en: 'OK', gu: 'ઠીક છે', kn: 'ಸರಿ' });
+    const close = pick(lang, { hi: 'ठीक है', en: 'OK', gu: 'ઠીક છે', kn: 'ಸರಿ', mr: 'ठीक आहे', te: 'సరే' });
 
     if (Platform.OS === 'android') {
       // iOS has no deep link to Settings → Accessibility → Spoken Content, so the
@@ -76,6 +80,8 @@ export default function ReadAloudButton({
             en: 'Open settings',
             gu: 'સેટિંગ્સ ખોલો',
             kn: 'ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ',
+            mr: 'सेटिंग्ज उघडा',
+            te: 'సెట్టింగ్‌లు తెరవండి',
           }),
           onPress: () => {
             Linking.sendIntent('com.android.settings.TTS_SETTINGS').catch(() => {
@@ -95,8 +101,8 @@ export default function ReadAloudButton({
   // Visible label follows the reading language; the accessibilityLabel below stays
   // English and un-localized (Maestro taps it literally; default reading lang is hi).
   const label = speaking
-    ? pick(lang, { hi: 'रोकें', en: 'Pause', gu: 'થોભો', kn: 'ವಿರಾಮ' })
-    : pick(lang, { hi: 'सुनें', en: 'Listen', gu: 'સાંભળો', kn: 'ಕೇಳಿ' });
+    ? pick(lang, { hi: 'रोकें', en: 'Pause', gu: 'થોભો', kn: 'ವಿರಾಮ', mr: 'थांबवा', te: 'ఆపండి' })
+    : pick(lang, { hi: 'सुनें', en: 'Listen', gu: 'સાંભળો', kn: 'ಕೇಳಿ', mr: 'ऐका', te: 'వినండి' });
   const a11yLabel = control.unavailable
     ? 'Read aloud unavailable'
     : speaking

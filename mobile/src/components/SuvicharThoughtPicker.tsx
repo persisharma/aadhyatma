@@ -22,14 +22,14 @@ export default function SuvicharThoughtPicker({ visible, deity, lang, selectedId
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <Text style={{ fontFamily: face, color: colors.ink, fontSize: 22, flex: 1 }}>{contentByLang(lang, subject.hi, subject.en)} · {pool.length}</Text>
           <Pressable testID="suvichar-thoughts-close" accessibilityRole="button" onPress={onClose} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: spacing.md }}>
-            <Text style={{ fontFamily: face, color: colors.saffronDeep }}>{pick(lang, { hi: 'बंद करें', en: 'Close', gu: 'બંધ કરો', kn: 'ಮುಚ್ಚಿ' })}</Text>
+            <Text style={{ fontFamily: face, color: colors.saffronDeep }}>{pick(lang, { hi: 'बंद करें', en: 'Close', gu: 'બંધ કરો', kn: 'ಮುಚ್ಚಿ', mr: 'बंद करा', te: 'మూసివేయండి' })}</Text>
           </Pressable>
         </View>
-        <TextInput testID="suvichar-thought-search" accessibilityLabel={pick(lang, { hi: 'सुविचार खोजें', en: 'Search thoughts', gu: 'સુવિચાર શોધો', kn: 'ಸುವಿಚಾರ ಹುಡುಕಿ' })} value={query} onChangeText={setQuery} placeholder={pick(lang, { hi: 'संदेश या संदर्भ खोजें', en: 'Search messages or references', gu: 'સંદેશ અથવા સંદર્ભ શોધો', kn: 'ಸಂದೇಶ ಅಥವಾ ಉಲ್ಲೇಖ ಹುಡುಕಿ' })} placeholderTextColor={colors.inkMuted}
+        <TextInput testID="suvichar-thought-search" accessibilityLabel={pick(lang, { hi: 'सुविचार खोजें', en: 'Search thoughts', gu: 'સુવિચાર શોધો', kn: 'ಸುವಿಚಾರ ಹುಡುಕಿ', mr: 'सुविचार शोधा', te: 'సువిచారం వెతకండి' })} value={query} onChangeText={setQuery} placeholder={pick(lang, { hi: 'संदेश या संदर्भ खोजें', en: 'Search messages or references', gu: 'સંદેશ અથવા સંદર્ભ શોધો', kn: 'ಸಂದೇಶ ಅಥವಾ ಉಲ್ಲೇಖ ಹುಡುಕಿ', mr: 'संदेश किंवा संदर्भ शोधा', te: 'సందేశం లేదా సందర్భం వెతకండి' })} placeholderTextColor={colors.inkMuted}
           style={{ fontFamily: face, color: colors.ink, padding: spacing.md, borderRadius: radii.md, borderWidth: 1, borderColor: colors.divider }} />
       </View>
       <FlatList testID="suvichar-thought-list" data={rows} keyExtractor={t => t.id} initialNumToRender={8} maxToRenderPerBatch={8} keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingHorizontal: spacing.lg, paddingBottom: spacing.xl, gap: spacing.sm }}
-        ListEmptyComponent={<Text style={{ color: colors.inkMuted, padding: spacing.md }}>{pick(lang, { hi: 'कोई संदेश नहीं मिला', en: 'No matching messages', gu: 'કોઈ સંદેશ મળ્યો નથી', kn: 'ಹೊಂದುವ ಸಂದೇಶಗಳಿಲ್ಲ' })}</Text>}
+        ListEmptyComponent={<Text style={{ color: colors.inkMuted, padding: spacing.md }}>{pick(lang, { hi: 'कोई संदेश नहीं मिला', en: 'No matching messages', gu: 'કોઈ સંદેશ મળ્યો નથી', kn: 'ಹೊಂದುವ ಸಂದೇಶಗಳಿಲ್ಲ', mr: 'कोणताही संदेश सापडला नाही', te: 'సరిపోలే సందేశాలు లేవు' })}</Text>}
         renderItem={({ item }) => <Pressable testID={`suvichar-thought-${item.id}`} accessibilityRole="button" accessibilityState={{ selected: selectedId === item.id }} onPress={() => { onSelect(item); onClose(); }}
           style={{ padding: spacing.md, gap: spacing.sm, borderRadius: radii.md, borderWidth: 1, borderColor: selectedId === item.id ? colors.saffron : colors.divider, backgroundColor: colors.parchmentSoft }}>
           <Text style={{ ...meaningToken(lang, typography), color: colors.ink }}>{contentByLang(lang, item.hi, item.en)}</Text>
