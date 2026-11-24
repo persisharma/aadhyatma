@@ -1295,6 +1295,8 @@ export function ShareProvider({ children }: { children: React.ReactNode }) {
               en: 'Share this katha',
               gu: 'કથા શેર કરો',
               kn: 'ಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ',
+              mr: 'कथा शेअर करा',
+              te: 'కథను షేర్ చేయండి',
             }
           )}
           hashtagPreview={hashtagPreview}
@@ -1420,12 +1422,16 @@ function alertCouldNotShare(lang: Lang) {
       en: "Couldn't share just now",
       gu: 'અત્યારે શેર ન થઈ શક્યું',
       kn: 'ಈಗ ಹಂಚಿಕೊಳ್ಳಲಾಗಲಿಲ್ಲ',
+      mr: 'आत्ता शेअर करता आले नाही',
+      te: 'ఇప్పుడు షేర్ చేయలేకపోయాం',
     }),
     pick(lang, {
       hi: 'कृपया दोबारा कोशिश करें।',
       en: 'Please try again.',
       gu: 'કૃપા કરીને ફરી પ્રયાસ કરો.',
       kn: 'ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+      mr: 'कृपया पुन्हा प्रयत्न करा.',
+      te: 'దయచేసి మళ్లీ ప్రయత్నించండి.',
     })
   );
 }
