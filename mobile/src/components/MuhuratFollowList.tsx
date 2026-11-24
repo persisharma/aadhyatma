@@ -4,7 +4,7 @@ import ListingCard from './ListingCard';
 import ObservanceArtwork from './ObservanceArtwork';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
-import { contentByLang, isRescriptLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
@@ -27,7 +27,7 @@ function startOfLocalDay(d: Date): Date {
 
 function shortDate(date: Date, lang: Lang): string {
   const months =
-    lang === 'en' ? MONTHS_EN : !isRescriptLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+    lang === 'en' ? MONTHS_EN : isDevanagariLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 

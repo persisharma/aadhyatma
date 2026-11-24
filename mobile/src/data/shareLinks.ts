@@ -49,6 +49,8 @@ const SHARE_CTA: LocalizedStrings = {
   en: 'Read on Vedansh:',
   gu: 'Vedansh ઍપ પર વાંચો:',
   kn: 'Vedansh ಆ್ಯಪ್‌ನಲ್ಲಿ ಓದಿ:',
+  mr: 'Vedansh ॲपवर वाचा:',
+  te: 'Vedansh యాప్‌లో చదవండి:',
 };
 
 /** "Follow on Instagram:" line that precedes the public profile URL (§37 / §39). */
@@ -57,6 +59,8 @@ const FOLLOW_IG_CTA: LocalizedStrings = {
   en: 'Follow on Instagram:',
   gu: 'Instagram પર ફૉલો કરો:',
   kn: 'Instagram ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ:',
+  mr: 'Instagram वर फॉलो करा:',
+  te: 'Instagramలో ఫాలో చేయండి:',
 };
 
 /** The localized "Follow on Instagram: <url>" line, shared by the verse + app-invite captions. */
@@ -99,6 +103,8 @@ const IG_FOLLOW: LocalizedStrings = {
   en: 'More verses daily',
   gu: 'વધુ વાંચો',
   kn: 'ಇನ್ನಷ್ಟು ಓದಿ',
+  mr: 'आणखी वाचा',
+  te: 'మరిన్ని చదవండి',
 };
 
 export type InstagramCaptionParams = ShareCaptionParams & {
@@ -194,6 +200,30 @@ const APP_SHARE_INVITE: LocalizedStrings = {
     'ಹಿಂದಿ · English · ગુજરાતી · ಕನ್ನಡದಲ್ಲಿ ಓದಿ.',
     'ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ:',
   ].join('\n'),
+  mr: [
+    'Vedansh — संपूर्ण भक्ती, एकाच ॲपमध्ये.',
+    '• गीता, रामायण, सुंदरकांड, चालीसा, आरती व स्तोत्र',
+    '• मुलांसाठी चित्रांसह भक्ती कथा',
+    '• व्रत कथा, पूजा विधी व तीर्थ परिचय',
+    '• पंचांग — व्रत-सण, मुहूर्त, कुंडली व राशीभविष्य',
+    '• जप माळ व अलार्म, भजन ऑडिओ, दैनिक श्लोक',
+    '• नित्य साधना — तुमच्या दैनिक पूजेचा दिनक्रम',
+    '• जिज्ञासा — आजची तिथी, व्रत किंवा मुहूर्त विचारा',
+    'हिंदी · English · ગુજરાતી · ಕನ್ನಡ मध्ये वाचा.',
+    'डाउनलोड करा:',
+  ].join('\n'),
+  te: [
+    'Vedansh — సంపూర్ణ భక్తి, ఒకే యాప్‌లో.',
+    '• గీత, రామాయణం, సుందరకాండ, చాలీసా, హారతి, స్తోత్రాలు',
+    '• పిల్లల కోసం చిత్రాలతో భక్తి కథలు',
+    '• వ్రత కథ, పూజా విధానం, తీర్థ పరిచయం',
+    '• పంచాంగం — వ్రతాలు-పండుగలు, ముహూర్తం, కుండలి, రాశిఫలం',
+    '• జప మాల, అలారాలు, భజన ఆడియో, రోజువారీ శ్లోకం',
+    '• నిత్య సాధన — మీ రోజువారీ పూజా దినచర్య',
+    '• జిజ్ఞాస — ఈరోజు తిథి, వ్రతం లేదా ముహూర్తం అడగండి',
+    'హిందీ · English · ગુજરાતી · ಕನ್ನಡలో చదవండి.',
+    'డౌన్‌లోడ్ చేయండి:',
+  ].join('\n'),
 };
 
 /** Caption under a Suvichar card (design.md §82): the recipient's invite + tappable download link. */
@@ -202,6 +232,8 @@ const SUVICHAR_CTA: LocalizedStrings = {
   en: 'Send cards like this too — get Vedansh:',
   gu: 'તમે પણ આવા સુવિચાર મોકલો — Vedansh ઍપ:',
   kn: 'ನೀವೂ ಇಂತಹ ಸುವಿಚಾರ ಕಳುಹಿಸಿ — Vedansh ಆ್ಯಪ್:',
+  mr: 'तुम्हीही असे सुविचार पाठवा — Vedansh ॲप:',
+  te: 'మీరూ ఇలాంటి సువిచారాలు పంపండి — Vedansh యాప్:',
 };
 
 /** One line, no Instagram URL: it rides as the WhatsApp image caption, so it stays short. */
@@ -220,6 +252,8 @@ const PANCHANG_CTA: LocalizedStrings = {
   en: 'The full panchang every day — get Vedansh:',
   gu: 'રોજનું પૂરું પંચાંગ — Vedansh ઍપ:',
   kn: 'ಪ್ರತಿದಿನದ ಪೂರ್ಣ ಪಂಚಾಂಗ — Vedansh ಆ್ಯಪ್:',
+  mr: 'रोजचे संपूर्ण पंचांग — Vedansh ॲप:',
+  te: 'ప్రతిరోజూ పూర్తి పంచాంగం — Vedansh యాప్:',
 };
 
 /** Two lines, no Instagram URL — it rides as the WhatsApp image caption, like Suvichar's. */

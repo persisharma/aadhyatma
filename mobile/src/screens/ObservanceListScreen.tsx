@@ -21,7 +21,7 @@ import { useVratFollows } from '@/contexts/VratFollowContext';
 import { areasPresent, getObservanceAreas, matchesAreaFilter, type AreaFilter } from '@/panchang/observanceAreas';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
-import { contentByLang, isRescriptLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { useTourTarget } from '@/components/tour/tourTargets';
@@ -34,7 +34,7 @@ const MONTHS_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 
 
 function shortDate(date: Date, lang: Lang): string {
   const months =
-    lang === 'en' ? MONTHS_EN : !isRescriptLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+    lang === 'en' ? MONTHS_EN : isDevanagariLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 

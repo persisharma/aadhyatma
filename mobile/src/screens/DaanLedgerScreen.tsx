@@ -56,10 +56,10 @@ export default function DaanLedgerScreen({ navigation }: Props) {
     cancelRemove();
     if (id !== null && entries.some((entry) => entry.id === id)) removeEntry(id);
   };
-  const removeLabel = pick(lang, { hi: 'प्रविष्टि हटाएँ', en: 'Remove entry', gu: 'નોંધ દૂર કરો', kn: 'ದಾಖಲೆ ತೆಗೆದುಹಾಕಿ' });
-  const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' });
+  const removeLabel = pick(lang, { hi: 'प्रविष्टि हटाएँ', en: 'Remove entry', gu: 'નોંધ દૂર કરો', kn: 'ದಾಖಲೆ ತೆಗೆದುಹಾಕಿ', mr: 'नोंद काढा', te: 'నమోదు తొలగించండి' });
+  const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' });
   const entryLabel = (entry: DaanLedgerEntry) => entry.gupt
-    ? pick(lang, { hi: 'गुप्त दान', en: 'Gupt daan', gu: 'ગુપ્ત દાન', kn: 'ಗುಪ್ತ ದಾನ' })
+    ? pick(lang, { hi: 'गुप्त दान', en: 'Gupt daan', gu: 'ગુપ્ત દાન', kn: 'ಗುಪ್ತ ದಾನ', mr: 'गुप्त दान', te: 'గుప్త దానం' })
     : contentByLang(lang, DAAN_CATEGORY_LABELS[entry.category].hi, DAAN_CATEGORY_LABELS[entry.category].en);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
@@ -194,6 +194,8 @@ export default function DaanLedgerScreen({ navigation }: Props) {
                 en: 'Export (CSV) — via the share sheet',
                 gu: 'નિકાસ કરો (CSV) — share sheet થી',
                 kn: 'ರಫ್ತು ಮಾಡಿ (CSV) — share sheet ಮೂಲಕ',
+                mr: 'निर्यात करा (CSV) — share sheet द्वारे',
+                te: 'ఎగుమతి చేయండి (CSV) — share sheet ద్వారా',
               })}
             </Text>
           </Pressable>
@@ -208,7 +210,7 @@ export default function DaanLedgerScreen({ navigation }: Props) {
               style={[styles.confirmCard, { backgroundColor: colors.parchment, borderColor: colors.cardActiveBorder, borderRadius: radii.lg }]}>
               <ScrollView style={styles.confirmScroll} contentContainerStyle={styles.confirmContent}>
                 <Text accessibilityRole="header" style={[styles.confirmTitle, { fontFamily: titleFont, color: colors.ink }]}>
-                  {pick(lang, { hi: 'यह दान प्रविष्टि हटाएँ?', en: 'Remove this daan entry?', gu: 'આ દાનની નોંધ દૂર કરવી?', kn: 'ಈ ದಾನದ ದಾಖಲೆ ತೆಗೆದುಹಾಕಬೇಕೆ?' })}
+                  {pick(lang, { hi: 'यह दान प्रविष्टि हटाएँ?', en: 'Remove this daan entry?', gu: 'આ દાનની નોંધ દૂર કરવી?', kn: 'ಈ ದಾನದ ದಾಖಲೆ ತೆಗೆದುಹಾಕಬೇಕೆ?', mr: 'ही दानाची नोंद काढायची?', te: 'ఈ దాన నమోదును తొలగించాలా?' })}
                 </Text>
                 <Text testID="daan-remove-identity" style={[styles.confirmIdentity, { fontFamily: titleFont, color: colors.ink }]}>
                   {entryLabel(pendingEntry)} · {pendingEntry.isoDate}
@@ -222,6 +224,8 @@ export default function DaanLedgerScreen({ navigation }: Props) {
                     en: 'This entry will leave your register. There is no undo in the register.',
                     gu: 'આ નોંધ તમારા ખાતામાંથી દૂર થશે. ખાતામાં તેને પાછી લાવવાનો વિકલ્પ નથી.',
                     kn: 'ಈ ದಾಖಲೆ ನಿಮ್ಮ ಖಾತೆಯಿಂದ ತೆಗೆದುಹಾಕಲಾಗುತ್ತದೆ. ಖಾತೆಯಲ್ಲಿ ಇದನ್ನು ಹಿಂದಿರುಗಿಸುವ ಆಯ್ಕೆ ಇಲ್ಲ.',
+                    mr: 'ही नोंद तुमच्या खात्यातून काढली जाईल. खात्यात ती परत आणण्याचा पर्याय नाही.',
+                    te: 'ఈ నమోదు మీ ఖాతా నుండి తొలగిపోతుంది. ఖాతాలో దీన్ని తిరిగి తెచ్చే అవకాశం లేదు.',
                   })}
                 </Text>
               </ScrollView>

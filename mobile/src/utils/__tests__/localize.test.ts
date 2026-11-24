@@ -7,7 +7,7 @@ import {
   verseLinesByLang,
 } from '../localize';
 
-const UI = { hi: 'नई साधना', en: 'New routine', gu: 'નવી સાધના', kn: 'ಹೊಸ ಸಾಧನೆ' };
+const UI = { hi: 'नई साधना', en: 'New routine', gu: 'નવી સાધના', kn: 'ಹೊಸ ಸಾಧನೆ', mr: 'नवी साधना', te: 'కొత్త సాధన' };
 
 describe('pick (UI chrome strings — all four hand-authored)', () => {
   test('returns the string for each language', () => {
