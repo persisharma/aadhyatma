@@ -1,4 +1,3 @@
-import type { Lang } from '@/data/gita/language';
 import type { UniformVerse } from '@/data/versePool';
 import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import { contentByLang, meaningByLang, pick, verseLinesByLang } from './localize';

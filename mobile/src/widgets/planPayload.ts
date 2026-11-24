@@ -10,7 +10,6 @@ import { computeMuhuratDay } from '@/panchang/muhurat';
 import { tithiChain } from '@/panchang/prevailingTithi';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { buildWidgetPayload, shiftDateKey, twoLineExcerpt, type WidgetPlannerInput } from './planner';
-import type { Lang } from '@/data/gita/language';
 import type { PanchangData } from '@/panchang/types';
 import { WIDGET_LANGS, WIDGET_TIME_ZONE, widgetDateKey, type PanchangWidgetDay, type WidgetLang, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 

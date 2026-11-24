@@ -1,5 +1,4 @@
 import { defaultSuvichar, suvicharDeities, suvicharReflections, suvicharWishes, type SuvicharDeity, type SuvicharFrame } from './suvichar';
-import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
 import { isSourcedSuvicharMessage, suvicharAllThoughts, suvicharThoughtForDay } from './suvicharContent';
 import { suvicharPhotoArt } from './suvicharPhotoArt';
