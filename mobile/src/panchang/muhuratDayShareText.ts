@@ -1,5 +1,5 @@
 import type { Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { TIER_LABELS, type DayVerdict, type EventRule } from './eventMuhurat';
 import { formatRange } from './muhuratFormat';
@@ -10,7 +10,7 @@ import type { PanchangData } from './types';
 type MuhuratDayShare = { rule: EventRule; verdict: DayVerdict; p: PanchangData; lang: Lang; cityLabel: string };
 
 const weekdayLabel = (d: Date, lang: Lang) =>
-  lang === 'en' ? VARA_NAMES_EN[d.getDay()] : lang === 'hi' ? VARA_NAMES_HI[d.getDay()] : transliterateDevanagari(VARA_NAMES_HI[d.getDay()], lang);
+  lang === 'en' ? VARA_NAMES_EN[d.getDay()] : isDevanagariLang(lang) ? VARA_NAMES_HI[d.getDay()] : transliterateDevanagari(VARA_NAMES_HI[d.getDay()], lang);
 
 /** Caption parts for the Muhurat Finder day card (design.md §39.10, §60). */
 export function muhuratDayShareCaption({ rule, verdict, lang }: Pick<MuhuratDayShare, 'rule' | 'verdict' | 'lang'>) {

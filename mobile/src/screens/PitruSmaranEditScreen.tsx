@@ -24,7 +24,7 @@ import { LUNAR_MONTH_NAMES_EN, LUNAR_MONTH_NAMES_HI, PAKSHA_NAMES_EN, PAKSHA_NAM
 import { useTheme } from '@/theme/ThemeContext';
 import KeyboardAwareScrollView from '@/components/KeyboardAwareScrollView';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { Paksha } from '@/panchang/types';
@@ -63,7 +63,7 @@ function dateKey(date: Date): string {
 }
 
 function localizedHi(text: string, lang: Lang): string {
-  return lang === 'hi' || lang === 'en' ? text : transliterateDevanagari(text, lang);
+  return isDevanagariLang(lang) || lang === 'en' ? text : transliterateDevanagari(text, lang);
 }
 
 /**

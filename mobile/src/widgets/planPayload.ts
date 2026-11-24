@@ -12,7 +12,7 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 import { buildWidgetPayload, shiftDateKey, twoLineExcerpt, type WidgetPlannerInput } from './planner';
 import type { Lang } from '@/data/gita/language';
 import type { PanchangData } from '@/panchang/types';
-import { WIDGET_TIME_ZONE, widgetDateKey, type PanchangWidgetDay, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
+import { WIDGET_LANGS, WIDGET_TIME_ZONE, widgetDateKey, type PanchangWidgetDay, type WidgetLang, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 
 const DAYS = 14;
 
@@ -137,14 +137,14 @@ export async function planWidgetPayload(input: WidgetPlanInput, isCancelled: () 
     if (!verse) throw new Error('Daily verse pool is empty');
     const hi = [...verseLinesForDisplay(verse.textHi, verse.labelHi)];
     const en = [...verseLinesForDisplay(verse.textEn, verse.labelEn)];
-    const lines: Record<Lang, string[]> = {
+    const lines: Record<WidgetLang, string[]> = {
       hi, en,
       gu: hi.map((line) => transliterateDevanagari(line, 'gu')),
       kn: hi.map((line) => transliterateDevanagari(line, 'kn')),
     };
     const source = sourceLabel(verse.sourceNameHi, verse.sourceNameEn, verse.labelHi, verse.labelEn);
-    const excerpt = Object.fromEntries((['hi', 'en', 'gu', 'kn'] as Lang[]).map((lang) => [lang, twoLineExcerpt(lines[lang])])) as Record<Lang, string>;
-    const accessibilityLabel = Object.fromEntries((['hi', 'en', 'gu', 'kn'] as Lang[]).map((lang) => [lang, `${lines[lang].join(' ')}. ${source[lang]}`])) as Record<Lang, string>;
+    const excerpt = Object.fromEntries(WIDGET_LANGS.map((lang) => [lang, twoLineExcerpt(lines[lang])])) as Record<WidgetLang, string>;
+    const accessibilityLabel = Object.fromEntries(WIDGET_LANGS.map((lang) => [lang, `${lines[lang].join(' ')}. ${source[lang]}`])) as Record<WidgetLang, string>;
     const query = new URLSearchParams({ sourceId: verse.sourceId, verseIndex: String(verse.verseIndex), ...(verse.chapter == null ? {} : { chapter: String(verse.chapter) }) });
     verseDays.push({ dateKey: verseKey, sourceId: verse.sourceId, artKey: widgetVerseSubject(verse.sourceId), ...(verse.chapter == null ? {} : { chapter: verse.chapter }), verseIndex: verse.verseIndex, lines, excerpt, source, accessibilityLabel, deepLink: `vedansh://widget/verse?${query.toString()}` });
     // Avoid monopolising Hermes while preparing the offline window. This is an

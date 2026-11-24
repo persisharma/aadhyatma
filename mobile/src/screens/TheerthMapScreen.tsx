@@ -13,7 +13,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { backLabel } from '@/utils/a11yLabels';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang, pick, isDevanagariLang } from '@/utils/localize';
 import { cardFontByLang, isLatinLang } from '@/utils/langType';
 import { useNewContent, templeNewKey } from '@/contexts/NewContentContext';
 import BackgroundLayer from '@/components/BackgroundLayer';
@@ -438,7 +438,7 @@ function BrowseCard({
         ? fontFamilies.gujaratiBold
         : lang === 'kn'
           ? fontFamilies.kannadaBold
-          : lang === 'hi'
+          : lang === 'te' ? fontFamilies.teluguBold : isDevanagariLang(lang)
             ? typography.cardHindi.fontFamily
             : fontFamilies.latinBold,
     fontSize: isLatinLang(lang) ? 19 : 17,

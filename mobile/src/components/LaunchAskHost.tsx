@@ -7,7 +7,7 @@ import { useNotificationPreferences } from '@/contexts/NotificationPreferencesCo
 import { useGitaLanguage } from '@/data/gita/language';
 import { moreTabTarget } from '@/navigation/entryRoutes';
 import { hasWidgetHost, readWidgetPayload } from '@/widgets/native';
-import { widgetDateKey, WIDGET_TIME_ZONE } from '@/widgets/contract';
+import { widgetDateKey, widgetLinesOrEmpty, WIDGET_TIME_ZONE } from '@/widgets/contract';
 import {
   startMetaAppEvents,
   metaTrackingAvailable,
@@ -145,10 +145,13 @@ export default function LaunchAskHost({
           .then((payload) => {
             if (payload.kind === 'ready')
               setLines(
-                payload.payload.verses.days.find(
-                  (d) =>
-                    d.dateKey === widgetDateKey(new Date(), WIDGET_TIME_ZONE),
-                )?.lines[lang] ?? [],
+                widgetLinesOrEmpty(
+                  payload.payload.verses.days.find(
+                    (d) =>
+                      d.dateKey === widgetDateKey(new Date(), WIDGET_TIME_ZONE),
+                  )?.lines,
+                  lang,
+                ),
               );
           })
           .catch(() => undefined);

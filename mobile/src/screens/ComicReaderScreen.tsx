@@ -6,6 +6,7 @@ import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
 import ComicPage from '@/components/ComicPage';
+import ComicLanguageNotice from '@/components/ComicLanguageNotice';
 import AutoSlideButton from '@/components/AutoSlideButton';
 import { useAutoSlide } from './_useAutoSlide';
 import { comicLanguage, comicPageIndex, comicPages, getComicBook } from '@/data/comicBooks';
@@ -69,6 +70,7 @@ export default function ComicReaderScreen({ route, navigation }: NativeStackScre
         <View pointerEvents="box-none" style={{ position: 'absolute', left: spacing.readingGutter }}><AutoSlideButton control={autoSlide} floating={false} /></View>
         <LanguageToggle />
       </View>
+      <ComicLanguageNotice />
       <View style={{ flex: 1 }} onLayout={event => { if (event.nativeEvent.layout.width > 0) setPageWidth(event.nativeEvent.layout.width); }}>
         <FlatList testID="comic-pager" key={pageWidth} ref={pager} CellRendererComponent={autoSlide.Cell} data={pages} extraData={{ language, typography }} keyExtractor={page => page.id}
           horizontal pagingEnabled directionalLockEnabled showsHorizontalScrollIndicator={false} initialScrollIndex={index}

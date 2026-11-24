@@ -18,6 +18,8 @@ import { NotoSerifGujarati_500Medium } from '@expo-google-fonts/noto-serif-gujar
 import { NotoSerifGujarati_600SemiBold } from '@expo-google-fonts/noto-serif-gujarati/600SemiBold';
 import { NotoSerifKannada_500Medium } from '@expo-google-fonts/noto-serif-kannada/500Medium';
 import { NotoSerifKannada_600SemiBold } from '@expo-google-fonts/noto-serif-kannada/600SemiBold';
+import { NotoSerifTelugu_500Medium } from '@expo-google-fonts/noto-serif-telugu/500Medium';
+import { NotoSerifTelugu_600SemiBold } from '@expo-google-fonts/noto-serif-telugu/600SemiBold';
 import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { TiroDevanagariSanskrit_400Regular } from '@expo-google-fonts/tiro-devanagari-sanskrit/400Regular';
@@ -168,6 +170,8 @@ export default function App() {
     NotoSerifGujarati_600SemiBold,
     NotoSerifKannada_500Medium,
     NotoSerifKannada_600SemiBold,
+    NotoSerifTelugu_500Medium,
+    NotoSerifTelugu_600SemiBold,
     Inter_500Medium,
     Inter_600SemiBold,
     TiroDevanagariSanskrit_400Regular,

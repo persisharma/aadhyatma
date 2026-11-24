@@ -60,6 +60,7 @@ export function resolveShareBrand(brand: ShareBrand): ResolvedShareBrand | null 
 export function brandTextLang(value: string): Lang {
   if (/[઀-૿]/.test(value)) return 'gu';
   if (/[ಀ-೿]/.test(value)) return 'kn';
+  if (/[ఀ-౿]/.test(value)) return 'te';
   if (/[ऀ-ॿ]/.test(value)) return 'hi';
   return 'en';
 }

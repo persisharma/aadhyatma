@@ -55,6 +55,8 @@ export const SPEECH_LOCALE: Record<SpeechTarget, { ios: string; android: string 
   en: { ios: 'en-IN', android: 'en' },
   gu: { ios: 'gu-IN', android: 'gu' },
   kn: { ios: 'kn-IN', android: 'kn' },
+  mr: { ios: 'mr-IN', android: 'mr' },
+  te: { ios: 'te-IN', android: 'te' },
 };
 
 /**
@@ -73,7 +75,7 @@ export function speechLangFor(lang: Lang): SpeechTarget {
  * near-universal default English voice) and to *nothing else*: never British, Australian,
  * Irish, etc. The result is that the app only ever *offers* Indian voices (see
  * `voicesForTarget`), yet English is never silent on a plain en-US device. Hindi/Gujarati/
- * Kannada have no non-Indian accent, so they have no fallback — their `-IN` voice or
+ * Kannada/Marathi/Telugu have no non-Indian accent, so they have no fallback — their `-IN` voice or
  * unavailable. English is still English either way, so "heard === seen" holds; this is an
  * accent fallback within one language, not the cross-language substitution the module forbids.
  */

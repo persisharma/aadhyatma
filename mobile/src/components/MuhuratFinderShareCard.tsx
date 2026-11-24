@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { TIER_LABELS, type DayVerdict, type EventRule } from '@/panchang/eventMuhurat';
 import { formatRange } from '@/panchang/muhuratFormat';
@@ -17,7 +17,7 @@ const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अ
 
 function monthName(d: Date, lang: Lang): string {
   if (lang === 'en') return MONTHS_EN[d.getMonth()];
-  if (lang === 'hi') return MONTHS_HI[d.getMonth()];
+  if (isDevanagariLang(lang)) return MONTHS_HI[d.getMonth()];
   return transliterateDevanagari(MONTHS_HI[d.getMonth()], lang);
 }
 
@@ -49,7 +49,7 @@ export default function MuhuratFinderShareCard({
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const date = new Date(verdict.dateMs);
   const weekday =
-    lang === 'en' ? VARA_NAMES_EN[date.getDay()] : lang === 'hi' ? VARA_NAMES_HI[date.getDay()] : transliterateDevanagari(VARA_NAMES_HI[date.getDay()], lang);
+    lang === 'en' ? VARA_NAMES_EN[date.getDay()] : isDevanagariLang(lang) ? VARA_NAMES_HI[date.getDay()] : transliterateDevanagari(VARA_NAMES_HI[date.getDay()], lang);
   const tier = verdict.tier === 'shreshtha' ? TIER_LABELS.shreshtha : TIER_LABELS.madhyam;
   const best = verdict.windows[0];
 
@@ -101,7 +101,7 @@ export default function MuhuratFinderShareCard({
               ? ` · ${
                   lang === 'en'
                     ? RASHI_NAMES_EN[best.lagnaRashiIndex]
-                    : lang === 'hi'
+                    : isDevanagariLang(lang)
                       ? RASHI_NAMES_HI[best.lagnaRashiIndex]
                       : transliterateDevanagari(RASHI_NAMES_HI[best.lagnaRashiIndex], lang)
                 } ${contentByLang(lang, 'लग्न', 'lagna')}`

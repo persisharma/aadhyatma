@@ -9,12 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import {
-  verseLinesByLang,
-  meaningByLang,
-  contentByLang,
-  pick,
-} from '@/utils/localize';
+import { verseLinesByLang, meaningByLang, contentByLang, pick, isDevanagariLang } from '@/utils/localize';
 import { verseToken, meaningToken } from '@/utils/langType';
 import { getRandomVerse, findVerse } from '@/data/versePool';
 import { aartiIndexById } from '@/data/aarti/ids';
@@ -184,7 +179,7 @@ export default function DailyBhaktiScreen() {
               verse={verseLines.join('\n')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}
               meaning={meaningByLang(lang, verse.meaningHi, verse.meaningEn)}
               lang={lang} art={devotionalArtForVerse(verse)}
-              verseStyle={{ ...verseType, lineHeight: lang === 'hi' ? devotionalReaderVerseLeading(verseType.fontSize) : verseType.lineHeight, color: colors.ink }}
+              verseStyle={{ ...verseType, lineHeight: isDevanagariLang(lang) ? devotionalReaderVerseLeading(verseType.fontSize) : verseType.lineHeight, color: colors.ink }}
               meaningStyle={{ ...meaningToken(lang, typography), color: colors.inkSoft }} />
             <DevotionalFooter art={devotionalArtForVerse(verse)} width={cardWidth} />
           </View>

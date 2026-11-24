@@ -13,7 +13,7 @@ import {
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
 
 type Props = {
@@ -122,18 +122,18 @@ export default function NorthIndianChart({ chart, size = 300, lang = 'en', onSel
                 x={x}
                 y={y - (onSelectHouse ? 12 : 5)}
                 fill={colors.saffronDeep}
-                fontFamily={scriptBodyFont(lang, lang === 'hi' ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)}
+                fontFamily={scriptBodyFont(lang, isDevanagariLang(lang) ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)}
                 fontSize={10}
                 textAnchor="middle"
               >
                 {onSelectHouse ? contentByLang(lang, `भाव ${index + 1}`, `House ${index + 1}`) : rashiIndex + 1}
               </SvgText>
-              {onSelectHouse && <SvgText x={x} y={y} fill={colors.inkSoft} fontFamily={scriptBodyFont(lang, lang === 'hi' ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)} fontSize={8} textAnchor="middle">{contentByLang(lang, RASHI_NAMES_HI[rashiIndex], RASHI_NAMES_WESTERN[rashiIndex])}</SvgText>}
+              {onSelectHouse && <SvgText x={x} y={y} fill={colors.inkSoft} fontFamily={scriptBodyFont(lang, isDevanagariLang(lang) ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)} fontSize={8} textAnchor="middle">{contentByLang(lang, RASHI_NAMES_HI[rashiIndex], RASHI_NAMES_WESTERN[rashiIndex])}</SvgText>}
               <SvgText
                 x={x}
                 y={y + (onSelectHouse ? 12 : 8)}
                 fill={colors.ink}
-                fontFamily={scriptBodyFont(lang, lang === 'hi' ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)}
+                fontFamily={scriptBodyFont(lang, isDevanagariLang(lang) ? fontFamilies.devanagariBold : fontFamilies.interSemiBold)}
                 // These sizes are viewBox units, not points: the chart scales
                 // with `size`, so unlike the fixed UI chrome covered by the 10pt
                 // floor (design.md §3) they grow with the diagram. The dense

@@ -3,7 +3,7 @@
 // detail, overview and More-row subtitle cannot drift apart.
 
 import type { Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { relationLabels, tithiRuleLabel, type SmaranEntry } from './pitruSmaran';
 
@@ -17,7 +17,7 @@ export function startOfLocalDay(d: Date): Date {
 function monthName(monthIndex: number, lang: Lang): string {
   if (lang === 'en') return MONTHS_EN[monthIndex];
   const hi = MONTHS_HI[monthIndex];
-  return lang === 'hi' ? hi : transliterateDevanagari(hi, lang);
+  return isDevanagariLang(lang) ? hi : transliterateDevanagari(hi, lang);
 }
 
 /** `21 सित` — the ObservanceList right-column short date. */
@@ -61,7 +61,7 @@ export function entryCaption(entry: Pick<SmaranEntry, 'tithiRule'>, lang: Lang):
     return contentByLang(lang, 'तिथि अज्ञात — सर्वपितृ अमावस्या', 'Tithi unknown — Sarvapitri Amavasya');
   }
   const hi = tithiRuleLabel(entry.tithiRule, 'hi');
-  return lang === 'en' ? tithiRuleLabel(entry.tithiRule, 'en') : lang === 'hi' ? hi : transliterateDevanagari(hi, lang);
+  return lang === 'en' ? tithiRuleLabel(entry.tithiRule, 'en') : isDevanagariLang(lang) ? hi : transliterateDevanagari(hi, lang);
 }
 
 /** The row's display name: relation, with the optional personal name appended. */
@@ -69,7 +69,7 @@ export function entryDisplayName(entry: Pick<SmaranEntry, 'relation' | 'name'>, 
   const labels = relationLabels(entry.relation);
   const relation = lang === 'en'
     ? labels.labelEn
-    : lang === 'hi'
+    : isDevanagariLang(lang)
       ? labels.labelHi
       : transliterateDevanagari(labels.labelHi, lang);
   const name = entry.name?.trim();

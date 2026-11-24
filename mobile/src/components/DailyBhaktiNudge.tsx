@@ -24,11 +24,7 @@ import {
   widgetCatalogEntry,
   widgetSizeLabel,
 } from '@/widgets/catalog';
-import {
-  WIDGET_TIME_ZONE,
-  widgetDateKey,
-  type WidgetPayloadState,
-} from '@/widgets/contract';
+import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState, widgetText, widgetLinesOrEmpty } from '@/widgets/contract';
 import { runningTithi } from '@/widgets/planner';
 import { widgetBackgroundImages } from '@assets/widget-backgrounds';
 import AppIcon from './AppIcon';
@@ -512,12 +508,12 @@ export function WidgetHowToBody({
         )
       : undefined;
   const verseLines = previewLines.length ? previewLines : payload.kind === 'ready'
-    ? payload.payload.verses.days.find((item) => item.dateKey === widgetDateKey(now, WIDGET_TIME_ZONE))?.lines[lang] ?? []
+    ? widgetLinesOrEmpty(payload.payload.verses.days.find((item) => item.dateKey === widgetDateKey(now, WIDGET_TIME_ZONE))?.lines, lang)
     : [];
   const tithi = day ? runningTithi(day, now) : undefined;
   const panchangEyebrow =
     day && payload.kind === 'ready'
-      ? `${day.representedDate[lang]} · ${payload.payload.panchang.cityLabel[lang]}`
+      ? `${widgetText(day.representedDate, lang)} · ${widgetText(payload.payload.panchang.cityLabel, lang)}`
       : pick(lang, {
           hi: 'आज का पंचांग',
           en: 'Today’s Panchang',
@@ -593,10 +589,10 @@ export function WidgetHowToBody({
                   { color: WIDGET_TEXT_TOKENS.ink, fontFamily: titleFont },
                 ]}
               >
-                {tithi.name[lang]}
+                {widgetText(tithi.name, lang)}
               </Text>
             ) : null}
-            {[tithi?.till?.[lang], day?.sunrise[lang]]
+            {[(tithi?.till ? widgetText(tithi.till, lang) : undefined), (day ? widgetText(day.sunrise, lang) : undefined)]
               .filter(Boolean)
               .map((line) => (
                 <Text

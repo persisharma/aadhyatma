@@ -12,6 +12,8 @@ type Props = {
   nameEn: string;
   nameGu?: string;
   nameKn?: string;
+  nameMr?: string;
+  nameTe?: string;
   /** Count for the accessibility label ("3 texts") — English by the e2e contract. */
   itemCount: string;
   /** The visible count in the reading language; defaults to `itemCount`. */
@@ -27,14 +29,15 @@ type Props = {
  * A deity browse row as the shared compact `ListCard` (design.md §8): painted
  * deity thumb, bilingual name, count meta.
  */
-export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, itemCount, meta, iconKey, onPress, testID, hasNew }: Props) {
+export default function DeityCard({ nameHi, nameEn, nameGu, nameKn, nameMr, nameTe, itemCount, meta, iconKey, onPress, testID, hasNew }: Props) {
   const { colors, radii } = useTheme();
   const { lang } = useGitaLanguage();
 
   const ordered = orderTitlesByLanguage(lang, nameHi, nameEn, CARD_TITLE_SIZES);
   // Story catalog names have editorially authored regional spellings. Keep the
   // shared title hierarchy, but use those spellings instead of transliteration.
-  const primary = { ...ordered.primary, text: lang === 'gu' ? nameGu ?? ordered.primary.text : lang === 'kn' ? nameKn ?? ordered.primary.text : ordered.primary.text };
+  const authored = { gu: nameGu, kn: nameKn, mr: nameMr, te: nameTe } as Partial<Record<typeof lang, string>>;
+  const primary = { ...ordered.primary, text: authored[lang] ?? ordered.primary.text };
 
   return (
     <ListCard

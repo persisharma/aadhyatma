@@ -5,6 +5,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { elevation } from '@/theme/elevation';
 import { useGitaLanguage } from '@/data/gita/language';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
+import { isDevanagariLang } from '@/utils/localize';
 
 /**
  * Content for a single Home "Discover" spotlight (§ design.md Home hero feature
@@ -67,7 +68,7 @@ export default function FeatureCard({
 }: Props) {
   const { colors, radii, typography, spacing } = useTheme();
   const { lang } = useGitaLanguage();
-  const isHi = lang === 'hi';
+  const isHi = isDevanagariLang(lang);
   const { fontScale } = useWindowDimensions();
 
   // Home spotlight shows a single language line (the reader's primary); the

@@ -1,23 +1,27 @@
 /**
- * Four-language selection helpers. The content corpus is authored bilingually
- * (Devanagari + English/romanized fields); Gujarati and Kannada renderings are
- * derived at runtime from the Devanagari via script transliteration — no content
- * JSON carries gu/kn fields. See
- * docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md.
+ * Six-language selection helpers. The content corpus is authored bilingually
+ * (Devanagari + English/romanized fields); Gujarati, Kannada and Telugu renderings
+ * are derived at runtime from the Devanagari via script transliteration, and Marathi
+ * reads the Devanagari directly (same script). See
+ * docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md and
+ * docs/superpowers/specs/2026-11-24-telugu-marathi-language-support-design.md.
  *
  * Which helper to use:
- * - `pick`            — free UI prose (button labels, headings): all four hand-authored.
+ * - `pick`            — free UI prose (button labels, headings): all six hand-authored.
  * - `contentByLang`   — content-bearing strings (section/chapter titles, verse-pill
- *                       labels, Sanskrit terms): gu/kn re-script the Devanagari, which
- *                       is the correct regional rendering for these.
- * - `verseLinesByLang`— recitation text: gu/kn always re-script the Devanagari lines
- *                       (never the romanization).
+ *                       labels, Sanskrit terms): gu/kn/te re-script the Devanagari and
+ *                       mr keeps it, which is the correct regional rendering for these.
+ * - `verseLinesByLang`— recitation text: gu/kn/te always re-script the Devanagari lines
+ *                       and mr keeps them (never the romanization).
+ * - `authoredByLang`  — authored content objects (kids stories, comics) that carry
+ *                       hi/en/gu/kn and optionally mr/te: mr falls back to the Hindi
+ *                       text, te to the Hindi text re-scripted into Telugu.
  * - `meaningByLang` / `commentaryByLang` — prose meaning policy (see below).
  *
- * Meaning policy: every reading language renders in its OWN script. Gujarati and
- * Kannada show the Hindi meaning re-scripted into Gujarati / Kannada (Hindi wording in
- * the regional script — readable in-script, since no native gu/kn translations are
- * authored yet). English shows the English meaning. Encoded only here, so when native
+ * Meaning policy: every reading language renders in its OWN script. Gujarati, Kannada
+ * and Telugu show the Hindi meaning re-scripted into their script (Hindi wording in
+ * the regional script) unless a verified native translation exists; Marathi shows the
+ * Hindi meaning as-is (same script) unless a native `meaningMr` exists. English shows the English meaning. Encoded only here, so when native
  * `meaningGu`/`meaningKn` fields are added later this is the single place to prefer them.
  * `meaningSourceLang` reports which language's typography the meaning body should use
  * (now identity — each language styles in its own script).
@@ -28,14 +32,39 @@ import { verseLinesForDisplay } from './versePresentation';
 import { readableRomanization } from './readableRomanization';
 import { transliterateDevanagari } from './transliterate';
 
-export type LocalizedStrings = { hi: string; en: string; gu: string; kn: string };
+export type LocalizedStrings = { hi: string; en: string; gu: string; kn: string; mr: string; te: string };
 
 /** UI chrome strings — every language explicitly authored at the call site. */
 export function pick(lang: Lang, s: LocalizedStrings): string {
   return s[lang];
 }
 
-/** Titles, labels, and other content-bearing strings: gu/kn derive from the Devanagari. */
+/** Languages whose script differs from Devanagari and is derived from it at runtime. */
+export type RescriptLang = 'gu' | 'kn' | 'te';
+
+export function isRescriptLang(lang: Lang): lang is RescriptLang {
+  return lang === 'gu' || lang === 'kn' || lang === 'te';
+}
+
+/** Languages read in Devanagari script (Hindi and Marathi). */
+export function isDevanagariLang(lang: Lang): boolean {
+  return lang === 'hi' || lang === 'mr';
+}
+
+/**
+ * Authored per-language content (kids stories, comics, data copy) that predates the
+ * mr/te reading languages: hi/en/gu/kn are required, mr/te optional. Missing mr shows
+ * the Hindi text (same script); missing te shows the Hindi text re-scripted to Telugu.
+ */
+export type AuthoredStrings = { hi: string; en: string; gu: string; kn: string; mr?: string; te?: string };
+
+export function authoredByLang(lang: Lang, s: AuthoredStrings): string {
+  if (lang === 'mr') return s.mr || s.hi;
+  if (lang === 'te') return s.te || transliterateDevanagari(s.hi, 'te');
+  return s[lang];
+}
+
+/** Titles, labels, and other content-bearing strings: gu/kn/te/mr derive from the Devanagari. */
 export function contentByLang(lang: Lang, hi: string, en: string): string {
   if (lang === 'hi') return hi;
   if (lang === 'en') return en;
@@ -51,7 +80,7 @@ export function meaningSourceLang(lang: Lang): Lang {
 }
 
 /** Authored native meaning translations, when they exist. Native-only: omit/empty → fall back. */
-export type NativeMeaning = { gu?: string; kn?: string };
+export type NativeMeaning = { gu?: string; kn?: string; mr?: string; te?: string };
 
 /**
  * Meaning prose. en stays English; hi stays Hindi. For gu/kn, prefer an authored
@@ -69,6 +98,8 @@ export function meaningByLang(
   if (lang === 'en') return meaningEn;
   if (lang === 'gu') return native?.gu || transliterateDevanagari(meaningHi, 'gu');
   if (lang === 'kn') return native?.kn || transliterateDevanagari(meaningHi, 'kn');
+  if (lang === 'te') return native?.te || transliterateDevanagari(meaningHi, 'te');
+  if (lang === 'mr') return native?.mr || meaningHi;
   return meaningHi; // 'hi'
 }
 
@@ -79,8 +110,7 @@ export function commentaryByLang(
   commentaryEn: readonly string[]
 ): readonly string[] {
   if (lang === 'en') return commentaryEn;
-  if (lang === 'gu' || lang === 'kn')
-    return commentaryHi.map((p) => transliterateDevanagari(p, lang));
+  if (isRescriptLang(lang)) return commentaryHi.map((p) => transliterateDevanagari(p, lang));
   return commentaryHi; // 'hi'
 }
 
@@ -97,7 +127,7 @@ export function verseLinesByLang(
   referenceLabel?: string
 ): readonly string[] {
   const deva = verseLinesForDisplay(devaLines, referenceLabel);
-  if (lang === 'hi') return deva;
+  if (isDevanagariLang(lang)) return deva;
   if (lang === 'en') return readableRomanization(verseLinesForDisplay(latinLines, referenceLabel));
   return deva.map((l) => transliterateDevanagari(l, lang));
 }

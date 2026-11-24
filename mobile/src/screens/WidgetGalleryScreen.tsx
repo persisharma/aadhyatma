@@ -12,7 +12,7 @@ import { radii, spacing } from '@/theme/spacing';
 import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { widgetPayloadKey } from '@/utils/widgetPayloadKey';
-import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
+import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState, widgetText, widgetLines } from '@/widgets/contract';
 import { WIDGET_TEXT_TOKENS, widgetBackgroundName, widgetCatalogEntry, widgetSizeLabel, type WidgetContent } from '@/widgets/catalog';
 import { widgetBackgroundImages } from '@assets/widget-backgrounds';
 import { widgetAppearance, WIDGET_APPEARANCE_TOKENS, type WidgetAppearance } from '@/widgets/appearance';
@@ -81,7 +81,7 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   // The gallery is a medium-cell facsimile. The native iOS widget measures
   // actual glyphs with ViewThatFits; this conservative approximation similarly
   // gives text more width before shrinking it on a crowded verse.
-  const previewVerseLength = verse ? flowedVerse(verse.lines[lang], verse.source[lang]).length : 0;
+  const previewVerseLength = verse ? flowedVerse(widgetLines(verse.lines, lang), widgetText(verse.source, lang)).length : 0;
   const previewVerseDense = previewVerseLength > 105;
   const previewVerseMedium = previewVerseLength > 64;
   const verseArtPadding = previewVerseDense ? spacing.md : previewVerseMedium ? 52 : 90;
@@ -108,24 +108,24 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
             {/* The facsimile stands in for the recommended (wide) cell, which
                 renders the whole verse with authored line breaks — not the
                 small-cell excerpt (design.md §59). */}
-            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(verse.lines[lang], verse.source[lang]) : recovery}</Text>
-            {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{verse.source[lang]}</Text> : null}
+            <Text numberOfLines={4} style={[styles.verse, { color: versePalette.ink, fontFamily: bodyFont, fontSize: previewVerseDense ? 14 : previewVerseMedium ? 16 : 18, lineHeight: previewVerseDense ? 22 : previewVerseMedium ? 25 : 29 }]}>{verse ? flowedVerse(widgetLines(verse.lines, lang), widgetText(verse.source, lang)) : recovery}</Text>
+            {verse ? <Text numberOfLines={2} style={[styles.meta, { color: versePalette.inkMuted, fontFamily: bodyFont }]}>{widgetText(verse.source, lang)}</Text> : null}
             {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>
-          <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
+          <Preview heritageImages={heritageImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${widgetText(day.representedDate, lang)} · ${widgetText(payloadState.payload.panchang.cityLabel, lang)}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
             {/* This is the small native widget's masthead / tithi / vrat-band /
                 sunrise-footer hierarchy, drawn from the same running tithi. */}
             {day && tithi && payloadState.kind === 'ready' ? <View style={{ gap: 7, justifyContent: 'center', flex: 1 }}>
               <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.accent }}>
-                {day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}
+                {widgetText(day.representedDate, lang)} · {widgetText(payloadState.payload.panchang.cityLabel, lang)}
               </Text>
-              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: titleLeading(25), color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
-              {tithi.till ? <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{tithi.till[lang]}</Text> : null}
+              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: titleLeading(25), color: panchangPalette.ink }}>{widgetText(tithi.name, lang)}</Text>
+              {tithi.till ? <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{widgetText(tithi.till, lang)}</Text> : null}
               {day.vrat ? <View style={{ borderLeftWidth: 3, borderLeftColor: panchangPalette.accent, borderRadius: 7, backgroundColor: appearance === 'night' ? '#24344A' : '#F1E3C6', paddingHorizontal: 7, paddingVertical: 5 }}>
-                <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{day.vrat[lang]}</Text>
+                <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{widgetText(day.vrat, lang)}</Text>
               </View> : null}
               <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', borderTopWidth: 1, borderTopColor: panchangPalette.gold, paddingTop: 7 }}>
-                <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{day.sunrise[lang]}</Text>
+                <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{widgetText(day.sunrise, lang)}</Text>
                 <Text style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 10, color: panchangPalette.gold }}>ॐ वेदांश़</Text>
               </View>
             </View> : <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{recovery}</Text>}

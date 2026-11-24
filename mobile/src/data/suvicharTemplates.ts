@@ -3,6 +3,7 @@ import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
 import { isSourcedSuvicharMessage, suvicharAllThoughts, suvicharThoughtForDay } from './suvicharContent';
 import { suvicharPhotoArt } from './suvicharPhotoArt';
+import { LANG_VALUES } from '@/data/gita/language';
 
 export type SuvicharTemplate = {
   id: string; kind: 'daily' | 'wish' | 'vaar'; deity: SuvicharDeity; frame: SuvicharFrame;
@@ -12,7 +13,7 @@ export type SuvicharTemplate = {
 /** Complete approved collection; daily cards use eligible originals and sourced dohas. */
 export const suvicharThoughts = suvicharAllThoughts;
 const legacyThoughts = [defaultSuvichar, ...suvicharReflections];
-const LANGS: Lang[] = ['hi', 'en', 'gu', 'kn'];
+const LANGS = LANG_VALUES;
 // Inserting a photo option must not rotate the existing deities into different default frames.
 const paintedOrder = new Map(suvicharDeities.filter(d => !suvicharPhotoArt(d.id)).map((d, index) => [d.id, index]));
 /** An unedited authored thought in any reading language (not a wish or a user's own words). */

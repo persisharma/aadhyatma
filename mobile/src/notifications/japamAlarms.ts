@@ -323,6 +323,8 @@ const DAY_NAMES: Record<Lang, readonly string[]> = {
   hi: ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'],
   gu: ['રવિ', 'સોમ', 'મંગળ', 'બુધ', 'ગુરુ', 'શુક્ર', 'શનિ'],
   kn: ['ಭಾನು', 'ಸೋಮ', 'ಮಂಗಳ', 'ಬುಧ', 'ಗುರು', 'ಶುಕ್ರ', 'ಶನಿ'],
+  mr: ['रवि', 'सोम', 'मंगळ', 'बुध', 'गुरु', 'शुक्र', 'शनि'],
+  te: ['ఆది', 'సోమ', 'మంగళ', 'బుధ', 'గురు', 'శుక్ర', 'శని'],
 };
 
 /** Single-letter chip labels for the editor's day row. */
@@ -330,16 +332,20 @@ export const DAY_LETTERS_EN = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 export const DAY_LETTERS_HI = ['र', 'सो', 'मं', 'बु', 'गु', 'शु', 'श'];
 const DAY_LETTERS_GU = ['ર', 'સો', 'મં', 'બુ', 'ગુ', 'શુ', 'શ'];
 const DAY_LETTERS_KN = ['ಭಾ', 'ಸೋ', 'ಮಂ', 'ಬು', 'ಗು', 'ಶು', 'ಶ'];
+const DAY_LETTERS_TE = ['ఆ', 'సో', 'మం', 'బు', 'గు', 'శు', 'శ'];
 
 /** Day-chip letters in the reading language (every UI language, never a hi/en split). */
 export function dayLetters(lang: Lang): readonly string[] {
   switch (lang) {
     case 'hi':
+    case 'mr':
       return DAY_LETTERS_HI;
     case 'gu':
       return DAY_LETTERS_GU;
     case 'kn':
       return DAY_LETTERS_KN;
+    case 'te':
+      return DAY_LETTERS_TE;
     default:
       return DAY_LETTERS_EN;
   }
@@ -350,6 +356,8 @@ const REPEAT_COPY: Record<Lang, { daily: string; once: string; weekdays: string;
   hi: { daily: 'प्रतिदिन', once: 'एक बार', weekdays: 'सोम–शुक्र', weekends: 'शनि–रवि' },
   gu: { daily: 'દરરોજ', once: 'એક વાર', weekdays: 'સોમ–શુક્ર', weekends: 'શનિ–રવિ' },
   kn: { daily: 'ಪ್ರತಿದಿನ', once: 'ಒಮ್ಮೆ', weekdays: 'ಸೋಮ–ಶುಕ್ರ', weekends: 'ಶನಿ–ಭಾನು' },
+  mr: { daily: 'दररोज', once: 'एकदा', weekdays: 'सोम–शुक्र', weekends: 'शनि–रवि' },
+  te: { daily: 'ప్రతిరోజు', once: 'ఒకసారి', weekdays: 'సోమ–శుక్ర', weekends: 'శని–ఆది' },
 };
 
 function sameDays(a: number[], b: number[]): boolean {
@@ -378,6 +386,8 @@ const UNTIL_COPY: Record<Lang, { d: string; h: string; m: string; wrap: (span: s
   hi: { d: 'दिन', h: 'घं', m: 'मि', wrap: (span) => `${span} में` },
   gu: { d: 'દિવસ', h: 'કલાક', m: 'મિનિટ', wrap: (span) => `${span} પછી` },
   kn: { d: 'ದಿನ', h: 'ಗಂಟೆ', m: 'ನಿಮಿಷ', wrap: (span) => `${span} ನಂತರ` },
+  mr: { d: 'दिवस', h: 'तास', m: 'मि', wrap: (span) => `${span} नंतर` },
+  te: { d: 'రోజు', h: 'గంట', m: 'నిమి', wrap: (span) => `${span} తర్వాత` },
 };
 
 export function describeUntilFire(

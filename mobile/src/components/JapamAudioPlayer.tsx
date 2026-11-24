@@ -343,13 +343,13 @@ function ActiveAudioPlayer({
       ? fontFamilies.gujaratiBold
       : lang === 'kn'
         ? fontFamilies.kannadaBold
-        : typography.readerTitle.fontFamily;
+        : lang === 'te' ? fontFamilies.teluguBold : typography.readerTitle.fontFamily;
   const labelSubFont =
     lang === 'gu'
       ? fontFamilies.gujarati
       : lang === 'kn'
         ? fontFamilies.kannada
-        : typography.cardLatin.fontFamily;
+        : lang === 'te' ? fontFamilies.telugu : typography.cardLatin.fontFamily;
 
   if (layout === 'rail') {
     return (
@@ -440,7 +440,7 @@ function UnavailableNotice({ lang, rate = 1, onRateChange, layout = 'row' }: Pic
       ? fontFamilies.gujarati
       : lang === 'kn'
         ? fontFamilies.kannada
-        : typography.swipeHint.fontFamily;
+        : lang === 'te' ? fontFamilies.telugu : typography.swipeHint.fontFamily;
   if (layout === 'rail') {
     // No recording: the speedometer stays for silent Infinity; a dimmed ▶ says
     // there is nothing to play instead of the notice text.

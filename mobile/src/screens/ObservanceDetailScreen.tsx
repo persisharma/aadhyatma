@@ -32,7 +32,7 @@ import { useVratReminderAction } from '@/components/useVratReminderAction';
 import { useVratFollows } from '@/contexts/VratFollowContext';
 import type { PanchangStackParamList } from '@/navigation/types';
 import { captionFont } from '@/utils/scriptFont';
-import { contentByLang, meaningByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont, pillTextStyle } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { UpvasFastType } from '@/panchang/types';
@@ -53,7 +53,7 @@ function startOfLocalDay(d: Date): Date {
 
 function formatDate(date: Date, lang: Lang): string {
   const months =
-    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+    lang === 'en' ? MONTHS_EN : isDevanagariLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 

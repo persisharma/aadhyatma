@@ -121,6 +121,11 @@ const ADVANCE: Record<Lang, number> = {
   gu: 0.43,
   kn: 0.56,
   en: 0.44,
+  // Marathi is set in the same Noto Serif Devanagari. Telugu reuses Kannada's advance:
+  // HarfBuzz-shaped Noto Serif Telugu runs ~11% narrower per character than Kannada
+  // (Nov 2026, Hanuman Chalisa corpus), so this over-counts lines and never clips.
+  mr: 0.41,
+  te: 0.56,
 };
 /** Title and heading are set in the semibold cut, which runs wider. */
 const BOLD_FACTOR = 1.06;

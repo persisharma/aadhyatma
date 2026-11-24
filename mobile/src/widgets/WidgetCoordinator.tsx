@@ -6,7 +6,7 @@ import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarHydrated, usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { useUserActivity } from '@/contexts/UserActivityContext';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
-import { isValidIanaTimeZone, stableWidgetPayloadKey } from './contract';
+import { isValidIanaTimeZone, stableWidgetPayloadKey, widgetLocale } from './contract';
 import { writeWidgetPayload } from './native';
 import { launchMarkOnce } from '@/utils/launchTrace';
 import { runWhenIdle } from '@/utils/runWhenIdle';
@@ -54,7 +54,7 @@ export default function WidgetCoordinator() {
             launchMarkOnce('widget-plan-start');
             const { cachedWidgetPlan } = await import('./planCache');
             const payload = await cachedWidgetPlan(
-              { generatedAt: new Date(), locale: lang, location, calendarSystem, deviceTimeZone, activity, lastUsedMantraId },
+              { generatedAt: new Date(), locale: widgetLocale(lang), location, calendarSystem, deviceTimeZone, activity, lastUsedMantraId },
               async (input, isCancelled) => {
                 const { planWidgetPayload } = await import('./planPayload');
                 return planWidgetPayload(input, isCancelled);

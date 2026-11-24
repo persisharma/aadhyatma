@@ -11,7 +11,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang, pick, isDevanagariLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto, SUPPORT_EMAIL } from '@/data/help/content';
 import { buildAppShareMessage, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
@@ -60,6 +60,7 @@ function nativeNameFont(lang: Lang, devanagariFallback: string): string {
   if (lang === 'en') return fontFamilies.latin;
   if (lang === 'gu') return fontFamilies.gujaratiBold;
   if (lang === 'kn') return fontFamilies.kannadaBold;
+  if (lang === 'te') return fontFamilies.teluguBold;
   return devanagariFallback;
 }
 
@@ -189,7 +190,7 @@ export default function MoreScreen({ navigation }: Props) {
   const kulState = kulRecord.kuldev
     ? (lang === 'en'
         ? kuldevDisplayName(kulRecord.kuldev, 'en')
-        : lang === 'hi'
+        : isDevanagariLang(lang)
           ? kuldevDisplayName(kulRecord.kuldev, 'hi')
           : transliterateDevanagari(kuldevDisplayName(kulRecord.kuldev, 'hi'), lang))
     : kulHasRecord

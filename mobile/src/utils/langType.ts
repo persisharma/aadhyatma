@@ -103,6 +103,10 @@ export function verseToken(lang: Lang, t: TypographyScale): ReadingToken {
       return t.verseGujarati;
     case 'kn':
       return t.verseKannada;
+    case 'te':
+      return t.verseTelugu;
+    case 'mr':
+      return t.verse;
   }
 }
 
@@ -120,6 +124,10 @@ export function meaningToken(lang: Lang, t: TypographyScale): ReadingToken {
       return t.meaningGujarati;
     case 'kn':
       return t.meaningKannada;
+    case 'te':
+      return t.meaningTelugu;
+    case 'mr':
+      return t.meaning;
   }
 }
 
@@ -137,6 +145,10 @@ export function titleFontByLang(lang: Lang): string {
       return fontFamilies.gujaratiBold;
     case 'kn':
       return fontFamilies.kannadaBold;
+    case 'te':
+      return fontFamilies.teluguBold;
+    case 'mr':
+      return fontFamilies.devanagariBold;
   }
 }
 
@@ -146,7 +158,7 @@ export function cardFontByLang(lang: Lang): string {
 }
 
 /**
- * Override a heading/title fontFamily for gu/kn only, leaving the hi/en `fallback`
+ * Override a heading/title fontFamily for gu/kn/te only, leaving the hi/en/mr `fallback`
  * untouched. Use at call sites that hard-code a Devanagari token (e.g.
  * `typography.readerTitle.fontFamily`) for a name/title that becomes Gujarati or
  * Kannada under runtime transliteration — those would otherwise render in the
@@ -155,12 +167,14 @@ export function cardFontByLang(lang: Lang): string {
 export function scriptTitleFont(lang: Lang, fallback: string): string {
   if (lang === 'gu') return fontFamilies.gujaratiBold;
   if (lang === 'kn') return fontFamilies.kannadaBold;
+  if (lang === 'te') return fontFamilies.teluguBold;
   return fallback;
 }
 
-/** Body/medium-weight counterpart of {@link scriptTitleFont} (gu/kn → their serif; else fallback). */
+/** Body/medium-weight counterpart of {@link scriptTitleFont} (gu/kn/te → their serif; else fallback). */
 export function scriptBodyFont(lang: Lang, fallback: string): string {
   if (lang === 'gu') return fontFamilies.gujarati;
   if (lang === 'kn') return fontFamilies.kannada;
+  if (lang === 'te') return fontFamilies.telugu;
   return fallback;
 }

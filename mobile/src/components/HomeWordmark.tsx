@@ -4,7 +4,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import { scriptBodyFont } from '@/utils/langType';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import manifest from '@assets/branding/wordmarks/manifest.json';
 import { companionTagline, WordmarkArtwork } from './VedanshWordmark';
 
@@ -14,7 +14,7 @@ export default function HomeWordmark({ compact = false, showTagline = true }: {
 }) {
   const { lang } = useGitaLanguage();
   const { colors, typography } = useTheme();
-  const kind = lang === 'hi' ? 'hi' : 'en';
+  const kind = isDevanagariLang(lang) ? 'hi' : 'en';
   const metrics = manifest.names[kind];
   // Align the visible dark lettering to the 30pt Om circles; decorative
   // flute/feather bounds must not shrink or vertically displace the name.

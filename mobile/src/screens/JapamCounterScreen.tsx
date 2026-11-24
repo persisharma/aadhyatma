@@ -22,7 +22,7 @@ import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
 import { backLabel } from '@/utils/a11yLabels';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang, pick, verseLinesByLang } from '@/utils/localize';
+import { contentByLang, pick, verseLinesByLang, isDevanagariLang } from '@/utils/localize';
 import { isLatinLang } from '@/utils/langType';
 import { getSourceBackground } from '@/data/backgrounds';
 import {
@@ -393,8 +393,8 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
   const clearAllLabel = pick(lang, { hi: 'सब साफ़', en: 'Clear All', gu: 'બધું સાફ', kn: 'ಎಲ್ಲ ತೆರವು' });
   const nothingToReset = entry.count === 0 && entry.rounds === 0;
   // Script serif for gu/kn (constrained surface keeps its own sizes); null for hi/en.
-  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
-  const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : lang === 'te' ? fontFamilies.telugu : null;
+  const scriptSerifBold = lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : lang === 'te' ? fontFamilies.teluguBold : null;
 
   const infinityReading = <Animated.View style={{ width: '100%', transform: [{ scale: nameBeat }] }}>
     <KaraokeText lines={compactReadingLines} referenceLines={mantra.lines} wordWeight={japaWordWeight}
@@ -497,7 +497,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
               onPress={() => setAlarmEditorOpen(true)}
               accessibilityRole="button"
               accessibilityLabel={
-                lang === 'hi'
+                isDevanagariLang(lang)
                   ? 'इस मंत्र के लिए स्मरण बनाएँ'
                   : 'Set an alarm for this mantra'
               }

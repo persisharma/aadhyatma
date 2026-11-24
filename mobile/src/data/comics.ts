@@ -1,10 +1,11 @@
 // Lightweight library metadata. Books load only when the native shelf opens.
+import type { AuthoredStrings } from '@/utils/localize';
 
 export type Comic = {
   id: string;
-  title: { hi: string; en: string; gu: string; kn: string };
+  title: AuthoredStrings;
   /** The kanda's own name, for the chapter-listing scope line. */
-  kanda: { hi: string; en: string; gu: string; kn: string };
+  kanda: AuthoredStrings;
   episodeCount: number;
 };
 
@@ -42,7 +43,7 @@ export function comicById(id: string): Comic | undefined {
  * `comics`; the rest show a "coming soon" row until their edition ships. */
 export type RamayanaKanda = {
   id: string;
-  name: { hi: string; en: string; gu: string; kn: string };
+  name: AuthoredStrings;
   comicId?: string;
 };
 

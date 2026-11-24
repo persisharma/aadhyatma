@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import ReaderHeader from '@/components/ReaderHeader';
 import ListCard, { CardThumb } from '@/components/ListCard';
@@ -67,7 +67,7 @@ export default function AbujhDaysScreen({ navigation }: Props) {
             const weekday =
               lang === 'en'
                 ? VARA_NAMES_EN[date.getDay()]
-                : lang === 'hi'
+                : isDevanagariLang(lang)
                   ? VARA_NAMES_HI[date.getDay()]
                   : transliterateDevanagari(VARA_NAMES_HI[date.getDay()], lang);
             return (

@@ -4,6 +4,7 @@ import type { SuvicharDeity } from './suvichar';
 import type { Lang } from './gita/language';
 import { contentByLang } from '@/utils/localize';
 import { suvicharDohaSources, suvicharDohaThoughts, suvicharDohasFor } from './doha/suvichar';
+import { LANG_VALUES } from '@/data/gita/language';
 export { suvicharDohaThoughts } from './doha/suvichar';
 
 export type SuvicharThought = typeof catalogue.entries[number];
@@ -50,12 +51,12 @@ export function suvicharThoughtForDay(deity: SuvicharDeity, day: number): Suvich
 /** Match only unedited text and only within the selected deity's collection. */
 export function findSuvicharThought(deity: SuvicharDeity, message: string, id?: string): SuvicharThought | undefined {
   const pool = suvicharThoughtsFor(deity);
-  const matches = (t: SuvicharThought) => (['hi', 'en', 'gu', 'kn'] as const).some(lang => contentByLang(lang, t.hi, t.en) === message);
+  const matches = (t: SuvicharThought) => LANG_VALUES.some(lang => contentByLang(lang, t.hi, t.en) === message);
   const selected = pool.find(t => t.id === id);
   if (selected && matches(selected)) return selected;
   if (!localized.has(deity)) {
     const index = new Map<string, SuvicharThought>();
-    for (const t of pool) for (const lang of ['hi', 'en', 'gu', 'kn'] as const) {
+    for (const t of pool) for (const lang of LANG_VALUES) {
       const text = contentByLang(lang, t.hi, t.en);
       if (!index.has(text)) index.set(text, t);
     }
@@ -65,7 +66,7 @@ export function findSuvicharThought(deity: SuvicharDeity, message: string, id?: 
 }
 export function isSourcedSuvicharMessage(message: string): boolean {
   if (!message) return false;
-  allMessages ??= new Set(suvicharAllThoughts.flatMap(t => (['hi', 'en', 'gu', 'kn'] as const).map(lang => contentByLang(lang, t.hi, t.en))));
+  allMessages ??= new Set(suvicharAllThoughts.flatMap(t => LANG_VALUES.map(lang => contentByLang(lang, t.hi, t.en))));
   return allMessages.has(message);
 }
 export function nextSuvicharThought(deity: SuvicharDeity, message: string, id?: string): SuvicharThought {

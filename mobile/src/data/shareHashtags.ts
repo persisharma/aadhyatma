@@ -57,6 +57,7 @@ import { library, type ContentCategory, type Deity } from './texts';
 import { normalize } from './searchNormalize';
 import type { Lang } from './gita/language';
 import { transliterateDevanagari } from '@/utils/transliterate';
+import { isDevanagariLang, isRescriptLang } from '@/utils/localize';
 
 /**
  * Hashtags per share. Five, because that is what Instagram accepts — and five is
@@ -302,7 +303,7 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
     // No `#Janmashtami2026` variant: it duplicates the topic of `#Janmashtami`
     // at a fraction of the volume, and a five-slot block cannot pay for that.
     ordered.push(latinTag(occ.nameEn));
-    if (p.lang === 'hi') ordered.push(nativeScriptTag(occ.nameHi));
+    if (isDevanagariLang(p.lang)) ordered.push(nativeScriptTag(occ.nameHi));
   }
 
   // 1. The work's own name — the single most searched thing about this verse.
@@ -312,12 +313,12 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
   if (textTag) ordered.push(textTag);
 
   // 2. The same name in the reading language's own script — this is where the
-  //    Hindi/Gujarati/Kannada audience actually searches. Derived from the
-  //    Devanagari title, re-scripted for gu/kn like every other content string.
+  //    Hindi/Marathi/Gujarati/Kannada/Telugu audience actually searches. Derived from
+  //    the Devanagari title, re-scripted for gu/kn/te like every other content string.
   const nativeTitle =
-    p.lang === 'hi'
+    isDevanagariLang(p.lang)
       ? nativeScriptTag(p.sectionNameHi)
-      : p.lang === 'gu' || p.lang === 'kn'
+      : isRescriptLang(p.lang)
         ? nativeScriptTag(transliterateDevanagari(p.sectionNameHi, p.lang))
         : '';
   if (nativeTitle) ordered.push(nativeTitle);
@@ -348,7 +349,7 @@ export function buildVerseHashtags(p: VerseHashtagParams): string[] {
     WEEKDAY_TAGS[weekday]
   ) {
     ordered.push(WEEKDAY_TAGS[weekday].latin);
-    if (p.lang === 'hi') ordered.push(WEEKDAY_TAGS[weekday].hi);
+    if (isDevanagariLang(p.lang)) ordered.push(WEEKDAY_TAGS[weekday].hi);
   }
 
   const chapter = chapterFromVerseLabel(p.verseLabelEn);

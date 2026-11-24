@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
 import type { Lang } from '@/data/gita/language';
-import { contentByLang, meaningByLang, verseLinesByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, verseLinesByLang, isDevanagariLang } from '@/utils/localize';
 import { meaningScriptFor, shareCardMetrics } from '@/utils/shareCardType';
 import { titleFontByLang } from '@/utils/langType';
 import { getReaderBackground } from '@/data/backgrounds';
@@ -66,15 +66,15 @@ const ShareCard = React.forwardRef<View, ShareCardProps>(function ShareCard(prop
       ? fontFamilies.gujarati
       : props.lang === 'kn'
         ? fontFamilies.kannada
-        : typography.verse.fontFamily;
+        : props.lang === 'te' ? fontFamilies.telugu : typography.verse.fontFamily;
   const meaningFont =
-    props.lang === 'hi'
+    isDevanagariLang(props.lang)
       ? typography.meaning.fontFamily
       : props.lang === 'gu'
         ? fontFamilies.gujarati
         : props.lang === 'kn'
           ? fontFamilies.kannada // kn meaning now renders in Kannada script
-          : typography.cardLatin.fontFamily; // en
+          : props.lang === 'te' ? fontFamilies.telugu : typography.cardLatin.fontFamily; // en
   // Keep type readable and let native text layout grow the image. Estimating
   // from authored line counts misses wrapping and used to clip long verses.
   const meaningScript = meaningScriptFor(props.lang);

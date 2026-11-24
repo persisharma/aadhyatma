@@ -16,6 +16,10 @@ export const fontFamilies = {
   gujaratiBold: 'NotoSerifGujarati_600SemiBold',
   kannada: 'NotoSerifKannada_500Medium',
   kannadaBold: 'NotoSerifKannada_600SemiBold',
+  // Telugu (te) — same Noto Serif family and weights. Marathi (mr) is Devanagari
+  // and reuses the Devanagari cuts above.
+  telugu: 'NotoSerifTelugu_500Medium',
+  teluguBold: 'NotoSerifTelugu_600SemiBold',
   // Inter carries the tiny UI chrome (section labels, verse pills, card meta,
   // and tab labels in en — localized tab labels take their script's serif face,
   // design.md §17) per design.md §3 — never used for reading content.
@@ -71,6 +75,11 @@ export const typography = {
     fontSize: 23,
     lineHeight: 39,
   },
+  verseTelugu: {
+    fontFamily: fontFamilies.telugu,
+    fontSize: 23,
+    lineHeight: 39,
+  },
   meaningEnglish: {
     // x-height match for the Cormorant Medium 20 it replaced.
     fontFamily: fontFamilies.sanskritLatin,
@@ -84,6 +93,11 @@ export const typography = {
   },
   meaningKannada: {
     fontFamily: fontFamilies.kannada,
+    fontSize: 20,
+    lineHeight: 34,
+  },
+  meaningTelugu: {
+    fontFamily: fontFamilies.telugu,
     fontSize: 20,
     lineHeight: 34,
   },

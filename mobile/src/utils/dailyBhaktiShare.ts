@@ -4,6 +4,7 @@ import { devotionalArtForVerse } from '@/data/devotionalShareArt';
 import { contentByLang, meaningByLang, pick, verseLinesByLang } from './localize';
 import { devotionalCharanRows, paginateDevotional } from './devotionalShareLayout';
 import type { ShareableProse, ShareableProseScope, ShareableVerse } from './shareVerse';
+import { LANG_VALUES } from '@/data/gita/language';
 
 export const devotionalMeaningLabel = { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' };
 /** Prepare only the verse being shared; never construct the random pool on startup. */
@@ -21,7 +22,7 @@ export function dailyBhaktiShareable(v: UniformVerse): ShareableProse {
 /** Render the exact reader payload, including Saar and authored native meanings. */
 export function devotionalVerseShareable(v: ShareableVerse): ShareableProse {
   const prepared = {} as NonNullable<ShareableProseScope['prepared']>;
-  for (const lang of ['hi', 'en', 'gu', 'kn'] as Lang[]) {
+  for (const lang of LANG_VALUES) {
     const label = contentByLang(lang, v.verseLabelHi ?? '', v.verseLabelEn ?? '');
     const header = `${contentByLang(lang, v.sectionNameHi, v.sectionNameEn)} · ${label}`;
     const lines = verseLinesByLang(lang, v.linesHi, v.linesEn, v.verseLabelHi), rows = devotionalCharanRows(lang, v.linesHi, lines);

@@ -20,7 +20,7 @@ import CachedArtwork from '@/components/CachedArtwork';
 import AppIcon from '@/components/AppIcon';
 import { observanceCountdown } from '@/panchang/observancePresentation';
 import { captionFont } from '@/utils/scriptFont';
-import { contentByLang, meaningByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
 import { fontFamilies } from '@/theme/typography';
 import { transliterateDevanagari } from '@/utils/transliterate';
@@ -36,7 +36,7 @@ const MONTHS_HI = ['जन', 'फ़र', 'मार्च', 'अप्रै', 
 
 function shortDate(date: Date, lang: Lang): string {
   const months =
-    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+    lang === 'en' ? MONTHS_EN : isDevanagariLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 

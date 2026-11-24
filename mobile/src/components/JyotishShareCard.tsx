@@ -172,7 +172,8 @@ function BrandHeader({
 function RashifalShareCard(props: RashifalProps) {
   const { colors, typography, radii } = useTheme();
   const sign = signPair(props.lang, props.rashiIndex);
-  const isKannada = props.lang === 'kn';
+  // Kannada and Telugu copy runs longest; both take the tighter guidance layout.
+  const isKannada = props.lang === 'kn' || props.lang === 'te';
   const rows = [
     {
       id: 'favour',

@@ -11,6 +11,7 @@ import { getPurpose, isPurposeId } from '@/panchang/prashnaPurposes';
 import { formatIstDateEn, formatIstDateHi } from '@/panchang/reportFormat';
 import { fold } from '../fold';
 import type { AskAction, AskAnswer, AskContext, Localized, ResolvedSlots } from '../types';
+import { isDevanagariLang } from '@/utils/localize';
 
 const L = (hi: string, en: string): Localized => ({ hi, en });
 
@@ -85,7 +86,7 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
       { label: L('इस समय दिशा', 'Direction now'), value: phase.directions[0].text },
       ...(phase.currentPeriod ? [{ label: L('चल रही अवधि', 'Running period'), value: L(`${phase.currentPeriod.label.hi} · ${formatIstDateHi(new Date(phase.currentPeriod.end))} तक`, `${phase.currentPeriod.label.en} · until ${formatIstDateEn(new Date(phase.currentPeriod.end))}`) }] : []),
     ],
-    working: phase.signals.map(s => ctx.lang === 'hi'
+    working: phase.signals.map(s => isDevanagariLang(ctx.lang)
       ? `${s.title.hi}: ${s.basis.map(basisLabelHi).join(' → ')}`
       : `${s.title.en}: ${s.basis.map(basisLabelEn).join(' → ')}`),
     basis: phase.signals.map(s => L(`${s.title.hi}: ${s.basis.map(basisLabelHi).join(' → ')}`, `${s.title.en}: ${s.basis.map(basisLabelEn).join(' → ')}`)),
@@ -104,7 +105,7 @@ export function resolvePrashna(intentId: string, ctx: AskContext, slots: Resolve
       ...(first && guidance!.timing.status === 'relevant' ? [{ label: L('अवधि', 'Window'), value: L(`${first.labelHi} · अनुकूलता की पुष्टि नहीं`, `${first.labelEn} · relevance, not confirmed favourability`) }] : []),
     ],
     // The आधार chain of the leading factors IS the working (§25.6 / §14.3.1).
-    working: answer.chains.slice(0, 2).map(chain => ctx.lang === 'hi'
+    working: answer.chains.slice(0, 2).map(chain => isDevanagariLang(ctx.lang)
       ? `${chain.labelHi}: ${chain.basis.map(basisLabelHi).join(' → ')}`
       : `${chain.labelEn}: ${chain.basis.map(basisLabelEn).join(' → ')}`),
     basis: answer.chains.slice(0, 2).map(chain => L(`${chain.labelHi}: ${chain.basis.map(basisLabelHi).join(' → ')}`, `${chain.labelEn}: ${chain.basis.map(basisLabelEn).join(' → ')}`)),

@@ -1,5 +1,6 @@
 import { transliterateDevanagari } from '@/utils/transliterate';
 import type { Lang } from '@/data/gita/language';
+import { isDevanagariLang } from '@/utils/localize';
 
 /**
  * A span of whole minutes, rounded up: "41 मिनट" / "1 घं 11 मि" / "41 min" /
@@ -14,5 +15,5 @@ export function formatSpan(ms: number, lang: Lang): string {
     h === 0 ? [`${m} मिनट`, `${m} min`]
       : m === 0 ? [`${h} घं`, `${h} h`]
         : [`${h} घं ${m} मि`, `${h} h ${m} m`];
-  return lang === 'en' ? en : lang === 'hi' ? hi : transliterateDevanagari(hi, lang);
+  return lang === 'en' ? en : isDevanagariLang(lang) ? hi : transliterateDevanagari(hi, lang);
 }

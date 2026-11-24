@@ -13,7 +13,8 @@ export const devotionalMetrics = {
   meaningLabelSize: 18, meaningLabelLeading: 28, meaningGap: 20, bottomSlack: 18, footerSpace: 80,
   heroHeights: [270] as readonly number[],
 } as const;
-const advances: Record<Lang, number> = { hi: .44, en: .47, gu: .47, kn: .60 };
+// mr shares the Devanagari face; te takes Kannada's (wider) advance so wraps over-count.
+const advances: Record<Lang, number> = { hi: .44, en: .47, gu: .47, kn: .60, mr: .44, te: .60 };
 function wrappedLines(text: string, perLine: number): number {
   let lines = 1, column = 0;
   for (const word of text.split(/\s+/).filter(Boolean)) {

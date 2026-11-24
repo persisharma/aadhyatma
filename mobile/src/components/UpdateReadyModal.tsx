@@ -40,13 +40,13 @@ export default function UpdateReadyModal() {
       ? fontFamilies.gujarati
       : lang === 'kn'
         ? fontFamilies.kannada
-        : null;
+        : lang === 'te' ? fontFamilies.telugu : null;
   const scriptSerifBold =
     lang === 'gu'
       ? fontFamilies.gujaratiBold
       : lang === 'kn'
         ? fontFamilies.kannadaBold
-        : null;
+        : lang === 'te' ? fontFamilies.teluguBold : null;
 
   const { isUpdatePending } = Updates.useUpdates();
   const [dismissed, setDismissed] = useState(false);

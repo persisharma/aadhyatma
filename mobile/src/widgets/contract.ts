@@ -1,11 +1,47 @@
 import type { Lang } from '@/data/gita/language';
+import { transliterateDevanagari } from '@/utils/transliterate';
 import type { CalendarSystem } from '@/panchang/types';
 
 export const WIDGET_SCHEMA_VERSION = 1 as const;
 export const WIDGET_TIME_ZONE = 'Asia/Kolkata' as const;
 export const WIDGET_PAYLOAD_KEY = 'vedansh_widget_payload_v1';
 
-export type WidgetLocalizedText = Record<Lang, string>;
+/**
+ * Languages the native widget payload (schema v1) carries. The native readers
+ * (WidgetPayloadContract.kt/.swift) validate exactly these four keys and reject any
+ * other `locale`, so the app's newer reading languages map onto them via
+ * {@link widgetLocale} rather than changing the native contract (which needs a
+ * native build). Marathi is Devanagari → Hindi payload; Telugu falls back to Hindi
+ * until a native widget release adds Telugu.
+ */
+export type WidgetLang = 'hi' | 'en' | 'gu' | 'kn';
+
+export function widgetLocale(lang: Lang): WidgetLang {
+  return lang === 'mr' || lang === 'te' ? 'hi' : lang;
+}
+
+export type WidgetLocalizedText = Record<WidgetLang, string>;
+
+/**
+ * In-app reads of widget payload text (gallery facsimile, nudges) follow the app's
+ * reading language: Marathi shows the Hindi value, Telugu re-scripts it.
+ */
+export function widgetText(value: WidgetLocalizedText, lang: Lang): string {
+  if (lang === 'mr') return value.hi;
+  if (lang === 'te') return transliterateDevanagari(value.hi, 'te');
+  return value[lang];
+}
+
+/** {@link widgetLines} for an optional payload day (no snapshot → no lines). */
+export function widgetLinesOrEmpty(value: Record<WidgetLang, string[]> | undefined, lang: Lang): string[] {
+  return value ? widgetLines(value, lang) : [];
+}
+
+export function widgetLines(value: Record<WidgetLang, string[]>, lang: Lang): string[] {
+  if (lang === 'mr') return value.hi;
+  if (lang === 'te') return value.hi.map((line) => transliterateDevanagari(line, 'te'));
+  return value[lang];
+}
 
 export type VerseWidgetDay = {
   dateKey: string;
@@ -13,10 +49,10 @@ export type VerseWidgetDay = {
   artKey?: string;
   chapter?: number;
   verseIndex: number;
-  lines: Record<Lang, string[]>;
-  excerpt: Record<Lang, string>;
-  source: Record<Lang, string>;
-  accessibilityLabel: Record<Lang, string>;
+  lines: Record<WidgetLang, string[]>;
+  excerpt: Record<WidgetLang, string>;
+  source: Record<WidgetLang, string>;
+  accessibilityLabel: Record<WidgetLang, string>;
   deepLink: string;
 };
 
@@ -69,7 +105,7 @@ export type WidgetPayloadV1 = {
   schemaVersion: typeof WIDGET_SCHEMA_VERSION;
   generatedAt: string;
   writerAppVersion: string;
-  locale: Lang;
+  locale: WidgetLang;
   panchang: {
     timeZone: typeof WIDGET_TIME_ZONE;
     cityId: string;
@@ -100,7 +136,8 @@ export type WidgetPayloadState =
   | { kind: 'ready'; payload: WidgetPayloadV1 }
   | { kind: 'missing' | 'corrupt' | 'incompatible' | 'expired' };
 
-const LANGS: Lang[] = ['hi', 'en', 'gu', 'kn'];
+export const WIDGET_LANGS: readonly WidgetLang[] = ['hi', 'en', 'gu', 'kn'];
+const LANGS = WIDGET_LANGS;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -210,7 +247,7 @@ export function decodeWidgetPayload(value: unknown, nowMs = Date.now()): WidgetP
   }
   if (!isRecord(decoded)) return { kind: 'corrupt' };
   if (decoded.schemaVersion !== WIDGET_SCHEMA_VERSION) return { kind: 'incompatible' };
-  if (!isIso(decoded.generatedAt) || typeof decoded.writerAppVersion !== 'string' || decoded.writerAppVersion.length === 0 || !LANGS.includes(decoded.locale as Lang)) return { kind: 'corrupt' };
+  if (!isIso(decoded.generatedAt) || typeof decoded.writerAppVersion !== 'string' || decoded.writerAppVersion.length === 0 || !LANGS.includes(decoded.locale as WidgetLang)) return { kind: 'corrupt' };
   const p = decoded.panchang;
   const v = decoded.verses;
   const j = decoded.japam;

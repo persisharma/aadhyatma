@@ -10,7 +10,7 @@ import { useGitaLanguage } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { titleFontByLang } from '@/utils/langType';
 import { orderTitlesByLanguage } from '@/utils/titleByLanguage';
-import { pick } from '@/utils/localize';
+import { authoredByLang, pick } from '@/utils/localize';
 import type { HomeStackParamList } from '@/navigation/types';
 
 /** The seven-kanda comic shelf (design.md §76.2). Shipped kandas open their
@@ -29,7 +29,7 @@ export default function RamayanComicScreen({ navigation }: NativeStackScreenProp
         {ramayanaKandas.map(kanda => {
           const comic = kanda.comicId ? comicById(kanda.comicId) : undefined;
           const ordered = orderTitlesByLanguage(lang, kanda.name.hi, kanda.name.en, CARD_TITLE_SIZES);
-          const primary = { ...ordered.primary, text: lang === 'gu' ? kanda.name.gu : lang === 'kn' ? kanda.name.kn : ordered.primary.text };
+          const primary = { ...ordered.primary, text: lang === 'hi' || lang === 'en' ? ordered.primary.text : authoredByLang(lang, kanda.name) };
           const meta = comic
             ? pick(lang, {
                 hi: `${comic.episodeCount} प्रसंग · सचित्र`,

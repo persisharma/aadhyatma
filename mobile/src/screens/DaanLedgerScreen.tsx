@@ -17,7 +17,7 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { DAAN_CATEGORY_LABELS, buildLedgerCsv, type DaanLedgerEntry } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang, pick, isDevanagariLang } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 
@@ -29,7 +29,7 @@ const MONTHS_HI = ['जनवरी', 'फ़रवरी', 'मार्च', '
 function monthLabel(isoMonth: string, lang: Lang): string {
   const [year, month] = isoMonth.split('-').map((n) => parseInt(n, 10));
   const hi = `${MONTHS_HI[month - 1]} ${year}`;
-  if (lang === 'hi') return hi;
+  if (isDevanagariLang(lang)) return hi;
   if (lang === 'en') return `${MONTHS_EN[month - 1]} ${year}`;
   return transliterateDevanagari(hi, lang);
 }

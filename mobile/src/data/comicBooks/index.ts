@@ -1,8 +1,13 @@
 import type { Lang } from '@/data/gita/language';
 
-export type ComicLanguage = Lang;
+/**
+ * Languages the comic editions are authored in. The newer reading languages read
+ * an authored edition rather than a re-scripted one: Marathi (Devanagari) reads the
+ * Hindi copy and Telugu the English copy, until native editions are written.
+ */
+export type ComicLanguage = 'hi' | 'en' | 'gu' | 'kn';
 export type ComicCopy = { narration: string; speaker: string | null; dialogue: string | null; note?: string };
-export type ComicPanel = Record<Lang, ComicCopy> & {
+export type ComicPanel = Record<ComicLanguage, ComicCopy> & {
   id: string; sourcePanel: string; source: string;
   art: string; sha256: string;
   dimensions: { width: number; height: number };
@@ -11,10 +16,10 @@ export type ComicPanel = Record<Lang, ComicCopy> & {
   mode: 'dialogue' | 'caption' | 'silent';
   mask?: [number, number][];
 };
-export type ComicEpisode = Record<Lang, { title: string; framing: string }> & { id: string; panels: ComicPanel[] };
-export type ComicReadingPage = { id: string; number: number; title: Record<Lang, string>; rows: string[][]; sourceSargas: number[] };
-export type ComicBook = { title: Record<Lang, string>; episodes: ComicEpisode[]; pages: ComicReadingPage[]; panelCount: number };
-export const comicLanguage = (lang: Lang): ComicLanguage => lang;
+export type ComicEpisode = Record<ComicLanguage, { title: string; framing: string }> & { id: string; panels: ComicPanel[] };
+export type ComicReadingPage = { id: string; number: number; title: Record<ComicLanguage, string>; rows: string[][]; sourceSargas: number[] };
+export type ComicBook = { title: Record<ComicLanguage, string>; episodes: ComicEpisode[]; pages: ComicReadingPage[]; panelCount: number };
+export const comicLanguage = (lang: Lang): ComicLanguage => (lang === 'mr' ? 'hi' : lang === 'te' ? 'en' : lang);
 export function getComicBook(id: string): ComicBook | undefined {
   if (id === 'balakanda-v1') return require('./balakanda.json') as ComicBook;
   if (id === 'ayodhyakanda-v1') return require('./ayodhyakanda.json') as ComicBook;

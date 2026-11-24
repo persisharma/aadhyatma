@@ -1,5 +1,5 @@
 import { verseLinesForDisplay } from '@/utils/versePresentation';
-import { WIDGET_SCHEMA_VERSION, WIDGET_TIME_ZONE, isValidIanaTimeZone, widgetDateKey, type PanchangWidgetDay, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
+import { WIDGET_SCHEMA_VERSION, WIDGET_TIME_ZONE, isValidIanaTimeZone, widgetDateKey, type PanchangWidgetDay, type PanchangWidgetTithi, type VerseWidgetDay, type WidgetLang, type WidgetLocalizedText, type WidgetPayloadV1 } from './contract';
 import type { Lang } from '@/data/gita/language';
 import type { CalendarSystem, PanchangLocation } from '@/panchang/types';
 import type { DailyEntry } from '@/contexts/UserActivityContext';
@@ -8,7 +8,7 @@ import { transliterateDevanagari } from '@/utils/transliterate';
 export type WidgetPlannerInput = {
   generatedAt: Date;
   writerAppVersion: string;
-  locale: Lang;
+  locale: WidgetLang;
   location: PanchangLocation;
   calendarSystem: CalendarSystem;
   deviceTimeZone: string;

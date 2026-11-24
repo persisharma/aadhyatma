@@ -2,7 +2,7 @@ import content from './content.json';
 import {experiences} from './experience';
 import {knowledgeText} from './knowledge';
 import { normalize } from '@/data/searchNormalize';
-import { toGujarati, toKannada } from '@/utils/transliterate';
+import { toGujarati, toKannada, toTelugu } from '@/utils/transliterate';
 export type Pair = readonly [string,string];
 export type SanatanTopic = { id:string; name:Pair; title:Pair; question:Pair; group:Pair; pages:readonly Pair[]; pageTitles?:readonly Pair[]; refs:readonly string[]; kind:string; aliases:readonly string[]; status:'published'|'draft' };
 export type SanatanSource = {title:string;edition:string;location:string};
@@ -26,7 +26,7 @@ export const getSanatanTopic=(id:string)=>getSanatanTopics().find(t=>t.id===id);
 type SearchMatch={topic:SanatanTopic;page:number};
 const searchDocuments=topics.filter(t=>t.status==='published').map(topic=>{
  const fields=[...topic.name,...topic.title,...topic.question,...topic.aliases,topic.id];
- const expand=(values:readonly string[])=>[...new Set(values.flatMap(v=>/[\u0900-\u097F]/.test(v)?[v,toGujarati(v),toKannada(v)]:[v]).map(normalize))];
+ const expand=(values:readonly string[])=>[...new Set(values.flatMap(v=>/[\u0900-\u097F]/.test(v)?[v,toGujarati(v),toKannada(v),toTelugu(v)]:[v]).map(normalize))];
  return {topic,fields:expand(fields),pages:topic.pages.map((_,page)=>expand([
   ...(topic.pageTitles?.[page]??[]),
   ...(page===0?(experiences[topic.id]?.terms??[]).flatMap(t=>[...t.name]):[]),

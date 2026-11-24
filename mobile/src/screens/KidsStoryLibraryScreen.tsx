@@ -37,6 +37,8 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
               nameEn={deity.name.en}
               nameGu={deity.name.gu}
               nameKn={deity.name.kn}
+              nameMr={deity.name.mr}
+              nameTe={deity.name.te}
               itemCount={status}
               iconKey={deity.iconKey}
               onPress={() => navigation.navigate('KidsStoryDeity', { deityId: deity.id })}
@@ -49,6 +51,8 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
           nameEn="Ramayana Comic"
           nameGu="રામાયણ કોમિક"
           nameKn="ರಾಮಾಯಣ ಕಾಮಿಕ್"
+          nameMr="रामायण कॉमिक"
+          nameTe="రామాయణ కామిక్"
           iconKey="bowArrow"
           itemCount={pick(lang, {
             hi: `${comics.length} काण्ड · सचित्र`,

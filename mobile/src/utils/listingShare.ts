@@ -1,5 +1,5 @@
 import type { BackgroundImage } from '@/data/backgroundAsset';
-import type { Lang } from '@/data/gita/language';
+import { LANGUAGES as ALL_LANGS, type Lang } from '@/data/gita/language';
 import { contentByLang, type LocalizedStrings } from '@/utils/localize';
 import {
   bodyHeightFor,
@@ -22,11 +22,11 @@ export type ListingShareItem = {
   detailEn?: string;
 };
 
-const LANGUAGES: readonly Lang[] = ['hi', 'en', 'gu', 'kn'];
+const LANGUAGES: readonly Lang[] = ALL_LANGS.map((l) => l.value);
 // Three complete rows leave room for long Indic titles and two-line details at
 // the prose card's fixed reading size. A row is never broken across cards.
 const ITEMS_PER_CARD = 3;
-const ADVANCE: Record<Lang, number> = { hi: 0.41, en: 0.44, gu: 0.43, kn: 0.56 };
+const ADVANCE: Record<Lang, number> = { hi: 0.41, en: 0.44, gu: 0.43, kn: 0.56, mr: 0.41, te: 0.56 };
 
 const LABELS: LocalizedStrings = {
   hi: 'सूची', en: 'Contents', gu: 'સૂચિ', kn: 'ಪಟ್ಟಿ',

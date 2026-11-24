@@ -129,5 +129,6 @@ const keys = {
   ],
 } as const;
 export function quietCopy(lang: Lang, key: keyof typeof keys) {
-  return keys[key][{ hi: 0, en: 1, gu: 2, kn: 3 }[lang]];
+  // Each entry is ordered hi, en, gu, kn, mr, te.
+  return keys[key][({ hi: 0, en: 1, gu: 2, kn: 3, mr: 4, te: 5 } as const)[lang]];
 }

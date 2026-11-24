@@ -251,7 +251,9 @@ export default function OnboardingSetupSheet() {
                   ? fontFamilies.gujaratiBold
                   : opt.script === 'kannada'
                     ? fontFamilies.kannadaBold
-                    : opt.script === 'latin'
+                    : opt.script === 'telugu'
+                      ? fontFamilies.teluguBold
+                      : opt.script === 'latin'
                       ? fontFamilies.interSemiBold
                       : fontFamilies.devanagariBold;
               return (

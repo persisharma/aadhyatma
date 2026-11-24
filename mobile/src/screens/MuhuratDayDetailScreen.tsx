@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang, pick, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import { usePanchangCalendarSystem } from '@/panchang/usePanchang';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
@@ -105,8 +105,8 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   }, [route.params.occasionId, route.params.dateMs, calendarSystem, location]);
 
   const weekday =
-    lang === 'en' ? VARA_NAMES_EN[date.getDay()] : lang === 'hi' ? VARA_NAMES_HI[date.getDay()] : transliterateDevanagari(VARA_NAMES_HI[date.getDay()], lang);
-  const monthName = lang === 'en' ? MONTHS_EN[date.getMonth()] : lang === 'hi' ? MONTHS_HI[date.getMonth()] : transliterateDevanagari(MONTHS_HI[date.getMonth()], lang);
+    lang === 'en' ? VARA_NAMES_EN[date.getDay()] : isDevanagariLang(lang) ? VARA_NAMES_HI[date.getDay()] : transliterateDevanagari(VARA_NAMES_HI[date.getDay()], lang);
+  const monthName = lang === 'en' ? MONTHS_EN[date.getMonth()] : isDevanagariLang(lang) ? MONTHS_HI[date.getMonth()] : transliterateDevanagari(MONTHS_HI[date.getMonth()], lang);
 
   const sectionLabelStyle = {
     fontFamily: typography.sectionLabel.fontFamily,
@@ -140,11 +140,11 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
   // differ, so cross-checking the Panchang tab can never look like a bug.
   const windowAnga = data?.v.windows[0]?.angaAtWindow ?? null;
   const nakName = (i: number) =>
-    lang === 'en' ? NAKSHATRA_NAMES_EN[i] : lang === 'hi' ? NAKSHATRA_NAMES_HI[i] : transliterateDevanagari(NAKSHATRA_NAMES_HI[i], lang);
+    lang === 'en' ? NAKSHATRA_NAMES_EN[i] : isDevanagariLang(lang) ? NAKSHATRA_NAMES_HI[i] : transliterateDevanagari(NAKSHATRA_NAMES_HI[i], lang);
   const tithiName = (i: number) =>
-    lang === 'en' ? TITHI_NAMES_EN[i] : lang === 'hi' ? TITHI_NAMES_HI[i] : transliterateDevanagari(TITHI_NAMES_HI[i], lang);
+    lang === 'en' ? TITHI_NAMES_EN[i] : isDevanagariLang(lang) ? TITHI_NAMES_HI[i] : transliterateDevanagari(TITHI_NAMES_HI[i], lang);
   const rashiName = (i: number) =>
-    lang === 'en' ? RASHI_NAMES_EN[i] : lang === 'hi' ? RASHI_NAMES_HI[i] : transliterateDevanagari(RASHI_NAMES_HI[i], lang);
+    lang === 'en' ? RASHI_NAMES_EN[i] : isDevanagariLang(lang) ? RASHI_NAMES_HI[i] : transliterateDevanagari(RASHI_NAMES_HI[i], lang);
   const best = data?.v.windows[0] ?? null;
 
   // Phase 4: the आपके लिए strip (saved Kundali only, §8). Absent without a
@@ -330,7 +330,7 @@ export default function MuhuratDayDetailScreen({ navigation, route }: Props) {
                 v={`${
                   lang === 'en'
                     ? HORA_NAMES_EN[best.horaRuler]
-                    : lang === 'hi'
+                    : isDevanagariLang(lang)
                       ? HORA_NAMES_HI[best.horaRuler]
                       : transliterateDevanagari(HORA_NAMES_HI[best.horaRuler], lang)
                 } ${contentByLang(lang, 'होरा', 'hora')}`}

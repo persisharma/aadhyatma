@@ -21,7 +21,7 @@ export const DEFAULT_SPEECH_RATE = 1.0;
 export type SpeechTarget = Lang;
 
 /** Every target a voice can be chosen for, in `LANGUAGES` order. */
-export const SPEECH_TARGETS: readonly SpeechTarget[] = ['hi', 'en', 'gu', 'kn'];
+export const SPEECH_TARGETS: readonly SpeechTarget[] = ['hi', 'en', 'gu', 'kn', 'mr', 'te'];
 
 export type ReadAloudPrefs = {
   /** Speech rate, clamped to [MIN_SPEECH_RATE, MAX_SPEECH_RATE]. */

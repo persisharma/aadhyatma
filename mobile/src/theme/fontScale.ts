@@ -17,7 +17,7 @@ export const DEFAULT_FONT_SCALE: FontScale = 'M';
 
 /**
  * The typography keys that carry verse / meaning reading text across every
- * script (Devanagari, Latin transliteration, Gujarati, Kannada). Only these are
+ * script (Devanagari, Latin transliteration, Gujarati, Kannada, Telugu). Only these are
  * scaled — everything else (screenTitle, readerTitle, pageCounter, labels, …)
  * stays fixed.
  */
@@ -27,9 +27,11 @@ export const READING_STYLE_KEYS = [
   'verseLatin',
   'verseGujarati',
   'verseKannada',
+  'verseTelugu',
   'meaningEnglish',
   'meaningGujarati',
   'meaningKannada',
+  'meaningTelugu',
 ] as const;
 
 export function fontScaleFactor(scale: FontScale): number {

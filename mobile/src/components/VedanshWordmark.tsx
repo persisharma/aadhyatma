@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import type { Lang } from '@/data/gita/language';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang, pick } from '@/utils/localize';
+import { contentByLang, pick, isDevanagariLang } from '@/utils/localize';
 import { scriptBodyFont } from '@/utils/langType';
 import { ArtworkCaptureContext } from './ArtworkCaptureContext';
 import manifest from '@assets/branding/wordmarks/manifest.json';
@@ -50,7 +50,7 @@ export default function VedanshWordmark({ lang = 'hi', compact = false,
   bilingual = false, showTagline = true, fixedExport = false,
 }: { lang?: Lang; compact?: boolean; bilingual?: boolean; showTagline?: boolean; fixedExport?: boolean }) {
   const { colors } = useTheme();
-  const primary = lang === 'hi' ? 'hi' : 'en';
+  const primary = isDevanagariLang(lang) ? 'hi' : 'en';
   const secondary = primary === 'hi' ? 'en' : 'hi';
   const width = (kind: 'hi' | 'en', small = false) => kind === 'en'
     ? (compact ? 86 : small ? 132 : 180) : (compact ? 58 : small ? 78 : 110);

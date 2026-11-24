@@ -5,7 +5,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTilePress } from '@/contexts/TilePressContext';
 import { useJapamCounter } from '@/contexts/JapamCounterContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
-import { useGitaLanguage } from '@/data/gita/language';
+import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { findJapamMantra, JAPAM_BEADS_PER_ROUND } from '@/data/japam';
 import { getPracticeHymn } from '@/data/practiceHymn';
 import { library } from '@/data/texts';
@@ -18,7 +18,7 @@ const curve =
   'M86 32 C66 12 54 4 36 5 C-4 6 -4 58 36 59 C55 60 70 48 86 32 C105 13 120 4 137 5 C177 6 177 58 137 59 C117 60 104 49 86 32 Z';
 // Native SVG dash distances use viewBox units, even when rendered at phone size.
 const loopLength = 416.63;
-const numerals = { hi: 'hi-IN-u-nu-deva', gu: 'gu-IN-u-nu-gujr', kn: 'kn-IN-u-nu-knda', en: 'en-IN' };
+const numerals: Record<Lang, string> = { hi: 'hi-IN-u-nu-deva', gu: 'gu-IN-u-nu-gujr', kn: 'kn-IN-u-nu-knda', en: 'en-IN', mr: 'mr-IN-u-nu-deva', te: 'te-IN-u-nu-telu' };
 
 export default function JapmalaBanner({
   navigation,

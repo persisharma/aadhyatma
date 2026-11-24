@@ -15,7 +15,7 @@ import { useMuhuratFollows } from '@/contexts/MuhuratFollowContext';
 import { useNextFollowedMuhurat } from '@/panchang/useMuhuratFinder';
 import { PAKSHA_NAMES_HI, PAKSHA_NAMES_EN, VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
 import { transliterateDevanagari } from '@/utils/transliterate';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { pillTextStyle, scriptTitleFont, eyebrowTextStyle } from '@/utils/langType';
 import { useCivilToday } from '@/panchang/useCivilToday';
 import { isPreDawn, tonightTitle } from '@/panchang/preDawn';
@@ -237,7 +237,7 @@ export default function TodayStrip() {
       ? contentByLang(lang, 'आज', 'Today')
       : lang === 'en'
         ? VARA_NAMES_EN[d.getDay()].slice(0, 3)
-        : lang === 'hi'
+        : isDevanagariLang(lang)
           ? wdHi
           : transliterateDevanagari(wdHi, lang);
     return nextFollow.windowStart ? `${day} ${formatClock(nextFollow.windowStart)}` : day;

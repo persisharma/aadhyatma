@@ -17,6 +17,7 @@ import type { Deity } from '@/data/texts';
 import { tithiRuleLabel, type SmaranEntry } from './pitruSmaran';
 import { janmaTithiRuleFromBirthDate } from './janmaTithi';
 import { birthCity, type PersonProfile } from './birthProfiles';
+import { isDevanagariLang } from '@/utils/localize';
 
 export const KUL_PARAMPARA_STORAGE_KEY = '@vedansh:kul-parampara:v1';
 const PAYLOAD_VERSION = 1;
@@ -136,7 +137,7 @@ export function serializeKulRecord(record: KulRecord): string {
 export function kuldevDisplayName(kuldev: NonNullable<KulRecord['kuldev']>, lang: 'hi' | 'en'): string {
   if (kuldev.deityId) {
     const meta = getDeityMeta(kuldev.deityId);
-    return lang === 'hi' ? meta.nameHi : meta.nameEn;
+    return isDevanagariLang(lang) ? meta.nameHi : meta.nameEn;
   }
   return kuldev.customName ?? '';
 }

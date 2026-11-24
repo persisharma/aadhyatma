@@ -62,9 +62,9 @@ export default function WishlistScreen({ navigation }: Props) {
   const { lang } = useGitaLanguage();
   // null for hi/en → callers fall back to the original font (byte-identical); the
   // bundled Noto serif for gu/kn so transliterated text renders in-script.
-  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : lang === 'te' ? fontFamilies.telugu : null;
   const scriptSerifBold =
-    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : lang === 'te' ? fontFamilies.teluguBold : null;
   const removeLabel = pick(lang, { hi: 'हटायें', en: 'Remove', gu: 'દૂર કરો', kn: 'ತೆಗೆದುಹಾಕಿ' });
   const cancelLabel = pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' });
   const { bookmarks, isLoading, removeBookmark } = useBookmarks();

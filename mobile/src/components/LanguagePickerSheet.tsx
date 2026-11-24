@@ -22,6 +22,8 @@ function familyFor(script: LangScript, devanagariFallback: string): string {
       return fontFamilies.gujaratiBold;
     case 'kannada':
       return fontFamilies.kannadaBold;
+    case 'telugu':
+      return fontFamilies.teluguBold;
     default:
       return devanagariFallback;
   }

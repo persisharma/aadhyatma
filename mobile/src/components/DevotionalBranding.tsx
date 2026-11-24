@@ -5,6 +5,7 @@ import type { Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import type { DevotionalArt } from '@/utils/devotionalShareLayout';
 import { WordmarkArtwork } from './VedanshWordmark';
+import { isDevanagariLang } from '@/utils/localize';
 
 type PaintProps = { width: number; onLoad?: () => void; onError?: () => void };
 
@@ -25,9 +26,9 @@ export function DevotionalHeaderBrand({ art, lang, width, onLoad, onError }: Pai
   const scale = width / 1080;
   const gradient = `plaque-${React.useId().replace(/:/g, '')}`;
   const badge = devotionalHeaderBadge(art);
-  const w = badge.width, kind = lang === 'hi' ? 'hi' : 'en';
+  const w = badge.width, kind = isDevanagariLang(lang) ? 'hi' : 'en';
   return <View testID="devotional-header-brand" pointerEvents="none" accessible accessibilityRole="image"
-    accessibilityLabel={lang === 'hi' ? `वेदांश · ${devotionalHeaderDomain.text}` : devotionalHeaderDomain.text}
+    accessibilityLabel={isDevanagariLang(lang) ? `वेदांश · ${devotionalHeaderDomain.text}` : devotionalHeaderDomain.text}
     style={{ position: 'absolute', left: badge.left * scale, top: badge.top * scale, width: w * scale, height: badge.height * scale, alignItems: 'center', justifyContent: 'center' }}>
     <Svg width={w * scale} height={badge.height * scale} viewBox={`0 0 ${w} 120`} style={StyleSheet.absoluteFill} accessible={false}>
       <Defs><LinearGradient id={gradient} x1="0" y1="0" x2="0" y2="1">

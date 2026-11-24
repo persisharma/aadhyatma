@@ -22,6 +22,7 @@ import { NAKSHATRA_NAMES_EN, NAKSHATRA_NAMES_HI } from './names';
 import { deriveTithiRuleFromDateSteps, type TithiRule } from './pitruSmaran';
 import { runSynchronously } from './backgroundWork';
 import type { BirthProfile } from './birthProfiles';
+import { isDevanagariLang } from '@/utils/localize';
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
 const TIME_PATTERN = /^([01]\d|2[0-3]):([0-5]\d)$/;
@@ -84,6 +85,6 @@ export function janmaNakshatraIndex(profile: Pick<BirthProfile, 'date' | 'time'>
 }
 
 export function nakshatraName(index: number, lang: 'hi' | 'en'): string {
-  const names = lang === 'hi' ? NAKSHATRA_NAMES_HI : NAKSHATRA_NAMES_EN;
+  const names = isDevanagariLang(lang) ? NAKSHATRA_NAMES_HI : NAKSHATRA_NAMES_EN;
   return names[index] ?? '';
 }

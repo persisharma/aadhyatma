@@ -16,7 +16,7 @@ import { kulVratRuleById, nextKulVratOccurrence, useKulRecord } from '@/panchang
 import { shortDateWithYear, startOfLocalDay } from '@/panchang/pitruSmaranDisplay';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isRescriptLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { panchangTabTarget } from '@/navigation/entryRoutes';
@@ -42,7 +42,7 @@ export default function KulParamparaScreen({ navigation }: Props) {
 
   const empty = hydrated && isEmptyKulRecord(record);
   // gu/kn re-script the Devanagari at runtime ([[languages]]); en callers pass their own string.
-  const devanagariOr = (hi: string): string => (lang === 'gu' || lang === 'kn' ? transliterateDevanagari(hi, lang) : hi);
+  const devanagariOr = (hi: string): string => (isRescriptLang(lang) ? transliterateDevanagari(hi, lang) : hi);
 
   // The linked kul vrat's next date — a precomputed-table read, but still off
   // the render path (the MoreScreen row's own deferral rule).

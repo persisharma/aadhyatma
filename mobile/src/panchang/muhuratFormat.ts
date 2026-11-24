@@ -5,6 +5,7 @@
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { civilDateOf, civilFieldsOf, isOnCivilDay } from './civilTime';
 import type { Lang } from '@/data/gita/language';
+import { isDevanagariLang } from '@/utils/localize';
 
 /**
  * 24-hour `HH:MM` clock of an INSTANT at the Panchang location, e.g. `06:24` /
@@ -40,7 +41,7 @@ export function formatShortDate(d: Date, lang: Lang): string {
   const month =
     lang === 'en'
       ? MONTHS_SHORT_EN[d.getMonth()]
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? MONTHS_SHORT_HI[d.getMonth()]
         : transliterateDevanagari(MONTHS_SHORT_HI[d.getMonth()], lang);
   return `${d.getDate()} ${month}`;

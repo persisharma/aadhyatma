@@ -79,7 +79,7 @@ import { usePitruSmaran } from '@/contexts/PitruSmaranContext';
 import { nextObservanceForEntry } from '@/panchang/pitruSmaran';
 import { shortDate as shortSmaranDate } from '@/panchang/pitruSmaranDisplay';
 import { captionFont } from '@/utils/scriptFont';
-import { contentByLang, meaningByLang } from '@/utils/localize';
+import { contentByLang, meaningByLang, isDevanagariLang } from '@/utils/localize';
 import { pillTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { useTourTarget } from '@/components/tour/tourTargets';
 import { fontFamilies } from '@/theme/typography';
@@ -138,7 +138,7 @@ function addDays(date: Date, days: number): Date {
 
 function formatShortDate(date: Date, lang: Lang): string {
   const months =
-    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+    lang === 'en' ? MONTHS_EN : isDevanagariLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]}`;
 }
 
@@ -146,7 +146,7 @@ function formatFullDate(date: Date, lang: Lang): string {
   const months =
     lang === 'en'
       ? MONTHS_FULL_EN
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? MONTHS_FULL_HI
         : MONTHS_FULL_HI.map((m) => transliterateDevanagari(m, lang));
   return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
@@ -156,7 +156,7 @@ function formatMonthTitle(date: Date, lang: Lang): string {
   const months =
     lang === 'en'
       ? MONTHS_FULL_EN
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? MONTHS_FULL_HI
         : MONTHS_FULL_HI.map((m) => transliterateDevanagari(m, lang));
   return `${months[date.getMonth()]} ${date.getFullYear()}`;
@@ -733,7 +733,7 @@ export default function PanchangScreen({ route }: Props) {
                   </View>
                 )}
                 <View style={styles.weekdayRow}>
-                  {(lang === 'en' ? WEEKDAYS_EN : lang === 'hi' ? WEEKDAYS_HI : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang))).map((day) => (
+                  {(lang === 'en' ? WEEKDAYS_EN : isDevanagariLang(lang) ? WEEKDAYS_HI : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang))).map((day) => (
                     <Text key={day} style={[styles.weekdayText, { color: colors.inkMuted }]}>
                       {day}
                     </Text>

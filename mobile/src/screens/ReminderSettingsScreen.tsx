@@ -53,7 +53,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
   } = useNotificationPreferences();
 
   const scriptSerifBold =
-    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : lang === 'te' ? fontFamilies.teluguBold : null;
   const screenTitle = orderTitlesByLanguage(lang, 'स्मरण', 'Reminders', {
     devPrimary: 22,
     devSecondary: 14,

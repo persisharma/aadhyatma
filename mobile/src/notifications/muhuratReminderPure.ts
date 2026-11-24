@@ -19,7 +19,7 @@
 
 import { ROLLING_WINDOW_DAYS } from './pure';
 import type { Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { ADVANCE_HOUR } from './vratReminderPure';
 import { formatRange } from '@/panchang/muhuratFormat';
 
@@ -227,11 +227,11 @@ export function formatMuhuratReminderContent(
   if (p.kind === 'dayOf') {
     const hi = p.windowLabelHi ? `आज ${p.nameHi} — ${p.windowLabelHi}` : `आज ${p.nameHi} का मुहूर्त`;
     const en = p.windowLabelEn ? `${p.nameEn} today — ${p.windowLabelEn}` : `${p.nameEn} today`;
-    return { title, body: lang === 'hi' ? `${hi} · ${en}` : contentByLang(lang, hi, en) };
+    return { title, body: isDevanagariLang(lang) ? `${hi} · ${en}` : contentByLang(lang, hi, en) };
   }
   const whenHi = p.advanceDays === 1 ? 'कल' : `${p.advanceDays} दिन में`;
   const hi = `${whenHi} ${p.nameHi} का मुहूर्त`;
-  if (lang === 'hi') return { title, body: `${hi} · ${p.nameEn}` };
+  if (isDevanagariLang(lang)) return { title, body: `${hi} · ${p.nameEn}` };
   const whenEn = p.advanceDays === 1 ? 'tomorrow' : `in ${p.advanceDays} days`;
   return { title, body: contentByLang(lang, hi, `${p.nameEn} ${whenEn}`) };
 }

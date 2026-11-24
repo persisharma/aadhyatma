@@ -40,6 +40,7 @@ export type ProseShareCardProps = {
 function bodyFont(lang: Lang): string {
   if (lang === 'gu') return fontFamilies.gujarati;
   if (lang === 'kn') return fontFamilies.kannada;
+  if (lang === 'te') return fontFamilies.telugu;
   if (lang === 'en') return fontFamilies.latin;
   return fontFamilies.devanagari;
 }
@@ -47,6 +48,7 @@ function bodyFont(lang: Lang): string {
 function boldFont(lang: Lang): string {
   if (lang === 'gu') return fontFamilies.gujaratiBold;
   if (lang === 'kn') return fontFamilies.kannadaBold;
+  if (lang === 'te') return fontFamilies.teluguBold;
   if (lang === 'en') return fontFamilies.latinSemiBold;
   return fontFamilies.devanagariBold;
 }

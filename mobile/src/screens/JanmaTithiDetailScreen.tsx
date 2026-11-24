@@ -22,7 +22,7 @@ import { fullDate, inDaysLabel, startOfLocalDay } from '@/panchang/pitruSmaranDi
 import { VARA_NAMES_EN, VARA_NAMES_HI } from '@/panchang/names';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { scriptBodyFont } from '@/utils/langType';
 import { buildEntryStartTarget, navigateToHomeStackTarget, panchangTabTarget } from '@/navigation/entryRoutes';
@@ -92,7 +92,7 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
   const tithiCaption = rule
     ? lang === 'en'
       ? tithiRuleLabel(rule, 'en')
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? tithiRuleLabel(rule, 'hi')
         : transliterateDevanagari(tithiRuleLabel(rule, 'hi'), lang)
     : contentByLang(lang, 'तिथि नहीं निकल सकी', 'Tithi could not be derived');
@@ -234,7 +234,7 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
                   <Text style={{ fontFamily: bodyFont, fontSize: 14, color: colors.ink, marginTop: 2 }}>
                     {lang === 'en'
                       ? nakshatraName(nakshatraIndex, 'en')
-                      : lang === 'hi'
+                      : isDevanagariLang(lang)
                         ? nakshatraName(nakshatraIndex, 'hi')
                         : transliterateDevanagari(nakshatraName(nakshatraIndex, 'hi'), lang)}
                   </Text>

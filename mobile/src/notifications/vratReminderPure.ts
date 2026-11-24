@@ -13,7 +13,7 @@
  */
 
 import type { Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { ROLLING_WINDOW_DAYS } from './pure';
 
 /** Identifier prefix for all PRD-09 vrat notifications. Lets us cancel just ours. */
@@ -179,11 +179,11 @@ export function formatVratReminderContent(
     p.titleHi ? 'Visarjan reminder' : 'Vrat reminder'
   );
   if (p.kind === 'dayOf') {
-    if (lang === 'hi') return { title, body: `आज ${p.nameHi} है · ${p.nameEn} today` };
+    if (isDevanagariLang(lang)) return { title, body: `आज ${p.nameHi} है · ${p.nameEn} today` };
     return { title, body: contentByLang(lang, `आज ${p.nameHi} है`, `${p.nameEn} today`) };
   }
   const whenHi = p.advanceDays === 1 ? 'कल' : `${p.advanceDays} दिन में`;
-  if (lang === 'hi') return { title, body: `${whenHi} ${p.nameHi} · ${p.nameEn}` };
+  if (isDevanagariLang(lang)) return { title, body: `${whenHi} ${p.nameHi} · ${p.nameEn}` };
   const whenEn = p.advanceDays === 1 ? 'tomorrow' : `in ${p.advanceDays} days`;
   return { title, body: contentByLang(lang, `${whenHi} ${p.nameHi}`, `${p.nameEn} ${whenEn}`) };
 }

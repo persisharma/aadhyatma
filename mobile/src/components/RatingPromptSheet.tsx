@@ -5,7 +5,7 @@ import { FacebookLogoIcon } from 'phosphor-react-native/src/icons/FacebookLogo';
 import { pendingSocialPlatforms } from '@/data/engagementPrompts';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { pick } from '@/utils/localize';
+import { pick, isDevanagariLang } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
 import { useRatingPrompt } from '@/contexts/RatingPromptContext';
 import { STORE_MIN_STARS, feedbackEmail } from '@/data/ratingPrompt';
@@ -62,13 +62,13 @@ export default function RatingPromptSheet() {
   // gu/kn need their own serif or the script renders as tofu; hi/en keep the
   // faces the other modals use (Cormorant carries no Devanagari, so hi never
   // falls back to it — see design.md §3).
-  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : null;
+  const scriptSerif = lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : lang === 'te' ? fontFamilies.telugu : null;
   const scriptSerifBold =
-    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : null;
+    lang === 'gu' ? fontFamilies.gujaratiBold : lang === 'kn' ? fontFamilies.kannadaBold : lang === 'te' ? fontFamilies.teluguBold : null;
   const titleFont = scriptSerifBold ?? typography.readerTitle.fontFamily;
   const bodyFont = scriptSerif ?? typography.meaning.fontFamily;
   const labelFont =
-    scriptSerif ?? (lang === 'hi' ? typography.meaning.fontFamily : typography.cardLatin.fontFamily);
+    scriptSerif ?? (isDevanagariLang(lang) ? typography.meaning.fontFamily : typography.cardLatin.fontFamily);
   // Latin tracking + uppercase split the shirorekha on Indic labels.
   const secondaryText = [
     styles.secondaryText,

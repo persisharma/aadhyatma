@@ -1,8 +1,9 @@
 /**
- * Devanagari → Gujarati / Kannada script conversion for the gu/kn reading languages.
+ * Devanagari → Gujarati / Kannada / Telugu script conversion for the gu/kn/te reading
+ * languages. Marathi (mr) is written in Devanagari, so its "conversion" is the identity.
  *
- * The corpus (verse lines, titles, labels, panchang terms) is Devanagari; Gujarati and
- * Kannada are sister Brahmi scripts with near-1:1 codepoint correspondence, so the
+ * The corpus (verse lines, titles, labels, panchang terms) is Devanagari; Gujarati,
+ * Kannada and Telugu are sister Brahmi scripts with near-1:1 codepoint correspondence, so the
  * conversion is a pure character map — the orthography (hence recitation) is preserved
  * exactly. This is script conversion, NOT romanization: design.md §3.1's IAST/ASCII rules
  * govern only the Latin `linesEn`/`transliteration` fields and do not apply here.
@@ -14,16 +15,20 @@
  *
  * Policy decisions (see docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md):
  * - Dandas (। ॥), Vedic accents, ZWJ/ZWNJ and anything unmapped pass through unchanged.
- * - ॐ → ૐ (Gujarati codepoint) / ಓಂ (Kannada has no single om codepoint; O + anusvara, per sanscript).
- * - Candrabindu ँ → ઁ / ಁ (both scripts have the codepoint; Noto Serif renders it — verified).
- * - Nukta ़ → ઼ / ಼ (preserved in both; precomposed क़…य़ decompose to base + nukta).
- * - Devanagari digits ०–९ map to the script's digits (૦–૯ / ೦–೯).
+ * - ॐ → ૐ (Gujarati codepoint) / ಓಂ / ఓం (Kannada and Telugu have no single om codepoint;
+ *   O + anusvara, per sanscript).
+ * - Candrabindu ँ → ઁ / ಁ / ఁ (all three scripts have the codepoint; Noto Serif renders it — verified).
+ * - Nukta ़ → ઼ / ಼ / ఼ (preserved; precomposed क़…य़ decompose to base + nukta). Telugu
+ *   nukta U+0C3C is present in the bundled Noto Serif Telugu cmap (verified).
+ * - Devanagari ए/ओ (always long in Sanskrit/Hindi) → the long Kannada/Telugu vowels ಏ/ఏ, ಓ/ఓ.
+ * - Devanagari digits ०–९ map to the script's digits (૦–૯ / ೦–೯ / ౦–౯).
  *
  * Non-Devanagari input is returned untouched, so the functions are safe on mixed
  * strings and idempotent on their own output.
  */
 
-export type TargetScript = 'gu' | 'kn';
+/** Reading languages derived from the Devanagari. 'mr' is Devanagari → identity. */
+export type TargetScript = 'gu' | 'kn' | 'te' | 'mr';
 
 const DEVA_START = 0x0900;
 const DEVA_END = 0x097f;
@@ -115,6 +120,40 @@ const KANNADA: ScriptSpec = {
   },
 };
 
+const TELUGU: ScriptSpec = {
+  offset: 0x300,
+  offsetRanges: [
+    [0x0900, 0x0903], // inverted candrabindu ఀ, candrabindu ఁ, anusvara, visarga
+    [0x0905, 0x090c], // अ–ऌ
+    [0x090e, 0x0910], // ऎ ए ऐ (Telugu has short e)
+    [0x0912, 0x0928], // ऒ ओ–न (Telugu has short o)
+    [0x092a, 0x0939], // प–ह (incl. ऱ→ఱ, ळ→ళ, ऴ→ఴ)
+    [0x093c, 0x0944], // nukta (఼ U+0C3C), avagraha, matras ा–ॄ
+    [0x0946, 0x0948], // ॆ े ै
+    [0x094a, 0x094d], // ॊ ो ौ ्
+    [0x0960, 0x0963], // ॠ ॡ + vocalic matras
+    [0x0966, 0x096f], // digits
+  ],
+  overrides: {
+    0x0904: 'అ',
+    0x090d: 'ఎ', // candra E → short e
+    0x0911: 'ఒ', // candra O → short o
+    0x0929: 'న',
+    0x0945: 'ె', // candra e matra → short e matra
+    0x0949: 'ొ', // candra o matra → short o matra
+    0x0950: 'ఓం', // no single Telugu om codepoint — O + anusvara (matches sanscript)
+    0x0958: 'క఼',
+    0x0959: 'ఖ఼',
+    0x095a: 'గ఼',
+    0x095b: 'జ఼',
+    0x095c: 'డ఼',
+    0x095d: 'ఢ఼',
+    0x095e: 'ఫ఼',
+    0x095f: 'య఼',
+    0x0972: 'అ',
+  },
+};
+
 function convert(text: string, spec: ScriptSpec): string {
   let out = '';
   for (const ch of text) {
@@ -143,6 +182,19 @@ export function toKannada(text: string): string {
   return convert(text, KANNADA);
 }
 
+export function toTelugu(text: string): string {
+  return convert(text, TELUGU);
+}
+
 export function transliterateDevanagari(text: string, target: TargetScript): string {
-  return target === 'gu' ? toGujarati(text) : toKannada(text);
+  switch (target) {
+    case 'gu':
+      return toGujarati(text);
+    case 'kn':
+      return toKannada(text);
+    case 'te':
+      return toTelugu(text);
+    case 'mr':
+      return text; // Marathi is written in Devanagari.
+  }
 }

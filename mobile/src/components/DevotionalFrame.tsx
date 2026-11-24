@@ -7,13 +7,13 @@ import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgrou
 import { devotionalFrameSpec, devotionalFrameCanvas as canvas } from '@/data/devotionalFrameSpec';
 import { devotionalFrameType as type, devotionalFrameColors } from '@/theme/devotionalFrame';
 import { fontFamilies } from '@/theme/typography';
-import { pick } from '@/utils/localize';
+import { pick, isDevanagariLang } from '@/utils/localize';
 import { splitDevotionalMeaning, type DevotionalArt } from '@/utils/devotionalShareLayout';
 import { withMarkHeadroom } from '@/utils/markHeadroom';
 import { DevotionalHeaderBrand, DevotionalFooterBrand } from './DevotionalBranding';
 
 export function devotionalFace(lang: Lang): string {
-  return lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : fontFamilies.sanskritLatin;
+  return lang === 'gu' ? fontFamilies.gujarati : lang === 'kn' ? fontFamilies.kannada : lang === 'te' ? fontFamilies.telugu : fontFamilies.sanskritLatin;
 }
 // Shared with every share card that sets tight Indic leading (utils/markHeadroom.ts).
 export { withMarkHeadroom };
@@ -174,14 +174,14 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
   // Preserve authored/charan boundaries at every size. Native Text wraps each
   // row and Panel grows vertically; no layout probe may join scripture rows.
   const shown = verseLinesForDisplay(verseRows ?? verse.trim().split('\n'), header).join('\n');
-  const shortVerse = lang === 'hi' && !shown.includes('\n') && Array.from(shown).length <= 32;
+  const shortVerse = isDevanagariLang(lang) && !shown.includes('\n') && Array.from(shown).length <= 32;
   const shortMeaning = Array.from(parts.meaning).length < 55;
   // One calibrated size + one script-correct face for every header; long source
   // lines shrink-to-fit inside two lines instead of jumping size/face (which read
   // as the header flicking big↔small) or wrapping unbounded into the hero/divider.
   const sourceSize = spec.sourceFont * width / 540;
   const reading = { fontFamily: face, textAlign: 'center' as const, includeFontPadding: false };
-  const bodyFace = lang === 'hi' ? shortMeaning ? fontFamilies.devanagari : type.bodyFace : face;
+  const bodyFace = isDevanagariLang(lang) ? shortMeaning ? fontFamilies.devanagari : type.bodyFace : face;
   const fit = (style: StyleProp<TextStyle>) => withMarkHeadroom(style, exportMode ? 1 : PixelRatio.getFontScale());
   // A box label sits in the gap its master leaves between the top-cap dashes.
   const boxLabel = (testID: string, label: string) => <Text testID={testID} allowFontScaling={!exportMode} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1}
@@ -190,7 +190,7 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
   return <View>
     <Panel art={art} width={width} top={spec.hero} bottom={spec.sourceEnd} bottomCap={28} testID="devotional-source-panel"
       contentStyle={{ paddingTop: spec.sourceTop * scale, paddingHorizontal: 120 * scale, paddingBottom: 22 * scale }} onLoad={() => mark('source')} onError={onError}>
-      <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }])}>{header}</Text>
+      <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: isDevanagariLang(lang) ? type.verseFace : face }])}>{header}</Text>
     </Panel>
     <Panel art={art} width={width} top={spec.sourceEnd} bottom={spec.verseEnd} testID="devotional-verse-panel"
       // Use the paper inside the ornamental rules; extra inset here needlessly
@@ -198,14 +198,14 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
       // size and let Panel grow vertically rather than shrinking scripture.
       contentStyle={{ paddingHorizontal: 55 * scale }} onLoad={() => mark('verse')} onError={onError}>
       <Text testID="devotional-share-verse" allowFontScaling={!exportMode}
-        style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: lang === 'hi' ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }])}>{shown}</Text>
+        style={fit([reading, verseStyle, exportMode && { fontSize: shortVerse ? 52 : lang === 'en' ? 27 : type.verseSize, lineHeight: shortVerse ? (spec.verseEnd - spec.sourceEnd) / 2 : lang === 'kn' || lang === 'te' ? 48 : lang === 'gu' ? 46 : type.verseLeading }, { color: '#2D1005', fontFamily: isDevanagariLang(lang) ? type.verseFace : face, transform: [{ translateY: shortVerse ? 16 * scale : 9 * scale }] }])}>{shown}</Text>
     </Panel>
     <DevotionalSlice art={art} width={width} top={spec.verseEnd} bottom={spec.meaningTop} testID="devotional-divider-image" onLoad={() => mark('divider')} onError={onError} />
     <Panel art={art} width={width} top={spec.meaningTop} bottom={spec.meaningBottom} topCap={68} bottomCap={48} testID="devotional-meaning-frame"
       overlay={boxLabel('devotional-meaning-label', pick(lang, { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' }))}
       onLoad={() => mark('meaning')} onError={onError} contentStyle={boxContent}>
       <Text testID="devotional-share-meaning" allowFontScaling={!exportMode}
-        style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
+        style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning ? 28 : lang === 'en' ? 23 : type.meaningSize, lineHeight: lang === 'kn' || lang === 'te' ? 38 : lang === 'gu' ? 34 : shortMeaning ? 34 : type.meaningLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.meaning}</Text>
     </Panel>
     {/* The explanation gets a twin of the meaning box behind the same lotus divider: its caps stay
         intact and its clean middle mirror-tiles, so any length keeps undistorted corners. Absent,
@@ -216,7 +216,7 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
         testID="devotional-commentary-panel" overlay={boxLabel('devotional-commentary-label', pick(lang, { hi: 'महत्त्व', en: 'Significance', gu: 'મહત્ત્વ', kn: 'ಮಹತ್ತ್ವ' }))}
         onLoad={() => mark('comment')} onError={onError} contentStyle={boxContent}>
         <Text testID="devotional-share-commentary" allowFontScaling={!exportMode}
-          style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text>
+          style={fit([reading, meaningStyle, exportMode && { fontSize: shortMeaning || lang === 'en' ? 23 : type.commentarySize, lineHeight: lang === 'kn' || lang === 'te' ? 38 : lang === 'gu' ? 34 : type.commentaryLeading }, { color: '#602D0E', fontFamily: bodyFace }])}>{parts.commentary}</Text>
       </Panel>
     </> : null}
     <DevotionalSlice art={art} width={width} top={spec.meaningBottom} bottom={spec.commentTop} testID="devotional-comment-divider-image" onLoad={() => mark('commentDivider')} onError={onError} />

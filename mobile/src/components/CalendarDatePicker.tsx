@@ -14,7 +14,7 @@ import type { Lang } from '@/data/gita/language';
 import { buildCalendarMonth, calendarWeeks } from '@/panchang/calendarGrid';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 
@@ -50,7 +50,7 @@ function todayKey(): string {
 
 function monthLabel(monthIndex: number, lang: Lang): string {
   if (lang === 'en') return MONTHS_EN[monthIndex];
-  if (lang === 'hi') return MONTHS_HI[monthIndex];
+  if (isDevanagariLang(lang)) return MONTHS_HI[monthIndex];
   return transliterateDevanagari(MONTHS_HI[monthIndex], lang);
 }
 
@@ -113,7 +113,7 @@ export default function CalendarDatePicker({
   const monthTitleEn = `${MONTHS_EN[visibleMonth]} ${visibleYear}`;
   const weekdays = lang === 'en'
     ? WEEKDAYS_EN
-    : lang === 'hi'
+    : isDevanagariLang(lang)
       ? WEEKDAYS_HI
       : WEEKDAYS_HI.map((d) => transliterateDevanagari(d, lang));
 

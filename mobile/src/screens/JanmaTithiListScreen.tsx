@@ -22,7 +22,7 @@ import {
 } from '@/panchang/pitruSmaranDisplay';
 import { useTheme } from '@/theme/ThemeContext';
 import { fontFamilies } from '@/theme/typography';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { panchangTabTarget } from '@/navigation/entryRoutes';
@@ -56,7 +56,7 @@ export default function JanmaTithiListScreen({ navigation }: Props) {
   const ruleCaption = (rule: Parameters<typeof tithiRuleLabel>[0] | null): string => {
     if (!rule) return contentByLang(lang, 'तिथि नहीं निकल सकी', 'Tithi could not be derived');
     const hi = tithiRuleLabel(rule, 'hi');
-    return lang === 'en' ? tithiRuleLabel(rule, 'en') : lang === 'hi' ? hi : transliterateDevanagari(hi, lang);
+    return lang === 'en' ? tithiRuleLabel(rule, 'en') : isDevanagariLang(lang) ? hi : transliterateDevanagari(hi, lang);
   };
 
   const sectionHead = (labelHi: string, labelEn: string) => (

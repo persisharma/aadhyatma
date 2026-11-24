@@ -33,6 +33,10 @@ const chromeOpticalOffsets = {
   gu: { place: 0.17, download: 0.175 },
   kn: { place: 0.26, download: 0.275 },
   en: { place: 0.04, download: -0.01 },
+  // Marathi is the Devanagari face. Telugu borrows Kannada's offsets (similar deep
+  // below-base reserve) pending a measured native export.
+  mr: { place: 0.295, download: 0.285 },
+  te: { place: 0.26, download: 0.275 },
 } as const;
 
 /**

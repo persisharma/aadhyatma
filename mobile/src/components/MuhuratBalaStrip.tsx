@@ -14,7 +14,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage, type Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { NAKSHATRA_NAMES_HI, NAKSHATRA_NAMES_EN } from '@/panchang/names';
@@ -39,7 +39,7 @@ function taraLine(bala: MuhuratBala, lang: Lang): string {
   const name =
     lang === 'en'
       ? TARA_NAMES_EN[bala.tara.tara - 1]
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? TARA_NAMES_HI[bala.tara.tara - 1]
         : transliterateDevanagari(TARA_NAMES_HI[bala.tara.tara - 1], lang);
   return `${name} ${contentByLang(lang, 'तारा', 'tara')}`;
@@ -113,13 +113,13 @@ export default function MuhuratBalaStrip({
   const janmaNak =
     lang === 'en'
       ? NAKSHATRA_NAMES_EN[bala.janmaNakshatraIndex]
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? NAKSHATRA_NAMES_HI[bala.janmaNakshatraIndex]
         : transliterateDevanagari(NAKSHATRA_NAMES_HI[bala.janmaNakshatraIndex], lang);
   const janmaRashi =
     lang === 'en'
       ? RASHI_NAMES_EN[bala.janmaRashiIndex]
-      : lang === 'hi'
+      : isDevanagariLang(lang)
         ? RASHI_NAMES_HI[bala.janmaRashiIndex]
         : transliterateDevanagari(RASHI_NAMES_HI[bala.janmaRashiIndex], lang);
 

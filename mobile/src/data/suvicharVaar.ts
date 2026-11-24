@@ -1,6 +1,7 @@
 import { contentByLang } from '@/utils/localize';
 import { suvicharArtRequest, suvicharFrames, suvicharWishes, type SuvicharDeity, type SuvicharPreferences } from './suvichar';
 import { isSuvicharThought, suvicharDay, suvicharTemplatesFor, type SuvicharTemplate } from './suvicharTemplates';
+import { LANG_VALUES } from '@/data/gita/language';
 
 export type SuvicharVaar = { hi: string; en: string; deities: readonly SuvicharDeity[] };
 
@@ -44,7 +45,7 @@ export function suvicharVaarTemplates(date: Date, templates: SuvicharTemplate[] 
   });
 }
 
-const wishes = new Set(suvicharWishes.flatMap(w => (['hi', 'en', 'gu', 'kn'] as const).map(lang => contentByLang(lang, w.messageHi, w.messageEn))));
+const wishes = new Set(suvicharWishes.flatMap(w => LANG_VALUES.map(lang => contentByLang(lang, w.messageHi, w.messageEn))));
 /** True when the reader wrote the message, rather than keeping a shipped thought or wish. */
 export function isAuthoredSuvicharMessage(message: string): boolean {
   return !!message.trim() && !isSuvicharThought(message) && !wishes.has(message);

@@ -1,5 +1,5 @@
 import type { Lang } from '@/data/gita/language';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isDevanagariLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { formatClock, formatEndInstant, formatRange } from './muhuratFormat';
 import type { MuhuratDay } from './muhurat';
@@ -11,7 +11,7 @@ const MONTHS_HI = ['जनवरी','फ़रवरी','मार्च','अ
 /** `26 अक्तूबर 2026`; gu/kn re-script the Devanagari month, matching the other Panchang screens. */
 export function panchangDateLabel(d: Date, lang: Lang): string {
   const months =
-    lang === 'en' ? MONTHS_EN : lang === 'hi' ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
+    lang === 'en' ? MONTHS_EN : isDevanagariLang(lang) ? MONTHS_HI : MONTHS_HI.map((m) => transliterateDevanagari(m, lang));
   return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 

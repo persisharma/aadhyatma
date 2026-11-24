@@ -24,7 +24,7 @@ import { transliterateDevanagari } from './transliterate';
  * compensate by sizing `latPrimary` a step above `devPrimary` (see call sites).
  */
 
-export type TitleScript = 'devanagari' | 'latin' | 'gujarati' | 'kannada';
+export type TitleScript = 'devanagari' | 'latin' | 'gujarati' | 'kannada' | 'telugu';
 
 /** Point sizes for each script in the prominent vs. supporting slot. */
 export type TitleSizeScale = {
@@ -73,13 +73,18 @@ export function orderTitlesByLanguage(
     fontSize: role === 'primary' ? sizes.latPrimary : sizes.latSecondary,
     ...(role === 'primary' ? { letterSpacing: 0.3 } : null),
   });
-  // gu/kn titles are the Devanagari name re-scripted; they take the Devanagari size
-  // class (same x-height) and the script's own serif cuts.
-  const indic = (script: 'gujarati' | 'kannada'): OrderedTitlePart => ({
-    text: transliterateDevanagari(nameHi, script === 'gujarati' ? 'gu' : 'kn'),
+  // gu/kn/te titles are the Devanagari name re-scripted; they take the Devanagari size
+  // class (same x-height) and the script's own serif cuts. mr reads the Devanagari
+  // name directly, exactly like hi.
+  const indic = (script: 'gujarati' | 'kannada' | 'telugu'): OrderedTitlePart => ({
+    text: transliterateDevanagari(nameHi, script === 'gujarati' ? 'gu' : script === 'kannada' ? 'kn' : 'te'),
     script,
     fontFamily:
-      script === 'gujarati' ? fontFamilies.gujaratiBold : fontFamilies.kannadaBold,
+      script === 'gujarati'
+        ? fontFamilies.gujaratiBold
+        : script === 'kannada'
+          ? fontFamilies.kannadaBold
+          : fontFamilies.teluguBold,
     fontStyle: 'normal',
     fontSize: sizes.devPrimary,
   });
@@ -87,5 +92,6 @@ export function orderTitlesByLanguage(
   if (lang === 'en') return { primary: latin('primary'), secondary: devanagari('secondary') };
   if (lang === 'gu') return { primary: indic('gujarati'), secondary: latin('secondary') };
   if (lang === 'kn') return { primary: indic('kannada'), secondary: latin('secondary') };
+  if (lang === 'te') return { primary: indic('telugu'), secondary: latin('secondary') };
   return { primary: devanagari('primary'), secondary: latin('secondary') };
 }

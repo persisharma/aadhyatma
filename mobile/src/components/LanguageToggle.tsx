@@ -24,6 +24,8 @@ function segmentFont(meta: LanguageMeta): { fontFamily: string; fontSize: number
       return { fontFamily: fontFamilies.gujaratiBold, fontSize: 14 };
     case 'kannada':
       return { fontFamily: fontFamilies.kannadaBold, fontSize: 13 };
+    case 'telugu':
+      return { fontFamily: fontFamilies.teluguBold, fontSize: 13 };
   }
 }
 

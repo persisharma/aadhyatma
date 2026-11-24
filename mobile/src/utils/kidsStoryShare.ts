@@ -5,8 +5,9 @@ import { kidsStoryArtRetainedHeight } from '@/utils/kidsStoryArtFrame';
 import { pick } from '@/utils/localize';
 import { MAX_SHARE_PAGES, bodyWidthFor, paginateProse, pictureCardMetrics, type ProseBlockInput, type ProsePage } from '@/utils/shareCardPages';
 import type { ShareableProse, ShareableProseScope } from '@/utils/shareVerse';
+import { LANG_VALUES } from '@/data/gita/language';
 
-const languages: Lang[] = ['hi', 'en', 'gu', 'kn'];
+const languages = LANG_VALUES;
 const shelf = { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' };
 type Unit = { scene: number | null; pages: Record<Lang, ProsePage[]> };
 const translated = <T,>(fn: (lang: Lang) => T): Record<Lang, T> => Object.fromEntries(languages.map(lang => [lang, fn(lang)])) as Record<Lang, T>;

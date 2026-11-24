@@ -16,8 +16,10 @@ const NAME_SIZE = 10.5;
 const NAME_MAX_SCALE = 1.3;
 // Widest of the seven names per script, in em, at the semibold cut the running
 // segment uses (Chromium measure of the shipped Noto Serif faces, Oct 2026):
-// अमृत · Shubh · અમૃત · ಉದ್ವೇಗ, rounded up for shaping differences.
-const WIDEST_NAME_EM: Record<Lang, number> = { hi: 1.9, en: 3.25, gu: 2.1, kn: 3.0 };
+// अमृत · Shubh · અમૃત · ಉದ್ವೇಗ, rounded up for shaping differences. Marathi shares the
+// Devanagari names; Telugu takes the Kannada width (HarfBuzz-shaped Telugu runs ~11%
+// narrower than Kannada per character, so this over-reserves rather than clips).
+const WIDEST_NAME_EM: Record<Lang, number> = { hi: 1.9, en: 3.25, gu: 2.1, kn: 3.0, mr: 1.9, te: 3.0 };
 
 /**
  * A choghadiya name's size, decided in JS (design.md §3.0): `base` × the system

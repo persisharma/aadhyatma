@@ -39,6 +39,7 @@ import {
   TITHI_NAMES_HI,
 } from './names';
 import type { ObservanceRule, Paksha } from './types';
+import { isDevanagariLang } from '@/utils/localize';
 
 /** A person's shraddha tithi, in the purnimant convention festivals.ts uses. */
 export type TithiRule = {
@@ -118,17 +119,17 @@ function tithiSlotIndex(rule: Pick<TithiRule, 'paksha' | 'tithi'>): number {
 
 /** Tithi name in words for a rule (e.g. `अष्टमी`, `अमावस्या`). */
 export function tithiName(rule: Pick<TithiRule, 'paksha' | 'tithi'>, lang: 'hi' | 'en'): string {
-  const names = lang === 'hi' ? TITHI_NAMES_HI : TITHI_NAMES_EN;
+  const names = isDevanagariLang(lang) ? TITHI_NAMES_HI : TITHI_NAMES_EN;
   return names[tithiSlotIndex(rule)];
 }
 
 /** Full rule label in words: `माघ कृष्ण अष्टमी` / `Magha Krishna Ashtami`. */
 export function tithiRuleLabel(rule: TithiRule | 'sarvapitri', lang: 'hi' | 'en'): string {
   if (rule === 'sarvapitri') {
-    return lang === 'hi' ? 'सर्वपितृ अमावस्या' : 'Sarvapitri Amavasya';
+    return isDevanagariLang(lang) ? 'सर्वपितृ अमावस्या' : 'Sarvapitri Amavasya';
   }
-  const months = lang === 'hi' ? LUNAR_MONTH_NAMES_HI : LUNAR_MONTH_NAMES_EN;
-  const paksha = lang === 'hi' ? PAKSHA_NAMES_HI[rule.paksha] : PAKSHA_NAMES_EN[rule.paksha];
+  const months = isDevanagariLang(lang) ? LUNAR_MONTH_NAMES_HI : LUNAR_MONTH_NAMES_EN;
+  const paksha = isDevanagariLang(lang) ? PAKSHA_NAMES_HI[rule.paksha] : PAKSHA_NAMES_EN[rule.paksha];
   return `${months[rule.lunarMonth - 1]} ${paksha} ${tithiName(rule, lang)}`;
 }
 

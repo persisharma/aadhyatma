@@ -14,7 +14,7 @@ import { kulParamparaExportFilename, shareKulParamparaFile } from '@/panchang/ku
 import { relationLabels } from '@/panchang/pitruSmaran';
 import { getTempleById } from '@/data/theerth/temples';
 import { useTheme } from '@/theme/ThemeContext';
-import { contentByLang } from '@/utils/localize';
+import { contentByLang, isRescriptLang } from '@/utils/localize';
 import { transliterateDevanagari } from '@/utils/transliterate';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import type { MoreStackParamList } from '@/navigation/types';
@@ -38,7 +38,7 @@ export default function KulParamparaExportScreen({ navigation }: Props) {
 
   const bodyFont = scriptBodyFont(lang, typography.meaning.fontFamily);
   const titleFont = scriptTitleFont(lang, typography.readerTitle.fontFamily);
-  const reScript = (hi: string): string => (lang === 'gu' || lang === 'kn' ? transliterateDevanagari(hi, lang) : hi);
+  const reScript = (hi: string): string => (isRescriptLang(lang) ? transliterateDevanagari(hi, lang) : hi);
 
   const temple = record.temple?.templeId ? getTempleById(record.temple.templeId) : undefined;
   const vratRule = record.kulVrat?.ruleId ? kulVratRuleById(record.kulVrat.ruleId) : null;
