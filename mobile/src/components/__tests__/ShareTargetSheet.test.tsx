@@ -127,13 +127,13 @@ describe('ShareTargetSheet', () => {
     expect(tree.root.findAll(n => n.props.children === 'Full verse and meaning — no image').length).toBeGreaterThan(0);
   });
 
-  test('card-language chips: four languages, current one selected, a tap reports the pick', async () => {
+  test('card-language chips: six languages, current one selected, a tap reports the pick', async () => {
     const onCardLang = jest.fn();
     const tree = await renderSheet({ cardLang: 'hi', onCardLang });
     const chips = tree.root.findAll(
       n => typeof n.props.testID === 'string' && n.props.testID.startsWith('share-card-lang-') && typeof n.props.onPress === 'function'
     );
-    expect(chips.map(c => c.props.testID)).toEqual(['share-card-lang-hi', 'share-card-lang-en', 'share-card-lang-gu', 'share-card-lang-kn']);
+    expect(chips.map(c => c.props.testID)).toEqual(['share-card-lang-hi', 'share-card-lang-en', 'share-card-lang-gu', 'share-card-lang-kn', 'share-card-lang-mr', 'share-card-lang-te']);
     expect(byLabel(tree, 'Card language: Hindi').props.accessibilityState).toEqual({ selected: true });
     expect(byLabel(tree, 'Card language: Hindi').props.disabled).toBe(true);
     await act(async () => byLabel(tree, 'Card language: Gujarati').props.onPress());

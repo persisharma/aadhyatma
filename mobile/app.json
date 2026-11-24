@@ -70,6 +70,8 @@
               "./node_modules/@expo-google-fonts/noto-serif-gujarati/600SemiBold/NotoSerifGujarati_600SemiBold.ttf",
               "./node_modules/@expo-google-fonts/noto-serif-kannada/500Medium/NotoSerifKannada_500Medium.ttf",
               "./node_modules/@expo-google-fonts/noto-serif-kannada/600SemiBold/NotoSerifKannada_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-telugu/500Medium/NotoSerifTelugu_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/noto-serif-telugu/600SemiBold/NotoSerifTelugu_600SemiBold.ttf",
               "./node_modules/@expo-google-fonts/inter/500Medium/Inter_500Medium.ttf",
               "./node_modules/@expo-google-fonts/inter/600SemiBold/Inter_600SemiBold.ttf",
               "./node_modules/@expo-google-fonts/tiro-devanagari-sanskrit/400Regular/TiroDevanagariSanskrit_400Regular.ttf"
