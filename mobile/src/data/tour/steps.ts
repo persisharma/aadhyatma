@@ -350,8 +350,8 @@ export const tourSteps: readonly TourStep[] = [
     pointer: 'down',
     titleHi: 'भाषा',
     titleEn: 'Language',
-    bodyHi: 'पढ़ने की भाषा — हिन्दी, English, ગુજરાતી या ಕನ್ನಡ; कभी भी यहाँ से बदलें।',
-    bodyEn: 'Your reading language — Hindi, English, Gujarati, or Kannada; change it here any time.',
+    bodyHi: 'पढ़ने की भाषा — हिन्दी, English, ગુજરાતી, ಕನ್ನಡ, मराठी या తెలుగు; कभी भी यहाँ से बदलें।',
+    bodyEn: 'Your reading language — Hindi, English, Gujarati, Kannada, Marathi, or Telugu; change it here any time.',
   },
   {
     id: 'reading-size-row',

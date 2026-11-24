@@ -1,4 +1,4 @@
-import { toGujarati, toKannada, transliterateDevanagari } from '../transliterate';
+import { toGujarati, toKannada, toTelugu, transliterateDevanagari } from '../transliterate';
 
 /**
  * Golden pairs verified against standard Brahmi-script correspondence (the same
@@ -120,5 +120,67 @@ describe('shared properties', () => {
       expect(toGujarati(line)).not.toMatch(deva);
       expect(toKannada(line)).not.toMatch(deva);
     }
+  });
+});
+
+describe('toTelugu', () => {
+  test('section titles', () => {
+    expect(toTelugu('भगवद् गीता')).toBe('భగవద్ గీతా');
+    expect(toTelugu('हनुमान चालीसा')).toBe('హనుమాన చాలీసా');
+    expect(toTelugu('सुन्दरकाण्ड')).toBe('సున్దరకాణ్డ');
+  });
+
+  test('verse line with conjuncts (Gita 1.1 opening)', () => {
+    expect(toTelugu('धृतराष्ट्र उवाच')).toBe('ధృతరాష్ట్ర ఉవాచ');
+  });
+
+  test('Awadhi chaupai (Hanuman Chalisa)', () => {
+    expect(toTelugu('जय हनुमान ज्ञान गुण सागर')).toBe('జయ హనుమాన జ్ఞాన గుణ సాగర');
+  });
+
+  test('om has no single Telugu codepoint → O + anusvara', () => {
+    expect(toTelugu('ॐ नमः शिवाय')).toBe('ఓం నమః శివాయ');
+  });
+
+  test('Devanagari ए/ओ (long) map to long ఏ/ఓ; short ऎ/ऒ to short ఎ/ఒ', () => {
+    expect(toTelugu('एक')).toBe('ఏక');
+    expect(toTelugu('ओज')).toBe('ఓజ');
+    expect(toTelugu('\u090E\u0912')).toBe('\u0C0E\u0C12');
+    expect(toTelugu('मे')).toBe('మే');
+  });
+
+  test('candrabindu → ఁ and nukta → ఼ (precomposed decomposes)', () => {
+    expect(toTelugu('\u0906\u0901\u0917\u0928')).toBe('\u0C06\u0C01\u0C17\u0C28');
+    expect(toTelugu('\u095B\u0930\u093E')).toBe('\u0C1C\u0C3C\u0C30\u0C3E');
+    expect(toTelugu('\u091C\u093C\u0930\u093E')).toBe('\u0C1C\u0C3C\u0C30\u0C3E');
+    expect(toTelugu('पड़ी')).toBe('పడ఼ీ');
+  });
+
+  test('digits, dandas and mixed Latin', () => {
+    expect(toTelugu('श्लोक · १.१')).toBe('శ్లోక · ౧.౧');
+    expect(toTelugu('महावीर विक्रम बजरंगी ॥')).toBe('మహావీర విక్రమ బజరంగీ ॥');
+    expect(toTelugu('Vedansh ऐप')).toBe('Vedansh ఐప');
+  });
+
+  test('idempotent on own output and passes non-Devanagari through', () => {
+    const te = toTelugu('जय श्री राम');
+    expect(toTelugu(te)).toBe(te);
+    expect(toTelugu('Hanuman Chalisa 108')).toBe('Hanuman Chalisa 108');
+    expect(toTelugu('')).toBe('');
+  });
+
+  test('no Devanagari residue on real corpus lines', () => {
+    const deva = /[ऀ-ॣ०-ॿ]/;
+    for (const line of ['श्रीगुरु चरन सरोज रज निज मनु मुकुरु सुधारि', 'बरनउँ रघुबर बिमल जसु जो दायकु फल चारि', 'त्वमेव माता च पिता त्वमेव']) {
+      expect(toTelugu(line)).not.toMatch(deva);
+    }
+  });
+});
+
+describe('transliterateDevanagari for the newer reading languages', () => {
+  test('te re-scripts; mr is the identity (Marathi is Devanagari)', () => {
+    expect(transliterateDevanagari('राम', 'te')).toBe('రామ');
+    expect(transliterateDevanagari('राम', 'mr')).toBe('राम');
+    expect(transliterateDevanagari('श्रीगणेशाय नमः', 'mr')).toBe('श्रीगणेशाय नमः');
   });
 });

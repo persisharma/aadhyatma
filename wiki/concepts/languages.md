@@ -1,13 +1,23 @@
 ---
-title: Reading Languages (hi/en/gu/kn)
+title: Reading Languages (hi/en/gu/kn/mr/te)
 type: concept
-sources: [mobile/src/data/gita/language.tsx, mobile/src/components/OnboardingSetupSheet.tsx, mobile/src/contexts/TourContext.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, mobile/src/data/__tests__/contentCorrectness.test.ts, mobile/.translations/, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md, docs/superpowers/specs/2026-06-25-native-gukn-scaleout-progress.md]
-last_verified_date: 2026-10-17
+sources: [docs/superpowers/specs/2026-11-24-telugu-marathi-language-support-design.md, mobile/src/widgets/contract.ts, mobile/src/data/comicBooks/index.ts, mobile/src/data/kidsStories/index.ts, mobile/src/data/gita/language.tsx, mobile/src/components/OnboardingSetupSheet.tsx, mobile/src/contexts/TourContext.tsx, mobile/src/utils/transliterate.ts, mobile/src/utils/localize.ts, mobile/src/utils/langType.ts, mobile/src/utils/titleByLanguage.ts, mobile/src/components/LanguageToggle.tsx, mobile/src/theme/typography.ts, mobile/src/data/__tests__/contentCorrectness.test.ts, mobile/.translations/, docs/superpowers/specs/2026-06-13-gujarati-kannada-language-support-design.md, docs/superpowers/specs/2026-06-25-native-gukn-scaleout-progress.md]
+last_verified_date: 2026-11-24
 confidence: high
 status: current
 ---
 
 ## Summary
+
+**Marathi + Telugu (2026-11-24).** `Lang` is now `'hi' | 'en' | 'gu' | 'kn' | 'mr' | 'te'`. Telugu is a third
+re-scripted language (`toTelugu`, ISO-15919, cross-checked against sanscript over 103,517 corpus strings — zero
+disagreements where sanscript emits Telugu) with bundled Noto Serif Telugu and `verseTelugu`/`meaningTelugu` tokens.
+Marathi is Devanagari: `transliterateDevanagari(x, 'mr')` is the identity, it uses every Hindi font/token/metric, and
+its meaning falls back to `meaningHi`. UI chrome is hand-authored in all six (`LocalizedStrings` requires mr/te).
+Use `isDevanagariLang` (hi+mr) and `isRescriptLang` (gu/kn/te), never `lang === 'hi'`. Fallbacks: kids stories mr→Hindi,
+te→English (`storyText`); comic `comicLanguage` mr→hi, te→en with `ComicLanguageNotice`; the native widget payload stays
+on hi/en/gu/kn (`widgetLocale` maps mr/te→hi — native decoders reject other locales) while in-app previews re-script via
+`widgetText`/`widgetLines`. Telugu metrics borrow Kannada's (Telugu shapes ~11% narrower, so wraps over-count).
 
 The app has one shared reading-language preference, `Lang = 'hi' | 'en' | 'gu' | 'kn'`
 (`useGitaLanguage()`, persisted at AsyncStorage `@vedansh/language`, default `'hi'`). Hindi and
@@ -112,6 +122,12 @@ fallback rather than treating generated prose as verified native translation.
   every chrome string is Hindi over English (the language options need no translation — each is
   written in its own script). Same rule as the tour; a `pick()`-localized sheet would show Hindi to
   an English-first installer.
+- **Adding a language touches more than `LANGUAGES`.** The Nov 2026 mr/te addition needed: the `Lang` union, a
+  transliteration spec (or identity), fonts loaded in `App.tsx` + `fontFamilies` + reading tokens + `READING_STYLE_KEYS`,
+  every `Record<Lang, number>` metric table, every gu/kn font ternary, every `lang === 'hi'` branch, speech locales,
+  the widget locale mapping, and ~800 `pick` objects. tsc catches `pick`/`Record<Lang>` gaps; ternaries/switches with a
+  default branch it cannot — grep `=== 'kn'` and `=== 'hi'` when adding the next one (Tamil needs a Sanskrit-in-Tamil
+  convention first).
 - **Native meaning coverage is partial by design** — completed chalisas/aartis can render
   `meaningGu`/`meaningKn`; every other section stays on fallback until its source gate passes.
   Commentary remains fallback-only.

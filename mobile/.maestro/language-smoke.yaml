@@ -1,4 +1,5 @@
-# Language Smoke Test — Gujarati & Kannada reading languages (PR: gu/kn support)
+# Language Smoke Test — Gujarati, Kannada, Telugu & Marathi reading languages
+# (gu/kn support; te/mr added Nov 2026 — Telugu re-scripts like Kannada, Marathi reads Devanagari)
 #
 # Vedansh's reading language was Hindi/English only. This flow proves the two
 # new languages work end to end: selected on the More "Language" card, persisted
@@ -108,6 +109,44 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-home" }
 - waitForAnimationToEnd
 - assertVisible: "ಹನುಮಾನ ಚಾಲೀಸಾ"
+
+# ── Telugu: same re-scripting path as Kannada, Noto Serif Telugu face ──
+- runFlow: _open-settings.yaml
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Telugu"
+    timeout: 15000
+- tapOn: "Telugu"
+- waitForAnimationToEnd
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- assertVisible: "హనుమాన చాలీసా"
+
+# ── Marathi: Devanagari script, so the title reads exactly as in Hindi while the
+#    More chrome switches to Marathi (row label stays "Language, Marathi") ──
+- runFlow: _open-settings.yaml
+- waitForAnimationToEnd
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
+- tapOn: "Language,.*"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Marathi"
+    timeout: 15000
+- tapOn: "Marathi"
+- waitForAnimationToEnd
+- assertVisible: "Language, Marathi"
+- tapOn: { id: "tab-home" }
+- waitForAnimationToEnd
+- assertVisible: "हनुमान चालीसा"
 
 # ── Restore Hindi so the next flow starts from the suite baseline ──
 - runFlow: _open-settings.yaml

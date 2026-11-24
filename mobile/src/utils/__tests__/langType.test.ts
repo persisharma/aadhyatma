@@ -1,4 +1,5 @@
-import { pillTextStyle, titleLeading } from '../langType';
+import { meaningToken, pillTextStyle, titleFontByLang, titleLeading, verseToken } from '../langType';
+import { typography } from '@/theme/typography';
 
 const PILL = { fontSize: 10, fontWeight: '600' as const, letterSpacing: 3 };
 
@@ -27,6 +28,24 @@ describe('pillTextStyle', () => {
     expect(pillTextStyle('kn', PILL).fontFamily).toBe('NotoSerifKannada_600SemiBold');
     expect(pillTextStyle('gu', PILL).letterSpacing).toBe(0);
     expect(pillTextStyle('kn', PILL).textTransform).toBe('none');
+  });
+});
+
+describe('Marathi and Telugu typography', () => {
+  test('Marathi reads in the Devanagari faces, Telugu in Noto Serif Telugu', () => {
+    expect(pillTextStyle('mr', PILL).fontFamily).toBe('NotoSerifDevanagari_600SemiBold');
+    expect(pillTextStyle('te', PILL).fontFamily).toBe('NotoSerifTelugu_600SemiBold');
+    expect(pillTextStyle('te', PILL).letterSpacing).toBe(0);
+    expect(titleFontByLang('mr')).toBe('NotoSerifDevanagari_600SemiBold');
+    expect(titleFontByLang('te')).toBe('NotoSerifTelugu_600SemiBold');
+  });
+
+  test('reading tokens: mr shares the Devanagari tokens; te has its own at the same metrics', () => {
+    expect(verseToken('mr', typography)).toBe(typography.verse);
+    expect(meaningToken('mr', typography)).toBe(typography.meaning);
+    expect(verseToken('te', typography).fontFamily).toBe('NotoSerifTelugu_500Medium');
+    expect(verseToken('te', typography).fontSize).toBe(typography.verse.fontSize);
+    expect(meaningToken('te', typography).lineHeight).toBe(typography.meaning.lineHeight);
   });
 });
 

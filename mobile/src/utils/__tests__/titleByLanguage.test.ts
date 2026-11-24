@@ -124,4 +124,16 @@ describe('orderTitlesByLanguage', () => {
     expect(secondary.text).toBe(NAME_EN);
     expect(secondary.fontStyle).toBe('italic');
   });
+  test('mr: Devanagari primary exactly like hi; te: re-scripted Telugu primary in its serif', () => {
+    expect(orderTitlesByLanguage('mr', NAME_HI, NAME_EN, SIZES)).toEqual(orderTitlesByLanguage('hi', NAME_HI, NAME_EN, SIZES));
+    const te = orderTitlesByLanguage('te', NAME_HI, NAME_EN, SIZES);
+    expect(te.primary).toEqual({
+      text: 'హనుమాన చాలీసా',
+      script: 'telugu',
+      fontFamily: fontFamilies.teluguBold,
+      fontStyle: 'normal',
+      fontSize: SIZES.devPrimary,
+    });
+    expect(te.secondary.text).toBe(NAME_EN);
+  });
 });

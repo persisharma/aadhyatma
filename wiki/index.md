@@ -34,7 +34,7 @@
 
 ## Concepts
 - [[concepts/karaoke]] — shared whole-word native-opacity highlight progression, host-owned configurable reading clock, Infinity first and future स्वतः integration contract.
-- [[languages]] — reading languages hi/en/gu/kn; gu/kn derived at runtime by transliterating the Devanagari; selection + typography helpers.
+- [[languages]] — reading languages hi/en/gu/kn/mr/te; gu/kn/te derived at runtime by transliterating the Devanagari, mr reads it directly; selection + typography helpers, story/comic/widget fallbacks.
 - [[deity-icons]] — shared Storybook icon system: 56 painted assets across Home/More/Discover, 21 deity attributes, direct Phosphor utility imports, offline art, shared celestial decorations and stable layout/accessibility contracts.
 
 ## Entities
