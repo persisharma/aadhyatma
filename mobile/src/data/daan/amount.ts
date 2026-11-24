@@ -8,9 +8,9 @@ export function parseDaanAmount(input: string): DaanAmount {
   // Bound paste work without silently truncating a user's value.
   if (input.length > 128) return { kind: 'invalid' };
   if (!input.trim()) return { kind: 'blank' };
-  const text = input.trim().replace(/^₹[ \u00a0]*/, '').replace(/[०-९૦-૯೦-೯]/g, (digit) => {
+  const text = input.trim().replace(/^₹[ \u00a0]*/, '').replace(/[०-९૦-૯౦-౯೦-೯]/g, (digit) => {
     const cp = digit.charCodeAt(0);
-    const zero = cp >= 0x0ce6 ? 0x0ce6 : cp >= 0x0ae6 ? 0x0ae6 : 0x0966;
+    const zero = cp >= 0x0ce6 ? 0x0ce6 : cp >= 0x0c66 ? 0x0c66 : cp >= 0x0ae6 ? 0x0ae6 : 0x0966;
     return String(cp - zero);
   });
   // A period is the decimal separator. Commas must be valid Indian or

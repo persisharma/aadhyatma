@@ -106,8 +106,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
             accessibilityRole="button"
             accessibilityLabel={
               canAskAgain
-                ? pick(lang, { hi: 'सूचना की अनुमति दें', en: 'Allow notifications', gu: 'સૂચનાની પરવાનગી આપો', kn: 'ಅಧಿಸೂಚನೆಗೆ ಅನುಮತಿ ನೀಡಿ' })
-                : pick(lang, { hi: 'सिस्टम सेटिंग्स खोलें', en: 'Open system settings', gu: 'સિસ્ટમ સેટિંગ્સ ખોલો', kn: 'ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ' })
+                ? pick(lang, { hi: 'सूचना की अनुमति दें', en: 'Allow notifications', gu: 'સૂચનાની પરવાનગી આપો', kn: 'ಅಧಿಸೂಚನೆಗೆ ಅನುಮತಿ ನೀಡಿ', mr: 'सूचनांना परवानगी द्या', te: 'నోటిఫికేషన్‌లకు అనుమతి ఇవ్వండి' })
+                : pick(lang, { hi: 'सिस्टम सेटिंग्स खोलें', en: 'Open system settings', gu: 'સિસ્ટમ સેટિંગ્સ ખોલો', kn: 'ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಿರಿ', mr: 'सिस्टम सेटिंग्ज उघडा', te: 'సిస్టమ్ సెట్టింగ్‌లు తెరవండి' })
             }
             style={({ pressed }) => [
               styles.permissionBanner,
@@ -129,8 +129,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               ]}
             >
               {canAskAgain
-                ? pick(lang, { hi: 'सूचना अनुमति बंद है — अनुमति देने के लिए टैप करें।', en: 'Notifications are off. Tap to allow them.', gu: 'સૂચના પરવાનગી બંધ છે — પરવાનગી આપવા માટે ટૅપ કરો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಅನುಮತಿ ನೀಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })
-                : pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.' })}
+                ? pick(lang, { hi: 'सूचना अनुमति बंद है — अनुमति देने के लिए टैप करें।', en: 'Notifications are off. Tap to allow them.', gu: 'સૂચના પરવાનગી બંધ છે — પરવાનગી આપવા માટે ટૅપ કરો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಅನುಮತಿ ನೀಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ.', mr: 'सूचना परवानगी बंद आहे — परवानगी देण्यासाठी टॅप करा.', te: 'నోటిఫికేషన్ అనుమతి ఆఫ్‌లో ఉంది — అనుమతించడానికి ట్యాప్ చేయండి.' })
+                : pick(lang, { hi: 'सूचना अनुमति बंद है — सेटिंग्स में जाकर खोलें।', en: 'Notifications are disabled. Tap to open Settings.', gu: 'સૂચના પરવાનગી બંધ છે — સેટિંગ્સમાં જઈને ખોલો.', kn: 'ಅಧಿಸೂಚನೆ ಅನುಮತಿ ಆಫ್ ಆಗಿದೆ — ಸೆಟ್ಟಿಂಗ್ಸ್ ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ.', mr: 'सूचना परवानगी बंद आहे — सेटिंग्ज उघडण्यासाठी टॅप करा.', te: 'నోటిఫికేషన్ అనుమతి ఆఫ్‌లో ఉంది — సెట్టింగ్‌లు తెరవడానికి ట్యాప్ చేయండి.' })}
             </Text>
           </Pressable>
   );
@@ -182,7 +182,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
           <Pressable
             onPress={() => navigation.goBack()}
             accessibilityRole="button"
-            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ' })}
+            accessibilityLabel={pick(lang, { hi: 'वापस', en: 'Back', gu: 'પાછા', kn: 'ಹಿಂದೆ', mr: 'मागे', te: 'వెనుకకు' })}
             hitSlop={16}
             style={({ pressed }) => [
               styles.back,
@@ -252,7 +252,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {pick(lang, { hi: 'दैनिक श्लोक', en: 'Daily verse', gu: 'દૈનિક શ્લોક', kn: 'ದೈನಿಕ ಶ್ಲೋಕ' })}
+                  {pick(lang, { hi: 'दैनिक श्लोक', en: 'Daily verse', gu: 'દૈનિક શ્લોક', kn: 'ದೈನಿಕ ಶ್ಲೋಕ', mr: 'दैनिक श्लोक', te: 'దైనిక శ్లోకం' })}
                 </Text>
                 <Text
                   style={[
@@ -263,7 +263,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     },
                   ]}
                 >
-                  {pick(lang, { hi: 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।', en: 'A verse at every time you choose.', gu: 'પસંદ કરેલા સમયે શ્લોક સ્ક્રીન પર આવશે.', kn: 'ಆಯ್ಕೆಮಾಡಿದ ಸಮಯಗಳಲ್ಲಿ ಶ್ಲೋಕ ಪರದೆಯಲ್ಲಿ ಬರುತ್ತದೆ.' })}
+                  {pick(lang, { hi: 'चुने हुए समयों पर श्लोक स्क्रीन पर आएँगे।', en: 'A verse at every time you choose.', gu: 'પસંદ કરેલા સમયે શ્લોક સ્ક્રીન પર આવશે.', kn: 'ಆಯ್ಕೆಮಾಡಿದ ಸಮಯಗಳಲ್ಲಿ ಶ್ಲೋಕ ಪರದೆಯಲ್ಲಿ ಬರುತ್ತದೆ.', mr: 'निवडलेल्या वेळी श्लोक स्क्रीनवर येईल.', te: 'ఎంచుకున్న సమయాల్లో శ్లోకం స్క్రీన్‌పై వస్తుంది.' })}
                 </Text>
               </View>
               <Switch
@@ -273,7 +273,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 trackColor={{ false: colors.divider, true: colors.saffron }}
                 thumbColor={colors.parchment}
                 ios_backgroundColor={colors.divider}
-                accessibilityLabel={pick(lang, { hi: 'दैनिक श्लोक चालू / बंद', en: 'Toggle daily verse', gu: 'દૈનિક શ્લોક ચાલુ / બંધ', kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಆನ್ / ಆಫ್' })}
+                accessibilityLabel={pick(lang, { hi: 'दैनिक श्लोक चालू / बंद', en: 'Toggle daily verse', gu: 'દૈનિક શ્લોક ચાલુ / બંધ', kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಆನ್ / ಆಫ್', mr: 'दैनिक श्लोक चालू / बंद', te: 'దైనిక శ్లోకం ఆన్ / ఆఫ్' })}
               />
             </View>
 
@@ -299,7 +299,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
               ]}
             >
-              {pick(lang, { hi: 'समय', en: 'Times', gu: 'સમય', kn: 'ಸಮಯ' })}
+              {pick(lang, { hi: 'समय', en: 'Times', gu: 'સમય', kn: 'ಸಮಯ', mr: 'वेळ', te: 'సమయాలు' })}
             </Text>
             <Text
               style={[
@@ -307,7 +307,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 { color: colors.inkMuted, fontFamily: typography.meaning.fontFamily },
               ]}
             >
-              {pick(lang, { hi: `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`, en: `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`, gu: `તમે રોજ શ્લોક મેળવવા માગો ત્યારે. વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકો.`, kn: `ನೀವು ಪ್ರತಿದಿನ ಶ್ಲೋಕ ಪಡೆಯಲು ಬಯಸಿದಾಗ. ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
+              {pick(lang, { hi: `जब आप रोज़ श्लोक प्राप्त करना चाहें। अधिकतम ${MAX_REMINDER_TIMES} समय जोड़ सकते हैं।`, en: `When the daily verse arrives. Add up to ${MAX_REMINDER_TIMES}.`, gu: `તમે રોજ શ્લોક મેળવવા માગો ત્યારે. વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકો.`, kn: `ನೀವು ಪ್ರತಿದಿನ ಶ್ಲೋಕ ಪಡೆಯಲು ಬಯಸಿದಾಗ. ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.`, mr: `तुम्हाला रोज श्लोक हवा असेल तेव्हा. जास्तीत जास्त ${MAX_REMINDER_TIMES} वेळा जोडू शकता.`, te: `మీకు రోజూ శ్లోకం కావలసిన సమయం. గరిష్ఠంగా ${MAX_REMINDER_TIMES} సమయాలు జోడించవచ్చు.` })}
             </Text>
 
             <View style={styles.timesList}>
@@ -331,7 +331,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                       onPress={() => removeAt(index)}
                       accessibilityRole="button"
                       accessibilityLabel={
-                        pick(lang, { hi: `समय हटाएँ ${index + 1}`, en: `Remove reminder ${index + 1}`, gu: `સમય દૂર કરો ${index + 1}`, kn: `ಸಮಯ ತೆಗೆದುಹಾಕಿ ${index + 1}` })
+                        pick(lang, { hi: `समय हटाएँ ${index + 1}`, en: `Remove reminder ${index + 1}`, gu: `સમય દૂર કરો ${index + 1}`, kn: `ಸಮಯ ತೆಗೆದುಹಾಕಿ ${index + 1}`, mr: `वेळ काढा ${index + 1}`, te: `సమయం తొలగించండి ${index + 1}` })
                       }
                       hitSlop={10}
                       style={({ pressed }) => [
@@ -362,7 +362,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
               <Pressable
                 onPress={addTime}
                 accessibilityRole="button"
-                accessibilityLabel={pick(lang, { hi: 'समय जोड़ें', en: 'Add reminder', gu: 'સમય ઉમેરો', kn: 'ಸಮಯ ಸೇರಿಸಿ' })}
+                accessibilityLabel={pick(lang, { hi: 'समय जोड़ें', en: 'Add reminder', gu: 'સમય ઉમેરો', kn: 'ಸಮಯ ಸೇರಿಸಿ', mr: 'वेळ जोडा', te: 'సమయం జోడించండి' })}
                 style={({ pressed }) => [
                   styles.addBtn,
                   {
@@ -383,7 +383,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     lang !== 'en' && { letterSpacing: 0, textTransform: 'none' as const },
                   ]}
                 >
-                  {pick(lang, { hi: '+ समय जोड़ें', en: '+ Add reminder', gu: '+ સમય ઉમેરો', kn: '+ ಸಮಯ ಸೇರಿಸಿ' })}
+                  {pick(lang, { hi: '+ समय जोड़ें', en: '+ Add reminder', gu: '+ સમય ઉમેરો', kn: '+ ಸಮಯ ಸೇರಿಸಿ', mr: '+ वेळ जोडा', te: '+ సమయం జోడించండి' })}
                 </Text>
               </Pressable>
             )}
@@ -395,7 +395,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                   lang !== 'en' && { letterSpacing: 0 },
                 ]}
               >
-                {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.` })}
+                {pick(lang, { hi: `अधिकतम ${MAX_REMINDER_TIMES} समय जोड़े जा सकते हैं।`, en: `Up to ${MAX_REMINDER_TIMES} reminders.`, gu: `વધુમાં વધુ ${MAX_REMINDER_TIMES} સમય ઉમેરી શકાય.`, kn: `ಗರಿಷ್ಠ ${MAX_REMINDER_TIMES} ಸಮಯ ಸೇರಿಸಬಹುದು.`, mr: `जास्तीत जास्त ${MAX_REMINDER_TIMES} वेळा जोडता येतात.`, te: `గరిష్ఠంగా ${MAX_REMINDER_TIMES} సమయాలు జోడించవచ్చు.` })}
               </Text>
             )}
           </View>
@@ -420,7 +420,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     { color: colors.ink, fontFamily: scriptSerifBold ?? typography.readerTitle.fontFamily },
                   ]}
                 >
-                  {pick(lang, { hi: 'पर्व स्मरण', en: 'Festival reminders', gu: 'પર્વ સ્મરણ', kn: 'ಪರ್ವ ಸ್ಮರಣ' })}
+                  {pick(lang, { hi: 'पर्व स्मरण', en: 'Festival reminders', gu: 'પર્વ સ્મરણ', kn: 'ಪರ್ವ ಸ್ಮರಣ', mr: 'पर्व स्मरणपत्रे', te: 'పర్వ రిమైండర్‌లు' })}
                 </Text>
                 <Text
                   style={[
@@ -433,6 +433,8 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                     en: `A greeting at ${FESTIVE_CLOCK} on ${FESTIVE_COUNT} major festivals, with the reading for that day one tap away.`,
                     gu: `${FESTIVE_COUNT} મુખ્ય પર્વો પર સવારે ${FESTIVE_CLOCK} વાગ્યે શુભકામના, અને તે દિવસના પાઠનું આમંત્રણ.`,
                     kn: `${FESTIVE_COUNT} ಪ್ರಮುಖ ಹಬ್ಬಗಳಂದು ಬೆಳಿಗ್ಗೆ ${FESTIVE_CLOCK} ಕ್ಕೆ ಶುಭಾಶಯ, ಮತ್ತು ಆ ದಿನದ ಪಾಠಕ್ಕೆ ಆಹ್ವಾನ.`,
+                    mr: `${FESTIVE_COUNT} प्रमुख सणांना सकाळी ${FESTIVE_CLOCK} वाजता शुभेच्छा, आणि त्या दिवसाच्या पाठाचे आमंत्रण.`,
+                    te: `${FESTIVE_COUNT} ప్రధాన పండుగల రోజున ఉదయం ${FESTIVE_CLOCK}కి శుభాకాంక్షలు, ఆ రోజు పాఠానికి ఆహ్వానం.`,
                   })}
                 </Text>
               </View>
@@ -443,7 +445,7 @@ export default function ReminderSettingsScreen({ navigation }: Props) {
                 trackColor={{ false: colors.divider, true: colors.saffron }}
                 thumbColor={colors.parchment}
                 ios_backgroundColor={colors.divider}
-                accessibilityLabel={pick(lang, { hi: 'पर्व स्मरण चालू / बंद', en: 'Toggle festival reminders', gu: 'પર્વ સ્મરણ ચાલુ / બંધ', kn: 'ಪರ್ವ ಸ್ಮರಣ ಆನ್ / ಆಫ್' })}
+                accessibilityLabel={pick(lang, { hi: 'पर्व स्मरण चालू / बंद', en: 'Toggle festival reminders', gu: 'પર્વ સ્મરણ ચાલુ / બંધ', kn: 'ಪರ್ವ ಸ್ಮರಣ ಆನ್ / ಆಫ್', mr: 'पर्व स्मरणपत्रे चालू / बंद', te: 'పర్వ రిమైండర్‌లు ఆన్ / ఆఫ్' })}
               />
             </View>
 

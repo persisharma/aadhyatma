@@ -11,7 +11,7 @@ import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useGitaLanguage, LANGUAGES, type Lang } from '@/data/gita/language';
 import { fontFamilies } from '@/theme/typography';
 import { scriptTitleFont, scriptBodyFont } from '@/utils/langType';
-import { contentByLang, pick, isDevanagariLang } from '@/utils/localize';
+import { contentByLang, pick, isRescriptLang } from '@/utils/localize';
 import { helpContent, buildDiscrepancyMailto, SUPPORT_EMAIL } from '@/data/help/content';
 import { buildAppShareMessage, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/data/shareLinks';
 import { useUserActivity } from '@/contexts/UserActivityContext';
@@ -161,9 +161,9 @@ export default function MoreScreen({ navigation }: Props) {
   const activeLensCount = lenses.size;
   const lensState =
     activeLensCount === 0
-      ? pick(lang, { hi: `${lensAvailableCount} उपलब्ध`, en: `${lensAvailableCount} available`, gu: `${lensAvailableCount} ઉપલબ્ધ`, kn: `${lensAvailableCount} ಲಭ್ಯ` })
+      ? pick(lang, { hi: `${lensAvailableCount} उपलब्ध`, en: `${lensAvailableCount} available`, gu: `${lensAvailableCount} ઉપલબ્ધ`, kn: `${lensAvailableCount} ಲಭ್ಯ`, mr: `${lensAvailableCount} उपलब्ध`, te: `${lensAvailableCount} అందుబాటులో` })
       : activeLensCount === lensAvailableCount
-      ? pick(lang, { hi: `सभी ${lensAvailableCount}`, en: `All ${lensAvailableCount}`, gu: `બધા ${lensAvailableCount}`, kn: `ಎಲ್ಲಾ ${lensAvailableCount}` })
+      ? pick(lang, { hi: `सभी ${lensAvailableCount}`, en: `All ${lensAvailableCount}`, gu: `બધા ${lensAvailableCount}`, kn: `ಎಲ್ಲಾ ${lensAvailableCount}`, mr: `सर्व ${lensAvailableCount}`, te: `అన్నీ ${lensAvailableCount}` })
       : [...lenses]
           .map((id) => {
             const def = getLensDefinition(id);
@@ -190,11 +190,11 @@ export default function MoreScreen({ navigation }: Props) {
   const kulState = kulRecord.kuldev
     ? (lang === 'en'
         ? kuldevDisplayName(kulRecord.kuldev, 'en')
-        : isDevanagariLang(lang)
-          ? kuldevDisplayName(kulRecord.kuldev, 'hi')
-          : transliterateDevanagari(kuldevDisplayName(kulRecord.kuldev, 'hi'), lang))
+        : isRescriptLang(lang)
+          ? transliterateDevanagari(kuldevDisplayName(kulRecord.kuldev, 'hi'), lang)
+          : kuldevDisplayName(kulRecord.kuldev, 'hi'))
     : kulHasRecord
-      ? pick(lang, { hi: 'सहेजा गया', en: 'Saved', gu: 'સાચવ્યું', kn: 'ಉಳಿಸಲಾಗಿದೆ' })
+      ? pick(lang, { hi: 'सहेजा गया', en: 'Saved', gu: 'સાચવ્યું', kn: 'ಉಳಿಸಲಾಗಿದೆ', mr: 'जतन केले', te: 'సేవ్ చేయబడింది' })
       : 'NEW';
   // Feature-tour spotlight targets (§47) — both rows sit in the "App" group,
   // below the fold on smaller devices, so each declares a reveal that scrolls
@@ -222,7 +222,7 @@ export default function MoreScreen({ navigation }: Props) {
   const shareApp = () => {
     shareWithRating(
       { message: buildAppShareMessage(lang) },
-      { dialogTitle: pick(lang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ' }) }
+      { dialogTitle: pick(lang, { hi: 'Vedansh साझा करें', en: 'Share Vedansh', gu: 'Vedansh શેર કરો', kn: 'Vedansh ಹಂಚಿಕೊಳ್ಳಿ', mr: 'Vedansh शेअर करा', te: 'Vedansh షేర్ చేయండి' }) }
     ).catch(() => {
       // Share sheet dismissed or unavailable — nothing to recover.
     });
@@ -248,8 +248,8 @@ export default function MoreScreen({ navigation }: Props) {
   };
 
   const remindersState = notifPrefs.dailyVerseEnabled
-    ? formatReminderTimes(notifPrefs.times) || pick(lang, { hi: 'चालू', en: 'On', gu: 'ચાલુ', kn: 'ಆನ್' })
-    : pick(lang, { hi: 'बंद', en: 'Off', gu: 'બંધ', kn: 'ಆಫ್' });
+    ? formatReminderTimes(notifPrefs.times) || pick(lang, { hi: 'चालू', en: 'On', gu: 'ચાલુ', kn: 'ಆನ್', mr: 'चालू', te: 'ఆన్' })
+    : pick(lang, { hi: 'बंद', en: 'Off', gu: 'બંધ', kn: 'ಆಫ್', mr: 'बंद', te: 'ఆఫ్' });
 
   return (
     <View style={styles.root}>
@@ -268,14 +268,14 @@ export default function MoreScreen({ navigation }: Props) {
             <Pressable
               testID="settings-back"
               accessibilityRole="button"
-              accessibilityLabel={pick(lang, { hi: 'होम पर वापस जाएँ', en: 'Back to Home', gu: 'હોમ પર પાછા જાઓ', kn: 'ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ' })}
+              accessibilityLabel={pick(lang, { hi: 'होम पर वापस जाएँ', en: 'Back to Home', gu: 'હોમ પર પાછા જાઓ', kn: 'ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ', mr: 'होमवर परत जा', te: 'హోమ్‌కు తిరిగి వెళ్లండి' })}
               onPress={() => navigation.getParent()?.navigate('HomeTab', { screen: 'Home' })}
               style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.7 }]}
             >
               <AppIcon name="back" size={24} color={colors.iconInk} />
             </Pressable>
             <Text style={{ fontFamily: titleFont, fontSize: 30, color: colors.ink }}>
-              {pick(lang, { hi: 'सेटिंग्स', en: 'Settings', gu: 'સેટિંગ્સ', kn: 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು' })}
+              {pick(lang, { hi: 'सेटिंग्स', en: 'Settings', gu: 'સેટિંગ્સ', kn: 'ಸೆಟ್ಟಿಂಗ್‌ಗಳು', mr: 'सेटिंग्ज', te: 'సెట్టింగ్‌లు' })}
             </Text>
           </View>
 
@@ -283,7 +283,7 @@ export default function MoreScreen({ navigation }: Props) {
             {/* ── Group 1: साधना / Practice ── */}
             <View style={styles.group}>
               <Text style={[styles.groupLabel, { color: colors.saffronDeep }, isEn ? styles.groupLabelLatin : { fontFamily: chromeFont }]}>
-                {pick(lang, { hi: 'साधना', en: 'Practice', gu: 'સાધના', kn: 'ಸಾಧನೆ' })}
+                {pick(lang, { hi: 'साधना', en: 'Practice', gu: 'સાધના', kn: 'ಸಾಧನೆ', mr: 'साधना', te: 'సాధన' })}
               </Text>
               <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
                 {/* Compact profile hero row */}
@@ -306,16 +306,16 @@ export default function MoreScreen({ navigation }: Props) {
                   </View>
                   <View style={styles.profileMeta}>
                     <Text style={{ fontFamily: labelFont, fontSize: 18, color: colors.ink }} numberOfLines={largeText ? undefined : 1}>
-                      {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್' })}
+                      {pick(lang, { hi: 'साधक प्रोफ़ाइल', en: 'Sadhak Profile', gu: 'સાધક પ્રોફાઇલ', kn: 'ಸಾಧಕ ಪ್ರೊಫೈಲ್', mr: 'साधक प्रोफाइल', te: 'సాధక ప్రొఫైల్' })}
                     </Text>
                     <Text style={{ marginTop: 3, fontFamily: chromeFont, fontSize: 14, color: colors.inkMuted }} numberOfLines={largeText ? undefined : 1}>
                       <Text style={{ color: colors.saffron, fontFamily: fontFamilies.interSemiBold }}>{profileTotals.totalReads}</Text>
                       {' '}
-                      {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' })}
+                      {pick(lang, { hi: 'श्लोक', en: 'verses', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ', mr: 'श्लोक', te: 'శ్లోకాలు' })}
                       {'    ·    '}
                       <Text style={{ color: colors.saffron, fontFamily: fontFamilies.interSemiBold }}>{streak}</Text>
                       {' '}
-                      {pick(lang, { hi: 'श्रृंखला', en: 'day streak', gu: 'શ્રેણી', kn: 'ಸರಣಿ' })}
+                      {pick(lang, { hi: 'श्रृंखला', en: 'day streak', gu: 'શ્રેણી', kn: 'ಸರಣಿ', mr: 'सलग दिवस', te: 'రోజుల వరుస' })}
                     </Text>
                   </View>
                   <View style={styles.rowChevron}>
@@ -328,7 +328,7 @@ export default function MoreScreen({ navigation }: Props) {
                     (kuldev → ancestors → birthdays), then the occasional home tool. */}
                 <SettingsRow
                   icon="bell"
-                  label={pick(lang, { hi: 'स्मरण', en: 'Reminders', gu: 'સ્મરણ', kn: 'ಸ್ಮರಣೆ' })}
+                  label={pick(lang, { hi: 'स्मरण', en: 'Reminders', gu: 'સ્મરણ', kn: 'ಸ್ಮರಣೆ', mr: 'स्मरणपत्रे', te: 'రిమైండర్‌లు' })}
                   labelFontFamily={labelFont}
                   state={remindersState}
                   stateFontFamily={notifPrefs.dailyVerseEnabled ? fontFamilies.inter : chromeFont}
@@ -341,7 +341,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 <SettingsRow
                   icon="alarm"
-                  label={pick(lang, { hi: 'जप अलार्म', en: 'Japam Alarms', gu: 'જપ અલાર્મ', kn: 'ಜಪ ಅಲಾರಂ' })}
+                  label={pick(lang, { hi: 'जप अलार्म', en: 'Japam Alarms', gu: 'જપ અલાર્મ', kn: 'ಜಪ ಅಲಾರಂ', mr: 'जप अलार्म', te: 'జప అలారాలు' })}
                   labelFontFamily={labelFont}
                   state={activeJapamAlarms.length > 0 ? `${activeJapamAlarms.length}` : undefined}
                   onPress={() => navigation.navigate('JapamAlarms')}
@@ -351,7 +351,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 <SettingsRow
                   icon="saved"
-                  label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ' })}
+                  label={pick(lang, { hi: 'संग्रह', en: 'Wishlist', gu: 'સંગ્રહ', kn: 'ಸಂಗ್ರಹ', mr: 'संग्रह', te: 'సంగ్రహం' })}
                   labelFontFamily={labelFont}
                   state={`${bookmarks.length}`}
                   onPress={() => navigation.navigate('Wishlist')}
@@ -361,7 +361,7 @@ export default function MoreScreen({ navigation }: Props) {
                     the saved kuldev once one is chosen. */}
                 <SettingsRow
                   icon="family"
-                  label={pick(lang, { hi: 'कुल परम्परा', en: 'Kul Parampara', gu: 'કુળ પરંપરા', kn: 'ಕುಲ ಪರಂಪರಾ' })}
+                  label={pick(lang, { hi: 'कुल परम्परा', en: 'Kul Parampara', gu: 'કુળ પરંપરા', kn: 'ಕುಲ ಪರಂಪರಾ', mr: 'कुळ परंपरा', te: 'కుల పరంపర' })}
                   labelFontFamily={labelFont}
                   state={kulState}
                   stateFontFamily={kulHasRecord ? chromeFont : fontFamilies.interSemiBold}
@@ -373,7 +373,7 @@ export default function MoreScreen({ navigation }: Props) {
                     More-row NEW state for one release, then count + soonest date. */}
                 <SettingsRow
                   icon="remembrance"
-                  label={pick(lang, { hi: 'पितृ स्मरण', en: 'Pitru Smaran', gu: 'પિતૃ સ્મરણ', kn: 'ಪಿತೃ ಸ್ಮರಣ' })}
+                  label={pick(lang, { hi: 'पितृ स्मरण', en: 'Pitru Smaran', gu: 'પિતૃ સ્મરણ', kn: 'ಪಿತೃ ಸ್ಮರಣ', mr: 'पितृ स्मरण', te: 'పితృ స్మరణ' })}
                   labelFontFamily={labelFont}
                   state={smaranState}
                   stateFontFamily={smaranEntries.length === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
@@ -393,7 +393,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {lensAvailableCount > 0 && (
                   <SettingsRow
                     icon="regional"
-                    label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ' })}
+                    label={pick(lang, { hi: 'क्षेत्रीय पंचांग', en: 'Regional calendars', gu: 'પ્રાદેશિક પંચાંગ', kn: 'ಪ್ರಾದೇಶಿಕ ಪಂಚಾಂಗ', mr: 'प्रादेशिक पंचांग', te: 'ప్రాంతీయ పంచాంగం' })}
                     labelFontFamily={labelFont}
                     state={lensState}
                     stateFontFamily={activeLensCount === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
@@ -412,7 +412,7 @@ export default function MoreScreen({ navigation }: Props) {
                     ledger: count + the soonest Hindu birthday. */}
                 <SettingsRow
                   icon="birthday"
-                  label={pick(lang, { hi: 'जन्म तिथि', en: 'Janma Tithi', gu: 'જન્મ તિથિ', kn: 'ಜನ್ಮ ತಿಥಿ' })}
+                  label={pick(lang, { hi: 'जन्म तिथि', en: 'Janma Tithi', gu: 'જન્મ તિથિ', kn: 'ಜನ್ಮ ತಿಥಿ', mr: 'जन्म तिथी', te: 'జన్మ తిథి' })}
                   labelFontFamily={labelFont}
                   state={janmaState}
                   stateFontFamily={janmaPeople.length === 0 ? fontFamilies.interSemiBold : fontFamilies.inter}
@@ -428,7 +428,7 @@ export default function MoreScreen({ navigation }: Props) {
                     the widget-gallery pattern. */}
                 <SettingsRow
                   icon="purpose"
-                  label={pick(lang, { hi: 'वास्तु दिशा', en: 'Vastu Disha', gu: 'વાસ્તુ દિશા', kn: 'ವಾಸ್ತು ದಿಶಾ' })}
+                  label={pick(lang, { hi: 'वास्तु दिशा', en: 'Vastu Disha', gu: 'વાસ્તુ દિશા', kn: 'ವಾಸ್ತು ದಿಶಾ', mr: 'वास्तु दिशा', te: 'వాస్తు దిశ' })}
                   labelFontFamily={labelFont}
                   state="NEW"
                   stateFontFamily={fontFamilies.interSemiBold}
@@ -439,7 +439,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {/* दान-पुण्य (PRD-26) — the educate-first giving layer. */}
                 <SettingsRow
                   icon="daan"
-                  label={pick(lang, { hi: 'दान-पुण्य', en: 'Daan Punya', gu: 'દાન-પુણ્ય', kn: 'ದಾನ-ಪುಣ್ಯ' })}
+                  label={pick(lang, { hi: 'दान-पुण्य', en: 'Daan Punya', gu: 'દાન-પુણ્ય', kn: 'ದಾನ-ಪುಣ್ಯ', mr: 'दान-पुण्य', te: 'దాన-పుణ్యం' })}
                   labelFontFamily={labelFont}
                   state="NEW"
                   stateFontFamily={fontFamilies.interSemiBold}
@@ -453,7 +453,7 @@ export default function MoreScreen({ navigation }: Props) {
             {/* ── Group 2: ऐप / App ── */}
             <View style={styles.group}>
               <Text style={[styles.groupLabel, { color: colors.saffronDeep }, isEn ? styles.groupLabelLatin : { fontFamily: chromeFont }]}>
-                {pick(lang, { hi: 'ऐप', en: 'App', gu: 'ઍપ', kn: 'ಆ್ಯಪ್' })}
+                {pick(lang, { hi: 'ऐप', en: 'App', gu: 'ઍપ', kn: 'ಆ್ಯಪ್', mr: 'ॲप', te: 'యాప్' })}
               </Text>
               <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
                 {/* Tour targets: wrapped in measurable views so FeatureTour can
@@ -462,7 +462,7 @@ export default function MoreScreen({ navigation }: Props) {
                   <SettingsRow
                     first
                     icon="language"
-                    label={pick(lang, { hi: 'भाषा', en: 'Language', gu: 'ભાષા', kn: 'ಭಾಷೆ' })}
+                    label={pick(lang, { hi: 'भाषा', en: 'Language', gu: 'ભાષા', kn: 'ಭಾಷೆ', mr: 'भाषा', te: 'భాష' })}
                     labelFontFamily={labelFont}
                     state={currentLang.nativeLabel}
                     stateFontFamily={nativeNameFont(lang, typography.readerTitle.fontFamily)}
@@ -471,7 +471,7 @@ export default function MoreScreen({ navigation }: Props) {
                   />
                 </View>
                 <SettingsRow icon="question"
-                  label={pick(lang, { hi: 'नए भाग देखें', en: 'Explore sections', gu: 'નવા વિભાગો જુઓ', kn: 'ವಿಭಾಗಗಳನ್ನು ನೋಡಿ' })}
+                  label={pick(lang, { hi: 'नए भाग देखें', en: 'Explore sections', gu: 'નવા વિભાગો જુઓ', kn: 'ವಿಭಾಗಗಳನ್ನು ನೋಡಿ', mr: 'नवे विभाग पाहा', te: 'కొత్త విభాగాలు చూడండి' })}
                   labelFontFamily={labelFont}
                   onPress={() => setShowExplore(true)}
                   accessibilityLabel="Explore sections"
@@ -480,7 +480,7 @@ export default function MoreScreen({ navigation }: Props) {
                 <View ref={readingSizeRowRef} collapsable={false}>
                   <SettingsRow
                     icon="textSize"
-                    label={pick(lang, { hi: 'पाठ का आकार', en: 'Reading Size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ' })}
+                    label={pick(lang, { hi: 'पाठ का आकार', en: 'Reading Size', gu: 'વાંચન કદ', kn: 'ಓದುವ ಗಾತ್ರ', mr: 'वाचन आकार', te: 'పఠన పరిమాణం' })}
                     labelFontFamily={labelFont}
                     state={readingSizeLabel(scale, lang)}
                     stateFontFamily={chromeFont}
@@ -493,7 +493,7 @@ export default function MoreScreen({ navigation }: Props) {
                     ref — so a row below them is safe as long as no tour step is added. */}
                 <SettingsRow
                   icon="voice"
-                  label={pick(lang, { hi: 'पाठ सुनें', en: 'Read Aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ' })}
+                  label={pick(lang, { hi: 'पाठ सुनें', en: 'Read Aloud', gu: 'પાઠ સાંભળો', kn: 'ಪಾಠ ಕೇಳಿ', mr: 'पाठ ऐका', te: 'పాఠం వినండి' })}
                   labelFontFamily={labelFont}
                   state={readAloudRowLabel(readAloudPrefs, lang, readAloudAvailability)}
                   stateFontFamily={chromeFont}
@@ -502,7 +502,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 <SettingsRow
                   icon="widgets"
-                  label={pick(lang, { hi: 'होम-स्क्रीन विजेट', en: 'Home-Screen Widgets', gu: 'હોમ-સ્ક્રીન વિજેટ', kn: 'ಹೋಮ್-ಸ್ಕ್ರೀನ್ ವಿಜೆಟ್' })}
+                  label={pick(lang, { hi: 'होम-स्क्रीन विजेट', en: 'Home-Screen Widgets', gu: 'હોમ-સ્ક્રીન વિજેટ', kn: 'ಹೋಮ್-ಸ್ಕ್ರೀನ್ ವಿಜೆಟ್', mr: 'होम-स्क्रीन विजेट', te: 'హోమ్-స్క్రీన్ విడ్జెట్‌లు' })}
                   labelFontFamily={labelFont}
                   state="NEW"
                   stateFontFamily={fontFamilies.interSemiBold}
@@ -512,7 +512,7 @@ export default function MoreScreen({ navigation }: Props) {
                 />
                 <SettingsRow
                   icon="share"
-                  label={pick(lang, { hi: 'ऐप साझा करें', en: 'Share the App', gu: 'ઍપ શેર કરો', kn: 'ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ' })}
+                  label={pick(lang, { hi: 'ऐप साझा करें', en: 'Share the App', gu: 'ઍપ શેર કરો', kn: 'ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'ॲप शेअर करा', te: 'యాప్ షేర్ చేయండి' })}
                   labelFontFamily={labelFont}
                   onPress={shareApp}
                   accessibilityLabel={pick(lang, {
@@ -520,6 +520,8 @@ export default function MoreScreen({ navigation }: Props) {
                     en: 'Share Vedansh app',
                     gu: 'Vedansh ઍપ શેર કરો',
                     kn: 'Vedansh ಆ್ಯಪ್ ಹಂಚಿಕೊಳ್ಳಿ',
+                    mr: 'Vedansh ॲप शेअर करा',
+                    te: 'Vedansh యాప్ షేర్ చేయండి',
                   })}
                 />
                 {/* Manual entry point for the rating ask (§54). Opens the same
@@ -532,6 +534,8 @@ export default function MoreScreen({ navigation }: Props) {
                     en: 'Rate the App',
                     gu: 'ઍપને રેટિંગ આપો',
                     kn: 'ಆ್ಯಪ್‌ಗೆ ರೇಟಿಂಗ್ ನೀಡಿ',
+                    mr: 'ॲपला रेटिंग द्या',
+                    te: 'యాప్‌కు రేటింగ్ ఇవ్వండి',
                   })}
                   labelFontFamily={labelFont}
                   onPress={openRatingPrompt}
@@ -545,6 +549,8 @@ export default function MoreScreen({ navigation }: Props) {
                     en: 'Follow on Instagram',
                     gu: 'Instagram પર ફોલો કરો',
                     kn: 'Instagram ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ',
+                    mr: 'Instagram वर फॉलो करा',
+                    te: 'Instagramలో ఫాలో చేయండి',
                   })}
                   labelFontFamily={labelFont}
                   state={`@${INSTAGRAM_HANDLE}`}
@@ -557,20 +563,20 @@ export default function MoreScreen({ navigation }: Props) {
             {/* ── Group 3: जानकारी / Info ── */}
             <View style={styles.group}>
               <Text style={[styles.groupLabel, { color: colors.saffronDeep }, isEn ? styles.groupLabelLatin : { fontFamily: chromeFont }]}>
-                {pick(lang, { hi: 'जानकारी', en: 'Info', gu: 'માહિતી', kn: 'ಮಾಹಿತಿ' })}
+                {pick(lang, { hi: 'जानकारी', en: 'Info', gu: 'માહિતી', kn: 'ಮಾಹಿತಿ', mr: 'माहिती', te: 'సమాచారం' })}
               </Text>
               <View style={[styles.list, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
                 <SettingsRow
                   first
                   icon="info"
-                  label={pick(lang, { hi: 'परिचय व अस्वीकरण', en: 'About & Disclaimer', gu: 'પરિચય અને અસ્વીકરણ', kn: 'ಪರಿಚಯ ಮತ್ತು ಹಕ್ಕುನಿರಾಕರಣೆ' })}
+                  label={pick(lang, { hi: 'परिचय व अस्वीकरण', en: 'About & Disclaimer', gu: 'પરિચય અને અસ્વીકરણ', kn: 'ಪರಿಚಯ ಮತ್ತು ಹಕ್ಕುನಿರಾಕರಣೆ', mr: 'परिचय आणि अस्वीकरण', te: 'పరిచయం & నిరాకరణ' })}
                   labelFontFamily={labelFont}
                   onPress={() => setDisclaimerVisible(true)}
                   accessibilityLabel="About and disclaimer"
                 />
                 <SettingsRow
                   icon="report"
-                  label={pick(lang, { hi: 'त्रुटि सूचित करें', en: 'Report an Error', gu: 'ભૂલ જણાવો', kn: 'ದೋಷ ವರದಿ ಮಾಡಿ' })}
+                  label={pick(lang, { hi: 'त्रुटि सूचित करें', en: 'Report an Error', gu: 'ભૂલ જણાવો', kn: 'ದೋಷ ವರದಿ ಮಾಡಿ', mr: 'त्रुटी कळवा', te: 'లోపాన్ని నివేదించండి' })}
                   labelFontFamily={labelFont}
                   onPress={reportError}
                   accessibilityLabel="Report an error"
@@ -578,7 +584,7 @@ export default function MoreScreen({ navigation }: Props) {
                 {/* Replay the first-launch feature tour on demand (design.md §37/§47). */}
                 <SettingsRow
                   icon="reset"
-                  label={pick(lang, { hi: 'ऐप भ्रमण फिर देखें', en: 'Show App Tour', gu: 'ઍપ પરિચય ફરી જુઓ', kn: 'ಆ್ಯಪ್ ಪ್ರವಾಸ ಮತ್ತೆ ನೋಡಿ' })}
+                  label={pick(lang, { hi: 'ऐप भ्रमण फिर देखें', en: 'Show App Tour', gu: 'ઍપ પરિચય ફરી જુઓ', kn: 'ಆ್ಯಪ್ ಪ್ರವಾಸ ಮತ್ತೆ ನೋಡಿ', mr: 'ॲप परिचय पुन्हा पाहा', te: 'యాప్ పరిచయం మళ్లీ చూడండి' })}
                   labelFontFamily={labelFont}
                   onPress={() => resetTour()}
                   accessibilityLabel="Show App Tour"

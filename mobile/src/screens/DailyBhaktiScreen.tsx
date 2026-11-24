@@ -125,6 +125,8 @@ export default function DailyBhaktiScreen() {
                 en: 'No verses available',
                 gu: 'દૈનિક શ્લોક ઉપલબ્ધ નથી',
                 kn: 'ದೈನಿಕ ಶ್ಲೋಕ ಲಭ್ಯವಿಲ್ಲ',
+                mr: 'दैनिक श्लोक उपलब्ध नाही',
+                te: 'దైనిక శ్లోకం అందుబాటులో లేదు',
               })}
             </Text>
           </View>
@@ -163,7 +165,7 @@ export default function DailyBhaktiScreen() {
                 <ShareButton busy={shareBusy} onPress={() => share(dailyBhaktiVerse(verse), lang, { cardStyle: 'daily-bhakti' })} />
               </View>
               <Pressable onPress={refresh} accessibilityRole="button"
-                accessibilityLabel={pick(lang, { hi: 'अगला श्लोक', en: 'Next verse', gu: 'આગળનો શ્લોક', kn: 'ಮುಂದಿನ ಶ್ಲೋಕ' })}
+                accessibilityLabel={pick(lang, { hi: 'अगला श्लोक', en: 'Next verse', gu: 'આગળનો શ્લોક', kn: 'ಮುಂದಿನ ಶ್ಲೋಕ', mr: 'पुढचा श्लोक', te: 'తదుపరి శ్లోకం' })}
                 testID="daily-bhakti-next" style={styles.nextBtn}>
                 <Text style={{ fontSize: 24, color: colors.saffronDeep }}>↻</Text>
               </Pressable>

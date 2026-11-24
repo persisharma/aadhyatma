@@ -8,13 +8,13 @@ import type { ShareableProse, ShareableProseScope } from '@/utils/shareVerse';
 import { LANG_VALUES } from '@/data/gita/language';
 
 const languages = LANG_VALUES;
-const shelf = { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' };
+const shelf = { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು', mr: 'मुलांच्या चित्रकथा', te: 'పిల్లల చిత్రకథలు' };
 type Unit = { scene: number | null; pages: Record<Lang, ProsePage[]> };
 const translated = <T,>(fn: (lang: Lang) => T): Record<Lang, T> => Object.fromEntries(languages.map(lang => [lang, fn(lang)])) as Record<Lang, T>;
 const layout = 'picture' as const;
-const endingTitle = { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ' };
+const endingTitle = { hi: 'कथा की सीख', en: 'What we learn', gu: 'વાર્તાની શીખ', kn: 'ಕಥೆಯ ಪಾಠ', mr: 'कथेची शिकवण', te: 'కథ నేర్పే పాఠం' };
 /** The app link on the last card: a PNG cannot be tapped, so the URL is printed and the share message carries it too. */
-const appLink = { hi: 'पूरी चित्र-कथा Vedansh ऐप में पढ़ें', en: 'Read the whole picture story in the Vedansh app', gu: 'આખી ચિત્રવાર્તા Vedansh ઍપમાં વાંચો', kn: 'ಸಂಪೂರ್ಣ ಚಿತ್ರಕಥೆ Vedansh ಆ್ಯಪ್‌ನಲ್ಲಿ ಓದಿ' };
+const appLink = { hi: 'पूरी चित्र-कथा Vedansh ऐप में पढ़ें', en: 'Read the whole picture story in the Vedansh app', gu: 'આખી ચિત્રવાર્તા Vedansh ઍપમાં વાંચો', kn: 'ಸಂಪೂರ್ಣ ಚಿತ್ರಕಥೆ Vedansh ಆ್ಯಪ್‌ನಲ್ಲಿ ಓದಿ', mr: 'संपूर्ण चित्रकथा Vedansh ॲपमध्ये वाचा', te: 'పూర్తి చిత్రకథను Vedansh యాప్‌లో చదవండి' };
 
 /**
  * One picture card: the complete art at the body's full width when the caption leaves
@@ -58,10 +58,10 @@ export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareablePr
     id, labelHi: '', labelEn: '', headerHi: story.title.hi, headerEn: story.title.en, blocks: [],
     prepared: translated(lang => {
       const label = part === undefined
-        ? pick(lang, { hi: 'यह पृष्ठ', en: 'This scene', gu: 'આ પાનું', kn: 'ಈ ಪುಟ' })
+        ? pick(lang, { hi: 'यह पृष्ठ', en: 'This scene', gu: 'આ પાનું', kn: 'ಈ ಪುಟ', mr: 'हे पान', te: 'ఈ పేజీ' })
         : parts.length === 1
-          ? pick(lang, { hi: 'पूरी चित्र-कथा', en: 'Whole picture story', gu: 'આખી ચિત્રવાર્તા', kn: 'ಸಂಪೂರ್ಣ ಚಿತ್ರಕಥೆ' })
-          : pick(lang, { hi: `भाग ${part}/${parts.length}`, en: `Part ${part}/${parts.length}`, gu: `ભાગ ${part}/${parts.length}`, kn: `ಭಾಗ ${part}/${parts.length}` });
+          ? pick(lang, { hi: 'पूरी चित्र-कथा', en: 'Whole picture story', gu: 'આખી ચિત્રવાર્તા', kn: 'ಸಂಪೂರ್ಣ ಚಿತ್ರಕಥೆ', mr: 'संपूर्ण चित्रकथा', te: 'పూర్తి చిత్రకథ' })
+          : pick(lang, { hi: `भाग ${part}/${parts.length}`, en: `Part ${part}/${parts.length}`, gu: `ભાગ ${part}/${parts.length}`, kn: `ಭಾಗ ${part}/${parts.length}`, mr: `भाग ${part}/${parts.length}`, te: `భాగం ${part}/${parts.length}` });
       const scenes = group.flatMap(u => u.scene === null ? [] : [u.scene]);
       const range = scenes.length ? `${scenes[0]}–${scenes[scenes.length - 1]}/${story.pages.length}` : '';
       return {
@@ -76,7 +76,7 @@ export function kidsStoryShareable(story: KidsStory, pageIndex = 0): ShareablePr
     kind: 'prose', layout, sourceId: `kids-story-${story.id}`, background: null,
     sectionNameHi: shelf.hi, sectionNameEn: shelf.en, sectionName: shelf,
     tagNameHi: story.title.hi, tagNameEn: story.title.en,
-    sheetTitle: { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ' },
+    sheetTitle: { hi: 'चित्र-कथा साझा करें', en: 'Share picture story', gu: 'ચિત્રવાર્તા શેર કરો', kn: 'ಚಿತ್ರಕಥೆ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'चित्रकथा शेअर करा', te: 'చిత్రకథను షేర్ చేయండి' },
     scopes: [...parts.map((group, i) => scope(`part-${i + 1}`, group, i + 1)), scope(`scene-${current + 1}`, [units[current], ...(current === units.length - 1 ? [ending] : [])])],
   };
 }

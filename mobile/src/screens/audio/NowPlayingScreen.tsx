@@ -56,7 +56,7 @@ export default function NowPlayingScreen() {
   const progress = durationSec > 0 ? Math.min(1, positionSec / durationSec) : 0;
 
   const a11y = nowPlayingLabels(lang, SKIP_SECONDS);
-  const headerLabel = pick(lang, { hi: 'अभी बज रहा है', en: 'Now Playing', gu: 'હમણાં વાગે છે', kn: 'ಈಗ ಪ್ಲೇ ಆಗುತ್ತಿದೆ' });
+  const headerLabel = pick(lang, { hi: 'अभी बज रहा है', en: 'Now Playing', gu: 'હમણાં વાગે છે', kn: 'ಈಗ ಪ್ಲೇ ಆಗುತ್ತಿದೆ', mr: 'आता वाजत आहे', te: 'ఇప్పుడు ప్లే అవుతోంది' });
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>

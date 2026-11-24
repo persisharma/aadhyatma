@@ -67,7 +67,7 @@ export default function GitaChapterCard({
   const read = cov?.read ?? 0;
   const complete = !!cov?.complete;
   const pin = scope ? getChapterProgress(scope.sourceId, chapter.chapter) : undefined;
-  const lastLabel = pick(lang, { hi: 'अंतिम', en: 'last', gu: 'છેલ્લું', kn: 'ಕೊನೆಯ' });
+  const lastLabel = pick(lang, { hi: 'अंतिम', en: 'last', gu: 'છેલ્લું', kn: 'ಕೊನೆಯ', mr: 'अंतिम', te: 'చివరి' });
   const progressMeta =
     read > 0
       ? `${read} / ${chapter.verseCount} ${unitLabel}${pin ? ` · ${lastLabel} ${pin.verseIndex + 1}` : ''}`

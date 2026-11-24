@@ -19,8 +19,8 @@ import type { HomeStackParamList } from '@/navigation/types';
 export default function RamayanComicScreen({ navigation }: NativeStackScreenProps<HomeStackParamList, 'RamayanComic'>) {
   const { lang } = useGitaLanguage();
   const { colors, spacing, typography } = useTheme();
-  const title = pick(lang, { hi: 'रामायण कॉमिक', en: 'Ramayana Comic', gu: 'રામાયણ કોમિક', kn: 'ರಾಮಾಯಣ ಕಾಮಿಕ್' });
-  const prompt = pick(lang, { hi: 'कौन-सा काण्ड पढ़ेंगे?', en: 'Which kanda shall we read?', gu: 'કયો કાંડ વાંચશો?', kn: 'ಯಾವ ಕಾಂಡವನ್ನು ಓದುತ್ತೀರಿ?' });
+  const title = pick(lang, { hi: 'रामायण कॉमिक', en: 'Ramayana Comic', gu: 'રામાયણ કોમિક', kn: 'ರಾಮಾಯಣ ಕಾಮಿಕ್', mr: 'रामायण कॉमिक', te: 'రామాయణ కామిక్' });
+  const prompt = pick(lang, { hi: 'कौन-सा काण्ड पढ़ेंगे?', en: 'Which kanda shall we read?', gu: 'કયો કાંડ વાંચશો?', kn: 'ಯಾವ ಕಾಂಡವನ್ನು ಓದುತ್ತೀರಿ?', mr: 'कोणता कांड वाचूया?', te: 'ఏ కాండ చదువుదాం?' });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={title} onBack={() => navigation.goBack()} variant="index" />
@@ -36,8 +36,10 @@ export default function RamayanComicScreen({ navigation }: NativeStackScreenProp
                 en: `${comic.episodeCount} episodes · illustrated`,
                 gu: `${comic.episodeCount} પ્રસંગ · સચિત્ર`,
                 kn: `${comic.episodeCount} ಪ್ರಸಂಗಗಳು · ಚಿತ್ರಸಹಿತ`,
+                mr: `${comic.episodeCount} प्रसंग · सचित्र`,
+                te: `${comic.episodeCount} ప్రసంగాలు · సచిత్రం`,
               })
-            : pick(lang, { hi: 'जल्द आएँगे', en: 'Coming soon', gu: 'જલ્દી આવશે', kn: 'ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ' });
+            : pick(lang, { hi: 'जल्द आएँगे', en: 'Coming soon', gu: 'જલ્દી આવશે', kn: 'ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ', mr: 'लवकरच येतील', te: 'త్వరలో వస్తాయి' });
           return (
             <ListCard
               key={kanda.id}

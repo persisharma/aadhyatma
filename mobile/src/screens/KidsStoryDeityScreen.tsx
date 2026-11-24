@@ -19,9 +19,9 @@ export default function KidsStoryDeityScreen({ navigation, route }: NativeStackS
   const deity = getStoryDeity(route.params.deityId);
   const stories = storiesForDeity(route.params.deityId);
   const planned = plannedStories.filter(item => item.deityId === route.params.deityId);
-  const title = deity ? storyText(deity.name, lang) : pick(lang, { hi: 'कथाएँ', en: 'Stories', gu: 'વાર્તાઓ', kn: 'ಕಥೆಗಳು' });
-  const pageLabel = pick(lang, { hi: 'पृष्ठ', en: 'pages', gu: 'પાનાં', kn: 'ಪುಟಗಳು' });
-  const comingSoon = pick(lang, { hi: 'जल्द आएगी', en: 'Coming soon', gu: 'જલ્દી આવશે', kn: 'ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ' });
+  const title = deity ? storyText(deity.name, lang) : pick(lang, { hi: 'कथाएँ', en: 'Stories', gu: 'વાર્તાઓ', kn: 'ಕಥೆಗಳು', mr: 'कथा', te: 'కథలు' });
+  const pageLabel = pick(lang, { hi: 'पृष्ठ', en: 'pages', gu: 'પાનાં', kn: 'ಪುಟಗಳು', mr: 'पाने', te: 'పేజీలు' });
+  const comingSoon = pick(lang, { hi: 'जल्द आएगी', en: 'Coming soon', gu: 'જલ્દી આવશે', kn: 'ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ', mr: 'लवकरच येईल', te: 'త్వరలో వస్తుంది' });
   // Age is a shelf-wide fact, stated once in the scope line — never per card.
   const age = stories.length ? Math.min(...stories.map(story => story.ageMin)) : 0;
   const count = stories.length;
@@ -30,10 +30,12 @@ export default function KidsStoryDeityScreen({ navigation, route }: NativeStackS
     en: `Ages ${age}+ · ${count} illustrated ${count === 1 ? 'reading' : 'readings'}`,
     gu: `${age}+ વય · ${count} ચિત્રવાંચન`,
     kn: `${age}+ ವಯಸ್ಸು · ${count} ಚಿತ್ರವಾಚನಗಳು`,
+    mr: `${age}+ वय · ${count} चित्र-पाठ`,
+    te: `${age}+ వయస్సు · ${count} చిత్ర పఠనాలు`,
   });
   const renderStory = (story: KidsStory, form?: NavadurgaReading) => {
     const storyTitle = storyText(story.title, lang);
-    const day = form ? pick(lang, { hi: `दिन ${form.day}`, en: `Day ${form.day}`, gu: `દિવસ ${form.day}`, kn: `ದಿನ ${form.day}` }) : undefined;
+    const day = form ? pick(lang, { hi: `दिन ${form.day}`, en: `Day ${form.day}`, gu: `દિવસ ${form.day}`, kn: `ದಿನ ${form.day}`, mr: `दिवस ${form.day}`, te: `రోజు ${form.day}` }) : undefined;
     const meta = `${story.pages.length} ${pageLabel}`;
     return (
       <ListingCard
@@ -61,12 +63,12 @@ export default function KidsStoryDeityScreen({ navigation, route }: NativeStackS
         {count > 0 && <ListingScope testID="kids-story-scope">{scope}</ListingScope>}
         {route.params.deityId === 'durga' ? <>
           {navaratri && renderStory(navaratri)}
-          <ListingSectionHeader>{pick(lang, { hi: 'नवरात्रि के नौ रूप', en: 'Navaratri: nine forms', gu: 'નવરાત્રિનાં નવ રૂપ', kn: 'ನವರಾತ್ರಿಯ ಒಂಬತ್ತು ರೂಪಗಳು' })}</ListingSectionHeader>
+          <ListingSectionHeader>{pick(lang, { hi: 'नवरात्रि के नौ रूप', en: 'Navaratri: nine forms', gu: 'નવરાત્રિનાં નવ રૂપ', kn: 'ನವರಾತ್ರಿಯ ಒಂಬತ್ತು ರೂಪಗಳು', mr: 'नवरात्रीची नऊ रूपे', te: 'నవరాత్రి తొమ్మిది రూపాలు' })}</ListingSectionHeader>
           {navadurgaReadings.map(form => {
             const story = stories.find(item => item.id === form.storyId);
             return story ? renderStory(story, form) : null;
           })}
-          <ListingSectionHeader>{pick(lang, { hi: 'माँ दुर्गा की अन्य कथाएँ', en: 'More Maa Durga stories', gu: 'મા દુર્ગાની બીજી વાર્તાઓ', kn: 'ದುರ್ಗಾ ಮಾತೆಯ ಇನ್ನಷ್ಟು ಕಥೆಗಳು' })}</ListingSectionHeader>
+          <ListingSectionHeader>{pick(lang, { hi: 'माँ दुर्गा की अन्य कथाएँ', en: 'More Maa Durga stories', gu: 'મા દુર્ગાની બીજી વાર્તાઓ', kn: 'ದುರ್ಗಾ ಮಾತೆಯ ಇನ್ನಷ್ಟು ಕಥೆಗಳು', mr: 'दुर्गा मातेच्या इतर कथा', te: 'దుర్గా మాత మరిన్ని కథలు' })}</ListingSectionHeader>
           {stories.filter(story => story.id !== 'durga-navaratri' && !formStoryIds.has(story.id)).map(story => renderStory(story))}
         </> : stories.map(story => renderStory(story))}
         {planned.map(item => (
@@ -82,7 +84,7 @@ export default function KidsStoryDeityScreen({ navigation, route }: NativeStackS
         ))}
         {stories.length === 0 && planned.length === 0 && (
           <Text style={{ ...meaningToken(lang, typography), color: colors.inkSoft, textAlign: 'center', paddingVertical: 32 }}>
-            {pick(lang, { hi: 'यहाँ नई चित्र-कथाएँ जल्द आएँगी।', en: 'New picture stories are being prepared for this shelf.', gu: 'અહીં નવી ચિત્રવાર્તાઓ જલ્દી આવશે.', kn: 'ಈ ವಿಭಾಗಕ್ಕೆ ಹೊಸ ಚಿತ್ರಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ.' })}
+            {pick(lang, { hi: 'यहाँ नई चित्र-कथाएँ जल्द आएँगी।', en: 'New picture stories are being prepared for this shelf.', gu: 'અહીં નવી ચિત્રવાર્તાઓ જલ્દી આવશે.', kn: 'ಈ ವಿಭಾಗಕ್ಕೆ ಹೊಸ ಚಿತ್ರಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ.', mr: 'इथे नव्या चित्रकथा लवकरच येतील.', te: 'ఇక్కడ కొత్త చిత్రకథలు త్వరలో వస్తాయి.' })}
           </Text>
         )}
       </ScrollView>

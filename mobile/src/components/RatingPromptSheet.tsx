@@ -86,6 +86,8 @@ export default function RatingPromptSheet() {
           en: 'Enjoying Vedansh?',
           gu: 'Vedansh કેવું લાગ્યું?',
           kn: 'Vedansh ಹೇಗಿದೆ?',
+          mr: 'Vedansh कसे वाटले?',
+          te: 'Vedansh నచ్చిందా?',
         })}
       </Text>
 
@@ -95,6 +97,8 @@ export default function RatingPromptSheet() {
           en: 'If the app has helped your daily practice, a short rating on the store helps other seekers find it. It takes a minute.',
           gu: 'જો આ ઍપ તમારી સાધનામાં ઉપયોગી રહી હોય, તો સ્ટોર પર આપેલી એક નાની રેટિંગ તેને બીજા સાધકો સુધી પહોંચાડે છે. એક મિનિટ લાગશે.',
           kn: 'ಈ ಆ್ಯಪ್ ನಿಮ್ಮ ಸಾಧನೆಗೆ ಸಹಾಯ ಮಾಡಿದ್ದರೆ, ಸ್ಟೋರ್‌ನಲ್ಲಿ ನೀಡಿದ ಒಂದು ಸಣ್ಣ ರೇಟಿಂಗ್ ಅದನ್ನು ಇತರ ಸಾಧಕರಿಗೆ ತಲುಪಿಸುತ್ತದೆ. ಒಂದು ನಿಮಿಷ ಸಾಕು.',
+          mr: 'हे ॲप तुमच्या साधनेत उपयोगी पडले असेल, तर स्टोअरवर दिलेले एक छोटे रेटिंग ते इतर साधकांपर्यंत पोहोचवते. एक मिनिट पुरेसे आहे.',
+          te: 'ఈ యాప్ మీ సాధనకు సహాయపడి ఉంటే, స్టోర్‌లో ఇచ్చే ఒక చిన్న రేటింగ్ దీన్ని ఇతర సాధకులకు చేరుస్తుంది. ఒక్క నిమిషం చాలు.',
         })}
       </Text>
 
@@ -121,7 +125,7 @@ export default function RatingPromptSheet() {
         style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.6 : 1 }]}
       >
         <Text style={secondaryText}>
-          {pick(lang, { hi: 'बाद में', en: 'Maybe later', gu: 'પછી', kn: 'ನಂತರ' })}
+          {pick(lang, { hi: 'बाद में', en: 'Maybe later', gu: 'પછી', kn: 'ನಂತರ', mr: 'नंतर', te: 'తర్వాత' })}
         </Text>
       </Pressable>
     </>
@@ -144,6 +148,8 @@ export default function RatingPromptSheet() {
           en: 'Thank you for rating',
           gu: 'રેટિંગ બદલ આભાર',
           kn: 'ರೇಟಿಂಗ್‌ಗೆ ಧನ್ಯವಾದಗಳು',
+          mr: 'रेटिंगबद्दल धन्यवाद',
+          te: 'రేటింగ్‌కు ధన్యవాదాలు',
         })}
       </Text>
 
@@ -155,6 +161,8 @@ export default function RatingPromptSheet() {
               en: "Tell us what isn't working and we'll fix it.",
               gu: 'શું બરાબર ન લાગ્યું તે જણાવો, અમે તેને સુધારીશું.',
               kn: 'ಏನು ಸರಿಯಿಲ್ಲ ಎಂದು ತಿಳಿಸಿ, ನಾವು ಅದನ್ನು ಸರಿಪಡಿಸುತ್ತೇವೆ.',
+              mr: 'काय योग्य वाटले नाही ते सांगा, आम्ही ते दुरुस्त करू.',
+              te: 'ఏది సరిగా లేదో చెప్పండి, మేము దాన్ని సరిచేస్తాము.',
             })}
           </Text>
           <Pressable
@@ -167,7 +175,7 @@ export default function RatingPromptSheet() {
             ]}
           >
             <Text style={[styles.primaryText, { color: colors.onPrimary, fontFamily: titleFont }]}>
-              {pick(lang, { hi: 'हमें लिखें', en: 'Write to us', gu: 'અમને લખો', kn: 'ನಮಗೆ ಬರೆಯಿರಿ' })}
+              {pick(lang, { hi: 'हमें लिखें', en: 'Write to us', gu: 'અમને લખો', kn: 'ನಮಗೆ ಬರೆಯಿರಿ', mr: 'आम्हाला लिहा', te: 'మాకు రాయండి' })}
             </Text>
           </Pressable>
         </>
@@ -185,6 +193,8 @@ export default function RatingPromptSheet() {
             en: 'Rate on the store',
             gu: 'સ્ટોર પર રેટિંગ આપો',
             kn: 'ಸ್ಟೋರ್‌ನಲ್ಲಿ ರೇಟಿಂಗ್ ನೀಡಿ',
+            mr: 'स्टोअरवर रेटिंग द्या',
+            te: 'స్టోర్‌లో రేటింగ్ ఇవ్వండి',
           })}
         </Text>
       </Pressable>
@@ -196,7 +206,7 @@ export default function RatingPromptSheet() {
         style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.6 : 1 }]}
       >
         <Text style={secondaryText}>
-          {pick(lang, { hi: 'बंद करें', en: 'Close', gu: 'બંધ કરો', kn: 'ಮುಚ್ಚಿ' })}
+          {pick(lang, { hi: 'बंद करें', en: 'Close', gu: 'બંધ કરો', kn: 'ಮುಚ್ಚಿ', mr: 'बंद करा', te: 'మూసివేయండి' })}
         </Text>
       </Pressable>
     </>
@@ -206,13 +216,13 @@ export default function RatingPromptSheet() {
     <>
       <Text accessibilityRole="header" style={[styles.title, { color: colors.ink, fontFamily: titleFont }]}>
         {pick(lang, { hi: 'भक्ति से जुड़े रहें', en: 'Stay connected with Vedansh',
-          gu: 'ભક્તિ સાથે જોડાયેલા રહો', kn: 'ಭಕ್ತಿಯೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ' })}
+          gu: 'ભક્તિ સાથે જોડાયેલા રહો', kn: 'ಭಕ್ತಿಯೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ', mr: 'भक्तीशी जोडलेले राहा', te: 'భక్తితో అనుసంధానమై ఉండండి' })}
       </Text>
       <Text style={[styles.body, { color: colors.inkSoft, fontFamily: bodyFont }]}>
         {pick(lang, { hi: 'रोज़ के सुविचार, पर्व की कहानियाँ और भक्ति के लिए हमारे पेज फ़ॉलो करें।',
           en: 'Follow our pages for daily thoughts, festival stories and devotion.',
           gu: 'રોજના સુવિચાર, પર્વની વાર્તાઓ અને ભક્તિ માટે અમારા પેજ ફૉલો કરો.',
-          kn: 'ದಿನದ ಸುವಿಚಾರಗಳು, ಹಬ್ಬದ ಕಥೆಗಳು ಮತ್ತು ಭಕ್ತಿಗಾಗಿ ನಮ್ಮ ಪುಟಗಳನ್ನು ಫಾಲೋ ಮಾಡಿ.' })}
+          kn: 'ದಿನದ ಸುವಿಚಾರಗಳು, ಹಬ್ಬದ ಕಥೆಗಳು ಮತ್ತು ಭಕ್ತಿಗಾಗಿ ನಮ್ಮ ಪುಟಗಳನ್ನು ಫಾಲೋ ಮಾಡಿ.', mr: 'रोजचे सुविचार, सणांच्या कथा आणि भक्तीसाठी आमची पेजेस फॉलो करा.', te: 'రోజువారీ సువిచారాలు, పండుగ కథలు మరియు భక్తి కోసం మా పేజీలను ఫాలో చేయండి.' })}
       </Text>
       {pendingSocialPlatforms(state.social).map((platform) => {
         const name = platform === 'instagram' ? 'Instagram' : 'Facebook';
@@ -230,14 +240,14 @@ export default function RatingPromptSheet() {
               </View>
               <Text style={[styles.primaryText, styles.socialLabel, { color: colors.onPrimary, fontFamily: titleFont }]}>
                 {pick(lang, { hi: `${name} पर फ़ॉलो करें`, en: `Follow on ${name}`,
-                  gu: `${name} પર ફૉલો કરો`, kn: `${name} ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ` })}
+                  gu: `${name} પર ફૉલો કરો`, kn: `${name} ನಲ್ಲಿ ಫಾಲೋ ಮಾಡಿ`, mr: `${name} वर फॉलो करा`, te: `${name}లో ఫాలో చేయండి` })}
               </Text>
             </Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel={`I already follow Vedansh on ${name}`}
               onPress={() => confirmFollowing(platform)} style={styles.storeLink}>
               <Text style={[styles.storeLinkText, { color: colors.inkSoft, fontFamily: bodyFont }]}>
                 {pick(lang, { hi: 'पहले से फ़ॉलो करते हैं', en: 'Already following',
-                  gu: 'પહેલેથી ફૉલો કરું છું', kn: 'ಈಗಾಗಲೇ ಫಾಲೋ ಮಾಡುತ್ತಿದ್ದೇನೆ' })}
+                  gu: 'પહેલેથી ફૉલો કરું છું', kn: 'ಈಗಾಗಲೇ ಫಾಲೋ ಮಾಡುತ್ತಿದ್ದೇನೆ', mr: 'आधीच फॉलो करतो', te: 'ఇప్పటికే ఫాలో చేస్తున్నాను' })}
               </Text>
             </Pressable>
           </View>
@@ -245,10 +255,10 @@ export default function RatingPromptSheet() {
       })}
       {socialLinkError && <Text accessibilityRole="alert" style={[styles.body, { color: colors.inkSoft, fontFamily: bodyFont }]}>
         {pick(lang, { hi: 'पेज नहीं खुला। फिर कोशिश करें।', en: 'Could not open the page. Please try again.',
-          gu: 'પેજ ખુલ્યું નહીં. ફરી પ્રયાસ કરો.', kn: 'ಪುಟ ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.' })}
+          gu: 'પેજ ખુલ્યું નહીં. ફરી પ્રયાસ કરો.', kn: 'ಪುಟ ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.', mr: 'पेज उघडले नाही. पुन्हा प्रयत्न करा.', te: 'పేజీ తెరవలేకపోయాం. మళ్లీ ప్రయత్నించండి.' })}
       </Text>}
       <Pressable onPress={dismiss} accessibilityRole="button" accessibilityLabel="Maybe later" style={styles.secondary}>
-        <Text style={secondaryText}>{pick(lang, { hi: 'बाद में', en: 'Maybe later', gu: 'પછી', kn: 'ನಂತರ' })}</Text>
+        <Text style={secondaryText}>{pick(lang, { hi: 'बाद में', en: 'Maybe later', gu: 'પછી', kn: 'ನಂತರ', mr: 'नंतर', te: 'తర్వాత' })}</Text>
       </Pressable>
     </>
   );

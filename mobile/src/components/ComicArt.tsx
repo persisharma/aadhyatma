@@ -72,8 +72,8 @@ export default function ComicArt({ panel, label, comicId, compact = false, fill 
         onError={() => setState({ art: panel.art, failed: true })} resizeMode="stretch"
         style={{ position: 'absolute', width: geometry.sheetWidth, height: geometry.sheetHeight, left: geometry.left, top: geometry.top }} />
         : <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 12 }}>
-          {current.failed ? <Pressable testID={`comic-art-retry-${panel.id}`} accessibilityRole="button" accessibilityLabel={pick(lang, { hi: 'चित्र फिर लोड करें', en: 'Retry picture', gu: 'ચિત્ર ફરી લોડ કરો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ' })} onPress={() => setAttempt(value => value + 1)} style={{ padding: 12 }}>
-            <Text style={{ color: colors.inkSoft, textAlign: 'center' }}>{compact ? '↻' : pick(lang, { hi: 'चित्र लोड नहीं हुआ। फिर कोशिश करें', en: 'Picture unavailable. Tap to retry', gu: 'ચિત્ર લોડ થયું નહીં. ફરી પ્રયાસ કરો', kn: 'ಚಿತ್ರ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ' })}</Text>
+          {current.failed ? <Pressable testID={`comic-art-retry-${panel.id}`} accessibilityRole="button" accessibilityLabel={pick(lang, { hi: 'चित्र फिर लोड करें', en: 'Retry picture', gu: 'ચિત્ર ફરી લોડ કરો', kn: 'ಚಿತ್ರವನ್ನು ಮತ್ತೆ ಲೋಡ್ ಮಾಡಿ', mr: 'चित्र पुन्हा लोड करा', te: 'చిత్రాన్ని మళ్లీ లోడ్ చేయండి' })} onPress={() => setAttempt(value => value + 1)} style={{ padding: 12 }}>
+            <Text style={{ color: colors.inkSoft, textAlign: 'center' }}>{compact ? '↻' : pick(lang, { hi: 'चित्र लोड नहीं हुआ। फिर कोशिश करें', en: 'Picture unavailable. Tap to retry', gu: 'ચિત્ર લોડ થયું નહીં. ફરી પ્રયાસ કરો', kn: 'ಚಿತ್ರ ಲೋಡ್ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ', mr: 'चित्र लोड झाले नाही. पुन्हा प्रयत्न करा', te: 'చిత్రం లోడ్ కాలేదు. మళ్లీ ప్రయత్నించండి' })}</Text>
           </Pressable> : <ActivityIndicator color={colors.saffron} />}
         </View>}
     </View>

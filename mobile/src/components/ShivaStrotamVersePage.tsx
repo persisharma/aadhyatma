@@ -41,6 +41,8 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width, topActio
     en: 'Meaning',
     gu: 'ભાવાર્થ',
     kn: 'ಭಾವಾರ್ಥ',
+    mr: 'भावार्थ',
+    te: 'భావార్థం',
   });
   const verseLines = verseLinesByLang(lang, verse.sanskrit, verse.linesEn, `${verse.chapter}.${verse.number}`);
   const verseTok = verseToken(lang, typography);
@@ -51,6 +53,8 @@ export default function ShivaStrotamVersePage({ verse, sourceId, width, topActio
         en: 'Introduction · परिचय',
         gu: 'પરિચય · Introduction',
         kn: 'ಪರಿಚಯ · Introduction',
+        mr: 'परिचय · Introduction',
+        te: 'పరిచయం · Introduction',
       })
     : contentByLang(
         lang,

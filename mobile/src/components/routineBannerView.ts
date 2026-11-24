@@ -71,6 +71,8 @@ export function bannerLine(status: BannerStatus, lang: Lang, sankalpOnly = false
       en: 'Sankalp · Today',
       gu: 'સંકલ્પ · આજ',
       kn: 'ಸಂಕಲ್ಪ · ಇಂದು',
+      mr: 'संकल्प · आज',
+      te: 'సంకల్పం · ఈరోజు',
     });
   }
   switch (status) {
@@ -80,6 +82,8 @@ export function bannerLine(status: BannerStatus, lang: Lang, sankalpOnly = false
         en: 'Set your daily practice',
         gu: 'તમારી નિત્ય સાધના સેટ કરો',
         kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ',
+        mr: 'तुमची नित्य साधना ठरवा',
+        te: 'మీ నిత్య సాధనను సెట్ చేయండి',
       });
     case 'complete':
       return pick(lang, {
@@ -87,6 +91,8 @@ export function bannerLine(status: BannerStatus, lang: Lang, sankalpOnly = false
         en: 'Complete for today',
         gu: 'સાધના પૂર્ણ · આજ',
         kn: 'ಸಾಧನೆ ಪೂರ್ಣ · ಇಂದು',
+        mr: 'साधना पूर्ण · आज',
+        te: 'సాధన పూర్తి · ఈరోజు',
       });
     case 'progress':
     default:
@@ -95,6 +101,8 @@ export function bannerLine(status: BannerStatus, lang: Lang, sankalpOnly = false
         en: 'Daily Routine · Today',
         gu: 'નિત્ય સાધના · આજ',
         kn: 'ನಿತ್ಯ ಸಾಧನೆ · ಇಂದು',
+        mr: 'नित्य साधना · आज',
+        te: 'నిత్య సాధన · ఈరోజు',
       });
   }
 }

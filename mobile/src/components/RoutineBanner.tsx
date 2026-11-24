@@ -79,7 +79,7 @@ export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<Vie
         onPressIn={() => beginTilePress(open('RoutineCreate'))}
         onPressOut={finishTilePress}
         accessibilityRole="button"
-        accessibilityLabel={pick(lang, { hi: 'अपनी नित्य साधना बनाएँ', en: 'Set your daily practice', gu: 'તમારી નિત્ય સાધના સેટ કરો', kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ' })}
+        accessibilityLabel={pick(lang, { hi: 'अपनी नित्य साधना बनाएँ', en: 'Set your daily practice', gu: 'તમારી નિત્ય સાધના સેટ કરો', kn: 'ನಿಮ್ಮ ನಿತ್ಯ ಸಾಧನೆ ಹೊಂದಿಸಿ', mr: 'तुमची नित्य साधना ठरवा', te: 'మీ నిత్య సాధనను సెట్ చేయండి' })}
         style={({ pressed }) => [
           base,
           styles.row,
@@ -107,7 +107,7 @@ export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<Vie
         onPressIn={() => beginTilePress(open('RoutineToday'))}
         onPressOut={finishTilePress}
         accessibilityRole="button"
-        accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ' })}
+        accessibilityLabel={pick(lang, { hi: 'आज की साधना पूर्ण', en: "Today's practice complete", gu: 'આજની સાધના પૂર્ણ', kn: 'ಇಂದಿನ ಸಾಧನೆ ಪೂರ್ಣ', mr: 'आजची साधना पूर्ण', te: 'ఈరోజు సాధన పూర్తి' })}
         style={({ pressed }) => [
           base,
           styles.row,
@@ -136,7 +136,7 @@ export default function RoutineBanner({ bannerRef }: { bannerRef?: React.Ref<Vie
       onPressIn={() => beginTilePress(open('RoutineToday'))}
       onPressOut={finishTilePress}
       accessibilityRole="button"
-      accessibilityLabel={pick(lang, { hi: 'आज की साधना', en: "Today's practice", gu: 'આજની સાધના', kn: 'ಇಂದಿನ ಸಾಧನೆ' })}
+      accessibilityLabel={pick(lang, { hi: 'आज की साधना', en: "Today's practice", gu: 'આજની સાધના', kn: 'ಇಂದಿನ ಸಾಧನೆ', mr: 'आजची साधना', te: 'ఈరోజు సాధన' })}
       style={({ pressed }) => [
         base,
         { borderWidth: 1, borderColor: colors.goldTint },

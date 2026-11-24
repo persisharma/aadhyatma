@@ -35,6 +35,8 @@ export function ShareCardBrandStrip({ lang, onPainted }: { lang: Lang; onPainted
           en: 'Get the Vedansh app for more cards like this',
           gu: 'આવા વધુ કાર્ડ માટે વેદાંશ ઍપ ડાઉનલોડ કરો',
           kn: 'ಇಂತಹ ಇನ್ನಷ್ಟು ಕಾರ್ಡ್‌ಗಳಿಗೆ ವೇದಾಂಶ ಆ್ಯಪ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ',
+          mr: 'अशा आणखी कार्डांसाठी वेदांश ॲप डाउनलोड करा',
+          te: 'ఇలాంటి మరిన్ని కార్డ్‌ల కోసం వేదాంశ్ యాప్ డౌన్‌లోడ్ చేయండి',
         })}
       </Text>
       <Text allowFontScaling={false} style={[styles.link, { color: colors.saffronDeep, fontFamily: fontFamilies.latinSemiBold }]}>{PRINTED_LINK}</Text>

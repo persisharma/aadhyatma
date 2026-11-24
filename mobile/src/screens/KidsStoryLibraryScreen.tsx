@@ -15,8 +15,8 @@ import type { HomeStackParamList } from '@/navigation/types';
 export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreenProps<HomeStackParamList, 'KidsStoryLibrary'>) {
   const { lang } = useGitaLanguage();
   const { colors, spacing, typography } = useTheme();
-  const title = pick(lang, { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು' });
-  const prompt = pick(lang, { hi: 'किसकी कथा पढ़ेंगे?', en: 'Whose stories shall we read?', gu: 'કોની વાર્તાઓ વાંચશો?', kn: 'ಯಾರ ಕಥೆಗಳನ್ನು ಓದುತ್ತೀರಿ?' });
+  const title = pick(lang, { hi: 'बच्चों की चित्र-कथाएँ', en: 'Stories for Kids', gu: 'બાળકોની ચિત્રવાર્તાઓ', kn: 'ಮಕ್ಕಳ ಚಿತ್ರಕಥೆಗಳು', mr: 'मुलांच्या चित्रकथा', te: 'పిల్లల చిత్రకథలు' });
+  const prompt = pick(lang, { hi: 'किसकी कथा पढ़ेंगे?', en: 'Whose stories shall we read?', gu: 'કોની વાર્તાઓ વાંચશો?', kn: 'ಯಾರ ಕಥೆಗಳನ್ನು ಓದುತ್ತೀರಿ?', mr: 'कोणाच्या कथा वाचूया?', te: 'ఎవరి కథలు చదువుదాం?' });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.parchment }} edges={['top', 'left', 'right']}>
       <ReaderHeader title={title} onBack={() => navigation.goBack()} variant="index" />
@@ -26,9 +26,9 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
           const count = storiesForDeity(deity.id).length;
           const status = count
             ? deity.id === 'durga'
-              ? pick(lang, { hi: `${count} चित्र-पाठ`, en: `${count} illustrated readings`, gu: `${count} ચિત્રવાંચન`, kn: `${count} ಚಿತ್ರವಾಚನಗಳು` })
-              : pick(lang, { hi: `${count} कथा`, en: `${count} ${count === 1 ? 'story' : 'stories'}`, gu: `${count} વાર્તા`, kn: `${count} ಕಥೆ` })
-            : pick(lang, { hi: 'कथाएँ जल्द आएँगी', en: 'Stories coming soon', gu: 'વાર્તાઓ જલ્દી આવશે', kn: 'ಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ' });
+              ? pick(lang, { hi: `${count} चित्र-पाठ`, en: `${count} illustrated readings`, gu: `${count} ચિત્રવાંચન`, kn: `${count} ಚಿತ್ರವಾಚನಗಳು`, mr: `${count} चित्र-पाठ`, te: `${count} చిత్ర పఠనాలు` })
+              : pick(lang, { hi: `${count} कथा`, en: `${count} ${count === 1 ? 'story' : 'stories'}`, gu: `${count} વાર્તા`, kn: `${count} ಕಥೆ`, mr: `${count} कथा`, te: `${count} కథలు` })
+            : pick(lang, { hi: 'कथाएँ जल्द आएँगी', en: 'Stories coming soon', gu: 'વાર્તાઓ જલ્દી આવશે', kn: 'ಕಥೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ', mr: 'कथा लवकरच येतील', te: 'కథలు త్వరలో వస్తాయి' });
           return (
             <DeityCard
               key={deity.id}
@@ -59,6 +59,8 @@ export default function KidsStoryLibraryScreen({ navigation }: NativeStackScreen
             en: `${comics.length} kandas · illustrated`,
             gu: `${comics.length} કાંડ · સચિત્ર`,
             kn: `${comics.length} ಕಾಂಡಗಳು · ಚಿತ್ರಸಹಿತ`,
+            mr: `${comics.length} कांड · सचित्र`,
+            te: `${comics.length} కాండలు · సచిత్రం`,
           })}
           onPress={() => navigation.navigate('RamayanComic')}
         />

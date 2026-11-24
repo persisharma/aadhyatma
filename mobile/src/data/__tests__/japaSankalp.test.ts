@@ -45,6 +45,7 @@ test('typed input accepts grouping and Indic digits, rejects anything else', () 
   assert.equal(parseSankalpInput(' 108 '), 108);
   assert.equal(parseSankalpInput('१०८'), 108);
   assert.equal(parseSankalpInput('૧૧'), 11);
+  assert.equal(parseSankalpInput('౧౦౮'), 108); // Telugu digits
   assert.equal(parseSankalpInput('೨೧'), 21);
   assert.equal(parseSankalpInput(''), null);
   assert.equal(parseSankalpInput('12a'), null);

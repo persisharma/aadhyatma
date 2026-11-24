@@ -8,15 +8,15 @@ import { useTheme } from '@/theme/ThemeContext';
 import { cardFontByLang } from '@/utils/langType';
 import { contentByLang, pick } from '@/utils/localize';
 
-export const JUMP_LABEL = { hi: 'श्लोक पर जाएँ', en: 'Go to verse', gu: 'શ્લોક પર જાઓ', kn: 'ಶ್ಲೋಕಕ್ಕೆ ಹೋಗಿ' };
-const CHAPTER = { hi: 'अध्याय', en: 'Chapter', gu: 'અધ્યાય', kn: 'ಅಧ್ಯಾಯ' };
-const VERSE = { hi: 'श्लोक', en: 'Verse', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ' };
+export const JUMP_LABEL = { hi: 'श्लोक पर जाएँ', en: 'Go to verse', gu: 'શ્લોક પર જાઓ', kn: 'ಶ್ಲೋಕಕ್ಕೆ ಹೋಗಿ', mr: 'श्लोकावर जा', te: 'శ్లోకానికి వెళ్లండి' };
+const CHAPTER = { hi: 'अध्याय', en: 'Chapter', gu: 'અધ્યાય', kn: 'ಅಧ್ಯಾಯ', mr: 'अध्याय', te: 'అధ్యాయం' };
+const VERSE = { hi: 'श्लोक', en: 'Verse', gu: 'શ્લોક', kn: 'ಶ್ಲೋಕ', mr: 'श्लोक', te: 'శ్లోకం' };
 
 /** Accept keyboard and pasted numerals in all four reading scripts, never partial numbers. */
 export function parseVerseNumber(value: string, maximum: number): number | null {
-  const normalized = value.trim().replace(/[०-९૦-૯೦-೯]/g, digit => {
+  const normalized = value.trim().replace(/[०-९૦-૯౦-౯೦-೯]/g, digit => {
     const code = digit.charCodeAt(0);
-    const zero = code >= 0x0ce6 ? 0x0ce6 : code >= 0x0ae6 ? 0x0ae6 : 0x0966;
+    const zero = code >= 0x0ce6 ? 0x0ce6 : code >= 0x0c66 ? 0x0c66 : code >= 0x0ae6 ? 0x0ae6 : 0x0966;
     return String(code - zero);
   });
   if (!/^[0-9]+$/.test(normalized)) return null;
@@ -53,7 +53,7 @@ export default function GitaVerseJumpSheet({ chapter, verse, onClose, onOpen }: 
   const label = { ...body, color: colors.inkMuted };
   const openLabel = selectedVerse == null ? pick(lang, JUMP_LABEL) : pick(lang, {
     hi: `श्लोक ${selectedChapter}.${selectedVerse} खोलें`, en: `Open verse ${selectedChapter}.${selectedVerse}`,
-    gu: `શ્લોક ${selectedChapter}.${selectedVerse} ખોલો`, kn: `ಶ್ಲೋಕ ${selectedChapter}.${selectedVerse} ತೆರೆಯಿರಿ`,
+    gu: `શ્લોક ${selectedChapter}.${selectedVerse} ખોલો`, kn: `ಶ್ಲೋಕ ${selectedChapter}.${selectedVerse} ತೆರೆಯಿರಿ`, mr: `श्लोक ${selectedChapter}.${selectedVerse} उघडा`, te: `శ్లోకం ${selectedChapter}.${selectedVerse} తెరవండి`,
   });
   const open = () => {
     if (selectedVerse == null || submitted.current) return;
@@ -98,7 +98,7 @@ export default function GitaVerseJumpSheet({ chapter, verse, onClose, onOpen }: 
             <Text style={[label, styles.context]}>{contentByLang(lang, summary.titleHi, summary.titleEn)} · 1–{summary.verseCount}</Text>
             {selectedVerse == null && <Text accessibilityLiveRegion="polite" style={[body, { color: colors.avoidDeep }]}>{pick(lang, {
               hi: `1 से ${summary.verseCount} तक श्लोक संख्या डालें।`, en: `Enter a verse from 1 to ${summary.verseCount}.`,
-              gu: `1 થી ${summary.verseCount} સુધીનો શ્લોક નંબર લખો.`, kn: `1 ರಿಂದ ${summary.verseCount} ರವರೆಗಿನ ಶ್ಲೋಕ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.`,
+              gu: `1 થી ${summary.verseCount} સુધીનો શ્લોક નંબર લખો.`, kn: `1 ರಿಂದ ${summary.verseCount} ರವರೆಗಿನ ಶ್ಲೋಕ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.`, mr: `1 ते ${summary.verseCount} पर्यंत श्लोक क्रमांक टाका.`, te: `1 నుండి ${summary.verseCount} వరకు శ్లోక సంఖ్యను నమోదు చేయండి.`,
             })}</Text>}
             <ScrollView ref={gridRef} nestedScrollEnabled keyboardShouldPersistTaps="handled" style={styles.choices} onContentSizeChange={revealSelection}><View style={styles.grid}>
               {Array.from({ length: summary.verseCount }, (_, index) => index + 1).map(number => <Pressable key={number} testID={`gita-jump-verse-${number}`} onLayout={event => { versePositions.current.set(number, event.nativeEvent.layout.y); if (number === selectedVerse) revealSelection(); }} accessibilityRole="button" accessibilityLabel={`${pick(lang, VERSE)} ${selectedChapter}.${number}`} accessibilityState={{ selected: selectedVerse === number }} onPress={() => { setInput(String(number)); setFailed(false); }} style={[styles.cell, { borderColor: colors.divider, backgroundColor: selectedVerse === number ? colors.saffronDeep : colors.parchmentSoft }]}>
@@ -108,13 +108,13 @@ export default function GitaVerseJumpSheet({ chapter, verse, onClose, onOpen }: 
           </>}
           {failed && <Text accessibilityRole="alert" style={[body, { color: colors.avoidDeep }]}>{pick(lang, {
             hi: 'अध्याय नहीं खुला। फिर कोशिश करें।', en: 'Could not open this chapter. Please try again.',
-            gu: 'અધ્યાય ખૂલી શક્યો નહીં. ફરી પ્રયાસ કરો.', kn: 'ಅಧ್ಯಾಯ ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
+            gu: 'અધ્યાય ખૂલી શક્યો નહીં. ફરી પ્રયાસ કરો.', kn: 'ಅಧ್ಯಾಯ ತೆರೆಯಲಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.', mr: 'अध्याय उघडला नाही. पुन्हा प्रयत्न करा.', te: 'అధ్యాయం తెరవలేకపోయాం. మళ్లీ ప్రయత్నించండి.',
           })}</Text>}
           <Pressable testID="gita-jump-open" accessibilityRole="button" accessibilityState={{ disabled: selectedVerse == null }} disabled={selectedVerse == null} onPress={open} style={[styles.action, { backgroundColor: colors.saffronDeep, opacity: selectedVerse == null ? 0.5 : 1 }]}>
             <Text style={[body, { color: colors.onPrimary, textAlign: 'center' }]}>{openLabel}</Text>
           </Pressable>
           <Pressable testID="gita-jump-cancel" accessibilityRole="button" onPress={onClose} style={styles.action}>
-            <Text style={[body, { color: colors.saffronDeep }]}>{pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ' })}</Text>
+            <Text style={[body, { color: colors.saffronDeep }]}>{pick(lang, { hi: 'रद्द करें', en: 'Cancel', gu: 'રદ કરો', kn: 'ರದ್ದುಮಾಡಿ', mr: 'रद्द करा', te: 'రద్దు చేయండి' })}</Text>
           </Pressable>
         </ScrollView>
       </View>

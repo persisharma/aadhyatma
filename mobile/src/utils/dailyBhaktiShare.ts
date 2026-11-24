@@ -6,7 +6,7 @@ import { devotionalCharanRows, paginateDevotional } from './devotionalShareLayou
 import type { ShareableProse, ShareableProseScope, ShareableVerse } from './shareVerse';
 import { LANG_VALUES } from '@/data/gita/language';
 
-export const devotionalMeaningLabel = { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ' };
+export const devotionalMeaningLabel = { hi: 'अर्थ', en: 'Meaning', gu: 'અર્થ', kn: 'ಅರ್ಥ', mr: 'अर्थ', te: 'అర్థం' };
 /** Prepare only the verse being shared; never construct the random pool on startup. */
 export function dailyBhaktiVerse(v: UniformVerse): ShareableVerse {
   return { sourceId: v.sourceId, verseIndex: v.verseIndex, stanza: v.chapter,
@@ -39,7 +39,7 @@ export function devotionalVerseShareable(v: ShareableVerse): ShareableProse {
   }
   return { kind: 'prose', sourceId: v.sourceId, background: null,
     sectionNameHi: v.sectionNameHi, sectionNameEn: v.sectionNameEn,
-    sheetTitle: { hi: 'भक्ति कार्ड साझा करें', en: 'Share this devotional card', gu: 'ભક્તિ કાર્ડ શેર કરો', kn: 'ಭಕ್ತಿ ಕಾರ್ಡ್ ಹಂಚಿಕೊಳ್ಳಿ' },
+    sheetTitle: { hi: 'भक्ति कार्ड साझा करें', en: 'Share this devotional card', gu: 'ભક્તિ કાર્ડ શેર કરો', kn: 'ಭಕ್ತಿ ಕಾರ್ಡ್ ಹಂಚಿಕೊಳ್ಳಿ', mr: 'भक्ती कार्ड शेअर करा', te: 'భక్తి కార్డ్ షేర్ చేయండి' },
     scopes: [{ id: 'daily-bhakti', labelHi: 'श्लोक और अर्थ', labelEn: 'Verse and meaning', headerHi: v.verseLabelHi ?? '', headerEn: v.verseLabelEn ?? '', blocks: [], prepared }],
   };
 }

@@ -1,12 +1,12 @@
 // Presentation only: canonical scripture and stable verse identities stay intact.
-const DIGITS = '0-9०-९૦-૯೦-೯';
+const DIGITS = '0-9०-९૦-૯౦-౯೦-೯';
 const REFERENCE = new RegExp(`([${DIGITS}]+(?:\\.[${DIGITS}]+)*)\\s*$`, 'u');
 const CLOSING_REFERENCE = new RegExp(`(॥|।{2}|\\|{2})\\s*([${DIGITS}]+(?:\\.[${DIGITS}]+)*)\\s*(?:॥|।{2}|\\|{2})\\s*$`, 'u');
 
 function asciiDigits(value: string): string {
-  return value.replace(/[०-९૦-૯೦-೯]/gu, digit => {
+  return value.replace(/[०-९૦-૯౦-౯೦-೯]/gu, digit => {
     const code = digit.charCodeAt(0);
-    const zero = code >= 0x0ce6 ? 0x0ce6 : code >= 0x0ae6 ? 0x0ae6 : 0x0966;
+    const zero = code >= 0x0ce6 ? 0x0ce6 : code >= 0x0c66 ? 0x0c66 : code >= 0x0ae6 ? 0x0ae6 : 0x0966;
     return String(code - zero);
   });
 }

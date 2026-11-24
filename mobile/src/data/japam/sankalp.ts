@@ -55,11 +55,11 @@ export function normalizeSankalpAmount(unit: JapaSankalpUnit, value: number): nu
   return n;
 }
 
-/** Parses typed digits (ASCII or Devanagari/Gujarati/Kannada, with grouping commas). */
+/** Parses typed digits (ASCII or Devanagari/Gujarati/Telugu/Kannada, with grouping commas). */
 export function parseSankalpInput(text: string): number | null {
-  const ascii = text.replace(/[०-९૦-૯೦-೯]/g, (d) => {
+  const ascii = text.replace(/[०-९૦-૯౦-౯೦-೯]/g, (d) => {
     const code = d.charCodeAt(0);
-    const zero = code >= 0x0ce6 ? 0x0ce6 : code >= 0x0ae6 ? 0x0ae6 : 0x0966;
+    const zero = code >= 0x0ce6 ? 0x0ce6 : code >= 0x0c66 ? 0x0c66 : code >= 0x0ae6 ? 0x0ae6 : 0x0966;
     return String(code - zero);
   });
   const digits = ascii.replace(/[\s,]/g, '');

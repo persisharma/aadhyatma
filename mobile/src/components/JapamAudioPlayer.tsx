@@ -334,9 +334,9 @@ function ActiveAudioPlayer({
   }, [player, clearCapTimer]);
 
   const playLabel = isPlaying
-    ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ' })
-    : pick(lang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಚಲಾಯಿಸಿ' });
-  const tempoLabel = pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ' });
+    ? pick(lang, { hi: 'विराम', en: 'Pause', gu: 'વિરામ', kn: 'ವಿರಾಮ', mr: 'विराम', te: 'విరామం' })
+    : pick(lang, { hi: 'चलाएँ', en: 'Play', gu: 'ચલાવો', kn: 'ಚಲಾಯಿಸಿ', mr: 'चालवा', te: 'ప్లే చేయండి' });
+  const tempoLabel = pick(lang, { hi: 'गति', en: 'Tempo', gu: 'ગતિ', kn: 'ಗತಿ', mr: 'गती', te: 'గతి' });
   const a11yPlay = isPlaying ? 'Pause auto-chant' : 'Play auto-chant';
   const labelHeadFont =
     lang === 'gu'
@@ -434,6 +434,8 @@ function UnavailableNotice({ lang, rate = 1, onRateChange, layout = 'row' }: Pic
     en: 'Audio not available',
     gu: 'આ મંત્રનો ધ્વનિ ઉપલબ્ધ નથી',
     kn: 'ಈ ಮಂತ್ರದ ಧ್ವನಿ ಲಭ್ಯವಿಲ್ಲ',
+    mr: 'या मंत्राचा ध्वनी उपलब्ध नाही',
+    te: 'ఈ మంత్ర ధ్వని అందుబాటులో లేదు',
   });
   const noticeFont =
     lang === 'gu'

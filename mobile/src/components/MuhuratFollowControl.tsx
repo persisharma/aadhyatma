@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/theme/ThemeContext';
 import { useGitaLanguage } from '@/data/gita/language';
-import { contentByLang, isDevanagariLang } from '@/utils/localize';
+import { contentByLang, isRescriptLang } from '@/utils/localize';
 import { scriptTitleFont } from '@/utils/langType';
 import VratReminderSheet, { type DayOfOption } from '@/components/VratReminderSheet';
 import {
@@ -44,8 +44,8 @@ export const MUHURAT_DAY_OF_OPTIONS: readonly DayOfOption[] = [
 function shortWeekday(d: Date, lang: Lang): string {
   const hi = VARA_NAMES_HI[d.getDay()];
   if (lang === 'en') return VARA_NAMES_EN[d.getDay()].slice(0, 3);
-  if (isDevanagariLang(lang)) return hi;
-  return transliterateDevanagari(hi, lang);
+  if (isRescriptLang(lang)) return transliterateDevanagari(hi, lang);
+  return hi;
 }
 
 export default function MuhuratFollowControl({
