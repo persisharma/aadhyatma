@@ -88,8 +88,8 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
   const panchangPalette = day ? palette : WIDGET_APPEARANCE_TOKENS.day;
   const tithi = day ? runningTithi(day, now) : undefined;
   const recovery = payloadState.kind === 'expired'
-    ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ', mr: 'विजेट ताजे करण्यासाठी वेदांश़ उघडा', te: 'విడ్జెట్‌లను రిఫ్రెష్ చేయడానికి వేదాంశ఼ తెరవండి' })
-    : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ', mr: 'विजेट तयार करण्यासाठी वेदांश़ उघडा', te: 'విడ్జెట్‌లను సిద్ధం చేయడానికి వేదాంశ఼ తెరవండి' });
+    ? pick(lang, { hi: 'विजेट ताज़ा करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to refresh widgets', gu: 'વિજેટ તાજું કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ನವೀಕರಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ', mr: 'विजेट ताजे करण्यासाठी वेदांश़ उघडा', te: 'విడ్జెట్‌లను రిఫ్రెష్ చేయడానికి వేదాంశ్ తెరవండి' })
+    : pick(lang, { hi: 'विजेट तैयार करने हेतु वेदांश़ खोलें', en: 'Open Vedansh to prepare widgets', gu: 'વિજેટ તૈયાર કરવા વેદાંશ઼ ખોલો', kn: 'ವಿಜೆಟ್ ಸಿದ್ಧಪಡಿಸಲು ವೇದಾಂಶ಼ ತೆರೆಯಿರಿ', mr: 'विजेट तयार करण्यासाठी वेदांश़ उघडा', te: 'విడ్జెట్‌లను సిద్ధం చేయడానికి వేదాంశ్ తెరవండి' });
 
   const pin = async (content: WidgetContent) => {
     const opened = await requestPinWidget(content);

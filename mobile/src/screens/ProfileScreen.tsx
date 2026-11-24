@@ -311,8 +311,8 @@ export default function ProfileScreen({ navigation }: Props) {
                 m === 'lifetime'
                   ? pick(lang, { hi: 'सर्वकालिक', en: 'Lifetime', gu: 'સર્વકાલિક', kn: 'ಸಾರ್ವಕಾಲಿಕ', mr: 'सार्वकालिक', te: 'సార్వకాలికం' })
                   : m === 'monthly'
-                    ? pick(lang, { hi: 'मासिक', en: 'Monthly', gu: 'માસિક', kn: 'ಮಾಸಿಕ', mr: 'मासिक', te: 'మాసిక' })
-                    : pick(lang, { hi: 'दैनिक', en: 'Daily', gu: 'દૈનિક', kn: 'ದೈನಿಕ', mr: 'दैनिक', te: 'దైనిక' });
+                    ? pick(lang, { hi: 'मासिक', en: 'Monthly', gu: 'માસિક', kn: 'ಮಾಸಿಕ', mr: 'मासिक', te: 'నెలవారీ' })
+                    : pick(lang, { hi: 'दैनिक', en: 'Daily', gu: 'દૈનિક', kn: 'ದೈನಿಕ', mr: 'दैनिक', te: 'రోజువారీ' });
               return (
                 <Pressable
                   key={m}
