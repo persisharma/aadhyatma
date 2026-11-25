@@ -94,7 +94,7 @@ enum WidgetArt {
     let maxSize = family == .systemSmall ? 256 : (family == .systemLarge ? 1024 : 768)
     let opts: [CFString: Any] = [
       kCGImageSourceCreateThumbnailFromImageAlways: true,
-      kCGImageSourceCreateThumbnailMaxPixelSize: maxSize,
+      kCGImageSourceThumbnailMaxPixelSize: maxSize,
       kCGImageSourceCreateThumbnailWithTransform: true,
       kCGImageSourceShouldCacheImmediately: true
     ]
