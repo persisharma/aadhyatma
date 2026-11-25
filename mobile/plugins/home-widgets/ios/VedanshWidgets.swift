@@ -151,29 +151,17 @@ private struct HeritageFiligree: View {
     ZStack {
       ContainerRelativeShape()
         .strokeBorder(palette.gold.opacity(0.80), lineWidth: 1.5)
-      corners
+      lotus
     }
     .accessibilityHidden(true)
     .allowsHitTesting(false)
   }
 
-  private var corners: some View {
+  // Corner swirls were removed at the owner's request (Nov 2026): next to the
+  // rim they read as extra outlines. Only the small lower lotus remains.
+  private var lotus: some View {
     Canvas { context, size in
       guard size.width > 35, size.height > 35 else { return }
-      for mirror in [false, true] {
-        let x = mirror ? size.width - 12 : 12
-        let sign: CGFloat = mirror ? -1 : 1
-        var curl = Path()
-        curl.move(to: CGPoint(x: x, y: 35))
-        curl.addQuadCurve(to: CGPoint(x: x + 20 * sign, y: 10), control: CGPoint(x: x + 1 * sign, y: 10))
-        curl.addQuadCurve(to: CGPoint(x: x + 34 * sign, y: 10), control: CGPoint(x: x + 25 * sign, y: 15))
-        context.stroke(curl, with: .color(palette.gold.opacity(0.50)), lineWidth: 0.8)
-        var base = Path()
-        base.move(to: CGPoint(x: x, y: size.height - 35))
-        base.addQuadCurve(to: CGPoint(x: x + 20 * sign, y: size.height - 10), control: CGPoint(x: x + sign, y: size.height - 10))
-        base.addQuadCurve(to: CGPoint(x: x + 34 * sign, y: size.height - 10), control: CGPoint(x: x + 25 * sign, y: size.height - 15))
-        context.stroke(base, with: .color(palette.gold.opacity(0.50)), lineWidth: 0.8)
-      }
       let center = CGPoint(x: size.width * 0.5, y: size.height - 12)
       for i in 0..<5 {
         let angle = CGFloat(i) * (.pi / 4) - .pi / 2

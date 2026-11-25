@@ -281,6 +281,7 @@ test('the heritage frame is one gold rim on the system widget shape', () => {
   assert.match(filigree, /ContainerRelativeShape\(\)\s*\.strokeBorder\(/,
     'the rim must follow the system corner radius, not a hard-coded one');
   assert.doesNotMatch(filigree, /Path\(roundedRect:/, 'no inset fixed-radius frames');
+  assert.doesNotMatch(filigree, /addQuadCurve/, 'corner swirls were removed; they read as extra outlines');
 });
 
 test('every ornate heritage subject has a reviewed painting in both the extension and gallery', () => {

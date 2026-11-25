@@ -3585,8 +3585,9 @@ and enlarged ribbon, verse, source and rule; the compact candidate restores the
 single header row with the new styling.
 
 **Frame.** `HeritageFiligree` draws one 1.5 pt gold rim (`ContainerRelativeShape`
-`.strokeBorder`, gold at 80%) on the widget's own edge, plus the corner curls and
-lower lotus. The two inset fixed-radius rounded rectangles (21/18 pt) inside the
+`.strokeBorder`, gold at 80%) on the widget's own edge and the small lower lotus.
+The corner swirls were removed at the owner's request: beside the rim they also
+read as outlines. The two inset fixed-radius rounded rectangles (21/18 pt) inside the
 OS edge read as three separate borders with non-parallel corners on a placed
 widget. This matches the gallery's single edge border.
 
