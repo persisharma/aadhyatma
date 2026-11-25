@@ -10,8 +10,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type AutoSlideSpeed = 'slow' | 'normal' | 'fast' | 'veryFast';
 
-/** Tap order of the pace meter; it wraps from the last back to the first. */
+/**
+ * Pace meter levels, slowest first. Taps step through them and bounce at either end
+ * (1 → 2 → 3 → 4 → 3 → 2 → 1 → 2 …) rather than wrapping, so the meter never jumps
+ * from fastest straight to slowest.
+ */
 export const AUTO_SLIDE_SPEEDS: readonly AutoSlideSpeed[] = ['slow', 'normal', 'fast', 'veryFast'];
+
+export type AutoSlideStep = 1 | -1;
+
+/** The next pace and direction after one tap. Pure — exported for tests. */
+export function nextAutoSlideSpeed(
+  speed: AutoSlideSpeed,
+  direction: AutoSlideStep
+): { speed: AutoSlideSpeed; direction: AutoSlideStep } {
+  const last = AUTO_SLIDE_SPEEDS.length - 1;
+  const i = Math.max(0, AUTO_SLIDE_SPEEDS.indexOf(speed));
+  let dir: AutoSlideStep = direction;
+  if (i >= last) dir = -1;
+  else if (i <= 0) dir = 1;
+  return { speed: AUTO_SLIDE_SPEEDS[i + dir], direction: dir };
+}
 
 const STORAGE_KEY = '@vedansh/auto-slide';
 
