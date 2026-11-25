@@ -198,7 +198,10 @@ describe('Japa sankalp on the counter (§35.2)', () => {
     // A paused Infinity session never counts.
     await act(async () => { loop().props.onCycle(); });
     expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 0 of 2 japa\./);
+    // A paused loop leaves the phone free to lock; a running one holds it awake.
+    expect(jest.mocked(useKeepAwake).mock.calls.some(([tag]) => tag === 'japam-auto-chant')).toBe(false);
     await press(byTestId(tree, 'japam-counter-infinity')); // start looping
+    expect(jest.mocked(useKeepAwake)).toHaveBeenCalledWith('japam-auto-chant');
     await act(async () => { loop().props.onCycle(); });
     expect(String(strip(tree).props.accessibilityLabel)).toMatch(/^Japa sankalp, 1 of 2 japa\./);
     const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
