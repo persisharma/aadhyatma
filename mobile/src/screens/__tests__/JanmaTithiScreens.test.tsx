@@ -225,7 +225,7 @@ describe('JanmaTithiDetailScreen', () => {
   });
 
   test.each([
-    ['hi', 'स्मरण रुका हुआ है'], ['en', 'Reminder paused'],
+    ['hi', 'स्मरण रुका है'], ['en', 'Reminder paused'],
     ['gu', 'સ્મરણ અટકેલું છે'], ['kn', 'ಜ್ಞಾಪನೆಯನ್ನು ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ'],
   ] as const)('saved reminder pauses, restores and can be disabled independently in %s', async (lang, title) => {
     withPeople([MADHU, VEDIKA]);
