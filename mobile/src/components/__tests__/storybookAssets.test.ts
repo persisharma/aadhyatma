@@ -83,3 +83,36 @@ it('ships More illustrations with transparent, centered bounds and matching hash
   }
   expect(manifest.icons.reduce((sum: number, i: { bytes: number }) => sum + i.bytes, 0)).toBeLessThan(750000);
 });
+
+it('ships the nine painted Daan प्रयोजन icons as centered transparent palette PNGs with matching hashes', () => {
+  const assets = path.resolve(__dirname, '../../../assets/icons/daan-seva');
+  const manifest = JSON.parse(fs.readFileSync(path.join(assets, 'manifest.json'), 'utf8'));
+  const registry = fs.readFileSync(path.resolve(__dirname, '../DaanCauseIcon.tsx'), 'utf8');
+  const causes = ['anna', 'gau', 'bal', 'vriddha', 'vidya', 'arogya', 'vastra', 'jeev', 'aapada'];
+  // One icon per cause — exhaustive, named for the cause.
+  expect(manifest.icons.map((i: { name: string }) => i.name).sort()).toEqual([...causes].sort());
+  // Only the nine shipped files sit in the folder (masters live under masters/).
+  expect(fs.readdirSync(assets).filter((p) => p.endsWith('.png')).sort()).toEqual(
+    manifest.icons.map((i: { file: string }) => i.file).sort(),
+  );
+  for (const icon of manifest.icons) {
+    const bytes = fs.readFileSync(path.join(assets, icon.file));
+    expect(registry).toContain(`daan-seva/${icon.file}`);
+    expect(bytes.subarray(1, 4).toString()).toBe('PNG');
+    expect(bytes.readUInt32BE(16)).toBe(512);
+    expect(bytes.readUInt32BE(20)).toBe(512);
+    expect(bytes.includes(Buffer.from('tRNS'))).toBe(true); // palette alpha, not RGBA
+    expect(createHash('sha256').update(bytes).digest('hex')).toBe(icon.sha256);
+    expect(bytes.length).toBe(icon.bytes);
+    // Recentred within the canvas and fit to the house 434px bound.
+    const [left, top, right, bottom] = icon.visibleBounds;
+    expect(Math.abs((left + right) / 2 - 256)).toBeLessThanOrEqual(2);
+    expect(Math.abs((top + bottom) / 2 - 256)).toBeLessThanOrEqual(2);
+    expect(Math.max(right - left, bottom - top)).toBeLessThanOrEqual(434);
+    expect(icon.alphaExtrema[0]).toBe(0);
+    // Provenance master travels with each icon.
+    expect(createHash('sha256').update(fs.readFileSync(path.join(assets, icon.provenanceFile))).digest('hex')).toBe(icon.masterSha256);
+  }
+  // This set carries its own budget; the storybook base budget stays untouched.
+  expect(manifest.icons.reduce((sum: number, i: { bytes: number }) => sum + i.bytes, 0)).toBeLessThan(600000);
+});

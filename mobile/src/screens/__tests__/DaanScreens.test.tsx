@@ -283,6 +283,8 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
     expect(has(tree, 'daan-directory-grid')).toBe(true);
     for (const id of ['anna', 'gau', 'bal', 'vriddha', 'vidya', 'arogya', 'vastra', 'jeev', 'aapada']) {
       expect(has(tree, `daan-cause-tile-${id}`)).toBe(true);
+      // Each tile carries its painted प्रयोजन icon.
+      expect(has(tree, `daan-cause-tile-icon-${id}`)).toBe(true);
     }
     // The grid names causes, not places — no mahatva/org rows until one is opened.
     expect(has(tree, 'daan-directory-filtered')).toBe(false);
