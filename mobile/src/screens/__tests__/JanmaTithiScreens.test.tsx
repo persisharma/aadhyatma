@@ -1,6 +1,6 @@
 import React from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
-import { Switch, Text } from 'react-native';
+import { Linking, Switch, Text } from 'react-native';
 
 /**
  * PRD-29 Part A जन्म तिथि screens — list (living + pitru sections, empty-state
@@ -71,7 +71,7 @@ jest.mock('@/contexts/NotificationPreferencesContext', () => ({
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeProvider } from '@/theme/ThemeContext';
 import { FontScaleProvider } from '@/contexts/FontScaleContext';
-import { __resetJanmaPrefsForTests, getJanmaPrefsSnapshot } from '@/panchang/janmaTithiPrefs';
+import { __resetJanmaPrefsForTests, getJanmaPrefsSnapshot, setJanmaReminder } from '@/panchang/janmaTithiPrefs';
 import { __resetKulRecordStoreForTests } from '@/panchang/kulParamparaStore';
 import type { PersonProfile } from '@/panchang/birthProfiles';
 
@@ -92,11 +92,11 @@ function withPeople(people: PersonProfile[]) {
   mockRoster = { hydrated: true, roster: { activeId: people[0]?.id ?? null, people }, error: false };
 }
 
-function wrap(children: React.ReactNode) {
+function wrap(children: React.ReactNode, lang: 'hi' | 'en' | 'gu' | 'kn' = 'hi') {
   return (
     <FontScaleProvider>
       <ThemeProvider>
-        <GitaLanguageProvider initialLang="hi">{children}</GitaLanguageProvider>
+        <GitaLanguageProvider initialLang={lang}>{children}</GitaLanguageProvider>
       </ThemeProvider>
     </FontScaleProvider>
   );
@@ -222,6 +222,41 @@ describe('JanmaTithiDetailScreen', () => {
     });
     expect(mockRequestPermission).toHaveBeenCalled();
     expect(getJanmaPrefsSnapshot().prefs.reminders['p-1']).toBe(true);
+  });
+
+  test.each([
+    ['hi', 'स्मरण रुका हुआ है'], ['en', 'Reminder paused'],
+    ['gu', 'સ્મરણ અટકેલું છે'], ['kn', 'ಜ್ಞಾಪನೆಯನ್ನು ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ'],
+  ] as const)('saved reminder pauses, restores and can be disabled independently in %s', async (lang, title) => {
+    withPeople([MADHU, VEDIKA]);
+    const ids = [MADHU.id, VEDIKA.id];
+    await setJanmaReminder(MADHU.id, true, ids);
+    await setJanmaReminder(VEDIKA.id, true, ids);
+    const openSettings = jest.spyOn(Linking, 'openSettings').mockResolvedValue(undefined);
+    const nav = { navigate: jest.fn(), goBack: jest.fn() };
+    const detail = () => wrap(<JanmaTithiDetailScreen navigation={nav as never} route={route} />, lang);
+    let tree!: TestRenderer.ReactTestRenderer;
+    mockPermissionStatus = 'denied';
+    await act(async () => { tree = TestRenderer.create(detail()); });
+    trees.push(tree);
+    await flush();
+    expect(allText(tree)).toContain(title);
+    expect(tree.root.findAllByType(Switch)).toHaveLength(0);
+    await act(async () => { await tree.root.findByProps({ testID: 'janma-reminder-settings' }).props.onPress(); });
+    expect(openSettings).toHaveBeenCalledTimes(1);
+    expect(mockRequestPermission).not.toHaveBeenCalled();
+    expect(getJanmaPrefsSnapshot().prefs.reminders[MADHU.id]).toBe(true);
+    mockPermissionStatus = 'granted';
+    await act(async () => tree.update(detail()));
+    expect(tree.root.findByType(Switch).props.value).toBe(true);
+    mockPermissionStatus = 'denied';
+    await act(async () => tree.update(detail()));
+    await act(async () => { await tree.root.findByProps({ testID: 'janma-reminder-disable' }).props.onPress(); });
+    expect(getJanmaPrefsSnapshot().prefs.reminders).toEqual({ [VEDIKA.id]: true });
+    mockPermissionStatus = 'granted';
+    await act(async () => tree.update(detail()));
+    expect(tree.root.findByType(Switch).props.value).toBe(false);
+    openSettings.mockRestore();
   });
 
   test('a denied grant leaves the preference honestly off', async () => {
