@@ -70,8 +70,8 @@ test('the iOS layout measures complete verses before switching to an explicitly 
   assert.match(verseView, /artFraction: 0\.32/);
   assert.match(verseView, /artFraction: 0\.16/);
   assert.match(verseView, /artFraction: 0,/);
-  assert.match(verseView, /\.fixedSize\(horizontal: false, vertical: !condensed\)/,
-    'full-size composition must measure intrinsic text height, not silently truncate');
+  assert.match(verseView, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)\s*\.font\([^\n]*\s*\.foregroundStyle\(palette\.ink\)\s*\.fixedSize\(horizontal: false, vertical: true\)/,
+    'measured compositions must use intrinsic text height, not silently truncate');
   assert.match(verseView, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)/,
     'medium and long iOS variants must use the full verse lines');
   assert.match(verseView, /ForEach\(Array\(v\.lines\.value\(lang\)\.enumerated\(\)\)/,
@@ -92,4 +92,44 @@ test('the chosen native layout retains a safe plain-parchment path', () => {
   assert.match(verseView, /art == nil \? CGFloat\(0\)/);
   assert.match(verseView, /palette\.parchment\.opacity\(0\.93\)/);
   assert.match(swift, /guard renderingMode == \.fullColor, case \.ready\(let payload\) = entry\.state/);
+});
+
+// Nov 2026 device report: the medium Shloka clipped its source and rule. The
+// flourish row sat OUTSIDE ViewThatFits, so a candidate was judged against the
+// whole cell while ~38 pt above it was already spent.
+test('the iOS verse measures the complete column, flourish included, against the real cell', () => {
+  const body = verseView.slice(verseView.indexOf('private func verse('), verseView.indexOf('private enum VerseChrome'));
+  assert.ok(body.length > 0, 'verse() body not found');
+  assert.doesNotMatch(body, /Text\("ॐ वेदांश"\)/,
+    'the brand flourish must be part of each measured candidate, not drawn beside ViewThatFits');
+  assert.match(body, /ViewThatFits\(in: \.vertical\)/);
+  assert.match(body, /\.frame\(width: geometry\.size\.width, height: geometry\.size\.height/,
+    'ViewThatFits must be proposed the exact cell, not a stack share');
+  const order = [...body.matchAll(/chrome: \.(full|compact|tight)|boundedVerseColumn\(/g)]
+    .map((m) => m[1] ?? 'bounded');
+  assert.deepEqual(order, ['full', 'full', 'full', 'compact', 'tight', 'tight', 'bounded'],
+    'approved chrome first, then compact chrome, then the bounded tap-through fallback last');
+  assert.match(verseView, /if chrome == \.full \{ verseFlourish\(\) \}/);
+  assert.match(verseView, /if chrome != \.tight \{ verseRule\(\) \}/);
+});
+
+test('every verse candidate keeps the source; only the bounded fallback may truncate', () => {
+  const composition = verseView.slice(verseView.indexOf('private func verseComposition('), verseView.indexOf('private func boundedVerseColumn('));
+  const bounded = verseView.slice(verseView.indexOf('private func boundedVerseColumn('), verseView.indexOf('private func readFullVerseKicker('));
+  for (const [name, part] of [['composition', composition], ['bounded', bounded]] as const) {
+    assert.ok(part.length > 0, `${name} not found`);
+    assert.match(part, /verseSource\(v, lang: lang\)/, `${name} dropped the source attribution`);
+  }
+  assert.match(bounded, /readFullVerseKicker\(lang\)/, 'the truncating fallback must cue tap-through');
+  assert.match(bounded, /\.layoutPriority\(-1\)/, 'only the verse may yield height in the fallback');
+  assert.match(bounded, /maxHeight: \.infinity/);
+  assert.doesNotMatch(bounded, /\.fixedSize\(horizontal: false, vertical: true\)\s*\}\s*$/,
+    'the fallback must fill the cell, not grow to its ideal height');
+  assert.doesNotMatch(verseView, /lineLimit\(condensed/, 'retired fixed line caps must not return');
+});
+
+test('the medium/large Panchang is measured as whole columns with a compact fallback', () => {
+  const panchang = swift.slice(swift.indexOf('MARK: - आज का पंचांग'), swift.indexOf('MARK: - जप-साधना'));
+  assert.match(panchang, /ViewThatFits\(in: \.vertical\) \{\s*widePanchang\([\s\S]*?compact: false\)\s*widePanchang\([\s\S]*?compact: true\)/);
+  assert.match(panchang, /if !compact \{ brand\(\) \}/);
 });

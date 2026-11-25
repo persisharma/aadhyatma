@@ -1628,3 +1628,7 @@ Updated live-darshan integration for in-place story scroll/focus and determinist
 
 ## [2026-11-24] ingest | Anant jap keep-awake
 A running Anant (Infinity) loop now holds the screen awake outside full screen too (`japam-auto-chant`); pause/blur/style or mantra switch/sankalp completion release it. design.md §35 + subsystems/japam.md synced. Jest and native device checks not run in this session.
+
+## [2026-11-25] ingest | Medium widget height fit
+
+iOS medium Shloka clipped its source/rule: the flourish row was outside `ViewThatFits`. Candidates are now whole columns (full → compact → tight → bounded tap-through) framed to the cell; medium/large Panchang gets a compact column. Updated [[home-widgets]] gotcha and design.md §59. Swift not compiled here; placed-widget device checks pending.
