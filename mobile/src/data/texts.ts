@@ -9,7 +9,6 @@
 // theme corpus behind a `require()` thunk, so importing the counts here is
 // launch-safe by design (see `gita-saar/index.ts` LAUNCH-GRAPH RULE).
 import { gitaSaarTotal, gitaSaarChaptersManifest } from './gita-saar';
-import { BHAGAVATAM_ID, bhagavatamChaptersManifest, bhagavatamTitleHi, bhagavatamTitleEn, bhagavatamVerseCount } from './bhagavatam';
 import {
   durgaDeviKavachamTotal,
   durgaSaptashatiChapterOneTotal,
@@ -92,6 +91,8 @@ import {
   valmikiRamayanTotal,
   vishnuChalisaCounts,
   vishnuSahasranamaTotal,
+  bhagavatamVerseCount,
+  bhagavatamReadingCount,
 } from './verseCounts';
 import { japamMantras } from './japam';
 import { parshuramPublished } from './parshuramAvailability';
@@ -197,11 +198,11 @@ export const library: readonly LibraryEntry[] = [
     verseCount: 701,
   },
   {
-    id: BHAGAVATAM_ID,
-    nameHi: bhagavatamTitleHi,
-    nameEn: bhagavatamTitleEn,
-    sub: `${bhagavatamChaptersManifest.length} चयनित पाठ · ${bhagavatamVerseCount} श्लोक`,
-    subEn: `${bhagavatamChaptersManifest.length} selected readings · ${bhagavatamVerseCount} verses`,
+    id: 'srimad-bhagavatam',
+    nameHi: 'श्रीमद्भागवतम्',
+    nameEn: 'Śrīmad Bhāgavatam',
+    sub: `${bhagavatamReadingCount} चयनित पाठ · ${bhagavatamVerseCount} श्लोक`,
+    subEn: `${bhagavatamReadingCount} selected readings · ${bhagavatamVerseCount} verses`,
     thumb: 'भा',
     status: 'active',
     category: 'granth',
