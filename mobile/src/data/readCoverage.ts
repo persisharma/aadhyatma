@@ -31,6 +31,15 @@ import { BHAGAVATAM_ID, bhagavatamChaptersManifest } from '@/data/bhagavatam';
 import { gitaSaarChaptersManifest } from '@/data/gita-saar';
 import { canonicalSourceId } from '@/data/sourceIdMigration';
 import { getVersePoolLastPositions } from '@/data/versePool';
+import { saptashatiChapterIds } from '@/data/saptashatiCore';
+
+/**
+ * The दुर्गा सप्तशती granth card aggregates its 13 chapters' coverage. Unlike the
+ * Gita (whose chapters share the granth's sourceId through a manifest), each
+ * chapter is its own flat reader recorded under its own sourceId, so the granth
+ * row has to sum the members rather than read a key of its own.
+ */
+const DURGA_SAPTASHATI_CORE_ID = 'durga-saptashati-core';
 
 /** Inclusive `[first, last]` run of read verse indices within one subsection. */
 export type VerseRange = readonly [number, number];
@@ -206,6 +215,9 @@ export function getChapterCoverage(
 }
 
 export function getSourceCoverage(state: CoverageState, sourceId: string): SourceCoverage | null {
+  if (coverageSourceId(sourceId) === DURGA_SAPTASHATI_CORE_ID) {
+    return aggregateSaptashatiCoverage(state);
+  }
   const shape = getCoverageShape(sourceId);
   if (!shape) return null;
   const id = coverageSourceId(sourceId);
@@ -230,6 +242,34 @@ export function getSourceCoverage(state: CoverageState, sourceId: string): Sourc
     hasChapters: shape.length > 1,
     paath: state.paath[id] ?? 0,
     paathAt: state.paathAt[id],
+  };
+}
+
+/** Sum the 13 chapters' own coverage into the granth row (see DURGA_SAPTASHATI_CORE_ID). */
+function aggregateSaptashatiCoverage(state: CoverageState): SourceCoverage {
+  let read = 0;
+  let total = 0;
+  let chaptersComplete = 0;
+  const chapters = saptashatiChapterIds.map((memberId, i) => {
+    const member = getSourceCoverage(state, memberId);
+    const r = member?.read ?? 0;
+    const t = member?.total ?? 0;
+    read += r;
+    total += t;
+    const complete = t > 0 && r >= t;
+    if (complete) chaptersComplete += 1;
+    return { chapter: i + 1, read: r, total: t, complete };
+  });
+  return {
+    sourceId: DURGA_SAPTASHATI_CORE_ID,
+    read,
+    total,
+    pct: total > 0 ? Math.floor((read / total) * 100) : 0,
+    chapters,
+    chaptersComplete,
+    hasChapters: true,
+    paath: state.paath[DURGA_SAPTASHATI_CORE_ID] ?? 0,
+    paathAt: state.paathAt[DURGA_SAPTASHATI_CORE_ID],
   };
 }
 
