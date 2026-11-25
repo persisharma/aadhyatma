@@ -43,7 +43,10 @@ content is generated from the registries, so it cannot drift from the code).
   standing doors in a sticky action bar above the tab bar — Sept 2026 UX
   review), DaanJourney (one skippable scroll with always-present terminal
   actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
-  (interstitial → `Linking.openURL`), DaanKatha (story → शिक्षा → canonical work/passage →
+  (interstitial → `Linking.openURL`; the cause grid tiles are each led by a
+  painted प्रयोजन miniature — the `daan-seva` Storybook set, `components/DaanCauseIcon.tsx`
+  → `assets/icons/daan-seva/seva-<cause>.png`, one per cause, pinned by
+  `storybookAssets.test.ts`), DaanKatha (story → शिक्षा → canonical work/passage →
   ॥ ॐ ॥ → `अगली कथा` row with position dots + `दान करें` / `खाते में दर्ज करें`
   doors, so the story never dead-ends). All but DaanPunya registered
   on Home, More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).

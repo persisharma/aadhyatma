@@ -344,6 +344,8 @@ The contract for such a flow:
 
 The bhajan text shelf (§34) is the second such flow: `BhajanStackParamList` is intersected into the Home and Audio param lists, and `BhajanList` / `BhajanReader` are registered on both stacks.
 
+The Mahadasha guide (design.md §51e) applies rule 4: its japa, paath and Daan-Punya doors open Home-stack screens, so the Panchang stack mounts every screen those doors can reach (`JyotishPracticeRoutes`, picked from `HomeStackParamList` in `navigation/types.ts`) and the guide and the Dasha tab push through `navigateToHomeStackTarget`. `navigation/__tests__/dashaGuidePracticeRoutes.test.ts` resolves every beej-japa and `GRAHA_UPAY` practice source and fails if its screen is not mounted on Panchang.
+
 Do **not** apply this to a flow with doors on one tab: a duplicate registration there is pure surface area. Guarded by `src/navigation/__tests__/vidhiBackNavigation.test.ts`.
 
 ### 6.1 Onboarding surfaces — feature tour, first-run setup & What's New (contract)
@@ -736,6 +738,13 @@ Keep its publisher attribution visible, standard YouTube controls/branding intac
 and offer in-app Retry, temple switching, the real temple guide and shipped readers.
 No app-owned YouTube/website exit buttons or external arrow on the Darshan player;
 verified recitation readers retain their existing same-video host hand-off.
+
+Playback failure may offer the selected temple's existing story only when its
+selected-language content is nonblank. Expand in place, wait for layout before
+scroll/focus, cancel stale focus on route/lifecycle changes, and never retry or
+resume playback from this action. Deterministic Maestro coverage uses the opt-in
+`VEDANSH_DARSHAN_E2E=1` development Metro fixture (never selected for production
+resolution); native accessibility/layout checks remain separately required.
 
 Channel WebView HTML uses the registered native app identity as HTTPS baseURL,
 Referer and player origin. Keep native fullscreen enabled on both video/channel
@@ -1189,6 +1198,9 @@ The compiled report reads each of the nine grahas the way a family pandit does �
 - **Device-only gates** (cannot be closed in CI/worktree; state their status explicitly before shipping): a clean CNG prebuild that reproducibly creates/entitles/signs the extension with no Xcode drift, an EAS build installing every signed target on a physical device, an app-write → widget-reload check, and per-size render / VoiceOver-TalkBack / large-text / Devanagari-matra screenshots. A local Swift module is not accepted as proof of extension-target feasibility.
 
 ## 17. Event Muhurat Finder (PRD-16) — rule-table contract
+
+**India civil scan date (Proposal 14).** Finder results, Special auspicious days and picker warm-up use `useCivilToday`: refresh just after IST midnight and on foreground return, with no rescan on same-day return. Results are keyed by the active date and scan inputs so an old list cannot flash before effect cleanup; obsolete progressive/final callbacks are ignored. Both result lists show a wrapping, script-aware 13/23 saffron-deep scan-start date beneath the city/convention line. Date labels and valid overnight window instants retain their existing meaning; horizons, ranking, routing and absolute-date cache keys are unchanged. Finder additionally checks yesterday once for windows that cross today's IST midnight and have not ended. Only those original windows carry over, with unchanged endpoints and per-window grading. Filtering preserves engine best-first order; the carry-over verdict tier and factors follow the first surviving window on initial load and expiry. They expire by a bounded timer or foreground refresh without rescanning or extending the upcoming horizon. Abujh entries are day labels with no timed-window payload, so expired prior-day entries leave that list. Rolling cache warm-up defaults explicitly to `civilToday()`; the shared device-local `startOfToday` helper is unchanged.
+
 
 **Startup integration invariant.** Callers mounted with Home must hydrate before calculating and use cooperative day/annual-scan APIs on a miss. An outer Promise, timer or `InteractionManager` callback is not a CPU yield inside a calculation. Numerical changes retain synchronous/cooperative parity tests, including timezone and end-time boundaries. Widget cached windows remain IST-scoped outside `panchangDayStore`; their key must invalidate on OTA/build, date, location, calendar and observance upgrades, and must not persist private activity. Validate with `scripts/profile-home-startup.mts` plus release-device tap tracing; a desktop timing is not an on-device latency result.
 

@@ -18,6 +18,13 @@ config.resolver.assetExts.push('txt');
 const delivery = valmikiCorpusDelivery(require('./app.json').expo.version);
 const resolveBefore = config.resolver.resolveRequest;
 config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (process.env.VEDANSH_DARSHAN_E2E === '1' && context.dev) {
+    const path = require('node:path');
+    if (moduleName === './ChannelYouTubeFrame' && context.originModulePath.endsWith('/components/video/DockedYouTubePlayer.tsx'))
+      return { type: 'sourceFile', filePath: path.join(__dirname, '.maestro/fixtures/darshan-error-frame.tsx') };
+    if (moduleName === '@/video/darshanSource')
+      return { type: 'sourceFile', filePath: path.join(__dirname, '.maestro/fixtures/darshan-source.ts') };
+  }
   const request = corpusSourceRequest(delivery, context.originModulePath, moduleName);
   return (resolveBefore ?? context.resolveRequest)(context, request, platform);
 };

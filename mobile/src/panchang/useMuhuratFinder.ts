@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { AppState } from 'react-native';
 import { computeMuhuratDay } from './muhurat';
 import {
   evaluateDay,
@@ -18,7 +19,6 @@ import {
   dayAt,
   dayKeysFrom,
   scanAbujhDays,
-  startOfToday,
   verdictForDate,
   yieldToUi,
   CHUNK_DAYS,
@@ -28,6 +28,8 @@ import {
 } from './muhuratFinderScan';
 import { usePanchangLocation } from '@/contexts/PanchangLocationContext';
 import { usePanchangCalendarSystem } from './usePanchang';
+import { useCivilToday } from './useCivilToday';
+import { civilDayStart, civilTodayKey } from './civilTime';
 import { runWhenIdle } from '@/utils/runWhenIdle';
 
 export { FINDER_WINDOW_DAYS };
@@ -46,6 +48,8 @@ export type FinderState = {
   summary: FinderSummary | null;
   /** When the window is empty: the first shreshtha/madhyam days beyond it. */
   firstAfter: DayVerdict[];
+  /** Yesterday's still-live overnight windows only; never changes the horizon. */
+  carryover?: DayVerdict;
 };
 
 /**
@@ -63,28 +67,32 @@ export function useMuhuratFinder(
   days: number = FINDER_WINDOW_DAYS,
   /** यात्रा only: the chosen travel direction (दिशा शूल exclusion). Scan-time input, never persisted. */
   direction?: DishaDirection
-): FinderState {
+): FinderState & { startDate: Date } {
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
-  const [state, setState] = useState<FinderState>({ loading: true, summary: null, firstAfter: [] });
+  const start = useCivilToday();
+  const scanKey = useMemo(() => ({}), [occasionId, days, direction, calendarSystem, location, start]);
+  const [result, setResult] = useState<{ key: object; state: FinderState }>(() => ({ key: scanKey, state: { loading: true, summary: null, firstAfter: [] } }));
 
   useEffect(() => {
     let cancelled = false;
+    let carryover: DayVerdict | undefined;
+    const setState = (state: FinderState) => setResult({ key: scanKey, state: { ...state, carryover } });
+    const isObsolete = () => cancelled || civilTodayKey() !== dateKeyFor(start);
     setState({ loading: true, summary: null, firstAfter: [] });
     const task = runWhenIdle(async () => {
       const opts = { calendarSystem, location };
       const rule = getEventRule(occasionId);
-      const start = startOfToday();
       // Disk → memory before the sweep, so days solved in an earlier session (or
       // an earlier launch) are never re-solved. One multiGet, short-circuited
       // entirely when the range is already warm.
-      await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
-      if (cancelled) return;
+      await hydratePanchangDays(location, calendarSystem, dayKeysFrom(dayAt(start, -1), HYDRATE_DAYS + 1));
+      if (isObsolete()) return;
       const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
       // One festival resolve for the whole sweep: abujh days lift the seasonal
       // bars (PRD-16 §4.2), so a Chaturmas-barred occasion still surfaces
       // Dev Uthani / Akshaya Tritiya rather than contradicting the abujh screen.
-      const abujhKeys = abujhFestivalKeys(start, FIRST_AFTER_MAX_DAYS, opts);
+      const abujhKeys = abujhFestivalKeys(dayAt(start, -1), FIRST_AFTER_MAX_DAYS + 1, opts);
       let heavyThisChunk = false;
       const inputsAt = (i: number) => {
         const { inputs, miss } = cachedDayInputs(scan, dayAt(start, i), opts);
@@ -93,14 +101,23 @@ export function useMuhuratFinder(
       };
       const verdicts: DayVerdict[] = [];
       const firstAfter: DayVerdict[] = [];
-      for (let i = 0; i < FIRST_AFTER_MAX_DAYS; i += 1) {
-        if (cancelled) return;
+      for (let i = -1; i < FIRST_AFTER_MAX_DAYS; i += 1) {
+        if (isObsolete()) return;
         const d = dayAt(start, i);
         const { p, asta, lagnas } = inputsAt(i);
         const { p: next } = inputsAt(i + 1);
         const m = computeMuhuratDay(p.sunrise, p.sunset, next.sunrise, d.getDay());
         const abujh = abujhKeys.has(dateKeyFor(d)) || pushyaYogaFor(p, d.getDay()) != null;
         const v = evaluateDay(rule, d.getTime(), d.getDay(), p, m, asta, { abujh, lagnas, direction });
+        if (i === -1) {
+          const midnight = civilDayStart(start).getTime();
+          const windows = v.windows.filter(w => w.start.getTime() < midnight && w.end.getTime() > Date.now());
+          if (v.tier !== 'excluded' && windows.length) carryover = withSurvivingWindows(v, windows);
+          // The previous day is a bounded carry-over check, not part of the horizon.
+          if (heavyThisChunk) await yieldToUi();
+          heavyThisChunk = false;
+          continue;
+        }
         if (i < days) {
           verdicts.push(v);
         } else if (v.tier !== 'excluded') {
@@ -117,14 +134,14 @@ export function useMuhuratFinder(
           // earliest matches, while the rest of the window keeps scanning for
           // the calendar overlay. An empty window stays on the spinner until the
           // scan finishes, so the empty-with-reason card never flashes early.
-          if (!cancelled && verdicts.some((x) => x.tier !== 'excluded')) {
+          if (!isObsolete() && verdicts.some((x) => x.tier !== 'excluded')) {
             setState({ loading: false, summary: summarize(verdicts), firstAfter });
           }
           if (heavyThisChunk) await yieldToUi();
           heavyThisChunk = false;
         }
       }
-      if (cancelled) return;
+      if (isObsolete()) return;
       setState({ loading: false, summary: summarize(verdicts), firstAfter });
       // Fire-and-forget: the results are already on screen, and the next launch
       // gets them for free.
@@ -134,9 +151,40 @@ export function useMuhuratFinder(
       cancelled = true;
       task.cancel();
     };
-  }, [occasionId, days, direction, calendarSystem, location]);
+  }, [occasionId, days, direction, calendarSystem, location, start, scanKey]);
 
-  return state;
+  // Hide the old scan during render, before effect cleanup or progressive paint.
+  const visible = result.key === scanKey ? result.state : { loading: true, summary: null, firstAfter: [] };
+  const summary = useLiveCarryover(visible.summary, visible.carryover);
+  return { ...visible, summary, startDate: start };
+}
+
+/** Filtering preserves engine best-first order; metadata follows its surviving best. */
+function withSurvivingWindows(verdict: DayVerdict, windows: DayVerdict['windows']): DayVerdict {
+  return { ...verdict, windows, tier: windows[0].tier, factors: windows[0].factors };
+}
+
+/** Expire only the carry-over row: same-day foreground returns never rescan. */
+function useLiveCarryover(summary: FinderSummary | null, carryover?: DayVerdict): FinderSummary | null {
+  const [tick, setTick] = useState(0);
+  const now = Date.now();
+  const nextEnd = carryover?.windows
+    .map(w => w.end.getTime())
+    .filter(end => end > now)
+    .sort((a, b) => a - b)[0];
+  useEffect(() => {
+    if (nextEnd == null) return;
+    const refresh = () => setTick(value => value + 1);
+    const timer = setTimeout(refresh, Math.max(1, nextEnd - Date.now()));
+    const sub = AppState.addEventListener('change', state => { if (state === 'active') refresh(); });
+    return () => { clearTimeout(timer); sub.remove(); };
+  }, [nextEnd]);
+  return useMemo(() => {
+    if (!summary || !carryover) return summary;
+    const windows = carryover.windows.filter(w => w.end.getTime() > Date.now());
+    if (!windows.length) return summary;
+    return summarize([withSurvivingWindows(carryover, windows), ...summary.verdicts]);
+  }, [summary, carryover, tick, nextEnd]);
 }
 
 /**
@@ -151,19 +199,20 @@ export function useMuhuratFinder(
 export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void {
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
+  const start = useCivilToday();
 
   useEffect(() => {
     let cancelled = false;
+    const isObsolete = () => cancelled || civilTodayKey() !== dateKeyFor(start);
     const task = runWhenIdle(async () => {
       const opts = { calendarSystem, location };
-      const start = startOfToday();
       await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, HYDRATE_DAYS));
-      if (cancelled) return;
+      if (isObsolete()) return;
       const scan = dayStoreFor(scopeKeyFor(location, calendarSystem));
       let heavy = false;
       // Warm one past the window: the scan reads day i AND i+1 (next sunrise).
       for (let i = 0; i <= days; i += 1) {
-        if (cancelled) return;
+        if (isObsolete()) return;
         const { miss } = cachedDayInputs(scan, dayAt(start, i), opts);
         if (miss) heavy = true;
         if (i % CHUNK_DAYS === CHUNK_DAYS - 1) {
@@ -177,7 +226,7 @@ export function useMuhuratFinderWarmup(days: number = FINDER_WINDOW_DAYS): void 
       cancelled = true;
       task.cancel();
     };
-  }, [location, calendarSystem, days]);
+  }, [location, calendarSystem, days, start]);
 }
 
 /** How far ahead Home's Today strip will surface a followed muhurat. */
@@ -337,41 +386,45 @@ export type AbujhState = { loading: boolean; days: AbujhDay[] };
  * first (progressive), pushya days stream in from the SHARED day cache the
  * finder + warmup fill, and a single bad solve can never strand the spinner.
  */
-export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhState {
+export function useAbujhDays(horizonDays: number = FIRST_AFTER_MAX_DAYS): AbujhState & { startDate: Date } {
   const { location } = usePanchangLocation();
   const [calendarSystem] = usePanchangCalendarSystem();
-  const [state, setState] = useState<AbujhState>({ loading: true, days: [] });
+  const start = useCivilToday();
+  const scanKey = useMemo(() => ({}), [calendarSystem, location, horizonDays, start]);
+  const [result, setResult] = useState<{ key: object; state: AbujhState }>(() => ({ key: scanKey, state: { loading: true, days: [] } }));
 
   useEffect(() => {
     let cancelled = false;
+    const setState = (state: AbujhState) => setResult({ key: scanKey, state });
+    const isObsolete = () => cancelled || civilTodayKey() !== dateKeyFor(start);
     setState({ loading: true, days: [] });
     const task = runWhenIdle(async () => {
       const opts = { calendarSystem, location };
-      const start = startOfToday();
       try {
         await hydratePanchangDays(location, calendarSystem, dayKeysFrom(start, horizonDays));
-        if (cancelled) return;
+        if (isObsolete()) return;
         const days = await scanAbujhDays(start, horizonDays, opts, {
-          isCancelled: () => cancelled,
+          isCancelled: isObsolete,
           // Progressive paint: reveal days (festival first, then pushya) as the
           // scan finds them, so the screen never sits on a bare spinner.
           onProgress: (partial) => {
-            if (!cancelled && partial.length) setState({ loading: false, days: partial });
+            if (!isObsolete() && partial.length) setState({ loading: false, days: partial });
           },
         });
-        if (!cancelled) setState({ loading: false, days });
+        if (!isObsolete()) setState({ loading: false, days });
         void persistPanchangDays(location, calendarSystem);
       } catch {
         // Defensive: the scan already guards each day, but never leave the
         // spinner stranded if something above the loop throws.
-        if (!cancelled) setState({ loading: false, days: [] });
+        if (!isObsolete()) setState({ loading: false, days: [] });
       }
     });
     return () => {
       cancelled = true;
       task.cancel();
     };
-  }, [calendarSystem, location, horizonDays]);
+  }, [calendarSystem, location, horizonDays, start, scanKey]);
 
-  return state;
+  // Hide the old scan during render, before effect cleanup or progressive paint.
+  return { ...(result.key === scanKey ? result.state : { loading: true, days: [] }), startDate: start };
 }

@@ -17,13 +17,13 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { civilToday } from '@/panchang/civilTime';
 import * as engine from '@/panchang/engine';
 import {
   dateKeyFor,
   dayAt,
   dayStoreFor,
   scopeKeyFor,
-  startOfToday,
   __resetPanchangDayStore,
 } from '@/panchang/panchangDayStore';
 import {
@@ -48,7 +48,7 @@ const SCOPE = scopeKeyFor(UJJAIN, SYSTEM);
  * START + 3). Today-relative is what actually keeps the assertions independent of
  * when the suite runs.
  */
-const START = startOfToday();
+const START = civilToday();
 /** Small window: the contract is the same at 3 days and the suite stays quick. */
 const DAYS = 3;
 

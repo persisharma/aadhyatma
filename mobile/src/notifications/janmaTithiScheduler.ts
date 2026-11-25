@@ -35,10 +35,13 @@ export async function cancelAllJanmaTithiReminders(): Promise<void> {
 export async function scheduleJanmaTithiReminders(
   inputs: JanmaTithiReminderInput[],
   now = new Date(),
-  lang: Lang = 'hi'
+  lang: Lang = 'hi',
+  isCancelled: () => boolean = () => false
 ): Promise<number> {
   const planned = planJanmaTithiReminders(inputs, now, familyCap(Platform.OS, 'janmaTithi'));
   const channelId = planned.length > 0 ? await ensureChannel().catch(() => undefined) : undefined;
+  // Channel creation can outlive a foreground change or a per-person opt-out.
+  if (isCancelled()) return 0;
   const slots: FamilySlot[] = planned.map((item) => {
     const { title, body } = formatJanmaTithiReminderContent(item, lang);
     return {

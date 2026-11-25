@@ -55,7 +55,10 @@ export default function GitaChapterCard({
     unitLabelHi,
     chapter.verseCount === 1 ? unitLabelEnSingular : unitLabelEn
   );
-  const chapterTag = `${chapterLabel} ${chapter.chapter}`;
+  const scripture = chapter.scriptureChapter;
+  const chapterTag = scripture
+    ? contentByLang(lang, `स्कन्ध ${scripture.canto} · अध्याय ${scripture.chapter}`, `Canto ${scripture.canto} · Chapter ${scripture.chapter}`)
+    : `${chapterLabel} ${chapter.chapter}`;
   const verseMeta = `${chapter.verseCount} ${unitLabel}`;
 
   // Read coverage shows only inside a GranthProgressScope (the chapters

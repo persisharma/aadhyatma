@@ -1,0 +1,27 @@
+# Start isolated Metro: VEDANSH_DARSHAN_E2E=1 npx expo start --port 8084 -c
+# Development bundle ONLY. The fixture fails the real player without live streams.
+appId: com.prashantsharma.vedansh
+---
+- runFlow: _launch.yaml
+- tapOn: { id: "tab-home" }
+- tapOn: { id: "home-darshan-floating" }
+- tapOn: { id: "darshan-view-all" }
+- tapOn: { id: "darshan-temple-somnath" }
+- extendedWaitUntil:
+    visible: { id: "darshan-read-story" }
+    timeout: 10000
+- takeScreenshot: e2e-shots/darshan-story-error
+- tapOn: { id: "darshan-read-story" }
+- assertVisible: { id: "darshan-story-content" }
+- takeScreenshot: e2e-shots/darshan-story-open
+- tapOn: { id: "darshan-read-story" }
+- assertVisible: { id: "darshan-story-content" }
+- tapOn: { id: "darshan-story" }
+- assertNotVisible: { id: "darshan-story-content" }
+- tapOn: { id: "darshan-read-story" }
+- assertVisible: { id: "darshan-story-content" }
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- tapOn: { id: "darshan-temple-somnath" }
+- assertNotVisible: { id: "darshan-story-content" }
+- tapOn: { id: "darshan-read-story" }
+- assertVisible: { id: "darshan-story-content" }

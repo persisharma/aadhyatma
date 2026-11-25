@@ -23,7 +23,14 @@ const mockChart = computeKundali({
   timezone: 'Asia/Kolkata',
 });
 
-const mockNavigation = { navigate: jest.fn(), goBack: jest.fn(), dispatch: jest.fn() };
+// The Panchang stack mounts the guide's practice routes (RULEBOOK §6.0.1), so
+// the doors push in place and Back returns to the guide.
+const mockNavigation = {
+  navigate: jest.fn(),
+  goBack: jest.fn(),
+  dispatch: jest.fn(),
+  getState: () => ({ routeNames: ['DashaGuide', 'JapamCounter', 'ChalisaReader', 'AshtakamReader', 'KavachamReader', 'VishnuSahasranamaChapters', 'DaanPunya'] }),
+};
 let mockPreventEnabled = false;
 let mockPreventCallback: ((event: { data: { action: unknown } }) => void) | null = null;
 
@@ -154,15 +161,20 @@ test('step 4 carries the day, daan, seva and mantra, and opens japa, paath and D
   assert.ok(text.includes('not a fix or a guarantee'));
   for (const cause of guide.daanCauses) assert.ok(text.includes(cause.name.en), cause.id);
 
+  // Every practice door pushes in place on the guide's own stack, so Back
+  // returns to step 4 instead of Home's root (owner report, Nov 2026).
   press(tree, 'dasha-guide-chant');
   const beej = library.find((entry) => entry.id === GRAHA_BEEJ_JAPA_ID[nextLord])!;
-  expect(mockNavigation.navigate).toHaveBeenLastCalledWith('HomeTab', buildEntryStartTarget(beej));
+  const beejTarget = buildEntryStartTarget(beej)!;
+  expect(mockNavigation.navigate).toHaveBeenLastCalledWith(beejTarget.screen, beejTarget.params);
   press(tree, 'dasha-guide-paath');
   const paath = library.find((entry) => entry.id === guide.upay.practiceSourceId)!;
-  expect(mockNavigation.navigate).toHaveBeenLastCalledWith('HomeTab', buildEntryStartTarget(paath));
+  const paathTarget = buildEntryStartTarget(paath)!;
+  expect(mockNavigation.navigate).toHaveBeenLastCalledWith(paathTarget.screen, paathTarget.params);
   // The daan door opens the educate-first home, never the directory (RULEBOOK §27.1, §27.13).
   press(tree, 'dasha-guide-open-daan');
-  expect(mockNavigation.navigate).toHaveBeenLastCalledWith('HomeTab', { screen: 'DaanPunya' });
+  expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanPunya', undefined);
+  expect(mockNavigation.navigate).not.toHaveBeenCalledWith('HomeTab', expect.anything());
 });
 
 test('step 5 answers why, quotes this chart, and opens Prashna only when a purpose fits', () => {

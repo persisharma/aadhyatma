@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daan-Punya — V1 vs V2 vs V3</title>
+<style>
+  body{margin:0;background:#3a322a;font-family:Inter,system-ui,sans-serif;zoom:0.88}
+  .row{display:flex;gap:12px;padding:12px;align-items:flex-start}
+  .col{display:flex;flex-direction:column;gap:8px}
+  .lbl{color:#F6ECD0;font-weight:700;font-size:15px;text-align:center;padding:6px 0}
+  .lbl small{display:block;font-weight:500;font-size:11px;color:#C2AC88}
+  iframe{width:390px;height:2720px;border:0;border-radius:18px;background:#F6ECD0;box-shadow:0 8px 30px rgba(0,0,0,.4);display:block}
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="col"><div class="lbl">V1 · Original<small>as proposed in PR #718</small></div>
+    <iframe src="V1.standalone.html" scrolling="no"></iframe></div>
+  <div class="col"><div class="lbl">V2 · Corrected<small>Claude — audit fixes</small></div>
+    <iframe src="Main.v2.standalone.html" scrolling="no"></iframe></div>
+  <div class="col"><div class="lbl">V3 · Codex<small>clean-slate redesign</small></div>
+    <iframe src="V3.standalone.html" scrolling="no"></iframe></div>
+</div>
+</body>
+</html>

@@ -829,6 +829,27 @@ const vamanaJayantiBhog = profile({
   },
 });
 
+const vaikunthaChaturdashiBhog = profile({
+  id: 'vaikuntha-chaturdashi-bhog',
+  titleHi: 'वैकुंठ चतुर्दशी का अर्पण और व्रत',
+  titleEn: 'Vaikuntha Chaturdashi offerings and fast',
+  observanceIds: ['vaikuntha-chaturdashi'],
+  offerings: [item('lotus-offering', 'विष्णु पूजन में कमल का अर्पण इस व्रत की प्रमुख परंपरा है।', 'A lotus offering to Vishnu is a central tradition of this vrat.')],
+  permittedDuringFast: [item('daytime-fast', 'कार्तिक माहात्म्य में दिन के उपवास का उल्लेख है। व्रत का स्वरूप अपनी पारिवारिक परंपरा के अनुसार रखें।', 'The Kartika Mahatmya describes a daytime fast. Follow your family tradition for the form it takes.')],
+  paranaMealHi: 'पारण का समय और भोजन अपनी परंपरा के अनुसार रखें।',
+  paranaMealEn: 'Follow your tradition for when and with what to break the fast.',
+  traditionNoteHi: 'काशी में हरि-हर पूजा में तुलसी और बेलपत्र के परस्पर अर्पण की विशेष रीति भी है।',
+  traditionNoteEn: 'Kashi also observes a special exchange of tulsi and bilva leaves in Hari-Hara worship.',
+  source: {
+    referenceUrls: [
+      `${DP}/festivals/vaikuntha-chaturdashi/vaikuntha-chaturdashi-date-time.html`,
+      'https://www.wisdomlib.org/hinduism/book/the-skanda-purana/d/doc371677.html',
+    ],
+    verificationNote: 'Reviewed 2026-11-21. Skanda Purana, Vaishnava Khanda, Kartika Mahatmya 35.23–26 describes fasting, lotus offerings and the order of worship. Drik Panchang attests the Hari-Hara worship and the Kashi leaf exchange.',
+    variantNote: 'The Kashi exchange is local. Follow family custom for fasting and parana.',
+  },
+});
+
 export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   hartalikaTeejBhog,
   hariyaliTeejBhog,
@@ -867,4 +888,5 @@ export const EXTENDED_BHOG_CONTENT: readonly BhogContentEntry[] = [
   narakChaturdashiBhog,
   varahaJayantiBhog,
   vamanaJayantiBhog,
+  vaikunthaChaturdashiBhog,
 ];

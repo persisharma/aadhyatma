@@ -31,11 +31,11 @@ import {
   dayKeysFrom,
   dayStoreFor,
   scopeKeyFor,
-  startOfToday,
   type ScanLocation,
   type ScanOptions,
 } from './panchangDayStore';
 import { hydratePanchangDays, persistPanchangDays } from './panchangDayCache';
+import { civilToday } from './civilTime';
 import type { CalendarSystem } from './types';
 
 /**
@@ -60,7 +60,7 @@ export const PREWARM_DAYS = 7;
 const inFlight = new Set<string>();
 
 export type PrewarmOptions = {
-  /** First day of the window. Defaults to today (device-local). */
+  /** First day of the window. Defaults to India's civil today. */
   start?: Date;
   /** Days past `start` to warm. Defaults to `PREWARM_DAYS`. */
   days?: number;
@@ -84,7 +84,7 @@ export async function prewarmPanchangDays(
   calendarSystem: CalendarSystem,
   options: PrewarmOptions = {}
 ): Promise<void> {
-  const { start = startOfToday(), days = PREWARM_DAYS, isCancelled = () => false } = options;
+  const { start = civilToday(), days = PREWARM_DAYS, isCancelled = () => false } = options;
   const scope = scopeKeyFor(location, calendarSystem);
   if (inFlight.has(scope)) return;
   inFlight.add(scope);

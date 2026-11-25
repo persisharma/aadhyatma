@@ -91,6 +91,8 @@ import {
   valmikiRamayanTotal,
   vishnuChalisaCounts,
   vishnuSahasranamaTotal,
+  bhagavatamVerseCount,
+  bhagavatamReadingCount,
 } from './verseCounts';
 import { japamMantras } from './japam';
 import { parshuramPublished } from './parshuramAvailability';
@@ -194,6 +196,18 @@ export const library: readonly LibraryEntry[] = [
     category: 'granth',
     deities: ['krishna'],
     verseCount: 701,
+  },
+  {
+    id: 'srimad-bhagavatam',
+    nameHi: 'श्रीमद्भागवतम्',
+    nameEn: 'Śrīmad Bhāgavatam',
+    sub: `${bhagavatamReadingCount} चयनित पाठ · ${bhagavatamVerseCount} श्लोक`,
+    subEn: `${bhagavatamReadingCount} selected readings · ${bhagavatamVerseCount} verses`,
+    thumb: 'भा',
+    status: 'active',
+    category: 'granth',
+    deities: ['krishna', 'vishnu'],
+    verseCount: bhagavatamVerseCount,
   },
   {
     // गीता सार — themed readings over the bundled Gita (design.md §77,

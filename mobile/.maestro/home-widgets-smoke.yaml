@@ -4,7 +4,12 @@
 appId: com.prashantsharma.vedansh
 ---
 - runFlow: _launch.yaml
+# Dismiss the fresh-install widget prompt if it mounted after _launch.
+- waitForAnimationToEnd
+- tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
+- waitForAnimationToEnd
 - runFlow: _open-settings.yaml
+- tapOn: { text: "Not now|अभी नहीं|હમણાં નહીં|ಈಗ ಬೇಡ", optional: true }
 - waitForAnimationToEnd
 - scrollUntilVisible:
     element: { id: "more-home-widgets" }

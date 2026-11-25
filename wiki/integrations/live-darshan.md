@@ -2,7 +2,7 @@
 title: Temple Darshan
 type: integration
 sources: [mobile/src/screens/HomeScreen.tsx, mobile/src/screens/DarshanQuickScreen.tsx, mobile/src/screens/DarshanListScreen.tsx, mobile/src/screens/DarshanPlayerScreen.tsx, mobile/src/data/darshan/channels.ts, mobile/src/video/darshanSource.ts, mobile/src/video/darshanFavorites.ts, design.md, RULEBOOK.md]
-last_verified_date: 2026-11-16
+last_verified_date: 2026-11-22
 confidence: medium
 status: current
 ---
@@ -34,6 +34,14 @@ Native fullscreen uses the existing WebView's video presentation, not a duplicat
 player/modal. Both source paths allow it; a channel-frame size change retains its
 memoised source. Actual fullscreen, rotation and Back/Done are native gates.
 Background/blur removes the player and cancels lookup; return requires Resume.
+
+Playback errors now expose the existing selected temple story when its localized
+prose is nonblank. The screen owns expansion and post-layout native measurement,
+scroll and accessibility focus; the shared player only invokes a callback. Focus
+requests are invalidated on blur/background/unmount, temple and language changes.
+Error actions have a bounded scroll viewport for large text. Native acceptance is
+still pending; `.maestro/darshan-story-error.yaml` uses an explicit development
+Metro fixture to exercise failure without a live-stream dependency.
 
 ## Dependencies
 [[overview]], [[audio]], [[languages]], design.md §§91–92.

@@ -13,7 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from '@/theme/ThemeContext';
-import { getGitaChapter, gitaChaptersManifest, type GitaVerse } from '@/data/gita';
+import { getGitaChapter, gitaChaptersManifest, gitaTitleEn, gitaTitleHi, type GitaVerse } from '@/data/gita';
+import { BHAGAVATAM_ID, bhagavatamChaptersManifest, bhagavatamTitleHi, bhagavatamTitleEn, getBhagavatamChapter } from '@/data/bhagavatam';
 import { useGitaLanguage } from '@/data/gita/language';
 import { useBookmarks } from '@/contexts/BookmarksContext';
 import { useReadingProgress } from '@/contexts/ReadingProgressContext';
@@ -58,7 +59,7 @@ type PrevTransitionItem = {
 
 type FlatListItem = GitaVerse | NextTransitionItem | PrevTransitionItem;
 
-type Props = NativeStackScreenProps<RootStackParamList, 'GitaReader'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'GitaReader' | 'BhagavatamReader'>;
 
 const DOT_COUNT = 5;
 
@@ -70,17 +71,21 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const { share, busy: shareBusy } = useShare();
   const { width } = useWindowDimensions();
 
-  const chapter = useSafeChapter(route.params.chapter, getGitaChapter, navigation, 'GitaChapters');
+  const isBhagavatam = route.name === 'BhagavatamReader';
+  const sourceId = isBhagavatam ? BHAGAVATAM_ID : 'bhagavad-gita';
+  const chapters = isBhagavatam ? bhagavatamChaptersManifest : gitaChaptersManifest;
+  const getChapter = isBhagavatam ? getBhagavatamChapter : getGitaChapter;
+  const chapter = useSafeChapter(route.params.chapter, getChapter, navigation, isBhagavatam ? 'BhagavatamChapters' : 'GitaChapters');
   const verseCount = chapter?.verses.length ?? 0;
   const initialIndex = clampIndex(route.params.initialIndex, verseCount);
   const isLastChapter =
-    chapter == null ? true : chapter.chapter >= gitaChaptersManifest.length;
+    chapter == null ? true : chapter.chapter >= chapters.length;
   const isFirstChapter = chapter == null ? true : chapter.chapter <= 1;
   const data: FlatListItem[] = useMemo(() => {
     if (chapter == null) return [];
     const items: FlatListItem[] = [];
     if (!isFirstChapter) {
-      const prev = gitaChaptersManifest[chapter.chapter - 2];
+      const prev = chapters[chapter.chapter - 2];
       if (prev) {
         items.push({
           __type: 'prev-transition' as const,
@@ -94,7 +99,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
     }
     items.push(...chapter.verses);
     if (!isLastChapter) {
-      const next = gitaChaptersManifest[chapter.chapter];
+      const next = chapters[chapter.chapter];
       if (next) {
         items.push({
           __type: 'transition' as const,
@@ -106,7 +111,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
       }
     }
     return items;
-  }, [chapter, isFirstChapter, isLastChapter]);
+  }, [chapter, chapters, isFirstChapter, isLastChapter]);
 
   const offset = isFirstChapter ? 0 : 1;
   const listRef = useRef<FlatList<FlatListItem>>(null);
@@ -122,7 +127,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   // Called before the null-chapter early return below, so hook order stays stable;
   // with no chapter it simply has zero pages to speak.
   const { readAloud, autoSlide } = useReaderPlayback({
-    sourceId: 'bhagavad-gita',
+    sourceId,
     data,
     offset,
     verseCount,
@@ -133,13 +138,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   useEffect(() => {
     if (chapter == null) return;
     setProgress({
-      sourceId: 'bhagavad-gita',
+      sourceId,
       chapter: chapter.chapter,
       verseIndex: currentIndex,
       updatedAt: Date.now(),
     });
-  }, [chapter, currentIndex, setProgress]);
-  useReadDwell('bhagavad-gita', chapter?.chapter, chapter && !jumpVisible ? currentIndex : -1);
+  }, [chapter, currentIndex, setProgress, sourceId]);
+  useReadDwell(sourceId, chapter?.chapter, chapter && !jumpVisible ? currentIndex : -1);
 
   const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
 
@@ -153,7 +158,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
         hasNavigatedRef.current = true;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
         transitionTimer.current = setTimeout(() => {
-          navigation.replace('GitaReader', { chapter: item.nextChapter });
+          navigation.replace(route.name, { chapter: item.nextChapter });
         }, 400);
       }
       return;
@@ -163,7 +168,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
         hasNavigatedRef.current = true;
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => undefined);
         transitionTimer.current = setTimeout(() => {
-          navigation.replace('GitaReader', {
+          navigation.replace(route.name, {
             chapter: item.prevChapter,
             initialIndex: item.prevVerseCount - 1,
           });
@@ -203,8 +208,8 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
   const topTitle = chapter
     ? contentByLang(
         lang,
-        `अध्याय ${chapter.chapter} · ${chapter.titleHi}`,
-        `Chapter ${chapter.chapter} · ${chapter.titleEn}`
+        isBhagavatam ? chapter.titleHi : `अध्याय ${chapter.chapter} · ${chapter.titleHi}`,
+        isBhagavatam ? chapter.titleEn : `Chapter ${chapter.chapter} · ${chapter.titleEn}`
       )
     : '';
 
@@ -246,13 +251,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
     // Resolve only the chosen chapter, and locate the actual verse number. Never
     // scroll through skipped pages or substitute a clamped, incorrect target.
     try {
-      const target = getGitaChapter(targetChapter);
+      const target = isBhagavatam ? getBhagavatamChapter(targetChapter) : getGitaChapter(targetChapter);
       const index = target.verses.findIndex(verse => verse.number === targetVerse);
       if (index < 0) return false;
       readAloud.stop();
       autoSlide.stop();
       hasNavigatedRef.current = true;
-      navigation.replace('GitaReader', { chapter: targetChapter, initialIndex: index });
+      navigation.replace(route.name, { chapter: targetChapter, initialIndex: index });
       return true;
     } catch {
       hasNavigatedRef.current = false;
@@ -273,7 +278,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           sideWidth={60}
           right={
             <ReaderPageCounter testID="gita-jump-trigger" current={currentIndex + 1} total={verseCount} onPress={openJump}
-              accessibilityLabel={pick(lang, JUMP_LABEL)} accessibilityValueText={`${chapter.chapter}.${currentIndex + 1}`} />
+              accessibilityLabel={pick(lang, JUMP_LABEL)} accessibilityValueText={chapter.verses[currentIndex].scriptureRef ?? `${chapter.chapter}.${currentIndex + 1}`} />
           }
         />
 
@@ -286,7 +291,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
             <AutoSlideButton control={autoSlide} floating={false} />
           </View>
           <LanguageToggle />
-          <AddToRoutineButton sourceId="bhagavad-gita" chapter={chapter.chapter} />
+          <AddToRoutineButton sourceId={sourceId} chapter={chapter.chapter} />
           {/* Pinned to the right edge so the toggle group stays centred; the read-aloud
               pill (▶ + "सुनें") sits inline with the toggle, clear of the progress bar. */}
           <View style={styles.readAloudSlot}>
@@ -320,12 +325,13 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                 );
               }
               const verseIdx = index - offset;
-              const bookmarkId = `bhagavad-gita:${chapter.chapter}:${verseIdx}`;
+              const bookmarkId = `${sourceId}:${chapter.chapter}:${verseIdx}`;
+              const reference = item.scriptureRef ?? `${item.chapter}.${item.number}`;
               return (
                 <GitaVersePage
                   showIllustration={verseIdx === 0}
                   verse={item}
-                  sourceId="bhagavad-gita"
+                  sourceId={sourceId}
                   width={width}
                   topActions={
                     <>
@@ -337,7 +343,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                           } else {
                             addBookmark({
                               id: bookmarkId,
-                              sourceId: 'bhagavad-gita',
+                              sourceId,
                               chapter: chapter.chapter,
                               verseIndex: verseIdx,
                               savedAt: Date.now(),
@@ -352,12 +358,12 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
                         onPress={() => {
                           share(
                             {
-                              sourceId: 'bhagavad-gita',
+                              sourceId,
                               verseIndex: verseIdx,
-                              sectionNameHi: 'भगवद् गीता',
-                              sectionNameEn: 'Bhagavad Gītā',
-                              verseLabelHi: `श्लोक ${item.chapter}.${item.number}`,
-                              verseLabelEn: `Verse ${item.chapter}.${item.number}`,
+                              sectionNameHi: isBhagavatam ? bhagavatamTitleHi : gitaTitleHi,
+                              sectionNameEn: isBhagavatam ? bhagavatamTitleEn : gitaTitleEn,
+                              verseLabelHi: `श्लोक ${reference}`,
+                              verseLabelEn: `Verse ${reference}`,
                               linesHi: [...item.sanskrit],
                               linesEn: [...item.transliteration],
                               meaningHi: item.meaningHi,
@@ -407,7 +413,7 @@ export default function GitaReaderScreen({ navigation, route }: Props) {
           </View>
         </View>
       </SafeAreaView>
-      {jumpVisible && <GitaVerseJumpSheet chapter={chapter.chapter}
+      {jumpVisible && <GitaVerseJumpSheet chapter={chapter.chapter} chapters={chapters}
         verse={chapter.verses[currentIndex].number} onClose={closeJump} onOpen={jumpToVerse} />}
     </View>
   );

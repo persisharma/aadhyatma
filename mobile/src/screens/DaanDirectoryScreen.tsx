@@ -29,6 +29,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
+import DaanCauseIcon from '@/components/DaanCauseIcon';
 import { useGitaLanguage } from '@/data/gita/language';
 import { DAAN_CAUSES, getDaanOrgs, type DaanCause, type DaanCauseMeta, type DaanOrgEntry } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
@@ -145,7 +146,8 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
           elevation.card,
         ]}
       >
-        <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: 23, color: ringed ? colors.saffronDeep : colors.ink }}>
+        <DaanCauseIcon cause={cause.id} size={46} testID={`daan-cause-tile-icon-${cause.id}`} />
+        <Text style={{ marginTop: 8, fontFamily: titleFont, fontSize: 15, lineHeight: 23, color: ringed ? colors.saffronDeep : colors.ink }}>
           {contentByLang(lang, cause.nameHi, cause.nameEn)}
         </Text>
         <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: 18, color: colors.inkMuted, marginTop: 4 }}>

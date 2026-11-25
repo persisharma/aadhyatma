@@ -21,7 +21,7 @@ test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
     'satyanarayan-bhog',
     'hanuman-jayanti-bhog',
   ]);
-  assert.equal(BHOG_CONTENT.length, 47);
+  assert.equal(BHOG_CONTENT.length, 48);
   assert.deepEqual(BHOG_CONTENT.slice(10).map((entry) => entry.id), [
     'hartalika-teej-bhog',
     'hariyali-teej-bhog',
@@ -60,6 +60,7 @@ test('the registry preserves v1 and publishes all phase 2/3 profiles', () => {
     'narak-chaturdashi-bhog',
     'varaha-jayanti-bhog',
     'vamana-jayanti-bhog',
+    'vaikuntha-chaturdashi-bhog',
   ]);
 });
 
@@ -99,7 +100,7 @@ test('every genuine vrat and upavas rule has verified food or offering guidance'
   // profile whose tradition note now names them (RULEBOOK §23a.7).
   // 79 → 103: the 24 "Vaishnava <name> Ekadashi" rows (RULEBOOK §23.16), each
   // sharing its Smarta Ekadashi's food profile — same fast, other tradition's day.
-  assert.equal(eligible.length, 103);
+  assert.equal(eligible.length, 104);
   assert.deepEqual(
     eligible.filter((rule) => !rule.bhogId).map((rule) => rule.id),
     []

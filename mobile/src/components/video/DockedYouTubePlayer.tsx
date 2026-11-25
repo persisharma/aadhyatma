@@ -6,10 +6,12 @@ import {
   Platform,
   Pressable,
   StyleSheet,
+  ScrollView,
   Text,
   View,
   useWindowDimensions,
 } from 'react-native';
+import { DarshanAction } from '@/components/darshan/DarshanUI';
 import ChannelYouTubeFrame from './ChannelYouTubeFrame';
 import YoutubePlayer, { PLAYER_STATES, type YoutubeIframeRef } from 'react-native-youtube-iframe';
 import { useFocusEffect } from '@react-navigation/native';
@@ -57,6 +59,7 @@ export type DockedYouTubePlayerProps = {
   /** Stable current-broadcast source when a dedicated temple video is unavailable. */
   channelId?: string;
   onChooseBroadcast?: () => void;
+  onReadTempleStory?: () => void;
   broadcast?: boolean;
   onRefreshSource?: () => void;
   uiLang: Lang;
@@ -80,6 +83,7 @@ export default function DockedYouTubePlayer({
   mapping,
   channelId,
   onChooseBroadcast,
+  onReadTempleStory,
   broadcast = false,
   onRefreshSource,
   uiLang,
@@ -251,6 +255,7 @@ export default function DockedYouTubePlayer({
             openLabel={openLabel}
             broadcast={broadcast}
             onChooseBroadcast={onChooseBroadcast}
+            onReadTempleStory={onReadTempleStory}
           />
         ) : (
           <>
@@ -362,6 +367,7 @@ function ErrorCard({
   openLabel,
   broadcast = false,
   onChooseBroadcast,
+  onReadTempleStory,
 }: {
   colors: ReturnType<typeof useTheme>['colors'];
   uiLang: Lang;
@@ -370,9 +376,11 @@ function ErrorCard({
   openLabel: string;
   broadcast?: boolean;
   onChooseBroadcast?: () => void;
+  onReadTempleStory?: () => void;
 }) {
-  return (
-    <View style={[styles.errCard, { backgroundColor: colors.surface }]}>
+  const { height } = useWindowDimensions();
+  const content = (
+    <View style={[styles.errCard, broadcast && { flex: undefined }, { backgroundColor: colors.surface }]}>
       <Text style={[styles.errTitle, { color: colors.ink }]}>
         {pick(uiLang, {
           hi: 'यह वीडियो नहीं चल सका',
@@ -395,6 +403,10 @@ function ErrorCard({
           {pick(uiLang, { hi: 'पुनः प्रयास', en: 'Retry', gu: 'ફરી પ્રયાસ', kn: 'ಮರುಪ್ರಯತ್ನ' })}
         </Text>
       </Pressable>
+      {broadcast && onReadTempleStory && <DarshanAction
+        testID="darshan-read-story" onPress={onReadTempleStory}
+        label={pick(uiLang, { hi: 'मंदिर की कथा पढ़ें', en: 'Read temple story', gu: 'મંદિરની કથા વાંચો', kn: 'ದೇವಾಲಯದ ಕಥೆಯನ್ನು ಓದಿ' })}
+      />}
       {broadcast && onChooseBroadcast && <Pressable onPress={onChooseBroadcast} accessibilityRole="button" style={styles.errOpen}>
         <Text style={[styles.errOpenText, { color: colors.saffronDeep }]}>{pick(uiLang, { hi: 'अन्य मंदिर देखें', en: 'Browse temples', gu: 'બીજાં મંદિરો જુઓ', kn: 'ಇತರ ದೇವಾಲಯಗಳನ್ನು ನೋಡಿ' })}</Text>
       </Pressable>}
@@ -403,6 +415,7 @@ function ErrorCard({
       </Pressable>}
     </View>
   );
+  return broadcast ? <ScrollView testID="darshan-error-actions" style={{ maxHeight: Math.max(200, height * 0.45) }}>{content}</ScrollView> : content;
 }
 
 function fmt(sec: number): string {

@@ -898,6 +898,10 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
         </Pressable>
       </Modal>
 
+      {/* A running Anant loop holds the screen awake; pausing, leaving the screen,
+          switching style/mantra or completing a vow all stop the loop and release it. */}
+      {infinityRunning ? <KeepAwakeWhileMounted tag="japam-auto-chant" /> : null}
+
       {/* Full screen: the view only, no controls. Taps count (Mala) or start/pause
           (Infinity) as usual; the faint corner icon, a long press or Back exits. */}
       <Modal
@@ -910,7 +914,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
       >
         {fullScreen ? (
           <View testID="japam-fullscreen-view" style={[StyleSheet.absoluteFill, { backgroundColor: colors.parchment }]}>
-            <KeepAwakeWhileMounted />
+            <KeepAwakeWhileMounted tag="japam-full-screen" />
             <StatusBar hidden animated />
             <BackgroundLayer source={getSourceBackground(sloka?.sourceId ?? mantra.id)} />
             <Pressable
@@ -1019,9 +1023,13 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
 
 const NO_INSETS = { top: 0, bottom: 0, left: 0, right: 0 };
 
-/** Keeps the phone awake only while full screen is shown. */
-function KeepAwakeWhileMounted() {
-  useKeepAwake('japam-full-screen');
+/**
+ * Keeps the phone awake only while mounted: full screen, and a running Anant
+ * loop (nobody touches the screen for minutes, and a lock suspends the loop).
+ * One tag per reason, so releasing one never releases the other.
+ */
+function KeepAwakeWhileMounted({ tag }: { tag: string }) {
+  useKeepAwake(tag);
   return null;
 }
 

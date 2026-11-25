@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, AppState, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { AccessibilityInfo, findNodeHandle, ActivityIndicator, AppState, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -38,6 +38,57 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
   const [videoId, setVideoId] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [storyOpen, setStoryOpen] = useState(false);
+  const scrollRef = useRef<ScrollView>(null);
+  const contentRef = useRef<View>(null);
+  const storyRef = useRef<View>(null);
+  const storyRequest = useRef(0);
+  const pendingStory = useRef(false);
+  const storyFrame = useRef<number | null>(null);
+  const storyText = useMemo(() => temple ? meaningByLang(lang, temple.originStoryHi ?? '', temple.originStoryEn ?? '') : '', [temple, lang]);
+  const hasStory = !!storyText.trim();
+  const cancelStoryFocus = useCallback(() => {
+    storyRequest.current += 1;
+    pendingStory.current = false;
+    if (storyFrame.current !== null) cancelAnimationFrame(storyFrame.current);
+    storyFrame.current = null;
+  }, []);
+  // Measure the mounted native heading against the scroll content, never a guessed
+  // text height. The expanded wrapper/content-size events run after native layout.
+  const focusStoryAfterLayout = useCallback(() => {
+    if (!pendingStory.current) return;
+    const token = storyRequest.current;
+    if (storyFrame.current !== null) cancelAnimationFrame(storyFrame.current);
+    storyFrame.current = requestAnimationFrame(() => {
+      storyFrame.current = null;
+      const target = storyRef.current;
+      const content = contentRef.current;
+      if (!target || !content || token !== storyRequest.current) return;
+      target.measureLayout(content, (_x, y) => {
+        if (!pendingStory.current || token !== storyRequest.current) return;
+        pendingStory.current = false;
+        scrollRef.current?.scrollTo({ y: Math.max(0, y), animated: false });
+        storyFrame.current = requestAnimationFrame(() => {
+          storyFrame.current = null;
+          if (token !== storyRequest.current || target !== storyRef.current) return;
+          const handle = findNodeHandle(target);
+          if (handle != null) AccessibilityInfo.setAccessibilityFocus(handle);
+        });
+      }, () => { /* A subsequent layout or explicit tap may retry measurement. */ });
+    });
+  }, []);
+  const readStory = useCallback(() => {
+    if (!hasStory) return;
+    cancelStoryFocus();
+    pendingStory.current = true;
+    setStoryOpen(true);
+    // Already-open stories have no new layout event.
+    if (storyOpen) focusStoryAfterLayout();
+  }, [hasStory, storyOpen, cancelStoryFocus, focusStoryAfterLayout]);
+  useLayoutEffect(() => {
+    cancelStoryFocus();
+    return cancelStoryFocus;
+  }, [route.params.templeId, lang, cancelStoryFocus]);
+  useLayoutEffect(() => { setStoryOpen(false); }, [route.params.templeId]);
   const request = useRef<{ controller: AbortController; timer: ReturnType<typeof setTimeout> } | null>(null);
   const cancel = useCallback(() => {
     if (!request.current) return;
@@ -74,14 +125,14 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
   }, [cancel, channel]);
   useEffect(() => { load(); return cancel; }, [load, cancel]);
   useFocusEffect(useCallback(() => () => {
-    cancel(); setVideoId(null); setPhase('idle');
-  }, [cancel]));
+    cancelStoryFocus(); cancel(); setVideoId(null); setPhase('idle');
+  }, [cancel, cancelStoryFocus]));
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
-      if (next !== 'active') { cancel(); setVideoId(null); setPhase('idle'); }
+      if (next !== 'active') { cancelStoryFocus(); cancel(); setVideoId(null); setPhase('idle'); }
     });
     return () => sub.remove();
-  }, [cancel]);
+  }, [cancel, cancelStoryFocus]);
 
   const heading = pick(lang, { hi: 'मंदिर दर्शन', en: 'Temple Darshan', gu: 'મંદિર દર્શન', kn: 'ದೇವಾಲಯ ದರ್ಶನ' });
   if (!channel || !temple) return <SafeAreaView style={[darshanStyles.root, { backgroundColor: colors.parchment }]}>
@@ -110,8 +161,9 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
           mapping={{ videoId: videoId ?? undefined, titleHi: temple.nameHi, titleEn: temple.nameEn, channel: channel.channel }}
           channelId={videoId ? undefined : channel.channelId}
           broadcast uiLang={lang} onRefreshSource={load}
+          onReadTempleStory={hasStory ? readStory : undefined}
           onChooseBroadcast={() => navigation.navigate('DarshanList')}
-          onClose={() => { setVideoId(null); setPhase('idle'); }}
+          onClose={() => { cancelStoryFocus(); setVideoId(null); setPhase('idle'); }}
         />}
         {phase !== 'playing' && <View testID="darshan-start" style={[styles.start, { minHeight: viewportHeight < 700 ? 200 : 240, backgroundColor: colors.parchmentDeep }]}>
           {phase === 'loading' ? <><ActivityIndicator color={colors.saffron} />
@@ -120,8 +172,8 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
         </View>}
 
       </View>
-    <ScrollView testID="darshan-content" style={{ flex: 1 }} contentContainerStyle={styles.scroll}>
-      <View style={styles.body}>
+    <ScrollView ref={scrollRef} onContentSizeChange={focusStoryAfterLayout} testID="darshan-content" style={{ flex: 1 }} contentContainerStyle={styles.scroll}>
+      <View testID="darshan-scroll-body" ref={contentRef} collapsable={false} style={styles.body}>
         <View testID="darshan-summary" style={styles.summary}>
           <View testID="darshan-title-row" style={styles.titleRow}>
             <DarshanText testID="darshan-title" accessibilityRole="header" style={{ fontFamily: cardFontByLang(lang), fontSize: 24 * factor, lineHeight: titleLeading(24 * factor), flexGrow: 1, flexShrink: 1, flexBasis: 180 }}>{title}</DarshanText>
@@ -137,13 +189,13 @@ export default function DarshanPlayerScreen({ navigation, route }: NativeStackSc
         <View testID="darshan-about" style={[styles.about, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }]}>
           <DarshanText accessibilityRole="header" style={{ color: colors.saffronDeep, fontFamily: cardFontByLang(lang) }}>{pick(lang, { hi: 'इस तीर्थ का महत्व', en: 'Why this temple is sacred', gu: 'આ તીર્થનું મહત્વ', kn: 'ಈ ಕ್ಷೇತ್ರದ ಮಹತ್ವ' })}</DarshanText>
           <DarshanText>{meaningByLang(lang, temple.significanceHi, temple.significanceEn)}</DarshanText>
-          {!!temple.originStoryHi && <>
-            <Pressable testID="darshan-story" accessibilityRole="button" accessibilityState={{ expanded: storyOpen }} onPress={() => setStoryOpen(!storyOpen)} style={[styles.textAction, { borderColor: colors.divider }]}>
+          {hasStory && <View onLayout={focusStoryAfterLayout} style={{ gap: 14 }}>
+            <Pressable ref={storyRef} testID="darshan-story" accessibilityRole="button" accessibilityState={{ expanded: storyOpen }} onPress={() => { cancelStoryFocus(); setStoryOpen(!storyOpen); }} style={[styles.textAction, { borderColor: colors.divider }]}>
               <DarshanText style={{ color: colors.saffronDeep, flex: 1 }}>{pick(lang, { hi: 'मंदिर की कथा व परंपरा', en: 'Temple story and tradition', gu: 'મંદિરની કથા અને પરંપરા', kn: 'ದೇವಾಲಯದ ಕಥೆ ಮತ್ತು ಪರಂಪರೆ' })}</DarshanText>
               <AppIcon name={storyOpen ? 'caretUp' : 'caretDown'} size={20} color={colors.saffronDeep} />
             </Pressable>
-            {storyOpen && <DarshanText testID="darshan-story-content">{meaningByLang(lang, temple.originStoryHi, temple.originStoryEn)}</DarshanText>}
-          </>}
+            {storyOpen && <DarshanText testID="darshan-story-content">{storyText}</DarshanText>}
+          </View>}
           <Pressable testID="darshan-guide" accessibilityRole="button" onPress={() => navigation.navigate('TheerthDetail', { templeId: temple.id })} style={styles.textAction}>
             <DarshanText style={{ color: colors.saffronDeep, flex: 1 }}>{pick(lang, { hi: 'पूरा मंदिर परिचय पढ़ें', en: 'Read the complete temple guide', gu: 'મંદિરનો સંપૂર્ણ પરિચય વાંચો', kn: 'ಸಂಪೂರ್ಣ ದೇವಾಲಯ ಪರಿಚಯ ಓದಿ' })}</DarshanText>
             <AppIcon name="next" size={18} color={colors.saffronDeep} />

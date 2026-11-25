@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=390, initial-scale=1">
+<title>दान-पुण्य — updated prototype (v2)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@500;600;700&family=Noto+Serif+Devanagari:wght@500;600;700&display=swap">
+<style>
+:root{
+  /* tokens from mobile/src/theme/colors.ts */
+  --parchment:#F3E7C9; --parchmentSoft:#F8EFD6; --parchmentHighlight:#F6ECD0; --parchmentGradientEnd:#F1E3BF;
+  --ink:#1A0E03; --inkSoft:#5A3A1E; --inkMuted:#6E5230;
+  --saffron:#B8621B; --saffronDeep:#8A3E0B; --gold:#A67C34;
+  --goldChipBg:rgba(166,124,52,0.22); --goldTint:rgba(166,124,52,0.14);
+  --skyTop:#160A03; --skyUpper:#2A1508; --skyLower:#45250E; --skyHorizon:#5C3214;
+  --nightInk:#FFF4DC; --nightInkSoft:#E9D8B6; --nightInkMuted:#C2AC88; --nightGold:#F2C46B;
+  --panchTileFrom:#FFF8EA; --panchTileTo:#F5E4BE; --cardActiveFrom:#FFF5E0; --cardActiveTo:#F5DEAC;
+  --border:rgba(138,62,11,0.18); --goldBorder:rgba(166,124,52,0.30);
+  --titleFont:'Cormorant Garamond','Noto Serif Devanagari',serif;
+  --bodyFont:'Noto Serif Devanagari',serif; --labelFont:'Inter',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#4a4036;display:flex;justify-content:center;padding:20px 0;font-family:var(--bodyFont)}
+.frame{width:390px;background:linear-gradient(180deg,var(--parchmentHighlight) 0%,var(--parchmentGradientEnd) 100%);color:var(--ink);overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.eyebrow{font-family:var(--labelFont);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--saffronDeep)}
+.h1{font-family:var(--titleFont);font-weight:700;font-size:26px;line-height:34px}
+.h2{font-family:var(--titleFont);font-weight:700;font-size:22px;line-height:32px}
+.h3{font-family:var(--titleFont);font-weight:700;font-size:19px;line-height:28px}
+.lede{font-size:14px;line-height:24px;color:var(--inkSoft)}
+.cap{font-size:12.5px;line-height:19px;color:var(--inkMuted)}
+/* header */
+.hdr{display:flex;align-items:center;gap:12px;padding:16px 16px 0}
+.iconbtn{width:44px;height:44px;border-radius:22px;border:1px solid var(--goldBorder);background:var(--parchmentSoft);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.pill{min-height:40px;padding:0 14px;border:1px solid var(--goldBorder);border-radius:999px;background:var(--parchmentSoft);color:var(--saffronDeep);font-family:var(--labelFont);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+/* skippable jump row (NOT a gate) */
+.jump{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 4px;margin:0;-ms-overflow-style:none;scrollbar-width:none}
+.jump::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--goldBorder);background:var(--parchmentSoft);color:var(--saffronDeep);font-family:var(--labelFont);font-weight:600;font-size:12.5px;display:inline-flex;align-items:center;white-space:nowrap}
+.scroll{padding:14px 16px 0;display:flex;flex-direction:column;gap:24px}
+.sec-label{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.stepnum{width:26px;height:26px;border-radius:13px;background:linear-gradient(180deg,var(--nightGold),var(--gold));color:var(--skyUpper);font-family:var(--labelFont);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card{border:1px solid var(--goldBorder);border-radius:20px;background:linear-gradient(180deg,var(--panchTileFrom),var(--panchTileTo));box-shadow:0 4px 12px rgba(90,58,30,.10)}
+.hero{border-radius:24px;overflow:hidden;border:1px solid var(--goldBorder);box-shadow:0 8px 22px rgba(90,58,30,.16);background:linear-gradient(180deg,var(--panchTileFrom),var(--panchTileTo))}
+.hero img{display:block;width:100%;height:180px;object-fit:cover}
+/* quiet scripture card (flat, parchment) — NOT a night panel */
+.scripture{border-left:4px solid var(--gold);background:var(--parchmentSoft);border-radius:0 16px 16px 0;padding:16px 16px 16px 16px}
+.verse{font-family:var(--titleFont);font-weight:700;font-size:17px;line-height:30px;color:var(--saffronDeep);white-space:pre-line}
+.cite{font-family:var(--labelFont);font-weight:600;font-size:12px;color:var(--inkMuted);margin-top:6px}
+.teaches{font-size:13.5px;line-height:23px;color:var(--inkSoft);margin-top:10px}
+.attrib{font-family:var(--labelFont);font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+/* THE ONE signature night panel */
+.night{position:relative;border-radius:22px;padding:22px 18px;background:linear-gradient(180deg,var(--skyTop) 0%,var(--skyUpper) 55%,var(--skyHorizon) 100%);border:1px solid var(--gold);text-align:center;box-shadow:0 10px 26px rgba(40,24,10,.30)}
+.night .eyebrow{color:var(--nightGold)}
+.night .verse{color:var(--nightGold)}
+.night .cite{color:var(--nightInkMuted)}
+.night .teaches{color:var(--nightInkSoft);text-align:left}
+.rule{height:1px;width:120px;margin:12px auto;background:linear-gradient(90deg,rgba(166,124,52,0) 0%,var(--gold) 50%,rgba(166,124,52,0) 100%)}
+.star{position:absolute;width:2px;height:2px;border-radius:1px;background:#FFF3D6}
+/* cause grid — unframed icons, no radial disc */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ctile{min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px 4px;border-radius:20px;border:1px solid var(--goldBorder);background:linear-gradient(180deg,var(--panchTileFrom),var(--panchTileTo));text-align:center}
+.ctile.sel{border:2px solid var(--saffron);background:linear-gradient(180deg,var(--cardActiveFrom),var(--cardActiveTo))}
+.ctile svg{width:50px;height:50px}
+.ctile span{font-weight:600;font-size:13px;line-height:18px;color:var(--ink)}
+.iconnote{font-size:11.5px;color:var(--inkMuted);text-align:center;margin-top:2px;font-style:italic}
+/* today week strip */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.day{min-height:54px;border-radius:14px;border:1px solid var(--goldBorder);background:var(--parchmentSoft);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-family:var(--labelFont);font-weight:600;font-size:12px;color:var(--inkSoft)}
+.day.today{border:2px solid var(--saffron);background:linear-gradient(180deg,var(--cardActiveFrom),var(--cardActiveTo));color:var(--saffronDeep)}
+.day .dot{width:5px;height:5px;border-radius:3px;background:var(--saffron)}
+.tag{min-height:34px;display:inline-flex;align-items:center;padding:0 12px;border-radius:8px;background:var(--goldChipBg);color:var(--saffronDeep);font-weight:700;font-size:15px}
+/* terminal doors — ungated, record first */
+.doors{display:flex;flex-direction:column;gap:10px;padding:18px 16px 22px}
+.doorFilled{min-height:52px;border:0;border-radius:999px;background:var(--saffronDeep);color:#fff;box-shadow:0 4px 12px rgba(138,62,11,.30);font-family:var(--labelFont);font-weight:600;font-size:15.5px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.doorOutline{min-height:50px;border:1.5px solid var(--saffron);border-radius:999px;background:transparent;color:var(--saffronDeep);font-family:var(--labelFont);font-weight:600;font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.foot{font-size:12px;color:var(--inkMuted);text-align:center;padding:0 16px 20px}
+.annot{background:rgba(184,98,27,.10);border:1px dashed var(--saffron);border-radius:12px;padding:10px 12px;font-size:12px;line-height:18px;color:var(--saffronDeep)}
+.annot b{font-weight:700}
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- header: ReaderHeader pattern, Hindi-led -->
+  <div class="hdr">
+    <div class="iconbtn" aria-label="वापस">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </div>
+    <div style="flex:1" class="h2">दान-पुण्य</div>
+    <button class="pill">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>
+      रजिस्टर
+    </button>
+  </div>
+
+  <div style="padding:10px 16px 0">
+    <div class="annot"><b>v2 — updated prototype.</b> One skippable scroll (no 5-step gate), दान करें + दान-द्वार doors at the end, one signature night panel, de-stanced copy, token colours, unframed icons. Fixes applied from <b>AUDIT.md</b>.</div>
+  </div>
+
+  <!-- skippable jump row, NOT a gate -->
+  <div class="jump">
+    <span class="chip">1 · दान क्या है</span>
+    <span class="chip">2 · कैसे दें</span>
+    <span class="chip">3 · आज</span>
+    <span class="chip">4 · किस तक</span>
+    <span class="chip">5 · रजिस्टर</span>
+  </div>
+
+  <div class="scroll">
+
+    <!-- hero -->
+    <div class="hero">
+      <img src="/mobile/assets/garud-puran/daan.webp" alt="दाता अन्न अर्पित करते हुए">
+      <div style="padding:16px 18px 18px">
+        <div class="eyebrow">पाँच छोटे पाठ</div>
+        <div class="h1" style="margin-top:4px">दान देना — सरलता से समझें</div>
+        <div class="lede" style="margin-top:8px">नीचे पढ़ते जाएँ, या किसी भी पाठ पर जाएँ। कुछ भी ज़रूरी नहीं — जब चाहें रजिस्टर या संस्थाएँ खोलें।</div>
+      </div>
+    </div>
+
+    <!-- 1. What daan is : signature NIGHT panel (the one) -->
+    <div>
+      <div class="sec-label"><div class="stepnum">1</div><div class="h3">दान क्या है</div></div>
+      <div class="night">
+        <span class="star" style="left:24px;top:18px"></span><span class="star" style="right:30px;top:30px"></span><span class="star" style="left:52px;bottom:34px"></span><span class="star" style="right:60px;bottom:20px"></span>
+        <div class="eyebrow">ऋग्वेद कहता है</div>
+        <div class="rule"></div>
+        <div class="verse">मोघमन्नं विन्दते अप्रचेताः
+सत्यं ब्रवीमि वध इत्स तस्य ।
+नार्यमणं पुष्यति नो सखायं
+केवलाघो भवति केवलादी ॥</div>
+        <div class="rule"></div>
+        <div class="cite">Ṛgveda 10.117.6</div>
+        <div class="teaches">जो अकेले खाता है और बाँटता नहीं, ऋग्वेद उसके अन्न को व्यर्थ कहता है — यही इस ऋचा का कथन है।</div>
+      </div>
+    </div>
+
+    <!-- 2. How to give : quiet scripture card (NOT a night panel) + principles as "what the text teaches" -->
+    <div>
+      <div class="sec-label"><div class="stepnum">2</div><div class="h3">कैसे दें</div></div>
+      <div class="scripture">
+        <div class="attrib">तैत्तिरीय उपनिषद् 1.11.3</div>
+        <div class="verse" style="color:var(--saffronDeep);font-size:16px;line-height:28px">श्रद्धया देयम् । अश्रद्धया अदेयम् ।
+श्रिया देयम् । ह्रिया देयम् ।
+भिया देयम् । संविदा देयम् ॥</div>
+        <div class="cite">छह निर्देश — उपनिषद् के अनुसार</div>
+        <div class="teaches">उपनिषद् सिखाता है: श्रद्धा से दें, श्रद्धा न हो तो न दें; सम्पन्नता से, विनम्रता से, आदर से, और समझ के साथ दें।</div>
+      </div>
+      <div class="card" style="padding:16px;margin-top:10px">
+        <div class="attrib" style="color:var(--saffronDeep)">भगवद्गीता 17.20 — सात्त्विक दान</div>
+        <div class="teaches" style="color:var(--ink)">गीता जिस दान को सात्त्विक कहती है: जो देना कर्तव्य मानकर, बिना प्रत्युपकार की आशा के, उचित देश-काल और योग्य पात्र को दिया जाए।</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
+          <div style="padding:10px 6px;border-radius:12px;background:var(--goldChipBg);text-align:center"><div style="font-weight:700;color:var(--saffronDeep)">देश</div><div class="cap">उचित स्थान</div></div>
+          <div style="padding:10px 6px;border-radius:12px;background:var(--goldChipBg);text-align:center"><div style="font-weight:700;color:var(--saffronDeep)">काल</div><div class="cap">उचित समय</div></div>
+          <div style="padding:10px 6px;border-radius:12px;background:var(--goldChipBg);text-align:center"><div style="font-weight:700;color:var(--saffronDeep)">पात्र</div><div class="cap">योग्य पात्र</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Today : runtime-derived vaar -->
+    <div>
+      <div class="sec-label"><div class="stepnum">3</div><div class="h3">आज</div></div>
+      <div class="week" id="week"></div>
+      <div class="cap" id="todayCap" style="margin-top:8px"></div>
+      <div class="card" style="padding:14px 16px;margin-top:10px">
+        <div class="eyebrow">आज का सुझाव</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <span class="tag">अन्न</span><span class="tag">वस्त्र</span>
+        </div>
+        <div class="teaches" style="color:var(--ink)">वार के अनुसार परम्परा में जुड़ा दान — <span id="todayItems"></span>. यह एक परम्परागत संगति है, कोई नियत मात्रा नहीं।</div>
+      </div>
+    </div>
+
+    <!-- 4. Whom it reaches : cause grid, unframed icons -->
+    <div>
+      <div class="sec-label"><div class="stepnum">4</div><div class="h3">किस तक पहुँचता है</div></div>
+      <div class="grid3" id="causeGrid"></div>
+      <div class="iconnote">चित्र स्थानापन्न — अंतिम रूप में Storybook चित्रित आइकन (seva-icon-generation-brief.md)</div>
+    </div>
+
+  </div>
+
+  <!-- TERMINAL doors : ungated, record BEFORE directory -->
+  <div class="doors">
+    <button class="doorFilled">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11l3 3v13H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>
+      दान करें · रजिस्टर में लिखें
+    </button>
+    <button class="doorOutline">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A3E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V9l7-5 7 5v12"/><path d="M10 21v-6h4v6"/></svg>
+      दान-द्वार · सत्यापित संस्थाएँ
+    </button>
+  </div>
+  <div class="foot">ऐप पैसे का लेन-देन नहीं करता · कोई राशि, कोई स्कोर, कोई स्ट्रीक नहीं</div>
+
+</div>
+
+<script>
+// cause icons (interim line-art, UNFRAMED — painted versions pending)
+const CAUSE_SVG = {
+  anna:'<path d="M3 12h18a9 8 0 0 1-18 0z" fill="#AD571F"/><path d="M5.5 12c1-2.4 3.6-3.6 6.5-3.6s5.5 1.2 6.5 3.6" fill="#FFF5E0"/><path d="M8 21h8"/><path d="M10 3.8c-.8.9.8 1.7 0 2.7M14 3.8c-.8.9.8 1.7 0 2.7"/>',
+  gau:'<path d="M4.5 11.5c0-1.2 1-2 2.2-2h3.2c.6-1.4 1.8-2 3-1.4.6.3 1 .9 1.1 1.4h1.8a2.5 2.5 0 0 1 2.4 1.8l.3 1.2H4.5z" fill="#AD571F"/><path d="M4.5 12.5h14v1.5a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2z" fill="#AD571F"/><path d="M6.8 16v4M9.3 16v4M14.3 16v4M16.8 16v4"/>',
+  bal:'<circle cx="9" cy="6.5" r="3" fill="#FFF5E0"/><path d="M5 20.5v-3.4a4 4 0 0 1 8 0v3.4" fill="#AD571F"/><rect x="13" y="10" width="7.5" height="6" rx="1" fill="#6F3F1D" stroke="#6F3F1D"/><path d="M14.8 12.3h3.8M14.8 14h2.4" stroke="#FFF5E0" stroke-width="1.4"/>',
+  vriddha:'<circle cx="10" cy="5.2" r="2.6" fill="#FFF5E0"/><path d="M10 8.2c-2.4 1-3.3 3.6-3.3 6.6h5.6c0-2-.4-3.4-1.2-4.6" fill="#AD571F"/><path d="M8 14.8l-1 5.7M11 14.8l1.2 5.7"/><path d="M16.5 9v12M16.5 9c0-1.3 1.3-2 2.3-1.2"/>',
+  vidya:'<path d="M3 6h6.2A2.8 2.8 0 0 1 12 8.8V20a2 2 0 0 0-2-2H3z" fill="#FFF5E0"/><path d="M21 6h-6.2A2.8 2.8 0 0 0 12 8.8V20a2 2 0 0 1 2-2h7z" fill="#AD571F"/><path d="M5.5 9.5h3.5M5.5 12.5h3.5"/>',
+  arogya:'<path d="M5 12h14l-1.6 6.2a2.5 2.5 0 0 1-2.4 1.8H9a2.5 2.5 0 0 1-2.4-1.8z" fill="#AD571F"/><path d="M4 12h16"/><path d="M7.5 9.8c.5-1.8 2-2.7 3.4-2.4-.2 1.6-1.6 2.8-3.4 2.4z" fill="#FFF5E0"/>',
+  vastra:'<path d="M4 8.5l8-3 8 3v8l-8 3-8-3z" fill="#FFF5E0"/><path d="M4 8.5l8 3 8-3"/><path d="M12 11.5v8"/><path d="M12 11.5l8-3v8l-8 3z" fill="#AD571F"/>',
+  jeev:'<path d="M4 18.5h16l-1.5 2.5h-13z" fill="#AD571F"/><path d="M7 15c2.5 0 4-1.6 4.8-3.8.8-2.4 3-3.4 5-2.6l2.2 1-1.6.8c.5 2.6-1.4 5.6-5.4 5.6H7z" fill="#FFF5E0"/><path d="M11 15.5l-.6 3M13.5 15.5l.4 3"/>',
+  aapada:'<path d="M4 12l8-6.5 8 6.5z" fill="#AD571F"/><path d="M6.5 11.5v5h11v-5" fill="#FFF5E0"/><path d="M10.5 16.5v-3h3v3"/>'
+};
+const CAUSES = [['anna','अन्न-जल'],['gau','गौ सेवा'],['bal','बालक'],['vriddha','वृद्ध सेवा'],['vidya','विद्या'],['arogya','आरोग्य'],['vastra','वस्त्र'],['jeev','जीव-पक्षी'],['aapada','आपदा']];
+document.getElementById('causeGrid').innerHTML = CAUSES.map((c,i)=>
+  `<div class="ctile${i===0?' sel':''}"><svg viewBox="0 0 24 24" fill="none" stroke="#6F3F1D" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${CAUSE_SVG[c[0]]}</svg><span>${c[1]}</span></div>`).join('');
+
+// today derived at RUNTIME (fixes hardcoded Friday)
+const VAAR=[['रवि','सूर्य/आरोग्य'],['सोम','शिव/जल'],['मंगल','हनुमान'],['बुध','गौ'],['गुरु','विद्या·अन्न'],['शुक्र','अन्न·वस्त्र'],['शनि','जीव·तेल']];
+const today=new Date().getDay();
+document.getElementById('week').innerHTML=VAAR.map((v,i)=>`<div class="day${i===today?' today':''}"><span>${v[0]}</span><span class="dot" style="background:${i===today?'var(--saffron)':'transparent'}"></span></div>`).join('');
+document.getElementById('todayCap').textContent='“आज” वर्तमान तिथि से स्वतः निकलता है (hardcoded Friday नहीं)।';
+document.getElementById('todayItems').textContent=VAAR[today][1];
+</script>
+</body>
+</html>

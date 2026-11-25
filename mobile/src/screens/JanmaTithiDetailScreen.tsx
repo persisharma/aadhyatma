@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import JanmaReminderPaused from '@/components/JanmaReminderPaused';
 import ReaderHeader from '@/components/ReaderHeader';
 import ObservanceDetailHero from '@/components/ObservanceDetailHero';
 import { personLabel } from '@/components/PersonChips';
@@ -50,8 +51,8 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
   // this stack owns the route, cross-tab to Home otherwise.
   const readerNav = useNavigation<never>();
   const { people } = useJanmaTithiPeople();
-  const { prefs } = useJanmaPrefs();
-  const { permissionStatus, requestPermission } = useNotificationPreferences();
+  const { prefs, hydrated: prefsHydrated } = useJanmaPrefs();
+  const { permissionStatus, requestPermission, isLoading: permissionLoading } = useNotificationPreferences();
   const { record } = useKulRecord();
 
   const match = people.find(({ person }) => person.id === route.params.personId) ?? null;
@@ -242,27 +243,30 @@ export default function JanmaTithiDetailScreen({ navigation, route }: Props) {
               </View>
             )}
 
-            {/* Reminder — default OFF, per person, persisted only after the OS grant. */}
-            <View style={[styles.row, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
-              <View style={styles.rowMain}>
-                <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>
-                  {contentByLang(lang, 'स्मरण', 'REMINDER')}
-                </Text>
-                <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 19, color: colors.inkSoft, marginTop: 3 }}>
-                  {contentByLang(lang, 'एक दिन पहले, सायं 18:00 बजे', 'The evening before, at 18:00')}
-                </Text>
+            {prefsHydrated && !permissionLoading && (reminderOn && permissionStatus !== 'granted' ? (
+              <JanmaReminderPaused onDisable={() => setReminderEnabled(false)} />
+            ) : (
+              <View style={[styles.row, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.md }]}>
+                <View style={styles.rowMain}>
+                  <Text style={[styles.rowLabel, { color: colors.inkMuted }]}>
+                    {contentByLang(lang, 'स्मरण', 'REMINDER')}
+                  </Text>
+                  <Text style={{ fontFamily: bodyFont, fontSize: 13, lineHeight: 19, color: colors.inkSoft, marginTop: 3 }}>
+                    {contentByLang(lang, 'एक दिन पहले, सायं 18:00 बजे', 'The evening before, at 18:00')}
+                  </Text>
+                </View>
+                <Switch
+                  value={reminderOn}
+                  onValueChange={setReminderEnabled}
+                  trackColor={{ false: colors.divider, true: colors.gold }}
+                  thumbColor={colors.parchmentHighlight}
+                  accessibilityRole="switch"
+                  accessibilityLabel="Janma tithi reminder"
+                  accessibilityValue={{ text: reminderOn ? 'On' : 'Off' }}
+                  accessibilityHint="Notifies the evening before this janma tithi"
+                />
               </View>
-              <Switch
-                value={reminderOn}
-                onValueChange={setReminderEnabled}
-                trackColor={{ false: colors.divider, true: colors.gold }}
-                thumbColor={colors.parchmentHighlight}
-                accessibilityRole="switch"
-                accessibilityLabel="Janma tithi reminder"
-                accessibilityValue={{ text: reminderOn ? 'On' : 'Off' }}
-                accessibilityHint="Notifies the evening before this janma tithi"
-              />
-            </View>
+            ))}
 
             {/* इस दिन की परम्परा — shipped sections only. */}
             {practiceRows.length > 0 && (
