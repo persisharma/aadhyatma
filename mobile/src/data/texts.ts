@@ -284,6 +284,28 @@ export const library: readonly LibraryEntry[] = [
     verseCount: ramcharitmanasTotal,
   },
   {
+    // दुर्गा सप्तशती — one granth (like the Gita): its 13 chapters and the anga
+    // stotras (Argala, Kilak, Devi Kavacham) live only here, opened via
+    // SaptashatiCore. The member texts stay in `library` as `hidden` so the
+    // reader, progress and bookmarks keep working but they no longer appear as
+    // standalone Stotram/Kavacham cards.
+    id: 'durga-saptashati-core',
+    nameHi: 'दुर्गा सप्तशती',
+    nameEn: 'Durga Saptashati',
+    sub: '13 अध्याय · 700 श्लोक · अर्थ सहित',
+    subEn: '13 chapters · 700 verses · with meaning',
+    thumb: 'दु',
+    status: 'active',
+    category: 'granth',
+    deities: ['durga'],
+    verseCount:
+      durgaSaptashatiChapterOneTotal + durgaSaptashatiChapter2Total + durgaSaptashatiChapter3Total +
+      durgaSaptashatiChapter4Total + durgaSaptashatiChapter5Total + durgaSaptashatiChapter6Total +
+      durgaSaptashatiChapter7Total + durgaSaptashatiChapter8Total + durgaSaptashatiChapter9Total +
+      durgaSaptashatiChapter10Total + durgaSaptashatiChapter11Total + durgaSaptashatiChapter12Total +
+      durgaSaptashatiChapter13Total,
+  },
+  {
     id: 'valmiki-ramayan',
     nameHi: 'वाल्मीकि रामायण',
     nameEn: 'Valmiki Ramayan',
@@ -1431,21 +1453,21 @@ export const library: readonly LibraryEntry[] = [
 
   { id: 'kalabhairav-ashtakam', nameHi: 'कालभैरवाष्टकम्', nameEn: 'Kalabhairav Ashtakam', sub: '9 पाठांश · अर्थ सहित', subEn: '9 units · with meaning', thumb: 'क', status: 'active', category: 'ashtakam', deities: ['shiva'], verseCount: kalabhairavAshtakamTotal, addedInVersion: '1.5.7' },
   { id: 'hanuman-bahuk', nameHi: 'श्री हनुमान बाहुक', nameEn: 'Hanuman Bahuk', sub: '44 पाठांश · अर्थ सहित', subEn: '44 units · with meaning', thumb: 'ह', status: 'active', category: 'stotram', deities: ['hanuman'], verseCount: hanumanBahukTotal, addedInVersion: '1.5.7' },
-  { id: 'durga-argala-stotram', nameHi: 'अर्गला स्तोत्रम्', nameEn: 'Argala Stotram', sub: '27 पाठांश · अर्थ सहित', subEn: '27 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaArgalaTotal, addedInVersion: '1.5.7' },
-  { id: 'durga-kilak-stotram', nameHi: 'कीलक स्तोत्रम्', nameEn: 'Kilak Stotram', sub: '14 पाठांश · अर्थ सहित', subEn: '14 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaKilakTotal, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-1', nameHi: 'दुर्गा सप्तशती · प्रथम अध्याय', nameEn: 'Durga Saptashati · Chapter 1', sub: '104 पाठांश · अर्थ सहित', subEn: '104 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapterOneTotal, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-2', nameHi: 'दुर्गा सप्तशती · द्वितीय अध्याय', nameEn: 'Durga Saptashati · Chapter 2', sub: '69 पाठांश · अर्थ सहित', subEn: '69 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter2Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-3', nameHi: 'दुर्गा सप्तशती · तृतीय अध्याय', nameEn: 'Durga Saptashati · Chapter 3', sub: '44 पाठांश · अर्थ सहित', subEn: '44 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter3Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-4', nameHi: 'दुर्गा सप्तशती · चतुर्थ अध्याय', nameEn: 'Durga Saptashati · Chapter 4', sub: '42 पाठांश · अर्थ सहित', subEn: '42 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter4Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-5', nameHi: 'दुर्गा सप्तशती · पञ्चम अध्याय', nameEn: 'Durga Saptashati · Chapter 5', sub: '129 पाठांश · अर्थ सहित', subEn: '129 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter5Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-6', nameHi: 'दुर्गा सप्तशती · षष्ठ अध्याय', nameEn: 'Durga Saptashati · Chapter 6', sub: '24 पाठांश · अर्थ सहित', subEn: '24 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter6Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-7', nameHi: 'दुर्गा सप्तशती · सप्तम अध्याय', nameEn: 'Durga Saptashati · Chapter 7', sub: '27 पाठांश · अर्थ सहित', subEn: '27 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter7Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-8', nameHi: 'दुर्गा सप्तशती · अष्टम अध्याय', nameEn: 'Durga Saptashati · Chapter 8', sub: '63 पाठांश · अर्थ सहित', subEn: '63 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter8Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-9', nameHi: 'दुर्गा सप्तशती · नवम अध्याय', nameEn: 'Durga Saptashati · Chapter 9', sub: '41 पाठांश · अर्थ सहित', subEn: '41 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter9Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-10', nameHi: 'दुर्गा सप्तशती · दशम अध्याय', nameEn: 'Durga Saptashati · Chapter 10', sub: '32 पाठांश · अर्थ सहित', subEn: '32 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter10Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-11', nameHi: 'दुर्गा सप्तशती · एकादश अध्याय', nameEn: 'Durga Saptashati · Chapter 11', sub: '55 पाठांश · अर्थ सहित', subEn: '55 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter11Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-12', nameHi: 'दुर्गा सप्तशती · द्वादश अध्याय', nameEn: 'Durga Saptashati · Chapter 12', sub: '41 पाठांश · अर्थ सहित', subEn: '41 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter12Total, addedInVersion: '1.5.7' },
-  { id: 'durga-saptashati-chapter-13', nameHi: 'दुर्गा सप्तशती · त्रयोदश अध्याय', nameEn: 'Durga Saptashati · Chapter 13', sub: '29 पाठांश · अर्थ सहित', subEn: '29 units · with meaning', thumb: 'दु', status: 'active', category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter13Total, addedInVersion: '1.5.7' },
-  { id: 'durga-devi-kavacham', nameHi: 'श्री देवी कवचम्', nameEn: 'Shri Devi Kavacham', sub: '56 पाठांश · अर्थ सहित', subEn: '56 units · with meaning', thumb: 'दु', status: 'active', category: 'kavacham', deities: ['durga'], verseCount: durgaDeviKavachamTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-argala-stotram', nameHi: 'अर्गला स्तोत्रम्', nameEn: 'Argala Stotram', sub: '27 पाठांश · अर्थ सहित', subEn: '27 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaArgalaTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-kilak-stotram', nameHi: 'कीलक स्तोत्रम्', nameEn: 'Kilak Stotram', sub: '14 पाठांश · अर्थ सहित', subEn: '14 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaKilakTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-1', nameHi: 'दुर्गा सप्तशती · प्रथम अध्याय', nameEn: 'Durga Saptashati · Chapter 1', sub: '104 पाठांश · अर्थ सहित', subEn: '104 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapterOneTotal, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-2', nameHi: 'दुर्गा सप्तशती · द्वितीय अध्याय', nameEn: 'Durga Saptashati · Chapter 2', sub: '69 पाठांश · अर्थ सहित', subEn: '69 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter2Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-3', nameHi: 'दुर्गा सप्तशती · तृतीय अध्याय', nameEn: 'Durga Saptashati · Chapter 3', sub: '44 पाठांश · अर्थ सहित', subEn: '44 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter3Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-4', nameHi: 'दुर्गा सप्तशती · चतुर्थ अध्याय', nameEn: 'Durga Saptashati · Chapter 4', sub: '42 पाठांश · अर्थ सहित', subEn: '42 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter4Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-5', nameHi: 'दुर्गा सप्तशती · पञ्चम अध्याय', nameEn: 'Durga Saptashati · Chapter 5', sub: '129 पाठांश · अर्थ सहित', subEn: '129 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter5Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-6', nameHi: 'दुर्गा सप्तशती · षष्ठ अध्याय', nameEn: 'Durga Saptashati · Chapter 6', sub: '24 पाठांश · अर्थ सहित', subEn: '24 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter6Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-7', nameHi: 'दुर्गा सप्तशती · सप्तम अध्याय', nameEn: 'Durga Saptashati · Chapter 7', sub: '27 पाठांश · अर्थ सहित', subEn: '27 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter7Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-8', nameHi: 'दुर्गा सप्तशती · अष्टम अध्याय', nameEn: 'Durga Saptashati · Chapter 8', sub: '63 पाठांश · अर्थ सहित', subEn: '63 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter8Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-9', nameHi: 'दुर्गा सप्तशती · नवम अध्याय', nameEn: 'Durga Saptashati · Chapter 9', sub: '41 पाठांश · अर्थ सहित', subEn: '41 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter9Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-10', nameHi: 'दुर्गा सप्तशती · दशम अध्याय', nameEn: 'Durga Saptashati · Chapter 10', sub: '32 पाठांश · अर्थ सहित', subEn: '32 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter10Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-11', nameHi: 'दुर्गा सप्तशती · एकादश अध्याय', nameEn: 'Durga Saptashati · Chapter 11', sub: '55 पाठांश · अर्थ सहित', subEn: '55 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter11Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-12', nameHi: 'दुर्गा सप्तशती · द्वादश अध्याय', nameEn: 'Durga Saptashati · Chapter 12', sub: '41 पाठांश · अर्थ सहित', subEn: '41 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter12Total, addedInVersion: '1.5.7' },
+  { id: 'durga-saptashati-chapter-13', nameHi: 'दुर्गा सप्तशती · त्रयोदश अध्याय', nameEn: 'Durga Saptashati · Chapter 13', sub: '29 पाठांश · अर्थ सहित', subEn: '29 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'stotram', deities: ['durga'], verseCount: durgaSaptashatiChapter13Total, addedInVersion: '1.5.7' },
+  { id: 'durga-devi-kavacham', nameHi: 'श्री देवी कवचम्', nameEn: 'Shri Devi Kavacham', sub: '56 पाठांश · अर्थ सहित', subEn: '56 units · with meaning', thumb: 'दु', status: 'active', hidden: true, category: 'kavacham', deities: ['durga'], verseCount: durgaDeviKavachamTotal, addedInVersion: '1.5.7' },
 ];
 

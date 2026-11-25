@@ -38,7 +38,6 @@ test.each([false, true])('Stotram cards use the normal reading routes (Japmala m
   expect(tree.root.findAllByType(ListingCard)).toHaveLength(0);
   const shortcuts = tree.root.findAllByType(ListCard);
   for (const [id, expected] of [
-    ['durga-saptashati-core', ['SaptashatiCore']],
     ['ganesh-atharvashirsha', ['GaneshStotramReader', { chapter: 2, initialIndex: 0 }]],
   ] as const) {
     const card = shortcuts.find((item) => item.props.testID === `reading-link-${id}`)!;
