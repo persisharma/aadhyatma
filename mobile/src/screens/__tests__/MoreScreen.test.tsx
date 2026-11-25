@@ -219,6 +219,13 @@ describe('MoreScreen (redesign)', () => {
     expect(text).toContain(readAloudRowLabel(DEFAULT_READ_ALOUD_PREFS, 'hi', 'unknown'));
   });
 
+  test('the Janma Tithi door opens the family list', async () => {
+    const nav = makeNav();
+    const tree = await renderMore(nav);
+    act(() => byLabel(tree, 'Janma Tithi, none saved').props.onPress());
+    expect(nav.navigate).toHaveBeenCalledWith('JanmaTithiList');
+  });
+
   test('the Sadhana rows are ordered by importance (design.md §37)', async () => {
     // Daily-practice loop (reminders → japam → saved verses), then family & lineage
     // records (kuldev → ancestors → birthdays), then the occasional vastu tool. A new

@@ -73,7 +73,7 @@ export default function JanmaTithiReminderScheduler() {
         }
         if (cancelled) return;
         void persistSmaranSolves();
-        if (!cancelled) scheduleJanmaTithiReminders(inputs, now, lang).catch(() => undefined);
+        if (!cancelled) scheduleJanmaTithiReminders(inputs, now, lang, () => cancelled).catch(() => undefined);
       });
     });
     return () => { cancelled = true; task.cancel(); };
