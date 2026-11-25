@@ -20,6 +20,7 @@ import shriSuktam from '../src/data/suktam/shri-suktam.json';
 import adityaHridayam from '../src/data/stuti/aditya-hridayam.json';
 import kanakadharaStotram from '../src/data/stuti/kanakadhara-stotram.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../src/data/garud-puran';
+import { bhagavatamVerseCount, bhagavatamReadingCount } from '../src/data/bhagavatam';
 import kabirDohe from '../src/data/doha/kabir-bhakti-dohe.json';
 import rahimDohe from '../src/data/doha/rahim-bhakti-dohe.json';
 import { aartiIdByIndex, getAarti } from '../src/data/aarti';
@@ -111,6 +112,8 @@ const VALUES: readonly (readonly [string, number | Record<string, number>])[] = 
   ['gangashtakamTotal', gangashtakamTotal],
   ['garudPuranTotal', garudPuranTotal],
   ['garudPuranReadingCount', garudPuranReadingCount],
+  ['bhagavatamVerseCount', bhagavatamVerseCount],
+  ['bhagavatamReadingCount', bhagavatamReadingCount],
   ['gayatriChalisaCounts', gayatriChalisaCounts],
   ['hanumanAshtakTotal', hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal],

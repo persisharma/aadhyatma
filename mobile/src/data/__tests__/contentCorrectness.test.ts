@@ -1007,7 +1007,12 @@ function collectJsonFiles(dirRel = ''): string[] {
       // Text-free festival art hashes, not scripture. OccasionYearCards checks
       // the complete source ledger, SHA-256 and catalog subject coverage.
       rel !== 'festivalHeroManifest.json' &&
-      rel !== 'valmiki-ramayan/daily-selection.json'
+      rel !== 'valmiki-ramayan/daily-selection.json' &&
+      // Śrīmad Bhāgavatam readings are a curated selection of canonical verses;
+      // each reading's provenance is the exact canto/chapter/verse recorded in
+      // bhagavatam/chapters-manifest.json, not a per-file `source` block (same
+      // shape as valmiki-ramayan/daily-selection.json above).
+      !rel.startsWith('bhagavatam/')
     ) {
       files.push(rel);
     }

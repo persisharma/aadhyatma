@@ -13,6 +13,7 @@ type BhagavatamReading = GitaChapterSummary & {
 // The reading and page indices are persisted. Append new selections and verses.
 export const bhagavatamChaptersManifest: readonly BhagavatamReading[] = manifest;
 export const bhagavatamVerseCount = manifest.reduce((count, reading) => count + reading.verseCount, 0);
+export const bhagavatamReadingCount = manifest.length;
 
 type VerseBody = Omit<GitaVerse, 'id' | 'chapter' | 'scriptureRef'>;
 const loadReadings: readonly (() => VerseBody[])[] = [

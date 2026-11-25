@@ -20,6 +20,7 @@ import kanakadharaStotram from '../stuti/kanakadhara-stotram.json';
 import shriSuktam from '../suktam/shri-suktam.json';
 import kalabhairavAshtakam from '../ashtakam/kalabhairav-ashtakam.json';
 import { garudPuranTotal, garudPuranReadingCount } from '../garud-puran';
+import { bhagavatamVerseCount, bhagavatamReadingCount } from '../bhagavatam';
 import { aartiIdByIndex, getAarti } from '../aarti';
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
@@ -115,6 +116,8 @@ test('every generated verse count still matches its corpus', () => {
   ['gangashtakamTotal', gangashtakamTotal, generated.gangashtakamTotal],
   ['garudPuranTotal', garudPuranTotal, generated.garudPuranTotal],
   ['garudPuranReadingCount', garudPuranReadingCount, generated.garudPuranReadingCount],
+  ['bhagavatamVerseCount', bhagavatamVerseCount, generated.bhagavatamVerseCount],
+  ['bhagavatamReadingCount', bhagavatamReadingCount, generated.bhagavatamReadingCount],
   ['gayatriChalisaCounts', gayatriChalisaCounts, generated.gayatriChalisaCounts],
   ['hanumanAshtakTotal', hanumanAshtakTotal, generated.hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal, generated.hanumanChalisaTotal],
@@ -216,6 +219,8 @@ test('verseCounts exports exactly what texts.ts and versePool.ts need, and nothi
   ['gangashtakamTotal', gangashtakamTotal, generated.gangashtakamTotal],
   ['garudPuranTotal', garudPuranTotal, generated.garudPuranTotal],
   ['garudPuranReadingCount', garudPuranReadingCount, generated.garudPuranReadingCount],
+  ['bhagavatamVerseCount', bhagavatamVerseCount, generated.bhagavatamVerseCount],
+  ['bhagavatamReadingCount', bhagavatamReadingCount, generated.bhagavatamReadingCount],
   ['gayatriChalisaCounts', gayatriChalisaCounts, generated.gayatriChalisaCounts],
   ['hanumanAshtakTotal', hanumanAshtakTotal, generated.hanumanAshtakTotal],
   ['hanumanChalisaTotal', hanumanChalisaTotal, generated.hanumanChalisaTotal],

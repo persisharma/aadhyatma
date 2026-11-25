@@ -3478,6 +3478,36 @@ because they are different concerns that happen to agree today.
 
 ## 59. Home-Screen Widgets (होम-स्क्रीन विजेट) — PRD-15
 
+### Approved Ornate Heritage (11 November 2026) — native target
+
+The signed-off iPhone Home Screen concept shows a **vivid Vishnu reclining
+on Shesha painting across the right of the medium Shloka**, a centered Vedansh
+flourish, a saffron ribbon for today's Shloka, dark-maroon native Sanskrit,
+book/source attribution and a delicate floral rule. The **small Panchang**
+shows ornamental gold-edged parchment, date/city masthead, an artistic lunar
+medallion beside the large Tithi, observance line, upper-right almanac scene
+and sunrise/sunset in balanced columns. This is the approved reference, not
+the simplified text-stack layout from PR #677.
+
+WidgetKit packages the app's reviewed reader paintings via the Expo config
+plugin. The iOS extension downsamples, focus-crops and caches a bounded image,
+with the legacy painted plate as its local fallback. A SwiftUI Canvas draws
+filigree at native screen resolution. There are no new network requests,
+astro computations, schema changes or JavaScript startup tasks. Existing night,
+tinted and missing-asset fallbacks retain readable native text.
+
+Sunset is derived only from the validated solar ISO instant for the selected
+city, and omitted for legacy snapshots lacking that value. The moon medallion
+is *pure decoration*, not a claimed calculated Moon phase. Keep the running
+Tithi handover, source/day identities and deep links unchanged.
+
+Shlokas still use measured adaptive layouts: 32% art, 16% art, then full text
+width for longer verses. The bounded fallback must explicitly cue tap-through.
+Verify the approved look, short/medium/long verse sources and all four languages
+against actual placed iOS WidgetKit screenshots at Small, Medium and Large,
+day/night/tinted with VoiceOver. The concept image or CI alone never proves
+native visual fidelity. Native changes require a new iOS binary, not OTA.
+
 ### Shloka rows and single source reference — 16 November 2026
 
 Daily Bhakti, the Gita/Gita Saar readers, shared numbered verse pages, both verse
@@ -3498,27 +3528,6 @@ so opening the app replaces older cached verse windows. Original identities,
 source attribution, deep links, art selection and canonical JSON are preserved.
 Native widget changes require new iOS/Android binaries. Actual four-language,
 compact/enlarged-text placement and share-export inspection remain device gates.
-
-### Native small Panchang visual hierarchy — 11 November 2026
-
-The previous small Panchang was still a flat text stack even after the adaptive
-Shloka PR. The small native widget now uses the validated represented date +
-selected city as a ten-point saffron masthead, running Tithi as the readable
-hero, optional *real* vrat as a subtle saffron band, and a compact sunrise plus
-Vedansh footer separated by a gold rule. SwiftUI ViewThatFits selects a normal
-or compact composition from rendered geometry, preserving Gujarati/Kannada/
-Devanagari shaping without computing astronomical data in WidgetKit.
-There is no festival icon/image download; the pre-reviewed almanac Heritage/
-Midnight Temple background and safe tinted/recovery presentation remain.
-
-Medium and large illustrated Shloka text is vertically balanced for short
-verses; full long-verse variants still win before the bounded tap-to-read
-fallback. A restrained icon/divider treatment gives the source attribution
-a distinctive place without reducing verse text area. The in-app widget gallery
-now mirrors the small Panchang hierarchy as a clearly approximate preview;
-the actual OS widget is definitive. Delivery requires a new iOS binary.
-Acceptance: native compile, visual widget placement screenshot, all four
-languages and sizes, appearance/VoiceOver, long tithi and vrat names.
 
 ### Adaptive illustrated iOS Shloka layout — 10 November 2026
 
