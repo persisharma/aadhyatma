@@ -3578,6 +3578,18 @@ stays on full chrome. The medium/large Panchang follows the same rule:
 `widePanchang(compact:)` drops the brand mark and eases the tithi (24→20 pt
 medium, 32→28 pt large) when the vrat-day stack (~136 pt) exceeds the cell.
 
+**Regression source.** Before the Ornate Heritage change (#681) the ribbon and
+brand shared one row and the verse was 16/15 pt, so a two-pada medium verse
+fitted (~112 pt). #681 added the separate flourish row outside the measurement
+and enlarged ribbon, verse, source and rule; the compact candidate restores the
+single header row with the new styling.
+
+**Frame.** `HeritageFiligree` draws one 1.5 pt gold rim (`ContainerRelativeShape`
+`.strokeBorder`, gold at 80%) on the widget's own edge, plus the corner curls and
+lower lotus. The two inset fixed-radius rounded rectangles (21/18 pt) inside the
+OS edge read as three separate borders with non-parallel corners on a placed
+widget. This matches the gallery's single edge border.
+
 No payload, art or kind change; it needs a **new iOS binary**. Placed Small /
 Medium / Large screenshots in four languages, Standard and enlarged system text,
 day/night/tinted and iPhone SE / Pro / Pro Max sizes remain pending.

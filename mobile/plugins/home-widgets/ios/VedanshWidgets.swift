@@ -140,15 +140,26 @@ private struct WidgetPalette {
 
 // Ornamentation is native vector drawing, not text baked into a picture.
 // It stays crisp on every iPhone scale and is never decoded from the network.
+//
+// The frame is ONE gold rim on the widget's own edge. It used to be two inset
+// rounded rectangles with fixed radii (21/18) inside the OS edge, which read on
+// a placed widget as three separate borders whose corners did not run parallel
+// (Nov 2026). ContainerRelativeShape follows the system corner on every device.
 private struct HeritageFiligree: View {
   let palette: WidgetPalette
   var body: some View {
+    ZStack {
+      ContainerRelativeShape()
+        .strokeBorder(palette.gold.opacity(0.80), lineWidth: 1.5)
+      corners
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+
+  private var corners: some View {
     Canvas { context, size in
       guard size.width > 35, size.height > 35 else { return }
-      let outer = Path(roundedRect: CGRect(x: 2.7, y: 2.7, width: size.width - 5.4, height: size.height - 5.4), cornerRadius: 21)
-      let inner = Path(roundedRect: CGRect(x: 6, y: 6, width: size.width - 12, height: size.height - 12), cornerRadius: 18)
-      context.stroke(outer, with: .color(palette.gold.opacity(0.76)), lineWidth: 0.9)
-      context.stroke(inner, with: .color(palette.gold.opacity(0.30)), lineWidth: 0.4)
       for mirror in [false, true] {
         let x = mirror ? size.width - 12 : 12
         let sign: CGFloat = mirror ? -1 : 1

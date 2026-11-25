@@ -271,6 +271,18 @@ test('approved Ornate Heritage visual contract is native, not only a gallery moc
   assert.doesNotMatch(swift, /URLSession|computePanchang\(/);
 });
 
+// Nov 2026 device report: two fixed-radius inset frames inside the OS edge
+// read as three separate borders on a placed widget.
+test('the heritage frame is one gold rim on the system widget shape', () => {
+  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
+  const filigree = swift.slice(swift.indexOf('private struct HeritageFiligree'), swift.indexOf('private struct TempleDawnCameo'));
+  assert.ok(filigree.length > 0, 'HeritageFiligree not found');
+  assert.equal((filigree.match(/strokeBorder\(/g) ?? []).length, 1, 'exactly one frame stroke');
+  assert.match(filigree, /ContainerRelativeShape\(\)\s*\.strokeBorder\(/,
+    'the rim must follow the system corner radius, not a hard-coded one');
+  assert.doesNotMatch(filigree, /Path\(roundedRect:/, 'no inset fixed-radius frames');
+});
+
 test('every ornate heritage subject has a reviewed painting in both the extension and gallery', () => {
   const plugin = read('withHomeWidgetsIos.js');
   const registry = fs.readFileSync(path.join(__dirname, '..', 'approvedPaintings.ts'), 'utf8');
