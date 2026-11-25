@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Seva icon (painted)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<!--
+  Painted Storybook replacement for ../prototype/CauseIcon.dc.html.
+  Same props (cause enum, size int) so it drops into Main.dc.html's <dc-import name="CauseIcon">.
+  Changes vs v1: renders the painted PNG miniature, UNFRAMED — no circular radial-gradient disc,
+  no border, no badge (Codex decision #2). The painting supplies its own texture.
+
+  Wiring: after the 10 icons are generated from seva-icon-generation-brief.md and uploaded to the
+  canvas, replace each src below with its /_blob/<id>. Until then the seva-<id>.png paths are
+  placeholders.
+-->
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: {{px}}px; height: {{px}}px; box-sizing: border-box; flex-shrink: 0; display: flex; align-items: center; justify-content: center">
+<img src="{{src}}" alt="" style="width: {{px}}px; height: {{px}}px; object-fit: contain; display: block">
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"cause":{"editor":"enum","options":["anna","gau","bal","vriddha","vidya","arogya","vastra","jeev","aapada","seva"],"default":"anna"},"size":{"editor":"int","min":24,"max":120,"default":96},"$preview":{"width":96,"height":96}}'>
+class Component extends DCLogic {
+renderVals() {
+const cause = this.props.cause ?? 'anna';
+const px = Number(this.props.size ?? 96);
+// Replace each value with the uploaded /_blob/<id> once the painted PNGs land.
+const SRC = {
+anna: 'seva-anna.png', gau: 'seva-gau.png', bal: 'seva-bal.png', vriddha: 'seva-vriddha.png',
+vidya: 'seva-vidya.png', arogya: 'seva-arogya.png', vastra: 'seva-vastra.png',
+jeev: 'seva-jeev.png', aapada: 'seva-aapada.png', seva: 'seva-seva.png'
+};
+return { px, src: SRC[cause] || SRC.anna };
+}
+}
+</script>
+</body>
+</html>
