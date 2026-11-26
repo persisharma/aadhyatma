@@ -272,16 +272,16 @@ export default function VidhiConductScreen({ navigation, route }: Props) {
         <View style={styles.readAloudSlot}>
           {onStepPage && (
             <>
+              {/* स्वतः pinned left, सुनें pinned right — the app-wide auto-slide
+                  placement; the phase label sits between them (design.md §85). */}
+              <AutoSlideButton control={autoSlide} floating={false} />
               <Text style={[styles.phase, { color: colors.inkMuted, fontFamily: scriptBodyFont(lang, fontFamilies.devanagari) }]}>
                 {contentByLang(lang,
                   isPersonalTithi && activePhase === 'main' ? 'तर्पण व स्मरण' : PHASE_LABELS[activePhase].hi,
                   isPersonalTithi && activePhase === 'main' ? 'Tarpana & remembrance' : PHASE_LABELS[activePhase].en
                 )}
               </Text>
-              <View style={styles.handsFree}>
-                <AutoSlideButton control={autoSlide} floating={false} />
-                <ReadAloudButton control={readAloud} />
-              </View>
+              <ReadAloudButton control={readAloud} />
             </>
           )}
         </View>
@@ -701,7 +701,6 @@ const styles = StyleSheet.create({
   mantraShare: { position: 'absolute', right: 0, top: 0, bottom: 0, justifyContent: 'center' },
   sectionLabel: { fontSize: 11, textAlign: 'center', textTransform: 'uppercase' },
   readAloudSlot: { minHeight: 46, paddingHorizontal: spacing.readingGutter, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  handsFree: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   handoffCard: { borderWidth: 1.4, padding: 15, marginTop: 14 },
   seal: {
     width: 84,

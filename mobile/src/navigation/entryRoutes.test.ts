@@ -56,6 +56,15 @@ for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe']) {
   assert.deepEqual(buildBookmarkTarget(bm({ id: `${sourceId}::3`, sourceId, verseIndex: 3 })), target);
 }
 
+// दुर्गा सप्तशती is one granth card (like the Gita) that opens its chapters index.
+{
+  const entry = library.find(e => e.id === 'durga-saptashati-core')!;
+  assert.equal(entry.category, 'granth');
+  assert.deepEqual(entry.deities, ['durga']);
+  assert.ok(!entry.hidden);
+  assert.deepEqual(buildEntryStartTarget(entry), { screen: 'SaptashatiCore', params: {} });
+}
+
 // Sundarkand chaptered bookmark routes to SundarkandReader with chapter+initialIndex.
 for (const [sourceId, screen, discriminator] of [
   ['krishna-stuti', 'StutiReader', 'stutiId'],
@@ -567,7 +576,6 @@ const home = (overrides: Partial<HomeRecord>): HomeRecord => ({
 // Discovery doors retain the existing canonical reader and location.
 for (const [id,screen,params] of [
  ['ganesh-atharvashirsha','GaneshStotramReader',{chapter:2,initialIndex:0}],
- ['durga-saptashati-core','SaptashatiCore',undefined],
 ] as const) {
  const {nav,calls}=makeNav(); assert.equal(navigateReadingLink(nav as never,id),true);
  assert.deepEqual(calls,[{name:screen,params}]);

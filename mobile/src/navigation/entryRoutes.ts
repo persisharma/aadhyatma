@@ -36,9 +36,11 @@ type Nav = Pick<NativeStackNavigationProp<HomeStackParamList>, 'navigate'>;
 export function navigateReadingLink(nav: Nav, id: string): boolean {
   const link = getReadingLink(id);
   if (!link) return false;
-  if (link.sourceId === 'ganesh-stotram') nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
-  else nav.navigate('SaptashatiCore');
-  return true;
+  if (link.sourceId === 'ganesh-stotram') {
+    nav.navigate('GaneshStotramReader', { chapter: link.chapter, initialIndex: link.verseIndex });
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -248,6 +250,11 @@ const stotramReaderRouteBySourceId: Record<string, keyof HomeStackParamList> = {
 };
 
 export function buildEntryStartTarget(entry: LibraryEntry): BookmarkTarget | null {
+  if (entry.id === 'durga-saptashati-core') {
+    // The दुर्गा सप्तशती granth opens its chapters index (SaptashatiCore), like
+    // the Gita granth opens its chapters list.
+    return { screen: 'SaptashatiCore', params: {} };
+  }
   if (entry.category === 'japam') {
     return { screen: 'JapamCounter', params: { mantraId: entry.id } };
   }
@@ -435,6 +442,14 @@ export function buildProgressTarget(p: {
   verseIndex: number;
 }): BookmarkTarget | null {
   const sourceId = canonicalSourceId(p.sourceId);
+  if (sourceId === 'durga-saptashati-core' && p.chapter != null) {
+    // Search indexes सप्तशती verses under the granth sourceId with chapter 1..13;
+    // each chapter is its own StutiReader (durga-saptashati-chapter-N).
+    return {
+      screen: 'StutiReader',
+      params: { initialIndex: p.verseIndex, stutiId: `durga-saptashati-chapter-${p.chapter}` },
+    };
+  }
   if (theerthIds.has(sourceId)) {
     return {
       screen: 'TheerthMap',

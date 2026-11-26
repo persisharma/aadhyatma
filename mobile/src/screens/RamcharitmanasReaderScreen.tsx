@@ -127,6 +127,10 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
         <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+          {/* स्वतः pinned top-left, inline — the app-wide auto-slide placement. */}
+          <View style={styles.autoSlideSlot}>
+            <AutoSlideButton control={autoSlide} floating={false} />
+          </View>
           <LanguageToggle />
           <AddToRoutineButton sourceId="ramcharitmanas" chapter={chapter.chapter} />
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
@@ -200,7 +204,6 @@ export default function RamcharitmanasReaderScreen({ navigation, route }: Props)
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
-          <AutoSlideButton control={autoSlide} />
           {currentIndex > 0 && <JumpToStartButton onPress={goToStart} lang={lang} />}
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
@@ -220,6 +223,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   toggleRow: { paddingVertical: 6, paddingBottom: 12, alignItems: 'center' },
   readAloudSlot: { position: 'absolute', right: 16, top: 6, bottom: 12, justifyContent: 'center' },
+  autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: { flex: 1 },
   list: { flex: 1 },
   dotsOverlay: { position: 'absolute', bottom: 4, left: 0, right: 0, alignItems: 'center' },

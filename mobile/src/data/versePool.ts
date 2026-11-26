@@ -152,7 +152,21 @@ export type PoolSegment = {
 };
 
 const entryById = new Map(library.map((entry) => [entry.id, entry]));
-const isActive = (id: string) => entryById.get(id)?.status === 'active' && !entryById.get(id)?.hidden;
+// The Durga Saptashati chapters are hidden from browse (the दुर्गा सप्तशती granth
+// owns them), but the daily verse pool still curates chapters 4/5/11 as verse-of-
+// the-day sources — the rest are held out by DAILY_POOL_EXCLUDED_SOURCES. Treat
+// these as pool-active despite `hidden`; every other hidden source (e.g. the
+// retired durga-kavach) stays out of the pool as before.
+const DAILY_POOL_HIDDEN_INCLUDED: ReadonlySet<string> = new Set<string>([
+  'durga-saptashati-chapter-4',
+  'durga-saptashati-chapter-5',
+  'durga-saptashati-chapter-11',
+]);
+const isActive = (id: string) => {
+  const entry = entryById.get(id);
+  if (entry?.status !== 'active') return false;
+  return !entry.hidden || DAILY_POOL_HIDDEN_INCLUDED.has(id);
+};
 const nameHi = (id: string, fallback?: string) => entryById.get(id)?.nameHi ?? fallback ?? id;
 const nameEn = (id: string, fallback?: string) => entryById.get(id)?.nameEn ?? fallback ?? id;
 

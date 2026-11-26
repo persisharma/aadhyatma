@@ -117,12 +117,14 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     },
     source: `${SOURCE_BUNDLED} Rama Raksha Stotra source references in kavacham/rama-raksha-stotra.json.`,
   },
-  'durga-devi-kavacham': {
-    purposes: ['protection', 'victory', 'courage'],
+  // दुर्गा सप्तशती is one granth; its chapters and anga stotras are hidden, so the
+  // discovery association lives on the granth entry (not per hidden member).
+  'durga-saptashati-core': {
+    purposes: ['protection', 'victory', 'courage', 'devotion'],
     bestDays: [2, 5],
     bestFestivals: ['navratri-start'],
     bestTime: 'sunrise',
-    source: `${SOURCE_BUNDLED} Durga Kavach source references in kavacham/durga-devi-kavacham.json.`,
+    source: `${SOURCE_BUNDLED} दुर्गा सप्तशती — 13 chapters plus the anga stotras (Kavach, Argala, Kilak); source references in stuti/durga-saptashati-chapter-*.json and kavacham/durga-devi-kavacham.json.`,
   },
   'ganesha-kavacham': {
     purposes: ['protection', 'obstacles', 'auspicious-beginnings'],
@@ -132,21 +134,6 @@ export const discoveryMeta: Readonly<Record<string, DiscoveryMeta>> = {
     source: `${SOURCE_BUNDLED} Ganesha Kavacham source references in kavacham/ganesha-kavacham.json.`,
   },
   'hanuman-bahuk': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/hanuman-bahuk.json; devotional reading, no guaranteed result.` },
-  'durga-argala-stotram': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-argala-stotram.json; devotional reading, no guaranteed result.` },
-  'durga-kilak-stotram': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-kilak-stotram.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-1': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-1.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-2': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-2.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-3': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-3.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-4': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-4.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-5': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-5.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-6': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-6.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-7': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-7.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-8': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-8.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-9': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-9.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-10': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-10.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-11': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-11.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-12': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-12.json; devotional reading, no guaranteed result.` },
-  'durga-saptashati-chapter-13': { purposes: ['devotion'], bestTime: 'any', source: `${SOURCE_BUNDLED} stuti/durga-saptashati-chapter-13.json; devotional reading, no guaranteed result.` },
   'aditya-hridayam': {
     purposes: ['devotion'],
     bestTime: 'any',

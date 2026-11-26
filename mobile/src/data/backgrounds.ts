@@ -69,6 +69,7 @@ const deityBackgrounds: Record<Deity, BackgroundImage> = {
 };
 
 const sourceBackgrounds: Record<string, BackgroundImage> = {
+  'durga-saptashati-core': backgroundImages.deity_durga_lion,
   'durga-devi-kavacham': backgroundImages.deity_durga_lion,
   'durga-saptashati-chapter-1': backgroundImages.deity_durga_lion,
   'durga-saptashati-chapter-2': backgroundImages.deity_durga_lion,
