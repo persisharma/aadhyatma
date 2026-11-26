@@ -1641,6 +1641,3 @@ Owner found the Ornate small Panchang overloaded. Restored the pre-#681 composit
 
 ## [2026-11-26] ingest | Feathered text wash on the Shloka widget
 Device screenshot: a long Sundarkand chaupai took the full-width composition and its solid wash ended in a hard edge over the painting. `textWash()` now bleeds and blurs. design.md §59 + [[home-widgets]] gotcha updated; device check pending.
-
-## [2026-11-27] ingest | Panchang without plate, glyphs or lotus
-Owner night/vrat-day screenshot: clipped date, lotus under the edge, corner painting stamp. iOS Panchang now has no plate (rim via `framed`), the small Panchang is text only, and the lotus is removed everywhere. design.md §59 + [[home-widgets]] updated; device check pending.

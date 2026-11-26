@@ -203,7 +203,7 @@ test('iOS loads each plate by name and refuses one over the family pixel budget'
   assert.match(swift, /cg\.width \* cg\.height <= budget/);
   // Recovery cards and tinted/vibrant rendering keep the plain parchment.
   assert.match(swift, /guard renderingMode == \.fullColor, case \.ready\(let payload\) = entry\.state, hasContent\(payload\)/);
-  assert.match(swift, /\.vedanshWidgetBackground\(art, vivid: vividArt, surface: surface, night: palette\.night, framed: framed\)/);
+  assert.match(swift, /\.vedanshWidgetBackground\(art, vivid: vividArt, surface: surface, night: palette\.night\)/);
   assert.match(read('withHomeWidgetsIos.js'), /'assets', 'widget-backgrounds'/);
 });
 
@@ -250,6 +250,7 @@ test('approved Ornate Heritage visual contract is native, not only a gallery moc
   const verse = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('private func smallPanchang('));
   const small = swift.slice(swift.indexOf('private func smallPanchang('), swift.indexOf('MARK: - आज का पंचांग'));
   assert.match(swift, /private struct HeritageFiligree: View/);
+  assert.match(swift, /Canvas \{ context, size in/);
   assert.match(swift, /CGImageSourceCreateThumbnailAtIndex/);
   assert.match(swift, /private static let vividCache: NSCache<NSString, UIImage>/);
   assert.match(swift, /vivid: vividArt, surface: surface/);
@@ -278,7 +279,7 @@ test('the heritage frame is one gold rim on the system widget shape', () => {
   assert.match(filigree, /ContainerRelativeShape\(\)\s*\.strokeBorder\(/,
     'the rim must follow the system corner radius, not a hard-coded one');
   assert.doesNotMatch(filigree, /Path\(roundedRect:/, 'no inset fixed-radius frames');
-  assert.doesNotMatch(filigree, /addQuadCurve|ellipseIn|Canvas/, 'swirls and the lower lotus were removed; only the rim remains');
+  assert.doesNotMatch(filigree, /addQuadCurve/, 'corner swirls were removed; they read as extra outlines');
 });
 
 // Nov 2026 owner decision: the Ornate small Panchang (moon medallion, sunset
@@ -289,17 +290,14 @@ test('the small Panchang is the plain glance, with no painting or almanac orname
   const small = swift.slice(swift.indexOf('private func smallPanchang('), swift.indexOf('MARK: - आज का पंचांग'));
   assert.ok(small.length > 0, 'smallPanchang not found');
   assert.doesNotMatch(swift, /AlmanacMoonSeal|TempleDawnCameo|almanacSolarColumn|FestivalMountain/);
-  assert.match(small, /Text\(p\.sunrise\.value\(lang\)\)[\s\S]*Text\("ॐ वेदांश़"\)/,
+  assert.match(small, /Image\(systemName: "sunrise\.fill"\)[\s\S]*Text\("ॐ वेदांश़"\)/,
     'sunrise footer carries the brand mark');
-  assert.doesNotMatch(small, /Image\(systemName:/, 'the small Panchang is text only: no glyphs');
-  assert.match(swift, /if surface == \.panchang \{ return nil \}/,
-    'no plate behind the Panchang: every plate bakes in a corner painting stamp');
   assert.match(swift, /guard surface == \.verse, family != \.systemSmall, renderingMode == \.fullColor/,
     'only the wide/large Shloka draws the full-colour painting');
+  assert.match(swift, /showsLotus: surface == \.verse/);
   const gallery = fs.readFileSync(path.join(__dirname, '..', '..', 'screens', 'WidgetGalleryScreen.tsx'), 'utf8');
   assert.match(gallery, /content === 'verse' \? vividImages\[subject\]/);
   assert.doesNotMatch(gallery, /sunsetAt|borderRadius: 18, borderWidth: 1/);
-  assert.match(gallery, /entry\.recommended === 'lock' \|\| content === 'panchang' \? undefined/);
 });
 
 test('every ornate heritage subject has a reviewed painting in both the extension and gallery', () => {

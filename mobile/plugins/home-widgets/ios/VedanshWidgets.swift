@@ -147,13 +147,34 @@ private struct WidgetPalette {
 // (Nov 2026). ContainerRelativeShape follows the system corner on every device.
 private struct HeritageFiligree: View {
   let palette: WidgetPalette
-  // Corner swirls and the lower lotus were removed at the owner's request
-  // (Nov 2026): the lotus rendered as a tangle of ovals and sat on text.
+  // The Panchang's sunrise footer sits where the lotus would, so it keeps the rim only.
+  var showsLotus = true
   var body: some View {
-    ContainerRelativeShape()
-      .strokeBorder(palette.gold.opacity(0.80), lineWidth: 1.5)
-      .accessibilityHidden(true)
-      .allowsHitTesting(false)
+    ZStack {
+      ContainerRelativeShape()
+        .strokeBorder(palette.gold.opacity(0.80), lineWidth: 1.5)
+      if showsLotus { lotus }
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+
+  // Corner swirls were removed at the owner's request (Nov 2026): next to the
+  // rim they read as extra outlines. Only the small lower lotus remains.
+  private var lotus: some View {
+    Canvas { context, size in
+      guard size.width > 35, size.height > 35 else { return }
+      let center = CGPoint(x: size.width * 0.5, y: size.height - 12)
+      for i in 0..<5 {
+        let angle = CGFloat(i) * (.pi / 4) - .pi / 2
+        let px = center.x + cos(angle) * 4
+        let py = center.y + sin(angle) * 4
+        let petal = Path(ellipseIn: CGRect(x: px - 2.1, y: py - 4.1, width: 4.2, height: 8.2))
+        context.stroke(petal, with: .color(palette.gold.opacity(0.68)), lineWidth: 0.7)
+      }
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
   }
 }
 
@@ -162,7 +183,6 @@ private struct WidgetBackdrop: View {
   let vivid: UIImage?
   let surface: VedanshSurface
   let night: Bool
-  let framed: Bool
   var body: some View {
     GeometryReader { geo in
       ZStack {
@@ -190,8 +210,8 @@ private struct WidgetBackdrop: View {
             .position(x: geo.size.width - width * 0.50 - 4, y: geo.size.height * 0.5)
             .accessibilityHidden(true)
         }
-        if framed {
-          HeritageFiligree(palette: WidgetPalette(night: night))
+        if art != nil || vivid != nil {
+          HeritageFiligree(palette: WidgetPalette(night: night), showsLotus: surface == .verse)
         }
       }
       .frame(width: geo.size.width, height: geo.size.height)
@@ -200,13 +220,12 @@ private struct WidgetBackdrop: View {
 }
 
 private extension View {
-  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?, vivid: UIImage?, surface: VedanshSurface,
-                                            night: Bool, framed: Bool) -> some View {
+  @ViewBuilder func vedanshWidgetBackground(_ art: UIImage?, vivid: UIImage?, surface: VedanshSurface, night: Bool) -> some View {
     if #available(iOSApplicationExtension 17.0, *) {
-      containerBackground(for: .widget) { WidgetBackdrop(art: art, vivid: vivid, surface: surface, night: night, framed: framed) }
-    } else if art != nil || vivid != nil || framed {
+      containerBackground(for: .widget) { WidgetBackdrop(art: art, vivid: vivid, surface: surface, night: night) }
+    } else if art != nil || vivid != nil {
       frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(WidgetBackdrop(art: art, vivid: vivid, surface: surface, night: night, framed: framed)).clipped()
+        .background(WidgetBackdrop(art: art, vivid: vivid, surface: surface, night: night)).clipped()
     } else { background(WidgetPalette(night: night).parchment) }
   }
 }
@@ -290,7 +309,7 @@ struct VedanshWidgetView: View {
       case .expired: recovery("पंचांग ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh")
       case .missing, .invalid: recovery("विजेट तैयार करने हेतु वेदांश़ खोलें", "Open Vedansh to prepare widgets")
       }
-    }.vedanshWidgetBackground(art, vivid: vividArt, surface: surface, night: palette.night, framed: framed)
+    }.vedanshWidgetBackground(art, vivid: vividArt, surface: surface, night: palette.night)
   }
 
   // Art only behind real content in full colour. Recovery cards stay the plain
@@ -302,26 +321,13 @@ struct VedanshWidgetView: View {
     return WidgetPalette(night: widgetIsNight(payload, at: entry.date))
   }
 
-  // The Panchang draws no plate: every Panchang plate bakes a square crop of
-  // the almanac painting into its top-right corner, which read as a stray
-  // stamp clipped by the rounded corner (owner decision, Nov 2026). It keeps
-  // the plain parchment / Midnight Temple ground and the gold rim.
   private var art: UIImage? {
     guard renderingMode == .fullColor, case .ready(let payload) = entry.state, hasContent(payload) else { return nil }
     if surface == .japam { return WidgetArt.image(surface, family) }
-    if surface == .panchang { return nil }
-    if family == .systemSmall { return nil }
+    if surface == .verse && family == .systemSmall { return nil }
     let verseKey = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
-    let subject = payload.verses.days.first(where: { $0.dateKey == verseKey })?.artKey ?? "prayer"
+    let subject = surface == .panchang ? "panchang" : (payload.verses.days.first(where: { $0.dateKey == verseKey })?.artKey ?? "prayer")
     return WidgetArt.heritage(subject, family, night: palette.night)
-  }
-
-  // The single gold rim: every Home Screen cell that shows real content in
-  // full colour, except the small Shloka (which never carried art or a frame).
-  private var framed: Bool {
-    guard renderingMode == .fullColor, case .ready(let payload) = entry.state, hasContent(payload),
-          [WidgetFamily.systemSmall, .systemMedium, .systemLarge].contains(family) else { return false }
-    return !(surface == .verse && family == .systemSmall)
   }
 
   // The full-colour painting belongs to the Shloka only. The Panchang keeps
@@ -593,16 +599,21 @@ struct VedanshWidgetView: View {
   }
 
   // Restored to the pre-Ornate glance at the owner's request (Nov 2026): the
-  // moon medallion, sunset column, corner painting and glyphs made the small
-  // cell read as overloaded. Text only: date/city, running tithi, its end, a
-  // vrat band and a ruled sunrise footer with the brand mark.
+  // moon medallion, sunset column and corner painting made the small cell
+  // read as overloaded. Date/city, running tithi, its end, a vrat chip and a
+  // sunrise footer with the brand mark are the whole composition.
   private func smallPanchang(_ p: PanchangDay, running: (name: LocalizedText, till: LocalizedText?),
                              city: String, lang: String, compact: Bool) -> some View {
     VStack(alignment: .leading, spacing: compact ? 3 : 6) {
-      Text("\(p.representedDate.value(lang)) · \(city)")
-        .font(.custom(fontName(lang, bold: true), size: 10))
-        .foregroundStyle(palette.saffronDeep)
-        .lineLimit(1).minimumScaleFactor(0.85)
+      HStack(spacing: 4) {
+        Image(systemName: "sun.max.fill")
+          .font(.system(size: 9, weight: .semibold))
+          .accessibilityHidden(true)
+        Text("\(p.representedDate.value(lang)) · \(city)")
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .lineLimit(1).minimumScaleFactor(0.85)
+      }
+      .foregroundStyle(palette.saffronDeep)
 
       VStack(alignment: .leading, spacing: 1) {
         Text(running.name.value(lang))
@@ -637,6 +648,10 @@ struct VedanshWidgetView: View {
       }
 
       HStack(spacing: 4) {
+        Image(systemName: "sunrise.fill")
+          .font(.system(size: 9, weight: .semibold))
+          .foregroundStyle(palette.saffronDeep)
+          .accessibilityHidden(true)
         Text(p.sunrise.value(lang))
           .font(.custom(fontName(lang, bold: true), size: 9))
           .foregroundStyle(palette.inkMuted)

@@ -3554,28 +3554,6 @@ native screenshots with short, multi-pada and unusually long verses, plus
 VoiceOver and source/tap checks; source tests alone are not visual acceptance.
 
 
-### Panchang without plate, glyphs or lotus — 27 November 2026
-
-**Owner decision** after a placed night screenshot on a vrat day (date clipped
-at the top, lotus under the bottom edge, a square of almanac painting in the
-top-right corner):
-
-- **No plate behind any Panchang size.** Every Panchang plate from
-  `build-widget-heritage.mjs` bakes a square crop of the almanac painting into
-  its top-right corner; it read as a stray stamp clipped by the rounded corner.
-  The Panchang sits on plain parchment (Midnight Temple navy at night) with the
-  single gold rim (`framed`), which no longer depends on an image being present.
-- **Small Panchang is text only**: no sun / sunrise glyphs. Date · city, running
-  tithi and its end, the vrat band, and the ruled footer with sunrise and
-  `ॐ वेदांश़`. On a vrat day with an end time the compact candidate (~113 pt)
-  fits the ~126 pt cell.
-- **No lower lotus on any widget.** It rendered as a tangle of ovals (petals
-  spread over half a circle, never rotated) and sat on text. `HeritageFiligree`
-  is now only the rim.
-
-The gallery facsimile drops the Panchang plate too. Android still draws its
-Panchang plates (unchanged). New iOS binary required; placed screenshots pending.
-
 ### Small Panchang restored to the plain glance — 26 November 2026
 
 **Owner decision.** The Ornate small Panchang (moon medallion beside the tithi,
