@@ -143,7 +143,8 @@ class JapamAlarmReceiver : BroadcastReceiver() {
         )
 
         val builder = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(context.applicationInfo.icon)
+            .setSmallIcon(smallIconRes(context))
+            .setColor(0xFFB8621B.toInt())
             .setContentTitle(label?.takeIf { it.isNotBlank() } ?: "जप का समय · Japam time")
             .setContentText("Tap to begin chanting")
             .setContentIntent(contentPi)
@@ -241,6 +242,21 @@ class JapamAlarmReceiver : BroadcastReceiver() {
             "raw",
             context.packageName
         )
+    }
+
+    /** The dedicated monochrome notification small icon, bundled by
+     *  `withJapamAlarmNative.js`. A notification small icon must be a simple
+     *  drawable the system UI process can load across the binder; the launcher's
+     *  adaptive icon (`applicationInfo.icon`) throws RemoteServiceException ("Bad
+     *  notification posted") on some OEM ROMs. Falls back to the app icon only if
+     *  the bundled drawable is somehow absent, so posting never fails outright. */
+    private fun smallIconRes(context: Context): Int {
+        val id = context.resources.getIdentifier(
+            "ic_japam_notification",
+            "drawable",
+            context.packageName
+        )
+        return if (id != 0) id else context.applicationInfo.icon
     }
 
     private fun rescheduleNextOccurrence(
