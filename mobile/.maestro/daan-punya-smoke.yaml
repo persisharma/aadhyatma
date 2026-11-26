@@ -28,6 +28,12 @@ appId: com.prashantsharma.vedansh
 # ── Global reading language → English (More → Language picker sheet) ──
 - runFlow: _open-settings.yaml
 - waitForAnimationToEnd
+# The ऐप section (Language) sits below the fold on standard-height iPhones
+# (the same scroll kundali-smoke.yaml uses); a blind tap misses the row.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -37,6 +43,12 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── 1. More → Daan Punya ──
+# The Language scroll can leave the Daan row out of view; bring it back.
+- scrollUntilVisible:
+    element:
+      id: "more-daan-punya"
+    direction: UP
+    centerElement: true
 - tapOn: { id: "more-daan-punya" }
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"
