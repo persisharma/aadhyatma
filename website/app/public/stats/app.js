@@ -1,4 +1,4 @@
-import { dailySeries, istToday } from '/stats/daily.js';
+import { dailySeries, istToday, splitBySource, channelOf, CHANNELS } from '/stats/daily.js';
 const $ = id => document.getElementById(id);
 // The owner token is kept in this browser only when "Remember on this device" is ticked.
 const TOKEN_KEY = 'vedansh-stats-token';
@@ -72,30 +72,60 @@ async function loadAllTime() {
     $('alltime-total').textContent=`${Number(d.total).toLocaleString()} visits`;
     $('alltime-source').textContent=live?`Live from ${live} (read-only, via the local preview)`:'Counted on this site since launch.';
     rows($('at-pages'),d.pages,'No page visits yet.');rows($('at-src'),d.sources,'No tagged download-link visits yet.');rows($('at-site'),d.siteSources,'No tagged landings yet.');
-    renderDaily(d.days);
+    renderDaily(d.days,d.daySources);
   } catch(e) { $('alltime-source').textContent='The site counter is unavailable here.'; }
 }
-// One column per India-time day from the counter's `day:` rows; the peak day and
-// today carry their value on the cap, every day has a hover/focus tooltip, and the
-// same numbers are in a table.
-function renderDaily(days) {
-  const series=dailySeries(days,istToday()), chart=$('daily-chart'), tip=$('daily-tip');
-  chart.replaceChildren();$('daily-axis').replaceChildren();$('daily-rows').replaceChildren();tip.hidden=true;
+// One stacked column per India-time day from the counter's `day:` rows, split by
+// source (`dsrc:` rows) into the fixed CHANNELS order, bottom to top; visits
+// counted before the split sit on top as a neutral "not split" segment. The peak
+// day and today carry their total on the cap, every day has a hover/focus
+// tooltip with the breakdown, and the same numbers are in a table.
+const NOT_SPLIT={id:'unsplit',label:'Before the split',short:'Not split'};
+const SHORT={direct:'Direct',instagram:'Instagram',other:'Other',get:'/get/'};
+const tagName=t=>`${t.kind==='get'?'/get/ ':''}${t.source}`;
+function renderDaily(days,daySources) {
+  const series=splitBySource(dailySeries(days,istToday()),daySources), chart=$('daily-chart'), tip=$('daily-tip');
+  for(const id of ['daily-chart','daily-axis','daily-rows','daily-thead','daily-legend'])$(id).replaceChildren();
+  tip.hidden=true;
   if(!series.length){chart.append(node('div','The daily count starts with the next visit.','empty'));return;}
   const when=(date,opts)=>new Date(`${date}T00:00:00Z`).toLocaleDateString('en-IN',{timeZone:'UTC',...opts});
   const visits=n=>`${n.toLocaleString()} visit${n===1?'':'s'}`;
+  const groups=[...CHANNELS,...(series.some(d=>d.parts.unsplit)?[NOT_SPLIT]:[])];
   const max=Math.max(1,...series.map(d=>d.count)), peak=series.reduce((a,b)=>b.count>a.count?b:a), today=series.at(-1), yesterday=series.at(-2);
   $('daily-summary').textContent=`Today ${today.count.toLocaleString()}${yesterday?` · Yesterday ${yesterday.count.toLocaleString()}`:''} · India time`;
-  const show=slot=>{tip.textContent=slot.dataset.tip;tip.hidden=false;const x=slot.offsetLeft+slot.offsetWidth/2,half=tip.offsetWidth/2;tip.style.left=`${Math.min(Math.max(x,half),chart.offsetWidth-half)}px`;tip.style.top=`${slot.firstChild.offsetTop-6}px`;};
+  for(const g of groups){
+    const li=node('li'),sw=node('i',undefined,`sw seg-${g.id}`);sw.setAttribute('aria-hidden','true');
+    li.append(sw,node('span',g.label),node('strong',series.reduce((sum,d)=>sum+d.parts[g.id],0).toLocaleString()));$('daily-legend').append(li);
+  }
+  const tr=node('tr');for(const h of ['Date','Visits',...groups.map(g=>g.short||SHORT[g.id]),'Tags'])tr.append(node('th',h));$('daily-thead').append(tr);
+  // Tooltip: the date and total, then one line per channel with its tags.
+  const fill=d=>{
+    tip.replaceChildren(node('strong',`${when(d.date,{weekday:'short',day:'numeric',month:'short'})} · ${visits(d.count)}`));
+    for(const g of groups){
+      if(!d.parts[g.id])continue;
+      // List the tags behind a channel, except Instagram's when it is only "instagram".
+      const tags=d.tags.filter(t=>channelOf(t.kind,t.source)===g.id);
+      const detail=tags.length&&(g.id!=='instagram'||tags.length>1)?` (${tags.map(t=>`${t.source} ${t.count}`).join(', ')})`:'';
+      const line=node('span',undefined,'tip-row');
+      line.append(node('i',undefined,`sw seg-${g.id}`),node('span',`${g.label}${detail}`),node('b',d.parts[g.id].toLocaleString()));tip.append(line);
+    }
+  };
+  const show=(slot,d)=>{fill(d);tip.hidden=false;const x=slot.offsetLeft+slot.offsetWidth/2,half=tip.offsetWidth/2;tip.style.left=`${Math.min(Math.max(x,half),chart.offsetWidth-half)}px`;tip.style.top=`${slot.firstChild.offsetTop-6}px`;};
   for(const d of series){
     const slot=node('div',undefined,'day');slot.tabIndex=0;
-    slot.dataset.tip=`${when(d.date,{weekday:'short',day:'numeric',month:'short'})} · ${visits(d.count)}`;slot.setAttribute('aria-label',slot.dataset.tip);
+    const breakdown=groups.filter(g=>d.parts[g.id]).map(g=>`${g.label} ${d.parts[g.id]}`).join(', ');
+    slot.setAttribute('aria-label',`${when(d.date,{weekday:'short',day:'numeric',month:'short'})} · ${visits(d.count)}${breakdown?`: ${breakdown}`:''}`);
     if(d===today || (d===peak && d.count>0)) slot.append(node('span',d.count.toLocaleString(),'cap'));
-    const bar=node('i');bar.style.height=`${d.count/max*100}%`;slot.append(bar);
-    for(const on of ['pointerenter','focus'])slot.addEventListener(on,()=>show(slot));
+    const stack=node('div',undefined,'stack');stack.style.height=`${d.count/max*100}%`;
+    for(const g of [...groups].reverse()) if(d.parts[g.id]){const seg=node('i',undefined,`seg-${g.id}`);seg.style.flexGrow=d.parts[g.id];stack.append(seg);}
+    slot.append(stack);
+    for(const on of ['pointerenter','focus'])slot.addEventListener(on,()=>show(slot,d));
     for(const off of ['pointerleave','blur'])slot.addEventListener(off,()=>{tip.hidden=true;});
     chart.append(slot);
-    const tr=node('tr');tr.append(node('td',when(d.date,{weekday:'short',day:'numeric',month:'short',year:'numeric'})),node('td',d.count.toLocaleString()));$('daily-rows').prepend(tr);
+    const row=node('tr');row.append(node('td',when(d.date,{weekday:'short',day:'numeric',month:'short',year:'numeric'})),node('td',d.count.toLocaleString()));
+    for(const g of groups)row.append(node('td',d.parts[g.id].toLocaleString()));
+    row.append(node('td',d.tags.map(t=>`${tagName(t)} ${t.count}`).join(' · ')||'—','tags'));
+    $('daily-rows').prepend(row);
   }
   $('daily-axis').append(node('span',when(series[0].date,{day:'numeric',month:'short'})),node('span','Today'));
 }

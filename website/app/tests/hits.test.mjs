@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { onRequest } from "../../functions/api/hits.js";
-import { dailySeries } from "../public/stats/daily.js";
+import { dailySeries, splitBySource, CHANNELS } from "../public/stats/daily.js";
 
 // In-memory stand-in for the D1 `hits` table, answering the exact statements
 // functions/api/hits.js prepares.
@@ -92,4 +92,53 @@ test("India-time today for the chart", async () => {
   const { istToday } = await import("../public/stats/daily.js");
   assert.equal(istToday(Date.parse("2026-11-24T18:29:00Z")), "2026-11-24");
   assert.equal(istToday(Date.parse("2026-11-24T18:30:00Z")), "2026-11-25");
+});
+
+test("each counted visit also lands on its day's source row: /get/ vs a site landing, tagged or direct", async () => {
+  const env = { DB: fakeDB() };
+  await at("2026-11-26T06:00:00Z", async () => {
+    await call(env, "POST", "p=%2F&src=instagram");
+    await call(env, "POST", "p=%2F&src=Instagram");
+    await call(env, "POST", "p=%2Fhi%2F");
+    await call(env, "POST", "p=%2Fget%2F&src=website");
+    await call(env, "POST", "p=%2Fget%2F");
+    await call(env, "POST", "p=%2Fprivacy%2F&src=not%20a%20slug");
+    await call(env, "GET", "p=%2F&src=instagram");
+  });
+  const all = await call(env, "GET", "all=1");
+  const rows = Object.fromEntries(all.daySources.map((r) => [`${r.date} ${r.kind} ${r.source}`, r.count]));
+  assert.deepEqual(rows, {
+    "2026-11-26 site instagram": 2,
+    "2026-11-26 site direct": 2,
+    "2026-11-26 get website": 1,
+    "2026-11-26 get direct": 1,
+  });
+  assert.equal(all.daySources.reduce((sum, r) => sum + r.count, 0), all.days[0].count, "source rows add up to the day");
+  assert.ok(!all.sources.some((s) => s.name.includes("2026")), "day-source rows stay out of the all-time source lists");
+});
+
+test("each day splits into channels; instagram tags merge, /get/ keeps its own bar, older days stay unsplit", () => {
+  assert.deepEqual(CHANNELS.map((c) => c.id), ["direct", "instagram", "other", "get"]);
+  const series = [
+    { date: "2026-11-25", count: 9 },
+    { date: "2026-11-26", count: 11 },
+  ];
+  const split = splitBySource(series, [
+    { date: "2026-11-26", kind: "site", source: "direct", count: 3 },
+    { date: "2026-11-26", kind: "site", source: "instagram", count: 2 },
+    { date: "2026-11-26", kind: "site", source: "ig", count: 1 },
+    { date: "2026-11-26", kind: "site", source: "poster", count: 1 },
+    { date: "2026-11-26", kind: "get", source: "instagram", count: 1 },
+    { date: "2026-11-26", kind: "get", source: "direct", count: 1 },
+  ]);
+  assert.deepEqual(split[0].parts, { direct: 0, instagram: 0, other: 0, get: 0, unsplit: 9 });
+  assert.deepEqual(split[1].parts, { direct: 3, instagram: 3, other: 1, get: 2, unsplit: 2 });
+  assert.deepEqual(split[1].tags, [
+    { kind: "site", source: "instagram", count: 2 },
+    { kind: "site", source: "ig", count: 1 },
+    { kind: "site", source: "poster", count: 1 },
+    { kind: "get", source: "instagram", count: 1 },
+  ]);
+  assert.equal(split[1].count, 11, "the day total is unchanged");
+  assert.deepEqual(splitBySource(series, undefined)[1].parts, { direct: 0, instagram: 0, other: 0, get: 0, unsplit: 11 });
 });

@@ -20,3 +20,32 @@ export function dailySeries(rows, today, limit = 30) {
   }
   return series;
 }
+
+// Where each day's visits came from. The counter's `daySources` rows are
+// { date, kind: 'get' | 'site', source: utm_source or 'direct', count }. They
+// fold into four fixed channels (stacked bottom to top in this order); visits
+// counted before the counter wrote `dsrc:` rows stay `unsplit`.
+export const CHANNELS = [
+  { id: 'direct', label: 'Direct / untagged' },
+  { id: 'instagram', label: 'Instagram' },
+  { id: 'other', label: 'Other campaigns' },
+  { id: 'get', label: 'Download link /get/' },
+];
+const INSTAGRAM = new Set(['instagram', 'ig', 'insta']);
+export const channelOf = (kind, source) => (kind === 'get' ? 'get' : source === 'direct' ? 'direct' : INSTAGRAM.has(source) ? 'instagram' : 'other');
+
+export function splitBySource(series, daySources = []) {
+  const byDate = new Map();
+  for (const r of daySources || []) {
+    if (!byDate.has(r.date)) byDate.set(r.date, []);
+    byDate.get(r.date).push({ kind: r.kind, source: r.source, count: Number(r.count) });
+  }
+  return series.map((d) => {
+    const rows = byDate.get(d.date) || [];
+    const parts = { direct: 0, instagram: 0, other: 0, get: 0, unsplit: 0 };
+    for (const r of rows) parts[channelOf(r.kind, r.source)] += r.count;
+    parts.unsplit = Math.max(0, d.count - CHANNELS.reduce((sum, c) => sum + parts[c.id], 0));
+    const tags = rows.filter((r) => r.source !== 'direct').sort((a, b) => b.count - a.count);
+    return { ...d, parts, tags };
+  });
+}

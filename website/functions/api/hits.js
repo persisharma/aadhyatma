@@ -36,7 +36,11 @@ export async function onRequest({ request, env, waitUntil }) {
       .map((r) => ({ name: r.k.slice(prefix.length), count: Number(r.n) }));
     const total = Number((results.find((r) => r.k === 'total') || { n: 0 }).n);
     const days = pick('day:').sort((a, b) => a.name.localeCompare(b.name));
-    return new Response(JSON.stringify({ total, pages: pick('page:'), sources: pick('src:'), siteSources: pick('site:'), days }), { status: 200, headers: HEADERS });
+    const daySources = pick('dsrc:').map(({ name, count }) => {
+      const [date, kind, source] = name.split(':');
+      return { date, kind, source, count };
+    });
+    return new Response(JSON.stringify({ total, pages: pick('page:'), sources: pick('src:'), siteSources: pick('site:'), days, daySources }), { status: 200, headers: HEADERS });
   }
 
   const raw = params.get('p') || '/';
@@ -52,8 +56,13 @@ export async function onRequest({ request, env, waitUntil }) {
   if (page && request.method === 'POST' && SOURCE.test(src)) keys.push(`${page === '/get/' ? 'src' : 'site'}:${src}`);
 
   // Daily visits for /stats/: every counted visit also lands on its India-time
-  // date (`day:YYYY-MM-DD`), so the day rows always add up to the total.
-  if (request.method === 'POST') keys.push(`day:${new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10)}`);
+  // date (`day:YYYY-MM-DD`), so the day rows always add up to the total, and on
+  // that date's source row (`dsrc:YYYY-MM-DD:get|site:<utm_source or direct>`),
+  // so each day can be split by where its visits came from. Same slug rule.
+  if (request.method === 'POST') {
+    const day = new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10);
+    keys.push(`day:${day}`, `dsrc:${day}:${page === '/get/' ? 'get' : 'site'}:${SOURCE.test(src) ? src : 'direct'}`);
+  }
 
   const results = await env.DB.batch(keys.map((k) => env.DB.prepare(sql).bind(k)));
 
