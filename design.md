@@ -3485,8 +3485,9 @@ The signed-off iPhone Home Screen concept shows a **vivid Vishnu reclining
 on Shesha painting across the right of the medium Shloka**, a centered Vedansh
 flourish, a saffron ribbon for today's Shloka, dark-maroon native Sanskrit,
 book/source attribution and a delicate floral rule. The **small Panchang**
-originally showed a lunar medallion, almanac scene and sunrise/sunset columns;
-these were withdrawn on 26 November 2026 (see below). This is the approved reference, not
+shows ornamental gold-edged parchment, date/city masthead, an artistic lunar
+medallion beside the large Tithi, observance line, upper-right almanac scene
+and sunrise/sunset in balanced columns. This is the approved reference, not
 the simplified text-stack layout from PR #677.
 
 WidgetKit packages the app's reviewed reader paintings via the Expo config
@@ -3553,25 +3554,6 @@ Release acceptance requires actual Standard/Large/compact and four-language
 native screenshots with short, multi-pada and unusually long verses, plus
 VoiceOver and source/tap checks; source tests alone are not visual acceptance.
 
-
-### Small Panchang restored to the plain glance — 26 November 2026
-
-**Owner decision.** The Ornate small Panchang (moon medallion beside the tithi,
-sunrise/sunset columns, corner almanac painting and temple cameo) read as
-overloaded on a placed widget. It returns to the pre-Ornate glance: a
-saffron date · city line with a sun glyph, the running tithi (25 pt, 21 pt
-compact) with its end time, an optional vrat chip (3 pt saffron bar on a tinted
-band), and a gold-ruled footer with sunrise and the `ॐ वेदांश़` mark. Two
-measured candidates (full / compact) still fit by `ViewThatFits`.
-
-**Art.** Only the medium/large Shloka draws the full-colour painting. Every
-Panchang size keeps the faded heritage plate, the single gold rim and no lower
-lotus (its sunrise footer sits there). `AlmanacMoonSeal`, `TempleDawnCameo`,
-`FestivalMountain` and the sunset column are removed; sunset remains in the
-payload and still schedules the day/night timeline. The gallery facsimile
-mirrors this. The panchang painting is still bundled but unused.
-New iOS binary required; placed Small Panchang screenshots (four languages,
-vrat/non-vrat, day/night) remain pending.
 
 ### Medium Shloka / Panchang height fit — 25 November 2026
 

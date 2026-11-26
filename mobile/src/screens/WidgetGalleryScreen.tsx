@@ -12,7 +12,7 @@ import { useGitaLanguage, type Lang } from '@/data/gita/language';
 import { contentByLang, pick } from '@/utils/localize';
 import { fontFamilies } from '@/theme/typography';
 import { radii, spacing } from '@/theme/spacing';
-import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont, titleLeading } from '@/utils/langType';
+import { eyebrowTextStyle, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 import { isWidgetPinSupported, readWidgetPayload, requestPinWidget } from '@/widgets/native';
 import { widgetPayloadKey } from '@/utils/widgetPayloadKey';
 import { WIDGET_TIME_ZONE, widgetDateKey, type WidgetPayloadState } from '@/widgets/contract';
@@ -24,6 +24,14 @@ import { flowedVerse, runningTithi } from '@/widgets/planner';
 import type { MoreStackParamList } from '@/navigation/types';
 
 type Props = NativeStackScreenProps<MoreStackParamList, 'WidgetGallery'>;
+
+function istClock(raw: string): string {
+  const minute = Math.floor(Date.parse(raw) / 60000);
+  if (!Number.isFinite(minute)) return '—';
+  const ist = ((minute + 330) % 1440 + 1440) % 1440;
+  return String(Math.floor(ist / 60)).padStart(2, '0') + ':' + String(ist % 60).padStart(2, '0');
+}
+
 
 export default function WidgetGalleryScreen({ navigation }: Props) {
   const { colors } = useTheme();
@@ -118,20 +126,28 @@ export default function WidgetGalleryScreen({ navigation }: Props) {
             {verse && previewVerseDense ? <Text style={[styles.meta, { color: versePalette.accent, fontFamily: bodyFont }]}>{pick(lang, { hi: 'पूरा श्लोक पढ़ें ›', en: 'Tap to read full verse ›', gu: 'આખો શ્લોક વાંચો ›', kn: 'ಪೂರ್ಣ ಶ್ಲೋಕ ಓದಿ ›' })}</Text> : null}
           </Preview>
           <Preview heritageImages={heritageImages} vividImages={vividImages} contentReady={!!day} appearance={day ? appearance : 'day'} subject="panchang" content="panchang" title={day && payloadState.kind === 'ready' ? `${day.representedDate[lang]} · ${payloadState.payload.panchang.cityLabel[lang]}` : contentByLang(lang, 'आज का पंचांग', 'Today’s Panchang')} accessibilityLabel="Panchang widget preview" colors={colors} eyebrowStyle={eyebrowStyle} lang={lang} bodyFont={bodyFont} pinSupported={pinSupported} onPin={pin}>
-            {/* This is the small native widget's masthead / tithi / vrat-band /
-                sunrise-footer hierarchy, drawn from the same running tithi. */}
-            {day && tithi && payloadState.kind === 'ready' ? <View style={{ gap: 7, justifyContent: 'center', flex: 1 }}>
-              <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.accent }}>
-                {day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}
-              </Text>
-              <Text numberOfLines={2} style={{ fontFamily: titleFont, fontSize: 25, lineHeight: titleLeading(25), color: panchangPalette.ink }}>{tithi.name[lang]}</Text>
-              {tithi.till ? <Text numberOfLines={1} style={{ fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{tithi.till[lang]}</Text> : null}
-              {day.vrat ? <View style={{ borderLeftWidth: 3, borderLeftColor: panchangPalette.accent, borderRadius: 7, backgroundColor: appearance === 'night' ? '#24344A' : '#F1E3C6', paddingHorizontal: 7, paddingVertical: 5 }}>
-                <Text numberOfLines={2} style={{ fontFamily: bodyFont, fontSize: 11, lineHeight: 17, color: panchangPalette.ink }}>{day.vrat[lang]}</Text>
-              </View> : null}
-              <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', borderTopWidth: 1, borderTopColor: panchangPalette.gold, paddingTop: 7 }}>
-                <Text numberOfLines={1} style={{ flex: 1, fontFamily: bodyFont, fontSize: 10, color: panchangPalette.inkMuted }}>{day.sunrise[lang]}</Text>
-                <Text style={{ fontFamily: fontFamilies.devanagariBold, fontSize: 10, color: panchangPalette.gold }}>ॐ वेदांश़</Text>
+            {day && tithi && payloadState.kind === 'ready' ? <View style={{ gap: 6, justifyContent: 'center', flex: 1 }}>
+              <Text numberOfLines={1} style={{ color: panchangPalette.accent, fontSize: 11, fontFamily: bodyFont }}>{day.representedDate[lang]} · {payloadState.payload.panchang.cityLabel[lang]}</Text>
+              <View style={{ flexDirection: 'row', gap: 7, alignItems: 'center' }}>
+                <View style={{ height: 36, width: 36, borderRadius: 18, borderWidth: 1, borderColor: panchangPalette.gold, alignItems: 'center', justifyContent: 'center', backgroundColor: appearance === 'night' ? '#182C43' : '#F0DFBD' }}>
+                  <View style={{ width: 23, height: 23, borderRadius: 12, backgroundColor: panchangPalette.inkMuted }}>
+                    <View style={{ position: 'absolute', top: -2, right: -5, width: 23, height: 23, borderRadius: 12, backgroundColor: appearance === 'night' ? '#182C43' : '#F0DFBD' }} />
+                  </View>
+                </View>
+                <Text numberOfLines={2} style={{ color: panchangPalette.ink, fontFamily: titleFont, fontSize: 23, lineHeight: 32, flexShrink: 1 }}>{tithi.name[lang]}</Text>
+              </View>
+              {tithi.till ? <Text numberOfLines={1} style={{ fontSize: 10, color: panchangPalette.inkMuted, fontFamily: bodyFont }}>{tithi.till[lang]}</Text> : null}
+              {day.vrat ? <Text numberOfLines={2} style={{ fontSize: 13, lineHeight: 20, color: panchangPalette.ink, fontFamily: bodyFont }}>✦ {day.vrat[lang]}</Text> : null}
+              <View style={{ height: 1, backgroundColor: panchangPalette.gold, opacity: 0.65 }} />
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={{ fontSize: 10, color: panchangPalette.accent, fontFamily: bodyFont }}>{pick(lang, { hi: 'सूर्योदय', en: 'Sunrise', gu: 'સૂર્યોદય', kn: 'ಸೂರ್ಯೋದಯ' })}</Text>
+                  <Text style={{ fontSize: 14, color: panchangPalette.ink, fontFamily: bodyFont }}>{day.sunrise[lang].split(' ').slice(-1)[0]}</Text>
+                </View>
+                {day.sunsetAt ? <View style={{ alignItems: 'center', borderLeftWidth: 1, borderLeftColor: panchangPalette.gold, paddingLeft: 12 }}>
+                  <Text style={{ fontSize: 10, color: panchangPalette.accent, fontFamily: bodyFont }}>{pick(lang, { hi: 'सूर्यास्त', en: 'Sunset', gu: 'સૂર્યાસ્ત', kn: 'ಸೂರ್ಯಾಸ್ತ' })}</Text>
+                  <Text style={{ fontSize: 14, color: panchangPalette.ink, fontFamily: bodyFont }}>{istClock(day.sunsetAt)}</Text>
+                </View> : null}
               </View>
             </View> : <Text style={[styles.headline, { color: panchangPalette.ink, fontFamily: titleFont }]}>{recovery}</Text>}
           </Preview>
@@ -184,14 +200,12 @@ function Preview({ heritageImages = {}, vividImages = {}, contentReady = true, a
   // without one the card is the plain parchment it was.
   const palette = WIDGET_APPEARANCE_TOKENS[appearance];
   const art = !contentReady || entry.recommended === 'lock' ? undefined : content === 'japam' ? widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)] : heritageImages[widgetHeritageName(subject, entry.recommended, appearance)];
-  // Only the Shloka carries the full-colour painting; the Panchang keeps the
-  // faded plate (its painting was removed with the overloaded almanac, Nov 2026).
-  const vivid = contentReady && appearance === 'day' && content === 'verse' ? vividImages[subject] : undefined;
+  const vivid = contentReady && appearance === 'day' && content !== 'japam' ? vividImages[subject] : undefined;
   const cardStyle = [styles.card, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider }];
   const previewStyle = [styles.preview, content === 'panchang' && { width: 190, minHeight: 190 }, { padding: spacing.md, paddingRight: content === 'verse' && art ? verseArtPadding : spacing.md, backgroundColor: palette.background, borderRadius: radii.lg }];
   const previewBody = <View accessible accessibilityRole="image" accessibilityLabel={accessibilityLabel} style={previewStyle}>
     {vivid ? <View pointerEvents="none" style={[StyleSheet.absoluteFillObject, { overflow: 'hidden', borderRadius: radii.lg }]}>
-      <CachedArtwork source={vivid} resizeMode="cover" style={{ position: 'absolute', right: 0, top: 0, width: '55%', height: '100%' }} />
+      <CachedArtwork source={vivid} resizeMode="cover" style={{ position: 'absolute', right: 0, top: 0, width: content === 'panchang' ? '38%' : '55%', height: content === 'panchang' ? '53%' : '100%' }} />
       <LinearGradient colors={[palette.background, palette.background + 'CC', palette.background + '00']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFillObject} />
     </View> : null}
     {content === 'verse' ? <>

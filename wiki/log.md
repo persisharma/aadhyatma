@@ -1641,3 +1641,6 @@ Owner found the Ornate small Panchang overloaded. Restored the pre-#681 composit
 
 ## [2026-11-26] ingest | Feathered text wash on the Shloka widget
 Device screenshot: a long Sundarkand chaupai took the full-width composition and its solid wash ended in a hard edge over the painting. `textWash()` now bleeds and blurs. design.md §59 + [[home-widgets]] gotcha updated; device check pending.
+
+## [2026-11-27] ingest | Owner reverted the plain Panchang
+After seeing the text-only small Panchang on a placed-widget mock, the owner preferred the Ornate layout. The 26/27 Nov Panchang commits were reverted: Ornate small Panchang, Panchang painting/cameo/plate and the lower lotus are back. The Shloka fit, single rim and feathered wash stay. Known open issue: the Ornate small Panchang overflows on a vrat day with a tithi end time (~152 pt in a ~126 pt cell).

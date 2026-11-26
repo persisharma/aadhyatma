@@ -247,7 +247,7 @@ test('both native widgets draw the widget text tokens the plates were toned for'
 test('approved Ornate Heritage visual contract is native, not only a gallery mockup', () => {
   const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
   const plugin = read('withHomeWidgetsIos.js');
-  const verse = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('private func smallPanchang('));
+  const verse = swift.slice(swift.indexOf('MARK: - आज का श्लोक'), swift.indexOf('private struct AlmanacMoonSeal'));
   const small = swift.slice(swift.indexOf('private func smallPanchang('), swift.indexOf('MARK: - आज का पंचांग'));
   assert.match(swift, /private struct HeritageFiligree: View/);
   assert.match(swift, /Canvas \{ context, size in/);
@@ -258,10 +258,12 @@ test('approved Ornate Heritage visual contract is native, not only a gallery moc
   assert.match(verse, /LinearGradient\(colors: \[palette\.saffronDeep/);
   assert.match(verse, /Text\(flowedVerse\(v\.lines\.value\(lang\)\)\)/);
   assert.match(verse, /Text\(v\.source\.value\(lang\)\)/);
+  assert.match(small, /AlmanacMoonSeal\(palette: palette\)/);
   assert.match(small, /p\.representedDate\.value\(lang\)/);
   assert.match(small, /running\.name\.value\(lang\)/);
   assert.match(small, /p\.vrat/);
-  assert.match(small, /Text\(p\.sunrise\.value\(lang\)\)/);
+  assert.match(small, /almanacSolarColumn/);
+  assert.match(swift, /guard let raw = p\.sunsetAt, let instant = widgetInstant\(raw\)/);
   assert.match(swift, /renderingMode == \.fullColor, !palette\.night/);
   assert.match(swift, /crop\.width \* crop\.height <= budget/);
   assert.match(plugin, /function heritageSources\(projectRoot\)/);
@@ -273,31 +275,13 @@ test('approved Ornate Heritage visual contract is native, not only a gallery moc
 // read as three separate borders on a placed widget.
 test('the heritage frame is one gold rim on the system widget shape', () => {
   const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
-  const filigree = swift.slice(swift.indexOf('private struct HeritageFiligree'), swift.indexOf('private struct WidgetBackdrop'));
+  const filigree = swift.slice(swift.indexOf('private struct HeritageFiligree'), swift.indexOf('private struct TempleDawnCameo'));
   assert.ok(filigree.length > 0, 'HeritageFiligree not found');
   assert.equal((filigree.match(/strokeBorder\(/g) ?? []).length, 1, 'exactly one frame stroke');
   assert.match(filigree, /ContainerRelativeShape\(\)\s*\.strokeBorder\(/,
     'the rim must follow the system corner radius, not a hard-coded one');
   assert.doesNotMatch(filigree, /Path\(roundedRect:/, 'no inset fixed-radius frames');
   assert.doesNotMatch(filigree, /addQuadCurve/, 'corner swirls were removed; they read as extra outlines');
-});
-
-// Nov 2026 owner decision: the Ornate small Panchang (moon medallion, sunset
-// column, corner painting and temple cameo) read as overloaded; the earlier
-// date / tithi / vrat / sunrise glance is restored and only the Shloka paints.
-test('the small Panchang is the plain glance, with no painting or almanac ornaments', () => {
-  const swift = read('home-widgets', 'ios', 'VedanshWidgets.swift');
-  const small = swift.slice(swift.indexOf('private func smallPanchang('), swift.indexOf('MARK: - आज का पंचांग'));
-  assert.ok(small.length > 0, 'smallPanchang not found');
-  assert.doesNotMatch(swift, /AlmanacMoonSeal|TempleDawnCameo|almanacSolarColumn|FestivalMountain/);
-  assert.match(small, /Image\(systemName: "sunrise\.fill"\)[\s\S]*Text\("ॐ वेदांश़"\)/,
-    'sunrise footer carries the brand mark');
-  assert.match(swift, /guard surface == \.verse, family != \.systemSmall, renderingMode == \.fullColor/,
-    'only the wide/large Shloka draws the full-colour painting');
-  assert.match(swift, /showsLotus: surface == \.verse/);
-  const gallery = fs.readFileSync(path.join(__dirname, '..', '..', 'screens', 'WidgetGalleryScreen.tsx'), 'utf8');
-  assert.match(gallery, /content === 'verse' \? vividImages\[subject\]/);
-  assert.doesNotMatch(gallery, /sunsetAt|borderRadius: 18, borderWidth: 1/);
 });
 
 test('every ornate heritage subject has a reviewed painting in both the extension and gallery', () => {

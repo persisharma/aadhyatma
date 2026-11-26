@@ -147,13 +147,11 @@ private struct WidgetPalette {
 // (Nov 2026). ContainerRelativeShape follows the system corner on every device.
 private struct HeritageFiligree: View {
   let palette: WidgetPalette
-  // The Panchang's sunrise footer sits where the lotus would, so it keeps the rim only.
-  var showsLotus = true
   var body: some View {
     ZStack {
       ContainerRelativeShape()
         .strokeBorder(palette.gold.opacity(0.80), lineWidth: 1.5)
-      if showsLotus { lotus }
+      lotus
     }
     .accessibilityHidden(true)
     .allowsHitTesting(false)
@@ -178,6 +176,63 @@ private struct HeritageFiligree: View {
   }
 }
 
+// Small almanac cameo from the approved design: a warm temple spire/flag.
+// Purely decorative, with no unsupported festival, direction or time claim.
+private struct TempleDawnCameo: View {
+  let palette: WidgetPalette
+  var body: some View {
+    ZStack {
+      Circle()
+        .fill(RadialGradient(colors: [palette.gold.opacity(0.25), .clear],
+                             center: .center, startRadius: 2, endRadius: 36))
+        .frame(width: 66, height: 66)
+      Canvas { context, size in
+        let x = size.width
+        let y = size.height
+        var building = Path()
+        building.move(to: CGPoint(x: 0.20 * x, y: 0.80 * y))
+        building.addLine(to: CGPoint(x: 0.80 * x, y: 0.80 * y))
+        building.addLine(to: CGPoint(x: 0.73 * x, y: 0.68 * y))
+        building.addLine(to: CGPoint(x: 0.27 * x, y: 0.68 * y))
+        building.closeSubpath()
+        context.fill(building, with: .color(palette.saffronDeep.opacity(0.54)))
+        var spire = Path()
+        spire.move(to: CGPoint(x: 0.34 * x, y: 0.68 * y))
+        spire.addLine(to: CGPoint(x: 0.38 * x, y: 0.42 * y))
+        spire.addLine(to: CGPoint(x: 0.50 * x, y: 0.18 * y))
+        spire.addLine(to: CGPoint(x: 0.62 * x, y: 0.42 * y))
+        spire.addLine(to: CGPoint(x: 0.66 * x, y: 0.68 * y))
+        spire.closeSubpath()
+        context.fill(spire, with: .color(palette.saffronDeep.opacity(0.58)))
+        var flag = Path()
+        flag.move(to: CGPoint(x: 0.50 * x, y: 0.20 * y))
+        flag.addLine(to: CGPoint(x: 0.50 * x, y: 0.04 * y))
+        flag.addLine(to: CGPoint(x: 0.76 * x, y: 0.11 * y))
+        flag.addLine(to: CGPoint(x: 0.50 * x, y: 0.15 * y))
+        context.stroke(flag, with: .color(palette.gold), lineWidth: 1)
+      }
+      .frame(width: 57, height: 57)
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+}
+
+private struct FestivalMountain: Shape {
+  func path(in rect: CGRect) -> Path {
+    var outline = Path()
+    outline.move(to: CGPoint(x: 0, y: rect.maxY))
+    outline.addLine(to: CGPoint(x: rect.width * 0.38, y: rect.minY))
+    outline.addLine(to: CGPoint(x: rect.width * 0.65, y: rect.maxY))
+    outline.closeSubpath()
+    outline.move(to: CGPoint(x: rect.width * 0.43, y: rect.maxY))
+    outline.addLine(to: CGPoint(x: rect.width * 0.73, y: rect.height * 0.35))
+    outline.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+    outline.closeSubpath()
+    return outline
+  }
+}
+
 private struct WidgetBackdrop: View {
   let art: UIImage?
   let vivid: UIImage?
@@ -195,8 +250,9 @@ private struct WidgetBackdrop: View {
             .clipped().accessibilityHidden(true)
         }
         if let vivid {
-          let width = geo.size.width * 0.59
-          let height = geo.size.height
+          let square = surface == .panchang
+          let width = geo.size.width * (square ? 0.38 : 0.59)
+          let height = geo.size.height * (square ? 0.50 : 1)
           Image(uiImage: vivid).resizable().scaledToFill()
             .frame(width: width, height: height)
             .clipped()
@@ -207,11 +263,17 @@ private struct WidgetBackdrop: View {
                 .init(color: .white, location: 0.46)
               ], startPoint: .leading, endPoint: .trailing)
             }
-            .position(x: geo.size.width - width * 0.50 - 4, y: geo.size.height * 0.5)
+            .position(x: geo.size.width - width * 0.50 - 4,
+                      y: square ? height * 0.5 + 4 : geo.size.height * 0.5)
             .accessibilityHidden(true)
         }
+        if surface == .panchang && vivid != nil {
+          TempleDawnCameo(palette: WidgetPalette(night: night))
+            .frame(width: 60, height: 60)
+            .position(x: geo.size.width - 31, y: 36)
+        }
         if art != nil || vivid != nil {
-          HeritageFiligree(palette: WidgetPalette(night: night), showsLotus: surface == .verse)
+          HeritageFiligree(palette: WidgetPalette(night: night))
         }
       }
       .frame(width: geo.size.width, height: geo.size.height)
@@ -330,14 +392,14 @@ struct VedanshWidgetView: View {
     return WidgetArt.heritage(subject, family, night: palette.night)
   }
 
-  // The full-colour painting belongs to the Shloka only. The Panchang keeps
-  // the faded heritage plate; its painting and temple cameo were removed with
-  // the overloaded almanac layout (Nov 2026).
   private var vividArt: UIImage? {
-    guard surface == .verse, family != .systemSmall, renderingMode == .fullColor, !palette.night,
+    guard surface != .japam, renderingMode == .fullColor, !palette.night,
           case .ready(let payload) = entry.state, hasContent(payload) else { return nil }
+    if surface == .verse && family == .systemSmall { return nil }
     let key = widgetDateKey(entry.date, timeZone: payload.verses.timeZone)
-    return WidgetArt.vivid(payload.verses.days.first(where: { $0.dateKey == key })?.artKey ?? "prayer", family)
+    let source = surface == .panchang ? "panchang"
+      : (payload.verses.days.first(where: { $0.dateKey == key })?.artKey ?? "prayer")
+    return WidgetArt.vivid(source, family)
   }
 
   /// Whether this entry renders the surface's dated content rather than a refresh card.
@@ -598,79 +660,132 @@ struct VedanshWidgetView: View {
       : "पूरा श्लोक पढ़ने के लिए टैप करें ›"
   }
 
-  // Restored to the pre-Ornate glance at the owner's request (Nov 2026): the
-  // moon medallion, sunset column and corner painting made the small cell
-  // read as overloaded. Date/city, running tithi, its end, a vrat chip and a
-  // sunrise footer with the brand mark are the whole composition.
-  private func smallPanchang(_ p: PanchangDay, running: (name: LocalizedText, till: LocalizedText?),
-                             city: String, lang: String, compact: Bool) -> some View {
-    VStack(alignment: .leading, spacing: compact ? 3 : 6) {
-      HStack(spacing: 4) {
-        Image(systemName: "sun.max.fill")
-          .font(.system(size: 9, weight: .semibold))
-          .accessibilityHidden(true)
-        Text("\(p.representedDate.value(lang)) · \(city)")
+  // The decorative crescent is an almanac emblem, NOT a computed Moon phase.
+  // A precise phase would need its own numerical ephemeris field.
+  private struct AlmanacMoonSeal: View {
+    let palette: WidgetPalette
+    var body: some View {
+      ZStack {
+        Circle().fill(palette.gold.opacity(0.10))
+        Circle().strokeBorder(palette.gold.opacity(0.88), lineWidth: 1)
+        Circle().fill(palette.inkMuted.opacity(0.88)).padding(8)
+        Circle().fill(palette.parchment).padding(9)
+          .offset(x: 6, y: -2)
+      }
+      .accessibilityHidden(true)
+    }
+  }
+
+  private func widgetSolarLabel(_ lang: String, sunset: Bool) -> String {
+    if sunset {
+      return lang == "en" ? "Sunset" : lang == "gu" ? "સૂર્યાસ્ત" :
+        lang == "kn" ? "ಸೂರ್ಯಾಸ್ತ" : "सूर्यास्त"
+    }
+    return lang == "en" ? "Sunrise" : lang == "gu" ? "સૂર્યોદય" :
+      lang == "kn" ? "ಸೂರ್ಯೋದಯ" : "सूर्योदय"
+  }
+
+  private func sunsetTime(_ p: PanchangDay) -> String? {
+    guard let raw = p.sunsetAt, let instant = widgetInstant(raw) else { return nil }
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(identifier: widgetIstTimeZone)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.dateFormat = "HH:mm"
+    return formatter.string(from: instant)
+  }
+
+  private func sunriseTime(_ p: PanchangDay, lang: String) -> String {
+    let full = p.sunrise.value(lang)
+    return full.split(separator: " ").last.map(String.init) ?? full
+  }
+
+  private func almanacSolarColumn(_ title: String, time: String, sunset: Bool, lang: String,
+                                  condensed: Bool) -> some View {
+    VStack(alignment: .center, spacing: condensed ? 1 : 3) {
+      HStack(spacing: 3) {
+        Image(systemName: sunset ? "sunset.fill" : "sunrise.fill")
+          .font(.system(size: condensed ? 10 : 11)).accessibilityHidden(true)
+        Text(title)
           .font(.custom(fontName(lang, bold: true), size: 10))
-          .lineLimit(1).minimumScaleFactor(0.85)
+          .lineLimit(1).minimumScaleFactor(0.78)
       }
       .foregroundStyle(palette.saffronDeep)
+      Text(time)
+        .font(.custom(fontName(lang, bold: true), size: condensed ? 13 : 16))
+        .foregroundStyle(palette.ink)
+        .lineLimit(1)
+    }
+    .frame(maxWidth: .infinity)
+  }
 
-      VStack(alignment: .leading, spacing: 1) {
-        Text(running.name.value(lang))
-          .font(.custom(fontName(lang, bold: true), size: compact ? 21 : 25))
-          .foregroundStyle(palette.ink)
-          .lineLimit(2).minimumScaleFactor(0.85)
-          .fixedSize(horizontal: false, vertical: true)
-        if let till = running.till {
-          Text(till.value(lang))
-            .font(.custom(fontName(lang, bold: false), size: compact ? 10 : 11))
-            .foregroundStyle(palette.inkMuted)
-            .lineLimit(1).minimumScaleFactor(0.85)
-        }
-      }
-
-      if let vrat = p.vrat {
-        HStack(spacing: 5) {
-          RoundedRectangle(cornerRadius: 2)
-            .fill(palette.saffronDeep).frame(width: 3)
-            .accessibilityHidden(true)
-          Text(vrat.value(lang))
-            .font(.custom(fontName(lang, bold: true), size: compact ? 10 : 11))
-            .foregroundStyle(palette.ink)
-            .lineLimit(2).minimumScaleFactor(0.85)
-            .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(.horizontal, compact ? 5 : 7)
-        .padding(.vertical, compact ? 3 : 5)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(palette.saffronDeep.opacity(palette.night ? 0.16 : 0.09),
-                    in: RoundedRectangle(cornerRadius: 8))
-      }
-
+  private func smallPanchang(_ p: PanchangDay,
+                             running: (name: LocalizedText, till: LocalizedText?),
+                             city: String, lang: String, compact: Bool) -> some View {
+    let sunset = sunsetTime(p)
+    return VStack(alignment: .leading, spacing: compact ? 4 : 7) {
       HStack(spacing: 4) {
-        Image(systemName: "sunrise.fill")
-          .font(.system(size: 9, weight: .semibold))
-          .foregroundStyle(palette.saffronDeep)
+        Image(systemName: "calendar").font(.system(size: 11, weight: .semibold))
           .accessibilityHidden(true)
-        Text(p.sunrise.value(lang))
-          .font(.custom(fontName(lang, bold: true), size: 9))
-          .foregroundStyle(palette.inkMuted)
-          .lineLimit(1).minimumScaleFactor(0.85)
-        Spacer(minLength: 1)
-        Text("ॐ वेदांश़")
-          .font(.custom("NotoSerifDevanagari-SemiBold", size: 9))
-          .foregroundStyle(palette.gold)
-          .lineLimit(1).minimumScaleFactor(0.9)
+        Text("\(p.representedDate.value(lang)) · \(city)")
+          .font(.custom(fontName(lang, bold: true), size: 11))
+          .lineLimit(1).minimumScaleFactor(0.8)
       }
-      .padding(.top, compact ? 4 : 7)
-      .overlay(alignment: .top) {
-        Rectangle().fill(palette.gold.opacity(0.55)).frame(height: 1)
-          .accessibilityHidden(true)
+      .foregroundStyle(palette.saffronDeep)
+      .padding(.trailing, 27)
+
+      HStack(alignment: .center, spacing: compact ? 7 : 9) {
+        AlmanacMoonSeal(palette: palette)
+          .frame(width: compact ? 32 : 43, height: compact ? 32 : 43)
+        Text(running.name.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: compact ? 22 : 28))
+          .foregroundStyle(palette.ink)
+          .lineLimit(2).minimumScaleFactor(0.82)
+          .fixedSize(horizontal: false, vertical: true)
+      }
+      if let till = running.till {
+        Text(till.value(lang))
+          .font(.custom(fontName(lang, bold: true), size: 10))
+          .foregroundStyle(palette.inkMuted)
+          .lineLimit(1).minimumScaleFactor(0.8)
+      }
+      if let vrat = p.vrat {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+          if vrat.hi.contains("गोवर्धन") {
+            FestivalMountain().fill(palette.saffronDeep)
+              .frame(width: 18, height: 14).accessibilityHidden(true)
+          } else {
+            Image(systemName: "sparkles").font(.system(size: 11))
+              .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+          }
+          Text(vrat.value(lang))
+            .font(.custom(fontName(lang, bold: true), size: compact ? 12 : 14))
+            .foregroundStyle(palette.ink)
+            .lineLimit(compact ? 1 : 2)
+            .minimumScaleFactor(0.84)
+        }
+        .padding(.vertical, compact ? 1 : 2)
+      }
+      Spacer(minLength: 0)
+      HStack(spacing: 4) {
+        Rectangle().fill(palette.gold.opacity(0.69)).frame(height: 1)
+        Image(systemName: "leaf.fill").font(.system(size: 8))
+          .foregroundStyle(palette.gold).accessibilityHidden(true)
+        Rectangle().fill(palette.gold.opacity(0.69)).frame(height: 1)
+      }
+      HStack(alignment: .center, spacing: 0) {
+        almanacSolarColumn(widgetSolarLabel(lang, sunset: false),
+                           time: sunriseTime(p, lang: lang),
+                           sunset: false, lang: lang, condensed: compact)
+        if let sunset {
+          Rectangle().fill(palette.gold.opacity(0.6))
+            .frame(width: 1, height: compact ? 22 : 29)
+          almanacSolarColumn(widgetSolarLabel(lang, sunset: true),
+                             time: sunset, sunset: true, lang: lang, condensed: compact)
+        }
       }
     }
-    .padding(.vertical, 2)
-    // Intrinsic height lets WidgetKit select the decorative or compact
-    // composition by real Indic glyph layout, not a character-count guess.
+    .padding(.vertical, 1)
+    .frame(maxWidth: .infinity, alignment: .topLeading)
     .fixedSize(horizontal: false, vertical: true)
   }
 
