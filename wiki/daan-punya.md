@@ -50,6 +50,13 @@ content is generated from the registries, so it cannot drift from the code).
   ॥ ॐ ॥ → `अगली कथा` row with position dots + `दान करें` / `खाते में दर्ज करें`
   doors, so the story never dead-ends). All but DaanPunya registered
   on Home, More AND Panchang stacks (`DaanStackParamList` in navigation/types.ts).
+  **DaanPunya home — Nov 2026 V4 rework:** opens on the Annapurna hero + a
+  skippable jump rail (`daan-jump-*`), then painted-`StoryIcon`-led sections —
+  **दान क्या है** (the Ṛgveda dāna-sūkta as ONE signature night panel via
+  `expo-linear-gradient` over the `skyNight` stops), **शास्त्र** (the remaining
+  verified principles as stacked parchment scripture cards, each keeping its share
+  + the Gita card's `गीता में पढ़ें`), **आज का दान** (today's occasion + vaar row),
+  **दान की कथाएँ** (katha shelf). The horizontal `daan-principle-carousel` is gone.
 - **Doors** — More hub साधना row (`more-daan-punya`); Home's full-width closing
   category card (a bundled Storybook daan-patra with three seed-shaped offerings; no duplicate
   Sadhana category card), DISCOVER spotlight and covered-day FOR TODAY card;

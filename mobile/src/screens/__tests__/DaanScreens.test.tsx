@@ -111,16 +111,21 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     await act(async () => tree.unmount());
   });
 
-  test('both standing doors live in the sticky action bar; the verse spine is a carousel', async () => {
+  test('both standing doors live in the sticky action bar; the dāna-sūkta leads as a signature panel, the rest are scripture cards', async () => {
     const navigation = { ...mockNavigation } as never;
     const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
     const bar = tree.root.findAllByProps({ testID: 'daan-home-actions' })[0];
     expect(bar.findAllByProps({ testID: 'daan-home-dwaar' }).length).toBeGreaterThan(0);
     expect(bar.findAllByProps({ testID: 'daan-home-donate' }).length).toBeGreaterThan(0);
-    // Every verified principle rides the carousel; the meaning renders in full (no unfold toggle).
-    const carousel = tree.root.findAllByProps({ testID: 'daan-principle-carousel' })[0];
-    expect(carousel.findAllByProps({ testID: 'daan-principle-dana-sukta' }).length).toBeGreaterThan(0);
+    // The dāna-sūkta is the one signature night panel; every other verified principle
+    // renders as a scripture card below it. The meaning renders in full (no unfold toggle).
+    expect(has(tree, 'daan-principle-dana-sukta')).toBe(true);
+    expect(has(tree, 'daan-principle-shraddhaya-deyam')).toBe(true);
+    expect(has(tree, 'daan-principle-sattvik-daan')).toBe(true);
     expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(false);
+    // The jump rail is skippable navigation, present at the top.
+    expect(has(tree, 'daan-jump-what')).toBe(true);
+    expect(has(tree, 'daan-jump-katha')).toBe(true);
     // The kathas are a horizontal shelf.
     const shelf = tree.root.findAllByProps({ testID: 'daan-katha-shelf' })[0];
     expect(shelf.findAllByProps({ testID: 'daan-katha-karna' }).length).toBeGreaterThan(0);
