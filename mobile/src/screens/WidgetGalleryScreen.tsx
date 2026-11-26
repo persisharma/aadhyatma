@@ -183,7 +183,8 @@ function Preview({ heritageImages = {}, vividImages = {}, contentReady = true, a
   // The same sketch plate the native widget draws at this kind's recommended size;
   // without one the card is the plain parchment it was.
   const palette = WIDGET_APPEARANCE_TOKENS[appearance];
-  const art = !contentReady || entry.recommended === 'lock' ? undefined : content === 'japam' ? widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)] : heritageImages[widgetHeritageName(subject, entry.recommended, appearance)];
+  // No plate behind the Panchang (its plates bake in a corner stamp; Nov 2026).
+  const art = !contentReady || entry.recommended === 'lock' || content === 'panchang' ? undefined : content === 'japam' ? widgetBackgroundImages[widgetBackgroundName(content, entry.recommended)] : heritageImages[widgetHeritageName(subject, entry.recommended, appearance)];
   // Only the Shloka carries the full-colour painting; the Panchang keeps the
   // faded plate (its painting was removed with the overloaded almanac, Nov 2026).
   const vivid = contentReady && appearance === 'day' && content === 'verse' ? vividImages[subject] : undefined;
