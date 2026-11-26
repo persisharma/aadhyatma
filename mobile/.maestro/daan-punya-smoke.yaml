@@ -79,17 +79,14 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: daan-directory-cause
 - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-# Every live cause is a painted seva tile; anna always has verified orgs.
+# Every live cause is a painted seva tile; anna always has verified orgs. The
+# painting itself is decorative (hidden from accessibility, so Maestro cannot
+# see its id — Jest pins one icon per tile); the tile button is the target.
 - scrollUntilVisible:
     element:
-      id: "daan-seva-grid"
+      id: "daan-seva-anna"
     direction: DOWN
     timeout: 20000
-- scrollUntilVisible:
-    element:
-      id: "daan-seva-icon-anna"
-    direction: DOWN
-    timeout: 15000
     centerElement: true
 - takeScreenshot: daan-home-seva
 - tapOn:
