@@ -1146,7 +1146,8 @@ The legacy Deity List is the plain filtered-list fallback: same as Section 21, b
 **Gradient background:** same as Home.
 
 **Verse pool:** an explicit registry — `mobile/src/data/versePool.ts` — mapping each participating section into a `UniformVerse` shape. Membership is **registered per section**, not inferred from categories, so the pool only surfaces content with a well-formed verse + meaning mapping. Selection: `Math.random()` over the flat pool (every verse equally likely) on each visit / `↻ next` tap.
-- **Members (Oct 2026, 1,676 verses):** the Gita; the shloka stotrams (Shiva, Durga, Saraswati, Ganesh, Krishna, Vishnu Sahasranama, Hanuman Ashtak, Ram Stuti); Sundarkand, Bajrang Baan, Ramcharitmanas; the 28-verse Valmiki Ramayan daily selection; non-naam japam mantras; sanskar verses (minus `intro`); and the single-list **ashtakam (14), suktam (3), kavach (4) and stuti/stotram (4)** sources — 303 verses. These single-list sources are registered in `versePoolFlat.ts`, which `versePool.ts` `require()`s when the pool is first used (the pool is built lazily, not at import), so neither that registry nor `verseCounts.ts` is on the launch path; each corpus then loads through its own thunk on first pick. They are appended after the older sources so earlier pool indices keep their verse.
+- **Members (Nov 2026, 1,967 verses):** the Gita; the shloka stotrams (Shiva, Durga, Saraswati, Ganesh, Krishna, Vishnu Sahasranama, Hanuman Ashtak, Ram Stuti); Sundarkand, Bajrang Baan, Ramcharitmanas; the 28-verse Valmiki Ramayan daily selection; sanskar verses (minus `intro` and Surya Namaskar); and the single-list ashtakam, suktam, kavach and stuti/stotram sources. These single-list sources are registered in `versePoolFlat.ts`, which `versePool.ts` `require()`s when the pool is first used (the pool is built lazily, not at import), so neither that registry nor `verseCounts.ts` is on the launch path; each corpus then loads through its own thunk on first pick. They are appended after the older sources so earlier pool indices keep their verse.
+- **Daily-pool curation (Nov 2026).** A registered source can be held out of the random verse of the day when its verses do not read as a standalone daily verse; it keeps its own reader. The hold-outs live in `DAILY_POOL_EXCLUDED_SOURCES` / `DAILY_POOL_EXCLUDED_CHAPTERS` (`versePool.ts`): Durga Saptashati's ten battle-narrative chapters (only the three stutis — ch. 4 Śakrādi, 5 "Ya Devi…" Aparājitā, 11 Nārāyaṇī — stay); the Argalā and Kīlaka stotras and the Devī Kavacham; the Gaṇeśa and Śiva Kavacham (limb-by-limb protection litanies); Vishnu Sahasranama's thousand-name chapter (3), keeping its invocation/dhyānam/phalaśruti; every single-line japam mantra (they live in the Japam feature); and Surya Namaskar's twelve salutation mantras. Rama Raksha Stotra is **kept** — only ~6 of its 38 verses are the limb litany, the rest are standalone darshan. Guarded by `data/__tests__/dailyBhaktiArtCoverage.jest.test.ts`.
 - **Deliberately excluded:** chalisas (12) and aartis (22) — added to the rotation on 21 Oct 2026 but removed on 28 Oct 2026; they keep their own readers (and the Theerth आरती व चालीसा block) but no longer surface as a verse of the day. Also Garud Puran (rites after death — not a morning devotional card), Gita Saar (re-presents pooled Gita verses), `ram-aarti` (reuses the pooled Ram Stuti content).
 - **Bookmarks** mirror each reader's id: `id:chapter:idx` for chaptered sources, `id::idx` for chapterless ones, `id:idx` for aartis (the Aarti reader's convention).
 - **Card art:** every pooled source has an explicit entry in `devotionalShareArt.ts`; a text gets a painted deity only when it is addressed to that deity by name, otherwise the neutral prayer plate.
@@ -3553,6 +3554,48 @@ Release acceptance requires actual Standard/Large/compact and four-language
 native screenshots with short, multi-pada and unusually long verses, plus
 VoiceOver and source/tap checks; source tests alone are not visual acceptance.
 
+
+### Medium Shloka / Panchang height fit — 25 November 2026
+
+A placed iPhone medium Shloka (BG 3.5, Hindi) clipped its source line and floral
+rule. The centred `ॐ वेदांश` flourish row sat outside `ViewThatFits`, so a
+125 pt composition was judged to fit the ~126 pt medium content area while the
+flourish and stack spacing had already used ~38 pt. Measured with the bundled
+fonts (Noto Serif Devanagari line height 1.555 em), the full approved chrome
+alone needs ~123 pt, so no full-chrome candidate can hold a two-pada verse in a
+medium cell.
+
+**Structure.** `ViewThatFits(in: .vertical)` now wraps complete columns and is
+framed to the exact cell. Candidates, in order: full chrome at 32% / 16% / 0%
+art (unchanged sizes); **compact** chrome — the brand mark sits beside the
+ribbon (`compactVerseHeader`, mark dropped first if the row is too narrow),
+ribbon vertical padding 3 pt, row spacing 4 pt, rule kept; **tight** — compact
+without the closing rule, at 16% then 0% art; and finally the bounded
+tap-through column. Only that last column may truncate: it fills the cell, the
+verse alone yields height (`layoutPriority(-1)`, tail truncation, padas still on
+their own lines), and ribbon, source and the localized tap cue keep their rows.
+Every candidate keeps `verseSource`. Large uses the same ladder and normally
+stays on full chrome. The medium/large Panchang follows the same rule:
+`widePanchang(compact:)` drops the brand mark and eases the tithi (24→20 pt
+medium, 32→28 pt large) when the vrat-day stack (~136 pt) exceeds the cell.
+
+**Regression source.** Before the Ornate Heritage change (#681) the ribbon and
+brand shared one row and the verse was 16/15 pt, so a two-pada medium verse
+fitted (~112 pt). #681 added the separate flourish row outside the measurement
+and enlarged ribbon, verse, source and rule; the compact candidate restores the
+single header row with the new styling.
+
+**Frame.** `HeritageFiligree` draws one 1.5 pt gold rim (`ContainerRelativeShape`
+`.strokeBorder`, gold at 80%) on the widget's own edge and the small lower lotus.
+The corner swirls were removed at the owner's request: beside the rim they also
+read as outlines. The two inset fixed-radius rounded rectangles (21/18 pt) inside the
+OS edge read as three separate borders with non-parallel corners on a placed
+widget. This matches the gallery's single edge border.
+
+No payload, art or kind change; it needs a **new iOS binary**. Placed Small /
+Medium / Large screenshots in four languages, Standard and enlarged system text,
+day/night/tinted and iPhone SE / Pro / Pro Max sizes remain pending.
+`adaptiveVerseLayout.test.ts` pins the column measurement and candidate order.
 
 ### Android Heritage / Midnight composition parity — 13 November 2026
 
