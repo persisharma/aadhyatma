@@ -256,7 +256,7 @@ for (const [query, sourceId] of [['Kabir', 'kabir-bhakti-dohe'], ['Rahim', 'rahi
   const res = runSearch('protection', index);
   const sectionIds = res.sections.map((h) => h.entry.sourceId);
   assert.ok(sectionIds.includes('rama-raksha-stotra'), 'protection should find Rama Raksha Stotra');
-  assert.ok(sectionIds.includes('durga-devi-kavacham'), 'protection should find Durga Kavach');
+  assert.ok(sectionIds.includes('durga-saptashati-core'), 'protection should find the Durga Saptashati granth');
 }
 
 {

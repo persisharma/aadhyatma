@@ -109,17 +109,18 @@ test('the Durga Saptashati granth card aggregates its 13 chapters coverage', () 
   const ids = Array.from({ length: 13 }, (_, i) => `durga-saptashati-chapter-${i + 1}`);
   const memberTotal = (id: string) => getCoverageShape(id)![0].verseCount;
   const grandTotal = ids.reduce((sum, id) => sum + memberTotal(id), 0);
-  // Read chapters 1 and 3 fully and chapter 2 partially (10 passages), each under
-  // its own sourceId — the granth row must sum them.
-  let s = readAll(EMPTY_COVERAGE, ids[0], undefined, 0, memberTotal(ids[0]) - 1);
-  s = readAll(s, ids[2], undefined, 0, memberTotal(ids[2]) - 1);
-  s = readAll(s, ids[1], undefined, 0, 9);
+  // Partial reads in three chapters, each under its own sourceId — the granth row
+  // must sum them. Reads stay partial on purpose: finishing a chapter banks a पाठ
+  // and clears its coverage, which would reset read to 0.
+  let s = readAll(EMPTY_COVERAGE, ids[0], undefined, 0, 49); // 50 of chapter 1
+  s = readAll(s, ids[2], undefined, 0, 19); // 20 of chapter 3
+  s = readAll(s, ids[1], undefined, 0, 9); // 10 of chapter 2
   const cov = getSourceCoverage(s, 'durga-saptashati-core')!;
   assert.equal(cov.total, grandTotal);
-  assert.equal(cov.read, memberTotal(ids[0]) + memberTotal(ids[2]) + 10);
-  assert.equal(cov.chaptersComplete, 2);
+  assert.equal(cov.read, 50 + 20 + 10);
+  assert.equal(cov.chaptersComplete, 0);
   assert.equal(cov.hasChapters, true);
-  assert.equal(cov.pct, Math.floor((cov.read / cov.total) * 100));
+  assert.equal(cov.pct, Math.floor((cov.read / grandTotal) * 100));
 });
 
 test('finishing every page banks one पाठ and clears the text for the next reading', () => {
