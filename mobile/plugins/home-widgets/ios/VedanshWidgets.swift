@@ -548,10 +548,12 @@ struct VedanshWidgetView: View {
   // box into the picture (Nov 2026 device report, Sundarkand chaupai at
   // night). Bleeding past the text and feathering the edge fades the art out
   // behind the verse instead; the text itself still sits on the full wash.
+  // The bleed stays inside the content margin so the gold rim is not washed out
+  // when a column fills the whole cell (the bounded fallback).
   private func textWash() -> some View {
     palette.parchment.opacity(0.93)
-      .padding(-14)
-      .blur(radius: 10)
+      .padding(-8)
+      .blur(radius: 8)
       .accessibilityHidden(true)
   }
 
