@@ -11,14 +11,15 @@ import android.util.Log
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsConstants
 import com.facebook.appevents.AppEventsLogger
-import expo.modules.kotlin.functions.Queues
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
 object MetaAppEventsTracker {
-  private var initialized = false
-  private var activated = false
-  private var backgroundAt: Long? = null
+  // activate() runs on a background queue, background() on the main thread, so
+  // these cross-thread flags are @Volatile for visibility (session dedup only).
+  @Volatile private var initialized = false
+  @Volatile private var activated = false
+  @Volatile private var backgroundAt: Long? = null
   private const val SESSION_GAP_MS = 60_000L
 
   fun background() { backgroundAt = SystemClock.elapsedRealtime() }
@@ -78,9 +79,14 @@ class MetaAppEventsModule : Module() {
       mapOf("enabled" to (context?.let { MetaAppEventsTracker.trackingEnabled(it) } ?: false))
     }
     OnActivityEntersBackground { MetaAppEventsTracker.background() }
+    // Runs on the module's default background queue, never the main thread:
+    // activate() does PackageManager/Facebook SDK init and an advertising-ID
+    // lookup that binds to Play Services over binder. On the main thread that
+    // slow binder call blocks input dispatch and ANRs (Android vitals "Slow
+    // binder call", __ioctl in libc). Nothing here needs the UI thread.
     AsyncFunction("activate") {
       val application = appContext.reactContext?.applicationContext as? Application
       application?.let { MetaAppEventsTracker.activate(it) } ?: false
-    }.runOnQueue(Queues.MAIN)
+    }
   }
 }

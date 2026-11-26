@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
+import java.util.concurrent.Executors
 import org.json.JSONObject
 
 /**
@@ -29,14 +30,36 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
     override fun onAppWidgetOptionsChanged(context: Context, manager: AppWidgetManager, id: Int, options: Bundle) = render(context, manager, id, surface)
 
     /**
-     * Our own boundary wake-up (see [scheduleNextRender]). Explicit-component
-     * PendingIntents reach an unexported receiver without an intent-filter, and
-     * a private action keeps this off the APPWIDGET_UPDATE path — that one
-     * carries EXTRA_APPWIDGET_IDS, which a stored alarm cannot keep fresh.
+     * Every broadcast (APPWIDGET_UPDATE, options-changed, and our [ACTION_BOUNDARY]
+     * wake-up) renders off the main thread. render() loads SharedPreferences,
+     * decodes the full multi-locale payload, builds RemoteViews and makes the
+     * updateAppWidget/AlarmManager binder calls; on a slow device doing that on the
+     * broadcast's main thread can exceed the broadcast timeout and ANR (Android
+     * vitals: "Broadcast of Intent APPWIDGET_UPDATE", main thread at
+     * nativePollOnce). goAsync() hands the main thread back at once and a single
+     * background thread finishes the work — serialized, so two updates never race
+     * on updateAppWidget.
+     *
+     * Our own boundary wake-up uses an explicit-component PendingIntent on a
+     * private action, keeping it off the APPWIDGET_UPDATE path — that one carries
+     * EXTRA_APPWIDGET_IDS, which a stored alarm cannot keep fresh.
      */
     override fun onReceive(context: Context, intent: Intent) {
+        val pending = goAsync()
+        WIDGET_EXECUTOR.execute {
+            try {
+                dispatch(context, intent)
+            } catch (_: Exception) {
+                // A failed render must never take the broadcast process down.
+            } finally {
+                pending.finish()
+            }
+        }
+    }
+
+    private fun dispatch(context: Context, intent: Intent) {
         if (intent.action != ACTION_BOUNDARY) return super.onReceive(context, intent)
-        val manager = AppWidgetManager.getInstance(context)
+        val manager = AppWidgetManager.getInstance(context) ?: return
         manager.getAppWidgetIds(ComponentName(context, providerFor(surface))).forEach { render(context, manager, it, surface) }
     }
 
@@ -48,6 +71,9 @@ abstract class VedanshWidgetProvider(private val surface: Surface) : AppWidgetPr
     companion object {
         const val PREFS = "vedansh_widgets"
         const val PAYLOAD_KEY = "vedansh_widget_payload_v1"
+        // One serial worker for all widget broadcasts: ordered updates, no races
+        // on updateAppWidget, and the broadcast's main thread is never blocked.
+        private val WIDGET_EXECUTOR = Executors.newSingleThreadExecutor()
         private const val ACTION_BOUNDARY = "__APP_PACKAGE__.widgets.BOUNDARY"
         /** Above the per-widget-id request codes, which are `id * surfaces + ordinal`. */
         private const val BOUNDARY_REQUEST_BASE = 1_000_000
