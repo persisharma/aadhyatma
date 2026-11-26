@@ -91,6 +91,44 @@ const withManifestReceivers = (config) =>
     return cfg;
   });
 
+/** Copy the notification small-icon drawable into res/drawable/. The receiver
+ *  references it by name (getIdentifier), so the alarm notification no longer
+ *  uses the adaptive launcher icon as its small icon — the RemoteServiceException
+ *  ("Bad notification posted") trigger on strict OEM ROMs. */
+const withNotificationIconRes = (config) =>
+  withDangerousMod(config, [
+    'android',
+    async (cfg) => {
+      const projectRoot = cfg.modRequest.projectRoot;
+      const platformProjectRoot = cfg.modRequest.platformProjectRoot;
+      const srcPath = path.join(
+        projectRoot,
+        'plugins',
+        'native-android',
+        'res',
+        'drawable',
+        'ic_japam_notification.xml'
+      );
+      if (!fs.existsSync(srcPath)) {
+        throw new Error(`withJapamAlarmNative: missing drawable ${srcPath}`);
+      }
+      const destDir = path.join(
+        platformProjectRoot,
+        'app',
+        'src',
+        'main',
+        'res',
+        'drawable'
+      );
+      fs.mkdirSync(destDir, { recursive: true });
+      fs.copyFileSync(
+        srcPath,
+        path.join(destDir, 'ic_japam_notification.xml')
+      );
+      return cfg;
+    },
+  ]);
+
 const withKotlinSources = (config) =>
   withDangerousMod(config, [
     'android',
@@ -199,6 +237,7 @@ const withMainApplicationWiring = (config) =>
 
 module.exports = function withJapamAlarmNative(config) {
   config = withManifestReceivers(config);
+  config = withNotificationIconRes(config);
   config = withKotlinSources(config);
   config = withMainApplicationWiring(config);
   return config;
