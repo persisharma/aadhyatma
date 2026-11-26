@@ -3,6 +3,8 @@
 # Covers the More-hub door, the educate-first home contract, and the
 # ledger's 10-second entry path:
 #   1. More → "Daan Punya, new" row opens the educate home.
+#   1b. Today first: the today hero, a served-cause chip into its
+#       दान-द्वार shelf, and the painted seva grid (design.md §73, Nov 2026).
 #   2. The home renders the mahatva sections and NO give affordance —
 #      the two standing doors sit in the sticky action bar and the
 #      ledger door in the header (§2.7; the absence half is pinned in
@@ -39,6 +41,53 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"
 
+# ── 1b. Today first (design.md §73, Option B): today's vaar items and the
+# causes they serve lead the home, before the week and the teaching. ──
+- extendedWaitUntil:
+    visible:
+      id: "daan-today-hero"
+    timeout: 15000
+- assertVisible:
+    id: "daan-today-items"
+- takeScreenshot: daan-home-today
+# A served-cause chip (painted icon + name) opens that cause's दान-द्वार shelf,
+# which leads with the cause's mahatva. The regex skips the chips' icon ids.
+- scrollUntilVisible:
+    element:
+      id: "daan-today-cause-[a-z]+"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- tapOn:
+    id: "daan-today-cause-[a-z]+"
+    index: 0
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-directory-filtered"
+- takeScreenshot: daan-directory-cause
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- waitForAnimationToEnd
+# Every live cause is a painted seva tile; anna always has verified orgs.
+- scrollUntilVisible:
+    element:
+      id: "daan-seva-grid"
+    direction: DOWN
+    timeout: 20000
+- scrollUntilVisible:
+    element:
+      id: "daan-seva-icon-anna"
+    direction: DOWN
+    timeout: 15000
+    centerElement: true
+- takeScreenshot: daan-home-seva
+- tapOn:
+    id: "daan-seva-anna"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-cause-mahatva-anna"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- waitForAnimationToEnd
+
 # ── 2. The educate home: shastra + kathas render; ledger door in the header ──
 - extendedWaitUntil:
     visible: "What the shastra says"
@@ -53,6 +102,19 @@ appId: com.prashantsharma.vedansh
       id: "daan-ledger-door"
     direction: DOWN
     timeout: 30000
+# The register card closes the read and opens a new entry directly.
+- scrollUntilVisible:
+    element:
+      id: "daan-register-record"
+    direction: DOWN
+    timeout: 30000
+- takeScreenshot: daan-home-register
+- tapOn:
+    id: "daan-register-record"
+- waitForAnimationToEnd
+- assertVisible: "New daan"
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- waitForAnimationToEnd
 
 # ── 3. Ledger → new entry → save ──
 - tapOn: { id: "daan-ledger-door" }
