@@ -138,7 +138,9 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: { id: "daan-entry-amount" }
 - inputText: "1,00"
-- hideKeyboard
+# iOS's numeric keypad has no dismiss key, so Maestro's hideKeyboard fails;
+# tapping the fixed header title blurs the field the way a person would.
+- tapOn: "New daan"
 - scrollUntilVisible:
     element: { id: "daan-entry-save" }
     direction: DOWN
@@ -148,7 +150,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "daan-entry-amount" }
 - eraseText
 - inputText: "1,000.50"
-- hideKeyboard
+- tapOn: "New daan"
 - assertVisible: { id: "daan-amount-preview" }
 - takeScreenshot: daan-amount-preview
 - tapOn: { id: "daan-entry-save" }
