@@ -21,6 +21,7 @@ import { getAshtakam, ashtakamIds, type AshtakamId } from './ashtakam';
 import { getSuktam, suktamIds, type SuktamId } from './suktam';
 import { getKavacham, kavachamIds, type KavachamId } from './kavacham';
 import { getStuti, stutiIds, type StutiId } from './stuti';
+import { saptashatiChapterIds } from './saptashatiCore';
 import {
   aartiCollection,
   aartiIdByIndex,
@@ -436,6 +437,11 @@ function* entryUnits(verses: SearchVerseEntry[], entry: LibraryEntry): Generator
     return;
   }
 
+  if (entry.id === 'durga-saptashati-core') {
+    yield* pushChapteredSaptashati(verses, entry);
+    return;
+  }
+
   if (entry.id === 'garud-puran') {
     yield* pushChapteredGarudPuran(verses, entry);
     return;
@@ -704,6 +710,34 @@ function* pushChapteredGita(
           labelEn: `Verse ${reference}`,
           linesHi: v.sanskrit,
           linesEn: v.transliteration,
+          meaningHi: v.meaningHi,
+          meaningEn: v.meaningEn,
+        })
+      );
+    });
+    // One chapter per unit: a whole corpus in one go is a dropped frame.
+    yield;
+  }
+}
+
+// दुर्गा सप्तशती is one granth card (hidden chapters), so its verses are indexed
+// under the granth sourceId with chapter 1..13 — like the Gita — and a verse hit
+// routes to that chapter's StutiReader (see entryRoutes.buildProgressTarget).
+function* pushChapteredSaptashati(out: SearchVerseEntry[], entry: LibraryEntry) {
+  for (const [i, chapterId] of saptashatiChapterIds.entries()) {
+    const ch = i + 1;
+    getStuti(chapterId).verses.forEach((v, idx) => {
+      out.push(
+        makeVerseEntry({
+          sourceId: entry.id,
+          sectionNameHi: entry.nameHi,
+          sectionNameEn: entry.nameEn,
+          chapter: ch,
+          verseIndex: idx,
+          labelHi: `अध्याय ${ch} · ${v.labelHi}`,
+          labelEn: `Chapter ${ch} · ${v.labelEn}`,
+          linesHi: v.lines,
+          linesEn: v.linesEn,
           meaningHi: v.meaningHi,
           meaningEn: v.meaningEn,
         })

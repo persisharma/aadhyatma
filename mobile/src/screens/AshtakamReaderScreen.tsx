@@ -176,6 +176,10 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: width < 360 ? 8 : 18 }]}>
+          {/* स्वतः pinned top-left, inline — the app-wide auto-slide placement. */}
+          <View style={styles.autoSlideSlot}>
+            <AutoSlideButton control={autoSlide} floating={false} />
+          </View>
           <LanguageToggle />
           <AddToRoutineButton sourceId={ashtakamId} />
           {/* Keep controls in flow on narrow screens to avoid overlapping routine/listen. */}
@@ -260,8 +264,6 @@ export default function AshtakamReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
-          <AutoSlideButton control={autoSlide} />
-
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
               {dotStyles.map((isCurrent, i) => (
@@ -301,6 +303,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     justifyContent: 'center',
   },
+  autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   readAloudSlotNarrow: {
     position: 'relative',
     right: 0,

@@ -78,7 +78,7 @@ test('the banner is one door to the Japmala section and counts nothing on Home',
 // then asked (19 Nov 2026) for the banner to do one thing only: lead to the
 // Japmala section. A saved hymn still shows its count, and the door opens the
 // section on its Hymns tab, where the reading is one tap away.
-test.each(['durga-saptashati-core', 'aditya-hridayam'] as const)(
+test.each(['kanakadhara-stotram', 'aditya-hridayam'] as const)(
   'the saved %s banner keeps its count and opens the Japmala section on Hymns', (sourceId) => {
     mockRecitations = { [sourceId]: { count: 3, updatedAt: 1 } };
     mockProgress = { sourceId, verseIndex: 5, updatedAt: 1 };

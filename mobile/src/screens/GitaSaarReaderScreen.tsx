@@ -354,6 +354,10 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
           <ReadingProgressBar current={currentIndex + 1} total={verseCount} />
 
           <View style={styles.toggleRow}>
+            {/* स्वतः pinned top-left, inline — the app-wide auto-slide placement. */}
+            <View style={styles.autoSlideSlot}>
+              <AutoSlideButton control={autoSlide} floating={false} />
+            </View>
             <LanguageToggle />
             <AddToRoutineButton
               sourceId={SOURCE_ID}
@@ -566,8 +570,6 @@ export default function GitaSaarReaderScreen({ navigation, route }: Props) {
               onScrollToIndexFailed={() => undefined}
               style={styles.list}
             />
-            <AutoSlideButton control={autoSlide} />
-
             {currentIndex > 0 && (
               <JumpToStartButton onPress={goToStart} lang={lang} />
             )}
@@ -702,6 +704,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     justifyContent: 'center',
   },
+  autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: {
     flex: 1,
   },

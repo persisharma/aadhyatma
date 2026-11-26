@@ -149,6 +149,10 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
         <ReadingProgressBar current={currentIndex + 1} total={total} />
 
         <View style={[styles.toggleRow, { flexDirection: 'row', justifyContent: 'center', gap: 18 }]}>
+          {/* स्वतः pinned top-left, inline — the app-wide auto-slide placement. */}
+          <View style={styles.autoSlideSlot}>
+            <AutoSlideButton control={autoSlide} floating={false} />
+          </View>
           <LanguageToggle />
           <AddToRoutineButton sourceId={sanskarId} />
           {/* Pinned right so the toggle group stays centred (design.md §56.2). */}
@@ -230,7 +234,6 @@ export default function SanskarReaderScreen({ navigation, route }: Props) {
             onScrollToIndexFailed={() => undefined}
             style={styles.list}
           />
-          <AutoSlideButton control={autoSlide} />
 
           <View style={styles.dotsOverlay}>
             <View style={styles.dots}>
@@ -271,6 +274,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     justifyContent: 'center',
   },
+  autoSlideSlot: { position: 'absolute', left: 16, top: 6, bottom: 12, justifyContent: 'center' },
   listContainer: {
     flex: 1,
   },

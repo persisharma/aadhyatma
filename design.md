@@ -2188,7 +2188,7 @@ A floating pill anchored bottom-right of the verse pager (16/16 inset, clear of 
 
 **Reading from Japmala.** The Stotram tab uses the Library's reader, chapter list and saved-reading routes. A saved hymn on the Home banner keeps its count there, but the banner no longer opens the reading itself: since 19 November 2026 the whole banner is one door to this section (§18), and it lands on the Stotram tab when the last practice was a hymn. The hymn's card here opens its reading and resumes a saved verse where available.
 
-**Durga Saptashati (दुर्गा सप्तशती).** The collection opens directly from Library, Search, and Japmala. The chapter page uses the standard ListingCard (§82) with separate preparatory readings and chapter groups, a language toggle, passage counts and the existing Durga artwork. Each row retains its routine action on the thumbnail and its reading progress. Stotram catalog shortcuts use the same regular ListCard (§8) as neighboring library entries.
+**Durga Saptashati (दुर्गा सप्तशती).** One **granth**, like the Gita: a single `category:'granth'` library entry (`durga-saptashati-core`, deity durga, 13 chapters · 700 verses) is the only card in Library/Search/deity listings; opening it (`buildEntryStartTarget` → `SaptashatiCore`) shows the chapters index (`SaptashatiCoreScreen`). Its member texts — the 13 chapters, plus the anga stotras Argala, Kilak and Devi Kavacham — stay in `library` as `hidden:true`, so the reader, routine action, progress and bookmarks keep working but they no longer appear as standalone Stotram/Kavacham cards or in search (same as the Gita's chapters, and the retired `durga-kavach`). The chapters index uses the standard ListingCard (§82) with separate preparatory-readings and chapter groups, a language toggle, passage counts and the existing Durga artwork. The granth card's progress (§84) **aggregates** its 13 chapters' coverage: each chapter is a flat reader recorded under its own sourceId, so `getSourceCoverage('durga-saptashati-core')` sums the members rather than reading a key of its own (unlike the Gita, whose chapters share the granth sourceId through a manifest). The Stotram tab no longer carries a shortcut card to the collection — it opens from the Granth catalogue and Durga's deity page, like the Gita.
 
 ### `LibraryEntry` (the registry row)
 
@@ -4462,7 +4462,9 @@ Files: `mobile/src/utils/suvicharPhoto.ts`, `data/suvichar.ts` (`photo`, `isSend
 
 **Control.** `AutoSlideButton`, radius 999, 1 px `cardActiveBorder`, 13 pt title face (italic in English), `saffronDeep` tint. Idle: `parchmentSoft` pill, ▶ (`AppIcon play`, 14, fill) + `स्वतः · Auto · સ્વતઃ · ಸ್ವಯಂ`. Playing: `saffronTint` pill split by a hairline into ❚❚ (pause) and a four-bar pace meter (3 pt bars, 5/8/11/14 pt tall, unlit bars at 30% opacity) that steps slow → normal → fast → very fast on tap and then back down (very fast → fast → normal → slow, bouncing at either end rather than wrapping from fastest to slowest; `nextAutoSlideSpeed`) and persists (`@vedansh/auto-slide`); a 2 pt `saffronDeep` countdown hairline runs along the pill's bottom to the next scroll or page turn (hidden while the page is held; omitted under reduced motion). Accessibility labels stay English for Maestro: `Start slideshow` / `Pause slideshow` / `Slideshow speed: <pace>` (`slow` / `normal` / `fast` / `very fast`).
 
-**Placement.** Verse readers: floating bottom-left of the pager (`left 16, bottom 16`, `elevation.lifted`), mirroring `JumpToStartButton` bottom-right and clear of the centred dots. Vrat Katha and पितृ पक्ष परिचय (prose fills the pager), Kids Stories (caption at the pager bottom) and the comic: inline (`floating={false}`) at the toggle row's left edge, opposite read-aloud/share. Vidhi conduct: inline beside the read-aloud pill on the phase row, step pages only.
+**Placement.** Inline (`floating={false}`) at the **top-left** of the reader's control row — pinned to the left edge (`left 16`), opposite read-aloud/share pinned right, with the language toggle centred between them. Readers whose control row is the shared `ReaderControlRow` pass it as the `leading` slot; the rest use a left-anchored `autoSlideSlot` (`position:absolute, left:16`) mirroring their `readAloudSlot`. Vidhi conduct (no language toggle) pins स्वतः left and read-aloud right of the phase label, step pages only. `JumpToStartButton` keeps its own floating bottom-right slot; the pager's bottom-left is no longer used by स्वतः on these readers. (Earlier revisions floated स्वतः bottom-left over the pager, which overlapped scrolling body text and was inconsistent with the inline readers — superseded.)
+
+**Exception — जप readers.** The nine readers whose control row already pins a `StartJapaButton` (जप) at the top-left (`japaSlot`, §35.1) — Bajrang Baan, Durga Stotram, Ganesh Stotram, Krishna Stotram, Ram Stuti, Saraswati Stotram, Shiva Stotram, Stuti, Vishnu Sahasranama — keep स्वतः **floating bottom-left** (`floating` default), because the top-left slot is taken and a fourth control (जप · toggle · सुनें · स्वतः) does not fit one row on narrow widths. These retain the earlier floating placement by design.
 
 **Files:** `mobile/src/screens/_useAutoSlide.ts` (`useAutoSlide`, `useReaderPlayback`, scroll-then-turn driver), `mobile/src/utils/autoSlideStore.ts` (pace, pacing rule, chapter hand-off), `mobile/src/components/AutoSlideButton.tsx`, `mobile/src/components/AutoSlideScrollView.tsx` (page scroll view + the pager's `CellRendererComponent` that tells it its index). RULEBOOK §3 *auto-slide*.
 
@@ -4596,9 +4598,10 @@ page that matched, as global Search does; the resume card opens the stored page.
 
 **Reader (`SanatanReaderScreen`).** Shared `ReaderHeader` with the shared
 `ReaderPageCounter` ("2 / 3"; tapping it opens the page picker with each page's
-name, §94), `ReadingProgressBar`, then
-one centred wrapping row: `LanguageToggle`, read-aloud, auto-slide. Horizontally
-paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
+name, §94), `ReadingProgressBar`, then the shared `ReaderControlRow` (§56.2):
+auto-slide (स्वतः) pinned top-left via the row's `leading` slot, `LanguageToggle`
+centred, read-aloud pinned right — the app-wide auto-slide placement (§85).
+Horizontally paged prose with vertical scrolling. Each page opens with a row — a `saffronTint`
 pill (the collection name; "चित्र से समझें" on the figure page) and, on the gutter,
 the shared round `BookmarkButton` and `ShareButton` — then the page heading (one
 step above the reading size). Page 1: the collection painting (opens the picture
@@ -4623,8 +4626,9 @@ Research provenance never appears as a screen, action, footer or share appendix
 Use theme colours, script-aware text, ProseParagraph and ProseReadingCard. Touch
 targets are at least 48pt (filter chips share the 44pt chip class of §33). Content
 scrolls rather than being ellipsized. Diagram facts have equivalent text
-captions and, where authored, a text legend. On narrow screens the playback
-controls wrap below the language toggle. The Swastika geometry remains SVG; the
+captions and, where authored, a text legend. On narrow screens `ReaderControlRow`
+stacks the read-aloud control below the centred language toggle; auto-slide stays
+pinned top-left. The Swastika geometry remains SVG; the
 paintings provide the approved rich imagery.
 
 Files: `mobile/src/screens/{SanatanParichayScreen,SanatanReaderScreen}.tsx`,

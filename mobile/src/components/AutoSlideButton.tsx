@@ -26,9 +26,11 @@ const SPEED_A11Y: Record<AutoSlideSpeed, string> = {
  * Auto"; playing it splits into ❚❚ and a four-bar pace meter (slow · normal · fast · very
  * fast) that cycles on tap, over a hairline countdown to the next scroll or page turn.
  *
- * `floating` (the default) anchors it bottom-left of a verse pager, mirroring
- * `JumpToStartButton` on the right. Screens whose pager bottom is caption text (Kids
- * Stories, the comic) or step navigation (Vidhi conduct) render it inline instead.
+ * Readers render it inline (`floating={false}`) at the top-left of the control row —
+ * the app-wide auto-slide placement (design.md §85): pinned left, opposite read-aloud
+ * pinned right, language toggle centred. `floating` (still the prop default) anchors it
+ * bottom-left of a pager instead; it is retained for callers that opt in but no reader
+ * uses it now.
  *
  * Visible labels follow the reading language; accessibility labels stay English for
  * Maestro, like every reader control.

@@ -87,7 +87,7 @@ test('previous Durga selection remains loadable but is absent from discovery', (
  assert.ok(!index.verses.some(s=>s.sourceId==='durga-kavach'));
 });
 
-test('all thirteen Saptashati chapters have 700 numbered units and complete discovery', () => {
+test('all thirteen Saptashati chapters have 700 numbered units and live only under the granth', () => {
   const counts = [104,69,44,42,129,24,27,63,41,32,55,41,29];
   const index = getSearchIndex();
   let total = 0;
@@ -97,8 +97,11 @@ test('all thirteen Saptashati chapters have 700 numbered units and complete disc
     assert.equal(payload.id,id);
     assert.equal(payload.verses.length,count);
     assert.equal(library.find(entry=>entry.id===id)?.verseCount,count);
-    assert.ok(index.sections.some(entry=>entry.sourceId===id),id);
-    assert.equal(index.verses.filter(entry=>entry.sourceId===id).length,count,id);
+    // The chapters now live only under the दुर्गा सप्तशती granth (like the Gita's
+    // chapters): hidden from the catalogue, so absent from standalone discovery.
+    assert.ok(library.find(entry=>entry.id===id)?.hidden,id);
+    assert.ok(!index.sections.some(entry=>entry.sourceId===id),id);
+    assert.ok(!index.verses.some(entry=>entry.sourceId===id),id);
     payload.verses.forEach((verse,i)=>{
       assert.equal(verse.id,`${id}-${i+1}`);
       assert.equal(verse.number,i+1);
@@ -111,6 +114,17 @@ test('all thirteen Saptashati chapters have 700 numbered units and complete disc
     total += count;
   }
   assert.equal(total,700);
+  // One granth card surfaces all of it (category 'granth', Durga deity, 700 verses)
+  // and is itself searchable; the anga stotras are hidden standalone too.
+  const granth = library.find(e=>e.id==='durga-saptashati-core');
+  assert.equal(granth?.category,'granth');
+  assert.ok(!granth?.hidden);
+  assert.equal(granth?.verseCount,700);
+  assert.ok(index.sections.some(s=>s.sourceId==='durga-saptashati-core'));
+  for (const anga of ['durga-argala-stotram','durga-kilak-stotram','durga-devi-kavacham']) {
+    assert.ok(library.find(e=>e.id===anga)?.hidden,anga);
+    assert.ok(!index.sections.some(s=>s.sourceId===anga),anga);
+  }
   // The threefold salutation is three traditional units, not three copies of a stanza.
   const fifth=getStuti('durga-saptashati-chapter-5');
   assert.ok(fifth.verses[13].lines.join(' ').includes('विष्णुमायेति'));

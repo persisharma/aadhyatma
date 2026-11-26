@@ -10,6 +10,7 @@ import { useSanatanLearning } from '@/data/sanatan-parichay/store';
 import ReaderHeader from '@/components/ReaderHeader';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import LanguageToggle from '@/components/LanguageToggle';
+import ReaderControlRow from '@/components/ReaderControlRow';
 import ProseReadingCard from '@/components/ProseReadingCard';
 import AutoSlideScrollView from '@/components/AutoSlideScrollView';
 import AutoSlideButton from '@/components/AutoSlideButton';
@@ -112,12 +113,12 @@ function Lesson({ navigation, topic, initialPage }: Props & { topic: SanatanTopi
         right={<ReaderPageCounter testID="sanatan-page-counter" current={page + 1} total={data.length} titles={titles.map(title => t(title))}
           onOpen={() => { readAloud.stop(); autoSlide.stop(); }} onJump={next => go(next - 1)} />} />
       <ReadingProgressBar current={page + 1} total={data.length} />
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 8, paddingHorizontal: spacing.readingGutter, paddingVertical: 8 }}>
+      {/* The shared reader control row: स्वतः pinned top-left, language toggle centred,
+          सुनें pinned right — the app-wide auto-slide placement (design.md §56.2/§85/§87). */}
+      <ReaderControlRow leading={<AutoSlideButton control={autoSlide} floating={false} />}
+        trailing={<ReadAloudButton control={readAloud} />}>
         <LanguageToggle />
-        <ReadAloudButton control={readAloud} />
-        {/* The pill pins itself to flex-start; the wrapper lets the row centre it. */}
-        <View><AutoSlideButton control={autoSlide} floating={false} /></View>
-      </View>
+      </ReaderControlRow>
       <FlatList ref={listRef} data={data} keyExtractor={item => item.id} horizontal pagingEnabled style={{ flex: 1 }}
         initialScrollIndex={initialPage} extraData={lang} CellRendererComponent={autoSlide.Cell}
         showsHorizontalScrollIndicator={false} getItemLayout={(_, index) => ({ length: width, offset: width * index, index })}
