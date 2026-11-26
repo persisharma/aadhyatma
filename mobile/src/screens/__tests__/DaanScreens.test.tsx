@@ -121,9 +121,56 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     const carousel = tree.root.findAllByProps({ testID: 'daan-principle-carousel' })[0];
     expect(carousel.findAllByProps({ testID: 'daan-principle-dana-sukta' }).length).toBeGreaterThan(0);
     expect(has(tree, 'daan-principle-meaning-dana-sukta')).toBe(false);
-    // The kathas are a horizontal shelf.
+    // The kathas are a two-up grid of story cards.
     const shelf = tree.root.findAllByProps({ testID: 'daan-katha-shelf' })[0];
     expect(shelf.findAllByProps({ testID: 'daan-katha-karna' }).length).toBeGreaterThan(0);
+    await act(async () => tree.unmount());
+  });
+
+  test('today first: the festival daan, then today\'s vaar items and the causes they serve', async () => {
+    const navigation = { ...mockNavigation } as never;
+    const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
+    // Ordering: the occasion card and the today hero come before the week strip.
+    const ids = tree.root.findAll((node) => typeof node.props.testID === 'string').map((node) => node.props.testID as string);
+    const first = (id: string) => ids.indexOf(id);
+    expect(first('daan-today-card')).toBeGreaterThanOrEqual(0);
+    expect(first('daan-today-card')).toBeLessThan(first('daan-today-hero'));
+    expect(first('daan-today-hero')).toBeLessThan(first('daan-vaar-line'));
+    expect(first('daan-vaar-line')).toBeLessThan(first('daan-seva-grid'));
+    expect(first('daan-seva-grid')).toBeLessThan(first('daan-principle-carousel'));
+    expect(first('daan-katha-shelf')).toBeLessThan(first('daan-register-card'));
+    // "Today" is the device's weekday, from the verified vaar table — never hardcoded.
+    const todayRow = getDaanVaarEntry(new Date().getDay());
+    const items = tree.root.findAllByProps({ testID: 'daan-today-items' })[0];
+    // The suite renders in the default reading language (Hindi).
+    const tagText = items.findAll((node) => typeof node.props.children === 'string').map((node) => node.props.children as string).join('|');
+    for (const tag of todayRow.itemsHi.split(' — ')[0].split(/,\s*/)) {
+      expect(tagText).toContain(tag.trim());
+    }
+    // Each served cause that a verified org carries opens its own directory shelf.
+    const live = new Set(getDaanOrgs().flatMap((org) => org.causes));
+    const served = (todayRow.causes ?? []).filter((id) => live.has(id));
+    expect(served.length).toBeGreaterThan(0);
+    for (const id of served) {
+      expect(has(tree, `daan-today-cause-icon-${id}`)).toBe(true);
+      await press(tree, `daan-today-cause-${id}`);
+      expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanDirectory', { causes: [id] });
+    }
+    await act(async () => tree.unmount());
+  });
+
+  test('every live cause is a painted seva tile; the register card records a daan', async () => {
+    const navigation = { ...mockNavigation } as never;
+    const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
+    const live = [...new Set(getDaanOrgs().flatMap((org) => org.causes))];
+    const grid = tree.root.findAllByProps({ testID: 'daan-seva-grid' })[0];
+    for (const id of live) {
+      expect(grid.findAllByProps({ testID: `daan-seva-icon-${id}` }).length).toBeGreaterThan(0);
+    }
+    await press(tree, `daan-seva-${live[0]}`);
+    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanDirectory', { causes: [live[0]] });
+    await press(tree, 'daan-register-record');
+    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanEntry', { occasionId: 'makar-sankranti' });
     await act(async () => tree.unmount());
   });
 });

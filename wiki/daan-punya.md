@@ -37,11 +37,13 @@ content is generated from the registries, so it cannot drift from the code).
   `getDaanOccasionForRule`).
 - **State** — `DaanLedgerContext` (AsyncStorage `@vedansh/daan-ledger:v1`,
   versioned payload, PitruSmaran hydration pattern).
-- **Screens** — DaanPunya (educate home, Home + More stacks: header खाता
-  door, vaar chips with readable short names, the verse spine as a horizontal
-  carousel with fold-out meanings, kathas as a horizontal shelf, and BOTH
-  standing doors in a sticky action bar above the tab bar — Sept 2026 UX
-  review), DaanJourney (one skippable scroll with always-present terminal
+- **Screens** — DaanPunya (educate home, Home + More + Panchang stacks,
+  **today-first since Nov 2026 (Option B)**: today's festival-daan card when
+  covered, a today hero — Annapurna painting, the vaar's items as tags, and a
+  painted chip per served cause → `DaanDirectory {causes:[id]}` — then every
+  vaar's chips, a 3-up painted grid of live causes (`daan-seva-*`), the verse
+  carousel, kathas as a two-up grid, a खाता card with `दर्ज करें`, the header
+  खाता door, and BOTH standing doors in the sticky action bar), DaanJourney (one skippable scroll with always-present terminal
   actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
   (interstitial → `Linking.openURL`; the cause grid tiles are each led by a
   painted प्रयोजन miniature — the `daan-seva` Storybook set, `components/DaanCauseIcon.tsx`
