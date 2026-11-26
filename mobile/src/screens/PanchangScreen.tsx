@@ -1,3 +1,5 @@
+import { useVisibleAction } from '@/retention/useVisibleAction';
+import { useOnboardingCoversContent } from '@/contexts/TourContext';
 import OccasionSection from '@/components/OccasionSection';
 import { isPreDawn } from '@/panchang/preDawn';
 import { useCivilToday } from '@/panchang/useCivilToday';
@@ -241,6 +243,8 @@ export default function PanchangScreen({ route }: Props) {
   // needs the inset.
   const insets = useSafeAreaInsets();
   const isSelectedToday = selectedDate.getTime() === today.getTime();
+  const coveredBySetup = useOnboardingCoversContent();
+  useVisibleAction('panchang_today_viewed', !!p && isFocused && isSelectedToday && panchangTab === 'calendar' && !coveredBySetup);
   const [lensSheetVisible, setLensSheetVisible] = useState(false);
   const { lenses, availableCount: lensAvailableCount } = useLenses();
   // The one line PRD-42 §4.2 allows about seeding, named per city and dismissible.

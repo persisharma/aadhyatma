@@ -1635,3 +1635,7 @@ iOS medium Shloka clipped its source/rule: the flourish row was outside `ViewTha
 
 ## [2026-11-25] ingest | Widget frame: one rim
 Placed widgets showed three edge lines (OS edge + two inset gold frames). `HeritageFiligree` now draws one gold rim on `ContainerRelativeShape`. The medium overflow regressed in #681 (flourish row outside `ViewThatFits`, larger type). design.md §59 + [[home-widgets]] updated; device check pending.
+
+## [2026-11-26] ingest | Android first-action and day-seven cohorts
+
+Documented eligibility, action boundaries, the first-party collector and reporting in [[integrations/android-retention]].

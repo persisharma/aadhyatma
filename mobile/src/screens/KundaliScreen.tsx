@@ -1,3 +1,4 @@
+import { completedAction } from '@/retention/mobile';
 import AppIcon from '@/components/AppIcon';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -181,6 +182,14 @@ export default function KundaliScreen({ navigation, route }: Props) {
     contentScrollRef.current?.scrollTo({ y: 0, animated: false });
   }, [activeTab, chart, editing, hydrated]);
 
+  const [submitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    if (submitted && chart && !creating && !editing && loadState === 'saved') {
+      completedAction('kundali_generated');
+      setSubmitted(false);
+    }
+  }, [submitted, chart, creating, editing, loadState]);
+
   const handleGenerate = async () => {
     Keyboard.dismiss();
     const nextErrors = validateBirthProfile(draft);
@@ -207,6 +216,7 @@ export default function KundaliScreen({ navigation, route }: Props) {
       } else {
         await saveProfile(draft);
       }
+      setSubmitted(true);
       setActiveTab('overview');
       setEditing(false);
     } catch {

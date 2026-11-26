@@ -6,6 +6,7 @@ import React, * as mockReact from 'react';
 import TestRenderer, { act } from 'react-test-renderer';
 import { Modal, StyleSheet, Text, View as mockView } from 'react-native';
 import TextField from '@/components/TextField';
+import * as retention from '@/retention/mobile';
 
 import { GitaLanguageProvider } from '@/data/gita/language';
 import { library } from '@/data/texts';
@@ -142,6 +143,7 @@ test('city search stays inside a padded host and still filters, selects and dism
 test('the birth-place sheet finds a town the city list never had, and saves it with its own coordinates', async () => {
   // Reported Nov 2026: North Lakhimpur (Assam) was findable as the Panchang location
   // but not as a Kundali birth place — this sheet searched the 394 bundled cities only.
+  const completion = jest.spyOn(retention, 'completedAction');
   mockSaveProfile.mockClear();
   const tree = render(<KundaliScreen navigation={mockNavigation as any} route={{ key: 'town', name: 'Kundali', params: { editing: true } } as any} />);
   act(() => tree.root.findByProps({ testID: 'kundali-city-button' }).props.onPress());
@@ -168,6 +170,8 @@ test('the birth-place sheet finds a town the city list never had, and saves it w
     await tree.root.findByProps({ testID: 'kundali-generate-button' }).props.onPress();
   });
   expect(mockSaveProfile).toHaveBeenCalledTimes(1);
+  expect(completion.mock.calls).toEqual([['kundali_generated']]);
+  completion.mockRestore();
   const saved = (mockSaveProfile.mock.calls[0] as unknown[])[0] as { cityId: string; place?: { latitude: number; longitude: number } };
   expect(saved.cityId).toBe('pin-787001');
   expect(saved.place?.latitude).toBeCloseTo(27.24, 1);

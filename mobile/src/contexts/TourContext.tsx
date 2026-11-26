@@ -227,6 +227,12 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   return <TourContext.Provider value={value}>{children}</TourContext.Provider>;
 }
 
+/** Passive views must ignore screens visited automatically by the walkthrough. */
+export function useOnboardingCoversContent(): boolean {
+  const tour = useContext(TourContext);
+  return !!tour && (tour.isLoading || tour.shouldShowFirstLaunchTour || tour.shouldShowOnboardingSetup);
+}
+
 export function useTour(): TourContextValue {
   const ctx = useContext(TourContext);
   if (!ctx) {

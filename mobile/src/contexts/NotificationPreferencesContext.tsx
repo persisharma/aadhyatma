@@ -1,3 +1,4 @@
+import { startRetention, retentionLifecycle } from '@/retention/mobile';
 import React, {
   createContext,
   useCallback,
@@ -291,6 +292,7 @@ export function NotificationPreferencesProvider({
         // safe upper bound so we don't grow this number indefinitely.
         if (!openCountBumpedRef.current) {
           openCountBumpedRef.current = true;
+          startRetention(metaRaw === null);
           const next = Math.min(loadedMeta.appOpenCount + 1, 9999);
           if (next !== loadedMeta.appOpenCount) {
             const updated = { ...loadedMeta, appOpenCount: next };
@@ -402,6 +404,7 @@ export function NotificationPreferencesProvider({
   // so the reconciliation effect re-runs with fresh dates.
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
+      retentionLifecycle(next);
       const prev = appStateRef.current;
       appStateRef.current = next;
       if (prev !== 'active' && next === 'active') {

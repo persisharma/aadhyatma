@@ -1,0 +1,8 @@
+{
+  "name": "vedansh-retention",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-01-01",
+  "observability": { "enabled": false },
+  "triggers": { "crons": ["0 1 * * *"] },
+  "d1_databases": [{ "binding": "DB", "database_name": "vedansh-retention", "database_id": "00000000-0000-0000-0000-000000000000" }]
+}

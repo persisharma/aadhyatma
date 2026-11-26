@@ -1,3 +1,4 @@
+import { useVisibleAction } from '@/retention/useVisibleAction';
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
 import { loadReadCoverage, markRead } from '@/utils/readCoverageStore';
@@ -21,6 +22,7 @@ function inForeground(): boolean {
  * prev/next chapter transition cards — are ignored by the store.
  */
 export function useReadDwell(sourceId: string, chapter: number | undefined, verseIndex: number): void {
+  useVisibleAction(sourceId === 'bhagavad-gita' ? 'gita_read' : 'other_read', verseIndex >= 0, `${sourceId}:${chapter}:${verseIndex}`);
   // Hydrate without subscribing: a reader only writes, so it must not
   // re-render on every mark.
   useEffect(loadReadCoverage, []);

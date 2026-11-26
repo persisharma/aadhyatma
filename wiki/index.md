@@ -43,6 +43,7 @@ _(none yet — add per-model pages as they warrant)_
 
 ## Integrations
 - [[integrations/live-darshan]] — Home floating door, native quick sheet and official-broadcast resolution with honest channel fallbacks.
+- [[integrations/android-retention]] — Android first-session and first-week activation and exact-day-seven cohort reporting.
 - [[integrations/meta-app-events]] — build-gated Android/iOS Meta activation measurement, ATT/privacy guards, native release requirements and verification limits.
 - [[integrations/reading-artwork]] — distinct reading backgrounds and Krishna-style reader illustrations, R2 manifests, immediate offline visuals, shared lifetime cache and bounded downloads.
 

@@ -1,3 +1,4 @@
+import { completedAction } from '@/retention/mobile';
 import { isRatingInteractionActive } from '@/contexts/ratingInteraction';
 import { isBrandLaunchVisible, useBrandLaunchVisible } from '@/navigation/brandLaunchIntent';
 import { useLaunchAsks, claimRatingAsk } from '@/components/launchAskStore';
@@ -208,6 +209,9 @@ export function RatingPromptProvider({
 
   const requestAsk = useCallback(
     (trigger: RatingAskTrigger) => {
+      if (trigger === 'bookmark-saved') completedAction('bookmark_saved');
+      if (trigger === 'routine-complete') completedAction('routine_completed');
+      if (trigger === 'content-shared' || trigger === 'verse-shared' || trigger === 'prose-shared') completedAction('share_handoff');
       if (pendingRef.current || visibleRef.current) return;
       // Still loading: the moment passes rather than being queued. Asking a few
       // seconds after the moment, once storage catches up, is the launch-frame

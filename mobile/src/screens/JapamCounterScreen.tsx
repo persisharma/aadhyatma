@@ -1,3 +1,4 @@
+import { completedAction } from '@/retention/mobile';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
@@ -287,6 +288,7 @@ export default function JapamCounterScreen({ navigation, route }: Props) {
     (beads: number = 1, source: 'tap' | 'auto' = 'tap') => {
       if (!mantra) return;
       const next = increment(mantra.id, beads);
+      if (source === 'tap') completedAction('bead_counted');
       if (next.rounds > lastRoundRef.current) {
         lastRoundRef.current = next.rounds;
         setSumeruNotice(true);
