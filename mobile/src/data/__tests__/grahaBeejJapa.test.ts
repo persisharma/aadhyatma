@@ -30,8 +30,10 @@ test('beej meanings frame the japa as a practice, never a fix', () => {
   }
 });
 
-test('graha beej mantras stay off the verse of the day; the deity mantras join it', () => {
+test('no japam mantra joins the verse of the day (single-line mantras live in Japam)', () => {
   const sources = new Set(getVersePool().map((v) => v.sourceId));
   for (const id of Object.values(GRAHA_BEEJ_JAPA_ID)) assert.equal(sources.has(id), false, id);
-  assert.ok(sources.has('ganapati-gam-mantra'));
+  // Deity japam mantras (graha beej and the rest) are off the daily pool too.
+  assert.equal(sources.has('ganapati-gam-mantra'), false);
+  for (const mantra of japamMantras) assert.equal(sources.has(mantra.id), false, mantra.id);
 });

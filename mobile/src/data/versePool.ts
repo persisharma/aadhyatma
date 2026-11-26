@@ -13,11 +13,7 @@ import { getRamStutiChapter, ramStutiChaptersManifest } from './ram-stuti';
 import { getBajrangBaanChapter, bajrangBaanChaptersManifest } from './bajrang-baan';
 import { getRamcharitmanasChapter, ramcharitmanasChaptersManifest } from './ramcharitmanas';
 import { valmikiRamayanDailySelection } from './valmiki-ramayan';
-import { japamMantras } from './japam';
-import { GRAHA_BEEJ_JAPA_ID } from './japam/grahaBeej';
 import { sanskarIds, getSanskar } from './sanskar';
-
-const grahaBeejJapaIds: ReadonlySet<string> = new Set(Object.values(GRAHA_BEEJ_JAPA_ID));
 
 export type UniformVerse = {
   sourceId: string;
@@ -40,11 +36,10 @@ export type UniformVerse = {
  *   numbered label (e.g. `श्लोक 1.5`). Most stotrams plus the Gita.
  * - **Pada** sources: chaptered, verses carry `lines` / `linesEn` and their own
  *   `labelHi` / `labelEn` (Sundarkand, Bajrang Baan, Ramcharitmanas, Valmiki Ramayan).
- * - **Japam**: one mantra per entry, no chapter.
  * - **Sanskar**: a flat verse list per ritual, no chapter; the first `intro`
  *   verse is a section descriptor and is excluded from the random pool.
- * - **Flat** sources: one verse list per text, no chapter (chalisas, aartis,
- *   ashtakams, suktams, kavachs, stutis), registered in `versePoolFlat.ts`.
+ * - **Flat** sources: one verse list per text, no chapter (ashtakams, suktams,
+ *   kavachs, stutis), registered in `versePoolFlat.ts`.
  *
  * Each new section must be registered below — membership is explicit rather
  * than inferred from a category, so the pool only surfaces content with a
@@ -83,6 +78,53 @@ type PadaSource = {
 
 // Gita transliteration lives on a different field, so it gets its own pass.
 const GITA_ID = 'bhagavad-gita';
+
+/**
+ * Daily Bhakti curation (Nov 2026). The verse of the day is a full verse with a
+ * teaching, so a handful of registered sources are held out of the daily
+ * rotation because their verses do not read as a standalone verse of the day.
+ * They remain fully available in their own readers — this only narrows the
+ * random daily pool. Rationale per group:
+ *  - Durga Saptashati's ten battle-narrative chapters. Only the three canonical
+ *    stutis stay pooled: chapter 4 (Śakrādi Stuti), 5 ("Ya Devi Sarvabhuteshu…"
+ *    Aparājitā Stuti) and 11 (Nārāyaṇī Stuti).
+ *  - Argalā and Kīlaka stotras (short repeating refrains) and the Devī Kavacham
+ *    (a limb-by-limb nyāsa litany).
+ *  - Gaṇeśa and Śiva Kavacham — "may X protect my head / eyes / …" litanies.
+ *  - Sūrya Namaskār's twelve salutation mantras (a sanskar).
+ * Vishnu Sahasranama keeps its invocation / dhyānam / phalaśruti but drops the
+ * thousand-name recitation chapter (a chapter-level hold-out, below).
+ */
+export const DAILY_POOL_EXCLUDED_SOURCES: ReadonlySet<string> = new Set<string>([
+  'ganesha-kavacham',
+  'shiva-kavacham',
+  'durga-devi-kavacham',
+  'durga-argala-stotram',
+  'durga-kilak-stotram',
+  'durga-saptashati-chapter-1',
+  'durga-saptashati-chapter-2',
+  'durga-saptashati-chapter-3',
+  'durga-saptashati-chapter-6',
+  'durga-saptashati-chapter-7',
+  'durga-saptashati-chapter-8',
+  'durga-saptashati-chapter-9',
+  'durga-saptashati-chapter-10',
+  'durga-saptashati-chapter-12',
+  'durga-saptashati-chapter-13',
+  'surya-namaskar',
+]);
+
+// Chapters of an otherwise-pooled source to hold out of the daily rotation.
+// Vishnu Sahasranama chapter 3 is the 1000-name recitation (a name list); its
+// invocation (1), dhyānam (2) and phalaśruti (4) stay pooled.
+const DAILY_POOL_EXCLUDED_CHAPTERS: ReadonlyMap<string, ReadonlySet<number>> = new Map([
+  ['vishnu-sahasranama', new Set<number>([3])],
+]);
+
+/** A registered source that is also eligible for the random verse of the day. */
+export function isDailyPoolSource(id: string): boolean {
+  return !DAILY_POOL_EXCLUDED_SOURCES.has(id);
+}
 
 const SHLOKA_SOURCES: readonly ShlokaSource[] = [
   { id: 'shiva-strotam', manifest: shivaStrotamChaptersManifest, getChapter: getShivaStrotamChapter },
@@ -193,8 +235,10 @@ function buildPoolSegments(): PoolSegment[] {
   }
 
   for (const src of SHLOKA_SOURCES) {
-    if (!isActive(src.id)) continue;
+    if (!isActive(src.id) || !isDailyPoolSource(src.id)) continue;
+    const excludedChapters = DAILY_POOL_EXCLUDED_CHAPTERS.get(src.id);
     for (const chapter of src.manifest) {
+      if (excludedChapters?.has(chapter.chapter)) continue;
       segments.push({
         sourceId: src.id,
         length: chapter.verseCount,
@@ -266,40 +310,11 @@ function buildPoolSegments(): PoolSegment[] {
     });
   }
 
-  // Japam entries and Sanskar projections are already small launch-path data.
-  for (const mantra of japamMantras) {
-    if (!isActive(mantra.id)) continue;
-    // A naam-japa line is a single name, not a verse to surface on its own.
-    if (mantra.naam) continue;
-    // A graha beej mantra is Kundali upaya (RULEBOOK §14.3.5): it stays on the
-    // surfaces the person opened, never pushed as a verse of the day.
-    if (grahaBeejJapaIds.has(mantra.id)) continue;
-    const getAt = (offset: number): UniformVerse | null =>
-      offset === 0
-        ? {
-            sourceId: mantra.id,
-            sourceNameHi: mantra.nameHi,
-            sourceNameEn: mantra.nameEn,
-            verseIndex: 0,
-            textHi: mantra.lines,
-            textEn: mantra.linesEn,
-            meaningHi: mantra.meaningHi,
-            meaningEn: mantra.meaningEn,
-            labelHi: 'मंत्र',
-            labelEn: 'Mantra',
-          }
-        : null;
-    segments.push({
-      sourceId: mantra.id,
-      length: 1,
-      lastPositions: [{ chapter: 1, verseIndex: 0 }],
-      getAt,
-      find: (verseIndex, chapter) => chapter == null && verseIndex === 0 ? getAt(0) : null,
-    });
-  }
-
+  // Japam mantras (single-line japa) no longer join the verse of the day — a one
+  // line mantra does not read as a standalone daily verse, and every mantra lives
+  // in the Japam feature. Sanskar projections are small launch-path data.
   for (const id of sanskarIds) {
-    if (!isActive(id)) continue;
+    if (!isActive(id) || !isDailyPoolSource(id)) continue;
     const data = getSanskar(id);
     const verseIndices = data.verses.flatMap((verse, index) => verse.type === 'intro' ? [] : [index]);
     const getAt = (offset: number): UniformVerse | null => {
@@ -334,8 +349,12 @@ function buildPoolSegments(): PoolSegment[] {
 
   // Appended after the existing sources so earlier pool indices keep their verse.
   // Required, not imported: the registry and its counts stay off the launch path.
+  // The flat registry lists every single-list source; the daily-pool curation
+  // (`DAILY_POOL_EXCLUDED_SOURCES`) holds a few of them out here.
   segments.push(
-    ...(require('./versePoolFlat') as typeof import('./versePoolFlat')).flatPoolSegments({ isActive, nameHi, nameEn })
+    ...(require('./versePoolFlat') as typeof import('./versePoolFlat'))
+      .flatPoolSegments({ isActive, nameHi, nameEn })
+      .filter((segment) => isDailyPoolSource(segment.sourceId))
   );
 
   if (isActive(BHAGAVATAM_ID)) {
