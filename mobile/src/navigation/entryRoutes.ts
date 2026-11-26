@@ -442,6 +442,14 @@ export function buildProgressTarget(p: {
   verseIndex: number;
 }): BookmarkTarget | null {
   const sourceId = canonicalSourceId(p.sourceId);
+  if (sourceId === 'durga-saptashati-core' && p.chapter != null) {
+    // Search indexes सप्तशती verses under the granth sourceId with chapter 1..13;
+    // each chapter is its own StutiReader (durga-saptashati-chapter-N).
+    return {
+      screen: 'StutiReader',
+      params: { initialIndex: p.verseIndex, stutiId: `durga-saptashati-chapter-${p.chapter}` },
+    };
+  }
   if (theerthIds.has(sourceId)) {
     return {
       screen: 'TheerthMap',
