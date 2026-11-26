@@ -133,3 +133,14 @@ test('the medium/large Panchang is measured as whole columns with a compact fall
   assert.match(panchang, /ViewThatFits\(in: \.vertical\) \{\s*widePanchang\([\s\S]*?compact: false\)\s*widePanchang\([\s\S]*?compact: true\)/);
   assert.match(panchang, /if !compact \{ brand\(\) \}/);
 });
+
+// Nov 2026 device report: a long Sundarkand chaupai took the full-width
+// composition and its solid wash ended in a hard edge across the painting.
+test('the full-width text wash is feathered, never a hard-edged box over the art', () => {
+  const wash = verseView.slice(verseView.indexOf('private func textWash('), verseView.indexOf('private func boundedVerseColumn('));
+  assert.ok(wash.length > 0, 'textWash not found');
+  assert.match(wash, /palette\.parchment\.opacity\(0\.93\)\s*\.padding\(-\d+\)\s*\.blur\(radius: \d+\)/);
+  assert.equal((verseView.match(/textWash\(\)/g) ?? []).length, 3, 'declaration + text-first composition + bounded fallback');
+  assert.doesNotMatch(verseView, /\.background \{\s*if art != nil[^}]*\{?\s*palette\.parchment\.opacity/,
+    'no bare parchment rectangle behind verse text');
+});

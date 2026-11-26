@@ -1638,3 +1638,6 @@ Placed widgets showed three edge lines (OS edge + two inset gold frames). `Herit
 
 ## [2026-11-26] ingest | Small Panchang back to the plain glance
 Owner found the Ornate small Panchang overloaded. Restored the pre-#681 composition; removed moon medallion, sunset column, painting and cameo from every Panchang size; gallery mirrors it. design.md §59 + [[home-widgets]] updated; device check pending.
+
+## [2026-11-26] ingest | Feathered text wash on the Shloka widget
+Device screenshot: a long Sundarkand chaupai took the full-width composition and its solid wash ended in a hard edge over the painting. `textWash()` now bleeds and blurs. design.md §59 + [[home-widgets]] gotcha updated; device check pending.

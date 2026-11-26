@@ -544,11 +544,21 @@ struct VedanshWidgetView: View {
     .padding(.trailing, reserved)
     .padding(.vertical, 2)
     .background {
-      if art != nil && artFraction == 0 {
-        palette.parchment.opacity(0.93)
-      }
+      if art != nil && artFraction == 0 { textWash() }
     }
     .fixedSize(horizontal: false, vertical: true)
+  }
+
+  // Contrast wash behind full-width text. A plain rectangle ended in a hard
+  // edge across the painting, so a long verse looked as if it ran out of its
+  // box into the picture (Nov 2026 device report, Sundarkand chaupai at
+  // night). Bleeding past the text and feathering the edge fades the art out
+  // behind the verse instead; the text itself still sits on the full wash.
+  private func textWash() -> some View {
+    palette.parchment.opacity(0.93)
+      .padding(-14)
+      .blur(radius: 10)
+      .accessibilityHidden(true)
   }
 
   // The last ViewThatFits candidate is used whenever nothing above fits, so
@@ -574,7 +584,7 @@ struct VedanshWidgetView: View {
     }
     .padding(.vertical, 2)
     .background {
-      if art != nil { palette.parchment.opacity(0.93) }
+      if art != nil { textWash() }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
   }

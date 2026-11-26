@@ -3597,6 +3597,14 @@ stays on full chrome. The medium/large Panchang follows the same rule:
 `widePanchang(compact:)` drops the brand mark and eases the tithi (24→20 pt
 medium, 32→28 pt large) when the vrat-day stack (~136 pt) exceeds the cell.
 
+**Text-first wash (26 November 2026).** When a long verse needs the full width
+(e.g. a two-line Sundarkand chaupai at night), the contrast wash behind it was a
+plain rectangle whose hard edge cut across the painting, so the verse looked as
+if it overflowed its box. `textWash()` now bleeds 14 pt past the text and is
+feathered (`blur(radius: 10)`), fading the art out behind the verse; the text
+itself still sits on the full 93% wash. Used by the 0% art candidates and the
+bounded fallback.
+
 **Regression source.** Before the Ornate Heritage change (#681) the ribbon and
 brand shared one row and the verse was 16/15 pt, so a two-pada medium verse
 fitted (~112 pt). #681 added the separate flourish row outside the measurement
