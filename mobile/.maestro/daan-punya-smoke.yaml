@@ -138,9 +138,14 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: { id: "daan-entry-amount" }
 - inputText: "1,00"
-# iOS's numeric keypad has no dismiss key, so Maestro's hideKeyboard fails;
-# tapping the fixed header title blurs the field the way a person would.
-- tapOn: "New daan"
+# iOS's numeric keypad has no dismiss key, so Maestro's hideKeyboard fails.
+# The form's scroll view uses keyboardShouldPersistTaps="handled", so a tap on
+# non-interactive content (the tithi row) dismisses the keypad and blurs the
+# field — which also runs the amount validation.
+- scrollUntilVisible:
+    element: { id: "daan-entry-tithi" }
+    direction: UP
+- tapOn: { id: "daan-entry-tithi" }
 - scrollUntilVisible:
     element: { id: "daan-entry-save" }
     direction: DOWN
@@ -150,9 +155,17 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "daan-entry-amount" }
 - eraseText
 - inputText: "1,000.50"
-- tapOn: "New daan"
-- assertVisible: { id: "daan-amount-preview" }
+- scrollUntilVisible:
+    element: { id: "daan-entry-tithi" }
+    direction: UP
+- tapOn: { id: "daan-entry-tithi" }
+- scrollUntilVisible:
+    element: { id: "daan-amount-preview" }
+    direction: DOWN
 - takeScreenshot: daan-amount-preview
+- scrollUntilVisible:
+    element: { id: "daan-entry-save" }
+    direction: DOWN
 - tapOn: { id: "daan-entry-save" }
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya register"
