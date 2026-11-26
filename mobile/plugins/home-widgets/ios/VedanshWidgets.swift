@@ -140,29 +140,28 @@ private struct WidgetPalette {
 
 // Ornamentation is native vector drawing, not text baked into a picture.
 // It stays crisp on every iPhone scale and is never decoded from the network.
+//
+// The frame is ONE gold rim on the widget's own edge. It used to be two inset
+// rounded rectangles with fixed radii (21/18) inside the OS edge, which read on
+// a placed widget as three separate borders whose corners did not run parallel
+// (Nov 2026). ContainerRelativeShape follows the system corner on every device.
 private struct HeritageFiligree: View {
   let palette: WidgetPalette
   var body: some View {
+    ZStack {
+      ContainerRelativeShape()
+        .strokeBorder(palette.gold.opacity(0.80), lineWidth: 1.5)
+      lotus
+    }
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+
+  // Corner swirls were removed at the owner's request (Nov 2026): next to the
+  // rim they read as extra outlines. Only the small lower lotus remains.
+  private var lotus: some View {
     Canvas { context, size in
       guard size.width > 35, size.height > 35 else { return }
-      let outer = Path(roundedRect: CGRect(x: 2.7, y: 2.7, width: size.width - 5.4, height: size.height - 5.4), cornerRadius: 21)
-      let inner = Path(roundedRect: CGRect(x: 6, y: 6, width: size.width - 12, height: size.height - 12), cornerRadius: 18)
-      context.stroke(outer, with: .color(palette.gold.opacity(0.76)), lineWidth: 0.9)
-      context.stroke(inner, with: .color(palette.gold.opacity(0.30)), lineWidth: 0.4)
-      for mirror in [false, true] {
-        let x = mirror ? size.width - 12 : 12
-        let sign: CGFloat = mirror ? -1 : 1
-        var curl = Path()
-        curl.move(to: CGPoint(x: x, y: 35))
-        curl.addQuadCurve(to: CGPoint(x: x + 20 * sign, y: 10), control: CGPoint(x: x + 1 * sign, y: 10))
-        curl.addQuadCurve(to: CGPoint(x: x + 34 * sign, y: 10), control: CGPoint(x: x + 25 * sign, y: 15))
-        context.stroke(curl, with: .color(palette.gold.opacity(0.50)), lineWidth: 0.8)
-        var base = Path()
-        base.move(to: CGPoint(x: x, y: size.height - 35))
-        base.addQuadCurve(to: CGPoint(x: x + 20 * sign, y: size.height - 10), control: CGPoint(x: x + sign, y: size.height - 10))
-        base.addQuadCurve(to: CGPoint(x: x + 34 * sign, y: size.height - 10), control: CGPoint(x: x + 25 * sign, y: size.height - 15))
-        context.stroke(base, with: .color(palette.gold.opacity(0.50)), lineWidth: 0.8)
-      }
       let center = CGPoint(x: size.width * 0.5, y: size.height - 12)
       for i in 0..<5 {
         let angle = CGFloat(i) * (.pi / 4) - .pi / 2
@@ -441,42 +440,40 @@ struct VedanshWidgetView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
           } else {
-            VStack(alignment: .leading, spacing: 5) {
-              HStack(spacing: 8) {
-                Rectangle().fill(palette.gold.opacity(0.56)).frame(height: 1)
-                Image(systemName: "leaf.fill").font(.system(size: 9, weight: .regular))
-                  .foregroundStyle(palette.gold).accessibilityHidden(true)
-                Text("ॐ वेदांश")
-                  .font(.custom("NotoSerifDevanagari-SemiBold", size: family == .systemLarge ? 19 : 15))
-                  .foregroundStyle(palette.ink)
-                  .fixedSize()
-                Image(systemName: "leaf.fill").font(.system(size: 9, weight: .regular))
-                  .foregroundStyle(palette.gold).scaleEffect(x: -1, y: 1).accessibilityHidden(true)
-                Rectangle().fill(palette.gold.opacity(0.56)).frame(height: 1)
-              }
-              .padding(.horizontal, family == .systemLarge ? 16 : 36)
-              .accessibilityHidden(true)
-              Spacer(minLength: 0)
-              ViewThatFits(in: .vertical) {
-                verseComposition(v, lang: lang, width: geometry.size.width,
-                                 artFraction: 0.32, fontSize: family == .systemLarge ? 21 : 18,
-                                 separated: family == .systemLarge, condensed: false)
-                verseComposition(v, lang: lang, width: geometry.size.width,
-                                 artFraction: 0.16, fontSize: family == .systemLarge ? 18 : 16,
-                                 separated: family == .systemLarge, condensed: false)
-                verseComposition(v, lang: lang, width: geometry.size.width,
-                                 artFraction: 0, fontSize: family == .systemLarge ? 16 : 14,
-                                 separated: false, condensed: false)
-                verseComposition(v, lang: lang, width: geometry.size.width,
-                                 artFraction: 0, fontSize: family == .systemLarge ? 15 : 14,
-                                 separated: false, condensed: true)
-              }
-              Spacer(minLength: 0)
+            // Every candidate is the COMPLETE column, brand flourish included,
+            // so ViewThatFits measures exactly what will be drawn against the
+            // real cell. It used to measure only the lower composition while
+            // the flourish sat outside it: a 125 pt candidate "fit" the 126 pt
+            // medium cell under a ~38 pt flourish row and the source and rule
+            // were pushed off the bottom edge (Nov 2026). The full approved
+            // chrome cannot hold a two-pada verse in a medium cell at all, so
+            // the compact chrome (flourish folded into the ribbon row, then no
+            // closing rule) comes before the bounded tap-through fallback.
+            ViewThatFits(in: .vertical) {
+              verseColumn(v, lang: lang, width: geometry.size.width,
+                          artFraction: 0.32, fontSize: family == .systemLarge ? 21 : 18,
+                          separated: family == .systemLarge, chrome: .full)
+              verseColumn(v, lang: lang, width: geometry.size.width,
+                          artFraction: 0.16, fontSize: family == .systemLarge ? 18 : 16,
+                          separated: family == .systemLarge, chrome: .full)
+              verseColumn(v, lang: lang, width: geometry.size.width,
+                          artFraction: 0, fontSize: family == .systemLarge ? 16 : 14,
+                          separated: false, chrome: .full)
+              verseColumn(v, lang: lang, width: geometry.size.width,
+                          artFraction: 0.16, fontSize: family == .systemLarge ? 18 : 16,
+                          separated: false, chrome: .compact)
+              verseColumn(v, lang: lang, width: geometry.size.width,
+                          artFraction: 0.16, fontSize: family == .systemLarge ? 18 : 16,
+                          separated: false, chrome: .tight)
+              verseColumn(v, lang: lang, width: geometry.size.width,
+                          artFraction: 0, fontSize: family == .systemLarge ? 16 : 14,
+                          separated: false, chrome: .tight)
+              boundedVerseColumn(v, lang: lang, fontSize: family == .systemLarge ? 15 : 14)
             }
             .padding(.horizontal, 2)
             // Centre shorter complete verses in the wide canvas instead of
             // leaving a conspicuous unused lower half beneath the artwork.
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
           }
         }
         .widgetURL(URL(string: v.deepLink))
@@ -486,26 +483,106 @@ struct VedanshWidgetView: View {
     } else { recovery("विजेट ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
   }
 
+  // .full is the approved composition: centred flourish row, ribbon, verse,
+  // source, floral rule. .compact folds the flourish into the ribbon row;
+  // .tight also drops the closing rule. Source attribution is never dropped.
+  private enum VerseChrome { case full, compact, tight }
+
+  private func verseFlourish() -> some View {
+    HStack(spacing: 8) {
+      Rectangle().fill(palette.gold.opacity(0.56)).frame(height: 1)
+      Image(systemName: "leaf.fill").font(.system(size: 9, weight: .regular))
+        .foregroundStyle(palette.gold).accessibilityHidden(true)
+      Text("ॐ वेदांश")
+        .font(.custom("NotoSerifDevanagari-SemiBold", size: family == .systemLarge ? 19 : 15))
+        .foregroundStyle(palette.ink)
+        .fixedSize()
+      Image(systemName: "leaf.fill").font(.system(size: 9, weight: .regular))
+        .foregroundStyle(palette.gold).scaleEffect(x: -1, y: 1).accessibilityHidden(true)
+      Rectangle().fill(palette.gold.opacity(0.56)).frame(height: 1)
+    }
+    .padding(.horizontal, family == .systemLarge ? 16 : 36)
+    .accessibilityHidden(true)
+  }
+
+  private func verseRibbon(_ lang: String, compact: Bool) -> some View {
+    HStack(spacing: 5) {
+      Image(systemName: "leaf.fill")
+        .font(.system(size: 10, weight: .regular)).accessibilityHidden(true)
+      Text(verseKicker(lang))
+        .font(.custom(fontName(lang, bold: true), size: 11))
+        .lineLimit(1)
+        .minimumScaleFactor(0.85)
+    }
+    .foregroundStyle(palette.night ? palette.parchment : .white)
+    .padding(.horizontal, 9).padding(.vertical, compact ? 3 : 5)
+    .background(
+      LinearGradient(colors: [palette.saffronDeep, palette.saffronDeep.opacity(0.83)],
+                     startPoint: .leading, endPoint: .trailing),
+      in: RoundedRectangle(cornerRadius: 8)
+    )
+  }
+
+  // Ribbon with the brand mark beside it; the mark is dropped before the
+  // ribbon is ever squeezed (narrow cell, enlarged system text).
+  private func compactVerseHeader(_ lang: String) -> some View {
+    ViewThatFits(in: .horizontal) {
+      HStack(spacing: 8) {
+        verseRibbon(lang, compact: true)
+        Text("ॐ वेदांश")
+          .font(.custom("NotoSerifDevanagari-SemiBold", size: 12))
+          .foregroundStyle(palette.ink)
+          .fixedSize()
+          .accessibilityHidden(true)
+      }
+      verseRibbon(lang, compact: true)
+    }
+  }
+
+  private func verseSource(_ v: VerseDay, lang: String) -> some View {
+    HStack(alignment: .center, spacing: 6) {
+      Image(systemName: "book.closed")
+        .font(.system(size: 12, weight: .regular))
+        .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
+      Text(v.source.value(lang))
+        .font(.custom(fontName(lang, bold: true), size: 11))
+        .foregroundStyle(palette.inkMuted)
+        .lineLimit(2)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+  }
+
+  private func verseRule() -> some View {
+    HStack(spacing: 4) {
+      Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
+      Image(systemName: "leaf.fill").font(.system(size: 9))
+        .foregroundStyle(palette.gold).accessibilityHidden(true)
+      Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
+    }
+    .padding(.top, 1)
+  }
+
+  private func verseColumn(_ v: VerseDay, lang: String, width: CGFloat,
+                           artFraction: CGFloat, fontSize: CGFloat,
+                           separated: Bool, chrome: VerseChrome) -> some View {
+    VStack(alignment: .leading, spacing: family == .systemLarge ? 8 : 5) {
+      if chrome == .full { verseFlourish() }
+      verseComposition(v, lang: lang, width: width, artFraction: artFraction,
+                       fontSize: fontSize, separated: separated, chrome: chrome)
+    }
+    .fixedSize(horizontal: false, vertical: true)
+  }
+
   private func verseComposition(_ v: VerseDay, lang: String, width: CGFloat,
                                 artFraction: CGFloat, fontSize: CGFloat,
-                                separated: Bool, condensed: Bool) -> some View {
+                                separated: Bool, chrome: VerseChrome) -> some View {
     let reserved = art == nil ? CGFloat(0) : width * artFraction
-    return VStack(alignment: .leading, spacing: family == .systemLarge ? 8 : 5) {
-      HStack(spacing: 5) {
-        Image(systemName: "leaf.fill")
-          .font(.system(size: 10, weight: .regular)).accessibilityHidden(true)
-        Text(verseKicker(lang))
-          .font(.custom(fontName(lang, bold: true), size: 11))
-          .lineLimit(1)
-          .minimumScaleFactor(0.85)
+    return VStack(alignment: .leading, spacing: family == .systemLarge ? 8 : (chrome == .full ? 5 : 4)) {
+      if chrome == .full {
+        verseRibbon(lang, compact: false)
+      } else {
+        compactVerseHeader(lang)
       }
-      .foregroundStyle(palette.night ? palette.parchment : .white)
-      .padding(.horizontal, 9).padding(.vertical, 5)
-      .background(
-        LinearGradient(colors: [palette.saffronDeep, palette.saffronDeep.opacity(0.83)],
-                       startPoint: .leading, endPoint: .trailing),
-        in: RoundedRectangle(cornerRadius: 8)
-      )
 
       if separated {
         VStack(alignment: .leading, spacing: 3) {
@@ -520,32 +597,11 @@ struct VedanshWidgetView: View {
         Text(flowedVerse(v.lines.value(lang)))
           .font(.custom(fontName(lang, bold: false), size: fontSize))
           .foregroundStyle(palette.ink)
-          .lineLimit(condensed ? (family == .systemLarge ? 10 : 4) : nil)
-          .truncationMode(.tail)
-          .fixedSize(horizontal: false, vertical: !condensed)
-      }
-
-      HStack(alignment: .center, spacing: 6) {
-        Image(systemName: "book.closed")
-          .font(.system(size: 12, weight: .regular))
-          .foregroundStyle(palette.saffronDeep).accessibilityHidden(true)
-        Text(v.source.value(lang))
-          .font(.custom(fontName(lang, bold: true), size: 11))
-          .foregroundStyle(palette.inkMuted)
           .fixedSize(horizontal: false, vertical: true)
       }
-      HStack(spacing: 4) {
-        Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
-        Image(systemName: "leaf.fill").font(.system(size: 9))
-          .foregroundStyle(palette.gold).accessibilityHidden(true)
-        Rectangle().fill(palette.gold.opacity(0.62)).frame(height: 1)
-      }
-      .padding(.top, 1)
-      if condensed {
-        Text(readFullVerseKicker(lang))
-          .font(.custom(fontName(lang, bold: true), size: 10))
-          .foregroundStyle(palette.saffronDeep)
-      }
+
+      verseSource(v, lang: lang)
+      if chrome != .tight { verseRule() }
     }
     .padding(.trailing, reserved)
     .padding(.vertical, 2)
@@ -555,6 +611,34 @@ struct VedanshWidgetView: View {
       }
     }
     .fixedSize(horizontal: false, vertical: true)
+  }
+
+  // The last ViewThatFits candidate is used whenever nothing above fits, so
+  // unlike them it is NOT fixed to its ideal height: it fills the cell, the
+  // ribbon, source and tap cue keep their rows, and only the verse yields
+  // height (tail-truncated, padas still on their own lines). The complete
+  // verse stays in VoiceOver and one tap away through the same deep link.
+  private func boundedVerseColumn(_ v: VerseDay, lang: String, fontSize: CGFloat) -> some View {
+    VStack(alignment: .leading, spacing: 4) {
+      compactVerseHeader(lang)
+      Text(flowedVerse(v.lines.value(lang)))
+        .font(.custom(fontName(lang, bold: false), size: fontSize))
+        .foregroundStyle(palette.ink)
+        .truncationMode(.tail)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .layoutPriority(-1)
+      verseSource(v, lang: lang)
+      Text(readFullVerseKicker(lang))
+        .font(.custom(fontName(lang, bold: true), size: 10))
+        .foregroundStyle(palette.saffronDeep)
+        .lineLimit(1)
+        .minimumScaleFactor(0.8)
+    }
+    .padding(.vertical, 2)
+    .background {
+      if art != nil { palette.parchment.opacity(0.93) }
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
   }
 
   private func readFullVerseKicker(_ lang: String) -> String {
@@ -725,43 +809,54 @@ struct VedanshWidgetView: View {
         .accessibilityElement(children: .combine)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
       } else {
-        VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
-          Text("\(p.representedDate.value(lang)) · \(payload.panchang.cityLabel.value(lang))")
-            .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(palette.saffronDeep)
-            .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(1)
-            .padding(.trailing, art == nil ? 0 : 36)
-          Text(running.name.value(lang))
-            .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? 32 : family == .systemSmall ? 24 : 24))
-            .foregroundStyle(palette.ink).lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.75)
-          // "तक 10:48" — when the headline stops being true, the one fact a
-          // dated tithi glance is useless without. Absent only when this day's
-          // solve does not know the end (the successor's end belongs to
-          // tomorrow's solve), matching the Home glance's own omission.
-          if let till = running.till {
-            Text(till.value(lang)).font(.system(size: family == .systemLarge ? 13 : 10, weight: .semibold))
-              .foregroundStyle(palette.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
-          }
-          if let vrat = p.vrat {
-            Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).foregroundStyle(palette.inkMuted)
-              .lineLimit(family == .systemSmall ? 2 : 1).minimumScaleFactor(0.85)
-          }
-          if family == .systemSmall {
-            Divider().overlay(palette.gold.opacity(0.5))
-            Text(p.sunrise.value(lang)).font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
-          } else if family == .systemLarge {
-            VStack(alignment: .leading, spacing: 4) {
-              Text(p.sunrise.value(lang)); Text(p.rahuKaal.value(lang))
-              if let abhijit = p.abhijit { Text(abhijit.value(lang)) }
-            }.font(.system(size: 13, weight: .semibold)).foregroundStyle(palette.inkMuted)
-          } else {
-            Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1)
-          }
-          brand()
+        // Measured as whole columns, like the verse: on a vrat day the full
+        // medium stack (~136 pt) is taller than the ~126 pt cell, so the
+        // compact column drops the brand mark and eases the tithi first.
+        ViewThatFits(in: .vertical) {
+          widePanchang(p, running: running, city: payload.panchang.cityLabel.value(lang),
+                       lang: lang, compact: false)
+          widePanchang(p, running: running, city: payload.panchang.cityLabel.value(lang),
+                       lang: lang, compact: true)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .widgetURL(URL(string: p.deepLink)).accessibilityElement(children: .combine)
       }
     } else { recovery("पंचांग ताज़ा करने हेतु वेदांश़ खोलें", "Open Vedansh to refresh") }
+  }
+
+  private func widePanchang(_ p: PanchangDay, running: (name: LocalizedText, till: LocalizedText?), city: String,
+                            lang: String, compact: Bool) -> some View {
+    VStack(alignment: .leading, spacing: family == .systemLarge ? 7 : 5) {
+      Text("\(p.representedDate.value(lang)) · \(city)")
+        .font(.custom(fontName(lang, bold: true), size: 10)).foregroundStyle(palette.saffronDeep)
+        .lineLimit(1).minimumScaleFactor(1)
+        .padding(.trailing, art == nil ? 0 : 36)
+      Text(running.name.value(lang))
+        .font(.custom(fontName(lang, bold: true), size: family == .systemLarge ? (compact ? 28 : 32) : (compact ? 20 : 24)))
+        .foregroundStyle(palette.ink).lineLimit(1).minimumScaleFactor(0.75)
+      // "तक 10:48" — when the headline stops being true, the one fact a
+      // dated tithi glance is useless without. Absent only when this day's
+      // solve does not know the end (the successor's end belongs to
+      // tomorrow's solve), matching the Home glance's own omission.
+      if let till = running.till {
+        Text(till.value(lang)).font(.system(size: family == .systemLarge ? 13 : 10, weight: .semibold))
+          .foregroundStyle(palette.inkMuted).lineLimit(1).minimumScaleFactor(0.8)
+      }
+      if let vrat = p.vrat {
+        Text(vrat.value(lang)).font(.custom(fontName(lang, bold: false), size: 12)).foregroundStyle(palette.inkMuted)
+          .lineLimit(1).minimumScaleFactor(0.85)
+      }
+      if family == .systemLarge {
+        VStack(alignment: .leading, spacing: 4) {
+          Text(p.sunrise.value(lang)); Text(p.rahuKaal.value(lang))
+          if let abhijit = p.abhijit { Text(abhijit.value(lang)) }
+        }.font(.system(size: 13, weight: .semibold)).foregroundStyle(palette.inkMuted)
+      } else {
+        Text("\(p.sunrise.value(lang))   \(p.rahuKaal.value(lang))").font(.system(size: 10, weight: .semibold)).foregroundStyle(palette.inkMuted).lineLimit(1)
+      }
+      if !compact { brand() }
+    }
+    .fixedSize(horizontal: false, vertical: true)
   }
 
   // MARK: - जप-साधना

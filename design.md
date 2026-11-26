@@ -3554,6 +3554,48 @@ native screenshots with short, multi-pada and unusually long verses, plus
 VoiceOver and source/tap checks; source tests alone are not visual acceptance.
 
 
+### Medium Shloka / Panchang height fit — 25 November 2026
+
+A placed iPhone medium Shloka (BG 3.5, Hindi) clipped its source line and floral
+rule. The centred `ॐ वेदांश` flourish row sat outside `ViewThatFits`, so a
+125 pt composition was judged to fit the ~126 pt medium content area while the
+flourish and stack spacing had already used ~38 pt. Measured with the bundled
+fonts (Noto Serif Devanagari line height 1.555 em), the full approved chrome
+alone needs ~123 pt, so no full-chrome candidate can hold a two-pada verse in a
+medium cell.
+
+**Structure.** `ViewThatFits(in: .vertical)` now wraps complete columns and is
+framed to the exact cell. Candidates, in order: full chrome at 32% / 16% / 0%
+art (unchanged sizes); **compact** chrome — the brand mark sits beside the
+ribbon (`compactVerseHeader`, mark dropped first if the row is too narrow),
+ribbon vertical padding 3 pt, row spacing 4 pt, rule kept; **tight** — compact
+without the closing rule, at 16% then 0% art; and finally the bounded
+tap-through column. Only that last column may truncate: it fills the cell, the
+verse alone yields height (`layoutPriority(-1)`, tail truncation, padas still on
+their own lines), and ribbon, source and the localized tap cue keep their rows.
+Every candidate keeps `verseSource`. Large uses the same ladder and normally
+stays on full chrome. The medium/large Panchang follows the same rule:
+`widePanchang(compact:)` drops the brand mark and eases the tithi (24→20 pt
+medium, 32→28 pt large) when the vrat-day stack (~136 pt) exceeds the cell.
+
+**Regression source.** Before the Ornate Heritage change (#681) the ribbon and
+brand shared one row and the verse was 16/15 pt, so a two-pada medium verse
+fitted (~112 pt). #681 added the separate flourish row outside the measurement
+and enlarged ribbon, verse, source and rule; the compact candidate restores the
+single header row with the new styling.
+
+**Frame.** `HeritageFiligree` draws one 1.5 pt gold rim (`ContainerRelativeShape`
+`.strokeBorder`, gold at 80%) on the widget's own edge and the small lower lotus.
+The corner swirls were removed at the owner's request: beside the rim they also
+read as outlines. The two inset fixed-radius rounded rectangles (21/18 pt) inside the
+OS edge read as three separate borders with non-parallel corners on a placed
+widget. This matches the gallery's single edge border.
+
+No payload, art or kind change; it needs a **new iOS binary**. Placed Small /
+Medium / Large screenshots in four languages, Standard and enlarged system text,
+day/night/tinted and iPhone SE / Pro / Pro Max sizes remain pending.
+`adaptiveVerseLayout.test.ts` pins the column measurement and candidate order.
+
 ### Android Heritage / Midnight composition parity — 13 November 2026
 
 Android had the solar palettes and plates but not the iOS composition around them, so a placed Android widget read as the older design. The RemoteViews layouts now carry it: **verse** wide/large has a header row with the eyebrow in a capsule (`vedansh_widget_pill` — saffronDeep at 10%; `vedansh_widget_pill_night` — `#EBC784` at 10%, padding 7×3 dp) and the `ॐ वेदांश़` mark at its end (`widget_brand_header`), the verse, a 1 dp gold rule (`widget_rule`, gold at 42%), then the source. The **small** verse cell (<180 dp wide) drops the capsule, rule and source and keeps the mark in its footer, as iOS `systemSmall` does. **Panchang** small shows the divided sunrise row (rule at 50%); large uses a 32 sp tithi and 13 sp तक / timing text with sunrise, Rahu Kaal and Abhijit on their own lines; wide is unchanged. The rule is a 1 dp `ImageView` because RemoteViews cannot inflate a plain `View`; its colour, the capsule and the header mark colour follow the solar appearance in `applyAppearance`. Recovery clears the capsule, hides the rule and header mark and restores the XML title size, because a launcher reapplies a same-layout RemoteViews over the previous view tree. Art still shows on API 31+ only. No payload, plate or kind change; it needs a new Android binary. `appearance.test.ts` pins the layout, the reset paths and the size branches. Native launcher screenshots in four languages, Standard/Large and enlarged system text remain pending.
