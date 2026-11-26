@@ -3,7 +3,7 @@ import { ashtakamIds, getAshtakam } from '../ashtakam';
 import { suktamIds, getSuktam } from '../suktam';
 import { kavachamIds, getKavacham } from '../kavacham';
 import { stutiIds, getStuti } from '../stuti';
-import { getVersePool } from '../versePool';
+import { getVersePool, DAILY_POOL_EXCLUDED_SOURCES, isDailyPoolSource } from '../versePool';
 import { parshuramPublished } from '../parshuramAvailability';
 import { devotionalArtForVerse, isDevotionalSubjectArt } from '../devotionalShareArt';
 
@@ -47,13 +47,22 @@ it('pools the flat ashtakam/suktam/kavach/stuti sources without the neutral fall
     ...suktamIds.map(id => ({id, count:getSuktam(id).verses.length})),
     ...kavachamIds.map(id => ({id, count:getKavacham(id).verses.length})),
     ...stutiIds.map(id => ({id, count:getStuti(id).verses.length})),
-  ].filter(({id}) => library.some(e => e.id===id && e.status==='active' && !e.hidden && !['kabir-bhakti-dohe','rahim-bhakti-dohe'].includes(id)));
+  ].filter(({id}) => library.some(e => e.id===id && e.status==='active' && !e.hidden && !['kabir-bhakti-dohe','rahim-bhakti-dohe'].includes(id)) && isDailyPoolSource(id));
   for (const {id,count} of entries) {
     const verses=pool.filter(v=>v.sourceId===id);
     expect(verses).toHaveLength(count);
     for(const verse of verses) expect(devotionalArtForVerse(verse)).not.toBe('prayer');
   }
   expect(pool.some(v=>v.sourceId==='durga-kavach')).toBe(false);
+  // Daily-pool curation (Nov 2026): these registered sources are held out of the
+  // verse of the day while keeping their own readers.
+  const pooledSources = new Set(pool.map(v => v.sourceId));
+  for (const id of DAILY_POOL_EXCLUDED_SOURCES) expect(pooledSources.has(id)).toBe(false);
+  // The three Durga Saptashati stuti chapters and the invocation/dhyānam/
+  // phalaśruti of Vishnu Sahasranama stay; the thousand-name chapter does not.
+  for (const id of ['durga-saptashati-chapter-4','durga-saptashati-chapter-5','durga-saptashati-chapter-11','rama-raksha-stotra','vishnu-sahasranama'])
+    expect(pooledSources.has(id)).toBe(true);
+  expect(pool.some(v => v.sourceId==='vishnu-sahasranama' && v.chapter===3)).toBe(false);
   for (const sourceId of ['kabir-bhakti-dohe', 'rahim-bhakti-dohe', 'unknown-source', 'matribhumi-vandana', 'sandhya-deepam']) {
     expect(devotionalArtForVerse({ sourceId, verseIndex: 0 })).toBe('prayer');
   }
