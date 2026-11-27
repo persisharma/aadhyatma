@@ -38,12 +38,13 @@ content is generated from the registries, so it cannot drift from the code).
 - **State** — `DaanLedgerContext` (AsyncStorage `@vedansh/daan-ledger:v1`,
   versioned payload, PitruSmaran hydration pattern).
 - **Screens** — DaanPunya (educate home, Home + More + Panchang stacks,
-  **today-first since Nov 2026 (Option B)**: today's festival-daan card when
-  covered, a today hero — Annapurna painting, the vaar's items as tags, and a
-  painted chip per served cause → `DaanDirectory {causes:[id]}` — then every
-  vaar's chips, a 3-up painted grid of live causes (`daan-seva-*`), the verse
-  carousel, kathas as a two-up grid, a खाता card with `दर्ज करें`, the header
-  खाता door, and BOTH standing doors in the sticky action bar), DaanJourney (one skippable scroll with always-present terminal
+  **built to the Option B canvas since Nov 2026**: a 440pt painted today card —
+  Annapurna painting under a night gradient, today's daan (festival folded in)
+  as title + glass tiles, painted chip per served cause → `DaanDirectory {causes:[id]}` —
+  then BOTH standing doors in a row under it, every vaar's chips + day card,
+  three night "short reads" cards (`daan-read-1..3`), a 3-up painted grid of
+  live causes (`daan-seva-*`), night-panel verse carousel, two-up katha cards
+  with night bands, a खाता card with `दर्ज करें`, and the header खाता door), DaanJourney (one skippable scroll with always-present terminal
   actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
   (interstitial → `Linking.openURL`; the cause grid tiles are each led by a
   painted प्रयोजन miniature — the `daan-seva` Storybook set, `components/DaanCauseIcon.tsx`
@@ -63,9 +64,9 @@ content is generated from the registries, so it cannot drift from the code).
 
 - **§2.7 IA contract is load-bearing**: education is the default, not a gate.
   `DaanPunyaScreen` always shows `daan-home-donate` → journey and
-  `daan-home-dwaar` → directory, both inside the sticky `daan-home-actions`
-  bar (keep them there — the Sept 2026 review found the earlier text-link
-  door had a ~26pt tap height and read as a caption); the journey is one
+  `daan-home-dwaar` → directory, both inside the `daan-home-actions`
+  row directly under the painted today card (Option B; never a text link —
+  the Sept 2026 review found one had a ~26pt tap height); the journey is one
   skippable scroll whose record and directory actions are always present at
   the end; `DaanKathaScreen` ends on `daan-katha-next` / `-donate` / `-record`.
   The app still never handles money. `DaanScreens.test.tsx` pins these doors

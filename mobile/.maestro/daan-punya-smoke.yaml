@@ -79,6 +79,14 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: daan-directory-cause
 - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
+# Option B: the three short reads sit between the vaar card and the seva grid.
+- scrollUntilVisible:
+    element:
+      id: "daan-read-1"
+    direction: DOWN
+    timeout: 20000
+    centerElement: true
+- takeScreenshot: daan-home-reads
 # Every live cause is a painted seva tile; anna always has verified orgs. The
 # painting itself is decorative (hidden from accessibility, so Maestro cannot
 # see its id — Jest pins one icon per tile); the tile button is the target.
