@@ -130,12 +130,15 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── 2. The educate home: shastra + kathas render; ledger door in the header ──
+# By id: the verse label now carries its place ("What the shastra says · 1 of 5")
+# and section labels render uppercase, so text matches would be brittle.
 - extendedWaitUntil:
-    visible: "What the shastra says"
+    visible:
+      id: "daan-principle-carousel"
     timeout: 15000
 - scrollUntilVisible:
     element:
-      text: "Stories of giving"
+      id: "daan-katha-shelf"
     direction: DOWN
     timeout: 30000
 - scrollUntilVisible:
