@@ -124,3 +124,17 @@ it('recovers a transient write failure without losing the amount', async () => {
   expect(goBack).toHaveBeenCalledTimes(1);
   expect(tree.root.findAllByProps({ testID: 'daan-save-error' })).toHaveLength(0);
 });
+
+it('gives the iOS decimal pad a Done bar that dismisses it and validates the amount', async () => {
+  const dismiss = jest.spyOn(require('react-native').Keyboard, 'dismiss').mockImplementation(() => {});
+  // The jest preset renders as iOS: the amount field points at the accessory.
+  expect(node('daan-entry-amount').props.inputAccessoryViewID).toBe('daan-amount-accessory');
+  expect(node('daan-amount-done').props.accessibilityLabel).toBe('Done');
+  await act(async () => node('daan-amount-done').props.onPress());
+  expect(dismiss).toHaveBeenCalledTimes(1);
+  // Blur (what dismissing does) marks the field touched, so an invalid amount shows its alert.
+  await input('daan-entry-amount', '500abc');
+  await act(async () => node('daan-entry-amount').props.onBlur());
+  expect(node('daan-amount-error').props.accessibilityRole).toBe('alert');
+  dismiss.mockRestore();
+});

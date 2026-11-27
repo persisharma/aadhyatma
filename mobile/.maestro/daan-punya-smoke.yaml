@@ -28,6 +28,12 @@ appId: com.prashantsharma.vedansh
 # ── Global reading language → English (More → Language picker sheet) ──
 - runFlow: _open-settings.yaml
 - waitForAnimationToEnd
+# The ऐप section (Language) sits below the fold on standard-height iPhones
+# (the same scroll kundali-smoke.yaml uses); a blind tap misses the row.
+- scrollUntilVisible:
+    element:
+      text: "Language,.*"
+    centerElement: true
 - tapOn: "Language,.*"
 - waitForAnimationToEnd
 - extendedWaitUntil:
@@ -37,6 +43,12 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── 1. More → Daan Punya ──
+# The Language scroll can leave the Daan row out of view; bring it back.
+- scrollUntilVisible:
+    element:
+      id: "more-daan-punya"
+    direction: UP
+    centerElement: true
 - tapOn: { id: "more-daan-punya" }
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya"
@@ -67,17 +79,14 @@ appId: com.prashantsharma.vedansh
 - takeScreenshot: daan-directory-cause
 - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
 - waitForAnimationToEnd
-# Every live cause is a painted seva tile; anna always has verified orgs.
+# Every live cause is a painted seva tile; anna always has verified orgs. The
+# painting itself is decorative (hidden from accessibility, so Maestro cannot
+# see its id — Jest pins one icon per tile); the tile button is the target.
 - scrollUntilVisible:
     element:
-      id: "daan-seva-grid"
+      id: "daan-seva-anna"
     direction: DOWN
     timeout: 20000
-- scrollUntilVisible:
-    element:
-      id: "daan-seva-icon-anna"
-    direction: DOWN
-    timeout: 15000
     centerElement: true
 - takeScreenshot: daan-home-seva
 - tapOn:
@@ -129,7 +138,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: { id: "daan-entry-amount" }
 - inputText: "1,00"
-- hideKeyboard
+# iOS's decimal pad has no return key; the amount field's Done bar (an
+# InputAccessoryView) dismisses it and blurs the field, which runs the
+# validation. hideKeyboard, taps and drags all failed to dismiss it natively.
+- tapOn: { id: "daan-amount-done" }
 - scrollUntilVisible:
     element: { id: "daan-entry-save" }
     direction: DOWN
@@ -139,9 +151,14 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "daan-entry-amount" }
 - eraseText
 - inputText: "1,000.50"
-- hideKeyboard
-- assertVisible: { id: "daan-amount-preview" }
+- tapOn: { id: "daan-amount-done" }
+- scrollUntilVisible:
+    element: { id: "daan-amount-preview" }
+    direction: DOWN
 - takeScreenshot: daan-amount-preview
+- scrollUntilVisible:
+    element: { id: "daan-entry-save" }
+    direction: DOWN
 - tapOn: { id: "daan-entry-save" }
 - waitForAnimationToEnd
 - assertVisible: "Daan Punya register"
