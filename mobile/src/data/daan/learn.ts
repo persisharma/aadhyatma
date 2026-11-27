@@ -53,13 +53,15 @@ export const DAAN_LEARN_NOT_MONEY: readonly { cause: DaanCause | null; label: Bi
 
 // ── Read 2 · How to give ─────────────────────────────────────────────────
 /** The Taittirīya's six words (1.11.3), each with a plain gloss; `not` marks "never without faith". */
-export const DAAN_LEARN_SIX_WAYS: readonly { word: string; plain: Bi; child: Bi; not?: true }[] = [
-  { word: 'श्रद्धया', plain: { hi: 'श्रद्धा से', en: 'With faith' }, child: { hi: 'मन से मानकर दें।', en: 'Give because you believe in it.' } },
-  { word: 'अश्रद्धया अदेयम्', plain: { hi: 'बिना श्रद्धा के नहीं', en: 'Never without faith' }, child: { hi: 'मन न हो तो न दें।', en: 'If your heart is not in it, don’t give.' }, not: true },
-  { word: 'श्रिया', plain: { hi: 'सामर्थ्य के अनुसार', en: 'By your means' }, child: { hi: 'जितना सम्भव हो, उतना दें।', en: 'Give what you can manage.' } },
-  { word: 'ह्रिया', plain: { hi: 'विनम्रता से', en: 'With humility' }, child: { hi: 'लेने वाले को छोटा न समझें।', en: 'Never look down on the one who receives.' } },
-  { word: 'भिया', plain: { hi: 'संकोच सहित', en: 'With awe' }, child: { hi: 'धीरे से दें, गर्व से नहीं।', en: 'Give gently, never proudly.' } },
-  { word: 'संविदा', plain: { hi: 'समझ के साथ', en: 'With understanding' }, child: { hi: 'जानें किसे दे रहे हैं, और क्यों।', en: 'Know whom you give to, and why.' } },
+export type DaanLearnWayIcon = 'faith' | 'no' | 'means' | 'humble' | 'awe' | 'know';
+
+export const DAAN_LEARN_SIX_WAYS: readonly { word: string; icon: DaanLearnWayIcon; plain: Bi; child: Bi; not?: true }[] = [
+  { word: 'श्रद्धया', icon: 'faith', plain: { hi: 'श्रद्धा से', en: 'With faith' }, child: { hi: 'मन से मानकर दें।', en: 'Give because you believe in it.' } },
+  { word: 'अश्रद्धया अदेयम्', icon: 'no', plain: { hi: 'बिना श्रद्धा के नहीं', en: 'Never without faith' }, child: { hi: 'मन न हो तो न दें।', en: 'If your heart is not in it, don’t give.' }, not: true },
+  { word: 'श्रिया', icon: 'means', plain: { hi: 'सामर्थ्य के अनुसार', en: 'By your means' }, child: { hi: 'जितना सम्भव हो, उतना दें।', en: 'Give what you can manage.' } },
+  { word: 'ह्रिया', icon: 'humble', plain: { hi: 'विनम्रता से', en: 'With humility' }, child: { hi: 'लेने वाले को छोटा न समझें।', en: 'Never look down on the one who receives.' } },
+  { word: 'भिया', icon: 'awe', plain: { hi: 'संकोच सहित', en: 'With awe' }, child: { hi: 'धीरे से दें, गर्व से नहीं।', en: 'Give gently, never proudly.' } },
+  { word: 'संविदा', icon: 'know', plain: { hi: 'समझ के साथ', en: 'With understanding' }, child: { hi: 'जानें किसे दे रहे हैं, और क्यों।', en: 'Know whom you give to, and why.' } },
 ];
 
 /** Gita 17.20's desha · kaala · patra. */
@@ -96,6 +98,8 @@ export const DAAN_LEARN_REGISTER = {
   sampleTithi: { hi: '[उस दिन की तिथि] · शुक्रवार', en: '[tithi of the day] · Shukravar' },
   sampleNote: { hi: 'मन्दिर की रसोई के लिए चावल', en: 'Rice for the temple kitchen' },
   guptName: { hi: 'गुप्त दान', en: 'Gupt daan' },
+  sampleDate: { hi: '20 नवं॰', en: '20 Nov' },
+  guptDate: { hi: '18 नवं॰', en: '18 Nov' },
   guptRow: { hi: 'केवल तिथि रहती है — न राशि, न विवरण, न पात्र।', en: 'Only the date is kept — no amount, no note, no recipient.' },
   guptLabel: { hi: 'गुप्त दान पहले क्यों', en: 'Why gupt daan comes first' },
   guptMeaning: {

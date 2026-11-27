@@ -1643,3 +1643,6 @@ The #736 build drifted from `OptionB.dc.html`. Rebuilt: 440pt painted today card
 
 ## [2026-11-27] ingest | Daan "three short reads" open the Learn reader
 #738 routed the read cards to the journey / a scroll / the ledger; the design links them to guide steps 1, 2, 5. New `DaanLearnScreen` (`DaanLearn {read}`, Home/More/Panchang stacks): what daan is · how to give · remember it quietly, verses from the principle registry, glosses in `data/daan/learn.ts`, दान-द्वार on every page. Step-1 photo pending (R2). design.md §73 + [[daan-punya]] synced.
+
+## [2026-11-27] ingest | Daan design audit vs the Option B canvas
+Home: eyebrow section labels, Register pill, page wash, 470pt card with icon-led item tiles + one "Serves" line, single night gradient, verse as one night panel (label/dots inside), cream tiles. Learn: six-ways glyphs, star points, sample dates, door glyph. Daan-dwaar cause page rebuilt to CausePage: cause chips, night header, mahatva card, vaar strip, place cards with hand-off line, record door. Not built: per-cause photo heroes, "How this seva reaches people" (no registry content), step-1 photo (R2). design.md §73 + [[daan-punya]] synced.

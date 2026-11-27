@@ -43,7 +43,7 @@ jest.mock('@/panchang/usePanchang', () => ({
   ],
 }));
 
-import DaanPunyaScreen from '../DaanPunyaScreen';
+import DaanPunyaScreen, { itemCauseIcon } from '../DaanPunyaScreen';
 import DaanJourneyScreen from '../DaanJourneyScreen';
 import DaanDirectoryScreen from '../DaanDirectoryScreen';
 import DaanDirectoryDetailScreen from '../DaanDirectoryDetailScreen';
@@ -178,6 +178,16 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     }
     await press(tree, 'daan-today-journey');
     expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanJourney', { occasionId: occasion.id });
+    await act(async () => tree.unmount());
+  });
+
+  test('each today item wears a painted seva icon read from its name', async () => {
+    expect(itemCauseIcon('white cloth', 'anna')).toBe('vastra');
+    expect(itemCauseIcon('books', 'anna')).toBe('vidya');
+    expect(itemCauseIcon('green fodder (gau-gras)', 'anna')).toBe('gau');
+    expect(itemCauseIcon('rice', 'anna')).toBe('anna');
+    const tree = await renderScreen(<DaanPunyaScreen navigation={{ ...mockNavigation } as never} route={{ key: 'k', name: 'DaanPunya' } as never} />);
+    expect(has(tree, 'daan-today-item-icon-0')).toBe(true);
     await act(async () => tree.unmount());
   });
 
@@ -393,6 +403,21 @@ describe('दान-द्वार — the cause (प्रयोजन) axis, 
     // Filtered to गौ-सेवा: TTD's Gosamrakshana row is in, Goonj (vastra) is out.
     expect(has(tree, 'daan-org-ttd-annaprasadam')).toBe(true);
     expect(has(tree, 'daan-org-goonj')).toBe(false);
+    await act(async () => tree.unmount());
+  });
+
+  test('the cause page: every live cause as a chip, night header, vaar strip, places, record door', async () => {
+    const tree = await renderDirectory({ causes: ['gau'] });
+    expect(has(tree, 'daan-cause-hero-gau')).toBe(true);
+    // Wednesday's gau-gras puts गौ-सेवा on the vaar strip.
+    expect(has(tree, 'daan-cause-days-gau')).toBe(true);
+    for (const id of ['anna', 'vastra', 'vidya']) expect(has(tree, `daan-cause-${id}`)).toBe(true);
+    // Another chip switches the cause in place.
+    await press(tree, 'daan-cause-vastra');
+    expect(has(tree, 'daan-cause-mahatva-vastra')).toBe(true);
+    expect(has(tree, 'daan-org-goonj')).toBe(true);
+    await press(tree, 'daan-cause-record');
+    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanEntry', undefined);
     await act(async () => tree.unmount());
   });
 

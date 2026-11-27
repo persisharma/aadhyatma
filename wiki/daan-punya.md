@@ -46,7 +46,9 @@ content is generated from the registries, so it cannot drift from the code).
   live causes (`daan-seva-*`), night-panel verse carousel, two-up katha cards
   with night bands, a खाता card with `दर्ज करें`, and the header खाता door), DaanLearn (the three short reads, one per page, with the दान-द्वार door on every page; glosses in `data/daan/learn.ts`, card lines in the tiny `learnReads.ts` to keep the home's cold start light), DaanJourney (one skippable scroll with always-present terminal
   actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
-  (interstitial → `Linking.openURL`; the cause grid tiles are each led by a
+  (the filtered द्वार is the design's cause page — cause chips, night header,
+  mahatva card, vaar strip of giving days, place cards, record door; no counts;
+  interstitial → `Linking.openURL`; the cause grid tiles are each led by a
   painted प्रयोजन miniature — the `daan-seva` Storybook set, `components/DaanCauseIcon.tsx`
   → `assets/icons/daan-seva/seva-<cause>.png`, one per cause, pinned by
   `storybookAssets.test.ts`), DaanKatha (story → शिक्षा → canonical work/passage →
