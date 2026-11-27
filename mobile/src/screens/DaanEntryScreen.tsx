@@ -6,7 +6,7 @@
  * merely hidden. Amounts never render outside this ledger and its export.
  */
 import React, { useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
+import { AccessibilityInfo, InputAccessoryView, Keyboard, Platform, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -28,6 +28,14 @@ import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
 import { contentByLang, pick } from '@/utils/localize';
 import { scriptBodyFont, scriptTitleFont } from '@/utils/langType';
+
+/**
+ * iOS's decimal pad has no return key, so the amount field carries a Done bar
+ * (InputAccessoryView): without it the keypad covers Save and nothing on the
+ * form reliably dismisses it (native simulator run, Nov 2026). Android's
+ * numeric keyboard has its own dismiss key, so the bar is iOS-only.
+ */
+export const DAAN_AMOUNT_ACCESSORY_ID = 'daan-amount-accessory';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanEntry'>;
 
@@ -234,6 +242,7 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
               editable={!saving}
               onChangeText={setAmountText}
               keyboardType="decimal-pad"
+              inputAccessoryViewID={Platform.OS === 'ios' ? DAAN_AMOUNT_ACCESSORY_ID : undefined}
               onBlur={() => setAmountTouched(true)}
               accessibilityLabel={amountLabel}
               accessibilityHint={showAmountError ? amountError : undefined}
@@ -285,12 +294,34 @@ export default function DaanEntryScreen({ navigation, route }: Props) {
           )}
         </Text>
       </KeyboardAwareScrollView>
+      {Platform.OS === 'ios' ? (
+        <InputAccessoryView nativeID={DAAN_AMOUNT_ACCESSORY_ID}>
+          <View style={[styles.accessoryBar, { backgroundColor: colors.parchmentHighlight, borderTopColor: colors.divider }]}>
+            <Pressable
+              testID="daan-amount-done"
+              accessibilityRole="button"
+              accessibilityLabel="Done"
+              // Dismissing blurs the field, so onBlur marks it touched and the
+              // amount is validated exactly as on any other blur.
+              onPress={() => Keyboard.dismiss()}
+              hitSlop={8}
+              style={({ pressed }) => [styles.accessoryDone, pressed && { opacity: 0.7 }]}
+            >
+              <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: 26, color: colors.saffronDeep }}>
+                {pick(lang, { hi: 'हो गया', en: 'Done', gu: 'થઈ ગયું', kn: 'ಆಯಿತು' })}
+              </Text>
+            </Pressable>
+          </View>
+        </InputAccessoryView>
+      ) : null}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  accessoryBar: { flexDirection: 'row', justifyContent: 'flex-end', borderTopWidth: StyleSheet.hairlineWidth, paddingHorizontal: 12 },
+  accessoryDone: { minHeight: 44, minWidth: 64, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
   tithiBox: { borderWidth: 1, paddingHorizontal: 13, paddingVertical: 12 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 7 },
   chip: { borderWidth: 1, paddingHorizontal: 13, paddingVertical: 7 },

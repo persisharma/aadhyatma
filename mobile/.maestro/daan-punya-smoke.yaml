@@ -138,13 +138,10 @@ appId: com.prashantsharma.vedansh
     direction: DOWN
 - tapOn: { id: "daan-entry-amount" }
 - inputText: "1,00"
-# iOS's decimal pad has no dismiss key, so Maestro's hideKeyboard fails, and a
-# tap on the form did not dismiss it on the simulator. The form's
-# KeyboardAwareScrollView uses keyboardDismissMode="on-drag": a short drag
-# dismisses the keypad and blurs the field, which also runs the validation.
-- swipe:
-    direction: DOWN
-    duration: 400
+# iOS's decimal pad has no return key; the amount field's Done bar (an
+# InputAccessoryView) dismisses it and blurs the field, which runs the
+# validation. hideKeyboard, taps and drags all failed to dismiss it natively.
+- tapOn: { id: "daan-amount-done" }
 - scrollUntilVisible:
     element: { id: "daan-entry-save" }
     direction: DOWN
@@ -154,9 +151,7 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "daan-entry-amount" }
 - eraseText
 - inputText: "1,000.50"
-- swipe:
-    direction: DOWN
-    duration: 400
+- tapOn: { id: "daan-amount-done" }
 - scrollUntilVisible:
     element: { id: "daan-amount-preview" }
     direction: DOWN
