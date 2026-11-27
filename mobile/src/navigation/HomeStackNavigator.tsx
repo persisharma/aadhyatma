@@ -50,6 +50,7 @@ const ChalisaReaderScreen = lazyScreen('ChalisaReader', 3, () => import('@/scree
 const DaanDirectoryScreen = lazyScreen('DaanDirectory', 3, () => import('@/screens/DaanDirectoryScreen'));
 const DaanJourneyScreen = lazyScreen('DaanJourney', 3, () => import('@/screens/DaanJourneyScreen'));
 const DaanKathaScreen = lazyScreen('DaanKatha', 3, () => import('@/screens/DaanKathaScreen'));
+const DaanLearnScreen = lazyScreen('DaanLearn', 3, () => import('@/screens/DaanLearnScreen'));
 const DaanLedgerScreen = lazyScreen('DaanLedger', 3, () => import('@/screens/DaanLedgerScreen'));
 const DeityDetailScreen = lazyScreen('DeityDetail', 3, () => import('@/screens/DeityDetailScreen'));
 const DeityListScreen = lazyScreen('DeityList', 3, () => import('@/screens/DeityListScreen'));
@@ -165,6 +166,7 @@ export default function HomeStackNavigator() {
       <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} />
       <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} />
       <Stack.Screen name="DaanKatha" component={DaanKathaScreen} />
+      <Stack.Screen name="DaanLearn" component={DaanLearnScreen} />
       <Stack.Screen
         name="ChalisaReader"
         component={ChalisaReaderScreen}

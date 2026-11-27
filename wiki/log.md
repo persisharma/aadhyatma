@@ -1640,3 +1640,6 @@ Placed widgets showed three edge lines (OS edge + two inset gold frames). `Herit
 
 ## [2026-11-27] ingest | Daan home matched to the Option B canvas
 The #736 build drifted from `OptionB.dc.html`. Rebuilt: 440pt painted today card (night gradient, festival folded in, glass item tiles, painted cause chips), doors directly under it (sticky bar removed), vaar chips in night colours + day card, the missing "Learn daan in three short reads" night cards, night-panel verses, night-band katha cards; faded background plate dropped. design.md §73 + [[daan-punya]] synced. Native visual check pending.
+
+## [2026-11-27] ingest | Daan "three short reads" open the Learn reader
+#738 routed the read cards to the journey / a scroll / the ledger; the design links them to guide steps 1, 2, 5. New `DaanLearnScreen` (`DaanLearn {read}`, Home/More/Panchang stacks): what daan is · how to give · remember it quietly, verses from the principle registry, glosses in `data/daan/learn.ts`, दान-द्वार on every page. Step-1 photo pending (R2). design.md §73 + [[daan-punya]] synced.

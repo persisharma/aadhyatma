@@ -48,6 +48,7 @@ import DaanJourneyScreen from '../DaanJourneyScreen';
 import DaanDirectoryScreen from '../DaanDirectoryScreen';
 import DaanDirectoryDetailScreen from '../DaanDirectoryDetailScreen';
 import DaanKathaScreen from '../DaanKathaScreen';
+import DaanLearnScreen, { clampLearnRead } from '../DaanLearnScreen';
 import { getDaanKathas, getDaanOccasionForRule, getDaanOrg, getDaanOrgs, getDaanVaarEntry } from '@/data/daan';
 
 const has = (tree: TestRenderer.ReactTestRenderer, testID: string) =>
@@ -180,14 +181,13 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     await act(async () => tree.unmount());
   });
 
-  test('the three short reads open the journey and the register', async () => {
+  test('each of the three short reads opens the Learn reader at that page', async () => {
     const navigation = { ...mockNavigation } as never;
     const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
-    for (const n of [1, 2, 3]) expect(has(tree, `daan-read-${n}`)).toBe(true);
-    await press(tree, 'daan-read-1');
-    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanJourney', { occasionId: 'makar-sankranti' });
-    await press(tree, 'daan-read-3');
-    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanLedger');
+    for (const n of [1, 2, 3] as const) {
+      await press(tree, `daan-read-${n}`);
+      expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanLearn', { read: n });
+    }
     await act(async () => tree.unmount());
   });
 
@@ -535,5 +535,58 @@ describe('पात्र-परिचय — a place, not a profile (RULEBOOK �
     expect(openURL).toHaveBeenCalledWith(org.officialUrl);
     openURL.mockRestore();
     await act(async () => tree.unmount());
+  });
+});
+
+describe('DaanLearnScreen — three short reads, a door on every page', () => {
+  const renderLearn = (read?: number) =>
+    renderScreen(
+      <DaanLearnScreen
+        navigation={{ ...mockNavigation } as never}
+        route={{ key: 'k', name: 'DaanLearn', params: read ? { read } : undefined } as never}
+      />
+    );
+
+  test('opens on the requested read, and an unknown read falls back to the first', async () => {
+    expect(clampLearnRead(2)).toBe(2);
+    expect(clampLearnRead(7)).toBe(1);
+    expect(clampLearnRead(undefined)).toBe(1);
+    const tree = await renderLearn(2);
+    expect(has(tree, 'daan-learn-read-2')).toBe(true);
+    expect(has(tree, 'daan-learn-upanishad')).toBe(true);
+    expect(has(tree, 'daan-learn-gita-panel')).toBe(true);
+    await act(async () => tree.unmount());
+  });
+
+  test('read 1 carries the Veda panel; next/previous walk the reads and finish returns', async () => {
+    const tree = await renderLearn();
+    expect(has(tree, 'daan-learn-read-1')).toBe(true);
+    expect(has(tree, 'daan-learn-veda')).toBe(true);
+    await press(tree, 'daan-learn-next');
+    expect(has(tree, 'daan-learn-read-2')).toBe(true);
+    await press(tree, 'daan-learn-next');
+    expect(has(tree, 'daan-learn-read-3')).toBe(true);
+    expect(has(tree, 'daan-learn-gupt')).toBe(true);
+    await press(tree, 'daan-learn-prev');
+    expect(has(tree, 'daan-learn-read-2')).toBe(true);
+    await press(tree, 'daan-learn-next');
+    await press(tree, 'daan-learn-next');
+    expect(mockNavigation.goBack).toHaveBeenCalled();
+    await act(async () => tree.unmount());
+  });
+
+  test('the daan-dwaar door is on every read; read 3 opens the register and a new entry', async () => {
+    for (const read of [1, 2, 3]) {
+      const tree = await renderLearn(read);
+      await press(tree, 'daan-learn-dwaar');
+      expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanDirectory', {});
+      if (read === 3) {
+        await press(tree, 'daan-learn-ledger');
+        expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanLedger');
+        await press(tree, 'daan-learn-record');
+        expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanEntry', undefined);
+      }
+      await act(async () => tree.unmount());
+    }
   });
 });

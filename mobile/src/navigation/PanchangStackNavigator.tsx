@@ -51,6 +51,7 @@ const VidhiConductScreen = lazyScreen('VidhiConduct', 4, () => import('@/screens
 const DaanDirectoryScreen = lazyScreen('DaanDirectory', 5, () => import('@/screens/DaanDirectoryScreen'));
 const DaanEntryScreen = lazyScreen('DaanEntry', 5, () => import('@/screens/DaanEntryScreen'));
 const DaanKathaScreen = lazyScreen('DaanKatha', 5, () => import('@/screens/DaanKathaScreen'));
+const DaanLearnScreen = lazyScreen('DaanLearn', 5, () => import('@/screens/DaanLearnScreen'));
 const VastuDishaScreen = lazyScreen('VastuDisha', 5, () => import('@/screens/VastuDishaScreen'));
 
 // depth 6
@@ -129,6 +130,7 @@ export default function PanchangStackNavigator({ initialMode = 'calendar' }: { i
       <Stack.Screen name="DaanDirectory" component={DaanDirectoryScreen} options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="DaanDirectoryDetail" component={DaanDirectoryDetailScreen} options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="DaanKatha" component={DaanKathaScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="DaanLearn" component={DaanLearnScreen} options={{ animation: 'slide_from_right' }} />
       {/* मेरा घर (PRD-24 Phase 2) — the griha-pravesh result's door pushes the
        * journey in place here so Back returns to the muhurat result. require()
        * thunks keep the journey off the static launch graph (launchGraph budget). */}

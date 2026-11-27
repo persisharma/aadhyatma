@@ -8,7 +8,7 @@
  *      glass tiles and the प्रयोजन it serves as painted chips;
  *   2. the two standing doors right under it (दान-द्वार, दान करें);
  *   3. every vaar's daan (chips + the selected day's card);
- *   4. three short reads (what daan is, how to give, the register);
+ *   4. three short reads → the Learn reader (DaanLearnScreen) at that page;
  *   5. the nine kinds of seva with their painted icons;
  *   6. the verse spine as night panels;
  *   7. the teaching-kathas as two-up cards;
@@ -21,7 +21,7 @@
  * and nothing narrates where the register is stored
  * (`userFacingImplementationCopy.test.ts`).
  */
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -48,6 +48,7 @@ import {
   getDaanPrinciples,
   type DaanCause,
 } from '@/data/daan';
+import { DAAN_LEARN_READS } from '@/data/daan/learnReads';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
@@ -94,8 +95,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const lead = (size: number, latinLeading: number) => (latin ? latinLeading : Math.ceil(size * 1.7));
   const cap = (text: string) => (latin ? text.charAt(0).toUpperCase() + text.slice(1) : text);
 
-  const scrollRef = useRef<ScrollView>(null);
-  const [shastraY, setShastraY] = useState(0);
 
   const [calendarSystem] = usePanchangCalendarSystem();
   // Stable per calendar day — an inline `new Date()` changes every render, which
@@ -136,7 +135,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
   const principles = getDaanPrinciples();
   const kathas = getDaanKathas();
-  const principle = (id: string) => principles.find((entry) => entry.id === id);
 
   // Verse carousel: which panel is in view (dots).
   const [verseIdx, setVerseIdx] = useState(0);
@@ -154,34 +152,22 @@ export default function DaanPunyaScreen({ navigation }: Props) {
     color,
   });
 
-  // The three short reads open teaching that already exists; their sub-lines
-  // are the verified principle titles, never authored stance.
-  const reads = [
-    {
-      id: 1,
-      icon: storybookSources.daan,
-      title: contentByLang(lang, 'दान क्या है', 'What daan is'),
-      sub: principle('dana-sukta') ? contentByLang(lang, principle('dana-sukta')!.titleHi, principle('dana-sukta')!.titleEn) : '',
-      open: () => navigation.navigate('DaanJourney', todayOccasion ? { occasionId: todayOccasion.id } : {}),
-      gradient: [colors.skyNightTop, colors.skyNightUpper] as const,
-    },
-    {
-      id: 2,
-      icon: storybookSources.suktam,
-      title: contentByLang(lang, 'कैसे दें', 'How to give'),
-      sub: principle('shraddhaya-deyam') ? contentByLang(lang, principle('shraddhaya-deyam')!.titleHi, principle('shraddhaya-deyam')!.titleEn) : '',
-      open: () => scrollRef.current?.scrollTo({ y: Math.max(0, shastraY - spacing.md), animated: true }),
-      gradient: [colors.skyNightUpper, colors.skyNightLower] as const,
-    },
-    {
-      id: 3,
-      icon: storybookSources.granth,
-      title: contentByLang(lang, 'आपका दान-खाता', 'Your daan register'),
-      sub: principle('gupt-daan') ? contentByLang(lang, principle('gupt-daan')!.titleHi, principle('gupt-daan')!.titleEn) : '',
-      open: () => navigation.navigate('DaanLedger'),
-      gradient: [colors.skyNightLower, colors.skyNightHorizon] as const,
-    },
-  ];
+  // The three short reads open the Learn reader at that page (design: the
+  // guide's steps 1, 2 and 5). Their lines come from `data/daan/learnReads.ts`.
+  const readGradients = [
+    [colors.skyNightTop, colors.skyNightUpper],
+    [colors.skyNightUpper, colors.skyNightLower],
+    [colors.skyNightLower, colors.skyNightHorizon],
+  ] as const;
+  const readIcons = [storybookSources.daan, storybookSources.suktam, storybookSources.granth] as const;
+  const reads = DAAN_LEARN_READS.map((entry, i) => ({
+    id: entry.id,
+    icon: readIcons[i],
+    title: contentByLang(lang, entry.title.hi, entry.title.en),
+    sub: contentByLang(lang, entry.card.hi, entry.card.en),
+    open: () => navigation.navigate('DaanLearn', { read: entry.id }),
+    gradient: readGradients[i],
+  }));
 
   return (
     <View style={[styles.root, { backgroundColor: colors.parchment }]}>
@@ -213,7 +199,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
         }
       />
       <ScrollView
-        ref={scrollRef}
         contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingTop: spacing.sm, paddingBottom: spacing.xxl, gap: 22 }}
         showsVerticalScrollIndicator={false}
       >
@@ -418,7 +403,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
         </View>
 
         {/* ── 6. What the shastra says — night panels ───────────────────── */}
-        <View onLayout={(e) => setShastraY(e.nativeEvent.layout.y)}>
+        <View>
           <View style={styles.labelRow}>
             <Text style={sectionTitle}>{contentByLang(lang, 'शास्त्र क्या कहते हैं', 'What the shastra says')}</Text>
             <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: lead(11.5, 16), color: colors.inkMuted }}>
