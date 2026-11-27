@@ -26,13 +26,14 @@
  * give/open affordance (that lives on the detail, §2.7).
  */
 import React, { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import ReaderHeader from '@/components/ReaderHeader';
 import DaanCauseIcon from '@/components/DaanCauseIcon';
+import { storybookSources } from '@/components/storybookSources';
 import { useGitaLanguage } from '@/data/gita/language';
 import { DAAN_CAUSES, DAAN_VAAR_ENTRIES, getDaanOrgs, type DaanCause, type DaanCauseMeta, type DaanOrgEntry } from '@/data/daan';
 import type { DaanStackParamList } from '@/navigation/types';
@@ -41,6 +42,14 @@ import { contentByLang, meaningByLang } from '@/utils/localize';
 import { isLatinLang, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanDirectory'>;
+
+/** The Storybook painting that leads each place card, by the kind of place it is. */
+const ORG_KIND_ART: Readonly<Record<DaanOrgEntry['kind'], number>> = {
+  'anna-kshetra': storybookSources.daan,
+  'temple-trust': storybookSources.theerth,
+  ngo: storybookSources.purpose,
+  'seva-portal': storybookSources.practice,
+};
 
 export default function DaanDirectoryScreen({ navigation, route }: Props) {
   const { colors, typography, spacing, radii, elevation } = useTheme();
@@ -196,10 +205,9 @@ export default function DaanDirectoryScreen({ navigation, route }: Props) {
         pressed && { opacity: 0.8 },
       ]}
     >
+      {/* Painted art, never a letter tile (RULEBOOK §3): the Storybook painting for the place's kind. */}
       <LinearGradient colors={[colors.skyNightUpper, colors.skyNightLower]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.initial, { borderRadius: radii.md }]}>
-        <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 15, lineHeight: 20, color: colors.nightGold }}>
-          {org.nameEn.replace(/^The /, '').charAt(0)}
-        </Text>
+        <Image source={ORG_KIND_ART[org.kind]} style={styles.initialArt} resizeMode="contain" accessibilityElementsHidden importantForAccessibility="no" />
       </LinearGradient>
       <View style={{ flex: 1, minWidth: 0 }}>
         <Text style={{ fontFamily: titleFont, fontSize: 15, lineHeight: lead(15, 23), color: colors.ink }}>
@@ -353,6 +361,7 @@ const styles = StyleSheet.create({
   tile: { borderWidth: 1, paddingHorizontal: 13, paddingVertical: 13, flexBasis: '47%', flexGrow: 1 },
   rowCard: { borderWidth: 1, paddingHorizontal: 14, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', gap: 12 },
   initial: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  initialArt: { width: 36, height: 36 },
   chip: { minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 6, paddingLeft: 4, paddingRight: 14 },
   causeHero: { flexDirection: 'row', alignItems: 'center', gap: 14, borderWidth: 1, paddingHorizontal: 16, paddingVertical: 18, overflow: 'hidden' },
   star: { position: 'absolute', width: 2, height: 2, borderRadius: 1 },
