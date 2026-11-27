@@ -172,7 +172,11 @@
     navigator.sendBeacon('/api/hits?p=%2Fget%2F' + (source ? '&src=' + encodeURIComponent(source) : ''));
   } catch (e) { /* decoration only */ }
 
-  var target = isAndroid ? PLAY : (isIOS ? IOS : null);
+  // A store button on the temple-walk site (/mandir/) links here with
+  // store=ios|android, so the tap is counted and the visitor still gets the
+  // store they chose; otherwise the device decides.
+  var store = params.get('store');
+  var target = store === 'ios' ? IOS : store === 'android' ? PLAY : (isAndroid ? PLAY : (isIOS ? IOS : null));
   if (!target) {
     document.getElementById('status').textContent = 'Choose your store above.';
     return;
@@ -180,7 +184,7 @@
 
   // replace() so the back button returns to wherever they came from rather
   // than bouncing them through this page again.
-  document.getElementById('status').textContent = 'Taking you to ' + (isAndroid ? 'Google Play' : 'the App Store') + '…';
+  document.getElementById('status').textContent = 'Taking you to ' + (target === PLAY ? 'Google Play' : 'the App Store') + '…';
   window.location.replace(target);
 })();
 </script>

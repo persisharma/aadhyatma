@@ -75,12 +75,16 @@ window.addEventListener('vedansh:lang', (e) => setLang(e.detail && e.detail.lang
 // After setLang above, so classic-site links read the new language.
 window.addEventListener('vedansh:lang', () => document.querySelectorAll('a[data-classic]').forEach((a) => { a.href = classicHref(); }));
 
+/** A store link through the site's /get/ download link: the tap counts on /stats/ under source "mandir",
+    Google Play gets the tags as its install referrer, and `store` keeps the store the visitor chose. */
+export const getHref = (store, from = '') => `/get/?utm_source=mandir&utm_medium=${encodeURIComponent(from || 'site')}&store=${store}`;
+
 /** Ask the chrome to open the Get-the-app sheet; falls back to the store when no chrome is mounted. */
 export function requestGet(from = '') {
   const ev = new CustomEvent('vedansh:get', { detail: { from }, cancelable: true });
   if (window.dispatchEvent(ev)) {
     const ios = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent) && 'ontouchend' in document;
-    window.open(ios ? content.storeLinks.ios : content.storeLinks.android, '_blank', 'noopener');
+    window.open(getHref(ios ? 'ios' : 'android', from), '_blank', 'noopener');
   }
 }
 
@@ -150,10 +154,9 @@ const UI = {
 };
 
 export function storeButtons({ from = '', size = '' } = {}) {
-  const { ios, android } = content.storeLinks;
   return `<div class="vc-stores${size ? ' vc-stores--' + size : ''}" data-from="${esc(from)}">
-    <a class="vc-store" href="${android}" target="_blank" rel="noopener" data-store="android">${PLAY}<span class="vc-store-txt">${t(UI.playTop, 'small')}<b>Google Play</b></span></a>
-    <a class="vc-store" href="${ios}" target="_blank" rel="noopener" data-store="ios">${APPLE}<span class="vc-store-txt">${t(UI.appleTop, 'small')}<b>App Store</b></span></a>
+    <a class="vc-store" href="${esc(getHref('android', from))}" target="_blank" rel="noopener" data-store="android">${PLAY}<span class="vc-store-txt">${t(UI.playTop, 'small')}<b>Google Play</b></span></a>
+    <a class="vc-store" href="${esc(getHref('ios', from))}" target="_blank" rel="noopener" data-store="ios">${APPLE}<span class="vc-store-txt">${t(UI.appleTop, 'small')}<b>App Store</b></span></a>
   </div>`;
 }
 
