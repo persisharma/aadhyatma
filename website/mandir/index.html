@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vedansh Mandir · your daily temple in one app</title>
+  <meta name="description" content="Vedansh: your daily temple in one app. Panchang, Gita, Chalisa, japa, vrat and stories for children, in Hindi and English.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#120b1c">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Mukta:wght@400;600&family=Tiro+Devanagari+Hindi&display=swap">
+  <link rel="preload" as="image" href="v4/art/gate-v1.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="v4/art/door-480.webp">
+  <link rel="modulepreload" href="shared/content.js">
+  <link rel="modulepreload" href="shared/chrome.js">
+  <link rel="stylesheet" href="shared/tokens.css">
+  <link rel="stylesheet" href="shared/chrome.css">
+  <link rel="stylesheet" href="shared/walk.css">
+  <link rel="stylesheet" href="v4/v4.css">
+  <link rel="icon" href="shared/img/icon.webp">
+  <script>
+    // Reduced motion: the doors are shown open and the gate is an ordinary screen (no pinned walk-in).
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('v4-static');
+  </script>
+</head>
+<body>
+  <a class="v4-skip" href="#walk">Skip to the temple</a>
+  <div id="chrome"></div>
+  <main>
+    <!-- 1 · Outside at blue hour (V1): the painted gate, 3D doors in its doorway, its own bell. -->
+    <section id="space-gate" class="v4-gate" data-space="gate" aria-labelledby="v4-title">
+      <div class="v4-track">
+        <div class="v4-stage">
+          <!-- The painting, in its own pixels (1536x1024), fitted by a transform only. It is composited only while
+               you walk in; at rest it is plain paint, so the gate costs one screen of tiles. -->
+          <div class="v4-world v4-world--paint">
+            <div class="v4-layer">
+              <img class="v4-gate-img" src="v4/art/gate-v1.webp" alt="" width="1536" height="1024" fetchpriority="high" decoding="async">
+            </div>
+          </div>
+          <div class="v4-scrim" aria-hidden="true"></div>
+          <div class="v4-copy">
+            <p class="kicker v4-kicker"><span data-i18n="kicker">Vedansh Mandir</span><span class="v4-kicker-alt deva" lang="hi">वेदांश मन्दिर</span></p>
+            <h1 class="display v4-h1" id="v4-title" data-i18n="promise">Your daily temple in one app.</h1>
+            <p class="v4-sub" data-i18n="sub">Panchang, Gita, Chalisa, japa, vrat and stories for children, in Hindi and English.</p>
+            <div class="v4-stores" data-stores></div>
+            <p class="vc-trust v4-trust" data-i18n="trust">Free · No ads · No account needed</p>
+            <p class="v4-classic"><a href="/" data-classic data-track="switch-classic" data-i18n="classic">Prefer the classic website?</a></p>
+            <p class="v4-hint"><button type="button" class="v4-hint-btn"><span data-i18n="hint">Ring the bell, or scroll to enter</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></p>
+          </div>
+          <!-- The doorway, toran and bell: the same transforms as the painting, but drawn last, so the 3D door leaves
+               never force the scrim or the words above them into GPU layers of their own. -->
+          <div class="v4-world v4-world--doors">
+            <div class="v4-layer">
+              <div class="v4-portal" aria-hidden="true">
+                <div class="v4-inside"><img data-src="shared/art/garbhagriha.webp" alt=""></div>
+                <div class="v4-leaf v4-leaf--l"><i></i></div>
+                <div class="v4-leaf v4-leaf--r"><i></i></div>
+                <span class="v4-leak"></span>
+              </div>
+              <img class="v4-toran" src="v4/art/toran.webp" alt="" aria-hidden="true">
+              <button type="button" class="v4-bell is-idle">
+                <img src="v4/art/bell.webp" alt="" width="98" height="148">
+                <span class="v4-rope" aria-hidden="true"><i></i></span>
+              </button>
+            </div>
+            <div class="v4-petals" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        // Fit the gate painting before first paint (transform only, so nothing shifts later). v4.js re-runs this.
+        window.v4PlaceGate = function () {
+          var stage = document.querySelector('.v4-stage'), copy = stage.querySelector('.v4-copy');
+          var G = { w: 1536, h: 1024 }, D = { x: 906, y: 528, w: 238, h: 304 }, bellY = 396;
+          var dcx0 = D.x + D.w / 2, dcy0 = D.y + D.h / 2;
+          var W = stage.clientWidth, H = stage.clientHeight, wide = W >= 900 && W / H >= 1.05, s, ox, oy;
+          var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+          stage.classList.toggle('is-wide', wide);
+          if (wide) {
+            s = Math.max(W / G.w, H / G.h) * 1.1;
+            ox = clamp(W * 0.645 - dcx0 * s, W - G.w * s, 0);
+            oy = clamp(H * 0.69 - dcy0 * s, H - G.h * s, 0);
+          } else {
+            var copyH = copy.offsetHeight, top = 62, avail = Math.max(160, H - copyH - top), span = D.y + D.h - (bellY - 16);
+            stage.style.setProperty('--copy-h', copyH + 'px');
+            s = Math.max(W / G.w, Math.min(clamp(W * 0.52, 160, 300) / D.w, avail / span));
+            ox = clamp(W / 2 - dcx0 * s, W - G.w * s, 0);
+            oy = Math.min(0, top + (avail - span * s) / 2 - (bellY - 16) * s);
+          }
+          var t = 'translate(' + ox + 'px,' + oy + 'px) scale(' + s + ')';
+          stage.querySelectorAll('.v4-layer').forEach(function (l) { l.style.transform = t; });
+          return { W: W, H: H, s: s, dcx: ox + dcx0 * s, dcy: oy + dcy0 * s, dw: D.w * s, dh: D.h * s };
+        };
+        window.v4PlaceGate();
+      </script>
+    </section>
+
+    <!-- 2 · Inside (V2): the seven shrines orbit the sanctum light. A normal section; it rises out of the glow. -->
+    <section id="shrines" class="scene" data-mode="pending" data-space="shrines" data-space-name="The seven shrines|सातों दर्शन" aria-labelledby="scene-name">
+      <canvas class="scene__canvas" aria-hidden="true"></canvas>
+      <div class="scene__veil" aria-hidden="true"></div>
+      <div class="scene__ui">
+        <!-- The DOM decides where the chosen shrine stands: the 3D camera, and the CSS circle, fit this box. -->
+        <div class="scene__stage">
+          <div class="ring" aria-hidden="true"><div class="ring__persp"><div class="ring__wheel"></div></div></div>
+          <p class="scene__hint" aria-hidden="true"><svg class="scene__hint-l" viewBox="0 0 16 16"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-k="hint">Drag to turn the shrines</span><svg class="scene__hint-r" viewBox="0 0 16 16"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+        </div>
+
+        <div class="scene__shrine">
+          <p class="kicker scene__s-kicker" data-k="s-kicker">Shrine 01 / 07 · Ganesh mandap</p>
+          <h2 class="scene__s-name display" id="scene-name" data-k="s-name">Shri Ganesha</h2>
+          <p class="scene__s-alt" data-k="s-alt" lang="hi">श्री गणेश</p>
+          <p class="scene__s-line"><span class="scene__s-label" data-k="s-offer-label">In the app</span><span data-k="s-offers"></span></p>
+          <p class="scene__s-line scene__s-act"><span class="scene__s-label" data-k="s-act-label">Inside</span><span class="scene__s-actline" data-k="s-act"></span></p>
+          <a class="btn btn--key" href="#space-ganesha" data-k="enter-link"><span data-k="enter">Enter the shrine</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v11m-4-4 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+
+        <nav class="rail">
+          <button type="button" class="rail__arrow" data-dir="-1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5m4-4-4 4 4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="rail__track">
+            <ol class="rail__list"></ol>
+            <span class="rail__marker" aria-hidden="true"></span>
+          </div>
+          <button type="button" class="rail__arrow" data-dir="1"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </nav>
+
+        <button type="button" class="peek">
+          <img class="peek__img" alt="" width="42" height="62" decoding="async">
+          <span class="peek__txt"><span class="kicker" data-k="peek-kicker">Next shrine</span><span class="peek__name" data-k="peek-name"></span></span>
+          <svg class="peek__go" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="sr-only" aria-live="polite" data-k="live"></p>
+      </div>
+    </section>
+
+    <!-- The sanctum's light at the end of the corridor: a fixed overlay, fully gold as the gate lets go, so the gate
+         scrolling away and the scene rising beneath are never seen; it then condenses onto the scene's sanctum. -->
+    <div class="v4-glow" aria-hidden="true"></div>
+
+    <!-- 3 · The shared walk. -->
+    <div id="walk"></div>
+  </main>
+  <script type="module" src="v4/v4.js"></script>
+</body>
+</html>

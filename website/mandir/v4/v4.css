@@ -1,0 +1,335 @@
+/* V4 · V1's gate leading into V2's shrine scene. Needs tokens.css, chrome.css, walk.css. */
+html, body { overflow-x: clip; }
+html { overscroll-behavior-x: none; }
+.v4-skip { position: fixed; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; border-radius: 8px; background: var(--lamp); color: var(--ink); font-weight: 600; text-decoration: none; }
+.v4-skip:focus { top: 12px; }
+
+/* ================= 1 · the gate (from V1) ================= */
+/* The gate overlaps the scene's first screen (see .scene), so only its visible stage takes pointer input. */
+.v4-gate { position: relative; z-index: 2; pointer-events: none; }
+.v4-track { position: relative; height: 150svh; }
+.v4-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #120b1c; isolation: isolate; pointer-events: auto; }
+.v4-world { position: absolute; inset: 0; pointer-events: none; }
+.v4-world--doors .v4-bell { pointer-events: auto; }
+.v4-stage.is-walking .v4-world { will-change: transform; }
+/* everything on the painting lives in its pixels; the inline script fits the layer with a transform */
+.v4-layer { position: absolute; left: 0; top: 0; width: 1536px; height: 1024px; transform-origin: 0 0; }
+.v4-gate-img { position: absolute; left: 0; top: 0; width: 1536px; height: 1024px; max-width: none; user-select: none; -webkit-user-drag: none; }
+.v4-portal { left: 906px; top: 528px; width: 238px; height: 304px; perspective: 762px; }
+.v4-toran { left: 858px; top: 520px; width: 314px; height: 148px; }
+.v4-bell { left: 952px; top: 396px; width: 98px; height: 240px; }
+.v4-copy [data-stores] { min-height: 50px; }
+.v4-stage:not(.is-wide) .v4-gate-img {
+  /* fades into the dark ground behind the words; the fade lifts (--unmask) as the words go and you walk in */
+  --m0: calc(70% + var(--unmask, 0) * 30%); --m1: calc(97% + var(--unmask, 0) * 3%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--m0), transparent var(--m1)); mask-image: linear-gradient(to bottom, #000 var(--m0), transparent var(--m1));
+}
+
+.v4-portal { position: absolute; }
+.v4-inside { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse at 50% 50%, #ffe2a0 0%, #e19a45 32%, #7a3613 70%, #2e1209 100%); }
+/* the garbhagriha corridor, cropped so its sanctum sits at the doorway's centre (the walk-in aims there) */
+.v4-inside img { width: 100%; height: 100%; object-fit: cover; object-position: 51% 50%; opacity: 0; transition: opacity .8s; }
+.v4-inside img.is-loaded { opacity: 1; }
+.v4-inside::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 55%, transparent 30%, rgba(30, 12, 6, .5)); }
+.v4-leaf { position: absolute; top: 0; bottom: 0; width: 50%; transition: transform 1.9s var(--ease-door); }
+.v4-leaf i { position: absolute; inset: 0; background: url(art/door-480.webp) 50% 45% / cover no-repeat; }
+.v4-leaf--l { left: 0; transform-origin: 0 50%; }
+.v4-leaf--r { right: 0; transform-origin: 100% 50%; }
+.v4-leaf--r i { transform: scaleX(-1); }
+.v4-leaf::after { content: ""; position: absolute; inset: 0; transition: background 1.9s var(--ease-door); }
+.v4-leaf--l::after { background: linear-gradient(90deg, rgba(20, 8, 4, .35), transparent 25%, transparent 80%, rgba(255, 170, 70, .14)); }
+.v4-leaf--r::after { background: linear-gradient(270deg, rgba(20, 8, 4, .35), transparent 25%, transparent 80%, rgba(255, 170, 70, .14)); }
+.v4-world.is-open .v4-leaf--l { transform: rotateY(76deg); }
+.v4-world.is-open .v4-leaf--r { transform: rotateY(-76deg); }
+.v4-world.is-open .v4-leaf::after { background: rgba(18, 7, 3, .55); }
+.v4-leak {
+  position: absolute; left: 50%; top: 3%; bottom: 0; width: 2px; margin-left: -1px; border-radius: 2px;
+  background: linear-gradient(#fff0c4, #ffbf5a); box-shadow: 0 0 8px 2px rgba(255, 196, 100, .85), 0 0 26px 6px rgba(255, 170, 70, .35);
+  animation: v4-leak 4.5s ease-in-out infinite alternate; transition: opacity .5s;
+}
+.v4-world.is-open .v4-leak { opacity: 0; animation: none; }
+@keyframes v4-leak { to { box-shadow: 0 0 10px 3px rgba(255, 200, 110, .95), 0 0 34px 8px rgba(255, 170, 70, .42); } }
+.v4-toran { position: absolute; max-width: none; pointer-events: none; }
+
+.v4-bell {
+  position: absolute; z-index: 2; padding: 0; border: 0; background: none; cursor: pointer; touch-action: none;
+  transform-origin: 46% 1.6%; -webkit-tap-highlight-color: transparent; translate: 0 calc(var(--pull, 0px) * .35);
+}
+.v4-bell img { display: block; width: 100%; height: auto; pointer-events: none; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .35)); }
+.v4-rope { position: absolute; left: 49%; top: 60.5%; width: 2px; height: calc(39.5% + var(--pull, 0px)); margin-left: -1px; background: repeating-linear-gradient(170deg, #b21f15 0 3px, #e0a94a 3px 5px); border-radius: 1px; }
+.v4-rope i { position: absolute; left: 50%; bottom: -9px; width: 7px; height: 13px; margin-left: -3.5px; border-radius: 4px 4px 2px 2px; background: repeating-linear-gradient(90deg, #f0c060 0 1.5px, #b9781f 1.5px 3px); box-shadow: 0 0 8px rgba(255, 190, 90, .6); }
+.v4-bell:focus-visible { outline-offset: 4px; border-radius: 12px; }
+.v4-bell.is-idle { animation: v4-sway 7s ease-in-out infinite alternate; }
+.v4-bell.is-ringing { animation: v4-swing 3s cubic-bezier(.3, .6, .3, 1); }
+@keyframes v4-sway { from { rotate: -1.1deg; } to { rotate: 1.1deg; } }
+@keyframes v4-swing { 0% { rotate: 0deg; } 10% { rotate: 14deg; } 27% { rotate: -11deg; } 44% { rotate: 7.5deg; } 60% { rotate: -4.5deg; } 75% { rotate: 2.5deg; } 88% { rotate: -1deg; } 100% { rotate: 0deg; } }
+
+.v4-petals { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.v4-petals i { position: absolute; width: 8px; height: 11px; border-radius: 60% 0 60% 0; background: #c9792c; box-shadow: inset -2px -2px 0 rgba(120, 50, 10, .35); opacity: 0; animation: v4-fall var(--d) var(--w) cubic-bezier(.4, .1, .6, 1) forwards; }
+@keyframes v4-fall { 0% { opacity: 0; transform: translate(0, 0) rotate(var(--r)); } 12% { opacity: .75; } 80% { opacity: .6; } 100% { opacity: 0; transform: translate(var(--x), 62vh) rotate(calc(var(--r) + 220deg)); } }
+
+/* first five seconds: brand, promise, both stores, the bell hint */
+.v4-scrim { position: absolute; inset: 0; pointer-events: none; }
+.v4-copy { position: absolute; z-index: 3; color: var(--ivory); }
+.v4-kicker { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin: 0; }
+.v4-kicker-alt { font-size: 1rem; letter-spacing: 0; text-transform: none; color: var(--stone); }
+.v4-kicker-alt[lang="en"] { font: 500 1.05rem/1.3 var(--font-display); letter-spacing: .04em; }
+.v4-h1 { margin: 12px 0 0; font-size: clamp(2.8rem, 1.6rem + 3.6vw, 4.8rem); color: #fff6e6; text-wrap: balance; text-shadow: 0 2px 24px rgba(10, 6, 20, .6); }
+.v4-h1:lang(hi) { line-height: 1.65; }
+.v4-sub { margin: 14px 0 0; max-width: 38ch; color: rgba(248, 239, 224, .82); }
+.v4-sub:lang(hi) { line-height: 1.7; }
+.v4-copy .vc-stores { margin-top: 22px; }
+.v4-hint { margin: 14px 0 0; }
+.v4-hint-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer; color: var(--lamp); font: 500 .95rem/1.3 var(--font-ui); }
+.v4-hint-btn svg { width: 14px; height: 14px; animation: v4-nudge 2.4s ease-in-out infinite; }
+.v4-hint-btn :lang(hi) { font-family: var(--font-body-hi); line-height: 1.65; }
+@keyframes v4-nudge { 50% { transform: translateY(3px); } }
+
+.v4-stage.is-wide .v4-scrim { background: linear-gradient(90deg, rgba(12, 8, 26, .84) 0%, rgba(12, 8, 26, .62) 30%, rgba(12, 8, 26, 0) 54%), linear-gradient(to bottom, rgba(12, 8, 26, .45), transparent 22%); }
+.v4-stage.is-wide .v4-copy { left: var(--gutter); top: calc(var(--bar-h) + (100% - var(--bar-h)) * .5); translate: 0 -50%; width: min(40vw, 560px); }
+.v4-stage:not(.is-wide) .v4-scrim { background: linear-gradient(to top, #120b1c 0, rgba(18, 11, 28, .94) calc(var(--copy-h, 300px) - 30px), rgba(18, 11, 28, 0) calc(var(--copy-h, 300px) + 60px)), linear-gradient(to bottom, rgba(12, 8, 26, .55), transparent 18%); }
+.v4-stage:not(.is-wide) .v4-copy { left: 0; right: 0; bottom: 0; padding: 0 var(--gutter) max(18px, env(safe-area-inset-bottom)); text-align: center; }
+.v4-stage:not(.is-wide) .v4-kicker { justify-content: center; }
+.v4-stage:not(.is-wide) .v4-h1 { font-size: clamp(2.1rem, 1.3rem + 4.4vw, 3.4rem); }
+.v4-stage:not(.is-wide) .v4-sub { margin-inline: auto; font-size: .98rem; }
+.v4-stage:not(.is-wide) .vc-stores { justify-content: center; }
+@media (max-height: 760px) and (max-width: 899px) {
+  .v4-stage:not(.is-wide) .v4-h1 { margin-top: 6px; font-size: clamp(1.9rem, 1.2rem + 3.6vw, 2.6rem); }
+  .v4-stage:not(.is-wide) .v4-sub { margin-top: 8px; font-size: .9rem; line-height: 1.5; }
+  .v4-stage:not(.is-wide) .v4-copy .vc-stores { margin-top: 14px; }
+  .v4-stage:not(.is-wide) .v4-trust { margin-top: 7px; }
+  .v4-stage:not(.is-wide) .v4-hint { margin-top: 4px; }
+  .v4-stage:not(.is-wide) .v4-hint-btn { min-height: 40px; }
+  .v4-stage:not(.is-wide) .v4-copy { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+}
+
+/* The sanctum's light at the end of the corridor: fixed over the page (below the bar and lamps). Fully opaque at the
+   end of the walk-in; as the scene rises it condenses onto the sanctum (--gx/--gy/--gr), its dusk edge thins (--ga),
+   then it lifts. Hidden outright whenever it is not showing. */
+.v4-glow {
+  position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0; visibility: hidden;
+  background: radial-gradient(circle var(--gr, 140vmax) at var(--gx, 50%) var(--gy, 50%),
+    #fff7e4 0%, #ffe3a6 8%, #f7b75a 22%, #d97f2e 40%,
+    rgba(138, 58, 22, calc(.55 + .45 * var(--ga, 1))) 64%, rgba(47, 20, 32, var(--ga, 1)) 86%, rgba(23, 12, 28, var(--ga, 1)) 100%);
+}
+
+/* ================= 2 · inside: the shrine scene (from V2) ================= */
+.scene, .scene *, .scene *::before, .scene *::after { box-sizing: border-box; }
+.scene {
+  --stage-h: clamp(300px, 60svh, 620px);
+  --stage-w: calc(var(--stage-h) * .64);
+  position: relative; z-index: 1; isolation: isolate; overflow: hidden;
+  min-height: max(100svh, 620px);
+  background: radial-gradient(ellipse 80% 60% at 50% 34%, #3a1d2a 0%, #1c1020 55%, #0e0b1f 100%);
+  touch-action: pan-y;
+}
+.scene__canvas, .scene__veil { position: absolute; inset: 0; }
+.scene__canvas { z-index: 1; display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 1500ms var(--ease-out); }
+.scene[data-scene="ready"] .scene__canvas, .scene[data-scene="settled"] .scene__canvas { opacity: 1; }
+.scene[data-scene="settled"] .ring { visibility: hidden; }
+.scene[data-mode="still"] .scene__canvas { display: none; }
+.scene.is-dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+.scene__veil {
+  z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(14, 11, 31, .55), rgba(14, 11, 31, 0) 18%),
+    linear-gradient(to top, var(--night) 0%, rgba(14, 11, 31, .72) 10%, rgba(14, 11, 31, 0) 30%),
+    linear-gradient(to right, rgba(14, 11, 31, .82) 0%, rgba(14, 11, 31, .46) 26%, rgba(14, 11, 31, 0) 42%),
+    linear-gradient(to left, rgba(14, 11, 31, .6) 0%, rgba(14, 11, 31, 0) 30%);
+}
+
+.scene__ui {
+  position: relative; z-index: 3; min-height: inherit;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--stage-w) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas: "shrine stage peek" "rail rail rail";
+  column-gap: clamp(28px, 4vw, 76px);
+  padding: calc(var(--bar-h) + clamp(24px, 6vh, 64px)) calc(var(--gutter) + 52px) clamp(14px, 2.4vh, 28px) var(--gutter);
+  pointer-events: none;
+}
+.scene__ui > * { pointer-events: auto; }
+.scene__stage { grid-area: stage; align-self: center; position: relative; height: var(--stage-h); width: 100%; pointer-events: none !important; }
+
+/* The sanctum light behind the chosen shrine (shown with the CSS circle; the 3D scene draws its own). */
+.scene__stage::before {
+  content: ""; position: absolute; left: 50%; top: 4%; width: 230%; aspect-ratio: 1; transform: translate(-50%, -42%); pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255, 226, 160, .5), rgba(242, 154, 29, .16) 42%, rgba(242, 154, 29, 0) 72%);
+  opacity: .55; transition: opacity 1200ms var(--ease-out);
+}
+.scene.is-flare .scene__stage::before { animation: v4-flare 2.6s var(--ease-out); }
+@keyframes v4-flare { from { opacity: 1; transform: translate(-50%, -42%) scale(1.5); } }
+.scene[data-scene="settled"] .scene__stage::before { visibility: hidden; }
+
+/* ---- V1's CSS-3D circle: the fallback, and the stand-in until the 3D scene is ready ---- */
+.ring { position: absolute; inset: 0; }
+.ring__persp { position: absolute; left: 50%; top: 50%; width: 0; height: 0; perspective: 1100px; }
+.ring__wheel { position: absolute; transform-style: preserve-3d; transition: transform 1s var(--ease-out); }
+.ring__wheel.is-dragging, .ring__wheel.is-instant { transition: none; }
+.ring__pan {
+  position: absolute; left: calc(var(--pw) / -2); top: calc(var(--ph) / -2); width: var(--pw); height: var(--ph); margin: 0; overflow: hidden;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden; background: #2a1820;
+  border-radius: 50% 50% 6px 6px / 33.4% 33.4% 6px 6px;
+  box-shadow: 0 0 0 1px rgba(217, 162, 115, .28), 0 0 0 6px #22151a, 0 0 0 7px rgba(217, 162, 115, .16), 0 30px 50px -24px rgba(0, 0, 0, .9);
+  transition: opacity .8s var(--ease-out), box-shadow .8s var(--ease-out);
+}
+.ring__pan img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s; pointer-events: none; }
+.ring__pan img.is-loaded { opacity: 1; }
+.ring__pan::after { content: ""; position: absolute; inset: 0; background: rgba(12, 6, 16, .5); transition: opacity .8s var(--ease-out); }
+.ring__pan.is-front::after { opacity: 0; }
+.ring__pan.is-front { box-shadow: 0 0 0 1px rgba(255, 204, 107, .6), 0 0 0 6px #22151a, 0 0 0 7px rgba(217, 162, 115, .3), 0 34px 60px -24px rgba(0, 0, 0, .9); }
+
+.scene__hint {
+  position: absolute; left: 50%; bottom: 2.8%; z-index: 4; margin: 0; transform: translate(-50%, 50%);
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;
+  font: 500 .8rem/1.2 var(--font-ui); letter-spacing: .02em; color: var(--ivory);
+  background: rgba(14, 11, 31, .66); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgba(217, 162, 115, .45);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.scene__hint :lang(hi) { font-family: var(--font-body-hi); font-size: .86rem; line-height: 1.65; }
+.scene__hint svg { width: 14px; height: 14px; flex: none; color: var(--lamp); }
+.scene__hint-l { animation: v4-hint-l 2.2s ease-in-out 1.2s 3; }
+.scene__hint-r { animation: v4-hint-r 2.2s ease-in-out 1.2s 3; }
+.scene.is-nudging .scene__hint-r { animation: v4-hint-r 1.1s ease-in-out 2; }
+@keyframes v4-hint-l { 0%, 100% { transform: none } 50% { transform: translateX(-3px) } }
+@keyframes v4-hint-r { 0%, 100% { transform: none } 50% { transform: translateX(3px) } }
+.scene.has-turned .scene__hint { opacity: 0; transform: translate(-50%, 90%); }
+
+/* ---- this shrine: a museum caption beside the painting ---- */
+.scene__shrine { grid-area: shrine; align-self: center; justify-self: end; position: relative; z-index: 2; width: min(100%, 23rem); padding: 2px 20px 4px 0; border-right: 1px solid rgba(217, 162, 115, .38); text-align: right; }
+/* the words always sit above the turning shrines, on a soft pool of dusk */
+.scene__shrine::before { content: ""; position: absolute; inset: -18% -14% -18% -40%; z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgba(14, 11, 31, .82), rgba(14, 11, 31, .55) 55%, rgba(14, 11, 31, 0)); }
+.scene__stage { z-index: 1; }
+.scene .kicker:lang(hi), .scene .kicker :lang(hi) { letter-spacing: 0; text-transform: none; font-size: .9rem; line-height: 1.65; }
+.scene__s-kicker { margin: 0; font-size: .7rem; }
+.scene__s-name { margin: .35em 0 0; font-size: clamp(2rem, 1.2rem + 1.6vw, 2.9rem); font-weight: 600; line-height: 1.05; color: var(--ivory); }
+.scene__s-name:lang(hi) { font-size: clamp(1.6rem, 1rem + 1.2vw, 2.2rem); font-weight: 400; line-height: 1.65; }
+.scene__s-alt { margin: .15em 0 .9rem; color: var(--stone); font: 400 1.15rem/1.65 var(--font-deva); }
+.scene__s-alt:lang(en) { font: italic 500 1.15rem/1.3 var(--font-display); letter-spacing: .01em; }
+.scene__s-line { margin: 0 0 .7rem; display: grid; gap: 2px; color: var(--ivory-dim); font-size: .88rem; line-height: 1.5; }
+.scene__s-line :lang(hi) { line-height: 1.7; }
+.scene__s-label { font: 500 .66rem/1.4 var(--font-ui); letter-spacing: .2em; text-transform: uppercase; color: rgba(248, 239, 224, .55); }
+.scene__s-label:lang(hi) { letter-spacing: .04em; text-transform: none; font-family: var(--font-body-hi); font-size: .78rem; line-height: 1.65; }
+.scene__s-actline { font: italic 500 1.15rem/1.3 var(--font-display); color: var(--ivory); }
+.scene__s-actline:lang(hi) { font: 400 1rem/1.7 var(--font-body-hi); font-style: normal; }
+.scene__shrine .btn { margin-top: .9rem; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px;
+  border: 0; border-radius: 999px; cursor: pointer; text-decoration: none;
+  font: 600 .95rem/1 var(--font-ui); letter-spacing: .01em;
+  transition: transform var(--t-fast) var(--ease-out), box-shadow var(--t-fast), background var(--t-fast);
+}
+.btn :lang(hi) { font-family: var(--font-body-hi); font-size: 1.02rem; line-height: 1.65; }
+.btn svg { width: 18px; height: 18px; transition: transform var(--t-fast) var(--ease-out); }
+.btn--key { background: var(--ivory); color: var(--ink); box-shadow: 0 14px 34px -16px rgba(255, 214, 150, .55); }
+.btn--key:hover { transform: translateY(-1px); }
+.btn--key:hover svg { transform: translateY(2px); }
+
+/* ---- rail of names ---- */
+.rail { grid-area: rail; justify-self: center; width: max-content; max-width: 100%; display: flex; align-items: center; gap: 12px; margin-top: clamp(10px, 2vh, 22px); }
+.rail__arrow {
+  flex: none; display: grid; place-items: center; width: 46px; height: 46px; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(14, 11, 31, .4); color: var(--ivory); box-shadow: inset 0 0 0 1px rgba(248, 239, 224, .3);
+  transition: box-shadow var(--t-fast), color var(--t-fast), transform var(--t-fast) var(--ease-out);
+}
+.rail__arrow:hover { color: var(--lamp); box-shadow: inset 0 0 0 1px var(--lamp); }
+.rail__arrow:active { transform: scale(.96); }
+.rail__arrow svg { width: 20px; height: 20px; }
+.rail__track { position: relative; min-width: 0; }
+.rail__list { list-style: none; margin: 0; padding: 0; display: flex; gap: 2px; }
+.rail__item {
+  display: grid; justify-items: center; gap: 3px; min-height: 48px; padding: 6px 12px 12px; border: 0; border-radius: 8px;
+  background: none; color: rgba(248, 239, 224, .58); cursor: pointer; transition: color var(--t-med) var(--ease-out);
+}
+.rail__item:hover { color: var(--ivory); }
+.rail__item[aria-pressed="true"] { color: var(--lamp); }
+.rail__num { font: 500 .64rem/1 var(--font-ui); letter-spacing: .16em; font-variant-numeric: tabular-nums; opacity: .8; }
+.rail__name { font: 500 1.1rem/1.2 var(--font-display); letter-spacing: .02em; white-space: nowrap; }
+.rail__name:lang(hi) { font: 400 1rem/1.65 var(--font-deva); letter-spacing: 0; }
+.rail__marker { position: absolute; left: 0; bottom: 4px; width: 24px; height: 2px; border-radius: 2px; pointer-events: none; background: var(--lamp); transition: transform 1100ms var(--ease-out); }
+
+/* ---- the next shrine, as a small glass card ---- */
+.peek {
+  grid-area: peek; justify-self: start; align-self: end; margin-bottom: clamp(8px, 4vh, 40px);
+  display: flex; align-items: center; gap: 14px; padding: 10px 18px 10px 10px; border: 0; border-radius: 16px;
+  color: var(--ivory); text-align: left; cursor: pointer;
+  background: rgba(40, 24, 54, .36); -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: inset 0 0 0 1px rgba(217, 162, 115, .26), 0 24px 50px -28px rgba(0, 0, 0, .9);
+  transition: box-shadow var(--t-fast), transform var(--t-fast) var(--ease-out);
+}
+.peek:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(255, 204, 107, .5), 0 24px 50px -28px rgba(0, 0, 0, .9); }
+.peek__img { width: 42px; height: 62px; object-fit: cover; border-radius: 21px 21px 3px 3px; box-shadow: 0 0 0 1px rgba(217, 162, 115, .5); background: var(--dusk); }
+.peek__txt { display: grid; gap: 3px; }
+.peek__txt .kicker { font-size: .64rem; }
+.peek__name { font: 500 1.3rem/1.1 var(--font-display); }
+.peek__name:lang(hi) { font: 400 1.1rem/1.65 var(--font-deva); }
+.peek__go { width: 18px; height: 18px; color: var(--lamp); margin-left: 4px; }
+
+@media (min-width: 900px) and (max-height: 760px) {
+  .scene { --stage-h: clamp(280px, 58svh, 500px); }
+  .scene__s-name { font-size: clamp(1.7rem, 1.1rem + 1vw, 2.2rem); }
+}
+@media (min-width: 900px) and (max-width: 1180px) {
+  .scene__ui { padding-right: calc(var(--gutter) + 48px); column-gap: 24px; }
+  .peek__txt .kicker { display: none; }
+}
+
+/* ---- phones and small tablets: shrine, words, rail ---- */
+@media (max-width: 899px) {
+  .scene { --stage-h: clamp(250px, 42svh, 460px); min-height: 100svh; }
+  .scene__ui {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "stage" "shrine" "rail";
+    align-content: space-between;
+    padding: calc(var(--bar-h) + var(--strip-h, 40px) + 18px) var(--gutter) max(14px, env(safe-area-inset-bottom));
+    min-height: 100svh;
+  }
+  .scene__veil { background: linear-gradient(to bottom, rgba(14, 11, 31, .7) 0%, rgba(14, 11, 31, 0) 22%), linear-gradient(to top, var(--night) 0%, rgba(14, 11, 31, .9) 30%, rgba(14, 11, 31, 0) 52%); }
+  .scene__stage { align-self: start; margin: 0; }
+  .scene__hint { bottom: 6%; transform: translate(-50%, 0); }
+  .scene.has-turned .scene__hint { transform: translate(-50%, 30%); }
+  .scene__shrine { justify-self: center; width: 100%; max-width: 32rem; text-align: center; padding: 0; margin: 14px 0 0; border: 0; }
+  .scene__s-name { display: inline; font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.1rem); line-height: 1.15; }
+  .scene__s-name:lang(hi) { font-size: clamp(1.4rem, 1.1rem + 1.4vw, 1.8rem); }
+  .scene__s-alt { display: inline; margin: 0 0 0 .45em; font-size: 1.05rem; }
+  .scene__s-kicker { margin-bottom: .3rem; font-size: .72rem; }
+  .scene__s-line { margin: .5rem 0 0; display: block; font-size: .86rem; }
+  .scene__s-line > span:last-child { text-wrap: balance; }
+  .scene__s-label { margin-right: .6em; }
+  .scene__s-act { display: none; }
+  .scene__shrine .btn { margin-top: .8rem; min-height: 46px; }
+  .peek { display: none; }
+  .rail { justify-self: stretch; width: auto; margin-top: 10px; gap: 6px; }
+  .rail__track { flex: 1 1 auto; }
+  .rail__list {
+    overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; scroll-snap-type: x proximity;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    padding: 0 18%;
+  }
+  .rail__list::-webkit-scrollbar { display: none; }
+  .rail__item { padding: 6px 10px 12px; scroll-snap-align: center; }
+  .rail__name { font-size: 1.02rem; }
+  .rail__arrow { width: 44px; height: 44px; }
+}
+@media (max-width: 899px) and (max-height: 760px) {
+  .scene { --stage-h: clamp(200px, 36svh, 300px); }
+  .scene__s-line:not(.scene__s-act) { font-size: .82rem; }
+}
+
+/* ================= reduced motion: doors open, no pinned walk-in, the circle as a plain section ================= */
+.v4-static .v4-track { height: auto; }
+.v4-static .v4-stage { position: relative; height: 100svh; min-height: 560px; }
+
+
+/* one language at a time: the gate kicker and the shrine name no longer repeat in the other language */
+.v4-kicker-alt, .scene__s-alt { display: none; }
+.scene__s-name { margin-bottom: .9rem; }
+
+/* the switch back to the classic website, under the trust line */
+.v4-classic { margin: 2px 0 0; font-size: .86rem; }
+.v4-classic a { display: inline-block; padding: 8px 0; color: var(--ivory-dim); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(248, 239, 224, .35); }
+.v4-classic a:hover, .v4-classic a:focus-visible { color: var(--lamp); }

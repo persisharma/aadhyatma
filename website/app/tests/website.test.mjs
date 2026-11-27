@@ -100,3 +100,35 @@ test('mala coordinates have stable precision for server/browser hydration', asyn
     assert.match(coordinate[1], /^\d+(\.\d{1,3})?$/);
   }
 });
+
+const SOCIAL = {
+  "social-instagram": "https://www.instagram.com/vedansh.app/",
+  "social-facebook": "https://www.facebook.com/profile.php?id=61594970420675",
+  "social-youtube": "https://www.youtube.com/shorts/mrDun5TXJEU",
+};
+for (const lang of ["en", "hi"]) {
+  test(`${lang}: the footer links to Instagram, Facebook and the YouTube short, each tracked and opening in a new tab`, async () => {
+    const html = await readFile(new URL(`../dist/client/${lang === "hi" ? "hi/" : ""}index.html`, import.meta.url), "utf8");
+    for (const [id, href] of Object.entries(SOCIAL)) {
+      const tag = html.match(new RegExp(`<a[^>]*data-track="${id}"[^>]*>`));
+      assert.ok(tag, `${id} link is in the pre-rendered page`);
+      assert.ok(tag[0].includes(`href="${href.replaceAll("&", "&amp;")}"`), `${id} points at ${href}`);
+      assert.ok(tag[0].includes('target="_blank"') && tag[0].includes('rel="noopener noreferrer"'));
+    }
+    const org = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])["@graph"].find((n) => n.sameAs);
+    assert.deepEqual(org.sameAs, [SOCIAL["social-instagram"], SOCIAL["social-facebook"], "https://www.youtube.com/@vedansh.app1"]);
+  });
+}
+
+// The new temple-walk site runs beside this one at /mandir/; both pages offer the switch, in their own language.
+for (const lang of ["en", "hi"]) {
+  test(`${lang}: the hero and the footer offer the new temple-walk site in this page's language, tracked`, async () => {
+    const html = await readFile(new URL(`../dist/client/${lang === "hi" ? "hi/" : ""}index.html`, import.meta.url), "utf8");
+    const want = lang === "hi" ? "/mandir/?lang=hi" : "/mandir/";
+    for (const id of ["try-new-site", "footer-new-site"]) {
+      const tag = html.match(new RegExp(`<a[^>]*data-track="${id}"[^>]*>`));
+      assert.ok(tag, `${id} is in the pre-rendered page`);
+      assert.ok(tag[0].includes(`href="${want}"`), `${id} points at ${want}`);
+    }
+  });
+}

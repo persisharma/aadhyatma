@@ -1,0 +1,61 @@
+/* Sandhya: the shared look of all three temple-visit prototypes (spec §4).
+   Fonts load from Google Fonts in each page's <head>:
+   Cormorant+Garamond:ital,wght@0,500;0,600;1,500 · Tiro+Devanagari+Hindi · Mukta:wght@400;600.
+   UI text uses the system font (no Inter download); on English pages Hindi snippets use Tiro, so Mukta only loads in Hindi. */
+:root {
+  --night: #0e0b1f;
+  --dusk: #2a1838;
+  --stone: #d9a273;
+  --stone-deep: #9c5b35;
+  --ivory: #f8efe0;
+  --ivory-dim: rgba(248, 239, 224, .72);
+  --lamp: #ffcc6b;          /* accent only: active states, the one key button */
+  --marigold: #f29a1d;
+  --sindoor: #c2381d;
+  --tulsi: #2f6b4f;
+  --ink: #1d120a;
+  --ink-dim: rgba(29, 18, 10, .7);
+  --line-dark: rgba(255, 204, 107, .22);
+  --line-light: rgba(29, 18, 10, .14);
+
+  --font-display: "Cormorant Garamond", "Tiro Devanagari Hindi", Georgia, serif;
+  --font-deva: "Tiro Devanagari Hindi", "Mukta", serif;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body-hi: "Mukta", system-ui, sans-serif;
+
+  --step--1: clamp(.8rem, .76rem + .2vw, .9rem);
+  --step-0: clamp(1rem, .95rem + .25vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.1rem + .7vw, 1.6rem);
+  --step-2: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem);
+  --step-3: clamp(2.2rem, 1.6rem + 3vw, 4rem);
+  --step-4: clamp(2.8rem, 1.8rem + 5vw, 6rem);
+  --tracking-kicker: .22em;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1240px;
+  --bar-h: 56px;
+
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-door: cubic-bezier(.3, .7, .2, 1);
+  --t-slow: 1200ms;
+  --t-med: 700ms;
+  --t-fast: 250ms;
+}
+
+html { color-scheme: dark; }
+body { margin: 0; background: var(--night); color: var(--ivory); font-family: var(--font-ui); font-size: var(--step-0); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+:lang(hi), [lang="hi"] { font-family: var(--font-body-hi); line-height: 1.75; }
+html[lang="en"] :lang(hi) { font-family: var(--font-deva); }
+.deva { font-family: var(--font-deva); line-height: 1.7; }
+/* Devanagari is never letter-spaced: tracking breaks the headline (shirorekha) that joins the letters. */
+html[lang="hi"] :lang(hi), :lang(hi).deva { letter-spacing: 0; }
+.kicker { font: 500 var(--step--1)/1.3 var(--font-ui); letter-spacing: var(--tracking-kicker); text-transform: uppercase; color: var(--lamp); }
+.display { font-family: var(--font-display); font-weight: 500; line-height: 1.02; letter-spacing: .005em; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--lamp); outline-offset: 3px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

@@ -142,3 +142,18 @@ test("each day splits into channels; instagram tags merge, /get/ keeps its own b
   assert.equal(split[1].count, 11, "the day total is unchanged");
   assert.deepEqual(splitBySource(series, undefined)[1].parts, { direct: 0, instagram: 0, other: 0, get: 0, unsplit: 11 });
 });
+
+test("the new temple-walk site at /mandir/ is a counted page, with its campaign tag, beside the classic site", async () => {
+  const env = { DB: fakeDB() };
+  await at("2026-11-27T06:00:00Z", async () => {
+    await call(env, "POST", "p=%2Fmandir%2F&src=instagram");
+    await call(env, "POST", "p=%2Fmandir%2F");
+    await call(env, "POST", "p=%2F");
+  });
+  const all = await call(env, "GET", "all=1");
+  const pages = Object.fromEntries(all.pages.map((r) => [r.name, r.count]));
+  assert.equal(pages["/mandir/"], 2);
+  assert.equal(pages["/"], 1);
+  assert.equal(all.total, 3);
+  assert.deepEqual(all.siteSources.map((r) => [r.name, r.count]), [["instagram", 1]]);
+});

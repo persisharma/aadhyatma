@@ -10,6 +10,7 @@
 const PAGES = new Set([
   '/', '/privacy/', '/terms/', '/support/', '/get/',
   '/hi/', '/hi/privacy/', '/hi/terms/', '/hi/support/',
+  '/mandir/', // the temple-walk site, live beside the classic one
 ]);
 
 const HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };

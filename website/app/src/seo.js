@@ -18,7 +18,7 @@ export function seo(lang = "en", launch = false) {
       alternateName: ["Vedansh App", "Vedansh app", "Vedaansh", "Vedaansh App", "Vedānsh", "वेदांश", "वेदांश ऐप", "vedansh.app"],
       url: "https://vedansh.app/",
       logo: "https://vedansh.app/images/icon.png",
-      sameAs: ["https://www.instagram.com/vedansh.app/"],
+      sameAs: ["https://www.instagram.com/vedansh.app/", "https://www.facebook.com/profile.php?id=61594970420675", "https://www.youtube.com/@vedansh.app1"],
     },
     {
       "@type": "MobileApplication",

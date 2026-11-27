@@ -28,6 +28,9 @@ import {
   HandHeart,
   Compass,
   SquaresFour,
+  InstagramLogo,
+  FacebookLogo,
+  YoutubeLogo,
 } from "@phosphor-icons/react";
 import {
   offerings,
@@ -572,6 +575,17 @@ export function App({ initialLanguage = "en" }) {
               fetchPriority="high"
             />
             <div className="hero-copy">
+              <a className="new-site-card" data-track="try-new-site" href={hi ? "/mandir/?lang=hi" : "/mandir/"}>
+                <img className="new-site-art" src="/assets/mandir-teaser.webp" alt="" width="560" height="350" decoding="async" />
+                <span className="new-site-text">
+                  <span className="new-site-badge">{t("New website", "नई वेबसाइट")}</span>
+                  <strong className="new-site-title">{t("Try the new Vedansh website", "वेदांश की नई वेबसाइट देखें")}</strong>
+                  <span className="new-site-cta">
+                    {t("Walk through the Mandir", "मन्दिर में दर्शन करें")}
+                    <ArrowRight size={15} weight="bold" aria-hidden="true" />
+                  </span>
+                </span>
+              </a>
               <p className="eyebrow">
                 {t(
                   "Ancient wisdom. Everyday devotion.",
@@ -917,7 +931,24 @@ export function App({ initialLanguage = "en" }) {
               >
                 {t("Support", "सहायता")}
               </a>
+              <a data-track="footer-new-site" href={hi ? "/mandir/?lang=hi" : "/mandir/"}>
+                {t("Try the new website", "नई वेबसाइट देखें")}
+              </a>
             </div>
+            <nav className="footer-social" aria-label={t("Vedansh on social media", "सोशल मीडिया पर वेदांश")}>
+              <a data-track="social-instagram" href="https://www.instagram.com/vedansh.app/" target="_blank" rel="noopener noreferrer">
+                <InstagramLogo size={18} weight="regular" aria-hidden="true" />
+                <span>Instagram</span>
+              </a>
+              <a data-track="social-facebook" href="https://www.facebook.com/profile.php?id=61594970420675" target="_blank" rel="noopener noreferrer">
+                <FacebookLogo size={18} weight="regular" aria-hidden="true" />
+                <span>Facebook</span>
+              </a>
+              <a data-track="social-youtube" href="https://www.youtube.com/shorts/mrDun5TXJEU" target="_blank" rel="noopener noreferrer">
+                <YoutubeLogo size={18} weight="regular" aria-hidden="true" />
+                <span>{t("Watch on YouTube", "YouTube पर देखें")}</span>
+              </a>
+            </nav>
           </footer>
         </main>
         <div data-section="mobile-sticky" className="mobile-install-bar">

@@ -58,8 +58,16 @@ Tokens: `--night #0e0b1f`, `--dusk #2a1838`, `--stone #d9a273`, `--stone-deep #9
 `--lamp #ffcc6b` (accent, sparing), `--marigold #f29a1d`, `--sindoor #c2381d`, `--tulsi #2f6b4f` (rare),
 `--ink #1d120a`. Text on dark: ivory; on light: ink. Contrast ≥ 4.5:1 for body text.
 
-Type: Latin display Cormorant Garamond (500/600); Devanagari display Tiro Devanagari Hindi; UI and body Inter,
-Hindi body Mukta. Indic line-height ≥ 1.65. Deity and space names appear in both scripts.
+**Ground decided (26 Nov colour audit): keep the indigo-plum dusk.** All text clears AA (lowest 5.2:1, after
+lifting the unlit graha names from 2.7:1). A warm brown-black ground (closer to the app's warm-only chrome) was
+built and compared; Codex rated it "warm with fixes", but the owner found it too black and kept the dusk. Do not
+re-propose a warm or parchment ground for the walk.
+
+Type: Latin display Cormorant Garamond (500/600); Devanagari display Tiro Devanagari Hindi; UI and body the
+system font (Inter dropped after the first build: fonts went from ~380 KB to ~175 KB); Hindi body Mukta, loaded
+only on Hindi pages (English pages show Hindi names in Tiro). Indic line-height ≥ 1.65. One language at a time
+(owner, 26 Nov): every label follows the EN | हि switch. Only the chanted mantra and the Chalisa verse stay in
+Devanagari on the English page, because there the script is the content. Devanagari is never letter-spaced.
 
 Motion: slow and calm (600–1400 ms, ease-out); diya flicker, incense smoke, falling marigold petals only in
 moments that earn them; nothing loops fast. `prefers-reduced-motion`: no parallax, no particles, doors and

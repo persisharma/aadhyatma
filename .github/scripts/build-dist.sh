@@ -8,7 +8,7 @@ rm -rf dist && mkdir dist
 rsync -a ./ dist/ \
   --exclude dist --exclude node_modules --exclude 'package*.json' \
   --exclude netlify.toml --exclude netlify-functions --exclude functions \
-  --exclude cloudflare --exclude wrangler.toml --exclude .netlify --exclude app
+  --exclude cloudflare --exclude wrangler.toml --exclude .netlify --exclude /app
 ( cd dist && python3 ../../.github/scripts/inline-css.py )
 # The home pages (/ and /hi/) and /stats/ are the React app in app/, pre-rendered
 # for search engines. Everything else — /get/, privacy, terms, support, 404,
@@ -28,6 +28,18 @@ sed -i.bak -e "s#\"/stats/app.js\"#\"/stats/app.js?v=$(fp dist/stats/app.js)\"#"
 rm -f dist/stats/*.bak
 grep -q "daily.js?v=" dist/stats/app.js && grep -q "app.js?v=" dist/stats/index.html && grep -q "style.css?v=" dist/stats/index.html \
   || { echo "stats fingerprinting did not apply" >&2; exit 1; }
+# /mandir/ (the temple-walk site) is a graph of modules that import each other, so under the same 4-hour cache
+# one stale file could mix two versions in a browser. Move its files under a content hash; the page itself is
+# the only unhashed file, and it names the hash.
+mh=$(cd dist/mandir && find v4 shared -type f -print0 | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | cut -c1-10)
+mkdir "dist/mandir/$mh" && mv dist/mandir/v4 dist/mandir/shared "dist/mandir/$mh/"
+# Every file of the source must arrive (an unanchored rsync exclude once dropped mandir/shared/img/app).
+[ "$(find "dist/mandir/$mh" -type f | wc -l)" -eq "$(find mandir/v4 mandir/shared -type f | wc -l)" ] \
+  || { echo "mandir: files missing from the build" >&2; exit 1; }
+sed -i.bak -E "s#(src|href|data-src)=\"(v4|shared)/#\1=\"$mh/\2/#g" dist/mandir/index.html && rm dist/mandir/index.html.bak
+grep -q "src=\"$mh/v4/v4.js\"" dist/mandir/index.html || { echo "mandir fingerprinting did not apply" >&2; exit 1; }
+if grep -E -q '(src|href|data-src)="(v4|shared)/' dist/mandir/index.html; then echo "mandir: unrewritten path" >&2; exit 1; fi
+echo "mandir fingerprint: $mh"
 # Fingerprint script.js so it can be cached for a year: a change to the file
 # changes the URL every page asks for.
 v=$(shasum -a 256 dist/script.js | cut -c1-10)

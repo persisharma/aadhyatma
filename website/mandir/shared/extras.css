@@ -1,0 +1,163 @@
+/* Lazy extras (extras.js): the catalog sheet, the FAQ and the verse-card maker. Needs tokens.css, chrome.css, walk.css. */
+
+/* ---------- chips (catalog filters, verse + format pickers) ---------- */
+.vx-chips { display: flex; gap: 8px; }
+.vx-chips--wrap { flex-wrap: wrap; margin-top: 14px; }
+.vx-chip {
+  flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgba(248, 239, 224, .06); box-shadow: inset 0 0 0 1px var(--line-dark); color: var(--ivory);
+  font: 500 .92rem/1.25 var(--font-ui); white-space: nowrap; transition: background var(--t-fast), box-shadow var(--t-fast), color var(--t-fast);
+}
+.vx-chip:hover { background: rgba(248, 239, 224, .1); }
+.vx-chip:lang(hi), .vx-chip :lang(hi) { font-family: var(--font-body-hi); line-height: 1.65; }
+.vx-chip[aria-pressed="true"] { color: var(--lamp); background: rgba(255, 204, 107, .13); box-shadow: inset 0 0 0 1px rgba(255, 204, 107, .75); }
+.vx-n { font: 600 .76rem/1 var(--font-ui); color: var(--ivory-dim); font-variant-numeric: tabular-nums; }
+.vx-chip[aria-pressed="true"] .vx-n { color: var(--lamp); }
+
+/* ---------- the catalog sheet: full screen, its own scroll, the page behind it still ---------- */
+html.vx-lock, html.vx-lock body { overflow: hidden; }
+.vx-cat {
+  position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0;
+  color: var(--ivory); background: radial-gradient(120% 60% at 50% 0%, #2c1932 0%, #160e22 55%, #100a1b 100%);
+}
+.vx-cat::backdrop { background: rgba(8, 6, 18, .7); }
+.vx-cat[open] .vx-cat-in { animation: vx-in var(--t-med) var(--ease-out); }
+@keyframes vx-in { from { opacity: 0; transform: translateY(18px); } }
+.vx-cat-in { display: flex; flex-direction: column; height: 100%; max-width: 980px; margin: 0 auto; }
+.vx-cat-head { flex: none; padding: max(14px, env(safe-area-inset-top)) var(--gutter) 12px; border-bottom: 1px solid var(--line-dark); }
+.vx-cat-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.vx-cat-k { margin: 6px 0 4px; }
+.vx-cat-title { margin: 0; font-size: var(--step-2); color: var(--ivory); }
+.vx-cat-title:focus { outline: none; }
+.vx-cat-title:focus-visible { outline: 2px solid var(--lamp); }
+.vx-close {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(248, 239, 224, .06); color: var(--ivory); box-shadow: inset 0 0 0 1px var(--line-dark);
+}
+.vx-close svg, .vx-clear svg { width: 16px; height: 16px; }
+.vx-close:hover { color: var(--lamp); box-shadow: inset 0 0 0 1px rgba(255, 204, 107, .6); }
+.vx-search {
+  position: relative; display: flex; align-items: center; margin: 14px 0 12px; border-radius: 12px;
+  background: rgba(248, 239, 224, .07); box-shadow: inset 0 0 0 1px rgba(255, 204, 107, .3);
+}
+.vx-search:focus-within { box-shadow: inset 0 0 0 1px var(--lamp), 0 0 0 3px rgba(255, 204, 107, .18); }
+.vx-lens { position: absolute; left: 14px; width: 20px; height: 20px; color: var(--lamp); pointer-events: none; }
+.vx-search input {
+  flex: 1; min-width: 0; height: 50px; padding: 0 48px 0 44px; border: 0; border-radius: 12px; background: transparent;
+  color: var(--ivory); font: 400 1rem/1.4 var(--font-ui); -webkit-appearance: none; appearance: none;
+}
+.vx-search input:focus { outline: none; }
+.vx-search input::placeholder { color: rgba(248, 239, 224, .56); }
+.vx-search input::-webkit-search-cancel-button { display: none; }
+html[lang="hi"] .vx-search input { font-family: var(--font-body-hi); line-height: 1.65; }
+.vx-clear { position: absolute; right: 3px; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: none; color: var(--ivory-dim); cursor: pointer; }
+.vx-clear:hover { color: var(--ivory); }
+.vx-clear[hidden], .vx-showall[hidden] { display: none; }
+.vx-cat-chips { overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter); scroll-padding-inline: var(--gutter); }
+.vx-cat-chips::-webkit-scrollbar { display: none; }
+.vx-cat-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 4px var(--gutter) max(40px, env(safe-area-inset-bottom)); }
+.vx-statusbar { display: flex; align-items: center; flex-wrap: wrap; gap: 0 16px; min-height: 48px; }
+.vx-status { margin: 0; font: 600 .82rem/1.4 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--ivory-dim); }
+.vx-status:lang(hi) { font-family: var(--font-body-hi); font-size: .92rem; line-height: 1.65; letter-spacing: 0; text-transform: none; }
+.vx-group { margin-top: 18px; }
+.vx-group-t { display: flex; align-items: baseline; gap: 10px; margin: 0; padding-bottom: 8px; font: 500 var(--step-1)/1.2 var(--font-display); color: var(--lamp); border-bottom: 1px solid var(--line-dark); }
+.vx-group-t :lang(hi) { font-family: var(--font-deva); line-height: 1.65; }
+.vx-items { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); column-gap: 32px; }
+.vx-item { padding: 14px 0 6px; border-bottom: 1px solid rgba(255, 204, 107, .1); }
+.vx-item-t { margin: 0; font: 600 1.22rem/1.25 var(--font-display); color: var(--ivory); }
+.vx-item-t:lang(hi) { font: 400 1.1rem/1.65 var(--font-deva); }
+.vx-where { margin: 2px 0 0; font: 500 .72rem/1.4 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--stone); }
+.vx-where:lang(hi) { font-size: .86rem; line-height: 1.65; letter-spacing: 0; text-transform: none; font-family: var(--font-body-hi); }
+.vx-item-d { margin: 6px 0 0; font-size: .93rem; line-height: 1.55; color: var(--ivory-dim); }
+.vx-item-d:lang(hi) { line-height: 1.7; }
+.vx-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
+.vx-goto, .vx-app {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
+  font: 600 .9rem/1.3 var(--font-ui); text-decoration: underline; text-underline-offset: 5px;
+}
+.vx-goto { color: var(--lamp); text-decoration-color: rgba(255, 204, 107, .4); }
+.vx-app { color: var(--ivory); text-decoration-color: rgba(248, 239, 224, .35); }
+.vx-goto:hover { text-decoration-color: var(--lamp); }
+.vx-app:hover { text-decoration-color: var(--ivory); }
+.vx-goto :lang(hi), .vx-app :lang(hi) { font-family: var(--font-body-hi); line-height: 1.65; }
+.vx-goto svg, .vx-app svg { width: 14px; height: 14px; flex: none; }
+.vx-empty { display: grid; justify-items: start; gap: 6px; padding: 36px 0; color: var(--ivory-dim); }
+.vx-empty p { margin: 0; }
+.vx-empty-t { font-size: var(--step-1); color: var(--ivory); }
+.vx-empty .vx-chip { margin-top: 10px; }
+@media (min-width: 700px) {
+  .vx-cat-head { padding-top: 22px; }
+  .vx-cat-chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 2px 0; }
+}
+
+/* ---------- the real app in a slim phone frame (placed and sized by walk.css) ---------- */
+.vw-phone-btn { display: block; width: 100%; padding: 0; border: 0; border-radius: 30px; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.vw-phone-frame {
+  display: block; padding: clamp(4px, 1.2vw, 6px); border-radius: clamp(20px, 6vw, 32px); background: linear-gradient(160deg, #33212b, #0b0806 55%);
+  box-shadow: 0 0 0 1px rgba(255, 204, 107, .34), inset 0 0 0 1px rgba(255, 255, 255, .07), 0 30px 60px -30px rgba(0, 0, 0, .9), 0 0 60px -24px rgba(255, 190, 90, .4);
+  transition: transform var(--t-med) var(--ease-out), box-shadow var(--t-med);
+}
+.vw-phone-frame img { width: 100%; height: auto; border-radius: clamp(16px, 5vw, 26px); background: #f3e6cf; }
+.vw-phone-btn:hover .vw-phone-frame { transform: translateY(-3px); box-shadow: 0 0 0 1px rgba(255, 204, 107, .7), inset 0 0 0 1px rgba(255, 255, 255, .07), 0 34px 64px -30px rgba(0, 0, 0, .9), 0 0 70px -20px rgba(255, 190, 90, .55); }
+.vw-phone-btn:focus-visible { outline-offset: 5px; }
+/* phones: the top of the screen, fading out, so it keeps to the height of the list beside it */
+@media (max-width: 639px) {
+  .vw-phone-frame { aspect-ratio: 9 / 16; overflow: hidden; padding-bottom: 0; border-radius: clamp(20px, 6vw, 32px) clamp(20px, 6vw, 32px) 0 0;
+    -webkit-mask-image: linear-gradient(#000 80%, transparent); mask-image: linear-gradient(#000 80%, transparent); }
+}
+
+/* ---------- navagraha seats: each graha's mandala shape on its cloth ---------- */
+.vw-graha-seat { width: 80%; height: auto; overflow: visible; }
+.vw-graha-seat > * { fill: var(--seat); stroke: rgba(255, 214, 140, .85); stroke-width: 1; stroke-linejoin: round; }
+.vw-graha-seat .l { fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
+/* ---------- Before you begin (FAQ), just before the sanctum ---------- */
+.vx-faq-list { margin-top: clamp(24px, 4vw, 40px); max-width: 880px; border-top: 1px solid var(--line-dark); }
+.vx-faq { border-bottom: 1px solid var(--line-dark); }
+.vx-faq summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px; box-sizing: border-box; min-height: 56px; padding: 9px 2px; cursor: pointer; list-style: none;
+  font: 600 clamp(1.12rem, 1.04rem + .4vw, 1.32rem)/1.3 var(--font-display); color: var(--ivory); transition: color var(--t-fast);
+}
+.vx-faq summary::-webkit-details-marker { display: none; }
+.vx-faq summary:hover, .vx-faq[open] summary { color: var(--lamp); }
+.vx-faq-q:lang(hi) { font: 400 1.08rem/1.7 var(--font-deva); }
+.vx-faq-ico { position: relative; flex: none; width: 30px; height: 30px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(255, 204, 107, .45); }
+.vx-faq-ico::before, .vx-faq-ico::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -.75px 0 0 -6px; background: var(--lamp); transition: transform var(--t-med) var(--ease-out); }
+.vx-faq-ico::after { transform: rotate(90deg); }
+.vx-faq[open] .vx-faq-ico::after { transform: rotate(0deg); }
+.vx-faq-a { margin: 0; padding: 0 44px 20px 2px; max-width: 70ch; color: var(--ivory-dim); line-height: 1.65; }
+.vx-faq-a:lang(hi) { line-height: 1.8; }
+.vx-faq[open] .vx-faq-a { animation: vw-up .5s var(--ease-out); }
+
+/* ---------- the verse-card maker, in Yatra & parivar ---------- */
+.vw-share-slot { margin-top: clamp(48px, 7vw, 88px); }
+.vx-share { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 900px) { .vx-share { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(40px, 5vw, 80px); } }
+.vx-share .vw-sub { margin-bottom: 8px; }
+.vx-share-d { margin: 0; max-width: 46ch; color: var(--ivory-dim); }
+.vx-share-d:lang(hi) { line-height: 1.75; }
+.vx-share-stage { display: grid; place-items: center; }
+@media (min-width: 900px) { .vx-share-stage { min-height: 500px; } }
+.vx-card {
+  position: relative; display: grid; place-items: center; margin: 0; width: min(100%, 320px); aspect-ratio: 4 / 5; overflow: hidden; border-radius: 16px;
+  text-align: center; color: var(--ivory); background: #1a1020;
+  box-shadow: 0 0 0 1px rgba(255, 204, 107, .4), 0 40px 80px -36px rgba(0, 0, 0, .9), 0 0 90px -34px rgba(255, 190, 90, .5);
+  transition: width var(--t-med) var(--ease-out);
+}
+.vx-card.is-story { width: min(100%, 262px); aspect-ratio: 9 / 16; }
+.vx-card-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* dusk over the painting, and a gold hairline frame */
+.vx-card::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(14, 11, 31, .3) 0%, rgba(42, 24, 56, .66) 42%, rgba(14, 11, 31, .9) 100%); }
+.vx-card::after { content: ""; position: absolute; inset: 10px; z-index: 2; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(255, 204, 107, .45); pointer-events: none; }
+.vx-card-in { position: relative; z-index: 3; display: grid; justify-items: center; gap: 12px; padding: 28px 26px 58px; }
+.vx-card-verse { margin: 0; font: 400 1.12rem/1.85 var(--font-deva); color: #fff4dc; text-shadow: 0 2px 16px rgba(0, 0, 0, .6); }
+.vx-card-meaning { margin: 0; font: italic 500 1rem/1.45 var(--font-display); color: #f0d9ab; text-shadow: 0 1px 10px rgba(0, 0, 0, .6); }
+.vx-card-src { font: 600 .64rem/1.4 var(--font-ui); letter-spacing: .22em; text-transform: uppercase; color: var(--lamp); }
+.vx-card-src:lang(hi) { font: 400 .78rem/1.65 var(--font-deva); letter-spacing: 0; text-transform: none; } /* spacing breaks the Devanagari headline */
+.vx-card-brand { position: absolute; z-index: 3; left: 0; right: 0; bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 7px; font: 600 1rem/1 var(--font-display); letter-spacing: .06em; color: var(--ivory); }
+.vx-card-brand img { width: 20px; height: 20px; border-radius: 5px; }
+.vx-card.is-story .vx-card-verse { font-size: 1.08rem; }
+/* Phones: fade the chip row's right edge so it reads as "more to swipe". */
+@media (max-width: 760px) { .vx-cat-chips { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); } }
+/* "See it in the temple" lands here: a brief lamp-gold ring on the offering. */
+.vw-offer.is-found { outline: 2px solid var(--lamp); outline-offset: 6px; border-radius: 6px; transition: outline-color .6s var(--ease-out); }
