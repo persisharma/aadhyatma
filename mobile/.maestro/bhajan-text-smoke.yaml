@@ -4,10 +4,9 @@
 # fold/unfold the first group → open its first bhajan → reader shows a stanza
 # and the plain "Composed by" credit → Back → list → Back → Bhajan tab.
 #
-# The shelf's door is hidden until at least one verified bhajan is registered
-# (data/bhajan/ids.ts). Until then every step after the tab check is skipped by
-# the `when: visible` guard, and this flow only proves the tab still opens.
-# Once the first text ships, the guarded block runs unchanged.
+# The door is always shown (owner decision, 27 Nov 2026). With no bhajans yet
+# it reads "Coming soon" and the shelf shows its empty line; the group/reader
+# block below is guarded on a group header and runs once the first text ships.
 #
 # Selectors: the door's a11y label is "Bhajan Lyrics. <n> bhajans with meaning.
 # Tap to open." in every reading language; group headers carry
@@ -19,13 +18,14 @@ appId: com.prashantsharma.vedansh
 - tapOn: { id: "tab-bhajan" }
 - waitForAnimationToEnd
 
+- tapOn: { id: "bhajan-shelf-door" }
+- waitForAnimationToEnd
+- assertVisible: { id: "bhajan-list" }
+
 - runFlow:
     when:
-      visible: { id: "bhajan-shelf-door" }
+      visible: { id: "bhajan-group-.*" }
     commands:
-      - tapOn: { id: "bhajan-shelf-door" }
-      - waitForAnimationToEnd
-      - assertVisible: { id: "bhajan-list" }
       # First group header folds closed and open again.
       - tapOn: { id: "bhajan-group-.*", index: 0 }
       - waitForAnimationToEnd
@@ -38,6 +38,13 @@ appId: com.prashantsharma.vedansh
       - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
       - waitForAnimationToEnd
       - assertVisible: { id: "bhajan-list" }
-      - tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
-      - waitForAnimationToEnd
-      - assertVisible: { id: "bhajan-shelf-door" }
+
+- runFlow:
+    when:
+      visible: { id: "bhajan-list-empty" }
+    commands:
+      - assertVisible: { id: "bhajan-list-empty" }
+
+- tapOn: "Back|वापस|પાછા|ಹಿಂದೆ"
+- waitForAnimationToEnd
+- assertVisible: { id: "bhajan-shelf-door" }

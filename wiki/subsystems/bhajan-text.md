@@ -2,7 +2,7 @@
 title: Bhajan text shelf (भजन संग्रह)
 type: subsystem
 sources: [mobile/src/data/bhajan/ids.ts, mobile/src/data/bhajan/index.ts, mobile/src/data/bhajan/shelf.ts, mobile/src/screens/BhajanListScreen.tsx, mobile/src/screens/BhajanReaderScreen.tsx, mobile/src/screens/audio/AudioLibraryScreen.tsx, mobile/src/navigation/entryRoutes.ts, mobile/src/navigation/AudioStackNavigator.tsx, mobile/src/data/categories.ts, docs/content-parity/bhajan-library.md, design.md, RULEBOOK.md]
-last_verified_date: 2026-11-15
+last_verified_date: 2026-11-27
 confidence: high
 status: current
 ---
@@ -13,7 +13,7 @@ Bhajan lyrics with meaning, listed inside the Bhajan (audio) tab rather than on 
 `bhajan` is a real `ContentCategory`, so search, deity pages, routines, bookmarks, resume and NEW
 badges work through the ordinary `library` machinery; only its listing is special. The shelf
 shipped as plumbing with an **empty catalog** (15 Nov 2026): no text had cleared RULEBOOK §11/§34
-yet, so the Bhajan tab shows no door.
+yet. Since 27 Nov 2026 (owner decision) the door is always shown and reads "coming soon" while empty.
 
 ## Details
 

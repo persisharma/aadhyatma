@@ -159,10 +159,11 @@ export default function BhajanListScreen({ navigation }: Props) {
               style={{ color: colors.inkMuted, fontFamily: typography.meaning.fontFamily, fontSize: 15, lineHeight: 22, textAlign: 'center', marginTop: 32 }}
             >
               {pick(lang, {
-                hi: 'भजन जाँच के बाद यहाँ जुड़ेंगे।',
-                en: 'Bhajans appear here once their text is verified.',
-                gu: 'ભજન ચકાસણી પછી અહીં ઉમેરાશે.',
-                kn: 'ಪಠ್ಯ ಪರಿಶೀಲನೆಯಾದ ನಂತರ ಭಜನೆಗಳು ಇಲ್ಲಿ ಸೇರುತ್ತವೆ.',
+                // No process/verification wording on screen (RULEBOOK §11.16).
+                hi: 'भजन जल्द आ रहे हैं।',
+                en: 'Bhajans are coming soon.',
+                gu: 'ભજન ટૂંક સમયમાં આવી રહ્યા છે.',
+                kn: 'ಭಜನೆಗಳು ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿವೆ.',
               })}
             </Text>
           ) : (

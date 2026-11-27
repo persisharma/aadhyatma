@@ -28,8 +28,9 @@ export default function AudioLibraryScreen() {
   const { lang } = useGitaLanguage();
   const { currentTrack, isPlaying, playTrack, prefetchTrack, openNowPlaying } = useAudioPlayerContext();
   const navigation = useNavigation<NativeStackNavigationProp<AudioStackParamList>>();
-  // Bhajan text shelf (design.md §34.1): the door shows only once at least one
-  // verified bhajan is registered — never an empty shelf.
+  // Bhajan text shelf (design.md §34.1). Owner decision (27 Nov 2026): the door
+  // is always shown; with no bhajans yet it reads "coming soon" and opens the
+  // shelf's empty state.
   const bhajanTextCount = useMemo(() => bhajanShelfEntries().length, []);
   const [filter, setFilter] = useState<Deity | null>(null);
   // Feature-tour anchor for the Bhajan "inside" step (design.md §47).
@@ -93,12 +94,8 @@ export default function AudioLibraryScreen() {
           </ScrollView>
 
           <View ref={bhajanInsideRef} collapsable={false} style={{ paddingHorizontal: spacing.screenGutter, gap: 12 }}>
-            {bhajanTextCount > 0 && (
-              <>
-                <SectionHeading hi="भजन पढ़ें" en="Read" />
-                <BhajanShelfDoor count={bhajanTextCount} onPress={() => navigation.navigate('BhajanList')} />
-              </>
-            )}
+            <SectionHeading hi="भजन पढ़ें" en="Read" />
+            <BhajanShelfDoor count={bhajanTextCount} onPress={() => navigation.navigate('BhajanList')} />
 
             {currentTrack && (
               <>
@@ -147,17 +144,19 @@ export default function AudioLibraryScreen() {
 function BhajanShelfDoor({ count, onPress }: { count: number; onPress: () => void }) {
   const { lang } = useGitaLanguage();
   const { primary, secondary } = orderTitlesByLanguage(lang, 'भजन संग्रह', 'Bhajan Lyrics', CARD_TITLE_SIZES);
-  const meta = pick(lang, {
-    hi: `${count} भजन · अर्थ सहित`,
-    en: `${count} bhajans · with meaning`,
-    gu: `${count} ભજન · અર્થ સહિત`,
-    kn: `${count} ಭಜನೆಗಳು · ಅರ್ಥ ಸಹಿತ`,
-  });
+  const meta = count > 0
+    ? pick(lang, {
+        hi: `${count} भजन · अर्थ सहित`,
+        en: `${count} bhajans · with meaning`,
+        gu: `${count} ભજન · અર્થ સહિત`,
+        kn: `${count} ಭಜನೆಗಳು · ಅರ್ಥ ಸಹಿತ`,
+      })
+    : pick(lang, { hi: 'जल्द आ रहे हैं', en: 'Coming soon', gu: 'ટૂંક સમયમાં', kn: 'ಶೀಘ್ರದಲ್ಲೇ' });
   return (
     <ListCard
       onPress={onPress}
       testID="bhajan-shelf-door"
-      accessibilityLabel={`Bhajan Lyrics. ${count} bhajans with meaning. Tap to open.`}
+      accessibilityLabel={count > 0 ? `Bhajan Lyrics. ${count} bhajans with meaning. Tap to open.` : 'Bhajan Lyrics. Coming soon. Tap to open.'}
       style={styles.inList}
       leading={
         <CardThumb>
