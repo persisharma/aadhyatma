@@ -87,12 +87,12 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
     centerElement: true
 - takeScreenshot: daan-home-reads
-# Each read opens the Learn reader at that page; Next walks the reads.
+# "What daan is" opens the five-step Learn guide at step 1; Next walks all five.
 - tapOn:
     id: "daan-read-1"
 - waitForAnimationToEnd
 - assertVisible:
-    id: "daan-learn-read-1"
+    id: "daan-learn-step-1"
 - assertVisible:
     id: "daan-learn-dwaar"
 - takeScreenshot: daan-learn-1
@@ -100,14 +100,26 @@ appId: com.prashantsharma.vedansh
     id: "daan-learn-next"
 - waitForAnimationToEnd
 - assertVisible:
-    id: "daan-learn-read-2"
+    id: "daan-learn-step-2"
 - takeScreenshot: daan-learn-2
 - tapOn:
     id: "daan-learn-next"
 - waitForAnimationToEnd
 - assertVisible:
-    id: "daan-learn-read-3"
+    id: "daan-learn-step-3"
 - takeScreenshot: daan-learn-3
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-4"
+- takeScreenshot: daan-learn-4
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-5"
+- takeScreenshot: daan-learn-5
 - tapOn:
     id: "daan-learn-next"
 - waitForAnimationToEnd

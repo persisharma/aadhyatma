@@ -14,7 +14,7 @@
  */
 import type { DaanKathaEntry, DaanOccasionEntry, DaanOrgEntry, DaanPrincipleEntry } from './types';
 
-export { DAAN_VAAR_ENTRIES, DAAN_VAAR_SOURCE, getDaanVaarEntry } from './vaar';
+export { DAAN_VAAR_ENTRIES, DAAN_VAAR_SOURCE, getDaanVaarEntry, splitVaarItems } from './vaar';
 export { DAAN_CAUSES, getDaanCause, causeForPurpose } from './causes';
 export type { DaanCauseMeta } from './causes';
 export {

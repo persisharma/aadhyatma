@@ -42,9 +42,9 @@ content is generated from the registries, so it cannot drift from the code).
   Annapurna painting under a night gradient, today's daan (festival folded in)
   as title + glass tiles, painted chip per served cause → `DaanDirectory {causes:[id]}` —
   then BOTH standing doors in a row under it, every vaar's chips + day card,
-  three night "short reads" cards (`daan-read-1..3` → `DaanLearn {read}`), a 3-up painted grid of
+  three night "short reads" cards (`daan-read-1..3` → `DaanLearn {step}` at steps 1, 2, 5), a 3-up painted grid of
   live causes (`daan-seva-*`), night-panel verse carousel, two-up katha cards
-  with night bands, a खाता card with `दर्ज करें`, and the header खाता door), DaanLearn (the three short reads, one per page, with the दान-द्वार door on every page; glosses in `data/daan/learn.ts`, card lines in the tiny `learnReads.ts` to keep the home's cold start light), DaanJourney (one skippable scroll with always-present terminal
+  with night bands, a खाता card with `दर्ज करें`, and the header खाता door), DaanLearn (the five-step guide — what daan is · how to give · what to give today · whom it reaches · remember it quietly — with the दान-द्वार door on every step; glosses in `data/daan/learn.ts`, card lines in the tiny `learnReads.ts` to keep the home's cold start light), DaanJourney (one skippable scroll with always-present terminal
   actions), DaanLedger + DaanEntry, DaanDirectory + DaanDirectoryDetail
   (the filtered द्वार is the design's cause page — cause chips, night header,
   mahatva card, vaar strip of giving days, place cards, record door; no counts;

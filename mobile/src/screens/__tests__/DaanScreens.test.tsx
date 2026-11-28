@@ -48,7 +48,7 @@ import DaanJourneyScreen from '../DaanJourneyScreen';
 import DaanDirectoryScreen from '../DaanDirectoryScreen';
 import DaanDirectoryDetailScreen from '../DaanDirectoryDetailScreen';
 import DaanKathaScreen from '../DaanKathaScreen';
-import DaanLearnScreen, { clampLearnRead } from '../DaanLearnScreen';
+import DaanLearnScreen, { clampLearnStep } from '../DaanLearnScreen';
 import { getDaanKathas, getDaanOccasionForRule, getDaanOrg, getDaanOrgs, getDaanVaarEntry } from '@/data/daan';
 
 const has = (tree: TestRenderer.ReactTestRenderer, testID: string) =>
@@ -191,12 +191,13 @@ describe('DaanPunyaScreen — the educate-first home', () => {
     await act(async () => tree.unmount());
   });
 
-  test('each of the three short reads opens the Learn reader at that page', async () => {
+  test('the three short reads open the five-step Learn guide at steps 1, 2 and 5', async () => {
     const navigation = { ...mockNavigation } as never;
     const tree = await renderScreen(<DaanPunyaScreen navigation={navigation} route={{ key: 'k', name: 'DaanPunya' } as never} />);
+    const expected = { 1: 1, 2: 2, 3: 5 } as const;
     for (const n of [1, 2, 3] as const) {
       await press(tree, `daan-read-${n}`);
-      expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanLearn', { read: n });
+      expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanLearn', { step: expected[n] });
     }
     await act(async () => tree.unmount());
   });
@@ -563,49 +564,78 @@ describe('पात्र-परिचय — a place, not a profile (RULEBOOK �
   });
 });
 
-describe('DaanLearnScreen — three short reads, a door on every page', () => {
-  const renderLearn = (read?: number) =>
+describe('DaanLearnScreen — the five-step guide, a door on every step', () => {
+  const renderLearn = (step?: number) =>
     renderScreen(
       <DaanLearnScreen
         navigation={{ ...mockNavigation } as never}
-        route={{ key: 'k', name: 'DaanLearn', params: read ? { read } : undefined } as never}
+        route={{ key: 'k', name: 'DaanLearn', params: step ? { step } : undefined } as never}
       />
     );
 
-  test('opens on the requested read, and an unknown read falls back to the first', async () => {
-    expect(clampLearnRead(2)).toBe(2);
-    expect(clampLearnRead(7)).toBe(1);
-    expect(clampLearnRead(undefined)).toBe(1);
+  test('opens on the requested step, and an unknown step falls back to the first', async () => {
+    expect(clampLearnStep(4)).toBe(4);
+    expect(clampLearnStep(7)).toBe(1);
+    expect(clampLearnStep(undefined)).toBe(1);
     const tree = await renderLearn(2);
-    expect(has(tree, 'daan-learn-read-2')).toBe(true);
+    expect(has(tree, 'daan-learn-step-2')).toBe(true);
     expect(has(tree, 'daan-learn-upanishad')).toBe(true);
     expect(has(tree, 'daan-learn-gita-panel')).toBe(true);
     await act(async () => tree.unmount());
   });
 
-  test('read 1 carries the Veda panel; next/previous walk the reads and finish returns', async () => {
+  test('Next walks all five steps (what · how · today · whom · remember) and Finish returns', async () => {
     const tree = await renderLearn();
-    expect(has(tree, 'daan-learn-read-1')).toBe(true);
+    expect(has(tree, 'daan-learn-step-1')).toBe(true);
     expect(has(tree, 'daan-learn-veda')).toBe(true);
     await press(tree, 'daan-learn-next');
-    expect(has(tree, 'daan-learn-read-2')).toBe(true);
+    expect(has(tree, 'daan-learn-step-2')).toBe(true);
     await press(tree, 'daan-learn-next');
-    expect(has(tree, 'daan-learn-read-3')).toBe(true);
+    expect(has(tree, 'daan-learn-step-3')).toBe(true);
+    expect(has(tree, 'daan-learn-today')).toBe(true);
+    await press(tree, 'daan-learn-next');
+    expect(has(tree, 'daan-learn-step-4')).toBe(true);
+    expect(has(tree, 'daan-learn-cause-card')).toBe(true);
+    await press(tree, 'daan-learn-next');
+    expect(has(tree, 'daan-learn-step-5')).toBe(true);
     expect(has(tree, 'daan-learn-gupt')).toBe(true);
     await press(tree, 'daan-learn-prev');
-    expect(has(tree, 'daan-learn-read-2')).toBe(true);
+    expect(has(tree, 'daan-learn-step-4')).toBe(true);
     await press(tree, 'daan-learn-next');
     await press(tree, 'daan-learn-next');
     expect(mockNavigation.goBack).toHaveBeenCalled();
     await act(async () => tree.unmount());
   });
 
-  test('the daan-dwaar door is on every read; read 3 opens the register and a new entry', async () => {
-    for (const read of [1, 2, 3]) {
-      const tree = await renderLearn(read);
+  test('step 3: a served cause opens step 4 on that cause; any vaar can be picked; Sudama opens', async () => {
+    const tree = await renderLearn(3);
+    // Wednesday's gau-gras serves गौ-सेवा.
+    await press(tree, 'daan-learn-vaar-3');
+    await press(tree, 'daan-learn-serves-gau');
+    expect(has(tree, 'daan-learn-step-4')).toBe(true);
+    expect(has(tree, 'daan-learn-org-ttd-annaprasadam')).toBe(true);
+    await press(tree, 'daan-learn-open-dwaar');
+    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanDirectory', { causes: ['gau'] });
+    await act(async () => tree.unmount());
+    const again = await renderLearn(3);
+    await press(again, 'daan-learn-sudama');
+    expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanKatha', { kathaId: 'sudama' });
+    await act(async () => again.unmount());
+  });
+
+  test('step 4: picking a cause shows its places', async () => {
+    const tree = await renderLearn(4);
+    await press(tree, 'daan-learn-cause-vastra');
+    expect(has(tree, 'daan-learn-org-goonj')).toBe(true);
+    await act(async () => tree.unmount());
+  });
+
+  test('the daan-dwaar door is on every step; step 5 opens the register and a new entry', async () => {
+    for (const step of [1, 2, 3, 4, 5]) {
+      const tree = await renderLearn(step);
       await press(tree, 'daan-learn-dwaar');
       expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanDirectory', {});
-      if (read === 3) {
+      if (step === 5) {
         await press(tree, 'daan-learn-ledger');
         expect(mockNavigation.navigate).toHaveBeenLastCalledWith('DaanLedger');
         await press(tree, 'daan-learn-record');

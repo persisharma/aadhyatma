@@ -18,7 +18,7 @@ export const routeGraph: Readonly<Record<string, readonly string[]>> = {
   "DaanDirectoryDetail": ["DaanEntry", "DaanKatha"],
   "DaanJourney": ["DaanDirectory", "DaanEntry", "DaanKatha"],
   "DaanKatha": ["DaanEntry", "DaanJourney"],
-  "DaanLearn": ["DaanDirectory", "DaanEntry", "DaanLedger"],
+  "DaanLearn": ["DaanDirectory", "DaanEntry", "DaanKatha", "DaanLedger"],
   "DaanLedger": ["DaanEntry", "DaanKatha"],
   "DaanPunya": ["DaanDirectory", "DaanEntry", "DaanJourney", "DaanKatha", "DaanLearn", "DaanLedger"],
   "DeityIndex": ["DeityDetail"],

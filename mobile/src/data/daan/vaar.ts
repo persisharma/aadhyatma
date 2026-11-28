@@ -86,3 +86,15 @@ export function getDaanVaarEntry(weekday: number): DaanVaarEntry {
   // The table is total over weekdays, so the lookup cannot miss.
   return DAAN_VAAR_ENTRIES.find((entry) => entry.weekday === normalized) ?? DAAN_VAAR_ENTRIES[0];
 }
+
+/**
+ * A vaar row's items as separate tags plus its trailing note: the registry
+ * writes "chana dal, haldi, banana, books — the vaar of vidya-daan". The note
+ * after the dash stays a line; the comma list becomes tags.
+ */
+export function splitVaarItems(items: string): { tags: string[]; note: string | null } {
+  const [list, ...rest] = items.split(' — ');
+  const tags = list.split(/,\s*/).map((tag) => tag.trim()).filter(Boolean);
+  const note = rest.join(' — ').trim();
+  return { tags, note: note.length > 0 ? note : null };
+}

@@ -45,6 +45,7 @@ import {
   getDaanOccasionForRule,
   getDaanOrgs,
   getDaanPrinciples,
+  splitVaarItems,
   type DaanCause,
 } from '@/data/daan';
 import { DAAN_LEARN_READS } from '@/data/daan/learnReads';
@@ -66,17 +67,8 @@ function vaarShortName(lang: Lang, vaarHi: string, vaarEn: string): string {
   return contentByLang(lang, vaarHi.replace(/वार$/, ''), vaarEn.slice(0, 3));
 }
 
-/**
- * A vaar row's items as separate tags plus its trailing note: the registry
- * writes "chana dal, haldi, banana, books — the vaar of vidya-daan". The note
- * after the dash stays a line; the comma list becomes tags.
- */
-export function splitVaarItems(items: string): { tags: string[]; note: string | null } {
-  const [list, ...rest] = items.split(' — ');
-  const tags = list.split(/,\s*/).map((tag) => tag.trim()).filter(Boolean);
-  const note = rest.join(' — ').trim();
-  return { tags, note: note.length > 0 ? note : null };
-}
+/** Re-exported for the home's callers and tests; lives in the vaar registry. */
+export { splitVaarItems };
 
 /**
  * Which painted seva icon an offered item wears on the today card: cloth →
@@ -169,15 +161,15 @@ export default function DaanPunyaScreen({ navigation }: Props) {
     color,
   });
 
-  // The three short reads open the Learn reader at that page (design: the
-  // guide's steps 1, 2 and 5). Their lines come from `data/daan/learnReads.ts`.
+  // The three short reads open the five-step Learn guide at their step
+  // (design: steps 1, 2 and 5). Their lines come from `data/daan/learnReads.ts`.
   const readIcons = [storybookSources.daan, storybookSources.suktam, storybookSources.granth] as const;
   const reads = DAAN_LEARN_READS.map((entry, i) => ({
     id: entry.id,
     icon: readIcons[i],
     title: contentByLang(lang, entry.title.hi, entry.title.en),
     sub: contentByLang(lang, entry.card.hi, entry.card.en),
-    open: () => navigation.navigate('DaanLearn', { read: entry.id }),
+    open: () => navigation.navigate('DaanLearn', { step: entry.step }),
   }));
 
   return (

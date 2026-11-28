@@ -1646,3 +1646,6 @@ The #736 build drifted from `OptionB.dc.html`. Rebuilt: 440pt painted today card
 
 ## [2026-11-27] ingest | Daan design audit vs the Option B canvas
 Home: eyebrow section labels, Register pill, page wash, 470pt card with icon-led item tiles + one "Serves" line, single night gradient, verse as one night panel (label/dots inside), cream tiles. Learn: six-ways glyphs, star points, sample dates, door glyph. Daan-dwaar cause page rebuilt to CausePage: cause chips, night header, mahatva card, vaar strip, place cards with hand-off line, record door. Not built: per-cause photo heroes, "How this seva reaches people" (no registry content), step-1 photo (R2). design.md §73 + [[daan-punya]] synced.
+
+## [2026-11-28] ingest | Daan Learn guide is five steps, per the design
+The read cards open `Main.dc.html`'s 5-step guide ("Step N of 5"); #739 had built only 3 pages. Added step 3 (today's vaar on the Annapurna painting, pick any vaar, served causes → step 4, "how much should I give?" → Sudama) and step 4 (every live cause, mahatva, places, door into the दान-द्वार on that cause). Route param is now `DaanLearn {step}`; `splitVaarItems` moved to `data/daan/vaar.ts`. design.md §73 + [[daan-punya]] synced.

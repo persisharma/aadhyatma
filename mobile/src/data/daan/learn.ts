@@ -15,7 +15,37 @@ import type { DaanCause } from './types';
 import type { Bi } from './learnReads';
 
 export { DAAN_LEARN_READS } from './learnReads';
-export type { DaanLearnRead, DaanLearnReadId } from './learnReads';
+export type { DaanLearnRead, DaanLearnReadId, DaanLearnStep } from './learnReads';
+
+/** The guide's five steps (design: Main.dc.html). Step 3's lede is built from today's vaar. */
+export const DAAN_LEARN_STEPS: readonly { title: Bi; lede: Bi }[] = [
+  { title: { hi: 'दान क्या है', en: 'What daan is' }, lede: { hi: 'जो आपके पास है, उसका एक भाग बाँटना', en: 'Sharing a part of what you have' } },
+  { title: { hi: 'कैसे दें', en: 'How to give' }, lede: { hi: 'श्रद्धा से, सामर्थ्य के अनुसार, विनम्रता से', en: 'With faith, by your means, with humility' } },
+  { title: { hi: 'आज क्या दें', en: 'What to give today' }, lede: { hi: 'आज के वार का दान', en: 'Today’s vaar and its daan' } },
+  { title: { hi: 'किस तक पहुँचे', en: 'Whom it reaches' }, lede: { hi: 'सेवा के प्रकार, और उन्हें करने वाले स्थान', en: 'The kinds of seva, and places that do them' } },
+  { title: { hi: 'चुपचाप याद रखें', en: 'Remember it quietly' }, lede: { hi: 'आपका खाता, और गुप्त दान', en: 'Your register, and gupt daan' } },
+];
+
+// ── Step 3 · What to give today ───────────────────────────────────────────
+export const DAAN_LEARN_TODAY = {
+  noteFallback: { hi: 'इस वार का पारम्परिक दान', en: 'The traditional daan of this vaar' },
+  servesLabel: { hi: 'यह किस तक पहुँचता है — छूकर देखें', en: 'Who this reaches — tap to see' },
+  weekLabel: { hi: 'हर वार का अपना दान', en: 'Every day has its daan' },
+  weekHint: { hi: 'किसी वार को छूकर देखें कि उस दिन परम्परा क्या देती है।', en: 'Tap a day to see what the tradition gives on it.' },
+  howMuchLabel: { hi: 'कितना दूँ?', en: 'How much should I give?' },
+  howMuch: { hi: 'कोई निश्चित मात्रा नहीं। उपनिषद् कहता है — अपने सामर्थ्य के अनुसार दो।', en: 'There is no fixed amount. The Upanishad says: give by your means.' },
+  howMuchSudama: { hi: 'सुदामा मुट्ठी भर पोहा लाए, और वह पूर्ण था। मापदण्ड भाव है, मात्रा नहीं।', en: 'Sudama brought a fistful of poha, and it was complete. Bhaav is the measure, never the amount.' },
+  readSudama: { hi: 'सुदामा की कथा पढ़ें', en: 'Read Sudama’s story' },
+} as const;
+
+// ── Step 4 · Whom it reaches ──────────────────────────────────────────────
+export const DAAN_LEARN_CAUSES = {
+  intro: { hi: 'हर दान किसी की सेवा करता है। किसी सेवा को छूकर देखें कि वह क्यों प्रिय मानी गई, और कौन-से स्थान यह कार्य करते हैं।', en: 'Every daan serves someone. Tap a seva to see why it is held dear, and places that do this work.' },
+  whyDear: { hi: 'यह दान क्यों प्रिय है', en: 'Why this daan is held dear' },
+  placesLabel: { hi: 'जो स्थान यह सेवा करते हैं', en: 'Places that serve it' },
+  openDwaar: { hi: 'दान-द्वार खोलें · ', en: 'Open Daan-dwaar · ' },
+  noMoney: { hi: 'दान संस्था की अपनी वेबसाइट पर होगा — ऐप किसी लेन-देन का हिस्सा नहीं है।', en: 'The giving happens on the organization’s own website — the app is never part of any transaction.' },
+} as const;
 
 // ── Read 1 · What daan is ────────────────────────────────────────────────
 export const DAAN_LEARN_ONE_LINE: Bi = {
