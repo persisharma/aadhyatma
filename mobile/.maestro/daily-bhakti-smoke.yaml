@@ -81,6 +81,24 @@ appId: com.prashantsharma.vedansh
 # Pin layout verification to a known complete verse rather than assuming a
 # random long verse/meaning must fit. This exercises the widget landing route,
 # not an OS notification tap.
+- scrollUntilVisible:
+    element: { id: "daily-bhakti-source-link" }
+    centerElement: true
+- takeScreenshot: e2e-shots/daily-source-citation
+- tapOn: { id: "daily-bhakti-source-link" }
+- assertVisible: 'Verse 2\.47.*'
+- tapOn: "Back"
+- assertVisible: { id: "daily-bhakti-source-link" }
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - tapOn: { id: "daily-bhakti-source-link" }
+      - assertVisible: 'Verse 2\.47.*'
+      - back
+- assertVisible: { id: "daily-bhakti-source-link" }
+- scrollUntilVisible:
+    element: { text: "Share verse" }
+    direction: UP
 - takeScreenshot: e2e-shots/daily-design-two-header
 - tapOn: "Share verse"
 - tapOn: "Card style: Daily Bhakti card"

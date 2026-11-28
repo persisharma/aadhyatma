@@ -1,6 +1,6 @@
 import { verseLinesForDisplay } from '@/utils/versePresentation';
 import React, { useEffect, useState } from 'react';
-import { Image, PixelRatio, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
+import { Image, PixelRatio, Pressable, StyleSheet, Text, View, type StyleProp, type TextStyle, type ViewStyle } from 'react-native';
 import type { Lang } from '@/data/gita/language';
 import { devotionalArtRequest, devotionalPlateArt } from '@/data/devotionalShareArt';
 import { evictBackgroundAsset, subscribeBackgroundAsset } from '@/utils/backgroundAssetCache';
@@ -160,8 +160,9 @@ function Panel({ art, width, top, bottom, topCap = 0, bottomCap = 0, tile, child
 /** Rows below the meaning box's 68px top cap that hold only paper and rules on every master
  * (a few above are the label dashes; below, some masters' corner curls begin, e.g. Durga +63). */
 const BOX_TILE = [82, 128] as const;
-export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
+export function DevotionalVerseBody({ header, onSourcePress, verse, verseRows, meaning, lang, art, verseStyle, meaningStyle, width = 540, exportMode = false, onLoad, onError }: {
   /** Explicit charan rows; each can wrap without joining the next row. */
+  onSourcePress?: () => void;
   header: string; verse: string; verseRows?: readonly string[]; meaning: string; lang: Lang; art: DevotionalArt;
   verseStyle: TextStyle; meaningStyle: TextStyle; width?: number; inset?: number; exportMode?: boolean;
   onLoad?: () => void; onError?: () => void;
@@ -187,10 +188,15 @@ export function DevotionalVerseBody({ header, verse, verseRows, meaning, lang, a
   const boxLabel = (testID: string, label: string) => <Text testID={testID} allowFontScaling={!exportMode} adjustsFontSizeToFit minimumFontScale={0.7} numberOfLines={1}
     style={fit([reading, { position: 'absolute', top: (art === 'vishnu' ? 31 : 30) * scale, left: 490 * scale, width: 100 * scale, fontSize: (lang === 'en' ? 21 : art === 'vishnu' ? 30 : 42) * scale, lineHeight: 44 * scale, color: '#7C210D' }])}>{label}</Text>;
   const boxContent = { paddingTop: spec.meaningPad * scale, paddingBottom: 22 * scale, paddingHorizontal: 86 * scale };
+  const linked = !exportMode && !!onSourcePress;
+  const sourceLabel = <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }])}>{linked ? header + '\u00a0›' : header}</Text>;
   return <View>
     <Panel art={art} width={width} top={spec.hero} bottom={spec.sourceEnd} bottomCap={28} testID="devotional-source-panel"
       contentStyle={{ paddingTop: spec.sourceTop * scale, paddingHorizontal: 120 * scale, paddingBottom: 22 * scale }} onLoad={() => mark('source')} onError={onError}>
-      <Text testID="devotional-share-source" allowFontScaling={!exportMode} adjustsFontSizeToFit numberOfLines={2} minimumFontScale={0.6} style={fit([reading, { fontSize: sourceSize, lineHeight: sourceSize * 1.3, color: '#7C210D', fontFamily: lang === 'hi' ? type.verseFace : face }])}>{header}</Text>
+      {linked ? <Pressable testID="daily-bhakti-source-link" accessibilityRole="link" accessibilityLabel={header}
+        onPress={onSourcePress} style={{ minHeight: 44, justifyContent: 'center' }}>
+        {sourceLabel}
+      </Pressable> : sourceLabel}
     </Panel>
     <Panel art={art} width={width} top={spec.sourceEnd} bottom={spec.verseEnd} testID="devotional-verse-panel"
       // Use the paper inside the ornamental rules; extra inset here needlessly
