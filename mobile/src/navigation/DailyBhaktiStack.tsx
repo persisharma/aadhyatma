@@ -17,7 +17,7 @@ function SourceReader() {
   return <CitationVisit><StackLoadBoundary><HomeStackNavigator /></StackLoadBoundary></CitationVisit>;
 }
 
-export default function DailyBhaktiStack({ route }: BottomTabScreenProps<TabParamList, 'DailyBhaktiTab'>) {
+export default function DailyBhaktiStack({ route }: Pick<BottomTabScreenProps<TabParamList, 'DailyBhaktiTab'>, 'route'>) {
   const [entry, setEntry] = useState({ params: route.params, revision: 0 });
   if (entry.params !== route.params) {
     // A new reminder, including a repeat of the same reminder, reveals the card.
