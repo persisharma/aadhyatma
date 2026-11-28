@@ -5,7 +5,7 @@ import { AppState, FlatList, Modal, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackRouter, StackActions, CommonActions } from '@react-navigation/routers';
 import { GitaLanguageProvider } from '@/data/gita/language';
-import { ReadingProgressProvider, useReadingProgress } from '@/contexts/ReadingProgressContext';
+import { CitationVisit, ReadingProgressProvider, useReadingProgress } from '@/contexts/ReadingProgressContext';
 import { BookmarksProvider, useBookmarks } from '@/contexts/BookmarksContext';
 import { ShareProvider } from '@/utils/shareVerse';
 import { __resetReadCoverageStore, useReadCoverage } from '@/utils/readCoverageStore';
@@ -33,12 +33,12 @@ const router = StackRouter({ initialRouteName: 'Search' });
 const options = { routeNames: ['Search', 'GitaReader', 'BhagavatamReader'], routeParamList: {}, routeGetIdList: {} };
 const replace = jest.fn();
 function Probe() { saved = useBookmarks(); progress = useReadingProgress(); coverage = useReadCoverage(); return null; }
-function Journey({ reader = 'GitaReader' }: { reader?: 'GitaReader' | 'BhagavatamReader' }) {
+function Journey({ reader = 'GitaReader', citation = false }: { citation?: boolean; reader?: 'GitaReader' | 'BhagavatamReader' }) {
   const { isLoading } = useReadingProgress();
   const [state, setState] = useState(() => router.getRehydratedState({
     stale: true, routes: [{ name: 'Search', params: { query: 'action' } }, {
       name: reader,
-      params: reader === 'BhagavatamReader' ? { chapter: 1, initialIndex: 0 } : { chapter: 2, initialIndex: 11 },
+      params: reader === 'BhagavatamReader' ? { chapter: 1, initialIndex: 0 } : { chapter: 2, initialIndex: citation ? 46 : 11 },
     }], index: 1,
   }, options));
   stack = state;
@@ -48,18 +48,19 @@ function Journey({ reader = 'GitaReader' }: { reader?: 'GitaReader' | 'Bhagavata
     goBack: () => setState(old => router.getRehydratedState(router.getStateForAction(old, CommonActions.goBack(), options) ?? old, options)),
     navigate: jest.fn(),
   };
-  return <><Probe />{!isLoading && route.name !== 'Search' && <GitaReaderScreen key={route.key} route={route as any} navigation={navigation as any} />}</>;
+  const page = !isLoading && route.name !== 'Search' && <GitaReaderScreen key={route.key} route={route as any} navigation={navigation as any} />;
+  return <><Probe />{citation ? <CitationVisit>{page}</CitationVisit> : page}</>;
 }
 const press = (id: string) => act(() => tree.root.findAll(n => n.props.testID === id && typeof n.props.onPress === 'function')[0].props.onPress());
 const type = (value: string) => act(() => tree.root.findByType(TextInput).props.onChangeText(value));
-async function mountJourney(reader?: 'BhagavatamReader') {
+async function mountJourney(reader?: 'BhagavatamReader', citation = false) {
   await act(async () => {
     tree = TestRenderer.create(
       <SafeAreaInsetsContext.Provider value={{ top: 24, bottom: 16, left: 0, right: 0 }}>
         <GitaLanguageProvider initialLang="en">
           <BookmarksProvider>
             <ReadingProgressProvider>
-              <ShareProvider><Journey reader={reader} /></ShareProvider>
+              <ShareProvider><Journey reader={reader} citation={citation} /></ShareProvider>
             </ReadingProgressProvider>
           </BookmarksProvider>
         </GitaLanguageProvider>
@@ -215,4 +216,16 @@ test('stale pager callbacks do not move or trigger chapter transitions while cho
   expect(progress.getChapterProgress('bhagavad-gita', 2)?.verseIndex).toBe(11);
   press('gita-jump-cancel');
   expect(tree.root.findByType(FlatList).props.scrollEnabled).toBe(true);
+});
+
+test('visiting the 2.47 citation and backing out preserves resume, activity timestamp and read coverage', async () => {
+  const before = progress.getChapterProgress('bhagavad-gita', 2);
+  expect(before?.verseIndex).toBe(11);
+  act(() => tree.unmount());
+  await mountJourney(undefined, true);
+  expect(tree.root.findByType(GitaReaderScreen).props.route.params.initialIndex).toBe(46);
+  act(() => jest.advanceTimersByTime(10_000));
+  act(() => tree.root.findByType(GitaReaderScreen).props.navigation.goBack());
+  expect(progress.getChapterProgress('bhagavad-gita', 2)).toEqual(before);
+  expect(coverage.isVerseRead('bhagavad-gita', 2, 46)).toBe(false);
 });

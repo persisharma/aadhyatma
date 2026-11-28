@@ -1,3 +1,4 @@
+import { useIsCitationVisit } from '@/contexts/ReadingProgressContext';
 import { useEffect } from 'react';
 import { AppState } from 'react-native';
 import { loadReadCoverage, markRead } from '@/utils/readCoverageStore';
@@ -21,11 +22,12 @@ function inForeground(): boolean {
  * prev/next chapter transition cards — are ignored by the store.
  */
 export function useReadDwell(sourceId: string, chapter: number | undefined, verseIndex: number): void {
+  const citation = useIsCitationVisit();
   // Hydrate without subscribing: a reader only writes, so it must not
   // re-render on every mark.
   useEffect(loadReadCoverage, []);
   useEffect(() => {
-    if (verseIndex < 0) return;
+    if (citation || verseIndex < 0) return;
     let shownAt: number | null = inForeground() ? Date.now() : null;
     const settle = () => {
       if (shownAt != null && Date.now() - shownAt >= READ_DWELL_MS) markRead(sourceId, chapter, verseIndex);
@@ -39,5 +41,5 @@ export function useReadDwell(sourceId: string, chapter: number | undefined, vers
       sub.remove();
       settle();
     };
-  }, [sourceId, chapter, verseIndex]);
+  }, [citation, sourceId, chapter, verseIndex]);
 }

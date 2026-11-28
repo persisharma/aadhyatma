@@ -195,6 +195,21 @@ export function ReadingProgressProvider({ children }: { children: React.ReactNod
   );
 }
 
+const CitationVisitContext = createContext(false);
+const skipCitationProgress = () => {};
+
+export function CitationVisit({ children }: React.PropsWithChildren) {
+  const progress = useContext(ReadingProgressContext);
+  const value = React.useMemo(() => ({ ...progress, setProgress: skipCitationProgress }), [progress]);
+  return <CitationVisitContext.Provider value={true}>
+    <ReadingProgressContext.Provider value={value}>{children}</ReadingProgressContext.Provider>
+  </CitationVisitContext.Provider>;
+}
+
+export function useIsCitationVisit() {
+  return useContext(CitationVisitContext);
+}
+
 export function useReadingProgress() {
   return useContext(ReadingProgressContext);
 }

@@ -57,9 +57,9 @@ const { GitaLanguageProvider } = jest.requireActual<typeof import('@/data/gita/l
 const { ShareProvider } = jest.requireActual<typeof import('@/utils/shareVerse')>(
   '@/utils/shareVerse'
 );
-const DailyBhaktiScreen = jest.requireActual<typeof import('../DailyBhaktiScreen')>(
+const { default: DailyBhaktiScreen, dailySourceTarget } = jest.requireActual<typeof import('../DailyBhaktiScreen')>(
   '../DailyBhaktiScreen'
-).default;
+);
 
 test('Bhakti uses the same deity artwork, framed meaning and footer as export', () => {
   let tree: TestRenderer.ReactTestRenderer;
@@ -136,13 +136,31 @@ test('the real Bhakti share button opens illustrated with both card styles and c
 
 test.each(['hi', 'en', 'gu', 'kn'] as const)('BG 2.47 has separate rows and one reference in %s', lang => {
   mockDailyParams = { sourceId: 'bhagavad-gita', chapter: 2, verseIndex: 46 };
+  const open = jest.fn();
   let tree: TestRenderer.ReactTestRenderer;
-  act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}><ShareProvider><DailyBhaktiScreen /></ShareProvider></GitaLanguageProvider>); });
+  act(() => { tree = TestRenderer.create(<GitaLanguageProvider initialLang={lang}><ShareProvider><DailyBhaktiScreen onOpenSource={open} /></ShareProvider></GitaLanguageProvider>); });
   const body = tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.children as string;
   const source = tree!.root.findByProps({ testID: 'devotional-share-source' }).props.children as string;
+  const link = tree!.root.findByProps({ testID: 'daily-bhakti-source-link' });
+  expect(link.props.accessibilityRole).toBe('link');
+  expect(source).toBe(link.props.accessibilityLabel + '\u00a0›');
+  act(() => link.props.onPress());
+  expect(open).toHaveBeenCalledWith({ screen: 'GitaReader', params: { chapter: 2, initialIndex: 46 } });
   expect(body.split('\n')).toHaveLength(2);
   expect(body).not.toContain('2.47');
   expect(source.match(/2\.47/g)).toHaveLength(1);
   expect(tree!.root.findByProps({ testID: 'devotional-share-verse' }).props.numberOfLines).toBeUndefined();
   act(() => tree!.unmount());
+});
+
+test('citation routes use exact chapterless and sparse identities and fail closed', () => {
+  expect(dailySourceTarget({ sourceId: 'lingashtakam', verseIndex: 3 })).toEqual({
+    screen: 'AshtakamReader', params: { ashtakamId: 'lingashtakam', initialIndex: 3 },
+  });
+  expect(dailySourceTarget({ sourceId: 'srimad-bhagavatam', chapter: 4, verseIndex: 1 })).toEqual({
+    screen: 'BhagavatamReader', params: { chapter: 4, initialIndex: 1 },
+  });
+  expect(dailySourceTarget({ sourceId: 'unknown', verseIndex: 0 })).toBeNull();
+  expect(dailySourceTarget({ sourceId: 'bhagavad-gita', verseIndex: 46 })).toBeNull();
+  expect(dailySourceTarget({ sourceId: 'lingashtakam', verseIndex: 90 })).toBeNull();
 });
