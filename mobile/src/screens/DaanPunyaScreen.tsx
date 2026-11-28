@@ -8,7 +8,7 @@
  *      glass tiles and the प्रयोजन it serves as painted chips;
  *   2. the two standing doors right under it (दान-द्वार, दान करें);
  *   3. every vaar's daan (chips + the selected day's card);
- *   4. three short reads (what daan is, how to give, the register);
+ *   4. three short reads → the Learn reader (DaanLearnScreen) at that page;
  *   5. the nine kinds of seva with their painted icons;
  *   6. the verse spine as night panels;
  *   7. the teaching-kathas as two-up cards;
@@ -21,13 +21,12 @@
  * and nothing narrates where the register is stored
  * (`userFacingImplementationCopy.test.ts`).
  */
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Path } from 'react-native-svg';
 
 import BackgroundArtwork from '@/components/BackgroundArtwork';
 import DaanCauseIcon from '@/components/DaanCauseIcon';
@@ -46,8 +45,10 @@ import {
   getDaanOccasionForRule,
   getDaanOrgs,
   getDaanPrinciples,
+  splitVaarItems,
   type DaanCause,
 } from '@/data/daan';
+import { DAAN_LEARN_READS } from '@/data/daan/learnReads';
 import { usePanchangCalendarSystem, useObservancesForDate } from '@/panchang/usePanchang';
 import type { DaanStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme/ThemeContext';
@@ -57,9 +58,7 @@ import { isLatinLang, scriptBodyFont, scriptTitleFont } from '@/utils/langType';
 type Props = NativeStackScreenProps<DaanStackParamList, 'DaanPunya'>;
 
 /** The painted today card's height — the design's portrait hero. */
-const HERO_HEIGHT = 440;
-/** The peek of the next verse panel that tells the reader the shelf scrolls. */
-const CAROUSEL_PEEK = 28;
+const HERO_HEIGHT = 470;
 const CAROUSEL_GAP = 10;
 const READ_CARD_WIDTH = 220;
 
@@ -68,16 +67,21 @@ function vaarShortName(lang: Lang, vaarHi: string, vaarEn: string): string {
   return contentByLang(lang, vaarHi.replace(/वार$/, ''), vaarEn.slice(0, 3));
 }
 
+/** Re-exported for the home's callers and tests; lives in the vaar registry. */
+export { splitVaarItems };
+
 /**
- * A vaar row's items as separate tags plus its trailing note: the registry
- * writes "chana dal, haldi, banana, books — the vaar of vidya-daan". The note
- * after the dash stays a line; the comma list becomes tags.
+ * Which painted seva icon an offered item wears on the today card: cloth →
+ * vastra, books/stationery → vidya, fodder/gau-gras → gau, grain for birds →
+ * jeev; anything else falls back to the day's own first cause (usually anna).
  */
-export function splitVaarItems(items: string): { tags: string[]; note: string | null } {
-  const [list, ...rest] = items.split(' — ');
-  const tags = list.split(/,\s*/).map((tag) => tag.trim()).filter(Boolean);
-  const note = rest.join(' — ').trim();
-  return { tags, note: note.length > 0 ? note : null };
+export function itemCauseIcon(itemEn: string, fallback: DaanCause): DaanCause {
+  const text = itemEn.toLowerCase();
+  if (/cloth|blanket|vastra|garment|shawl/.test(text)) return 'vastra';
+  if (/book|pen\b|stationery|notebook|slate/.test(text)) return 'vidya';
+  if (/fodder|gau|cow|grass/.test(text)) return 'gau';
+  if (/bird|animal/.test(text)) return 'jeev';
+  return fallback;
 }
 
 export default function DaanPunyaScreen({ navigation }: Props) {
@@ -94,8 +98,6 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const lead = (size: number, latinLeading: number) => (latin ? latinLeading : Math.ceil(size * 1.7));
   const cap = (text: string) => (latin ? text.charAt(0).toUpperCase() + text.slice(1) : text);
 
-  const scrollRef = useRef<ScrollView>(null);
-  const [shastraY, setShastraY] = useState(0);
 
   const [calendarSystem] = usePanchangCalendarSystem();
   // Stable per calendar day — an inline `new Date()` changes every render, which
@@ -130,21 +132,26 @@ export default function DaanPunyaScreen({ navigation }: Props) {
   const heroTags = todayOccasion
     ? todayOccasion.items.map((item) => contentByLang(lang, item.nameHi, item.nameEn))
     : vaarItems.tags.map(cap);
-  const heroTitle = heroTags.join(latin ? ', ' : ', ');
+  const heroTitle = heroTags.join(', ');
+  // The painted seva icon per item tile, read from the English item name (the
+  // Hindi and English lists are parallel), falling back to the day's first cause.
+  const heroFallback: DaanCause = (todayOccasion?.causes ?? todayVaar.causes)?.[0] ?? 'anna';
+  const heroIcons: DaanCause[] = todayOccasion
+    ? todayOccasion.items.map((item) => itemCauseIcon(item.nameEn, heroFallback))
+    : splitVaarItems(todayVaar.itemsEn).tags.map((tag) => itemCauseIcon(tag, heroFallback));
   const heroNote = todayOccasion ? null : vaarItems.note;
   const todayCauses = ((todayOccasion?.causes ?? todayVaar.causes) ?? []).filter((id) => liveIds.has(id));
 
   const principles = getDaanPrinciples();
   const kathas = getDaanKathas();
-  const principle = (id: string) => principles.find((entry) => entry.id === id);
 
-  // Verse carousel: which panel is in view (dots).
-  const [verseIdx, setVerseIdx] = useState(0);
-  const cardWidth = width - spacing.readingGutter * 2 - CAROUSEL_PEEK;
+  // One full-width night panel per verse (the design's single panel); dots inside show the place.
+  const cardWidth = width - spacing.readingGutter * 2;
   const snap = cardWidth + CAROUSEL_GAP;
 
-  const night = [colors.skyNightTop, colors.skyNightUpper, colors.skyNightHorizon] as const;
-  const sectionTitle = { fontFamily: titleFont, fontSize: 19, lineHeight: lead(19, 27), color: colors.ink };
+  // The design's one night gradient (135°, skyNightUpper → skyNightLower) for the reads, verse panel and story bands.
+  const nightCard = [colors.skyNightUpper, colors.skyNightLower] as const;
+  const diag = { start: { x: 0, y: 0 }, end: { x: 1, y: 1 } } as const;
   const eyebrow = (color: string) => ({
     fontFamily: typography.sectionLabel.fontFamily,
     fontSize: 11,
@@ -154,43 +161,25 @@ export default function DaanPunyaScreen({ navigation }: Props) {
     color,
   });
 
-  // The three short reads open teaching that already exists; their sub-lines
-  // are the verified principle titles, never authored stance.
-  const reads = [
-    {
-      id: 1,
-      icon: storybookSources.daan,
-      title: contentByLang(lang, 'दान क्या है', 'What daan is'),
-      sub: principle('dana-sukta') ? contentByLang(lang, principle('dana-sukta')!.titleHi, principle('dana-sukta')!.titleEn) : '',
-      open: () => navigation.navigate('DaanJourney', todayOccasion ? { occasionId: todayOccasion.id } : {}),
-      gradient: [colors.skyNightTop, colors.skyNightUpper] as const,
-    },
-    {
-      id: 2,
-      icon: storybookSources.suktam,
-      title: contentByLang(lang, 'कैसे दें', 'How to give'),
-      sub: principle('shraddhaya-deyam') ? contentByLang(lang, principle('shraddhaya-deyam')!.titleHi, principle('shraddhaya-deyam')!.titleEn) : '',
-      open: () => scrollRef.current?.scrollTo({ y: Math.max(0, shastraY - spacing.md), animated: true }),
-      gradient: [colors.skyNightUpper, colors.skyNightLower] as const,
-    },
-    {
-      id: 3,
-      icon: storybookSources.granth,
-      title: contentByLang(lang, 'आपका दान-खाता', 'Your daan register'),
-      sub: principle('gupt-daan') ? contentByLang(lang, principle('gupt-daan')!.titleHi, principle('gupt-daan')!.titleEn) : '',
-      open: () => navigation.navigate('DaanLedger'),
-      gradient: [colors.skyNightLower, colors.skyNightHorizon] as const,
-    },
-  ];
+  // The three short reads open the five-step Learn guide at their step
+  // (design: steps 1, 2 and 5). Their lines come from `data/daan/learnReads.ts`.
+  const readIcons = [storybookSources.daan, storybookSources.suktam, storybookSources.granth] as const;
+  const reads = DAAN_LEARN_READS.map((entry, i) => ({
+    id: entry.id,
+    icon: readIcons[i],
+    title: contentByLang(lang, entry.title.hi, entry.title.en),
+    sub: contentByLang(lang, entry.card.hi, entry.card.en),
+    open: () => navigation.navigate('DaanLearn', { step: entry.step }),
+  }));
 
   return (
-    <View style={[styles.root, { backgroundColor: colors.parchment }]}>
+    <LinearGradient colors={[colors.parchmentHighlight, colors.parchmentGradientEnd]} style={styles.root}>
       <SafeAreaView style={styles.root} edges={['top']} testID="daan-punya-screen">
       <ReaderHeader
         title={contentByLang(lang, 'दान-पुण्य', 'Daan Punya')}
         variant="index"
         onBack={() => navigation.goBack()}
-        sideWidth={44}
+        sideWidth={84}
         right={
           // The खाता door lives in the header (44pt circle) — ungated, always in reach.
           <Pressable
@@ -201,19 +190,17 @@ export default function DaanPunyaScreen({ navigation }: Props) {
             onPress={() => navigation.navigate('DaanLedger')}
             style={({ pressed }) => [
               styles.headerBtn,
-              { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.xl },
+              { backgroundColor: colors.panchangTileFrom, borderColor: colors.panchangTileBorder, borderRadius: radii.pill },
               pressed && { opacity: 0.7 },
             ]}
           >
-            <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
-              <Path d="M4 4h12a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2z" stroke={colors.saffronDeep} strokeWidth={2} strokeLinejoin="round" />
-              <Path d="M4 18a2 2 0 0 1 2-2h12M8 8h6" stroke={colors.saffronDeep} strokeWidth={2} strokeLinecap="round" />
-            </Svg>
+            <Text numberOfLines={1} style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 12.5, lineHeight: lead(12.5, 17), color: colors.saffronDeep }}>
+              {contentByLang(lang, 'खाता', 'Register')}
+            </Text>
           </Pressable>
         }
       />
       <ScrollView
-        ref={scrollRef}
         contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, paddingTop: spacing.sm, paddingBottom: spacing.xxl, gap: 22 }}
         showsVerticalScrollIndicator={false}
       >
@@ -226,7 +213,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
             style={styles.heroShade}
           >
             <Text style={eyebrow(colors.nightGold)}>{heroEyebrow}</Text>
-            <Text testID={todayOccasion ? 'daan-today-card' : undefined} style={{ fontFamily: titleFont, fontSize: 24, lineHeight: lead(24, 32), color: colors.nightInk, marginTop: 4 }}>
+            <Text testID={todayOccasion ? 'daan-today-card' : undefined} style={{ fontFamily: titleFont, fontSize: 26, lineHeight: lead(26, 36), color: colors.nightInk, marginTop: 4 }}>
               {heroTitle}
             </Text>
             {heroNote ? (
@@ -245,17 +232,20 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                 </Text>
               </Pressable>
             ) : null}
-            <View testID="daan-today-items" style={styles.tileRow}>
-              {heroTags.map((tag) => (
+            {/* Each item as a glass tile with its painted seva icon (design: Rice · Ghee · White cloth). */}
+            <View testID="daan-today-items" style={[styles.tileRow, { flexWrap: 'nowrap' }]}>
+              {heroTags.map((tag, i) => (
                 <View key={tag} style={[styles.glassTile, { backgroundColor: colors.nightGlass, borderColor: colors.nightGlassBorder, borderRadius: radii.lg }]}>
-                  <Text style={{ fontFamily: titleFont, fontSize: 13.5, lineHeight: lead(13.5, 19), color: colors.nightInk, textAlign: 'center' }}>{tag}</Text>
+                  <DaanCauseIcon cause={heroIcons[i]} size={40} testID={`daan-today-item-icon-${i}`} />
+                  <Text style={{ fontFamily: titleFont, fontSize: 13, lineHeight: lead(13, 18), color: colors.nightInk, textAlign: 'center' }}>{tag}</Text>
                 </View>
               ))}
             </View>
+            {/* "Serves · Food & water · Clothing" — one quiet line; each name opens that shelf. */}
             {todayCauses.length > 0 ? (
-              <View style={[styles.tileRow, { alignItems: 'center' }]}>
-                <Text style={{ fontFamily: bodyFont, fontSize: 12.5, lineHeight: lead(12.5, 18), color: colors.nightInkSoft }}>
-                  {contentByLang(lang, 'सेवा ·', 'Serves ·')}
+              <View style={styles.servesLine}>
+                <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 12, lineHeight: lead(12, 18), color: colors.nightInkSoft }}>
+                  {contentByLang(lang, 'सेवा', 'Serves')}
                 </Text>
                 {todayCauses.map((id) => (
                   <Pressable
@@ -263,15 +253,12 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                     testID={`daan-today-cause-${id}`}
                     accessibilityRole="button"
                     accessibilityLabel={`${causeMeta(id).nameEn}: places that serve it`}
+                    hitSlop={{ top: 12, bottom: 12, left: 4, right: 4 }}
                     onPress={() => openCause(id)}
-                    style={({ pressed }) => [
-                      styles.causeChip,
-                      { backgroundColor: colors.nightGlass, borderColor: colors.nightGlassBorder, borderRadius: radii.pill },
-                      pressed && { opacity: 0.75 },
-                    ]}
+                    style={({ pressed }) => [styles.servesItem, pressed && { opacity: 0.7 }]}
                   >
-                    <DaanCauseIcon cause={id} size={30} testID={`daan-today-cause-icon-${id}`} />
-                    <Text style={{ fontFamily: titleFont, fontSize: 13, lineHeight: lead(13, 18), color: colors.nightInk }}>
+                    <DaanCauseIcon cause={id} size={22} testID={`daan-today-cause-icon-${id}`} />
+                    <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 12, lineHeight: lead(12, 18), color: colors.nightInkSoft, textDecorationLine: 'underline' }}>
                       {contentByLang(lang, causeMeta(id).nameHi, causeMeta(id).nameEn)}
                     </Text>
                   </Pressable>
@@ -297,7 +284,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           <Pressable
             testID="daan-home-donate"
             accessibilityRole="button"
-            accessibilityLabel={contentByLang(lang, 'दान करें', 'Donate')}
+            accessibilityLabel={contentByLang(lang, 'दान करें', 'Give today')}
             onPress={() => navigation.navigate('DaanJourney', todayOccasion ? { occasionId: todayOccasion.id } : {})}
             style={({ pressed }) => [
               styles.door,
@@ -307,14 +294,14 @@ export default function DaanPunyaScreen({ navigation }: Props) {
             ]}
           >
             <Text style={{ fontFamily: titleFont, fontSize: 15.5, lineHeight: lead(15.5, 21), color: colors.onPrimary }}>
-              {contentByLang(lang, 'दान करें', 'Donate')}
+              {contentByLang(lang, 'दान करें', 'Give today')}
             </Text>
           </Pressable>
         </View>
 
         {/* ── 3. Every day has its daan ─────────────────────────────────── */}
         <View>
-          <Text style={[sectionTitle, { marginBottom: 10 }]}>{contentByLang(lang, 'हर वार का दान', 'Every day has its daan')}</Text>
+          <Text style={[eyebrow(colors.saffronDeep), { marginBottom: 10 }]}>{contentByLang(lang, 'हर वार का दान', 'Every day has its daan')}</Text>
           <View style={styles.vaarRow}>
             {DAAN_VAAR_ENTRIES.map((entry) => {
               const active = entry.weekday === vaarIdx;
@@ -330,8 +317,8 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                   style={[
                     styles.vaarChip,
                     {
-                      backgroundColor: active ? colors.skyNightUpper : colors.parchmentSoft,
-                      borderColor: active ? colors.skyNightUpper : colors.divider,
+                      backgroundColor: active ? colors.skyNightUpper : colors.panchangTileFrom,
+                      borderColor: active ? colors.skyNightUpper : colors.panchangTileBorder,
                       borderRadius: radii.md,
                     },
                   ]}
@@ -347,7 +334,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           </View>
           <View
             testID="daan-vaar-line"
-            style={[styles.dayCard, { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg }]}
+            style={[styles.dayCard, { backgroundColor: colors.panchangTileFrom, borderColor: colors.panchangTileBorder, borderRadius: radii.lg }]}
           >
             {vaar.causes?.[0] ? <DaanCauseIcon cause={vaar.causes[0]} size={44} testID="daan-vaar-icon" /> : null}
             <View style={{ flex: 1, minWidth: 0 }}>
@@ -364,7 +351,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
         {/* ── 4. Learn daan in three short reads ────────────────────────── */}
         <View>
-          <Text style={[sectionTitle, { marginBottom: 10 }]}>{contentByLang(lang, 'दान को तीन छोटे पाठों में समझें', 'Learn daan in three short reads')}</Text>
+          <Text style={[eyebrow(colors.saffronDeep), { marginBottom: 10 }]}>{contentByLang(lang, 'दान को तीन छोटे पाठों में समझें', 'Learn daan in three short reads')}</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -spacing.readingGutter }} contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, gap: 10 }}>
             {reads.map((read) => (
               <Pressable
@@ -375,7 +362,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                 onPress={read.open}
                 style={({ pressed }) => [pressed && { opacity: 0.85 }]}
               >
-                <LinearGradient colors={read.gradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.readCard, { borderRadius: radii.xl }]}>
+                <LinearGradient colors={nightCard} {...diag} style={[styles.readCard, { borderRadius: radii.xl }]}>
                   <Image source={read.icon} style={styles.readIcon} resizeMode="contain" accessibilityElementsHidden importantForAccessibility="no" />
                   <Text style={eyebrow(colors.nightGold)}>{contentByLang(lang, `पाठ ${read.id}`, `Read ${read.id}`)}</Text>
                   <Text style={{ fontFamily: titleFont, fontSize: 17, lineHeight: lead(17, 25), color: colors.nightInk }}>{read.title}</Text>
@@ -388,7 +375,7 @@ export default function DaanPunyaScreen({ navigation }: Props) {
 
         {/* ── 5. Nine kinds of seva — the दान-द्वार's causes, painted ─────── */}
         <View>
-          <Text style={[sectionTitle, { marginBottom: 10 }]}>
+          <Text style={[eyebrow(colors.saffronDeep), { marginBottom: 10 }]}>
             {liveCauses.length === 9
               ? contentByLang(lang, 'नौ प्रकार की सेवा', 'Nine kinds of seva')
               : contentByLang(lang, 'सेवा के प्रकार', 'Kinds of seva')}
@@ -403,12 +390,12 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                 onPress={() => openCause(cause.id)}
                 style={({ pressed }) => [
                   styles.sevaTile,
-                  { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
+                  { backgroundColor: colors.panchangTileFrom, borderColor: colors.panchangTileBorder, borderRadius: radii.lg },
                   elevation.card,
                   pressed && { opacity: 0.8 },
                 ]}
               >
-                <DaanCauseIcon cause={cause.id} size={52} testID={`daan-seva-icon-${cause.id}`} />
+                <DaanCauseIcon cause={cause.id} size={50} testID={`daan-seva-icon-${cause.id}`} />
                 <Text style={{ fontFamily: titleFont, fontSize: 13, lineHeight: lead(13, 18), color: colors.ink, textAlign: 'center' }}>
                   {contentByLang(lang, cause.nameHi, cause.nameEn)}
                 </Text>
@@ -417,94 +404,84 @@ export default function DaanPunyaScreen({ navigation }: Props) {
           </View>
         </View>
 
-        {/* ── 6. What the shastra says — night panels ───────────────────── */}
-        <View onLayout={(e) => setShastraY(e.nativeEvent.layout.y)}>
-          <View style={styles.labelRow}>
-            <Text style={sectionTitle}>{contentByLang(lang, 'शास्त्र क्या कहते हैं', 'What the shastra says')}</Text>
-            <Text style={{ fontFamily: bodyFont, fontSize: 11.5, lineHeight: lead(11.5, 16), color: colors.inkMuted }}>
-              {`${verseIdx + 1} / ${principles.length}`}
-            </Text>
-          </View>
-          <ScrollView
-            testID="daan-principle-carousel"
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            decelerationRate="fast"
-            snapToInterval={snap}
-            snapToAlignment="start"
-            style={{ marginHorizontal: -spacing.readingGutter }}
-            contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, gap: CAROUSEL_GAP }}
-            onMomentumScrollEnd={(e) => {
-              const idx = Math.round(e.nativeEvent.contentOffset.x / snap);
-              setVerseIdx(Math.max(0, Math.min(principles.length - 1, idx)));
-            }}
-          >
-            {principles.map((entry) => (
-              <LinearGradient
-                key={entry.id}
-                testID={`daan-principle-${entry.id}`}
-                colors={night}
-                locations={[0, 0.55, 1]}
-                style={[styles.versePanel, { width: cardWidth, borderColor: colors.gold, borderRadius: radii.xl }]}
-              >
-                <View>
-                  {entry.verseLines ? (
-                    <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: lead(16, 28), color: colors.nightGold, textAlign: 'center' }}>
-                      {verseLinesByLang(lang, entry.verseLines, entry.iastLines ?? entry.verseLines).join('\n')}
+        {/* ── 6. What the shastra says — one night panel per verse ──────── */}
+        {/* Label, counter and dots live inside the panel (design); swipe for the next verse. */}
+        <ScrollView
+          testID="daan-principle-carousel"
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          decelerationRate="fast"
+          snapToInterval={snap}
+          snapToAlignment="start"
+          style={{ marginHorizontal: -spacing.readingGutter }}
+          contentContainerStyle={{ paddingHorizontal: spacing.readingGutter, gap: CAROUSEL_GAP }}
+        >
+          {principles.map((entry, index) => (
+            <LinearGradient
+              key={entry.id}
+              testID={`daan-principle-${entry.id}`}
+              colors={nightCard}
+              {...diag}
+              style={[styles.versePanel, { width: cardWidth, borderRadius: radii.xl }]}
+            >
+              <Text style={[eyebrow(colors.nightGold), { textAlign: 'center' }]}>
+                {contentByLang(lang, `शास्त्र क्या कहते हैं · ${index + 1} / ${principles.length}`, `What the shastra says · ${index + 1} of ${principles.length}`)}
+              </Text>
+              {entry.verseLines ? (
+                <Text style={{ fontFamily: titleFont, fontSize: 17, lineHeight: lead(17, 30), color: colors.moonLight, textAlign: 'center', marginTop: 10 }}>
+                  {verseLinesByLang(lang, entry.verseLines, entry.iastLines ?? entry.verseLines).join('\n')}
+                </Text>
+              ) : (
+                <Text style={{ fontFamily: titleFont, fontSize: 17, lineHeight: lead(17, 26), color: colors.moonLight, textAlign: 'center', marginTop: 10 }}>
+                  {contentByLang(lang, entry.titleHi, entry.titleEn)}
+                </Text>
+              )}
+              <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 12, lineHeight: lead(12, 17), color: colors.nightInkMuted, textAlign: 'center', marginTop: 6 }}>
+                {contentByLang(lang, entry.citeHi, entry.citeEn)}
+              </Text>
+              <Text style={{ fontFamily: bodyFont, fontSize: 14, lineHeight: lead(14, 23), color: colors.nightInkSoft, marginTop: 12 }}>
+                {meaningByLang(lang, entry.meaningHi, entry.meaningEn)}
+              </Text>
+              <View style={styles.cardActions}>
+                {entry.gitaRef ? (
+                  <Pressable
+                    testID="daan-gita-link"
+                    accessibilityRole="button"
+                    accessibilityLabel="Read in the Gita reader"
+                    onPress={() =>
+                      rootNav.navigate('HomeTab', {
+                        screen: 'GitaReader',
+                        params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
+                      })
+                    }
+                    style={[styles.chip, { borderColor: colors.nightGlassBorder, borderRadius: radii.pill }]}
+                  >
+                    <Text style={{ fontFamily: titleFont, fontSize: 12.5, lineHeight: lead(12.5, 18), color: colors.nightGold }}>
+                      {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
                     </Text>
-                  ) : (
-                    <Text style={{ fontFamily: titleFont, fontSize: 16, lineHeight: lead(16, 24), color: colors.nightGold, textAlign: 'center' }}>
-                      {contentByLang(lang, entry.titleHi, entry.titleEn)}
-                    </Text>
-                  )}
-                  <Text style={[eyebrow(colors.nightInkMuted), { textAlign: 'center', marginTop: 8 }]}>
-                    {contentByLang(lang, entry.citeHi, entry.citeEn)}
-                  </Text>
-                  <Text style={{ fontFamily: bodyFont, fontSize: 13.5, lineHeight: lead(13.5, 21), color: colors.nightInkSoft, marginTop: 10 }}>
-                    {meaningByLang(lang, entry.meaningHi, entry.meaningEn)}
-                  </Text>
+                  </Pressable>
+                ) : null}
+                <View style={styles.shareEnd}>
+                  <ShareButton
+                    onPress={() => void share(daanPrincipleShareable(entry), lang)}
+                    busy={shareBusy}
+                    accessibilityLabel="Share verse"
+                    accessibilityHint="Opens share options for this verse and its meaning"
+                  />
                 </View>
-                <View style={styles.cardActions}>
-                  {entry.gitaRef ? (
-                    <Pressable
-                      testID="daan-gita-link"
-                      accessibilityRole="button"
-                      accessibilityLabel="Read in the Gita reader"
-                      onPress={() =>
-                        rootNav.navigate('HomeTab', {
-                          screen: 'GitaReader',
-                          params: { chapter: entry.gitaRef!.chapter, initialIndex: entry.gitaRef!.verseIndex },
-                        })
-                      }
-                      style={[styles.chip, { borderColor: colors.nightGold, borderRadius: radii.pill }]}
-                    >
-                      <Text style={{ fontFamily: titleFont, fontSize: 12.5, lineHeight: lead(12.5, 18), color: colors.nightGold }}>
-                        {contentByLang(lang, 'गीता में पढ़ें ›', 'Read in the Gita ›')}
-                      </Text>
-                    </Pressable>
-                  ) : null}
-                  <View style={styles.shareEnd}>
-                    <ShareButton
-                      onPress={() => void share(daanPrincipleShareable(entry), lang)}
-                      busy={shareBusy}
-                      accessibilityLabel="Share verse"
-                      accessibilityHint="Opens share options for this verse and its meaning"
-                    />
-                  </View>
-                </View>
-              </LinearGradient>
-            ))}
-          </ScrollView>
-          <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
-            {principles.map((entry, i) => (
-              <View key={entry.id} style={[styles.dot, { backgroundColor: i === verseIdx ? colors.saffronDeep : colors.dotRest, width: i === verseIdx ? 18 : 6 }]} />
-            ))}
-          </View>
-        </View>
+              </View>
+              <View style={styles.dots} accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+                {principles.map((dot, i) => (
+                  <View key={dot.id} style={[styles.dot, { backgroundColor: colors.nightGold, opacity: i === index ? 1 : 0.4, width: i === index ? 18 : 6 }]} />
+                ))}
+              </View>
+            </LinearGradient>
+          ))}
+        </ScrollView>
 
         {/* ── 7. Stories of giving — two-up cards ──────────────────────── */}
         <View>
-          <Text style={[sectionTitle, { marginBottom: 10 }]}>{contentByLang(lang, 'दान की कथाएँ', 'Stories of giving')}</Text>
+          <Text style={[eyebrow(colors.saffronDeep), { marginBottom: 10 }]}>{contentByLang(lang, 'दान की कथाएँ', 'Stories of giving')}</Text>
           <View testID="daan-katha-shelf" style={styles.kathaGrid}>
             {kathas.map((katha, index) => (
               <Pressable
@@ -517,13 +494,13 @@ export default function DaanPunyaScreen({ navigation }: Props) {
                   styles.kathaTile,
                   // An odd last card spans the row instead of leaving a hole.
                   kathas.length % 2 === 1 && index === kathas.length - 1 && styles.kathaTileWide,
-                  { backgroundColor: colors.parchmentSoft, borderColor: colors.divider, borderRadius: radii.lg },
+                  { backgroundColor: colors.panchangTileFrom, borderColor: colors.panchangTileBorder, borderRadius: radii.lg },
                   elevation.card,
                   pressed && { opacity: 0.8 },
                 ]}
               >
-                <LinearGradient colors={night} locations={[0, 0.55, 1]} style={styles.kathaBand}>
-                  <Text style={{ fontFamily: titleFont, fontSize: 22, lineHeight: lead(22, 28), color: colors.nightGold }} accessibilityElementsHidden importantForAccessibility="no">॥</Text>
+                <LinearGradient colors={nightCard} {...diag} style={styles.kathaBand}>
+                  <Text style={{ fontFamily: titleFont, fontSize: 24, lineHeight: lead(24, 30), color: colors.nightGold }} accessibilityElementsHidden importantForAccessibility="no">॥</Text>
                   <Text style={{ fontFamily: typography.sectionLabel.fontFamily, fontSize: 11, lineHeight: lead(11, 16), color: colors.nightInkSoft }}>{`${index + 1} / ${kathas.length}`}</Text>
                 </LinearGradient>
                 <View style={styles.kathaBody}>
@@ -571,22 +548,22 @@ export default function DaanPunyaScreen({ navigation }: Props) {
         </View>
       </ScrollView>
       </SafeAreaView>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-  headerBtn: { width: 44, height: 44, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  headerBtn: { minWidth: 44, height: 44, borderWidth: 1, paddingHorizontal: 14, alignItems: 'center', justifyContent: 'center' },
   hero: { height: HERO_HEIGHT, overflow: 'hidden' },
   heroShade: { position: 'absolute', left: 0, right: 0, bottom: 0, paddingTop: 72, paddingHorizontal: 18, paddingBottom: 18, gap: 4 },
   heroLink: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start' },
   tileRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 10 },
-  glassTile: { flexGrow: 1, minWidth: 84, minHeight: 44, borderWidth: 1, paddingHorizontal: 10, paddingVertical: 8, alignItems: 'center', justifyContent: 'center' },
-  causeChip: { flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44, borderWidth: 1, paddingLeft: 4, paddingRight: 12 },
+  glassTile: { flex: 1, minWidth: 0, borderWidth: 1, paddingHorizontal: 4, paddingVertical: 10, alignItems: 'center', gap: 6 },
+  servesLine: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', columnGap: 10, rowGap: 4, marginTop: 10 },
+  servesItem: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 28 },
   doorRow: { flexDirection: 'row', gap: 10, marginTop: -8 },
   door: { minHeight: 52, borderWidth: 1.5, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12 },
-  labelRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 },
   vaarRow: { flexDirection: 'row', gap: 5 },
   vaarChip: { flex: 1, minHeight: 52, borderWidth: 1, alignItems: 'center', justifyContent: 'center', gap: 4 },
   todayDot: { width: 5, height: 5, borderRadius: 3 },
@@ -595,7 +572,7 @@ const styles = StyleSheet.create({
   readIcon: { width: 56, height: 56 },
   sevaGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   sevaTile: { width: '31.5%', flexGrow: 1, minHeight: 104, borderWidth: 1, alignItems: 'center', justifyContent: 'center', gap: 6, paddingVertical: 10, paddingHorizontal: 4 },
-  versePanel: { borderWidth: 1, paddingHorizontal: 18, paddingTop: 20, paddingBottom: 14, justifyContent: 'space-between' },
+  versePanel: { paddingHorizontal: 18, paddingTop: 20, paddingBottom: 16 },
   cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10, gap: 8 },
   shareEnd: { marginLeft: 'auto' },
   chip: { borderWidth: 1.5, paddingHorizontal: 12, minHeight: 44, justifyContent: 'center' },
@@ -607,6 +584,6 @@ const styles = StyleSheet.create({
   kathaBand: { height: 56, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 14 },
   kathaBody: { paddingHorizontal: 12, paddingTop: 10, paddingBottom: 14 },
   registerCard: { flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 14 },
-  registerIcon: { width: 56, height: 56 },
+  registerIcon: { width: 60, height: 60 },
   recordBtn: { minHeight: 44, paddingHorizontal: 14, alignItems: 'center', justifyContent: 'center' },
 });

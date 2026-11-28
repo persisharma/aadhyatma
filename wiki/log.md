@@ -1640,3 +1640,12 @@ Placed widgets showed three edge lines (OS edge + two inset gold frames). `Herit
 
 ## [2026-11-27] ingest | Daan home matched to the Option B canvas
 The #736 build drifted from `OptionB.dc.html`. Rebuilt: 440pt painted today card (night gradient, festival folded in, glass item tiles, painted cause chips), doors directly under it (sticky bar removed), vaar chips in night colours + day card, the missing "Learn daan in three short reads" night cards, night-panel verses, night-band katha cards; faded background plate dropped. design.md §73 + [[daan-punya]] synced. Native visual check pending.
+
+## [2026-11-27] ingest | Daan "three short reads" open the Learn reader
+#738 routed the read cards to the journey / a scroll / the ledger; the design links them to guide steps 1, 2, 5. New `DaanLearnScreen` (`DaanLearn {read}`, Home/More/Panchang stacks): what daan is · how to give · remember it quietly, verses from the principle registry, glosses in `data/daan/learn.ts`, दान-द्वार on every page. Step-1 photo pending (R2). design.md §73 + [[daan-punya]] synced.
+
+## [2026-11-27] ingest | Daan design audit vs the Option B canvas
+Home: eyebrow section labels, Register pill, page wash, 470pt card with icon-led item tiles + one "Serves" line, single night gradient, verse as one night panel (label/dots inside), cream tiles. Learn: six-ways glyphs, star points, sample dates, door glyph. Daan-dwaar cause page rebuilt to CausePage: cause chips, night header, mahatva card, vaar strip, place cards with hand-off line, record door. Not built: per-cause photo heroes, "How this seva reaches people" (no registry content), step-1 photo (R2). design.md §73 + [[daan-punya]] synced.
+
+## [2026-11-28] ingest | Daan Learn guide is five steps, per the design
+The read cards open `Main.dc.html`'s 5-step guide ("Step N of 5"); #739 had built only 3 pages. Added step 3 (today's vaar on the Annapurna painting, pick any vaar, served causes → step 4, "how much should I give?" → Sudama) and step 4 (every live cause, mahatva, places, door into the दान-द्वार on that cause). Route param is now `DaanLearn {step}`; `splitVaarItems` moved to `data/daan/vaar.ts`. design.md §73 + [[daan-punya]] synced.

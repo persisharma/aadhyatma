@@ -41,6 +41,7 @@ const loadDaanEntryRoute = prefetchedRoute('DaanEntry', 3, () => require('@/scre
 const loadDaanDirectoryRoute = prefetchedRoute('DaanDirectory', 3, () => require('@/screens/DaanDirectoryScreen').default);
 const loadDaanDirectoryDetailRoute = prefetchedRoute('DaanDirectoryDetail', 3, () => require('@/screens/DaanDirectoryDetailScreen').default);
 const loadDaanKathaRoute = prefetchedRoute('DaanKatha', 3, () => require('@/screens/DaanKathaScreen').default);
+const loadDaanLearnRoute = prefetchedRoute('DaanLearn', 3, () => require('@/screens/DaanLearnScreen').default);
 const loadGharVastuRosterRoute = prefetchedRoute('GharVastuRoster', 3, () => require('@/screens/GharVastuRosterScreen').default);
 const loadGharVastuSetupRoute = prefetchedRoute('GharVastuSetup', 3, () => require('@/screens/GharVastuSetupScreen').default);
 const loadGharVastuRoute = prefetchedRoute('GharVastu', 3, () => require('@/screens/GharVastuScreen').default);
@@ -89,6 +90,7 @@ export default function MoreStackNavigator() {
       <Stack.Screen name="DaanDirectory" getComponent={loadDaanDirectoryRoute} />
       <Stack.Screen name="DaanDirectoryDetail" getComponent={loadDaanDirectoryDetailRoute} />
       <Stack.Screen name="DaanKatha" getComponent={loadDaanKathaRoute} />
+      <Stack.Screen name="DaanLearn" getComponent={loadDaanLearnRoute} />
       {/* मेरा घर (PRD-24 Phase 2) — roster, setup walk and the mandala reading.
           Loaded through require() thunks so the journey's screens (grid, engine,
           handoff) stay OFF the static launch graph (launchGraph.test.ts budget)

@@ -180,6 +180,8 @@ export type DaanStackParamList = {
   DaanDirectory: { causes?: string[] } | undefined;
   DaanDirectoryDetail: { orgId: string };
   DaanKatha: { kathaId: string };
+  /** The five-step Learn guide; `step` opens that step (the home's reads open 1, 2 and 5). */
+  DaanLearn: { step?: 1 | 2 | 3 | 4 | 5 } | undefined;
 };
 
 export type MoreStackParamList = VidhiStackParamList & DaanStackParamList & GharVastuStackParamList & {

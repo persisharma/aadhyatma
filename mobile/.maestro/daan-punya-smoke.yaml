@@ -87,6 +87,42 @@ appId: com.prashantsharma.vedansh
     timeout: 20000
     centerElement: true
 - takeScreenshot: daan-home-reads
+# "What daan is" opens the five-step Learn guide at step 1; Next walks all five.
+- tapOn:
+    id: "daan-read-1"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-1"
+- assertVisible:
+    id: "daan-learn-dwaar"
+- takeScreenshot: daan-learn-1
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-2"
+- takeScreenshot: daan-learn-2
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-3"
+- takeScreenshot: daan-learn-3
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-4"
+- takeScreenshot: daan-learn-4
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
+- assertVisible:
+    id: "daan-learn-step-5"
+- takeScreenshot: daan-learn-5
+- tapOn:
+    id: "daan-learn-next"
+- waitForAnimationToEnd
 # Every live cause is a painted seva tile; anna always has verified orgs. The
 # painting itself is decorative (hidden from accessibility, so Maestro cannot
 # see its id — Jest pins one icon per tile); the tile button is the target.
@@ -106,12 +142,15 @@ appId: com.prashantsharma.vedansh
 - waitForAnimationToEnd
 
 # ── 2. The educate home: shastra + kathas render; ledger door in the header ──
+# By id: the verse label now carries its place ("What the shastra says · 1 of 5")
+# and section labels render uppercase, so text matches would be brittle.
 - extendedWaitUntil:
-    visible: "What the shastra says"
+    visible:
+      id: "daan-principle-carousel"
     timeout: 15000
 - scrollUntilVisible:
     element:
-      text: "Stories of giving"
+      id: "daan-katha-shelf"
     direction: DOWN
     timeout: 30000
 - scrollUntilVisible:
