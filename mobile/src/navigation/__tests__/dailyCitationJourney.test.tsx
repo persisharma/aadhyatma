@@ -38,13 +38,13 @@ jest.mock('expo-linear-gradient', () => ({ LinearGradient: require('react-native
 const Root = createNativeStackNavigator<TabParamList>();
 const identity = { sourceId: 'bhagavad-gita', chapter: 2, verseIndex: 46 };
 
-test('a Daily Bhakti citation opens its reader and both Back actions restore the mounted card', async () => {
+test.each(['hi', 'en', 'gu', 'kn'] as const)('Large %s citation opens its reader and both Back actions restore the mounted card', async lang => {
   const ref = createNavigationContainerRef<TabParamList>();
   await AsyncStorage.setItem('@vedansh/font-scale', 'L');
   let tree!: TestRenderer.ReactTestRenderer;
   await act(async () => {
     tree = TestRenderer.create(<SafeAreaInsetsContext.Provider value={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-      <GitaLanguageProvider initialLang="hi"><FontScaleProvider><ReadingProgressProvider><ShareProvider>
+      <GitaLanguageProvider initialLang={lang}><FontScaleProvider><ReadingProgressProvider><ShareProvider>
         <NavigationContainer ref={ref}><Root.Navigator>
           <Root.Screen name="DailyBhaktiTab" initialParams={identity} component={DailyBhaktiStack} />
         </Root.Navigator></NavigationContainer>

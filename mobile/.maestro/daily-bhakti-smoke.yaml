@@ -86,8 +86,15 @@ appId: com.prashantsharma.vedansh
     centerElement: true
 - takeScreenshot: e2e-shots/daily-source-citation
 - tapOn: { id: "daily-bhakti-source-link" }
-- assertVisible: { id: "gita-jump-trigger" }
-- back
+- assertVisible: 'Verse 2\.47.*'
+- tapOn: "Back"
+- assertVisible: { id: "daily-bhakti-source-link" }
+- runFlow:
+    when: { platform: Android }
+    commands:
+      - tapOn: { id: "daily-bhakti-source-link" }
+      - assertVisible: 'Verse 2\.47.*'
+      - back
 - assertVisible: { id: "daily-bhakti-source-link" }
 - scrollUntilVisible:
     element: { text: "Share verse" }
