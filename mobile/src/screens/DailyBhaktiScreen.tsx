@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { suvicharTabTarget } from '@/navigation/entryRoutes';
+import { buildProgressTarget, suvicharTabTarget, type BookmarkTarget } from '@/navigation/entryRoutes';
 import { dailyBhaktiVerse } from '@/utils/dailyBhaktiShare';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
@@ -51,7 +51,19 @@ function resolveInitialVerse(
   return getRandomVerse();
 }
 
-export default function DailyBhaktiScreen() {
+export function dailySourceTarget(verse: Pick<UniformVerse, 'sourceId' | 'chapter' | 'verseIndex'>) {
+  if (!Number.isInteger(verse.verseIndex) || verse.verseIndex < 0) return null;
+  const exact = findVerse(verse.sourceId, verse.verseIndex, verse.chapter);
+  if (!exact || exact.chapter !== verse.chapter || exact.verseIndex !== verse.verseIndex) return null;
+  const target = buildProgressTarget(exact);
+  return target && 'initialIndex' in target.params && target.params.initialIndex === verse.verseIndex
+    ? target : null;
+}
+
+export default function DailyBhaktiScreen({ tabRoute, onOpenSource }: {
+  tabRoute?: RouteProp<TabParamList, 'DailyBhaktiTab'>;
+  onOpenSource?: (target: BookmarkTarget) => void;
+} = {}) {
   const { colors, typography, spacing } = useTheme();
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
   // Feature-tour spotlight anchors (design.md §47).
@@ -60,7 +72,8 @@ export default function DailyBhaktiScreen() {
   const { lang } = useGitaLanguage();
   const { width: windowWidth } = useWindowDimensions();
   const [cardWidth, setCardWidth] = useState(Math.min(540, Math.max(240, windowWidth - 32)));
-  const route = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
+  const screenRoute = useRoute<RouteProp<TabParamList, 'DailyBhaktiTab'>>();
+  const route = tabRoute ?? screenRoute;
   const { sourceId, chapter, verseIndex } = route.params ?? {};
   const [verse, setVerse] = useState<UniformVerse | null>(() =>
     resolveInitialVerse(sourceId, verseIndex, chapter)
@@ -112,6 +125,7 @@ export default function DailyBhaktiScreen() {
   const verseLines = verse
     ? verseLinesByLang(lang, verse.textHi, verse.textEn.length > 0 ? verse.textEn : verse.textHi, verse.labelHi)
     : [];
+  const sourceTarget = React.useMemo(() => verse && dailySourceTarget(verse), [verse]);
   const verseType = verseToken(lang, typography);
 
   if (!verse) {
@@ -179,6 +193,7 @@ export default function DailyBhaktiScreen() {
             <DevotionalHero art={devotionalArtForVerse(verse)} lang={lang} width={cardWidth} />
             <DevotionalVerseBody
               width={cardWidth} inset={cardWidth * 55 / 1080}
+              onSourcePress={sourceTarget && onOpenSource ? () => onOpenSource(sourceTarget) : undefined}
               header={[contentByLang(lang, verse.sourceNameHi, verse.sourceNameEn), contentByLang(lang, verse.labelHi ?? '', verse.labelEn ?? '')].filter(Boolean).join(' · ')}
               // Preserve charan boundaries; long rows wrap and the paper grows.
               verse={verseLines.join('\n')} verseRows={devotionalCharanRows(lang, verse.textHi, verseLines)}

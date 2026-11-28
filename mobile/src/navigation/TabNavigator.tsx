@@ -130,7 +130,7 @@ export default function TabNavigator() {
         getComponent={() => {
           // Literal route loader keeps the painted card off Home's launch graph.
           // eslint-disable-next-line @typescript-eslint/no-require-imports
-          return require('@/screens/DailyBhaktiScreen').default;
+          return require('./DailyBhaktiStack').default;
         }}
         options={{
           title: contentByLang(lang, 'भक्ति', 'Bhakti'),
